@@ -1,0 +1,92 @@
+Flot 0.4
+--------
+
+API changes: deprecated axis.noTicks in favor of just specifying the
+number as axis.ticks. So "xaxis: { noTicks: 10 }" becomes
+"xaxis: { ticks: 10 }"
+
+Time series support. Specify axis.mode: "time", put in Javascript
+timestamps as data, and Flot will automatically spit out sensible
+ticks. Take a look at the two new examples. The format can be
+customized with axis.timeformat and axis.monthNames, or if that fails
+with axis.tickFormatter.
+
+Support for colored background areas via grid.coloredAreas. Specify an
+array of { x1, y1, x2, y2 } objects or a function that returns these
+given { xmin, xmax, ymin, ymax }.
+
+More members on the plot object (report by Chris Davies and others).
+"getData" for inspecting the assigned settings on data series (e.g.
+color) and "setData", "setupGrid" and "draw" for updating the contents
+without a total replot.
+
+The default number of ticks to aim for is now dependent on the size of
+the plot in pixels. Support for customizing tick interval sizes
+directly with axis.minTickSize and axis.tickSize.
+
+Cleaned up the automatic axis scaling algorithm and fixed how it
+interacts with ticks. Also fixed a couple of tick-related corner case
+bugs (one reported by mainstreetmark, another reported by timothytoe).
+
+The option axis.tickFormatter now takes a function with two
+parameters, the second parameter is an optional object with
+information about the axis. It has min, max, tickDecimals, tickSize.
+
+Added support for segmented lines (based on patch from Michael
+MacDonald) and for ignoring null and bad values (suggestion from Nick
+Konidaris and joshwaihi). 
+
+Added support for changing the border width (joebno and safoo).
+Label colors can be changed via CSS by selecting the tickLabel class.
+
+Fixed a bug in handling single-item bar series (reported by Emil
+Filipov). Fixed erratic behaviour when interacting with the plot
+with IE 7 (reported by Lau Bech Lauritzen). Prevent IE/Safari text
+selection when selecting stuff on the canvas.
+
+
+
+Flot 0.3
+--------
+
+This is mostly a quick-fix release because jquery.js wasn't included
+in the previous zip/tarball.
+
+Support clicking on the plot. Turn it on with grid: { clickable: true },
+then you get a "plotclick" event on the graph placeholder with the
+position in units of the plot.
+
+Fixed a bug in dealing with data where min = max, thanks to Michael
+Messinides.
+
+Include jquery.js in the zip/tarball.
+
+
+Flot 0.2
+--------
+
+Added support for putting a background behind the default legend. The
+default is the partly transparent background color. Added
+backgroundColor and backgroundOpacity to the legend options to control
+this.
+
+The ticks options can now be a callback function that takes one
+parameter, an object with the attributes min and max. The function
+should return a ticks array.
+
+Added labelFormatter option in legend, useful for turning the legend
+labels into links.
+
+Fixed a couple of bugs.
+
+The API should now be fully documented.
+
+Patch from Guy Fraser to make parts of the code smaller.
+
+API changes: Moved labelMargin option to grid from x/yaxis.
+
+
+Flot 0.1
+--------
+
+First public release.

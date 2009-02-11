@@ -1,0 +1,47 @@
+/////////////////////////////////
+///       OpenCart V1.0      ///
+///    Install Instruction    ///
+///  http://www.opencart.com  ///
+/////////////////////////////////
+
+-------
+INSTALL
+-------
+
+1. Upload all the files and folders to your server from the "Upload" folder.
+   This can be to anywhere of your choice.
+	
+   e.g. /public_html/store or /public_html
+
+2. If you have a Linux/Unix make sure the following folders and files are writable.
+   chmod 0666 image/
+   chmod 0666 image/cache/
+   chmod 0666 cache/
+   chmod 0666 download/
+   chmod 0666 config.php
+   chmod 0666 admin/config.php
+
+3. Make sure you have installed a MySQL Database which has a user assigned to it 
+   DO NOT USE YOUR ROOT USERNAME AND ROOT PASSWORD
+
+4. Visit the store homepage
+   e.g. http://www.example.com or http://www.example.com/store/
+
+5. Follow the onscreen instructions.
+
+6. Delete the install directory.
+
+---------------------
+FURTHER CONFIGURATION
+---------------------
+
+URL Alias
+---------
+
+1. To use URL Alias you need to be running apache with mod_rewrite enabled. 
+
+2. Ensure you have permissions to use .htaccess, and that it is setup correctly.
+
+For any support issues please visit: http://www.opencart.com
+
+EOF

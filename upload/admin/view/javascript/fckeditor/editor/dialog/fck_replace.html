@@ -1,0 +1,530 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--
+ * FCKeditor - The text editor for Internet - http://www.fckeditor.net
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ *
+ * == BEGIN LICENSE ==
+ *
+ * Licensed under the terms of any of the following licenses at your
+ * choice:
+ *
+ *  - GNU General Public License Version 2 or later (the "GPL")
+ *    http://www.gnu.org/licenses/gpl.html
+ *
+ *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+ *    http://www.gnu.org/licenses/lgpl.html
+ *
+ *  - Mozilla Public License Version 1.1 or later (the "MPL")
+ *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *
+ * == END LICENSE ==
+ *
+ * "Find" and "Replace" dialog box window.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta content="noindex, nofollow" name="robots" />
+	<script src="common/fck_dialog_common.js" type="text/javascript"></script>
+	<script type="text/javascript">
+
+var dialog	= window.parent ;
+var oEditor = dialog.InnerDialogLoaded() ;
+var dialogArguments = dialog.Args() ;
+
+var FCKLang = oEditor.FCKLang ;
+
+dialog.AddTab( 'Find', FCKLang.DlgFindTitle ) ;
+dialog.AddTab( 'Replace', FCKLang.DlgReplaceTitle ) ;
+var idMap = {} ;
+
+function OnDialogTabChange( tabCode )
+{
+	ShowE( 'divFind', ( tabCode == 'Find' ) ) ;
+	ShowE( 'divReplace', ( tabCode == 'Replace' ) ) ;
+	idMap['FindText'] = 'txtFind' + tabCode ;
+	idMap['CheckCase'] = 'chkCase' + tabCode ;
+	idMap['CheckWord'] = 'chkWord' + tabCode ;
+
+	if ( tabCode == 'Replace' )
+		dialog.SetAutoSize( true ) ;
+}
+
+// Place a range at the start of document.
+// This will be the starting point of our search.
+var GlobalRange = new oEditor.FCKDomRange( oEditor.FCK.EditorWindow ) ;
+
+function ResetGlobalRange()
+{
+	GlobalRange.SetStart( oEditor.FCK.EditorDocument.body, 1 ) ;
+	GlobalRange.SetEnd( oEditor.FCK.EditorDocument.body, 1 ) ;
+	GlobalRange.Collapse( true ) ;
+}
+ResetGlobalRange() ;
+
+var HighlightRange = null ;
+function Highlight()
+{
+	if ( HighlightRange )
+		ClearHighlight() ;
+	var cloneRange = GlobalRange.Clone() ;
+	oEditor.FCKStyles.GetStyle( '_FCK_SelectionHighlight' ).ApplyToRange( cloneRange, false, true ) ;
+	HighlightRange = cloneRange ;
+	GlobalRange = HighlightRange.Clone() ;
+}
+
+function ClearHighlight()
+{
+	if ( HighlightRange )
+	{
+		oEditor.FCKStyles.GetStyle( '_FCK_SelectionHighlight' ).RemoveFromRange( HighlightRange, false, true ) ;
+		HighlightRange = null ;
+	}
+}
+
+function OnLoad()
+{
+	// First of all, translate the dialog box texts.
+	oEditor.FCKLanguageManager.TranslatePage( document ) ;
+
+	// Show the appropriate tab at startup.
+	if ( dialogArguments.CustomValue == 'Find' )
+	{
+		dialog.SetSelectedTab( 'Find' ) ;
+		dialog.SetAutoSize( true ) ;
+	}
+	else
+		dialog.SetSelectedTab( 'Replace' ) ;
+
+	SelectField( 'txtFind' + dialogArguments.CustomValue ) ;
+}
+
+function btnStat()
+{
+	GetE('btnReplace').disabled =
+		GetE('btnReplaceAll').disabled =
+			GetE('btnFind').disabled =
+				( GetE(idMap["FindText"]).value.length == 0 ) ;
+}
+
+function btnStatDelayed()
+{
+	setTimeout( btnStat, 1 ) ;
+}
+
+function GetSearchString()
+{
+	return GetE(idMap['FindText']).value ;
+}
+
+function GetReplaceString()
+{
+	return GetE("txtReplace").value ;
+}
+
+function GetCheckCase()
+{
+	return !! ( GetE(idMap['CheckCase']).checked ) ;
+}
+
+function GetMatchWord()
+{
+	return !! ( GetE(idMap['CheckWord']).checked ) ;
+}
+
+// Get the data pointed to by a bookmark.
+function GetData( bookmark )
+{
+	var cursor = oEditor.FCK.EditorDocument.documentElement ;
+	for ( var i = 0 ; i < bookmark.length ; i++ )
+	{
+		var target = bookmark[i] ;
+		var currentIndex = -1 ;
+		if ( cursor.nodeType != 3 )
+		{
+			for (var j = 0 ; j < cursor.childNodes.length ; j++ )
+			{
+				var candidate = cursor.childNodes[j] ;
+				if ( candidate.nodeType == 3 &&
+						candidate.previousSibling &&
+						candidate.previousSibling.nodeType == 3 )
+					continue ;
+				currentIndex++ ;
+				if ( currentIndex == target )
+				{
+					cursor = candidate ;
+					break ;
+				}
+			}
+			if ( currentIndex < target )
+				return null ;
+		}
+		else
+		{
+			if ( i != bookmark.length - 1 )
+				return null ;
+			while ( target >= cursor.length && cursor.nextSibling && cursor.nextSibling.nodeType == 3 )
+			{
+				target -= cursor.length ;
+				cursor = cursor.nextSibling ;
+			}
+			cursor = cursor.nodeValue.charAt( target ) ;
+			if ( cursor == "" )
+				cursor = null ;
+		}
+	}
+	return cursor ;
+}
+
+// With this function, we can treat the bookmark as an iterator for DFS.
+function NextPosition( bookmark )
+{
+	// See if there's anything further down the tree.
+	var next = bookmark.concat( [0] ) ;
+	if ( GetData( next ) != null )
+		return next ;
+
+	// Nothing down there? See if there's anything next to me.
+	var next = bookmark.slice( 0, bookmark.length - 1 ).concat( [ bookmark[ bookmark.length - 1 ] + 1 ] ) ;
+	if ( GetData( next ) != null )
+		return next ;
+
+	// Nothing even next to me? See if there's anything next to my ancestors.
+	for ( var i = bookmark.length - 1 ; i > 0 ; i-- )
+	{
+		var next = bookmark.slice( 0, i - 1 ).concat( [ bookmark[ i - 1 ] + 1 ] ) ;
+		if ( GetData( next ) != null )
+			return next ;
+	}
+
+	// There's absolutely nothing left to walk, return null.
+	return null ;
+}
+
+// Is this character a unicode whitespace?
+// Reference: http://unicode.org/Public/UNIDATA/PropList.txt
+function CheckIsWhitespace( c )
+{
+	var code = c.charCodeAt( 0 );
+	if ( code >= 9 && code <= 0xd )
+		return true;
+	if ( code >= 0x2000 && code <= 0x200a )
+		return true;
+	switch ( code )
+	{
+		case 0x20:
+		case 0x85:
+		case 0xa0:
+		case 0x1680:
+		case 0x180e:
+		case 0x2028:
+		case 0x2029:
+		case 0x202f:
+		case 0x205f:
+		case 0x3000:
+			return true;
+		default:
+			return false;
+	}
+}
+
+// Knuth-Morris-Pratt Algorithm for stream input
+KMP_NOMATCH = 0 ;
+KMP_ADVANCED = 1 ;
+KMP_MATCHED = 2 ;
+function KmpMatch( pattern, ignoreCase )
+{
+	var overlap = [ -1 ] ;
+	for ( var i = 0 ; i < pattern.length ; i++ )
+	{
+		overlap.push( overlap[i] + 1 ) ;
+		while ( overlap[ i + 1 ] > 0 && pattern.charAt( i ) != pattern.charAt( overlap[ i + 1 ] - 1 ) )
+			overlap[ i + 1 ] = overlap[ overlap[ i + 1 ] - 1 ] + 1 ;
+	}
+	this._Overlap = overlap ;
+	this._State = 0 ;
+	this._IgnoreCase = ( ignoreCase === true ) ;
+	if ( ignoreCase )
+		this.Pattern = pattern.toLowerCase();
+	else
+		this.Pattern = pattern ;
+}
+KmpMatch.prototype = {
+	"FeedCharacter" : function( c )
+	{
+		if ( this._IgnoreCase )
+			c = c.toLowerCase();
+
+		while ( true )
+		{
+			if ( c == this.Pattern.charAt( this._State ) )
+			{
+				this._State++ ;
+				if ( this._State == this.Pattern.length )
+				{
+					// found a match, start over, don't care about partial matches involving the current match
+					this._State = 0;
+					return KMP_MATCHED;
+				}
+				return KMP_ADVANCED ;
+			}
+			else if ( this._State == 0 )
+				return KMP_NOMATCH;
+			else
+				this._State = this._Overlap[ this._State ];
+		}
+
+		return null ;
+	},
+	"Reset" : function()
+	{
+		this._State = 0 ;
+	}
+};
+
+function _Find()
+{
+	// Start from the end of the current selection.
+	var matcher = new KmpMatch( GetSearchString(), ! GetCheckCase() ) ;
+	var cursor = GlobalRange.CreateBookmark2().End ;
+	var matchState = KMP_NOMATCH ;
+	var matchBookmark = null ;
+	var matchBookmarkStart = [] ;
+
+	// Match finding.
+	while ( true )
+	{
+		// Perform KMP stream matching.
+		//	- Reset KMP matcher if we encountered a block element.
+		var data = GetData( cursor ) ;
+		if ( data )
+		{
+			if ( data.tagName )
+			{
+				if ( oEditor.FCKListsLib.BlockElements[ data.tagName.toLowerCase() ] )
+				{
+					matcher.Reset();
+					matchBookmarkStart = [] ;
+				}
+			}
+			else if ( data.charAt != undefined )
+			{
+				matchState = matcher.FeedCharacter(data) ;
+
+				// No possible match of any useful substring in the pattern for the currently scanned character.
+				// So delete any positional information.
+				if ( matchState == KMP_NOMATCH )
+					matchBookmarkStart = [] ;
+				// We've matched something, but it's not a complete match, so let's just mark down the position for backtracking later.
+				else if ( matchState == KMP_ADVANCED )
+				{
+					matchBookmarkStart.push( cursor.concat( [] ) ) ;
+					if ( matchBookmarkStart.length > matcher._State )
+						matchBookmarkStart.shift() ;
+				}
+				// Found a complete match! Mark down the ending position as well.
+				else if ( matchState == KMP_MATCHED )
+				{
+					// It is possible to get a KMP_MATCHED without KMP_ADVANCED when the match pattern is only 1 character.
+					// So need to check and mark down the starting position as well.
+					if ( matchBookmarkStart.length == 0 )
+						matchBookmarkStart = [cursor.concat( [] )] ;
+
+					matchBookmark = { 'Start' : matchBookmarkStart.shift(), 'End' : cursor.concat( [] ) } ;
+					matchBookmark.End[ matchBookmark.End.length - 1 ]++;
+
+					// Wait, do we have to match a whole word?
+					// If yes, carry out additional checks on what we've got.
+					if ( GetMatchWord() )
+					{
+						var startOk = false ;
+						var endOk = false ;
+						var start = matchBookmark.Start ;
+						var end = matchBookmark.End ;
+						if ( start[ start.length - 1 ] == 0 )
+							startOk = true ;
+						else
+						{
+							var cursorBeforeStart = start.slice( 0, start.length - 1 ) ;
+							cursorBeforeStart.push( start[ start.length - 1 ] - 1 ) ;
+							var dataBeforeStart = GetData( cursorBeforeStart ) ;
+							if ( dataBeforeStart == null || dataBeforeStart.charAt == undefined )
+								startOk = true ;
+							else if ( CheckIsWhitespace( dataBeforeStart ) )
+								startOk = true ;
+						}
+
+						// this is already one character beyond the last char, no need to move
+						var cursorAfterEnd = end ;
+						var dataAfterEnd = GetData( cursorAfterEnd );
+						if ( dataAfterEnd == null || dataAfterEnd.charAt == undefined )
+							endOk = true ;
+						else if ( CheckIsWhitespace( dataAfterEnd ) )
+							endOk = true ;
+
+						if ( startOk && endOk )
+							break ;
+						else
+							matcher.Reset() ;
+					}
+					else
+						break ;
+				}
+			}
+		}
+
+		// Perform DFS across the document, until we've reached the end.
+		cursor = NextPosition( cursor ) ;
+		if ( cursor == null )
+			break;
+	}
+
+	// If we've found a match, highlight the match.
+	if ( matchState == KMP_MATCHED )
+	{
+		GlobalRange.MoveToBookmark2( matchBookmark ) ;
+		Highlight() ;
+		var focus = GlobalRange._Range.endContainer ;
+		while ( focus && focus.nodeType != 1 )
+			focus = focus.parentNode ;
+
+		if ( focus )
+		{
+			if ( oEditor.FCKBrowserInfo.IsSafari )
+				oEditor.FCKDomTools.ScrollIntoView( focus, false ) ;
+			else
+				focus.scrollIntoView( false ) ;
+		}
+
+		return true ;
+	}
+	else
+	{
+		ResetGlobalRange() ;
+		return false ;
+	}
+}
+
+function Find()
+{
+	if ( ! _Find() )
+	{
+		ClearHighlight() ;
+		alert( FCKLang.DlgFindNotFoundMsg ) ;
+	}
+}
+
+function Replace()
+{
+	if ( GlobalRange.CheckIsCollapsed() )
+	{
+		if (! _Find() )
+		{
+			ClearHighlight() ;
+			alert( FCKLang.DlgFindNotFoundMsg ) ;
+		}
+	}
+	else
+	{
+		oEditor.FCKUndo.SaveUndoStep() ;
+		GlobalRange.DeleteContents() ;
+		GlobalRange.InsertNode( oEditor.FCK.EditorDocument.createTextNode( GetReplaceString() ) ) ;
+		GlobalRange.Collapse( false ) ;
+	}
+}
+
+function ReplaceAll()
+{
+	oEditor.FCKUndo.SaveUndoStep() ;
+	var replaceCount = 0 ;
+
+	while ( _Find() )
+	{
+		dialog.Selection.EnsureSelection() ;
+		GlobalRange.DeleteContents() ;
+		GlobalRange.InsertNode( oEditor.FCK.EditorDocument.createTextNode( GetReplaceString() ) ) ;
+		GlobalRange.Collapse( false ) ;
+		replaceCount++ ;
+	}
+	if ( replaceCount == 0 )
+	{
+		ClearHighlight() ;
+		alert( FCKLang.DlgFindNotFoundMsg ) ;
+	}
+	dialog.Cancel() ;
+}
+
+window.onunload = function(){ ClearHighlight() ; }
+	</script>
+</head>
+<body onload="OnLoad()" style="overflow: hidden">
+	<div id="divFind" style="display: none">
+		<table cellspacing="3" cellpadding="2" width="100%" border="0">
+			<tr>
+				<td nowrap="nowrap">
+					<label for="txtFindFind" fcklang="DlgReplaceFindLbl">
+						Find what:</label>
+				</td>
+				<td width="100%">
+					<input id="txtFindFind" onkeyup="btnStat()" oninput="btnStat()" onpaste="btnStatDelayed()" style="width: 100%" tabindex="1"
+						type="text" />
+				</td>
+				<td>
+					<input id="btnFind" style="width: 80px" disabled="disabled" onclick="Find();"
+						type="button" value="Find" fcklang="DlgFindFindBtn" />
+				</td>
+			</tr>
+			<tr>
+				<td valign="bottom" colspan="3">
+					&nbsp;<input id="chkCaseFind" tabindex="3" type="checkbox" /><label for="chkCaseFind" fcklang="DlgReplaceCaseChk">Match
+						case</label>
+					<br />
+					&nbsp;<input id="chkWordFind" tabindex="4" type="checkbox" /><label for="chkWordFind" fcklang="DlgReplaceWordChk">Match
+						whole word</label>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id="divReplace" style="display:none">
+		<table cellspacing="3" cellpadding="2" width="100%" border="0">
+			<tr>
+				<td nowrap="nowrap">
+					<label for="txtFindReplace" fcklang="DlgReplaceFindLbl">
+						Find what:</label>
+				</td>
+				<td width="100%">
+					<input id="txtFindReplace" onkeyup="btnStat()" oninput="btnStat()" onpaste="btnStatDelayed()" style="width: 100%" tabindex="1"
+						type="text" />
+				</td>
+				<td>
+					<input id="btnReplace" style="width: 80px" disabled="disabled" onclick="Replace();"
+						type="button" value="Replace" fcklang="DlgReplaceReplaceBtn" />
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" nowrap="nowrap">
+					<label for="txtReplace" fcklang="DlgReplaceReplaceLbl">
+						Replace with:</label>
+				</td>
+				<td valign="top">
+					<input id="txtReplace" style="width: 100%" tabindex="2" type="text" />
+				</td>
+				<td>
+					<input id="btnReplaceAll" style="width: 80px" disabled="disabled" onclick="ReplaceAll()" type="button"
+						value="Replace All" fcklang="DlgReplaceReplAllBtn" />
+				</td>
+			</tr>
+			<tr>
+				<td valign="bottom" colspan="3">
+					&nbsp;<input id="chkCaseReplace" tabindex="3" type="checkbox" /><label for="chkCaseReplace" fcklang="DlgReplaceCaseChk">Match
+						case</label>
+					<br />
+					&nbsp;<input id="chkWordReplace" tabindex="4" type="checkbox" /><label for="chkWordReplace" fcklang="DlgReplaceWordChk">Match
+						whole word</label>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

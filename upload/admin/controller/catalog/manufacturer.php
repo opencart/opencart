@@ -1,0 +1,378 @@
+<?php    
+class ControllerCatalogManufacturer extends Controller { 
+	private $error = array();
+  
+  	public function index() {
+		$this->load->language('catalog/manufacturer');
+		
+		$this->document->title = $this->language->get('heading_title');
+		 
+		$this->load->model('catalog/manufacturer');
+		
+    	$this->getList();
+  	}
+  
+  	public function insert() {
+		$this->load->language('catalog/manufacturer');
+
+    	$this->document->title = $this->language->get('heading_title');
+		
+		$this->load->model('catalog/manufacturer');
+			
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+			$this->model_catalog_manufacturer->addManufacturer($this->request->post);
+			
+			$this->session->data['success'] = $this->language->get('text_success');
+			
+			$url = '';
+			
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+			
+			$this->redirect($this->url->https('catalog/manufacturer' . $url));
+		}
+    
+    	$this->getForm();
+  	} 
+   
+  	public function update() {
+		$this->load->language('catalog/manufacturer');
+
+    	$this->document->title = $this->language->get('heading_title');
+		
+		$this->load->model('catalog/manufacturer');
+		
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+			$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], $this->request->post);
+			
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+			
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+			
+			$this->redirect($this->url->https('catalog/manufacturer' . $url));
+		}
+    
+    	$this->getForm();
+  	}   
+
+  	public function delete() {
+		$this->load->language('catalog/manufacturer');
+
+    	$this->document->title = $this->language->get('heading_title');
+		
+		$this->load->model('catalog/manufacturer');
+			
+    	if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
+			foreach ($this->request->post['delete'] as $manufacturer_id) {
+				$this->model_catalog_manufacturer->deleteManufacturer($manufacturer_id);
+			}
+			
+			$this->session->data['success'] = $this->language->get('text_success');
+			
+			$url = '';
+			
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+			
+			$this->redirect($this->url->https('catalog/manufacturer' . $url));
+    	}
+	
+    	$this->getList();
+  	}  
+    
+  	private function getList() {
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+		
+		if (isset($this->request->get['sort'])) {
+			$sort = $this->request->get['sort'];
+		} else {
+			$sort = 'name';
+		}
+		
+		if (isset($this->request->get['order'])) {
+			$order = $this->request->get['order'];
+		} else {
+			$order = 'ASC';
+		}
+		
+		$url = '';
+			
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+  		$this->document->breadcrumbs = array();
+
+   		$this->document->breadcrumbs[] = array(
+       		'href'      => $this->url->https('common/home'),
+       		'text'      => $this->language->get('text_home'),
+      		'separator' => FALSE
+   		);
+
+   		$this->document->breadcrumbs[] = array(
+       		'href'      => $this->url->https('catalog/manufacturer' . $url),
+       		'text'      => $this->language->get('heading_title'),
+      		'separator' => ' :: '
+   		);
+							
+		$this->data['insert'] = $this->url->https('catalog/manufacturer/insert' . $url);
+		$this->data['delete'] = $this->url->https('catalog/manufacturer/delete' . $url);	
+
+		$this->data['manufacturers'] = array();
+
+		$data = array(
+			'sort'  => $sort,
+			'order' => $order,
+			'start' => ($page - 1) * 10,
+			'limit' => 10
+		);
+		
+		$manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturers();
+	
+		$results = $this->model_catalog_manufacturer->getManufacturers($data);
+ 
+    	foreach ($results as $result) {
+			$action = array();
+			
+			$action[] = array(
+				'text' => $this->language->get('text_edit'),
+				'href' => $this->url->https('catalog/manufacturer/update&manufacturer_id=' . $result['manufacturer_id'] . $url)
+			);
+						
+			$this->data['manufacturers'][] = array(
+				'manufacturer_id' => $result['manufacturer_id'],
+				'name'            => $result['name'],
+				'sort_order'      => $result['sort_order'],
+				'delete'          => in_array($result['manufacturer_id'], (array)@$this->request->post['delete']),
+				'action'          => $action
+			);
+		}	
+	
+		$this->data['heading_title'] = $this->language->get('heading_title');
+		
+		$this->data['text_no_results'] = $this->language->get('text_no_results');
+
+		$this->data['column_name'] = $this->language->get('column_name');
+		$this->data['column_sort_order'] = $this->language->get('column_sort_order');
+		$this->data['column_action'] = $this->language->get('column_action');		
+		
+		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_delete'] = $this->language->get('button_delete');
+ 
+		$this->data['error_warning'] = @$this->error['warning'];
+		
+		$this->data['success'] = @$this->session->data['success'];
+		
+		unset($this->session->data['success']);
+
+		if ($order == 'ASC') {
+			$url .= '&order=' .  'DESC';
+		} else {
+			$url .= '&order=' .  'ASC';
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+		
+		$this->data['sort_name'] = $this->url->https('catalog/manufacturer&sort=name' . $url);
+		$this->data['sort_sort_order'] = $this->url->https('catalog/manufacturer&sort=sort_order' . $url);
+		
+		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+												
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		$pagination = new Pagination();
+		$pagination->total = $manufacturer_total;
+		$pagination->page = $page;
+		$pagination->limit = 10; 
+		$pagination->text = $this->language->get('text_pagination');
+		$pagination->url = $this->url->https('catalog/manufacturer' . $url . '&page=%s');
+			
+		$this->data['pagination'] = $pagination->render();
+
+		$this->data['sort'] = $sort;
+		$this->data['order'] = $order;
+
+		$this->id       = 'content';
+		$this->template = 'catalog/manufacturer_list.tpl';
+		$this->layout   = 'module/layout';
+				
+		$this->render();
+	}
+  
+  	private function getForm() {
+    	$this->data['heading_title'] = $this->language->get('heading_title');
+
+    	$this->data['text_enabled'] = $this->language->get('text_enabled');
+    	$this->data['text_disabled'] = $this->language->get('text_disabled');
+		$this->data['text_upload'] = $this->language->get('text_upload');
+    	
+		$this->data['entry_name'] = $this->language->get('entry_name');
+    	$this->data['entry_image'] = $this->language->get('entry_image');
+		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
+  
+    	$this->data['button_save'] = $this->language->get('button_save');
+    	$this->data['button_cancel'] = $this->language->get('button_cancel');
+	
+		$this->data['tab_general'] = $this->language->get('tab_general');
+	  
+    	$this->data['error_warning'] = @$this->error['warning'];
+    	$this->data['error_name'] = @$this->error['name'];
+
+  		$this->document->breadcrumbs = array();
+
+   		$this->document->breadcrumbs[] = array(
+       		'href'      => $this->url->https('common/home'),
+       		'text'      => $this->language->get('text_home'),
+      		'separator' => FALSE
+   		);
+
+   		$this->document->breadcrumbs[] = array(
+       		'href'      => $this->url->https('catalog/manufacturer'),
+       		'text'      => $this->language->get('heading_title'),
+      		'separator' => ' :: '
+   		);
+		    
+		$url = '';
+			
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+							
+		if (!isset($this->request->get['manufacturer_id'])) {
+			$this->data['action'] = $this->url->https('catalog/manufacturer/insert' . $url);
+		} else {
+			$this->data['action'] = $this->url->https('catalog/manufacturer/update&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url);
+		}
+		
+		$this->data['cancel'] = $this->url->https('catalog/manufacturer' . $url);
+
+    	if ((isset($this->request->get['manufacturer_id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+      		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
+    	}
+
+    	if (isset($this->request->post['name'])) {
+      		$this->data['name'] = $this->request->post['name'];
+    	} else {
+      		$this->data['name'] = @$manufacturer_info['name'];
+    	}
+		
+		$this->load->model('catalog/image');
+		
+		$this->data['images'] = $this->model_catalog_image->getImages();
+		
+		if (isset($this->request->post['image_id'])) {
+			$this->data['image_id'] = $this->request->post['image_id'];
+		} else {
+			$this->data['image_id'] = @$manufacturer_info['image_id'];
+		}
+		
+		if (isset($this->request->post['sort_order'])) {
+      		$this->data['sort_order'] = $this->request->post['sort_order'];
+    	} else {
+      		$this->data['sort_order'] = @$manufacturer_info['sort_order'];
+    	}
+
+		$this->id       = 'content';
+		$this->template = 'catalog/manufacturer_form.tpl';
+		$this->layout   = 'module/layout';
+		
+ 		$this->render();
+	}  
+	 
+  	private function validateForm() {
+    	if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
+      		$this->error['warning'] = $this->language->get('error_permission');
+    	}
+
+    	if ((strlen($this->request->post['name']) < 3) || (strlen($this->request->post['name']) > 32)) {
+      		$this->error['name'] = $this->language->get('error_name');
+    	}
+
+		if (!$this->error) {
+	  		return TRUE;
+		} else {
+	  		return FALSE;
+		}
+  	}    
+
+  	private function validateDelete() {
+    	if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+    	}	
+		
+		$this->load->model('catalog/product');
+
+		foreach ($this->request->post['delete'] as $manufacturer_id) {
+  			$product_total = $this->model_catalog_product->getTotalProductsByManufacturerId($manufacturer_id);
+    
+			if ($product_total) {
+	  			$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);	
+			}	
+	  	} 
+		
+		if (!$this->error) {
+	  		return TRUE;
+		} else {
+	  		return FALSE;
+		}  
+  	}
+}
+?>

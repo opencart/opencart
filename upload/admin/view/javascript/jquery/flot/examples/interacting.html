@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Flot Examples</title>
+    <link href="layout.css" rel="stylesheet" type="text/css"></link>
+    <!--[if IE]><script language="javascript" type="text/javascript" src="../excanvas.pack.js"></script><![endif]-->
+    <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="../jquery.flot.js"></script>
+ </head>
+    <body>
+    <h1>Flot Examples</h1>
+
+    <div id="placeholder" style="width:600px;height:300px"></div>
+
+    <p>Flot supports user interactions. It's currently still a bit
+    primitive, but you can enable the user to click on the plot and
+    get the corresponding x and y values back.</p>
+
+    <p>Try clicking on the plot above. <span id="result"></span></p>
+
+<script id="source" language="javascript" type="text/javascript">
+$(function () {
+    var d = [];
+    for (var i = 0; i < 14; i += 0.5)
+        d.push([i, Math.sin(i)]);
+
+    $.plot($("#placeholder"), [ d ], { grid: { clickable: true } });
+
+    $("#placeholder").bind("plotclick", function (e, pos) {
+        // the values are in pos.x and pos.y
+        $("#result").text('You clicked on (' + pos.x.toFixed(2) +  ', ' + pos.y.toFixed(2) + ')');
+    });
+});
+</script>
+
+ </body>
+</html>

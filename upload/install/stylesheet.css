@@ -1,0 +1,66 @@
+body, form {
+  margin: 0;
+  padding: 0;
+}
+
+body, td, th, input, select, textarea {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #000000;
+}
+
+#container {
+	margin-top: 50px;
+	width: 600px;
+	position: absolute;
+	left: 50%;
+	margin-left: -300px;
+	border: 1px dashed #CCCCCC;
+}
+
+#header { 
+	padding: 5px;
+	margin: 5px;
+	height: 30px;
+	border: 1px dashed #CCCCCC;
+	font-size: 24px;
+}
+
+#content {
+	padding: 5px;
+	margin: 5px;
+	border: 1px dashed #CCCCCC;	
+}
+
+#footer {
+	padding: 5px;
+	margin: 5px;
+	border: 1px dashed #CCCCCC;
+	text-align: center;
+}
+
+.required {
+	color: #FF0000;
+	margin-right: 5px;
+}
+
+.error {
+	color: #FF0000;
+	display: block;
+	clear: both;	
+}
+
+.warning {
+	background-color: #FFB3B5;
+	padding: 3px;
+}
+
+.good {
+	color: #669900;
+	font-weight: bold;
+}
+
+.bad {
+	color: #FF0000;
+	font-weight: bold;	
+}

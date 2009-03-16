@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogProduct extends Model {
 	public function addProduct($data) {
-		$this->db->query("INSERT INTO product SET model = '" . $this->db->escape(@$data['model']) . "', quantity = '" . (int)@$data['quantity'] . "', stock_status_id = '" . (int)@$data['stock_status_id'] . "', date_available = '" . $this->db->escape(@$data['date_available']) . "', manufacturer_id = '" . (int)@$data['manufacturer_id'] . "', image_id = '" . $this->db->escape(@$data['image_id']) . "', shipping = '" . (int)@$data['shipping'] . "', price = '" . (float)@$data['price'] . "', sort_order = '" . (int)@$data['sort_order'] . "', weight = '" . (float)@$data['weight'] . "', weight_class_id = '" . (int)@$data['weight_class_id'] . "', status = '" . (int)@$data['status'] . "', tax_class_id = '" . (int)@$data['tax_class_id'] . "', date_added = NOW()");
+		$this->db->query("INSERT INTO product SET model = '" . $this->db->escape(@$data['model']) . "', image = '" . $this->db->escape(basename($data['image'])) . "', quantity = '" . (int)@$data['quantity'] . "', stock_status_id = '" . (int)@$data['stock_status_id'] . "', date_available = '" . $this->db->escape(@$data['date_available']) . "', manufacturer_id = '" . (int)@$data['manufacturer_id'] . "', shipping = '" . (int)@$data['shipping'] . "', price = '" . (float)@$data['price'] . "', sort_order = '" . (int)@$data['sort_order'] . "', weight = '" . (float)@$data['weight'] . "', weight_class_id = '" . (int)@$data['weight_class_id'] . "', status = '" . (int)@$data['status'] . "', tax_class_id = '" . (int)@$data['tax_class_id'] . "', date_added = NOW()");
 		
 		$product_id = $this->db->getLastId();
 		
@@ -19,14 +19,16 @@ class ModelCatalogProduct extends Model {
 					$this->db->query("INSERT INTO product_option_description SET product_option_id = '" . (int)$product_option_id . "', language_id = '" . (int)$language_id . "', product_id = '" . (int)$product_id . "', name = '" . $this->db->escape($language['name']) . "'");
 				}				
 				
-				foreach ($product_option['product_option_value'] as $product_option_value) {
-					$this->db->query("INSERT INTO product_option_value SET product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', price = '" . (float)$product_option_value['price'] . "', prefix = '" . $this->db->escape($product_option_value['prefix']) . "', sort_order = '" . (int)$product_option_value['sort_order'] . "'");
+				if (isset($product_option['product_option_value'])) {
+					foreach ($product_option['product_option_value'] as $product_option_value) {
+						$this->db->query("INSERT INTO product_option_value SET product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', price = '" . (float)$product_option_value['price'] . "', prefix = '" . $this->db->escape($product_option_value['prefix']) . "', sort_order = '" . (int)$product_option_value['sort_order'] . "'");
 				
-					$product_option_value_id = $this->db->getLastId();
+						$product_option_value_id = $this->db->getLastId();
 				
-					foreach ($product_option_value['language'] as $language_id => $language) {
-						$this->db->query("INSERT INTO product_option_value_description SET product_option_value_id = '" . (int)$product_option_value_id . "', language_id = '" . (int)$language_id . "', product_id = '" . (int)$product_id . "', name = '" . $this->db->escape($language['name']) . "'");
-					}					
+						foreach ($product_option_value['language'] as $language_id => $language) {
+							$this->db->query("INSERT INTO product_option_value_description SET product_option_value_id = '" . (int)$product_option_value_id . "', language_id = '" . (int)$language_id . "', product_id = '" . (int)$product_id . "', name = '" . $this->db->escape($language['name']) . "'");
+						}					
+					}
 				}
 			}
 		}
@@ -38,8 +40,10 @@ class ModelCatalogProduct extends Model {
 		}
 		
 		if (isset($data['product_image'])) {
-			foreach ($data['product_image'] as $image_id) {
-				$this->db->query("INSERT INTO product_to_image SET product_id = '" . (int)$product_id . "', image_id = '" . (int)$image_id . "'");
+			foreach ($data['product_image'] as $image) {
+				if ($image) {
+        			$this->db->query("INSERT INTO product_image SET product_id = '" . (int)$product_id . "', image = '" . $this->db->escape(basename($image)) . "'");
+				}
 			}
 		}
 		
@@ -59,7 +63,7 @@ class ModelCatalogProduct extends Model {
 	}
 	
 	public function editProduct($product_id, $data) {
-		$this->db->query("UPDATE product SET model = '" . $this->db->escape(@$data['model']) . "', quantity = '" . (int)@$data['quantity'] . "', stock_status_id = '" . (int)@$data['stock_status_id'] . "', date_available = '" . $this->db->escape(@$data['date_available']) . "', manufacturer_id = '" . (int)@$data['manufacturer_id'] . "', image_id = '" . $this->db->escape(@$data['image_id']) . "', shipping = '" . (int)@$data['shipping'] . "', price = '" . (float)@$data['price'] . "', sort_order = '" . (int)@$data['sort_order'] . "', weight = '" . (float)@$data['weight'] . "', weight_class_id = '" . (int)@$data['weight_class_id'] . "', status = '" . (int)@$data['status'] . "', tax_class_id = '" . (int)@$data['tax_class_id'] . "', date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
+		$this->db->query("UPDATE product SET model = '" . $this->db->escape(@$data['model']) . "', image = '" . $this->db->escape(basename($data['image'])) . "', quantity = '" . (int)@$data['quantity'] . "', stock_status_id = '" . (int)@$data['stock_status_id'] . "', date_available = '" . $this->db->escape(@$data['date_available']) . "', manufacturer_id = '" . (int)@$data['manufacturer_id'] . "', shipping = '" . (int)@$data['shipping'] . "', price = '" . (float)@$data['price'] . "', sort_order = '" . (int)@$data['sort_order'] . "', weight = '" . (float)@$data['weight'] . "', weight_class_id = '" . (int)@$data['weight_class_id'] . "', status = '" . (int)@$data['status'] . "', tax_class_id = '" . (int)@$data['tax_class_id'] . "', date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
 		
 		$this->db->query("DELETE FROM product_description WHERE product_id = '" . (int)$product_id . "'");
 		
@@ -82,14 +86,16 @@ class ModelCatalogProduct extends Model {
 					$this->db->query("INSERT INTO product_option_description SET product_option_id = '" . (int)$product_option_id . "', language_id = '" . (int)$language_id . "', product_id = '" . (int)$product_id . "', name = '" . $this->db->escape($language['name']) . "'");
 				}				
 				
-				foreach ($product_option['product_option_value'] as $product_option_value) {
-					$this->db->query("INSERT INTO product_option_value SET product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', price = '" . (float)$product_option_value['price'] . "', prefix = '" . $this->db->escape($product_option_value['prefix']) . "', sort_order = '" . (int)$product_option_value['sort_order'] . "'");
+				if (isset($product_option['product_option_value'])) {
+					foreach ($product_option['product_option_value'] as $product_option_value) {
+						$this->db->query("INSERT INTO product_option_value SET product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', price = '" . (float)$product_option_value['price'] . "', prefix = '" . $this->db->escape($product_option_value['prefix']) . "', sort_order = '" . (int)$product_option_value['sort_order'] . "'");
 				
-					$product_option_value_id = $this->db->getLastId();
+						$product_option_value_id = $this->db->getLastId();
 				
-					foreach ($product_option_value['language'] as $language_id => $language) {
-						$this->db->query("INSERT INTO product_option_value_description SET product_option_value_id = '" . (int)$product_option_value_id . "', language_id = '" . (int)$language_id . "', product_id = '" . (int)$product_id . "', name = '" . $this->db->escape($language['name']) . "'");
-					}					
+						foreach ($product_option_value['language'] as $language_id => $language) {
+							$this->db->query("INSERT INTO product_option_value_description SET product_option_value_id = '" . (int)$product_option_value_id . "', language_id = '" . (int)$language_id . "', product_id = '" . (int)$product_id . "', name = '" . $this->db->escape($language['name']) . "'");
+						}					
+					}
 				}
 			}
 		}
@@ -102,11 +108,13 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 		
-		$this->db->query("DELETE FROM product_to_image WHERE product_id = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM product_image WHERE product_id = '" . (int)$product_id . "'");
 		
 		if (isset($data['product_image'])) {
-			foreach ($data['product_image'] as $image_id) {
-				$this->db->query("INSERT INTO product_to_image SET product_id = '" . (int)$product_id . "', image_id = '" . (int)$image_id . "'");
+			foreach ($data['product_image'] as $image) {
+				if ($image) {
+        			$this->db->query("INSERT INTO product_image SET product_id = '" . (int)$product_id . "', image = '" . $this->db->escape(basename($image)) . "'");
+				}
 			}
 		}
 		
@@ -167,14 +175,21 @@ class ModelCatalogProduct extends Model {
 				$sql .= " AND p.status = '" . (int)$data['status'] . "'";
 			}
 
-			if (isset($data['sort'])) {
-				$sql .= " ORDER BY " . $this->db->escape($data['sort']);	
+			$sort_data = array(
+				'pd.name',
+				'p.model',
+				'p.status',
+				'p.sort_order'
+			);	
+			
+			if (in_array(@$data['sort'], $sort_data)) {
+				$sql .= " ORDER BY " . $data['sort'];	
 			} else {
 				$sql .= " ORDER BY pd.name";	
 			}
 			
-			if (isset($data['order'])) {
-				$sql .= " " . $this->db->escape($data['order']);
+			if (@$data['order'] == 'DESC') {
+				$sql .= " DESC";
 			} else {
 				$sql .= " ASC";
 			}
@@ -266,10 +281,10 @@ class ModelCatalogProduct extends Model {
 	public function getProductImages($product_id) {
 		$product_image_data = array();
 		
-		$query = $this->db->query("SELECT * FROM product_to_image WHERE product_id = '" . (int)$product_id . "'");
+		$query = $this->db->query("SELECT * FROM product_image WHERE product_id = '" . (int)$product_id . "'");
 		
 		foreach ($query->rows as $result) {
-			$product_image_data[] = $result['image_id'];
+			$product_image_data[] = $result['image'];
 		}
 		
 		return $product_image_data;

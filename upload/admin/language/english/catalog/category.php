@@ -13,8 +13,8 @@ $_['column_action']     = 'Action';
 // Entry
 $_['entry_name']        = 'Category Name:';
 $_['entry_category']    = 'Parent Category:';
+$_['entry_image']       = 'Image:';
 $_['entry_sort_order']  = 'Sort Order:';
-$_['entry_image']       = 'Category Image:';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify categories!';

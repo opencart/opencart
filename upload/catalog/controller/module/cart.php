@@ -31,10 +31,10 @@ class ControllerModuleCart extends Controller {
       		);
     	}
 
-    	$this->data['subtotal'] = $this->currency->format($this->cart->getsubTotal());
+    	$this->data['subtotal'] = $this->currency->format($this->cart->getTotal());
 
 		$this->id       = 'cart';
-		$this->template = 'module/cart.tpl';
+		$this->template = $this->config->get('config_template') . 'module/cart.tpl';
 		
 		$this->render();
 	}

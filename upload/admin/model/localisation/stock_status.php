@@ -36,14 +36,10 @@ class ModelLocalisationStockStatus extends Model {
 		if ($data) {
 			$sql = "SELECT * FROM stock_status WHERE language_id = '" . (int)$this->language->getId() . "'";
       		
-			if (isset($data['sort'])) {
-				$sql .= " ORDER BY " . $this->db->escape($data['sort']);	
-			} else {
-				$sql .= " ORDER BY name";	
-			}
+			$sql .= " ORDER BY name";	
 			
-			if (isset($data['order'])) {
-				$sql .= " " . $this->db->escape($data['order']);
+			if (@$data['order'] == 'DESC') {
+				$sql .= " DESC";
 			} else {
 				$sql .= " ASC";
 			}

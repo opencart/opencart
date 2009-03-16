@@ -44,7 +44,7 @@ class ModelReportReport extends Model {
 			$date_end = date('Y-m-d', time());
 		}
 		
-		$sql .= " AND (date_added BETWEEN '" . $this->db->escape($date_start) . "' AND '" . $this->db->escape($date_end) . "')";
+		$sql .= " AND (DATE(date_added) >= '" . $this->db->escape($date_start) . "' AND DATE(date_added) <= '" . $this->db->escape($date_end) . "')";
 		
 		if (@$data['order_status_id']) {
 			$sql .= " AND order_status_id = '" . (int)$data['order_status_id'] . "'";
@@ -96,7 +96,7 @@ class ModelReportReport extends Model {
 			$date_end = date('Y-m-d', strtotime($date_start));
 		}
 		
-		$sql .= " AND (date_added BETWEEN '" . $this->db->escape($date_start) . "' AND '" . $this->db->escape($date_end) . "')";
+		$sql .= " AND (DATE(date_added) >= '" . $this->db->escape($date_start) . "' AND DATE(date_added) <= '" . $this->db->escape($date_end) . "')";
 		
 		if (@$data['order_status_id']) {
 			$sql .= " AND order_status_id = '" . (int)$data['order_status_id'] . "'";

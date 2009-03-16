@@ -21,14 +21,22 @@ class ModelCatalogReview extends Model {
 	public function getReviews($data = array()) {
 		$sql = "SELECT r.review_id, pd.name, r.author, r.rating, r.status, r.date_added FROM review r LEFT JOIN product_description pd ON (r.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->language->getId() . "'";																																					  
 		
-		if (isset($data['sort'])) {
-			$sql .= " ORDER BY " . $this->db->escape($data['sort']);	
+		$sort_data = array(
+			'pd.name',
+			'r.author',
+			'r.rating',
+			'r.status',
+			'r.date_added'
+		);	
+			
+		if (in_array(@$data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];	
 		} else {
-			$sql .= " ORDER BY r..date_added";	
+			$sql .= " ORDER BY r.date_added";	
 		}
 			
-		if (isset($data['order'])) {
-			$sql .= " " . $this->db->escape($data['order']);
+		if (@$data['order'] == 'DESC') {
+			$sql .= " DESC";
 		} else {
 			$sql .= " ASC";
 		}

@@ -1,19 +1,19 @@
 <?php
 class ModelCatalogCategory extends Model {
 	public function addCategory($data) {
-		$this->db->query("INSERT INTO category SET image_id = '" . (int)$data['image_id'] . "', parent_id = '" . (int)$data['parent_id'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW(), date_added = NOW()");
+		$this->db->query("INSERT INTO category SET image = '" . $this->db->escape(basename($data['image'])) . "', parent_id = '" . (int)$data['parent_id'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW(), date_added = NOW()");
 	
 		$category_id = $this->db->getLastId();
-				
+		
 		foreach ($data['category_description'] as $language_id => $value) {
 			$this->db->query("INSERT INTO category_description SET category_id = '" . (int)$category_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
 			
-		$this->cache->delete('category');	
+		$this->cache->delete('category');
 	}
 	
 	public function editCategory($category_id, $data) {
-		$this->db->query("UPDATE category SET image_id = '" . (int)$data['image_id'] . "', parent_id = '" . (int)$data['parent_id'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE category_id = '" . (int)$category_id . "'");
+		$this->db->query("UPDATE category SET image = '" . $this->db->escape(basename($data['image'])) . "', parent_id = '" . (int)$data['parent_id'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE category_id = '" . (int)$category_id . "'");
 
 		$this->db->query("DELETE FROM category_description WHERE category_id = '" . (int)$category_id . "'");
 
@@ -31,10 +31,10 @@ class ModelCatalogCategory extends Model {
 		$query = $this->db->query("SELECT category_id FROM category WHERE parent_id = '" . (int)$category_id . "'");
 
 		foreach ($query->rows as $result) {
-			$this->delete($result['category_id']);
+			$this->deleteCategory($result['category_id']);
 		}
 		
-		$this->cache->deleteCategory('category');
+		$this->cache->delete('category');
 	}
 
 	public function getCategory($category_id) {

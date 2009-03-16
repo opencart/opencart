@@ -26,9 +26,6 @@ form {
 	margin: 0;
 	padding: 0;
 }
-input, textarea, select, form iframe {
-	margin-top: 4px;
-}
 #header {
 	height: 30px;
 	background: #000000 url('../image/header.png');
@@ -276,7 +273,9 @@ input, textarea, select, form iframe {
 	display: block;
 }
 .help {
-	cursor: pointer;
+	color: #999;
+	display: block;
+	font-size: 11px;
 }
 .tooltip {
 	border: 1px solid #FDDA5C;
@@ -319,7 +318,7 @@ input, textarea, select, form iframe {
 }
 .list input, .list select {
 	padding: 0;
-	margin: 5px 0px;odd
+	margin: 5px 0px;
 }
 .list thead td {
 	color: #FFFFFF;
@@ -423,13 +422,20 @@ input, textarea, select, form iframe {
 	background: #F8F8F8;
 	border-bottom: 1px solid #EEEEEE;
 }
+.form {
+	width: 100%;
+	border-collapse: collapse;
+}
+.form td {
+	padding: 5px;
+	vertical-align: top;
+}
 .scrollbox {
 	border: 1px solid #CCCCCC;
 	width: 350px;
 	height: 100px;
 	background: #FFFFFF;
 	overflow-y: scroll;
-	margin-top: 4px;
 }
 .scrollbox div {
 	padding: 3px;
@@ -445,7 +451,6 @@ input, textarea, select, form iframe {
 .scrollbox div.odd {
 	background: #E4EEF7;
 }
-
 /* Preview Image */
 #preview {
 	text-align: center;
@@ -501,21 +506,21 @@ input, textarea, select, form iframe {
 	width: 45%;
 	height: 200px;
 }
-#invoice {
+#order {
 	border-top: 1px solid #CDDDDD;
 }
-#invoice table {
+#order table {
 	border-collapse: collapse;
 	border-left: 1px solid #E5E5E5;
 	width: 100%;
 }
-#invoice table td {
+#order table td {
 	padding: 5px;
 	background:  #FFFFFF;
 	border-right: 1px solid #E5E5E5;
 	border-bottom: 1px solid #E5E5E5;
 }
-#invoice table thead td {
+#order table thead td {
 	background: #303F4A;
 	color: #FFFFFF;
 }

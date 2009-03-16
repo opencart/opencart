@@ -20,7 +20,7 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->load->model('catalog/manufacturer');
 			
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
-			$this->model_catalog_manufacturer->addManufacturer($this->request->post);
+			$this->model_catalog_manufacturer->addManufacturer($this->request->post, $this->request->files);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
@@ -207,6 +207,8 @@ class ControllerCatalogManufacturer extends Controller {
 		
 		unset($this->session->data['success']);
 
+		$url = '';
+
 		if ($order == 'ASC') {
 			$url .= '&order=' .  'DESC';
 		} else {
@@ -254,7 +256,6 @@ class ControllerCatalogManufacturer extends Controller {
 
     	$this->data['text_enabled'] = $this->language->get('text_enabled');
     	$this->data['text_disabled'] = $this->language->get('text_disabled');
-		$this->data['text_upload'] = $this->language->get('text_upload');
     	
 		$this->data['entry_name'] = $this->language->get('entry_name');
     	$this->data['entry_image'] = $this->language->get('entry_image');
@@ -313,17 +314,23 @@ class ControllerCatalogManufacturer extends Controller {
     	} else {
       		$this->data['name'] = @$manufacturer_info['name'];
     	}
-		
-		$this->load->model('catalog/image');
-		
-		$this->data['images'] = $this->model_catalog_image->getImages();
-		
-		if (isset($this->request->post['image_id'])) {
-			$this->data['image_id'] = $this->request->post['image_id'];
+
+		if (isset($this->request->post['image'])) {
+			$this->data['image'] = $this->request->post['image'];
 		} else {
-			$this->data['image_id'] = @$manufacturer_info['image_id'];
+			$this->data['image'] = $manufacturer_info['image'];
 		}
 		
+		$this->load->helper('image');
+		
+		if (isset($this->request->post['image'])) {
+			$this->data['preview'] = HelperImage::resize($this->request->post['image'], 100, 100);
+		} elseif (@$manufacturer_info['image']) {
+			$this->data['preview'] = HelperImage::resize($manufacturer_info['image'], 100, 100);
+		} else {
+			$this->data['preview'] = HelperImage::resize('no_image.jpg', 100, 100);
+		}
+
 		if (isset($this->request->post['sort_order'])) {
       		$this->data['sort_order'] = $this->request->post['sort_order'];
     	} else {

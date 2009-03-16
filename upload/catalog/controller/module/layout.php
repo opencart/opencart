@@ -23,7 +23,7 @@ class ControllerModuleLayout extends Controller {
 		}
 		*/
 		
-		$this->template = 'module/layout.tpl';
+		$this->template = $this->config->get('config_template') . 'module/layout.tpl';
 		$this->children = array(
 			'module/header',
 			'module/footer',

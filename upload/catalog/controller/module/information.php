@@ -23,7 +23,7 @@ class ControllerModuleInformation extends Controller {
     	$this->data['sitemap'] = $this->url->http('information/sitemap');
 		
 		$this->id       = 'information';
-		$this->template = 'module/information.tpl';
+		$this->template = $this->config->get('config_template') . 'module/information.tpl';
 		
 		$this->render();
 	}

@@ -20,7 +20,7 @@ class ControllerModuleHeader extends Controller {
 		$this->data['checkout'] = $this->url->https('checkout/shipping');
 
 		$this->id       = 'header';
-		$this->template = 'module/header.tpl';
+		$this->template = $this->config->get('config_template') . 'module/header.tpl';
 		$this->children = array(
 			'module/language',
 			'module/search'

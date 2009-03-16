@@ -13,7 +13,7 @@ class ControllerInformationContact extends Controller {
 	  		$mail->setFrom($this->request->post['email']);
 	  		$mail->setSender($this->request->post['name']);
 	  		$mail->setSubject(sprintf($this->language->get('email_subject'), $this->request->post['name']));
-	  		$mail->setText($this->request->post['enquiry']);
+	  		$mail->setText(strip_tags(html_entity_decode($this->request->post['enquiry'])));
       		$mail->send();
 
 	  		$this->redirect($this->url->https('information/contact/success'));
@@ -62,7 +62,7 @@ class ControllerInformationContact extends Controller {
 		$this->data['verification'] = @$this->request->post['verification'];
 	
 		$this->id       = 'content';
-		$this->template = 'information/contact.tpl';
+		$this->template = $this->config->get('config_template') . 'information/contact.tpl';
 		$this->layout   = 'module/layout';
 		
  		$this->render();		
@@ -96,7 +96,7 @@ class ControllerInformationContact extends Controller {
     	$this->data['continue'] = $this->url->http('common/home');
 
 		$this->id       = 'content';
-		$this->template = 'common/success.tpl';
+		$this->template = $this->config->get('config_template') . 'common/success.tpl';
 		$this->layout   = 'module/layout';
 		
  		$this->render();

@@ -23,10 +23,16 @@
       <button id="nineties">1990-2000</button>
       <button id="ninetynine">1999</button></p>
 
-    <p>The timestamps must be specified as Javascript
-      timestamps, as milliseconds since January 1, 1970 00:00. This is
-      like Unix timestamps, but in milliseconds instead of seconds
-      (remember to multiply with 1000!).</p> 
+    <p>The timestamps must be specified as Javascript timestamps, as
+      milliseconds since January 1, 1970 00:00. This is like Unix
+      timestamps, but in milliseconds instead of seconds (remember to
+      multiply with 1000!).</p>
+
+    <p>As an extra caveat, the timestamps are interpreted according to
+      UTC to avoid having the graph shift with each visitor's local
+      time zone. So you might have to add your local time zone offset
+      to the timestamps or simply pretend that the data was produced
+      in UTC instead of your local time zone.</p>
 
 <script id="source" language="javascript" type="text/javascript">
 $(function () {

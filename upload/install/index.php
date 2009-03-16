@@ -20,10 +20,6 @@ switch ($step) {
     			$error['message'] = 'Warning: You need to use PHP5 or above for OpenCart to work!';
   			}
 
-  			if (ini_get('register_globals')) {
-    			$error['message'] = 'Warning: OpenCart will not work with register_globals enabled!';
-  			}
-
   			if (!ini_get('file_uploads')) {
     			$error['message'] = 'Warning: file_uploads needs to be enabled!';
   			}
@@ -101,7 +97,13 @@ switch ($step) {
         <td><?php echo (ini_get('register_globals') ? 'On' : 'Off'); ?></td>
         <td>Off</td>
         <td><?php echo (!ini_get('register_globals') ? '<span class="good">Good</span>' : '<span class="bad">Error</span>'); ?></td>
-      </tr>
+      </tr>  
+      <tr>
+        <td>Magic Quotes GPC:</td>
+        <td><?php echo (ini_get('magic_quotes_gpc') ? 'On' : 'Off'); ?></td>
+        <td>Off</td>
+        <td><?php echo (!ini_get('magic_quotes_gpc') ? '<span class="good">Good</span>' : '<span class="bad">Error</span>'); ?></td>
+      </tr>          
       <tr>
         <td>File Uploads:</td>
         <td><?php echo (ini_get('file_uploads') ? 'On' : 'Off'); ?></td>
@@ -429,6 +431,8 @@ switch ($step) {
 									
 			if (!$error) {
 				mysql_query("SET CHARATER SET utf8", $connection);
+				
+				mysql_query("SET @@session.sql_mode = 'MYSQL40'", $connection);
 				
 				mysql_query("DELETE FROM from user WHERE user_id = '1'");
 				

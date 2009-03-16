@@ -44,15 +44,11 @@ class ModelLocalisationTaxClass extends Model {
 	public function getTaxClasses($data = array()) {
     	if ($data) {
 			$sql = "SELECT * FROM tax_class";
+
+			$sql .= " ORDER BY title";	
 			
-			if (isset($data['sort'])) {
-				$sql .= " ORDER BY " . $this->db->escape($data['sort']);	
-			} else {
-				$sql .= " ORDER BY title";	
-			}
-			
-			if (isset($data['order'])) {
-				$sql .= " " . $this->db->escape($data['order']);
+			if (@$data['order'] == 'DESC') {
+				$sql .= " DESC";
 			} else {
 				$sql .= " ASC";
 			}

@@ -74,7 +74,19 @@ final class Currency {
       		$string .= $symbol_left;
     	}
 
-    	$string .= number_format(round($value, $decimal_place), $decimal_place, (($format) ? $this->language->get('decimal_point') : '.'), $format ? ',' : '');
+		if ($format) {
+			$decimal_point = $this->language->get('decimal_point');
+		} else {
+			$decimal_point = '.';
+		}
+		
+		if ($format) {
+			$thousand_point = $this->language->get('thousand_point');
+		} else {
+			$thousand_point = '';
+		}
+		
+    	$string .= number_format(round($value, $decimal_place), $decimal_place, $decimal_point, $thousand_point);
 
     	if (($symbol_right) && ($format)) {
       		$string .= $symbol_right;
@@ -82,7 +94,7 @@ final class Currency {
 
     	return $string;
   	}
-
+	
   	public function getId() {
     	return $this->currencies[$this->code]['currency_id'];
   	}

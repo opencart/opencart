@@ -96,6 +96,12 @@ class ControllerProductSearch extends Controller {
 				$results = $this->model_catalog_product->getProductsByKeyword($this->request->get['keyword'], @$this->request->get['description'], $sort, $order, ($page - 1) * 12, 12);
         		
 				foreach ($results as $result) {
+					if ($result['image']) {
+						$image = $result['image'];
+					} else {
+						$image = 'no_image.jpg';
+					}						
+					
 					$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
 					
 					$this->data['products'][] = array(
@@ -103,7 +109,7 @@ class ControllerProductSearch extends Controller {
 						'model'  => $result['model'],
 						'rating' => $rating,
 						'stars'  => sprintf($this->language->get('text_stars'), $rating),
-            			'thumb'  => HelperImage::resize($result['filename'], 120, 120),
+            			'thumb'  => HelperImage::resize($image, 120, 120),
             			'price'  => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'])),
 						'href'   => $this->url->http('product/product&keyword=' . $this->request->get['keyword'] . $url . '&product_id=' . $result['product_id']),
           			);
@@ -194,7 +200,7 @@ class ControllerProductSearch extends Controller {
 		}
   
 		$this->id       = 'content';
-		$this->template = 'product/search.tpl';
+		$this->template = $this->config->get('config_template') . 'product/search.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();

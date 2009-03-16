@@ -104,14 +104,14 @@ class ControllerCheckoutCart extends Controller {
         		);
       		}
 			
-      		$this->data['subtotal'] = $this->currency->format($this->cart->getSubtotal());
+      		$this->data['subtotal'] = $this->currency->format($this->cart->getTotal());
 
       		$this->data['continue'] = $this->url->http('common/home');
 
       		$this->data['checkout'] = $this->url->http('checkout/shipping');
 
 			$this->id       = 'content';
-			$this->template = 'checkout/cart.tpl';
+			$this->template = $this->config->get('config_template') . 'checkout/cart.tpl';
 			$this->layout   = 'module/layout';
 			
 			$this->render();					
@@ -125,7 +125,7 @@ class ControllerCheckoutCart extends Controller {
       		$this->data['continue'] = $this->url->http('common/home');
 
 			$this->id       = 'content';
-			$this->template = 'error/not_found.tpl';
+			$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
 			$this->layout   = 'module/layout';
 			
 			$this->render();			

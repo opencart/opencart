@@ -17,7 +17,7 @@ class ControllerModuleSearch extends Controller {
 		$this->data['advanced'] = @$this->url->http('product/search');
 		
 		$this->id       = 'search';
-		$this->template = 'module/search.tpl';
+		$this->template = $this->config->get('config_template') . 'module/search.tpl';
 
     	$this->render();
   	}

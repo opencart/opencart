@@ -22,8 +22,8 @@ class ModelCheckoutOrder extends Model {
 
 		$order_id = $this->db->getLastId();
 
-		foreach ($data['products'] as $product) {
-			$this->db->query("INSERT INTO order_product SET order_id = '" . (int)$order_id . "', name = '" . $this->db->escape($product['name']) . "', model = '" . $this->db->escape($product['model']) . "', price = '" . (float)$product['price'] . "', discount = '" . (float)$product['discount'] . "', total = '" . (float)$product['total'] . "', tax = '" . (float)$product['tax'] . "', quantity = '" . (int)$product['quantity'] . "'");
+		foreach ($data['products'] as $product) { 
+			$this->db->query("INSERT INTO order_product SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', name = '" . $this->db->escape($product['name']) . "', model = '" . $this->db->escape($product['model']) . "', price = '" . (float)$product['price'] . "', discount = '" . (float)$product['discount'] . "', total = '" . (float)$product['total'] . "', tax = '" . (float)$product['tax'] . "', quantity = '" . (int)$product['quantity'] . "'");
  
 			$order_product_id = $this->db->getLastId();
 
@@ -58,7 +58,6 @@ class ModelCheckoutOrder extends Model {
 				'{order_id}',
 				'{date_added}',
 				'{status}', 
-				'{comment}',
 				'{invoice}'
 			);
 						
@@ -67,12 +66,11 @@ class ModelCheckoutOrder extends Model {
 				'order_id'   => $order_id,
 				'date_added' => date($this->language->get('date_format_short'), strtotime($query->row['date_added'])),
 				'status'     => $query->row['status'],
-				'comment'    => $query->row['comment'],
-				'invoice'    => $this->url->http('account/invoice')
+				'invoice'    => html_entity_decode($this->url->http('account/invoice&order_id=' . $order_id))
 			);
 			
-			$subject = str_replace($find, $replace, $this->config->get('mail_order_subject_' . $query->row['language_id']));
-			$message = str_replace($find, $replace, $this->config->get('mail_order_message_' . $query->row['language_id']));
+			$subject = str_replace($find, $replace, $this->config->get('config_order_subject_' . $query->row['language_id']));
+			$message = str_replace($find, $replace, $this->config->get('config_order_message_' . $query->row['language_id']));
 
 			$mail = new Mail(); 
 			$mail->setTo($query->row['email']);
@@ -110,12 +108,12 @@ class ModelCheckoutOrder extends Model {
 					'date_added' => date($this->language->get('date_format_short'), strtotime($query->row['date_added'])),
 					'status'     => $query->row['status'],
 					'comment'    => $query->row['comment'],
-					'invoice'    => $this->url->http('account/invoice')
+					'invoice'    => html_entity_decode($this->url->http('account/invoice&order_id=' . $order_id))
 				);
 				
-				$subject = str_replace($find, $replace, $this->config->get('mail_update_subject_' . $query->row['language_id']));				
+				$subject = str_replace($find, $replace, $this->config->get('config_update_subject_' . $query->row['language_id']));				
 			
-				$message = str_replace($find, $replace, $this->config->get('mail_update_message_' . $query->row['language_id']));
+				$message = str_replace($find, $replace, $this->config->get('config_update_message_' . $query->row['language_id']));
 
 				$mail = new Mail();
 				$mail->setTo($query->row['email']);
@@ -130,10 +128,14 @@ class ModelCheckoutOrder extends Model {
 	
 	public function complete($order_id) {
 		if ($this->config->get('config_stock_subtract')) {
-			$query = $this->db->query("SELECT * FROM order_product WHERE order_id = '" . (int)$order_id . "' AND confirm = '1'");
+			$query = $this->db->query("SELECT * FROM `order` WHERE order_id = '" . (int)$order_id . "' AND confirm = '1'");
+
+			if ($query->num_rows) {
+				$query = $this->db->query("SELECT * FROM order_product WHERE order_id = '" . (int)$order_id . "'");
 			
-			foreach ($query->rows as $result) {
-				$this->db->query("UPDATE product SET quantity = (quantity - " . (int)$result['quantity'] . ") WHERE product_id = '" . (int)$result['product_id'] . "'");
+				foreach ($query->rows as $result) {
+					$this->db->query("UPDATE product SET quantity = (quantity - " . (int)$result['quantity'] . ") WHERE product_id = '" . (int)$result['product_id'] . "'");
+				}
 			}
 		}
 	}

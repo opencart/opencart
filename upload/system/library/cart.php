@@ -25,7 +25,7 @@ final class Cart {
         		$options = array();
       		} 
 	 
-      		$product = $this->db->query("SELECT * FROM product p LEFT JOIN product_description pd ON (p.product_id = pd.product_id) LEFT JOIN image i ON (p.image_id = i.image_id) WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->language->getId() . "' AND p.date_available < NOW() AND p.status = '1'");
+      		$product = $this->db->query("SELECT * FROM product p LEFT JOIN product_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->language->getId() . "' AND p.date_available <= NOW() AND p.status = '1'");
       	  	
 			if ($product->num_rows) {
       			$option_price = 0;
@@ -33,19 +33,10 @@ final class Cart {
       			$option_data = array();
       
       			foreach ($options as $product_option_value_id) {
-        		 	$option_value = $this->db->query("SELECT pov.product_option_id, povd.name, pov.price, pov.prefix 
-											   FROM product_option_value pov 
-											   LEFT JOIN product_option_value_description povd ON (pov.product_option_value_id = povd.product_option_value_id) 
-											   WHERE pov.product_option_value_id = '" . (int)$product_option_value_id . "' 
-											   AND pov.product_id = '" . (int)$product_id . "' 
-											   AND povd.language_id = '" . (int)$this->language->getId() . "' ORDER BY pov.sort_order");
+        		 	$option_value = $this->db->query("SELECT pov.product_option_id, povd.name, pov.price, pov.prefix FROM product_option_value pov LEFT JOIN product_option_value_description povd ON (pov.product_option_value_id = povd.product_option_value_id) WHERE pov.product_option_value_id = '" . (int)$product_option_value_id . "' AND pov.product_id = '" . (int)$product_id . "' AND povd.language_id = '" . (int)$this->language->getId() . "' ORDER BY pov.sort_order");
 					
 					if ($option_value->num_rows) {
-						$option = $this->db->query("SELECT pod.name FROM product_option po 
-											   LEFT JOIN product_option_description pod ON (po.product_option_id = pod.product_option_id) 
-											   WHERE po.product_option_id = '" . (int)$option_value->row['product_option_id'] . "'  
-											   AND po.product_id = '" . (int)$product_id . "' 
-											   AND pod.language_id = '" . (int)$this->language->getId() . "' ORDER BY po.sort_order");
+						$option = $this->db->query("SELECT pod.name FROM product_option po LEFT JOIN product_option_description pod ON (po.product_option_id = pod.product_option_id)  WHERE po.product_option_id = '" . (int)$option_value->row['product_option_id'] . "' AND po.product_id = '" . (int)$product_id . "' AND pod.language_id = '" . (int)$this->language->getId() . "' ORDER BY po.sort_order");
 						
         				if ($option_value->row['prefix'] == '+') {
           					$option_price = $option_price + $option_value->row['price'];
@@ -64,13 +55,13 @@ final class Cart {
       			}
 				
 				$product_discount = $this->db->query("SELECT * FROM product_discount WHERE product_id = '" . (int)$product->row['product_id'] . "' AND quantity <= '" . (int)$quantity . "' ORDER BY quantity DESC LIMIT 1");
-
-				if (!$product_discount->num_rows) {
-          			$discount = 0;
-				} else {
+				
+				if ($product_discount->num_rows) {
 					$discount = $product_discount->row['discount'];
+				} else {
+					$discount = 0;
 				}
-				 
+
 				$download_data = array();     		
 				
 				$query = $this->db->query("SELECT * FROM product_to_download p2d LEFT JOIN download d ON (p2d.download_id = d.download_id) LEFT JOIN download_description dd ON (d.download_id = dd.download_id) WHERE p2d.product_id = '" . (int)$product_id . "' AND dd.language_id = '" . (int)$this->language->getId() . "'");
@@ -91,7 +82,7 @@ final class Cart {
         			'name'            => $product->row['name'],
         			'model'           => $product->row['model'],
 					'shipping'        => $product->row['shipping'],
-        			'image'           => $product->row['filename'],
+        			'image'           => $product->row['image'],
         			'option'          => $option_data,
 					'download'        => $download_data,
         			'quantity'        => $quantity,
@@ -115,16 +106,18 @@ final class Cart {
     	} else {
       		$key = $product_id . ':' . implode('.', $options);
     	}
-    
-    	if (!isset($this->session->data['cart'][$key])) {
-      		$this->session->data['cart'][$key] = $qty;
-    	} else {
-      		$this->session->data['cart'][$key] += $qty;
-    	}
+    	
+		if ((int)$qty) {
+    		if (!isset($this->session->data['cart'][$key])) {
+      			$this->session->data['cart'][$key] = $qty;
+    		} else {
+      			$this->session->data['cart'][$key] += $qty;
+    		}
+		}
   	}
 
   	public function update($key, $qty) {
-    	if ($qty) {
+    	if ((int)$qty) {
       		$this->session->data['cart'][$key] = $qty;
     	} else {
 	  		$this->remove($key);
@@ -154,17 +147,17 @@ final class Cart {
 	
 		return $weight;
 	}
-  
-  	public function getSubTotal() { 
-		$sub_total = 0;
+
+  	public function getSubTotal() {
+		$total = 0;
 		
 		foreach ($this->products as $product) {
- 	  		$sub_total += $this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax'));
+			$total += $product['total'];
 		}
-		
-		return $sub_total;
+
+		return $total;
   	}
-  	
+	
 	public function getTaxes() {
 		$taxes = array();
 		
@@ -180,12 +173,12 @@ final class Cart {
 		
 		return $taxes;
   	}
-	
+
   	public function getTotal() {
 		$total = 0;
 		
 		foreach ($this->products as $product) {
-			$total += $this->tax->calculate($product['total'], $product['tax_class_id']);
+			$total += $this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax'));
 		}
 
 		return $total;
@@ -223,6 +216,8 @@ final class Cart {
 		foreach ($this->products as $product) {
 	  		if ($product['shipping']) {
 	    		$shipping = TRUE;
+				
+				break;
 	  		}		
 		}
 		

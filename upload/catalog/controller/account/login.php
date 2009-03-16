@@ -76,7 +76,7 @@ class ControllerAccountLogin extends Controller {
     	$this->data['forgotten'] = $this->url->https('account/forgotten');
 	
 		$this->id       = 'content';
-		$this->template = 'account/login.tpl';
+		$this->template = $this->config->get('config_template') . 'account/login.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();

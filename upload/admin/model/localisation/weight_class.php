@@ -45,14 +45,19 @@ class ModelLocalisationWeightClass extends Model {
 		if ($data) {
 			$sql = "SELECT * FROM weight_class WHERE language_id = '" . (int)$this->language->getId() . "'";
 		
-			if (isset($data['sort'])) {
-				$sql .= " ORDER BY " . $this->db->escape($data['sort']);	
+			$sort_data = array(
+				'title',
+				'unit'
+			);	
+			
+			if (in_array(@$data['sort'], $sort_data)) {
+				$sql .= " ORDER BY " . $data['sort'];	
 			} else {
 				$sql .= " ORDER BY title";	
 			}
 			
-			if (isset($data['order'])) {
-				$sql .= " " . $this->db->escape($data['order']);
+			if (@$data['order'] == 'DESC') {
+				$sql .= " DESC";
 			} else {
 				$sql .= " ASC";
 			}

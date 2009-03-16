@@ -184,8 +184,6 @@ class ControllerCatalogDownload extends Controller {
 			$this->data['downloads'][] = array(
 				'download_id' => $result['download_id'],
 				'name'        => $result['name'],
-				'filename'    => $result['filename'],
-				'mask'        => $result['mask'],
 				'remaining'   => $result['remaining'],
 				'delete'      => in_array($result['download_id'], (array)@$this->request->post['delete']),
 				'action'      => $action
@@ -197,8 +195,6 @@ class ControllerCatalogDownload extends Controller {
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 
 		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_filename'] = $this->language->get('column_filename');
-		$this->data['column_mask'] = $this->language->get('column_mask');
 		$this->data['column_remaining'] = $this->language->get('column_remaining');
 		$this->data['column_action'] = $this->language->get('column_action');		
 		
@@ -224,8 +220,6 @@ class ControllerCatalogDownload extends Controller {
 		}
 		
 		$this->data['sort_name'] = $this->url->https('catalog/download&sort=dd.name' . $url);
-		$this->data['sort_filename'] = $this->url->https('catalog/download&sort=d.filename' . $url);
-		$this->data['sort_mask'] = $this->url->https('catalog/download&sort=d.mask' . $url);
 		$this->data['sort_remaining'] = $this->url->https('catalog/download&sort=d.remaining' . $url);
 		
 		$url = '';
@@ -262,7 +256,6 @@ class ControllerCatalogDownload extends Controller {
    
     	$this->data['entry_name'] = $this->language->get('entry_name');
     	$this->data['entry_filename'] = $this->language->get('entry_filename');
-		$this->data['entry_mask'] = $this->language->get('entry_mask');
     	$this->data['entry_remaining'] = $this->language->get('entry_remaining');
   
     	$this->data['button_save'] = $this->language->get('button_save');
@@ -272,8 +265,7 @@ class ControllerCatalogDownload extends Controller {
     
 		$this->data['error_warning'] = @$this->error['warning'];
     	$this->data['error_name'] = @$this->error['name'];
-    	$this->data['error_file'] = @$this->error['file'];
-		$this->data['error_mask'] = @$this->error['mask'];
+    	$this->data['error_download'] = @$this->error['download'];
 
   		$this->document->breadcrumbs = array();
 
@@ -327,12 +319,6 @@ class ControllerCatalogDownload extends Controller {
 			$this->data['download_description'] = array();
 		}   	
 		
-    	if (isset($this->request->post['mask'])) {
-      		$this->data['mask'] = $this->request->post['mask'];
-    	} else {
-      		$this->data['mask'] = @$download_info['mask'];
-    	}
-
 		if (isset($this->request->post['remaining'])) {
       		$this->data['remaining'] = $this->request->post['remaining'];
     	} elseif (isset($download_info['remaining'])) {
@@ -361,28 +347,16 @@ class ControllerCatalogDownload extends Controller {
 
 		if (is_uploaded_file($this->request->files['download']['tmp_name'])) {
 	  		if ((strlen($this->request->files['download']['name']) < 3) || (strlen($this->request->files['download']['name']) > 128)) {
-        		$this->error['file'] = $this->language->get('error_filename');
+        		$this->error['download'] = $this->language->get('error_filename');
 	  		}
 	    	
 			if (substr(strrchr($this->request->files['download']['name'], '.'), 1) == 'php') {
-       	   		$this->error['file'] = $this->language->get('error_filetype');
+       	   		$this->error['download'] = $this->language->get('error_filetype');
        		}
 						
 			if ($this->request->files['download']['error'] != UPLOAD_ERR_OK) {
 				$this->error['warning'] = $this->language->get('error_upload_' . $this->request->files['download']['error']);
 			}
-			
-			if (!$this->error) {
-				if (!@move_uploaded_file($this->request->files['download']['tmp_name'], DIR_DOWNLOAD . basename($this->request->files['download']['name']))) {
-					@unlink($this->request->files['download']['tmp_name']);
-
-	    			$this->error['file'] = $this->language->get('error_upload');
-	  			}
-			}	
-		}
-		
-		if (strlen($this->request->post['mask']) > 128) {
-			$this->error['mask'] = $this->language->get('error_mask');
 		}
 		
 		if (!$this->error) {

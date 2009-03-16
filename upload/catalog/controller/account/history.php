@@ -86,7 +86,7 @@ class ControllerAccountHistory extends Controller {
       		$this->data['continue'] = $this->url->https('account/account');
 			
 			$this->id       = 'content';
-			$this->template = 'account/history.tpl';
+			$this->template = $this->config->get('config_template') . 'account/history.tpl';
 			$this->layout   = 'module/layout';
 		
 			$this->render();				
@@ -100,7 +100,7 @@ class ControllerAccountHistory extends Controller {
       		$this->data['continue'] = $this->url->https('account/account');
 			
 			$this->id       = 'content';
-			$this->template = 'error/not_found.tpl';
+			$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
 			$this->layout   = 'module/layout';
 		
 			$this->render();				

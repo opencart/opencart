@@ -41,14 +41,19 @@ class ModelCatalogInformation extends Model {
 		if ($data) {
 			$sql = "SELECT * FROM information i LEFT JOIN information_description id ON (i.information_id = id.information_id) WHERE id.language_id = '" . (int)$this->language->getId() . "'";
 		
-			if (isset($data['sort'])) {
-				$sql .= " ORDER BY " . $this->db->escape($data['sort']);	
+			$sort_data = array(
+				'id.title',
+				'i.sort_order'
+			);		
+		
+			if (in_array(@$data['sort'], $sort_data)) {
+				$sql .= " ORDER BY " . $data['sort'];	
 			} else {
 				$sql .= " ORDER BY id.title";	
 			}
 			
-			if (isset($data['order'])) {
-				$sql .= " " . $this->db->escape($data['order']);
+			if (@$data['order'] == 'DESC') {
+				$sql .= " DESC";
 			} else {
 				$sql .= " ASC";
 			}

@@ -39,11 +39,35 @@ class ControllerCheckoutPayment extends Controller {
 	  		$this->redirect($this->url->https('checkout/address/payment'));
     	}
 
-		$this->load->model('checkout/payment');
+		$this->load->model('checkout/extension');
 		
 		if (!isset($this->session->data['payment_methods'])) {
-			$this->session->data['payment_methods'] = $this->model_checkout_payment->getMethods();
+			$method_data = array();
+		
+			$results = $this->model_checkout_extension->getExtensions('payment');
+
+			foreach ($results as $result) {
+				$this->load->model('payment/' . $result['key']);
+			
+				$method = $this->{'model_payment_' . $result['key']}->getMethod(); 
+			 
+				if ($method) {
+					$method_data[$result['key']] = $method;
+				}
+			}
+					 
+			$sort_order = array(); 
+	  
+			foreach ($method_data as $key => $value) {
+      			$sort_order[$key] = $value['sort_order'];
+    		}
+
+    		array_multisort($sort_order, SORT_ASC, $method_data);			
+		
+			$this->session->data['payment_methods'] = $method_data;
 		}
+		
+		$this->load->language('checkout/payment');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment']];
@@ -52,8 +76,6 @@ class ControllerCheckoutPayment extends Controller {
 		  
 	  		$this->redirect($this->url->https('checkout/confirm'));
     	}
-
-    	$this->load->language('checkout/payment');
 
     	$this->document->title = $this->language->get('heading_title'); 
 		
@@ -148,7 +170,7 @@ class ControllerCheckoutPayment extends Controller {
     	}
 	
 		$this->id       = 'content';
-		$this->template = 'checkout/payment.tpl';
+		$this->template = $this->config->get('config_template') . 'checkout/payment.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();	

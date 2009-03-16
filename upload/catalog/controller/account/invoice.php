@@ -159,9 +159,9 @@ class ControllerAccountInvoice extends Controller {
           			'model'    => $product['model'],
           			'option'   => $option_data,
           			'quantity' => $product['quantity'],
-          			'price'    => $this->currency->format(($product['price'] + ($product['price'] * $product['tax'] / 100)), $order_info['currency'], $order_info['value']),
-          			'discount' => (ceil($product['discount']) ? $this->currency->format(($product['price'] - $product['discount']) + (($product['price'] - $product['discount']) * $product['tax'] / 100), $order_info['currency'], $order_info['value']) : NULL),
-					'total'    => $this->currency->format($product['total'] + ($product['total'] * $product['tax'] / 100), $order_info['currency'], $order_info['value'])
+          			'price'    => $this->currency->format($product['price'], $order_info['currency'], $order_info['value']),
+          			'discount' => (ceil($product['discount']) ? $this->currency->format($product['price'] - $product['discount'], $order_info['currency'], $order_info['value']) : NULL),
+					'total'    => $this->currency->format($product['total'], $order_info['currency'], $order_info['value'])
         		);
       		}
 
@@ -182,7 +182,7 @@ class ControllerAccountInvoice extends Controller {
       		$this->data['continue'] = $this->url->https('account/history');
 
 			$this->id       = 'content';
-			$this->template = 'account/invoice.tpl';
+			$this->template = $this->config->get('config_template') . 'account/invoice.tpl';
 			$this->layout   = 'module/layout';
 		
 			$this->render();		
@@ -196,7 +196,7 @@ class ControllerAccountInvoice extends Controller {
       		$this->data['continue'] = $this->url->http('account/history');
       			
 			$this->id       = 'content';
-			$this->template = 'error/not_found.tpl';
+			$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
 			$this->layout   = 'module/layout';
 		
 			$this->render();				

@@ -66,6 +66,7 @@ margin-top: expression(0 - parseInt(this.offsetHeight / 2) + (TBWindowMargin = d
 	border-bottom: 1px solid #ccc;
 	border-top: 1px solid #666;
 	border-left: 1px solid #666;
+	border: 0px;
 }
 
 #TB_caption{

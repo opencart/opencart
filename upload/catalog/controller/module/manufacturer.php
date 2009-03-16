@@ -23,7 +23,7 @@ class ControllerModuleManufacturer extends Controller {
 		}
 		
 		$this->id       = 'manufacturer';
-		$this->template = 'module/manufacturer.tpl';
+		$this->template = $this->config->get('config_template') . 'module/manufacturer.tpl';
 		
 		$this->render(); 
 	}

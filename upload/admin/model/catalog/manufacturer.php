@@ -1,14 +1,14 @@
 <?php
 class ModelCatalogManufacturer extends Model {
 	public function addManufacturer($data) {
-      	$this->db->query("INSERT INTO manufacturer SET name = '" . $this->db->escape(@$data['name']) . "', image_id = '" . (int)@$data['image_id'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
-      	  	
+      	$this->db->query("INSERT INTO manufacturer SET name = '" . $this->db->escape(@$data['name']) . "', image = '" . $this->db->escape(basename($data['image'])) . "', sort_order = '" . (int)$data['sort_order'] . "'");
+		
 		$this->cache->delete('manufacturer');
 	}
 	
 	public function editManufacturer($manufacturer_id, $data) {
-      	$this->db->query("UPDATE manufacturer SET name = '" . $this->db->escape(@$data['name']) . "', image_id = '" . (int)@$data['image_id'] . "', sort_order = '" . (int)@$data['sort_order'] . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
-			
+      	$this->db->query("UPDATE manufacturer SET name = '" . $this->db->escape(@$data['name']) . "', image = '" . $this->db->escape(basename($data['image'])) . "', sort_order = '" . (int)@$data['sort_order'] . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+		
 		$this->cache->delete('manufacturer');
 	}
 	
@@ -28,14 +28,19 @@ class ModelCatalogManufacturer extends Model {
 		if ($data) {
 			$sql = "SELECT * FROM manufacturer";
 			
-			if (isset($data['sort'])) {
-				$sql .= " ORDER BY " . $this->db->escape($data['sort']);	
+			$sort_data = array(
+				'name',
+				'sort_order'
+			);	
+			
+			if (in_array(@$data['sort'], $sort_data)) {
+				$sql .= " ORDER BY " . $data['sort'];	
 			} else {
 				$sql .= " ORDER BY name";	
 			}
 			
-			if (isset($data['order'])) {
-				$sql .= " " . $this->db->escape($data['order']);
+			if (@$data['order'] == 'DESC') {
+				$sql .= " DESC";
 			} else {
 				$sql .= " ASC";
 			}

@@ -35,102 +35,41 @@ class ControllerCheckoutConfirm extends Controller {
 	  		$this->redirect($this->url->https('checkout/address/payment'));
     	}    
 		
-		$this->load->model('checkout/total');
+		$total_data = array();
+		$total = 0;
+		$taxes = $this->cart->getTaxes();
+		 
+		$this->load->model('checkout/extension');
 		
-		$totals = $this->model_checkout_total->getTotals();
+		$results = $this->model_checkout_extension->getExtensions('total');
+		
+		foreach ($results as $result) {
+			$this->load->model('total/' . $result['key']);
+						
+			$this->{'model_total_' . $result['key']}->getTotal(&$total_data, &$total, &$taxes);
+		}
+		
+		$sort_order = array(); 
+	  
+		foreach ($total_data as $key => $value) {
+      		$sort_order[$key] = $value['sort_order'];
+    	}
 
-		// Language is loaded here so it does not interfer with loaded totals.
+    	array_multisort($sort_order, SORT_ASC, $total_data);
+
 		$this->load->language('checkout/confirm');
 
     	$this->document->title = $this->language->get('heading_title'); 
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+			$this->session->data['coupon'] = $this->request->post['coupon'];
+			
 			$this->session->data['success'] = $this->language->get('text_coupon');
 			
 			$this->redirect($this->url->https('checkout/confirm'));
 		}	
 		
-		$subtotal = $this->cart->getSubtotal();
-		$taxes = $this->cart->getTaxes();
-		$total = $this->cart->getSubtotal();
-		
-		$total_data = array();
-		
-		// Sub Total
-      	$total_data[] = array(
-        	'title'      => $this->language->get('text_sub_total'),
-	    	'text'       => $this->currency->format($subtotal),
-        	'value'      => $subtotal,
-			'sort_order' => 0
-      	);
-		
-		$i = 1;
-		
-		foreach ($totals as $result) {
-      		$total_data[] = array(
-        		'title'      => $result['title'],
-	    		'text'       => $result['text'],
-        		'value'      => $result['value'],
-				'sort_order' => $i++
-      		);
-			
-			$total += $result['value'];
-			
-			if (!isset($taxes[$result['tax_class_id']])) {
-				$taxes[$result['tax_class_id']] = @$result['tax'];
-			} else {
-				$taxes[$result['tax_class_id']] += @$result['tax'];
-			}
-		}
-		
-		// Taxes
-		foreach ($taxes as $key => $value) {
-        	$total_data[] = array(
-	       		'title'      => $this->tax->getDescription($key) . ':', 
-	       		'text'       => $this->currency->format($value),
-	       		'value'      => $value,
-				'sort_order' => $i++
-	    	);
-			
-			if (!$this->config->get('config_tax')) {
-				$total += $value;
-			}
-		}
-		
-		// Total
-      	$total_data[] = array(
-        	'title'      => $this->language->get('text_total'),
-	    	'text'       => $this->currency->format($total),
-        	'value'      => $total,
-			'sort_order' => $i++
-      	);
-		
-		$product_data = array();
-	
-		foreach ($this->cart->getProducts() as $product) {
-      		$option_data = array();
-
-      		foreach ($product['option'] as $option) {
-        		$option_data[] = array(
-          			'name'   => $option['name'],
-          			'value'  => $option['value'],
-		  			'prefix' => $option['prefix']
-        		);
-      		}
- 
-      		$product_data[] = array(
-        		'product_id' => $product['product_id'],
-				'name'       => $product['name'],
-        		'model'      => $product['model'],
-        		'option'     => $option_data,
-				'download'   => $product['download'],
-				'quantity'   => $product['quantity'],
-				'price'      => $product['price'],
-				'discount'   => $product['discount'],
-        		'total'      => $product['total'],
-				'tax'        => $this->tax->getRate($product['tax_class_id']),
-      		); 
-    	}
+		$data = array();
 		
 		$data['customer_id'] = $this->customer->getId();
 		$data['language_id'] = $this->language->getId();
@@ -167,7 +106,34 @@ class ControllerCheckoutConfirm extends Controller {
 		$data['payment_country'] = $payment_address['country'];
 		$data['payment_address_format'] = $payment_address['address_format'];
 		$data['payment_method'] = @$this->session->data['payment_method']['title'];
-		 
+
+		$product_data = array();
+	
+		foreach ($this->cart->getProducts() as $product) {
+      		$option_data = array();
+
+      		foreach ($product['option'] as $option) {
+        		$option_data[] = array(
+          			'name'   => $option['name'],
+          			'value'  => $option['value'],
+		  			'prefix' => $option['prefix']
+        		);
+      		}
+ 
+      		$product_data[] = array(
+        		'product_id' => $product['product_id'],
+				'name'       => $product['name'],
+        		'model'      => $product['model'],
+        		'option'     => $option_data,
+				'download'   => $product['download'],
+				'quantity'   => $product['quantity'],
+				'price'      => $product['price'],
+				'discount'   => $product['discount'],
+        		'total'      => $product['total'],
+				'tax'        => $this->tax->getRate($product['tax_class_id'])
+      		); 
+    	}
+				
 		$data['products'] = $product_data;
 		$data['totals'] = $total_data;
 		$data['comment'] = @$this->session->data['comment'];
@@ -241,7 +207,7 @@ class ControllerCheckoutConfirm extends Controller {
 		if (isset($this->request->post['coupon'])) {
 			$this->data['coupon'] = $this->request->post['coupon'];
 		} else {
-			$this->data['coupon'] = $this->coupon->getCode();
+			$this->data['coupon'] = @$this->session->data['coupon'];
 		}
 
     	$this->data['success'] = @$this->session->data['success'];
@@ -351,9 +317,9 @@ class ControllerCheckoutConfirm extends Controller {
         		'option'     => $option_data,
         		'quantity'   => $product['quantity'],
 				'tax'        => $this->tax->getRate($product['tax_class_id']),
-        		'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
-				'discount'   => ($product['discount'] ? $this->currency->format($this->tax->calculate($product['price'] - $product['discount'], $product['tax_class_id'], $this->config->get('config_tax'))) : NULL),
-        		'total'      => $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax'))),
+        		'price'      => $this->currency->format($product['price']),
+				'discount'   => ($product['discount'] ? $this->currency->format($product['price'] - $product['discount']) : NULL),
+        		'total'      => $this->currency->format($product['total']),
 				'href'       => $this->url->http('product/product&product_id=' . $product['product_id'])
       		); 
     	} 
@@ -363,7 +329,7 @@ class ControllerCheckoutConfirm extends Controller {
 		$this->data['comment'] = $this->session->data['comment'];
     
 		$this->id       = 'content';
-		$this->template = 'checkout/confirm.tpl';
+		$this->template = $this->config->get('config_template') . 'checkout/confirm.tpl';
 		$this->layout   = 'module/layout';
 		$this->children = array('payment/' . $this->session->data['payment_method']['id']);
 		
@@ -371,7 +337,11 @@ class ControllerCheckoutConfirm extends Controller {
   	}
 			
 	private function validate() {
-		if (!$this->coupon->set($this->request->post['coupon'])) {
+		$this->load->model('checkout/coupon');
+			
+		$coupon = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);
+			
+		if (!$coupon) {
 			$this->error['message'] = $this->language->get('error_coupon');
 		}
 		

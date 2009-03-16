@@ -64,7 +64,7 @@ class ControllerAccountPassword extends Controller {
     	$this->data['back'] = $this->url->https('account/account');
 
 		$this->id       = 'content';
-		$this->template = 'account/password.tpl';
+		$this->template = $this->config->get('config_template') . 'account/password.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();				

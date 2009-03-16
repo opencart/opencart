@@ -60,7 +60,7 @@ class ControllerInformationSitemap extends Controller {
     	}
 		
   		$this->id       = 'content';
-		$this->template = 'information/sitemap.tpl';
+		$this->template = $this->config->get('config_template') . 'information/sitemap.tpl';
 		$this->layout   = 'module/layout';
 		
  		$this->render();		

@@ -9,17 +9,24 @@ class ControllerCheckoutSuccess extends Controller {
 		
 		if (isset($this->session->data['order_id'])) {
 			$this->cart->clear();
-			$this->coupon->redeem($this->session->data['order_id']);
-		
+			
 			$this->load->model('checkout/order');
 		
 			$this->model_checkout_order->complete($this->session->data['order_id']);
-		
+			
+			if (isset($this->session->data['coupon'])) {
+				$this->load->model('checkout/coupon');
+			
+				$this->model_checkout_coupon->redeem($this->session->data['coupon'], $this->session->data['order_id']);
+			}
+			
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
-			unset($this->session->data['order_id']);		
+			unset($this->session->data['comment']);
+			unset($this->session->data['order_id']);	
+			unset($this->session->data['coupon']);
 		}
 									   
 		$this->load->language('checkout/success');
@@ -73,7 +80,7 @@ class ControllerCheckoutSuccess extends Controller {
     	$this->data['continue'] = $this->url->http('common/home');
 		
 		$this->id       = 'content';
-		$this->template = 'common/success.tpl';
+		$this->template = $this->config->get('config_template') . 'common/success.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();

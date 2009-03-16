@@ -22,7 +22,7 @@ class ControllerModuleLanguage extends Controller {
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();
 		
 		$this->id       = 'language';
-		$this->template = 'module/language.tpl';
+		$this->template = $this->config->get('config_template') . 'module/language.tpl';
 		
 		$this->render(); 
 	}

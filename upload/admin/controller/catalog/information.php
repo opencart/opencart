@@ -262,7 +262,6 @@ class ControllerCatalogInformation extends Controller {
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
-		$this->data['tab_data'] = $this->language->get('tab_data');
 
 		$this->data['error_warning'] = @$this->error['warning'];
 		$this->data['error_title'] = @$this->error['title'];

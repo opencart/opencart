@@ -102,7 +102,7 @@ class ControllerAccountEdit extends Controller {
 		$this->data['back'] = $this->url->https('account/account');
 		
 		$this->id       = 'content';
-		$this->template = 'account/edit.tpl';
+		$this->template = $this->config->get('config_template') . 'account/edit.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();		

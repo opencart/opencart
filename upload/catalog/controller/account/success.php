@@ -42,7 +42,7 @@ class ControllerAccountSuccess extends Controller {
 		}
 		
 		$this->id       = 'content';
-		$this->template = 'common/success.tpl';
+		$this->template = $this->config->get('config_template') . 'common/success.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();				

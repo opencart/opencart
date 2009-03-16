@@ -1,7 +1,7 @@
 <?php
 class ModelUserUser extends Model {
 	public function addUser($data) {
-		$this->db->query("INSERT INTO `user` SET username = '" . $this->db->escape(@$data['username']) . "', password = '" . $this->db->escape(@$data['password']) . "', firstname = '" . $this->db->escape(@$data['firstname']) . "', lastname = '" . $this->db->escape(@$data['lastname']) . "', email = '" . $this->db->escape(@$data['email']) . "', user_group_id = '" . (int)@$data['user_group_id'] . "', status = '" . (int)@$data['status'] . "', date_added = NOW()");
+		$this->db->query("INSERT INTO `user` SET username = '" . $this->db->escape(@$data['username']) . "', password = '" . $this->db->escape(md5(@$data['password'])) . "', firstname = '" . $this->db->escape(@$data['firstname']) . "', lastname = '" . $this->db->escape(@$data['lastname']) . "', email = '" . $this->db->escape(@$data['email']) . "', user_group_id = '" . (int)@$data['user_group_id'] . "', status = '" . (int)@$data['status'] . "', date_added = NOW()");
 	}
 	
 	public function editUser($user_id, $data) {
@@ -25,14 +25,20 @@ class ModelUserUser extends Model {
 	public function getUsers($data = array()) {
 		$sql = "SELECT * FROM `user`";
 			
-		if (isset($data['sort'])) {
-			$sql .= " ORDER BY " . $this->db->escape($data['sort']);	
+		$sort_data = array(
+			'username',
+			'status',
+			'date_added'
+		);	
+			
+		if (in_array(@$data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];	
 		} else {
 			$sql .= " ORDER BY username";	
 		}
 			
-		if (isset($data['order'])) {
-			$sql .= " " . $this->db->escape($data['order']);
+		if (@$data['order'] == 'DESC') {
+			$sql .= " DESC";
 		} else {
 			$sql .= " ASC";
 		}

@@ -31,7 +31,7 @@ class ModelShippingZone extends Model {
 					foreach ($rates as $rate) {
   						$data = explode(':', $rate);
   					
-						if ($this->cart->getWeight() >= $data[0]) {
+						if ($this->cart->getWeight() <= $data[0]) {
     						$cost = @$data[1];
 						
    							break;

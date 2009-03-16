@@ -194,7 +194,7 @@ class ControllerCheckoutAddress extends Controller {
     	$this->data['countries'] = $this->model_localisation_country->getCountries();
 		
 		$this->id       = 'content';
-		$this->template = 'checkout/address.tpl';
+		$this->template = $this->config->get('config_template') . 'checkout/address.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();			

@@ -31,7 +31,7 @@
 
     <p>Selections are really useful for zooming. Just replot the
        chart with min and max values for the axes set to the values
-       in the "selected" event triggered. Try enabling the checkbox
+       in the "plotselected" event triggered. Try enabling the checkbox
        below and select a region again.</p>
 
     <p><input id="zoom" type="checkbox">Zoom to selection.</input></p>
@@ -80,14 +80,14 @@ $(function () {
 
     var placeholder = $("#placeholder");
 
-    placeholder.bind("selected", function (event, area) {
-        $("#selection").text(area.x1.toFixed(1) + " to " + area.x2.toFixed(1));
+    placeholder.bind("plotselected", function (event, ranges) {
+        $("#selection").text(ranges.xaxis.from.toFixed(1) + " to " + ranges.xaxis.to.toFixed(1));
 
         var zoom = $("#zoom").attr("checked");
         if (zoom)
             plot = $.plot(placeholder, data,
                           $.extend(true, {}, options, {
-                              xaxis: { min: area.x1, max: area.x2 }
+                              xaxis: { min: ranges.xaxis.from, max: ranges.xaxis.to }
                           }));
     });
     

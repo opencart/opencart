@@ -24,15 +24,15 @@ class ControllerPaymentProtx extends Controller {
 		$query .= '&Amount=' . $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
 		$query .= '&Currency=' . $order_info['currency'];
 		$query .= '&Description=' . date($this->language->get('date_format_short')) . ' - ' . $order_info['firstname'] . ' ' . $order_info['lastname'];
-		$query .= '&SuccessURL=' . $this->url->ssl('checkout/success');
-		$query .= '&FailureURL=' . $this->url->ssl('checkout/payment');
+		$query .= '&SuccessURL=' . $this->url->https('checkout/success');
+		$query .= '&FailureURL=' . $this->url->https('checkout/payment');
 		$query .= '&CustomerName=' . $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
 		$query .= '&CustomerEMail=' . $order_info['email'];
 		$query .= '&VendorEMail=' . $this->config->get('config_email');
 
 		$data = array();
 
-		for ($i = 0; $i < strlen($password); $i++){
+		for ($i = 0; $i < strlen($password); $i++) {
 			$data[$i] = ord(substr($password, $i, 1));
 		}
 
@@ -44,13 +44,13 @@ class ControllerPaymentProtx extends Controller {
 
 		$crypt = base64_encode($output);	
 	
-		$this->data['Vendor'] = $vendor;
+		$this->data['vendor'] = $vendor;
 		$this->data['crypt'] = $crypt;
 
 		$this->data['back'] = $this->url->https('checkout/payment');
 		
 		$this->id       = 'payment';
-		$this->template = 'payment/paypal.tpl';
+		$this->template = $this->config->get('config_template') . 'payment/protx.tpl';
 		
 		$this->render();		
 	}

@@ -18,7 +18,7 @@ class ControllerModuleCategory extends Controller {
 		$this->data['category'] = $this->getCategories(0);
 												
 		$this->id       = 'category';
-		$this->template = 'module/category.tpl';
+		$this->template = $this->config->get('config_template') . 'module/category.tpl';
 		
 		$this->render();
   	}

@@ -29,11 +29,40 @@ class ControllerCheckoutShipping extends Controller {
 	  		$this->redirect($this->url->https('checkout/address/shipping'));
 		}
 
-		$this->load->model('checkout/shipping');
+		$this->load->model('checkout/extension');
 		
 		if (!isset($this->session->data['shipping_methods'])) {
-			$this->session->data['shipping_methods'] = $this->model_checkout_shipping->getQuotes();
+			$quote_data = array();
+		
+			$results = $this->model_checkout_extension->getExtensions('shipping');
+		
+			foreach ($results as $result) {
+				$this->load->model('shipping/' . $result['key']);
+			
+				$quote = $this->{'model_shipping_' . $result['key']}->getQuote(); 
+
+				if ($quote) {
+					$quote_data[$result['key']] = array(
+						'title'      => $quote['title'],
+						'quote'      => $quote['quote'], 
+						'sort_order' => $quote['sort_order'],
+						'error'      => $quote['error']
+					);
+				}
+			}
+
+			$sort_order = array();
+	  
+			foreach ($quote_data as $key => $value) {
+      			$sort_order[$key] = $value['sort_order'];
+    		}
+
+    		array_multisort($sort_order, SORT_ASC, $quote_data);
+		
+			$this->session->data['shipping_methods'] = $quote_data;
 		}
+		
+		$this->load->language('checkout/shipping');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$shipping = explode('.', $this->request->post['shipping']);
@@ -44,8 +73,6 @@ class ControllerCheckoutShipping extends Controller {
 
 	  		$this->redirect($this->url->https('checkout/payment'));
     	}
-		
-    	$this->load->language('checkout/shipping');
  
 		$this->document->title = $this->language->get('heading_title');    
 		
@@ -130,7 +157,7 @@ class ControllerCheckoutShipping extends Controller {
     	$this->data['back'] = $this->url->https('checkout/cart');
 		
 		$this->id       = 'content';
-		$this->template = 'checkout/shipping.tpl';
+		$this->template = $this->config->get('config_template') . 'checkout/shipping.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();		

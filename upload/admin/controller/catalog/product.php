@@ -351,8 +351,6 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['text_plus'] = $this->language->get('text_plus');
 		$this->data['text_minus'] = $this->language->get('text_minus');
 
-		$this->data['text_upload'] = $this->language->get('text_upload');
-
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_description'] = $this->language->get('entry_description');
     	$this->data['entry_model'] = $this->language->get('entry_model');
@@ -368,7 +366,6 @@ class ControllerCatalogProduct extends Controller {
     	$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
     	$this->data['entry_weight'] = $this->language->get('entry_weight');
     	$this->data['entry_image'] = $this->language->get('entry_image');
-    	$this->data['entry_images'] = $this->language->get('entry_images');
     	$this->data['entry_download'] = $this->language->get('entry_download');
     	$this->data['entry_category'] = $this->language->get('entry_category');
 		$this->data['entry_option'] = $this->language->get('entry_option');
@@ -389,14 +386,12 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['tab_discount'] = $this->language->get('tab_discount');
 		$this->data['tab_option'] = $this->language->get('tab_option');
     	$this->data['tab_image'] = $this->language->get('tab_image');
-    	$this->data['tab_download'] = $this->language->get('tab_download');
-    	$this->data['tab_category'] = $this->language->get('tab_category');
  
     	$this->data['error_warning'] = @$this->error['warning'];
     	$this->data['error_name'] = @$this->error['name'];
     	$this->data['error_description'] = @$this->error['description'];
     	$this->data['error_model'] = @$this->error['model'];
-    	$this->data['error_date_available'] = @$this->error['date_available'];
+		$this->data['error_date_available'] = @$this->error['date_available'];
 
 		$url = '';
 
@@ -467,7 +462,25 @@ class ControllerCatalogProduct extends Controller {
     	} else {
       		$this->data['model'] = @$product_info['model'];
     	}
+
+		if (isset($this->request->post['image'])) {
+			$this->data['image'] = $this->request->post['image'];
+		} else {
+			$this->data['image'] = $product_info['image'];
+		}
 		
+		$this->load->helper('image');
+		
+		if (isset($this->request->post['image'])) {
+			$this->data['preview'] = HelperImage::resize($this->request->post['image'], 100, 100);
+		} elseif (@$product_info['image']) {
+			$this->data['preview'] = HelperImage::resize($product_info['image'], 100, 100);
+		} else {
+			$this->data['preview'] = HelperImage::resize('no_image.jpg', 100, 100);
+		}
+		
+		$this->data['no_image'] = HelperImage::resize('no_image.jpg', 100, 100);
+	
 		$this->load->model('catalog/manufacturer');
 		
     	$this->data['manufacturers'] = $this->model_catalog_manufacturer->getManufacturers();
@@ -571,24 +584,26 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$this->data['product_discounts'] = array();
 		}
-				
-		$this->load->model('catalog/image');
-		
-		$this->data['images'] = $this->model_catalog_image->getImages();
-		
-		if (isset($this->request->post['image_id'])) {
-			$this->data['image_id'] = $this->request->post['image_id'];
-		} else {
-			$this->data['image_id'] = @$product_info['image_id'];
-		}
 
+		$this->data['product_images'] = array();
+		
 		if (isset($this->request->post['product_image'])) {
-			$this->data['product_images'] = $this->request->post['product_image'];
+			foreach ($this->request->post['product_image'] as $image) {
+				$this->data['product_images'][] = array(
+					'file'  => $image,
+					'image' => HelperImage::resize($image, 100, 100)
+				);
+			}
 		} elseif (isset($product_info)) {
-			$this->data['product_images'] = $this->model_catalog_product->getProductImages($this->request->get['product_id']);
-		} else {
-			$this->data['product_images'] = array();
-		}			
+			$results = $this->model_catalog_product->getProductImages($this->request->get['product_id']);
+			
+			foreach ($results as $result) {
+				$this->data['product_images'][] = array(
+					'file'  => $result,
+					'image' => HelperImage::resize($result, 100, 100)
+				);
+			}
+		}		
 
 		$this->load->model('catalog/download');
 		

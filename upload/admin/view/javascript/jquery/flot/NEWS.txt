@@ -1,3 +1,76 @@
+Flot 0.5
+--------
+
+Backwards API change summary: Timestamps are now in UTC. Also
+"selected" event -> becomes "plotselected" with new data, the
+parameters for setSelection are now different (but backwards
+compatibility hooks are in place), coloredAreas becomes markings with
+a new interface (but backwards compatibility hooks are in place).
+
+
+Interactivity: added a new "plothover" event and this and the
+"plotclick" event now returns the closest data item (based on patch by
+/david, patch by Mark Byers for bar support). See the revamped
+"interacting with the data" example for some hints on what you can do.
+
+Highlighting: you can now highlight points and datapoints are
+autohighlighted when you hover over them (if hovering is turned on).
+
+Support for dual axis has been added (based on patch by someone who's
+annoyed and /david). For each data series you can specify which axes
+it belongs to, and there are two more axes, x2axis and y2axis, to
+customize. This affects the "selected" event which has been renamed to
+"plotselected" and spews out { xaxis: { from: -10, to: 20 } ... },
+setSelection in which the parameters are on a new form (backwards
+compatible hooks are in place so old code shouldn't break) and
+markings (formerly coloredAreas).
+
+Timestamps in time mode are now displayed according to
+UTC instead of the time zone of the visitor. This affects the way the
+timestamps should be input; you'll probably have to offset the
+timestamps according to your local time zone. It also affects any
+custom date handling code (which basically now should use the
+equivalent UTC date mehods, e.g. .setUTCMonth() instead of
+.setMonth().
+
+Added support for specifying the size of tick labels (axis.labelWidth,
+axis.labelHeight). Useful for specifying a max label size to keep
+multiple plots aligned.
+
+Markings, previously coloredAreas, are now specified as ranges on the
+axes, like { xaxis: { from: 0, to: 10 }}. Furthermore with markings
+you can now draw horizontal/vertical lines by setting from and to to
+the same coordinate (idea from line support patch by by Ryan Funduk).
+
+The "fill" option can now be a number that specifies the opacity of
+the fill.
+
+You can now specify a coordinate as null (like [2, null]) and Flot
+will take the other coordinate into account when scaling the axes
+(based on patch by joebno).
+
+New option for bars "align". Set it to "center" to center the bars on
+the value they represent.
+
+setSelection now takes a second parameter which you can use to prevent
+the method from firing the "plotselected" handler. 
+
+Using the "container" option in legend now overwrites the container
+element instead of just appending to it (fixes infinite legend bug,
+reported by several people, fix by Brad Dewey).
+
+Fixed a bug in calculating spacing around the plot (reported by
+timothytoe). Fixed a bug in finding max values for all-negative data
+sets. Prevent the possibility of eternal looping in tick calculations.
+Fixed a bug when borderWidth is set to 0 (reported by
+Rob/sanchothefat). Fixed a bug with drawing bars extending below 0
+(reported by James Hewitt, patch by Ryan Funduk). Fixed a
+bug with line widths of bars (reported by MikeM). Fixed a bug with
+'nw' and 'sw' legend positions. Improved the handling of axis
+auto-scaling with bars. Fixed a bug with multi-line x-axis tick
+labels (reported by Luca Ciano). IE-fix help by Savage Zhang.
+
+
 Flot 0.4
 --------
 

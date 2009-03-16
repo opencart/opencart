@@ -11,31 +11,24 @@ grid configuration
 
 selection
   - user should be able to cancel selection with escape
-  - select points
 
 interactive zooming
   - convenience zoom(x1, y1, x2, y2)? and zoomOut() (via zoom stack)?
   - auto-zoom mode?
   - auto-margins
 
-support for highlighting stuff
-  - lines
-  - points
-
 legend
   - interactive auto-highlight of graph?
+  - ability to specify noRows instead of just noColumns
 
 labels
   - labels on bars, data points
-  - plan "all points" option
-  - interactive "label this point" command
-
-interactive hover over
-  - fire event with value for points
-  - fire event with graph id for lines
+  - interactive "label this point" command/tooltip support
 
 error margin indicators
   - for scientific/statistical purposes
+
+hi-low bars
 
 non-xy based graph types
   - figure out how to integrate them with the rest of the plugin

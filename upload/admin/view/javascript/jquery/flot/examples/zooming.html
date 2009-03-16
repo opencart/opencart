@@ -63,34 +63,26 @@ $(function () {
     });
 
     // now connect the two
-    var internalSelection = false;
     
-    $("#placeholder").bind("selected", function (event, area) {
+    $("#placeholder").bind("plotselected", function (event, ranges) {
         // clamp the zooming to prevent eternal zoom
-        if (area.x2 - area.x1 < 0.00001)
-            area.x2 = area.x1 + 0.00001;
-        if (area.y2 - area.y1 < 0.00001)
-            area.y2 = area.y1 + 0.00001;
+        if (ranges.xaxis.to - ranges.xaxis.from < 0.00001)
+            ranges.xaxis.to = ranges.xaxis.from + 0.00001;
+        if (ranges.yaxis.to - ranges.yaxis.from < 0.00001)
+            ranges.yaxis.to = ranges.yaxis.from + 0.00001;
         
         // do the zooming
-        plot = $.plot($("#placeholder"), getData(area.x1, area.x2),
+        plot = $.plot($("#placeholder"), getData(ranges.xaxis.from, ranges.xaxis.to),
                       $.extend(true, {}, options, {
-                          xaxis: { min: area.x1, max: area.x2 },
-                          yaxis: { min: area.y1, max: area.y2 }
+                          xaxis: { min: ranges.xaxis.from, max: ranges.xaxis.to },
+                          yaxis: { min: ranges.yaxis.from, max: ranges.yaxis.to }
                       }));
         
-        if (internalSelection)
-            return; // prevent eternal loop
-        internalSelection = true;
-        overview.setSelection(area);
-        internalSelection = false;
+        // don't fire event on the overview to prevent eternal loop
+        overview.setSelection(ranges, true);
     });
-    $("#overview").bind("selected", function (event, area) {
-        if (internalSelection)
-            return;
-        internalSelection = true;
-        plot.setSelection(area);
-        internalSelection = false;
+    $("#overview").bind("plotselected", function (event, ranges) {
+        plot.setSelection(ranges);
     });
 });
 </script>

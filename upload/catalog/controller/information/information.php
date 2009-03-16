@@ -33,7 +33,7 @@ class ControllerInformationInformation extends Controller {
 			$this->data['continue'] = $this->url->http('common/home');
 
 			$this->id       = 'content';
-			$this->template = 'information/information.tpl';
+			$this->template = $this->config->get('config_template') . 'information/information.tpl';
 			$this->layout   = 'module/layout';
 				  
 	  		$this->render();
@@ -55,7 +55,7 @@ class ControllerInformationInformation extends Controller {
       		$this->data['continue'] = $this->url->http('common/home');
 
 			$this->id       = 'content';
-			$this->template = 'error/not_found.tpl';
+			$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
 			$this->layout   = 'module/layout';
 			  
 	  		$this->render();

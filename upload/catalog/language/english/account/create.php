@@ -35,7 +35,7 @@ $_['error_lastname']       = 'Last Name must be greater than 3 and less than 32 
 $_['error_email']          = 'E-Mail Address does not appear to be valid!';
 $_['error_password']       = 'Password must be greater than 3 and less than 20 characters!';
 $_['error_confirm']        = 'Password confirmation does not match password!';
-$_['error_address_1']      = 'Address 1 must be greater than 3 and less than 64 characters!';
-$_['error_city']           = 'City must be greater than 3 and less than 32 characters!';
+$_['error_address_1']      = 'Address 1 must be greater than 3 and less than 128 characters!';
+$_['error_city']           = 'City must be greater than 3 and less than 128 characters!';
 $_['error_telephone']      = 'Telephone must be greater than 3 and less than 32 characters!';
 ?>

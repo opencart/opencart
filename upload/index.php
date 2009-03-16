@@ -1,7 +1,7 @@
 <?php
 // Configuration
 require_once('config.php');
-
+   
 // Install 
 if (!defined('HTTP_SERVER')) {
 	header('Location: install/index.php');
@@ -17,7 +17,6 @@ require_once(DIR_SYSTEM . 'library/currency.php');
 require_once(DIR_SYSTEM . 'library/tax.php');
 require_once(DIR_SYSTEM . 'library/weight.php');
 require_once(DIR_SYSTEM . 'library/cart.php');
-require_once(DIR_SYSTEM . 'library/coupon.php');
 
 // Page Time
 $time = (time() + microtime());
@@ -82,10 +81,7 @@ Registry::set('weight', new Weight());
 // Cart
 Registry::set('cart', new Cart());
 
-// Coupon
-Registry::set('coupon', new Coupon());
-
-// Front Controller
+// Front Controller 
 $controller = new Front();
 
 // Router

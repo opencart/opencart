@@ -8,7 +8,7 @@ class ControllerPaymentCod extends Controller {
 		$this->data['back'] = $this->url->https('checkout/payment');
 		
 		$this->id       = 'payment';
-		$this->template = 'payment/cod.tpl';
+		$this->template = $this->config->get('config_template') . 'payment/cod.tpl';
 		
 		$this->render();		
 	}
@@ -17,6 +17,8 @@ class ControllerPaymentCod extends Controller {
 		$this->load->model('checkout/order');
 		
 		$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('cod_order_status_id'));
+	
+		$this->response->setOutput($this->session->data['order_id']);
 	}
 }
 ?>

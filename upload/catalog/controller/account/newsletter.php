@@ -58,7 +58,7 @@ class ControllerAccountNewsletter extends Controller {
 		$this->data['back'] = $this->url->https('account/account');
 		
 		$this->id       = 'content';
-		$this->template = 'account/newsletter.tpl';
+		$this->template = $this->config->get('config_template') . 'account/newsletter.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();			

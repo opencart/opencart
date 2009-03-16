@@ -16,10 +16,7 @@ class ControllerModuleMenu extends Controller {
 		$this->data['text_download'] = $this->language->get('text_download');
 		$this->data['text_extension'] = $this->language->get('text_extension');
 		$this->data['text_geo_zone'] = $this->language->get('text_geo_zone');
-		$this->data['text_google'] = $this->language->get('text_google');
-		$this->data['text_google_optimizer'] = $this->language->get('text_google_optimizer');
 		$this->data['text_home'] = $this->language->get('text_home');
-      	$this->data['text_image'] = $this->language->get('text_image');
 		$this->data['text_information'] = $this->language->get('text_information');
 		$this->data['text_language'] = $this->language->get('text_language');
       	$this->data['text_localisation'] = $this->language->get('text_localisation');
@@ -35,7 +32,6 @@ class ControllerModuleMenu extends Controller {
       	$this->data['text_report_viewed'] = $this->language->get('text_report_viewed');
       	$this->data['text_report_purchased'] = $this->language->get('text_report_purchased');	
 		$this->data['text_review'] = $this->language->get('text_review');
-		$this->data['text_send_mail'] = $this->language->get('text_send_mail');
 		$this->data['text_shipping'] = $this->language->get('text_shipping');
       	$this->data['text_shop'] = $this->language->get('text_shop');			
      	$this->data['text_setting'] = $this->language->get('text_setting');
@@ -56,13 +52,11 @@ class ControllerModuleMenu extends Controller {
 		$this->data['customer'] = $this->url->https('customer/customer');
 		$this->data['download'] = $this->url->https('catalog/download');			
 		$this->data['geo_zone'] = $this->url->https('localisation/geo_zone');
-		$this->data['google_optimizer'] = $this->url->https('google/optimizer');		
 		$this->data['home'] = $this->url->https('common/home'); 
-		$this->data['image'] = $this->url->https('catalog/image');
 		$this->data['information'] = $this->url->https('catalog/information');
 		$this->data['language'] = $this->url->https('localisation/language');
 		$this->data['logout'] = $this->url->https('common/logout');
-		$this->data['mail'] = $this->url->https('setting/mail');
+		$this->data['mail'] = $this->url->https('customer/mail');
 		$this->data['manufacturer'] = $this->url->https('catalog/manufacturer');
 		$this->data['order'] = $this->url->https('customer/order');
 		$this->data['order_status'] = $this->url->https('localisation/order_status');
@@ -72,7 +66,6 @@ class ControllerModuleMenu extends Controller {
       	$this->data['report_viewed'] = $this->url->https('report/viewed');
       	$this->data['report_purchased'] = $this->url->https('report/purchased');
 		$this->data['review'] = $this->url->https('catalog/review');
-		$this->data['send_mail'] = $this->url->https('customer/send_mail');
 		$this->data['shipping'] = $this->url->https('extension/shipping');
 		$this->data['shop'] = HTTP_CATALOG;
 		$this->data['setting'] = $this->url->https('setting/setting');

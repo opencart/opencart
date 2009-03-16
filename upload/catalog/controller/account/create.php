@@ -30,8 +30,8 @@ class ControllerAccountCreate extends Controller {
 	  			'login'     => $this->url->https('account/login')
 			);
 			
-			$subject = str_replace($find, $replace, $this->config->get('mail_account_subject_' . $this->language->getId()));
-			$message = str_replace($find, $replace, $this->config->get('mail_account_message_' . $this->language->getId()));
+			$subject = str_replace($find, $replace, $this->config->get('config_account_subject_' . $this->language->getId()));
+			$message = str_replace($find, $replace, $this->config->get('config_account_message_' . $this->language->getId()));
 			
 			$mail = new Mail();
 			$mail->setTo($this->request->post['email']);
@@ -138,7 +138,7 @@ class ControllerAccountCreate extends Controller {
 		$this->data['newsletter'] = @$this->request->post['newsletter'];
 
 		$this->id       = 'content';
-		$this->template = 'account/create.tpl';
+		$this->template = $this->config->get('config_template') . 'account/create.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();	
@@ -169,11 +169,11 @@ class ControllerAccountCreate extends Controller {
       		$this->error['confirm'] = $this->language->get('error_confirm');
     	}
 
-    	if ((strlen($this->request->post['address_1']) < 3) || (strlen($this->request->post['address_1']) > 64)) {
+    	if ((strlen($this->request->post['address_1']) < 3) || (strlen($this->request->post['address_1']) > 128)) {
       		$this->error['address_1'] = $this->language->get('error_address_1');
     	}
 
-    	if ((strlen($this->request->post['city']) < 3) || (strlen($this->request->post['city']) > 32)) {
+    	if ((strlen($this->request->post['city']) < 3) || (strlen($this->request->post['city']) > 128)) {
       		$this->error['city'] = $this->language->get('error_city');
     	}
 

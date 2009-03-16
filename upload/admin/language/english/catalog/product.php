@@ -30,7 +30,6 @@ $_['entry_price']          = 'Price:';
 $_['entry_weight_class']   = 'Weight Class:';
 $_['entry_weight']         = 'Weight:';
 $_['entry_image']          = 'Image:';
-$_['entry_images']         = 'Additional Images:';
 $_['entry_discount']       = 'Discount:';
 $_['entry_option']         = 'Option:';
 $_['entry_option_value']   = 'Option Value:';

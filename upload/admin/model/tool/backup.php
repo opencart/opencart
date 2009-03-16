@@ -20,14 +20,7 @@ class ModelToolBackup extends Model {
 		$list_tables = mysql_list_tables(DB_DATABASE);
 
 		while ($row = mysql_fetch_row($list_tables)) {
-			$output .= '#' . "\n" . '# TABLE STRUCTURE FOR: `' . $row[0] . "`\n" . '#' . "\n\n";
-			
-			$output .= 'DROP TABLE IF EXISTS `' . $row[0] . '`;' . "\n";
-			
-			$create_table = mysql_query("SHOW CREATE TABLE `" . DB_DATABASE . "`.`" . $row[0] . "`");
-			$table_sql    = mysql_fetch_row($create_table);
-			
-			$output .= trim($table_sql[1]) . ';' . "\n\n";
+			$output .= 'TRUNCATE TABLE `' . $row[0] . '`' . "\n\n";
 			
 			$query = $this->db->query("SELECT * FROM `" . $row[0] . "`");
 				

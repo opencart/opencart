@@ -135,7 +135,6 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['text_none'] = $this->language->get('text_none');
-		$this->data['text_upload'] = $this->language->get('text_upload');
 		
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_category'] = $this->language->get('entry_category');
@@ -196,23 +195,29 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$this->data['parent_id'] = @$category_info['parent_id'];
 		}
-				
+
+		if (isset($this->request->post['image'])) {
+			$this->data['image'] = $this->request->post['image'];
+		} else {
+			$this->data['image'] = $category_info['image'];
+		}
+		
+		$this->load->helper('image');
+		
+		if (isset($this->request->post['image'])) {
+			$this->data['preview'] = HelperImage::resize($this->request->post['image'], 100, 100);
+		} elseif (@$category_info['image']) {
+			$this->data['preview'] = HelperImage::resize($category_info['image'], 100, 100);
+		} else {
+			$this->data['preview'] = HelperImage::resize('no_image.jpg', 100, 100);
+		}
+		
 		if (isset($this->request->post['sort_order'])) {
 			$this->data['sort_order'] = $this->request->post['sort_order'];
 		} else {
 			$this->data['sort_order'] = @$category_info['sort_order'];
 		}
-						
-		$this->load->model('catalog/image');
 		
-		$this->data['images'] = $this->model_catalog_image->getImages();
-		
-		if (isset($this->request->post['image_id'])) {
-			$this->data['image_id'] = $this->request->post['image_id'];
-		} else {
-			$this->data['image_id'] = @$category_info['image_id'];
-		}
-				
 		$this->id       = 'content';
 		$this->template = 'catalog/category_form.tpl';
 		$this->layout   = 'module/layout';
@@ -230,7 +235,7 @@ class ControllerCatalogCategory extends Controller {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
 		}
-
+    	
 		if (!$this->error) {
 			return TRUE;
 		} else {

@@ -16,18 +16,24 @@ class ControllerModulePopular extends Controller {
 		$results = $this->model_catalog_product->getPopularProducts(5);
 			
 		foreach ($results as $result) {
+			if ($result['image']) {
+				$image = $result['image'];
+			} else {
+				$image = 'no_image.jpg';
+			}
+			
 			$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
 			
 			$this->data['products'][] = array(
 				'name'   => $result['name'],
 				'price'  => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
-				'image'  => HelperImage::resize($result['filename'], 38, 38),
+				'image'  => HelperImage::resize($image, 38, 38),
 				'href'   => $this->url->http('product/product&product_id=' . $result['product_id'])
 			);
 		}
 		
 		$this->id       = 'popular';
-		$this->template = 'module/popular.tpl';
+		$this->template = $this->config->get('config_template') . 'module/popular.tpl';
 		
 		$this->render();
 	}

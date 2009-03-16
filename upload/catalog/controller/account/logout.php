@@ -4,7 +4,17 @@ class ControllerAccountLogout extends Controller {
     	if ($this->customer->isLogged()) {
       		$this->customer->logout();
 	  		$this->cart->clear();
-	  
+			
+			unset($this->session->data['shipping_address_id']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_address_id']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
+			unset($this->session->data['comment']);
+			unset($this->session->data['order_id']);
+			unset($this->session->data['coupon']);
+			
       		$this->redirect($this->url->https('account/logout'));
     	}
  
@@ -41,7 +51,7 @@ class ControllerAccountLogout extends Controller {
     	$this->data['continue'] = $this->url->http('common/home');
 
 		$this->id       = 'content';
-		$this->template = 'common/success.tpl';
+		$this->template = $this->config->get('config_template') . 'common/success.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();	

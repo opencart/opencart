@@ -22,6 +22,10 @@ class ControllerSettingSetting extends Controller {
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');
 		$this->data['text_none'] = $this->language->get('text_none');
+		$this->data['text_account'] = $this->language->get('text_account');
+		$this->data['text_forgotten'] = $this->language->get('text_forgotten');
+		$this->data['text_order'] = $this->language->get('text_order');
+		$this->data['text_update'] = $this->language->get('text_update');
 
 		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_welcome'] = $this->language->get('entry_welcome');
@@ -30,9 +34,9 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
 		$this->data['entry_fax'] = $this->language->get('entry_fax');
-		$this->data['entry_url_alias'] = $this->language->get('entry_url_alias');
-		$this->data['entry_parse_time'] = $this->language->get('entry_parse_time');
+		$this->data['entry_template'] = $this->language->get('entry_template');
 		$this->data['entry_ssl'] = $this->language->get('entry_ssl');
+		$this->data['entry_parse_time'] = $this->language->get('entry_parse_time');
 		$this->data['entry_country'] = $this->language->get('entry_country');
 		$this->data['entry_zone'] = $this->language->get('entry_zone');
 		$this->data['entry_language'] = $this->language->get('entry_language');
@@ -46,6 +50,14 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_stock_status'] = $this->language->get('entry_stock_status');
 		$this->data['entry_download'] = $this->language->get('entry_download');
 		$this->data['entry_download_status'] = $this->language->get('entry_download_status');
+		$this->data['entry_account_subject'] = $this->language->get('entry_account_subject');
+		$this->data['entry_account_message'] = $this->language->get('entry_account_message');
+		$this->data['entry_forgotten_subject'] = $this->language->get('entry_forgotten_subject');
+		$this->data['entry_forgotten_message'] = $this->language->get('entry_forgotten_message');
+		$this->data['entry_order_subject'] = $this->language->get('entry_order_subject');
+		$this->data['entry_order_message'] = $this->language->get('entry_order_message');
+		$this->data['entry_update_subject'] = $this->language->get('entry_update_subject');
+		$this->data['entry_update_message'] = $this->language->get('entry_update_message');		
 		$this->data['entry_cache'] = $this->language->get('entry_cache');
 		$this->data['entry_compression'] = $this->language->get('entry_compression');
  
@@ -54,6 +66,10 @@ class ControllerSettingSetting extends Controller {
 		$this->data['help_stock_checkout'] = $this->language->get('help_stock_checkout');
 		$this->data['help_stock_subtract'] = $this->language->get('help_stock_subtract');
 		$this->data['help_download_status'] = $this->language->get('help_download_status');
+		$this->data['help_account'] = $this->language->get('help_account');
+		$this->data['help_forgotten'] = $this->language->get('help_forgotten');
+		$this->data['help_order'] = $this->language->get('help_order');
+		$this->data['help_update'] = $this->language->get('help_update');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -62,6 +78,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['tab_admin'] = $this->language->get('tab_admin');
 		$this->data['tab_local'] = $this->language->get('tab_local');
 		$this->data['tab_option'] = $this->language->get('tab_option');
+		$this->data['tab_mail'] = $this->language->get('tab_mail');
 		$this->data['tab_cache'] = $this->language->get('tab_cache');
 
 		$this->data['error_warning'] = @$this->error['warning'];
@@ -74,6 +91,14 @@ class ControllerSettingSetting extends Controller {
 		 
 		foreach ($languages as $language) {
 			$this->data['error_welcome_' . $language['language_id']] = @$this->error['welcome_' . $language['language_id']];
+			$this->data['error_account_subject_' . $language['language_id']] = @$this->error['account_subject_' . $language['language_id']];
+			$this->data['error_account_message_' . $language['language_id']] = @$this->error['account_message_' . $language['language_id']];
+			$this->data['error_forgotten_subject_' . $language['language_id']] = @$this->error['forgotten_subject_' . $language['language_id']];
+			$this->data['error_forgotten_message_' . $language['language_id']] = @$this->error['forgotten_message_' . $language['language_id']];
+			$this->data['error_order_subject_' . $language['language_id']] = @$this->error['order_subject_' . $language['language_id']];
+			$this->data['error_order_message_' . $language['language_id']] = @$this->error['order_message_' . $language['language_id']];
+			$this->data['error_update_subject_' . $language['language_id']] = @$this->error['update_subject_' . $language['language_id']];
+			$this->data['error_update_message_' . $language['language_id']] = @$this->error['update_message_' . $language['language_id']];		
 		}
 		
 		$this->data['error_owner'] = @$this->error['owner'];
@@ -146,23 +171,34 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_fax'] = $this->config->get('config_fax');
 		}
-
-		if (isset($this->request->post['config_url_alias'])) {
-			$this->data['config_url_alias'] = $this->request->post['config_url_alias'];
-		} else {
-			$this->data['config_url_alias'] = $this->config->get('config_url_alias');
+		
+		$this->data['templates'] = array();
+		
+		$directories = glob(DIR_CATALOG . 'view/theme/*', GLOB_ONLYDIR);
+		
+		foreach ($directories as $directory) {
+			$this->data['templates'][] = array(
+				'name'  => basename($directory),
+				'value' => basename($directory) . '/template/'
+			);
 		}
 		
-		if (isset($this->request->post['config_parse_time'])) {
-			$this->data['config_parse_time'] = $this->request->post['config_parse_time'];
+		if (isset($this->request->post['config_template'])) {
+			$this->data['config_template'] = $this->request->post['config_template'];
 		} else {
-			$this->data['config_parse_time'] = $this->config->get('config_parse_time');
+			$this->data['config_template'] = $this->config->get('config_template');
 		}
 		
 		if (isset($this->request->post['config_ssl'])) {
 			$this->data['config_ssl'] = $this->request->post['config_ssl'];
 		} else {
 			$this->data['config_ssl'] = $this->config->get('config_ssl');
+		}
+		
+		if (isset($this->request->post['config_parse_time'])) {
+			$this->data['config_parse_time'] = $this->request->post['config_parse_time'];
+		} else {
+			$this->data['config_parse_time'] = $this->config->get('config_parse_time');
 		}
 		
 		if (isset($this->request->post['config_country_id'])) {
@@ -266,6 +302,71 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_download_status'] = $this->config->get('config_download_status');
 		}
+
+		$this->load->model('localisation/language');
+		
+		$languages = $this->model_localisation_language->getLanguages();
+		 
+		foreach ($languages as $language) {
+			$this->data['error_account_subject_' . $language['language_id']] = @$this->error['account_subject_' . $language['language_id']];
+			$this->data['error_account_message_' . $language['language_id']] = @$this->error['account_message_' . $language['language_id']];
+			$this->data['error_forgotten_subject_' . $language['language_id']] = @$this->error['forgotten_subject_' . $language['language_id']];
+			$this->data['error_forgotten_message_' . $language['language_id']] = @$this->error['forgotten_message_' . $language['language_id']];
+			$this->data['error_order_subject_' . $language['language_id']] = @$this->error['order_subject_' . $language['language_id']];
+			$this->data['error_order_message_' . $language['language_id']] = @$this->error['order_message_' . $language['language_id']];
+			$this->data['error_update_subject_' . $language['language_id']] = @$this->error['update_subject_' . $language['language_id']];
+			$this->data['error_update_message_' . $language['language_id']] = @$this->error['update_message_' . $language['language_id']];
+		}
+
+		foreach ($languages as $language) {
+			if (isset($this->request->post['config_account_subject_' . $language['language_id']])) {
+				$this->data['config_account_subject_' . $language['language_id']] = $this->request->post['config_account_subject_' . $language['language_id']];
+			} else {
+				$this->data['config_account_subject_' . $language['language_id']] = $this->config->get('config_account_subject_' . $language['language_id']);
+			}
+			
+			if (isset($this->request->post['config_account_message_' . $language['language_id']])) {
+				$this->data['config_account_message_' . $language['language_id']] = $this->request->post['config_account_message_' . $language['language_id']];
+			} else {
+				$this->data['config_account_message_' . $language['language_id']] = $this->config->get('config_account_message_' . $language['language_id']);
+			}	
+			
+			if (isset($this->request->post['config_forgotten_subject_' . $language['language_id']])) {
+				$this->data['config_forgotten_subject_' . $language['language_id']] = $this->request->post['config_forgotten_subject_' . $language['language_id']];
+			} else {
+				$this->data['config_forgotten_subject_' . $language['language_id']] = $this->config->get('config_forgotten_subject_' . $language['language_id']);
+			}
+			
+			if (isset($this->request->post['config_forgotten_message_' . $language['language_id']])) {
+				$this->data['config_forgotten_message_' . $language['language_id']] = $this->request->post['config_forgotten_message_' . $language['language_id']];
+			} else {
+				$this->data['config_forgotten_message_' . $language['language_id']] = $this->config->get('config_forgotten_message_' . $language['language_id']);
+			}				
+
+			if (isset($this->request->post['config_order_subject_' . $language['language_id']])) {
+				$this->data['config_order_subject_' . $language['language_id']] = $this->request->post['config_order_subject_' . $language['language_id']];
+			} else {
+				$this->data['config_order_subject_' . $language['language_id']] = $this->config->get('config_order_subject_' . $language['language_id']);
+			}
+			
+			if (isset($this->request->post['config_order_message_' . $language['language_id']])) {
+				$this->data['config_order_message_' . $language['language_id']] = $this->request->post['config_order_message_' . $language['language_id']];
+			} else {
+				$this->data['config_order_message_' . $language['language_id']] = $this->config->get('config_order_message_' . $language['language_id']);
+			}
+			
+			if (isset($this->request->post['config_update_subject_' . $language['language_id']])) {
+				$this->data['config_update_subject_' . $language['language_id']] = $this->request->post['config_update_subject_' . $language['language_id']];
+			} else {
+				$this->data['config_update_subject_' . $language['language_id']] = $this->config->get('config_update_subject_' . $language['language_id']);
+			}
+			
+			if (isset($this->request->post['config_update_message_' . $language['language_id']])) {
+				$this->data['config_update_message_' . $language['language_id']] = $this->request->post['config_update_message_' . $language['language_id']];
+			} else {
+				$this->data['config_update_message_' . $language['language_id']] = $this->config->get('config_update_message_' . $language['language_id']);
+			}
+		}
 		
 		if (isset($this->request->post['config_cache'])) {
 			$this->data['config_cache'] = $this->request->post['config_cache'];
@@ -303,6 +404,38 @@ class ControllerSettingSetting extends Controller {
 			if (!$this->request->post['config_welcome_' . $language['language_id']]) {
 				$this->error['welcome_' . $language['language_id']] = $this->language->get('error_welcome');
 			}	
+
+			if (!$this->request->post['config_account_subject_' . $language['language_id']]) {
+				$this->error['account_subject_' . $language['language_id']] = $this->language->get('error_account_subject');
+			}
+			
+			if (!$this->request->post['config_account_message_' . $language['language_id']]) {
+				$this->error['account_message_' . $language['language_id']] = $this->language->get('error_account_message');
+			}	
+			
+			if (!$this->request->post['config_forgotten_subject_' . $language['language_id']]) {
+				$this->error['forgotten_subject_' . $language['language_id']] = $this->language->get('error_forgotten_subject');
+			}
+			
+			if (!$this->request->post['config_forgotten_message_' . $language['language_id']]) {
+				$this->error['forgotten_message_' . $language['language_id']] = $this->language->get('error_forgotten_message');
+			}				
+
+			if (!$this->request->post['config_order_subject_' . $language['language_id']]) {
+				$this->error['order_subject_' . $language['language_id']] = $this->language->get('error_order_subject');
+			}
+			
+			if (!$this->request->post['config_order_message_' . $language['language_id']]) {
+				$this->error['order_message_' . $language['language_id']] = $this->language->get('error_order_message');
+			}
+			
+			if (!$this->request->post['config_update_subject_' . $language['language_id']]) {
+				$this->error['update_subject_' . $language['language_id']] = $this->language->get('error_update_subject');
+			}
+			
+			if (!$this->request->post['config_update_message_' . $language['language_id']]) {
+				$this->error['update_message_' . $language['language_id']] = $this->language->get('error_update_message');
+			}		
 		}
 
 		if ((strlen($this->request->post['config_owner']) < 3) || (strlen($this->request->post['config_owner']) > 32)) {

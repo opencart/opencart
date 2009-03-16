@@ -25,21 +25,27 @@ class ControllerCommonHome extends Controller {
 		$this->data['products'] = array();
 
 		foreach ($this->model_catalog_product->getLatestProducts(8) as $result) {			
+			if ($result['image']) {
+				$image = $result['image'];
+			} else {
+				$image = 'no_image.jpg';
+			}
+			
 			$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
-			 
+			
           	$this->data['products'][] = array(
             	'name'   => $result['name'],
 				'model'  => $result['model'],
             	'rating' => $rating,
 				'stars'  => sprintf($this->language->get('text_stars'), $rating),
-				'thumb'  => HelperImage::resize($result['filename'], 120, 120),
+				'thumb'  => HelperImage::resize($image, 120, 120),
             	'price'  => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 				'href'   => $this->url->http('product/product&product_id=' . $result['product_id'])
           	);
 		}
 		
 		$this->id       = 'content';
-		$this->template = 'common/home.tpl';
+		$this->template = $this->config->get('config_template') . 'common/home.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();

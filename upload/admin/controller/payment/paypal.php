@@ -32,8 +32,11 @@ class ControllerPaymentPayPal extends Controller {
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_email'] = $this->language->get('entry_email');
+		$this->data['entry_encryption'] = $this->language->get('entry_encryption');
 		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		
+		$this->data['help_encryption'] = $this->language->get('help_encryption');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -42,8 +45,9 @@ class ControllerPaymentPayPal extends Controller {
 
 		$this->data['error_warning'] = @$this->error['warning'];
 		$this->data['error_email'] = @$this->error['email'];
+		$this->data['error_encryption'] = @$this->error['encryption'];
 
-  		$this->document->breadcrumbs = array();
+		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
        		'href'      => $this->url->https('common/home'),
@@ -94,6 +98,12 @@ class ControllerPaymentPayPal extends Controller {
 		} else {
 			$this->data['paypal_email'] = $this->config->get('paypal_email');
 		}
+
+		if (isset($this->request->post['paypal_encryption'])) {
+			$this->data['paypal_encryption'] = $this->request->post['paypal_encryption'];
+		} else {
+			$this->data['paypal_encryption'] = $this->config->get('paypal_encryption');
+		}
 		
 		if (isset($this->request->post['paypal_test'])) {
 			$this->data['paypal_test'] = $this->request->post['paypal_test'];
@@ -126,7 +136,11 @@ class ControllerPaymentPayPal extends Controller {
 		if (!@$this->request->post['paypal_email']) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
-				
+
+		if (!@$this->request->post['paypal_encryption']) {
+			$this->error['encryption'] = $this->language->get('error_encryption');
+		}
+		
 		if (!$this->error) {
 			return TRUE;
 		} else {

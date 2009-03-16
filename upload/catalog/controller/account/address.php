@@ -181,7 +181,7 @@ class ControllerAccountAddress extends Controller {
 		$this->data['back'] = $this->url->https('account/account');
 		
 		$this->id       = 'content';
-		$this->template = 'account/addresses.tpl';
+		$this->template = $this->config->get('config_template') . 'account/addresses.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();		
@@ -328,7 +328,7 @@ class ControllerAccountAddress extends Controller {
     	$this->data['back'] = $this->url->https('account/address');
 		
 		$this->id       = 'content';
-		$this->template = 'account/address.tpl';
+		$this->template = $this->config->get('config_template') . 'account/address.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();		
@@ -343,11 +343,11 @@ class ControllerAccountAddress extends Controller {
       		$this->error['lastname'] = $this->language->get('error_lastname');
     	}
 
-    	if ((strlen($this->request->post['address_1']) < 3) || (strlen($this->request->post['address_1']) > 64)) {
+    	if ((strlen($this->request->post['address_1']) < 3) || (strlen($this->request->post['address_1']) > 128)) {
       		$this->error['address_1'] = $this->language->get('error_address_1');
     	}
 
-    	if ((strlen($this->request->post['city']) < 3) || (strlen($this->request->post['city']) > 32)) {
+    	if ((strlen($this->request->post['city']) < 3) || (strlen($this->request->post['city']) > 128)) {
       		$this->error['city'] = $this->language->get('error_city');
     	}
 

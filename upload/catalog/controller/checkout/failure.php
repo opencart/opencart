@@ -52,7 +52,7 @@ class ControllerCheckoutFailure extends Controller {
     	$this->data['continue'] = $this->url->https('checkout/shipping');
 		
 		$this->id       = 'content';
-		$this->template = 'common/failure.tpl';
+		$this->template = $this->config->get('config_template') . 'common/failure.tpl';
 		$this->layout   = 'module/layout';
 		
 		$this->render();		

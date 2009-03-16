@@ -7,9 +7,9 @@ final class Router {
 	public function __construct($route) {
 		$path = '';
 		
-		$parts = explode('/', $route);
+		$parts = explode('/', str_replace('../', '', $route));
 		
-		foreach ($parts as $part) {
+		foreach ($parts as $part) { 
 			$path .= $part;
 			
 			if (is_dir(DIR_APPLICATION . 'controller/' . $path)) {
@@ -26,7 +26,7 @@ final class Router {
 				array_shift($parts);
 				
 				break;
-			}			
+			}
 		}
 
 		$method = array_shift($parts);

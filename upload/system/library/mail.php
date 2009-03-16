@@ -101,7 +101,7 @@ class Mail {
       		$message .= 'Content-Type: text/html; charset="utf-8"' . $eol; 
       		$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
 	  		$message .= chunk_split(base64_encode($this->html)); 
-			$message .= '--' . $boundary . '_alt' . $eol;		 
+			$message .= '--' . $boundary . '_alt--' . $eol;		 
 		}
 		
     	foreach ($this->attachments as $attachment) {  

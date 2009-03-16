@@ -4,7 +4,7 @@ class ControllerModuleCurrency extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && (isset($this->request->post['currency']))) {
       		$this->currency->set($this->request->post['currency']);
 
-  			$this->redirect($this->url->http($this->request->get));
+  			$this->redirect($this->url->http('common/home'));
    		}
     	
 		$this->load->language('module/currency');
@@ -24,7 +24,7 @@ class ControllerModuleCurrency extends Controller {
    		$this->data['currencies'] = $this->model_localisation_currency->getCurrencies();
 		
 		$this->id       = 'currency';
-		$this->template = 'module/currency.tpl';
+		$this->template = $this->config->get('config_template') . 'module/currency.tpl';
 		
    		$this->render();
 	} 

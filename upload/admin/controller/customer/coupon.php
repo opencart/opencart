@@ -186,7 +186,6 @@ class ControllerCustomerCoupon extends Controller {
 				'name'       => $result['name'],
 				'code'       => $result['code'],
 				'discount'   => $result['discount'],
-				'prefix'     => $result['prefix'],
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
@@ -202,7 +201,6 @@ class ControllerCustomerCoupon extends Controller {
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_code'] = $this->language->get('column_code');
 		$this->data['column_discount'] = $this->language->get('column_discount');
-		$this->data['column_prefix'] = $this->language->get('column_prefix');
 		$this->data['column_date_start'] = $this->language->get('column_date_start');
 		$this->data['column_date_end'] = $this->language->get('column_date_end');
 		$this->data['column_status'] = $this->language->get('column_status');
@@ -229,13 +227,12 @@ class ControllerCustomerCoupon extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->https('customer/customer&sort=cd.name' . $url);
-		$this->data['sort_code'] = $this->url->https('customer/customer&sort=c.code' . $url);
-		$this->data['sort_discount'] = $this->url->https('customer/customer&sort=c.discount' . $url);
-		$this->data['sort_prefix'] = $this->url->https('customer/customer&sort=c.prefix' . $url);
-		$this->data['sort_date_start'] = $this->url->https('customer/customer&sort=c.date_start' . $url);
-		$this->data['sort_date_end'] = $this->url->https('customer/customer&sort=c.date_end' . $url);
-		$this->data['sort_status'] = $this->url->https('customer/customer&sort=c.status' . $url);
+		$this->data['sort_name'] = $this->url->https('customer/coupon&sort=cd.name' . $url);
+		$this->data['sort_code'] = $this->url->https('customer/coupon&sort=c.code' . $url);
+		$this->data['sort_discount'] = $this->url->https('customer/coupon&sort=c.discount' . $url);
+		$this->data['sort_date_start'] = $this->url->https('customer/coupon&sort=c.date_start' . $url);
+		$this->data['sort_date_end'] = $this->url->https('customer/coupon&sort=c.date_end' . $url);
+		$this->data['sort_status'] = $this->url->https('customer/coupon&sort=c.status' . $url);
 				
 		$url = '';
 
@@ -274,16 +271,18 @@ class ControllerCustomerCoupon extends Controller {
     	$this->data['text_yes'] = $this->language->get('text_yes');
     	$this->data['text_no'] = $this->language->get('text_no');
     	$this->data['text_percent'] = $this->language->get('text_percent');
-    	$this->data['text_minus'] = $this->language->get('text_minus');
-		  
+    	$this->data['text_amount'] = $this->language->get('text_amount');
+		
 		$this->data['entry_name'] = $this->language->get('entry_name');
     	$this->data['entry_description'] = $this->language->get('entry_description');
     	$this->data['entry_code'] = $this->language->get('entry_code');
 		$this->data['entry_discount'] = $this->language->get('entry_discount');
-    	$this->data['entry_prefix'] = $this->language->get('entry_prefix');
+		$this->data['entry_shipping'] = $this->language->get('entry_shipping');
+		$this->data['entry_type'] = $this->language->get('entry_type');
+		$this->data['entry_total'] = $this->language->get('entry_total');
+		$this->data['entry_product'] = $this->language->get('entry_product');
     	$this->data['entry_date_start'] = $this->language->get('entry_date_start');
     	$this->data['entry_date_end'] = $this->language->get('entry_date_end');
-    	$this->data['entry_shipping'] = $this->language->get('entry_shipping');
     	$this->data['entry_uses_total'] = $this->language->get('entry_uses_total');
 		$this->data['entry_uses_customer'] = $this->language->get('entry_uses_customer');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -292,7 +291,6 @@ class ControllerCustomerCoupon extends Controller {
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
 
     	$this->data['tab_general'] = $this->language->get('tab_general');
-    	$this->data['tab_data'] = $this->language->get('tab_data');
 
     	$this->data['error_warning'] = @$this->error['warning'];
     	$this->data['error_name'] = @$this->error['name'];
@@ -358,30 +356,42 @@ class ControllerCustomerCoupon extends Controller {
     	} else {
       		$this->data['code'] = @$coupon_info['code'];
     	}
-
+		
+    	if (isset($this->request->post['type'])) {
+      		$this->data['type'] = $this->request->post['type'];
+    	} else {
+      		$this->data['type'] = @$coupon_info['type'];
+    	}
+		
     	if (isset($this->request->post['discount'])) {
       		$this->data['discount'] = $this->request->post['discount'];
     	} else {
       		$this->data['discount'] = @$coupon_info['discount'];
     	}
-
-    	if (isset($this->request->post['discount'])) {
-      		$this->data['discount'] = $this->request->post['discount'];
-    	} else {
-      		$this->data['discount'] = @$coupon_info['discount'];
-    	}
-				
-    	if (isset($this->request->post['prefix'])) {
-      		$this->data['prefix'] = $this->request->post['prefix'];
-    	} else {
-      		$this->data['prefix'] = @$coupon_info['prefix'];
-    	}
-
+		
     	if (isset($this->request->post['shipping'])) {
       		$this->data['shipping'] = $this->request->post['shipping'];
     	} else {
       		$this->data['shipping'] = @$coupon_info['shipping'];
     	}
+
+    	if (isset($this->request->post['total'])) {
+      		$this->data['total'] = $this->request->post['total'];
+    	} else {
+      		$this->data['total'] = @$coupon_info['total'];
+    	}
+
+		$this->load->model('catalog/product'); 
+		
+    	$this->data['products'] = $this->model_catalog_product->getProducts();
+		
+    	if (isset($this->request->post['product'])) {
+      		$this->data['coupon_product'] = $this->request->post['product'];
+    	} elseif (isset($coupon_info)) {
+      		$this->data['coupon_product'] = $this->model_customer_coupon->getCouponProducts($this->request->get['coupon_id']);
+    	} else {
+			$this->data['coupon_product'] = array();
+		}
 		
 		if (isset($this->request->post['date_start'])) {
        		$this->data['date_start'] = $this->request->post['date_start'];

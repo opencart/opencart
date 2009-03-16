@@ -4,6 +4,7 @@ $_['heading_title']         = 'Orders';
 
 // Text
 $_['text_success']          = 'Success: You have modified orders!';
+$_['text_invoice']          = 'Invoice';
 $_['text_invoice_no']       = 'Invoice No.:';
 $_['text_invoice_date']     = 'Invoice Date:';
 $_['text_telephone']        = 'Telephone';

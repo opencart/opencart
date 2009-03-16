@@ -161,10 +161,17 @@ class ControllerUserUserGroup extends Controller {
 		$this->data['delete'] = $this->url->https('user/user_group/delete' . $url);	
 	
 		$this->data['user_groups'] = array();
+
+		$data = array(
+			'sort'  => $sort,
+			'order' => $order,
+			'start' => ($page - 1) * 10,
+			'limit' => 10
+		);
 		
 		$user_group_total = $this->model_user_user_group->getTotalUserGroups();
 		
-		$results = $this->model_user_user_group->getUserGroups();
+		$results = $this->model_user_user_group->getUserGroups($data);
 
 		foreach ($results as $result) {
 			$action = array();

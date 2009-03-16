@@ -58,7 +58,7 @@ class ControllerAccountDownload extends Controller {
 			$results = $this->model_account_download->getDownloads(($page - 1) * 10, 10);
 			
 			foreach ($results as $result) {
-				$size = filesize(DIR_DOWNLOAD . $result['filename']);
+				$size = filesize(DIR_DOWNLOAD . $result['mask']);
 
 				$i = 0;
 
@@ -101,7 +101,7 @@ class ControllerAccountDownload extends Controller {
 			$this->data['continue'] = $this->url->https('account/account');
 
 			$this->id       = 'content';
-			$this->template = 'account/download.tpl';
+			$this->template = $this->config->get('config_template') . 'account/download.tpl';
 			$this->layout   = 'module/layout';
 		
 			$this->render();				
@@ -115,7 +115,7 @@ class ControllerAccountDownload extends Controller {
 			$this->data['continue'] = $this->url->https('account/account');
 
 			$this->id       = 'content';
-			$this->template = 'error/not_found.tpl';
+			$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
 			$this->layout   = 'module/layout';
 		
 			$this->render();

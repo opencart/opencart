@@ -28,14 +28,20 @@ class ModelLocalisationCountry extends Model {
 		if ($data) {
 			$sql = "SELECT * FROM country";
 			
-			if (isset($data['sort'])) {
-				$sql .= " ORDER BY " . $this->db->escape($data['sort']);	
+			$sort_data = array(
+				'name',
+				'iso_code_2',
+				'iso_code_3'
+			);	
+			
+			if (in_array(@$data['sort'], $sort_data)) {
+				$sql .= " ORDER BY " . $data['sort'];	
 			} else {
 				$sql .= " ORDER BY name";	
 			}
 			
-			if (isset($data['order'])) {
-				$sql .= " " . $this->db->escape($data['order']);
+			if (@$data['order'] == 'DESC') {
+				$sql .= " DESC";
 			} else {
 				$sql .= " ASC";
 			}

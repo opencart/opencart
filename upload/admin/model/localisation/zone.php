@@ -25,47 +25,47 @@ class ModelLocalisationZone extends Model {
 	}
 	
 	public function getZones($data = array()) {
-		if ($data) {
-			$sql = "SELECT *, z.name, c.name AS country FROM zone z LEFT JOIN country c ON (z.country_id = c.country_id)";
+		$sql = "SELECT *, z.name, c.name AS country FROM zone z LEFT JOIN country c ON (z.country_id = c.country_id)";
 			
-			if (isset($data['sort'])) {
-				$sql .= " ORDER BY " . $this->db->escape($data['sort']);	
-			} else {
-				$sql .= " ORDER BY c.name";	
-			}
+		$sort_data = array(
+			'c.name',
+			'z.name',
+			'z.code'
+		);	
 			
-			if (isset($data['order'])) {
-				$sql .= " " . $this->db->escape($data['order']);
-			} else {
-				$sql .= " ASC";
-			}
-			
-			if (isset($data['start']) || isset($data['limit'])) {
-				$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-			}
-		
-			$query = $this->db->query($sql);
-		
-			return $query->rows;
+		if (in_array(@$data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];	
 		} else {
-			$zone = $this->cache->get('zone.' . $country_id);
-	
-			if (!$zone) {
-				$query = $this->db->query("SELECT * FROM zone WHERE country_id = '" . (int)$country_id . "' ORDER BY name");
-	
-				$zone = $query->rows;
-			
-				$this->cache->set('zone.' . $country_id, $zone);
-			}
-	
-			return $zone;			
+			$sql .= " ORDER BY c.name";	
 		}
+			
+		if (@$data['order'] == 'DESC') {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
+		}
+			
+		if (isset($data['start']) || isset($data['limit'])) {
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+		
+		$query = $this->db->query($sql);
+		
+		return $query->rows;
 	}
 	
 	public function getZonesByCountryId($country_id) {
-		$query = $this->db->query("SELECT * FROM zone WHERE country_id = '" . (int)$country_id . "' ORDER BY name");
+		$zone = $this->cache->get('zone.' . $country_id);
 	
-		return $query->rows;
+		if (!$zone) {
+			$query = $this->db->query("SELECT * FROM zone WHERE country_id = '" . (int)$country_id . "' ORDER BY name");
+	
+			$zone = $query->rows;
+			
+			$this->cache->set('zone.' . $country_id, $zone);
+		}
+	
+		return $zone;
 	}
 	
 	public function getTotalZones() {

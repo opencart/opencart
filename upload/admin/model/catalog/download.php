@@ -1,9 +1,15 @@
 <?php
 class ModelCatalogDownload extends Model {
 	public function addDownload($data) {
-      	$this->db->query("INSERT INTO download SET filename = '" . $this->db->escape($data['download']['name']) . "', mask = '" . $this->db->escape($data['mask']) . "', remaining = '" . (int)$data['remaining'] . "', date_added = NOW()");
+		$filename = basename($data['download']['name']) . '.' . md5(rand());
+		
+		if (@move_uploaded_file($data['download']['tmp_name'], DIR_DOWNLOAD . $filename)) {
+			@unlink($data['download']['tmp_name']);
+	  	}
+				
+      	$this->db->query("INSERT INTO download SET filename = '" . $this->db->escape($filename) . "', mask = '" . $this->db->escape(basename($data['download']['name'])) . "', remaining = '" . (int)$data['remaining'] . "', date_added = NOW()");
 
-      	$download_id = $this->db->getLastId();
+      	$download_id = $this->db->getLastId(); 
 
       	foreach ($data['download_description'] as $language_id => $value) {
         	$this->db->query("INSERT INTO download_description SET download_id = '" . (int)$download_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
@@ -12,10 +18,16 @@ class ModelCatalogDownload extends Model {
 	
 	public function editDownload($download_id, $data) {
       	if ($data['download']['name']) {
-        	$this->db->query("UPDATE download SET filename = '" . $this->db->escape($data['download']['name']) . "' WHERE download_id = '" . (int)$download_id . "'");
+			$filename = basename($data['download']['name']) . '.' . md5(rand());
+		
+			if (@move_uploaded_file($data['download']['tmp_name'], DIR_DOWNLOAD . $filename)) {
+				@unlink($data['download']['tmp_name']);
+	  		}			
+			
+        	$this->db->query("UPDATE download SET filename = '" . $this->db->escape($filename) . "', mask = '" . $this->db->escape(basename($data['download']['name'])) . "' WHERE download_id = '" . (int)$download_id . "'");
       	}
  
-        $this->db->query("UPDATE download SET mask = '" . $this->db->escape($data['mask']) . "', remaining = '" . (int)$data['remaining'] . "' WHERE download_id = '" . (int)$download_id . "'");
+        $this->db->query("UPDATE download SET remaining = '" . (int)$data['remaining'] . "' WHERE download_id = '" . (int)$download_id . "'");
 		
       	$this->db->query("DELETE FROM download_description WHERE download_id = '" . (int)$download_id . "'");
 
@@ -37,15 +49,20 @@ class ModelCatalogDownload extends Model {
 
 	public function getDownloads($data = array()) {
 		$sql = "SELECT * FROM download d LEFT JOIN download_description dd ON (d.download_id = dd.download_id) WHERE dd.language_id = '" . (int)$this->language->getId() . "'";
-			
-		if (isset($data['sort'])) {
-			$sql .= " ORDER BY " . $this->db->escape($data['sort']);	
+	
+		$sort_data = array(
+			'dd.name',
+			'd.remaining'
+		);
+	
+		if (in_array(@$data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];	
 		} else {
 			$sql .= " ORDER BY dd.name";	
 		}
 			
-		if (isset($data['order'])) {
-			$sql .= " " . $this->db->escape($data['order']);
+		if (@$data['order'] == 'DESC') {
+			$sql .= " DESC";
 		} else {
 			$sql .= " ASC";
 		}

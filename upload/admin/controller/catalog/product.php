@@ -466,7 +466,7 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->post['image'])) {
 			$this->data['image'] = $this->request->post['image'];
 		} else {
-			$this->data['image'] = $product_info['image'];
+			$this->data['image'] = @$product_info['image'];
 		}
 		
 		$this->load->helper('image');

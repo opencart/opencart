@@ -1,6 +1,6 @@
 <?php
 class ModelTotalSubTotal extends Model {
-	public function getTotal($total_data, $total, $taxes) {
+	public function getTotal(&$total_data, &$total, &$taxes) {
 		if ($this->config->get('sub_total_status')) {
 			$this->load->language('total/sub_total');
 		 

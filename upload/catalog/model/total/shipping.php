@@ -1,6 +1,6 @@
 <?php
 class ModelTotalShipping extends Model {
-	public function getTotal($total_data, $total, $taxes) {
+	public function getTotal(&$total_data, &$total, &$taxes) {
 		if (($this->cart->hasShipping()) && ($this->config->get('coupon_status'))) {
 			$total_data[] = array( 
         		'title'      => $this->session->data['shipping_method']['title'] . ':',

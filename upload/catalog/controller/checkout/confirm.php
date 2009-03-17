@@ -46,7 +46,7 @@ class ControllerCheckoutConfirm extends Controller {
 		foreach ($results as $result) {
 			$this->load->model('total/' . $result['key']);
 						
-			$this->{'model_total_' . $result['key']}->getTotal(&$total_data, &$total, &$taxes);
+			$this->{'model_total_' . $result['key']}->getTotal($total_data, $total, $taxes);
 		}
 		
 		$sort_order = array(); 

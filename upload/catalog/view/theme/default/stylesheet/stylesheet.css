@@ -1,0 +1,393 @@
+html {
+	overflow: -moz-scrollbars-vertical;
+	margin: 0;
+	padding: 0;
+}
+* {
+	font-family: Arial, Helvetica, sans-serif;
+}
+body {
+	margin: 0px;
+	padding: 0px;
+}
+body, td, th, input, textarea, select, a {
+	font-size: 12px;
+}
+form {
+	padding: 0;
+	margin: 0;
+	display: inline;
+}
+input, textarea, select {
+	margin: 3px 0px;
+}
+a, a:visited {
+	color: #1B57A3;
+	text-decoration: underline;
+	cursor: pointer;
+}
+a:hover {
+	text-decoration: none;
+}
+a img {
+	border: none;
+}
+p {
+	margin-top: 0px;
+}
+.png {
+	behavior: url('catalog/view/javascript/png/iepngfix.htc');
+}
+/* layout */
+#container {
+	width: 960px;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	background: #FFFFFF;
+}
+#header {
+}
+#header .div1 {
+	height: 97px;
+}
+#header .div2 {
+	position: absolute;
+	top: 21px;
+	left: 15px;
+}
+#header .div3 {
+	background: url('../image/search.png') no-repeat;
+	width: 250px;
+	height: 62px;
+	position: absolute;
+	top: 15px;
+	right: 0px;
+	padding-top: 5px;
+	padding-left: 17px;
+}
+#header .div4 {
+	width: 950px;
+	padding-left: 10px;
+	height: 40px;
+	background: url('../image/header.png') repeat-x;
+}
+#header .div4 a {
+	padding: 12px 20px 12px 20px;
+	display: inline-block;
+	float: left;
+	color: #FFFFFF;
+	text-align: center;
+	text-decoration: none;
+	font-size: 14px;
+	font-family: Verdana, Geneva, sans-serif;
+}
+#breadcrumb {
+	padding-top: 8px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+}
+#column_left {
+	float: left;
+	width: 180px;
+	margin-right: 10px;
+	display: inline-block; 
+}
+#column_right {
+	float: right;
+	width: 180px;
+	margin-left: 10px;
+	display: inline-block;
+}
+#content {
+	display: inline-block;
+	width: 580px;
+	margin-bottom: 10px;
+}
+#content .top {
+	padding: 8px 0px 6px 10px;
+	background: url('../image/content_top.png') no-repeat;
+}
+#content .top h1, .heading {
+	color: #000000;
+	font-size: 14px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-transform: uppercase;
+	margin: 0px;
+}
+.heading {
+	border-bottom: 1px solid #DDDDDD;
+	padding-bottom: 3px;
+	margin-bottom: 10px;
+}
+#content .middle {
+	border-left: 1px solid #DDDDDD;
+	border-right: 1px solid #DDDDDD;
+	background: #FFFFFF;
+	padding: 10px 10px 1px 10px;
+	min-height: 380px;
+	width: 558px;
+}
+#content .bottom {
+	background: url('../image/content_bottom.png') no-repeat;
+	height: 5px;
+}
+.box {
+	margin-bottom: 10px;
+	background: url('../image/box_top.png') no-repeat;
+}
+.box .top {
+	padding: 8px 0px 6px 10px;
+	color: #000000;
+	font-size: 14px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+.box .middle {
+	border-left: 1px solid #DDDDDD;
+	border-right: 1px solid #DDDDDD;
+	background: #FFFFFF;
+	padding: 10px;
+}
+.box .bottom {
+	height: 5px;
+	background: url('../image/box_bottom.png') no-repeat;
+}
+.success {
+	padding: 5px 0px;
+	margin-bottom: 10px;
+	background: #E4F1C9;
+	border: 1px solid #A5BD71;
+	font-size: 11px;
+	font-family: Verdana, Geneva, sans-serif;
+	text-align: center;
+}
+.warning {
+	padding: 5px 0px;
+	margin-bottom: 10px;
+	background: #FFDFE0;
+	border: 1px solid #FF9999;
+	font-size: 11px;
+	font-family: Verdana, Geneva, sans-serif;
+	text-align: center;
+}
+.wait {
+	padding: 5px 0px;
+	margin-bottom: 10px;
+	background: #FBFAEA;
+	border: 1px solid #EFEBAA;
+	font-size: 11px;
+	font-family: Verdana, Geneva, sans-serif;
+	text-align: center;
+}
+.required {
+	color: #FF0000;
+	font-weight: bold;
+}
+.error {
+	color: #FF0000;
+	display: block;
+}
+.help {
+	cursor: pointer;
+}
+.tooltip {
+	border: 1px solid #FDDA5C;
+	background: #FBFF95;
+	padding: 5px;
+	font-size: 11px;
+	width: 250px;
+}
+.clear { /* generic container (i.e. div) for floating buttons */
+	overflow: hidden;
+	width: 100%;
+}
+a.button {
+	background: transparent url('../image/button_right.png') no-repeat scroll top right;
+	color: #FFFFFF;
+	display: inline-block;
+	font: normal 12px arial, sans-serif;
+	height: 25px;
+	margin-right: 6px;
+	padding-right: 18px; /* sliding doors padding */
+	text-decoration: none;
+}
+a.button span {
+	background: transparent url('../image/button_left.png') no-repeat;
+	display: inline-block;
+	
+	padding: 5px 0 5px 18px;
+}
+/*
+a.button:active {
+	background-position: bottom right;
+	color: #000;
+	outline: none;
+}
+a.button:active span {
+	background-position: bottom left;
+	padding: 5px 0 5px 18px;
+}
+*/
+.buttons {
+	background: #F8F8F8;
+	border: 1px solid #DDDDDD;
+	margin-bottom: 10px;
+	clear: both;
+	padding: 5px;
+}
+.buttons input {
+	padding: 0px;
+	margin: 0px;
+}
+.buttons table {
+	width: 100%;
+	border-collapse: collapse;
+}
+.buttons table td {
+	vertical-align: middle;
+}
+.list {
+	width: 100%;
+	margin-bottom: 10px;
+}
+.list td {
+	text-align: center;
+	vertical-align: top;
+	padding-bottom: 10px;
+}
+.sort {
+	margin-bottom: 10px;
+	background: #F8F8F8;
+	height: 30px;
+	width: 100%;
+}
+.sort .div1 {
+	float: right;
+	display: inline-block;
+	margin-left: 5px;
+	padding-top: 6px;
+	padding-right: 9px;
+}
+.sort .div2 {
+	text-align: right;
+	display: inline-block;
+	padding-top: 9px;
+}
+.sort select {
+	font-size: 11px;
+	margin: 0;
+	padding: 0;
+}
+.pagination {
+	display: inline-block;
+	width: 100%;
+	background: #F8F8F8;
+	margin-bottom: 10px;
+}
+.pagination .links, .pagination .results {
+	padding: 7px;
+}
+.pagination .links {
+	float: left;
+}
+.pagination .links a {
+	border: 1px solid #CCCCCC;
+	padding: 4px 7px;
+	text-decoration: none;
+	color: #000000;
+}
+.pagination .links b {
+	border: 1px solid #CCCCCC;
+	padding: 4px 7px;
+	text-decoration: none;
+	color: #000000;
+	background: #FFFFFF;
+}
+.pagination .results {
+	float: right;
+}
+.tabs {
+	display: block;
+	width: 100%;
+	margin-bottom: 0px;
+}
+.tabs a {
+	float: left;
+	display: block;
+	padding: 6px 15px 7px 15px;
+	margin-right: 2px;
+	border-top: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD;
+	border-left: 1px solid #DDDDDD;
+	border-right: 1px solid #DDDDDD;
+	background: #FFFFFF url('../image/tab.png') repeat-x;
+	color: #000000;
+	font-weight: bold;
+	font-size: 13px;
+	text-decoration: none;
+	z-index: 1;
+	position: relative;
+	top: 1px;
+}
+.tabs a.selected {
+	background: #FFFFFF url('../image/tab.png') repeat-x;
+	border-bottom: 0px;
+	padding-bottom: 8px;
+	z-index: 3;
+}
+.page {
+	border: 1px solid #DDDDDD;
+	background: #FFFFFF;
+	display: inline-block;
+	padding: 10px;
+	display: block;
+	width: 536px;
+	clear: both;
+	z-index: 2;
+	margin-bottom: 10px;
+}
+#footer {
+	width: 100%;
+	padding-top: 5px;
+	border-top: 1px solid #DDDDDD;
+	display: inline-block;
+}
+#footer .div1 {
+	float: left;
+	text-align: left;
+}
+#footer .div2 {
+	float: right;
+	text-align: right;
+}
+#category ul {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 8px;
+	padding-left: 12px;
+	list-style: url('../image/bullet_1.png');
+}
+#information ul {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 8px;
+	padding-left: 12px;
+	list-style: url('../image/bullet_2.png');
+}
+.cart {
+	border-collapse: collapse;
+	margin-bottom: 10px;
+	width: 100%;
+	border: 1px solid #EEEEEE;
+}
+.cart th {
+	background: #EEEEEE;
+	padding: 5px;
+	font-weight: normal;
+}
+.cart td {
+	padding: 5px;
+}

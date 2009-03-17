@@ -1,0 +1,701 @@
+Flot Reference
+--------------
+
+Consider a call to the plot function:
+
+   var plot = $.plot(placeholder, data, options)
+
+The placeholder is a jQuery object that the plot will be put into.
+This placeholder needs to have its width and height set as explained
+in the README (go read that now if you haven't, it's short). The plot
+will modify some properties of the placeholder so it's recommended you
+simply pass in a div that you don't use for anything else.
+
+The format of the data is documented below, as is the available
+options. The "plot" object returned has some methods you can call.
+These are documented separately below.
+
+Note that in general Flot gives no guarantees if you change any of the
+objects you pass in to the plot function or get out of it since
+they're not necessarily deep-copied.
+
+
+Data Format
+-----------
+
+The data is an array of data series:
+
+  [ series1, series2, ... ]
+
+A series can either be raw data or an object with properties. The raw
+data format is an array of points:
+
+  [ [x1, y1], [x2, y2], ... ]
+
+E.g.
+
+  [ [1, 3], [2, 14.01], [3.5, 3.14] ]
+
+Note that to simplify the internal logic in Flot both the x and y
+values must be numbers, even if specifying time series (see below for
+how to do this). This is a common problem because you might retrieve
+data from the database and serialize them directly to JSON without
+noticing the wrong type.
+
+If a null is specified as a point or if one of the coordinates is null
+or couldn't be converted to a number, the point is ignored when
+drawing. As a special case, a null value for lines is interpreted as a
+line segment end, i.e. the point before and after the null value are
+not connected.
+
+The format of a single series object is as follows:
+
+  {
+    color: color or number,
+    data: rawdata,
+    label: string,
+    lines: specific lines options,
+    bars: specific bars options,
+    points: specific points options,
+    xaxis: 1 or 2,
+    yaxis: 1 or 2,
+    shadowSize: number
+  }
+
+You don't have to specify any of them except the data, the rest are
+options that will get default values. Typically you'd only specify
+label and data, like this:
+
+  {
+    label: "y = 3",
+    data: [[0, 3], [10, 3]]
+  }
+
+The label is used for the legend, if you don't specify one, the series
+will not show up in the legend.
+
+If you don't specify color, the series will get a color from the
+auto-generated colors. The color is either a CSS color specification
+(like "rgb(255, 100, 123)") or an integer that specifies which of
+auto-generated colors to select, e.g. 0 will get color no. 0, etc.
+
+The latter is mostly useful if you let the user add and remove series,
+in which case you can hard-code the color index to prevent the colors
+from jumping around between the series.
+
+The "xaxis" and "yaxis" options specify which axis to use, specify 2
+to get the secondary axis (x axis at top or y axis to the right).
+E.g., you can use this to make a dual axis plot by specifying
+{ yaxis: 2 } for one data series.
+
+The rest of the options are all documented below as they are the same
+as the default options passed in via the options parameter in the plot
+commmand. When you specify them for a specific data series, they will
+override the default options for the plot for that data series.
+
+Here's a complete example of a simple data specification:
+
+  [ { label: "Foo", data: [ [10, 1], [17, -14], [30, 5] ] },
+    { label: "Bar", data: [ [11, 13], [19, 11], [30, -7] ] } ]
+
+
+Plot Options
+------------
+
+All options are completely optional. They are documented individually
+below, to change them you just specify them in an object, e.g.
+
+  var options = {
+    lines: { show: true },
+    points: { show: true }
+  };
+
+  $.plot(placeholder, data, options);
+
+
+Customizing the legend
+======================
+
+  legend: {
+    show: boolean
+    labelFormatter: null or (fn: string -> string)
+    labelBoxBorderColor: color
+    noColumns: number
+    position: "ne" or "nw" or "se" or "sw"
+    margin: number of pixels
+    backgroundColor: null or color
+    backgroundOpacity: number in 0.0 - 1.0
+    container: null or jQuery object
+  }
+
+The legend is generated as a table with the data series labels and
+small label boxes with the color of the series. If you want to format
+the labels in some way, e.g. make them to links, you can pass in a
+function for "labelFormatter". Here's an example that makes them
+clickable:
+
+  labelFormatter: function(label) {
+    return '<a href="' + label + '">' + label + '</a>';
+  }
+
+"noColumns" is the number of columns to divide the legend table into.
+"position" specifies the overall placement of the legend within the
+plot (top-right, top-left, etc.) and margin the distance to the plot
+edge. "backgroundColor" and "backgroundOpacity" specifies the
+background. The default is a partly transparent auto-detected
+background.
+
+If you want the legend to appear somewhere else in the DOM, you can
+specify "container" as a jQuery object to put the legend table into.
+The "position" and "margin" etc. options will then be ignored. Note
+that it will overwrite the contents of the container.
+
+
+
+Customizing the axes
+====================
+
+  xaxis, yaxis, x2axis, y2axis: {
+    mode: null or "time"
+    min: null or number
+    max: null or number
+    autoscaleMargin: null or number
+    labelWidth: null or number
+    labelHeight: null or number
+
+    ticks: null or number or ticks array or (fn: range -> ticks array)
+    tickSize: number or array
+    minTickSize: number or array
+    tickFormatter: (fn: number, object -> string) or string
+    tickDecimals: null or number
+  }
+
+The axes have the same kind of options. The "mode" option
+determines how the data is interpreted, the default of null means as
+decimal numbers. Use "time" for time series data, see the next section.
+
+The options "min"/"max" are the precise minimum/maximum value on the
+scale. If you don't specify either of them, a value will automatically
+be chosen based on the minimum/maximum data values.
+
+The "autoscaleMargin" is a bit esoteric: it's the fraction of margin
+that the scaling algorithm will add to avoid that the outermost points
+ends up on the grid border. Note that this margin is only applied
+when a min or max value is not explicitly set. If a margin is
+specified, the plot will furthermore extend the axis end-point to the
+nearest whole tick. The default value is "null" for the x axis and
+0.02 for the y axis which seems appropriate for most cases.
+
+"labelWidth" and "labelHeight" specifies the maximum size of the tick
+labels in pixels. They're useful in case you need to align several
+plots.
+
+The rest of the options deal with the ticks.
+
+If you don't specify any ticks, a tick generator algorithm will make
+some for you. The algorithm has two passes. It first estimates how
+many ticks would be reasonable and uses this number to compute a nice
+round tick interval size. Then it generates the ticks.
+
+You can specify how many ticks the algorithm aims for by setting
+"ticks" to a number. The algorithm always tries to generate reasonably
+round tick values so even if you ask for three ticks, you might get
+five if that fits better with the rounding. If you don't want ticks,
+set "ticks" to 0 or an empty array.
+
+Another option is to skip the rounding part and directly set the tick
+interval size with "tickSize". If you set it to 2, you'll get ticks at
+2, 4, 6, etc. Alternatively, you can specify that you just don't want
+ticks at a size less than a specific tick size with "minTickSize".
+Note that for time series, the format is an array like [2, "month"],
+see the next section.
+
+If you want to completely override the tick algorithm, you can specify
+an array for "ticks", either like this:
+
+  ticks: [0, 1.2, 2.4]
+
+Or like this (you can mix the two if you like):
+
+  ticks: [[0, "zero"], [1.2, "one mark"], [2.4, "two marks"]]
+
+For extra flexibility you can specify a function as the "ticks"
+parameter. The function will be called with an object with the axis
+min and max and should return a ticks array. Here's a simplistic tick
+generator that spits out intervals of pi, suitable for use on the x
+axis for trigonometric functions:
+
+  function piTickGenerator(axis) {
+    var res = [], i = Math.floor(axis.min / Math.PI);
+    do {
+      var v = i * Math.PI;
+      res.push([v, i + "\u03c0"]);
+      ++i;
+    } while (v < axis.max);
+    
+    return res;
+  }
+
+
+You can control how the ticks look like with "tickDecimals", the
+number of decimals to display (default is auto-detected).
+
+Alternatively, for ultimate control over how ticks look like you can
+provide a function to "tickFormatter". The function is passed two
+parameters, the tick value and an "axis" object with information, and
+should return a string. The default formatter looks like this:
+
+  function formatter(val, axis) {
+    return val.toFixed(axis.tickDecimals);
+  }
+
+The axis object has "min" and "max" with the range of the axis,
+"tickDecimals" with the number of decimals to round the value to and
+"tickSize" with the size of the interval between ticks as calculated
+by the automatic axis scaling algorithm (or specified by you). Here's
+an example of a custom formatter:
+
+  function suffixFormatter(val, axis) {
+    if (val > 1000000)
+      return (val / 1000000).toFixed(axis.tickDecimals) + " MB";
+    else if (val > 1000)
+      return (val / 1000).toFixed(axis.tickDecimals) + " kB";
+    else
+      return val.toFixed(axis.tickDecimals) + " B";
+  }
+
+
+Time series data
+================
+
+Time series are a bit more difficult than scalar data because
+calendars don't follow a simple base 10 system. For many cases, Flot
+abstracts most of this away, but it can still be a bit difficult to
+get the data into Flot. So we'll first discuss the data format.
+
+The time series support in Flot is based on Javascript timestamps,
+i.e. everywhere a time value is expected or handed over, a Javascript
+timestamp number is used. This is a number, not a Date object. A
+Javascript timestamp is the number of milliseconds since January 1,
+1970 00:00:00 UTC. This is almost the same as Unix timestamps, except it's
+in milliseconds, so remember to multiply by 1000!
+
+You can see a timestamp like this
+
+  alert((new Date()).getTime())
+
+Normally you want the timestamps to be displayed according to a
+certain time zone, usually the time zone in which the data has been
+produced. However, Flot always displays timestamps according to UTC.
+It has to as the only alternative with core Javascript is to interpret
+the timestamps according to the time zone that the visitor is in,
+which means that the ticks will shift unpredictably with the time zone
+and daylight savings of each visitor.
+
+So given that there's no good support for custom time zones in
+Javascript, you'll have to take care of this server-side.
+
+The easiest way to think about it is to pretend that the data
+production time zone is UTC, even if it isn't. So if you have a
+datapoint at 2002-02-20 08:00, you can generate a timestamp for eight
+o'clock UTC even if it really happened eight o'clock UTC+0200.
+
+In PHP you can get an appropriate timestamp with
+'strtotime("2002-02-20 UTC") * 1000', in Python with
+'calendar.timegm(datetime_object.timetuple()) * 1000', in .NET with
+something like:
+
+  public static int GetJavascriptTimestamp(System.DateTime input)
+  {
+    System.TimeSpan span = new System.TimeSpan(System.DateTime.Parse("1/1/1970").Ticks);
+    System.DateTime time = input.Subtract(span);
+    return (long)(time.Ticks / 10000);
+  }
+
+Javascript also has some support for parsing date strings, so it is
+possible to generate the timestamps manually client-side.
+
+If you've already got the real UTC timestamp, it's too late to use the
+pretend trick described above. But you can fix up the timestamps by
+adding the time zone offset, e.g. for UTC+0200 you would add 2 hours
+to the UTC timestamp you got. Then it'll look right on the plot. Most
+programming environments have some means of getting the timezone
+offset for a specific date.
+
+Once you've got the timestamps into the data and specified "time" as
+the axis mode, Flot will automatically generate relevant ticks and
+format them. As always, you can tweak the ticks via the "ticks" option
+- just remember that the values should be timestamps (numbers), not
+Date objects.
+
+Tick generation and formatting can also be controlled separately
+through the following axis options:
+
+  xaxis, yaxis: {
+    minTickSize
+    timeformat: null or format string
+    monthNames: null or array of size 12 of strings
+  }
+
+Here "timeformat" is a format string to use. You might use it like
+this:
+
+  xaxis: {
+    mode: "time",
+    timeformat: "%y/%m/%d"
+  }
+  
+This will result in tick labels like "2000/12/24". The following
+specifiers are supported
+
+  %h': hours
+  %H': hours (left-padded with a zero)
+  %M': minutes (left-padded with a zero)
+  %S': seconds (left-padded with a zero)
+  %d': day of month (1-31)
+  %m': month (1-12)
+  %y': year (four digits)
+  %b': month name (customizable)
+
+You can customize the month names with the "monthNames" option. For
+instance, for Danish you might specify:
+
+  monthName: ["jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec"]
+
+If everything else fails, you can control the formatting by specifying
+a custom tick formatter function as usual. Here's a simple example
+which will format December 24 as 24/12:
+
+  tickFormatter: function (val, axis) {
+    var d = new Date(val);
+    return d.getUTCDate() + "/" + (d.getUTCMonth() + 1);
+  }
+
+Note that for the time mode "tickSize" and "minTickSize" are a bit
+special in that they are arrays on the form "[value, unit]" where unit
+is one of "second", "minute", "hour", "day", "month" and "year". So
+you can specify
+
+  minTickSize: [1, "month"]
+
+to get a tick interval size of at least 1 month and correspondingly,
+if axis.tickSize is [2, "day"] in the tick formatter, the ticks have
+been produced with two days in-between.
+
+
+
+Customizing the data series
+===========================
+
+  lines, points, bars: {
+    show: boolean
+    lineWidth: number
+    fill: boolean or number
+    fillColor: color
+  }
+
+  points: {
+    radius: number
+  }
+
+  bars: {
+    barWidth: number
+    align: "left" or "center"
+  }
+
+  colors: [ color1, color2, ... ]
+
+  shadowSize: number
+
+The most important options are "lines", "points" and "bars" that
+specifies whether and how lines, points and bars should be shown for
+each data series. You can specify them independently of each other,
+and Flot will happily draw each of them in turn, e.g.
+
+  var options = {
+    lines: { show: true, fill: true, fillColor: "rgba(255, 255, 255, 0.8)" },
+    points: { show: true, fill: false }
+  };
+
+"lineWidth" is the thickness of the line or outline in pixels.
+
+"fill" is whether the shape should be filled. For lines, this produces
+area graphs. You can use "fillColor" to specify the color of the fill.
+If "fillColor" evaluates to false (default for everything except
+points), the fill color is auto-set to the color of the data series.
+You can adjust the opacity of the fill by setting fill to a number
+between 0 (fully transparent) and 1 (fully opaque).
+
+"barWidth" is the width of the bars in units of the x axis, contrary
+to most other measures that are specified in pixels. For instance, for
+time series the unit is milliseconds so 24 * 60 * 60 * 1000 produces
+bars with the width of a day. "align" specifies whether a bar should
+be left-aligned (default) or centered on top of the value it
+represents.
+
+The "colors" array specifies a default color theme to get colors for
+the data series from. You can specify as many colors as you like, like
+this:
+
+  colors: ["#d18b2c", "#dba255", "#919733"]
+
+If there are more data series than colors, Flot will try to generate
+extra colors by lightening and darkening colors in the theme.
+
+"shadowSize" is the default size of shadows in pixels. Set it to 0 to
+remove shadows.
+
+
+Customizing the grid
+====================
+
+  grid: {
+    color: color
+    backgroundColor: color or null
+    tickColor: color
+    labelMargin: number
+    markings: array of markings or (fn: axes -> array of markings)
+    borderWidth: number
+    clickable: boolean
+    hoverable: boolean
+    autoHighlight: boolean
+    mouseActiveRadius: number
+  }
+
+The grid is the thing with the axes and a number of ticks. "color"
+is the color of the grid itself whereas "backgroundColor" specifies
+the background color inside the grid area. The default value of null
+means that the background is transparent. You should only need to set
+backgroundColor if you want the grid area to be a different color from the
+page color. Otherwise you might as well just set the background color
+of the page with CSS.
+
+"tickColor" is the color of the ticks and "labelMargin" is the spacing
+between tick labels and the grid. Note that you can style the tick
+labels with CSS, e.g. to change the color. They have class "tickLabel".
+"borderWidth" is the width of the border around the plot. Set it to 0
+to disable the border.
+
+"markings" is used to draw simple lines and rectangular areas in the
+background of the plot. You can either specify an array of ranges on
+the form { xaxis: { from, to }, yaxis: { from, to } } (secondary axis
+coordinates with x2axis/y2axis) or with a function that returns such
+an array given the axes for the plot in an object as the first
+parameter.
+
+You can set the color of markings by specifying "color" in the ranges
+object. Here's an example array:
+
+  markings: [ { xaxis: { from: 0, to: 2 }, yaxis: { from: 10, to: 10 }, color: "#bb0000" }, ... ]
+
+If you leave out one of the values, that value is assumed to go to the
+border of the plot. So for example if you only specify { xaxis: {
+from: 0, to: 2 } } it means an area that extends from the top to the
+bottom of the plot in the x range 0-2.
+
+A line is drawn if from and to are the same, e.g.
+
+  markings: [ { yaxis: { from: 1, to: 1 } }, ... ]
+
+would draw a line parallel to the x axis at y = 1. You can control the
+line width with "lineWidth" in the ranges objects.
+
+An example function might look like this:
+
+  markings: function (axes) {
+    var markings = [];
+    for (var x = Math.floor(axes.xaxis.min); x < axes.xaxis.max; x += 2)
+      markings.push({ xaxis: { from: x, to: x + 1 } });
+    return markings;
+  }
+
+
+If you set "clickable" to true, the plot will listen for click events
+on the plot area and fire a "plotclick" event on the placeholder with
+a position and a nearby data item object as parameters. The coordinates
+are available both in the unit of the axes (not in pixels) and in
+global screen coordinates.
+
+Likewise, if you set "hoverable" to true, the plot will listen for
+mouse move events on the plot area and fire a "plothover" event with
+the same parameters as the "plotclick" event. If "autoHighlight" is
+true (the default), nearby data items are highlighted automatically.
+If needed, you can disable highlighting and control it yourself with
+the highlight/unhighlight plot methods described elsewhere.
+
+You can use "plotclick" and "plothover" events like this:
+
+    $.plot($("#placeholder"), [ d ], { grid: { clickable: true } });
+
+    $("#placeholder").bind("plotclick", function (event, pos, item) {
+        alert("You clicked at " + pos.x + ", " + pos.y);
+        // secondary axis coordinates if present are in pos.x2, pos.y2,
+        // if you need global screen coordinates, they are pos.pageX, pos.pageY
+
+        if (item) {
+          highlight(item.series, item.datapoint);
+          alert("You clicked a point!");
+        }
+    });
+
+The item object in this example is either null or a nearby object on the form:
+
+  item: {
+      datapoint: the point as you specified it in the data, e.g. [0, 2]
+      dataIndex: the index of the point in the data array
+      series: the series object
+      seriesIndex: the index of the series
+      pageX, pageY: the global screen coordinates of the point
+  }
+
+For instance, if you have specified the data like this 
+
+    $.plot($("#placeholder"), [ { label: "Foo", data: [[0, 10], [7, 3]] } ], ...);
+
+and the mouse is near the point (7, 3), "datapoint" is the [7, 3] we
+specified, "dataIndex" will be 1, "series" is a normalized series
+object with among other things the "Foo" label in series.label and the
+color in series.color, and "seriesIndex" is 0.
+
+If you use the above events to update some other information and want
+to clear out that info in case the mouse goes away, you'll probably
+also need to listen to "mouseout" events on the placeholder div.
+
+"mouseActiveRadius" specifies how far the mouse can be from an item
+and still activate it. If there are two or more points within this
+radius, Flot chooses the closest item. For bars, the top-most bar
+(from the latest specified data series) is chosen.
+
+
+Customizing the selection
+=========================
+
+  selection: {
+    mode: null or "x" or "y" or "xy",
+    color: color
+  }
+
+You enable selection support by setting the mode to one of "x", "y" or
+"xy". In "x" mode, the user will only be able to specify the x range,
+similarly for "y" mode. For "xy", the selection becomes a rectangle
+where both ranges can be specified. "color" is color of the selection.
+
+When selection support is enabled, a "plotselected" event will be emitted
+on the DOM element you passed into the plot function. The event
+handler gets one extra parameter with the ranges selected on the axes,
+like this:
+
+  placeholder.bind("plotselected", function(event, ranges) {
+    alert("You selected " + ranges.xaxis.from + " to " + ranges.xaxis.to)
+    // similar for yaxis, secondary axes are in x2axis
+    // and y2axis if present
+  });
+
+
+Plot Methods
+------------
+
+The Plot object returned from the plot function has some methods you
+can call:
+
+  - clearSelection()
+
+    Clear the selection rectangle.
+
+
+  - setSelection(ranges, preventEvent)
+
+    Set the selection rectangle. The passed in ranges is on the same
+    form as returned in the "plotselected" event. If the selection
+    mode is "x", you should put in either an xaxis (or x2axis) object,
+    if the mode is "y" you need to put in an yaxis (or y2axis) object
+    and both xaxis/x2axis and yaxis/y2axis if the selection mode is
+    "xy", like this:
+
+      setSelection({ xaxis: { from: 0, to: 10 }, yaxis: { from: 40, to: 60 } });
+
+    setSelection will trigger the "plotselected" event when called. If
+    you don't want that to happen, e.g. if you're inside a
+    "plotselected" handler, pass true as the second parameter.
+    
+
+  - highlight(series, datapoint)
+
+    Highlight a specific datapoint in the data series. You can either
+    specify the actual objects, e.g. if you got them from a
+    "plotclick" event, or you can specify the indices, e.g.
+    highlight(1, 3) to highlight the fourth point in the second series.
+
+  
+  - unhighlight(series, datapoint)
+
+    Remove the highlighting of the point, same parameters as highlight.
+
+
+  - setData(data)
+
+    You can use this to reset the data used. Note that axis scaling,
+    ticks, legend etc. will not be recomputed (use setupGrid() to do
+    that). You'll probably want to call draw() afterwards.
+
+    You can use this function to speed up redrawing a plot if you know
+    that the axes won't change. Put in the new data with
+    setData(newdata) and call draw() afterwards, and you're good to
+    go.
+
+    
+  - setupGrid()
+
+    Recalculate and set axis scaling, ticks, legend etc.
+
+    Note that because of the drawing model of the canvas, this
+    function will immediately redraw (actually reinsert in the DOM)
+    the labels and the legend, but not the actual tick lines because
+    they're drawn on the canvas. You need to call draw() to get the
+    canvas redrawn.
+    
+  - draw()
+
+    Redraws the canvas.
+    
+
+There are also some members that let you peek inside the internal
+workings of Flot which in some cases is useful. Note that if you change
+something in the objects returned, you're changing the objects used by
+Flot to keep track of its state, so be careful.
+
+  - getData()
+
+    Returns an array of the data series currently used on normalized
+    form with missing settings filled in according to the global
+    options. So for instance to find out what color Flot has assigned
+    to the data series, you could do this:
+
+      var series = plot.getData();
+      for (var i = 0; i < series.length; ++i)
+        alert(series[i].color);
+
+
+  - getAxes()
+
+    Gets an object with the axes settings as { xaxis, yaxis, x2axis,
+    y2axis }. Various things are stuffed inside an axis object, e.g.
+    you could use getAxes().xaxis.ticks to find out what the ticks are
+    for the xaxis.
+    
+
+  - getCanvas()
+
+    Returns the canvas used for drawing in case you need to hack on it
+    yourself. You'll probably need to get the plot offset too.
+
+  
+  - getPlotOffset()
+
+    Gets the offset that the grid has within the canvas as an object
+    with distances from the canvas edges as "left", "right", "top",
+    "bottom". I.e., if you draw a circle on the canvas with the center
+    placed at (left, top), its center will be at the top-most, left
+    corner of the grid.
+
+

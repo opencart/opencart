@@ -1,0 +1,159 @@
+<%
+ * FCKeditor - The text editor for Internet - http://www.fckeditor.net
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ *
+ * == BEGIN LICENSE ==
+ *
+ * Licensed under the terms of any of the following licenses at your
+ * choice:
+ *
+ *  - GNU General Public License Version 2 or later (the "GPL")
+ *    http://www.gnu.org/licenses/gpl.html
+ *
+ *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+ *    http://www.gnu.org/licenses/lgpl.html
+ *
+ *  - Mozilla Public License Version 1.1 or later (the "MPL")
+ *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *
+ * == END LICENSE ==
+ *
+ * This is the integration file for Active FoxPro Pages.
+ *
+
+DEFINE CLASS goFckeditor AS CONTAINER OLEPUBLIC
+
+	cInstanceName =""
+	BasePath =""
+	cWIDTH =""
+	cHEIGHT =""
+	ToolbarSet =""
+	cValue=""
+	DIMENSION aConfig(10,2)
+
+&& -----------------------------------------------------------------------
+	FUNCTION fckeditor( tcInstanceName )
+		LOCAL lnLoop,lnLoop2
+		THIS.cInstanceName	= tcInstanceName
+		THIS.BasePath	= '/fckeditor/'
+		THIS.cWIDTH		= '100%'
+		THIS.cHEIGHT	= '200'
+		THIS.ToolbarSet	= 'Default'
+		THIS.cValue		= ''
+		FOR lnLoop=1 TO 10
+			FOR lnLoop2=1 TO 2
+				THIS.aConfig(lnLoop,lnLoop2)	= ""
+			NEXT
+		NEXT
+		RETURN
+	ENDFUNC
+
+
+&& -----------------------------------------------------------------------
+	FUNCTION CREATE()
+		? THIS.CreateHtml()
+		RETURN
+	ENDFUNC
+
+&& -----------------------------------------------------------------------
+	FUNCTION CreateHtml()
+		LOCAL html
+		LOCAL lcLink
+
+		HtmlValue = THIS.cValue		&& HTMLSPECIALCHARS()
+
+		html = []
+		IF THIS.IsCompatible()
+			lcLink = THIS.BasePath+[editor/fckeditor.html?InstanceName=]+THIS.cInstanceName
+
+			IF ( !THIS.ToolbarSet == '' )
+				lcLink = lcLink + [&Toolbar=]+THIS.ToolbarSet
+			ENDIF
+
+			&& Render the LINKED HIDDEN FIELD.
+			html = html + [<input type="hidden" id="]+THIS.cInstanceName +[" name="]+THIS.cInstanceName +[" value="]+HtmlValue+[" style="display:none" />]
+
+			&& Render the configurations HIDDEN FIELD.
+			html = html + [<input type="hidden" id="]+THIS.cInstanceName +[___Config" value="]+THIS.GetConfigFieldString() + [" style="display:none" />] +CHR(13)+CHR(10)
+
+			&& Render the EDITOR IFRAME.
+			html = html + [<iframe id="]+THIS.cInstanceName +[___Frame" src="Link" width="]+THIS.cWIDTH+[" height="]+THIS.cHEIGHT+[" frameborder="0" scrolling="no"></iframe>]
+		ELSE
+			IF ( AT("%", THIS.cWIDTH)=0 )
+				WidthCSS = THIS.cWIDTH + 'px'
+			ELSE
+				WidthCSS = THIS.cWIDTH
+			ENDIF
+
+			IF ( AT("%",THIS.cHEIGHT)=0  )
+				HeightCSS = THIS.cHEIGHT + 'px'
+			ELSE
+				HeightCSS = THIS.cHEIGHT
+			ENDIF
+
+			html = html + [<textarea name="]+THIS.cInstanceName +[" rows="4" cols="40" style="width: ]+WidthCSS+[ height: ]+HeightCSS+[">]+HtmlValue+[</textarea>]
+		ENDIF
+
+		RETURN (html)
+	ENDFUNC
+
+
+&& -----------------------------------------------------------------------
+	FUNCTION IsCompatible()
+		LOCAL llRetval
+		LOCAL sAgent
+
+		llRetval=.F.
+
+		SET POINT TO "."
+
+		sAgent = LOWER(ALLTRIM(request.servervariables("HTTP_USER_AGENT")))
+
+		IF AT("msie",sAgent) >0 .AND. AT("mac",sAgent)=0 .AND. AT("opera",sAgent)=0
+			iVersion=VAL(SUBSTR(sAgent,AT("msie",sAgent)+5,3))
+			llRetval= iVersion > 5.5
+		ELSE
+			IF AT("gecko/",sAgent)>0
+				iVersion=VAL(SUBSTR(sAgent,AT("gecko/",sAgent)+6,8))
+				llRetval =iVersion > 20030210
+			ENDIF
+		ELSE
+			IF AT("opera/",sAgent)>0
+				iVersion=VAL(SUBSTR(sAgent,AT("opera/",sAgent)+6,4))
+				llRetval =iVersion >= 9.5
+			ENDIF
+		ELSE
+			IF AT("applewebkit/",sAgent)>0
+				iVersion=VAL(SUBSTR(sAgent,AT("applewebkit/",sAgent)+12,3))
+				llRetval =iVersion >= 522
+			ENDIF
+		ENDIF
+
+		SET POINT TO
+
+		RETURN (llRetval)
+	ENDFUNC
+
+&& -----------------------------------------------------------------------
+	FUNCTION GetConfigFieldString()
+		LOCAL sParams
+		LOCAL bFirst
+		LOCAL sKey
+		sParams = ""
+		bFirst = .T.
+		FOR lnLoop=1 TO 10 && ALEN(this.aconfig)
+			IF !EMPTY(THIS.aConfig(lnLoop,1))
+				IF bFirst = .F.
+					sParams = sParams + "&"
+				ELSE
+					bFirst = .F.
+				ENDIF
+				sParams = sParams +THIS.aConfig(lnLoop,1)+[=]+THIS.aConfig(lnLoop,2)
+			ELSE
+				EXIT
+			ENDIF
+		NEXT
+		RETURN(sParams)
+	ENDFUNC
+ENDDEFINE
+%>

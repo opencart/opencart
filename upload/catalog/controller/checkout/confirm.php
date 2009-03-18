@@ -45,7 +45,7 @@ class ControllerCheckoutConfirm extends Controller {
 		
 		foreach ($results as $result) {
 			$this->load->model('total/' . $result['key']);
-						
+			echo $total . '<br />';			
 			$this->{'model_total_' . $result['key']}->getTotal($total_data, $total, $taxes);
 		}
 		

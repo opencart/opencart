@@ -1504,7 +1504,7 @@ CREATE TABLE IF NOT EXISTS `zone` (
   `code` varchar(32) NOT NULL default '',
   `name` varchar(32) NOT NULL default '',
   PRIMARY KEY  (`zone_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3842 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3843 ;
 
 --
 -- Dumping data for table `zone`
@@ -4999,7 +4999,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3484, 220, 'DN', 'Dnipropetrovs''k'),
 (3485, 220, 'DO', 'Donets''k'),
 (3486, 220, 'IV', 'Ivano-Frankivs''k'),
-(3487, 220, 'KL', 'Kharkiv Kherson'),
+(3487, 220, 'KH', 'Kharkiv'),
 (3488, 220, 'KM', 'Khmel''nyts''kyy'),
 (3489, 220, 'KR', 'Kirovohrad'),
 (3490, 220, 'KV', 'Kiev'),
@@ -5353,7 +5353,9 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3838, 239, 'MV', 'Masvingo'),
 (3839, 239, 'MN', 'Matabeleland North'),
 (3840, 239, 'MS', 'Matabeleland South'),
-(3841, 239, 'MD', 'Midlands');
+(3841, 239, 'MD', 'Midlands'),
+(3842, 220, 'KS', 'Kherson')
+;
 
 -- --------------------------------------------------------
 

@@ -5003,7 +5003,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3488, 220, 'KM', 'Khmel''nyts''kyy'),
 (3489, 220, 'KR', 'Kirovohrad'),
 (3490, 220, 'KV', 'Kiev'),
-(3491, 220, 'KY', 'Kyyiv'),
+(3491, 220, 'KY', 'Kievskaya oblast'''),
 (3492, 220, 'LU', 'Luhans''k'),
 (3493, 220, 'LV', 'L''viv'),
 (3494, 220, 'MY', 'Mykolayiv'),
@@ -5354,8 +5354,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3839, 239, 'MN', 'Matabeleland North'),
 (3840, 239, 'MS', 'Matabeleland South'),
 (3841, 239, 'MD', 'Midlands'),
-(3842, 220, 'KS', 'Kherson')
-;
+(3842, 220, 'KS', 'Kherson');
 
 -- --------------------------------------------------------
 

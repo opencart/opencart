@@ -8,6 +8,7 @@
   <thead>
     <tr>
       <td class="left"><?php echo $column_name; ?></td>
+      <td class="left"><?php echo $column_development; ?></td>
       <td class="left"><?php echo $column_status; ?></td>
       <td class="right"><?php echo $column_sort_order; ?></td>
       <td class="right"><?php echo $column_action; ?></td>
@@ -20,6 +21,7 @@
     <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
     <tr class="<?php echo $class; ?>">
       <td class="left"><?php echo $extension['name']; ?></td>
+      <td class="left"><?php echo $extension['development'] ?></td>
       <td class="left"><?php echo $extension['status'] ?></td>
       <td class="right"><?php echo $extension['sort_order']; ?></td>
       <td class="right"><?php foreach ($extension['action'] as $action) { ?>

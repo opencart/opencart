@@ -5,6 +5,7 @@ $_['heading_title']      = 'Cash On Delivery';
 // Text
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified Cash On Delivery payment module!';
+$_['text_development']   = '<span style="color: green;">Ready</span>';
 
 // Entry
 $_['entry_status']       = 'Status:';

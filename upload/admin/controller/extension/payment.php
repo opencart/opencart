@@ -24,6 +24,7 @@ class ControllerExtensionPayment extends Controller {
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 
 		$this->data['column_name'] = $this->language->get('column_name');
+		$this->data['column_development'] = $this->language->get('column_development');
 		$this->data['column_status'] = $this->language->get('column_status');
 		$this->data['column_sort_order'] = $this->language->get('column_sort_order');
 		$this->data['column_action'] = $this->language->get('column_action');
@@ -65,10 +66,11 @@ class ControllerExtensionPayment extends Controller {
 			}
 									
 			$this->data['extensions'][] = array(
-				'name'       => $this->language->get('heading_title'),
-				'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'sort_order' => $this->config->get($extension . '_sort_order'),
-				'action'     => $action
+				'name'        => $this->language->get('heading_title'),
+				'development' => $this->language->get('text_development'),
+				'status'      => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'sort_order'  => $this->config->get($extension . '_sort_order'),
+				'action'      => $action
 			);
 		}
 						

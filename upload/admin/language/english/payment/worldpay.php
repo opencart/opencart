@@ -1,10 +1,11 @@
 <?php
 // Heading
-$_['heading_title']      = 'WordPay <span style="color: red;">(In Development)</span>';
+$_['heading_title']      = 'WordPay';
 
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified WordPay account details!';
+$_['text_development']   = '<span style="color: red;">In Development</span>';
 $_['text_successful']    = 'On - Always Successful';
 $_['text_declined']      = 'On - Always Declined';
 $_['text_off']           = 'Off';

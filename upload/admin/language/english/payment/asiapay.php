@@ -1,10 +1,11 @@
 <?php
 // Heading
-$_['heading_title']      = 'AsiaPay <span style="color: red;">(In Development)</span>';
+$_['heading_title']      = 'AsiaPay';
 
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified AsiaPay account details!';
+$_['text_development']   = '<span style="color: red;">In Development</span>';
 $_['text_standard']      = 'Standard';
 $_['text_ipn']           = 'IPN (Recommended)';
 

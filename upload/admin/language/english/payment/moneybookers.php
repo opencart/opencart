@@ -1,10 +1,11 @@
 <?php
 // Heading
-$_['heading_title']      = 'Moneybookers <span style="color: red;">(In Development)</span>';
+$_['heading_title']      = 'Moneybookers';
 
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified Moneybookers account details!';
+$_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
 $_['entry_status']       = 'Status:';

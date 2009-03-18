@@ -1,10 +1,11 @@
 <?php
 // Heading
-$_['heading_title']      = 'Authorize.Net <span style="color: red;">(In Development)</span>';
+$_['heading_title']      = 'Authorize.Net';
 
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified Authorize.Net account details!';
+$_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
 $_['entry_status']       = 'Status:';

@@ -1,10 +1,11 @@
 <?php
 // Heading
-$_['heading_title']      = 'CCNow <span style="color: red;">(In Development)</span>';
+$_['heading_title']      = 'CCNow';
 
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified CCNow account details!';
+$_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
 $_['entry_status']       = 'Status:';

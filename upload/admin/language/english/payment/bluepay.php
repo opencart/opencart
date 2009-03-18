@@ -1,10 +1,11 @@
 <?php
 // Heading
-$_['heading_title']      = 'BluePay <span style="color: red;">(In Development)</span>';
+$_['heading_title']      = 'BluePay';
 
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified BluePay account details!';
+$_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
 $_['entry_status']       = 'Status:';

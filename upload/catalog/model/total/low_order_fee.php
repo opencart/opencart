@@ -10,9 +10,9 @@ class ModelTotalLowOrderFee extends Model {
         		'value'      => $this->config->get('low_order_fee_fee'),
 				'sort_order' => $this->config->get('low_order_fee_sort_order')
 			);
+			
+			$total += $this->config->get('low_order_fee_fee');
 		}
-		
-		$total += $this->config->get('low_order_fee_fee');
 	}
 }
 ?>

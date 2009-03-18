@@ -10,9 +10,9 @@ class ModelTotalSubTotal extends Model {
         		'value'      => $this->cart->getSubTotal(),
 				'sort_order' => $this->config->get('sub_total_sort_order')
 			);
+			
+			$total += $this->cart->getSubTotal();
 		}
-		
-		$total += $this->cart->getSubTotal();
 	}
 }
 ?>

@@ -14,7 +14,6 @@ $_['text_average']       = 'Average Rating:';
 $_['text_stars']         = '%s out of 5 Stars!';
 $_['text_no_rating']     = 'Not Rated';
 $_['text_qty']           = 'Qty:';
-$_['text_write']         = 'Write Review';
 $_['text_note']          = '<span style="color: #FF0000;">Note:</span> HTML is not translated!';
 $_['text_success']       = 'Thank you for your review. It has been submitted to the webmaster for approval.';
 

@@ -1,0 +1,3 @@
+http://www.wunderground.com/%s.html
+
+wuxml/global/stations/34300

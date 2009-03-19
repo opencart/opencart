@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 2.11.9.4
+-- version 3.1.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 15, 2009 at 09:59 PM
--- Server version: 5.0.67
--- PHP Version: 5.2.6
+-- Generation Time: Mar 19, 2009 at 02:04 PM
+-- Server version: 5.1.30
+-- PHP Version: 5.2.9
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -16,7 +16,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `opencart_dev`
+-- Database: `opencart`
 --
 
 -- --------------------------------------------------------
@@ -25,28 +25,30 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `address`
 --
 
-CREATE TABLE IF NOT EXISTS `address` (
-  `address_id` int(11) NOT NULL auto_increment,
-  `customer_id` int(11) NOT NULL default '0',
-  `company` varchar(32) collate utf8_unicode_ci default NULL,
-  `firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `address_1` varchar(128) collate utf8_unicode_ci NOT NULL,
-  `address_2` varchar(128) collate utf8_unicode_ci default NULL,
-  `postcode` varchar(10) collate utf8_unicode_ci NOT NULL default '',
-  `city` varchar(128) collate utf8_unicode_ci NOT NULL,
-  `country_id` int(11) NOT NULL default '0',
-  `zone_id` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`address_id`),
+DROP TABLE IF EXISTS `address`;
+CREATE TABLE `address` (
+  `address_id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` int(11) NOT NULL DEFAULT '0',
+  `company` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `firstname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `lastname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `address_1` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `address_2` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `postcode` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `city` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `country_id` int(11) NOT NULL DEFAULT '0',
+  `zone_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`address_id`),
   KEY `customer_id` (`customer_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `address`
 --
 
 INSERT INTO `address` (`address_id`, `customer_id`, `company`, `firstname`, `lastname`, `address_1`, `address_2`, `postcode`, `city`, `country_id`, `zone_id`) VALUES
-(2, 2, 'OpenCart', 'Daniel', 'Kerr', '34 Lancaster Ave', '', 'FY5 4NN', 'Thornton-Cleveleys', 222, 3563);
+(2, 2, 'OpenCart', 'Daniel', 'Kerr', '34 Lancaster Ave', '', 'FY5 4NN', 'Thornton-Cleveleys', 222, 3563),
+(4, 2, 'OpenCart', 'Daniel', 'Kerr', '34 Lancaster Ave', '', 'FY5 4NN', 'Thornton-Cleveleys', 222, 3563);
 
 -- --------------------------------------------------------
 
@@ -54,14 +56,15 @@ INSERT INTO `address` (`address_id`, `customer_id`, `company`, `firstname`, `las
 -- Table structure for table `category`
 --
 
-CREATE TABLE IF NOT EXISTS `category` (
-  `category_id` int(11) NOT NULL auto_increment,
-  `image` varchar(255) collate utf8_unicode_ci NOT NULL default '0',
-  `parent_id` int(11) NOT NULL default '0',
-  `sort_order` int(3) default '0',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`category_id`)
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
+  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `sort_order` int(3) DEFAULT '0',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`category_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=35 ;
 
 --
@@ -90,11 +93,12 @@ INSERT INTO `category` (`category_id`, `image`, `parent_id`, `sort_order`, `date
 -- Table structure for table `category_description`
 --
 
-CREATE TABLE IF NOT EXISTS `category_description` (
-  `category_id` int(11) NOT NULL default '0',
-  `language_id` int(11) NOT NULL default '1',
-  `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  PRIMARY KEY  (`category_id`,`language_id`),
+DROP TABLE IF EXISTS `category_description`;
+CREATE TABLE `category_description` (
+  `category_id` int(11) NOT NULL DEFAULT '0',
+  `language_id` int(11) NOT NULL DEFAULT '1',
+  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`category_id`,`language_id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -124,13 +128,14 @@ INSERT INTO `category_description` (`category_id`, `language_id`, `name`) VALUES
 -- Table structure for table `country`
 --
 
-CREATE TABLE IF NOT EXISTS `country` (
-  `country_id` int(11) NOT NULL auto_increment,
-  `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `iso_code_2` varchar(2) collate utf8_unicode_ci NOT NULL default '',
-  `iso_code_3` varchar(3) collate utf8_unicode_ci NOT NULL default '',
-  `address_format` text collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`country_id`)
+DROP TABLE IF EXISTS `country`;
+CREATE TABLE `country` (
+  `country_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `iso_code_2` varchar(2) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `iso_code_3` varchar(3) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `address_format` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`country_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=240 ;
 
 --
@@ -384,20 +389,21 @@ INSERT INTO `country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `addres
 -- Table structure for table `coupon`
 --
 
-CREATE TABLE IF NOT EXISTS `coupon` (
-  `coupon_id` int(11) NOT NULL auto_increment,
-  `code` varchar(10) collate utf8_unicode_ci NOT NULL,
-  `type` char(1) collate utf8_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `coupon`;
+CREATE TABLE `coupon` (
+  `coupon_id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `type` char(1) COLLATE utf8_unicode_ci NOT NULL,
   `discount` decimal(15,4) NOT NULL,
   `shipping` int(1) NOT NULL,
   `total` decimal(15,4) NOT NULL,
   `date_start` date NOT NULL,
   `date_end` date NOT NULL,
   `uses_total` int(11) NOT NULL,
-  `uses_customer` varchar(11) collate utf8_unicode_ci NOT NULL,
+  `uses_customer` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
   `status` int(1) NOT NULL,
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`coupon_id`)
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`coupon_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
@@ -415,12 +421,13 @@ INSERT INTO `coupon` (`coupon_id`, `code`, `type`, `discount`, `shipping`, `tota
 -- Table structure for table `coupon_description`
 --
 
-CREATE TABLE IF NOT EXISTS `coupon_description` (
+DROP TABLE IF EXISTS `coupon_description`;
+CREATE TABLE `coupon_description` (
   `coupon_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(128) collate utf8_unicode_ci NOT NULL,
-  `description` text collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`coupon_id`,`language_id`)
+  `name` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`coupon_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -438,11 +445,12 @@ INSERT INTO `coupon_description` (`coupon_id`, `language_id`, `name`, `descripti
 -- Table structure for table `coupon_product`
 --
 
-CREATE TABLE IF NOT EXISTS `coupon_product` (
-  `coupon_product_id` int(11) NOT NULL auto_increment,
+DROP TABLE IF EXISTS `coupon_product`;
+CREATE TABLE `coupon_product` (
+  `coupon_product_id` int(11) NOT NULL AUTO_INCREMENT,
   `coupon_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  PRIMARY KEY  (`coupon_product_id`)
+  PRIMARY KEY (`coupon_product_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=23 ;
 
 --
@@ -456,13 +464,14 @@ CREATE TABLE IF NOT EXISTS `coupon_product` (
 -- Table structure for table `coupon_redeem`
 --
 
-CREATE TABLE IF NOT EXISTS `coupon_redeem` (
-  `coupon_redeem_id` int(11) NOT NULL auto_increment,
+DROP TABLE IF EXISTS `coupon_redeem`;
+CREATE TABLE `coupon_redeem` (
+  `coupon_redeem_id` int(11) NOT NULL AUTO_INCREMENT,
   `coupon_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`coupon_redeem_id`)
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`coupon_redeem_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -476,17 +485,18 @@ CREATE TABLE IF NOT EXISTS `coupon_redeem` (
 -- Table structure for table `currency`
 --
 
-CREATE TABLE IF NOT EXISTS `currency` (
-  `currency_id` int(11) NOT NULL auto_increment,
-  `title` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `code` varchar(3) collate utf8_unicode_ci NOT NULL default '',
-  `symbol_left` varchar(12) collate utf8_unicode_ci default NULL,
-  `symbol_right` varchar(12) collate utf8_unicode_ci default NULL,
-  `decimal_place` char(1) collate utf8_unicode_ci default NULL,
-  `value` float(13,8) default NULL,
+DROP TABLE IF EXISTS `currency`;
+CREATE TABLE `currency` (
+  `currency_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `code` varchar(3) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `symbol_left` varchar(12) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `symbol_right` varchar(12) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `decimal_place` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `value` float(13,8) DEFAULT NULL,
   `status` int(1) NOT NULL,
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`currency_id`)
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`currency_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
@@ -504,21 +514,22 @@ INSERT INTO `currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_r
 -- Table structure for table `customer`
 --
 
-CREATE TABLE IF NOT EXISTS `customer` (
-  `customer_id` int(11) NOT NULL auto_increment,
-  `firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `email` varchar(96) collate utf8_unicode_ci NOT NULL default '',
-  `telephone` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `fax` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `password` varchar(40) collate utf8_unicode_ci NOT NULL default '',
-  `cart` text collate utf8_unicode_ci,
-  `newsletter` int(1) NOT NULL default '0',
-  `address_id` int(11) NOT NULL default '0',
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE `customer` (
+  `customer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `lastname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(96) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `telephone` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `fax` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `password` varchar(40) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `cart` text COLLATE utf8_unicode_ci,
+  `newsletter` int(1) NOT NULL DEFAULT '0',
+  `address_id` int(11) NOT NULL DEFAULT '0',
   `status` int(1) NOT NULL,
-  `ip` varchar(15) collate utf8_unicode_ci default NULL,
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`customer_id`)
+  `ip` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -532,13 +543,14 @@ CREATE TABLE IF NOT EXISTS `customer` (
 -- Table structure for table `download`
 --
 
-CREATE TABLE IF NOT EXISTS `download` (
-  `download_id` int(11) NOT NULL auto_increment,
-  `filename` varchar(128) collate utf8_unicode_ci NOT NULL default '',
-  `mask` varchar(128) collate utf8_unicode_ci NOT NULL default '',
-  `remaining` int(11) NOT NULL default '0',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`download_id`)
+DROP TABLE IF EXISTS `download`;
+CREATE TABLE `download` (
+  `download_id` int(11) NOT NULL AUTO_INCREMENT,
+  `filename` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `mask` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `remaining` int(11) NOT NULL DEFAULT '0',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`download_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
@@ -552,11 +564,12 @@ CREATE TABLE IF NOT EXISTS `download` (
 -- Table structure for table `download_description`
 --
 
-CREATE TABLE IF NOT EXISTS `download_description` (
-  `download_id` int(11) NOT NULL default '0',
-  `language_id` int(11) NOT NULL default '0',
-  `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  PRIMARY KEY  (`download_id`,`language_id`)
+DROP TABLE IF EXISTS `download_description`;
+CREATE TABLE `download_description` (
+  `download_id` int(11) NOT NULL DEFAULT '0',
+  `language_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`download_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -570,12 +583,13 @@ CREATE TABLE IF NOT EXISTS `download_description` (
 -- Table structure for table `extension`
 --
 
-CREATE TABLE IF NOT EXISTS `extension` (
-  `extension_id` int(11) NOT NULL auto_increment,
-  `type` varchar(32) collate utf8_unicode_ci NOT NULL,
-  `key` varchar(32) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`extension_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=67 ;
+DROP TABLE IF EXISTS `extension`;
+CREATE TABLE `extension` (
+  `extension_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `key` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`extension_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=68 ;
 
 --
 -- Dumping data for table `extension`
@@ -591,7 +605,8 @@ INSERT INTO `extension` (`extension_id`, `type`, `key`) VALUES
 (63, 'total', 'low_order_fee'),
 (57, 'total', 'sub_total'),
 (58, 'total', 'tax'),
-(59, 'total', 'total');
+(59, 'total', 'total'),
+(67, 'payment', 'paypal');
 
 -- --------------------------------------------------------
 
@@ -599,13 +614,14 @@ INSERT INTO `extension` (`extension_id`, `type`, `key`) VALUES
 -- Table structure for table `geo_zone`
 --
 
-CREATE TABLE IF NOT EXISTS `geo_zone` (
-  `geo_zone_id` int(11) NOT NULL auto_increment,
-  `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `description` varchar(255) collate utf8_unicode_ci NOT NULL default '',
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`geo_zone_id`)
+DROP TABLE IF EXISTS `geo_zone`;
+CREATE TABLE `geo_zone` (
+  `geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`geo_zone_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
@@ -621,10 +637,11 @@ INSERT INTO `geo_zone` (`geo_zone_id`, `name`, `description`, `date_modified`, `
 -- Table structure for table `information`
 --
 
-CREATE TABLE IF NOT EXISTS `information` (
-  `information_id` int(11) NOT NULL auto_increment,
-  `sort_order` int(3) NOT NULL default '0',
-  PRIMARY KEY  (`information_id`)
+DROP TABLE IF EXISTS `information`;
+CREATE TABLE `information` (
+  `information_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sort_order` int(3) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`information_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
@@ -642,12 +659,13 @@ INSERT INTO `information` (`information_id`, `sort_order`) VALUES
 -- Table structure for table `information_description`
 --
 
-CREATE TABLE IF NOT EXISTS `information_description` (
-  `information_id` int(11) NOT NULL default '0',
-  `language_id` int(11) NOT NULL default '0',
-  `title` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `description` text collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`information_id`,`language_id`)
+DROP TABLE IF EXISTS `information_description`;
+CREATE TABLE `information_description` (
+  `information_id` int(11) NOT NULL DEFAULT '0',
+  `language_id` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`information_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -665,17 +683,18 @@ INSERT INTO `information_description` (`information_id`, `language_id`, `title`,
 -- Table structure for table `language`
 --
 
-CREATE TABLE IF NOT EXISTS `language` (
-  `language_id` int(11) NOT NULL auto_increment,
-  `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `code` varchar(5) collate utf8_unicode_ci NOT NULL,
-  `locale` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `image` varchar(64) collate utf8_unicode_ci default NULL,
-  `directory` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `filename` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `sort_order` int(3) default NULL,
+DROP TABLE IF EXISTS `language`;
+CREATE TABLE `language` (
+  `language_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `code` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `image` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `directory` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `filename` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `sort_order` int(3) DEFAULT NULL,
   `status` int(1) NOT NULL,
-  PRIMARY KEY  (`language_id`),
+  PRIMARY KEY (`language_id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
@@ -692,12 +711,13 @@ INSERT INTO `language` (`language_id`, `name`, `code`, `locale`, `image`, `direc
 -- Table structure for table `manufacturer`
 --
 
-CREATE TABLE IF NOT EXISTS `manufacturer` (
-  `manufacturer_id` int(11) NOT NULL auto_increment,
-  `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `image` varchar(255) collate utf8_unicode_ci NOT NULL default '0',
-  `sort_order` int(3) NOT NULL default '0',
-  PRIMARY KEY  (`manufacturer_id`)
+DROP TABLE IF EXISTS `manufacturer`;
+CREATE TABLE `manufacturer` (
+  `manufacturer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `sort_order` int(3) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`manufacturer_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 --
@@ -718,47 +738,48 @@ INSERT INTO `manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`) VA
 -- Table structure for table `order`
 --
 
-CREATE TABLE IF NOT EXISTS `order` (
-  `order_id` int(11) NOT NULL auto_increment,
-  `customer_id` int(11) NOT NULL default '0',
-  `firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `lastname` varchar(32) collate utf8_unicode_ci default NULL,
-  `telephone` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `fax` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `email` varchar(96) collate utf8_unicode_ci NOT NULL default '',
-  `shipping_firstname` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `shipping_lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `shipping_company` varchar(32) collate utf8_unicode_ci default NULL,
-  `shipping_address_1` varchar(128) collate utf8_unicode_ci NOT NULL,
-  `shipping_address_2` varchar(128) collate utf8_unicode_ci default NULL,
-  `shipping_city` varchar(128) collate utf8_unicode_ci NOT NULL,
-  `shipping_postcode` varchar(10) collate utf8_unicode_ci NOT NULL default '',
-  `shipping_zone` varchar(32) collate utf8_unicode_ci default NULL,
-  `shipping_country` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `shipping_address_format` text collate utf8_unicode_ci NOT NULL,
-  `shipping_method` varchar(128) collate utf8_unicode_ci NOT NULL default '',
-  `payment_firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `payment_lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `payment_company` varchar(32) collate utf8_unicode_ci default NULL,
-  `payment_address_1` varchar(128) collate utf8_unicode_ci NOT NULL,
-  `payment_address_2` varchar(128) collate utf8_unicode_ci default NULL,
-  `payment_city` varchar(128) collate utf8_unicode_ci NOT NULL,
-  `payment_postcode` varchar(10) collate utf8_unicode_ci NOT NULL default '',
-  `payment_zone` varchar(32) collate utf8_unicode_ci default NULL,
-  `payment_country` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `payment_address_format` text collate utf8_unicode_ci NOT NULL,
-  `payment_method` varchar(128) collate utf8_unicode_ci NOT NULL default '',
-  `total` decimal(15,4) NOT NULL default '0.0000',
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order` (
+  `order_id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` int(11) NOT NULL DEFAULT '0',
+  `firstname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `lastname` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `telephone` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `fax` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(96) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `shipping_firstname` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `shipping_lastname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `shipping_company` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `shipping_address_1` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `shipping_address_2` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `shipping_city` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `shipping_postcode` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `shipping_zone` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `shipping_country` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `shipping_address_format` text COLLATE utf8_unicode_ci NOT NULL,
+  `shipping_method` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `payment_firstname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `payment_lastname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `payment_company` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `payment_address_1` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `payment_address_2` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `payment_city` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `payment_postcode` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `payment_zone` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `payment_country` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `payment_address_format` text COLLATE utf8_unicode_ci NOT NULL,
+  `payment_method` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `total` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `order_status_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `currency_id` int(11) NOT NULL,
-  `currency` varchar(3) collate utf8_unicode_ci NOT NULL,
+  `currency` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
   `value` decimal(15,4) NOT NULL,
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  `confirm` int(1) NOT NULL default '0',
-  `ip` varchar(15) collate utf8_unicode_ci NOT NULL default '',
-  PRIMARY KEY  (`order_id`)
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `confirm` int(1) NOT NULL DEFAULT '0',
+  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -772,15 +793,16 @@ CREATE TABLE IF NOT EXISTS `order` (
 -- Table structure for table `order_download`
 --
 
-CREATE TABLE IF NOT EXISTS `order_download` (
-  `order_download_id` int(11) NOT NULL auto_increment,
-  `order_id` int(11) NOT NULL default '0',
-  `order_product_id` int(11) NOT NULL default '0',
-  `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `filename` varchar(128) collate utf8_unicode_ci NOT NULL default '',
-  `mask` varchar(128) collate utf8_unicode_ci NOT NULL default '',
-  `remaining` int(3) NOT NULL default '0',
-  PRIMARY KEY  (`order_download_id`)
+DROP TABLE IF EXISTS `order_download`;
+CREATE TABLE `order_download` (
+  `order_download_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL DEFAULT '0',
+  `order_product_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `filename` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `mask` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `remaining` int(3) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`order_download_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -794,20 +816,81 @@ CREATE TABLE IF NOT EXISTS `order_download` (
 -- Table structure for table `order_history`
 --
 
-CREATE TABLE IF NOT EXISTS `order_history` (
-  `order_history_id` int(11) NOT NULL auto_increment,
-  `order_id` int(11) NOT NULL default '0',
-  `order_status_id` int(5) NOT NULL default '0',
-  `notify` int(1) default '0',
-  `comment` text collate utf8_unicode_ci,
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`order_history_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+DROP TABLE IF EXISTS `order_history`;
+CREATE TABLE `order_history` (
+  `order_history_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL DEFAULT '0',
+  `order_status_id` int(5) NOT NULL DEFAULT '0',
+  `notify` int(1) DEFAULT '0',
+  `comment` text COLLATE utf8_unicode_ci,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`order_history_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=60 ;
 
 --
 -- Dumping data for table `order_history`
 --
 
+INSERT INTO `order_history` (`order_history_id`, `order_id`, `order_status_id`, `notify`, `comment`, `date_added`) VALUES
+(1, 1, 1, 1, '', '2009-03-17 02:18:28'),
+(2, 2, 1, 1, '', '2009-03-17 02:19:20'),
+(3, 3, 1, 1, '', '2009-03-17 02:19:48'),
+(4, 4, 1, 1, '', '2009-03-17 02:20:55'),
+(5, 5, 1, 1, '', '2009-03-17 02:21:21'),
+(6, 6, 1, 1, '', '2009-03-17 02:31:56'),
+(7, 7, 1, 1, '', '2009-03-17 02:41:17'),
+(8, 8, 1, 1, '', '2009-03-17 02:43:05'),
+(9, 9, 1, 1, '', '2009-03-17 02:44:08'),
+(10, 10, 1, 1, '', '2009-03-17 02:44:10'),
+(11, 11, 1, 1, '', '2009-03-17 11:16:20'),
+(12, 12, 1, 1, '', '2009-03-17 11:16:45'),
+(13, 13, 1, 1, '', '2009-03-17 11:16:50'),
+(14, 14, 1, 1, '', '2009-03-17 23:15:05'),
+(15, 15, 1, 1, '', '2009-03-18 00:07:00'),
+(16, 16, 1, 1, '', '2009-03-18 00:10:59'),
+(17, 17, 1, 1, '', '2009-03-18 00:21:25'),
+(18, 18, 1, 1, '', '2009-03-18 00:22:03'),
+(19, 19, 1, 1, '', '2009-03-18 00:22:23'),
+(20, 20, 1, 1, '', '2009-03-18 00:22:45'),
+(21, 21, 1, 1, '', '2009-03-18 00:23:09'),
+(22, 22, 1, 1, '', '2009-03-18 00:23:44'),
+(23, 23, 1, 1, '', '2009-03-18 00:25:51'),
+(24, 24, 1, 1, '', '2009-03-18 01:05:11'),
+(25, 25, 1, 1, '', '2009-03-18 01:05:48'),
+(26, 26, 1, 1, '', '2009-03-18 01:20:26'),
+(27, 27, 1, 1, '', '2009-03-18 01:45:29'),
+(28, 28, 1, 1, '', '2009-03-18 01:56:41'),
+(29, 29, 1, 1, '', '2009-03-18 01:57:54'),
+(30, 30, 1, 1, '', '2009-03-18 02:08:13'),
+(31, 31, 1, 1, '', '2009-03-18 02:08:33'),
+(32, 32, 1, 1, '', '2009-03-18 02:08:44'),
+(33, 33, 1, 1, '', '2009-03-18 02:10:18'),
+(34, 34, 1, 1, '', '2009-03-18 02:11:15'),
+(35, 35, 1, 1, '', '2009-03-18 02:11:35'),
+(36, 36, 1, 1, '', '2009-03-18 02:11:36'),
+(37, 37, 1, 1, '', '2009-03-18 02:11:50'),
+(38, 38, 1, 1, '', '2009-03-18 02:12:31'),
+(39, 39, 1, 1, '', '2009-03-18 02:13:12'),
+(40, 40, 1, 1, '', '2009-03-18 02:14:49'),
+(41, 41, 1, 1, '', '2009-03-18 02:14:52'),
+(42, 42, 1, 1, '', '2009-03-18 02:15:33'),
+(43, 43, 1, 1, '', '2009-03-18 02:15:50'),
+(44, 44, 1, 1, '', '2009-03-18 02:17:21'),
+(45, 45, 1, 1, '', '2009-03-18 02:17:41'),
+(46, 46, 1, 1, '', '2009-03-18 02:19:29'),
+(47, 47, 1, 1, '', '2009-03-18 02:28:34'),
+(48, 48, 1, 1, '', '2009-03-18 02:33:44'),
+(49, 49, 1, 1, '', '2009-03-18 02:34:02'),
+(50, 50, 1, 1, '', '2009-03-18 02:34:16'),
+(51, 51, 1, 1, '', '2009-03-18 02:34:45'),
+(52, 52, 1, 1, '', '2009-03-18 02:45:15'),
+(53, 53, 1, 1, '', '2009-03-18 17:30:00'),
+(54, 54, 1, 1, '', '2009-03-18 17:33:06'),
+(55, 55, 1, 1, '', '2009-03-18 17:34:55'),
+(56, 56, 1, 1, '', '2009-03-18 17:55:44'),
+(57, 57, 1, 1, '', '2009-03-18 17:56:50'),
+(58, 58, 1, 1, '', '2009-03-18 17:57:26'),
+(59, 59, 1, 1, '', '2009-03-18 18:40:41');
 
 -- --------------------------------------------------------
 
@@ -815,15 +898,16 @@ CREATE TABLE IF NOT EXISTS `order_history` (
 -- Table structure for table `order_option`
 --
 
-CREATE TABLE IF NOT EXISTS `order_option` (
-  `order_option_id` int(11) NOT NULL auto_increment,
-  `order_id` int(11) NOT NULL default '0',
-  `order_product_id` int(11) NOT NULL default '0',
-  `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `value` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `price` decimal(15,4) NOT NULL default '0.0000',
-  `prefix` char(1) collate utf8_unicode_ci NOT NULL default '',
-  PRIMARY KEY  (`order_option_id`)
+DROP TABLE IF EXISTS `order_option`;
+CREATE TABLE `order_option` (
+  `order_option_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL DEFAULT '0',
+  `order_product_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `value` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `prefix` char(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`order_option_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -837,18 +921,19 @@ CREATE TABLE IF NOT EXISTS `order_option` (
 -- Table structure for table `order_product`
 --
 
-CREATE TABLE IF NOT EXISTS `order_product` (
-  `order_product_id` int(11) NOT NULL auto_increment,
-  `order_id` int(11) NOT NULL default '0',
+DROP TABLE IF EXISTS `order_product`;
+CREATE TABLE `order_product` (
+  `order_product_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL DEFAULT '0',
   `product_id` int(11) NOT NULL,
-  `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `model` varchar(12) collate utf8_unicode_ci NOT NULL default '',
-  `price` decimal(15,4) NOT NULL default '0.0000',
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `model` varchar(12) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `discount` decimal(15,4) NOT NULL,
-  `total` decimal(15,4) NOT NULL default '0.0000',
-  `tax` decimal(15,4) NOT NULL default '0.0000',
-  `quantity` int(4) NOT NULL default '0',
-  PRIMARY KEY  (`order_product_id`)
+  `total` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `tax` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `quantity` int(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`order_product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -862,11 +947,12 @@ CREATE TABLE IF NOT EXISTS `order_product` (
 -- Table structure for table `order_status`
 --
 
-CREATE TABLE IF NOT EXISTS `order_status` (
-  `order_status_id` int(11) NOT NULL auto_increment,
+DROP TABLE IF EXISTS `order_status`;
+CREATE TABLE `order_status` (
+  `order_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL,
-  `name` varchar(32) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`order_status_id`,`language_id`)
+  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`order_status_id`,`language_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
 --
@@ -889,14 +975,15 @@ INSERT INTO `order_status` (`order_status_id`, `language_id`, `name`) VALUES
 -- Table structure for table `order_total`
 --
 
-CREATE TABLE IF NOT EXISTS `order_total` (
-  `order_total_id` int(10) unsigned NOT NULL auto_increment,
-  `order_id` int(11) NOT NULL default '0',
-  `title` varchar(255) collate utf8_unicode_ci NOT NULL default '',
-  `text` varchar(255) collate utf8_unicode_ci NOT NULL default '',
-  `value` decimal(15,4) NOT NULL default '0.0000',
+DROP TABLE IF EXISTS `order_total`;
+CREATE TABLE `order_total` (
+  `order_total_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `text` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `value` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `sort_order` int(3) NOT NULL,
-  PRIMARY KEY  (`order_total_id`),
+  PRIMARY KEY (`order_total_id`),
   KEY `idx_orders_total_orders_id` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -911,25 +998,26 @@ CREATE TABLE IF NOT EXISTS `order_total` (
 -- Table structure for table `product`
 --
 
-CREATE TABLE IF NOT EXISTS `product` (
-  `product_id` int(11) NOT NULL auto_increment,
-  `model` varchar(24) collate utf8_unicode_ci NOT NULL,
-  `quantity` int(4) NOT NULL default '0',
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `product_id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(24) COLLATE utf8_unicode_ci NOT NULL,
+  `quantity` int(4) NOT NULL DEFAULT '0',
   `stock_status_id` int(11) NOT NULL,
-  `image` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `manufacturer_id` int(11) NOT NULL default '0',
-  `shipping` int(1) NOT NULL default '1',
-  `price` decimal(15,4) NOT NULL default '0.0000',
+  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `manufacturer_id` int(11) NOT NULL DEFAULT '0',
+  `shipping` int(1) NOT NULL DEFAULT '1',
+  `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `tax_class_id` int(11) NOT NULL,
-  `date_available` date default NULL,
-  `weight` decimal(5,2) NOT NULL default '0.00',
-  `weight_class_id` int(11) NOT NULL default '0',
+  `date_available` date DEFAULT NULL,
+  `weight` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `weight_class_id` int(11) NOT NULL DEFAULT '0',
   `sort_order` int(3) NOT NULL,
-  `status` int(1) NOT NULL default '0',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  `viewed` int(5) NOT NULL default '0',
-  PRIMARY KEY  (`product_id`)
+  `status` int(1) NOT NULL DEFAULT '0',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `viewed` int(5) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=50 ;
 
 --
@@ -954,7 +1042,7 @@ INSERT INTO `product` (`product_id`, `model`, `quantity`, `stock_status_id`, `im
 (45, 'Product 18', 0, 5, 'macbook_pro_1.jpg', 8, 1, '2000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:17', '2009-02-22 22:05:50', 12),
 (46, 'Product 19', 10, 5, 'sony_vaio_1.jpg', 10, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:29', '2009-02-22 22:08:39', 15),
 (47, 'Product 20', 10, 5, 'hp_1.jpg', 7, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:40', '2009-02-22 22:24:17', 22),
-(48, 'product 20', 10, 5, 'ipod_classic_1.jpg', 8, 1, '100.0000', 9, '2009-02-08', '0.00', 1, 0, 1, '2009-02-08 17:21:51', '2009-02-22 21:49:21', 89);
+(48, 'product 20', 10, 5, 'ipod_classic_1.jpg', 8, 1, '100.0000', 9, '2009-02-08', '0.00', 1, 0, 1, '2009-02-08 17:21:51', '2009-02-22 21:49:21', 91);
 
 -- --------------------------------------------------------
 
@@ -962,12 +1050,13 @@ INSERT INTO `product` (`product_id`, `model`, `quantity`, `stock_status_id`, `im
 -- Table structure for table `product_description`
 --
 
-CREATE TABLE IF NOT EXISTS `product_description` (
-  `product_id` int(11) NOT NULL auto_increment,
-  `language_id` int(11) NOT NULL default '1',
-  `name` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `description` text collate utf8_unicode_ci,
-  PRIMARY KEY  (`product_id`,`language_id`),
+DROP TABLE IF EXISTS `product_description`;
+CREATE TABLE `product_description` (
+  `product_id` int(11) NOT NULL AUTO_INCREMENT,
+  `language_id` int(11) NOT NULL DEFAULT '1',
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`product_id`,`language_id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=50 ;
 
@@ -1001,12 +1090,13 @@ INSERT INTO `product_description` (`product_id`, `language_id`, `name`, `descrip
 -- Table structure for table `product_discount`
 --
 
-CREATE TABLE IF NOT EXISTS `product_discount` (
-  `product_discount_id` int(11) NOT NULL auto_increment,
+DROP TABLE IF EXISTS `product_discount`;
+CREATE TABLE `product_discount` (
+  `product_discount_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `quantity` int(4) NOT NULL,
   `discount` decimal(15,4) NOT NULL,
-  PRIMARY KEY  (`product_discount_id`)
+  PRIMARY KEY (`product_discount_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=269 ;
 
 --
@@ -1022,11 +1112,12 @@ INSERT INTO `product_discount` (`product_discount_id`, `product_id`, `quantity`,
 -- Table structure for table `product_image`
 --
 
-CREATE TABLE IF NOT EXISTS `product_image` (
-  `product_image_id` int(11) NOT NULL auto_increment,
-  `product_id` int(11) NOT NULL default '0',
-  `image` varchar(255) collate utf8_unicode_ci NOT NULL default '0',
-  PRIMARY KEY  (`product_image_id`)
+DROP TABLE IF EXISTS `product_image`;
+CREATE TABLE `product_image` (
+  `product_image_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL DEFAULT '0',
+  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_image_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=72 ;
 
 --
@@ -1091,11 +1182,12 @@ INSERT INTO `product_image` (`product_image_id`, `product_id`, `image`) VALUES
 -- Table structure for table `product_option`
 --
 
-CREATE TABLE IF NOT EXISTS `product_option` (
-  `product_option_id` int(11) NOT NULL auto_increment,
-  `product_id` int(11) NOT NULL default '0',
-  `sort_order` int(3) NOT NULL default '0',
-  PRIMARY KEY  (`product_option_id`)
+DROP TABLE IF EXISTS `product_option`;
+CREATE TABLE `product_option` (
+  `product_option_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL DEFAULT '0',
+  `sort_order` int(3) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_option_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
 
 --
@@ -1111,12 +1203,13 @@ INSERT INTO `product_option` (`product_option_id`, `product_id`, `sort_order`) V
 -- Table structure for table `product_option_description`
 --
 
-CREATE TABLE IF NOT EXISTS `product_option_description` (
+DROP TABLE IF EXISTS `product_option_description`;
+CREATE TABLE `product_option_description` (
   `product_option_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `name` varchar(64) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`product_option_id`,`language_id`)
+  `name` varchar(64) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`product_option_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1132,14 +1225,15 @@ INSERT INTO `product_option_description` (`product_option_id`, `language_id`, `p
 -- Table structure for table `product_option_value`
 --
 
-CREATE TABLE IF NOT EXISTS `product_option_value` (
-  `product_option_value_id` int(11) NOT NULL auto_increment,
+DROP TABLE IF EXISTS `product_option_value`;
+CREATE TABLE `product_option_value` (
+  `product_option_value_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_option_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `price` decimal(15,4) NOT NULL,
-  `prefix` char(1) collate utf8_bin NOT NULL,
+  `prefix` char(1) COLLATE utf8_bin NOT NULL,
   `sort_order` int(3) NOT NULL,
-  PRIMARY KEY  (`product_option_value_id`)
+  PRIMARY KEY (`product_option_value_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=40 ;
 
 --
@@ -1156,12 +1250,13 @@ INSERT INTO `product_option_value` (`product_option_value_id`, `product_option_i
 -- Table structure for table `product_option_value_description`
 --
 
-CREATE TABLE IF NOT EXISTS `product_option_value_description` (
+DROP TABLE IF EXISTS `product_option_value_description`;
+CREATE TABLE `product_option_value_description` (
   `product_option_value_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `name` varchar(64) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`product_option_value_id`,`language_id`)
+  `name` varchar(64) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`product_option_value_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1178,10 +1273,11 @@ INSERT INTO `product_option_value_description` (`product_option_value_id`, `lang
 -- Table structure for table `product_to_category`
 --
 
-CREATE TABLE IF NOT EXISTS `product_to_category` (
-  `product_id` int(11) NOT NULL default '0',
-  `category_id` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`product_id`,`category_id`)
+DROP TABLE IF EXISTS `product_to_category`;
+CREATE TABLE `product_to_category` (
+  `product_id` int(11) NOT NULL DEFAULT '0',
+  `category_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_id`,`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1213,10 +1309,11 @@ INSERT INTO `product_to_category` (`product_id`, `category_id`) VALUES
 -- Table structure for table `product_to_download`
 --
 
-CREATE TABLE IF NOT EXISTS `product_to_download` (
-  `product_id` int(11) NOT NULL default '0',
-  `download_id` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`product_id`,`download_id`)
+DROP TABLE IF EXISTS `product_to_download`;
+CREATE TABLE `product_to_download` (
+  `product_id` int(11) NOT NULL DEFAULT '0',
+  `download_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_id`,`download_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1230,17 +1327,18 @@ CREATE TABLE IF NOT EXISTS `product_to_download` (
 -- Table structure for table `review`
 --
 
-CREATE TABLE IF NOT EXISTS `review` (
-  `review_id` int(11) NOT NULL auto_increment,
-  `product_id` int(11) NOT NULL default '0',
-  `customer_id` int(11) NOT NULL default '0',
-  `author` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `text` text collate utf8_unicode_ci NOT NULL,
-  `rating` int(1) default NULL,
-  `status` int(1) NOT NULL default '0',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`review_id`)
+DROP TABLE IF EXISTS `review`;
+CREATE TABLE `review` (
+  `review_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL DEFAULT '0',
+  `customer_id` int(11) NOT NULL DEFAULT '0',
+  `author` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `text` text COLLATE utf8_unicode_ci NOT NULL,
+  `rating` int(1) DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT '0',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`review_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=59 ;
 
 --
@@ -1256,13 +1354,14 @@ INSERT INTO `review` (`review_id`, `product_id`, `customer_id`, `author`, `text`
 -- Table structure for table `setting`
 --
 
-CREATE TABLE IF NOT EXISTS `setting` (
-  `setting_id` int(11) NOT NULL auto_increment,
-  `group` varchar(32) collate utf8_unicode_ci NOT NULL,
-  `key` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `value` text collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`setting_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5630 ;
+DROP TABLE IF EXISTS `setting`;
+CREATE TABLE `setting` (
+  `setting_id` int(11) NOT NULL AUTO_INCREMENT,
+  `group` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `key` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `value` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`setting_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5645 ;
 
 --
 -- Dumping data for table `setting`
@@ -1310,7 +1409,7 @@ INSERT INTO `setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (5606, 'config', 'config_parse_time', '0'),
 (5605, 'config', 'config_ssl', '0'),
 (5604, 'config', 'config_template', 'default/template/'),
-(5601, 'config', 'config_email', 'your@email.com'),
+(5630, 'config', 'config_email', 'webmaster@opencart.com'),
 (5602, 'config', 'config_telephone', '123456789'),
 (5603, 'config', 'config_fax', ''),
 (5574, 'item', 'item_sort_order', '2'),
@@ -1334,7 +1433,14 @@ INSERT INTO `setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (5626, 'config', 'config_update_subject_1', '{store} - Order Update #{order_id}'),
 (5627, 'config', 'config_update_message_1', 'Order ID: #{order_id}\r\nDate Ordered: {date_added}\r\n\r\nYour order has been updated to the following status: {status}\r\n\r\nThe comments for your order are:\r\n\r\n{comment}\r\n\r\nTo view your order click the link below:\r\n{invoice}\r\n\r\nPlease reply to this email if you have any questions.'),
 (5628, 'config', 'config_cache', '1'),
-(5629, 'config', 'config_compression', '4');
+(5629, 'config', 'config_compression', '4'),
+(5642, 'paypal', 'paypal_geo_zone_id', '0'),
+(5641, 'paypal', 'paypal_order_status_id', '5'),
+(5640, 'paypal', 'paypal_test', '0'),
+(5639, 'paypal', 'paypal_encryption', '123456'),
+(5638, 'paypal', 'paypal_email', 'webmaster@opencart.com'),
+(5643, 'paypal', 'paypal_status', '1'),
+(5644, 'paypal', 'paypal_sort_order', '1');
 
 -- --------------------------------------------------------
 
@@ -1342,11 +1448,12 @@ INSERT INTO `setting` (`setting_id`, `group`, `key`, `value`) VALUES
 -- Table structure for table `stock_status`
 --
 
-CREATE TABLE IF NOT EXISTS `stock_status` (
-  `stock_status_id` int(11) NOT NULL auto_increment,
+DROP TABLE IF EXISTS `stock_status`;
+CREATE TABLE `stock_status` (
+  `stock_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL,
-  `name` varchar(32) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`stock_status_id`,`language_id`)
+  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`stock_status_id`,`language_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
@@ -1366,13 +1473,14 @@ INSERT INTO `stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 -- Table structure for table `tax_class`
 --
 
-CREATE TABLE IF NOT EXISTS `tax_class` (
-  `tax_class_id` int(11) NOT NULL auto_increment,
-  `title` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `description` varchar(255) collate utf8_unicode_ci NOT NULL default '',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`tax_class_id`)
+DROP TABLE IF EXISTS `tax_class`;
+CREATE TABLE `tax_class` (
+  `tax_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`tax_class_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 --
@@ -1388,16 +1496,17 @@ INSERT INTO `tax_class` (`tax_class_id`, `title`, `description`, `date_added`, `
 -- Table structure for table `tax_rate`
 --
 
-CREATE TABLE IF NOT EXISTS `tax_rate` (
-  `tax_rate_id` int(11) NOT NULL auto_increment,
-  `geo_zone_id` int(11) NOT NULL default '0',
-  `tax_class_id` int(11) NOT NULL default '0',
-  `priority` int(5) default '1',
-  `rate` decimal(7,4) NOT NULL default '0.0000',
-  `description` varchar(255) collate utf8_unicode_ci NOT NULL default '',
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`tax_rate_id`)
+DROP TABLE IF EXISTS `tax_rate`;
+CREATE TABLE `tax_rate` (
+  `tax_rate_id` int(11) NOT NULL AUTO_INCREMENT,
+  `geo_zone_id` int(11) NOT NULL DEFAULT '0',
+  `tax_class_id` int(11) NOT NULL DEFAULT '0',
+  `priority` int(5) DEFAULT '1',
+  `rate` decimal(7,4) NOT NULL DEFAULT '0.0000',
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`tax_rate_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
 
 --
@@ -1413,21 +1522,21 @@ INSERT INTO `tax_rate` (`tax_rate_id`, `geo_zone_id`, `tax_class_id`, `priority`
 -- Table structure for table `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` int(11) NOT NULL auto_increment,
-  `user_group_id` int(11) NOT NULL default '0',
-  `username` varchar(20) collate utf8_unicode_ci NOT NULL default '',
-  `password` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `email` varchar(96) collate utf8_unicode_ci NOT NULL default '',
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_group_id` int(11) NOT NULL DEFAULT '0',
+  `username` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `password` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `firstname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `lastname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(96) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `status` int(1) NOT NULL,
-  `ip` varchar(15) collate utf8_unicode_ci NOT NULL default '',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`user_id`),
+  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
-
 
 -- --------------------------------------------------------
 
@@ -1435,11 +1544,12 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Table structure for table `user_group`
 --
 
-CREATE TABLE IF NOT EXISTS `user_group` (
-  `user_group_id` int(11) NOT NULL auto_increment,
-  `name` varchar(64) collate utf8_unicode_ci default NULL,
-  `permission` text collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`user_group_id`)
+DROP TABLE IF EXISTS `user_group`;
+CREATE TABLE `user_group` (
+  `user_group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `permission` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`user_group_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 --
@@ -1456,12 +1566,13 @@ INSERT INTO `user_group` (`user_group_id`, `name`, `permission`) VALUES
 -- Table structure for table `weight_class`
 --
 
-CREATE TABLE IF NOT EXISTS `weight_class` (
-  `weight_class_id` int(11) NOT NULL auto_increment,
+DROP TABLE IF EXISTS `weight_class`;
+CREATE TABLE `weight_class` (
+  `weight_class_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL,
-  `title` varchar(32) collate utf8_unicode_ci NOT NULL,
-  `unit` varchar(4) collate utf8_unicode_ci NOT NULL default '',
-  PRIMARY KEY  (`weight_class_id`,`language_id`)
+  `title` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `unit` varchar(4) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`weight_class_id`,`language_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
@@ -1478,10 +1589,11 @@ INSERT INTO `weight_class` (`weight_class_id`, `language_id`, `title`, `unit`) V
 -- Table structure for table `weight_rule`
 --
 
-CREATE TABLE IF NOT EXISTS `weight_rule` (
-  `from_id` int(11) NOT NULL default '0',
-  `to_id` int(11) NOT NULL default '0',
-  `rule` decimal(15,4) NOT NULL default '0.0000'
+DROP TABLE IF EXISTS `weight_rule`;
+CREATE TABLE `weight_rule` (
+  `from_id` int(11) NOT NULL DEFAULT '0',
+  `to_id` int(11) NOT NULL DEFAULT '0',
+  `rule` decimal(15,4) NOT NULL DEFAULT '0.0000'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1498,13 +1610,14 @@ INSERT INTO `weight_rule` (`from_id`, `to_id`, `rule`) VALUES
 -- Table structure for table `zone`
 --
 
-CREATE TABLE IF NOT EXISTS `zone` (
-  `zone_id` int(11) NOT NULL auto_increment,
-  `country_id` int(11) NOT NULL default '0',
-  `code` varchar(32) NOT NULL default '',
-  `name` varchar(32) NOT NULL default '',
-  PRIMARY KEY  (`zone_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3843 ;
+DROP TABLE IF EXISTS `zone`;
+CREATE TABLE `zone` (
+  `zone_id` int(11) NOT NULL AUTO_INCREMENT,
+  `country_id` int(11) NOT NULL DEFAULT '0',
+  `code` varchar(32) NOT NULL DEFAULT '',
+  `name` varchar(32) NOT NULL DEFAULT '',
+  PRIMARY KEY (`zone_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3842 ;
 
 --
 -- Dumping data for table `zone`
@@ -4999,11 +5112,11 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3484, 220, 'DN', 'Dnipropetrovs''k'),
 (3485, 220, 'DO', 'Donets''k'),
 (3486, 220, 'IV', 'Ivano-Frankivs''k'),
-(3487, 220, 'KH', 'Kharkiv'),
+(3487, 220, 'KL', 'Kharkiv Kherson'),
 (3488, 220, 'KM', 'Khmel''nyts''kyy'),
 (3489, 220, 'KR', 'Kirovohrad'),
 (3490, 220, 'KV', 'Kiev'),
-(3491, 220, 'KY', 'Kievskaya oblast'''),
+(3491, 220, 'KY', 'Kyyiv'),
 (3492, 220, 'LU', 'Luhans''k'),
 (3493, 220, 'LV', 'L''viv'),
 (3494, 220, 'MY', 'Mykolayiv'),
@@ -5353,8 +5466,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3838, 239, 'MV', 'Masvingo'),
 (3839, 239, 'MN', 'Matabeleland North'),
 (3840, 239, 'MS', 'Matabeleland South'),
-(3841, 239, 'MD', 'Midlands'),
-(3842, 220, 'KS', 'Kherson');
+(3841, 239, 'MD', 'Midlands');
 
 -- --------------------------------------------------------
 
@@ -5362,14 +5474,15 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 -- Table structure for table `zone_to_geo_zone`
 --
 
-CREATE TABLE IF NOT EXISTS `zone_to_geo_zone` (
-  `zone_to_geo_zone_id` int(11) NOT NULL auto_increment,
-  `country_id` int(11) NOT NULL default '0',
-  `zone_id` int(11) default NULL,
-  `geo_zone_id` int(11) default NULL,
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`zone_to_geo_zone_id`)
+DROP TABLE IF EXISTS `zone_to_geo_zone`;
+CREATE TABLE `zone_to_geo_zone` (
+  `zone_to_geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
+  `country_id` int(11) NOT NULL DEFAULT '0',
+  `zone_id` int(11) DEFAULT NULL,
+  `geo_zone_id` int(11) DEFAULT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`zone_to_geo_zone_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --

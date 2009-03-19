@@ -132,6 +132,7 @@ final class Cart {
 
   	public function clear() {
 		$this->session->data['cart'] = array();
+		$this->products = array();
   	}
 	      
   	public function getProducts() {

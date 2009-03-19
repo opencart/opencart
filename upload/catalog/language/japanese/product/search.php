@@ -1,0 +1,22 @@
+<?php
+// Heading
+$_['heading_title']     = 'ŒŸõ';
+ 
+// Text
+$_['text_search']       = 'ŒŸõ‚Åƒqƒbƒg‚µ‚½¤•i';
+$_['text_keywords']     = 'ƒL[ƒ[ƒh';
+$_['text_critea']       = 'ŒŸõðŒ';
+$_['text_empty']        = 'ŒŸõðŒ‚Éˆê’v‚·‚é¤•i‚Í‚ ‚è‚Ü‚¹‚ñB';
+$_['text_stars']        = '5‚Â¯‚Ì‚¤‚¿ %s !';
+$_['text_sort']         = '•À‚Ñ‘Ö‚¦:';
+$_['text_name_asc']     = '¤•i–¼ A - Z';
+$_['text_name_desc']    = '¤•i–¼ Z - A';
+$_['text_price_asc']    = '‰¿Ši ˆÀ &gt;‚';
+$_['text_price_desc']   = '‰¿Ši ‚ &lt; ˆÀ';
+$_['text_rating_asc']   = '•]‰¿‚Ì’á‚¢‡'; 
+$_['text_rating_desc']  = '•]‰¿‚Ì‚‚¢‡';
+
+// Entry
+$_['entry_search']      = 'ŒŸõ:';
+$_['entry_description'] = '¤•i‚Ìà–¾‚ÅŒŸõ';
+?>

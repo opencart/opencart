@@ -1,0 +1,14 @@
+<?php
+// Text
+$_['text_product']      = '¤•i';
+$_['text_error']        = 'ƒJƒeƒSƒŠ[‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ!';
+$_['text_empty']        = '‚±‚ÌƒJƒeƒSƒŠ[‚ÉƒŠƒXƒg‚³‚ê‚Ä‚¢‚é¤•i‚ª‚ ‚è‚Ü‚¹‚ñB';
+$_['text_stars']        = '5‚Â¯‚Ì‚¤‚¿ %s !';
+$_['text_sort']         = '•À‚×‘Ö‚¦:';
+$_['text_name_asc']     = '¤•i–¼ A - Z';
+$_['text_name_desc']    = '¤•i–¼ Z - A';
+$_['text_price_asc']    = '‰¿Ši ˆÀ &gt; ‚';
+$_['text_price_desc']   = '‰¿Ši ‚ &lt; ˆÀ';
+$_['text_rating_asc']   = '•]‰¿‚Ì’á‚¢‡';
+$_['text_rating_desc']  = '•]‰¿‚Ì‚‚¢‡';
+?>

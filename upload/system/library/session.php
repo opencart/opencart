@@ -8,6 +8,18 @@ final class Session {
 	
 		@session_set_cookie_params(0, '/');
 		@session_start();
+
+		if (ini_get('register_globals')) {
+        	$array = array('_SESSION');
+        
+			foreach ($array as $value) {
+           		foreach ($GLOBALS[$value] as $key => $var) {
+               		if ($var === $GLOBALS[$key]) {
+                   		unset($GLOBALS[$key]);
+               		}
+           		}
+        	}
+		}
 		
 		$this->data =& $_SESSION;
 	}

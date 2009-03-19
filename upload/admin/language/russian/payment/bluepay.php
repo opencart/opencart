@@ -3,21 +3,22 @@
 $_['heading_title']      = 'BluePay';
 
 // Text 
-$_['text_payment']       = 'Оплата';
-$_['text_success']       = 'Успех: Вы изменили детали счета BluePay!';
+$_['text_payment']       = 'Payment';
+$_['text_success']       = 'Success: You have modified BluePay account details!';
+$_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
-$_['entry_status']       = 'Состояние:';
-$_['entry_geo_zone']     = 'Географическая зона:';
-$_['entry_order_status'] = 'Состояние заказа:';
-$_['entry_merchant']     = 'Код покупателя:';
-$_['entry_key']          = 'Секретный ключ:';
-$_['entry_test']         = 'Тестовый режим:';
-$_['entry_debug']        = 'Режим отладки:';
-$_['entry_sort_order']   = 'Порядок сортировки:';
+$_['entry_status']       = 'Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_merchant']     = 'Merchant ID:';
+$_['entry_key']          = 'Secret Key:';
+$_['entry_test']         = 'Test Mode:';
+$_['entry_debug']        = 'Debug Mode:';
+$_['entry_sort_order']   = 'Sort Order:';
 
 // Error
-$_['error_permission']   = 'Внимание: Вы не имеите прав для изменения оплаты BluePay!';
-$_['error_merchant']     = 'Код покупателя обязателен!';
-$_['error_key']          = 'Секретный ключ обязателен!';
+$_['error_permission']   = 'Warning: You do not have permission to modify payment BluePay!';
+$_['error_merchant']     = 'Merchant ID Required!';
+$_['error_key']          = 'Secret Key Required!';
 ?>

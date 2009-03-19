@@ -3,30 +3,31 @@
 $_['heading_title']      = 'HSBC';
 
 // Text 
-$_['text_payment']       = 'Оплата';
-$_['text_success']       = 'Успех: Вы изменили детали счета HSBC!';
-$_['text_approved']      = 'Включено (Утверждено)';
-$_['text_declined']      = 'Включено (Отклонено)';
-$_['text_off']           = 'Выключено';
+$_['text_payment']       = 'Payment';
+$_['text_success']       = 'Success: You have modified HSBC account details!';
+$_['text_development']   = '<span style="color: red;">In Development</span>';
+$_['text_approved']      = 'On (Approved)';
+$_['text_declined']      = 'On (Declined)';
+$_['text_off']           = 'Off';
 
 // Entry
-$_['entry_status']       = 'Состояние:';
-$_['entry_geo_zone']     = 'Географическая зона:';
-$_['entry_order_status'] = 'Состояние заказа:';
-$_['entry_client']       = 'Код клиента:';
-$_['entry_user']         = 'Код пользователя:';
-$_['entry_password']     = 'Пароль:';
-$_['entry_gateway']      = 'Gateway путь:';
-$_['entry_pas']          = 'PAS путь:';
-$_['entry_avs']          = 'AVS проверка:';
-$_['entry_test']         = 'Тестовый режим:';
-$_['entry_sort_order']   = 'Порядок сортировки:';
+$_['entry_status']       = 'Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_client']       = 'Client ID:';
+$_['entry_user']         = 'User ID:';
+$_['entry_password']     = 'Password:';
+$_['entry_gateway']      = 'Gateway Path:';
+$_['entry_pas']          = 'PAS Path:';
+$_['entry_avs']          = 'AVS Check:';
+$_['entry_test']         = 'Test Mode:';
+$_['entry_sort_order']   = 'Sort Order:';
 
 // Error
-$_['error_permission']   = 'Внимание: Вы не имеите прав для изменения оплаты HSBC!';
-$_['error_client']       = 'Код клиента обязателен!';
-$_['error_user']         = 'Код пользователя обязателен!';
-$_['error_password']     = 'Пароль обязателен!';
-$_['error_gateway']      = 'Gateway путь обязателен!';
-$_['error_pas']          = 'PAS путь обязателен!';
+$_['error_permission']   = 'Warning: You do not have permission to modify payment HSBC!';
+$_['error_client']       = 'Client ID Required!';
+$_['error_user']         = 'User ID Required!';
+$_['error_password']     = 'Password Required!';
+$_['error_gateway']      = 'Gateway Path Required!';
+$_['error_pas']          = 'PAS Path Required!';
 ?>

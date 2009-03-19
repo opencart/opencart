@@ -3,19 +3,20 @@
 $_['heading_title']      = 'Mal\'s e-commerce';
 
 // Text 
-$_['text_payment']       = 'Оплата';
-$_['text_success']       = 'Успех: Вы изменили детали счета Mal\'s e-commerce!';
+$_['text_payment']       = 'Payment';
+$_['text_success']       = 'Success: You have modified Mal\'s e-commerce account details!';
+$_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
-$_['entry_status']       = 'Состояние:';
-$_['entry_geo_zone']     = 'Географическая зона:';
-$_['entry_order_status'] = 'Состояние заказа:';
-$_['entry_account']      = '№ счета:';
-$_['entry_domain']       = 'Домен сервера:';
-$_['entry_sort_order']   = 'Порядок сортировки:';
+$_['entry_status']       = 'Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_account']      = 'Account No.:';
+$_['entry_domain']       = 'Server Domain:';
+$_['entry_sort_order']   = 'Sort Order:';
 
 // Error
-$_['error_permission']   = 'Внимание: Вы не имеите прав для изменения оплаты Mal\'s e-commerce!';
-$_['error_account']      = '№ счета обязателен!';
-$_['error_domain']       = 'Домен сервера обязателен!';
+$_['error_permission']   = 'Warning: You do not have permission to modify payment Mal\'s e-commerce!';
+$_['error_account']      = 'Account No. Required!';
+$_['error_domain']       = 'Server Domain Required!';
 ?>

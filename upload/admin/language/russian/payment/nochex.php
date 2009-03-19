@@ -3,24 +3,25 @@
 $_['heading_title']      = 'NOCHEX';
 
 // Text 
-$_['text_payment']       = 'Оплата';
-$_['text_success']       = 'Успех: Вы изменили детали счета NOCHEX!';
-$_['text_seller']        = 'Продавец / лицевой счет';
-$_['text_merchant']      = 'Счет продавца';
+$_['text_payment']       = 'Payment';
+$_['text_success']       = 'Success: You have modified NOCHEX account details!';
+$_['text_development']   = '<span style="color: red;">In Development</span>';
+$_['text_seller']        = 'Seller / Personal Account';
+$_['text_merchant']      = 'Merchant Account';
       
 // Entry
-$_['entry_status']       = 'Состояние:';
-$_['entry_geo_zone']     = 'Географическая зона:';
-$_['entry_order_status'] = 'Состояние заказа:';
+$_['entry_status']       = 'Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_order_status'] = 'Order Status:';
 $_['entry_email']        = 'E-Mail:';
 $_['entry_account']      = 'Account Type:';
-$_['entry_merchant']     = 'Код продавца:';
-$_['entry_template']     = 'Pass шаблон:';
-$_['entry_test']         = 'Тест:';
-$_['entry_sort_order']   = 'Порядок сортировки:';
+$_['entry_merchant']     = 'Merchant ID:';
+$_['entry_template']     = 'Pass Template:';
+$_['entry_test']         = 'Test:';
+$_['entry_sort_order']   = 'Sort Order:';
 
 // Error
-$_['error_permission']   = 'Внимание: Вы не имеите прав для изменения оплаты NOCHEX!';
-$_['error_email']        = 'E-Mail обязателен!';
-$_['error_merchant']     = 'Код продавца обязателен!';
+$_['error_permission']   = 'Warning: You do not have permission to modify payment NOCHEX!';
+$_['error_email']        = 'E-Mail Required!';
+$_['error_merchant']     = 'Merchant ID Required!';
 ?>

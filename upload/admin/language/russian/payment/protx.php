@@ -5,6 +5,7 @@ $_['heading_title']      = 'Protx';
 // Text 
 $_['text_payment']       = 'Payment'; 
 $_['text_success']       = 'Success: You have modified Protx account details!';
+$_['text_development']   = '<span style="color: orange;">Requires Testing</span>';
 $_['text_simulator']     = 'Simulator';
 $_['text_test']          = 'Test';
 $_['text_live']          = 'Live';

@@ -3,23 +3,24 @@
 $_['heading_title']      = 'ChronoPay';
 
 // Text 
-$_['text_payment']       = 'Оплата';
-$_['text_success']       = 'Вы изменили детали счета ChronoPay!';
+$_['text_payment']       = 'Payment';
+$_['text_success']       = 'Success: You have modified ChronoPay account details!';
+$_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
-$_['entry_status']       = 'Состояние:';
-$_['entry_geo_zone']     = 'Географическая зона:';
-$_['entry_order_status'] = 'Состояние заказа:';
-$_['entry_product_id']   = 'Код товара:';
-$_['entry_product_name'] = 'Название товара:';
-$_['entry_callback']     = 'Ответ URL:';
-$_['entry_sort_order']   = 'Порядок сртировки:';
+$_['entry_status']       = 'Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_product_id']   = 'Product ID:';
+$_['entry_product_name'] = 'Product Name:';
+$_['entry_callback']     = 'Relay Response URL:';
+$_['entry_sort_order']   = 'Sort Order:';
 
 // Help
-$_['help_callback']      = 'Это должно быть установлено в панель управления ChronoPay.';
+$_['help_callback']      = 'This has to be set in the ChronoPay control panel.';
 
 // Error
-$_['error_permission']   = 'Внимание: Вы не имеите прав для изменения оплаты ChronoPay!';
-$_['error_product_id']   = 'Код товара обязателен!';
-$_['error_product_name'] = 'Название товара обязательно!';
+$_['error_permission']   = 'Warning: You do not have permission to modify payment ChronoPay!';
+$_['error_product_id']   = 'Product ID Required!';
+$_['error_product_name'] = 'Product Name Required!';
 ?>

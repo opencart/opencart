@@ -1,17 +1,18 @@
 <?php
 // Heading
-$_['heading_title']      = 'Наличными при доставке';
+$_['heading_title']      = 'Cash On Delivery';
 
 // Text
-$_['text_payment']       = 'Оплата';
-$_['text_success']       = 'Успех: Вы изменили детали доставки!';
+$_['text_payment']       = 'Payment';
+$_['text_success']       = 'Success: You have modified Cash On Delivery payment module!';
+$_['text_development']   = '<span style="color: green;">Ready</span>';
 
 // Entry
-$_['entry_status']       = 'Состояние:';
-$_['entry_geo_zone']     = 'Географическая зона:';
-$_['entry_order_status'] = 'Состояние заказа:';
-$_['entry_sort_order']   = 'Порядок сортировки:';
+$_['entry_status']       = 'Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_sort_order']   = 'Sort Order:';
 
 // Error
-$_['error_permission']   = 'Внимание: Вы не имеите прав для изменения способа оплаты!';
+$_['error_permission']   = 'Warning: You do not have permission to modify payment Cash On Delivery!';
 ?>

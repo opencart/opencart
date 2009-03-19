@@ -85,7 +85,7 @@ class ModelCheckoutOrder extends Model {
 	public function update($order_id, $order_status_id, $comment = '', $notifiy = FALSE) {
 		$this->db->query("UPDATE `order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "' AND confirm = '1'");
 		
-		$this->db->query("INSERT INTO order_history SET order_status_id = '" . (int)$order_status_id . "', comment = '" . $this->db->escape($comment) . "' WHERE order_id = '" . (int)$order_id . "'");
+		$this->db->query("INSERT INTO order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', comment = '" . $this->db->escape($comment) . "'");
 	
 		if ($notifiy) {
 			$query = $this->db->query("SELECT *, os.name AS status, l.code AS language FROM `order` o LEFT JOIN order_status os ON (o.order_status_id = os.order_status_id AND os.language_id = o.language_id) LEFT JOIN language l ON (o.language_id = l.language_id) WHERE o.order_id = '" . (int)$order_id . "'");

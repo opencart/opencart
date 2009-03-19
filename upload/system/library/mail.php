@@ -119,6 +119,8 @@ class Mail {
       		$message .= chunk_split(base64_encode($content));
     	}  
 
+		ini_set('sendmail_from', $from);
+		
     	mail($to, $this->subject, $message, $headers);  
 	} 
 }

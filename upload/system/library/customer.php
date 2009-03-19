@@ -63,7 +63,7 @@ final class Customer {
 		if ($query->num_rows) {
 			$this->session->data['customer_id'] = $query->row['customer_id'];	
 		    
-			foreach ((array)unserialize($query->row['cart']) as $key => $value) {
+			foreach ((array)@unserialize($query->row['cart']) as $key => $value) {
 				if (!array_key_exists($key, $this->session->data['cart'])) {
 					$this->session->data['cart'][$key] = $value;
 				} else {

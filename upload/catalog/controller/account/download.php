@@ -58,7 +58,7 @@ class ControllerAccountDownload extends Controller {
 			$results = $this->model_account_download->getDownloads(($page - 1) * 10, 10);
 			
 			foreach ($results as $result) {
-				$size = filesize(DIR_DOWNLOAD . $result['mask']);
+				$size = filesize(DIR_DOWNLOAD . $result['filename']);
 
 				$i = 0;
 

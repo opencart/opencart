@@ -28,6 +28,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['text_update'] = $this->language->get('text_update');
 
 		$this->data['entry_store'] = $this->language->get('entry_store');
+		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$this->data['entry_welcome'] = $this->language->get('entry_welcome');
 		$this->data['entry_owner'] = $this->language->get('entry_owner');
 		$this->data['entry_address'] = $this->language->get('entry_address');
@@ -84,6 +85,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['error_warning'] = @$this->error['warning'];
 		
 		$this->data['error_store'] = @$this->error['store'];
+		$this->data['error_meta_description'] = @$this->error['meta_description'];
 		
 		$this->load->model('localisation/language');
 		
@@ -133,7 +135,13 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_store'] = $this->config->get('config_store');
 		}
-			
+
+		if (isset($this->request->post['config_meta_description'])) {
+			$this->data['config_meta_description'] = $this->request->post['config_meta_description'];
+		} else {
+			$this->data['config_meta_description'] = $this->config->get('config_meta_description');
+		}
+		
 		foreach ($languages as $language) {
 			if (isset($this->request->post['config_welcome_' . $language['language_id']])) {
 				$this->data['config_welcome_' . $language['language_id']] = $this->request->post['config_welcome_' . $language['language_id']];
@@ -395,7 +403,11 @@ class ControllerSettingSetting extends Controller {
 		if (!$this->request->post['config_store']) {
 			$this->error['store'] = $this->language->get('error_store');
 		}				
-		
+
+      	if (strlen($this->request->post['config_meta_description']) > 66) {
+        	$this->error['meta_description'] = $this->language->get('error_meta_description');
+      	}
+
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();

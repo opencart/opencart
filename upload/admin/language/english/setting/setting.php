@@ -11,6 +11,7 @@ $_['text_update']             = 'Order Update';
 
 // Entry
 $_['entry_store']             = 'Store Name:';
+$_['entry_meta_description']  = 'Meta Tag Description:';
 $_['entry_welcome']           = 'Welcome Message:';
 $_['entry_owner']             = 'Store Owner:';
 $_['entry_address']           = 'Address:';
@@ -58,6 +59,7 @@ $_['help_update']             = '<b>Replacement Tags:</b><br />{store} - Store N
 // Error
 $_['error_permission']        = 'Warning: You do not have permission to modify settings!';
 $_['error_store']             = 'Store Name must be greater than 3 and less than 32 characters!';
+$_['error_meta_description']  = 'Meta Tag Description must be less than 66 characters!';
 $_['error_welcome']           = 'Store Welcome Message required!';
 $_['error_owner']             = 'Store Owner must be greater than 3 and less than 32 characters!';
 $_['error_address']           = 'Store Address must be greater than 10 and less than 128 characters!';

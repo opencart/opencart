@@ -8,11 +8,11 @@ final class Request {
 	
   	public function __construct() {
 		if (ini_get('register_globals')) {
-			$array = array('_REQUEST', '_SERVER', '_ENV', '_FILES');
+			$array = array('_REQUEST', '_FILES', '_SERVER', '_ENV');
 	
 			foreach ($array as $value) {
 				foreach ($GLOBALS[$value] as $key => $var) {
-					if ($var === $GLOBALS[$key]) {
+					if ($var === @$GLOBALS[$key]) {
 						unset($GLOBALS[$key]);
 					}
 				}

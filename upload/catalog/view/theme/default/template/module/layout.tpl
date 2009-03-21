@@ -3,6 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="<?php echo $direction; ?>" lang="<?php echo $language; ?>" xml:lang="<?php echo $language; ?>">
 <head>
 <title><?php echo $title; ?></title>
+<?php if ($description) { ?>
+<meta name="description" content="<?php echo $description; ?>" />
+<?php } ?>
 <base href="<?php echo $base; ?>" />
 <link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/stylesheet.css" />
 <script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.3.min.js"></script>

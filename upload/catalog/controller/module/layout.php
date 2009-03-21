@@ -26,12 +26,5 @@ class ControllerModuleLayout extends Controller {
 		
 		$this->render();
 	}
-	
-	
-	public function getGoogleOptimizer($product_id) {
-		$query = $this->db->query("SELECT * FROM google_optimizer WHERE product_id = '" . (int)$product_id . "' AND status = '1'");
-			
-		return $query->row;
-	}	
 }
 ?>

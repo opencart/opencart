@@ -15,7 +15,7 @@
         <td><input name="category_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo @$category_description[$language['language_id']]['name']; ?>" />
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
           <?php if (@$error_name[$language['language_id']]) { ?>
-          <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+          <span class="error"><?php echo $error_name[$language['language_id']]; ?></span>
           <?php } ?></td>
       </tr>
       <tr>
@@ -23,7 +23,7 @@
         <td><textarea name="category_description[<?php echo $language['language_id']; ?>][meta_description]" cols="40" rows="5"><?php echo @$category_description[$language['language_id']]['meta_description']; ?></textarea>
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" /><br />
           <?php if (@$error_meta_description[$language['language_id']]) { ?>
-          <span class="error"><?php echo $error_meta_description[$language['language_id']]; ?></span><br />
+          <span class="error"><?php echo $error_meta_description[$language['language_id']]; ?></span>
           <?php } ?></td>
       </tr>      
       <?php } ?>

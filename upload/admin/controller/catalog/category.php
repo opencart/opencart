@@ -137,6 +137,7 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['text_none'] = $this->language->get('text_none');
 		
 		$this->data['entry_name'] = $this->language->get('entry_name');
+		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$this->data['entry_category'] = $this->language->get('entry_category');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_image'] = $this->language->get('entry_image');
@@ -149,6 +150,7 @@ class ControllerCatalogCategory extends Controller {
 
 		$this->data['error_warning'] = @$this->error['warning'];
 		$this->data['error_name'] = @$this->error['name'];
+		$this->data['error_meta_description'] = @$this->error['meta_description'];
 
   		$this->document->breadcrumbs = array();
 
@@ -201,10 +203,10 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$this->data['image'] = @$category_info['image'];
 		}
-		
+
 		$this->load->helper('image');
 		
-		if (isset($this->request->post['image'])) {
+		if (@$this->request->post['image']) {
 			$this->data['preview'] = HelperImage::resize($this->request->post['image'], 100, 100);
 		} elseif (@$category_info['image']) {
 			$this->data['preview'] = HelperImage::resize($category_info['image'], 100, 100);
@@ -234,6 +236,10 @@ class ControllerCatalogCategory extends Controller {
 			if ((strlen($value['name']) < 2) || (strlen($value['name']) > 32)) {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
+
+      		if (strlen($value['meta_description']) > 66) {
+        		$this->error['meta_description'][$language_id] = $this->language->get('error_meta_description');
+      		}
 		}
     	
 		if (!$this->error) {

@@ -352,6 +352,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['text_minus'] = $this->language->get('text_minus');
 
 		$this->data['entry_name'] = $this->language->get('entry_name');
+		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$this->data['entry_description'] = $this->language->get('entry_description');
     	$this->data['entry_model'] = $this->language->get('entry_model');
 		$this->data['entry_manufacturer'] = $this->language->get('entry_manufacturer');
@@ -389,6 +390,7 @@ class ControllerCatalogProduct extends Controller {
  
     	$this->data['error_warning'] = @$this->error['warning'];
     	$this->data['error_name'] = @$this->error['name'];
+		$this->data['error_meta_description'] = @$this->error['meta_description'];
     	$this->data['error_description'] = @$this->error['description'];
     	$this->data['error_model'] = @$this->error['model'];
 		$this->data['error_date_available'] = @$this->error['date_available'];
@@ -471,7 +473,7 @@ class ControllerCatalogProduct extends Controller {
 		
 		$this->load->helper('image');
 		
-		if (isset($this->request->post['image'])) {
+		if (@$this->request->post['image']) {
 			$this->data['preview'] = HelperImage::resize($this->request->post['image'], 100, 100);
 		} elseif (@$product_info['image']) {
 			$this->data['preview'] = HelperImage::resize($product_info['image'], 100, 100);
@@ -644,6 +646,10 @@ class ControllerCatalogProduct extends Controller {
     	foreach ($this->request->post['product_description'] as $language_id => $value) {
       		if ((strlen($value['name']) < 3) || (strlen($value['name']) > 255)) {
         		$this->error['name'][$language_id] = $this->language->get('error_name');
+      		}
+
+      		if (strlen($value['meta_description']) > 66) {
+        		$this->error['meta_description'][$language_id] = $this->language->get('error_meta_description');
       		}
 			
       		if (strlen($value['description']) < 3) {

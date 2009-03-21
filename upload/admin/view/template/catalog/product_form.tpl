@@ -12,15 +12,24 @@
       <?php foreach ($languages as $language) { ?>
       <tr>
         <td width="180"><span class="required">*</span> <?php echo $entry_name; ?></td>
-        <td><input type="text" name="product_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo @$product_description[$language['language_id']]['name']; ?>" /> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" />
-          <br />
+        <td><input type="text" name="product_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo @$product_description[$language['language_id']]['name']; ?>" />
+          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
           <?php if (@$error_name[$language['language_id']]) { ?>
           <span class="error"><?php echo $error_name[$language['language_id']]; ?></span>
           <?php } ?></td>
       </tr>
       <tr>
+        <td><?php echo $entry_meta_description; ?></td>
+        <td><textarea name="product_description[<?php echo $language['language_id']; ?>][meta_description]" cols="40" rows="5"><?php echo @$product_description[$language['language_id']]['meta_description']; ?></textarea>
+          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" /><br />
+          <?php if (@$error_meta_description[$language['language_id']]) { ?>
+          <span class="error"><?php echo $error_meta_description[$language['language_id']]; ?></span>
+          <?php } ?></td>
+      </tr>
+      <tr>
         <td><span class="required">*</span> <?php echo $entry_description; ?></td>
-        <td><textarea name="product_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo @$product_description[$language['language_id']]['description']; ?></textarea> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" />
+        <td><textarea name="product_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo @$product_description[$language['language_id']]['description']; ?></textarea>
+          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" />
           <?php if (@$error_description[$language['language_id']]) { ?>
           <span class="error"><?php echo $error_description[$language['language_id']]; ?></span>
           <?php } ?></td>

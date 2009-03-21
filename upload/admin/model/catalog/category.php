@@ -6,7 +6,7 @@ class ModelCatalogCategory extends Model {
 		$category_id = $this->db->getLastId();
 		
 		foreach ($data['category_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO category_description SET category_id = '" . (int)$category_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			$this->db->query("INSERT INTO category_description SET category_id = '" . (int)$category_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', meta_description = '" . $this->db->escape(@$value['meta_description']) . "'");
 		}
 			
 		$this->cache->delete('category');
@@ -18,7 +18,7 @@ class ModelCatalogCategory extends Model {
 		$this->db->query("DELETE FROM category_description WHERE category_id = '" . (int)$category_id . "'");
 
 		foreach ($data['category_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO category_description SET category_id = '" . (int)$category_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			$this->db->query("INSERT INTO category_description SET category_id = '" . (int)$category_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', meta_description = '" . $this->db->escape(@$value['meta_description']) . "'");
 		}
 
 		$this->cache->delete('category');
@@ -85,7 +85,10 @@ class ModelCatalogCategory extends Model {
 		$query = $this->db->query("SELECT * FROM category_description WHERE category_id = '" . (int)$category_id . "'");
 		
 		foreach ($query->rows as $result) {
-			$category_description_data[$result['language_id']] = array('name' => $result['name']);
+			$category_description_data[$result['language_id']] = array(
+				'name'             => $result['name'],
+				'meta_description' => $result['meta_description']
+			);
 		}
 		
 		return $category_description_data;

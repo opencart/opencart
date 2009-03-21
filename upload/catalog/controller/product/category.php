@@ -40,6 +40,8 @@ class ControllerProductCategory extends Controller {
 		if ($category_info) {
 	  		$this->document->title = $category_info['name'];
 			
+			$this->document->description = $category_info['meta_description'];
+			
 			$this->data['heading_title'] = $category_info['name'];
 			
 			$this->data['text_sort'] = $this->language->get('text_sort');
@@ -197,7 +199,9 @@ class ControllerProductCategory extends Controller {
 				$this->render();										
       		} else {
         		$this->document->title = $category_info['name'];
-
+				
+				$this->document->description = $category_info['meta_description'];
+				
         		$this->data['heading_title'] = $category_info['name'];
 
         		$this->data['text_error'] = $this->language->get('text_empty');

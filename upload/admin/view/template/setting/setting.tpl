@@ -21,6 +21,13 @@
           <?php } ?></td>
       </tr>
       <tr>
+        <td><?php echo $entry_meta_description; ?></td>
+        <td><textarea name="config_meta_description" cols="40" rows="5"><?php echo $config_meta_description; ?></textarea>
+          <?php if ($error_meta_description) { ?>
+          <span class="error"><?php echo $error_meta_description; ?></span>
+          <?php } ?></td>
+      </tr>         
+      <tr>
         <td><span class="required">*</span> <?php echo $entry_owner; ?></td>
         <td><input type="text" name="config_owner" value="<?php echo $config_owner; ?>" />
           <br />

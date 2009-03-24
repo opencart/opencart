@@ -7,9 +7,26 @@ if (version_compare(phpversion(), '5.1.0', '<') == TRUE) {
 	exit('PHP5.1 Only');
 }
 
-// Magic Quotes Fix
-@ini_set('magic_quotes_gpc', 'Off');
+// Register Globals Fix
+if (ini_get('register_globals')) {
+	@ini_set('session.use_cookies', '1');
+	@ini_set('session.use_trans_sid', '0');
+		
+	@session_set_cookie_params(0, '/');
+	@session_start();
+	
+	$globals = array($_REQUEST, $_SESSION, $_SERVER, $_FILES);
 
+	foreach ($globals as $global) {
+		foreach(array_keys($global) as $key) {
+			unset($$key);
+		}
+	}
+	
+	ini_set('register_globals', 'Off');
+}
+
+// Magic Quotes Fix
 if (ini_get('magic_quotes_gpc')) {
 	function clean($data) {
    		if (is_array($data)) {
@@ -26,6 +43,8 @@ if (ini_get('magic_quotes_gpc')) {
 	$_GET = clean($_GET);
 	$_POST = clean($_POST);
 	$_COOKIE = clean($_COOKIE);
+	
+	ini_set('magic_quotes_gpc', 'Off');
 }
 
 // Engine

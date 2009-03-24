@@ -20,7 +20,7 @@ class ModelToolBackup extends Model {
 		$list_tables = mysql_list_tables(DB_DATABASE);
 
 		while ($row = mysql_fetch_row($list_tables)) {
-			$output .= 'TRUNCATE TABLE `' . $row[0] . '`' . "\n\n";
+			$output .= 'TRUNCATE TABLE `' . $row[0] . '`;' . "\n\n";
 			
 			$query = $this->db->query("SELECT * FROM `" . $row[0] . "`");
 				

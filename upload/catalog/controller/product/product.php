@@ -297,7 +297,9 @@ class ControllerProductProduct extends Controller {
 			$data['error'] = $this->error['message'];
 		}	
 		
-		$this->response->setOutput(json_encode($data));
+		$this->load->helper('json');
+		
+		$this->response->setOutput(Json::encode($data));
 	}
 	
 	public function verification() {

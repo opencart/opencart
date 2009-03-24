@@ -16,13 +16,15 @@ class ControllerCatalogImage extends Controller {
 				$this->load->helper('image');
 			
 				$data['file'] = $filename;
-				$data['src']  = HelperImage::resize($filename, '100', '100');
+				$data['src'] = HelperImage::resize($filename, '100', '100');
 			}
 		} else {
 			$data['error'] = $this->error['message'];
 		}
 		
-		$this->response->setOutput(json_encode($data));
+		$this->load->helper('json');
+		
+		$this->response->setOutput(Json::encode($data));
 	}
 	
 	private function validate() {
@@ -38,7 +40,9 @@ class ControllerCatalogImage extends Controller {
 
 		    	$allowed = array(
 		      		'image/jpeg',
-		      		'image/pjpeg'
+		      		'image/pjpeg',
+					'image/png',
+					'image/gif'
 		    	);
 				
 				if (!in_array($this->request->files['image']['type'], $allowed)) {

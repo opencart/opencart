@@ -58,7 +58,7 @@ Registry::set('url', new Url());
 // Session
 $session = new Session();
 Registry::set('session', $session);
-		
+
 // Language
 $language = new Language();
 Registry::set('language', $language);

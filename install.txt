@@ -1,5 +1,5 @@
 /////////////////////////////////
-///       OpenCart V1.0      ///
+///       OpenCart V2.0      ///
 ///    Install Instruction    ///
 ///  http://www.opencart.com  ///
 /////////////////////////////////

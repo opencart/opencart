@@ -171,8 +171,10 @@ class ControllerCommonHome extends Controller {
 				}			
 				break;	
 		}
-				
-		$this->response->setOutput(json_encode($data));
+		
+		$this->load->helper('json');
+		
+		$this->response->setOutput(Json::encode($data));
 	}
 }
 ?>

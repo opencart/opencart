@@ -9,7 +9,11 @@
       <table width="100%">
         <tr>
           <td><b><?php echo $text_price; ?></b></td>
-          <td><?php echo $price; ?></td>
+          <td><?php if (!$special) { ?>
+            <?php echo $price; ?>
+            <?php } else { ?>
+            <span style="text-decoration: line-through;"><?php echo $price; ?></span> <span style="color: #F00;"><?php echo $special; ?></span>
+            <?php } ?></td>
         </tr>
         <tr>
           <td><b><?php echo $text_availability; ?></b></td>

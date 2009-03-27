@@ -10,6 +10,11 @@
   <div id="tab_general" class="page">
     <table class="form">
       <tr>
+        <td><?php echo $entry_total; ?><br />
+          <span class="help"><?php echo $help_total; ?></span></td>
+        <td><input type="text" name="free_total" value="<?php echo $free_total; ?>" /></td>
+      </tr>
+      <tr>
         <td><?php echo $entry_geo_zone; ?></td>
         <td><select name="free_geo_zone_id">
             <option value="0"><?php echo $text_all_zones; ?></option>

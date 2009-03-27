@@ -8,12 +8,12 @@ $_['text_success']       = 'Success: You have modified PayPal account details!';
 $_['text_development']   = '<span style="color: green;">Ready</span>';
 
 // Entry
-$_['entry_status']       = 'Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_order_status'] = 'Order Status:';
 $_['entry_email']        = 'E-Mail:';
 $_['entry_encryption']   = 'Encryption Key:';
 $_['entry_test']         = 'Test Mode:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
 // Help

@@ -22,12 +22,13 @@ class ControllerShippingZone extends Controller {
 		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
-		$this->data['text_example'] = $this->language->get('text_example');
 		
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_cost'] = $this->language->get('entry_cost');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		
+		$this->data['help_cost'] = $this->language->get('help_cost');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');

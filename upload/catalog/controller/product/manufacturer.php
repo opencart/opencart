@@ -65,15 +65,24 @@ class ControllerProductManufacturer extends Controller {
 					}
 					
 					$rating = $this->model_catalog_review->getAverageRating($result['product_id']);
+
+					$special = $this->model_catalog_product->getProductSpecial($result['product_id']);
+			
+					if ($special) {
+						$special = $this->currency->format($this->tax->calculate($special, $result['tax_class_id'], $this->config->get('config_tax')));
+					} else {
+						$special = FALSE;
+					}
 					
           			$this->data['products'][] = array(
-            			'name'   => $result['name'],
-						'model'  => $result['model'],
-						'rating' => $rating,
-						'stars'  => sprintf($this->language->get('text_stars'), $rating),            			
-						'thumb'  => HelperImage::resize($image, 120, 120),
-            			'price'  => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
-						'href'   => $this->url->http('product/product&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&product_id=' . $result['product_id'])
+            			'name'    => $result['name'],
+						'model'   => $result['model'],
+						'rating'  => $rating,
+						'stars'   => sprintf($this->language->get('text_stars'), $rating),            			
+						'thumb'   => HelperImage::resize($image, 120, 120),
+            			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
+						'special' => $special,
+						'href'    => $this->url->http('product/product&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&product_id=' . $result['product_id'])
           			);
         		}
 

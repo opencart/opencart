@@ -24,11 +24,14 @@ class ControllerShippingFree extends Controller {
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
 		
+		$this->data['entry_total'] = $this->language->get('entry_total');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_cost'] = $this->language->get('entry_cost');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		
+		$this->data['help_total'] = $this->language->get('help_total');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -61,6 +64,12 @@ class ControllerShippingFree extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/shipping');
 	
+		if (isset($this->request->post['free_total'])) {
+			$this->data['free_total'] = $this->request->post['free_total'];
+		} else {
+			$this->data['free_total'] = $this->config->get('free_total');
+		}
+		
 		if (isset($this->request->post['free_status'])) {
 			$this->data['free_status'] = $this->request->post['free_status'];
 		} else {

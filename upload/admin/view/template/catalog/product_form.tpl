@@ -85,7 +85,7 @@
       </tr>
       <tr>
         <td><?php echo $entry_date_available; ?></td>
-        <td><input type="text" name="date_available" value="<?php echo $date_available; ?>" size="12" id="date" /></td>
+        <td><input type="text" name="date_available" value="<?php echo $date_available; ?>" size="12" class="date" /></td>
       </tr>
       <tr>
         <td><?php echo $entry_quantity; ?></td>
@@ -262,21 +262,40 @@
       <?php $k++; ?>
       <?php } ?>
     </div>
-    <a onclick="addDiscount();" class="button"><span class="button_left button_insert"></span><span class="button_middle"><?php echo $button_add_discount; ?></span><span class="button_right"></span></a></div>
-  <div id="tab_image" class="page">
-    <div id="images">
+    <a onclick="addDiscount();" class="button"><span class="button_left button_insert"></span><span class="button_middle"><?php echo $button_add_discount; ?></span><span class="button_right"></span></a>
+    <hr />
+    <div id="special">
       <?php $l = 0; ?>
-      <?php foreach ($product_images as $product_image) { ?>
-      <table width="100%" id="image_row<?php echo $l; ?>" class="green">
+      <?php foreach ($product_specials as $product_special) { ?>
+      <table width="100%" class="green" id="special_row<?php echo $l; ?>">
         <tr>
-          <td><img src="<?php echo $product_image['image']; ?>" alt="" id="preview<?php echo $l; ?>" /></td>
-          <td><div style="margin-bottom: 4px;"><?php echo $entry_image; ?></div>
-            <input type="file" id="upload<?php echo $l; ?>" />
-            <input type="hidden" name="product_image[]" value="<?php echo $product_image['file']; ?>" id="image<?php echo $l; ?>" /></td>
-          <td><a onclick="$('#image_row<?php echo $l; ?>').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>
+          <td><?php echo $entry_price; ?><br />
+            <input type="text" name="product_special[<?php echo $l; ?>][price]" value="<?php echo $product_special['price']; ?>" /></td>
+          <td><?php echo $entry_date_start; ?><br />
+            <input type="text" name="product_special[<?php echo $l; ?>][date_start]" value="<?php echo $product_special['date_start']; ?>" class="date" /></td>
+          <td><?php echo $entry_date_end; ?><br />
+            <input type="text" name="product_special[<?php echo $l; ?>][date_end]" value="<?php echo $product_special['date_end']; ?>" class="date" /></td>
+          <td><a onclick="$('#special_row<?php echo $l; ?>').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>
         </tr>
       </table>
       <?php $l++; ?>
+      <?php } ?>
+    </div>
+    <a onclick="addSpecial();" class="button"><span class="button_left button_insert"></span><span class="button_middle"><?php echo $button_add_special; ?></span><span class="button_right"></span></a></div>
+  <div id="tab_image" class="page">
+    <div id="images">
+      <?php $m = 0; ?>
+      <?php foreach ($product_images as $product_image) { ?>
+      <table width="100%" id="image_row<?php echo $m; ?>" class="green">
+        <tr>
+          <td><img src="<?php echo $product_image['image']; ?>" alt="" id="preview<?php echo $m; ?>" /></td>
+          <td><div style="margin-bottom: 4px;"><?php echo $entry_image; ?></div>
+            <input type="file" id="upload<?php echo $m; ?>" />
+            <input type="hidden" name="product_image[]" value="<?php echo $product_image['file']; ?>" id="image<?php echo $m; ?>" /></td>
+          <td><a onclick="$('#image_row<?php echo $m; ?>').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>
+        </tr>
+      </table>
+      <?php $m++; ?>
       <?php } ?>
     </div>
     <a onclick="addImage();" class="button"><span class="button_left button_insert"></span><span class="button_middle"><?php echo $button_add_image; ?></span><span class="button_right"></span></a> </div>
@@ -378,9 +397,28 @@ function addDiscount() {
 	
 	discount_row++;
 }
+
+var special_row = <?php echo $l ?>;
+
+function addSpecial() {
+	html  = '<table class="green" id="special_row' + special_row + '">';
+	html += '<tr>';   
+    html += '<td><?php echo $entry_price; ?><br /><input type="text" name="product_special[' + special_row + '][price]" value="" /></td>';
+    html += '<td><?php echo $entry_date_start; ?><br /><input type="text" name="product_special[' + special_row + '][date_start]" value="" class="date" /></td>';
+	html += '<td><?php echo $entry_date_end; ?><br /><input type="text" name="product_special[' + special_row + '][date_end]" value="" class="date" /></td>';
+    html += '<td><a onclick="$(\'#special_row' + special_row + '\').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>';
+	html += '</tr>';
+    html += '</table>';
+	
+	$('#special').append(html);
+	
+	$('#special .date').datepicker({dateFormat: 'yy-mm-dd'});
+	
+	special_row++;
+}
 //--></script>
 <script type="text/javascript"><!--
-var image_row = <?php echo $l; ?>;
+var image_row = <?php echo $m; ?>;
 
 function addImage() {
     html  = '<div id="image_row' + image_row + '" class="green">';
@@ -439,6 +477,6 @@ function setUploader(upload, preview, image) {
 <script type="text/javascript" src="view/javascript/jquery/ui/ui.datepicker.min.js"></script>
 <script type="text/javascript"><!--
 $(document).ready(function() {
-	$('#date').datepicker({dateFormat: 'yy-mm-dd'});
+	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
 });
 //--></script>

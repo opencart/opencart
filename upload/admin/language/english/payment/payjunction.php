@@ -8,12 +8,12 @@ $_['text_success']       = 'Success: You have modified PayJunction account detai
 $_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
-$_['entry_status']       = 'Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_order_status'] = 'Order Status:';
 $_['entry_username']     = 'Username:';
 $_['entry_password']     = 'Password:';
 $_['entry_test']         = 'Test Mode:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
 // Error

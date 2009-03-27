@@ -25,6 +25,7 @@ $_['entry_country']           = 'Country:';
 $_['entry_zone']              = 'Region / State:';
 $_['entry_language']          = 'Language:';
 $_['entry_currency']          = 'Currency:';
+$_['entry_currency_auto']     = 'Auto Update Currency:';
 $_['entry_weight']            = 'Weight Class:';
 $_['entry_tax']               = 'Display Prices With Tax:';
 $_['entry_order_status']      = 'Order Status:';
@@ -46,6 +47,7 @@ $_['entry_cache']             = 'Use Caching:';
 $_['entry_compression']       = 'Output Compression Level:';
 
 // Help
+$_['help_currency_auto']      = 'Set your store to automatically update currencies daily.'; 
 $_['help_order_status']       = 'Set the default order status when an order is processed.';
 $_['help_stock_check']        = 'Display out of stock message on the shopping cart page if a product is out of stock.';
 $_['help_stock_checkout']     = 'Allow customers to still checkout if the products they are ordering are not in stock.';
@@ -55,6 +57,7 @@ $_['help_account']            = '<b>Replacement Tags:</b><br />{store} - Store N
 $_['help_forgotten']          = '<b>Replacement Tags:</b><br />{store} - Store Name<br />{password} - New Password';
 $_['help_order']              = '<b>Replacement Tags:</b><br />{store} - Store Name<br />{order_id} - Order ID<br />{date_added} - Date order was added<br />{status} - Order Status<br />{invoice} - Invoice link';
 $_['help_update']             = '<b>Replacement Tags:</b><br />{store} - Store Name<br />{order_id} - Order ID<br />{date_added} - Date order was added<br />{status} - Order Status<br />{comment} - Order comments<br />{invoice} - Invoice link';
+$_['help_compression']        = 'GZIP for more efficient transfer to requesting clients. Compression level must be between 0 - 9';
 
 // Error
 $_['error_permission']        = 'Warning: You do not have permission to modify settings!';

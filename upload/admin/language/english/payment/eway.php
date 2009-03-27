@@ -8,10 +8,10 @@ $_['text_success']       = 'Success: You have modified eWay account details!';
 $_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
-$_['entry_status']       = 'Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_order_status'] = 'Order Status:';
 $_['entry_merchant']     = 'Merchant ID:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
 // Error

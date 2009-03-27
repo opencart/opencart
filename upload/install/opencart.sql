@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.1.1
+-- version 2.11.9.4
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 21, 2009 at 08:13 PM
--- Server version: 5.1.30
--- PHP Version: 5.2.9
+-- Generation Time: Mar 27, 2009 at 02:32 AM
+-- Server version: 5.0.67
+-- PHP Version: 5.2.6
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -16,7 +16,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `opencart`
+-- Database: `opencart_dev`
 --
 
 -- --------------------------------------------------------
@@ -27,20 +27,20 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 DROP TABLE IF EXISTS `address`;
 CREATE TABLE `address` (
-  `address_id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer_id` int(11) NOT NULL DEFAULT '0',
-  `company` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `firstname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `lastname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `address_1` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `address_2` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `postcode` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `city` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `country_id` int(11) NOT NULL DEFAULT '0',
-  `zone_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`address_id`),
+  `address_id` int(11) NOT NULL auto_increment,
+  `customer_id` int(11) NOT NULL default '0',
+  `company` varchar(32) collate utf8_unicode_ci default NULL,
+  `firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `address_1` varchar(128) collate utf8_unicode_ci NOT NULL,
+  `address_2` varchar(128) collate utf8_unicode_ci default NULL,
+  `postcode` varchar(10) collate utf8_unicode_ci NOT NULL default '',
+  `city` varchar(128) collate utf8_unicode_ci NOT NULL,
+  `country_id` int(11) NOT NULL default '0',
+  `zone_id` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`address_id`),
   KEY `customer_id` (`customer_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `address`
@@ -48,7 +48,9 @@ CREATE TABLE `address` (
 
 INSERT INTO `address` (`address_id`, `customer_id`, `company`, `firstname`, `lastname`, `address_1`, `address_2`, `postcode`, `city`, `country_id`, `zone_id`) VALUES
 (2, 2, 'OpenCart', 'Daniel', 'Kerr', '34 Lancaster Ave', '', 'FY5 4NN', 'Thornton-Cleveleys', 222, 3563),
-(4, 2, 'OpenCart', 'Daniel', 'Kerr', '34 Lancaster Ave', '', 'FY5 4NN', 'Thornton-Cleveleys', 222, 3563);
+(4, 2, 'OpenCart', 'Daniel', 'Kerr', '34 Lancaster Ave', '', 'FY5 4NN', 'Thornton-Cleveleys', 222, 3563),
+(5, 1, 'OpenCart', 'Daniel', 'Kerr', '34 Lancaster Ave', '', 'FY5 4NN', 'THornton-Cleveleys', 222, 3563),
+(6, 2, '', 'john', 'customer', '6661 - 22 ave', '', '', 'london', 222, 3563);
 
 -- --------------------------------------------------------
 
@@ -58,13 +60,13 @@ INSERT INTO `address` (`address_id`, `customer_id`, `company`, `firstname`, `las
 
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
-  `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  `parent_id` int(11) NOT NULL DEFAULT '0',
-  `sort_order` int(3) DEFAULT '0',
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`category_id`)
+  `category_id` int(11) NOT NULL auto_increment,
+  `image` varchar(255) collate utf8_unicode_ci NOT NULL default '0',
+  `parent_id` int(11) NOT NULL default '0',
+  `sort_order` int(3) default '0',
+  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`category_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=37 ;
 
 --
@@ -74,7 +76,7 @@ CREATE TABLE `category` (
 INSERT INTO `category` (`category_id`, `image`, `parent_id`, `sort_order`, `date_added`, `date_modified`) VALUES
 (25, '', 0, 3, '2009-01-31 01:04:25', '2009-02-02 14:11:14'),
 (27, '', 20, 2, '2009-01-31 01:55:34', '2009-02-02 14:11:53'),
-(20, '', 0, 1, '2009-01-05 21:49:43', '2009-03-21 02:23:36'),
+(20, '', 0, 1, '2009-01-05 21:49:43', '2009-03-26 21:56:23'),
 (24, '', 0, 5, '2009-01-20 02:36:26', '2009-02-03 14:22:23'),
 (18, '', 0, 2, '2009-01-05 21:49:15', '2009-02-03 13:54:50'),
 (17, '', 0, 4, '2009-01-03 21:08:57', '2009-02-02 14:12:10'),
@@ -95,11 +97,11 @@ INSERT INTO `category` (`category_id`, `image`, `parent_id`, `sort_order`, `date
 
 DROP TABLE IF EXISTS `category_description`;
 CREATE TABLE `category_description` (
-  `category_id` int(11) NOT NULL DEFAULT '0',
-  `language_id` int(11) NOT NULL DEFAULT '1',
-  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `meta_description` varchar(66) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`category_id`,`language_id`),
+  `category_id` int(11) NOT NULL default '0',
+  `language_id` int(11) NOT NULL default '1',
+  `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `meta_description` varchar(66) collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`category_id`,`language_id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -131,12 +133,12 @@ INSERT INTO `category_description` (`category_id`, `language_id`, `name`, `meta_
 
 DROP TABLE IF EXISTS `country`;
 CREATE TABLE `country` (
-  `country_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `iso_code_2` varchar(2) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `iso_code_3` varchar(3) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `address_format` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`country_id`)
+  `country_id` int(11) NOT NULL auto_increment,
+  `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  `iso_code_2` varchar(2) collate utf8_unicode_ci NOT NULL default '',
+  `iso_code_3` varchar(3) collate utf8_unicode_ci NOT NULL default '',
+  `address_format` text collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`country_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=240 ;
 
 --
@@ -392,19 +394,19 @@ INSERT INTO `country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `addres
 
 DROP TABLE IF EXISTS `coupon`;
 CREATE TABLE `coupon` (
-  `coupon_id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `type` char(1) COLLATE utf8_unicode_ci NOT NULL,
+  `coupon_id` int(11) NOT NULL auto_increment,
+  `code` varchar(10) collate utf8_unicode_ci NOT NULL,
+  `type` char(1) collate utf8_unicode_ci NOT NULL,
   `discount` decimal(15,4) NOT NULL,
   `shipping` int(1) NOT NULL,
   `total` decimal(15,4) NOT NULL,
   `date_start` date NOT NULL,
   `date_end` date NOT NULL,
   `uses_total` int(11) NOT NULL,
-  `uses_customer` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `uses_customer` varchar(11) collate utf8_unicode_ci NOT NULL,
   `status` int(1) NOT NULL,
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`coupon_id`)
+  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`coupon_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
@@ -414,7 +416,7 @@ CREATE TABLE `coupon` (
 INSERT INTO `coupon` (`coupon_id`, `code`, `type`, `discount`, `shipping`, `total`, `date_start`, `date_end`, `uses_total`, `uses_customer`, `status`, `date_added`) VALUES
 (4, '2222', 'P', '10.0000', 0, '0.0000', '2009-01-27', '2009-12-31', 10, '10', 1, '2009-01-27 13:55:03'),
 (5, '3333', 'P', '0.0000', 1, '100.0000', '2009-03-01', '2009-04-01', 10, '10', 1, '2009-03-14 21:13:53'),
-(6, '1111', 'P', '10.0000', 0, '100.0000', '2009-03-14', '2009-03-14', 10, '10', 1, '2009-03-14 21:15:18');
+(6, '1111', 'P', '10.0000', 0, '100.0000', '2009-03-14', '2009-04-30', 10, '1', 1, '2009-03-14 21:15:18');
 
 -- --------------------------------------------------------
 
@@ -426,9 +428,9 @@ DROP TABLE IF EXISTS `coupon_description`;
 CREATE TABLE `coupon_description` (
   `coupon_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`coupon_id`,`language_id`)
+  `name` varchar(128) collate utf8_unicode_ci NOT NULL,
+  `description` text collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`coupon_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -448,10 +450,10 @@ INSERT INTO `coupon_description` (`coupon_id`, `language_id`, `name`, `descripti
 
 DROP TABLE IF EXISTS `coupon_product`;
 CREATE TABLE `coupon_product` (
-  `coupon_product_id` int(11) NOT NULL AUTO_INCREMENT,
+  `coupon_product_id` int(11) NOT NULL auto_increment,
   `coupon_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  PRIMARY KEY (`coupon_product_id`)
+  PRIMARY KEY  (`coupon_product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -467,12 +469,12 @@ CREATE TABLE `coupon_product` (
 
 DROP TABLE IF EXISTS `coupon_redeem`;
 CREATE TABLE `coupon_redeem` (
-  `coupon_redeem_id` int(11) NOT NULL AUTO_INCREMENT,
+  `coupon_redeem_id` int(11) NOT NULL auto_increment,
   `coupon_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`coupon_redeem_id`)
+  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`coupon_redeem_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -488,16 +490,16 @@ CREATE TABLE `coupon_redeem` (
 
 DROP TABLE IF EXISTS `currency`;
 CREATE TABLE `currency` (
-  `currency_id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `code` varchar(3) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `symbol_left` varchar(12) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `symbol_right` varchar(12) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `decimal_place` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `value` float(13,8) DEFAULT NULL,
+  `currency_id` int(11) NOT NULL auto_increment,
+  `title` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `code` varchar(3) collate utf8_unicode_ci NOT NULL default '',
+  `symbol_left` varchar(12) collate utf8_unicode_ci default NULL,
+  `symbol_right` varchar(12) collate utf8_unicode_ci default NULL,
+  `decimal_place` char(1) collate utf8_unicode_ci default NULL,
+  `value` float(13,8) default NULL,
   `status` int(1) NOT NULL,
-  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`currency_id`)
+  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`currency_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
@@ -505,9 +507,9 @@ CREATE TABLE `currency` (
 --
 
 INSERT INTO `currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`) VALUES
-(1, 'Pound Sterling', 'GBP', '£', '', '2', 1.00000000, 1, '2009-02-18 14:22:14'),
-(2, 'US Dollar', 'USD', '$', '', '2', 1.51359999, 1, '2009-02-18 14:21:27'),
-(3, 'Euro', 'EUR', '', '€', '2', 1.12043822, 1, '2009-03-15 20:17:49');
+(1, 'Pound Sterling', 'GBP', '£', '', '2', 1.00000000, 1, '2009-03-24 12:04:39'),
+(2, 'US Dollar', 'USD', '$', '', '2', 1.45690203, 1, '2009-03-26 02:12:07'),
+(3, 'Euro', 'EUR', '', '€', '2', 1.07966304, 1, '2009-03-26 02:12:07');
 
 -- --------------------------------------------------------
 
@@ -517,20 +519,20 @@ INSERT INTO `currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_r
 
 DROP TABLE IF EXISTS `customer`;
 CREATE TABLE `customer` (
-  `customer_id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `lastname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `email` varchar(96) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `telephone` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `fax` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `password` varchar(40) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `cart` text COLLATE utf8_unicode_ci,
-  `newsletter` int(1) NOT NULL DEFAULT '0',
-  `address_id` int(11) NOT NULL DEFAULT '0',
+  `customer_id` int(11) NOT NULL auto_increment,
+  `firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `email` varchar(96) collate utf8_unicode_ci NOT NULL default '',
+  `telephone` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `fax` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `password` varchar(40) collate utf8_unicode_ci NOT NULL default '',
+  `cart` text collate utf8_unicode_ci,
+  `newsletter` int(1) NOT NULL default '0',
+  `address_id` int(11) NOT NULL default '0',
   `status` int(1) NOT NULL,
-  `ip` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`customer_id`)
+  `ip` varchar(15) collate utf8_unicode_ci default NULL,
+  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -546,12 +548,12 @@ CREATE TABLE `customer` (
 
 DROP TABLE IF EXISTS `download`;
 CREATE TABLE `download` (
-  `download_id` int(11) NOT NULL AUTO_INCREMENT,
-  `filename` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `mask` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `remaining` int(11) NOT NULL DEFAULT '0',
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`download_id`)
+  `download_id` int(11) NOT NULL auto_increment,
+  `filename` varchar(128) collate utf8_unicode_ci NOT NULL default '',
+  `mask` varchar(128) collate utf8_unicode_ci NOT NULL default '',
+  `remaining` int(11) NOT NULL default '0',
+  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`download_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -567,10 +569,10 @@ CREATE TABLE `download` (
 
 DROP TABLE IF EXISTS `download_description`;
 CREATE TABLE `download_description` (
-  `download_id` int(11) NOT NULL DEFAULT '0',
-  `language_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`download_id`,`language_id`)
+  `download_id` int(11) NOT NULL default '0',
+  `language_id` int(11) NOT NULL default '0',
+  `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  PRIMARY KEY  (`download_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -586,20 +588,17 @@ CREATE TABLE `download_description` (
 
 DROP TABLE IF EXISTS `extension`;
 CREATE TABLE `extension` (
-  `extension_id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `key` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`extension_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=68 ;
+  `extension_id` int(11) NOT NULL auto_increment,
+  `type` varchar(32) collate utf8_unicode_ci NOT NULL,
+  `key` varchar(32) collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`extension_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=77 ;
 
 --
 -- Dumping data for table `extension`
 --
 
 INSERT INTO `extension` (`extension_id`, `type`, `key`) VALUES
-(19, 'shipping', 'flat'),
-(2, 'shipping', 'item'),
-(3, 'shipping', 'zone'),
 (23, 'payment', 'cod'),
 (14, 'total', 'coupon'),
 (22, 'total', 'shipping'),
@@ -607,7 +606,7 @@ INSERT INTO `extension` (`extension_id`, `type`, `key`) VALUES
 (57, 'total', 'sub_total'),
 (58, 'total', 'tax'),
 (59, 'total', 'total'),
-(67, 'payment', 'paypal');
+(76, 'shipping', 'free');
 
 -- --------------------------------------------------------
 
@@ -617,12 +616,12 @@ INSERT INTO `extension` (`extension_id`, `type`, `key`) VALUES
 
 DROP TABLE IF EXISTS `geo_zone`;
 CREATE TABLE `geo_zone` (
-  `geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`geo_zone_id`)
+  `geo_zone_id` int(11) NOT NULL auto_increment,
+  `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `description` varchar(255) collate utf8_unicode_ci NOT NULL default '',
+  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`geo_zone_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
@@ -640,9 +639,9 @@ INSERT INTO `geo_zone` (`geo_zone_id`, `name`, `description`, `date_modified`, `
 
 DROP TABLE IF EXISTS `information`;
 CREATE TABLE `information` (
-  `information_id` int(11) NOT NULL AUTO_INCREMENT,
-  `sort_order` int(3) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`information_id`)
+  `information_id` int(11) NOT NULL auto_increment,
+  `sort_order` int(3) NOT NULL default '0',
+  PRIMARY KEY  (`information_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
@@ -662,11 +661,11 @@ INSERT INTO `information` (`information_id`, `sort_order`) VALUES
 
 DROP TABLE IF EXISTS `information_description`;
 CREATE TABLE `information_description` (
-  `information_id` int(11) NOT NULL DEFAULT '0',
-  `language_id` int(11) NOT NULL DEFAULT '0',
-  `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `description` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`information_id`,`language_id`)
+  `information_id` int(11) NOT NULL default '0',
+  `language_id` int(11) NOT NULL default '0',
+  `title` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  `description` text collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`information_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -686,16 +685,16 @@ INSERT INTO `information_description` (`information_id`, `language_id`, `title`,
 
 DROP TABLE IF EXISTS `language`;
 CREATE TABLE `language` (
-  `language_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `code` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `image` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `directory` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `filename` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `sort_order` int(3) DEFAULT NULL,
+  `language_id` int(11) NOT NULL auto_increment,
+  `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `code` varchar(5) collate utf8_unicode_ci NOT NULL,
+  `locale` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `image` varchar(64) collate utf8_unicode_ci default NULL,
+  `directory` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `filename` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  `sort_order` int(3) default NULL,
   `status` int(1) NOT NULL,
-  PRIMARY KEY (`language_id`),
+  PRIMARY KEY  (`language_id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
@@ -714,11 +713,11 @@ INSERT INTO `language` (`language_id`, `name`, `code`, `locale`, `image`, `direc
 
 DROP TABLE IF EXISTS `manufacturer`;
 CREATE TABLE `manufacturer` (
-  `manufacturer_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  `sort_order` int(3) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`manufacturer_id`)
+  `manufacturer_id` int(11) NOT NULL auto_increment,
+  `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  `image` varchar(255) collate utf8_unicode_ci NOT NULL default '0',
+  `sort_order` int(3) NOT NULL default '0',
+  PRIMARY KEY  (`manufacturer_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 --
@@ -741,46 +740,46 @@ INSERT INTO `manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`) VA
 
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
-  `order_id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer_id` int(11) NOT NULL DEFAULT '0',
-  `firstname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `lastname` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `telephone` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `fax` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `email` varchar(96) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `shipping_firstname` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `shipping_lastname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `shipping_company` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `shipping_address_1` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `shipping_address_2` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `shipping_city` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `shipping_postcode` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `shipping_zone` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `shipping_country` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `shipping_address_format` text COLLATE utf8_unicode_ci NOT NULL,
-  `shipping_method` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `payment_firstname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `payment_lastname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `payment_company` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `payment_address_1` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `payment_address_2` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `payment_city` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `payment_postcode` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `payment_zone` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `payment_country` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `payment_address_format` text COLLATE utf8_unicode_ci NOT NULL,
-  `payment_method` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `total` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `order_id` int(11) NOT NULL auto_increment,
+  `customer_id` int(11) NOT NULL default '0',
+  `firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `lastname` varchar(32) collate utf8_unicode_ci default NULL,
+  `telephone` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `fax` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `email` varchar(96) collate utf8_unicode_ci NOT NULL default '',
+  `shipping_firstname` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  `shipping_lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `shipping_company` varchar(32) collate utf8_unicode_ci default NULL,
+  `shipping_address_1` varchar(128) collate utf8_unicode_ci NOT NULL,
+  `shipping_address_2` varchar(128) collate utf8_unicode_ci default NULL,
+  `shipping_city` varchar(128) collate utf8_unicode_ci NOT NULL,
+  `shipping_postcode` varchar(10) collate utf8_unicode_ci NOT NULL default '',
+  `shipping_zone` varchar(32) collate utf8_unicode_ci default NULL,
+  `shipping_country` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  `shipping_address_format` text collate utf8_unicode_ci NOT NULL,
+  `shipping_method` varchar(128) collate utf8_unicode_ci NOT NULL default '',
+  `payment_firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `payment_lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `payment_company` varchar(32) collate utf8_unicode_ci default NULL,
+  `payment_address_1` varchar(128) collate utf8_unicode_ci NOT NULL,
+  `payment_address_2` varchar(128) collate utf8_unicode_ci default NULL,
+  `payment_city` varchar(128) collate utf8_unicode_ci NOT NULL,
+  `payment_postcode` varchar(10) collate utf8_unicode_ci NOT NULL default '',
+  `payment_zone` varchar(32) collate utf8_unicode_ci default NULL,
+  `payment_country` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  `payment_address_format` text collate utf8_unicode_ci NOT NULL,
+  `payment_method` varchar(128) collate utf8_unicode_ci NOT NULL default '',
+  `total` decimal(15,4) NOT NULL default '0.0000',
   `order_status_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `currency_id` int(11) NOT NULL,
-  `currency` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
+  `currency` varchar(3) collate utf8_unicode_ci NOT NULL,
   `value` decimal(15,4) NOT NULL,
-  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `confirm` int(1) NOT NULL DEFAULT '0',
-  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`order_id`)
+  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+  `confirm` int(1) NOT NULL default '0',
+  `ip` varchar(15) collate utf8_unicode_ci NOT NULL default '',
+  PRIMARY KEY  (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -796,14 +795,14 @@ CREATE TABLE `order` (
 
 DROP TABLE IF EXISTS `order_download`;
 CREATE TABLE `order_download` (
-  `order_download_id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL DEFAULT '0',
-  `order_product_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `filename` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `mask` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `remaining` int(3) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`order_download_id`)
+  `order_download_id` int(11) NOT NULL auto_increment,
+  `order_id` int(11) NOT NULL default '0',
+  `order_product_id` int(11) NOT NULL default '0',
+  `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  `filename` varchar(128) collate utf8_unicode_ci NOT NULL default '',
+  `mask` varchar(128) collate utf8_unicode_ci NOT NULL default '',
+  `remaining` int(3) NOT NULL default '0',
+  PRIMARY KEY  (`order_download_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -819,79 +818,19 @@ CREATE TABLE `order_download` (
 
 DROP TABLE IF EXISTS `order_history`;
 CREATE TABLE `order_history` (
-  `order_history_id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL DEFAULT '0',
-  `order_status_id` int(5) NOT NULL DEFAULT '0',
-  `notify` int(1) DEFAULT '0',
-  `comment` text COLLATE utf8_unicode_ci,
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`order_history_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=60 ;
+  `order_history_id` int(11) NOT NULL auto_increment,
+  `order_id` int(11) NOT NULL default '0',
+  `order_status_id` int(5) NOT NULL default '0',
+  `notify` int(1) default '0',
+  `comment` text collate utf8_unicode_ci,
+  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`order_history_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
 -- Dumping data for table `order_history`
 --
 
-INSERT INTO `order_history` (`order_history_id`, `order_id`, `order_status_id`, `notify`, `comment`, `date_added`) VALUES
-(1, 1, 1, 1, '', '2009-03-17 02:18:28'),
-(2, 2, 1, 1, '', '2009-03-17 02:19:20'),
-(3, 3, 1, 1, '', '2009-03-17 02:19:48'),
-(4, 4, 1, 1, '', '2009-03-17 02:20:55'),
-(5, 5, 1, 1, '', '2009-03-17 02:21:21'),
-(6, 6, 1, 1, '', '2009-03-17 02:31:56'),
-(7, 7, 1, 1, '', '2009-03-17 02:41:17'),
-(8, 8, 1, 1, '', '2009-03-17 02:43:05'),
-(9, 9, 1, 1, '', '2009-03-17 02:44:08'),
-(10, 10, 1, 1, '', '2009-03-17 02:44:10'),
-(11, 11, 1, 1, '', '2009-03-17 11:16:20'),
-(12, 12, 1, 1, '', '2009-03-17 11:16:45'),
-(13, 13, 1, 1, '', '2009-03-17 11:16:50'),
-(14, 14, 1, 1, '', '2009-03-17 23:15:05'),
-(15, 15, 1, 1, '', '2009-03-18 00:07:00'),
-(16, 16, 1, 1, '', '2009-03-18 00:10:59'),
-(17, 17, 1, 1, '', '2009-03-18 00:21:25'),
-(18, 18, 1, 1, '', '2009-03-18 00:22:03'),
-(19, 19, 1, 1, '', '2009-03-18 00:22:23'),
-(20, 20, 1, 1, '', '2009-03-18 00:22:45'),
-(21, 21, 1, 1, '', '2009-03-18 00:23:09'),
-(22, 22, 1, 1, '', '2009-03-18 00:23:44'),
-(23, 23, 1, 1, '', '2009-03-18 00:25:51'),
-(24, 24, 1, 1, '', '2009-03-18 01:05:11'),
-(25, 25, 1, 1, '', '2009-03-18 01:05:48'),
-(26, 26, 1, 1, '', '2009-03-18 01:20:26'),
-(27, 27, 1, 1, '', '2009-03-18 01:45:29'),
-(28, 28, 1, 1, '', '2009-03-18 01:56:41'),
-(29, 29, 1, 1, '', '2009-03-18 01:57:54'),
-(30, 30, 1, 1, '', '2009-03-18 02:08:13'),
-(31, 31, 1, 1, '', '2009-03-18 02:08:33'),
-(32, 32, 1, 1, '', '2009-03-18 02:08:44'),
-(33, 33, 1, 1, '', '2009-03-18 02:10:18'),
-(34, 34, 1, 1, '', '2009-03-18 02:11:15'),
-(35, 35, 1, 1, '', '2009-03-18 02:11:35'),
-(36, 36, 1, 1, '', '2009-03-18 02:11:36'),
-(37, 37, 1, 1, '', '2009-03-18 02:11:50'),
-(38, 38, 1, 1, '', '2009-03-18 02:12:31'),
-(39, 39, 1, 1, '', '2009-03-18 02:13:12'),
-(40, 40, 1, 1, '', '2009-03-18 02:14:49'),
-(41, 41, 1, 1, '', '2009-03-18 02:14:52'),
-(42, 42, 1, 1, '', '2009-03-18 02:15:33'),
-(43, 43, 1, 1, '', '2009-03-18 02:15:50'),
-(44, 44, 1, 1, '', '2009-03-18 02:17:21'),
-(45, 45, 1, 1, '', '2009-03-18 02:17:41'),
-(46, 46, 1, 1, '', '2009-03-18 02:19:29'),
-(47, 47, 1, 1, '', '2009-03-18 02:28:34'),
-(48, 48, 1, 1, '', '2009-03-18 02:33:44'),
-(49, 49, 1, 1, '', '2009-03-18 02:34:02'),
-(50, 50, 1, 1, '', '2009-03-18 02:34:16'),
-(51, 51, 1, 1, '', '2009-03-18 02:34:45'),
-(52, 52, 1, 1, '', '2009-03-18 02:45:15'),
-(53, 53, 1, 1, '', '2009-03-18 17:30:00'),
-(54, 54, 1, 1, '', '2009-03-18 17:33:06'),
-(55, 55, 1, 1, '', '2009-03-18 17:34:55'),
-(56, 56, 1, 1, '', '2009-03-18 17:55:44'),
-(57, 57, 1, 1, '', '2009-03-18 17:56:50'),
-(58, 58, 1, 1, '', '2009-03-18 17:57:26'),
-(59, 59, 1, 1, '', '2009-03-18 18:40:41');
 
 -- --------------------------------------------------------
 
@@ -901,14 +840,14 @@ INSERT INTO `order_history` (`order_history_id`, `order_id`, `order_status_id`, 
 
 DROP TABLE IF EXISTS `order_option`;
 CREATE TABLE `order_option` (
-  `order_option_id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL DEFAULT '0',
-  `order_product_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `value` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
-  `prefix` char(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`order_option_id`)
+  `order_option_id` int(11) NOT NULL auto_increment,
+  `order_id` int(11) NOT NULL default '0',
+  `order_product_id` int(11) NOT NULL default '0',
+  `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `value` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `price` decimal(15,4) NOT NULL default '0.0000',
+  `prefix` char(1) collate utf8_unicode_ci NOT NULL default '',
+  PRIMARY KEY  (`order_option_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -924,17 +863,17 @@ CREATE TABLE `order_option` (
 
 DROP TABLE IF EXISTS `order_product`;
 CREATE TABLE `order_product` (
-  `order_product_id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL DEFAULT '0',
+  `order_product_id` int(11) NOT NULL auto_increment,
+  `order_id` int(11) NOT NULL default '0',
   `product_id` int(11) NOT NULL,
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `model` varchar(12) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  `model` varchar(12) collate utf8_unicode_ci NOT NULL default '',
+  `price` decimal(15,4) NOT NULL default '0.0000',
   `discount` decimal(15,4) NOT NULL,
-  `total` decimal(15,4) NOT NULL DEFAULT '0.0000',
-  `tax` decimal(15,4) NOT NULL DEFAULT '0.0000',
-  `quantity` int(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`order_product_id`)
+  `total` decimal(15,4) NOT NULL default '0.0000',
+  `tax` decimal(15,4) NOT NULL default '0.0000',
+  `quantity` int(4) NOT NULL default '0',
+  PRIMARY KEY  (`order_product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -950,10 +889,10 @@ CREATE TABLE `order_product` (
 
 DROP TABLE IF EXISTS `order_status`;
 CREATE TABLE `order_status` (
-  `order_status_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_status_id` int(11) NOT NULL auto_increment,
   `language_id` int(11) NOT NULL,
-  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`order_status_id`,`language_id`)
+  `name` varchar(32) collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`order_status_id`,`language_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
 --
@@ -978,13 +917,13 @@ INSERT INTO `order_status` (`order_status_id`, `language_id`, `name`) VALUES
 
 DROP TABLE IF EXISTS `order_total`;
 CREATE TABLE `order_total` (
-  `order_total_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL DEFAULT '0',
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `text` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `value` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `order_total_id` int(10) unsigned NOT NULL auto_increment,
+  `order_id` int(11) NOT NULL default '0',
+  `title` varchar(255) collate utf8_unicode_ci NOT NULL default '',
+  `text` varchar(255) collate utf8_unicode_ci NOT NULL default '',
+  `value` decimal(15,4) NOT NULL default '0.0000',
   `sort_order` int(3) NOT NULL,
-  PRIMARY KEY (`order_total_id`),
+  PRIMARY KEY  (`order_total_id`),
   KEY `idx_orders_total_orders_id` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -1001,24 +940,24 @@ CREATE TABLE `order_total` (
 
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
-  `product_id` int(11) NOT NULL AUTO_INCREMENT,
-  `model` varchar(24) COLLATE utf8_unicode_ci NOT NULL,
-  `quantity` int(4) NOT NULL DEFAULT '0',
+  `product_id` int(11) NOT NULL auto_increment,
+  `model` varchar(24) collate utf8_unicode_ci NOT NULL,
+  `quantity` int(4) NOT NULL default '0',
   `stock_status_id` int(11) NOT NULL,
-  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `manufacturer_id` int(11) NOT NULL DEFAULT '0',
-  `shipping` int(1) NOT NULL DEFAULT '1',
-  `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `image` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `manufacturer_id` int(11) NOT NULL default '0',
+  `shipping` int(1) NOT NULL default '1',
+  `price` decimal(15,4) NOT NULL default '0.0000',
   `tax_class_id` int(11) NOT NULL,
-  `date_available` date DEFAULT NULL,
-  `weight` decimal(5,2) NOT NULL DEFAULT '0.00',
-  `weight_class_id` int(11) NOT NULL DEFAULT '0',
+  `date_available` date default NULL,
+  `weight` decimal(5,2) NOT NULL default '0.00',
+  `weight_class_id` int(11) NOT NULL default '0',
   `sort_order` int(3) NOT NULL,
-  `status` int(1) NOT NULL DEFAULT '0',
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `viewed` int(5) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`product_id`)
+  `status` int(1) NOT NULL default '0',
+  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  `viewed` int(5) NOT NULL default '0',
+  PRIMARY KEY  (`product_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=49 ;
 
 --
@@ -1028,22 +967,22 @@ CREATE TABLE `product` (
 INSERT INTO `product` (`product_id`, `model`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `sort_order`, `status`, `date_added`, `date_modified`, `viewed`) VALUES
 (28, 'Product 1', 10, 7, 'htc_touch_hd_1.jpg', 5, 1, '484.4400', 9, '2009-02-03', '146.40', 2, 0, 1, '2009-02-03 16:06:50', '2009-02-22 22:25:07', 63),
 (29, 'Product 2', 10, 5, 'palm_treo_pro_1.jpg', 6, 1, '279.9900', 9, '2009-02-03', '133.00', 2, 0, 1, '2009-02-03 16:42:17', '2009-02-22 22:07:34', 12),
-(30, 'Product 3', -1, 6, 'canon_eos_5d_1.jpg', 9, 1, '100.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 16:59:00', '2009-02-22 21:46:05', 11),
+(30, 'Product 3', -1, 6, 'canon_eos_5d_1.jpg', 9, 1, '100.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 16:59:00', '2009-02-22 21:46:05', 13),
 (31, 'Product 4', 50, 6, 'nikon_d300_1.jpg', 0, 1, '80.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 17:00:10', '2009-03-14 22:44:42', 6),
 (32, 'Product 5', 10, 6, 'ipod_touch_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 0, 1, '2009-02-03 17:07:26', '2009-02-22 21:53:58', 7),
 (33, 'Product 6', 10, 6, 'samsung_syncmaster_941bw.jpg', 0, 1, '200.0000', 9, '2009-02-03', '5.00', 1, 0, 1, '2009-02-03 17:08:31', '2009-02-22 22:07:57', 2),
 (34, 'Product 7', 0, 6, 'ipod_shuffle_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 1, 1, '2009-02-03 18:07:54', '2009-02-22 21:51:54', 5),
 (35, 'Product 8', 10, 5, '', 0, 0, '100.0000', 9, '2009-02-03', '5.00', 1, 1, 1, '2009-02-03 18:08:31', '2009-02-03 18:35:36', 6),
-(36, 'Product 9', 8, 6, 'ipod_nano_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 10, 1, '2009-02-03 18:09:19', '2009-02-22 21:50:36', 43),
-(40, 'product 11', 7, 5, 'iphone_1.jpg', 8, 1, '342.5000', 9, '2009-02-03', '133.00', 2, 0, 1, '2009-02-03 21:07:12', '2009-02-22 22:24:45', 146),
-(41, 'Product 14', 0, 5, 'imac_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:07:26', '2009-02-22 22:25:39', 20),
-(42, 'Product 15', 8, 5, 'apple_cinema_30.jpg', 8, 1, '100.0000', 9, '2009-02-03', '12.50', 1, 1, 1, '2009-02-03 21:07:37', '2009-03-21 00:55:11', 19),
+(36, 'Product 9', 8, 6, 'ipod_nano_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 10, 1, '2009-02-03 18:09:19', '2009-02-22 21:50:36', 47),
+(40, 'product 11', 7, 5, 'iphone_1.jpg', 8, 1, '342.5000', 9, '2009-02-03', '133.00', 2, 0, 1, '2009-02-03 21:07:12', '2009-02-22 22:24:45', 194),
+(41, 'Product 14', 0, 5, 'imac_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:07:26', '2009-02-22 22:25:39', 21),
+(42, 'Product 15', 8, 5, 'apple_cinema_30.jpg', 8, 1, '100.0000', 9, '2009-02-03', '12.50', 1, 1, 1, '2009-02-03 21:07:37', '2009-03-27 01:36:50', 31),
 (43, 'Product 16', 10, 5, 'macbook_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:07:49', '2009-02-22 21:57:56', 11),
 (44, 'Product 17', 10, 5, 'macbook_air_1.jpg', 8, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:00', '2009-02-22 22:04:58', 5),
-(45, 'Product 18', 0, 5, 'macbook_pro_1.jpg', 8, 1, '2000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:17', '2009-02-22 22:05:50', 12),
-(46, 'Product 19', 10, 5, 'sony_vaio_1.jpg', 10, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:29', '2009-02-22 22:08:39', 15),
-(47, 'Product 20', 10, 5, 'hp_1.jpg', 7, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:40', '2009-02-22 22:24:17', 22),
-(48, 'product 20', 10, 5, 'ipod_classic_1.jpg', 8, 1, '100.0000', 9, '2009-02-08', '0.00', 1, 0, 1, '2009-02-08 17:21:51', '2009-02-22 21:49:21', 93);
+(45, 'Product 18', 0, 5, 'macbook_pro_1.jpg', 8, 1, '2000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:17', '2009-02-22 22:05:50', 15),
+(46, 'Product 19', 10, 5, 'sony_vaio_1.jpg', 10, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:29', '2009-02-22 22:08:39', 16),
+(47, 'Product 20', 10, 5, 'hp_1.jpg', 7, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:40', '2009-02-22 22:24:17', 29),
+(48, 'product 20', 10, 5, 'ipod_classic_1.jpg', 8, 1, '100.0000', 9, '2009-02-08', '0.00', 1, 0, 1, '2009-02-08 17:21:51', '2009-02-22 21:49:21', 129);
 
 -- --------------------------------------------------------
 
@@ -1053,12 +992,12 @@ INSERT INTO `product` (`product_id`, `model`, `quantity`, `stock_status_id`, `im
 
 DROP TABLE IF EXISTS `product_description`;
 CREATE TABLE `product_description` (
-  `product_id` int(11) NOT NULL AUTO_INCREMENT,
-  `language_id` int(11) NOT NULL DEFAULT '1',
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `meta_description` varchar(66) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`product_id`,`language_id`),
+  `product_id` int(11) NOT NULL auto_increment,
+  `language_id` int(11) NOT NULL default '1',
+  `name` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `meta_description` varchar(66) collate utf8_unicode_ci NOT NULL,
+  `description` text collate utf8_unicode_ci,
+  PRIMARY KEY  (`product_id`,`language_id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=49 ;
 
@@ -1068,7 +1007,7 @@ CREATE TABLE `product_description` (
 
 INSERT INTO `product_description` (`product_id`, `language_id`, `name`, `meta_description`, `description`) VALUES
 (28, 1, 'HTC Touch HD', '', '&lt;p&gt;HTC Touch - in High Definition. Watch music videos and streaming content in awe-inspiring high definition clarity for a mobile experience you never thought possible. Seductively sleek, the HTC Touch HD provides the next generation of mobile functionality, all at a simple touch. Fully integrated with Windows Mobile Professional 6.1, ultrafast 3.5G, GPS, 5MP camera, plus lots more - all delivered on a breathtakingly crisp 3.8&amp;quot; WVGA touchscreen - you can take control of your mobile world with the HTC Touch HD.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Processor Qualcomm&amp;reg; MSM 7201A&amp;trade; 528 MHz&lt;/li&gt;\r\n    &lt;li&gt;Windows Mobile&amp;reg; 6.1 Professional Operating System&lt;/li&gt;\r\n    &lt;li&gt;Memory: 512 MB ROM, 288 MB RAM&lt;/li&gt;\r\n    &lt;li&gt;Dimensions: 115 mm x 62.8 mm x 12 mm / 146.4 grams&lt;/li&gt;\r\n    &lt;li&gt;3.8-inch TFT-LCD flat touch-sensitive screen with 480 x 800 WVGA resolution&lt;/li&gt;\r\n    &lt;li&gt;HSDPA/WCDMA: Europe/Asia: 900/2100 MHz; Up to 2 Mbps up-link and 7.2 Mbps down-link speeds&lt;/li&gt;\r\n    &lt;li&gt;Quad-band GSM/GPRS/EDGE: Europe/Asia: 850/900/1800/1900 MHz (Band frequency, HSUPA availability, and data speed are operator dependent.)&lt;/li&gt;\r\n    &lt;li&gt;Device Control via HTC TouchFLO&amp;trade; 3D &amp;amp; Touch-sensitive front panel buttons&lt;/li&gt;\r\n    &lt;li&gt;GPS and A-GPS ready&lt;/li&gt;\r\n    &lt;li&gt;Bluetooth&amp;reg; 2.0 with Enhanced Data Rate and A2DP for wireless stereo headsets&lt;/li&gt;\r\n    &lt;li&gt;Wi-Fi&amp;reg;: IEEE 802.11 b/g&lt;/li&gt;\r\n    &lt;li&gt;HTC ExtUSB&amp;trade; (11-pin mini-USB 2.0)&lt;/li&gt;\r\n    &lt;li&gt;5 megapixel color camera with auto focus&lt;/li&gt;\r\n    &lt;li&gt;VGA CMOS color camera&lt;/li&gt;\r\n    &lt;li&gt;Built-in 3.5 mm audio jack, microphone, speaker, and FM radio&lt;/li&gt;\r\n    &lt;li&gt;Ring tone formats: AAC, AAC+, eAAC+, AMR-NB, AMR-WB, QCP, MP3, WMA, WAV&lt;/li&gt;\r\n    &lt;li&gt;40 polyphonic and standard MIDI format 0 and 1 (SMF)/SP MIDI&lt;/li&gt;\r\n    &lt;li&gt;Rechargeable Lithium-ion or Lithium-ion polymer 1350 mAh battery&lt;/li&gt;\r\n    &lt;li&gt;Expansion Slot: microSD&amp;trade; memory card (SD 2.0 compatible)&lt;/li&gt;\r\n    &lt;li&gt;AC Adapter Voltage range/frequency: 100 ~ 240V AC, 50/60 Hz DC output: 5V and 1A&lt;/li&gt;\r\n    &lt;li&gt;Special Features: FM Radio, G-Sensor&lt;/li&gt;\r\n&lt;/ul&gt;'),
-(42, 1, 'Apple Cinema 30&quot;', 'test', '&lt;p&gt;&lt;font face=&quot;helvetica,geneva,arial&quot; size=&quot;2&quot;&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution. Designed specifically for the creative professional, this display provides more space for easier access to all the tools and palettes needed to edit, format and composite your work. Combine this display with a Mac Pro, MacBook Pro, or PowerMac G5 and there&#039;s no limit to what you can achieve. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The Cinema HD features an active-matrix liquid crystal display that produces flicker-free images that deliver twice the brightness, twice the sharpness and twice the contrast ratio of a typical CRT display. Unlike other flat panels, it&#039;s designed with a pure digital interface to deliver distortion-free images that never need adjusting. With over 4 million digital pixels, the display is uniquely suited for scientific and technical applications such as visualizing molecular structures or analyzing geological data. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Offering accurate, brilliant color performance, the Cinema HD delivers up to 16.7 million colors across a wide gamut allowing you to see subtle nuances between colors from soft pastels to rich jewel tones. A wide viewing angle ensures uniform color from edge to edge. Apple&#039;s ColorSync technology allows you to create custom profiles to maintain consistent color onscreen and in print. The result: You can confidently use this display in all your color-critical applications. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Housed in a new aluminum design, the display has a very thin bezel that enhances visual accuracy. Each display features two FireWire 400 ports and two USB 2.0 ports, making attachment of desktop peripherals, such as iSight, iPod, digital and still cameras, hard drives, printers and scanners, even more accessible and convenient. Taking advantage of the much thinner and lighter footprint of an LCD, the new displays support the VESA (Video Electronics Standards Association) mounting interface standard. Customers with the optional Cinema Display VESA Mount Adapter kit gain the flexibility to mount their display in locations most appropriate for their work environment. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The Cinema HD features a single cable design with elegant breakout for the USB 2.0, FireWire 400 and a pure digital connection using the industry standard Digital Video Interface (DVI) interface. The DVI connection allows for a direct pure-digital connection. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;\r\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\r\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\r\n&lt;h3&gt;Features:&lt;/h3&gt;\r\n&lt;p&gt;Unrivaled display performance&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;30-inch (viewable) active-matrix liquid crystal display provides breathtaking image quality and vivid, richly saturated color.&lt;/li&gt;\r\n    &lt;li&gt;Support for 2560-by-1600 pixel resolution for display of high definition still and video imagery.&lt;/li&gt;\r\n    &lt;li&gt;Wide-format design for simultaneous display of two full pages of text and graphics.&lt;/li&gt;\r\n    &lt;li&gt;Industry standard DVI connector for direct attachment to Mac- and Windows-based desktops and notebooks&lt;/li&gt;\r\n    &lt;li&gt;Incredibly wide (170 degree) horizontal and vertical viewing angle for maximum visibility and color performance.&lt;/li&gt;\r\n    &lt;li&gt;Lightning-fast pixel response for full-motion digital video playback.&lt;/li&gt;\r\n    &lt;li&gt;Support for 16.7 million saturated colors, for use in all graphics-intensive applications.&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;Simple setup and operation&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Single cable with elegant breakout for connection to DVI, USB and FireWire ports&lt;/li&gt;\r\n    &lt;li&gt;Built-in two-port USB 2.0 hub for easy connection of desktop peripheral devices.&lt;/li&gt;\r\n    &lt;li&gt;Two FireWire 400 ports to support iSight and other desktop peripherals&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;Sleek, elegant design&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Huge virtual workspace, very small footprint.&lt;/li&gt;\r\n    &lt;li&gt;Narrow Bezel design to minimize visual impact of using dual displays&lt;/li&gt;\r\n    &lt;li&gt;Unique hinge design for effortless adjustment&lt;/li&gt;\r\n    &lt;li&gt;Support for VESA mounting solutions (Apple Cinema Display VESA Mount Adapter sold separately)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;br /&gt;\r\n&amp;nbsp;&lt;/p&gt;\r\n&lt;h3&gt;Technical specifications&lt;/h3&gt;\r\n&lt;p&gt;&lt;b&gt;Screen size (diagonal viewable image size)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Apple Cinema HD Display: 30 inches (29.7-inch viewable)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Screen type&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Thin film transistor (TFT) active-matrix liquid crystal display (AMLCD)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Resolutions&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;2560 x 1600 pixels (optimum resolution)&lt;/li&gt;\r\n    &lt;li&gt;2048 x 1280&lt;/li&gt;\r\n    &lt;li&gt;1920 x 1200&lt;/li&gt;\r\n    &lt;li&gt;1280 x 800&lt;/li&gt;\r\n    &lt;li&gt;1024 x 640&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Display colors (maximum)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;16.7 million&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Viewing angle (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;170&amp;deg; horizontal; 170&amp;deg; vertical&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Brightness (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;30-inch Cinema HD Display: 400 cd/m2&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Contrast ratio (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;700:1&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Response time (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;16 ms&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Pixel pitch&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;30-inch Cinema HD Display: 0.250 mm&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Screen treatment&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Antiglare hardcoat&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;User controls (hardware and software)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Display Power,&lt;/li&gt;\r\n    &lt;li&gt;System sleep, wake&lt;/li&gt;\r\n    &lt;li&gt;Brightness&lt;/li&gt;\r\n    &lt;li&gt;Monitor tilt&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Connectors and cables&lt;/b&gt;&lt;br /&gt;\r\nCable&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;DVI (Digital Visual Interface)&lt;/li&gt;\r\n    &lt;li&gt;FireWire 400&lt;/li&gt;\r\n    &lt;li&gt;USB 2.0&lt;/li&gt;\r\n    &lt;li&gt;DC power (24 V)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;Connectors&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Two-port, self-powered USB 2.0 hub&lt;/li&gt;\r\n    &lt;li&gt;Two FireWire 400 ports&lt;/li&gt;\r\n    &lt;li&gt;Kensington security port&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;VESA mount adapter&lt;/b&gt;&lt;br /&gt;\r\nRequires optional Cinema Display VESA Mount Adapter (M9649G/A)&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Compatible with VESA FDMI (MIS-D, 100, C) compliant mounting solutions&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Electrical requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Input voltage: 100-240 VAC 50-60Hz&lt;/li&gt;\r\n    &lt;li&gt;Maximum power when operating: 150W&lt;/li&gt;\r\n    &lt;li&gt;Energy saver mode: 3W or less&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Environmental requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Operating temperature: 50&amp;deg; to 95&amp;deg; F (10&amp;deg; to 35&amp;deg; C)&lt;/li&gt;\r\n    &lt;li&gt;Storage temperature: -40&amp;deg; to 116&amp;deg; F (-40&amp;deg; to 47&amp;deg; C)&lt;/li&gt;\r\n    &lt;li&gt;Operating humidity: 20% to 80% noncondensing&lt;/li&gt;\r\n    &lt;li&gt;Maximum operating altitude: 10,000 feet&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Agency approvals&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;FCC Part 15 Class B&lt;/li&gt;\r\n    &lt;li&gt;EN55022 Class B&lt;/li&gt;\r\n    &lt;li&gt;EN55024&lt;/li&gt;\r\n    &lt;li&gt;VCCI Class B&lt;/li&gt;\r\n    &lt;li&gt;AS/NZS 3548 Class B&lt;/li&gt;\r\n    &lt;li&gt;CNS 13438 Class B&lt;/li&gt;\r\n    &lt;li&gt;ICES-003 Class B&lt;/li&gt;\r\n    &lt;li&gt;ISO 13406 part 2&lt;/li&gt;\r\n    &lt;li&gt;MPR II&lt;/li&gt;\r\n    &lt;li&gt;IEC 60950&lt;/li&gt;\r\n    &lt;li&gt;UL 60950&lt;/li&gt;\r\n    &lt;li&gt;CSA 60950&lt;/li&gt;\r\n    &lt;li&gt;EN60950&lt;/li&gt;\r\n    &lt;li&gt;ENERGY STAR&lt;/li&gt;\r\n    &lt;li&gt;TCO &#039;03&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Size and weight&lt;/b&gt;&lt;br /&gt;\r\n30-inch Apple Cinema HD Display&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Height: 21.3 inches (54.3 cm)&lt;/li&gt;\r\n    &lt;li&gt;Width: 27.2 inches (68.8 cm)&lt;/li&gt;\r\n    &lt;li&gt;Depth: 8.46 inches (21.5 cm)&lt;/li&gt;\r\n    &lt;li&gt;Weight: 27.5 pounds (12.5 kg)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;System Requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Mac Pro, all graphic options&lt;/li&gt;\r\n    &lt;li&gt;MacBook Pro&lt;/li&gt;\r\n    &lt;li&gt;Power Mac G5 (PCI-X) with ATI Radeon 9650 or better or NVIDIA GeForce 6800 GT DDL or better&lt;/li&gt;\r\n    &lt;li&gt;Power Mac G5 (PCI Express), all graphics options&lt;/li&gt;\r\n    &lt;li&gt;PowerBook G4 with dual-link DVI support&lt;/li&gt;\r\n    &lt;li&gt;Windows PC and graphics card that supports DVI ports with dual-link digital bandwidth and VESA DDC standard for plug-and-play setup&lt;/li&gt;\r\n&lt;/ul&gt;'),
+(42, 1, 'Apple Cinema 30&quot;', 'test', '&lt;p&gt;&lt;font size=&quot;2&quot; face=&quot;helvetica,geneva,arial&quot;&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution. Designed specifically for the creative professional, this display provides more space for easier access to all the tools and palettes needed to edit, format and composite your work. Combine this display with a Mac Pro, MacBook Pro, or PowerMac G5 and there&#039;s no limit to what you can achieve. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;The Cinema HD features an active-matrix liquid crystal display that produces flicker-free images that deliver twice the brightness, twice the sharpness and twice the contrast ratio of a typical CRT display. Unlike other flat panels, it&#039;s designed with a pure digital interface to deliver distortion-free images that never need adjusting. With over 4 million digital pixels, the display is uniquely suited for scientific and technical applications such as visualizing molecular structures or analyzing geological data. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;Offering accurate, brilliant color performance, the Cinema HD delivers up to 16.7 million colors across a wide gamut allowing you to see subtle nuances between colors from soft pastels to rich jewel tones. A wide viewing angle ensures uniform color from edge to edge. Apple&#039;s ColorSync technology allows you to create custom profiles to maintain consistent color onscreen and in print. The result: You can confidently use this display in all your color-critical applications. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;Housed in a new aluminum design, the display has a very thin bezel that enhances visual accuracy. Each display features two FireWire 400 ports and two USB 2.0 ports, making attachment of desktop peripherals, such as iSight, iPod, digital and still cameras, hard drives, printers and scanners, even more accessible and convenient. Taking advantage of the much thinner and lighter footprint of an LCD, the new displays support the VESA (Video Electronics Standards Association) mounting interface standard. Customers with the optional Cinema Display VESA Mount Adapter kit gain the flexibility to mount their display in locations most appropriate for their work environment. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;The Cinema HD features a single cable design with elegant breakout for the USB 2.0, FireWire 400 and a pure digital connection using the industry standard Digital Video Interface (DVI) interface. The DVI connection allows for a direct pure-digital connection.&lt;br /&gt;\r\n&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;\r\n&lt;h3&gt;Features:&lt;/h3&gt;\r\n&lt;p&gt;Unrivaled display performance&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;30-inch (viewable) active-matrix liquid crystal display provides breathtaking image quality and vivid, richly saturated color.&lt;/li&gt;\r\n    &lt;li&gt;Support for 2560-by-1600 pixel resolution for display of high definition still and video imagery.&lt;/li&gt;\r\n    &lt;li&gt;Wide-format design for simultaneous display of two full pages of text and graphics.&lt;/li&gt;\r\n    &lt;li&gt;Industry standard DVI connector for direct attachment to Mac- and Windows-based desktops and notebooks&lt;/li&gt;\r\n    &lt;li&gt;Incredibly wide (170 degree) horizontal and vertical viewing angle for maximum visibility and color performance.&lt;/li&gt;\r\n    &lt;li&gt;Lightning-fast pixel response for full-motion digital video playback.&lt;/li&gt;\r\n    &lt;li&gt;Support for 16.7 million saturated colors, for use in all graphics-intensive applications.&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;Simple setup and operation&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Single cable with elegant breakout for connection to DVI, USB and FireWire ports&lt;/li&gt;\r\n    &lt;li&gt;Built-in two-port USB 2.0 hub for easy connection of desktop peripheral devices.&lt;/li&gt;\r\n    &lt;li&gt;Two FireWire 400 ports to support iSight and other desktop peripherals&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;Sleek, elegant design&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Huge virtual workspace, very small footprint.&lt;/li&gt;\r\n    &lt;li&gt;Narrow Bezel design to minimize visual impact of using dual displays&lt;/li&gt;\r\n    &lt;li&gt;Unique hinge design for effortless adjustment&lt;/li&gt;\r\n    &lt;li&gt;Support for VESA mounting solutions (Apple Cinema Display VESA Mount Adapter sold separately)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;h3&gt;Technical specifications&lt;/h3&gt;\r\n&lt;p&gt;&lt;b&gt;Screen size (diagonal viewable image size)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Apple Cinema HD Display: 30 inches (29.7-inch viewable)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Screen type&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Thin film transistor (TFT) active-matrix liquid crystal display (AMLCD)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Resolutions&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;2560 x 1600 pixels (optimum resolution)&lt;/li&gt;\r\n    &lt;li&gt;2048 x 1280&lt;/li&gt;\r\n    &lt;li&gt;1920 x 1200&lt;/li&gt;\r\n    &lt;li&gt;1280 x 800&lt;/li&gt;\r\n    &lt;li&gt;1024 x 640&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Display colors (maximum)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;16.7 million&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Viewing angle (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;170&amp;deg; horizontal; 170&amp;deg; vertical&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Brightness (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;30-inch Cinema HD Display: 400 cd/m2&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Contrast ratio (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;700:1&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Response time (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;16 ms&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Pixel pitch&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;30-inch Cinema HD Display: 0.250 mm&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Screen treatment&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Antiglare hardcoat&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;User controls (hardware and software)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Display Power,&lt;/li&gt;\r\n    &lt;li&gt;System sleep, wake&lt;/li&gt;\r\n    &lt;li&gt;Brightness&lt;/li&gt;\r\n    &lt;li&gt;Monitor tilt&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Connectors and cables&lt;/b&gt;&lt;br /&gt;\r\nCable&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;DVI (Digital Visual Interface)&lt;/li&gt;\r\n    &lt;li&gt;FireWire 400&lt;/li&gt;\r\n    &lt;li&gt;USB 2.0&lt;/li&gt;\r\n    &lt;li&gt;DC power (24 V)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;Connectors&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Two-port, self-powered USB 2.0 hub&lt;/li&gt;\r\n    &lt;li&gt;Two FireWire 400 ports&lt;/li&gt;\r\n    &lt;li&gt;Kensington security port&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;VESA mount adapter&lt;/b&gt;&lt;br /&gt;\r\nRequires optional Cinema Display VESA Mount Adapter (M9649G/A)&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Compatible with VESA FDMI (MIS-D, 100, C) compliant mounting solutions&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Electrical requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Input voltage: 100-240 VAC 50-60Hz&lt;/li&gt;\r\n    &lt;li&gt;Maximum power when operating: 150W&lt;/li&gt;\r\n    &lt;li&gt;Energy saver mode: 3W or less&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Environmental requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Operating temperature: 50&amp;deg; to 95&amp;deg; F (10&amp;deg; to 35&amp;deg; C)&lt;/li&gt;\r\n    &lt;li&gt;Storage temperature: -40&amp;deg; to 116&amp;deg; F (-40&amp;deg; to 47&amp;deg; C)&lt;/li&gt;\r\n    &lt;li&gt;Operating humidity: 20% to 80% noncondensing&lt;/li&gt;\r\n    &lt;li&gt;Maximum operating altitude: 10,000 feet&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Agency approvals&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;FCC Part 15 Class B&lt;/li&gt;\r\n    &lt;li&gt;EN55022 Class B&lt;/li&gt;\r\n    &lt;li&gt;EN55024&lt;/li&gt;\r\n    &lt;li&gt;VCCI Class B&lt;/li&gt;\r\n    &lt;li&gt;AS/NZS 3548 Class B&lt;/li&gt;\r\n    &lt;li&gt;CNS 13438 Class B&lt;/li&gt;\r\n    &lt;li&gt;ICES-003 Class B&lt;/li&gt;\r\n    &lt;li&gt;ISO 13406 part 2&lt;/li&gt;\r\n    &lt;li&gt;MPR II&lt;/li&gt;\r\n    &lt;li&gt;IEC 60950&lt;/li&gt;\r\n    &lt;li&gt;UL 60950&lt;/li&gt;\r\n    &lt;li&gt;CSA 60950&lt;/li&gt;\r\n    &lt;li&gt;EN60950&lt;/li&gt;\r\n    &lt;li&gt;ENERGY STAR&lt;/li&gt;\r\n    &lt;li&gt;TCO &#039;03&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Size and weight&lt;/b&gt;&lt;br /&gt;\r\n30-inch Apple Cinema HD Display&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Height: 21.3 inches (54.3 cm)&lt;/li&gt;\r\n    &lt;li&gt;Width: 27.2 inches (68.8 cm)&lt;/li&gt;\r\n    &lt;li&gt;Depth: 8.46 inches (21.5 cm)&lt;/li&gt;\r\n    &lt;li&gt;Weight: 27.5 pounds (12.5 kg)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;System Requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Mac Pro, all graphic options&lt;/li&gt;\r\n    &lt;li&gt;MacBook Pro&lt;/li&gt;\r\n    &lt;li&gt;Power Mac G5 (PCI-X) with ATI Radeon 9650 or better or NVIDIA GeForce 6800 GT DDL or better&lt;/li&gt;\r\n    &lt;li&gt;Power Mac G5 (PCI Express), all graphics options&lt;/li&gt;\r\n    &lt;li&gt;PowerBook G4 with dual-link DVI support&lt;/li&gt;\r\n    &lt;li&gt;Windows PC and graphics card that supports DVI ports with dual-link digital bandwidth and VESA DDC standard for plug-and-play setup&lt;/li&gt;\r\n&lt;/ul&gt;'),
 (29, 1, 'Palm Treo Pro', '', '&lt;p&gt;Redefine your workday with the Palm Treo Pro smartphone. Perfectly balanced, you can respond to business and personal email, stay on top of appointments and contacts, and use Wi-Fi or GPS when you&amp;rsquo;re out and about. Then watch a video on YouTube, catch up with news and sports on the web, or listen to a few songs. Balance your work and play the way you like it, with the Palm Treo Pro.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Windows Mobile&amp;reg; 6.1 Professional Edition&lt;/li&gt;\r\n    &lt;li&gt;Qualcomm&amp;reg; MSM7201 400MHz Processor&lt;/li&gt;\r\n    &lt;li&gt;320x320 transflective colour TFT touchscreen&lt;/li&gt;\r\n    &lt;li&gt;HSDPA/UMTS/EDGE/GPRS/GSM radio&lt;/li&gt;\r\n    &lt;li&gt;Tri-band UMTS &amp;mdash; 850MHz, 1900MHz, 2100MHz&lt;/li&gt;\r\n    &lt;li&gt;Quad-band GSM &amp;mdash; 850/900/1800/1900&lt;/li&gt;\r\n    &lt;li&gt;802.11b/g with WPA, WPA2, and 801.1x authentication&lt;/li&gt;\r\n    &lt;li&gt;Built-in GPS&lt;/li&gt;\r\n    &lt;li&gt;Bluetooth Version: 2.0 + Enhanced Data Rate&lt;/li&gt;\r\n    &lt;li&gt;256MB storage (100MB user available), 128MB RAM&lt;/li&gt;\r\n    &lt;li&gt;2.0 megapixel camera, up to 8x digital zoom and video capture&lt;/li&gt;\r\n    &lt;li&gt;Removable, rechargeable 1500mAh lithium-ion battery&lt;/li&gt;\r\n    &lt;li&gt;Up to 5.0 hours talk time and up to 250 hours standby&lt;/li&gt;\r\n    &lt;li&gt;MicroSDHC card expansion (up to 32GB supported)&lt;/li&gt;\r\n    &lt;li&gt;MicroUSB 2.0 for synchronization and charging&lt;/li&gt;\r\n    &lt;li&gt;3.5mm stereo headset jack&lt;/li&gt;\r\n    &lt;li&gt;60mm (W) x 114mm (L) x 13.5mm (D) / 133g&lt;/li&gt;\r\n&lt;/ul&gt;'),
 (30, 1, 'Canon EOS 5D', '', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n&lt;div&gt;Canon&#039;s press material for the EOS 5D states that it &#039;defines (a) new D-SLR category&#039;, while we&#039;re not typically too concerned with marketing talk this particular statement is clearly pretty accurate. The EOS 5D is unlike any previous digital SLR in that it combines a full-frame (35 mm sized) high resolution sensor (12.8 megapixels) with a relatively compact body (slightly larger than the EOS 20D, although in your hand it feels noticeably &#039;chunkier&#039;). The EOS 5D is aimed to slot in between the EOS 20D and the EOS-1D professional digital SLR&#039;s, an important difference when compared to the latter is that the EOS 5D doesn&#039;t have any environmental seals. While Canon don&#039;t specifically refer to the EOS 5D as a &#039;professional&#039; digital SLR it will have obvious appeal to professionals who want a high quality digital SLR in a body lighter than the EOS-1D. It will also no doubt appeal to current EOS 20D owners (although lets hope they&#039;ve not bought too many EF-S lenses...)&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;'),
 (31, 1, 'Nikon D300', '', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n&lt;div&gt;Engineered with pro-level features and performance, the 12.3-effective-megapixel D300 combines brand new technologies with advanced features inherited from Nikon&#039;s newly announced D3 professional digital SLR camera to offer serious photographers remarkable performance combined with agility.&lt;br /&gt;\r\n&lt;br /&gt;\r\nSimilar to the D3, the D300 features Nikon&#039;s exclusive EXPEED Image Processing System that is central to driving the speed and processing power needed for many of the camera&#039;s new features. The D300 features a new 51-point autofocus system with Nikon&#039;s 3D Focus Tracking feature and two new LiveView shooting modes that allow users to frame a photograph using the camera&#039;s high-resolution LCD monitor. The D300 shares a similar Scene Recognition System as is found in the D3; it promises to greatly enhance the accuracy of autofocus, autoexposure, and auto white balance by recognizing the subject or scene being photographed and applying this information to the calculations for the three functions.&lt;br /&gt;\r\n&lt;br /&gt;\r\nThe D300 reacts with lightning speed, powering up in a mere 0.13 seconds and shooting with an imperceptible 45-millisecond shutter release lag time. The D300 is capable of shooting at a rapid six frames per second and can go as fast as eight frames per second when using the optional MB-D10 multi-power battery pack. In continuous bursts, the D300 can shoot up to 100 shots at full 12.3-megapixel resolution. (NORMAL-LARGE image setting, using a SanDisk Extreme IV 1GB CompactFlash card.)&lt;br /&gt;\r\n&lt;br /&gt;\r\nThe D300 incorporates a range of innovative technologies and features that will significantly improve the accuracy, control, and performance photographers can get from their equipment. Its new Scene Recognition System advances the use of Nikon&#039;s acclaimed 1,005-segment sensor to recognize colors and light patterns that help the camera determine the subject and the type of scene being photographed before a picture is taken. This information is used to improve the accuracy of autofocus, autoexposure, and auto white balance functions in the D300. For example, the camera can track moving subjects better and by identifying them, it can also automatically select focus points faster and with greater accuracy. It can also analyze highlights and more accurately determine exposure, as well as infer light sources to deliver more accurate white balance detection.&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;'),
@@ -1094,19 +1033,19 @@ INSERT INTO `product_description` (`product_id`, `language_id`, `name`, `meta_de
 
 DROP TABLE IF EXISTS `product_discount`;
 CREATE TABLE `product_discount` (
-  `product_discount_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_discount_id` int(11) NOT NULL auto_increment,
   `product_id` int(11) NOT NULL,
   `quantity` int(4) NOT NULL,
   `discount` decimal(15,4) NOT NULL,
-  PRIMARY KEY (`product_discount_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=270 ;
+  PRIMARY KEY  (`product_discount_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=279 ;
 
 --
 -- Dumping data for table `product_discount`
 --
 
 INSERT INTO `product_discount` (`product_discount_id`, `product_id`, `quantity`, `discount`) VALUES
-(269, 42, 3, '10.0000');
+(278, 42, 3, '10.0000');
 
 -- --------------------------------------------------------
 
@@ -1116,10 +1055,10 @@ INSERT INTO `product_discount` (`product_discount_id`, `product_id`, `quantity`,
 
 DROP TABLE IF EXISTS `product_image`;
 CREATE TABLE `product_image` (
-  `product_image_id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL DEFAULT '0',
-  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  PRIMARY KEY (`product_image_id`)
+  `product_image_id` int(11) NOT NULL auto_increment,
+  `product_id` int(11) NOT NULL default '0',
+  `image` varchar(255) collate utf8_unicode_ci NOT NULL default '0',
+  PRIMARY KEY  (`product_image_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=72 ;
 
 --
@@ -1186,10 +1125,10 @@ INSERT INTO `product_image` (`product_image_id`, `product_id`, `image`) VALUES
 
 DROP TABLE IF EXISTS `product_option`;
 CREATE TABLE `product_option` (
-  `product_option_id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL DEFAULT '0',
-  `sort_order` int(3) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`product_option_id`)
+  `product_option_id` int(11) NOT NULL auto_increment,
+  `product_id` int(11) NOT NULL default '0',
+  `sort_order` int(3) NOT NULL default '0',
+  PRIMARY KEY  (`product_option_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
 
 --
@@ -1210,8 +1149,8 @@ CREATE TABLE `product_option_description` (
   `product_option_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`product_option_id`,`language_id`)
+  `name` varchar(64) collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`product_option_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1229,13 +1168,13 @@ INSERT INTO `product_option_description` (`product_option_id`, `language_id`, `p
 
 DROP TABLE IF EXISTS `product_option_value`;
 CREATE TABLE `product_option_value` (
-  `product_option_value_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_option_value_id` int(11) NOT NULL auto_increment,
   `product_option_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `price` decimal(15,4) NOT NULL,
-  `prefix` char(1) COLLATE utf8_unicode_ci NOT NULL,
+  `prefix` char(1) collate utf8_unicode_ci NOT NULL,
   `sort_order` int(3) NOT NULL,
-  PRIMARY KEY (`product_option_value_id`)
+  PRIMARY KEY  (`product_option_value_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=40 ;
 
 --
@@ -1257,8 +1196,8 @@ CREATE TABLE `product_option_value_description` (
   `product_option_value_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`product_option_value_id`,`language_id`)
+  `name` varchar(64) collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`product_option_value_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1272,14 +1211,37 @@ INSERT INTO `product_option_value_description` (`product_option_value_id`, `lang
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product_special`
+--
+
+DROP TABLE IF EXISTS `product_special`;
+CREATE TABLE `product_special` (
+  `product_special_id` int(11) NOT NULL auto_increment,
+  `product_id` int(11) NOT NULL,
+  `price` decimal(15,4) NOT NULL,
+  `date_start` date NOT NULL,
+  `date_end` date NOT NULL,
+  PRIMARY KEY  (`product_special_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `product_special`
+--
+
+INSERT INTO `product_special` (`product_special_id`, `product_id`, `price`, `date_start`, `date_end`) VALUES
+(9, 42, '100.0000', '2009-03-01', '2009-03-31');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product_to_category`
 --
 
 DROP TABLE IF EXISTS `product_to_category`;
 CREATE TABLE `product_to_category` (
-  `product_id` int(11) NOT NULL DEFAULT '0',
-  `category_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`product_id`,`category_id`)
+  `product_id` int(11) NOT NULL default '0',
+  `category_id` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`product_id`,`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1313,9 +1275,9 @@ INSERT INTO `product_to_category` (`product_id`, `category_id`) VALUES
 
 DROP TABLE IF EXISTS `product_to_download`;
 CREATE TABLE `product_to_download` (
-  `product_id` int(11) NOT NULL DEFAULT '0',
-  `download_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`product_id`,`download_id`)
+  `product_id` int(11) NOT NULL default '0',
+  `download_id` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`product_id`,`download_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1331,16 +1293,16 @@ CREATE TABLE `product_to_download` (
 
 DROP TABLE IF EXISTS `review`;
 CREATE TABLE `review` (
-  `review_id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL DEFAULT '0',
-  `customer_id` int(11) NOT NULL DEFAULT '0',
-  `author` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `text` text COLLATE utf8_unicode_ci NOT NULL,
-  `rating` int(1) DEFAULT NULL,
-  `status` int(1) NOT NULL DEFAULT '0',
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`review_id`)
+  `review_id` int(11) NOT NULL auto_increment,
+  `product_id` int(11) NOT NULL default '0',
+  `customer_id` int(11) NOT NULL default '0',
+  `author` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  `text` text collate utf8_unicode_ci NOT NULL,
+  `rating` int(1) default NULL,
+  `status` int(1) NOT NULL default '0',
+  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`review_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=59 ;
 
 --
@@ -1348,7 +1310,7 @@ CREATE TABLE `review` (
 --
 
 INSERT INTO `review` (`review_id`, `product_id`, `customer_id`, `author`, `text`, `rating`, `status`, `date_added`, `date_modified`) VALUES
-(58, 40, 0, 'Daniel', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ', 3, 1, '2009-03-14 22:51:53', '0000-00-00 00:00:00');
+(58, 40, 0, 'Daniel', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ', 3, 1, '2009-03-26 22:09:07', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1358,12 +1320,12 @@ INSERT INTO `review` (`review_id`, `product_id`, `customer_id`, `author`, `text`
 
 DROP TABLE IF EXISTS `setting`;
 CREATE TABLE `setting` (
-  `setting_id` int(11) NOT NULL AUTO_INCREMENT,
-  `group` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `key` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `value` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`setting_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5714 ;
+  `setting_id` int(11) NOT NULL auto_increment,
+  `group` varchar(32) collate utf8_unicode_ci NOT NULL,
+  `key` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  `value` text collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`setting_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5910 ;
 
 --
 -- Dumping data for table `setting`
@@ -1371,43 +1333,27 @@ CREATE TABLE `setting` (
 
 INSERT INTO `setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (5583, 'coupon', 'coupon_sort_order', '4'),
-(5592, 'flat', 'flat_sort_order', '1'),
-(5591, 'flat', 'flat_status', '1'),
-(5573, 'item', 'item_status', '1'),
-(5572, 'item', 'item_geo_zone_id', '0'),
-(5571, 'item', 'item_tax_class_id', '9'),
-(5570, 'item', 'item_cost', '5'),
-(5590, 'flat', 'flat_geo_zone_id', '3'),
+(5874, 'free', 'free_sort_order', '1'),
+(5873, 'free', 'free_status', '1'),
+(5872, 'free', 'free_geo_zone_id', '0'),
 (5585, 'shipping', 'shipping_sort_order', '3'),
 (5584, 'shipping', 'shipping_status', '1'),
 (5596, 'cod', 'cod_sort_order', '1'),
-(5579, 'zone', 'zone_sort_order', '3'),
 (5393, 'sub_total', 'sub_total_status', '1'),
-(5578, 'zone', 'zone_status', '1'),
 (5595, 'cod', 'cod_status', '1'),
 (5594, 'cod', 'cod_geo_zone_id', '0'),
 (5582, 'coupon', 'coupon_status', '1'),
-(5710, 'config', 'config_update_subject_1', '{store} - Order Update #{order_id}'),
 (5394, 'sub_total', 'sub_total_sort_order', '1'),
-(5709, 'config', 'config_order_message_1', 'Thank you for interest in {store} products. Your order has been received and will be dealt with as quickly as possible.\r\n \r\nOrder ID: #{order_id}\r\nDate Ordered: {date_added}\r\n\r\nTo view you order click the link below:\r\n{invoice}\r\n\r\nPlease reply to this email if you have any questions.'),
-(5706, 'config', 'config_forgotten_subject_1', '{store} - New Password'),
-(5707, 'config', 'config_forgotten_message_1', 'A new password was requested from {store}.\r\n\r\nYour new password to is:\r\n\r\n{password}'),
-(5708, 'config', 'config_order_subject_1', '{store} - Order #{order_id}'),
-(5705, 'config', 'config_account_message_1', 'Welcome and thank you for registering at {store}!\r\n\r\nYour account has now been created and you can log in by using your email address and password by visiting our website or at the following URL:\r\n{login}\r\n\r\nUpon logging in, you will be able to access other services including reviewing past orders, printing invoices and editing your account information.\r\n\r\nThanks,\r\n{store}'),
-(5577, 'zone', 'zone_tax_class_id', '9'),
-(5704, 'config', 'config_account_subject_1', '{store} - Thank you for registering'),
-(5703, 'config', 'config_download_status', '5'),
-(5702, 'config', 'config_download', '1'),
-(5701, 'config', 'config_stock_status_id', '5'),
-(5700, 'config', 'config_order_status_id', '1'),
-(5699, 'config', 'config_stock_subtract', '0'),
-(5697, 'config', 'config_stock_check', '1'),
-(5574, 'item', 'item_sort_order', '2'),
-(5589, 'flat', 'flat_tax_class_id', '9'),
+(5908, 'config', 'config_cache', '1'),
+(5909, 'config', 'config_compression', '4'),
+(5907, 'config', 'config_update_message_1', 'Order ID: #{order_id}\r\nDate Ordered: {date_added}\r\n\r\nYour order has been updated to the following status: {status}\r\n\r\nThe comments for your order are:\r\n\r\n{comment}\r\n\r\nTo view your order click the link below:\r\n{invoice}\r\n\r\nPlease reply to this email if you have any questions.'),
+(5901, 'config', 'config_account_message_1', 'Welcome and thank you for registering at {store}!\r\n\r\nYour account has now been created and you can log in by using your email address and password by visiting our website or at the following URL:\r\n{login}\r\n\r\nUpon logging in, you will be able to access other services including reviewing past orders, printing invoices and editing your account information.\r\n\r\nThanks,\r\n{store}'),
+(5906, 'config', 'config_update_subject_1', '{store} - Order Update #{order_id}'),
+(5904, 'config', 'config_order_subject_1', '{store} - Order #{order_id}'),
+(5905, 'config', 'config_order_message_1', 'Thank you for interest in {store} products. Your order has been received and will be dealt with as quickly as possible.\r\n \r\nOrder ID: #{order_id}\r\nDate Ordered: {date_added}\r\n\r\nTo view you order click the link below:\r\n{invoice}\r\n\r\nPlease reply to this email if you have any questions.'),
+(5903, 'config', 'config_forgotten_message_1', 'A new password was requested from {store}.\r\n\r\nYour new password to is:\r\n\r\n{password}'),
+(5871, 'free', 'free_total', ''),
 (5593, 'cod', 'cod_order_status_id', '1'),
-(5588, 'flat', 'flat_cost', '10.00'),
-(5576, 'zone', 'zone_3_status', '1'),
-(5575, 'zone', 'zone_3_cost', '100:10,1000:20'),
 (5512, 'low_order_fee', 'low_order_fee_sort_order', '2'),
 (5511, 'low_order_fee', 'low_order_fee_status', '0'),
 (5510, 'low_order_fee', 'low_order_fee_fee', '5'),
@@ -1416,34 +1362,33 @@ INSERT INTO `setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (5509, 'low_order_fee', 'low_order_fee_total', '100'),
 (5587, 'total', 'total_sort_order', '6'),
 (5586, 'total', 'total_status', '1'),
-(5698, 'config', 'config_stock_checkout', '0'),
-(5696, 'config', 'config_weight_class_id', '1'),
-(5695, 'config', 'config_tax', '1'),
-(5694, 'config', 'config_currency', 'GBP'),
-(5688, 'config', 'config_ssl', '0'),
-(5689, 'config', 'config_parse_time', '0'),
-(5690, 'config', 'config_welcome_1', '&lt;p&gt;Welcome to my store!&lt;/p&gt;'),
-(5691, 'config', 'config_country_id', '222'),
-(5692, 'config', 'config_zone_id', '3563'),
-(5693, 'config', 'config_language', 'en'),
-(5642, 'paypal', 'paypal_geo_zone_id', '0'),
-(5641, 'paypal', 'paypal_order_status_id', '5'),
-(5640, 'paypal', 'paypal_test', '0'),
-(5639, 'paypal', 'paypal_encryption', '123456'),
-(5638, 'paypal', 'paypal_email', 'webmaster@opencart.com'),
-(5643, 'paypal', 'paypal_status', '1'),
-(5644, 'paypal', 'paypal_sort_order', '1'),
-(5711, 'config', 'config_update_message_1', 'Order ID: #{order_id}\r\nDate Ordered: {date_added}\r\n\r\nYour order has been updated to the following status: {status}\r\n\r\nThe comments for your order are:\r\n\r\n{comment}\r\n\r\nTo view your order click the link below:\r\n{invoice}\r\n\r\nPlease reply to this email if you have any questions.'),
-(5686, 'config', 'config_fax', ''),
-(5687, 'config', 'config_template', 'default/template/'),
-(5682, 'config', 'config_owner', 'Your Name'),
-(5683, 'config', 'config_address', 'Address 1'),
-(5684, 'config', 'config_email', 'webmaster@opencart.com'),
-(5685, 'config', 'config_telephone', '123456789'),
-(5681, 'config', 'config_meta_description', 'your store of fun'),
-(5680, 'config', 'config_store', 'Your Store'),
-(5712, 'config', 'config_cache', '1'),
-(5713, 'config', 'config_compression', '4');
+(5902, 'config', 'config_forgotten_subject_1', '{store} - New Password'),
+(5898, 'config', 'config_download', '1'),
+(5899, 'config', 'config_download_status', '5'),
+(5900, 'config', 'config_account_subject_1', '{store} - Thank you for registering'),
+(5897, 'config', 'config_stock_status_id', '5'),
+(5896, 'config', 'config_order_status_id', '1'),
+(5895, 'config', 'config_stock_subtract', '0'),
+(5894, 'config', 'config_stock_checkout', '0'),
+(5893, 'config', 'config_stock_check', '1'),
+(5892, 'config', 'config_weight_class_id', '1'),
+(5891, 'config', 'config_tax', '1'),
+(5890, 'config', 'config_currency_auto', '1'),
+(5889, 'config', 'config_currency', 'GBP'),
+(5886, 'config', 'config_country_id', '222'),
+(5887, 'config', 'config_zone_id', '3563'),
+(5888, 'config', 'config_language', 'en'),
+(5885, 'config', 'config_welcome_1', '&lt;p&gt;Welcome to my store!&lt;/p&gt;'),
+(5884, 'config', 'config_parse_time', '0'),
+(5883, 'config', 'config_ssl', '0'),
+(5882, 'config', 'config_template', 'default/template/'),
+(5881, 'config', 'config_fax', ''),
+(5876, 'config', 'config_meta_description', 'your store of fun'),
+(5877, 'config', 'config_owner', 'Your Name'),
+(5878, 'config', 'config_address', 'Address 1'),
+(5879, 'config', 'config_email', 'webmaster@opencart.com'),
+(5880, 'config', 'config_telephone', '123456789'),
+(5875, 'config', 'config_store', 'Your Store');
 
 -- --------------------------------------------------------
 
@@ -1453,10 +1398,10 @@ INSERT INTO `setting` (`setting_id`, `group`, `key`, `value`) VALUES
 
 DROP TABLE IF EXISTS `stock_status`;
 CREATE TABLE `stock_status` (
-  `stock_status_id` int(11) NOT NULL AUTO_INCREMENT,
+  `stock_status_id` int(11) NOT NULL auto_increment,
   `language_id` int(11) NOT NULL,
-  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`stock_status_id`,`language_id`)
+  `name` varchar(32) collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`stock_status_id`,`language_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
 --
@@ -1478,12 +1423,12 @@ INSERT INTO `stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 
 DROP TABLE IF EXISTS `tax_class`;
 CREATE TABLE `tax_class` (
-  `tax_class_id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`tax_class_id`)
+  `tax_class_id` int(11) NOT NULL auto_increment,
+  `title` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `description` varchar(255) collate utf8_unicode_ci NOT NULL default '',
+  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`tax_class_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
@@ -1501,15 +1446,15 @@ INSERT INTO `tax_class` (`tax_class_id`, `title`, `description`, `date_added`, `
 
 DROP TABLE IF EXISTS `tax_rate`;
 CREATE TABLE `tax_rate` (
-  `tax_rate_id` int(11) NOT NULL AUTO_INCREMENT,
-  `geo_zone_id` int(11) NOT NULL DEFAULT '0',
-  `tax_class_id` int(11) NOT NULL DEFAULT '0',
-  `priority` int(5) DEFAULT '1',
-  `rate` decimal(7,4) NOT NULL DEFAULT '0.0000',
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`tax_rate_id`)
+  `tax_rate_id` int(11) NOT NULL auto_increment,
+  `geo_zone_id` int(11) NOT NULL default '0',
+  `tax_class_id` int(11) NOT NULL default '0',
+  `priority` int(5) default '1',
+  `rate` decimal(7,4) NOT NULL default '0.0000',
+  `description` varchar(255) collate utf8_unicode_ci NOT NULL default '',
+  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`tax_rate_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
 
 --
@@ -1527,23 +1472,19 @@ INSERT INTO `tax_rate` (`tax_rate_id`, `geo_zone_id`, `tax_class_id`, `priority`
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_group_id` int(11) NOT NULL DEFAULT '0',
-  `username` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `password` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `firstname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `lastname` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `email` varchar(96) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `user_id` int(11) NOT NULL auto_increment,
+  `user_group_id` int(11) NOT NULL default '0',
+  `username` varchar(20) collate utf8_unicode_ci NOT NULL default '',
+  `password` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `email` varchar(96) collate utf8_unicode_ci NOT NULL default '',
   `status` int(1) NOT NULL,
-  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`user_id`),
+  `ip` varchar(15) collate utf8_unicode_ci NOT NULL default '',
+  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`user_id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `user`
---
 
 -- --------------------------------------------------------
 
@@ -1553,10 +1494,10 @@ CREATE TABLE `user` (
 
 DROP TABLE IF EXISTS `user_group`;
 CREATE TABLE `user_group` (
-  `user_group_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `permission` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`user_group_id`)
+  `user_group_id` int(11) NOT NULL auto_increment,
+  `name` varchar(64) collate utf8_unicode_ci default NULL,
+  `permission` text collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`user_group_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 --
@@ -1564,7 +1505,7 @@ CREATE TABLE `user_group` (
 --
 
 INSERT INTO `user_group` (`user_group_id`, `name`, `permission`) VALUES
-(1, 'Top Administrator', 'a:2:{s:6:"access";a:62:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:15:"customer/coupon";i:8;s:17:"customer/customer";i:9;s:13:"customer/mail";i:10;s:14:"customer/order";i:11;s:17:"extension/payment";i:12;s:18:"extension/shipping";i:13;s:15:"extension/total";i:14;s:20:"localisation/country";i:15;s:21:"localisation/currency";i:16;s:21:"localisation/geo_zone";i:17;s:21:"localisation/language";i:18;s:25:"localisation/order_status";i:19;s:25:"localisation/stock_status";i:20;s:22:"localisation/tax_class";i:21;s:25:"localisation/weight_class";i:22;s:17:"localisation/zone";i:23;s:17:"payment/2checkout";i:24;s:15:"payment/asiapay";i:25;s:20:"payment/authorizenet";i:26;s:15:"payment/bluepay";i:27;s:16:"payment/ccavenue";i:28;s:13:"payment/ccnow";i:29;s:17:"payment/chronopay";i:30;s:11:"payment/cod";i:31;s:13:"payment/egold";i:32;s:12:"payment/eway";i:33;s:12:"payment/hsbc";i:34;s:17:"payment/linkpoint";i:35;s:13:"payment/malse";i:36;s:20:"payment/moneybookers";i:37;s:14:"payment/nochex";i:38;s:19:"payment/payjunction";i:39;s:15:"payment/paymate";i:40;s:14:"payment/paypal";i:41;s:13:"payment/protx";i:42;s:15:"payment/psigate";i:43;s:14:"payment/secpay";i:44;s:16:"payment/verisign";i:45;s:16:"payment/worldpay";i:46;s:16:"report/purchased";i:47;s:11:"report/sale";i:48;s:13:"report/viewed";i:49;s:15:"setting/setting";i:50;s:13:"shipping/flat";i:51;s:13:"shipping/item";i:52;s:13:"shipping/zone";i:53;s:11:"tool/backup";i:54;s:12:"total/coupon";i:55;s:19:"total/low_order_fee";i:56;s:14:"total/shipping";i:57;s:15:"total/sub_total";i:58;s:9:"total/tax";i:59;s:11:"total/total";i:60;s:9:"user/user";i:61;s:15:"user/user_group";}s:6:"modify";a:62:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:15:"customer/coupon";i:8;s:17:"customer/customer";i:9;s:13:"customer/mail";i:10;s:14:"customer/order";i:11;s:17:"extension/payment";i:12;s:18:"extension/shipping";i:13;s:15:"extension/total";i:14;s:20:"localisation/country";i:15;s:21:"localisation/currency";i:16;s:21:"localisation/geo_zone";i:17;s:21:"localisation/language";i:18;s:25:"localisation/order_status";i:19;s:25:"localisation/stock_status";i:20;s:22:"localisation/tax_class";i:21;s:25:"localisation/weight_class";i:22;s:17:"localisation/zone";i:23;s:17:"payment/2checkout";i:24;s:15:"payment/asiapay";i:25;s:20:"payment/authorizenet";i:26;s:15:"payment/bluepay";i:27;s:16:"payment/ccavenue";i:28;s:13:"payment/ccnow";i:29;s:17:"payment/chronopay";i:30;s:11:"payment/cod";i:31;s:13:"payment/egold";i:32;s:12:"payment/eway";i:33;s:12:"payment/hsbc";i:34;s:17:"payment/linkpoint";i:35;s:13:"payment/malse";i:36;s:20:"payment/moneybookers";i:37;s:14:"payment/nochex";i:38;s:19:"payment/payjunction";i:39;s:15:"payment/paymate";i:40;s:14:"payment/paypal";i:41;s:13:"payment/protx";i:42;s:15:"payment/psigate";i:43;s:14:"payment/secpay";i:44;s:16:"payment/verisign";i:45;s:16:"payment/worldpay";i:46;s:16:"report/purchased";i:47;s:11:"report/sale";i:48;s:13:"report/viewed";i:49;s:15:"setting/setting";i:50;s:13:"shipping/flat";i:51;s:13:"shipping/item";i:52;s:13:"shipping/zone";i:53;s:11:"tool/backup";i:54;s:12:"total/coupon";i:55;s:19:"total/low_order_fee";i:56;s:14:"total/shipping";i:57;s:15:"total/sub_total";i:58;s:9:"total/tax";i:59;s:11:"total/total";i:60;s:9:"user/user";i:61;s:15:"user/user_group";}}'),
+(1, 'Top Administrator', 'a:2:{s:6:"access";a:63:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:15:"customer/coupon";i:8;s:17:"customer/customer";i:9;s:13:"customer/mail";i:10;s:14:"customer/order";i:11;s:17:"extension/payment";i:12;s:18:"extension/shipping";i:13;s:15:"extension/total";i:14;s:20:"localisation/country";i:15;s:21:"localisation/currency";i:16;s:21:"localisation/geo_zone";i:17;s:21:"localisation/language";i:18;s:25:"localisation/order_status";i:19;s:25:"localisation/stock_status";i:20;s:22:"localisation/tax_class";i:21;s:25:"localisation/weight_class";i:22;s:17:"localisation/zone";i:23;s:17:"payment/2checkout";i:24;s:15:"payment/asiapay";i:25;s:20:"payment/authorizenet";i:26;s:15:"payment/bluepay";i:27;s:16:"payment/ccavenue";i:28;s:13:"payment/ccnow";i:29;s:17:"payment/chronopay";i:30;s:11:"payment/cod";i:31;s:13:"payment/egold";i:32;s:12:"payment/eway";i:33;s:12:"payment/hsbc";i:34;s:17:"payment/linkpoint";i:35;s:13:"payment/malse";i:36;s:20:"payment/moneybookers";i:37;s:14:"payment/nochex";i:38;s:19:"payment/payjunction";i:39;s:15:"payment/paymate";i:40;s:14:"payment/paypal";i:41;s:13:"payment/protx";i:42;s:15:"payment/psigate";i:43;s:14:"payment/secpay";i:44;s:16:"payment/verisign";i:45;s:16:"payment/worldpay";i:46;s:16:"report/purchased";i:47;s:11:"report/sale";i:48;s:13:"report/viewed";i:49;s:15:"setting/setting";i:50;s:13:"shipping/flat";i:51;s:13:"shipping/free";i:52;s:13:"shipping/item";i:53;s:13:"shipping/zone";i:54;s:11:"tool/backup";i:55;s:12:"total/coupon";i:56;s:19:"total/low_order_fee";i:57;s:14:"total/shipping";i:58;s:15:"total/sub_total";i:59;s:9:"total/tax";i:60;s:11:"total/total";i:61;s:9:"user/user";i:62;s:15:"user/user_group";}s:6:"modify";a:63:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:15:"customer/coupon";i:8;s:17:"customer/customer";i:9;s:13:"customer/mail";i:10;s:14:"customer/order";i:11;s:17:"extension/payment";i:12;s:18:"extension/shipping";i:13;s:15:"extension/total";i:14;s:20:"localisation/country";i:15;s:21:"localisation/currency";i:16;s:21:"localisation/geo_zone";i:17;s:21:"localisation/language";i:18;s:25:"localisation/order_status";i:19;s:25:"localisation/stock_status";i:20;s:22:"localisation/tax_class";i:21;s:25:"localisation/weight_class";i:22;s:17:"localisation/zone";i:23;s:17:"payment/2checkout";i:24;s:15:"payment/asiapay";i:25;s:20:"payment/authorizenet";i:26;s:15:"payment/bluepay";i:27;s:16:"payment/ccavenue";i:28;s:13:"payment/ccnow";i:29;s:17:"payment/chronopay";i:30;s:11:"payment/cod";i:31;s:13:"payment/egold";i:32;s:12:"payment/eway";i:33;s:12:"payment/hsbc";i:34;s:17:"payment/linkpoint";i:35;s:13:"payment/malse";i:36;s:20:"payment/moneybookers";i:37;s:14:"payment/nochex";i:38;s:19:"payment/payjunction";i:39;s:15:"payment/paymate";i:40;s:14:"payment/paypal";i:41;s:13:"payment/protx";i:42;s:15:"payment/psigate";i:43;s:14:"payment/secpay";i:44;s:16:"payment/verisign";i:45;s:16:"payment/worldpay";i:46;s:16:"report/purchased";i:47;s:11:"report/sale";i:48;s:13:"report/viewed";i:49;s:15:"setting/setting";i:50;s:13:"shipping/flat";i:51;s:13:"shipping/free";i:52;s:13:"shipping/item";i:53;s:13:"shipping/zone";i:54;s:11:"tool/backup";i:55;s:12:"total/coupon";i:56;s:19:"total/low_order_fee";i:57;s:14:"total/shipping";i:58;s:15:"total/sub_total";i:59;s:9:"total/tax";i:60;s:11:"total/total";i:61;s:9:"user/user";i:62;s:15:"user/user_group";}}'),
 (10, 'Demonstration', 'a:1:{s:6:"access";a:44:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:15:"customer/coupon";i:8;s:17:"customer/customer";i:9;s:14:"customer/order";i:10;s:18:"customer/send_mail";i:11;s:17:"extension/payment";i:12;s:18:"extension/shipping";i:13;s:15:"extension/total";i:14;s:20:"localisation/country";i:15;s:21:"localisation/currency";i:16;s:21:"localisation/geo_zone";i:17;s:21:"localisation/language";i:18;s:25:"localisation/order_status";i:19;s:25:"localisation/stock_status";i:20;s:22:"localisation/tax_class";i:21;s:25:"localisation/weight_class";i:22;s:17:"localisation/zone";i:23;s:11:"payment/cod";i:24;s:14:"payment/paypal";i:25;s:13:"payment/protx";i:26;s:16:"payment/worldpay";i:27;s:16:"report/purchased";i:28;s:11:"report/sale";i:29;s:13:"report/viewed";i:30;s:12:"setting/mail";i:31;s:15:"setting/setting";i:32;s:13:"shipping/flat";i:33;s:13:"shipping/item";i:34;s:13:"shipping/zone";i:35;s:11:"tool/backup";i:36;s:12:"total/coupon";i:37;s:19:"total/low_order_fee";i:38;s:14:"total/shipping";i:39;s:15:"total/sub_total";i:40;s:9:"total/tax";i:41;s:11:"total/total";i:42;s:9:"user/user";i:43;s:15:"user/user_group";}}');
 
 -- --------------------------------------------------------
@@ -1575,11 +1516,11 @@ INSERT INTO `user_group` (`user_group_id`, `name`, `permission`) VALUES
 
 DROP TABLE IF EXISTS `weight_class`;
 CREATE TABLE `weight_class` (
-  `weight_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `weight_class_id` int(11) NOT NULL auto_increment,
   `language_id` int(11) NOT NULL,
-  `title` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `unit` varchar(4) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`weight_class_id`,`language_id`)
+  `title` varchar(32) collate utf8_unicode_ci NOT NULL,
+  `unit` varchar(4) collate utf8_unicode_ci NOT NULL default '',
+  PRIMARY KEY  (`weight_class_id`,`language_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
@@ -1598,9 +1539,9 @@ INSERT INTO `weight_class` (`weight_class_id`, `language_id`, `title`, `unit`) V
 
 DROP TABLE IF EXISTS `weight_rule`;
 CREATE TABLE `weight_rule` (
-  `from_id` int(11) NOT NULL DEFAULT '0',
-  `to_id` int(11) NOT NULL DEFAULT '0',
-  `rule` decimal(15,4) NOT NULL DEFAULT '0.0000'
+  `from_id` int(11) NOT NULL default '0',
+  `to_id` int(11) NOT NULL default '0',
+  `rule` decimal(15,4) NOT NULL default '0.0000'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1619,11 +1560,11 @@ INSERT INTO `weight_rule` (`from_id`, `to_id`, `rule`) VALUES
 
 DROP TABLE IF EXISTS `zone`;
 CREATE TABLE `zone` (
-  `zone_id` int(11) NOT NULL AUTO_INCREMENT,
-  `country_id` int(11) NOT NULL DEFAULT '0',
-  `code` varchar(32) NOT NULL DEFAULT '',
-  `name` varchar(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (`zone_id`)
+  `zone_id` int(11) NOT NULL auto_increment,
+  `country_id` int(11) NOT NULL default '0',
+  `code` varchar(32) NOT NULL default '',
+  `name` varchar(32) NOT NULL default '',
+  PRIMARY KEY  (`zone_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3842 ;
 
 --
@@ -5483,13 +5424,13 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 
 DROP TABLE IF EXISTS `zone_to_geo_zone`;
 CREATE TABLE `zone_to_geo_zone` (
-  `zone_to_geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
-  `country_id` int(11) NOT NULL DEFAULT '0',
-  `zone_id` int(11) DEFAULT NULL,
-  `geo_zone_id` int(11) DEFAULT NULL,
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`zone_to_geo_zone_id`)
+  `zone_to_geo_zone_id` int(11) NOT NULL auto_increment,
+  `country_id` int(11) NOT NULL default '0',
+  `zone_id` int(11) default NULL,
+  `geo_zone_id` int(11) default NULL,
+  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`zone_to_geo_zone_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --

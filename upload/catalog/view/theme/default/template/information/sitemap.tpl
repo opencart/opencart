@@ -5,6 +5,7 @@
   <div style="float: left; width: 50%; display: inline-block;"><?php echo $category; ?></div>
   <div style="float: right; width: 50%; display: inline-block;">
     <ul>
+      <li><a href="<?php echo $special; ?>"><?php echo $text_special; ?></a></li>
       <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a>
         <ul>
           <li><a href="<?php echo $edit; ?>"><?php echo $text_edit; ?></a></li>

@@ -11,12 +11,12 @@ $_['text_test']          = 'Test';
 $_['text_live']          = 'Live';
 
 // Entry
-$_['entry_status']       = 'Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_order_status'] = 'Order Status:';
 $_['entry_vendor']       = 'Vendor:';
 $_['entry_password']     = 'Password:';
 $_['entry_test']         = 'Test Mode:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
 // Error

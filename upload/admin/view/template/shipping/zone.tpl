@@ -11,9 +11,9 @@
     <table class="form">
       <?php foreach ($geo_zones as $geo_zone) { ?>
       <tr>
-        <td><?php echo $geo_zone['name']; ?> <?php echo $entry_cost; ?></td>
-        <td><input type="text" name="zone_<?php echo $geo_zone['geo_zone_id']; ?>_cost" value="<?php echo ${'zone_' . $geo_zone['geo_zone_id'] . '_cost'}; ?>" />
-          <img src="view/image/help.png" onmouseover="toolTip('<?php echo $text_example; ?>')" onmouseout="toolTip()" /></td>
+        <td><?php echo $geo_zone['name']; ?> <?php echo $entry_cost; ?><br /> 
+          <span class="help"><?php echo $help_cost; ?></span></td>
+        <td><input type="text" name="zone_<?php echo $geo_zone['geo_zone_id']; ?>_cost" value="<?php echo ${'zone_' . $geo_zone['geo_zone_id'] . '_cost'}; ?>" /></td>
       </tr>
       <tr>
         <td><?php echo $geo_zone['name']; ?> <?php echo $entry_status; ?></td>

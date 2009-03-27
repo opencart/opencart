@@ -69,6 +69,26 @@ class ModelLocalisationCurrency extends Model {
 		}
 	}	
 	
+	public function updateCurrencies() {
+		$query = $this->db->query("SELECT * FROM currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "' AND date_modified < '" . date(strtotime('-1 day')) . "'");
+		
+		if ($query->num_rows) {
+			$xml = file_get_contents('http://currencysource.com/RSS/' . $this->config->get('config_currency') . '.xml');
+		
+			preg_match_all('/([A-Z]{3}) \((.*)\)/', $xml, $match);
+		
+			$rate = array_combine($match[1], $match[2]);
+			
+			foreach ($query->rows as $result) {
+				if (isset($rate[$result['code']])) {
+					$this->db->query("UPDATE currency SET value = '" . (float)$rate[$result['code']] . "', date_modified = NOW() WHERE currency_id = '" . (int)$result['currency_id'] . "'");
+				}
+			}
+		}
+		
+		$this->cache->delete('currency');
+	}
+	
 	public function getTotalCurrencies() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM currency");
 		

@@ -67,20 +67,28 @@ p {
 	padding-left: 17px;
 }
 #header .div4 {
-	width: 950px;
+	width: 940px;
 	padding-left: 10px;
+	padding-right: 10px;
 	height: 40px;
 	background: url('../image/header.png') repeat-x;
 }
 #header .div4 a {
-	padding: 12px 20px 12px 20px;
+	padding: 12px 0px 12px 22px;
+	margin-left: 10px;
+	margin-right: 10px;
 	display: inline-block;
-	float: left;
 	color: #FFFFFF;
 	text-align: center;
 	text-decoration: none;
 	font-size: 14px;
 	font-family: Verdana, Geneva, sans-serif;
+}
+#header .div5 a {
+	float: left;
+}
+#header .div6 a {
+	float: right;
 }
 #breadcrumb {
 	padding-top: 8px;
@@ -220,17 +228,6 @@ a.button span {
 	
 	padding: 5px 0 5px 18px;
 }
-/*
-a.button:active {
-	background-position: bottom right;
-	color: #000;
-	outline: none;
-}
-a.button:active span {
-	background-position: bottom left;
-	padding: 5px 0 5px 18px;
-}
-*/
 .buttons {
 	background: #F8F8F8;
 	border: 1px solid #DDDDDD;

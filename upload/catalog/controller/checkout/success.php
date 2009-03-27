@@ -8,17 +8,17 @@ class ControllerCheckoutSuccess extends Controller {
     	}
 		
 		if (isset($this->session->data['order_id'])) {
-			$this->cart->clear();
-			
-			$this->load->model('checkout/order');
-		
-			$this->model_checkout_order->complete($this->session->data['order_id']);
-			
 			if (isset($this->session->data['coupon'])) {
 				$this->load->model('checkout/coupon');
 			
 				$this->model_checkout_coupon->redeem($this->session->data['coupon'], $this->session->data['order_id']);
 			}
+			
+			$this->cart->clear();
+			
+			$this->load->model('checkout/order');
+		
+			$this->model_checkout_order->complete($this->session->data['order_id']);
 			
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);

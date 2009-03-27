@@ -159,6 +159,21 @@
           </select></td>
       </tr>
       <tr>
+        <td><?php echo $entry_currency_auto; ?><br />
+          <span class="help"><?php echo $help_currency_auto; ?></span></td>
+        <td><?php if ($config_currency_auto) { ?>
+          <input type="radio" name="config_currency_auto" value="1" checked="checked" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_currency_auto" value="0" />
+          <?php echo $text_no; ?>
+          <?php } else { ?>
+          <input type="radio" name="config_currency_auto" value="1" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_currency_auto" value="0" checked="checked" />
+          <?php echo $text_no; ?>
+          <?php } ?></td>
+      </tr>      
+      <tr>
         <td><?php echo $entry_tax; ?></td>
         <td><?php if ($config_tax) { ?>
           <input type="radio" name="config_tax" value="1" checked="checked" />
@@ -399,7 +414,8 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_compression; ?></td>
+        <td><?php echo $entry_compression; ?><br />
+          <span class="help"><?php echo $help_compression; ?></span></td>
         <td><input type="text" name="config_compression" value="<?php echo $config_compression; ?>" size="3" /></td>
       </tr>
     </table>

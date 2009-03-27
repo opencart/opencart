@@ -96,7 +96,11 @@ class ControllerCommonHome extends Controller {
 				'action'     => $action
 			);
 		}
-					
+
+		$this->load->model('localisation/currency');
+		
+		$this->model_localisation_currency->updateCurrencies();
+		
 		$this->id       = 'content'; 
 		$this->template = 'common/home.tpl';
 		$this->layout   = 'module/layout';

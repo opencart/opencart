@@ -4,7 +4,11 @@ class ControllerModuleCurrency extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && (isset($this->request->post['currency']))) {
       		$this->currency->set($this->request->post['currency']);
 
-  			$this->redirect($this->url->http('common/home'));
+			if ($this->request->post['redirect']) {
+				$this->redirect($this->request->post['redirect']);
+			} else {
+				$this->redirect($this->url->http('common/home'));
+			}
    		}
     	
 		$this->load->language('module/currency');
@@ -16,7 +20,9 @@ class ControllerModuleCurrency extends Controller {
 		$this->data['entry_currency'] = $this->language->get('entry_currency');
 		
 		$this->data['action'] = $this->url->http('common/home');
-   				 
+		
+		$this->data['redirect'] = $this->url->http(str_replace('route=', '', urldecode(http_build_query($this->request->get))));
+		
 		$this->data['default'] = $this->currency->getCode(); 
 		
 		$this->load->model('localisation/currency');

@@ -10,14 +10,14 @@ $_['text_seller']        = 'Seller / Personal Account';
 $_['text_merchant']      = 'Merchant Account';
       
 // Entry
-$_['entry_status']       = 'Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_order_status'] = 'Order Status:';
 $_['entry_email']        = 'E-Mail:';
 $_['entry_account']      = 'Account Type:';
 $_['entry_merchant']     = 'Merchant ID:';
 $_['entry_template']     = 'Pass Template:';
 $_['entry_test']         = 'Test:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
 // Error

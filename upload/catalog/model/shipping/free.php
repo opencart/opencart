@@ -19,6 +19,10 @@ class ModelShippingFree extends Model {
 			$status = FALSE;
 		}
 
+		if ($this->cart->getSubTotal() < $this->config->get('free_total')) {
+			$status = FALSE;
+		}
+		
 		$method_data = array();
 	
 		if ($status) {

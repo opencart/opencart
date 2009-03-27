@@ -10,14 +10,14 @@ $_['text_standard']      = 'Standard';
 $_['text_ipn']           = 'IPN (Recommended)';
 
 // Entry
-$_['entry_status']       = 'Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_order_status'] = 'Order Status:';
 $_['entry_email']        = 'E-Mail:';
 $_['entry_receiver']     = 'AsiaPay User ID:';
 $_['entry_account']      = 'AsiaPay Account ID:';
 $_['entry_method']       = 'Method:';
 $_['entry_callback']     = 'IPN URL:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
 // Help

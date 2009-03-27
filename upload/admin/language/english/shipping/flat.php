@@ -5,12 +5,13 @@ $_['heading_title']    = 'Flat Rate';
 // Text
 $_['text_shipping']    = 'Shipping';
 $_['text_success']     = 'Success: You have modified shipping flat rate!';
+$_['text_development'] = '<span style="color: green;">Ready</span>';
 
 // Entry
-$_['entry_status']     = 'Status:';
-$_['entry_geo_zone']   = 'Geo Zone:';
 $_['entry_cost']       = 'Cost:';
 $_['entry_tax']        = 'Tax Class:';
+$_['entry_geo_zone']   = 'Geo Zone:';
+$_['entry_status']     = 'Status:';
 $_['entry_sort_order'] = 'Sort Order:';
 
 // Error

@@ -35,8 +35,6 @@ class ModelCheckoutOrder extends Model {
 				$this->db->query("INSERT INTO order_download SET order_id = '" . (int)$order_id . "', order_product_id = '" . (int)$order_product_id . "', name = '" . $this->db->escape($download['name']) . "', filename = '" . $this->db->escape($download['filename']) . "', mask = '" . $this->db->escape($download['mask']) . "', remaining = '" . (int)($download['remaining'] * $product['quantity']) . "'");
 			}	
 		}
-		
-		$this->db->query("INSERT INTO order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$data['order_status_id'] . "', date_added = NOW(), notify = '1', comment = '" . $this->db->escape(strip_tags($data['comment'])) . "'");
 
 		foreach ($data['totals'] as $total) {
 			$this->db->query("INSERT INTO order_total SET order_id = '" . (int)$order_id . "', title = '" . $this->db->escape($total['title']) . "', text = '" . $this->db->escape($total['text']) . "', `value` = '" . (float)$total['value'] . "', sort_order = '" . (int)$total['sort_order'] . "'");

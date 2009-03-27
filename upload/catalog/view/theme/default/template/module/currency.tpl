@@ -11,6 +11,7 @@
         <?php } ?>
         <?php } ?>
       </select>
+      <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
     </form>
   </div>
   <div class="bottom"></div>

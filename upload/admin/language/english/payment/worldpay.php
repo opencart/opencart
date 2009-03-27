@@ -11,12 +11,12 @@ $_['text_declined']      = 'On - Always Declined';
 $_['text_off']           = 'Off';
       
 // Entry
-$_['entry_status']       = 'Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_order_status'] = 'Order Status:';
 $_['entry_merchant']     = 'Merchant ID:';
 $_['entry_callback']     = 'Relay Response URL:';
 $_['entry_test']         = 'Test Mode:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
 // Help

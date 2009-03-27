@@ -62,6 +62,14 @@ final class Cart {
 					$discount = 0;
 				}
 
+				$product_special = $this->db->query("SELECT * FROM product_special WHERE product_id = '" . (int)$product->row['product_id'] . "' AND date_start < NOW() AND date_end > NOW() LIMIT 1");
+				
+				if ($product_special->num_rows) {
+					$price = $product_special->row['price'];
+				} else {
+					$price = $product->row['price'];
+				}
+
 				$download_data = array();     		
 				
 				$query = $this->db->query("SELECT * FROM product_to_download p2d LEFT JOIN download d ON (p2d.download_id = d.download_id) LEFT JOIN download_description dd ON (d.download_id = dd.download_id) WHERE p2d.product_id = '" . (int)$product_id . "' AND dd.language_id = '" . (int)$this->language->getId() . "'");
@@ -87,9 +95,9 @@ final class Cart {
 					'download'        => $download_data,
         			'quantity'        => $quantity,
 					'stock'           => ($quantity <= $product->row['quantity']),
-        			'price'           => ($product->row['price'] + $option_price),
+        			'price'           => ($price + $option_price),
 					'discount'        => $discount,
-        			'total'           => (($product->row['price'] + $option_price) - $discount) * $quantity,
+        			'total'           => (($price + $option_price) - $discount) * $quantity,
         			'tax_class_id'    => $product->row['tax_class_id'],
         			'weight'          => $product->row['weight'],
         			'weight_class_id' => $product->row['weight_class_id']

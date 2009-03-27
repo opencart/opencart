@@ -11,49 +11,40 @@ class ControllerPaymentWorldPay extends Controller {
 		$this->data['action'] = 'https://select.worldpay.com/wcc/purchase';
 
 		$this->data['merchant'] = $this->config->get('worldpay_merchant');
-		$this->data['merchant'] = $this->config->get('worldpay_merchant');
-
-/*
-					<input type='hidden' name='cartId' value='".$cart_order_id."' />
-					<input type='hidden' name='MC_OID' value='".$cart_order_id."' />
-					<input type='hidden' name='amount' value='".$basket['grandTotal']."' />
-					<input type='hidden' name='currency' value='".$config['defaultCurrency']."' />
-					<input type='hidden' name='desc' value='Cart - ".$cart_order_id."' />
-					<input type='hidden' name='name' value='".$ccUserData[0]['title']." ".$ccUserData[0]['firstName']." ".$ccUserData[0]['lastName']."' />";
-					
-					if(!empty($ccUserData[0]['add_2'])){
-
-						$add = $ccUserData[0]['add_1'].",&#10;".$ccUserData[0]['add_2'].",&#10;".$ccUserData[0]['town'].", ".$ccUserData[0]['county'].",&#10;".countryName($ccUserData[0]['country']);
-					
-					} else {
-						
-						$add = $ccUserData[0]['add_1'].",&#10;".$ccUserData[0]['town'].",&#10;".$ccUserData[0]['county'].",&#10;".countryName($ccUserData[0]['country']);
-					
-					}
-					
-					$hiddenVars .= "<input type='hidden' name='address' value='".$add."' />
-					<input type='hidden' name='postcode' value='".$ccUserData[0]['postcode']."' />
-					<input type='hidden' name='country' value='".countryIso($ccUserData[0]['country'])."' />
-					<input type='hidden' name='tel' value='".$ccUserData[0]['phone']."' />
-					<input type='hidden' name='email' value='".$ccUserData[0]['email']."' />";
-				
-					$hiddenVars .= "<input type='hidden' name='testMode' value='".$module['testMode']."' />";
-				
-*/		
-
-
+		$this->data['order_id'] = $order_info['order_id'];
+		$this->data['amount'] = $order_info['total'];
+		$this->data['currency'] = $order_info['currency'];
+		$this->data['description'] = $this->config->get('config_store') . ' - #' . $order_info['order_id'];
+		$this->data['name'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
+		
+		if (!$order_info['payment_address_2']) {
+			$this->data['address'] = $order_info['payment_address_1'] . ', ' . $order_info['payment_city'] . ', ' . $order_info['payment_zone'];
+		} else {
+			$this->data['address'] = $order_info['payment_address_1'] . ', ' . $order_info['payment_address_2'] . ', ' . $order_info['payment_city'] . ', ' . $order_info['payment_zone'];
+		}
+		
+		$this->data['postcode'] = $order_info['payment_postcode'];
+		$this->data['country'] = $order_info['payment_country'];
+		$this->data['telephone'] = $order_info['telephone'];
+		$this->data['email'] = $order_info['email'];
+		$this->data['test'] = $this->config->get('worldpay_test');
+		
 		$this->data['back'] = $this->url->https('checkout/payment');
 		
 		$this->id       = 'payment';
-		$this->template = $this->config->get('config_template') . 'payment/protx.tpl';
+		$this->template = $this->config->get('config_template') . 'payment/worldpay.tpl';
 		
-		$this->render();		
+		$this->render();
 	}
 	
 	public function confirm() {
 		$this->load->model('checkout/order');
 		
-		$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
+		$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('config_order_status_id'));
+	}
+	
+	public function callback() {
+		
 	}
 }
 ?>

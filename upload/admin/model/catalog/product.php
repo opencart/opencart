@@ -38,6 +38,12 @@ class ModelCatalogProduct extends Model {
 				$this->db->query("INSERT INTO product_discount SET product_id = '" . (int)$product_id . "', quantity = '" . (int)$value['quantity'] . "', discount = '" . (float)$value['discount'] . "'");
 			}
 		}
+
+		if (isset($data['product_special'])) {
+			foreach ($data['product_special'] as $value) {
+				$this->db->query("INSERT INTO product_special SET product_id = '" . (int)$product_id . "', price = '" . (float)$value['price'] . "', date_start = '" . $this->db->escape($value['date_start']) . "', date_end = '" . $this->db->escape($value['date_end']) . "'");
+			}
+		}
 		
 		if (isset($data['product_image'])) {
 			foreach ($data['product_image'] as $image) {
@@ -107,7 +113,15 @@ class ModelCatalogProduct extends Model {
 				$this->db->query("INSERT INTO product_discount SET product_id = '" . (int)$product_id . "', quantity = '" . (int)$value['quantity'] . "', discount = '" . (float)$value['discount'] . "'");
 			}
 		}
-		
+
+		$this->db->query("DELETE FROM product_special WHERE product_id = '" . (int)$product_id . "'");
+
+		if (isset($data['product_special'])) {
+			foreach ($data['product_special'] as $value) {
+				$this->db->query("INSERT INTO product_special SET product_id = '" . (int)$product_id . "', price = '" . (float)$value['price'] . "', date_start = '" . $this->db->escape($value['date_start']) . "', date_end = '" . $this->db->escape($value['date_end']) . "'");
+			}
+		}
+
 		$this->db->query("DELETE FROM product_image WHERE product_id = '" . (int)$product_id . "'");
 		
 		if (isset($data['product_image'])) {
@@ -145,6 +159,7 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("DELETE FROM product_option_value WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM product_option_value_description WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM product_discount WHERE product_id = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM product_special WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM product_image WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM product_to_download WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM product_to_category WHERE product_id = '" . (int)$product_id . "'");
@@ -296,7 +311,13 @@ class ModelCatalogProduct extends Model {
 		
 		return $query->rows;
 	}
+
+	public function getProductSpecials($product_id) {
+		$query = $this->db->query("SELECT * FROM product_special WHERE product_id = '" . (int)$product_id . "'");
 		
+		return $query->rows;
+	}
+	
 	public function getProductDownloads($product_id) {
 		$product_download_data = array();
 		

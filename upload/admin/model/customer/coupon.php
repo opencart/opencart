@@ -78,7 +78,7 @@ class ModelCustomerCoupon extends Model {
 		
 		return $query->rows;
 	}
-
+	
 	public function getCouponDescriptions($coupon_id) {
 		$coupon_description_data = array();
 		

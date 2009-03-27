@@ -5,6 +5,7 @@ class ControllerModuleHeader extends Controller {
 	    	
 		$this->data['store'] = $this->config->get('config_store');
 		$this->data['text_home'] = $this->language->get('text_home');
+		$this->data['text_special'] = $this->language->get('text_special');
     	$this->data['text_account'] = $this->language->get('text_account');
     	$this->data['text_login'] = $this->language->get('text_login');
     	$this->data['text_logout'] = $this->language->get('text_logout');
@@ -12,6 +13,7 @@ class ControllerModuleHeader extends Controller {
     	$this->data['text_checkout'] = $this->language->get('text_checkout');
 
 		$this->data['home'] = $this->url->http('common/home');
+		$this->data['special'] = $this->url->http('product/special');
     	$this->data['account'] = $this->url->https('account/account');
 		$this->data['logged'] = $this->customer->isLogged();
 		$this->data['login'] = $this->url->https('account/login');

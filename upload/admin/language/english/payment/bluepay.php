@@ -8,13 +8,13 @@ $_['text_success']       = 'Success: You have modified BluePay account details!'
 $_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
-$_['entry_status']       = 'Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_order_status'] = 'Order Status:';
 $_['entry_merchant']     = 'Merchant ID:';
 $_['entry_key']          = 'Secret Key:';
 $_['entry_test']         = 'Test Mode:';
 $_['entry_debug']        = 'Debug Mode:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
 // Error

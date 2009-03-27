@@ -373,12 +373,15 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['entry_option_value'] = $this->language->get('entry_option_value');
 		$this->data['entry_prefix'] = $this->language->get('entry_prefix');
 		$this->data['entry_discount'] = $this->language->get('entry_discount');
+		$this->data['entry_date_start'] = $this->language->get('entry_date_start');
+		$this->data['entry_date_end'] = $this->language->get('entry_date_end');
 		
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
 		$this->data['button_add_option'] = $this->language->get('button_add_option');
 		$this->data['button_add_option_value'] = $this->language->get('button_add_option_value');
 		$this->data['button_add_discount'] = $this->language->get('button_add_discount');
+		$this->data['button_add_special'] = $this->language->get('button_add_special');
 		$this->data['button_add_image'] = $this->language->get('button_add_image');
 		$this->data['button_remove'] = $this->language->get('button_remove');
 		
@@ -587,6 +590,14 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['product_discounts'] = array();
 		}
 
+		if (isset($this->request->post['product_special'])) {
+			$this->data['product_specials'] = $this->request->post['product_special'];
+		} elseif (isset($product_info)) {
+			$this->data['product_specials'] = $this->model_catalog_product->getProductSpecials($this->request->get['product_id']);
+		} else {
+			$this->data['product_specials'] = array();
+		}
+		
 		$this->data['product_images'] = array();
 		
 		if (isset($this->request->post['product_image'])) {

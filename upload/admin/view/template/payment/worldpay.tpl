@@ -24,20 +24,20 @@
       <tr>
         <td><?php echo $entry_test; ?></td>
         <td><select name="worldpay_test">
-            <?php if ($worldpay_test == 'off') { ?>
-            <option value="off" selected="selected"><?php echo $text_off; ?></option>
+            <?php if ($worldpay_test == '0') { ?>
+            <option value="0" selected="selected"><?php echo $text_off; ?></option>
             <?php } else { ?>
-            <option value="off"><?php echo $text_off; ?></option>
+            <option value="0"><?php echo $text_off; ?></option>
             <?php } ?>
-            <?php if ($worldpay_test == 'successful') { ?>
-            <option value="successful" selected="selected"><?php echo $text_successful; ?></option>
+            <?php if ($worldpay_test == '100') { ?>
+            <option value="100" selected="selected"><?php echo $text_successful; ?></option>
             <?php } else { ?>
-            <option value="successful"><?php echo $text_successful; ?></option>
+            <option value="100"><?php echo $text_successful; ?></option>
             <?php } ?>
-            <?php if ($worldpay_test == 'declined') { ?>
-            <option value="declined" selected="selected"><?php echo $text_declined; ?></option>
+            <?php if ($worldpay_test == '101') { ?>
+            <option value="101" selected="selected"><?php echo $text_declined; ?></option>
             <?php } else { ?>
-            <option value="declined"><?php echo $text_declined; ?></option>
+            <option value="101"><?php echo $text_declined; ?></option>
             <?php } ?>
           </select></td>
       </tr>

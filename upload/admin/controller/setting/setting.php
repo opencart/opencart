@@ -42,6 +42,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_zone'] = $this->language->get('entry_zone');
 		$this->data['entry_language'] = $this->language->get('entry_language');
 		$this->data['entry_currency'] = $this->language->get('entry_currency');
+		$this->data['entry_currency_auto'] = $this->language->get('entry_currency_auto');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
 		$this->data['entry_weight'] = $this->language->get('entry_weight');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
@@ -62,6 +63,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_cache'] = $this->language->get('entry_cache');
 		$this->data['entry_compression'] = $this->language->get('entry_compression');
  
+ 		$this->data['help_currency_auto'] = $this->language->get('help_currency_auto');
 		$this->data['help_order_status'] = $this->language->get('help_order_status');
 		$this->data['help_stock_check'] = $this->language->get('help_stock_check');
 		$this->data['help_stock_checkout'] = $this->language->get('help_stock_checkout');
@@ -71,6 +73,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['help_forgotten'] = $this->language->get('help_forgotten');
 		$this->data['help_order'] = $this->language->get('help_order');
 		$this->data['help_update'] = $this->language->get('help_update');
+		$this->data['help_compression'] = $this->language->get('help_compression');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -239,6 +242,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_currency'] = $this->request->post['config_currency'];
 		} else {
 			$this->data['config_currency'] = $this->config->get('config_currency');
+		}
+
+		if (isset($this->request->post['config_currency_auto'])) {
+			$this->data['config_currency_auto'] = $this->request->post['config_currency_auto'];
+		} else {
+			$this->data['config_currency_auto'] = $this->config->get('config_currency_auto');
 		}
 		
 		$this->load->model('localisation/currency');

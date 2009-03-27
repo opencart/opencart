@@ -11,9 +11,6 @@ $_['text_declined']      = 'On (Declined)';
 $_['text_off']           = 'Off';
 
 // Entry
-$_['entry_status']       = 'Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_order_status'] = 'Order Status:';
 $_['entry_client']       = 'Client ID:';
 $_['entry_user']         = 'User ID:';
 $_['entry_password']     = 'Password:';
@@ -21,6 +18,9 @@ $_['entry_gateway']      = 'Gateway Path:';
 $_['entry_pas']          = 'PAS Path:';
 $_['entry_avs']          = 'AVS Check:';
 $_['entry_test']         = 'Test Mode:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
 // Error

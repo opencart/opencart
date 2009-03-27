@@ -8,10 +8,10 @@ $_['text_success']       = 'Success: You have modified Moneybookers account deta
 $_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
-$_['entry_status']       = 'Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_order_status'] = 'Order Status:';
 $_['entry_email']        = 'E-Mail:';
+$_['entry_order_status'] = 'Order Status:';
+$_['entry_geo_zone']     = 'Geo Zone:';
+$_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
 // Error

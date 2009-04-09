@@ -63,7 +63,7 @@ class ControllerInformationContact extends Controller {
 	
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'information/contact.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();		
   	}
@@ -97,7 +97,7 @@ class ControllerInformationContact extends Controller {
 
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'common/success.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}
@@ -113,7 +113,7 @@ class ControllerInformationContact extends Controller {
 	}
 	
   	private function validate() {
-    	if ((strlen($this->request->post['name']) < 3) || (strlen($this->request->post['name']) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['name'])) < 3) || (strlen(utf8_decode($this->request->post['name'])) > 32)) {
       		$this->error['name'] = $this->language->get('error_name');
     	}
 
@@ -121,7 +121,7 @@ class ControllerInformationContact extends Controller {
       		$this->error['email'] = $this->language->get('error_email');
     	}
 
-    	if ((strlen($this->request->post['enquiry']) < 10) || (strlen($this->request->post['enquiry']) > 1000)) {
+    	if ((strlen(utf8_decode($this->request->post['enquiry'])) < 10) || (strlen(utf8_decode($this->request->post['enquiry'])) > 1000)) {
       		$this->error['enquiry'] = $this->language->get('error_enquiry');
     	}
 

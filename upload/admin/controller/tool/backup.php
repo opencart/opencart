@@ -52,7 +52,7 @@ class ControllerToolBackup extends Controller {
 		
 		$this->id       = 'content'; 
 		$this->template = 'tool/backup.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();
 	}

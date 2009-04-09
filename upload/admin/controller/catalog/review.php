@@ -255,7 +255,7 @@ class ControllerCatalogReview extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'catalog/review_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
 	}
@@ -359,7 +359,7 @@ class ControllerCatalogReview extends Controller {
 		
 		$this->id       = 'content';
 		$this->template = 'catalog/review_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
 	}
@@ -369,11 +369,11 @@ class ControllerCatalogReview extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((strlen($this->request->post['author']) < 3) || (strlen($this->request->post['author']) > 64)) {
+		if ((strlen(utf8_decode($this->request->post['author'])) < 3) || (strlen(utf8_decode($this->request->post['author'])) > 64)) {
 			$this->error['author'] = $this->language->get('error_author');
 		}
 
-		if ((strlen($this->request->post['text']) < 25) || (strlen($this->request->post['text']) > 1000)) {
+		if ((strlen(utf8_decode($this->request->post['text'])) < 25) || (strlen(utf8_decode($this->request->post['text'])) > 1000)) {
 			$this->error['text'] = $this->language->get('error_text');
 		}
 

@@ -103,21 +103,21 @@ class ControllerAccountEdit extends Controller {
 		
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'account/edit.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();		
 	}
 
 	private function validate() {
-		if ((strlen($this->request->post['firstname']) < 3) || (strlen($this->request->post['firstname']) > 32)) {
+		if ((strlen(utf8_decode($this->request->post['firstname'])) < 3) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if ((strlen($this->request->post['lastname']) < 3) || (strlen($this->request->post['lastname']) > 32)) {
+		if ((strlen(utf8_decode($this->request->post['lastname'])) < 3) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((strlen($this->request->post['email']) > 32) || (!eregi('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$', $this->request->post['email']))) {
+		if ((strlen(utf8_decode($this->request->post['email'])) > 32) || (!eregi('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$', $this->request->post['email']))) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 		
@@ -125,7 +125,7 @@ class ControllerAccountEdit extends Controller {
 			$this->error['message'] = $this->language->get('error_exists');
 		}
 
-		if ((strlen($this->request->post['telephone']) < 3) || (strlen($this->request->post['telephone']) > 32)) {
+		if ((strlen(utf8_decode($this->request->post['telephone'])) < 3) || (strlen(utf8_decode($this->request->post['telephone'])) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 

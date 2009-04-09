@@ -68,7 +68,7 @@ class ControllerReportPurchased extends Controller {
 		
 		$this->id       = 'content'; 
 		$this->template = 'report/purchased.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();
 	}	

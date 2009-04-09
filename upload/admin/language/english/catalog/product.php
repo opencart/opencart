@@ -39,6 +39,7 @@ $_['entry_option_value']     = 'Option Value:';
 $_['entry_prefix']           = 'Prefix:';
 $_['entry_category']         = 'Categories:';
 $_['entry_download']         = 'Downloads:';
+$_['entry_related']          = 'Related Products:';
 
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify products!';

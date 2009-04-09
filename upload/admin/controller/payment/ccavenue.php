@@ -28,12 +28,12 @@ class ControllerPaymentCCAvenue extends Controller {
 		$this->data['text_american'] = $this->language->get('text_american');
 		$this->data['text_indian'] = $this->language->get('text_indian');
 		
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_key'] = $this->language->get('entry_key');
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
 		$this->data['entry_gateway'] = $this->language->get('entry_gateway');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -69,28 +69,6 @@ class ControllerPaymentCCAvenue extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
 		
-		if (isset($this->request->post['ccavenue_status'])) {
-			$this->data['ccavenue_status'] = $this->request->post['ccavenue_status'];
-		} else {
-			$this->data['ccavenue_status'] = $this->config->get('ccavenue_status');
-		}
-		
-		if (isset($this->request->post['ccavenue_geo_zone_id'])) {
-			$this->data['ccavenue_geo_zone_id'] = $this->request->post['ccavenue_geo_zone_id'];
-		} else {
-			$this->data['ccavenue_geo_zone_id'] = $this->config->get('ccavenue_geo_zone_id'); 
-		} 
-
-		if (isset($this->request->post['ccavenue_order_status_id'])) {
-			$this->data['ccavenue_order_status_id'] = $this->request->post['ccavenue_order_status_id'];
-		} else {
-			$this->data['ccavenue_order_status_id'] = $this->config->get('ccavenue_order_status_id'); 
-		} 
-
-		$this->load->model('localisation/order_status');
-		
-		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		
 		if (isset($this->request->post['ccavenue_key'])) {
 			$this->data['ccavenue_key'] = $this->request->post['ccavenue_key'];
 		} else {
@@ -109,19 +87,41 @@ class ControllerPaymentCCAvenue extends Controller {
 			$this->data['ccavenue_gateway'] = $this->config->get('ccavenue_gateway');
 		}
 		
+		if (isset($this->request->post['ccavenue_order_status_id'])) {
+			$this->data['ccavenue_order_status_id'] = $this->request->post['ccavenue_order_status_id'];
+		} else {
+			$this->data['ccavenue_order_status_id'] = $this->config->get('ccavenue_order_status_id'); 
+		} 
+
+		$this->load->model('localisation/order_status');
+		
+		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+		
+		if (isset($this->request->post['ccavenue_geo_zone_id'])) {
+			$this->data['ccavenue_geo_zone_id'] = $this->request->post['ccavenue_geo_zone_id'];
+		} else {
+			$this->data['ccavenue_geo_zone_id'] = $this->config->get('ccavenue_geo_zone_id'); 
+		} 
+		
+		$this->load->model('localisation/geo_zone');
+										
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
+		if (isset($this->request->post['ccavenue_status'])) {
+			$this->data['ccavenue_status'] = $this->request->post['ccavenue_status'];
+		} else {
+			$this->data['ccavenue_status'] = $this->config->get('ccavenue_status');
+		}
+		
 		if (isset($this->request->post['ccavenue_sort_order'])) {
 			$this->data['ccavenue_sort_order'] = $this->request->post['ccavenue_sort_order'];
 		} else {
 			$this->data['ccavenue_sort_order'] = $this->config->get('ccavenue_sort_order');
 		}
 		
-		$this->load->model('localisation/geo_zone');
-										
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-
 		$this->id       = 'content';
 		$this->template = 'payment/ccavenue.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

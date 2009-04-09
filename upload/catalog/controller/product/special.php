@@ -85,7 +85,7 @@ class ControllerProductSpecial extends Controller {
 					'rating'  => $rating,
 					'stars'   => sprintf($this->language->get('text_stars'), $rating),
            			'thumb'   => HelperImage::resize($image, 120, 120),
-           			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'])),
+           			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 					'special' => $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax'))),
 					'href'    => $this->url->http('product/product' . $url . '&product_id=' . $result['product_id']),
        			);
@@ -159,7 +159,7 @@ class ControllerProductSpecial extends Controller {
 			
 			$this->id       = 'content';
 			$this->template = $this->config->get('config_template') . 'product/special.tpl';
-			$this->layout   = 'module/layout';
+			$this->layout   = 'common/layout';
 		
 			$this->render();			
 		} else {
@@ -171,7 +171,7 @@ class ControllerProductSpecial extends Controller {
 	  			
 			$this->id       = 'content';
 			$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
-			$this->layout   = 'module/layout';
+			$this->layout   = 'common/layout';
 		
 			$this->render();
 		}

@@ -243,7 +243,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'localisation/order_status_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
   	}
@@ -312,7 +312,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 				
 		$this->id       = 'content';
 		$this->template = 'localisation/order_status_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();	
   	}
@@ -323,7 +323,7 @@ class ControllerLocalisationOrderStatus extends Controller {
     	}
 	
     	foreach ($this->request->post['order_status'] as $language_id => $value) {
-      		if ((strlen($value['name']) < 3) || (strlen($value['name']) > 32)) {
+      		if ((strlen(utf8_decode($value['name'])) < 3) || (strlen(utf8_decode($value['name'])) > 32)) {
         		$this->error['name'][$language_id] = $this->language->get('error_name');
       		}
     	}

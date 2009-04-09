@@ -425,6 +425,7 @@ form {
 .form {
 	width: 100%;
 	border-collapse: collapse;
+	margin-bottom: 15px;
 }
 .form td {
 	padding: 5px;

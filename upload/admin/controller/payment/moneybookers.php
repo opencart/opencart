@@ -26,10 +26,10 @@ class ControllerPaymentMoneyBookers extends Controller {
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
 				
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_email'] = $this->language->get('entry_email');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -64,18 +64,12 @@ class ControllerPaymentMoneyBookers extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
 		
-		if (isset($this->request->post['moneybookers_status'])) {
-			$this->data['moneybookers_status'] = $this->request->post['moneybookers_status'];
+		if (isset($this->request->post['moneybookers_email'])) {
+			$this->data['moneybookers_email'] = $this->request->post['moneybookers_email'];
 		} else {
-			$this->data['moneybookers_status'] = $this->config->get('moneybookers_status');
+			$this->data['moneybookers_email'] = $this->config->get('moneybookers_email');
 		}
 		
-		if (isset($this->request->post['moneybookers_geo_zone_id'])) {
-			$this->data['moneybookers_geo_zone_id'] = $this->request->post['moneybookers_geo_zone_id'];
-		} else {
-			$this->data['moneybookers_geo_zone_id'] = $this->config->get('moneybookers_geo_zone_id'); 
-		} 
-
 		if (isset($this->request->post['moneybookers_order_status_id'])) {
 			$this->data['moneybookers_order_status_id'] = $this->request->post['moneybookers_order_status_id'];
 		} else {
@@ -86,10 +80,20 @@ class ControllerPaymentMoneyBookers extends Controller {
 		
 		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 		
-		if (isset($this->request->post['moneybookers_email'])) {
-			$this->data['moneybookers_email'] = $this->request->post['moneybookers_email'];
+		if (isset($this->request->post['moneybookers_geo_zone_id'])) {
+			$this->data['moneybookers_geo_zone_id'] = $this->request->post['moneybookers_geo_zone_id'];
 		} else {
-			$this->data['moneybookers_email'] = $this->config->get('moneybookers_email');
+			$this->data['moneybookers_geo_zone_id'] = $this->config->get('moneybookers_geo_zone_id'); 
+		} 	
+		
+		$this->load->model('localisation/geo_zone');
+										
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
+		if (isset($this->request->post['moneybookers_status'])) {
+			$this->data['moneybookers_status'] = $this->request->post['moneybookers_status'];
+		} else {
+			$this->data['moneybookers_status'] = $this->config->get('moneybookers_status');
 		}
 		
 		if (isset($this->request->post['moneybookers_sort_order'])) {
@@ -97,14 +101,10 @@ class ControllerPaymentMoneyBookers extends Controller {
 		} else {
 			$this->data['moneybookers_sort_order'] = $this->config->get('moneybookers_sort_order');
 		}
-		
-		$this->load->model('localisation/geo_zone');
-										
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		$this->id       = 'content';
 		$this->template = 'payment/moneybookers.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

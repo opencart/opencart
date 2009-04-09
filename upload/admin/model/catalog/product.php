@@ -65,6 +65,12 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 		
+		if (isset($data['product_related'])) {
+			foreach ($data['product_related'] as $related_id) {
+				$this->db->query("INSERT INTO product_related SET product_id = '" . (int)$product_id . "', related_id = '" . (int)$related_id . "'");
+			}
+		}
+		
 		$this->cache->delete('product');
 	}
 	
@@ -147,6 +153,14 @@ class ModelCatalogProduct extends Model {
 				$this->db->query("INSERT INTO product_to_category SET product_id = '" . (int)$product_id . "', category_id = '" . (int)$category_id . "'");
 			}		
 		}
+
+		$this->db->query("DELETE FROM product_related WHERE product_id = '" . (int)$product_id . "'");
+
+		if (isset($data['product_related'])) {
+			foreach ($data['product_related'] as $related_id) {
+				$this->db->query("INSERT INTO product_related SET product_id = '" . (int)$product_id . "', related_id = '" . (int)$related_id . "'");
+			}
+		}
 		
 		$this->cache->delete('product');
 	}
@@ -161,6 +175,7 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("DELETE FROM product_discount WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM product_special WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM product_image WHERE product_id = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM product_related WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM product_to_download WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM product_to_category WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM review WHERE product_id = '" . (int)$product_id . "'");
@@ -340,6 +355,18 @@ class ModelCatalogProduct extends Model {
 		}
 
 		return $product_category_data;
+	}
+
+	public function getProductRelated($product_id) {
+		$product_related_data = array();
+		
+		$query = $this->db->query("SELECT * FROM product_related WHERE product_id = '" . (int)$product_id . "'");
+		
+		foreach ($query->rows as $result) {
+			$product_related_data[] = $result['related_id'];
+		}
+		
+		return $product_related_data;
 	}
 	
 	public function getTotalProducts($data = array()) {

@@ -8,7 +8,7 @@
   <h1><?php echo $heading_title; ?></h1>
   <div class="buttons"><a onclick="$('#form').submit();" class="button"><span class="button_left button_save"></span><span class="button_middle"><?php echo $button_save; ?></span><span class="button_right"></span></a><a onclick="location='<?php echo $cancel; ?>';" class="button"><span class="button_left button_cancel"></span><span class="button_middle"><?php echo $button_cancel; ?></span><span class="button_right"></span></a></div>
 </div>
-<div class="tabs"><a tab="#tab_shop"><?php echo $tab_shop; ?></a><a tab="#tab_local"><?php echo $tab_local; ?></a><a tab="#tab_option"><?php echo $tab_option; ?></a><a tab="#tab_mail"><?php echo $tab_mail; ?></a><a tab="#tab_cache"><?php echo $tab_cache; ?></a></div>
+<div class="tabs"><a tab="#tab_shop"><?php echo $tab_shop; ?></a><a tab="#tab_local"><?php echo $tab_local; ?></a><a tab="#tab_option"><?php echo $tab_option; ?></a><a tab="#tab_cache"><?php echo $tab_cache; ?></a></div>
 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
   <div id="tab_shop" class="page">
     <table class="form">
@@ -26,7 +26,7 @@
           <?php if ($error_meta_description) { ?>
           <span class="error"><?php echo $error_meta_description; ?></span>
           <?php } ?></td>
-      </tr>         
+      </tr>
       <tr>
         <td><span class="required">*</span> <?php echo $entry_owner; ?></td>
         <td><input type="text" name="config_owner" value="<?php echo $config_owner; ?>" />
@@ -172,7 +172,7 @@
           <input type="radio" name="config_currency_auto" value="0" checked="checked" />
           <?php echo $text_no; ?>
           <?php } ?></td>
-      </tr>      
+      </tr>
       <tr>
         <td><?php echo $entry_tax; ?></td>
         <td><?php if ($config_tax) { ?>
@@ -299,102 +299,6 @@
             <?php } ?>
           </select></td>
       </tr>
-    </table>
-  </div>
-  <div id="tab_mail" class="page">
-    <table class="form">
-      <tr>
-        <td colspan="2"><b><?php echo $text_account; ?></b></td>
-      </tr>
-      <?php foreach ($languages as $language) { ?>
-      <tr>
-        <td width="25%"><span class="required">*</span> <?php echo $entry_account_subject; ?><br />
-          <img src="view/image/help.png" onmouseover="toolTip('<?php echo $help_account; ?>')" onmouseout="toolTip()" /></td>
-        <td><input type="text" name="config_account_subject_<?php echo $language['language_id']; ?>" value="<?php echo ${'config_account_subject_' . $language['language_id']}; ?>" />
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-          <?php if (@${'error_account_subject_' . $language['language_id']}) { ?>
-          <span class="error"><?php echo ${'error_account_subject_' . $language['language_id']}; ?></span>
-          <?php } ?></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_account_message; ?><br />
-          <img src="view/image/help.png" onmouseover="toolTip('<?php echo $help_account; ?>')" onmouseout="toolTip()" /></td>
-        <td><textarea name="config_account_message_<?php echo $language['language_id']; ?>" cols="80" rows="15"><?php echo ${'config_account_message_' . $language['language_id']}; ?></textarea>
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" /><br />
-          <?php if (@${'error_account_message_' . $language['language_id']}) { ?>
-          <span class="error"><?php echo ${'error_account_message_' . $language['language_id']}; ?></span>
-          <?php } ?></td>
-      </tr>
-      <?php } ?>
-      <tr>
-        <td colspan="2"><b><?php echo $text_forgotten; ?></b></td>
-      </tr>
-      <?php foreach ($languages as $language) { ?>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_forgotten_subject; ?><br />
-          <img src="view/image/help.png" onmouseover="toolTip('<?php echo $help_forgotten; ?>')" onmouseout="toolTip()" /></td>
-        <td><input type="text" name="config_forgotten_subject_<?php echo $language['language_id']; ?>" value="<?php echo ${'config_forgotten_subject_' . $language['language_id']}; ?>" />
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-          <?php if (@${'error_forgotten_subject_' . $language['language_id']}) { ?>
-          <span class="error"><?php echo ${'error_forgotten_subject_' . $language['language_id']}; ?></span>
-          <?php } ?></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_forgotten_message; ?><br />
-          <img src="view/image/help.png" onmouseover="toolTip('<?php echo $help_forgotten; ?>')" onmouseout="toolTip()" /></td>
-        <td><textarea name="config_forgotten_message_<?php echo $language['language_id']; ?>" cols="80" rows="15"><?php echo ${'config_forgotten_message_' . $language['language_id']}; ?></textarea>
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" /><br />
-          <?php if (@${'error_forgotten_message_' . $language['language_id']}) { ?>
-          <span class="error"><?php echo ${'error_forgotten_message_' . $language['language_id']}; ?></span>
-          <?php } ?></td>
-      </tr>
-      <?php } ?>
-      <tr>
-        <td colspan="2"><b><?php echo $text_order; ?></b></td>
-      </tr>
-      <?php foreach ($languages as $language) { ?>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_order_subject; ?><br />
-          <img src="view/image/help.png" onmouseover="toolTip('<?php echo $help_order; ?>')" onmouseout="toolTip()" /></td>
-        <td><input type="text" name="config_order_subject_<?php echo $language['language_id']; ?>" value="<?php echo ${'config_order_subject_' . $language['language_id']}; ?>" />
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-          <?php if (@${'error_order_subject_' . $language['language_id']}) { ?>
-          <span class="error"><?php echo ${'error_order_subject_' . $language['language_id']}; ?></span>
-          <?php } ?></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_order_message; ?><br />
-          <img src="view/image/help.png" onmouseover="toolTip('<?php echo $help_order; ?>')" onmouseout="toolTip()" /></td>
-        <td><textarea name="config_order_message_<?php echo $language['language_id']; ?>" cols="80" rows="15"><?php echo ${'config_order_message_' . $language['language_id']}; ?></textarea>
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" /><br />
-          <?php if (@${'error_order_message_' . $language['language_id']}) { ?>
-          <span class="error"><?php echo ${'error_order_message_' . $language['language_id']}; ?></span>
-          <?php } ?></td>
-      </tr>
-      <?php } ?>
-      <tr>
-        <td colspan="2"><b><?php echo $text_update; ?></b></td>
-      </tr>
-      <?php foreach ($languages as $language) { ?>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_update_subject; ?><br />
-          <img src="view/image/help.png" onmouseover="toolTip('<?php echo $help_update; ?>')" onmouseout="toolTip()" /></td>
-        <td><input type="text" name="config_update_subject_<?php echo $language['language_id']; ?>" value="<?php echo ${'config_update_subject_' . $language['language_id']}; ?>" />
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-          <?php if (@${'error_update_subject_' . $language['language_id']}) { ?>
-          <span class="error"><?php echo ${'error_update_subject_' . $language['language_id']}; ?></span>
-          <?php } ?></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_update_message; ?><br />
-          <img src="view/image/help.png" onmouseover="toolTip('<?php echo $help_update; ?>')" onmouseout="toolTip()" /></td>
-        <td><textarea name="config_update_message_<?php echo $language['language_id']; ?>" cols="80" rows="15"><?php echo ${'config_update_message_' . $language['language_id']}; ?></textarea>
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" /> <br />
-          <?php if (@${'error_update_message_' . $language['language_id']}) { ?>
-          <span class="error"><?php echo ${'error_update_message_' . $language['language_id']}; ?></span>
-          <?php } ?></td>
-      </tr>
-      <?php } ?>
     </table>
   </div>
   <div id="tab_cache" class="page">

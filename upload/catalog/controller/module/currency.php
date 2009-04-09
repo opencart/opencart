@@ -21,7 +21,11 @@ class ControllerModuleCurrency extends Controller {
 		
 		$this->data['action'] = $this->url->http('common/home');
 		
-		$this->data['redirect'] = $this->url->http(str_replace('route=', '', urldecode(http_build_query($this->request->get))));
+		if (!isset($this->request->get['route'])) {
+			$this->data['redirect'] = $this->url->http('common/home');
+		} else {
+			$this->data['redirect'] = $this->url->http(str_replace('route=', '', urldecode(http_build_query($this->request->get))));
+		}
 		
 		$this->data['default'] = $this->currency->getCode(); 
 		

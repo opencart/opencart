@@ -59,7 +59,7 @@ class ControllerReportViewed extends Controller {
 						
 		$this->id       = 'content'; 
 		$this->template = 'report/viewed.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		 
 		$this->render();
 	}

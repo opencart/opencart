@@ -23,7 +23,7 @@ class ControllerErrorPermission extends Controller {
 		
 		$this->id       = 'content'; 
 		$this->template = 'error/permission.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		    
 		$this->render();
   	}

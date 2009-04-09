@@ -28,15 +28,15 @@ class ControllerPaymentAuthorizeNet extends Controller {
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');
 
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
 		$this->data['entry_key'] = $this->language->get('entry_key');
 		$this->data['entry_callback'] = $this->language->get('entry_callback');
 		$this->data['entry_test'] = $this->language->get('entry_test');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
+		
 		$this->data['help_callback'] = $this->language->get('help_callback');
 
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -72,28 +72,6 @@ class ControllerPaymentAuthorizeNet extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
 		
-		if (isset($this->request->post['authorizenet_status'])) {
-			$this->data['authorizenet_status'] = $this->request->post['authorizenet_status'];
-		} else {
-			$this->data['authorizenet_status'] = $this->config->get('authorizenet_status');
-		}
-		
-		if (isset($this->request->post['authorizenet_geo_zone_id'])) {
-			$this->data['authorizenet_geo_zone_id'] = $this->request->post['authorizenet_geo_zone_id'];
-		} else {
-			$this->data['authorizenet_geo_zone_id'] = $this->config->get('authorizenet_geo_zone_id'); 
-		} 
-
-		if (isset($this->request->post['authorizenet_order_status_id'])) {
-			$this->data['authorizenet_order_status_id'] = $this->request->post['authorizenet_order_status_id'];
-		} else {
-			$this->data['authorizenet_order_status_id'] = $this->config->get('authorizenet_order_status_id'); 
-		} 
-
-		$this->load->model('localisation/order_status');
-		
-		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		
 		if (isset($this->request->post['authorizenet_merchant'])) {
 			$this->data['authorizenet_merchant'] = $this->request->post['authorizenet_merchant'];
 		} else {
@@ -106,12 +84,38 @@ class ControllerPaymentAuthorizeNet extends Controller {
 			$this->data['authorizenet_key'] = $this->config->get('authorizenet_key');
 		}
 
-		$this->data['callback'] = HTTP_CATALOG . 'index.php?route=payment/authorizenet/callback';
-
 		if (isset($this->request->post['authorizenet_test'])) {
 			$this->data['authorizenet_test'] = $this->request->post['authorizenet_test'];
 		} else {
 			$this->data['authorizenet_test'] = $this->config->get('authorizenet_test');
+		}
+		
+		$this->data['callback'] = HTTP_CATALOG . 'index.php?route=payment/authorizenet/callback';
+		
+		if (isset($this->request->post['authorizenet_order_status_id'])) {
+			$this->data['authorizenet_order_status_id'] = $this->request->post['authorizenet_order_status_id'];
+		} else {
+			$this->data['authorizenet_order_status_id'] = $this->config->get('authorizenet_order_status_id'); 
+		} 
+
+		$this->load->model('localisation/order_status');
+		
+		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();	
+		
+		if (isset($this->request->post['authorizenet_geo_zone_id'])) {
+			$this->data['authorizenet_geo_zone_id'] = $this->request->post['authorizenet_geo_zone_id'];
+		} else {
+			$this->data['authorizenet_geo_zone_id'] = $this->config->get('authorizenet_geo_zone_id'); 
+		} 
+		
+		$this->load->model('localisation/geo_zone');
+										
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
+		if (isset($this->request->post['authorizenet_status'])) {
+			$this->data['authorizenet_status'] = $this->request->post['authorizenet_status'];
+		} else {
+			$this->data['authorizenet_status'] = $this->config->get('authorizenet_status');
 		}
 		
 		if (isset($this->request->post['authorizenet_sort_order'])) {
@@ -119,14 +123,10 @@ class ControllerPaymentAuthorizeNet extends Controller {
 		} else {
 			$this->data['authorizenet_sort_order'] = $this->config->get('authorizenet_sort_order');
 		}
-		
-		$this->load->model('localisation/geo_zone');
-										
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		$this->id       = 'content';
 		$this->template = 'payment/authorizenet.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

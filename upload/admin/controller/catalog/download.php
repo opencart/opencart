@@ -246,7 +246,7 @@ class ControllerCatalogDownload extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'catalog/download_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
   	}
@@ -329,7 +329,7 @@ class ControllerCatalogDownload extends Controller {
  
 		$this->id       = 'content';
 		$this->template = 'catalog/download_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();		
   	}
@@ -340,13 +340,13 @@ class ControllerCatalogDownload extends Controller {
     	}
 	
     	foreach ($this->request->post['download_description'] as $language_id => $value) {
-      		if ((strlen($value['name']) < 3) || (strlen($value['name']) > 64)) {
+      		if ((strlen(utf8_decode($value['name'])) < 3) || (strlen(utf8_decode($value['name'])) > 64)) {
         		$this->error['name'][$language_id] = $this->language->get('error_name');
       		}
     	}	
 
 		if (is_uploaded_file($this->request->files['download']['tmp_name'])) {
-	  		if ((strlen($this->request->files['download']['name']) < 3) || (strlen($this->request->files['download']['name']) > 128)) {
+	  		if ((strlen(utf8_decode($this->request->files['download']['name'])) < 3) || (strlen(utf8_decode($this->request->files['download']['name'])) > 128)) {
         		$this->error['download'] = $this->language->get('error_filename');
 	  		}
 	    	

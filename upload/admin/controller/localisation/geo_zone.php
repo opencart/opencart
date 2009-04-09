@@ -246,7 +246,7 @@ class ControllerLocalisationGeoZone extends Controller {
 				
 		$this->id       = 'content';
 		$this->template = 'localisation/geo_zone_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
 	}
@@ -336,7 +336,7 @@ class ControllerLocalisationGeoZone extends Controller {
 		
 		$this->id       = 'content';
 		$this->template = 'localisation/geo_zone_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();
 	}
@@ -346,11 +346,11 @@ class ControllerLocalisationGeoZone extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((strlen($this->request->post['name']) < 3) || (strlen($this->request->post['name']) > 32)) {
+		if ((strlen(utf8_decode($this->request->post['name'])) < 3) || (strlen(utf8_decode($this->request->post['name'])) > 32)) {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		if ((strlen($this->request->post['description']) < 3) || (strlen($this->request->post['description']) > 255)) {
+		if ((strlen(utf8_decode($this->request->post['description'])) < 3) || (strlen(utf8_decode($this->request->post['description'])) > 255)) {
 			$this->error['description'] = $this->language->get('error_description');
 		}
 

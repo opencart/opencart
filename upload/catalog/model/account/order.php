@@ -1,13 +1,13 @@
 <?php
 class ModelAccountOrder extends Model {
 	public function getOrder($order_id) {
-		$query = $this->db->query("SELECT * FROM `order` WHERE order_id = '" . (int)$order_id . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND confirm = '1'");
+		$query = $this->db->query("SELECT * FROM `order` WHERE order_id = '" . (int)$order_id . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND order_status_id > '0'");
 	
 		return $query->row;	
 	}
 	 
 	public function getOrders($start = 1, $limit = 20) {
-		$query = $this->db->query("SELECT o.order_id, o.firstname, o.lastname, os.name as status, o.date_added, o.total, o.currency, o.value FROM `order` o LEFT JOIN order_status os ON (o.order_status_id = os.order_status_id) WHERE customer_id = '" . (int)$this->customer->getId() . "' AND o.confirm = '1' AND os.language_id = '" . (int)$this->language->getId() . "' ORDER BY o.order_id DESC LIMIT " . (int)$start . "," . (int)$limit);	
+		$query = $this->db->query("SELECT o.order_id, o.firstname, o.lastname, os.name as status, o.date_added, o.total, o.currency, o.value FROM `order` o LEFT JOIN order_status os ON (o.order_status_id = os.order_status_id) WHERE customer_id = '" . (int)$this->customer->getId() . "' AND o.order_status_id > '0' AND os.language_id = '" . (int)$this->language->getId() . "' ORDER BY o.order_id DESC LIMIT " . (int)$start . "," . (int)$limit);	
 	
 		return $query->rows;
 	}
@@ -43,7 +43,7 @@ class ModelAccountOrder extends Model {
 	}	
 
 	public function getTotalOrders() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE customer_id = '" . (int)$this->customer->getId() . "' AND confirm = '1'");
+      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE customer_id = '" . (int)$this->customer->getId() . "' AND order_status_id > '0'");
 		
 		return $query->row['total'];
 	}

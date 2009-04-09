@@ -31,9 +31,6 @@ class ControllerPaymentHSBC extends Controller {
 		$this->data['text_declined'] = $this->language->get('text_declined');
 		$this->data['text_off'] = $this->language->get('text_off');
 		
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_client'] = $this->language->get('entry_client');
 		$this->data['entry_user'] = $this->language->get('entry_user');
 		$this->data['entry_password'] = $this->language->get('entry_password');
@@ -41,6 +38,9 @@ class ControllerPaymentHSBC extends Controller {
 		$this->data['entry_pas'] = $this->language->get('entry_pas');
 		$this->data['entry_avs'] = $this->language->get('entry_avs');
 		$this->data['entry_test'] = $this->language->get('entry_test');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -78,28 +78,6 @@ class ControllerPaymentHSBC extends Controller {
 		$this->data['action'] = $this->url->https('payment/hsbc');
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
-		
-		if (isset($this->request->post['hsbc_status'])) {
-			$this->data['hsbc_status'] = $this->request->post['hsbc_status'];
-		} else {
-			$this->data['hsbc_status'] = $this->config->get('hsbc_status');
-		}
-		
-		if (isset($this->request->post['hsbc_geo_zone_id'])) {
-			$this->data['hsbc_geo_zone_id'] = $this->request->post['hsbc_geo_zone_id'];
-		} else {
-			$this->data['hsbc_geo_zone_id'] = $this->config->get('hsbc_geo_zone_id'); 
-		} 
-
-		if (isset($this->request->post['hsbc_order_status_id'])) {
-			$this->data['hsbc_order_status_id'] = $this->request->post['hsbc_order_status_id'];
-		} else {
-			$this->data['hsbc_order_status_id'] = $this->config->get('hsbc_order_status_id'); 
-		} 
-
-		$this->load->model('localisation/order_status');
-		
-		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 		
 		if (isset($this->request->post['hsbc_client'])) {
 			$this->data['hsbc_client'] = $this->request->post['hsbc_client'];
@@ -143,19 +121,41 @@ class ControllerPaymentHSBC extends Controller {
 			$this->data['hsbc_test'] = $this->config->get('hsbc_test');
 		}
 		
+		if (isset($this->request->post['hsbc_order_status_id'])) {
+			$this->data['hsbc_order_status_id'] = $this->request->post['hsbc_order_status_id'];
+		} else {
+			$this->data['hsbc_order_status_id'] = $this->config->get('hsbc_order_status_id'); 
+		} 
+		
+		$this->load->model('localisation/order_status');
+		
+		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+		
+		if (isset($this->request->post['hsbc_geo_zone_id'])) {
+			$this->data['hsbc_geo_zone_id'] = $this->request->post['hsbc_geo_zone_id'];
+		} else {
+			$this->data['hsbc_geo_zone_id'] = $this->config->get('hsbc_geo_zone_id'); 
+		} 
+		
+		$this->load->model('localisation/geo_zone');
+										
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
+		if (isset($this->request->post['hsbc_status'])) {
+			$this->data['hsbc_status'] = $this->request->post['hsbc_status'];
+		} else {
+			$this->data['hsbc_status'] = $this->config->get('hsbc_status');
+		}
+		
 		if (isset($this->request->post['hsbc_sort_order'])) {
 			$this->data['hsbc_sort_order'] = $this->request->post['hsbc_sort_order'];
 		} else {
 			$this->data['hsbc_sort_order'] = $this->config->get('hsbc_sort_order');
 		}
-		
-		$this->load->model('localisation/geo_zone');
-										
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		$this->id       = 'content';
 		$this->template = 'payment/hsbc.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

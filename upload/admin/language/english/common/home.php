@@ -3,10 +3,10 @@
 $_['heading_title']       = 'Administration';
 
 // Text
-$_['text_day']            = 'Last 24 Hours';
-$_['text_week']           = 'Last 7 Days';
-$_['text_month']          = 'Last Month';
-$_['text_year']           = 'Last Year';
+$_['text_day']            = 'Today';
+$_['text_week']           = 'This Week';
+$_['text_month']          = 'This Month';
+$_['text_year']           = 'This Year';
 $_['text_order']          = 'Total Orders';
 $_['text_customer']       = 'Total Customers';
 

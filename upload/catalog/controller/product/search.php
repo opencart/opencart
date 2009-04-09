@@ -118,7 +118,7 @@ class ControllerProductSearch extends Controller {
 						'rating'  => $rating,
 						'stars'   => sprintf($this->language->get('text_stars'), $rating),
             			'thumb'   => HelperImage::resize($image, 120, 120),
-            			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'])),
+            			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 						'special' => $special,
 						'href'    => $this->url->http('product/product&keyword=' . $this->request->get['keyword'] . $url . '&product_id=' . $result['product_id']),
           			);
@@ -210,7 +210,7 @@ class ControllerProductSearch extends Controller {
   
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'product/search.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();
   	}

@@ -65,13 +65,13 @@ class ControllerAccountPassword extends Controller {
 
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'account/password.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();				
   	}
   
   	private function validate() {
-    	if ((strlen($this->request->post['password']) < 4) || (strlen($this->request->post['password']) > 20)) {
+    	if ((strlen(utf8_decode($this->request->post['password'])) < 4) || (strlen(utf8_decode($this->request->post['password'])) > 20)) {
       		$this->error['password'] = $this->language->get('error_password');
     	}
 

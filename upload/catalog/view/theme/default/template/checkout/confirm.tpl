@@ -72,14 +72,9 @@
       <br />
     </div>
   </div>
-  <?php if ($comment) { ?>
-  <b style="margin-bottom: 3px; display: block;"><?php echo $text_your_comments; ?></b>
-  <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;"><?php echo $comment; ?></div>
-  <?php } ?>
   <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="coupon">
-    
-      <table width="100%">
+      <table width="100%" style="border-collapse: collapse;">
         <tr>
           <td><?php echo $entry_coupon; ?></td>
           <td class="right" width="1"><input type="text" name="coupon" value="<?php echo $coupon; ?>" /></td>
@@ -88,5 +83,9 @@
       </table>
     </form>
   </div>
-  <?php echo $payment; ?> </div>
+  <?php if ($comment) { ?>
+  <b style="margin-bottom: 3px; display: block;"><?php echo $text_comment; ?></b>
+  <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;"><?php echo $comment; ?></div>
+  <?php } ?>
+  <?php echo $payment; ?></div>
 <div class="bottom"></div>

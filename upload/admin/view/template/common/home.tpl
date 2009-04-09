@@ -11,7 +11,7 @@
       <option value="year"><?php echo $text_year; ?></option>
     </select>
   </div>
-  <div id="report" style="width: 100%; height: 350px;"></div>
+  <div id="report"></div>
 </div>
 <div id="tab_order" class="page">
   <table class="list">
@@ -83,32 +83,15 @@
     </tbody>
   </table>
 </div>
-<!--[if IE]><script type="text/javascript" src="view/javascript/jquery/flot/excanvas.js"></script><![endif]-->
-<script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script>
 <script type="text/javascript"><!--
 function getSalesChart(range) {
 	$.ajax({
 		type: 'GET',
 		url: 'index.php?route=common/home/report&range=' + range,
-		dataType: 'json',
+		dataType: 'text',
 		async: false,
-		success: function(json) {
-			var option = {	
-				shadowSize: 0,
-				lines: { 
-					show: true,
-					fill: true,
-					lineWidth: 1
-				},
-				grid: {
-					backgroundColor: '#FFFFFF'
-				},	
-				xaxis: {
-            		ticks: json.xaxis
-				}
-			}
-
-			$.plot($('#report'), [json.order, json.customer], option);
+		success: function(data) {
+			$('#report').html('<img src="' + data + '" style="border: 1px solid #DDDDDD; background: #FFF; padding: 10px;" />');
 		}
 	});
 }

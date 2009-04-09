@@ -148,7 +148,7 @@ class ControllerReportSale extends Controller {
 
 		$this->id       = 'content'; 
 		$this->template = 'report/sale.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();
 	}

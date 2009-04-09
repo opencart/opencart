@@ -70,7 +70,7 @@ class ControllerTotalCoupon extends Controller {
 																				
 		$this->id       = 'content';
 		$this->template = 'total/coupon.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

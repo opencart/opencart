@@ -27,12 +27,12 @@ class ControllerPayment2Checkout extends Controller {
 		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');
-				
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
+		
 		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_test'] = $this->language->get('entry_test');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -67,28 +67,6 @@ class ControllerPayment2Checkout extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
 		
-		if (isset($this->request->post['2checkout_status'])) {
-			$this->data['2checkout_status'] = $this->request->post['2checkout_status'];
-		} else {
-			$this->data['2checkout_status'] = $this->config->get('2checkout_status');
-		}
-		
-		if (isset($this->request->post['2checkout_geo_zone_id'])) {
-			$this->data['2checkout_geo_zone_id'] = $this->request->post['2checkout_geo_zone_id'];
-		} else {
-			$this->data['2checkout_geo_zone_id'] = $this->config->get('2checkout_geo_zone_id'); 
-		} 
-
-		if (isset($this->request->post['2checkout_order_status_id'])) {
-			$this->data['2checkout_order_status_id'] = $this->request->post['2checkout_order_status_id'];
-		} else {
-			$this->data['2checkout_order_status_id'] = $this->config->get('2checkout_order_status_id'); 
-		} 
-
-		$this->load->model('localisation/order_status');
-		
-		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		
 		if (isset($this->request->post['2checkout_email'])) {
 			$this->data['2checkout_email'] = $this->request->post['2checkout_email'];
 		} else {
@@ -101,19 +79,41 @@ class ControllerPayment2Checkout extends Controller {
 			$this->data['2checkout_test'] = $this->config->get('2checkout_test');
 		}
 		
-		if (isset($this->request->post['2checkout_sort_order'])) {
-			$this->data['2checkout_sort_order'] = $this->request->post['2checkout_sort_order'];
+		if (isset($this->request->post['2checkout_order_status_id'])) {
+			$this->data['2checkout_order_status_id'] = $this->request->post['2checkout_order_status_id'];
 		} else {
-			$this->data['2checkout_sort_order'] = $this->config->get('2checkout_sort_order');
+			$this->data['2checkout_order_status_id'] = $this->config->get('2checkout_order_status_id'); 
+		}
+		
+		$this->load->model('localisation/order_status');
+		
+		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+		
+		if (isset($this->request->post['2checkout_geo_zone_id'])) {
+			$this->data['2checkout_geo_zone_id'] = $this->request->post['2checkout_geo_zone_id'];
+		} else {
+			$this->data['2checkout_geo_zone_id'] = $this->config->get('2checkout_geo_zone_id'); 
 		}
 		
 		$this->load->model('localisation/geo_zone');
 										
 		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
+		if (isset($this->request->post['2checkout_status'])) {
+			$this->data['2checkout_status'] = $this->request->post['2checkout_status'];
+		} else {
+			$this->data['2checkout_status'] = $this->config->get('2checkout_status');
+		}
+		
+		if (isset($this->request->post['2checkout_sort_order'])) {
+			$this->data['2checkout_sort_order'] = $this->request->post['2checkout_sort_order'];
+		} else {
+			$this->data['2checkout_sort_order'] = $this->config->get('2checkout_sort_order');
+		}
 
 		$this->id       = 'content';
 		$this->template = 'payment/2checkout.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

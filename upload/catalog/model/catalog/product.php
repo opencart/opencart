@@ -140,7 +140,7 @@ class ModelCatalogProduct extends Model {
 		return $product;
 	}
 
-	public function getPopularProducts($limit) {
+	public function getBestSellerProducts($limit) {
 		$product = $this->cache->get('product.popular.' . $this->language->getId() . '.' . $limit);
 
 		if (!$product) { 
@@ -161,31 +161,29 @@ class ModelCatalogProduct extends Model {
 	public function getProductOptions($product_id) {
 		$product_option_data = array();
 		
-		$product_option = $this->db->query("SELECT * FROM product_option WHERE product_id = '" . (int)$product_id . "' ORDER BY sort_order");
+		$product_option_query = $this->db->query("SELECT * FROM product_option WHERE product_id = '" . (int)$product_id . "' ORDER BY sort_order");
 		
-		foreach ($product_option->rows as $product_option) {
+		foreach ($product_option_query->rows as $product_option) {
 			$product_option_value_data = array();
 			
-			$product_option_value = $this->db->query("SELECT * FROM product_option_value WHERE product_option_id = '" . (int)$product_option['product_option_id'] . "' ORDER BY sort_order");
+			$product_option_value_query = $this->db->query("SELECT * FROM product_option_value WHERE product_option_id = '" . (int)$product_option['product_option_id'] . "' ORDER BY sort_order");
 			
-			foreach ($product_option_value->rows as $product_option_value) {
-				$product_option_value_description = $this->db->query("SELECT * FROM product_option_value_description WHERE product_option_value_id = '" . (int)$product_option_value['product_option_value_id'] . "' AND language_id = '" . (int)$this->language->getId() . "'");
+			foreach ($product_option_value_query->rows as $product_option_value) {
+				$product_option_value_description_query = $this->db->query("SELECT * FROM product_option_value_description WHERE product_option_value_id = '" . (int)$product_option_value['product_option_value_id'] . "' AND language_id = '" . (int)$this->language->getId() . "'");
 			
 				$product_option_value_data[] = array(
 					'product_option_value_id' => $product_option_value['product_option_value_id'],
-					'name'                    => $product_option_value_description->row['name'],
+					'name'                    => $product_option_value_description_query->row['name'],
          			'price'                   => $product_option_value['price'],
          			'prefix'                  => $product_option_value['prefix']
 				);
 			}
-			
-			$product_option_description = array();
-			
-			$product_option_description = $this->db->query("SELECT * FROM product_option_description WHERE product_option_id = '" . (int)$product_option['product_option_id'] . "' AND language_id = '" . (int)$this->language->getId() . "'");
+						
+			$product_option_description_query = $this->db->query("SELECT * FROM product_option_description WHERE product_option_id = '" . (int)$product_option['product_option_id'] . "' AND language_id = '" . (int)$this->language->getId() . "'");
 						
         	$product_option_data[] = array(
         		'product_option_id' => $product_option['product_option_id'],
-				'name'              => $product_option_description->row['name'],
+				'name'              => $product_option_description_query->row['name'],
 				'option_value'      => $product_option_value_data,
 				'sort_order'        => $product_option['sort_order']
         	);
@@ -237,11 +235,17 @@ class ModelCatalogProduct extends Model {
 		
 		return $query->rows;
 	}	
-	
+
 	public function getTotalProductSpecials() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM product_special ps LEFT JOIN product p ON (ps.product_id = p.product_id) WHERE p.status = '1' AND ps.date_start < NOW() AND ps.date_end > NOW()");
 		
 		return $query->row['total'];
+	}	
+	
+	public function getProductRelated($product_id) {
+		$query = $this->db->query("SELECT *, pd.name AS name, p.image, m.name AS manufacturer, ss.name AS stock, (SELECT AVG(r.rating) FROM review r WHERE p.product_id = r.product_id GROUP BY r.product_id) AS rating FROM product_related pr LEFT JOIN product p ON (pr.related_id = p.product_id) LEFT JOIN product_description pd ON (p.product_id = pd.product_id) LEFT JOIN manufacturer m ON (p.manufacturer_id = m.manufacturer_id) LEFT JOIN stock_status ss ON (p.stock_status_id = ss.stock_status_id) LEFT JOIN product_to_category p2c ON (p.product_id = p2c.product_id) WHERE pr.product_id = '" . (int)$product_id . "' AND p.status = '1' AND p.date_available <= NOW() AND pd.language_id = '" . (int)$this->language->getId() . "' AND ss.language_id = '" . (int)$this->language->getId() . "' ORDER BY pd.name ASC");
+		
+		return $query->rows;
 	}	
 }
 ?>

@@ -252,7 +252,7 @@ class ControllerLocalisationCurrency extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'localisation/currency_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();
 	}
@@ -364,7 +364,7 @@ class ControllerLocalisationCurrency extends Controller {
 		
 		$this->id       = 'content';
 		$this->template = 'localisation/currency_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();
 	}
@@ -374,11 +374,11 @@ class ControllerLocalisationCurrency extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((strlen($this->request->post['title']) < 3) || (strlen($this->request->post['title']) > 32)) {
+		if ((strlen(utf8_decode($this->request->post['title'])) < 3) || (strlen(utf8_decode($this->request->post['title'])) > 32)) {
 			$this->error['title'] = $this->language->get('error_title');
 		}
 
-		if (strlen($this->request->post['code']) != 3) {
+		if (strlen(utf8_decode($this->request->post['code'])) != 3) {
 			$this->error['code'] = $this->language->get('error_code');
 		}
 

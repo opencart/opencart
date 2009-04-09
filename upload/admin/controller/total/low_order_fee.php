@@ -84,7 +84,7 @@ class ControllerTotalLowOrderFee extends Controller {
 																				
 		$this->id       = 'content';
 		$this->template = 'total/low_order_fee.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

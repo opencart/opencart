@@ -243,7 +243,7 @@ class ControllerUserUserGroup extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'user/user_group_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
  	}
@@ -311,7 +311,7 @@ class ControllerUserUserGroup extends Controller {
 		
 		$ignore = array(
 			'common/home',
-			'module/layout',
+			'common/layout',
 			'common/login',
 			'common/logout',
 			'common/permission',
@@ -352,7 +352,7 @@ class ControllerUserUserGroup extends Controller {
 			
 		$this->id       = 'content';
 		$this->template = 'user/user_group_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();
 	}
@@ -362,7 +362,7 @@ class ControllerUserUserGroup extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((strlen($this->request->post['name']) < 3) || (strlen($this->request->post['name']) > 64)) {
+		if ((strlen(utf8_decode($this->request->post['name'])) < 3) || (strlen(utf8_decode($this->request->post['name'])) > 64)) {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 

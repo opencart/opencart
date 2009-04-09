@@ -136,9 +136,8 @@ class ControllerCheckoutConfirm extends Controller {
 				
 		$data['products'] = $product_data;
 		$data['totals'] = $total_data;
-		$data['comment'] = @$this->session->data['comment'];
+		$data['comment'] = $this->session->data['comment'];
 		$data['total'] = $total;
-		$data['order_status_id'] = $this->config->get('config_order_status_id');
 		$data['language_id'] = $this->language->getId();
 		$data['currency_id'] = $this->currency->getId();
 		$data['currency'] = $this->currency->getCode();
@@ -187,7 +186,7 @@ class ControllerCheckoutConfirm extends Controller {
     	$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
     	$this->data['text_payment_address'] = $this->language->get('text_payment_address');
     	$this->data['text_payment_method'] = $this->language->get('text_payment_method');
-    	$this->data['text_your_comments'] = $this->language->get('text_your_comments');
+    	$this->data['text_comment'] = $this->language->get('text_comment');
     	$this->data['text_change'] = $this->language->get('text_change');
     	
 		$this->data['column_product'] = $this->language->get('column_product');
@@ -326,11 +325,11 @@ class ControllerCheckoutConfirm extends Controller {
 		
 		$this->data['totals'] = $total_data;
 	
-		$this->data['comment'] = $this->session->data['comment'];
+		$this->data['comment'] = nl2br($this->session->data['comment']);
     
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'checkout/confirm.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		$this->children = array('payment/' . $this->session->data['payment_method']['id']);
 		
 		$this->render();

@@ -20,6 +20,7 @@ $_['text_model']            = 'Model';
 $_['text_quantity']         = 'Quantity';
 $_['text_price']            = 'Unit Price';
 $_['text_total']            = 'Total';
+$_['text_comment']          = 'Order Comments';
 $_['text_error']            = 'The invoice you requested could not be found!';
 
 // Column

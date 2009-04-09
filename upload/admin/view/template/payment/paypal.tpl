@@ -18,13 +18,29 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><span class="required">*</span> <?php echo $entry_encryption; ?></td>
-        <td><div class="help"><?php echo $help_encryption; ?></div>
-          <input type="text" name="paypal_encryption" value="<?php echo $paypal_encryption; ?>" />
+        <td><span class="required">*</span> <?php echo $entry_encryption; ?><br />
+          <span class="help"><?php echo $help_encryption; ?></span></td>
+        <td><input type="text" name="paypal_encryption" value="<?php echo $paypal_encryption; ?>" />
           <br />
           <?php if ($error_encryption) { ?>
           <span class="error"><?php echo $error_encryption; ?></span>
           <?php } ?></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_callback; ?><br />
+          <span class="help"><?php echo $help_callback; ?></span></td>
+        <td><select name="paypal_callback">
+            <?php if (!$paypal_confirm) { ?>
+            <option value="0" selected="selected"><?php echo $text_checkout; ?></option>
+            <?php } else { ?>
+            <option value="0"><?php echo $text_checkout; ?></option>
+            <?php } ?>
+            <?php if ($paypal_confirm) { ?>
+            <option value="1" selected="selected"><?php echo $text_callback; ?></option>
+            <?php } else { ?>
+            <option value="1"><?php echo $text_callback; ?></option>
+            <?php } ?>
+          </select></td>
       </tr>
       <tr>
         <td><?php echo $entry_test; ?></td>

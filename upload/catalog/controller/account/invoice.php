@@ -58,6 +58,7 @@ class ControllerAccountInvoice extends Controller {
       		$this->data['text_quantity'] = $this->language->get('text_quantity');
       		$this->data['text_price'] = $this->language->get('text_price');
       		$this->data['text_total'] = $this->language->get('text_total');
+			$this->data['text_comment'] = $this->language->get('text_comment');
 
       		$this->data['column_date_added'] = $this->language->get('column_date_added');
       		$this->data['column_status'] = $this->language->get('column_status');
@@ -166,8 +167,10 @@ class ControllerAccountInvoice extends Controller {
       		}
 
       		$this->data['totals'] = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
-
-      		$this->data['historys'] = array();
+			
+			$this->data['comment'] = $order_info['comment'];
+      		
+			$this->data['historys'] = array();
 
 			$results = $this->model_account_order->getOrderHistorys($this->request->get['order_id']);
 
@@ -175,7 +178,7 @@ class ControllerAccountInvoice extends Controller {
         		$this->data['historys'][] = array(
           			'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
           			'status'     => $result['status'],
-          			'comment'    => $result['comment']
+          			'comment'    => nl2br($result['comment'])
         		);
       		}
 
@@ -183,7 +186,7 @@ class ControllerAccountInvoice extends Controller {
 
 			$this->id       = 'content';
 			$this->template = $this->config->get('config_template') . 'account/invoice.tpl';
-			$this->layout   = 'module/layout';
+			$this->layout   = 'common/layout';
 		
 			$this->render();		
     	} else {
@@ -197,7 +200,7 @@ class ControllerAccountInvoice extends Controller {
       			
 			$this->id       = 'content';
 			$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
-			$this->layout   = 'module/layout';
+			$this->layout   = 'common/layout';
 		
 			$this->render();				
     	}

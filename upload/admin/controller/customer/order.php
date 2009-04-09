@@ -338,7 +338,7 @@ class ControllerCustomerOrder extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'customer/order_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
   	}
@@ -362,6 +362,7 @@ class ControllerCustomerOrder extends Controller {
     	$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
     	$this->data['text_payment_address'] = $this->language->get('text_payment_address');
     	$this->data['text_payment_method'] = $this->language->get('text_payment_method');
+		$this->data['text_order_comment'] = $this->language->get('text_order_comment');
 		$this->data['text_comment'] = $this->language->get('text_comment');
 		$this->data['text_status'] = $this->language->get('text_status');
 		$this->data['text_notify'] = $this->language->get('text_notify');
@@ -446,6 +447,7 @@ class ControllerCustomerOrder extends Controller {
 		$this->data['email'] = $order_info['email'];
 		$this->data['telephone'] = $order_info['telephone'];
 		$this->data['fax'] = $order_info['fax'];
+		$this->data['order_comment'] = nl2br($order_info['comment']);
 
 		if ($order_info['shipping_address_format']) {
       		$format = $order_info['shipping_address_format'];
@@ -552,7 +554,7 @@ class ControllerCustomerOrder extends Controller {
       		$this->data['historys'][] = array(
         		'date_added' => date('d/m/Y', strtotime($result['date_added'])),
         		'status'     => $result['status'],
-        		'comment'    => $result['comment'],
+        		'comment'    => nl2br($result['comment']),
         		'notify'     => $result['notify'] ? $this->language->get('text_yes') : $this->language->get('text_no')
       		);
     	}
@@ -584,7 +586,7 @@ class ControllerCustomerOrder extends Controller {
 	
 		$this->id       = 'content';
 		$this->template = 'customer/order_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();		
   	}

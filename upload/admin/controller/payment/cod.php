@@ -24,9 +24,9 @@ class ControllerPaymentCod extends Controller {
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
 				
-		$this->data['entry_status'] = $this->language->get('entry_status');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -60,18 +60,6 @@ class ControllerPaymentCod extends Controller {
 
 		$this->data['cancel'] = $this->url->https('extension/payment');	
 		
-		if (isset($this->request->post['cod_status'])) {
-			$this->data['cod_status'] = $this->request->post['cod_status'];
-		} else {
-			$this->data['cod_status'] = $this->config->get('cod_status');
-		}
-		
-		if (isset($this->request->post['cod_geo_zone_id'])) {
-			$this->data['cod_geo_zone_id'] = $this->request->post['cod_geo_zone_id'];
-		} else {
-			$this->data['cod_geo_zone_id'] = $this->config->get('cod_geo_zone_id'); 
-		} 
-		
 		if (isset($this->request->post['cod_order_status_id'])) {
 			$this->data['cod_order_status_id'] = $this->request->post['cod_order_status_id'];
 		} else {
@@ -82,19 +70,31 @@ class ControllerPaymentCod extends Controller {
 		
 		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 		
+		if (isset($this->request->post['cod_geo_zone_id'])) {
+			$this->data['cod_geo_zone_id'] = $this->request->post['cod_geo_zone_id'];
+		} else {
+			$this->data['cod_geo_zone_id'] = $this->config->get('cod_geo_zone_id'); 
+		} 
+		
+		$this->load->model('localisation/geo_zone');						
+		
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
+		if (isset($this->request->post['cod_status'])) {
+			$this->data['cod_status'] = $this->request->post['cod_status'];
+		} else {
+			$this->data['cod_status'] = $this->config->get('cod_status');
+		}
+		
 		if (isset($this->request->post['cod_sort_order'])) {
 			$this->data['cod_sort_order'] = $this->request->post['cod_sort_order'];
 		} else {
 			$this->data['cod_sort_order'] = $this->config->get('cod_sort_order');
 		}
-		
-		$this->load->model('localisation/geo_zone');						
-		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 								
 		$this->id       = 'content';
 		$this->template = 'payment/cod.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

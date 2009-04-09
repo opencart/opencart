@@ -28,6 +28,14 @@ $_['entry_newsletter']     = 'Subscribe:';
 $_['entry_password']       = 'Password:';
 $_['entry_confirm']        = 'Password Confirm:';
 
+// Mail
+$_['mail_subject']         = '%s - Thank you for registering';
+$_['mail_line_1']          = 'Welcome and thank you for registering at %s!';
+$_['mail_line_2']          = 'Your account has now been created and you can log in by using your email address and password by visiting our website or at the following URL:';
+$_['mail_line_3']          = 'Upon logging in, you will be able to access other services including reviewing past orders, printing invoices and editing your account information.';
+$_['mail_line_4']          = 'Thanks,';
+$_['mail_line_5']          = 'Your Store';
+
 // Error
 $_['error_exists']         = 'Error: E-Mail Address is already registered!';
 $_['error_firstname']      = 'First Name must be greater than 3 and less than 32 characters!';

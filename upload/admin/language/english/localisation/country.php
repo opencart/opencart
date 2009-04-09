@@ -19,7 +19,7 @@ $_['entry_address_format']   = 'Address Format:';
 
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify countries!';
-$_['error_name']             = 'Country Name must be greater than 3 and less than 32 characters!';
+$_['error_name']             = 'Country Name must be greater than 3 and less than 128 characters!';
 $_['error_default']          = 'Warning: This Country cannot be deleted as it is currently assigned as the default store country!';
 $_['error_address']          = 'Warning: This Country cannot be deleted as it is currently assigned to %s address book entries!';
 $_['error_zone']             = 'Warning: This Country cannot be deleted as it is currently assigned to %s zones!';

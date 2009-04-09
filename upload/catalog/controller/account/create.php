@@ -17,21 +17,15 @@ class ControllerAccountCreate extends Controller {
 			$this->model_account_customer->addCustomer($this->request->post);
 			
 			$this->customer->login($this->request->post['email'], $this->request->post['password']);
-    		
-			$find = array(
-	  			'{firstname}',
-	  			'{store}',
-	  			'{login}'
-			);
 	
-			$replace = array(
-	  			'firstname' => $this->request->post['firstname'],
-	  			'store'     => $this->config->get('config_store'),
-	  			'login'     => $this->url->https('account/login')
-			);
+			$subject = sprintf($this->language->get('mail_subject'), $this->config->get('config_store'));
 			
-			$subject = str_replace($find, $replace, $this->config->get('config_account_subject_' . $this->language->getId()));
-			$message = str_replace($find, $replace, $this->config->get('config_account_message_' . $this->language->getId()));
+			$message  = sprintf($this->language->get('mail_line_1'), $this->config->get('config_store')) . "\n\n";
+			$message .= $this->language->get('mail_line_2') . "\n";
+			$message .= $this->url->https('account/login') . "\n\n";
+			$message .= $this->language->get('mail_line_3') . "\n\n";
+			$message .= $this->language->get('mail_line_4') . "\n";
+			$message .= $this->language->get('mail_line_5');
 			
 			$mail = new Mail();
 			$mail->setTo($this->request->post['email']);
@@ -139,17 +133,17 @@ class ControllerAccountCreate extends Controller {
 
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'account/create.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();	
   	}
 
   	private function validate() {
-    	if ((strlen($this->request->post['firstname']) < 3) || (strlen($this->request->post['firstname']) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['firstname'])) < 3) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
       		$this->error['firstname'] = $this->language->get('error_firstname');
     	}
 
-    	if ((strlen($this->request->post['lastname']) < 3) || (strlen($this->request->post['lastname']) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['lastname'])) < 3) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
       		$this->error['lastname'] = $this->language->get('error_lastname');
     	}
 
@@ -161,7 +155,7 @@ class ControllerAccountCreate extends Controller {
       		$this->error['message'] = $this->language->get('error_exists');
     	}
 
-    	if ((strlen($this->request->post['password']) < 4) || (strlen($this->request->post['password']) > 20)) {
+    	if ((strlen(utf8_decode($this->request->post['password'])) < 4) || (strlen(utf8_decode($this->request->post['password'])) > 20)) {
       		$this->error['password'] = $this->language->get('error_password');
     	}
 
@@ -169,15 +163,15 @@ class ControllerAccountCreate extends Controller {
       		$this->error['confirm'] = $this->language->get('error_confirm');
     	}
 
-    	if ((strlen($this->request->post['address_1']) < 3) || (strlen($this->request->post['address_1']) > 128)) {
+    	if ((strlen(utf8_decode($this->request->post['address_1'])) < 3) || (strlen(utf8_decode($this->request->post['address_1'])) > 128)) {
       		$this->error['address_1'] = $this->language->get('error_address_1');
     	}
 
-    	if ((strlen($this->request->post['city']) < 3) || (strlen($this->request->post['city']) > 128)) {
+    	if ((strlen(utf8_decode($this->request->post['city'])) < 3) || (strlen(utf8_decode($this->request->post['city'])) > 128)) {
       		$this->error['city'] = $this->language->get('error_city');
     	}
 
-    	if ((strlen($this->request->post['telephone']) < 3) || (strlen($this->request->post['telephone']) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['telephone'])) < 3) || (strlen(utf8_decode($this->request->post['telephone'])) > 32)) {
       		$this->error['telephone'] = $this->language->get('error_telephone');
     	}
 

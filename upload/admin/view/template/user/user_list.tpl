@@ -12,7 +12,7 @@
   <table class="list">
     <thead>
       <tr>
-        <td width="1" align="center"><input type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);" /></td>
+        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);" /></td>
         <td class="left"><?php if ($sort == 'username') { ?>
           <a href="<?php echo $sort_username; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_username; ?></a>
           <?php } else { ?>
@@ -37,7 +37,7 @@
       <?php foreach ($users as $user) { ?>
       <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
       <tr class="<?php echo $class; ?>">
-        <td align="center"><?php if ($user['delete']) { ?>
+        <td style="align: center;"><?php if ($user['delete']) { ?>
           <input type="checkbox" name="delete[]" value="<?php echo $user['user_id']; ?>" checked="checked" />
           <?php } else { ?>
           <input type="checkbox" name="delete[]" value="<?php echo $user['user_id']; ?>" />

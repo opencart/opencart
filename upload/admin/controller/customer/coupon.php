@@ -258,7 +258,7 @@ class ControllerCustomerCoupon extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'customer/coupon_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
   	}
@@ -429,7 +429,7 @@ class ControllerCustomerCoupon extends Controller {
 		
 		$this->id       = 'content';
 		$this->template = 'customer/coupon_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();		
   	}
@@ -440,16 +440,16 @@ class ControllerCustomerCoupon extends Controller {
     	}
 	      
     	foreach ($this->request->post['coupon_description'] as $language_id => $value) {
-      		if ((strlen($value['name']) < 3) || (strlen($value['name']) > 64)) {
+      		if ((strlen(utf8_decode($value['name'])) < 3) || (strlen(utf8_decode($value['name'])) > 64)) {
         		$this->error['name'][$language_id] = $this->language->get('error_name');
       		}
 
-      		if (strlen($value['description']) < 3) {
+      		if (strlen(utf8_decode($value['description'])) < 3) {
         		$this->error['description'][$language_id] = $this->language->get('error_description');
       		}
     	}
 
-    	if ((strlen($this->request->post['code']) < 3) || (strlen($this->request->post['code']) > 10)) {
+    	if ((strlen(utf8_decode($this->request->post['code'])) < 3) || (strlen(utf8_decode($this->request->post['code'])) > 10)) {
       		$this->error['code'] = $this->language->get('error_code');
     	}
 		

@@ -30,13 +30,13 @@ class ControllerPaymentVerisign extends Controller {
 		$this->data['text_australia'] = $this->language->get('text_australia');
 		$this->data['text_usa'] = $this->language->get('text_usa');
 		
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
 		$this->data['entry_partner'] = $this->language->get('entry_partner');
 		$this->data['entry_country'] = $this->language->get('entry_country');
 		$this->data['entry_test'] = $this->language->get('entry_test');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -72,28 +72,6 @@ class ControllerPaymentVerisign extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
 		
-		if (isset($this->request->post['verisign_status'])) {
-			$this->data['verisign_status'] = $this->request->post['verisign_status'];
-		} else {
-			$this->data['verisign_status'] = $this->config->get('verisign_status');
-		}
-		
-		if (isset($this->request->post['verisign_geo_zone_id'])) {
-			$this->data['verisign_geo_zone_id'] = $this->request->post['verisign_geo_zone_id'];
-		} else {
-			$this->data['verisign_geo_zone_id'] = $this->config->get('verisign_geo_zone_id'); 
-		} 
-
-		if (isset($this->request->post['verisign_order_status_id'])) {
-			$this->data['verisign_order_status_id'] = $this->request->post['verisign_order_status_id'];
-		} else {
-			$this->data['verisign_order_status_id'] = $this->config->get('verisign_order_status_id'); 
-		} 
-
-		$this->load->model('localisation/order_status');
-		
-		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		
 		if (isset($this->request->post['verisign_merchant'])) {
 			$this->data['verisign_merchant'] = $this->request->post['verisign_merchant'];
 		} else {
@@ -118,19 +96,41 @@ class ControllerPaymentVerisign extends Controller {
 			$this->data['verisign_test'] = $this->config->get('verisign_test');
 		}
 		
+		if (isset($this->request->post['verisign_order_status_id'])) {
+			$this->data['verisign_order_status_id'] = $this->request->post['verisign_order_status_id'];
+		} else {
+			$this->data['verisign_order_status_id'] = $this->config->get('verisign_order_status_id'); 
+		} 
+
+		$this->load->model('localisation/order_status');
+		
+		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+		
+		if (isset($this->request->post['verisign_geo_zone_id'])) {
+			$this->data['verisign_geo_zone_id'] = $this->request->post['verisign_geo_zone_id'];
+		} else {
+			$this->data['verisign_geo_zone_id'] = $this->config->get('verisign_geo_zone_id'); 
+		} 
+		
+		$this->load->model('localisation/geo_zone');
+										
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
+		if (isset($this->request->post['verisign_status'])) {
+			$this->data['verisign_status'] = $this->request->post['verisign_status'];
+		} else {
+			$this->data['verisign_status'] = $this->config->get('verisign_status');
+		}
+		
 		if (isset($this->request->post['verisign_sort_order'])) {
 			$this->data['verisign_sort_order'] = $this->request->post['verisign_sort_order'];
 		} else {
 			$this->data['verisign_sort_order'] = $this->config->get('verisign_sort_order');
 		}
-		
-		$this->load->model('localisation/geo_zone');
-										
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		$this->id       = 'content';
 		$this->template = 'payment/verisign.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

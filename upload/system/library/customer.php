@@ -16,21 +16,21 @@ final class Customer {
 		$this->session = Registry::get('session');
 				
 		if (isset($this->session->data['customer_id'])) { 
-			$query = $this->db->query("SELECT * FROM customer WHERE customer_id = '" . (int)$this->session->data['customer_id'] . "' AND status = '1'");
+			$customer_query = $this->db->query("SELECT * FROM customer WHERE customer_id = '" . (int)$this->session->data['customer_id'] . "' AND status = '1'");
 			
-			if ($query->num_rows) {
-				$this->customer_id = $query->row['customer_id'];
-				$this->firstname = $query->row['firstname'];
-				$this->lastname = $query->row['lastname'];
-				$this->email = $query->row['email'];
-				$this->telephone = $query->row['telephone'];
-				$this->fax = $query->row['fax'];
-				$this->newsletter = $query->row['newsletter'];
-				$this->address_id = $query->row['address_id'];
+			if ($customer_query->num_rows) {
+				$this->customer_id = $customer_query->row['customer_id'];
+				$this->firstname = $customer_query->row['firstname'];
+				$this->lastname = $customer_query->row['lastname'];
+				$this->email = $customer_query->row['email'];
+				$this->telephone = $customer_query->row['telephone'];
+				$this->fax = $customer_query->row['fax'];
+				$this->newsletter = $customer_query->row['newsletter'];
+				$this->address_id = $customer_query->row['address_id'];
 			
-				$query = $this->db->query("SELECT *, c.name AS country, z.name AS zone FROM address a LEFT JOIN country c ON a.country_id = c.country_id LEFT JOIN zone z ON a.zone_id = z.zone_id WHERE a.customer_id = '" . (int)$this->session->data['customer_id'] . "'");
+				$address_query = $this->db->query("SELECT *, c.name AS country, z.name AS zone FROM address a LEFT JOIN country c ON a.country_id = c.country_id LEFT JOIN zone z ON a.zone_id = z.zone_id WHERE a.customer_id = '" . (int)$this->session->data['customer_id'] . "'");
 						 
-				foreach ($query->rows as $result) {
+				foreach ($address_query->rows as $result) {
 					$this->address[$result['address_id']] = array(
 						'firstname'      => $result['firstname'],
 						'lastname'       => $result['lastname'],
@@ -58,13 +58,13 @@ final class Customer {
 	}
 		
   	public function login($email, $password) {
-		$query = $this->db->query("SELECT * FROM customer WHERE email = '" . $this->db->escape($email) . "' AND password = '" . $this->db->escape(md5($password)) . "' AND status = '1'");
+		$customer_query = $this->db->query("SELECT * FROM customer WHERE email = '" . $this->db->escape($email) . "' AND password = '" . $this->db->escape(md5($password)) . "' AND status = '1'");
 		
-		if ($query->num_rows) {
-			$this->session->data['customer_id'] = $query->row['customer_id'];	
+		if ($customer_query->num_rows) {
+			$this->session->data['customer_id'] = $customer_query->row['customer_id'];	
 		    
-			if (is_string($query->row['cart'])) {
-				$cart = unserialize($query->row['cart']);
+			if (is_string($customer_query->row['cart'])) {
+				$cart = unserialize($customer_query->row['cart']);
 				
 				foreach ($cart as $key => $value) {
 					if (!array_key_exists($key, $this->session->data['cart'])) {
@@ -75,18 +75,18 @@ final class Customer {
 				}			
 			}
 			
-			$this->customer_id = $query->row['customer_id'];
-			$this->firstname = $query->row['firstname'];
-			$this->lastname = $query->row['lastname'];
-			$this->email = $query->row['email'];
-			$this->telephone = $query->row['telephone'];
-			$this->fax = $query->row['fax'];
-			$this->newsletter = $query->row['newsletter'];
-			$this->address_id = $query->row['address_id'];
+			$this->customer_id = $customer_query->row['customer_id'];
+			$this->firstname = $customer_query->row['firstname'];
+			$this->lastname = $customer_query->row['lastname'];
+			$this->email = $customer_query->row['email'];
+			$this->telephone = $customer_query->row['telephone'];
+			$this->fax = $customer_query->row['fax'];
+			$this->newsletter = $customer_query->row['newsletter'];
+			$this->address_id = $customer_query->row['address_id'];
 			
-			$query = $this->db->query("SELECT *, c.name AS country, z.name AS zone FROM address a LEFT JOIN country c ON a.country_id = c.country_id LEFT JOIN zone z ON a.zone_id = z.zone_id WHERE a.customer_id = '" . (int)$this->session->data['customer_id'] . "'");
+			$address_query = $this->db->query("SELECT *, c.name AS country, z.name AS zone FROM address a LEFT JOIN country c ON a.country_id = c.country_id LEFT JOIN zone z ON a.zone_id = z.zone_id WHERE a.customer_id = '" . (int)$this->session->data['customer_id'] . "'");
 						 
-			foreach ($query->rows as $result) {
+			foreach ($address_query->rows as $result) {
 				$this->address[$result['address_id']] = array(
 					'firstname'      => $result['firstname'],
 					'lastname'       => $result['lastname'],

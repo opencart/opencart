@@ -58,14 +58,9 @@ $_['tab_image']               = 'Image';
 $_['tab_option']              = 'Option';
 $_['tab_shop']                = 'Shop';
 $_['tab_local']               = 'Local';
-$_['tab_mail']                = 'Mail';
 $_['tab_stats']               = 'Statistics';
 $_['tab_order']               = 'Orders';
 $_['tab_customer']            = 'Customers';
-$_['tab_account']             = 'Account';
-$_['tab_forgotten']           = 'Forgotten';
-$_['tab_order']               = 'Orders';
-$_['tab_update']              = 'Update';
 
 // Error
 $_['error_upload_1']          = 'Warning: The uploaded file exceeds the upload_max_filesize directive in php.ini!';

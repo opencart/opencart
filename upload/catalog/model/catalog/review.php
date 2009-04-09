@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogReview extends Model {		
 	public function addReview($product_id, $data) {
-		 $this->db->query("INSERT INTO review SET author = '" . $this->db->escape($data['name']) . "', customer_id = '" . (int)$this->customer->getId() . "', product_id = '" . (int)$product_id . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', date_added = NOW()");
+		$this->db->query("INSERT INTO review SET author = '" . $this->db->escape($data['name']) . "', customer_id = '" . (int)$this->customer->getId() . "', product_id = '" . (int)$product_id . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', date_added = NOW()");
 	}
 		
 	public function getReviewsByProductId($product_id, $start = 0, $limit = 20) {

@@ -171,7 +171,7 @@ class ControllerCheckoutPayment extends Controller {
 	
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'checkout/payment.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();	
   	}

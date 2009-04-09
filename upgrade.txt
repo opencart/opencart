@@ -1,0 +1,41 @@
+To upgrade from 1.2.5:
+
+I.
+---------------------------------------------------
+
+1. First off backup your site.
+2. Download a backup of your database using your DB manager.
+3. Goto your DB manager and run this query:
+
+DELETE FROM `order` WHERE confirm = '0';
+
+4. Using your DB manager remove the field confirm in the order table.
+5. Open your opencart admin and goto "Admin > Configuration > Backup & Restore"
+6. Download a backup of your store.
+7. Delete the old opencart files in your hosting directory.
+8. Upload the files from the upload directory.
+9. Go through the install as normal.
+10. Once the install is finished import the database you backed up.
+11. Goto the image directory from your backup and copy all the images from the image directory to the image directory on your hosting.
+
+
+II.
+---------------------------------------------------
+
+1. Login to your admin and goto "Admin > Configuration > User Groups".
+2. Click edit next to "Top Administrator".
+3. Go thorugh the Access Permission & Modify Permission list and click the checkbox of all that are not checked.
+4. Goto "Extensions > Modules" and click install next to any modules that are not installed. 
+5. GO thorugh each module and set to the settings listed be below:
+
+Module		Position	Status		Sort Order
+
+Bestsellers 	right 		Enabled		3  
+Cart 		right 		Enabled		1 
+Category 	left 		Enabled		1
+Currency 	right 		Enabled		2
+Information 	left 		Enabled		3
+Manufacturer	left 		Enabled 	2
+
+
+6. Finished!

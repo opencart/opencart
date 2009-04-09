@@ -182,7 +182,7 @@ class ControllerAccountAddress extends Controller {
 		
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'account/addresses.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();		
   	}
@@ -329,25 +329,25 @@ class ControllerAccountAddress extends Controller {
 		
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'account/address.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();		
   	}
 	
   	private function validateForm() {
-    	if ((strlen($this->request->post['firstname']) < 3) || (strlen($this->request->post['firstname']) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['firstname'])) < 3) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
       		$this->error['firstname'] = $this->language->get('error_firstname');
     	}
 
-    	if ((strlen($this->request->post['lastname']) < 3) || (strlen($this->request->post['lastname']) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['lastname'])) < 3) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
       		$this->error['lastname'] = $this->language->get('error_lastname');
     	}
 
-    	if ((strlen($this->request->post['address_1']) < 3) || (strlen($this->request->post['address_1']) > 128)) {
+    	if ((strlen(utf8_decode($this->request->post['address_1'])) < 3) || (strlen(utf8_decode($this->request->post['address_1'])) > 128)) {
       		$this->error['address_1'] = $this->language->get('error_address_1');
     	}
 
-    	if ((strlen($this->request->post['city']) < 3) || (strlen($this->request->post['city']) > 128)) {
+    	if ((strlen(utf8_decode($this->request->post['city'])) < 3) || (strlen(utf8_decode($this->request->post['city'])) > 128)) {
       		$this->error['city'] = $this->language->get('error_city');
     	}
 

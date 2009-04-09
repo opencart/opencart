@@ -26,10 +26,10 @@ class ControllerPaymenteGold extends Controller {
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
 				
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -64,17 +64,11 @@ class ControllerPaymenteGold extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
 		
-		if (isset($this->request->post['egold_status'])) {
-			$this->data['egold_status'] = $this->request->post['egold_status'];
+		if (isset($this->request->post['egold_merchant'])) {
+			$this->data['egold_merchant'] = $this->request->post['egold_merchant'];
 		} else {
-			$this->data['egold_status'] = $this->config->get('egold_status');
+			$this->data['egold_merchant'] = $this->config->get('egold_merchant');
 		}
-		
-		if (isset($this->request->post['egold_geo_zone_id'])) {
-			$this->data['egold_geo_zone_id'] = $this->request->post['egold_geo_zone_id'];
-		} else {
-			$this->data['egold_geo_zone_id'] = $this->config->get('egold_geo_zone_id'); 
-		} 
 
 		if (isset($this->request->post['egold_order_status_id'])) {
 			$this->data['egold_order_status_id'] = $this->request->post['egold_order_status_id'];
@@ -86,10 +80,20 @@ class ControllerPaymenteGold extends Controller {
 		
 		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 		
-		if (isset($this->request->post['egold_merchant'])) {
-			$this->data['egold_merchant'] = $this->request->post['egold_merchant'];
+		if (isset($this->request->post['egold_geo_zone_id'])) {
+			$this->data['egold_geo_zone_id'] = $this->request->post['egold_geo_zone_id'];
 		} else {
-			$this->data['egold_merchant'] = $this->config->get('egold_merchant');
+			$this->data['egold_geo_zone_id'] = $this->config->get('egold_geo_zone_id'); 
+		} 
+		
+		$this->load->model('localisation/geo_zone');
+										
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();		
+		
+		if (isset($this->request->post['egold_status'])) {
+			$this->data['egold_status'] = $this->request->post['egold_status'];
+		} else {
+			$this->data['egold_status'] = $this->config->get('egold_status');
 		}
 		
 		if (isset($this->request->post['egold_sort_order'])) {
@@ -97,14 +101,10 @@ class ControllerPaymenteGold extends Controller {
 		} else {
 			$this->data['egold_sort_order'] = $this->config->get('egold_sort_order');
 		}
-		
-		$this->load->model('localisation/geo_zone');
-										
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		$this->id       = 'content';
 		$this->template = 'payment/egold.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

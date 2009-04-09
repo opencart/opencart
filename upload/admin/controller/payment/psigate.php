@@ -28,13 +28,13 @@ class ControllerPaymentPSIGate extends Controller {
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');
 				
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
 		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_gateway'] = $this->language->get('entry_gateway');
 		$this->data['entry_test'] = $this->language->get('entry_test');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -70,29 +70,7 @@ class ControllerPaymentPSIGate extends Controller {
 		$this->data['action'] = $this->url->https('payment/psigate');
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
-		
-		if (isset($this->request->post['psigate_status'])) {
-			$this->data['psigate_status'] = $this->request->post['psigate_status'];
-		} else {
-			$this->data['psigate_status'] = $this->config->get('psigate_status');
-		}
-		
-		if (isset($this->request->post['psigate_geo_zone_id'])) {
-			$this->data['psigate_geo_zone_id'] = $this->request->post['psigate_geo_zone_id'];
-		} else {
-			$this->data['psigate_geo_zone_id'] = $this->config->get('psigate_geo_zone_id'); 
-		} 
-
-		if (isset($this->request->post['psigate_order_status_id'])) {
-			$this->data['psigate_order_status_id'] = $this->request->post['psigate_order_status_id'];
-		} else {
-			$this->data['psigate_order_status_id'] = $this->config->get('psigate_order_status_id'); 
-		} 
-
-		$this->load->model('localisation/order_status');
-		
-		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		
+				
 		if (isset($this->request->post['psigate_merchant'])) {
 			$this->data['psigate_merchant'] = $this->request->post['psigate_merchant'];
 		} else {
@@ -117,19 +95,41 @@ class ControllerPaymentPSIGate extends Controller {
 			$this->data['psigate_test'] = $this->config->get('psigate_test');
 		}
 		
+		if (isset($this->request->post['psigate_order_status_id'])) {
+			$this->data['psigate_order_status_id'] = $this->request->post['psigate_order_status_id'];
+		} else {
+			$this->data['psigate_order_status_id'] = $this->config->get('psigate_order_status_id'); 
+		} 
+
+		$this->load->model('localisation/order_status');
+		
+		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+		
+		if (isset($this->request->post['psigate_geo_zone_id'])) {
+			$this->data['psigate_geo_zone_id'] = $this->request->post['psigate_geo_zone_id'];
+		} else {
+			$this->data['psigate_geo_zone_id'] = $this->config->get('psigate_geo_zone_id'); 
+		} 
+		
+		$this->load->model('localisation/geo_zone');
+										
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
+		if (isset($this->request->post['psigate_status'])) {
+			$this->data['psigate_status'] = $this->request->post['psigate_status'];
+		} else {
+			$this->data['psigate_status'] = $this->config->get('psigate_status');
+		}
+		
 		if (isset($this->request->post['psigate_sort_order'])) {
 			$this->data['psigate_sort_order'] = $this->request->post['psigate_sort_order'];
 		} else {
 			$this->data['psigate_sort_order'] = $this->config->get('psigate_sort_order');
 		}
-		
-		$this->load->model('localisation/geo_zone');
-										
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		$this->id       = 'content';
 		$this->template = 'payment/psigate.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

@@ -30,14 +30,14 @@ class ControllerPaymentNOCHEX extends Controller {
 		$this->data['text_seller'] = $this->language->get('text_seller');
 		$this->data['text_merchant'] = $this->language->get('text_merchant');
 		
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_account'] = $this->language->get('entry_account');
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
 		$this->data['entry_template'] = $this->language->get('entry_template');
 		$this->data['entry_test'] = $this->language->get('entry_test');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -73,28 +73,6 @@ class ControllerPaymentNOCHEX extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
 		
-		if (isset($this->request->post['nochex_status'])) {
-			$this->data['nochex_status'] = $this->request->post['nochex_status'];
-		} else {
-			$this->data['nochex_status'] = $this->config->get('nochex_status');
-		}
-		
-		if (isset($this->request->post['nochex_geo_zone_id'])) {
-			$this->data['nochex_geo_zone_id'] = $this->request->post['nochex_geo_zone_id'];
-		} else {
-			$this->data['nochex_geo_zone_id'] = $this->config->get('nochex_geo_zone_id'); 
-		} 
-
-		if (isset($this->request->post['nochex_order_status_id'])) {
-			$this->data['nochex_order_status_id'] = $this->request->post['nochex_order_status_id'];
-		} else {
-			$this->data['nochex_order_status_id'] = $this->config->get('nochex_order_status_id'); 
-		} 
-
-		$this->load->model('localisation/order_status');
-		
-		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		
 		if (isset($this->request->post['nochex_email'])) {
 			$this->data['nochex_email'] = $this->request->post['nochex_email'];
 		} else {
@@ -125,19 +103,41 @@ class ControllerPaymentNOCHEX extends Controller {
 			$this->data['nochex_test'] = $this->config->get('nochex_test');
 		}
 		
+		if (isset($this->request->post['nochex_order_status_id'])) {
+			$this->data['nochex_order_status_id'] = $this->request->post['nochex_order_status_id'];
+		} else {
+			$this->data['nochex_order_status_id'] = $this->config->get('nochex_order_status_id'); 
+		} 
+
+		$this->load->model('localisation/order_status');
+		
+		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+		
+		if (isset($this->request->post['nochex_geo_zone_id'])) {
+			$this->data['nochex_geo_zone_id'] = $this->request->post['nochex_geo_zone_id'];
+		} else {
+			$this->data['nochex_geo_zone_id'] = $this->config->get('nochex_geo_zone_id'); 
+		} 
+		
+		$this->load->model('localisation/geo_zone');
+										
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
+		if (isset($this->request->post['nochex_status'])) {
+			$this->data['nochex_status'] = $this->request->post['nochex_status'];
+		} else {
+			$this->data['nochex_status'] = $this->config->get('nochex_status');
+		}
+		
 		if (isset($this->request->post['nochex_sort_order'])) {
 			$this->data['nochex_sort_order'] = $this->request->post['nochex_sort_order'];
 		} else {
 			$this->data['nochex_sort_order'] = $this->config->get('nochex_sort_order');
 		}
-		
-		$this->load->model('localisation/geo_zone');
-										
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		$this->id       = 'content';
 		$this->template = 'payment/nochex.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

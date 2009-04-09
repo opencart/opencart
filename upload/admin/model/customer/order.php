@@ -10,27 +10,24 @@ class ModelCustomerOrder extends Model {
 	    	
 			if ($query->num_rows) {
 				$this->language->load($query->row['filename'], $query->row['language']);
-			
-    			$find = array(
-					'{store}',
-					'{order_id}',
-					'{date_added}',
-					'{status}',
-					'{comment}',
-					'{invoice}'
-				);
-			
-				$replace = array(
-					'store'      => $this->config->get('config_store'),
-					'order_id'   => $order_id,
-					'date_added' => date($this->language->get('date_format_short'), strtotime($query->row['date_added'])),
-					'status'     => $query->row['status'],
-					'comment'    => strip_tags($data['comment']),
-					'invoice'    => html_entity_decode(HTTP_CATALOG . 'index.php?route=account/invoice&order_id=' . $order_id)
-				);
-				
-				$subject = str_replace($find, $replace, $this->config->get('config_update_subject_' . $query->row['language_id']));
-				$message = str_replace($find, $replace, $this->config->get('config_update_message_' . $query->row['language_id']));
+				$this->language->load('customer/order', $query->row['language']);
+
+				$subject = sprintf($this->language->get('mail_subject'), $this->config->get('config_store'), $order_id);
+	
+				$message  = $this->language->get('mail_order') . ' ' . $order_id . "\n";
+				$message .= $this->language->get('mail_date_added') . ' ' . date($this->language->get('date_format_short'), strtotime($query->row['date_added'])) . "\n\n";
+				$message .= $this->language->get('mail_order_status') . "\n\n";
+				$message .= $query->row['status'] . "\n\n";
+					
+				$message .= $this->language->get('mail_invoice') . "\n";
+				$message .= html_entity_decode(HTTP_CATALOG . 'index.php?route=account/invoice&order_id=' . $order_id) . "\n\n";
+					
+				if (isset($data['comment'])) { 
+					$message .= $this->language->get('mail_comment') . "\n\n";
+					$message .= strip_tags($data['comment']) . "\n\n";
+				}
+					
+				$message .= $this->language->get('mail_footer');
 
 				$mail = new Mail();
 	    		$mail->setTo($query->row['email']);
@@ -60,7 +57,7 @@ class ModelCustomerOrder extends Model {
 	}
 	
 	public function getOrders($data = array()) {
-		$sql = "SELECT o.order_id, CONCAT(o.firstname, ' ', o.lastname) AS name, os.name AS status, o.date_added, o.total, o.currency, o.value FROM `order` o LEFT JOIN order_status os ON (o.order_status_id = os.order_status_id) WHERE os.language_id = '" . (int)$this->language->getId() . "' AND o.confirm = '1'";
+		$sql = "SELECT o.order_id, CONCAT(o.firstname, ' ', o.lastname) AS name, os.name AS status, o.date_added, o.total, o.currency, o.value FROM `order` o LEFT JOIN order_status os ON (o.order_status_id = os.order_status_id) WHERE os.language_id = '" . (int)$this->language->getId() . "' AND o.order_status_id > '0'";
 
 		if (isset($data['order_id'])) {
 			$sql .= " AND o.order_id = '" . (int)$data['order_id'] . "'";
@@ -142,7 +139,7 @@ class ModelCustomerOrder extends Model {
 	}	
 				
 	public function getTotalOrders($data = array()) {
-      	$sql = "SELECT COUNT(*) AS total FROM `order` WHERE confirm = '1'";
+      	$sql = "SELECT COUNT(*) AS total FROM `order` WHERE order_status_id > '0'";
 
 		if (isset($data['order_id'])) {
 			$sql .= " AND order_id = '" . (int)$data['order_id'] . "'";
@@ -170,25 +167,25 @@ class ModelCustomerOrder extends Model {
 	} 
 			
 	public function getOrderHistoryTotalByOrderStatusId($order_status_id) {
-	  	$query = $this->db->query("SELECT oh.order_id FROM order_history oh LEFT JOIN `order` o ON (oh.order_id = o.order_id) WHERE oh.order_status_id = '" . (int)$order_status_id . "' AND o.confirm = '1' GROUP BY order_id");
+	  	$query = $this->db->query("SELECT oh.order_id FROM order_history oh LEFT JOIN `order` o ON (oh.order_id = o.order_id) WHERE oh.order_status_id = '" . (int)$order_status_id . "' AND o.order_status_id > '0' GROUP BY order_id");
 
 		return $query->num_rows;
 	}
 
 	public function getTotalOrdersByOrderStatusId($order_status_id) {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE order_status_id = '" . (int)$order_status_id . "' AND confirm = '1'");
+      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE order_status_id = '" . (int)$order_status_id . "' AND order_status_id > '0'");
 		
 		return $query->row['total'];
 	}
 	
 	public function getTotalOrdersByLanguageId($language_id) {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE language_id = '" . (int)$language_id . "' AND confirm = '1'");
+      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE language_id = '" . (int)$language_id . "' AND order_status_id > '0'");
 		
 		return $query->row['total'];
 	}	
 	
 	public function getTotalOrdersByCurrencyId($currency_id) {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE currency_id = '" . (int)$currency_id . "' AND confirm = '1'");
+      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE currency_id = '" . (int)$currency_id . "' AND order_status_id > '0'");
 		
 		return $query->row['total'];
 	}		

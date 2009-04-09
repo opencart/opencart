@@ -28,10 +28,10 @@
       <tr>
         <td><?php echo $entry_test; ?></td>
         <td><select name="protx_test">
-            <?php if ($protx_test == 'simulator') { ?>
-            <option value="simulator" selected="selected"><?php echo $text_simulator; ?></option>
+            <?php if ($protx_test == 'sim') { ?>
+            <option value="sim" selected="selected"><?php echo $text_sim; ?></option>
             <?php } else { ?>
-            <option value="simulator"><?php echo $text_simulator; ?></option>
+            <option value="sim"><?php echo $text_sim; ?></option>
             <?php } ?>
             <?php if ($protx_test == 'test') { ?>
             <option value="test" selected="selected"><?php echo $text_test; ?></option>

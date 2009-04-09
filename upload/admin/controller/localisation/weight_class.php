@@ -246,7 +246,7 @@ class ControllerLocalisationWeightClass extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'localisation/weight_class_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
 	}
@@ -327,7 +327,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		
 		$this->id       = 'content';
 		$this->template = 'localisation/weight_class_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();
 	}
@@ -338,11 +338,11 @@ class ControllerLocalisationWeightClass extends Controller {
 		}
 
 		foreach ($this->request->post['weight_class'] as $language_id => $value) {
-			if ((strlen($value['title']) < 3) || (strlen($value['title']) > 32)) {
+			if ((strlen(utf8_decode($value['title'])) < 3) || (strlen(utf8_decode($value['title'])) > 32)) {
 				$this->error['title'][$language_id] = $this->language->get('error_title');
 			}
 
-			if ((!$value['unit']) || (strlen($value['unit']) > 4)) {
+			if ((!$value['unit']) || (strlen(utf8_decode($value['unit'])) > 4)) {
 				$this->error['unit'][$language_id] = $this->language->get('error_unit');
 			}
 		}

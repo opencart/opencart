@@ -28,6 +28,7 @@
         </tr>
       </tbody>
     </table>
+    <br />
     <table>
       <thead>
         <tr>
@@ -47,6 +48,7 @@
         </tr>
       </tbody>
     </table>
+    <br />
     <table>
       <thead>
         <tr>
@@ -64,6 +66,7 @@
         </tr>
       </tbody>
     </table>
+    <br />
     <table>
       <thead>
         <tr>
@@ -84,8 +87,7 @@
             <?php foreach ($product['option'] as $option) { ?>
             <br />
             &nbsp;<small> - <?php echo $option['name']; ?> <?php echo $option['value']; ?></small>
-            <?php } ?>
-          </td>
+            <?php } ?></td>
           <td><?php echo $product['model']; ?></td>
           <td align="right"><?php echo $product['quantity']; ?></td>
           <td align="right"><?php if (!$product['discount']) { ?>
@@ -105,6 +107,22 @@
         <?php } ?>
       </tbody>
     </table>
+    <br />
+    <?php if ($order_comment) { ?>
+    <table>
+      <thead>
+        <tr>
+          <td align="center"><?php echo $text_order_comment; ?></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><?php echo $order_comment; ?></td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <?php } ?>
     <?php if ($downloads) { ?>
     <table>
       <thead>
@@ -127,6 +145,7 @@
         <?php } ?>
       </tbody>
     </table>
+    <br />
     <?php } ?>
     <table>
       <thead>
@@ -158,6 +177,7 @@
         <?php } ?>
       </tbody>
     </table>
+    <br />
     <table>
       <thead>
         <tr>
@@ -189,7 +209,7 @@
           <td colspan="2"><b><?php echo $entry_comment; ?></b></td>
         </tr>
         <tr>
-          <td colspan="2"><textarea name="comment" cols="40" rows="8" style="width: 99%"></textarea></td>
+          <td colspan="2"><textarea name="comment" cols="40" rows="8" style="width: 99%"><?php echo $comment; ?></textarea></td>
         </tr>
         <tr>
           <td align="right" colspan="2"><a onclick="$('#form').submit();" class="button"><span class="button_left button_save"></span><span class="button_middle"><?php echo $button_save; ?></span><span class="button_right"></span></a><a onclick="location='<?php echo $cancel; ?>';" class="button" style="margin-left: 5px;"><span class="button_left button_cancel"></span><span class="button_middle"><?php echo $button_cancel; ?></span><span class="button_right"></span></a></td>

@@ -28,11 +28,11 @@ class ControllerPaymentLinkPoint extends Controller {
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');
 				
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
 		$this->data['entry_test'] = $this->language->get('entry_test');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -67,28 +67,6 @@ class ControllerPaymentLinkPoint extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
 		
-		if (isset($this->request->post['linkpoint_status'])) {
-			$this->data['linkpoint_status'] = $this->request->post['linkpoint_status'];
-		} else {
-			$this->data['linkpoint_status'] = $this->config->get('linkpoint_status');
-		}
-		
-		if (isset($this->request->post['linkpoint_geo_zone_id'])) {
-			$this->data['linkpoint_geo_zone_id'] = $this->request->post['linkpoint_geo_zone_id'];
-		} else {
-			$this->data['linkpoint_geo_zone_id'] = $this->config->get('linkpoint_geo_zone_id'); 
-		} 
-
-		if (isset($this->request->post['linkpoint_order_status_id'])) {
-			$this->data['linkpoint_order_status_id'] = $this->request->post['linkpoint_order_status_id'];
-		} else {
-			$this->data['linkpoint_order_status_id'] = $this->config->get('linkpoint_order_status_id'); 
-		} 
-
-		$this->load->model('localisation/order_status');
-		
-		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		
 		if (isset($this->request->post['linkpoint_merchant'])) {
 			$this->data['linkpoint_merchant'] = $this->request->post['linkpoint_merchant'];
 		} else {
@@ -101,19 +79,41 @@ class ControllerPaymentLinkPoint extends Controller {
 			$this->data['linkpoint_test'] = $this->config->get('linkpoint_test');
 		}
 		
+		if (isset($this->request->post['linkpoint_order_status_id'])) {
+			$this->data['linkpoint_order_status_id'] = $this->request->post['linkpoint_order_status_id'];
+		} else {
+			$this->data['linkpoint_order_status_id'] = $this->config->get('linkpoint_order_status_id'); 
+		} 
+
+		$this->load->model('localisation/order_status');
+		
+		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+		
+		if (isset($this->request->post['linkpoint_geo_zone_id'])) {
+			$this->data['linkpoint_geo_zone_id'] = $this->request->post['linkpoint_geo_zone_id'];
+		} else {
+			$this->data['linkpoint_geo_zone_id'] = $this->config->get('linkpoint_geo_zone_id'); 
+		} 
+		
+		$this->load->model('localisation/geo_zone');
+										
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
+		if (isset($this->request->post['linkpoint_status'])) {
+			$this->data['linkpoint_status'] = $this->request->post['linkpoint_status'];
+		} else {
+			$this->data['linkpoint_status'] = $this->config->get('linkpoint_status');
+		}
+		
 		if (isset($this->request->post['linkpoint_sort_order'])) {
 			$this->data['linkpoint_sort_order'] = $this->request->post['linkpoint_sort_order'];
 		} else {
 			$this->data['linkpoint_sort_order'] = $this->config->get('linkpoint_sort_order');
 		}
-		
-		$this->load->model('localisation/geo_zone');
-										
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		$this->id       = 'content';
 		$this->template = 'payment/linkpoint.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

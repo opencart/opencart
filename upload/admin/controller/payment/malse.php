@@ -26,11 +26,11 @@ class ControllerPaymentMalsE extends Controller {
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
 				
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_account'] = $this->language->get('entry_account');
 		$this->data['entry_domain'] = $this->language->get('entry_domain');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -66,27 +66,11 @@ class ControllerPaymentMalsE extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
 		
-		if (isset($this->request->post['malse_status'])) {
-			$this->data['malse_status'] = $this->request->post['malse_status'];
-		} else {
-			$this->data['malse_status'] = $this->config->get('malse_status');
-		}
 		
-		if (isset($this->request->post['malse_geo_zone_id'])) {
-			$this->data['malse_geo_zone_id'] = $this->request->post['malse_geo_zone_id'];
-		} else {
-			$this->data['malse_geo_zone_id'] = $this->config->get('malse_geo_zone_id'); 
-		} 
 
-		if (isset($this->request->post['malse_order_status_id'])) {
-			$this->data['malse_order_status_id'] = $this->request->post['malse_order_status_id'];
-		} else {
-			$this->data['malse_order_status_id'] = $this->config->get('malse_order_status_id'); 
-		} 
-
-		$this->load->model('localisation/order_status');
 		
-		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+		
 		
 		if (isset($this->request->post['malse_account'])) {
 			$this->data['malse_account'] = $this->request->post['malse_account'];
@@ -100,19 +84,41 @@ class ControllerPaymentMalsE extends Controller {
 			$this->data['malse_domain'] = $this->config->get('malse_domain');
 		}
 		
+		if (isset($this->request->post['malse_order_status_id'])) {
+			$this->data['malse_order_status_id'] = $this->request->post['malse_order_status_id'];
+		} else {
+			$this->data['malse_order_status_id'] = $this->config->get('malse_order_status_id'); 
+		} 
+		
+		$this->load->model('localisation/order_status');
+		
+		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+		
+		if (isset($this->request->post['malse_geo_zone_id'])) {
+			$this->data['malse_geo_zone_id'] = $this->request->post['malse_geo_zone_id'];
+		} else {
+			$this->data['malse_geo_zone_id'] = $this->config->get('malse_geo_zone_id'); 
+		} 	
+		
+		$this->load->model('localisation/geo_zone');
+										
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
+		if (isset($this->request->post['malse_status'])) {
+			$this->data['malse_status'] = $this->request->post['malse_status'];
+		} else {
+			$this->data['malse_status'] = $this->config->get('malse_status');
+		}
+		
 		if (isset($this->request->post['malse_sort_order'])) {
 			$this->data['malse_sort_order'] = $this->request->post['malse_sort_order'];
 		} else {
 			$this->data['malse_sort_order'] = $this->config->get('malse_sort_order');
 		}
-		
-		$this->load->model('localisation/geo_zone');
-										
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		$this->id       = 'content';
 		$this->template = 'payment/malse.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

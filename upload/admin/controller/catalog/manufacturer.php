@@ -246,7 +246,7 @@ class ControllerCatalogManufacturer extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'catalog/manufacturer_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
 	}
@@ -339,7 +339,7 @@ class ControllerCatalogManufacturer extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'catalog/manufacturer_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}  
@@ -349,7 +349,7 @@ class ControllerCatalogManufacturer extends Controller {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
 
-    	if ((strlen($this->request->post['name']) < 3) || (strlen($this->request->post['name']) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['name'])) < 3) || (strlen(utf8_decode($this->request->post['name'])) > 32)) {
       		$this->error['name'] = $this->language->get('error_name');
     	}
 

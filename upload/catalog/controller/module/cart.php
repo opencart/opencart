@@ -26,7 +26,6 @@ class ControllerModuleCart extends Controller {
         		'quantity' => $result['quantity'],
 				'stock'    => $result['stock'],
 				'price'    => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
-				'image'    => HelperImage::resize($result['image'], 38, 38),
 				'href'     => $this->url->http('product/product&product_id=' . $result['product_id']),
       		);
     	}

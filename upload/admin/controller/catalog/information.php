@@ -246,7 +246,7 @@ class ControllerCatalogInformation extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'catalog/information_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
 	}
@@ -327,7 +327,7 @@ class ControllerCatalogInformation extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'catalog/information_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}
@@ -338,11 +338,11 @@ class ControllerCatalogInformation extends Controller {
 		}
 
 		foreach ($this->request->post['information_description'] as $language_id => $value) {
-			if ((strlen($value['title']) < 3) || (strlen($value['title']) > 32)) {
+			if ((strlen(utf8_decode($value['title'])) < 3) || (strlen(utf8_decode($value['title'])) > 32)) {
 				$this->error['title'][$language_id] = $this->language->get('error_title');
 			}
 		
-			if (strlen($value['description']) < 3) {
+			if (strlen(utf8_decode($value['description'])) < 3) {
 				$this->error['description'][$language_id] = $this->language->get('error_description');
 			}
 		}

@@ -25,6 +25,7 @@ $_['text_shipping_address'] = 'Shipping Address';
 $_['text_shipping_method']  = 'Shipping Method';
 $_['text_payment_address']  = 'Payment Address';
 $_['text_payment_method']   = 'Payment Method';
+$_['text_order_comment']    = 'Order Comments';
 $_['text_status']           = 'Status';
 $_['text_notify']           = 'Customer Notified';
 $_['text_comment']          = 'Comments';
@@ -50,15 +51,13 @@ $_['entry_comment']         = 'Comments';
 $_['entry_notify']          = 'Notify Customer';
 
 // E-Mail
-$_['email_subject']         = 'Order ID #%s - Order Update';
-$_['email_message']         = 'Order ID: #%s ' . "\n" . 
-                              'Date Ordered: %s' . "\n\n" . 
-							  'Your order has been updated to the following status: %s' . "\n\n".
-                              'The comments for your order are:' . "\n\n" . 
-							  '%s' . "\n\n".
-							  'To view your order click the link below:' . "\n" . 
-							  '%s' . "\n\n".
-                              'Please reply to this email if you have any questions.';
+$_['mail_subject']          = '%s - Order Update %s';
+$_['mail_order']            = 'Order ID:';
+$_['mail_date_added']       = 'Date Ordered:';
+$_['mail_order_status']     = 'Your order has been updated to the following status:';
+$_['mail_comment']          = 'The comments for your order are:';
+$_['mail_invoice']          = 'To view your order click on the link below:';
+$_['mail_footer']           = 'Please reply to this email if you have any questions.';
 
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify orders!';

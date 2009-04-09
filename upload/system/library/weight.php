@@ -7,18 +7,18 @@ final class Weight {
     	$this->db = Registry::get('db');
 		$this->language = Registry::get('language');
 
-		$query = $this->db->query("SELECT * FROM weight_class WHERE language_id = '" . (int)$this->language->getId() . "'");
+		$weight_class_query = $this->db->query("SELECT * FROM weight_class WHERE language_id = '" . (int)$this->language->getId() . "'");
     
-    	foreach ($query->rows as $result) {
+    	foreach ($weight_class_query->rows as $result) {
       		$this->classes[$result['weight_class_id']] = array(
         		'unit'  => $result['unit'],
         		'title' => $result['title']
       		);
     	}
 		
-    	$query = $this->db->query("SELECT * FROM weight_rule");
+    	$weight_rule_query = $this->db->query("SELECT * FROM weight_rule");
 	
-    	foreach ($query->rows as $result) {
+    	foreach ($weight_rule_query->rows as $result) {
       		$this->rules[$result['from_id']][$result['to_id']] = $result['rule'];
     	}
   	}

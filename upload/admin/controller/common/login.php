@@ -14,7 +14,7 @@ class ControllerCommonLogin extends Controller {
 		if (($this->request->post) && ($this->validate())) { 
 	  		$this->redirect($this->url->https('common/home'));
 		}
-
+		
 		$this->data['title'] = $this->language->get('heading_title');
 		$this->data['base'] = (@$this->request->server['HTTPS'] != 'on') ? HTTP_SERVER : HTTPS_SERVER;
 		$this->data['charset'] = $this->language->get('charset');
@@ -33,10 +33,7 @@ class ControllerCommonLogin extends Controller {
     	$this->data['action'] = $this->url->https('common/login');
 		
 		$this->template = 'common/login.tpl';
-		$this->children = array(
-			'module/header',
-		);
-		
+		$this->children = array('common/header');		
     	$this->render();
   	}
 		

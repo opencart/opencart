@@ -23,7 +23,7 @@ class ControllerErrorNotFound extends Controller {
 		
 		$this->id       = 'content'; 
 		$this->template = 'error/not_found.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		    
 		$this->render();	
   	}

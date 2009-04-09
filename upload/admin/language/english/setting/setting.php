@@ -4,10 +4,6 @@ $_['heading_title']           = 'Settings';
 
 // Text
 $_['text_success']            = 'Success: You have successfully saved your settings!';
-$_['text_account']            = 'New Account';
-$_['text_forgotten']          = 'Forgotten Password';
-$_['text_order']              = 'New Order';
-$_['text_update']             = 'Order Update';
 
 // Entry
 $_['entry_store']             = 'Store Name:';
@@ -32,17 +28,9 @@ $_['entry_order_status']      = 'Order Status:';
 $_['entry_stock_check']       = 'Show Out Of Stock:';
 $_['entry_stock_checkout']    = 'Stock Checkout:';
 $_['entry_stock_subtract']    = 'Stock Subtract:';
-$_['entry_stock_status']      = 'Stock Statuses:';
+$_['entry_stock_status']      = 'Stock Status:';
 $_['entry_download']          = 'Allow Downloads:';
 $_['entry_download_status']   = 'Download Order Status:';
-$_['entry_account_subject']   = 'Account Subject:'; 
-$_['entry_account_message']   = 'Account Message:'; 
-$_['entry_forgotten_subject'] = 'Forgotten Password Subject:';
-$_['entry_forgotten_message'] = 'Forgotten Password Message:';
-$_['entry_order_subject']     = 'New Order Subject:'; 
-$_['entry_order_message']     = 'New Order Message:';
-$_['entry_update_subject']    = 'Order Update Subject:';
-$_['entry_update_message']    = 'Order Update Message:';
 $_['entry_cache']             = 'Use Caching:';
 $_['entry_compression']       = 'Output Compression Level:';
 
@@ -53,10 +41,6 @@ $_['help_stock_check']        = 'Display out of stock message on the shopping ca
 $_['help_stock_checkout']     = 'Allow customers to still checkout if the products they are ordering are not in stock.';
 $_['help_stock_subtract']     = 'Subtract product quantity when an order is processed.';
 $_['help_download_status']    = 'Set the order status the customers order must reach before they are allowed to access their downloadable products.';
-$_['help_account']            = '<b>Replacement Tags:</b><br />{store} - Store Name<br />{firstname} - Customers First Name<br />{login} - Login link';
-$_['help_forgotten']          = '<b>Replacement Tags:</b><br />{store} - Store Name<br />{password} - New Password';
-$_['help_order']              = '<b>Replacement Tags:</b><br />{store} - Store Name<br />{order_id} - Order ID<br />{date_added} - Date order was added<br />{status} - Order Status<br />{invoice} - Invoice link';
-$_['help_update']             = '<b>Replacement Tags:</b><br />{store} - Store Name<br />{order_id} - Order ID<br />{date_added} - Date order was added<br />{status} - Order Status<br />{comment} - Order comments<br />{invoice} - Invoice link';
 $_['help_compression']        = 'GZIP for more efficient transfer to requesting clients. Compression level must be between 0 - 9';
 
 // Error
@@ -68,12 +52,4 @@ $_['error_owner']             = 'Store Owner must be greater than 3 and less tha
 $_['error_address']           = 'Store Address must be greater than 10 and less than 128 characters!';
 $_['error_email']             = 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']         = 'Telephone must be greater than 3 and less than 32 characters!';
-$_['error_account_subject']   = 'Account subject is required!';
-$_['error_account_message']   = 'Account message is required!';
-$_['error_forgotten_subject'] = 'Forgotten subject is required!';
-$_['error_forgotten_message'] = 'Forgotten message is required!';
-$_['error_order_subject']     = 'Order subject is required!';
-$_['error_order_message']     = 'Order message is required!';
-$_['error_update_subject']    = 'Order update subject is required!';
-$_['error_update_message']    = 'Order update message is required!'; 
 ?>

@@ -59,7 +59,7 @@ class ControllerAccountNewsletter extends Controller {
 		
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'account/newsletter.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();			
   	}

@@ -114,7 +114,7 @@ class ControllerCustomerMail extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'customer/mail.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
 	}

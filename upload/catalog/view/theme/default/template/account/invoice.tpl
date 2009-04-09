@@ -75,6 +75,10 @@
       </table>
     </div>
   </div>
+  <?php if ($comment) { ?>
+  <b style="margin-bottom: 3px; display: block;"><?php echo $text_comment; ?></b>
+  <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;"><?php echo $comment; ?></div>
+  <?php } ?>
   <b style="margin-bottom: 3px; display: block;"><?php echo $text_order_history; ?></b>
   <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
     <table width="100%">
@@ -85,9 +89,9 @@
       </tr>
       <?php foreach ($historys as $history) { ?>
       <tr>
-        <td><?php echo $history['date_added']; ?></td>
-        <td><?php echo $history['status']; ?></td>
-        <td><?php echo $history['comment']; ?></td>
+        <td valign="top"><?php echo $history['date_added']; ?></td>
+        <td valign="top"><?php echo $history['status']; ?></td>
+        <td valign="top"><?php echo $history['comment']; ?></td>
       </tr>
       <?php } ?>
     </table>

@@ -335,7 +335,7 @@ class ControllerCatalogProduct extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'catalog/product_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
   	}
@@ -369,6 +369,7 @@ class ControllerCatalogProduct extends Controller {
     	$this->data['entry_image'] = $this->language->get('entry_image');
     	$this->data['entry_download'] = $this->language->get('entry_download');
     	$this->data['entry_category'] = $this->language->get('entry_category');
+		$this->data['entry_related'] = $this->language->get('entry_related');
 		$this->data['entry_option'] = $this->language->get('entry_option');
 		$this->data['entry_option_value'] = $this->language->get('entry_option_value');
 		$this->data['entry_prefix'] = $this->language->get('entry_prefix');
@@ -641,10 +642,20 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$this->data['product_category'] = array();
 		}		
- 
+ 				
+		$this->data['products'] = $this->model_catalog_product->getProducts();
+		
+ 		if (isset($this->request->post['product_related'])) {
+			$this->data['product_related'] = (array)@$this->request->post['product_related'];
+		} elseif (isset($product_info)) {
+			$this->data['product_related'] = $this->model_catalog_product->getProductRelated($this->request->get['product_id']);
+		} else {
+			$this->data['product_related'] = array();
+		}	
+		
 		$this->id       = 'content';
 		$this->template = 'catalog/product_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
   	} 
@@ -655,20 +666,20 @@ class ControllerCatalogProduct extends Controller {
     	}
 
     	foreach ($this->request->post['product_description'] as $language_id => $value) {
-      		if ((strlen($value['name']) < 3) || (strlen($value['name']) > 255)) {
+      		if ((strlen(utf8_decode($value['name'])) < 3) || (strlen(utf8_decode($value['name'])) > 255)) {
         		$this->error['name'][$language_id] = $this->language->get('error_name');
       		}
 
-      		if (strlen($value['meta_description']) > 66) {
+      		if (strlen(utf8_decode($value['meta_description'])) > 66) {
         		$this->error['meta_description'][$language_id] = $this->language->get('error_meta_description');
       		}
 			
-      		if (strlen($value['description']) < 3) {
+      		if (strlen(utf8_decode($value['description'])) < 3) {
         		$this->error['description'][$language_id] = $this->language->get('error_description');
       		}
     	}
 		
-    	if ((strlen($this->request->post['model']) < 3) || (strlen($this->request->post['model']) > 24)) {
+    	if ((strlen(utf8_decode($this->request->post['model'])) < 3) || (strlen(utf8_decode($this->request->post['model'])) > 24)) {
       		$this->error['model'] = $this->language->get('error_model');
     	}
 		

@@ -34,7 +34,7 @@ class ControllerCatalogImage extends Controller {
 		
 		if (isset($this->request->files['image'])) {
 			if (is_uploaded_file($this->request->files['image']['tmp_name'])) {
-	  			if ((strlen($this->request->files['image']['name']) < 3) || (strlen($this->request->files['image']['name']) > 255)) {
+	  			if ((strlen(utf8_decode($this->request->files['image']['name'])) < 3) || (strlen(utf8_decode($this->request->files['image']['name'])) > 255)) {
         			$this->error['message'] = $this->language->get('error_filename');
 	  			}
 

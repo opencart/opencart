@@ -45,6 +45,11 @@ class ControllerPaymentWorldPay extends Controller {
 	
 	public function callback() {
 		
+		$this->id       = 'content';
+		$this->template = $this->config->get('config_template') . 'payment/worldpay_callback.tpl';
+		$this->layout   = 'module/layout';
+			  
+	  	$this->render();
 	}
 }
 ?>

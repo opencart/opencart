@@ -26,10 +26,10 @@ class ControllerPaymentPayMate extends Controller {
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
 				
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_username'] = $this->language->get('entry_username');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -64,18 +64,12 @@ class ControllerPaymentPayMate extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
 		
-		if (isset($this->request->post['paymate_status'])) {
-			$this->data['paymate_status'] = $this->request->post['paymate_status'];
+		if (isset($this->request->post['paymate_username'])) {
+			$this->data['paymate_username'] = $this->request->post['paymate_username'];
 		} else {
-			$this->data['paymate_status'] = $this->config->get('paymate_status');
+			$this->data['paymate_username'] = $this->config->get('paymate_username');
 		}
 		
-		if (isset($this->request->post['paymate_geo_zone_id'])) {
-			$this->data['paymate_geo_zone_id'] = $this->request->post['paymate_geo_zone_id'];
-		} else {
-			$this->data['paymate_geo_zone_id'] = $this->config->get('paymate_geo_zone_id'); 
-		} 
-
 		if (isset($this->request->post['paymate_order_status_id'])) {
 			$this->data['paymate_order_status_id'] = $this->request->post['paymate_order_status_id'];
 		} else {
@@ -86,10 +80,20 @@ class ControllerPaymentPayMate extends Controller {
 		
 		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 		
-		if (isset($this->request->post['paymate_username'])) {
-			$this->data['paymate_username'] = $this->request->post['paymate_username'];
+		if (isset($this->request->post['paymate_geo_zone_id'])) {
+			$this->data['paymate_geo_zone_id'] = $this->request->post['paymate_geo_zone_id'];
 		} else {
-			$this->data['paymate_username'] = $this->config->get('paymate_username');
+			$this->data['paymate_geo_zone_id'] = $this->config->get('paymate_geo_zone_id'); 
+		} 
+		
+		$this->load->model('localisation/geo_zone');
+										
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
+		if (isset($this->request->post['paymate_status'])) {
+			$this->data['paymate_status'] = $this->request->post['paymate_status'];
+		} else {
+			$this->data['paymate_status'] = $this->config->get('paymate_status');
 		}
 		
 		if (isset($this->request->post['paymate_sort_order'])) {
@@ -97,14 +101,10 @@ class ControllerPaymentPayMate extends Controller {
 		} else {
 			$this->data['paymate_sort_order'] = $this->config->get('paymate_sort_order');
 		}
-		
-		$this->load->model('localisation/geo_zone');
-										
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		$this->id       = 'content';
 		$this->template = 'payment/paymate.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

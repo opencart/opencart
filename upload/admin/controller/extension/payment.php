@@ -76,7 +76,7 @@ class ControllerExtensionPayment extends Controller {
 						
 		$this->id       = 'content';
 		$this->template = 'extension/payment.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
 	}

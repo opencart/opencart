@@ -111,6 +111,8 @@ class ControllerProductProduct extends Controller {
 			$this->data['text_average'] = $this->language->get('text_average');
 			$this->data['text_no_rating'] = $this->language->get('text_no_rating');
 			$this->data['text_note'] = $this->language->get('text_note');
+			$this->data['text_no_images'] = $this->language->get('text_no_images');
+			$this->data['text_no_related'] = $this->language->get('text_no_related');
 
 			$this->data['entry_name'] = $this->language->get('entry_name');
 			$this->data['entry_review'] = $this->language->get('entry_review');
@@ -126,6 +128,7 @@ class ControllerProductProduct extends Controller {
 			$this->data['tab_description'] = $this->language->get('tab_description');
 			$this->data['tab_image'] = $this->language->get('tab_image');
 			$this->data['tab_review'] = sprintf($this->language->get('tab_review'), $this->model_catalog_review->getTotalReviewsByProductId($this->request->get['product_id']));
+			$this->data['tab_related'] = $this->language->get('tab_related');
 			
 			$average = $this->model_catalog_review->getAverageRating($this->request->get['product_id']);	
 			
@@ -197,12 +200,45 @@ class ControllerProductProduct extends Controller {
           			'thumb' => HelperImage::resize($result['image'], 150, 150)
         		);
       		}
-	  		
+
+			$this->data['products'] = array();
+			
+			$results = $this->model_catalog_product->getProductRelated($this->request->get['product_id']);
+			
+      		foreach ($results as $result) {
+				if ($result['image']) {
+					$image = $result['image'];
+				} else {
+					$image = 'no_image.jpg';
+				}
+			
+				$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
+
+				$special = $this->model_catalog_product->getProductSpecial($result['product_id']);
+			
+				if ($special) {
+					$special = $this->currency->format($this->tax->calculate($special, $result['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$special = FALSE;
+				}
+			
+          		$this->data['products'][] = array(
+            		'name'    => $result['name'],
+					'model'   => $result['model'],
+            		'rating'  => $rating,
+					'stars'   => sprintf($this->language->get('text_stars'), $rating),
+					'thumb'   => HelperImage::resize($image, 120, 120),
+            		'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
+					'special' => $special,
+					'href'    => $this->url->http('product/product&product_id=' . $result['product_id'])
+          		);
+      		}
+			
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 						
 			$this->id       = 'content';
 			$this->template = $this->config->get('config_template') . 'product/product.tpl';
-			$this->layout   = 'module/layout';
+			$this->layout   = 'common/layout';
 		
 			$this->render();
     	} else {
@@ -242,7 +278,7 @@ class ControllerProductProduct extends Controller {
 	  
 			$this->id       = 'content';
 			$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
-			$this->layout   = 'module/layout';
+			$this->layout   = 'common/layout';
 		
 			$this->render();
     	}
@@ -322,11 +358,11 @@ class ControllerProductProduct extends Controller {
 	}
 	
   	private function validate() {
-    	if ((strlen($this->request->post['name']) < 3) || (strlen($this->request->post['name']) > 25)) {
+    	if ((strlen(utf8_decode($this->request->post['name'])) < 3) || (strlen(utf8_decode($this->request->post['name'])) > 25)) {
       		$this->error['message'] = $this->language->get('error_name');
     	}
 		
-    	if ((strlen($this->request->post['text']) < 25) || (strlen($this->request->post['text']) > 1000)) {
+    	if ((strlen(utf8_decode($this->request->post['text'])) < 25) || (strlen(utf8_decode($this->request->post['text'])) > 1000)) {
       		$this->error['message'] = $this->language->get('error_text');
     	}
 

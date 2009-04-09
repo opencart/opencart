@@ -76,7 +76,7 @@ class ControllerExtensionShipping extends Controller {
 	
 		$this->id       = 'content';
 		$this->template = 'extension/shipping.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
 	}

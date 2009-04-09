@@ -263,14 +263,12 @@ a.button span {
 }
 .sort .div1 {
 	float: right;
-	display: inline-block;
 	margin-left: 5px;
 	padding-top: 6px;
 	padding-right: 9px;
 }
 .sort .div2 {
 	text-align: right;
-	display: inline-block;
 	padding-top: 9px;
 }
 .sort select {

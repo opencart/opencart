@@ -243,7 +243,7 @@ class ControllerLocalisationTaxClass extends Controller {
 				
 		$this->id       = 'content';
 		$this->template = 'localisation/tax_class_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
 	}
@@ -335,7 +335,7 @@ class ControllerLocalisationTaxClass extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'localisation/tax_class_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();
 	}
@@ -345,11 +345,11 @@ class ControllerLocalisationTaxClass extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((strlen($this->request->post['title']) < 3) || (strlen($this->request->post['title']) > 32)) {
+		if ((strlen(utf8_decode($this->request->post['title'])) < 3) || (strlen(utf8_decode($this->request->post['title'])) > 32)) {
 			$this->error['title'] = $this->language->get('error_title');
 		}
 
-		if ((strlen($this->request->post['description']) < 3) || (strlen($this->request->post['description']) > 255)) {
+		if ((strlen(utf8_decode($this->request->post['description'])) < 3) || (strlen(utf8_decode($this->request->post['description'])) > 255)) {
 			$this->error['description'] = $this->language->get('error_description');
 		}
 		
@@ -363,7 +363,7 @@ class ControllerLocalisationTaxClass extends Controller {
 					$this->error['warning'] = $this->language->get('error_rate');
 				}
 
-				if ((strlen($value['description']) < 3) || (strlen($value['description']) > 255)) {
+				if ((strlen(utf8_decode($value['description'])) < 3) || (strlen(utf8_decode($value['description'])) > 255)) {
 					$this->error['warning'] = $this->language->get('error_description');
 				}
 			}

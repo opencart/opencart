@@ -70,7 +70,7 @@ class ControllerTotalShipping extends Controller {
 																				
 		$this->id       = 'content';
 		$this->template = 'total/shipping.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

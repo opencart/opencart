@@ -2,7 +2,7 @@
   <h1><?php echo $heading_title; ?></h1>
 </div>
 <div class="middle">
-  <div style="display: inline-block; margin-bottom: 30px;">
+  <div style="display: inline-block; width: 100%; margin-bottom: 30px;">
     <div style="float: left; text-align: center; width: 250px;"><a href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>" class="thickbox"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" style="margin-bottom: 3px;" /></a><br />
       <span style="font-size: 11px;"><?php echo $text_enlarge; ?></span></div>
     <div style="float: right; margin-left: 10px; width: 296px;">
@@ -68,7 +68,7 @@
       </form>
     </div>
   </div>
-  <div class="tabs"><a tab="#tab_description"><?php echo $tab_description; ?></a><a tab="#tab_image"><?php echo $tab_image; ?></a><a tab="#tab_review"><?php echo $tab_review; ?></a></div>
+  <div class="tabs"><a tab="#tab_description"><?php echo $tab_description; ?></a><a tab="#tab_image"><?php echo $tab_image; ?></a><a tab="#tab_review"><?php echo $tab_review; ?></a><a tab="#tab_related"><?php echo $tab_related; ?></a></div>
   <div id="tab_description" class="page"><?php echo $description; ?></div>
   <div id="tab_review" class="page">
     <div id="review"></div>
@@ -82,15 +82,15 @@
       <span style="font-size: 11px;"><?php echo $text_note; ?></span><br />
       <br />
       <b><?php echo $entry_rating; ?></b> <span><?php echo $entry_bad; ?></span>&nbsp;
-      <input type="radio" name="rating" value="1" style="margin: 0; margin: 0;" />
+      <input type="radio" name="rating" value="1" style="margin: 0;" />
       &nbsp;
-      <input type="radio" name="rating" value="2" style="margin: 0; margin: 0;" />
+      <input type="radio" name="rating" value="2" style="margin: 0;" />
       &nbsp;
-      <input type="radio" name="rating" value="3" style="margin: 0; margin: 0;" />
+      <input type="radio" name="rating" value="3" style="margin: 0;" />
       &nbsp;
-      <input type="radio" name="rating" value="4" style="margin: 0; margin: 0;" />
+      <input type="radio" name="rating" value="4" style="margin: 0;" />
       &nbsp;
-      <input type="radio" name="rating" value="5" style="margin: 0; margin: 0;" />
+      <input type="radio" name="rating" value="5" style="margin: 0;" />
       &nbsp; <span><?php echo $entry_good; ?></span><br />
       <br />
       <b><?php echo $entry_verification; ?></b><br />
@@ -106,14 +106,43 @@
     </div>
   </div>
   <div id="tab_image" class="page">
+    <?php if ($images) { ?>
     <div style="display: inline-block;">
-      <?php if ($images) { ?>
       <?php foreach ($images as $image) { ?>
       <div style="display: inline-block; float: left; text-align: center; margin-left: 5px; margin-right: 5px; margin-bottom: 10px;"><a href="<?php echo $image['popup']; ?>" title="<?php echo $heading_title; ?>" class="thickbox"><img src="<?php echo $image['thumb']; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" style="border: 1px solid #DDDDDD; margin-bottom: 3px;" /></a><br />
         <span style="font-size: 11px;"><?php echo $text_enlarge; ?></span></div>
       <?php } ?>
-      <?php } ?>
     </div>
+    <?php } else { ?>
+    <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;"><?php echo $text_no_images; ?></div>
+    <?php } ?>
+  </div>
+  <div id="tab_related" class="page">
+    <?php if ($products) { ?>
+    <table class="list">
+      <?php for ($i = 0; $i < sizeof($products); $i = $i + 4) { ?>
+      <tr>
+        <?php for ($j = $i; $j < ($i + 4); $j++) { ?>
+        <td width="25%"><?php if (isset($products[$j])) { ?>
+          <a href="<?php echo $products[$j]['href']; ?>"><img src="<?php echo $products[$j]['thumb']; ?>" title="<?php echo $products[$j]['name']; ?>" alt="<?php echo $products[$j]['name']; ?>" /></a><br />
+          <a href="<?php echo $products[$j]['href']; ?>"><?php echo $products[$j]['name']; ?></a><br />
+          <span style="color: #999; font-size: 11px;"><?php echo $products[$j]['model']; ?></span><br />
+          <?php if (!$products[$j]['special']) { ?>
+          <span style="color: #900; font-weight: bold;"><?php echo $products[$j]['price']; ?></span><br />
+          <?php } else { ?>
+          <span style="color: #900; font-weight: bold; text-decoration: line-through;"><?php echo $products[$j]['price']; ?></span> <span style="color: #F00;"><?php echo $products[$j]['special']; ?></span>
+          <?php } ?>
+          <?php if ($products[$j]['rating']) { ?>
+          <img src="catalog/view/theme/default/image/stars_<?php echo $products[$j]['rating'] . '.png'; ?>" alt="<?php echo $products[$j]['stars']; ?>" />
+          <?php } ?>
+          <?php } ?></td>
+        <?php } ?>
+      </tr>
+      <?php } ?>
+    </table>
+    <?php } else { ?>
+    <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;"><?php echo $text_no_related; ?></div>
+    <?php } ?>
   </div>
 </div>
 <div class="bottom"></div>

@@ -24,13 +24,13 @@ class ModelReportReport extends Model {
 	}	
 	
 	public function getProductPurchasedReport($start = 0, $limit = 20) {
-		$query = $this->db->query("SELECT op.name, op.model, SUM(op.quantity) AS quantity, SUM((op.total + op.tax) * op.quantity) AS total FROM order_product op LEFT JOIN `order` o ON (op.order_id = o.order_id) WHERE o.confirm = '1' GROUP BY model ORDER BY total DESC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT op.name, op.model, SUM(op.quantity) AS quantity, SUM((op.total + op.tax) * op.quantity) AS total FROM order_product op LEFT JOIN `order` o ON (op.order_id = o.order_id) WHERE o.order_status_id > '0' GROUP BY model ORDER BY total DESC LIMIT " . (int)$start . "," . (int)$limit);
 	
 		return $query->rows;
 	}
 
 	public function getSaleReport($data = array()) {
-		$sql = "SELECT MIN(date_added) AS date_start, MAX(date_added) AS date_end, COUNT(*) AS orders, SUM(total) AS total FROM `order` WHERE confirm = '1'"; 
+		$sql = "SELECT MIN(date_added) AS date_start, MAX(date_added) AS date_end, COUNT(*) AS orders, SUM(total) AS total FROM `order` WHERE order_status_id > '0'"; 
 		
 		if (isset($data['date_start'])) {
 			$date_start = $data['date_start'];
@@ -82,7 +82,7 @@ class ModelReportReport extends Model {
 	}
 	
 	public function getSaleReportTotal($data = array()) {
-		$sql = "SELECT MIN(date_added) AS date_start, MAX(date_added) AS date_end, COUNT(*) AS orders, SUM(total) AS total FROM `order` WHERE confirm = '1'";
+		$sql = "SELECT MIN(date_added) AS date_start, MAX(date_added) AS date_end, COUNT(*) AS orders, SUM(total) AS total FROM `order` WHERE order_status_id > '0'";
 		
 		if (isset($data['date_start'])) {
 			$date_start = $data['date_start'];

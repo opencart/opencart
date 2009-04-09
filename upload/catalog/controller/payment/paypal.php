@@ -45,9 +45,11 @@ class ControllerPaymentPayPal extends Controller {
 	}
 	
 	public function confirm() {
-		$this->load->model('checkout/order');
+		if (!$this->config->get('paypal_callback')) {
+			$this->load->model('checkout/order');
 		
-		$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
+			$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
+		}
 	}
 	
 	public function callback() {
@@ -69,7 +71,7 @@ class ControllerPaymentPayPal extends Controller {
 
 			$header  = 'POST /cgi-bin/webscr HTTP/1.0' . "\r\n";
 			$header .= 'Content-Type: application/x-www-form-urlencoded' . "\r\n";
-			$header .= 'Content-Length: ' . strlen($req) . "\r\n\r\n";
+			$header .= 'Content-Length: ' . strlen(utf8_decode($req)) . "\r\n\r\n";
 		
 			if (!$this->config->get('paypal_test')) {
 				$fp = fsockopen('www.paypal.com', 80, $errno, $errstr, 30);
@@ -84,7 +86,11 @@ class ControllerPaymentPayPal extends Controller {
 					$res = fgets($fp, 1024);
 				
 					if (strcmp($res, 'VERIFIED') == 0) {
-						$this->model_checkout_order->update($order_id, $this->config->get('paypal_order_status_id'));
+						if ($this->config->get('paypal_callback')) {
+							$this->model_checkout_order->confirm($order_id, $this->config->get('paypal_order_status_id'));
+						} else {
+							$this->model_checkout_order->update($order_id, $this->config->get('paypal_order_status_id'));
+						}
 					}
 				}
 			

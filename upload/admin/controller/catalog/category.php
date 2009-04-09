@@ -126,7 +126,7 @@ class ControllerCatalogCategory extends Controller {
 		
 		$this->id       = 'content';
 		$this->template = 'catalog/category_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
 	}
@@ -222,7 +222,7 @@ class ControllerCatalogCategory extends Controller {
 		
 		$this->id       = 'content';
 		$this->template = 'catalog/category_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}
@@ -233,11 +233,11 @@ class ControllerCatalogCategory extends Controller {
 		}
 
 		foreach ($this->request->post['category_description'] as $language_id => $value) {
-			if ((strlen($value['name']) < 2) || (strlen($value['name']) > 32)) {
+			if ((strlen(utf8_decode($value['name'])) < 2) || (strlen(utf8_decode($value['name'])) > 32)) {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
 
-      		if (strlen($value['meta_description']) > 66) {
+      		if (strlen(utf8_decode($value['meta_description'])) > 66) {
         		$this->error['meta_description'][$language_id] = $this->language->get('error_meta_description');
       		}
 		}

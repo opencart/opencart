@@ -7,19 +7,19 @@ final class Tax {
 		$this->db = Registry::get('db');	
 		$this->session = Registry::get('session');
 			
-		$query = $this->db->query("SELECT country_id, zone_id FROM address WHERE address_id = '" . (int)@$this->session->data['shipping_address_id'] . "' AND customer_id = '" . (int)@$this->session->data['customer_id'] . "'");
+		$tax_class_query = $this->db->query("SELECT country_id, zone_id FROM address WHERE address_id = '" . (int)@$this->session->data['shipping_address_id'] . "' AND customer_id = '" . (int)@$this->session->data['customer_id'] . "'");
 		
-		if ($query->num_rows) {
-			$country_id = $query->row['country_id'];
-			$zone_id    = $query->row['zone_id'];
+		if ($tax_class_query->num_rows) {
+			$country_id = $tax_class_query->row['country_id'];
+			$zone_id    = $tax_class_query->row['zone_id'];
 		} else {
 			$country_id = $this->config->get('config_country_id');
 			$zone_id    = $this->config->get('config_zone_id');
 		}
 		
-		$query = $this->db->query("SELECT tr.tax_class_id, SUM(tr.rate) AS rate, tr.description FROM tax_rate tr LEFT JOIN zone_to_geo_zone z2gz ON (tr.geo_zone_id = z2gz.geo_zone_id) LEFT JOIN geo_zone gz ON (tr.geo_zone_id = gz.geo_zone_id) WHERE (z2gz.country_id = '0' OR z2gz.country_id = '" . (int)$country_id . "') AND (z2gz.zone_id = '0' OR z2gz.zone_id = '" . (int)$zone_id . "') GROUP BY tr.tax_class_id");
+		$tax_rate_query = $this->db->query("SELECT tr.tax_class_id, SUM(tr.rate) AS rate, tr.description FROM tax_rate tr LEFT JOIN zone_to_geo_zone z2gz ON (tr.geo_zone_id = z2gz.geo_zone_id) LEFT JOIN geo_zone gz ON (tr.geo_zone_id = gz.geo_zone_id) WHERE (z2gz.country_id = '0' OR z2gz.country_id = '" . (int)$country_id . "') AND (z2gz.zone_id = '0' OR z2gz.zone_id = '" . (int)$zone_id . "') GROUP BY tr.tax_class_id");
 	
-		foreach ($query->rows as $result) {
+		foreach ($tax_rate_query->rows as $result) {
       		$this->taxes[$result['tax_class_id']] = array(
         		'rate'        => $result['rate'],
         		'description' => $result['description']

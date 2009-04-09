@@ -56,7 +56,7 @@ switch ($step) {
     			$error['message'] = 'Warning: Image directory needs to be writable for OpenCart to work!';
   			}
 
- 			if (!is_writable(dirname(__FILE__) . '/../image')) {
+ 			if (!is_writable(dirname(__FILE__) . '/../image/cache')) {
     			$error['message'] = 'Warning: Image cache directory needs to be writable for OpenCart to work!';
   			}
 			

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 27, 2009 at 02:32 AM
+-- Generation Time: Apr 09, 2009 at 12:15 AM
 -- Server version: 5.0.67
 -- PHP Version: 5.2.6
 
@@ -40,17 +40,12 @@ CREATE TABLE `address` (
   `zone_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`address_id`),
   KEY `customer_id` (`customer_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `address`
 --
 
-INSERT INTO `address` (`address_id`, `customer_id`, `company`, `firstname`, `lastname`, `address_1`, `address_2`, `postcode`, `city`, `country_id`, `zone_id`) VALUES
-(2, 2, 'OpenCart', 'Daniel', 'Kerr', '34 Lancaster Ave', '', 'FY5 4NN', 'Thornton-Cleveleys', 222, 3563),
-(4, 2, 'OpenCart', 'Daniel', 'Kerr', '34 Lancaster Ave', '', 'FY5 4NN', 'Thornton-Cleveleys', 222, 3563),
-(5, 1, 'OpenCart', 'Daniel', 'Kerr', '34 Lancaster Ave', '', 'FY5 4NN', 'THornton-Cleveleys', 222, 3563),
-(6, 2, '', 'john', 'customer', '6661 - 22 ave', '', '', 'london', 222, 3563);
 
 -- --------------------------------------------------------
 
@@ -76,7 +71,7 @@ CREATE TABLE `category` (
 INSERT INTO `category` (`category_id`, `image`, `parent_id`, `sort_order`, `date_added`, `date_modified`) VALUES
 (25, '', 0, 3, '2009-01-31 01:04:25', '2009-02-02 14:11:14'),
 (27, '', 20, 2, '2009-01-31 01:55:34', '2009-02-02 14:11:53'),
-(20, '', 0, 1, '2009-01-05 21:49:43', '2009-03-26 21:56:23'),
+(20, '', 0, 1, '2009-01-05 21:49:43', '2009-04-01 18:43:36'),
 (24, '', 0, 5, '2009-01-20 02:36:26', '2009-02-03 14:22:23'),
 (18, '', 0, 2, '2009-01-05 21:49:15', '2009-02-03 13:54:50'),
 (17, '', 0, 4, '2009-01-03 21:08:57', '2009-02-02 14:12:10'),
@@ -134,7 +129,7 @@ INSERT INTO `category_description` (`category_id`, `language_id`, `name`, `meta_
 DROP TABLE IF EXISTS `country`;
 CREATE TABLE `country` (
   `country_id` int(11) NOT NULL auto_increment,
-  `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  `name` varchar(128) collate utf8_unicode_ci NOT NULL,
   `iso_code_2` varchar(2) collate utf8_unicode_ci NOT NULL default '',
   `iso_code_3` varchar(3) collate utf8_unicode_ci NOT NULL default '',
   `address_format` text collate utf8_unicode_ci NOT NULL,
@@ -257,7 +252,7 @@ INSERT INTO `country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `addres
 (109, 'Kazakhstan', 'KZ', 'KAZ', ''),
 (110, 'Kenya', 'KE', 'KEN', ''),
 (111, 'Kiribati', 'KI', 'KIR', ''),
-(112, 'Korea, Democratic People''s Republic of', 'KP', 'PRK', ''),
+(112, 'Korea Democratic People&#039;s Republic Of (North Korea)', 'KP', 'PRK', ''),
 (113, 'Korea, Republic of', 'KR', 'KOR', ''),
 (114, 'Kuwait', 'KW', 'KWT', ''),
 (115, 'Kyrgyzstan', 'KG', 'KGZ', ''),
@@ -509,7 +504,7 @@ CREATE TABLE `currency` (
 INSERT INTO `currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`) VALUES
 (1, 'Pound Sterling', 'GBP', '£', '', '2', 1.00000000, 1, '2009-03-24 12:04:39'),
 (2, 'US Dollar', 'USD', '$', '', '2', 1.45690203, 1, '2009-03-26 02:12:07'),
-(3, 'Euro', 'EUR', '', '€', '2', 1.07966304, 1, '2009-03-26 02:12:07');
+(3, 'Euro', 'EUR', '', '€', '2', 1.07966304, 1, '2009-04-01 18:45:37');
 
 -- --------------------------------------------------------
 
@@ -533,7 +528,7 @@ CREATE TABLE `customer` (
   `ip` varchar(15) collate utf8_unicode_ci default NULL,
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`customer_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `customer`
@@ -592,21 +587,28 @@ CREATE TABLE `extension` (
   `type` varchar(32) collate utf8_unicode_ci NOT NULL,
   `key` varchar(32) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`extension_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=77 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=112 ;
 
 --
 -- Dumping data for table `extension`
 --
 
 INSERT INTO `extension` (`extension_id`, `type`, `key`) VALUES
-(23, 'payment', 'cod'),
 (14, 'total', 'coupon'),
 (22, 'total', 'shipping'),
 (63, 'total', 'low_order_fee'),
 (57, 'total', 'sub_total'),
 (58, 'total', 'tax'),
 (59, 'total', 'total'),
-(76, 'shipping', 'free');
+(76, 'shipping', 'free'),
+(107, 'module', 'cart'),
+(78, 'module', 'category'),
+(79, 'module', 'currency'),
+(80, 'module', 'information'),
+(81, 'module', 'manufacturer'),
+(108, 'module', 'bestseller'),
+(83, 'payment', 'bank_transfer'),
+(109, 'payment', 'cheque');
 
 -- --------------------------------------------------------
 
@@ -629,7 +631,7 @@ CREATE TABLE `geo_zone` (
 --
 
 INSERT INTO `geo_zone` (`geo_zone_id`, `name`, `description`, `date_modified`, `date_added`) VALUES
-(3, 'UK VAT Zone', 'UK VAT', '2009-02-23 12:44:48', '2009-01-06 23:26:25');
+(3, 'UK VAT Zone', 'UK VAT', '2009-04-01 18:46:49', '2009-01-06 23:26:25');
 
 -- --------------------------------------------------------
 
@@ -754,8 +756,8 @@ CREATE TABLE `order` (
   `shipping_address_2` varchar(128) collate utf8_unicode_ci default NULL,
   `shipping_city` varchar(128) collate utf8_unicode_ci NOT NULL,
   `shipping_postcode` varchar(10) collate utf8_unicode_ci NOT NULL default '',
-  `shipping_zone` varchar(32) collate utf8_unicode_ci default NULL,
-  `shipping_country` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  `shipping_zone` varchar(64) collate utf8_unicode_ci default NULL,
+  `shipping_country` varchar(128) collate utf8_unicode_ci NOT NULL,
   `shipping_address_format` text collate utf8_unicode_ci NOT NULL,
   `shipping_method` varchar(128) collate utf8_unicode_ci NOT NULL default '',
   `payment_firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
@@ -765,19 +767,19 @@ CREATE TABLE `order` (
   `payment_address_2` varchar(128) collate utf8_unicode_ci default NULL,
   `payment_city` varchar(128) collate utf8_unicode_ci NOT NULL,
   `payment_postcode` varchar(10) collate utf8_unicode_ci NOT NULL default '',
-  `payment_zone` varchar(32) collate utf8_unicode_ci default NULL,
-  `payment_country` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+  `payment_zone` varchar(64) collate utf8_unicode_ci default NULL,
+  `payment_country` varchar(128) collate utf8_unicode_ci NOT NULL,
   `payment_address_format` text collate utf8_unicode_ci NOT NULL,
   `payment_method` varchar(128) collate utf8_unicode_ci NOT NULL default '',
+  `comment` text collate utf8_unicode_ci NOT NULL,
   `total` decimal(15,4) NOT NULL default '0.0000',
-  `order_status_id` int(11) NOT NULL,
+  `order_status_id` int(11) NOT NULL default '0',
   `language_id` int(11) NOT NULL,
   `currency_id` int(11) NOT NULL,
   `currency` varchar(3) collate utf8_unicode_ci NOT NULL,
   `value` decimal(15,4) NOT NULL,
   `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  `confirm` int(1) NOT NULL default '0',
   `ip` varchar(15) collate utf8_unicode_ci NOT NULL default '',
   PRIMARY KEY  (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -822,10 +824,10 @@ CREATE TABLE `order_history` (
   `order_id` int(11) NOT NULL default '0',
   `order_status_id` int(5) NOT NULL default '0',
   `notify` int(1) default '0',
-  `comment` text collate utf8_unicode_ci,
+  `comment` text collate utf8_unicode_ci NOT NULL,
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`order_history_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=42 ;
 
 --
 -- Dumping data for table `order_history`
@@ -848,7 +850,7 @@ CREATE TABLE `order_option` (
   `price` decimal(15,4) NOT NULL default '0.0000',
   `prefix` char(1) collate utf8_unicode_ci NOT NULL default '',
   PRIMARY KEY  (`order_option_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `order_option`
@@ -965,24 +967,24 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `model`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `sort_order`, `status`, `date_added`, `date_modified`, `viewed`) VALUES
-(28, 'Product 1', 10, 7, 'htc_touch_hd_1.jpg', 5, 1, '484.4400', 9, '2009-02-03', '146.40', 2, 0, 1, '2009-02-03 16:06:50', '2009-02-22 22:25:07', 63),
-(29, 'Product 2', 10, 5, 'palm_treo_pro_1.jpg', 6, 1, '279.9900', 9, '2009-02-03', '133.00', 2, 0, 1, '2009-02-03 16:42:17', '2009-02-22 22:07:34', 12),
-(30, 'Product 3', -1, 6, 'canon_eos_5d_1.jpg', 9, 1, '100.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 16:59:00', '2009-02-22 21:46:05', 13),
-(31, 'Product 4', 50, 6, 'nikon_d300_1.jpg', 0, 1, '80.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 17:00:10', '2009-03-14 22:44:42', 6),
-(32, 'Product 5', 10, 6, 'ipod_touch_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 0, 1, '2009-02-03 17:07:26', '2009-02-22 21:53:58', 7),
+(28, 'Product 1', 10, 7, 'htc_touch_hd_1.jpg', 5, 1, '484.4400', 9, '2009-02-03', '146.40', 2, 0, 1, '2009-02-03 16:06:50', '2009-02-22 22:25:07', 68),
+(29, 'Product 2', 10, 5, 'palm_treo_pro_1.jpg', 6, 1, '279.9900', 9, '2009-02-03', '133.00', 2, 0, 1, '2009-02-03 16:42:17', '2009-02-22 22:07:34', 15),
+(30, 'Product 3', -1, 6, 'canon_eos_5d_1.jpg', 9, 1, '100.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 16:59:00', '2009-02-22 21:46:05', 16),
+(31, 'Product 4', 50, 6, 'nikon_d300_1.jpg', 0, 1, '80.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 17:00:10', '2009-03-14 22:44:42', 9),
+(32, 'Product 5', 10, 6, 'ipod_touch_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 0, 1, '2009-02-03 17:07:26', '2009-02-22 21:53:58', 8),
 (33, 'Product 6', 10, 6, 'samsung_syncmaster_941bw.jpg', 0, 1, '200.0000', 9, '2009-02-03', '5.00', 1, 0, 1, '2009-02-03 17:08:31', '2009-02-22 22:07:57', 2),
-(34, 'Product 7', 0, 6, 'ipod_shuffle_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 1, 1, '2009-02-03 18:07:54', '2009-02-22 21:51:54', 5),
+(34, 'Product 7', 0, 6, 'ipod_shuffle_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 1, 1, '2009-02-03 18:07:54', '2009-02-22 21:51:54', 8),
 (35, 'Product 8', 10, 5, '', 0, 0, '100.0000', 9, '2009-02-03', '5.00', 1, 1, 1, '2009-02-03 18:08:31', '2009-02-03 18:35:36', 6),
-(36, 'Product 9', 8, 6, 'ipod_nano_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 10, 1, '2009-02-03 18:09:19', '2009-02-22 21:50:36', 47),
-(40, 'product 11', 7, 5, 'iphone_1.jpg', 8, 1, '342.5000', 9, '2009-02-03', '133.00', 2, 0, 1, '2009-02-03 21:07:12', '2009-02-22 22:24:45', 194),
-(41, 'Product 14', 0, 5, 'imac_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:07:26', '2009-02-22 22:25:39', 21),
-(42, 'Product 15', 8, 5, 'apple_cinema_30.jpg', 8, 1, '100.0000', 9, '2009-02-03', '12.50', 1, 1, 1, '2009-02-03 21:07:37', '2009-03-27 01:36:50', 31),
-(43, 'Product 16', 10, 5, 'macbook_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:07:49', '2009-02-22 21:57:56', 11),
-(44, 'Product 17', 10, 5, 'macbook_air_1.jpg', 8, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:00', '2009-02-22 22:04:58', 5),
-(45, 'Product 18', 0, 5, 'macbook_pro_1.jpg', 8, 1, '2000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:17', '2009-02-22 22:05:50', 15),
-(46, 'Product 19', 10, 5, 'sony_vaio_1.jpg', 10, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:29', '2009-02-22 22:08:39', 16),
-(47, 'Product 20', 10, 5, 'hp_1.jpg', 7, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:40', '2009-02-22 22:24:17', 29),
-(48, 'product 20', 10, 5, 'ipod_classic_1.jpg', 8, 1, '100.0000', 9, '2009-02-08', '0.00', 1, 0, 1, '2009-02-08 17:21:51', '2009-02-22 21:49:21', 129);
+(36, 'Product 9', 8, 6, 'ipod_nano_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 10, 1, '2009-02-03 18:09:19', '2009-02-22 21:50:36', 54),
+(40, 'product 11', 7, 5, 'iphone_1.jpg', 8, 1, '342.5000', 9, '2009-02-03', '133.00', 2, 0, 1, '2009-02-03 21:07:12', '2009-02-22 22:24:45', 227),
+(41, 'Product 14', 0, 5, 'imac_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:07:26', '2009-02-22 22:25:39', 27),
+(42, 'Product 15', 8, 5, 'apple_cinema_30.jpg', 8, 1, '100.0000', 9, '2009-02-03', '12.50', 1, 1, 1, '2009-02-03 21:07:37', '2009-04-08 20:39:13', 48),
+(43, 'Product 16', 10, 5, 'macbook_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:07:49', '2009-02-22 21:57:56', 14),
+(44, 'Product 17', 10, 5, 'macbook_air_1.jpg', 8, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:00', '2009-02-22 22:04:58', 8),
+(45, 'Product 18', 0, 5, 'macbook_pro_1.jpg', 8, 1, '2000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:17', '2009-02-22 22:05:50', 16),
+(46, 'Product 19', 10, 5, 'sony_vaio_1.jpg', 10, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:29', '2009-02-22 22:08:39', 20),
+(47, 'Product 20', 10, 5, 'hp_1.jpg', 7, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:40', '2009-02-22 22:24:17', 30),
+(48, 'product 20', 10, 5, 'ipod_classic_1.jpg', 8, 1, '100.0000', 9, '2009-02-08', '0.00', 1, 0, 1, '2009-02-08 17:21:51', '2009-02-22 21:49:21', 165);
 
 -- --------------------------------------------------------
 
@@ -1038,14 +1040,14 @@ CREATE TABLE `product_discount` (
   `quantity` int(4) NOT NULL,
   `discount` decimal(15,4) NOT NULL,
   PRIMARY KEY  (`product_discount_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=279 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=282 ;
 
 --
 -- Dumping data for table `product_discount`
 --
 
 INSERT INTO `product_discount` (`product_discount_id`, `product_id`, `quantity`, `discount`) VALUES
-(278, 42, 3, '10.0000');
+(281, 42, 3, '10.0000');
 
 -- --------------------------------------------------------
 
@@ -1211,6 +1213,26 @@ INSERT INTO `product_option_value_description` (`product_option_value_id`, `lang
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product_related`
+--
+
+DROP TABLE IF EXISTS `product_related`;
+CREATE TABLE `product_related` (
+  `product_id` int(11) NOT NULL,
+  `related_id` int(11) NOT NULL,
+  PRIMARY KEY  (`product_id`,`related_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product_related`
+--
+
+INSERT INTO `product_related` (`product_id`, `related_id`) VALUES
+(42, 41);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product_special`
 --
 
@@ -1222,14 +1244,14 @@ CREATE TABLE `product_special` (
   `date_start` date NOT NULL,
   `date_end` date NOT NULL,
   PRIMARY KEY  (`product_special_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `product_special`
 --
 
 INSERT INTO `product_special` (`product_special_id`, `product_id`, `price`, `date_start`, `date_end`) VALUES
-(9, 42, '100.0000', '2009-03-01', '2009-03-31');
+(12, 42, '100.0000', '2009-03-01', '2009-03-31');
 
 -- --------------------------------------------------------
 
@@ -1325,7 +1347,7 @@ CREATE TABLE `setting` (
   `key` varchar(64) collate utf8_unicode_ci NOT NULL default '',
   `value` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`setting_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5910 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6352 ;
 
 --
 -- Dumping data for table `setting`
@@ -1333,27 +1355,21 @@ CREATE TABLE `setting` (
 
 INSERT INTO `setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (5583, 'coupon', 'coupon_sort_order', '4'),
-(5874, 'free', 'free_sort_order', '1'),
-(5873, 'free', 'free_status', '1'),
-(5872, 'free', 'free_geo_zone_id', '0'),
+(6135, 'free', 'free_sort_order', '1'),
+(6134, 'free', 'free_status', '1'),
+(6133, 'free', 'free_geo_zone_id', '0'),
 (5585, 'shipping', 'shipping_sort_order', '3'),
 (5584, 'shipping', 'shipping_status', '1'),
-(5596, 'cod', 'cod_sort_order', '1'),
 (5393, 'sub_total', 'sub_total_status', '1'),
-(5595, 'cod', 'cod_status', '1'),
-(5594, 'cod', 'cod_geo_zone_id', '0'),
 (5582, 'coupon', 'coupon_status', '1'),
 (5394, 'sub_total', 'sub_total_sort_order', '1'),
-(5908, 'config', 'config_cache', '1'),
-(5909, 'config', 'config_compression', '4'),
-(5907, 'config', 'config_update_message_1', 'Order ID: #{order_id}\r\nDate Ordered: {date_added}\r\n\r\nYour order has been updated to the following status: {status}\r\n\r\nThe comments for your order are:\r\n\r\n{comment}\r\n\r\nTo view your order click the link below:\r\n{invoice}\r\n\r\nPlease reply to this email if you have any questions.'),
-(5901, 'config', 'config_account_message_1', 'Welcome and thank you for registering at {store}!\r\n\r\nYour account has now been created and you can log in by using your email address and password by visiting our website or at the following URL:\r\n{login}\r\n\r\nUpon logging in, you will be able to access other services including reviewing past orders, printing invoices and editing your account information.\r\n\r\nThanks,\r\n{store}'),
-(5906, 'config', 'config_update_subject_1', '{store} - Order Update #{order_id}'),
-(5904, 'config', 'config_order_subject_1', '{store} - Order #{order_id}'),
-(5905, 'config', 'config_order_message_1', 'Thank you for interest in {store} products. Your order has been received and will be dealt with as quickly as possible.\r\n \r\nOrder ID: #{order_id}\r\nDate Ordered: {date_added}\r\n\r\nTo view you order click the link below:\r\n{invoice}\r\n\r\nPlease reply to this email if you have any questions.'),
-(5903, 'config', 'config_forgotten_message_1', 'A new password was requested from {store}.\r\n\r\nYour new password to is:\r\n\r\n{password}'),
-(5871, 'free', 'free_total', ''),
-(5593, 'cod', 'cod_order_status_id', '1'),
+(6320, 'config', 'config_forgotten_subject_1', 'Your Store - New Password'),
+(6321, 'config', 'config_forgotten_message_1', 'A new password was requested from Your Store.\r\n\r\nYour new password to is:\r\n\r\n{password}'),
+(6322, 'config', 'config_order_subject_1', 'Your Store - Order #{order_id}'),
+(6323, 'config', 'config_order_message_1', 'Thank you for interest in Your Store products. Your order has been received and will be dealt with as quickly as possible.\r\n \r\nOrder ID: #{order_id}\r\nDate Ordered: {date_added}\r\n\r\nTo view you order click the link below:\r\n{invoice}\r\n\r\nTo view you order click the link below:\r\n{download}\r\n\r\n{shipping}\r\n\r\n{payment}\r\n\r\n{product}\r\n\r\n{total}\r\n\r\nThe comments for your order are:\r\n\r\n{comment}\r\n\r\nPlease reply to this email if you have any questions.'),
+(6326, 'config', 'config_cache', '1'),
+(6327, 'config', 'config_compression', '4'),
+(6132, 'free', 'free_total', ''),
 (5512, 'low_order_fee', 'low_order_fee_sort_order', '2'),
 (5511, 'low_order_fee', 'low_order_fee_status', '0'),
 (5510, 'low_order_fee', 'low_order_fee_fee', '5'),
@@ -1362,33 +1378,64 @@ INSERT INTO `setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (5509, 'low_order_fee', 'low_order_fee_total', '100'),
 (5587, 'total', 'total_sort_order', '6'),
 (5586, 'total', 'total_status', '1'),
-(5902, 'config', 'config_forgotten_subject_1', '{store} - New Password'),
-(5898, 'config', 'config_download', '1'),
-(5899, 'config', 'config_download_status', '5'),
-(5900, 'config', 'config_account_subject_1', '{store} - Thank you for registering'),
-(5897, 'config', 'config_stock_status_id', '5'),
-(5896, 'config', 'config_order_status_id', '1'),
-(5895, 'config', 'config_stock_subtract', '0'),
-(5894, 'config', 'config_stock_checkout', '0'),
-(5893, 'config', 'config_stock_check', '1'),
-(5892, 'config', 'config_weight_class_id', '1'),
-(5891, 'config', 'config_tax', '1'),
-(5890, 'config', 'config_currency_auto', '1'),
-(5889, 'config', 'config_currency', 'GBP'),
-(5886, 'config', 'config_country_id', '222'),
-(5887, 'config', 'config_zone_id', '3563'),
-(5888, 'config', 'config_language', 'en'),
-(5885, 'config', 'config_welcome_1', '&lt;p&gt;Welcome to my store!&lt;/p&gt;'),
-(5884, 'config', 'config_parse_time', '0'),
-(5883, 'config', 'config_ssl', '0'),
-(5882, 'config', 'config_template', 'default/template/'),
-(5881, 'config', 'config_fax', ''),
-(5876, 'config', 'config_meta_description', 'your store of fun'),
-(5877, 'config', 'config_owner', 'Your Name'),
-(5878, 'config', 'config_address', 'Address 1'),
-(5879, 'config', 'config_email', 'webmaster@opencart.com'),
-(5880, 'config', 'config_telephone', '123456789'),
-(5875, 'config', 'config_store', 'Your Store');
+(6324, 'config', 'config_update_subject_1', 'Your Store - Order Update #{order_id}'),
+(6325, 'config', 'config_update_message_1', 'Order ID: #{order_id}\r\nDate Ordered: {date_added}\r\n\r\nYour order has been updated to the following status: {status}\r\n\r\nThe comments for your order are:\r\n\r\n{comment}\r\n\r\nTo view your order click the link below:\r\n{invoice}\r\n\r\nPlease reply to this email if you have any questions.'),
+(6316, 'config', 'config_download', '1'),
+(6317, 'config', 'config_download_status', '5'),
+(6318, 'config', 'config_account_subject_1', 'Your Store - Thank you for registering'),
+(6319, 'config', 'config_account_message_1', 'Welcome and thank you for registering at Your Store!\r\n\r\nYour account has now been created and you can log in by using your email address and password by visiting our website or at the following URL:\r\n{login}\r\n\r\nUpon logging in, you will be able to access other services including reviewing past orders, printing invoices and editing your account information.\r\n\r\nThanks,\r\nYour Store'),
+(6315, 'config', 'config_stock_status_id', '5'),
+(6314, 'config', 'config_order_status_id', '1'),
+(6313, 'config', 'config_stock_subtract', '0'),
+(6312, 'config', 'config_stock_checkout', '0'),
+(6311, 'config', 'config_stock_check', '1'),
+(6310, 'config', 'config_weight_class_id', '1'),
+(6309, 'config', 'config_tax', '1'),
+(6308, 'config', 'config_currency_auto', '1'),
+(6307, 'config', 'config_currency', 'GBP'),
+(5975, 'bestseller', 'bestseller_sort_order', '3'),
+(5915, 'category', 'category_position', 'left'),
+(5916, 'category', 'category_status', '1'),
+(5917, 'category', 'category_sort_order', '1'),
+(5918, 'currency', 'currency_position', 'right'),
+(5919, 'currency', 'currency_status', '1'),
+(5920, 'currency', 'currency_sort_order', '2'),
+(5921, 'information', 'information_position', 'left'),
+(5922, 'information', 'information_status', '1'),
+(5923, 'information', 'information_sort_order', '3'),
+(5924, 'manufacturer', 'manufacturer_position', 'left'),
+(5925, 'manufacturer', 'manufacturer_status', '1'),
+(5926, 'manufacturer', 'manufacturer_sort_order', '2'),
+(5955, 'cart', 'cart_sort_order', '1'),
+(5954, 'cart', 'cart_status', '1'),
+(5953, 'cart', 'cart_position', 'right'),
+(5974, 'bestseller', 'bestseller_status', '1'),
+(5973, 'bestseller', 'bestseller_position', 'right'),
+(5972, 'bestseller', 'bestseller_limit', '5'),
+(6306, 'config', 'config_language', 'en'),
+(6145, 'cheque', 'cheque_sort_order', '1'),
+(6144, 'cheque', 'cheque_status', '1'),
+(6143, 'cheque', 'cheque_geo_zone_id', '0'),
+(6142, 'cheque', 'cheque_order_status_id', '1'),
+(6141, 'cheque', 'cheque_payable', 'OpenCart'),
+(6305, 'config', 'config_zone_id', '3563'),
+(6304, 'config', 'config_country_id', '222'),
+(6301, 'config', 'config_ssl', '0'),
+(6302, 'config', 'config_parse_time', '0'),
+(6303, 'config', 'config_welcome_1', '&lt;p&gt;Welcome to my store!&lt;/p&gt;'),
+(6300, 'config', 'config_template', 'default/template/'),
+(6299, 'config', 'config_fax', ''),
+(6298, 'config', 'config_telephone', '123456789'),
+(6140, 'bank_transfer', 'bank_transfer_sort_order', '1'),
+(6139, 'bank_transfer', 'bank_transfer_status', '1'),
+(6138, 'bank_transfer', 'bank_transfer_geo_zone_id', '0'),
+(6137, 'bank_transfer', 'bank_transfer_order_status_id', '1'),
+(6136, 'bank_transfer', 'bank_transfer_bank_1', 'Account: Name\r\nAccount IBAN: AC00 0000 0000 0000 0000 0000 000\r\nBIC / SWIFT Code: ABCDEFGHIJK\r\nBank: Bank name, city'),
+(6294, 'config', 'config_meta_description', 'your store of fun'),
+(6297, 'config', 'config_email', 'webmaster@opencart.com'),
+(6296, 'config', 'config_address', 'Address 1'),
+(6295, 'config', 'config_owner', 'Your Name'),
+(6293, 'config', 'config_store', 'Your Store');
 
 -- --------------------------------------------------------
 
@@ -1436,7 +1483,7 @@ CREATE TABLE `tax_class` (
 --
 
 INSERT INTO `tax_class` (`tax_class_id`, `title`, `description`, `date_added`, `date_modified`) VALUES
-(9, 'Taxable Goods', 'Taxed Stuff', '2009-01-06 23:21:53', '2009-03-15 18:44:27');
+(9, 'Taxable Goods', 'Taxed Stuff', '2009-01-06 23:21:53', '2009-04-01 18:46:58');
 
 -- --------------------------------------------------------
 
@@ -1455,14 +1502,14 @@ CREATE TABLE `tax_rate` (
   `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`tax_rate_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=32 ;
 
 --
 -- Dumping data for table `tax_rate`
 --
 
 INSERT INTO `tax_rate` (`tax_rate_id`, `geo_zone_id`, `tax_class_id`, `priority`, `rate`, `description`, `date_modified`, `date_added`) VALUES
-(30, 3, 9, 1, '17.5000', 'VAT 17.5%', '0000-00-00 00:00:00', '2009-03-15 18:44:27');
+(31, 3, 9, 1, '17.5000', 'VAT 17.5%', '0000-00-00 00:00:00', '2009-04-01 18:46:58');
 
 -- --------------------------------------------------------
 
@@ -1484,7 +1531,11 @@ CREATE TABLE `user` (
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`user_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `user`
+--
 
 -- --------------------------------------------------------
 
@@ -1505,8 +1556,8 @@ CREATE TABLE `user_group` (
 --
 
 INSERT INTO `user_group` (`user_group_id`, `name`, `permission`) VALUES
-(1, 'Top Administrator', 'a:2:{s:6:"access";a:63:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:15:"customer/coupon";i:8;s:17:"customer/customer";i:9;s:13:"customer/mail";i:10;s:14:"customer/order";i:11;s:17:"extension/payment";i:12;s:18:"extension/shipping";i:13;s:15:"extension/total";i:14;s:20:"localisation/country";i:15;s:21:"localisation/currency";i:16;s:21:"localisation/geo_zone";i:17;s:21:"localisation/language";i:18;s:25:"localisation/order_status";i:19;s:25:"localisation/stock_status";i:20;s:22:"localisation/tax_class";i:21;s:25:"localisation/weight_class";i:22;s:17:"localisation/zone";i:23;s:17:"payment/2checkout";i:24;s:15:"payment/asiapay";i:25;s:20:"payment/authorizenet";i:26;s:15:"payment/bluepay";i:27;s:16:"payment/ccavenue";i:28;s:13:"payment/ccnow";i:29;s:17:"payment/chronopay";i:30;s:11:"payment/cod";i:31;s:13:"payment/egold";i:32;s:12:"payment/eway";i:33;s:12:"payment/hsbc";i:34;s:17:"payment/linkpoint";i:35;s:13:"payment/malse";i:36;s:20:"payment/moneybookers";i:37;s:14:"payment/nochex";i:38;s:19:"payment/payjunction";i:39;s:15:"payment/paymate";i:40;s:14:"payment/paypal";i:41;s:13:"payment/protx";i:42;s:15:"payment/psigate";i:43;s:14:"payment/secpay";i:44;s:16:"payment/verisign";i:45;s:16:"payment/worldpay";i:46;s:16:"report/purchased";i:47;s:11:"report/sale";i:48;s:13:"report/viewed";i:49;s:15:"setting/setting";i:50;s:13:"shipping/flat";i:51;s:13:"shipping/free";i:52;s:13:"shipping/item";i:53;s:13:"shipping/zone";i:54;s:11:"tool/backup";i:55;s:12:"total/coupon";i:56;s:19:"total/low_order_fee";i:57;s:14:"total/shipping";i:58;s:15:"total/sub_total";i:59;s:9:"total/tax";i:60;s:11:"total/total";i:61;s:9:"user/user";i:62;s:15:"user/user_group";}s:6:"modify";a:63:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:15:"customer/coupon";i:8;s:17:"customer/customer";i:9;s:13:"customer/mail";i:10;s:14:"customer/order";i:11;s:17:"extension/payment";i:12;s:18:"extension/shipping";i:13;s:15:"extension/total";i:14;s:20:"localisation/country";i:15;s:21:"localisation/currency";i:16;s:21:"localisation/geo_zone";i:17;s:21:"localisation/language";i:18;s:25:"localisation/order_status";i:19;s:25:"localisation/stock_status";i:20;s:22:"localisation/tax_class";i:21;s:25:"localisation/weight_class";i:22;s:17:"localisation/zone";i:23;s:17:"payment/2checkout";i:24;s:15:"payment/asiapay";i:25;s:20:"payment/authorizenet";i:26;s:15:"payment/bluepay";i:27;s:16:"payment/ccavenue";i:28;s:13:"payment/ccnow";i:29;s:17:"payment/chronopay";i:30;s:11:"payment/cod";i:31;s:13:"payment/egold";i:32;s:12:"payment/eway";i:33;s:12:"payment/hsbc";i:34;s:17:"payment/linkpoint";i:35;s:13:"payment/malse";i:36;s:20:"payment/moneybookers";i:37;s:14:"payment/nochex";i:38;s:19:"payment/payjunction";i:39;s:15:"payment/paymate";i:40;s:14:"payment/paypal";i:41;s:13:"payment/protx";i:42;s:15:"payment/psigate";i:43;s:14:"payment/secpay";i:44;s:16:"payment/verisign";i:45;s:16:"payment/worldpay";i:46;s:16:"report/purchased";i:47;s:11:"report/sale";i:48;s:13:"report/viewed";i:49;s:15:"setting/setting";i:50;s:13:"shipping/flat";i:51;s:13:"shipping/free";i:52;s:13:"shipping/item";i:53;s:13:"shipping/zone";i:54;s:11:"tool/backup";i:55;s:12:"total/coupon";i:56;s:19:"total/low_order_fee";i:57;s:14:"total/shipping";i:58;s:15:"total/sub_total";i:59;s:9:"total/tax";i:60;s:11:"total/total";i:61;s:9:"user/user";i:62;s:15:"user/user_group";}}'),
-(10, 'Demonstration', 'a:1:{s:6:"access";a:44:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:15:"customer/coupon";i:8;s:17:"customer/customer";i:9;s:14:"customer/order";i:10;s:18:"customer/send_mail";i:11;s:17:"extension/payment";i:12;s:18:"extension/shipping";i:13;s:15:"extension/total";i:14;s:20:"localisation/country";i:15;s:21:"localisation/currency";i:16;s:21:"localisation/geo_zone";i:17;s:21:"localisation/language";i:18;s:25:"localisation/order_status";i:19;s:25:"localisation/stock_status";i:20;s:22:"localisation/tax_class";i:21;s:25:"localisation/weight_class";i:22;s:17:"localisation/zone";i:23;s:11:"payment/cod";i:24;s:14:"payment/paypal";i:25;s:13:"payment/protx";i:26;s:16:"payment/worldpay";i:27;s:16:"report/purchased";i:28;s:11:"report/sale";i:29;s:13:"report/viewed";i:30;s:12:"setting/mail";i:31;s:15:"setting/setting";i:32;s:13:"shipping/flat";i:33;s:13:"shipping/item";i:34;s:13:"shipping/zone";i:35;s:11:"tool/backup";i:36;s:12:"total/coupon";i:37;s:19:"total/low_order_fee";i:38;s:14:"total/shipping";i:39;s:15:"total/sub_total";i:40;s:9:"total/tax";i:41;s:11:"total/total";i:42;s:9:"user/user";i:43;s:15:"user/user_group";}}');
+(1, 'Top Administrator', 'a:2:{s:6:"access";a:88:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:13:"common/footer";i:8;s:13:"common/header";i:9;s:11:"common/menu";i:10;s:15:"customer/coupon";i:11;s:17:"customer/customer";i:12;s:13:"customer/mail";i:13;s:14:"customer/order";i:14;s:14:"extension/feed";i:15;s:16:"extension/module";i:16;s:17:"extension/payment";i:17;s:18:"extension/shipping";i:18;s:15:"extension/total";i:19;s:14:"feed/bidhopper";i:20;s:12:"feed/bizrate";i:21;s:15:"feed/edirectory";i:22;s:12:"feed/froogle";i:23;s:10:"feed/yahoo";i:24;s:20:"localisation/country";i:25;s:21:"localisation/currency";i:26;s:21:"localisation/geo_zone";i:27;s:21:"localisation/language";i:28;s:25:"localisation/order_status";i:29;s:25:"localisation/stock_status";i:30;s:22:"localisation/tax_class";i:31;s:25:"localisation/weight_class";i:32;s:17:"localisation/zone";i:33;s:17:"module/bestseller";i:34;s:11:"module/cart";i:35;s:15:"module/category";i:36;s:15:"module/currency";i:37;s:18:"module/information";i:38;s:19:"module/manufacturer";i:39;s:17:"payment/2checkout";i:40;s:15:"payment/asiapay";i:41;s:20:"payment/authorizenet";i:42;s:21:"payment/bank_transfer";i:43;s:15:"payment/bluepay";i:44;s:16:"payment/ccavenue";i:45;s:13:"payment/ccnow";i:46;s:14:"payment/cheque";i:47;s:17:"payment/chronopay";i:48;s:11:"payment/cod";i:49;s:13:"payment/egold";i:50;s:12:"payment/eway";i:51;s:12:"payment/hsbc";i:52;s:17:"payment/linkpoint";i:53;s:14:"payment/liqpay";i:54;s:13:"payment/malse";i:55;s:20:"payment/moneybookers";i:56;s:14:"payment/nochex";i:57;s:19:"payment/payjunction";i:58;s:15:"payment/paymate";i:59;s:14:"payment/paypal";i:60;s:13:"payment/protx";i:61;s:15:"payment/psigate";i:62;s:14:"payment/secpay";i:63;s:16:"payment/verisign";i:64;s:16:"payment/worldpay";i:65;s:16:"report/purchased";i:66;s:11:"report/sale";i:67;s:13:"report/viewed";i:68;s:15:"setting/setting";i:69;s:14:"shipping/fedex";i:70;s:13:"shipping/flat";i:71;s:13:"shipping/free";i:72;s:13:"shipping/item";i:73;s:16:"shipping/percent";i:74;s:19:"shipping/royal_mail";i:75;s:12:"shipping/ups";i:76;s:13:"shipping/usps";i:77;s:15:"shipping/weight";i:78;s:13:"shipping/zone";i:79;s:11:"tool/backup";i:80;s:12:"total/coupon";i:81;s:19:"total/low_order_fee";i:82;s:14:"total/shipping";i:83;s:15:"total/sub_total";i:84;s:9:"total/tax";i:85;s:11:"total/total";i:86;s:9:"user/user";i:87;s:15:"user/user_group";}s:6:"modify";a:88:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:13:"common/footer";i:8;s:13:"common/header";i:9;s:11:"common/menu";i:10;s:15:"customer/coupon";i:11;s:17:"customer/customer";i:12;s:13:"customer/mail";i:13;s:14:"customer/order";i:14;s:14:"extension/feed";i:15;s:16:"extension/module";i:16;s:17:"extension/payment";i:17;s:18:"extension/shipping";i:18;s:15:"extension/total";i:19;s:14:"feed/bidhopper";i:20;s:12:"feed/bizrate";i:21;s:15:"feed/edirectory";i:22;s:12:"feed/froogle";i:23;s:10:"feed/yahoo";i:24;s:20:"localisation/country";i:25;s:21:"localisation/currency";i:26;s:21:"localisation/geo_zone";i:27;s:21:"localisation/language";i:28;s:25:"localisation/order_status";i:29;s:25:"localisation/stock_status";i:30;s:22:"localisation/tax_class";i:31;s:25:"localisation/weight_class";i:32;s:17:"localisation/zone";i:33;s:17:"module/bestseller";i:34;s:11:"module/cart";i:35;s:15:"module/category";i:36;s:15:"module/currency";i:37;s:18:"module/information";i:38;s:19:"module/manufacturer";i:39;s:17:"payment/2checkout";i:40;s:15:"payment/asiapay";i:41;s:20:"payment/authorizenet";i:42;s:21:"payment/bank_transfer";i:43;s:15:"payment/bluepay";i:44;s:16:"payment/ccavenue";i:45;s:13:"payment/ccnow";i:46;s:14:"payment/cheque";i:47;s:17:"payment/chronopay";i:48;s:11:"payment/cod";i:49;s:13:"payment/egold";i:50;s:12:"payment/eway";i:51;s:12:"payment/hsbc";i:52;s:17:"payment/linkpoint";i:53;s:14:"payment/liqpay";i:54;s:13:"payment/malse";i:55;s:20:"payment/moneybookers";i:56;s:14:"payment/nochex";i:57;s:19:"payment/payjunction";i:58;s:15:"payment/paymate";i:59;s:14:"payment/paypal";i:60;s:13:"payment/protx";i:61;s:15:"payment/psigate";i:62;s:14:"payment/secpay";i:63;s:16:"payment/verisign";i:64;s:16:"payment/worldpay";i:65;s:16:"report/purchased";i:66;s:11:"report/sale";i:67;s:13:"report/viewed";i:68;s:15:"setting/setting";i:69;s:14:"shipping/fedex";i:70;s:13:"shipping/flat";i:71;s:13:"shipping/free";i:72;s:13:"shipping/item";i:73;s:16:"shipping/percent";i:74;s:19:"shipping/royal_mail";i:75;s:12:"shipping/ups";i:76;s:13:"shipping/usps";i:77;s:15:"shipping/weight";i:78;s:13:"shipping/zone";i:79;s:11:"tool/backup";i:80;s:12:"total/coupon";i:81;s:19:"total/low_order_fee";i:82;s:14:"total/shipping";i:83;s:15:"total/sub_total";i:84;s:9:"total/tax";i:85;s:11:"total/total";i:86;s:9:"user/user";i:87;s:15:"user/user_group";}}'),
+(10, 'Demonstration', 'a:1:{s:6:"access";a:82:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:13:"common/footer";i:8;s:13:"common/header";i:9;s:11:"common/menu";i:10;s:15:"customer/coupon";i:11;s:17:"customer/customer";i:12;s:13:"customer/mail";i:13;s:14:"customer/order";i:14;s:16:"extension/module";i:15;s:17:"extension/payment";i:16;s:18:"extension/shipping";i:17;s:15:"extension/total";i:18;s:20:"localisation/country";i:19;s:21:"localisation/currency";i:20;s:21:"localisation/geo_zone";i:21;s:21:"localisation/language";i:22;s:25:"localisation/order_status";i:23;s:25:"localisation/stock_status";i:24;s:22:"localisation/tax_class";i:25;s:25:"localisation/weight_class";i:26;s:17:"localisation/zone";i:27;s:11:"module/cart";i:28;s:15:"module/category";i:29;s:15:"module/currency";i:30;s:18:"module/information";i:31;s:19:"module/manufacturer";i:32;s:14:"module/popular";i:33;s:17:"payment/2checkout";i:34;s:15:"payment/asiapay";i:35;s:20:"payment/authorizenet";i:36;s:21:"payment/bank_transfer";i:37;s:15:"payment/bluepay";i:38;s:16:"payment/ccavenue";i:39;s:13:"payment/ccnow";i:40;s:14:"payment/cheque";i:41;s:17:"payment/chronopay";i:42;s:11:"payment/cod";i:43;s:13:"payment/egold";i:44;s:12:"payment/eway";i:45;s:12:"payment/hsbc";i:46;s:17:"payment/linkpoint";i:47;s:13:"payment/malse";i:48;s:19:"payment/money_order";i:49;s:20:"payment/moneybookers";i:50;s:14:"payment/nochex";i:51;s:19:"payment/payjunction";i:52;s:15:"payment/paymate";i:53;s:14:"payment/paypal";i:54;s:13:"payment/protx";i:55;s:15:"payment/psigate";i:56;s:14:"payment/secpay";i:57;s:16:"payment/verisign";i:58;s:16:"payment/worldpay";i:59;s:16:"report/purchased";i:60;s:11:"report/sale";i:61;s:13:"report/viewed";i:62;s:15:"setting/setting";i:63;s:14:"shipping/fedex";i:64;s:13:"shipping/flat";i:65;s:13:"shipping/free";i:66;s:13:"shipping/item";i:67;s:16:"shipping/percent";i:68;s:19:"shipping/royal_mail";i:69;s:12:"shipping/ups";i:70;s:13:"shipping/usps";i:71;s:15:"shipping/weight";i:72;s:13:"shipping/zone";i:73;s:11:"tool/backup";i:74;s:12:"total/coupon";i:75;s:19:"total/low_order_fee";i:76;s:14:"total/shipping";i:77;s:15:"total/sub_total";i:78;s:9:"total/tax";i:79;s:11:"total/total";i:80;s:9:"user/user";i:81;s:15:"user/user_group";}}');
 
 -- --------------------------------------------------------
 
@@ -1562,10 +1613,10 @@ DROP TABLE IF EXISTS `zone`;
 CREATE TABLE `zone` (
   `zone_id` int(11) NOT NULL auto_increment,
   `country_id` int(11) NOT NULL default '0',
-  `code` varchar(32) NOT NULL default '',
-  `name` varchar(32) NOT NULL default '',
+  `code` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `name` varchar(128) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`zone_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3842 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3842 ;
 
 --
 -- Dumping data for table `zone`
@@ -1771,9 +1822,9 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (197, 13, 'VIC', 'Victoria'),
 (198, 13, 'WA', 'Western Australia'),
 (199, 14, 'BUR', 'Burgenland'),
-(200, 14, 'KAR', 'KÃƒÆ’Ã‚Â¤rnten'),
-(201, 14, 'NOS', 'NiederÃƒÆ’Ã‚Â¶sterreich'),
-(202, 14, 'OOS', 'OberÃƒÆ’Ã‚Â¶sterreich'),
+(200, 14, 'KAR', 'Kärnten'),
+(201, 14, 'NOS', 'Nieder&ouml;esterreich'),
+(202, 14, 'OOS', 'Ober&ouml;esterreich'),
 (203, 14, 'SAL', 'Salzburg'),
 (204, 14, 'STE', 'Steiermark'),
 (205, 14, 'TIR', 'Tirol'),
@@ -2139,7 +2190,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (565, 35, 'RT', 'Rutana'),
 (566, 35, 'RY', 'Ruyigi'),
 (567, 36, 'PP', 'Phnom Penh'),
-(568, 36, 'PS', 'Preah Seihanu (Kompong Som or Si'),
+(568, 36, 'PS', 'Preah Seihanu (Kompong Som or Sihanoukville)'),
 (569, 36, 'PA', 'Pailin'),
 (570, 36, 'KB', 'Keb'),
 (571, 36, 'BM', 'Banteay Meanchey'),
@@ -2183,7 +2234,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (609, 38, 'NU', 'Nunavut'),
 (610, 38, 'ON', 'Ontario'),
 (611, 38, 'PE', 'Prince Edward Island'),
-(612, 38, 'QC', 'QuÃƒÆ’Ã‚Â©bec'),
+(612, 38, 'QC', 'Qu&eacute;bec'),
 (613, 38, 'SK', 'Saskatchewan'),
 (614, 38, 'YT', 'Yukon Territory'),
 (615, 39, 'BV', 'Boa Vista'),
@@ -2217,7 +2268,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (643, 41, 'HMB', 'Haut-Mbomou'),
 (644, 41, 'KEM', 'Kemo'),
 (645, 41, 'LOB', 'Lobaye'),
-(646, 41, 'MKD', 'MambÃƒÆ’Ã‚Â©re-KadÃƒÆ’Ã‚Â©ÃƒÆ’Ã‚'),
+(646, 41, 'MKD', 'Mambere-KadeÔ'),
 (647, 41, 'MBO', 'Mbomou'),
 (648, 41, 'NMM', 'Nana-Mambere'),
 (649, 41, 'OMP', 'Ombella-M''Poko'),
@@ -2488,7 +2539,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (914, 57, 'SO', 'Sonderjylland'),
 (915, 57, 'ST', 'Storstrom'),
 (916, 57, 'VK', 'Vejle'),
-(917, 57, 'VJ', 'VestjÃƒÆ’Ã‚Â¦lland'),
+(917, 57, 'VJ', 'Vestj&aelig;lland'),
 (918, 57, 'VB', 'Viborg'),
 (919, 58, 'S', '''Ali Sabih'),
 (920, 58, 'K', 'Dikhil'),
@@ -2552,24 +2603,24 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (978, 61, 'VI', 'Viqueque'),
 (979, 62, 'AZU', 'Azuay'),
 (980, 62, 'BOL', 'Bolivar'),
-(981, 62, 'CAN', 'CaÃƒÆ’Ã‚Â±ar'),
+(981, 62, 'CAN', 'Ca&ntilde;ar'),
 (982, 62, 'CAR', 'Carchi'),
 (983, 62, 'CHI', 'Chimborazo'),
 (984, 62, 'COT', 'Cotopaxi'),
 (985, 62, 'EOR', 'El Oro'),
 (986, 62, 'ESM', 'Esmeraldas'),
-(987, 62, 'GPS', 'GalÃƒÆ’Ã‚Â¡pagos'),
+(987, 62, 'GPS', 'Gal&aacute;pagos'),
 (988, 62, 'GUA', 'Guayas'),
 (989, 62, 'IMB', 'Imbabura'),
 (990, 62, 'LOJ', 'Loja'),
 (991, 62, 'LRO', 'Los Rios'),
-(992, 62, 'MAN', 'ManabÃƒÆ’Ã‚Â­'),
+(992, 62, 'MAN', 'Manab&iacute;'),
 (993, 62, 'MSA', 'Morona Santiago'),
 (994, 62, 'NAP', 'Napo'),
 (995, 62, 'ORE', 'Orellana'),
 (996, 62, 'PAS', 'Pastaza'),
 (997, 62, 'PIC', 'Pichincha'),
-(998, 62, 'SUC', 'SucumbÃƒÆ’Ã‚Â­os'),
+(998, 62, 'SUC', 'Sucumb&iacute;os'),
 (999, 62, 'TUN', 'Tungurahua'),
 (1000, 62, 'ZCH', 'Zamora Chinchipe'),
 (1001, 63, 'DHY', 'Ad Daqahliyah'),
@@ -2621,8 +2672,8 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1047, 65, 'WN', 'Provincia Wele-Nzas'),
 (1048, 66, 'MA', 'Central (Maekel)'),
 (1049, 66, 'KE', 'Anseba (Keren)'),
-(1050, 66, 'DK', 'Southern Red Sea (Debub-Keih-Bah'),
-(1051, 66, 'SK', 'Northern Red Sea (Semien-Keih-Ba'),
+(1050, 66, 'DK', 'Southern Red Sea (Debub-Keih-Bahri)'),
+(1051, 66, 'SK', 'Northern Red Sea (Semien-Keih-Bahri)'),
 (1052, 66, 'DE', 'Southern (Debub)'),
 (1053, 66, 'BR', 'Gash-Barka (Barentu)'),
 (1054, 67, 'HA', 'Harjumaa (Tallinn)'),
@@ -2647,7 +2698,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1073, 68, 'HR', 'Hariai'),
 (1074, 68, 'OR', 'Oromia'),
 (1075, 68, 'SM', 'Somali'),
-(1076, 68, 'SN', 'Southern Nations - Nationalities'),
+(1076, 68, 'SN', 'Southern Nations - Nationalities and Peoples Region'),
 (1077, 68, 'TG', 'Tigray'),
 (1078, 68, 'AA', 'Addis Ababa'),
 (1079, 68, 'DD', 'Dire Dawa'),
@@ -2691,39 +2742,39 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1117, 74, '04', 'Alpes de Haute Provence'),
 (1118, 74, '05', 'Hautes-Alpes'),
 (1119, 74, '06', 'Alpes Maritimes'),
-(1120, 74, '07', 'ArdÃƒÆ’Ã‚Â¨che'),
+(1120, 74, '07', 'Ard&egrave;che'),
 (1121, 74, '08', 'Ardennes'),
-(1122, 74, '09', 'AriÃƒÆ’Ã‚Â¨ge'),
+(1122, 74, '09', 'Ari&egrave;ge'),
 (1123, 74, '10', 'Aube'),
 (1124, 74, '11', 'Aude'),
 (1125, 74, '12', 'Aveyron'),
-(1126, 74, '13', 'Bouches du RhÃƒÆ’Ã‚Â´ne'),
+(1126, 74, '13', 'Bouches du Rh&ocirc;ne'),
 (1127, 74, '14', 'Calvados'),
 (1128, 74, '15', 'Cantal'),
 (1129, 74, '16', 'Charente'),
 (1130, 74, '17', 'Charente Maritime'),
 (1131, 74, '18', 'Cher'),
-(1132, 74, '19', 'CorrÃƒÆ’Ã‚Â¨ze'),
+(1132, 74, '19', 'Corr&egrave;ze'),
 (1133, 74, '2A', 'Corse du Sud'),
 (1134, 74, '2B', 'Haute Corse'),
-(1135, 74, '21', 'CÃƒÆ’Ã‚Â´te d''or'),
-(1136, 74, '22', 'CÃƒÆ’Ã‚Â´tes d''Armor'),
+(1135, 74, '21', 'C&ocirc;te d&#039;or'),
+(1136, 74, '22', 'C&ocirc;tes d&#039;Armor'),
 (1137, 74, '23', 'Creuse'),
 (1138, 74, '24', 'Dordogne'),
 (1139, 74, '25', 'Doubs'),
-(1140, 74, '26', 'DrÃƒÆ’Ã‚Â´me'),
+(1140, 74, '26', 'Dr&ocirc;me'),
 (1141, 74, '27', 'Eure'),
 (1142, 74, '28', 'Eure et Loir'),
-(1143, 74, '29', 'FinistÃƒÆ’Ã‚Â¨re'),
+(1143, 74, '29', 'Finist&egrave;re'),
 (1144, 74, '30', 'Gard'),
 (1145, 74, '31', 'Haute Garonne'),
 (1146, 74, '32', 'Gers'),
 (1147, 74, '33', 'Gironde'),
-(1148, 74, '34', 'HÃƒÆ’Ã‚Â©;rault'),
+(1148, 74, '34', 'H&eacute;rault'),
 (1149, 74, '35', 'Ille et Vilaine'),
 (1150, 74, '36', 'Indre'),
 (1151, 74, '37', 'Indre et Loire'),
-(1152, 74, '38', 'IsÃƒÆ’Ã‚Â©;re'),
+(1152, 74, '38', 'Is&eacute;re'),
 (1153, 74, '39', 'Jura'),
 (1154, 74, '40', 'Landes'),
 (1155, 74, '41', 'Loir et Cher'),
@@ -2733,7 +2784,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1159, 74, '45', 'Loiret'),
 (1160, 74, '46', 'Lot'),
 (1161, 74, '47', 'Lot et Garonne'),
-(1162, 74, '48', 'LozÃƒÆ’Ã‚Â¨re'),
+(1162, 74, '48', 'Loz&egrave;re'),
 (1163, 74, '49', 'Maine et Loire'),
 (1164, 74, '50', 'Manche'),
 (1165, 74, '51', 'Marne'),
@@ -2743,20 +2794,20 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1169, 74, '55', 'Meuse'),
 (1170, 74, '56', 'Morbihan'),
 (1171, 74, '57', 'Moselle'),
-(1172, 74, '58', 'NiÃƒÆ’Ã‚Â¨vre'),
+(1172, 74, '58', 'Ni&egrave;vre'),
 (1173, 74, '59', 'Nord'),
 (1174, 74, '60', 'Oise'),
 (1175, 74, '61', 'Orne'),
 (1176, 74, '62', 'Pas de Calais'),
-(1177, 74, '63', 'Puy de DÃƒÆ’Ã‚Â´me'),
-(1178, 74, '64', 'PyrÃƒÆ’Ã‚Â©nÃƒÆ’Ã‚Â©es Atlantiqu'),
-(1179, 74, '65', 'Hautes PyrÃƒÆ’Ã‚Â©nÃƒÆ’Ã‚Â©es'),
-(1180, 74, '66', 'PyrÃƒÆ’Ã‚Â©nÃƒÆ’Ã‚Â©es Orientale'),
+(1177, 74, '63', 'Puy de D&ocirc;me'),
+(1178, 74, '64', 'Pyr&eacute;n&eacute;es Atlantiques'),
+(1179, 74, '65', 'Hautes Pyr&eacute;n&eacute;es'),
+(1180, 74, '66', 'Pyr&eacute;n&eacute;es Orientales'),
 (1181, 74, '67', 'Bas Rhin'),
 (1182, 74, '68', 'Haut Rhin'),
-(1183, 74, '69', 'RhÃƒÆ’Ã‚Â´ne'),
-(1184, 74, '70', 'Haute SaÃƒÆ’Ã‚Â´ne'),
-(1185, 74, '71', 'SaÃƒÆ’Ã‚Â´ne et Loire'),
+(1183, 74, '69', 'Rh&ocirc;ne'),
+(1184, 74, '70', 'Haute Sa&ocirc;ne'),
+(1185, 74, '71', 'Sa&ocirc;ne et Loire'),
 (1186, 74, '72', 'Sarthe'),
 (1187, 74, '73', 'Savoie'),
 (1188, 74, '74', 'Haute Savoie'),
@@ -2764,13 +2815,13 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1190, 74, '76', 'Seine Maritime'),
 (1191, 74, '77', 'Seine et Marne'),
 (1192, 74, '78', 'Yvelines'),
-(1193, 74, '79', 'Deux SÃƒÆ’Ã‚Â¨vres'),
+(1193, 74, '79', 'Deux S&egrave;vres'),
 (1194, 74, '80', 'Somme'),
 (1195, 74, '81', 'Tarn'),
 (1196, 74, '82', 'Tarn et Garonne'),
 (1197, 74, '83', 'Var'),
 (1198, 74, '84', 'Vaucluse'),
-(1199, 74, '85', 'VendÃƒÆ’Ã‚Â©e'),
+(1199, 74, '85', 'Vend&eacute;e'),
 (1200, 74, '86', 'Vienne'),
 (1201, 74, '87', 'Haute Vienne'),
 (1202, 74, '88', 'Vosges'),
@@ -2825,7 +2876,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1251, 80, 'SZ', 'Samegrelo-Zemo Svaneti'),
 (1252, 80, 'SJ', 'Samtskhe-Javakheti'),
 (1253, 80, 'SK', 'Shida Kartli'),
-(1254, 81, 'BAW', 'Baden-WÃƒÆ’Ã‚Â¼rttemberg'),
+(1254, 81, 'BAW', 'Baden-W&uuml;rttemberg'),
 (1255, 81, 'BAY', 'Bayern'),
 (1256, 81, 'BER', 'Berlin'),
 (1257, 81, 'BRG', 'Brandenburg'),
@@ -2840,7 +2891,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1266, 81, 'SAS', 'Sachsen'),
 (1267, 81, 'SAC', 'Sachsen-Anhalt'),
 (1268, 81, 'SCN', 'Schleswig-Holstein'),
-(1269, 81, 'THE', 'ThÃƒÆ’Ã‚Â¼ringen'),
+(1269, 81, 'THE', 'Th&uuml;ringen'),
 (1270, 82, 'AS', 'Ashanti Region'),
 (1271, 82, 'BA', 'Brong-Ahafo Region'),
 (1272, 82, 'CE', 'Central Region'),
@@ -2981,7 +3032,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1407, 95, 'SB', 'Santa Barbara'),
 (1408, 95, 'VA', 'Valle'),
 (1409, 95, 'YO', 'Yoro'),
-(1410, 96, 'HCW', 'Central and Western Hong Kong Is'),
+(1410, 96, 'HCW', 'Central and Western Hong Kong Island'),
 (1411, 96, 'HEA', 'Eastern Hong Kong Island'),
 (1412, 96, 'HSO', 'Southern Hong Kong Island'),
 (1413, 96, 'HWC', 'Wan Chai Hong Kong Island'),
@@ -3243,8 +3294,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1669, 107, 'HY', 'Hyogo'),
 (1670, 107, 'IB', 'Ibaraki'),
 (1671, 107, 'IS', 'Ishikawa'),
-(1672, 107, 'IW', 'Iwate');
-INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
+(1672, 107, 'IW', 'Iwate'),
 (1673, 107, 'KA', 'Kagawa'),
 (1674, 107, 'KG', 'Kagoshima'),
 (1675, 107, 'KN', 'Kanagawa'),
@@ -3258,7 +3308,8 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1683, 107, 'NG', 'Nagasaki'),
 (1684, 107, 'NR', 'Nara'),
 (1685, 107, 'NI', 'Niigata'),
-(1686, 107, 'OI', 'Oita'),
+(1686, 107, 'OI', 'Oita');
+INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1687, 107, 'OK', 'Okayama'),
 (1688, 107, 'ON', 'Okinawa'),
 (1689, 107, 'OS', 'Osaka'),
@@ -3707,7 +3758,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (2132, 136, 'QB', 'Quatre Bornes'),
 (2133, 136, 'VP', 'Vacoas-Phoenix'),
 (2134, 136, 'AG', 'Agalega Islands'),
-(2135, 136, 'CC', 'Cargados Carajos Shoals (Saint B'),
+(2135, 136, 'CC', 'Cargados Carajos Shoals (Saint Brandon Islands)'),
 (2136, 136, 'RO', 'Rodrigues'),
 (2137, 136, 'BL', 'Black River'),
 (2138, 136, 'FL', 'Flacq'),
@@ -3763,7 +3814,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (2188, 140, 'SO', 'Soroca'),
 (2189, 140, 'TI', 'Tighina'),
 (2190, 140, 'UN', 'Ungheni'),
-(2191, 140, 'SN', 'StÃƒÆ’Ã‚Â®nga Nistrului'),
+(2191, 140, 'SN', 'St‚nga Nistrului'),
 (2192, 141, 'FV', 'Fontvieille'),
 (2193, 141, 'LC', 'La Condamine'),
 (2194, 141, 'MV', 'Monaco-Ville'),
@@ -4030,7 +4081,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (2455, 161, 'MU', 'Musandam'),
 (2456, 161, 'ZU', 'Zufar'),
 (2457, 162, 'B', 'Balochistan'),
-(2458, 162, 'T', 'Federally Administered Tribal Ar'),
+(2458, 162, 'T', 'Federally Administered Tribal Areas'),
 (2459, 162, 'I', 'Islamabad Capital Territory'),
 (2460, 162, 'N', 'North-West Frontier'),
 (2461, 162, 'P', 'Punjab'),
@@ -4221,14 +4272,14 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (2646, 170, 'ZA', 'Zachodniopomorskie'),
 (2647, 198, 'P', 'Saint Pierre'),
 (2648, 198, 'M', 'Miquelon'),
-(2649, 171, 'AC', 'AÃƒÆ’Ã‚Â§ores'),
+(2649, 171, 'AC', 'A&ccedil;ores'),
 (2650, 171, 'AV', 'Aveiro'),
 (2651, 171, 'BE', 'Beja'),
 (2652, 171, 'BR', 'Braga'),
-(2653, 171, 'BA', 'BraganÃƒÆ’Ã‚Â§a'),
+(2653, 171, 'BA', 'Bragan&ccedil;a'),
 (2654, 171, 'CB', 'Castelo Branco'),
 (2655, 171, 'CO', 'Coimbra'),
-(2656, 171, 'EV', 'ÃƒÆ’Ã‚Â©;vora'),
+(2656, 171, 'EV', '&Eacute;vora'),
 (2657, 171, 'FA', 'Faro'),
 (2658, 171, 'GU', 'Guarda'),
 (2659, 171, 'LE', 'Leiria'),
@@ -4236,8 +4287,8 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (2661, 171, 'ME', 'Madeira'),
 (2662, 171, 'PO', 'Portalegre'),
 (2663, 171, 'PR', 'Porto'),
-(2664, 171, 'SA', 'SantarÃƒÆ’Ã‚Â©;m'),
-(2665, 171, 'SE', 'SetÃƒÆ’Ã‚Âºbal'),
+(2664, 171, 'SA', 'Santar&eacute;m'),
+(2665, 171, 'SE', 'Set&uacute;bal'),
 (2666, 171, 'VC', 'Viana do Castelo'),
 (2667, 171, 'VR', 'Vila Real'),
 (2668, 171, 'VI', 'Viseu'),
@@ -4542,32 +4593,32 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (2967, 193, 'NW', 'North West'),
 (2968, 193, 'NC', 'Northern Cape'),
 (2969, 193, 'WC', 'Western Cape'),
-(2970, 195, 'CA', 'A CoruÃƒÆ’Ã‚Â±a'),
-(2971, 195, 'AL', 'ÃƒÆ’Ã‚Âlava'),
+(2970, 195, 'CA', 'La Coru&ntilde;a'),
+(2971, 195, 'AL', '&Aacute;lava'),
 (2972, 195, 'AB', 'Albacete'),
 (2973, 195, 'AC', 'Alicante'),
 (2974, 195, 'AM', 'Almeria'),
 (2975, 195, 'AS', 'Asturias'),
-(2976, 195, 'AV', 'ÃƒÆ’Ã‚Âvila'),
+(2976, 195, 'AV', '&Aacute;vila'),
 (2977, 195, 'BJ', 'Badajoz'),
 (2978, 195, 'IB', 'Baleares'),
 (2979, 195, 'BA', 'Barcelona'),
 (2980, 195, 'BU', 'Burgos'),
-(2981, 195, 'CC', 'CÃƒÆ’Ã‚Â¡ceres'),
-(2982, 195, 'CZ', 'CÃƒÆ’Ã‚Â¡diz'),
+(2981, 195, 'CC', 'C&aacute;ceres'),
+(2982, 195, 'CZ', 'C&aacute;diz'),
 (2983, 195, 'CT', 'Cantabria'),
-(2984, 195, 'CL', 'CastellÃƒÆ’Ã‚Â³n'),
+(2984, 195, 'CL', 'Castell&oacute;n'),
 (2985, 195, 'CE', 'Ceuta'),
 (2986, 195, 'CR', 'Ciudad Real'),
-(2987, 195, 'CD', 'CÃƒÆ’Ã‚Â³rdoba'),
+(2987, 195, 'CD', 'C&oacute;rdoba'),
 (2988, 195, 'CU', 'Cuenca'),
 (2989, 195, 'GI', 'Girona'),
 (2990, 195, 'GD', 'Granada'),
 (2991, 195, 'GJ', 'Guadalajara'),
-(2992, 195, 'GP', 'GuipÃƒÆ’Ã‚Âºzcoa'),
+(2992, 195, 'GP', 'Guip&uacute;zcoa'),
 (2993, 195, 'HL', 'Huelva'),
 (2994, 195, 'HS', 'Huesca'),
-(2995, 195, 'JN', 'JaÃƒÆ’Ã‚Â©n'),
+(2995, 195, 'JN', 'Ja&eacute;n'),
 (2996, 195, 'RJ', 'La Rioja'),
 (2997, 195, 'PM', 'Las Palmas'),
 (2998, 195, 'LE', 'Leon'),
@@ -4648,25 +4699,25 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3073, 202, 'S', 'Shishelweni'),
 (3074, 203, 'K', 'Blekinge'),
 (3075, 203, 'W', 'Dalama'),
-(3076, 203, 'X', 'GÃƒÆ’Ã‚Â¤vleborg'),
+(3076, 203, 'X', 'G&auml;vleborg'),
 (3077, 203, 'I', 'Gotland'),
 (3078, 203, 'N', 'Halland'),
-(3079, 203, 'Z', 'JÃƒÆ’Ã‚Â¤mtland'),
-(3080, 203, 'F', 'JÃƒÆ’Ã‚Â¶nkping'),
+(3079, 203, 'Z', 'J&auml;mtland'),
+(3080, 203, 'F', 'J&ouml;nk&ouml;ping'),
 (3081, 203, 'H', 'Kalmar'),
 (3082, 203, 'G', 'Kronoberg'),
 (3083, 203, 'BD', 'Norrbotten'),
-(3084, 203, 'T', 'ÃƒÆ’Ã¢â‚¬â€œrebro'),
-(3085, 203, 'E', 'ÃƒÆ’Ã¢â‚¬â€œstergÃƒÆ’Ã‚Â¶tland'),
-(3086, 203, 'M', 'SkÃƒÆ’Ã‚Â¥ne'),
-(3087, 203, 'D', 'SÃƒÆ’Ã‚Â¶dermanland'),
+(3084, 203, 'T', '&Ouml;rebro'),
+(3085, 203, 'E', '&Ouml;sterg&ouml;tland'),
+(3086, 203, 'M', 'Sk&aring;ne'),
+(3087, 203, 'D', 'S&ouml;dermanland'),
 (3088, 203, 'AB', 'Stockholm'),
 (3089, 203, 'C', 'Uppsala'),
-(3090, 203, 'S', 'VÃƒÆ’Ã‚Â¤rmland'),
-(3091, 203, 'AC', 'VÃƒÆ’Ã‚Â¤sterbotten'),
-(3092, 203, 'Y', 'VÃƒÆ’Ã‚Â¤sternorrland'),
-(3093, 203, 'U', 'VÃƒÆ’Ã‚Â¤stmanland'),
-(3094, 203, 'O', 'VÃƒÆ’Ã‚Â¤stra GÃƒÆ’Ã‚Â¶taland'),
+(3090, 203, 'S', 'V&auml;rmland'),
+(3091, 203, 'AC', 'V&auml;sterbotten'),
+(3092, 203, 'Y', 'V&auml;sternorrland'),
+(3093, 203, 'U', 'V&auml;stmanland'),
+(3094, 203, 'O', 'V&auml;stra G&ouml;taland'),
 (3095, 204, 'AG', 'Aargau'),
 (3096, 204, 'AR', 'Appenzell Ausserrhoden'),
 (3097, 204, 'AI', 'Appenzell Innerrhoden'),
@@ -4674,12 +4725,12 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3099, 204, 'BL', 'Basel-Landschaft'),
 (3100, 204, 'BE', 'Bern'),
 (3101, 204, 'FR', 'Fribourg'),
-(3102, 204, 'GE', 'GenÃƒÆ’Ã‚Â¨ve'),
+(3102, 204, 'GE', 'Gen&egrave;ve'),
 (3103, 204, 'GL', 'Glarus'),
-(3104, 204, 'GR', 'GraubÃƒÆ’Ã‚Â¼nden'),
+(3104, 204, 'GR', 'Graub&uuml;nden'),
 (3105, 204, 'JU', 'Jura'),
 (3106, 204, 'LU', 'Luzern'),
-(3107, 204, 'NE', 'NeuchÃƒÆ’Ã‚Â¢tel'),
+(3107, 204, 'NE', 'Neuch&acirc;tel'),
 (3108, 204, 'NW', 'Nidwald'),
 (3109, 204, 'OW', 'Obwald'),
 (3110, 204, 'SG', 'St. Gallen'),
@@ -4692,7 +4743,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3117, 204, 'VS', 'Valais'),
 (3118, 204, 'VD', 'Vaud'),
 (3119, 204, 'ZG', 'Zug'),
-(3120, 204, 'ZH', 'ZÃƒÆ’Ã‚Â¼rich'),
+(3120, 204, 'ZH', 'Z&uuml;rich'),
 (3121, 205, 'HA', 'Al Hasakah'),
 (3122, 205, 'LA', 'Al Ladhiqiyah'),
 (3123, 205, 'QU', 'Al Qunaytirah'),
@@ -4860,8 +4911,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3285, 213, 'PS', 'Port of Spain'),
 (3286, 213, 'SF', 'San Fernando'),
 (3287, 213, 'AR', 'Arima'),
-(3288, 213, 'PF', 'Point Fortin');
-INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
+(3288, 213, 'PF', 'Point Fortin'),
 (3289, 213, 'CH', 'Chaguanas'),
 (3290, 213, 'TO', 'Tobago'),
 (3291, 214, 'AR', 'Ariana'),
@@ -4888,7 +4938,8 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3312, 214, 'TO', 'Tozeur'),
 (3313, 214, 'TU', 'Tunis'),
 (3314, 214, 'ZA', 'Zaghouan'),
-(3315, 215, 'ADA', 'Adana'),
+(3315, 215, 'ADA', 'Adana');
+INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3316, 215, 'ADI', 'Adiyaman'),
 (3317, 215, 'AFY', 'Afyonkarahisar'),
 (3318, 215, 'AGR', 'Agri'),
@@ -5431,11 +5482,11 @@ CREATE TABLE `zone_to_geo_zone` (
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`zone_to_geo_zone_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `zone_to_geo_zone`
 --
 
 INSERT INTO `zone_to_geo_zone` (`zone_to_geo_zone_id`, `country_id`, `zone_id`, `geo_zone_id`, `date_added`, `date_modified`) VALUES
-(4, 222, 0, 3, '2009-02-23 12:44:48', '0000-00-00 00:00:00');
+(5, 222, 0, 3, '2009-04-01 18:46:49', '0000-00-00 00:00:00');

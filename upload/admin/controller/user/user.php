@@ -249,7 +249,7 @@ class ControllerUserUser extends Controller {
 
 		$this->id       = 'content';
 		$this->template = 'user/user_list.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 				
 		$this->render();
   	}
@@ -367,7 +367,7 @@ class ControllerUserUser extends Controller {
 		
 		$this->id       = 'content';
 		$this->template = 'user/user_form.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();	
   	}
@@ -377,20 +377,20 @@ class ControllerUserUser extends Controller {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
     
-    	if ((strlen($this->request->post['username']) < 3) || (strlen($this->request->post['username']) > 20)) {
+    	if ((strlen(utf8_decode($this->request->post['username'])) < 3) || (strlen(utf8_decode($this->request->post['username'])) > 20)) {
       		$this->error['username'] = $this->language->get('error_username');
     	}
 
-    	if ((strlen($this->request->post['firstname']) < 3) || (strlen($this->request->post['firstname']) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['firstname'])) < 3) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
       		$this->error['firstname'] = $this->language->get('error_firstname');
     	}
 
-    	if ((strlen($this->request->post['lastname']) < 3) || (strlen($this->request->post['lastname']) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['lastname'])) < 3) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
       		$this->error['lastname'] = $this->language->get('error_lastname');
     	}
 
     	if (($this->request->post['password']) || (!isset($this->request->get['user_id']))) {
-      		if ((strlen($this->request->post['password']) < 4) || (strlen($this->request->post['password']) > 20)) {
+      		if ((strlen(utf8_decode($this->request->post['password'])) < 4) || (strlen(utf8_decode($this->request->post['password'])) > 20)) {
         		$this->error['password'] = $this->language->get('error_password');
       		}
 	

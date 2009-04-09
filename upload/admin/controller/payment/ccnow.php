@@ -26,11 +26,11 @@ class ControllerPaymentCCNow extends Controller {
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
 				
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
 		$this->data['entry_key'] = $this->language->get('entry_key');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -66,28 +66,6 @@ class ControllerPaymentCCNow extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
 		
-		if (isset($this->request->post['ccnow_status'])) {
-			$this->data['ccnow_status'] = $this->request->post['ccnow_status'];
-		} else {
-			$this->data['ccnow_status'] = $this->config->get('ccnow_status');
-		}
-		
-		if (isset($this->request->post['ccnow_geo_zone_id'])) {
-			$this->data['ccnow_geo_zone_id'] = $this->request->post['ccnow_geo_zone_id'];
-		} else {
-			$this->data['ccnow_geo_zone_id'] = $this->config->get('ccnow_geo_zone_id'); 
-		} 
-
-		if (isset($this->request->post['ccnow_order_status_id'])) {
-			$this->data['ccnow_order_status_id'] = $this->request->post['ccnow_order_status_id'];
-		} else {
-			$this->data['ccnow_order_status_id'] = $this->config->get('ccnow_order_status_id'); 
-		} 
-
-		$this->load->model('localisation/order_status');
-		
-		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		
 		if (isset($this->request->post['ccnow_merchant'])) {
 			$this->data['ccnow_merchant'] = $this->request->post['ccnow_merchant'];
 		} else {
@@ -99,6 +77,32 @@ class ControllerPaymentCCNow extends Controller {
 		} else {
 			$this->data['ccnow_key'] = $this->config->get('ccnow_key');
 		}
+
+		if (isset($this->request->post['ccnow_order_status_id'])) {
+			$this->data['ccnow_order_status_id'] = $this->request->post['ccnow_order_status_id'];
+		} else {
+			$this->data['ccnow_order_status_id'] = $this->config->get('ccnow_order_status_id'); 
+		} 
+
+		$this->load->model('localisation/order_status');
+		
+		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+		
+		if (isset($this->request->post['ccnow_geo_zone_id'])) {
+			$this->data['ccnow_geo_zone_id'] = $this->request->post['ccnow_geo_zone_id'];
+		} else {
+			$this->data['ccnow_geo_zone_id'] = $this->config->get('ccnow_geo_zone_id'); 
+		} 
+		
+		$this->load->model('localisation/geo_zone');
+										
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
+		if (isset($this->request->post['ccnow_status'])) {
+			$this->data['ccnow_status'] = $this->request->post['ccnow_status'];
+		} else {
+			$this->data['ccnow_status'] = $this->config->get('ccnow_status');
+		}
 		
 		if (isset($this->request->post['ccnow_sort_order'])) {
 			$this->data['ccnow_sort_order'] = $this->request->post['ccnow_sort_order'];
@@ -106,13 +110,9 @@ class ControllerPaymentCCNow extends Controller {
 			$this->data['ccnow_sort_order'] = $this->config->get('ccnow_sort_order');
 		}
 		
-		$this->load->model('localisation/geo_zone');
-										
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-
 		$this->id       = 'content';
 		$this->template = 'payment/ccnow.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

@@ -15,19 +15,12 @@ class ControllerAccountForgotten extends Controller {
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$password = substr(md5(rand()), 0, 7);
-
-			$find = array(
-				'{store}',
-				'{password}'
-			);
-	 
-			$replace = array(
-				'store'    => $this->config->get('config_store'),
-				'passowrd' => $password
-			);
 			
-			$subject = str_replace($find, $replace, $this->config->get('config_forgotten_subject_' . $this->language->getId()));
-			$message = str_replace($find, $replace, $this->config->get('config_forgotten_message_' . $this->language->getId()));
+			$subject = sprintf($this->language->get('mail_subject'), $this->config->get('config_store'));
+			
+			$message  = sprintf($this->language->get('mail_greeting'), $this->config->get('config_store')) . "\n\n";
+			$message .= $this->language->get('mail_password') . "\n\n";
+			$message .= $password;
 
 			$mail = new Mail();
 			$mail->setTo($this->request->post['email']);
@@ -82,7 +75,7 @@ class ControllerAccountForgotten extends Controller {
 		
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'account/forgotten.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();		
 	}

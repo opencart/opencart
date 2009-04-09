@@ -60,7 +60,7 @@ class ControllerCommonHome extends Controller {
 			$this->data['orders'][] = array(
 				'order_id'   => $result['order_id'],
 				'name'       => $result['name'],
-				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'total'      => $this->currency->format($result['total'], $result['currency'], $result['value']),
 				'action'     => $action
@@ -103,82 +103,190 @@ class ControllerCommonHome extends Controller {
 		
 		$this->id       = 'content'; 
 		$this->template = 'common/home.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
 		$this->render();  
   	}
 	
 	public function report() {
-    	$this->load->language('common/home');
+		$this->load->language('common/home');
 		
-		$data = array();
-		
-		$data['order'] = array();
-		$data['customer'] = array();
-		$data['xaxis'] = array();
-		
-		$data['order']['label'] = $this->language->get('text_order');
-		$data['customer']['label'] = $this->language->get('text_customer');
-		
+		$url  = 'http://chart.apis.google.com/chart?cht=lc';
+		$url .= '&chdl=' . $this->language->get('text_order') . '|' . $this->language->get('text_customer');
+		$url .= '&chco=FF0000,00FF00';
+		$url .= '&chs=718x330';
+		$url .= '&chxt=x,y';
+		$url .= '&chg=20,10';
+				
 		switch (@$this->request->get['range']) {
-			case 'day':
-				for ($i = 0; $i <= date('G'); $i++) {
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE confirm = '1' AND (DATE(date_added) = '" . date('Y-m-d') . "' AND HOUR(date_added) = '" . (int)$i . "') GROUP BY HOUR(date_added)");
-			
-					$data['order']['data'][]  = array(date('G', strtotime('-' . (int)$i . ' hour')), (int)@$query->row['total']);
-			
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM customer WHERE DATE(date_added) = '" . date('Y-m-d') . "' AND HOUR(date_added) = '" . (int)$i . "' GROUP BY HOUR(date_added)");
-			
-					$data['customer']['data'][] = array(date('G', strtotime('-' . (int)$i . ' hour')), (int)@$query->row['total']);
-			
-					$data['xaxis'][] = array(date('G', strtotime('-' . (int)$i . ' hour')), date('H', strtotime('-' . (int)$i . ' hour')));
-				}					
-				break;
-			case 'week':
-				for ($i = 0; $i < 7; $i++) {
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE confirm = '1' AND DATE(date_added) = '" . date('Y-m-d', strtotime('-' . (int)$i . ' day')) . "' GROUP BY DAY(date_added)");
-			
-					$data['order']['data'][]  = array(date('d', strtotime('-' . (int)$i . ' day')), (int)@$query->row['total']);
-			
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM customer WHERE DATE(date_added) = '" . date('Y-m-d', strtotime('-' . (int)$i . ' day')) . "' GROUP BY DAY(date_added)");
-			
-					$data['customer']['data'][] = array(date('d', strtotime('-' . (int)$i . ' day')), (int)@$query->row['total']);
-			
-					$data['xaxis'][] = array(date('d', strtotime('-' . (int)$i . ' day')), date('d/m', strtotime('-' . (int)$i . ' day')));
-				}			
-				break;
 			default:
-			case 'month':
-				for ($i = 0; $i < date('j'); $i++) {
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE confirm = '1' AND (DATE(date_added) = '" . date('Y-m-d', strtotime('-' . (int)$i . ' day')) . "') GROUP BY DAY(date_added)");
-			
-					$data['order']['data'][]  = array(date('d', strtotime('-' . (int)$i . ' day')), (int)@$query->row['total']);
-			
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM customer WHERE DATE(date_added) = '" . date('Y-m-d', strtotime('-' . (int)$i . ' day')) . "' GROUP BY DAY(date_added)");
-			
-					$data['customer']['data'][]  = array(date('d', strtotime('-' . (int)$i . ' day')), (int)@$query->row['total']);
-			
-					$data['xaxis'][] = array(date('d', strtotime('-' . (int)$i . ' day')), date('d/m', strtotime('-' . (int)$i . ' day')));
+			case 'day':
+				$orders = array();
+				$customers = array();
+				$labels = array();
+				
+				for ($i = 0; $i <= 23; $i++) {
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE order_status_id > '0' AND DATE(date_added) = DATE(NOW()) AND HOUR(date_added) = '" . (int)$i . "' GROUP BY HOUR(date_added) ORDER BY date_added ASC");
+
+					if ($query->num_rows) {
+						$orders[] = $query->row['total'];
+					} else {
+						$orders[] = 0;
+					}
+					
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM customer WHERE DATE(date_added) = DATE(NOW()) AND HOUR(date_added) = '" . (int)$i . "' GROUP BY HOUR(date_added) ORDER BY date_added ASC");
+					
+					if ($query->num_rows) {
+						$customers[] = $query->row['total'];
+					} else {
+						$customers[] = 0;
+					}
+					
+					$labels[] = $i;
+				}
+				
+				$url .= '&chxl=0:|' . implode('|', $labels) . '|';
+				$url .= '&chd=t:';
+				
+				if ($orders) {
+					$url .= implode(',', $orders);
+				}
+				
+				if (($orders) && ($customers)) {
+					$url .= '|';
+				}
+				
+				if ($customers) {
+					$url .= implode(',', $customers);
 				}
 				break;
+			case 'week':
+				$orders = array();
+				$customers = array();
+				$labels = array();
+				
+				$week = mktime(0, 0, 0, date('m'), date('d') - date('w'), date('Y'));
+
+				for ($i = 1; $i <= 7; $i++) {
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE order_status_id > '0' AND DATE(date_added) = DATE('" . date('Y-m-d', $week + ($i * 86400)) . "') GROUP BY DATE(date_added)");
+
+					if ($query->num_rows) {
+						$orders[] = $query->row['total'];
+					} else { 
+						$orders[] = 0;
+					}
+				
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM customer WHERE DATE(date_added) = DATE('" . date('Y-m-d', $week + ($i * 86400)) . "') GROUP BY DATE(date_added)");
+				
+					if ($query->num_rows) {
+						$customers[] = $query->row['total'];
+					} else {
+						$customers[] = 0;
+					}
+					
+					$labels[] = date('D', $week + ($i * 86400));
+				}
+				
+				$url .= '&chxl=0:|' . implode('|', $labels) . '|';
+				$url .= '&chd=t:';
+				
+				if ($orders) {
+					$url .= implode(',', $orders);
+				}
+				
+				if (($orders) && ($customers)) {
+					$url .= '|';
+				}
+				
+				if ($customers) {
+					$url .= implode(',', $customers);
+				}		
+				break;
+			case 'month':
+				$orders = array();
+				$customers = array();
+				$labels = array();
+				
+				$last_day_of_the_month = mktime(23, 59, 59, date('m'), 0, date('Y')); 
+
+				for ($i = 1; $i <= date('j', $last_day_of_the_month); $i++) {
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE order_status_id > '0' AND DATE(date_added) = DATE('" . date('Y-m') . '-' . (int)$i . "') GROUP BY DATE(date_added)");
+
+					if ($query->num_rows) {
+						$orders[] = $query->row['total'];
+					} else { 
+						$orders[] = 0;
+					}
+				
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM customer WHERE DATE(date_added) = DATE('" . date('Y-m') . '-' . (int)$i . "') GROUP BY DATE(date_added)");
+				
+					if ($query->num_rows) {
+						$customers[] = $query->row['total'];
+					} else {
+						$customers[] = 0;
+					}
+					
+					$labels[] = $i;
+				}
+				
+				$url .= '&chxl=0:|' . implode('|', $labels) . '|';
+				$url .= '&chd=t:';
+				
+				if ($orders) {
+					$url .= implode(',', $orders);
+				}
+				
+				if (($orders) && ($customers)) {
+					$url .= '|';
+				}
+				
+				if ($customers) {
+					$url .= implode(',', $customers);
+				}				
+				break;
 			case 'year':
-				for ($i = 0; $i < date('n'); $i++) {
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE confirm = '1' AND (YEAR(date_added) = '" . date('Y') . "' AND MONTH(date_added) = '" . date('m', strtotime('-' . $i . ' month')) . "') GROUP BY MONTH(date_added)");
-			
-					$data['order']['data'][]  = array(date('n', strtotime('-' . (int)$i . ' month')), (int)@$query->row['total']);
-			
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM customer WHERE YEAR(date_added) = '" . date('Y') . "' AND MONTH(date_added) = '" . date('m', strtotime('-' . $i . ' month')) . "' GROUP BY MONTH(date_added)");
-			
-					$data['customer']['data'][]  =array(date('n', strtotime('-' . (int)$i . ' month')), (int)@$query->row['total']);
-			
-					$data['xaxis'][] = array(date('n', strtotime('-' . (int)$i . ' month')), date('m', strtotime('-' . (int)$i . ' month')));
-				}			
+				$orders = array();
+				$customers = array();
+				$labels = array();
+
+				for ($i = 1; $i <= 12; $i++) {
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE order_status_id > '0' AND YEAR(date_added) = YEAR(NOW()) AND MONTH(date_added) = '" . (int)$i . "' GROUP BY MONTH(date_added)");
+
+					if ($query->num_rows) {
+						$orders[] = $query->row['total'];
+					} else { 
+						$orders[] = 0;
+					}
+				
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM customer WHERE YEAR(date_added) = YEAR(NOW()) AND MONTH(date_added) = '" . (int)$i . "' GROUP BY DATE(date_added)");
+				
+					if ($query->num_rows) {
+						$customers[] = $query->row['total'];
+					} else {
+						$customers[] = 0;
+					}
+					
+					$labels[] = date('M', mktime(0, 0, 0, $i, 1, date('Y')));
+				}
+				
+				$url .= '&chxl=0:|' . implode('|', $labels) . '|';
+				$url .= '&chd=t:';
+				
+				if ($orders) {
+					$url .= implode(',', $orders);
+				}
+				
+				if (($orders) && ($customers)) {
+					$url .= '|';
+				}
+				
+				if ($customers) {
+					$url .= implode(',', $customers);
+				}
 				break;	
 		}
 		
-		$this->load->helper('json');
-		
-		$this->response->setOutput(Json::encode($data));
+		$this->response->setOutput($url);
 	}
 }
 ?>

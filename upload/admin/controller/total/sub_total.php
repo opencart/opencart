@@ -70,7 +70,7 @@ class ControllerTotalSubTotal extends Controller {
 																				
 		$this->id       = 'content';
 		$this->template = 'total/sub_total.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

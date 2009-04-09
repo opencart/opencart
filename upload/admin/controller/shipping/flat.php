@@ -101,7 +101,7 @@ class ControllerShippingFlat extends Controller {
 								
 		$this->id       = 'content';
 		$this->template = 'shipping/flat.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

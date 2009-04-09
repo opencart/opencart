@@ -12,6 +12,11 @@ $_['text_success']    = 'Success: A new password has been sent to your e-mail ad
 // Entry
 $_['entry_email']     = 'E-Mail Address:';
 
+// Mail
+$_['mail_subject']    = '%s - New Password';
+$_['mail_greeting']   = 'A new password was requested from %s.';
+$_['mail_password']   = 'Your new password to is:';
+
 // Error
 $_['error_email']     = 'Error: The E-Mail Address was not found in our records, please try again!';
 ?>

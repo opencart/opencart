@@ -101,7 +101,7 @@ class ControllerShippingItem extends Controller {
 								
 		$this->id       = 'content';
 		$this->template = 'shipping/item.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

@@ -105,7 +105,7 @@ class ControllerShippingZone extends Controller {
 								
 		$this->id       = 'content';
 		$this->template = 'shipping/zone.tpl';
-		$this->layout   = 'module/layout';
+		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

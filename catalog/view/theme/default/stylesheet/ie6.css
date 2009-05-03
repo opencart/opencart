@@ -1,0 +1,68 @@
+.png {
+	behavior: url('catalog/view/javascript/png/iepngfix.htc');
+}
+#header .div2 img {
+	behavior: url('catalog/view/javascript/png/iepngfix.htc');	
+	width: 214px;
+	height: 59px;
+}
+#header .div3 {
+	behavior: url('catalog/view/javascript/png/iepngfix.htc');
+	width: 268px;
+	height: 67px;
+}
+#header .div4 img {
+	behavior: url('catalog/view/javascript/png/iepngfix.htc');
+	width: 16px;
+	height: 16px;
+}
+#content {
+	float: left;
+	width: 580px;	
+}
+#content .top {
+	behavior: url('catalog/view/javascript/png/iepngfix.htc');
+	float: left;
+	clear: both;
+	width: 100%;	
+}
+#content .middle {
+	float: left;
+	clear: both;
+	width: 580px;
+}
+#content .bottom {
+	float: left;
+	clear: both;
+	width: 100%;	
+	line-height: 5px;
+	behavior: url('catalog/view/javascript/png/iepngfix.htc');
+}
+.box {
+	float: left;
+	clear: both;
+	width: 100%;
+}
+.box .top img {
+	behavior: url('catalog/view/javascript/png/iepngfix.htc');
+	width: 16px;
+	height: 16px;	
+}
+.box .top {
+	float: left;
+	clear: both;
+	width: 100%;
+}
+.box .middle {
+	float: left;
+	clear: both;
+	width: 100%;
+}
+.box .bottom {
+	line-height: 5px;
+	clear: both;
+	width: 100%;
+}
+.buttons {
+	width: 100%;
+}

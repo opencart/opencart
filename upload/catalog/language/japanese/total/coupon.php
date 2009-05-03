@@ -1,5 +1,0 @@
-<?php
-// Text
-$_['text_title']    = '%s:';
-$_['text_shipping'] = 'ƒN[ƒ|ƒ“ (‘——¿–³—¿):';
-?>

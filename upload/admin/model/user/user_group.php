@@ -12,6 +12,22 @@ class ModelUserUserGroup extends Model {
 		$this->db->query("DELETE FROM user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
 	}
 
+	public function addPermission($user_id, $type, $page) {
+		$user_query = $this->db->query("SELECT DISTINCT user_group_id FROM user WHERE user_id = '" . (int)$user_id . "'");
+		
+		if ($user_query->num_rows) {
+			$user_group_query = $this->db->query("SELECT DISTINCT * FROM user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
+		
+			if ($user_group_query->num_rows) {
+				$data = @unserialize($user_group_query->row['permission']);
+		
+				$data[$type][] = $page;
+		
+				$this->db->query("UPDATE user_group SET permission = '" . serialize($data) . "' WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
+			}
+		}
+	}
+	
 	public function getUserGroup($user_group_id) {
 		$query = $this->db->query("SELECT DISTINCT * FROM user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
 		

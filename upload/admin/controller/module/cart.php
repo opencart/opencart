@@ -24,6 +24,7 @@ class ControllerModuleCart extends Controller {
 		$this->data['text_left'] = $this->language->get('text_left');
 		$this->data['text_right'] = $this->language->get('text_right');
 		
+		$this->data['entry_ajax'] = $this->language->get('entry_ajax');
 		$this->data['entry_position'] = $this->language->get('entry_position');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
@@ -58,6 +59,12 @@ class ControllerModuleCart extends Controller {
 		$this->data['action'] = $this->url->https('module/cart');
 		
 		$this->data['cancel'] = $this->url->https('extension/module');
+
+		if (isset($this->request->post['cart_ajax'])) {
+			$this->data['cart_ajax'] = $this->request->post['cart_ajax'];
+		} else {
+			$this->data['cart_ajax'] = $this->config->get('cart_ajax');
+		}
 		
 		if (isset($this->request->post['cart_position'])) {
 			$this->data['cart_position'] = $this->request->post['cart_position'];

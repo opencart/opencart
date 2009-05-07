@@ -5,7 +5,7 @@
   <div class="buttons">
     <table>
       <tr>
-        <td align="right"><a onclick="location='<?php echo $continue; ?>'" class="button"><span><?php echo $button_continue; ?></span></a></td>
+        <td align="right"><a onclick="location='<?php echo $continue; ?>'" class="button"><span><?php echo $button_confirm; ?></span></a></td>
       </tr>
     </table>
   </div>

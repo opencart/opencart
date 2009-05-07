@@ -16,7 +16,16 @@ class ControllerCatalogImage extends Controller {
 				$this->load->helper('image');
 			
 				$data['file'] = $filename;
-				$data['src'] = HelperImage::resize($filename, '100', '100');
+				
+				if (isset($this->request->get['no_resize'])) {
+					if (@$this->request->server['HTTPS'] != 'on') {
+						$this->data['src'] = HTTP_IMAGE . $filename;
+					} else {
+						$this->data['src'] = HTTPS_IMAGE . $filename;
+					}					
+				} else {
+					$data['src'] = HelperImage::resize($filename, '100', '100');
+				}
 			}
 		} else {
 			$data['error'] = $this->error['message'];
@@ -42,6 +51,7 @@ class ControllerCatalogImage extends Controller {
 		      		'image/jpeg',
 		      		'image/pjpeg',
 					'image/png',
+					'image/x-png',
 					'image/gif'
 		    	);
 				

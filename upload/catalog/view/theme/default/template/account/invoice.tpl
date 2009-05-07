@@ -5,7 +5,7 @@
   <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
     <table width="100%">
       <tr>
-        <td valign="top"><b><?php echo $text_order; ?></b><br />
+        <td width="33.3%" valign="top"><b><?php echo $text_order; ?></b><br />
           #<?php echo $order_id; ?><br />
           <br />
           <b><?php echo $text_email; ?></b><br />
@@ -26,11 +26,11 @@
           <?php } ?>
           <b><?php echo $text_payment_method; ?></b><br />
           <?php echo $payment_method; ?></td>
-        <td valign="top"><?php if ($shipping_address) { ?>
+        <td width="33.3%" valign="top"><?php if ($shipping_address) { ?>
           <b><?php echo $text_shipping_address; ?></b><br />
           <?php echo $shipping_address; ?><br />
           <?php } ?></td>
-        <td valign="top"><b><?php echo $text_payment_address; ?></b><br />
+        <td width="33.3%" valign="top"><b><?php echo $text_payment_address; ?></b><br />
           <?php echo $payment_address; ?><br /></td>
       </tr>
     </table>

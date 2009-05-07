@@ -8,6 +8,7 @@ $_['text_success']            = 'Success: You have successfully saved your setti
 // Entry
 $_['entry_store']             = 'Store Name:';
 $_['entry_meta_description']  = 'Meta Tag Description:';
+$_['entry_logo']              = 'Store Logo:';
 $_['entry_welcome']           = 'Welcome Message:';
 $_['entry_owner']             = 'Store Owner:';
 $_['entry_address']           = 'Address:';
@@ -16,6 +17,7 @@ $_['entry_telephone']         = 'Telephone:';
 $_['entry_fax']               = 'Fax:';
 $_['entry_template']          = 'Template:';
 $_['entry_ssl']               = 'Use SSL:';
+$_['entry_encryption']        = 'Encryption Key:';
 $_['entry_parse_time']        = 'Display Parse Time:';
 $_['entry_country']           = 'Country:';
 $_['entry_zone']              = 'Region / State:';
@@ -38,6 +40,8 @@ $_['entry_cache']             = 'Use Caching:';
 $_['entry_compression']       = 'Output Compression Level:';
 
 // Help
+$_['help_ssl']                = 'To get SSL to work you need SSL installed on your server and the SSL address in your config file.';
+$_['help_encryption']         = 'Please provide a secret key that will be used to encrypt private information when processing orders.';
 $_['help_currency_auto']      = 'Set your store to automatically update currencies daily.';
 $_['help_alert_mail']         = 'Send a email to the store owner when a new order is created.';
 $_['help_account']            = 'Forces people to agree to terms before an account can be created.';
@@ -58,4 +62,5 @@ $_['error_owner']             = 'Store Owner must be greater than 3 and less tha
 $_['error_address']           = 'Store Address must be greater than 10 and less than 128 characters!';
 $_['error_email']             = 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']         = 'Telephone must be greater than 3 and less than 32 characters!';
+$_['error_encryption']        = 'Encryption Key Required!';
 ?>

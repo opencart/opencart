@@ -34,6 +34,7 @@ $_['button_login']          = 'Login';
 $_['button_update']         = 'Update';
 $_['button_shopping']       = 'Continue Shopping';
 $_['button_checkout']       = 'Checkout';
+$_['button_confirm']        = 'Confirm Order';
 $_['button_view']           = 'View';
 $_['button_search']         = 'Search';
 ?>

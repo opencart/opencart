@@ -83,7 +83,12 @@ class ControllerExtensionTotal extends Controller {
 		$this->load->model('setting/extension');
 		
 		$this->model_setting_extension->install('total', $this->request->get['extension']);
+
+		$this->load->model('user/user_groupr');
 		
+		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'total/' . $this->request->get['extension']);
+		$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'total/' . $this->request->get['extension']);
+
 		$this->redirect($this->url->https('extension/total'));
 	}
 	

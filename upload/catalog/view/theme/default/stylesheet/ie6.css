@@ -3,8 +3,8 @@
 }
 #header .div2 img {
 	behavior: url('catalog/view/javascript/png/iepngfix.htc');	
-	width: 214px;
-	height: 59px;
+	width: auto;
+	height: auto;
 }
 #header .div3 {
 	behavior: url('catalog/view/javascript/png/iepngfix.htc');

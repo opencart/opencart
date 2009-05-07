@@ -2,7 +2,13 @@
 class ControllerCommonLayout extends Controller {
 	protected function index() { 
 		$this->data['title'] = $this->document->title;
-		$this->data['base'] = (@$this->request->server['HTTPS'] != 'on') ? HTTP_SERVER : HTTPS_SERVER;
+		
+		if (@$this->request->server['HTTPS'] != 'on') {
+			$this->data['base'] = HTTP_SERVER;
+		} else {
+			$this->data['base'] = HTTPS_SERVER;
+		}
+		
 		$this->data['charset'] = $this->language->get('charset');
 		$this->data['language'] = $this->language->get('code');	
 		$this->data['direction'] = $this->language->get('direction');

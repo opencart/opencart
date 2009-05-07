@@ -1,0 +1,10 @@
+1.2.7 > 1.2.8
+
+To Upgrade:
+1. First off backup your site.
+2. Download a backup of your database.
+3. Delete the files in your hosting directory
+4. Upload the files from the download.
+5. Go through the install as normal.
+6. Once the install is finished import the database you backed up.
+7. Goto the image directory from the backup and copy all the image and upload to the image directory on your hosting.

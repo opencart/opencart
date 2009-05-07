@@ -4,6 +4,13 @@ class ControllerCommonHeader extends Controller {
 		$this->load->language('common/header');
 	    	
 		$this->data['store'] = $this->config->get('config_store');
+		
+		if (@$this->request->server['HTTPS'] != 'on') {
+			$this->data['logo'] = HTTP_IMAGE . $this->config->get('config_logo');
+		} else {
+			$this->data['logo'] = HTTPS_IMAGE . $this->config->get('config_logo');
+		}
+		
 		$this->data['text_home'] = $this->language->get('text_home');
 		$this->data['text_special'] = $this->language->get('text_special');
     	$this->data['text_account'] = $this->language->get('text_account');

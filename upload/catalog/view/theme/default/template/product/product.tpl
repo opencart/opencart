@@ -5,7 +5,7 @@
   <div style="width: 100%; margin-bottom: 30px;">
     <table style="width: 100%; border-collapse: collapse;">
       <tr>
-        <td style="text-align: center; width: 250px; vertical-align: top;"><a href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>" class="thickbox"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" style="margin-bottom: 3px;" /></a><br />
+        <td style="text-align: center; width: 250px; vertical-align: top;"><a href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>" class="thickbox"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" id="image" style="margin-bottom: 3px;" /></a><br />
           <span style="font-size: 11px;"><?php echo $text_enlarge; ?></span></td>
         <td style="padding-left: 15px; width: 296px; vertical-align: top;"><table width="100%">
             <tr>
@@ -64,7 +64,7 @@
             <?php } ?>
             <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px;"><?php echo $text_qty; ?>
               <input type="text" name="quantity" size="3" value="1" />
-              <a onclick="$('#product').submit();" class="button"><span><?php echo $button_add_to_cart; ?></span></a></div>
+              <a onclick="$('#product').submit();" id="add_to_cart" class="button"><span><?php echo $button_add_to_cart; ?></span></a></div>
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
           </form></td>
       </tr>

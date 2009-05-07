@@ -137,7 +137,7 @@ class ControllerProductProduct extends Controller {
 			$this->data['button_add_to_cart'] = $this->language->get('button_add_to_cart');
 
 			$this->data['action'] = $this->url->http('checkout/cart');
-
+			
 			$this->load->helper('image');
 			
 			if ($product_info['image']) {

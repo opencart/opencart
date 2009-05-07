@@ -9,6 +9,7 @@ $_['text_left']        = 'Left';
 $_['text_right']       = 'Right';
 
 // Entry
+$_['entry_ajax']       = 'AJAX Add To Cart:';
 $_['entry_position']   = 'Position:';
 $_['entry_status']     = 'Status:';
 $_['entry_sort_order'] = 'Sort Order:';

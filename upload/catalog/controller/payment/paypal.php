@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentPayPal extends Controller {
 	protected function index() {
-    	$this->data['button_continue'] = $this->language->get('button_continue');
+    	$this->data['button_confirm'] = $this->language->get('button_confirm');
 		$this->data['button_back'] = $this->language->get('button_back');
 
 		if (!$this->config->get('paypal_test')) {
@@ -16,7 +16,7 @@ class ControllerPaymentPayPal extends Controller {
 		
 		$this->load->library('encryption');
 		
-		$encryption = new Encryption($this->config->get('paypal_encryption'));
+		$encryption = new Encryption($this->config->get('config_encryption'));
 																				   
 		$this->data['business'] = $this->config->get('paypal_email');
 		$this->data['item_name'] = $this->config->get('config_store');				
@@ -34,10 +34,10 @@ class ControllerPaymentPayPal extends Controller {
 		$this->data['invoice'] = $this->session->data['order_id'] . ' - ' . $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
 		$this->data['lc'] = $this->language->getCode();
 		
-		if (!$this->config->get('paypal_method')) {
-			$this->data['paymentaction'] = 'authorization';
+		if (!$this->config->get('paypal_transaction')) {
+			$this->data['paymentaction'] = 'Authorization';
 		} else {
-			$this->data['paymentaction'] = 'sale';
+			$this->data['paymentaction'] = 'Sale';
 		}
 		
 		$this->data['return'] = $this->url->https('checkout/success');
@@ -54,7 +54,7 @@ class ControllerPaymentPayPal extends Controller {
 	public function callback() {
 		$this->load->library('encryption');
 		
-		$encryption = new Encryption($this->config->get('paypal_encryption'));
+		$encryption = new Encryption($this->config->get('config_encryption'));
 		$order_id = $encryption->decrypt(@$this->request->get['order_id']);
 		
 		$this->load->model('checkout/order');

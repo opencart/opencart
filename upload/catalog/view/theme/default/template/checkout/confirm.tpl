@@ -11,7 +11,7 @@
   <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
     <table width="100%">
       <tr>
-        <td valign="top"><?php if ($shipping_method) { ?>
+        <td width="33.3%" valign="top"><?php if ($shipping_method) { ?>
           <b><?php echo $text_shipping_method; ?></b><br />
           <?php echo $shipping_method; ?><br />
           <a href="<?php echo $checkout_shipping; ?>"><?php echo $text_change; ?></a><br />
@@ -20,12 +20,12 @@
           <b><?php echo $text_payment_method; ?></b><br />
           <?php echo $payment_method; ?><br />
           <a href="<?php echo $checkout_payment; ?>"><?php echo $text_change; ?></a></td>
-        <td valign="top"><?php if ($shipping_address) { ?>
+        <td width="33.3%" valign="top"><?php if ($shipping_address) { ?>
           <b><?php echo $text_shipping_address; ?></b><br />
           <?php echo $shipping_address; ?><br />
           <a href="<?php echo $checkout_shipping_address; ?>"><?php echo $text_change; ?></a>
           <?php } ?></td>
-        <td><b><?php echo $text_payment_address; ?></b><br />
+        <td width="33.3%" valign="top"><b><?php echo $text_payment_address; ?></b><br />
           <?php echo $payment_address; ?><br />
           <a href="<?php echo $checkout_payment_address; ?>"><?php echo $text_change; ?></a></td>
       </tr>

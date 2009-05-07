@@ -486,31 +486,6 @@ function setUploader(upload, preview, image) {
 			$('#loading').remove();	
 		}
 	});
-	/*
-	$(upload).upload({
-		name:    'image',
-		method:  'post',
-		enctype: 'multipart/form-data',
-		action:  'index.php?route=catalog/image',
-		autoSubmit: false,
-		onSubmit: function() {
-			$(upload).after('<img src="view/image/loading.gif" id="loading" />');
-		},
-		onComplete: function(data) {
-			var json = eval('(' + data + ')');
-
-			if (json.error) {
-				alert(json.error);
-			} else {
-				$(preview).attr('src', json.src);
-
-				$(image).attr('value', json.file);
-			}
-			$('#loading').remove();
-		},
-		onSelect: function() {}
-	});
-	*/
 }
 //--></script>
 <link rel="stylesheet" type="text/css" href="view/stylesheet/datepicker.css" />

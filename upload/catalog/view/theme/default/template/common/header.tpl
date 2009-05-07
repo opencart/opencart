@@ -1,5 +1,5 @@
 <div class="div1">
-  <div class="div2"><a href="<?php echo $home; ?>"><img src="catalog/view/theme/default/image/logo.png" title="<?php echo $store; ?>" alt="<?php echo $store; ?>" /></a></div>
+  <div class="div2"><a href="<?php echo $home; ?>"><img src="<?php echo $logo; ?>" title="<?php echo $store; ?>" alt="<?php echo $store; ?>" /></a></div>
   <div class="div3"><?php echo $language; ?><?php echo $search; ?></div>
 </div>
 <div class="div4">

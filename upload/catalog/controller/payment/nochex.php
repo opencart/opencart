@@ -3,7 +3,7 @@
 // Nochex via APC maybe only avaiable to "Merchant" account holders only - site docs a bit vague on this point
 class ControllerPaymentNochex extends Controller {
 	protected function index() {
-    	$this->data['button_continue']      = $this->language->get('button_continue');
+    	$this->data['button_confirm']      = $this->language->get('button_confirm');
 		$this->data['button_back']          = $this->language->get('button_back');
 
         $this->data['action']               = 'https://secure.nochex.com/'; // This is a constant for both test and live

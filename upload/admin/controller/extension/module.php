@@ -85,7 +85,12 @@ class ControllerExtensionModule extends Controller {
 		$this->load->model('setting/extension');
 		
 		$this->model_setting_extension->install('module', $this->request->get['extension']);
+
+		$this->load->model('user/user_group');
 		
+		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'module/' . $this->request->get['extension']);
+		$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'module/' . $this->request->get['extension']);
+
 		$this->redirect($this->url->https('extension/module'));
 	}
 	

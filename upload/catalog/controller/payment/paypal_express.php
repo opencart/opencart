@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentPayPalExpress extends Controller {
 	protected function index() {
-    	$this->data['button_continue'] = $this->language->get('button_continue');
+    	$this->data['button_confirm'] = $this->language->get('button_confirm');
 		$this->data['button_back'] = $this->language->get('button_back');
 
 		if (!$this->config->get('paypal_express_test')) {

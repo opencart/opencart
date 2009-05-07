@@ -6,7 +6,7 @@ class ControllerPaymentBankTransfer extends Controller {
 		$this->data['text_instruction'] = $this->language->get('text_instruction');
 		$this->data['text_payment'] = $this->language->get('text_payment');
 		
-		$this->data['button_continue'] = $this->language->get('button_continue');
+		$this->data['button_confirm'] = $this->language->get('button_confirm');
 		$this->data['button_back'] = $this->language->get('button_back');
 		
 		$this->data['bank'] = nl2br($this->config->get('bank_transfer_bank_' . $this->language->getId()));

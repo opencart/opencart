@@ -1,10 +1,15 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
-</head>
+<?php
+// Text
+$_['text_title']               = 'Credit or Debit Card (Processed securely by PayPal)';
+$_['text_credit_card']         = 'Credit Card Details';
+$_['text_start_date']          = '(if available)';
+$_['text_issue_number']        = '(for Maestro and Solo cards only)';
 
-<body>
-</body>
-</html>
+// Entry
+$_['entry_credit_card_type']   = 'Card Type:';
+$_['entry_credit_card_number'] = 'Card Number:';
+$_['entry_start_date']         = 'Card Valid From Date:';
+$_['entry_expire_date']        = 'Card Expiry Date:';
+$_['entry_cvv2_number']        = 'Card Security Code (CVV2):';
+$_['entry_issue_number']       = 'Card Issue Number:';
+?>

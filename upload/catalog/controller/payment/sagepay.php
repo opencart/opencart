@@ -1,9 +1,63 @@
 <?php
 class ControllerPaymentSagePay extends Controller {
 	protected function index() {
-    	$this->data['button_continue'] = $this->language->get('button_continue');
+		$this->data['text_credit_card'] = $this->language->get('text_credit_card');
+		$this->data['text_start_date'] = $this->language->get('text_start_date');
+		$this->data['text_issue_number'] = $this->language->get('text_issue_number');
+		
+		$this->data['entry_credit_card_type'] = $this->language->get('entry_credit_card_type');
+		$this->data['entry_credit_card_number'] = $this->language->get('entry_credit_card_number');
+		$this->data['entry_start_date'] = $this->language->get('entry_start_date');
+		$this->data['entry_expire_date'] = $this->language->get('entry_expire_date');
+		$this->data['entry_cvv2_number'] = $this->language->get('entry_cvv2_number');
+		$this->data['entry_issue_number'] = $this->language->get('entry_issue_number');
+		
+		$this->data['button_confirm'] = $this->language->get('button_confirm');
 		$this->data['button_back'] = $this->language->get('button_back');
 
+		$this->data['cards'] = array();
+
+		$this->data['cards'][] = array(
+			'text'  => 'Visa', 
+			'value' => 'VISA'
+		);
+
+		$this->data['cards'][] = array(
+			'text'  => 'MasterCard', 
+			'value' => 'MASTERCARD'
+		);
+
+		$this->data['cards'][] = array(
+			'text'  => 'Discover Card', 
+			'value' => 'DISCOVER'
+		);
+		
+		$this->data['cards'][] = array(
+			'text'  => 'American Express', 
+			'value' => 'AMEX'
+		);
+
+		$this->data['cards'][] = array(
+			'text'  => 'Maestro', 
+			'value' => 'SWITCH'
+		);
+		
+		$this->data['cards'][] = array(
+			'text'  => 'Solo', 
+			'value' => 'SOLO'
+		);		
+		
+
+
+		$this->data['back'] = $this->url->https('checkout/payment');
+		
+		$this->id       = 'payment';
+		$this->template = $this->config->get('config_template') . 'payment/sagepay.tpl';
+		
+		$this->render();		
+	}
+	
+	public function send() {
 		if ($this->config->get('sagepay_test') == 'sim') {
     		$this->data['action'] = 'https://test.sagepay.com/Simulator/VSPFormGateway.asp';
 
@@ -18,7 +72,7 @@ class ControllerPaymentSagePay extends Controller {
     		$this->data['action'] = 'https://live.sagepay.com/gateway/service/vpsform-register.vsp';
 
 			$vendor   = $this->config->get('sagepay_vendor');
-			$password = $this->config->get('sagepay_password');		
+			$password = $this->config->get('sagepay_password');
 		}		
 		
 		$this->load->model('checkout/order');
@@ -30,7 +84,7 @@ class ControllerPaymentSagePay extends Controller {
 		$query .= '&Amount=' . $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
 		$query .= '&Currency=' . $order_info['currency'];
 		$query .= '&Description=' . sprintf($this->language->get('description'), date($this->language->get('date_format_short')), $this->session->data['order_id']);
-		//$query .= '&NotificationURL=' . $this->url->https('payment/sagepay/callback');
+		$query .= '&NotificationURL=' . $this->url->https('payment/sagepay/callback');
 		$query .= '&SuccessURL=' . $this->url->https('checkout/success');
 		$query .= '&FailureURL=' . $this->url->https('checkout/payment');
 		$query .= '&CustomerName=' . $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
@@ -38,7 +92,6 @@ class ControllerPaymentSagePay extends Controller {
 		$query .= '&VendorEMail=' . $this->config->get('config_email');
         $query .= '&SendEMail=' . '1';
         $query .= '&EMailMessage=' . $order_info['comment'];		
-		
         $query .= '&BillingSurname=' . $order_info['payment_lastname'];
         $query .= '&BillingFirstnames=' . $order_info['payment_firstname'];
         $query .= '&BillingAddress1=' . $order_info['payment_address_1'];
@@ -81,22 +134,13 @@ class ControllerPaymentSagePay extends Controller {
 	
 		$this->data['vendor'] = $vendor;
 		$this->data['crypt'] = $crypt;
-
-		$this->data['back'] = $this->url->https('checkout/payment');
 		
-		$this->id       = 'payment';
-		$this->template = $this->config->get('config_template') . 'payment/sagepay.tpl';
-		
-		$this->render();		
-	}
-	
-	public function confirm() {
+		/*
 		$this->load->model('checkout/order');
 		
 		$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
-	}
-	
-	public function callback() {
+		*/
+		
 	}	 
 }
 ?>

@@ -1,4 +1,4 @@
-<div class="box">
+<div id="module_cart" class="box">
   <div class="top"><img src="catalog/view/theme/default/image/icon_basket.png" alt="" /><?php echo $heading_title; ?></div>
   <div class="middle">
     <?php if ($products) { ?>
@@ -23,3 +23,38 @@
   </div>
   <div class="bottom">&nbsp;</div>
 </div>
+<?php if ($ajax) { ?>
+<script type="text/javascript"><!--
+$(document).ready(function () {
+	$('#add_to_cart').replaceWith('<a onclick="" id="add_to_cart" class="button">' + $('#add_to_cart').html() + '</a>');
+
+	$('#add_to_cart').click(function () {
+		$.ajax({
+			type: 'post',
+			url: 'index.php?route=checkout/cart',
+			data: $('#product :input')
+		});	
+		
+		
+		$('#module_cart .middle').load('index.php?route=module/cart/callback');
+	
+		var image = $('#image').offset();
+		var cart  = $('#module_cart').offset();
+	
+		$('#image').before('<img src="' + $('#image').attr('src') + '" id="temp" style="position: absolute; top: ' + image.top + 'px; left: ' + image.left + 'px;" />');
+	
+		params = {
+			top : cart.top + 'px',
+			left : cart.left + 'px',
+			opacity : 0.0,
+			width : $('#module_cart').width(),  
+			heigth : $('#module_cart').height()
+		};		
+	
+		$('#temp').animate(params, 'slow', false, function () {
+			$('#temp').remove();
+		});			
+	});			
+});
+//--></script>
+<?php } ?>

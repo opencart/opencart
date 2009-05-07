@@ -334,16 +334,16 @@ class ControllerUserUserGroup extends Controller {
 			}
 		}
 		
-		if (isset($this->request->post['access'])) {
-			$this->data['access'] = $this->request->post['access'];
+		if (isset($this->request->post['permission'])) {
+			$this->data['access'] = $this->request->post['permission']['access'];
 		} elseif (isset($user_group_info['permission']['access'])) {
 			$this->data['access'] = $user_group_info['permission']['access'];
 		} else { 
 			$this->data['access'] = array();
 		}
 
-		if (isset($this->request->post['modify'])) {
-			$this->data['modify'] = $this->request->post['modify'];
+		if (isset($this->request->post['permission'])) {
+			$this->data['modify'] = $this->request->post['permission']['modify'];
 		} elseif (isset($user_group_info['permission']['modify'])) {
 			$this->data['modify'] = $user_group_info['permission']['modify'];
 		} else { 

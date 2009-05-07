@@ -28,6 +28,15 @@
           <?php } ?></td>
       </tr>
       <tr>
+        <td><?php echo $entry_logo; ?></td>
+        <td><input type="file" id="upload" />
+          <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="image" /></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><img src="<?php echo $preview; ?>" alt="" id="preview" style="margin: 4px 0px; border: 1px solid #EEEEEE;" /></td>
+      </tr>
+      <tr>
         <td><span class="required">*</span> <?php echo $entry_owner; ?></td>
         <td><input type="text" name="config_owner" value="<?php echo $config_owner; ?>" />
           <br />
@@ -65,7 +74,7 @@
       </tr>
       <tr>
         <td><?php echo $entry_template; ?></td>
-        <td><select name="config_template">
+        <td><select name="config_template" onchange="$('#template').load('index.php?route=setting/setting/template&template=' + encodeURIComponent(this.value));">
             <?php foreach ($templates as $template) { ?>
             <?php if ($template['value'] == $config_template) { ?>
             <option value="<?php echo $template['value']; ?>" selected="selected"><?php echo $template['name']; ?></option>
@@ -76,7 +85,12 @@
           </select></td>
       </tr>
       <tr>
-        <td><?php echo $entry_ssl; ?></td>
+        <td></td>
+        <td id="template"></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_ssl; ?><br />
+          <span class="help"><?php echo $help_ssl; ?></span></td>
         <td><?php if ($config_ssl) { ?>
           <input type="radio" name="config_ssl" value="1" checked="checked" />
           <?php echo $text_yes; ?>
@@ -87,6 +101,15 @@
           <?php echo $text_yes; ?>
           <input type="radio" name="config_ssl" value="0" checked="checked" />
           <?php echo $text_no; ?>
+          <?php } ?></td>
+      </tr>
+      <tr>
+        <td><span class="required">*</span> <?php echo $entry_encryption; ?><br />
+          <span class="help"><?php echo $help_encryption; ?></span></td>
+        <td><input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" />
+          <br />
+          <?php if ($error_encryption) { ?>
+          <span class="error"><?php echo $error_encryption; ?></span>
           <?php } ?></td>
       </tr>
       <tr>
@@ -379,6 +402,34 @@ var oFCKeditor<?php echo $language['language_id']; ?>          = new FCKeditor('
 	oFCKeditor<?php echo $language['language_id']; ?>.Height   = '300';
 	oFCKeditor<?php echo $language['language_id']; ?>.ReplaceTextarea();
 <?php } ?>
+//--></script>
+<script type="text/javascript" src="view/javascript/jquery/ajaxupload.3.1.js"></script>
+<script type="text/javascript"><!--
+$('#template').load('index.php?route=setting/setting/template&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
+
+$(document).ready(function() { 
+	new AjaxUpload('#upload', {
+		action: 'index.php?route=catalog/image&no_resize=1',
+		name: 'image',
+		autoSubmit: true,
+		responseType: 'json',
+		onChange: function(file, extension) {},
+		onSubmit: function(file, extension) {
+			$('#upload').after('<img src="view/image/loading.gif" id="loading" />');
+		},
+		onComplete: function(file, json) {
+			if (json.error) {
+				alert(json.error);
+			} else {
+				$('#preview').attr('src', json.src);
+
+				$('#image').attr('value', json.file);
+			}
+			
+			$('#loading').remove();	
+		}
+	});
+});	
 //--></script>
 <script type="text/javascript"><!--
 $('#zone').load('index.php?route=setting/setting/zone&country_id=' + $('#country').attr('value') + '&zone_id=<?php echo $config_zone_id; ?>');

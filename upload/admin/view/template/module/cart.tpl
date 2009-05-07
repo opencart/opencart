@@ -10,7 +10,19 @@
   <div id="tab_general" class="page">
     <table class="form">
       <tr>
-        <td width="25%"><?php echo $entry_position; ?></td>
+        <td width="25%"><?php echo $entry_ajax; ?></td>
+        <td><select name="cart_ajax">
+            <?php if ($cart_ajax) { ?>
+            <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+            <option value="0"><?php echo $text_disabled; ?></option>
+            <?php } else { ?>
+            <option value="1"><?php echo $text_enabled; ?></option>
+            <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+            <?php } ?>
+          </select></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_position; ?></td>
         <td><select name="cart_position">
             <?php if ($cart_position == 'left') { ?>
             <option value="left" selected="selected"><?php echo $text_left; ?></option>

@@ -10,13 +10,13 @@ class ModelCheckoutCoupon extends Model {
 				$status = FALSE;
 			}
 		
-			$coupon_redeem_query = $this->db->query("SELECT COUNT(*) AS total FROM order WHERE order_status_id > '0' AND coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "'");
+			$coupon_redeem_query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE order_status_id > '0' AND coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "'");
 
 			if ($coupon_redeem_query->row['total'] >= $coupon_query->row['uses_total']) {
 				$status = FALSE;
 			}
 			
-			$coupon_redeem_query = $this->db->query("SELECT COUNT(*) AS total FROM order WHERE order_status_id > '0' AND coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "' AND customer_id = '" . (int)$this->customer->getId() . "'");
+			$coupon_redeem_query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE order_status_id > '0' AND coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "' AND customer_id = '" . (int)$this->customer->getId() . "'");
 				
 			if ($coupon_redeem_query->row['total'] >= $coupon_query->row['uses_customer']) {
 				$status = FALSE;

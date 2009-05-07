@@ -18,15 +18,6 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><span class="required">*</span> <?php echo $entry_encryption; ?><br />
-          <span class="help"><?php echo $help_encryption; ?></span></td>
-        <td><input type="text" name="paypal_encryption" value="<?php echo $paypal_encryption; ?>" />
-          <br />
-          <?php if ($error_encryption) { ?>
-          <span class="error"><?php echo $error_encryption; ?></span>
-          <?php } ?></td>
-      </tr>
-      <tr>
         <td><?php echo $entry_test; ?></td>
         <td><?php if ($paypal_test) { ?>
           <input type="radio" name="paypal_test" value="1" checked="checked" />
@@ -41,14 +32,14 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_method; ?></td>
-        <td><select name="paypal_method">
-            <?php if (!$paypal_method) { ?>
+        <td><?php echo $entry_transaction; ?></td>
+        <td><select name="paypal_transaction">
+            <?php if (!$paypal_transaction) { ?>
             <option value="0" selected="selected"><?php echo $text_authorization; ?></option>
             <?php } else { ?>
             <option value="0"><?php echo $text_authorization; ?></option>
             <?php } ?>
-            <?php if ($paypal_method) { ?>
+            <?php if ($paypal_transaction) { ?>
             <option value="1" selected="selected"><?php echo $text_sale; ?></option>
             <?php } else { ?>
             <option value="1"><?php echo $text_sale; ?></option>

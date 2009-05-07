@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 03, 2009 at 11:01 PM
+-- Generation Time: May 07, 2009 at 09:38 PM
 -- Server version: 5.0.67
 -- PHP Version: 5.2.6
 
@@ -25,8 +25,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `address`
 --
 
-DROP TABLE IF EXISTS `address`;
-CREATE TABLE `address` (
+CREATE TABLE IF NOT EXISTS `address` (
   `address_id` int(11) NOT NULL auto_increment,
   `customer_id` int(11) NOT NULL default '0',
   `company` varchar(32) collate utf8_unicode_ci default NULL,
@@ -40,7 +39,7 @@ CREATE TABLE `address` (
   `zone_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`address_id`),
   KEY `customer_id` (`customer_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `address`
@@ -53,8 +52,7 @@ CREATE TABLE `address` (
 -- Table structure for table `category`
 --
 
-DROP TABLE IF EXISTS `category`;
-CREATE TABLE `category` (
+CREATE TABLE IF NOT EXISTS `category` (
   `category_id` int(11) NOT NULL auto_increment,
   `image` varchar(255) collate utf8_unicode_ci NOT NULL default '0',
   `parent_id` int(11) NOT NULL default '0',
@@ -90,8 +88,7 @@ INSERT INTO `category` (`category_id`, `image`, `parent_id`, `sort_order`, `date
 -- Table structure for table `category_description`
 --
 
-DROP TABLE IF EXISTS `category_description`;
-CREATE TABLE `category_description` (
+CREATE TABLE IF NOT EXISTS `category_description` (
   `category_id` int(11) NOT NULL default '0',
   `language_id` int(11) NOT NULL default '1',
   `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
@@ -126,8 +123,7 @@ INSERT INTO `category_description` (`category_id`, `language_id`, `name`, `meta_
 -- Table structure for table `country`
 --
 
-DROP TABLE IF EXISTS `country`;
-CREATE TABLE `country` (
+CREATE TABLE IF NOT EXISTS `country` (
   `country_id` int(11) NOT NULL auto_increment,
   `name` varchar(128) collate utf8_unicode_ci NOT NULL,
   `iso_code_2` varchar(2) collate utf8_unicode_ci NOT NULL default '',
@@ -387,8 +383,7 @@ INSERT INTO `country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `addres
 -- Table structure for table `coupon`
 --
 
-DROP TABLE IF EXISTS `coupon`;
-CREATE TABLE `coupon` (
+CREATE TABLE IF NOT EXISTS `coupon` (
   `coupon_id` int(11) NOT NULL auto_increment,
   `code` varchar(10) collate utf8_unicode_ci NOT NULL,
   `type` char(1) collate utf8_unicode_ci NOT NULL,
@@ -419,8 +414,7 @@ INSERT INTO `coupon` (`coupon_id`, `code`, `type`, `discount`, `shipping`, `tota
 -- Table structure for table `coupon_description`
 --
 
-DROP TABLE IF EXISTS `coupon_description`;
-CREATE TABLE `coupon_description` (
+CREATE TABLE IF NOT EXISTS `coupon_description` (
   `coupon_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `name` varchar(128) collate utf8_unicode_ci NOT NULL,
@@ -443,8 +437,7 @@ INSERT INTO `coupon_description` (`coupon_id`, `language_id`, `name`, `descripti
 -- Table structure for table `coupon_product`
 --
 
-DROP TABLE IF EXISTS `coupon_product`;
-CREATE TABLE `coupon_product` (
+CREATE TABLE IF NOT EXISTS `coupon_product` (
   `coupon_product_id` int(11) NOT NULL auto_increment,
   `coupon_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -462,8 +455,7 @@ CREATE TABLE `coupon_product` (
 -- Table structure for table `currency`
 --
 
-DROP TABLE IF EXISTS `currency`;
-CREATE TABLE `currency` (
+CREATE TABLE IF NOT EXISTS `currency` (
   `currency_id` int(11) NOT NULL auto_increment,
   `title` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `code` varchar(3) collate utf8_unicode_ci NOT NULL default '',
@@ -482,8 +474,8 @@ CREATE TABLE `currency` (
 
 INSERT INTO `currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`) VALUES
 (1, 'Pound Sterling', 'GBP', '£', '', '2', 1.00000000, 1, '2009-03-24 12:04:39'),
-(2, 'US Dollar', 'USD', '$', '', '2', 1.49299300, 1, '2009-05-03 19:21:22'),
-(3, 'Euro', 'EUR', '', '€', '2', 1.12457597, 1, '2009-05-03 19:21:22');
+(2, 'US Dollar', 'USD', '$', '', '2', 1.51510406, 1, '2009-05-07 16:28:32'),
+(3, 'Euro', 'EUR', '', '€', '2', 1.13380098, 1, '2009-05-07 16:28:32');
 
 -- --------------------------------------------------------
 
@@ -491,8 +483,7 @@ INSERT INTO `currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_r
 -- Table structure for table `customer`
 --
 
-DROP TABLE IF EXISTS `customer`;
-CREATE TABLE `customer` (
+CREATE TABLE IF NOT EXISTS `customer` (
   `customer_id` int(11) NOT NULL auto_increment,
   `firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
@@ -507,7 +498,7 @@ CREATE TABLE `customer` (
   `ip` varchar(15) collate utf8_unicode_ci default NULL,
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`customer_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `customer`
@@ -520,15 +511,14 @@ CREATE TABLE `customer` (
 -- Table structure for table `download`
 --
 
-DROP TABLE IF EXISTS `download`;
-CREATE TABLE `download` (
+CREATE TABLE IF NOT EXISTS `download` (
   `download_id` int(11) NOT NULL auto_increment,
   `filename` varchar(128) collate utf8_unicode_ci NOT NULL default '',
   `mask` varchar(128) collate utf8_unicode_ci NOT NULL default '',
   `remaining` int(11) NOT NULL default '0',
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`download_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `download`
@@ -541,8 +531,7 @@ CREATE TABLE `download` (
 -- Table structure for table `download_description`
 --
 
-DROP TABLE IF EXISTS `download_description`;
-CREATE TABLE `download_description` (
+CREATE TABLE IF NOT EXISTS `download_description` (
   `download_id` int(11) NOT NULL default '0',
   `language_id` int(11) NOT NULL default '0',
   `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
@@ -560,13 +549,12 @@ CREATE TABLE `download_description` (
 -- Table structure for table `extension`
 --
 
-DROP TABLE IF EXISTS `extension`;
-CREATE TABLE `extension` (
+CREATE TABLE IF NOT EXISTS `extension` (
   `extension_id` int(11) NOT NULL auto_increment,
   `type` varchar(32) collate utf8_unicode_ci NOT NULL,
   `key` varchar(32) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`extension_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=88 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=97 ;
 
 --
 -- Dumping data for table `extension`
@@ -594,8 +582,7 @@ INSERT INTO `extension` (`extension_id`, `type`, `key`) VALUES
 -- Table structure for table `geo_zone`
 --
 
-DROP TABLE IF EXISTS `geo_zone`;
-CREATE TABLE `geo_zone` (
+CREATE TABLE IF NOT EXISTS `geo_zone` (
   `geo_zone_id` int(11) NOT NULL auto_increment,
   `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `description` varchar(255) collate utf8_unicode_ci NOT NULL default '',
@@ -617,8 +604,7 @@ INSERT INTO `geo_zone` (`geo_zone_id`, `name`, `description`, `date_modified`, `
 -- Table structure for table `information`
 --
 
-DROP TABLE IF EXISTS `information`;
-CREATE TABLE `information` (
+CREATE TABLE IF NOT EXISTS `information` (
   `information_id` int(11) NOT NULL auto_increment,
   `sort_order` int(3) NOT NULL default '0',
   PRIMARY KEY  (`information_id`)
@@ -639,8 +625,7 @@ INSERT INTO `information` (`information_id`, `sort_order`) VALUES
 -- Table structure for table `information_description`
 --
 
-DROP TABLE IF EXISTS `information_description`;
-CREATE TABLE `information_description` (
+CREATE TABLE IF NOT EXISTS `information_description` (
   `information_id` int(11) NOT NULL default '0',
   `language_id` int(11) NOT NULL default '0',
   `title` varchar(64) collate utf8_unicode_ci NOT NULL default '',
@@ -663,8 +648,7 @@ INSERT INTO `information_description` (`information_id`, `language_id`, `title`,
 -- Table structure for table `language`
 --
 
-DROP TABLE IF EXISTS `language`;
-CREATE TABLE `language` (
+CREATE TABLE IF NOT EXISTS `language` (
   `language_id` int(11) NOT NULL auto_increment,
   `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `code` varchar(5) collate utf8_unicode_ci NOT NULL,
@@ -691,8 +675,7 @@ INSERT INTO `language` (`language_id`, `name`, `code`, `locale`, `image`, `direc
 -- Table structure for table `manufacturer`
 --
 
-DROP TABLE IF EXISTS `manufacturer`;
-CREATE TABLE `manufacturer` (
+CREATE TABLE IF NOT EXISTS `manufacturer` (
   `manufacturer_id` int(11) NOT NULL auto_increment,
   `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
   `image` varchar(255) collate utf8_unicode_ci NOT NULL default '0',
@@ -718,8 +701,7 @@ INSERT INTO `manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`) VA
 -- Table structure for table `order`
 --
 
-DROP TABLE IF EXISTS `order`;
-CREATE TABLE `order` (
+CREATE TABLE IF NOT EXISTS `order` (
   `order_id` int(11) NOT NULL auto_increment,
   `customer_id` int(11) NOT NULL default '0',
   `firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
@@ -751,12 +733,12 @@ CREATE TABLE `order` (
   `payment_method` varchar(128) collate utf8_unicode_ci NOT NULL default '',
   `comment` text collate utf8_unicode_ci NOT NULL,
   `total` decimal(15,4) NOT NULL default '0.0000',
-  `order_status_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `currency_id` int(11) NOT NULL,
+  `order_status_id` int(11) NOT NULL default '0',
+  `language_id` int(11) NOT NULL default '0',
+  `currency_id` int(11) NOT NULL default '0',
   `currency` varchar(3) collate utf8_unicode_ci NOT NULL,
   `value` decimal(15,4) NOT NULL,
-  `coupon_id` int(11) NOT NULL,
+  `coupon_id` int(11) NOT NULL default '0',
   `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   `ip` varchar(15) collate utf8_unicode_ci NOT NULL default '',
@@ -774,8 +756,7 @@ CREATE TABLE `order` (
 -- Table structure for table `order_download`
 --
 
-DROP TABLE IF EXISTS `order_download`;
-CREATE TABLE `order_download` (
+CREATE TABLE IF NOT EXISTS `order_download` (
   `order_download_id` int(11) NOT NULL auto_increment,
   `order_id` int(11) NOT NULL default '0',
   `order_product_id` int(11) NOT NULL default '0',
@@ -797,8 +778,7 @@ CREATE TABLE `order_download` (
 -- Table structure for table `order_history`
 --
 
-DROP TABLE IF EXISTS `order_history`;
-CREATE TABLE `order_history` (
+CREATE TABLE IF NOT EXISTS `order_history` (
   `order_history_id` int(11) NOT NULL auto_increment,
   `order_id` int(11) NOT NULL default '0',
   `order_status_id` int(5) NOT NULL default '0',
@@ -819,8 +799,7 @@ CREATE TABLE `order_history` (
 -- Table structure for table `order_option`
 --
 
-DROP TABLE IF EXISTS `order_option`;
-CREATE TABLE `order_option` (
+CREATE TABLE IF NOT EXISTS `order_option` (
   `order_option_id` int(11) NOT NULL auto_increment,
   `order_id` int(11) NOT NULL default '0',
   `order_product_id` int(11) NOT NULL default '0',
@@ -842,8 +821,7 @@ CREATE TABLE `order_option` (
 -- Table structure for table `order_product`
 --
 
-DROP TABLE IF EXISTS `order_product`;
-CREATE TABLE `order_product` (
+CREATE TABLE IF NOT EXISTS `order_product` (
   `order_product_id` int(11) NOT NULL auto_increment,
   `order_id` int(11) NOT NULL default '0',
   `product_id` int(11) NOT NULL,
@@ -868,8 +846,7 @@ CREATE TABLE `order_product` (
 -- Table structure for table `order_status`
 --
 
-DROP TABLE IF EXISTS `order_status`;
-CREATE TABLE `order_status` (
+CREATE TABLE IF NOT EXISTS `order_status` (
   `order_status_id` int(11) NOT NULL auto_increment,
   `language_id` int(11) NOT NULL,
   `name` varchar(32) collate utf8_unicode_ci NOT NULL,
@@ -896,8 +873,7 @@ INSERT INTO `order_status` (`order_status_id`, `language_id`, `name`) VALUES
 -- Table structure for table `order_total`
 --
 
-DROP TABLE IF EXISTS `order_total`;
-CREATE TABLE `order_total` (
+CREATE TABLE IF NOT EXISTS `order_total` (
   `order_total_id` int(10) unsigned NOT NULL auto_increment,
   `order_id` int(11) NOT NULL default '0',
   `title` varchar(255) collate utf8_unicode_ci NOT NULL default '',
@@ -919,8 +895,7 @@ CREATE TABLE `order_total` (
 -- Table structure for table `product`
 --
 
-DROP TABLE IF EXISTS `product`;
-CREATE TABLE `product` (
+CREATE TABLE IF NOT EXISTS `product` (
   `product_id` int(11) NOT NULL auto_increment,
   `model` varchar(24) collate utf8_unicode_ci NOT NULL,
   `quantity` int(4) NOT NULL default '0',
@@ -946,24 +921,24 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `model`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `sort_order`, `status`, `date_added`, `date_modified`, `viewed`) VALUES
-(28, 'Product 1', 10, 7, 'htc_touch_hd_1.jpg', 5, 1, '484.4400', 9, '2009-02-03', '146.40', 2, 0, 1, '2009-02-03 16:06:50', '2009-02-22 22:25:07', 67),
+(28, 'Product 1', 10, 7, 'htc_touch_hd_1.jpg', 5, 1, '484.4400', 9, '2009-02-03', '146.40', 2, 0, 1, '2009-02-03 16:06:50', '2009-02-22 22:25:07', 68),
 (29, 'Product 2', 10, 5, 'palm_treo_pro_1.jpg', 6, 1, '279.9900', 9, '2009-02-03', '133.00', 2, 0, 1, '2009-02-03 16:42:17', '2009-02-22 22:07:34', 14),
-(30, 'Product 3', 10, 6, 'canon_eos_5d_1.jpg', 9, 1, '100.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 16:59:00', '2009-04-28 12:03:49', 13),
+(30, 'Product 3', 10, 6, 'canon_eos_5d_1.jpg', 9, 1, '100.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 16:59:00', '2009-05-06 22:47:38', 42),
 (31, 'Product 4', 50, 6, 'nikon_d300_1.jpg', 0, 1, '80.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 17:00:10', '2009-03-14 22:44:42', 6),
-(32, 'Product 5', 10, 6, 'ipod_touch_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 0, 1, '2009-02-03 17:07:26', '2009-02-22 21:53:58', 9),
+(32, 'Product 5', 10, 6, 'ipod_touch_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 0, 1, '2009-02-03 17:07:26', '2009-02-22 21:53:58', 10),
 (33, 'Product 6', 10, 6, 'samsung_syncmaster_941bw.jpg', 0, 1, '200.0000', 9, '2009-02-03', '5.00', 1, 0, 1, '2009-02-03 17:08:31', '2009-02-22 22:07:57', 2),
-(34, 'Product 7', 0, 6, 'ipod_shuffle_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 1, 1, '2009-02-03 18:07:54', '2009-02-22 21:51:54', 7),
+(34, 'Product 7', 0, 6, 'ipod_shuffle_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 1, 1, '2009-02-03 18:07:54', '2009-02-22 21:51:54', 8),
 (35, 'Product 8', 10, 5, '', 0, 0, '100.0000', 9, '2009-02-03', '5.00', 1, 1, 1, '2009-02-03 18:08:31', '2009-02-03 18:35:36', 6),
 (36, 'Product 9', 8, 6, 'ipod_nano_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 10, 1, '2009-02-03 18:09:19', '2009-02-22 21:50:36', 48),
-(40, 'product 11', 7, 5, 'iphone_1.jpg', 8, 1, '342.5000', 9, '2009-02-03', '133.00', 2, 0, 1, '2009-02-03 21:07:12', '2009-02-22 22:24:45', 196),
-(41, 'Product 14', 0, 5, 'imac_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:07:26', '2009-02-22 22:25:39', 27),
-(42, 'Product 15', 8, 5, 'apple_cinema_30.jpg', 8, 1, '100.0000', 9, '2009-02-03', '12.50', 1, 1, 1, '2009-02-03 21:07:37', '2009-04-28 12:07:07', 46),
-(43, 'Product 16', 10, 5, 'macbook_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:07:49', '2009-02-22 21:57:56', 16),
+(40, 'product 11', 7, 5, 'iphone_1.jpg', 8, 1, '342.5000', 9, '2009-02-03', '133.00', 2, 0, 1, '2009-02-03 21:07:12', '2009-02-22 22:24:45', 199),
+(41, 'Product 14', 0, 5, 'imac_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:07:26', '2009-02-22 22:25:39', 29),
+(42, 'Product 15', 8, 5, 'apple_cinema_30.jpg', 8, 1, '100.0000', 9, '2009-02-03', '12.50', 1, 1, 1, '2009-02-03 21:07:37', '2009-05-05 22:21:35', 47),
+(43, 'Product 16', 10, 5, 'macbook_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:07:49', '2009-02-22 21:57:56', 17),
 (44, 'Product 17', 10, 5, 'macbook_air_1.jpg', 8, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:00', '2009-02-22 22:04:58', 17),
-(45, 'Product 18', 0, 5, 'macbook_pro_1.jpg', 8, 1, '2000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:17', '2009-02-22 22:05:50', 27),
-(46, 'Product 19', 10, 5, 'sony_vaio_1.jpg', 10, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:29', '2009-02-22 22:08:39', 23),
-(47, 'Product 20', 10, 5, 'hp_1.jpg', 7, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:40', '2009-02-22 22:24:17', 38),
-(48, 'product 20', 10, 5, 'ipod_classic_1.jpg', 8, 1, '100.0000', 9, '2009-02-08', '0.00', 1, 0, 1, '2009-02-08 17:21:51', '2009-05-01 17:50:53', 190);
+(45, 'Product 18', 0, 5, 'macbook_pro_1.jpg', 8, 1, '2000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:17', '2009-02-22 22:05:50', 28),
+(46, 'Product 19', 10, 5, 'sony_vaio_1.jpg', 10, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:29', '2009-02-22 22:08:39', 25),
+(47, 'Product 20', 10, 5, 'hp_1.jpg', 7, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:40', '2009-02-22 22:24:17', 145),
+(48, 'product 20', 10, 5, 'ipod_classic_1.jpg', 8, 1, '100.0000', 9, '2009-02-08', '0.00', 1, 0, 1, '2009-02-08 17:21:51', '2009-05-07 16:28:20', 335);
 
 -- --------------------------------------------------------
 
@@ -971,8 +946,7 @@ INSERT INTO `product` (`product_id`, `model`, `quantity`, `stock_status_id`, `im
 -- Table structure for table `product_description`
 --
 
-DROP TABLE IF EXISTS `product_description`;
-CREATE TABLE `product_description` (
+CREATE TABLE IF NOT EXISTS `product_description` (
   `product_id` int(11) NOT NULL auto_increment,
   `language_id` int(11) NOT NULL default '1',
   `name` varchar(255) collate utf8_unicode_ci NOT NULL,
@@ -1012,21 +986,20 @@ INSERT INTO `product_description` (`product_id`, `language_id`, `name`, `meta_de
 -- Table structure for table `product_discount`
 --
 
-DROP TABLE IF EXISTS `product_discount`;
-CREATE TABLE `product_discount` (
+CREATE TABLE IF NOT EXISTS `product_discount` (
   `product_discount_id` int(11) NOT NULL auto_increment,
   `product_id` int(11) NOT NULL,
   `quantity` int(4) NOT NULL,
   `discount` decimal(15,4) NOT NULL,
   PRIMARY KEY  (`product_discount_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=283 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=286 ;
 
 --
 -- Dumping data for table `product_discount`
 --
 
 INSERT INTO `product_discount` (`product_discount_id`, `product_id`, `quantity`, `discount`) VALUES
-(282, 42, 3, '10.0000');
+(285, 42, 3, '10.0000');
 
 -- --------------------------------------------------------
 
@@ -1034,21 +1007,20 @@ INSERT INTO `product_discount` (`product_discount_id`, `product_id`, `quantity`,
 -- Table structure for table `product_image`
 --
 
-DROP TABLE IF EXISTS `product_image`;
-CREATE TABLE `product_image` (
+CREATE TABLE IF NOT EXISTS `product_image` (
   `product_image_id` int(11) NOT NULL auto_increment,
   `product_id` int(11) NOT NULL default '0',
   `image` varchar(255) collate utf8_unicode_ci NOT NULL default '0',
   PRIMARY KEY  (`product_image_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=84 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=93 ;
 
 --
 -- Dumping data for table `product_image`
 --
 
 INSERT INTO `product_image` (`product_image_id`, `product_id`, `image`) VALUES
-(76, 30, 'canon_eos_5d_3.jpg'),
-(75, 30, 'canon_eos_5d_2.jpg'),
+(86, 30, 'canon_eos_5d_2.jpg'),
+(85, 30, 'canon_eos_5d_3.jpg'),
 (58, 47, 'hp_3.jpg'),
 (57, 47, 'hp_2.jpg'),
 (65, 28, 'htc_touch_hd_3.jpg'),
@@ -1060,9 +1032,9 @@ INSERT INTO `product_image` (`product_image_id`, `product_id`, `image`) VALUES
 (61, 40, 'iphone_4.jpg'),
 (60, 40, 'iphone_3.jpg'),
 (59, 40, 'iphone_2.jpg'),
-(79, 48, 'ipod_classic_2.jpg'),
-(78, 48, 'ipod_classic_3.jpg'),
-(77, 48, 'ipod_classic_4.jpg'),
+(92, 48, 'ipod_classic_2.jpg'),
+(91, 48, 'ipod_classic_3.jpg'),
+(90, 48, 'ipod_classic_4.jpg'),
 (19, 36, 'ipod_nano_2.jpg'),
 (20, 36, 'ipod_nano_3.jpg'),
 (21, 36, 'ipod_nano_4.jpg'),
@@ -1104,8 +1076,7 @@ INSERT INTO `product_image` (`product_image_id`, `product_id`, `image`) VALUES
 -- Table structure for table `product_option`
 --
 
-DROP TABLE IF EXISTS `product_option`;
-CREATE TABLE `product_option` (
+CREATE TABLE IF NOT EXISTS `product_option` (
   `product_option_id` int(11) NOT NULL auto_increment,
   `product_id` int(11) NOT NULL default '0',
   `sort_order` int(3) NOT NULL default '0',
@@ -1125,12 +1096,11 @@ INSERT INTO `product_option` (`product_option_id`, `product_id`, `sort_order`) V
 -- Table structure for table `product_option_description`
 --
 
-DROP TABLE IF EXISTS `product_option_description`;
-CREATE TABLE `product_option_description` (
+CREATE TABLE IF NOT EXISTS `product_option_description` (
   `product_option_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `name` varchar(64) collate utf8_unicode_ci NOT NULL,
+  `name` varchar(255) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`product_option_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1147,8 +1117,7 @@ INSERT INTO `product_option_description` (`product_option_id`, `language_id`, `p
 -- Table structure for table `product_option_value`
 --
 
-DROP TABLE IF EXISTS `product_option_value`;
-CREATE TABLE `product_option_value` (
+CREATE TABLE IF NOT EXISTS `product_option_value` (
   `product_option_value_id` int(11) NOT NULL auto_increment,
   `product_option_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -1172,12 +1141,11 @@ INSERT INTO `product_option_value` (`product_option_value_id`, `product_option_i
 -- Table structure for table `product_option_value_description`
 --
 
-DROP TABLE IF EXISTS `product_option_value_description`;
-CREATE TABLE `product_option_value_description` (
+CREATE TABLE IF NOT EXISTS `product_option_value_description` (
   `product_option_value_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `name` varchar(64) collate utf8_unicode_ci NOT NULL,
+  `name` varchar(255) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`product_option_value_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1195,8 +1163,7 @@ INSERT INTO `product_option_value_description` (`product_option_value_id`, `lang
 -- Table structure for table `product_related`
 --
 
-DROP TABLE IF EXISTS `product_related`;
-CREATE TABLE `product_related` (
+CREATE TABLE IF NOT EXISTS `product_related` (
   `product_id` int(11) NOT NULL,
   `related_id` int(11) NOT NULL,
   PRIMARY KEY  (`product_id`,`related_id`)
@@ -1218,22 +1185,22 @@ INSERT INTO `product_related` (`product_id`, `related_id`) VALUES
 -- Table structure for table `product_special`
 --
 
-DROP TABLE IF EXISTS `product_special`;
-CREATE TABLE `product_special` (
+CREATE TABLE IF NOT EXISTS `product_special` (
   `product_special_id` int(11) NOT NULL auto_increment,
   `product_id` int(11) NOT NULL,
   `price` decimal(15,4) NOT NULL,
   `date_start` date NOT NULL,
   `date_end` date NOT NULL,
   PRIMARY KEY  (`product_special_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `product_special`
 --
 
 INSERT INTO `product_special` (`product_special_id`, `product_id`, `price`, `date_start`, `date_end`) VALUES
-(13, 42, '100.0000', '2009-03-01', '2009-03-31');
+(16, 42, '100.0000', '2009-03-01', '2009-03-31'),
+(17, 30, '90.0000', '2009-05-01', '2009-05-31');
 
 -- --------------------------------------------------------
 
@@ -1241,8 +1208,7 @@ INSERT INTO `product_special` (`product_special_id`, `product_id`, `price`, `dat
 -- Table structure for table `product_to_category`
 --
 
-DROP TABLE IF EXISTS `product_to_category`;
-CREATE TABLE `product_to_category` (
+CREATE TABLE IF NOT EXISTS `product_to_category` (
   `product_id` int(11) NOT NULL default '0',
   `category_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`product_id`,`category_id`)
@@ -1263,6 +1229,7 @@ INSERT INTO `product_to_category` (`product_id`, `category_id`) VALUES
 (36, 34),
 (40, 24),
 (41, 27),
+(42, 28),
 (43, 18),
 (44, 18),
 (45, 18),
@@ -1276,8 +1243,7 @@ INSERT INTO `product_to_category` (`product_id`, `category_id`) VALUES
 -- Table structure for table `product_to_download`
 --
 
-DROP TABLE IF EXISTS `product_to_download`;
-CREATE TABLE `product_to_download` (
+CREATE TABLE IF NOT EXISTS `product_to_download` (
   `product_id` int(11) NOT NULL default '0',
   `download_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`product_id`,`download_id`)
@@ -1294,8 +1260,7 @@ CREATE TABLE `product_to_download` (
 -- Table structure for table `review`
 --
 
-DROP TABLE IF EXISTS `review`;
-CREATE TABLE `review` (
+CREATE TABLE IF NOT EXISTS `review` (
   `review_id` int(11) NOT NULL auto_increment,
   `product_id` int(11) NOT NULL default '0',
   `customer_id` int(11) NOT NULL default '0',
@@ -1321,14 +1286,13 @@ INSERT INTO `review` (`review_id`, `product_id`, `customer_id`, `author`, `text`
 -- Table structure for table `setting`
 --
 
-DROP TABLE IF EXISTS `setting`;
-CREATE TABLE `setting` (
+CREATE TABLE IF NOT EXISTS `setting` (
   `setting_id` int(11) NOT NULL auto_increment,
   `group` varchar(32) collate utf8_unicode_ci NOT NULL,
   `key` varchar(64) collate utf8_unicode_ci NOT NULL default '',
   `value` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`setting_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6170 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6565 ;
 
 --
 -- Dumping data for table `setting`
@@ -1347,15 +1311,19 @@ INSERT INTO `setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (5594, 'cod', 'cod_geo_zone_id', '0'),
 (5582, 'coupon', 'coupon_status', '1'),
 (5394, 'sub_total', 'sub_total_sort_order', '1'),
-(6152, 'config', 'config_cache', '1'),
-(6153, 'config', 'config_compression', '4'),
-(6151, 'config', 'config_download_status', '5'),
-(6150, 'config', 'config_download', '1'),
-(6149, 'config', 'config_stock_status_id', '5'),
-(6148, 'config', 'config_order_status_id', '1'),
-(6147, 'config', 'config_stock_subtract', '0'),
-(6145, 'config', 'config_stock_check', '1'),
-(6146, 'config', 'config_stock_checkout', '0'),
+(6520, 'config', 'config_compression', '4'),
+(6519, 'config', 'config_cache', '1'),
+(6518, 'config', 'config_download_status', '5'),
+(6517, 'config', 'config_download', '1'),
+(6516, 'config', 'config_stock_status_id', '5'),
+(6515, 'config', 'config_order_status_id', '1'),
+(6514, 'config', 'config_stock_subtract', '0'),
+(6513, 'config', 'config_stock_checkout', '0'),
+(6512, 'config', 'config_stock_check', '1'),
+(6511, 'config', 'config_checkout', '3'),
+(6510, 'config', 'config_account', '3'),
+(6509, 'config', 'config_alert_mail', '1'),
+(6508, 'config', 'config_encryption', 'test'),
 (5871, 'free', 'free_total', ''),
 (5593, 'cod', 'cod_order_status_id', '1'),
 (5512, 'low_order_fee', 'low_order_fee_sort_order', '2'),
@@ -1366,30 +1334,25 @@ INSERT INTO `setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (5509, 'low_order_fee', 'low_order_fee_total', '100'),
 (5587, 'total', 'total_sort_order', '6'),
 (5586, 'total', 'total_status', '1'),
-(6143, 'config', 'config_account', '3'),
-(6144, 'config', 'config_checkout', '3'),
-(6142, 'config', 'config_alert_mail', '1'),
-(6141, 'config', 'config_weight_class_id', '1'),
-(6140, 'config', 'config_tax', '1'),
-(6139, 'config', 'config_currency_auto', '1'),
-(6138, 'config', 'config_currency', 'GBP'),
-(6137, 'config', 'config_language', 'en'),
-(6136, 'config', 'config_zone_id', '3563'),
-(6135, 'config', 'config_country_id', '222'),
-(6133, 'config', 'config_parse_time', '0'),
-(6134, 'config', 'config_welcome_1', '&lt;p&gt;Welcome to my store!&lt;/p&gt;'),
-(6132, 'config', 'config_ssl', '0'),
-(6130, 'config', 'config_fax', ''),
-(6131, 'config', 'config_template', 'default/template/'),
-(6129, 'config', 'config_telephone', '123456789'),
-(6127, 'config', 'config_address', 'Address 1'),
-(6128, 'config', 'config_email', 'webmaster@opencart.com'),
-(6126, 'config', 'config_owner', 'Your Name'),
-(6125, 'config', 'config_meta_description', 'your store of fun'),
-(6124, 'config', 'config_store', 'Your Store'),
-(5912, 'cart', 'cart_position', 'right'),
-(5913, 'cart', 'cart_status', '1'),
-(5914, 'cart', 'cart_sort_order', '1'),
+(6506, 'config', 'config_tax', '1'),
+(6507, 'config', 'config_weight_class_id', '1'),
+(6505, 'config', 'config_currency_auto', '1'),
+(6504, 'config', 'config_currency', 'GBP'),
+(6503, 'config', 'config_language', 'en'),
+(6502, 'config', 'config_zone_id', '3563'),
+(6499, 'config', 'config_parse_time', '0'),
+(6500, 'config', 'config_welcome_1', '&lt;p&gt;Welcome to my store!&lt;/p&gt;'),
+(6501, 'config', 'config_country_id', '222'),
+(6498, 'config', 'config_ssl', '0'),
+(6496, 'config', 'config_fax', ''),
+(6497, 'config', 'config_template', 'default/template/'),
+(6495, 'config', 'config_telephone', '123456789'),
+(6494, 'config', 'config_email', 'webmaster@opencart.com'),
+(6491, 'config', 'config_logo', 'logo.png'),
+(6493, 'config', 'config_address', 'Address 1'),
+(6492, 'config', 'config_owner', 'Your Name'),
+(6490, 'config', 'config_meta_description', 'your store of fun'),
+(6489, 'config', 'config_store', 'Your Store'),
 (5915, 'category', 'category_position', 'left'),
 (5916, 'category', 'category_status', '1'),
 (5917, 'category', 'category_sort_order', '1'),
@@ -1402,10 +1365,14 @@ INSERT INTO `setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (5924, 'manufacturer', 'manufacturer_position', 'left'),
 (5925, 'manufacturer', 'manufacturer_status', '1'),
 (5926, 'manufacturer', 'manufacturer_sort_order', '2'),
-(5941, 'bestseller', 'bestseller_status', '1'),
-(5940, 'bestseller', 'bestseller_position', 'right'),
-(5939, 'bestseller', 'bestseller_limit', '5'),
-(5942, 'bestseller', 'bestseller_sort_order', '3');
+(6549, 'bestseller', 'bestseller_limit', '5'),
+(6550, 'bestseller', 'bestseller_position', 'right'),
+(6551, 'bestseller', 'bestseller_status', '1'),
+(6552, 'bestseller', 'bestseller_sort_order', '3'),
+(6564, 'cart', 'cart_sort_order', '1'),
+(6563, 'cart', 'cart_status', '1'),
+(6561, 'cart', 'cart_ajax', '1'),
+(6562, 'cart', 'cart_position', 'right');
 
 -- --------------------------------------------------------
 
@@ -1413,8 +1380,7 @@ INSERT INTO `setting` (`setting_id`, `group`, `key`, `value`) VALUES
 -- Table structure for table `stock_status`
 --
 
-DROP TABLE IF EXISTS `stock_status`;
-CREATE TABLE `stock_status` (
+CREATE TABLE IF NOT EXISTS `stock_status` (
   `stock_status_id` int(11) NOT NULL auto_increment,
   `language_id` int(11) NOT NULL,
   `name` varchar(32) collate utf8_unicode_ci NOT NULL,
@@ -1438,8 +1404,7 @@ INSERT INTO `stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 -- Table structure for table `tax_class`
 --
 
-DROP TABLE IF EXISTS `tax_class`;
-CREATE TABLE `tax_class` (
+CREATE TABLE IF NOT EXISTS `tax_class` (
   `tax_class_id` int(11) NOT NULL auto_increment,
   `title` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `description` varchar(255) collate utf8_unicode_ci NOT NULL default '',
@@ -1461,8 +1426,7 @@ INSERT INTO `tax_class` (`tax_class_id`, `title`, `description`, `date_added`, `
 -- Table structure for table `tax_rate`
 --
 
-DROP TABLE IF EXISTS `tax_rate`;
-CREATE TABLE `tax_rate` (
+CREATE TABLE IF NOT EXISTS `tax_rate` (
   `tax_rate_id` int(11) NOT NULL auto_increment,
   `geo_zone_id` int(11) NOT NULL default '0',
   `tax_class_id` int(11) NOT NULL default '0',
@@ -1487,8 +1451,7 @@ INSERT INTO `tax_rate` (`tax_rate_id`, `geo_zone_id`, `tax_class_id`, `priority`
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(11) NOT NULL auto_increment,
   `user_group_id` int(11) NOT NULL default '0',
   `username` varchar(20) collate utf8_unicode_ci NOT NULL default '',
@@ -1507,15 +1470,13 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `user_group`
 --
 
-DROP TABLE IF EXISTS `user_group`;
-CREATE TABLE `user_group` (
+CREATE TABLE IF NOT EXISTS `user_group` (
   `user_group_id` int(11) NOT NULL auto_increment,
   `name` varchar(64) collate utf8_unicode_ci default NULL,
   `permission` text collate utf8_unicode_ci NOT NULL,
@@ -1536,8 +1497,7 @@ INSERT INTO `user_group` (`user_group_id`, `name`, `permission`) VALUES
 -- Table structure for table `weight_class`
 --
 
-DROP TABLE IF EXISTS `weight_class`;
-CREATE TABLE `weight_class` (
+CREATE TABLE IF NOT EXISTS `weight_class` (
   `weight_class_id` int(11) NOT NULL auto_increment,
   `language_id` int(11) NOT NULL,
   `title` varchar(32) collate utf8_unicode_ci NOT NULL,
@@ -1559,8 +1519,7 @@ INSERT INTO `weight_class` (`weight_class_id`, `language_id`, `title`, `unit`) V
 -- Table structure for table `weight_rule`
 --
 
-DROP TABLE IF EXISTS `weight_rule`;
-CREATE TABLE `weight_rule` (
+CREATE TABLE IF NOT EXISTS `weight_rule` (
   `from_id` int(11) NOT NULL default '0',
   `to_id` int(11) NOT NULL default '0',
   `rule` decimal(15,4) NOT NULL default '0.0000'
@@ -1580,8 +1539,7 @@ INSERT INTO `weight_rule` (`from_id`, `to_id`, `rule`) VALUES
 -- Table structure for table `zone`
 --
 
-DROP TABLE IF EXISTS `zone`;
-CREATE TABLE `zone` (
+CREATE TABLE IF NOT EXISTS `zone` (
   `zone_id` int(11) NOT NULL auto_increment,
   `country_id` int(11) NOT NULL default '0',
   `code` varchar(32) collate utf8_unicode_ci NOT NULL default '',
@@ -5444,8 +5402,7 @@ INSERT INTO `zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 -- Table structure for table `zone_to_geo_zone`
 --
 
-DROP TABLE IF EXISTS `zone_to_geo_zone`;
-CREATE TABLE `zone_to_geo_zone` (
+CREATE TABLE IF NOT EXISTS `zone_to_geo_zone` (
   `zone_to_geo_zone_id` int(11) NOT NULL auto_increment,
   `country_id` int(11) NOT NULL default '0',
   `zone_id` int(11) default NULL,

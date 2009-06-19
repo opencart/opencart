@@ -4,14 +4,16 @@ class ControllerModuleCategory extends Controller {
 	protected $path = array();
 	
 	protected function index() {
-		$this->load->language('module/category');
+		$this->language->load('module/category');
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
 		
 		$this->load->model('catalog/category');
+		$this->load->model('tool/seo_url');
 		
 		if (isset($this->request->get['path'])) {
 			$this->path = explode('_', $this->request->get['path']);
+			
 			$this->category_id = end($this->path);
 		}
 		
@@ -50,9 +52,9 @@ class ControllerModuleCategory extends Controller {
 			}
 			
 			if ($this->category_id == $result['category_id']) {
-				$output .= '<a href="' . $this->url->http('product/category&path=' . $new_path)  . '"><b>' . $result['name'] . '</b></a>';
+				$output .= '<a href="' . $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $new_path))  . '"><b>' . $result['name'] . '</b></a>';
 			} else {
-				$output .= '<a href="' . $this->url->http('product/category&path=' . $new_path)  . '">' . $result['name'] . '</a>';
+				$output .= '<a href="' . $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $new_path))  . '">' . $result['name'] . '</a>';
 			}
 			
         	$output .= $children;

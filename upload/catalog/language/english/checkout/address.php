@@ -28,5 +28,4 @@ $_['error_firstname']  = 'First Name must be greater than 3 and less than 32 cha
 $_['error_lastname']   = 'Last Name must be greater than 3 and less than 32 characters!';
 $_['error_address_1']  = 'Address 1 must be greater than 3 and less than 64 characters!';
 $_['error_city']       = 'City must be greater than 3 and less than 32 characters!';
-$_['error_telephone']  = 'Telephone must be greater than 3 and less than 32 characters!';
 ?>

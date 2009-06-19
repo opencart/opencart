@@ -1,7 +1,7 @@
 <?php  
 class ControllerModuleManufacturer extends Controller {
 	protected function index() {
-		$this->load->language('module/manufacturer');	
+		$this->language->load('module/manufacturer');	
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		$this->data['text_select'] = $this->language->get('text_select');
@@ -18,7 +18,7 @@ class ControllerModuleManufacturer extends Controller {
 			$this->data['manufacturers'][] = array(
 				'manufacturer_id' => $result['manufacturer_id'],
 				'name'            => $result['name'],
-				'href'            => $this->url->http('product/manufacturer&manufacturer_id=' . $result['manufacturer_id'])
+				'href'            => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $result['manufacturer_id']))
 			);
 		}
 		

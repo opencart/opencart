@@ -5,7 +5,6 @@ $_['heading_title']    = 'Per Item';
 // Text
 $_['text_shipping']    = 'Shipping';
 $_['text_success']     = 'Success: You have modified shipping per item rates!';
-$_['text_development'] = '<span style="color: green;">Ready</span>';
 
 // Entry
 $_['entry_cost']       = 'Cost:';

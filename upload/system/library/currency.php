@@ -1,7 +1,6 @@
 <?php
 final class Currency {
-  	private $id;
-	private $code;
+  	private $code;
   	private $currencies = array();
   
   	public function __construct() {
@@ -11,7 +10,7 @@ final class Currency {
 		$this->request = Registry::get('request');
 		$this->session = Registry::get('session');
 		
-		$query = $this->db->query("SELECT * FROM currency");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency");
 
     	foreach ($query->rows as $result) {
       		$this->currencies[$result['code']] = array(
@@ -45,7 +44,7 @@ final class Currency {
     	}
   	}
 
-  	public function format($number, $currency = NULL, $value = NULL, $format = TRUE) {
+  	public function format($number, $currency = '', $value = '', $format = TRUE) {
 		if ($currency) {
       		$symbol_left   = $this->currencies[$currency]['symbol_left'];
       		$symbol_right  = $this->currencies[$currency]['symbol_right'];
@@ -54,12 +53,14 @@ final class Currency {
       		$symbol_left   = $this->currencies[$this->code]['symbol_left'];
       		$symbol_right  = $this->currencies[$this->code]['symbol_right'];
       		$decimal_place = $this->currencies[$this->code]['decimal_place'];
+			
+			$currency = $this->code;
     	}
 
     	if ($value) {
       		$value = $value;
     	} else {
-      		$value = $this->currencies[$this->code]['value'];
+      		$value = $this->currencies[$currency]['value'];
     	}
 
     	if ($value) {
@@ -96,7 +97,7 @@ final class Currency {
   	}
 	
   	public function getId() {
-    	return $this->currencies[$this->code]['currency_id'];
+		return $this->currencies[$this->code]['currency_id'];
   	}
 	
   	public function getCode() {

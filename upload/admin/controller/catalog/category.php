@@ -22,6 +22,12 @@ class ControllerCatalogCategory extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
 			$this->model_catalog_category->addCategory($this->request->post);
 
+			if ($this->config->get('config_seo_url')) {
+				$this->load->model('tool/seo_url');
+				
+				$this->model_tool_seo_url->generate();
+			}
+			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
 			$this->redirect($this->url->https('catalog/category'));
@@ -39,6 +45,12 @@ class ControllerCatalogCategory extends Controller {
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
 			$this->model_catalog_category->editCategory($this->request->get['category_id'], $this->request->post);
+
+			if ($this->config->get('config_seo_url')) {
+				$this->load->model('tool/seo_url');
+				
+				$this->model_tool_seo_url->generate();
+			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
@@ -58,6 +70,12 @@ class ControllerCatalogCategory extends Controller {
 		if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
 			foreach ($this->request->post['delete'] as $category_id) {
 				$this->model_catalog_category->deleteCategory($category_id);
+			}
+
+			if ($this->config->get('config_seo_url')) {
+				$this->load->model('tool/seo_url');
+				
+				$this->model_tool_seo_url->generate();
 			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -137,7 +155,9 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['text_none'] = $this->language->get('text_none');
 		
 		$this->data['entry_name'] = $this->language->get('entry_name');
+		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
 		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
+		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_category'] = $this->language->get('entry_category');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_image'] = $this->language->get('entry_image');
@@ -190,6 +210,12 @@ class ControllerCatalogCategory extends Controller {
 			$this->data['category_description'] = array();
 		}
 
+		if (isset($this->request->post['keyword'])) {
+			$this->data['keyword'] = $this->request->post['keyword'];
+		} else {
+			$this->data['keyword'] = @$category_info['keyword'];
+		}
+		
 		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
 
 		if (isset($this->request->post['parent_id'])) {

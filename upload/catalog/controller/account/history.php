@@ -7,7 +7,7 @@ class ControllerAccountHistory extends Controller {
 	  		$this->redirect($this->url->https('account/login'));
     	}
  
-    	$this->load->language('account/history');
+    	$this->language->load('account/history');
 
     	$this->document->title = $this->language->get('heading_title');
 
@@ -67,7 +67,7 @@ class ControllerAccountHistory extends Controller {
           			'order_id'   => $result['order_id'],
           			'name'       => $result['firstname'] . ' ' . $result['lastname'],
           			'status'     => $result['status'],
-          			'date_added' => date('d F Y', strtotime($result['date_added'])),
+          			'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
           			'products'   => $product_total,
           			'total'      => $this->currency->format($result['total'], $result['currency'], $result['value']),
 					'href'       => $this->url->https('account/invoice&order_id=' . $result['order_id'])

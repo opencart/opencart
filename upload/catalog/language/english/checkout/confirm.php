@@ -46,5 +46,5 @@ $_['mail_update_order_invoice']      = 'To view your order click on the link bel
 $_['mail_update_order_footer']       = 'Please reply to this email if you have any questions.';
 
 // Error
-$_['error_coupon']                   = 'Error: Coupon is ethier invalid, expired or reached its usage limit!';	
+$_['error_coupon']                   = 'Error: Coupon is either invalid, expired or reached its usage limit!';	
 ?>

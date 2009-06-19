@@ -1,11 +1,10 @@
 <?php
 // Heading
-$_['heading_title']         = 'PayPal Direct Payments (UK)';
+$_['heading_title']         = 'PayPal Direct (UK)';
 
 // Text 
 $_['text_payment']          = 'Payment';
 $_['text_success']          = 'Success: You have modified PayPal account details!';
-$_['text_development']      = '<span style="color: red;">In Development</span>';
 $_['text_paypal_direct_uk'] = '<a onclick="window.open(\'https://www.paypal.com/uk/mrb/pal=W9TBB5DTD6QJW\');"><img src="view/image/payment/paypal.png" alt="PayPal" title="PayPal" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_checkout']         = 'On Checkout';
 $_['text_callback']         = 'On Callback';

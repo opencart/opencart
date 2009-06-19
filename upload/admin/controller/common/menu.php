@@ -43,9 +43,9 @@ class ControllerCommonMenu extends Controller {
 		$this->data['text_tax_class'] = $this->language->get('text_tax_class');
 		$this->data['text_total'] = $this->language->get('text_total');
 		$this->data['text_user'] = $this->language->get('text_user');
-		$this->data['text_user_guide'] = $this->language->get('text_user_guide');
+		$this->data['text_user_group'] = $this->language->get('text_user_group');
 		$this->data['text_users'] = $this->language->get('text_users');
-      	$this->data['text_user_group'] = $this->language->get('text_user_group');
+      	$this->data['text_documentation'] = $this->language->get('text_documentation');
       	$this->data['text_weight_class'] = $this->language->get('text_weight_class');
 		$this->data['text_opencart'] = $this->language->get('text_opencart');
       	$this->data['text_zone'] = $this->language->get('text_zone');

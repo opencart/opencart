@@ -62,7 +62,7 @@ class ControllerCheckoutShipping extends Controller {
 			$this->session->data['shipping_methods'] = $quote_data;
 		}
 		
-		$this->load->language('checkout/shipping');
+		$this->language->load('checkout/shipping');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$shipping = explode('.', $this->request->post['shipping']);

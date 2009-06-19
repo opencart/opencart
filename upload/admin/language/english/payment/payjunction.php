@@ -5,7 +5,6 @@ $_['heading_title']      = 'PayJunction';
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified PayJunction account details!';
-$_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
 $_['entry_username']     = 'Username:';

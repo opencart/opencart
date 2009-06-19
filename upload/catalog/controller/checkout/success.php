@@ -19,7 +19,7 @@ class ControllerCheckoutSuccess extends Controller {
 			unset($this->session->data['coupon']);
 		}
 									   
-		$this->load->language('checkout/success');
+		$this->language->load('checkout/success');
 		
 		$this->document->title = $this->language->get('heading_title');
 		

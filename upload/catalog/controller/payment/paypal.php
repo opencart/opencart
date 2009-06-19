@@ -35,9 +35,9 @@ class ControllerPaymentPayPal extends Controller {
 		$this->data['lc'] = $this->language->getCode();
 		
 		if (!$this->config->get('paypal_transaction')) {
-			$this->data['paymentaction'] = 'Authorization';
+			$this->data['paymentaction'] = 'authorization';
 		} else {
-			$this->data['paymentaction'] = 'Sale';
+			$this->data['paymentaction'] = 'sale';
 		}
 		
 		$this->data['return'] = $this->url->https('checkout/success');

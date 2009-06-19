@@ -7,7 +7,7 @@ class ControllerAccountCreate extends Controller {
 	  		$this->redirect($this->url->https('account/account'));
     	}
 
-    	$this->load->language('account/create');
+    	$this->language->load('account/create');
 		
 		$this->document->title = $this->language->get('heading_title');
 		
@@ -118,7 +118,7 @@ class ControllerAccountCreate extends Controller {
     	if (isset($this->request->post['zone_id'])) {
       		$this->data['zone_id'] = $this->request->post['zone_id'];
     	} else {
-      		$this->data['zone_id'] = $this->config->get('config_zone_id');
+      		$this->data['zone_id'] = 0;
     	}
 		
 		$this->load->model('localisation/country');

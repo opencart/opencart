@@ -1,7 +1,7 @@
 <?php  
 class ControllerCommonHome extends Controller {
 	public function index() {
-		$this->load->language('common/home');
+		$this->language->load('common/home');
 		
 		$this->document->title = sprintf($this->language->get('title'), $this->config->get('config_store'));
 		$this->document->description = $this->config->get('config_meta_description');
@@ -21,8 +21,9 @@ class ControllerCommonHome extends Controller {
 		
 		$this->load->model('catalog/product');
 		$this->load->model('catalog/review');
+		$this->load->model('tool/seo_url');
 		$this->load->helper('image');
-				
+		
 		$this->data['products'] = array();
 
 		foreach ($this->model_catalog_product->getLatestProducts(8) as $result) {			
@@ -41,7 +42,7 @@ class ControllerCommonHome extends Controller {
 			} else {
 				$special = FALSE;
 			}
-					
+			
           	$this->data['products'][] = array(
             	'name'    => $result['name'],
 				'model'   => $result['model'],
@@ -50,7 +51,7 @@ class ControllerCommonHome extends Controller {
 				'thumb'   => HelperImage::resize($image, 120, 120),
             	'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 				'special' => $special,
-				'href'    => $this->url->http('product/product&product_id=' . $result['product_id'])
+				'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $result['product_id']))
           	);
 		}
 		

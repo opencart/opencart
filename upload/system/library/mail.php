@@ -1,5 +1,5 @@
 <?php 
-class Mail {
+final class Mail {
 	protected $to;
   	protected $from;
   	protected $sender;
@@ -32,7 +32,7 @@ class Mail {
     	$this->html = $html;
   	}
 	
-  	public function addAttachment($attachments, $embed = FALSE) {
+  	public function addAttachment($attachments) {
     	$this->attachments[] = $attachments;
   	}
 
@@ -106,8 +106,8 @@ class Mail {
 		
     	foreach ($this->attachments as $attachment) {  
       		$filename = basename($attachment);  
-      		$handle   = fopen($attachment, 'r'); 
-      		$content  = fread($handle, filesize($attachment));
+      		$handle = fopen($attachment, 'r'); 
+      		$content = fread($handle, filesize($attachment));
       
 	  		fclose($handle);  
 	  

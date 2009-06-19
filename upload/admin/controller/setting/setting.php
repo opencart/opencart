@@ -33,12 +33,10 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
 		$this->data['entry_fax'] = $this->language->get('entry_fax');
 		$this->data['entry_template'] = $this->language->get('entry_template');
-		$this->data['entry_ssl'] = $this->language->get('entry_ssl');
-		$this->data['entry_encryption'] = $this->language->get('entry_encryption');
-		$this->data['entry_parse_time'] = $this->language->get('entry_parse_time');
 		$this->data['entry_country'] = $this->language->get('entry_country');
 		$this->data['entry_zone'] = $this->language->get('entry_zone');
 		$this->data['entry_language'] = $this->language->get('entry_language');
+		$this->data['entry_admin_language'] = $this->language->get('entry_admin_language');
 		$this->data['entry_currency'] = $this->language->get('entry_currency');
 		$this->data['entry_currency_auto'] = $this->language->get('entry_currency_auto');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
@@ -53,11 +51,12 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_stock_status'] = $this->language->get('entry_stock_status');
 		$this->data['entry_download'] = $this->language->get('entry_download');
 		$this->data['entry_download_status'] = $this->language->get('entry_download_status');
-		$this->data['entry_cache'] = $this->language->get('entry_cache');
+		$this->data['entry_ssl'] = $this->language->get('entry_ssl');
+		$this->data['entry_encryption'] = $this->language->get('entry_encryption');
+		$this->data['entry_seo_url'] = $this->language->get('entry_seo_url');
 		$this->data['entry_compression'] = $this->language->get('entry_compression');
-		
-		$this->data['help_ssl'] = $this->language->get('help_ssl'); 
-		$this->data['help_encryption'] = $this->language->get('help_encryption'); 
+		$this->data['entry_parse_time'] = $this->language->get('entry_parse_time');
+
  		$this->data['help_currency_auto'] = $this->language->get('help_currency_auto');
 		$this->data['help_alert_mail'] = $this->language->get('help_alert_mail');
 		$this->data['help_account'] = $this->language->get('help_account');
@@ -67,16 +66,20 @@ class ControllerSettingSetting extends Controller {
 		$this->data['help_stock_checkout'] = $this->language->get('help_stock_checkout');
 		$this->data['help_stock_subtract'] = $this->language->get('help_stock_subtract');
 		$this->data['help_download_status'] = $this->language->get('help_download_status');
+		$this->data['help_ssl'] = $this->language->get('help_ssl'); 
+		$this->data['help_encryption'] = $this->language->get('help_encryption'); 
+		$this->data['help_seo_url'] = $this->language->get('help_seo_url'); 
 		$this->data['help_compression'] = $this->language->get('help_compression');
+		$this->data['help_parse_time'] = $this->language->get('help_parse_time');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
 		$this->data['tab_shop'] = $this->language->get('tab_shop');
+		$this->data['tab_server'] = $this->language->get('tab_server');
 		$this->data['tab_admin'] = $this->language->get('tab_admin');
 		$this->data['tab_local'] = $this->language->get('tab_local');
 		$this->data['tab_option'] = $this->language->get('tab_option');
-		$this->data['tab_cache'] = $this->language->get('tab_cache');
 
 		$this->data['error_warning'] = @$this->error['warning'];
 		
@@ -133,25 +136,11 @@ class ControllerSettingSetting extends Controller {
 
 		if (isset($this->request->post['config_logo'])) {
 			$this->data['config_logo'] = $this->request->post['config_logo'];
-		} else {
-			$this->data['config_logo'] = $this->config->get('config_logo');
-		}
-
-		$this->load->helper('image');
-		
-		if (@$this->request->post['image']) {
-			$preview = $this->request->post['image'];
 		} elseif ($this->config->get('config_logo')) {
-			$preview = $this->config->get('config_logo');
+			$this->data['config_logo'] = $this->config->get('config_logo');
 		} else {
-			$preview = 'no_image.jpg';
+			$this->data['config_logo'] = 'no_image.jpg';
 		}
-
-		if (@$this->request->server['HTTPS'] != 'on') {
-			$this->data['preview'] = HTTP_IMAGE . $preview;
-		} else {
-			$this->data['preview'] = HTTPS_IMAGE . $preview;
-		}	
 					
 		foreach ($languages as $language) {
 			if (isset($this->request->post['config_welcome_' . $language['language_id']])) {
@@ -207,25 +196,7 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_template'] = $this->config->get('config_template');
 		}
-		
-		if (isset($this->request->post['config_ssl'])) {
-			$this->data['config_ssl'] = $this->request->post['config_ssl'];
-		} else {
-			$this->data['config_ssl'] = $this->config->get('config_ssl');
-		}
-
-		if (isset($this->request->post['config_encryption'])) {
-			$this->data['config_encryption'] = $this->request->post['config_encryption'];
-		} else {
-			$this->data['config_encryption'] = $this->config->get('config_encryption');
-		}
-		
-		if (isset($this->request->post['config_parse_time'])) {
-			$this->data['config_parse_time'] = $this->request->post['config_parse_time'];
-		} else {
-			$this->data['config_parse_time'] = $this->config->get('config_parse_time');
-		}
-		
+				
 		if (isset($this->request->post['config_country_id'])) {
 			$this->data['config_country_id'] = $this->request->post['config_country_id'];
 		} else {
@@ -246,6 +217,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_language'] = $this->request->post['config_language'];
 		} else {
 			$this->data['config_language'] = $this->config->get('config_language');
+		}
+
+		if (isset($this->request->post['config_admin_language'])) {
+			$this->data['config_admin_language'] = $this->request->post['config_admin_language'];
+		} else {
+			$this->data['config_admin_language'] = $this->config->get('config_admin_language');
 		}
 		
 		$this->load->model('localisation/language');
@@ -356,18 +333,36 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_download_status'] = $this->config->get('config_download_status');
 		}
 		
-		if (isset($this->request->post['config_cache'])) {
-			$this->data['config_cache'] = $this->request->post['config_cache'];
+		if (isset($this->request->post['config_ssl'])) {
+			$this->data['config_ssl'] = $this->request->post['config_ssl'];
 		} else {
-			$this->data['config_cache'] = $this->config->get('config_cache');
+			$this->data['config_ssl'] = $this->config->get('config_ssl');
 		}
-				
+
+		if (isset($this->request->post['config_encryption'])) {
+			$this->data['config_encryption'] = $this->request->post['config_encryption'];
+		} else {
+			$this->data['config_encryption'] = $this->config->get('config_encryption');
+		}
+		
+		if (isset($this->request->post['config_seo_url'])) {
+			$this->data['config_seo_url'] = $this->request->post['config_seo_url'];
+		} else {
+			$this->data['config_seo_url'] = $this->config->get('config_seo_url');
+		}
+		
 		if (isset($this->request->post['config_compression'])) {
 			$this->data['config_compression'] = $this->request->post['config_compression']; 
 		} else {
 			$this->data['config_compression'] = $this->config->get('config_compression');
 		}
 		
+		if (isset($this->request->post['config_parse_time'])) {
+			$this->data['config_parse_time'] = $this->request->post['config_parse_time'];
+		} else {
+			$this->data['config_parse_time'] = $this->config->get('config_parse_time');
+		}
+
 		$this->id       = 'content'; 
 		$this->template = 'setting/setting.tpl';
 		$this->layout   = 'common/layout';
@@ -447,6 +442,20 @@ class ControllerSettingSetting extends Controller {
 		}
 
 		$this->response->setOutput($output);
+	} 
+	
+	public function logo() {
+		if (isset($this->request->get['logo'])) {
+			$this->load->helper('image');
+		
+			if (@$this->request->server['HTTPS'] != 'on') {
+				$image = HTTP_IMAGE . basename($this->request->get['logo']);
+			} else {
+				$image = HTTPS_IMAGE . basename($this->request->get['logo']);
+			}					
+		
+			$this->response->setOutput('<img src="' . $image . '" alt="" title="" style="border: 1px solid #EEEEEE;" />');
+		}
 	}
 	
 	public function template() {
@@ -459,6 +468,6 @@ class ControllerSettingSetting extends Controller {
 		}
 		
 		$this->response->setOutput('<img src="' . $image . '" alt="" title="" style="border: 1px solid #EEEEEE;" />');
-	}
+	}	
 }
 ?>

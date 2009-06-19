@@ -9,26 +9,28 @@
 <body>
 <h1><?php echo $text_invoice; ?></h1>
 <div class="div1">
-  <div class="div2"><?php echo $store; ?><br />
-    <?php echo $address; ?><br />
-    <?php echo $text_telephone; ?> <?php echo $telephone; ?><br />
-    <?php if ($fax) { ?>
-    <?php echo $text_fax; ?> <?php echo $fax; ?><br />
-    <?php } ?>
-    <?php echo $email; ?><br />
-    <?php echo $website; ?></div>
-  <div class="div3">
-    <table>
-      <tr>
-        <td><b><?php echo $text_invoice_date; ?></b></td>
-        <td><?php echo $date_added; ?></td>
-      </tr>
-      <tr>
-        <td><b><?php echo $text_invoice_no; ?></b></td>
-        <td><?php echo $order_id; ?></td>
-      </tr>
-    </table>
-  </div>
+  <table width="100%">
+    <tr>
+      <td><?php echo $store; ?><br />
+        <?php echo $address; ?><br />
+        <?php echo $text_telephone; ?> <?php echo $telephone; ?><br />
+        <?php if ($fax) { ?>
+        <?php echo $text_fax; ?> <?php echo $fax; ?><br />
+        <?php } ?>
+        <?php echo $email; ?><br />
+        <?php echo $website; ?></td>
+      <td align="right" valign="top"><table>
+          <tr>
+            <td><b><?php echo $text_invoice_date; ?></b></td>
+            <td><?php echo $date_added; ?></td>
+          </tr>
+          <tr>
+            <td><b><?php echo $text_invoice_no; ?></b></td>
+            <td><?php echo $order_id; ?></td>
+          </tr>
+        </table></td>
+    </tr>
+  </table>
 </div>
 <table class="address">
   <tr class="heading">
@@ -60,7 +62,7 @@
     <td align="right"><?php if (!$product['discount']) { ?>
       <?php echo $product['price']; ?>
       <?php } else { ?>
-      <u style="color: #F00; text-decoration: line-through;"><?php echo $product['price']; ?></u><br /> 
+      <u style="color: #F00; text-decoration: line-through;"><?php echo $product['price']; ?></u><br />
       <span class="price_new"><?php echo $product['discount']; ?></span>
       <?php } ?></td>
     <td align="right"><?php echo $product['total']; ?></td>

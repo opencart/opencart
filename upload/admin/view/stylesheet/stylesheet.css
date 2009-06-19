@@ -231,11 +231,11 @@ form {
 .button .button_login {
 	background: url('../image/button_login.png') no-repeat;
 }
-.button .button_import {
-	background: url('../image/button_import.png') no-repeat;
+.button .button_restore {
+	background: url('../image/button_restore.png') no-repeat;
 }
-.button .button_export {
-	background: url('../image/button_export.png') no-repeat;
+.button .button_backup {
+	background: url('../image/button_backup.png') no-repeat;
 }
 .button .button_invoice {
 	background: url('../image/button_invoice.png') no-repeat;

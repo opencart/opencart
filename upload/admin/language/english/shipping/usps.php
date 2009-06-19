@@ -5,7 +5,6 @@ $_['heading_title']    = 'United States Postal Service';
 // Text
 $_['text_shipping']    = 'Shipping';
 $_['text_success']     = 'Success: You have modified united states postal service!';
-$_['text_development'] = '<span style="color: red;">In Development</span>';
 
 // Entry
 $_['entry_cost']       = 'Cost:';

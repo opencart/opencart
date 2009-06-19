@@ -1,21 +1,21 @@
 <?php
 class ModelLocalisationCountry extends Model {
 	public function getCountries() {
-		$country = $this->cache->get('country');
+		$country_data = $this->cache->get('country');
 		
-		if (!$country) {
-			$query = $this->db->query("SELECT * FROM country ORDER BY name ASC");
+		if (!$country_data) {
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country ORDER BY name ASC");
 	
-			$country = $query->rows;
+			$country_data = $query->rows;
 		
-			$this->cache->set('country', $country);
+			$this->cache->set('country', $country_data);
 		}
 
-		return $country;
+		return $country_data;
 	}
 	
 	public function getCountry($country_id) {
-		$query = $this->db->query("SELECT * FROM country WHERE country_id = '" . (int)$country_id . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE country_id = '" . (int)$country_id . "'");
 		
 		return $query->row;
 	}	

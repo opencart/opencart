@@ -443,7 +443,7 @@ class ControllerCustomerOrder extends Controller {
     	$order_info = $this->model_customer_order->getOrder($this->request->get['order_id']);
 		
 		$this->data['order_id'] = $order_info['order_id'];
-		$this->data['date_added'] = date('d/m/Y', strtotime($order_info['date_added'])); 
+		$this->data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added'])); 
 		$this->data['email'] = $order_info['email'];
 		$this->data['telephone'] = $order_info['telephone'];
 		$this->data['fax'] = $order_info['fax'];
@@ -552,7 +552,7 @@ class ControllerCustomerOrder extends Controller {
 
     	foreach ($results as $result) {
       		$this->data['historys'][] = array(
-        		'date_added' => date('d/m/Y', strtotime($result['date_added'])),
+        		'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
         		'status'     => $result['status'],
         		'comment'    => nl2br($result['comment']),
         		'notify'     => $result['notify'] ? $this->language->get('text_yes') : $this->language->get('text_no')
@@ -618,7 +618,7 @@ class ControllerCustomerOrder extends Controller {
     	$order_info = $this->model_customer_order->getOrder($this->request->get['order_id']);
 		
 		$this->data['order_id'] = $order_info['order_id'];
-		$this->data['date_added'] = date('d/m/Y', strtotime($order_info['date_added']));    	
+		$this->data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));    	
 
 		$this->data['store'] = $this->config->get('config_store');
 		$this->data['address'] = nl2br($this->config->get('config_address'));

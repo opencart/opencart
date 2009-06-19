@@ -1,7 +1,7 @@
 <?php   
 class ControllerCommonHeader extends Controller {
 	protected function index() {
-		$this->load->language('common/header');
+		$this->language->load('common/header');
 	    	
 		$this->data['store'] = $this->config->get('config_store');
 		

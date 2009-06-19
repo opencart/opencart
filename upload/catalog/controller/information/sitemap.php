@@ -1,7 +1,7 @@
 <?php  
 class ControllerInformationSitemap extends Controller {
 	public function index() {
-    	$this->load->language('information/sitemap');
+    	$this->language->load('information/sitemap');
  
 		$this->document->title = $this->language->get('heading_title'); 
 
@@ -36,6 +36,8 @@ class ControllerInformationSitemap extends Controller {
 		
 		$this->load->model('catalog/category');
 		
+		$this->load->model('tool/seo_url');
+		
 		$this->data['category'] = $this->getCategories(0);
 		
 		$this->data['special'] = $this->url->https('product/special');
@@ -57,7 +59,7 @@ class ControllerInformationSitemap extends Controller {
 		foreach ($this->model_catalog_information->getInformations() as $result) {
       		$this->data['informations'][] = array(
         		'title' => $result['title'],
-        		'href'  => $this->url->http('information/information&information_id=' . $result['information_id'])
+        		'href'  => $this->model_tool_seo_url->rewrite($this->url->http('information/information&information_id=' . $result['information_id']))
       		);
     	}
 		
@@ -86,7 +88,7 @@ class ControllerInformationSitemap extends Controller {
 			
 			$output .= '<li>';
 			
-			$output .= '<a href="' . $this->url->http('product/category&path=' . $new_path)  . '">' . $result['name'] . '</a>';
+			$output .= '<a href="' . $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $new_path))  . '">' . $result['name'] . '</a>';
 			
         	$output .= $this->getCategories($result['category_id'], $new_path);
         

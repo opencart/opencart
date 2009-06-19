@@ -7,23 +7,22 @@ final class User {
   	public function __construct() {
 		$this->db = Registry::get('db');
 		$this->request = Registry::get('request');
-		$this->session  = Registry::get('session');
+		$this->session = Registry::get('session');
 		
     	if (isset($this->session->data['user_id'])) {
-			$user_query = $this->db->query("SELECT * FROM user WHERE user_id = '" . (int)$this->session->data['user_id'] . "'");
+			$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE user_id = '" . (int)$this->session->data['user_id'] . "'");
 			
 			if ($user_query->num_rows) {
 				$this->user_id = $user_query->row['user_id'];
 				$this->username = $user_query->row['username'];
 				
-      			$this->db->query("UPDATE user SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE user_id = '" . (int)$this->session->data['user_id'] . "'");
+      			$this->db->query("UPDATE " . DB_PREFIX . "user SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE user_id = '" . (int)$this->session->data['user_id'] . "'");
 
-      			$user_group_query = $this->db->query("SELECT DISTINCT ug.permission FROM user u LEFT JOIN user_group ug ON u.user_group_id = ug.user_group_id WHERE u.user_id = '" . (int)$this->session->data['user_id'] . "'");
+      			$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
 				
 	  			foreach (unserialize($user_group_query->row['permission']) as $key => $value) {
 	    			$this->permission[$key] = $value;
 	  			}
-
 			} else {
 				$this->logout();
 			}
@@ -31,7 +30,7 @@ final class User {
   	}
 		
   	public function login($username, $password) {
-    	$user_query = $this->db->query("SELECT * FROM user WHERE username = '" . $this->db->escape($username) . "' AND password = '" . $this->db->escape(md5($password)) . "'");
+    	$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE username = '" . $this->db->escape($username) . "' AND password = '" . $this->db->escape(md5($password)) . "'");
 
     	if ($user_query->num_rows) {
 			$this->session->data['user_id'] = $user_query->row['user_id'];
@@ -39,7 +38,7 @@ final class User {
 			$this->user_id = $user_query->row['user_id'];
 			$this->username = $user_query->row['username'];			
 
-      		$user_group_query = $this->db->query("SELECT DISTINCT ug.permission FROM user u LEFT JOIN user_group ug ON u.user_group_id = ug.user_group_id WHERE u.user_id = '" . (int)$user_query->row['user_id'] . "'");
+      		$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
 
 	  		foreach (unserialize($user_group_query->row['permission']) as $key => $value) {
 	    		$this->permissions[$key] = $value;

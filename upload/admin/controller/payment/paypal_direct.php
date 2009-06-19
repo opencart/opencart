@@ -83,7 +83,7 @@ class ControllerPaymentPayPalDirect extends Controller {
 		}
 		
 		if (isset($this->request->post['paypal_direct_password'])) {
-			$this->data['paypal_direct_password'] = $this->request->post['paypal_directe_password'];
+			$this->data['paypal_direct_password'] = $this->request->post['paypal_direct_password'];
 		} else {
 			$this->data['paypal_direct_password'] = $this->config->get('paypal_direct_password');
 		}

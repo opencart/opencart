@@ -31,7 +31,7 @@ final class Front {
 		$method = $action->getMethod();
 		$args   = $action->getArgs();
 
-		$action = NULL;
+		$action = '';
 
 		if (file_exists($file)) {
 			require_once($file);
@@ -43,12 +43,12 @@ final class Front {
 			} else {
 				$action = $this->error;
 			
-				$this->error = NULL;
+				$this->error = '';
 			}
 		} else {
 			$action = $this->error;
 			
-			$this->error = NULL;
+			$this->error = '';
 		}
 		
 		return $action;

@@ -22,6 +22,12 @@ class ControllerCatalogProduct extends Controller {
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
 			$this->model_catalog_product->addProduct($this->request->post);
 	  		
+			if ($this->config->get('config_seo_url')) {
+				$this->load->model('tool/seo_url');
+				
+				$this->model_tool_seo_url->generate();
+			}
+			
 			$this->session->data['success'] = $this->language->get('text_success');
 	  
 			$url = '';
@@ -65,9 +71,15 @@ class ControllerCatalogProduct extends Controller {
 	
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
 			$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
-		
+			
+			if ($this->config->get('config_seo_url')) {
+				$this->load->model('tool/seo_url');
+				
+				$this->model_tool_seo_url->generate();
+			}
+			
 			$this->session->data['success'] = $this->language->get('text_success');
-	  		
+			
 			$url = '';
 			
 			if (isset($this->request->get['filter_name'])) {
@@ -112,6 +124,12 @@ class ControllerCatalogProduct extends Controller {
 			foreach ($this->request->post['delete'] as $product_id) {
 				$this->model_catalog_product->deleteProduct($product_id);
 	  		}
+
+			if ($this->config->get('config_seo_url')) {
+				$this->load->model('tool/seo_url');
+				
+				$this->model_tool_seo_url->generate();
+			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
@@ -352,6 +370,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['text_minus'] = $this->language->get('text_minus');
 
 		$this->data['entry_name'] = $this->language->get('entry_name');
+		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
 		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$this->data['entry_description'] = $this->language->get('entry_description');
     	$this->data['entry_model'] = $this->language->get('entry_model');
@@ -468,7 +487,13 @@ class ControllerCatalogProduct extends Controller {
     	} else {
       		$this->data['model'] = @$product_info['model'];
     	}
-
+		
+		if (isset($this->request->post['keyword'])) {
+			$this->data['keyword'] = $this->request->post['keyword'];
+		} else {
+			$this->data['keyword'] = @$product_info['keyword'];
+		}
+		
 		if (isset($this->request->post['image'])) {
 			$this->data['image'] = $this->request->post['image'];
 		} else {
@@ -499,9 +524,11 @@ class ControllerCatalogProduct extends Controller {
 		
     	if (isset($this->request->post['shipping'])) {
       		$this->data['shipping'] = $this->request->post['shipping'];
+    	} elseif (isset($product_info['shipping'])) {
+      		$this->data['shipping'] = $product_info['shipping'];
     	} else {
-      		$this->data['shipping'] = @$product_info['shipping'];
-    	}
+			$this->data['shipping'] = 1;
+		}
       	
 		if (isset($this->request->post['date_available'])) {
        		$this->data['date_available'] = $this->request->post['date_available'];

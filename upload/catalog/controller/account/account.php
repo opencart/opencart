@@ -7,7 +7,7 @@ class ControllerAccountAccount extends Controller {
 	  		$this->redirect($this->url->https('account/login'));
     	} 
 	
-		$this->load->language('account/account');
+		$this->language->load('account/account');
 
       	$this->document->breadcrumbs = array();
 

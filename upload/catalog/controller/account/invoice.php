@@ -7,7 +7,7 @@ class ControllerAccountInvoice extends Controller {
 			$this->redirect($this->url->https('account/login'));
     	}
 	  
-    	$this->load->language('account/invoice');
+    	$this->language->load('account/invoice');
 
     	$this->document->title = $this->language->get('heading_title');
       	

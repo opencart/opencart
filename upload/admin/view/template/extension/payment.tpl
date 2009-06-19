@@ -1,6 +1,9 @@
 <?php if ($success) { ?>
 <div class="success"><?php echo $success; ?></div>
 <?php } ?>
+<?php if ($error) { ?>
+<div class="warning"><?php echo $error; ?></div>
+<?php } ?>
 <div class="heading">
   <h1><?php echo $heading_title; ?></h1>
 </div>
@@ -9,7 +12,6 @@
     <tr>
       <td class="left"><?php echo $column_name; ?></td>
       <td></td>
-      <td class="left"><?php echo $column_development; ?></td>
       <td class="left"><?php echo $column_status; ?></td>
       <td class="right"><?php echo $column_sort_order; ?></td>
       <td class="right"><?php echo $column_action; ?></td>
@@ -23,7 +25,6 @@
     <tr class="<?php echo $class; ?>">
       <td class="left"><?php echo $extension['name']; ?></td>
       <td class="center"><?php echo $extension['link'] ?></td>
-      <td class="left"><?php echo $extension['development'] ?></td>
       <td class="left"><?php echo $extension['status'] ?></td>
       <td class="right"><?php echo $extension['sort_order']; ?></td>
       <td class="right"><?php foreach ($extension['action'] as $action) { ?>

@@ -18,7 +18,17 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_callback; ?><span class="help"><?php echo $help_callback; ?></span></td>
+        <td><span class="required">*</span> <?php echo $entry_password; ?><br />
+          <span class="help"><?php echo $help_password; ?></span></td>
+        <td><input type="text" name="worldpay_password" value="<?php echo $worldpay_password; ?>" />
+          <br />
+          <?php if ($error_password) { ?>
+          <span class="error"><?php echo $error_password; ?></span>
+          <?php } ?></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_callback; ?><br />
+          <span class="help"><?php echo $help_callback; ?></span></td>
         <td><textarea cols="40" rows="5"><?php echo $callback; ?></textarea></td>
       </tr>
       <tr>

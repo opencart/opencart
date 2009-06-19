@@ -30,11 +30,11 @@ $config = new Config();
 Registry::set('config', $config);
 
 // Database 
-$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PREFIX);
+$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 Registry::set('db', $db);
 
 // Settings
-$query = $db->query("SELECT * FROM setting");
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "setting");
 
 foreach ($query->rows as $setting) {
 	$config->set($setting['key'], $setting['value']);
@@ -59,7 +59,7 @@ Registry::set('url', new Url());
 $session = new Session();
 Registry::set('session', $session);
 
-// Language
+// Language		
 $language = new Language();
 Registry::set('language', $language);
 	
@@ -83,6 +83,9 @@ Registry::set('cart', new Cart());
 
 // Front Controller 
 $controller = new Front();
+
+// SEO URL's
+$controller->addPreAction(new Router('common/seo_url'));
 
 // Router
 if (isset($request->get['route'])) {

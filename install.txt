@@ -14,12 +14,12 @@ INSTALL
    e.g. /public_html/store or /public_html
 
 2. If you have a Linux/Unix make sure the following folders and files are writable.
-   chmod 0755 image/
-   chmod 0755 image/cache/
-   chmod 0755 cache/
-   chmod 0755 download/
-   chmod 0755 config.php
-   chmod 0755 admin/config.php
+   chmod 0755 or 0777 image/
+   chmod 0755 or 0777 image/cache/
+   chmod 0755 or 0777 cache/
+   chmod 0755 or 0777 download/
+   chmod 0755 or 0777 config.php
+   chmod 0755 or 0777 admin/config.php
 
 3. Make sure you have installed a MySQL Database which has a user assigned to it 
    DO NOT USE YOUR ROOT USERNAME AND ROOT PASSWORD

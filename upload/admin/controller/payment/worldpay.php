@@ -32,6 +32,7 @@ class ControllerPaymentWorldPay extends Controller {
 		$this->data['text_off'] = $this->language->get('text_off');
 		
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
+		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_callback'] = $this->language->get('entry_callback');
 		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
@@ -39,6 +40,7 @@ class ControllerPaymentWorldPay extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
+		$this->data['help_password'] = $this->language->get('help_password');
 		$this->data['help_callback'] = $this->language->get('help_callback');
 
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -48,6 +50,7 @@ class ControllerPaymentWorldPay extends Controller {
 
 		$this->data['error_warning'] = @$this->error['warning'];
 		$this->data['error_merchant'] = @$this->error['merchant'];
+		$this->data['error_password'] = @$this->error['password'];
 
   		$this->document->breadcrumbs = array();
 
@@ -77,6 +80,12 @@ class ControllerPaymentWorldPay extends Controller {
 			$this->data['worldpay_merchant'] = $this->request->post['worldpay_merchant'];
 		} else {
 			$this->data['worldpay_merchant'] = $this->config->get('worldpay_merchant');
+		}
+		
+		if (isset($this->request->post['worldpay_password'])) {
+			$this->data['worldpay_password'] = $this->request->post['worldpay_password'];
+		} else {
+			$this->data['worldpay_password'] = $this->config->get('worldpay_password');
 		}
 		
 		$this->data['callback'] = HTTP_CATALOG . 'index.php?route=payment/worldpay/callback';
@@ -134,7 +143,11 @@ class ControllerPaymentWorldPay extends Controller {
 		if (!@$this->request->post['worldpay_merchant']) {
 			$this->error['merchant'] = $this->language->get('error_merchant');
 		}
-				
+		
+		if (!@$this->request->post['worldpay_password']) {
+			$this->error['password'] = $this->language->get('error_password');
+		}
+		
 		if (!$this->error) {
 			return TRUE;
 		} else {

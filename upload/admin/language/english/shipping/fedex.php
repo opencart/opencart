@@ -5,7 +5,6 @@ $_['heading_title']    = 'FEDEX';
 // Text
 $_['text_shipping']    = 'Shipping';
 $_['text_success']     = 'Success: You have modified shipping FEDEX!';
-$_['text_development'] = '<span style="color: red;">In Development</span>';
 
 // Entry
 $_['entry_cost']       = 'Cost:';

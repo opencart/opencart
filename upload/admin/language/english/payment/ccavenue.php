@@ -5,7 +5,6 @@ $_['heading_title']      = 'CCAvenue';
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified CCAvenue account details!';
-$_['text_development']   = '<span style="color: red;">In Development</span>';
 $_['text_american']      = 'American Gateway';
 $_['text_indian']        = 'Indian Gateway';
 

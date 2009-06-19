@@ -67,7 +67,7 @@ class ControllerCheckoutPayment extends Controller {
 			$this->session->data['payment_methods'] = $method_data;
 		}
 		
-		$this->load->language('checkout/payment');
+		$this->language->load('checkout/payment');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment']];
@@ -117,8 +117,14 @@ class ControllerCheckoutPayment extends Controller {
     	$this->data['button_continue'] = $this->language->get('button_continue');
     	$this->data['button_back'] = $this->language->get('button_back');
 
-    	$this->data['error_warning'] = @$this->error['warning'];
-
+		if (isset($this->session->data['error'])) {
+			$this->data['error_warning'] = $this->session->data['error'];
+			
+			unset($this->session->data['error']);
+		} else {
+    		$this->data['error_warning'] = @$this->error['warning'];
+		}
+		
     	$this->data['action'] = $this->url->https('checkout/payment');
     
 		$address = $this->customer->getAddress($this->session->data['payment_address_id']);

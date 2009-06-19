@@ -156,5 +156,4 @@
 $('#zone').load('index.php?route=account/create/zone&country_id=<?php echo $country_id; ?>&zone_id=<?php echo $zone_id; ?>');
 
 $('#country_id').attr('value', '<?php echo $country_id; ?>');
-$('#zone_id').attr('value', '<?php echo $zone_id; ?>');
 //--></script>

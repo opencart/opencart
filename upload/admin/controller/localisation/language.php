@@ -416,7 +416,7 @@ class ControllerLocalisationLanguage extends Controller {
 	private function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'localisation/language')) {
 			$this->error['warning'] = $this->language->get('error_permission');
-		}
+		} 
 		
 		$this->load->model('customer/order');
 		
@@ -425,6 +425,10 @@ class ControllerLocalisationLanguage extends Controller {
 
 			if ($this->config->get('config_language') == @$language_info['code']) {
 				$this->error['warning'] = $this->language->get('error_default');
+			}
+	
+			if ($this->config->get('config_admin_language') == @$language_info['code']) {
+				$this->error['warning'] = $this->language->get('error_admin');
 			}
 			
 			$order_total = $this->model_customer_order->getTotalOrdersByLanguageId($language_id);

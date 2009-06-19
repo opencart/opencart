@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentPayPalDirect extends Controller {
 	protected function index() {
-    	$this->load->language('payment/paypal_direct');
+    	$this->language->load('payment/paypal_direct');
 		
 		$this->data['text_credit_card'] = $this->language->get('text_credit_card');
 		$this->data['text_start_date'] = $this->language->get('text_start_date');
@@ -103,9 +103,7 @@ class ControllerPaymentPayPalDirect extends Controller {
 		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		
-		$this->load->model('localisation/country');
-		
-		$country_info = $this->model_localisation_country->getCountry($this->session->data['payment_address_id']);
+		$payment_address = $this->customer->getAddress($this->session->data['payment_address_id']);
 		
 		$ch = curl_init();
 		
@@ -142,7 +140,7 @@ class ControllerPaymentPayPalDirect extends Controller {
 			'CITY'           => $order_info['payment_city'],
 			'STATE'          => $order_info['payment_zone'],
 			'ZIP'            => $order_info['payment_postcode'],
-			'COUNTRYCODE'    => $country_info['iso_code_2'],
+			'COUNTRYCODE'    => $payment_address['iso_code_2'],
 			'CURRENCYCODE'   => $order_info['currency']
 		);
 		
@@ -153,7 +151,7 @@ class ControllerPaymentPayPalDirect extends Controller {
 		if (!$response) {
 			exit('DoDirectPayment failed: ' . curl_error($ch) . '(' . curl_errno($ch) . ')');
 		}
-
+ 
  		$response_data = array();
  
 		parse_str($response, $response_data);
@@ -161,7 +159,7 @@ class ControllerPaymentPayPalDirect extends Controller {
 		$json = array();
 		
 		if ($response_data['ACK'] == 'Success') {
-			$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('paypal_direct_order_status_id'));
+			$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
 			
 			$message = '';
 			
@@ -186,7 +184,7 @@ class ControllerPaymentPayPalDirect extends Controller {
         	$json['error'] = $response_data['L_LONGMESSAGE0'];
         }
 		
-		$this->load->helper('json');
+		$this->load->library('json');
 		
 		$this->response->setOutput(Json::encode($json));
 	}

@@ -5,7 +5,7 @@ class ControllerAccountSuccess extends Controller {
       		$this->redirect($this->url->https('account/login'));
     	}
 	
-    	$this->load->language('account/success');
+    	$this->language->load('account/success');
 
     	$this->document->title = $this->language->get('heading_title');
 

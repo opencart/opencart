@@ -7,10 +7,10 @@ final class Request {
 	public $server = array();
 	
   	public function __construct() {
-		$this->get    =& $this->clean($_GET);
-		$this->post   =& $this->clean($_POST);
+		$this->get =& $this->clean($_GET);
+		$this->post =& $this->clean($_POST);
 		$this->cookie =& $this->clean($_COOKIE);
-		$this->files  =& $this->clean($_FILES);
+		$this->files =& $this->clean($_FILES);
 		$this->server =& $this->clean($_SERVER);
 	}
 	

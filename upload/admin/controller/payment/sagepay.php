@@ -28,10 +28,14 @@ class ControllerPaymentSagePay extends Controller {
 		$this->data['text_sim'] = $this->language->get('text_sim');
 		$this->data['text_test'] = $this->language->get('text_test');
 		$this->data['text_live'] = $this->language->get('text_live');
+		$this->data['text_payment'] = $this->language->get('text_payment');
+		$this->data['text_defered'] = $this->language->get('text_defered');
+		$this->data['text_authenticate'] = $this->language->get('text_authenticate');
 		
 		$this->data['entry_vendor'] = $this->language->get('entry_vendor');
 		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_test'] = $this->language->get('entry_test');
+		$this->data['entry_transaction'] = $this->language->get('entry_transaction');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -81,11 +85,18 @@ class ControllerPaymentSagePay extends Controller {
 		} else {
 			$this->data['sagepay_password'] = $this->config->get('sagepay_password');
 		}
-		
+
+
 		if (isset($this->request->post['sagepay_test'])) {
 			$this->data['sagepay_test'] = $this->request->post['sagepay_test'];
 		} else {
 			$this->data['sagepay_test'] = $this->config->get('sagepay_test');
+		}
+		
+		if (isset($this->request->post['sagepay_transaction'])) {
+			$this->data['sagepay_transaction'] = $this->request->post['sagepay_transaction'];
+		} else {
+			$this->data['sagepay_transaction'] = $this->config->get('sagepay_transaction');
 		}
 		
 		if (isset($this->request->post['sagepay_order_status_id'])) {

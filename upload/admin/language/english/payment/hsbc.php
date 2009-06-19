@@ -5,7 +5,6 @@ $_['heading_title']      = 'HSBC';
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified HSBC account details!';
-$_['text_development']   = '<span style="color: red;">In Development</span>';
 $_['text_approved']      = 'On (Approved)';
 $_['text_declined']      = 'On (Declined)';
 $_['text_off']           = 'Off';

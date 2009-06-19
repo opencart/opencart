@@ -57,7 +57,7 @@ class ControllerCheckoutConfirm extends Controller {
 
     	array_multisort($sort_order, SORT_ASC, $total_data);
 
-		$this->load->language('checkout/confirm');
+		$this->language->load('checkout/confirm');
 
     	$this->document->title = $this->language->get('heading_title'); 
 		
@@ -72,7 +72,6 @@ class ControllerCheckoutConfirm extends Controller {
 		$data = array();
 		
 		$data['customer_id'] = $this->customer->getId();
-		$data['language_id'] = $this->language->getId();
 		$data['firstname'] = $this->customer->getFirstName();
 		$data['lastname'] = $this->customer->getLastName();
 		$data['email'] = $this->customer->getEmail();

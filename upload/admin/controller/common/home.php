@@ -97,9 +97,11 @@ class ControllerCommonHome extends Controller {
 			);
 		}
 
-		$this->load->model('localisation/currency');
+		if ($this->config->get('config_currency_auto')) {
+			$this->load->model('localisation/currency');
 		
-		$this->model_localisation_currency->updateCurrencies();
+			$this->model_localisation_currency->updateCurrencies();
+		}
 		
 		$this->id       = 'content'; 
 		$this->template = 'common/home.tpl';
@@ -126,7 +128,7 @@ class ControllerCommonHome extends Controller {
 				$labels = array();
 				
 				for ($i = 0; $i <= 23; $i++) {
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE order_status_id > '0' AND DATE(date_added) = DATE(NOW()) AND HOUR(date_added) = '" . (int)$i . "' GROUP BY HOUR(date_added) ORDER BY date_added ASC");
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND DATE(date_added) = DATE(NOW()) AND HOUR(date_added) = '" . (int)$i . "' GROUP BY HOUR(date_added) ORDER BY date_added ASC");
 
 					if ($query->num_rows) {
 						$orders[] = $query->row['total'];
@@ -134,7 +136,7 @@ class ControllerCommonHome extends Controller {
 						$orders[] = 0;
 					}
 					
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM customer WHERE DATE(date_added) = DATE(NOW()) AND HOUR(date_added) = '" . (int)$i . "' GROUP BY HOUR(date_added) ORDER BY date_added ASC");
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE DATE(date_added) = DATE(NOW()) AND HOUR(date_added) = '" . (int)$i . "' GROUP BY HOUR(date_added) ORDER BY date_added ASC");
 					
 					if ($query->num_rows) {
 						$customers[] = $query->row['total'];
@@ -168,7 +170,7 @@ class ControllerCommonHome extends Controller {
 				$week = mktime(0, 0, 0, date('m'), date('d') - date('w'), date('Y'));
 
 				for ($i = 1; $i <= 7; $i++) {
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE order_status_id > '0' AND DATE(date_added) = DATE('" . date('Y-m-d', $week + ($i * 86400)) . "') GROUP BY DATE(date_added)");
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND DATE(date_added) = DATE('" . date('Y-m-d', $week + ($i * 86400)) . "') GROUP BY DATE(date_added)");
 
 					if ($query->num_rows) {
 						$orders[] = $query->row['total'];
@@ -176,7 +178,7 @@ class ControllerCommonHome extends Controller {
 						$orders[] = 0;
 					}
 				
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM customer WHERE DATE(date_added) = DATE('" . date('Y-m-d', $week + ($i * 86400)) . "') GROUP BY DATE(date_added)");
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE DATE(date_added) = DATE('" . date('Y-m-d', $week + ($i * 86400)) . "') GROUP BY DATE(date_added)");
 				
 					if ($query->num_rows) {
 						$customers[] = $query->row['total'];
@@ -210,7 +212,7 @@ class ControllerCommonHome extends Controller {
 				$last_day_of_the_month = mktime(23, 59, 59, date('m'), 0, date('Y')); 
 
 				for ($i = 1; $i <= date('j', $last_day_of_the_month); $i++) {
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE order_status_id > '0' AND DATE(date_added) = DATE('" . date('Y-m') . '-' . (int)$i . "') GROUP BY DATE(date_added)");
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND DATE(date_added) = DATE('" . date('Y-m') . '-' . (int)$i . "') GROUP BY DATE(date_added)");
 
 					if ($query->num_rows) {
 						$orders[] = $query->row['total'];
@@ -218,7 +220,7 @@ class ControllerCommonHome extends Controller {
 						$orders[] = 0;
 					}
 				
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM customer WHERE DATE(date_added) = DATE('" . date('Y-m') . '-' . (int)$i . "') GROUP BY DATE(date_added)");
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE DATE(date_added) = DATE('" . date('Y-m') . '-' . (int)$i . "') GROUP BY DATE(date_added)");
 				
 					if ($query->num_rows) {
 						$customers[] = $query->row['total'];
@@ -250,7 +252,7 @@ class ControllerCommonHome extends Controller {
 				$labels = array();
 
 				for ($i = 1; $i <= 12; $i++) {
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM `order` WHERE order_status_id > '0' AND YEAR(date_added) = YEAR(NOW()) AND MONTH(date_added) = '" . (int)$i . "' GROUP BY MONTH(date_added)");
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND YEAR(date_added) = YEAR(NOW()) AND MONTH(date_added) = '" . (int)$i . "' GROUP BY MONTH(date_added)");
 
 					if ($query->num_rows) {
 						$orders[] = $query->row['total'];
@@ -258,7 +260,7 @@ class ControllerCommonHome extends Controller {
 						$orders[] = 0;
 					}
 				
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM customer WHERE YEAR(date_added) = YEAR(NOW()) AND MONTH(date_added) = '" . (int)$i . "' GROUP BY DATE(date_added)");
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE YEAR(date_added) = YEAR(NOW()) AND MONTH(date_added) = '" . (int)$i . "' GROUP BY DATE(date_added)");
 				
 					if ($query->num_rows) {
 						$customers[] = $query->row['total'];

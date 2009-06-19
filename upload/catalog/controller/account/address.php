@@ -9,7 +9,7 @@ class ControllerAccountAddress extends Controller {
 	  		$this->redirect($this->url->https('account/login')); 
     	}
 	
-    	$this->load->language('account/address');
+    	$this->language->load('account/address');
 
 		$this->document->title = $this->language->get('heading_title');
 		
@@ -25,7 +25,7 @@ class ControllerAccountAddress extends Controller {
 	  		$this->redirect($this->url->https('account/login')); 
     	} 
 
-    	$this->load->language('account/address');
+    	$this->language->load('account/address');
 
 		$this->document->title = $this->language->get('heading_title');
 		
@@ -49,7 +49,7 @@ class ControllerAccountAddress extends Controller {
 	  		$this->redirect($this->url->https('account/login')); 
     	} 
 		
-    	$this->load->language('account/address');
+    	$this->language->load('account/address');
 
 		$this->document->title = $this->language->get('heading_title');
 		
@@ -83,7 +83,7 @@ class ControllerAccountAddress extends Controller {
 	  		$this->redirect($this->url->https('account/login')); 
     	} 
 			
-    	$this->load->language('account/address');
+    	$this->language->load('account/address');
 
 		$this->document->title = $this->language->get('heading_title');
 		
@@ -128,7 +128,7 @@ class ControllerAccountAddress extends Controller {
     	$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_back'] = $this->language->get('button_back');
 
-    	$this->data['error'] = @$this->error['success'];
+    	$this->data['error_warning'] = @$this->error['warning'];
     
 		$this->data['success'] = @$this->session->data['success'];
 		
@@ -312,7 +312,7 @@ class ControllerAccountAddress extends Controller {
     	}  elseif (isset($address_info['zone_id'])) {
       		$this->data['zone_id'] = $address_info['zone_id'];
     	} else {
-      		$this->data['zone_id'] = $this->config->get('config_zone_id');
+      		$this->data['zone_id'] = 0;
     	}
 		
 		$this->load->model('localisation/country');
@@ -360,11 +360,11 @@ class ControllerAccountAddress extends Controller {
 
   	private function validateDelete() {
     	if ($this->model_account_address->getTotalAddresses() == 1) {
-      		$this->error['success'] = $this->language->get('error_delete');
+      		$this->error['warning'] = $this->language->get('error_delete');
     	}
 
     	if ($this->customer->getAddressId() == $this->request->get['address_id']) {
-      		$this->error['success'] = $this->language->get('error_default');
+      		$this->error['warning'] = $this->language->get('error_default');
     	}
 
     	if (!$this->error) {

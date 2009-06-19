@@ -1,6 +1,6 @@
 <?php    
 class ControllerCommonPermission extends Controller {    
-	public function checkPermission() {
+	public function check() {
 		if (isset($this->request->get['route'])) {
 			$route = $this->request->get['route'];
 		  

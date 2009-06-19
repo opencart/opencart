@@ -21,11 +21,11 @@ $config = new Config();
 Registry::set('config', $config);
 
 // Database
-$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PREFIX);
+$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 Registry::set('db', $db);
 
 // Settings
-$query = $db->query("SELECT * FROM setting");
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "setting");
  
 foreach ($query->rows as $setting) {
 	$config->set($setting['key'], $setting['value']);
@@ -50,7 +50,7 @@ Registry::set('cache', new Cache());
 Registry::set('url', new Url());
 
 // Language
-$language = new Language();
+$language = new Language($config->get('config_admin_language'));
 Registry::set('language', $language);
 
 // Document
@@ -66,10 +66,10 @@ Registry::set('user', new User());
 $controller = new Front();
 
 // Login
-$controller->addPreAction(new Router('common/login/checkLogin'));
+$controller->addPreAction(new Router('common/login/check'));
 
 // Permission
-$controller->addPreAction(new Router('common/permission/checkPermission'));
+$controller->addPreAction(new Router('common/permission/check'));
 
 // Router
 if (isset($request->get['route'])) {

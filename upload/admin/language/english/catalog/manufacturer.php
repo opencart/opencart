@@ -12,6 +12,7 @@ $_['column_action']     = 'Action';
 
 // Entry
 $_['entry_name']        = 'Manufacturer Name:';
+$_['entry_keyword']     = 'SEO Keyword:';
 $_['entry_image']       = 'Image:';
 $_['entry_sort_order']  = 'Sort Order:';
 

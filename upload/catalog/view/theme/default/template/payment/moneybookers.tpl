@@ -6,7 +6,7 @@
   <input type="hidden" name="cancel_url" value="<?php echo $cancel_url; ?>" />
   <input type="hidden" name="status_url" value="<?php echo $mb_email; ?>" />
   <input type="hidden" name="language" value="<?php echo $language; ?>" />
-  <input type="hidden" name="pay_to_email" value="<?php echo $mb_email; ?>" />  
+  <input type="hidden" name="pay_to_email" value="<?php echo $mb_email; ?>" />
   <input type="hidden" name="pay_from_email" value="<?php echo $cust_email; ?>" />
   <input type="hidden" name="amount" value="<?php echo $amount; ?>" />
   <input type="hidden" name="currency" value="<?php echo $currency; ?>" />
@@ -41,5 +41,3 @@ function confirmSubmit() {
 	});
 }
 //--></script>
-
-

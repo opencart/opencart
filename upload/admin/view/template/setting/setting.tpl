@@ -8,7 +8,7 @@
   <h1><?php echo $heading_title; ?></h1>
   <div class="buttons"><a onclick="$('#form').submit();" class="button"><span class="button_left button_save"></span><span class="button_middle"><?php echo $button_save; ?></span><span class="button_right"></span></a><a onclick="location='<?php echo $cancel; ?>';" class="button"><span class="button_left button_cancel"></span><span class="button_middle"><?php echo $button_cancel; ?></span><span class="button_right"></span></a></div>
 </div>
-<div class="tabs"><a tab="#tab_shop"><?php echo $tab_shop; ?></a><a tab="#tab_local"><?php echo $tab_local; ?></a><a tab="#tab_option"><?php echo $tab_option; ?></a><a tab="#tab_cache"><?php echo $tab_cache; ?></a></div>
+<div class="tabs"><a tab="#tab_shop"><?php echo $tab_shop; ?></a><a tab="#tab_local"><?php echo $tab_local; ?></a><a tab="#tab_option"><?php echo $tab_option; ?></a><a tab="#tab_server"><?php echo $tab_server; ?></a></div>
 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
   <div id="tab_shop" class="page">
     <table class="form">
@@ -30,11 +30,11 @@
       <tr>
         <td><?php echo $entry_logo; ?></td>
         <td><input type="file" id="upload" />
-          <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="image" /></td>
+          <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" /></td>
       </tr>
       <tr>
         <td></td>
-        <td><img src="<?php echo $preview; ?>" alt="" id="preview" style="margin: 4px 0px; border: 1px solid #EEEEEE;" /></td>
+        <td id="logo"></td>
       </tr>
       <tr>
         <td><span class="required">*</span> <?php echo $entry_owner; ?></td>
@@ -88,44 +88,6 @@
         <td></td>
         <td id="template"></td>
       </tr>
-      <tr>
-        <td><?php echo $entry_ssl; ?><br />
-          <span class="help"><?php echo $help_ssl; ?></span></td>
-        <td><?php if ($config_ssl) { ?>
-          <input type="radio" name="config_ssl" value="1" checked="checked" />
-          <?php echo $text_yes; ?>
-          <input type="radio" name="config_ssl" value="0" />
-          <?php echo $text_no; ?>
-          <?php } else { ?>
-          <input type="radio" name="config_ssl" value="1" />
-          <?php echo $text_yes; ?>
-          <input type="radio" name="config_ssl" value="0" checked="checked" />
-          <?php echo $text_no; ?>
-          <?php } ?></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_encryption; ?><br />
-          <span class="help"><?php echo $help_encryption; ?></span></td>
-        <td><input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" />
-          <br />
-          <?php if ($error_encryption) { ?>
-          <span class="error"><?php echo $error_encryption; ?></span>
-          <?php } ?></td>
-      </tr>
-      <tr>
-        <td><?php echo $entry_parse_time; ?></td>
-        <td><?php if ($config_parse_time) { ?>
-          <input type="radio" name="config_parse_time" value="1" checked="checked" />
-          <?php echo $text_yes; ?>
-          <input type="radio" name="config_parse_time" value="0" />
-          <?php echo $text_no; ?>
-          <?php } else { ?>
-          <input type="radio" name="config_parse_time" value="1" />
-          <?php echo $text_yes; ?>
-          <input type="radio" name="config_parse_time" value="0" checked="checked" />
-          <?php echo $text_no; ?>
-          <?php } ?></td>
-      </tr>
       <?php foreach ($languages as $language) { ?>
       <tr>
         <td><span class="required">*</span> <?php echo $entry_welcome; ?></td>
@@ -162,6 +124,18 @@
         <td><select name="config_language">
             <?php foreach ($languages as $language) { ?>
             <?php if ($language['code'] == $config_language) { ?>
+            <option value="<?php echo $language['code']; ?>" selected="selected"><?php echo $language['name']; ?></option>
+            <?php } else { ?>
+            <option value="<?php echo $language['code']; ?>"><?php echo $language['name']; ?></option>
+            <?php } ?>
+            <?php } ?>
+          </select></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_admin_language; ?></td>
+        <td><select name="config_admin_language">
+            <?php foreach ($languages as $language) { ?>
+            <?php if ($language['code'] == $config_admin_language) { ?>
             <option value="<?php echo $language['code']; ?>" selected="selected"><?php echo $language['name']; ?></option>
             <?php } else { ?>
             <option value="<?php echo $language['code']; ?>"><?php echo $language['name']; ?></option>
@@ -367,19 +341,44 @@
       </tr>
     </table>
   </div>
-  <div id="tab_cache" class="page">
+  <div id="tab_server" class="page">
     <table class="form">
       <tr>
-        <td width="25%"><?php echo $entry_cache; ?></td>
-        <td><?php if ($config_cache) { ?>
-          <input type="radio" name="config_cache" value="1" checked="checked" />
+        <td width="25%"><?php echo $entry_ssl; ?><br />
+          <span class="help"><?php echo $help_ssl; ?></span></td>
+        <td><?php if ($config_ssl) { ?>
+          <input type="radio" name="config_ssl" value="1" checked="checked" />
           <?php echo $text_yes; ?>
-          <input type="radio" name="config_cache" value="0" />
+          <input type="radio" name="config_ssl" value="0" />
           <?php echo $text_no; ?>
           <?php } else { ?>
-          <input type="radio" name="config_cache" value="1" />
+          <input type="radio" name="config_ssl" value="1" />
           <?php echo $text_yes; ?>
-          <input type="radio" name="config_cache" value="0" checked="checked" />
+          <input type="radio" name="config_ssl" value="0" checked="checked" />
+          <?php echo $text_no; ?>
+          <?php } ?></td>
+      </tr>
+      <tr>
+        <td><span class="required">*</span> <?php echo $entry_encryption; ?><br />
+          <span class="help"><?php echo $help_encryption; ?></span></td>
+        <td><input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" />
+          <br />
+          <?php if ($error_encryption) { ?>
+          <span class="error"><?php echo $error_encryption; ?></span>
+          <?php } ?></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_seo_url; ?><br />
+          <span class="help"><?php echo $help_seo_url; ?></span></td>
+        <td><?php if ($config_seo_url) { ?>
+          <input type="radio" name="config_seo_url" value="1" checked="checked" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_seo_url" value="0" />
+          <?php echo $text_no; ?>
+          <?php } else { ?>
+          <input type="radio" name="config_seo_url" value="1" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_seo_url" value="0" checked="checked" />
           <?php echo $text_no; ?>
           <?php } ?></td>
       </tr>
@@ -387,6 +386,21 @@
         <td><?php echo $entry_compression; ?><br />
           <span class="help"><?php echo $help_compression; ?></span></td>
         <td><input type="text" name="config_compression" value="<?php echo $config_compression; ?>" size="3" /></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_parse_time; ?><br />
+          <span class="help"><?php echo $help_parse_time; ?></span></td>
+        <td><?php if ($config_parse_time) { ?>
+          <input type="radio" name="config_parse_time" value="1" checked="checked" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_parse_time" value="0" />
+          <?php echo $text_no; ?>
+          <?php } else { ?>
+          <input type="radio" name="config_parse_time" value="1" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_parse_time" value="0" checked="checked" />
+          <?php echo $text_no; ?>
+          <?php } ?></td>
       </tr>
     </table>
   </div>
@@ -405,11 +419,11 @@ var oFCKeditor<?php echo $language['language_id']; ?>          = new FCKeditor('
 //--></script>
 <script type="text/javascript" src="view/javascript/jquery/ajaxupload.3.1.js"></script>
 <script type="text/javascript"><!--
+$('#logo').load('index.php?route=setting/setting/logo&logo=' + encodeURIComponent($('input[name=\'config_logo\']').attr('value')));
 $('#template').load('index.php?route=setting/setting/template&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
-
 $(document).ready(function() { 
 	new AjaxUpload('#upload', {
-		action: 'index.php?route=catalog/image&no_resize=1',
+		action: 'index.php?route=catalog/image',
 		name: 'image',
 		autoSubmit: true,
 		responseType: 'json',
@@ -421,9 +435,9 @@ $(document).ready(function() {
 			if (json.error) {
 				alert(json.error);
 			} else {
-				$('#preview').attr('src', json.src);
-
-				$('#image').attr('value', json.file);
+				$('input[name=\'config_logo\']').attr('value', json.file);
+				
+				$('#logo').load('index.php?route=setting/setting/logo&logo=' + encodeURIComponent($('input[name=\'config_logo\']').attr('value')));
 			}
 			
 			$('#loading').remove();	

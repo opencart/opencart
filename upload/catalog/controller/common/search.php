@@ -1,7 +1,7 @@
 <?php  
 class ControllerCommonSearch extends Controller {
 	protected function index() { 	
-		$this->load->language('common/search');
+		$this->language->load('common/search');
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
     	

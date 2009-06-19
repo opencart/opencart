@@ -36,7 +36,7 @@ final class Image {
     }	
 	
     public function save($file, $quality = 100) {
-        $info      = pathinfo($file);
+        $info = pathinfo($file);
         $extension = $info['extension'];
    
         if ($extension == ('jpeg' || 'jpg')) {
@@ -145,7 +145,7 @@ final class Image {
     private function merge($file, $x = 0, $y = 0, $opacity = 100) {
         $merge = $this->create($file);
 
-        $merge_width  = imagesx($image);
+        $merge_width = imagesx($image);
         $merge_height = imagesy($image);
 		        
         imagecopymerge($this->image, $merge, $x, $y, 0, 0, $merge_width, $merge_height, $opacity);

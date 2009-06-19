@@ -7,7 +7,7 @@ class ControllerAccountForgotten extends Controller {
 			$this->redirect($this->url->https('account/forgotten'));
 		}
 
-		$this->load->language('account/forgotten');
+		$this->language->load('account/forgotten');
 
 		$this->document->title = $this->language->get('heading_title');
 		

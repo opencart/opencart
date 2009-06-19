@@ -5,7 +5,6 @@ $_['heading_title']      = 'VeriSign';
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified VeriSign account details!';
-$_['text_development']   = '<span style="color: red;">In Development</span>';
 $_['text_australia']     = 'Australia';
 $_['text_usa']           = 'USA';
 

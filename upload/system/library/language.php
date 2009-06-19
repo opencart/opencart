@@ -4,13 +4,13 @@ final class Language {
   	private $languages = array();
 	private $data = array();
  
-	public function __construct() {
+	public function __construct($code = FALSE) {
 		$this->config  = Registry::get('config');
 		$this->db = Registry::get('db');
 		$this->request = Registry::get('request');
 		$this->session = Registry::get('session');
 
-    	$query = $this->db->query("SELECT * FROM language");
+    	$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "language"); 
 
     	foreach ($query->rows as $result) {
       		$this->languages[$result['code']] = array(
@@ -23,17 +23,21 @@ final class Language {
       		);
     	}
  		
-    	if (array_key_exists(@$this->session->data['language'], $this->languages)) {
-      		$this->set($this->session->data['language']);
-    	} elseif (array_key_exists(@$this->request->cookie['language'], $this->languages)) {
-      		$this->set($this->request->cookie['language']);
-    	} elseif ($browser = $this->detect()) {
-	    	$this->set($browser);
-	  	} else {
-        	$this->set($this->config->get('config_language'));
+		if ($code) {
+			$this->code = $code; 
+		} else {
+    		if (array_key_exists(@$this->session->data['language'], $this->languages)) {
+      			$this->set($this->session->data['language']);
+    		} elseif (array_key_exists(@$this->request->cookie['language'], $this->languages)) {
+      			$this->set($this->request->cookie['language']);
+    		} elseif ($browser = $this->detect()) {
+	    		$this->set($browser);
+	  		} else {
+        		$this->set($this->config->get('config_language'));
+			}
 		}
-	
-		$this->load($this->languages[$this->code]['filename']);		
+		
+		$this->load($this->languages[$this->code]['filename']);	
 	}
 
 	public function set($language) {
@@ -54,12 +58,8 @@ final class Language {
    		return (isset($this->data[$key]) ? $this->data[$key] : $key);
   	}
 	
-	public function load($filename, $code = FALSE) {
-		if (isset($this->languages[$code])) {
-			$file = DIR_LANGUAGE . $this->languages[$code]['directory'] . '/' . $filename . '.php';
-		} else {
-			$file = DIR_LANGUAGE . $this->languages[$this->code]['directory'] . '/' . $filename . '.php';
-		}
+	public function load($filename) {
+		$file = DIR_LANGUAGE . $this->languages[$this->code]['directory'] . '/' . $filename . '.php';
 
     	if (file_exists($file)) {
 	  		$_ = array();

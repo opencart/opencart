@@ -5,7 +5,6 @@ $_['heading_title']    = 'Royal Mail';
 // Text
 $_['text_shipping']    = 'Shipping';
 $_['text_success']     = 'Success: You have modified royal mail shipping!';
-$_['text_development'] = '<span style="color: red;">In Development</span>';
 
 // Entry
 $_['entry_cost']       = 'Cost:';

@@ -1,6 +1,9 @@
 <?php if ($success) { ?>
 <div class="success"><?php echo $success; ?></div>
 <?php } ?>
+<?php if ($error) { ?>
+<div class="warning"><?php echo $error; ?></div>
+<?php } ?>
 <div class="heading">
   <h1><?php echo $heading_title; ?></h1>
 </div>

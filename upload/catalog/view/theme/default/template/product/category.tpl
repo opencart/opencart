@@ -2,11 +2,22 @@
   <h1><?php echo $heading_title; ?></h1>
 </div>
 <div class="middle">
-  <?php if ($categories) { ?>
-  <?php foreach ($categories as $category) { ?>
-  <div style="display: inline-block; float: left; text-align: center; width: 25%; margin-bottom: 15px;"><a href="<?php echo $category['href']; ?>"><img src="<?php echo $category['thumb']; ?>" title="<?php echo $category['name']; ?>" alt="<?php echo $category['name']; ?>" style="margin-bottom: 3px;" /></a><br />
-    <a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></div>
+  <?php if ($description) { ?>
+  <div style="margin-bottom: 15px;"><?php echo $description; ?></div>
   <?php } ?>
+  <?php if ($categories) { ?>
+  <table class="list">
+    <?php for ($i = 0; $i < sizeof($categories); $i = $i + 4) { ?>
+    <tr>
+      <?php for ($j = $i; $j < ($i + 4); $j++) { ?>
+      <td width="25%"><?php if (isset($categories[$j])) { ?>
+        <a href="<?php echo $categories[$j]['href']; ?>"><img src="<?php echo $categories[$j]['thumb']; ?>" title="<?php echo $categories[$j]['name']; ?>" alt="<?php echo $categories[$j]['name']; ?>" style="margin-bottom: 3px;" /></a><br />
+        <a href="<?php echo $categories[$j]['href']; ?>"><?php echo $categories[$j]['name']; ?></a>
+        <?php } ?></td>
+      <?php } ?>
+    </tr>
+    <?php } ?>
+  </table>
   <?php } ?>
   <?php if ($products) { ?>
   <div class="sort">

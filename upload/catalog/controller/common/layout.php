@@ -4,7 +4,7 @@ class ControllerCommonLayout extends Controller {
 		$this->data['title'] = $this->document->title;
 		$this->data['description'] = $this->document->description;
 		
-		if (@$this->request->server['HTTPS'] != 'on') {
+		if ((!isset($this->request->server['HTTPS'])) || ($this->request->server['HTTPS'] != 'on')) {
 			$this->data['base'] = HTTP_SERVER;
 		} else {
 			$this->data['base'] = HTTPS_SERVER;
@@ -27,7 +27,7 @@ class ControllerCommonLayout extends Controller {
 		$module_data = array();
 		
 		$this->load->model('checkout/extension');
-
+		
 		$results = $this->model_checkout_extension->getExtensions('module');
 
 		foreach ($results as $result) {

@@ -2,7 +2,7 @@
 class ControllerPaymentMoneybookers extends Controller {
 	protected function index() {
 		$this->load->model('checkout/order');
-		$this->load->language('payment/moneybookers');
+		$this->language->load('payment/moneybookers');
 		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 

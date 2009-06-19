@@ -5,8 +5,8 @@
   <?php if ($success) { ?>
   <div class="success"><?php echo $success; ?></div>
   <?php } ?>
-  <?php if ($error) { ?>
-  <div class="warning"><?php echo $error; ?></div>
+  <?php if ($error_warning) { ?>
+  <div class="warning"><?php echo $error_warning; ?></div>
   <?php } ?>
   <b style="margin-bottom: 3px; display: block;"><?php echo $text_address_book; ?></b>
   <?php foreach ($addresses as $result) { ?>

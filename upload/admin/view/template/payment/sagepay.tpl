@@ -46,6 +46,26 @@
           </select></td>
       </tr>
       <tr>
+        <td><?php echo $entry_transaction; ?></td>
+        <td><select name="sagepay_transaction">
+            <?php if ($sagepay_transaction == 'PAYMENT') { ?>
+            <option value="PAYMENT" selected="selected"><?php echo $text_payment; ?></option>
+            <?php } else { ?>
+            <option value="PAYMENT"><?php echo $text_payment; ?></option>
+            <?php } ?>
+            <?php if ($sagepay_transaction == 'DEFERRED') { ?>
+            <option value="DEFERRED" selected="selected"><?php echo $text_defered; ?></option>
+            <?php } else { ?>
+            <option value="DEFERRED"><?php echo $text_defered; ?></option>
+            <?php } ?>
+            <?php if ($sagepay_transaction == 'AUTHENTICATE') { ?>
+            <option value="AUTHENTICATE" selected="selected"><?php echo $text_authenticate; ?></option>
+            <?php } else { ?>
+            <option value="AUTHENTICATE"><?php echo $text_authenticate; ?></option>
+            <?php } ?>
+          </select></td>
+      </tr>
+      <tr>
         <td><?php echo $entry_order_status; ?></td>
         <td><select name="sagepay_order_status_id">
             <?php foreach ($order_statuses as $order_status) { ?>

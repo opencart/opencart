@@ -5,7 +5,6 @@ $_['heading_title']      = 'Mal\'s e-commerce';
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified Mal\'s e-commerce account details!';
-$_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
 $_['entry_account']      = 'Account No.:';

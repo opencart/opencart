@@ -1,14 +1,15 @@
 <?php
 final class DB {
 	private $driver;
-	private $prefix;
 	
-	public function __construct($driver, $hostname, $username, $password, $database, $prefix = NULL) {
-		if (!@require_once(DIR_DATABASE . $driver . '.php')) {
+	public function __construct($driver, $hostname, $username, $password, $database) {
+		if (file_exists(DIR_DATABASE . $driver . '.php')) {
+			require_once(DIR_DATABASE . $driver . '.php');
+		} else {
 			exit('Error: Could not load database file ' . $driver . '!');
 		}
 				
-		$this->driver = new $driver($hostname, $username, $password, $database, $prefix);
+		$this->driver = new $driver($hostname, $username, $password, $database);
 	}
 		
   	public function query($sql) {

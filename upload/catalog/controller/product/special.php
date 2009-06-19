@@ -1,7 +1,7 @@
 <?php 
 class ControllerProductSpecial extends Controller { 	
 	public function index() { 
-    	$this->load->language('product/special');
+    	$this->language->load('product/special');
 	  	  
     	$this->document->title = $this->language->get('heading_title');
 
@@ -63,7 +63,9 @@ class ControllerProductSpecial extends Controller {
 			$url = '';
 				
 			$this->load->model('catalog/review');
-				
+			
+			$this->load->model('tool/seo_url');
+			
 			$this->load->helper('image');
 				
        		$this->data['products'] = array();
@@ -87,7 +89,7 @@ class ControllerProductSpecial extends Controller {
            			'thumb'   => HelperImage::resize($image, 120, 120),
            			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 					'special' => $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax'))),
-					'href'    => $this->url->http('product/product' . $url . '&product_id=' . $result['product_id'])
+					'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product' . $url . '&product_id=' . $result['product_id']))
        			);
         	}
 				

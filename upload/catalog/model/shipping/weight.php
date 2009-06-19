@@ -6,13 +6,13 @@ class ModelShippingWeight extends Model {
 		$quote_data = array();
 
 		if ($this->config->get('weight_status')) {
-			$query = $this->db->query("SELECT * FROM geo_zone ORDER BY name");
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "geo_zone ORDER BY name");
 		
 			$address = $this->customer->getAddress($this->session->data['shipping_address_id']);
 		
 			foreach ($query->rows as $result) {
    				if ($this->config->get('weight_' . $result['geo_zone_id'] . '_status')) {
-   					$query = $this->db->query("SELECT * FROM zone_to_geo_zone WHERE geo_zone_id = '" . (int)$result['geo_zone_id'] . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+   					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$result['geo_zone_id'] . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 				
 					if ($query->num_rows) {
        					$status = TRUE;

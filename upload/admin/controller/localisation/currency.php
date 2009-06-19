@@ -372,7 +372,7 @@ class ControllerLocalisationCurrency extends Controller {
 	private function validateForm() { 
 		if (!$this->user->hasPermission('modify', 'localisation/currency')) { 
 			$this->error['warning'] = $this->language->get('error_permission');
-		}
+		} 
 
 		if ((strlen(utf8_decode($this->request->post['title'])) < 3) || (strlen(utf8_decode($this->request->post['title'])) > 32)) {
 			$this->error['title'] = $this->language->get('error_title');

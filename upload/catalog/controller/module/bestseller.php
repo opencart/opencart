@@ -1,13 +1,15 @@
 <?php  
 class ControllerModuleBestSeller extends Controller {
 	protected function index() {
-		$this->load->language('module/bestseller');
+		$this->language->load('module/bestseller');
 
       	$this->data['heading_title'] = $this->language->get('heading_title');
 		
 		$this->load->model('catalog/product');
 		
 		$this->load->model('catalog/review');
+		
+		$this->load->model('tool/seo_url');
 		
 		$this->load->helper('image');
 		
@@ -31,13 +33,13 @@ class ControllerModuleBestSeller extends Controller {
 			} else {
 				$special = FALSE;
 			}
-					
+			
 			$this->data['products'][] = array(											  
 				'name'    => $result['name'],
 				'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 				'special' => $special,
 				'image'   => HelperImage::resize($image, 38, 38),
-				'href'    => $this->url->http('product/product&product_id=' . $result['product_id'])
+				'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $result['product_id']))
 			);
 		}
 		

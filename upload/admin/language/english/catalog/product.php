@@ -16,6 +16,7 @@ $_['column_action']          = 'Action';
 
 // Entry
 $_['entry_name']             = 'Product Name:';
+$_['entry_keyword']          = 'SEO Keyword:';
 $_['entry_meta_description'] = 'Meta Tag Description:';
 $_['entry_description']      = 'Description:';
 $_['entry_model']            = 'Model:';

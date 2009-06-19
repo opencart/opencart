@@ -22,6 +22,12 @@ class ControllerCatalogManufacturer extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
 			$this->model_catalog_manufacturer->addManufacturer($this->request->post, $this->request->files);
 			
+			if ($this->config->get('config_seo_url')) {
+				$this->load->model('tool/seo_url');
+				
+				$this->model_tool_seo_url->generate();
+			}
+			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
 			$url = '';
@@ -53,6 +59,12 @@ class ControllerCatalogManufacturer extends Controller {
 		
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
 			$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], $this->request->post);
+			
+			if ($this->config->get('config_seo_url')) {
+				$this->load->model('tool/seo_url');
+				
+				$this->model_tool_seo_url->generate();
+			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -86,6 +98,12 @@ class ControllerCatalogManufacturer extends Controller {
     	if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
 			foreach ($this->request->post['delete'] as $manufacturer_id) {
 				$this->model_catalog_manufacturer->deleteManufacturer($manufacturer_id);
+			}
+
+			if ($this->config->get('config_seo_url')) {
+				$this->load->model('tool/seo_url');
+				
+				$this->model_tool_seo_url->generate();
 			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -258,6 +276,7 @@ class ControllerCatalogManufacturer extends Controller {
     	$this->data['text_disabled'] = $this->language->get('text_disabled');
     	
 		$this->data['entry_name'] = $this->language->get('entry_name');
+		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
     	$this->data['entry_image'] = $this->language->get('entry_image');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
   
@@ -315,6 +334,12 @@ class ControllerCatalogManufacturer extends Controller {
       		$this->data['name'] = @$manufacturer_info['name'];
     	}
 
+		if (isset($this->request->post['keyword'])) {
+			$this->data['keyword'] = $this->request->post['keyword'];
+		} else {
+			$this->data['keyword'] = @$manufacturer_info['keyword'];
+		}
+		
 		if (isset($this->request->post['image'])) {
 			$this->data['image'] = $this->request->post['image'];
 		} else {

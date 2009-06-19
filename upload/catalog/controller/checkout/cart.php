@@ -32,7 +32,7 @@ class ControllerCheckoutCart extends Controller {
 	  		$this->redirect($this->url->https('checkout/cart'));
     	}
 
-		$this->load->language('checkout/cart');
+		$this->language->load('checkout/cart');
 
     	$this->document->title = $this->language->get('heading_title');
 
@@ -75,6 +75,8 @@ class ControllerCheckoutCart extends Controller {
       		
 			$this->data['action'] = $this->url->http('checkout/cart');
 			
+			$this->load->model('tool/seo_url'); 
+			
 			$this->load->helper('image');
 			
       		$this->data['products'] = array();
@@ -89,18 +91,24 @@ class ControllerCheckoutCart extends Controller {
           			);
         		}
 
+				if ($result['image']) {
+					$image = $result['image'];
+				} else {
+					$image = 'no_image.jpg';
+				}
+
         		$this->data['products'][] = array(
           			'key'      => $result['key'],
           			'name'     => $result['name'],
           			'model'    => $result['model'],
-          			'thumb'    => HelperImage::resize($result['image'], 75, 75),
+          			'thumb'    => HelperImage::resize($image, 75, 75),
           			'option'   => $option_data,
           			'quantity' => $result['quantity'],
           			'stock'    => $result['stock'],
 					'price'    => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
           			'discount' => ($result['discount'] ? $this->currency->format($this->tax->calculate($result['price'] - $result['discount'], $result['tax_class_id'], $this->config->get('config_tax'))) : NULL),
 					'total'    => $this->currency->format($this->tax->calculate($result['total'], $result['tax_class_id'], $this->config->get('config_tax'))),
-					'href'     => $this->url->http('product/product&product_id=' . $result['product_id'])
+					'href'     => $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $result['product_id']))
         		);
       		}
 			

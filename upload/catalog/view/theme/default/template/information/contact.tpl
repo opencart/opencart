@@ -39,13 +39,13 @@
       <span class="error"><?php echo $error_enquiry; ?></span>
       <?php } ?>
       <br />
-      <?php echo $entry_verification; ?><br />
-      <input type="text" name="verification" value="<?php echo $verification; ?>" />
+      <?php echo $entry_captcha; ?><br />
+      <input type="text" name="captcha" value="<?php echo $captcha; ?>" />
       <br />
-      <?php if ($error_verification) { ?>
-      <span class="error"><?php echo $error_verification; ?></span>
+      <?php if ($error_captcha) { ?>
+      <span class="error"><?php echo $error_captcha; ?></span>
       <?php } ?>
-      <img src="index.php?route=product/product/verification" /></div>
+      <img src="index.php?route=product/product/captcha" /></div>
     <div class="buttons">
       <table>
         <tr>

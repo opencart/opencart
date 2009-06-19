@@ -7,7 +7,7 @@ class ControllerAccountDownload extends Controller {
 			$this->redirect($this->url->https('account/login'));
 		}
          		
-		$this->load->language('account/download');
+		$this->language->load('account/download');
 
 		$this->document->title = $this->language->get('heading_title');
 
@@ -134,10 +134,31 @@ class ControllerAccountDownload extends Controller {
 		$download_info = $this->model_account_download->getDownload(@$this->request->get['order_download_id']);
 		
 		if ($download_info) {
-			$download = new Download(DIR_DOWNLOAD . $download_info['filename']);
-			$download->setMask($download_info['mask']);
-			$download->output();
+			$file = DIR_DOWNLOAD . $download_info['filename'];
+			$mask = basename($download_info['mask']);
+			$mime = 'application/octet-stream';
+			$encoding = 'binary';
 
+			if (!headers_sent()) {
+				header('Pragma: public');
+				header('Expires: 0');
+				header('Content-Description: File Transfer');
+				header('Content-Type: ' . $mime);
+				header('Content-Transfer-Encoding: ' . $encoding);
+				header('Content-Disposition: attachment; filename=' . ($mask ? $mask : basename($file)));
+				header('Content-Length: ' . filesize($file));
+			
+				if (file_exists($file)) {
+					$file = readfile($file, 'rb');
+				
+					print($file);
+				} else {
+					exit('Error: Could not find file ' . $file . '!');
+				}
+			} else {
+				exit('Error: Headers already sent out!');
+			}
+		
 			$this->model_account_download->updateRemaining($this->request->get['order_download_id']);
 		} else {
 			$this->redirect($this->url->https('account/download'));

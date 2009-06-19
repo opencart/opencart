@@ -18,6 +18,12 @@
           <span class="error"><?php echo $error_name[$language['language_id']]; ?></span>
           <?php } ?></td>
       </tr>
+      <?php } ?>
+      <tr>
+        <td><?php echo $entry_keyword; ?></td>
+        <td><input type="text" name="keyword" value="<?php echo $keyword; ?>" /></td>
+      </tr>
+      <?php foreach ($languages as $language) { ?>
       <tr>
         <td><?php echo $entry_meta_description; ?></td>
         <td><textarea name="product_description[<?php echo $language['language_id']; ?>][meta_description]" cols="40" rows="5"><?php echo @$product_description[$language['language_id']]['meta_description']; ?></textarea>
@@ -205,7 +211,7 @@
             </div>
             <?php } ?>
           </div></td>
-      </tr>      
+      </tr>
     </table>
   </div>
   <div id="tab_option" class="page">

@@ -50,24 +50,23 @@ if (ini_get('magic_quotes_gpc')) {
 // Engine
 require_once(DIR_SYSTEM . 'engine/controller.php');
 require_once(DIR_SYSTEM . 'engine/front.php');
+require_once(DIR_SYSTEM . 'engine/loader.php'); 
 require_once(DIR_SYSTEM . 'engine/model.php');
 require_once(DIR_SYSTEM . 'engine/registry.php');
 require_once(DIR_SYSTEM . 'engine/router.php'); 
+require_once(DIR_SYSTEM . 'engine/url.php');
 
 // Common
-include(DIR_SYSTEM . 'library/cache.php');
-include(DIR_SYSTEM . 'library/config.php');
-include(DIR_SYSTEM . 'library/db.php');
-include(DIR_SYSTEM . 'library/document.php');
-include(DIR_SYSTEM . 'library/download.php');
-include(DIR_SYSTEM . 'library/image.php');
-include(DIR_SYSTEM . 'library/language.php');
-include(DIR_SYSTEM . 'library/loader.php');
-include(DIR_SYSTEM . 'library/mail.php');
-include(DIR_SYSTEM . 'library/pagination.php');
-include(DIR_SYSTEM . 'library/request.php');
-include(DIR_SYSTEM . 'library/response.php');
-include(DIR_SYSTEM . 'library/session.php');
-include(DIR_SYSTEM . 'library/template.php');
-include(DIR_SYSTEM . 'library/url.php');
+require_once(DIR_SYSTEM . 'library/cache.php');
+require_once(DIR_SYSTEM . 'library/config.php');
+require_once(DIR_SYSTEM . 'library/db.php');
+require_once(DIR_SYSTEM . 'library/document.php');
+require_once(DIR_SYSTEM . 'library/image.php');
+require_once(DIR_SYSTEM . 'library/language.php');
+require_once(DIR_SYSTEM . 'library/mail.php');
+require_once(DIR_SYSTEM . 'library/pagination.php');
+require_once(DIR_SYSTEM . 'library/request.php');
+require_once(DIR_SYSTEM . 'library/response.php');
+require_once(DIR_SYSTEM . 'library/session.php');
+require_once(DIR_SYSTEM . 'library/template.php');
 ?>

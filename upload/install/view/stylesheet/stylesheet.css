@@ -1,0 +1,125 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: #F7F7F7;
+}
+body, td, th, input, select, textarea {
+	font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
+	font-size: 12px;
+	color: #666666;
+}
+h1 {
+	font-size: 20px;
+	font-weight: normal;
+	color: #8CB02C;
+	margin-top: 0px;
+	margin-bottom: 20px;
+}
+a, a:visited {
+	color: #003366;
+	text-decoration: underline;
+	cursor: pointer;
+}
+b {
+	color: #000000;
+}
+p {
+	margin-top: 0px;
+	margin-bottom: 20px;
+}
+form {
+	margin: 0;
+	padding: 0;
+}
+table {
+	margin-bottom: 20px;
+}
+.required {
+	color: #FF0000;
+	margin-right: 5px;
+}
+.error {
+	color: #FF0000;
+	display: block;
+	clear: both;
+}
+.warning {
+	padding: 5px 0px;
+	margin-bottom: 10px;
+	background: #FFDFE0;
+	border: 1px solid #FF9999;
+	font-size: 11px;
+	font-family: Verdana, Geneva, sans-serif;
+	text-align: center;
+}
+.button {
+	border: 1px solid #EEEEEE;
+	background: #F7F7F7;
+	text-align: right;
+	padding: 8px;
+	color: #000;
+}
+#container {
+	margin-top: 20px;
+	width: 810px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#header {
+	margin-bottom: 10px;
+}
+#column {
+	float: left;
+	width: 170px;
+	height: 100px;
+	margin-top: 30px;
+}
+#column_top {
+	background: url('../image/content_top.png') no-repeat;
+	height: 5px;
+}
+#column_middle {
+	border-left: 1px solid #DDDDDD;
+	min-height: 120px;
+	background: #FFF;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+#column_middle ol {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+#column_bottom {
+	background: url('../image/content_bottom.png') no-repeat;
+	height: 5px;
+}
+#content {
+	float: right;
+	width: 640px;
+	margin-bottom: 5px;
+}
+#content_top {
+	background: url('../image/content_top.png') no-repeat;
+	height: 5px;
+}
+#content_middle {
+	border-left: 1px solid #DDDDDD;
+	border-right: 1px solid #DDDDDD;
+	background: #FFF;
+	width: 618px;
+	padding: 10px;
+}
+#content_bottom {
+	background: url('../image/content_bottom.png') no-repeat;
+	height: 5px;
+}
+#footer {
+	text-align: center;
+	color: #CCC;
+	float: right;
+	width: 618px;
+}
+#footer a {
+	margin-left: 10px;
+	margin-right: 10px;
+}

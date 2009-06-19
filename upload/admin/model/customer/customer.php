@@ -1,30 +1,30 @@
 <?php
 class ModelCustomerCustomer extends Model {
 	public function addCustomer($data) {
-      	$this->db->query("INSERT INTO customer SET firstname = '" . $this->db->escape(@$data['firstname']) . "', lastname = '" . $this->db->escape(@$data['lastname']) . "', email = '" . $this->db->escape(@$data['email']) . "', telephone = '" . $this->db->escape(@$data['telephone']) . "', fax = '" . $this->db->escape(@$data['fax']) . "', newsletter = '" . (int)@$data['newsletter'] . "', password = '" . $this->db->escape(md5(@$data['password'])) . "', status = '" . (int)@$data['status'] . "', date_added = NOW()");
+      	$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET firstname = '" . $this->db->escape(@$data['firstname']) . "', lastname = '" . $this->db->escape(@$data['lastname']) . "', email = '" . $this->db->escape(@$data['email']) . "', telephone = '" . $this->db->escape(@$data['telephone']) . "', fax = '" . $this->db->escape(@$data['fax']) . "', newsletter = '" . (int)@$data['newsletter'] . "', password = '" . $this->db->escape(md5(@$data['password'])) . "', status = '" . (int)@$data['status'] . "', date_added = NOW()");
 	}
 	
 	public function editCustomer($customer_id, $data) {
-		$this->db->query("UPDATE customer SET firstname = '" . $this->db->escape(@$data['firstname']) . "', lastname = '" . $this->db->escape(@$data['lastname']) . "', email = '" . $this->db->escape(@$data['email']) . "', telephone = '" . $this->db->escape(@$data['telephone']) . "', fax = '" . $this->db->escape(@$data['fax']) . "', newsletter = '" . (int)@$data['newsletter'] . "', status = '" . (int)@$data['status'] . "' WHERE customer_id = '" . (int)$customer_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "customer SET firstname = '" . $this->db->escape(@$data['firstname']) . "', lastname = '" . $this->db->escape(@$data['lastname']) . "', email = '" . $this->db->escape(@$data['email']) . "', telephone = '" . $this->db->escape(@$data['telephone']) . "', fax = '" . $this->db->escape(@$data['fax']) . "', newsletter = '" . (int)@$data['newsletter'] . "', status = '" . (int)@$data['status'] . "' WHERE customer_id = '" . (int)$customer_id . "'");
 	
       	if (@$data['password']) {
-        	$this->db->query("UPDATE customer SET password = '" . $this->db->escape(md5(@$data['password'])) . "' WHERE customer_id = '" . (int)$customer_id . "'");
+        	$this->db->query("UPDATE " . DB_PREFIX . "customer SET password = '" . $this->db->escape(md5(@$data['password'])) . "' WHERE customer_id = '" . (int)$customer_id . "'");
       	}
 	}
 	
 	public function deleteCustomer($customer_id) {
-		$this->db->query("DELETE FROM customer WHERE customer_id = '" . (int)$customer_id . "'");
-		$this->db->query("DELETE FROM address WHERE customer_id = '" . (int)$customer_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$customer_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "address WHERE customer_id = '" . (int)$customer_id . "'");
 	}
 	
 	public function getCustomer($customer_id) {
-		$query = $this->db->query("SELECT DISTINCT * FROM customer WHERE customer_id = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$customer_id . "'");
 	
 		return $query->row;
 	}
 		
 	public function getCustomers($data = array()) {
-		$sql = "SELECT *, CONCAT(firstname, ' ', lastname) AS name FROM customer";
+		$sql = "SELECT *, CONCAT(firstname, ' ', lastname) AS name FROM " . DB_PREFIX . "customer";
 
 		$implode = array();
 		
@@ -72,13 +72,13 @@ class ModelCustomerCustomer extends Model {
 	}
 
 	public function getCustomersByNewsletter() {
-		$query = $this->db->query("SELECT * FROM customer WHERE newsletter = '1' ORDER BY firstname, lastname, email");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE newsletter = '1' ORDER BY firstname, lastname, email");
 	
 		return $query->rows;
 	}
 	
 	public function getTotalCustomers($data = array()) {
-      	$sql = "SELECT COUNT(*) AS total FROM customer";
+      	$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer";
 		
 		$implode = array();
 		
@@ -104,19 +104,19 @@ class ModelCustomerCustomer extends Model {
 	}
 	
 	public function getTotalAddressesByCustomerId($customer_id) {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM address WHERE customer_id = '" . (int)$customer_id . "'");
+      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "address WHERE customer_id = '" . (int)$customer_id . "'");
 		
 		return $query->row['total'];
 	}
 	
 	public function getTotalAddressesByCountryId($country_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM address WHERE country_id = '" . (int)$country_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "address WHERE country_id = '" . (int)$country_id . "'");
 		
 		return $query->row['total'];
 	}	
 	
 	public function getTotalAddressesByZoneId($zone_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM address WHERE zone_id = '" . (int)$zone_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "address WHERE zone_id = '" . (int)$zone_id . "'");
 		
 		return $query->row['total'];
 	}			

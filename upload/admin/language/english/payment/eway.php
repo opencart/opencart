@@ -5,7 +5,6 @@ $_['heading_title']      = 'eWay';
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified eWay account details!';
-$_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
 $_['entry_merchant']     = 'Merchant ID:';

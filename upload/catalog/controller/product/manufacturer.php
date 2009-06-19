@@ -1,10 +1,11 @@
 <?php 
 class ControllerProductManufacturer extends Controller {  
 	public function index() { 
-		$this->load->language('product/manufacturer');
+		$this->language->load('product/manufacturer');
 
 		$this->load->model('catalog/manufacturer');
 		$this->load->model('catalog/product');
+		$this->load->model('tool/seo_url'); 
 		$this->load->helper('image');
 		
 		$this->document->breadcrumbs = array();
@@ -19,7 +20,7 @@ class ControllerProductManufacturer extends Controller {
 	
 		if ($manufacturer_info) {
       		$this->document->breadcrumbs[] = array(
-        		'href'      => $this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id']),
+        		'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'])),
         		'text'      => $manufacturer_info['name'],
         		'separator' => $this->language->get('text_separator')
       		);
@@ -82,7 +83,7 @@ class ControllerProductManufacturer extends Controller {
 						'thumb'   => HelperImage::resize($image, 120, 120),
             			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 						'special' => $special,
-						'href'    => $this->url->http('product/product&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&product_id=' . $result['product_id'])
+						'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&product_id=' . $result['product_id']))
           			);
         		}
 
@@ -97,37 +98,37 @@ class ControllerProductManufacturer extends Controller {
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_name_asc'),
 					'value' => 'pd.name-ASC',
-					'href'  => $this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=pd.name&order=ASC')
+					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=pd.name&order=ASC'))
 				);  
  
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_name_desc'),
 					'value' => 'pd.name-DESC',
-					'href'  => $this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=pd.name&order=DESC')
+					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=pd.name&order=DESC'))
 				);  
 
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_price_asc'),
 					'value' => 'p.price-ASC',
-					'href'  => $this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.price&order=ASC')
+					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.price&order=ASC'))
 				); 
 
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_price_desc'),
 					'value' => 'p.price-DESC',
-					'href'  => $this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.price&order=DESC')
+					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.price&order=DESC'))
 				); 
 				
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_rating_desc'),
 					'value' => 'rating-DESC',
-					'href'  => $this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=rating&order=DESC')
+					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=rating&order=DESC'))
 				); 
 				
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_rating_asc'),
 					'value' => 'rating-ASC',
-					'href'  => $this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=rating&order=ASC')
+					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=rating&order=ASC'))
 				); 
 
 				$url = '';
@@ -145,7 +146,7 @@ class ControllerProductManufacturer extends Controller {
 				$pagination->page = $page;
 				$pagination->limit = 12; 
 				$pagination->text = $this->language->get('text_pagination');
-				$pagination->url = $this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page=%s');
+				$pagination->url = $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page=%s'));
 			
 				$this->data['pagination'] = $pagination->render();
 
@@ -190,7 +191,7 @@ class ControllerProductManufacturer extends Controller {
 			}	
 			
       		$this->document->breadcrumbs[] = array(
-        		'href'      => $this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url),
+        		'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)),
         		'text'      => $this->language->get('text_error'),
         		'separator' => $this->language->get('text_separator')
       		);

@@ -5,7 +5,6 @@ $_['heading_title']      = 'LIQPAY';
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified LIQPAY account details!';
-$_['text_development']   = '<span style="color: red;">In Development</span>';
 $_['text_successful']    = 'On - Always Successful';
 $_['text_declined']      = 'On - Always Declined';
 $_['text_off']           = 'Off';

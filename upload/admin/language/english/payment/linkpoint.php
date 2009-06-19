@@ -5,7 +5,6 @@ $_['heading_title']      = 'LinkPoint';
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified LinkPoint account details!';
-$_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
 $_['entry_merchant']     = 'Merchant ID:';

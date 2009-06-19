@@ -1,7 +1,7 @@
 <?php   
 class ControllerErrorNotFound extends Controller {
 	public function index() {		
-		$this->load->language('error/not_found');
+		$this->language->load('error/not_found');
 		
 		$this->document->title = $this->language->get('heading_title');
 		
@@ -12,12 +12,14 @@ class ControllerErrorNotFound extends Controller {
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	);		
-			 
-       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http($this->request->get['route']),
-        	'text'      => $this->language->get('text_error'),
-        	'separator' => $this->language->get('text_separator')
-      	);	   	
+		
+		if (isset($this->request->get['route'])) {
+       		$this->document->breadcrumbs[] = array(
+        		'href'      => $this->url->http($this->request->get['route']),
+        		'text'      => $this->language->get('text_error'),
+        		'separator' => $this->language->get('text_separator')
+      		);	   	
+		}
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		

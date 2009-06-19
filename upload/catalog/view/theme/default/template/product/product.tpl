@@ -95,10 +95,10 @@
       <input type="radio" name="rating" value="5" style="margin: 0;" />
       &nbsp; <span><?php echo $entry_good; ?></span><br />
       <br />
-      <b><?php echo $entry_verification; ?></b><br />
-      <input type="text" name="verification" value="" />
+      <b><?php echo $entry_captcha; ?></b><br />
+      <input type="text" name="captcha" value="" />
       <br />
-      <img src="index.php?route=product/product/verification" id="verification" /></div>
+      <img src="index.php?route=product/product/captcha" id="captcha" /></div>
     <div class="buttons">
       <table>
         <tr>
@@ -166,11 +166,11 @@ function review() {
 		type: 'post',
 		url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
 		dataType: 'json',
-		data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : '') + '&verification=' + encodeURIComponent($('input[name=\'verification\']').val()),
+		data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : '') + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()),
 		beforeSend: function() {
 			$('.success, .warning').remove();
 			$('#review_button').attr('disabled', 'disabled');
-			$('#review_title').after('<div class="wait"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> Please wait!</div>');
+			$('#review_title').after('<div class="wait"><img src="catalog/view/theme/default/image/loading_1.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
 			$('#review_button').attr('disabled', '');
@@ -187,7 +187,7 @@ function review() {
 				$('input[name=\'name\']').val('');
 				$('textarea[name=\'text\']').val('');
 				$('input[name=\'rating\']:checked').attr('checked', '');
-				$('input[name=\'verification\']').val('');
+				$('input[name=\'captcha\']').val('');
 			}
 		}
 	});

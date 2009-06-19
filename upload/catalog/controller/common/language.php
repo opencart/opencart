@@ -1,17 +1,17 @@
 <?php  
 class ControllerCommonLanguage extends Controller {
 	protected function index() {
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && (isset($this->request->post['language']))) {
-			$this->language->set($this->request->post['language']);
-			
-			if ($this->request->post['redirect']) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && (isset($this->request->post['language_code']))) {
+			$this->language->set($this->request->post['language_code']);
+		
+			if (isset($this->request->post['redirect'])) {
 				$this->redirect($this->request->post['redirect']);
 			} else {
 				$this->redirect($this->url->http('common/home'));
 			}
     	}
 		
-		$this->load->language('common/language');
+		$this->language->load('common/language');
 		 
     	$this->data['heading_title'] = $this->language->get('heading_title');
 		
@@ -22,7 +22,21 @@ class ControllerCommonLanguage extends Controller {
 		if (!isset($this->request->get['route'])) {
 			$this->data['redirect'] = $this->url->http('common/home');
 		} else {
-			$this->data['redirect'] = $this->url->http(str_replace('route=', '', urldecode(http_build_query($this->request->get))));
+			$this->load->model('tool/seo_url');
+			
+			$data = $this->request->get;
+			
+			$route = $data['route'];
+			
+			unset($data['route']);
+			
+			$url = '';
+			
+			if ($data) {
+				$url = '&' . urldecode(http_build_query($data));
+			}			
+			
+			$this->data['redirect'] = $this->model_tool_seo_url->rewrite($this->url->http($route . $url));
 		}
 		
 		$this->data['default'] = $this->language->getCode();	

@@ -16,7 +16,7 @@ final class Customer {
 		$this->session = Registry::get('session');
 				
 		if (isset($this->session->data['customer_id'])) { 
-			$customer_query = $this->db->query("SELECT * FROM customer WHERE customer_id = '" . (int)$this->session->data['customer_id'] . "' AND status = '1'");
+			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$this->session->data['customer_id'] . "' AND status = '1'");
 			
 			if ($customer_query->num_rows) {
 				$this->customer_id = $customer_query->row['customer_id'];
@@ -28,7 +28,7 @@ final class Customer {
 				$this->newsletter = $customer_query->row['newsletter'];
 				$this->address_id = $customer_query->row['address_id'];
 			
-				$address_query = $this->db->query("SELECT *, c.name AS country, z.name AS zone FROM address a LEFT JOIN country c ON a.country_id = c.country_id LEFT JOIN zone z ON a.zone_id = z.zone_id WHERE a.customer_id = '" . (int)$this->session->data['customer_id'] . "'");
+				$address_query = $this->db->query("SELECT *, c.name AS country, z.name AS zone FROM " . DB_PREFIX . "address a LEFT JOIN " . DB_PREFIX . "country c ON a.country_id = c.country_id LEFT JOIN " . DB_PREFIX . "zone z ON a.zone_id = z.zone_id WHERE a.customer_id = '" . (int)$this->session->data['customer_id'] . "'");
 						 
 				foreach ($address_query->rows as $result) {
 					$this->address[$result['address_id']] = array(
@@ -50,7 +50,7 @@ final class Customer {
 					);
 				}
 			
-      			$this->db->query("UPDATE customer SET cart = '" . $this->db->escape(serialize($this->session->data['cart'])) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->session->data['customer_id'] . "'");
+      			$this->db->query("UPDATE " . DB_PREFIX . "customer SET cart = '" . $this->db->escape(serialize($this->session->data['cart'])) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->session->data['customer_id'] . "'");
 			} else {
 				$this->logout();
 			}
@@ -58,7 +58,7 @@ final class Customer {
 	}
 		
   	public function login($email, $password) {
-		$customer_query = $this->db->query("SELECT * FROM customer WHERE email = '" . $this->db->escape($email) . "' AND password = '" . $this->db->escape(md5($password)) . "' AND status = '1'");
+		$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE email = '" . $this->db->escape($email) . "' AND password = '" . $this->db->escape(md5($password)) . "' AND status = '1'");
 		
 		if ($customer_query->num_rows) {
 			$this->session->data['customer_id'] = $customer_query->row['customer_id'];	
@@ -84,7 +84,7 @@ final class Customer {
 			$this->newsletter = $customer_query->row['newsletter'];
 			$this->address_id = $customer_query->row['address_id'];
 			
-			$address_query = $this->db->query("SELECT *, c.name AS country, z.name AS zone FROM address a LEFT JOIN country c ON a.country_id = c.country_id LEFT JOIN zone z ON a.zone_id = z.zone_id WHERE a.customer_id = '" . (int)$this->session->data['customer_id'] . "'");
+			$address_query = $this->db->query("SELECT *, c.name AS country, z.name AS zone FROM " . DB_PREFIX . "address a LEFT JOIN " . DB_PREFIX . "country c ON a.country_id = c.country_id LEFT JOIN " . DB_PREFIX . "zone z ON a.zone_id = z.zone_id WHERE a.customer_id = '" . (int)$this->session->data['customer_id'] . "'");
 						 
 			foreach ($address_query->rows as $result) {
 				$this->address[$result['address_id']] = array(

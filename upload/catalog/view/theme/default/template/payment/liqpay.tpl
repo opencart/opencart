@@ -1,6 +1,6 @@
 <form action="<?php echo $action; ?>" method="post" id="checkout">
-          <input type="hidden" name="operation_xml" value="<?php echo $operation_xml; ?>">
-          <input type="hidden" name="signature" value="<?php echo $signature; ?>">
+  <input type="hidden" name="operation_xml" value="<?php echo $operation_xml; ?>">
+  <input type="hidden" name="signature" value="<?php echo $signature; ?>">
 </form>
 <div class="buttons">
   <table>

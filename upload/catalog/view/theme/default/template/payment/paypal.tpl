@@ -26,18 +26,7 @@
   <table>
     <tr>
       <td align="left"><a onclick="location = '<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
-      <td align="right"><a onclick="confirmSubmit();" class="button"><span><?php echo $button_confirm; ?></span></a></td>
+      <td align="right"><a onclick="$('#checkout').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></td>
     </tr>
   </table>
 </div>
-<script type="text/javascript"><!--
-function confirmSubmit() {
-	$.ajax({
-		type: 'GET',
-		url: 'index.php?route=payment/paypal/confirm',
-		success: function() {
-			$('#checkout').submit();
-		}
-	});
-}
-//--></script>

@@ -16,12 +16,10 @@ $_['entry_email']             = 'E-Mail:';
 $_['entry_telephone']         = 'Telephone:';
 $_['entry_fax']               = 'Fax:';
 $_['entry_template']          = 'Template:';
-$_['entry_ssl']               = 'Use SSL:';
-$_['entry_encryption']        = 'Encryption Key:';
-$_['entry_parse_time']        = 'Display Parse Time:';
 $_['entry_country']           = 'Country:';
 $_['entry_zone']              = 'Region / State:';
 $_['entry_language']          = 'Language:';
+$_['entry_admin_language']    = 'Administration Language:';
 $_['entry_currency']          = 'Currency:';
 $_['entry_currency_auto']     = 'Auto Update Currency:';
 $_['entry_weight']            = 'Weight Class:';
@@ -36,12 +34,13 @@ $_['entry_stock_subtract']    = 'Stock Subtract:';
 $_['entry_stock_status']      = 'Stock Status:';
 $_['entry_download']          = 'Allow Downloads:';
 $_['entry_download_status']   = 'Download Order Status:';
-$_['entry_cache']             = 'Use Caching:';
+$_['entry_ssl']               = 'Use SSL:';
+$_['entry_encryption']        = 'Encryption Key:';
+$_['entry_seo_url']           = 'Use SEO URL\'s:';
 $_['entry_compression']       = 'Output Compression Level:';
+$_['entry_parse_time']        = 'Display Parse Time:';
 
 // Help
-$_['help_ssl']                = 'To get SSL to work you need SSL installed on your server and the SSL address in your config file.';
-$_['help_encryption']         = 'Please provide a secret key that will be used to encrypt private information when processing orders.';
 $_['help_currency_auto']      = 'Set your store to automatically update currencies daily.';
 $_['help_alert_mail']         = 'Send a email to the store owner when a new order is created.';
 $_['help_account']            = 'Forces people to agree to terms before an account can be created.';
@@ -51,7 +50,11 @@ $_['help_stock_check']        = 'Display out of stock message on the shopping ca
 $_['help_stock_checkout']     = 'Allow customers to still checkout if the products they are ordering are not in stock.';
 $_['help_stock_subtract']     = 'Subtract product quantity when an order is processed.';
 $_['help_download_status']    = 'Set the order status the customers order must reach before they are allowed to access their downloadable products.';
+$_['help_ssl']                = 'To use SSL check with your host if a SSL certificate is installed and then add the SSL address in your config file.';
+$_['help_encryption']         = 'Please provide a secret key that will be used to encrypt private information when processing orders.';
+$_['help_seo_url']            = 'To use SEO URL\'s apache module mod-rewrite must be installed and you need to rename the htaccess.txt to .htaccess.';
 $_['help_compression']        = 'GZIP for more efficient transfer to requesting clients. Compression level must be between 0 - 9';
+$_['help_parse_time']         = 'You need to be careful displaying parse time as it can interfere with image uploading, image captures and many more features.';
 
 // Error
 $_['error_permission']        = 'Warning: You do not have permission to modify settings!';

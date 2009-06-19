@@ -5,7 +5,6 @@ $_['heading_title']      = 'Bank Transfer';
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified bank transfer details!';
-$_['text_development']   = '<span style="color: green;">Ready</span>';
 
 // Entry
 $_['entry_bank']         = 'Bank Transfer Instructions:';

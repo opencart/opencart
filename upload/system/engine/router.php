@@ -41,7 +41,7 @@ final class Router {
 			$this->method = 'index';
 		}
 	}
-
+	
 	public function getClass() {
 		return $this->class;
 	}

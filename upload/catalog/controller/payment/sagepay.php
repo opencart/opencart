@@ -1,53 +1,115 @@
 <?php
 class ControllerPaymentSagePay extends Controller {
 	protected function index() {
-		$this->data['text_credit_card'] = $this->language->get('text_credit_card');
-		$this->data['text_start_date'] = $this->language->get('text_start_date');
-		$this->data['text_issue_number'] = $this->language->get('text_issue_number');
-		
-		$this->data['entry_credit_card_type'] = $this->language->get('entry_credit_card_type');
-		$this->data['entry_credit_card_number'] = $this->language->get('entry_credit_card_number');
-		$this->data['entry_start_date'] = $this->language->get('entry_start_date');
-		$this->data['entry_expire_date'] = $this->language->get('entry_expire_date');
-		$this->data['entry_cvv2_number'] = $this->language->get('entry_cvv2_number');
-		$this->data['entry_issue_number'] = $this->language->get('entry_issue_number');
+		$this->language->load('payment/sagepay');
 		
 		$this->data['button_confirm'] = $this->language->get('button_confirm');
 		$this->data['button_back'] = $this->language->get('button_back');
-
-		$this->data['cards'] = array();
-
-		$this->data['cards'][] = array(
-			'text'  => 'Visa', 
-			'value' => 'VISA'
-		);
-
-		$this->data['cards'][] = array(
-			'text'  => 'MasterCard', 
-			'value' => 'MASTERCARD'
-		);
-
-		$this->data['cards'][] = array(
-			'text'  => 'Discover Card', 
-			'value' => 'DISCOVER'
-		);
 		
-		$this->data['cards'][] = array(
-			'text'  => 'American Express', 
-			'value' => 'AMEX'
-		);
-
-		$this->data['cards'][] = array(
-			'text'  => 'Maestro', 
-			'value' => 'SWITCH'
-		);
+		if ($this->config->get('sagepay_test') == 'live') {
+    		$this->data['action'] = 'https://live.sagepay.com/gateway/service/vspform-register.vsp';
+		} elseif ($this->config->get('sagepay_test') == 'test') {
+			$this->data['action'] = 'https://test.sagepay.com/gateway/service/vspform-register.vsp';		
+		} elseif ($this->config->get('sagepay_test') == 'sim') {
+    		$this->data['action'] = 'https://test.sagepay.com/simulator/vspformgateway.asp';
+  		} 
 		
-		$this->data['cards'][] = array(
-			'text'  => 'Solo', 
-			'value' => 'SOLO'
-		);		
+		$vendor = $this->config->get('sagepay_vendor');
+		$password = $this->config->get('sagepay_password');		
 		
+		$this->load->model('checkout/order');
+		
+		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
+		$url  = 'VendorTxCode=' . $this->session->data['order_id'];
+		$url .= '&ReferrerID=' . 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
+		$url .= '&Amount=' . $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
+		$url .= '&Currency=' . $order_info['currency'];
+		$url .= '&Description=' . sprintf($this->language->get('text_description'), date($this->language->get('date_format_short')), $this->session->data['order_id']);
+		$url .= '&SuccessURL=' . html_entity_decode($this->url->https('payment/sagepay/success&order_id=' . $this->session->data['order_id']));
+		$url .= '&FailureURL=' . $this->url->https('checkout/payment');
+		$url .= '&CustomerName=' . $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
+		$url .= '&SendEMail=1';
+		$url .= '&CustomerEMail=' . $order_info['email'];
+		$url .= '&VendorEMail=' . $this->config->get('config_email');  
+		
+		$url .= '&BillingFirstnames=' . $order_info['payment_firstname'];
+        $url .= '&BillingSurname=' . $order_info['payment_lastname'];
+        $url .= '&BillingAddress1=' . $order_info['payment_address_1'];
+		
+		if ($order_info['payment_address_2']) {
+        	$url .= '&BillingAddress2=' . $order_info['payment_address_2'];
+		}
+		
+		$url .= '&BillingCity=' . $order_info['payment_city'];
+        $url .= '&BillingPostCode=' . $order_info['payment_postcode'];	
+		
+		$payment_address = $this->customer->getAddress($this->session->data['payment_address_id']);
+		
+        $url .= '&BillingCountry=' . $payment_address['iso_code_2'];
+		
+		if ($payment_address['iso_code_2'] == 'US') {
+			$url .= '&BillingState=' . $payment_address['code'];
+		}
+		
+		$url .= '&BillingPhone=' . $order_info['telephone'];
+		
+		// Check if there is a delivery address
+		if (isset($this->session->data['shipping_address_id'])) {
+			$url .= '&DeliveryFirstnames=' . $order_info['shipping_firstname'];
+        	$url .= '&DeliverySurname=' . $order_info['shipping_lastname'];
+        	$url .= '&DeliveryAddress1=' . $order_info['shipping_address_1'];
+		
+			if ($order_info['shipping_address_2']) {
+        		$url .= '&DeliveryAddress2=' . $order_info['shipping_address_2'];
+			}
+		
+        	$url .= '&DeliveryCity=' . $order_info['shipping_city'];
+        	$url .= '&DeliveryPostCode=' . $order_info['shipping_postcode'];
+		
+			$shipping_address = $this->customer->getAddress($this->session->data['shipping_address_id']);
+		
+        	$url .= '&DeliveryCountry=' . $shipping_address['iso_code_2'];
+		
+			if ($shipping_address['iso_code_2'] == 'US') {
+				$url .= '&DeliveryState=' . $shipping_address['code'];
+			}
+		
+			$url .= '&DeliveryPhone=' . $order_info['telephone'];
+		} else {
+			$url .= '&DeliveryFirstnames=' . $order_info['payment_firstname'];
+        	$url .= '&DeliverySurname=' . $order_info['payment_lastname'];
+        	$url .= '&DeliveryAddress1=' . $order_info['payment_address_1'];
+		
+			if ($order_info['payment_address_2']) {
+        		$url .= '&DeliveryAddress2=' . $order_info['payment_address_2'];
+			}
+		
+        	$url .= '&DeliveryCity=' . $order_info['payment_city'];
+        	$url .= '&DeliveryPostCode=' . $order_info['payment_postcode'];
+		
+			$payment_address = $this->customer->getAddress($this->session->data['payment_address_id']);
+		
+        	$url .= '&DeliveryCountry=' . $payment_address['iso_code_2'];
+		
+			if ($payment_address['iso_code_2'] == 'US') {
+				$url .= '&DeliveryState=' . $payment_address['code'];
+			}
+		
+			$url .= '&DeliveryPhone=' . $order_info['telephone'];			
+		}
+		
+		$url .= '&AllowGiftAid=0';
+		
+		if (!$this->config->get('sagepay_transaction')) {
+			$url .= '&ApplyAVSCV2=0';
+		}
+		
+ 		$url .= '&Apply3DSecure=0';
+		
+		$this->data['transaction'] = $this->config->get('sagepay_transaction');
+		$this->data['vendor'] = $vendor;
+		$this->data['crypt'] = base64_encode($this->simpleXor($url, $password));
 
 		$this->data['back'] = $this->url->https('checkout/payment');
 		
@@ -57,67 +119,70 @@ class ControllerPaymentSagePay extends Controller {
 		$this->render();		
 	}
 	
-	public function send() {
-		if ($this->config->get('sagepay_test') == 'sim') {
-    		$this->data['action'] = 'https://test.sagepay.com/Simulator/VSPFormGateway.asp';
-
-			$vendor   = $this->config->get('sagepay_vendor');
+	public function success() {
+		if (isset($this->request->get['crypt'])) {
+			$string = base64_decode(str_replace(' ', '+', $this->request->get['crypt']));
 			$password = $this->config->get('sagepay_password');	
-  		} elseif ($this->config->get('sagepay_test') == 'test') {
-			$this->data['action'] = 'https://test.sagepay.com/gateway/service/vpsform-register.vsp';
+
+			$output = $this->simpleXor($string, $password);
 			
-			$vendor   = 'testvendor';
-			$password = 'testvendor';			
-		} elseif ($this->config->get('sagepay_test') == 'live') {
-    		$this->data['action'] = 'https://live.sagepay.com/gateway/service/vpsform-register.vsp';
+			$data = $this->getToken($output);
+		
+			if ($data) {
+				$this->load->model('checkout/order');
+		
+				$this->model_checkout_order->confirm($this->request->get['order_id'], $this->config->get('sagepay_order_status_id'));
 
-			$vendor   = $this->config->get('sagepay_vendor');
-			$password = $this->config->get('sagepay_password');
-		}		
+				$message = '';
 		
-		$this->load->model('checkout/order');
-		
-		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+				if (isset($data['VPSTxId'])) { 
+					$message .= 'VPSTxId: ' . $data['VPSTxId'] . "\n";
+				}
 
-		$query  = 'VendorTxCode=' . date("dmYHis") . $this->session->data['order_id'];
-		$query .= '&ReferrerID=' . '{E511AF91-E4A0-42DE-80B0-09C981A3FB61}';
-		$query .= '&Amount=' . $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
-		$query .= '&Currency=' . $order_info['currency'];
-		$query .= '&Description=' . sprintf($this->language->get('description'), date($this->language->get('date_format_short')), $this->session->data['order_id']);
-		$query .= '&NotificationURL=' . $this->url->https('payment/sagepay/callback');
-		$query .= '&SuccessURL=' . $this->url->https('checkout/success');
-		$query .= '&FailureURL=' . $this->url->https('checkout/payment');
-		$query .= '&CustomerName=' . $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
-		$query .= '&CustomerEMail=' . $order_info['email'];
-		$query .= '&VendorEMail=' . $this->config->get('config_email');
-        $query .= '&SendEMail=' . '1';
-        $query .= '&EMailMessage=' . $order_info['comment'];		
-        $query .= '&BillingSurname=' . $order_info['payment_lastname'];
-        $query .= '&BillingFirstnames=' . $order_info['payment_firstname'];
-        $query .= '&BillingAddress1=' . $order_info['payment_address_1'];
-        $query .= '&BillingAddress2=' . $order_info['payment_address_2'];
-        $query .= '&BillingCity=' . $order_info['payment_city'];
-        $query .= '&BillingPostCode=' . $order_info['payment_postcode'];
-		
-		$this->load->model('localisation/country');
-		
-		$country_info = $this->model_localisation_country->getCountry($this->session->data['payment_address_id']);
-		
-        $query .= '&BillingCountry=' . $country_info['iso_code_2'];
-		$query .= '&BillingPhone=' . $order_info['telephone'];
+				if (isset($data['TxAuthNo'])) {
+					$message .= 'TxAuthNo: ' . $data['TxAuthNo'] . "\n";
+				}
 
-        $query .= '&DeliverySurname=' . $order_info['shipping_lastname'];
-        $query .= '&DeliveryFirstnames=' . $order_info['shipping_firstname'];
-        $query .= '&DeliveryAddress1=' . $order_info['shipping_address_1'];
-        $query .= '&DeliveryAddress2=' . $order_info['shipping_address_2'];
-        $query .= '&DeliveryCity=' . $order_info['shipping_city'];
-        $query .= '&DeliveryPostCode=' . $order_info['shipping_postcode'];
-		
-		$country_info = $this->model_localisation_country->getCountry($this->session->data['shipping_address_id']);
-		
-        $query .= '&DeliveryCountry=' . $country_info['iso_code_2'];
-        $query .= '&DeliveryPhone=' . $order_info['telephone'];	
+				if (isset($data['AVSCV2'])) {
+					$message .= 'AVSCV2: ' . $data['AVSCV2'] . "\n";
+				}
 
+				if (isset($data['AddressResult'])) {
+					$message .= 'AddressResult: ' . $data['AddressResult'] . "\n";
+				}
+				
+				if (isset($data['PostCodeResult'])) {
+					$message .= 'PostCodeResult: ' . $data['PostCodeResult'] . "\n";
+				}
+				
+				if (isset($data['CV2Result'])) {
+					$message .= 'CV2Result: ' . $data['CV2Result'] . "\n";
+				}
+
+				if (isset($data['3DSecureStatus'])) {
+					$message .= '3DSecureStatus: ' . $data['3DSecureStatus'] . "\n";
+				}
+
+				if (isset($data['CAVV'])) {
+					$message .= 'CAVV: ' . $data['CAVV'] . "\n";
+				}
+				
+				if (isset($data['CardType'])) {
+					$message .= 'CardType: ' . $data['CardType'] . "\n";
+				}
+				
+				if (isset($data['Last4Digits'])) {
+					$message .= 'Last4Digits: ' . $data['Last4Digits'] . "\n";
+				}
+				
+				$this->model_checkout_order->update($this->request->get['order_id'], $this->config->get('sagepay_order_status_id'), $message, FALSE);
+
+				$this->redirect($this->url->http('checkout/success'));
+			}
+		}
+	}	 
+	
+	private function simpleXor($string, $password) {
 		$data = array();
 
 		for ($i = 0; $i < strlen(utf8_decode($password)); $i++) {
@@ -126,21 +191,63 @@ class ControllerPaymentSagePay extends Controller {
 
 		$output = '';
 
-		for ($i = 0; $i < strlen(utf8_decode($query)); $i++) {
-    		$output .= chr(ord(substr($query, $i, 1)) ^ ($data[$i % strlen(utf8_decode($password))]));
+		for ($i = 0; $i < strlen(utf8_decode($string)); $i++) {
+    		$output .= chr(ord(substr($string, $i, 1)) ^ ($data[$i % strlen(utf8_decode($password))]));
 		}
 
-		$crypt = base64_encode($output);	
+		return $output;		
+	}
 	
-		$this->data['vendor'] = $vendor;
-		$this->data['crypt'] = $crypt;
+	private function getToken($string) {
+  		$tokens = array(
+   			'Status',
+    		'StatusDetail',
+    		'VendorTxCode',
+   			'VPSTxId',
+    		'TxAuthNo',
+    		'Amount',
+   			'AVSCV2', 
+    		'AddressResult', 
+    		'PostCodeResult', 
+    		'CV2Result', 
+    		'GiftAid', 
+    		'3DSecureStatus', 
+    		'CAVV',
+			'AddressStatus',
+			'CardType',
+			'Last4Digits',
+			'PayerStatus',
+			'CardType'
+		);		
 		
-		/*
-		$this->load->model('checkout/order');
+  		$output = array();
+		$data = array();
+  
+  		for ($i = count($tokens) - 1; $i >= 0; $i--){
+    		$start = strpos($string, $tokens[$i]);
+    		
+			if ($start){
+     			$data[$i]['start'] = $start;
+     			$data[$i]['token'] = $tokens[$i];
+			}
+		}
+  
+		sort($data);
 		
-		$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
-		*/
-		
-	}	 
+		for ($i = 0; $i < count($data); $i++){
+			$start = $data[$i]['start'] + strlen($data[$i]['token']) + 1;
+
+			if ($i == (count($data) - 1)) {
+				$output[$data[$i]['token']] = substr($string, $start);
+			} else {
+				$length = $data[$i+1]['start'] - $data[$i]['start'] - strlen($data[$i]['token']) - 2;
+				
+				$output[$data[$i]['token']] = substr($string, $start, $length);
+			}      
+
+		}
+  
+		return $output;
+	}	
 }
 ?>

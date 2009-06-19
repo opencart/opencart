@@ -5,7 +5,6 @@ $_['heading_title']      = 'ChronoPay';
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified ChronoPay account details!';
-$_['text_development']   = '<span style="color: red;">In Development</span>';
 
 // Entry
 $_['entry_product_id']   = 'Product ID:';

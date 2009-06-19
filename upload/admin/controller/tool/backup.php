@@ -10,7 +10,7 @@ class ControllerToolBackup extends Controller {
 		$this->load->model('tool/backup');
 				
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {			
-			$this->model_tool_backup->import(file_get_contents(@$this->request->files['import']['tmp_name']));
+			$this->model_tool_backup->restore(file_get_contents(@$this->request->files['import']['tmp_name']));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 			
@@ -21,8 +21,8 @@ class ControllerToolBackup extends Controller {
 		
 		$this->data['entry_restore'] = $this->language->get('entry_restore');
 		 
-		$this->data['button_import'] = $this->language->get('button_import');
-		$this->data['button_export'] = $this->language->get('button_export');
+		$this->data['button_backup'] = $this->language->get('button_backup');
+		$this->data['button_restore'] = $this->language->get('button_restore');
 		
 		$this->data['tab_general'] = $this->language->get('tab_general');
 		
@@ -48,7 +48,7 @@ class ControllerToolBackup extends Controller {
 		
 		unset($this->session->data['success']);
 				
-		$this->data['export'] = $this->url->https('tool/backup/export');
+		$this->data['backup'] = $this->url->https('tool/backup/backup');
 		
 		$this->id       = 'content'; 
 		$this->template = 'tool/backup.tpl';
@@ -57,7 +57,7 @@ class ControllerToolBackup extends Controller {
 		$this->render();
 	}
 	
-	public function export() {
+	public function backup() {
 		if ($this->validate()) {
 			$this->response->addheader('Pragma', 'public');
 			$this->response->addheader('Expires', '0');
@@ -68,7 +68,7 @@ class ControllerToolBackup extends Controller {
 			
 			$this->load->model('tool/backup');
 			
-			$this->response->setOutput($this->model_tool_backup->export());
+			$this->response->setOutput($this->model_tool_backup->backup());
 		} else {
 			return $this->forward('error/error_404', 'index');
 		}

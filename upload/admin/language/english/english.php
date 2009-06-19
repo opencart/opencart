@@ -1,12 +1,12 @@
 <?php
 // Locale
-$_['code']              = 'en';
-$_['direction']         = 'ltr';
-$_['date_format_short'] = 'd/m/Y';
-$_['date_format_long']  = 'l dS F Y';
-$_['time_format']       = 'h:i:s A';
-$_['decimal_point']     = '.';
-$_['thousand_point']    = ',';
+$_['code']                    = 'en';
+$_['direction']               = 'ltr';
+$_['date_format_short']       = 'd/m/Y';
+$_['date_format_long']        = 'l dS F Y';
+$_['time_format']             = 'h:i:s A';
+$_['decimal_point']           = '.';
+$_['thousand_point']          = ',';
 
 // Text
 $_['text_time']               = 'Page created in %s seconds';
@@ -37,8 +37,8 @@ $_['button_filter']           = 'Filter';
 $_['button_send']             = 'Send';
 $_['button_back']             = 'Back';
 $_['button_remove']           = 'Remove';
-$_['button_import']           = 'Import';
-$_['button_export']           = 'Export';
+$_['button_backup']           = 'Backup';
+$_['button_restore']          = 'Restore';
 $_['button_invoice']          = 'Invoice';
 $_['button_add_option']       = 'Add Option';
 $_['button_add_option_value'] = 'Add Option Value';
@@ -56,6 +56,7 @@ $_['tab_discount']            = 'Discount';
 $_['tab_general']             = 'General';
 $_['tab_image']               = 'Image';
 $_['tab_option']              = 'Option';
+$_['tab_server']              = 'Server';
 $_['tab_shop']                = 'Shop';
 $_['tab_local']               = 'Local';
 $_['tab_stats']               = 'Statistics';

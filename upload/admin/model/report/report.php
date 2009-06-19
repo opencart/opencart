@@ -5,11 +5,11 @@ class ModelReportReport extends Model {
 
 		$product_data = array();
 		
-		$query = $this->db->query("SELECT SUM(viewed) AS total FROM product");
+		$query = $this->db->query("SELECT SUM(viewed) AS total FROM " . DB_PREFIX . "product");
 
 		$total = $query->row['total'];
 		
-		$query = $this->db->query("SELECT * FROM product p LEFT JOIN product_description pd ON (p.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->language->getId() . "' ORDER BY viewed DESC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->language->getId() . "' ORDER BY viewed DESC LIMIT " . (int)$start . "," . (int)$limit);
 		
 		foreach ($query->rows as $result) {
 			$product_data[] = array(
@@ -24,13 +24,13 @@ class ModelReportReport extends Model {
 	}	
 	
 	public function getProductPurchasedReport($start = 0, $limit = 20) {
-		$query = $this->db->query("SELECT op.name, op.model, SUM(op.quantity) AS quantity, SUM((op.total + op.tax) * op.quantity) AS total FROM order_product op LEFT JOIN `order` o ON (op.order_id = o.order_id) WHERE o.order_status_id > '0' GROUP BY model ORDER BY total DESC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT op.name, op.model, SUM(op.quantity) AS quantity, SUM(op.total + op.tax) AS total FROM " . DB_PREFIX . "order_product op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.order_id = o.order_id) WHERE o.order_status_id > '0' GROUP BY model ORDER BY total DESC LIMIT " . (int)$start . "," . (int)$limit);
 	
 		return $query->rows;
 	}
 
 	public function getSaleReport($data = array()) {
-		$sql = "SELECT MIN(date_added) AS date_start, MAX(date_added) AS date_end, COUNT(*) AS orders, SUM(total) AS total FROM `order` WHERE order_status_id > '0'"; 
+		$sql = "SELECT MIN(date_added) AS date_start, MAX(date_added) AS date_end, COUNT(*) AS orders, SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'"; 
 		
 		if (isset($data['date_start'])) {
 			$date_start = $data['date_start'];
@@ -76,13 +76,13 @@ class ModelReportReport extends Model {
 	}	
 	
 	public function getTotalOrderedProducts() {
-      	$query = $this->db->query("SELECT * FROM `order_product` GROUP BY model");
+      	$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` GROUP BY model");
 		
 		return $query->num_rows;
 	}
 	
 	public function getSaleReportTotal($data = array()) {
-		$sql = "SELECT MIN(date_added) AS date_start, MAX(date_added) AS date_end, COUNT(*) AS orders, SUM(total) AS total FROM `order` WHERE order_status_id > '0'";
+		$sql = "SELECT MIN(date_added) AS date_start, MAX(date_added) AS date_end, COUNT(*) AS orders, SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'";
 		
 		if (isset($data['date_start'])) {
 			$date_start = $data['date_start'];

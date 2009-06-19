@@ -1,7 +1,7 @@
 <?php  
 class ControllerModuleInformation extends Controller {
 	protected function index() {
-		$this->load->language('module/information');
+		$this->language->load('module/information');
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
     	
@@ -15,7 +15,7 @@ class ControllerModuleInformation extends Controller {
 		foreach ($this->model_catalog_information->getInformations() as $result) {
       		$this->data['informations'][] = array(
         		'title' => $result['title'],
-	    		'href'  => $this->url->http('information/information&information_id=' . $result['information_id'])
+	    		'href'  => $this->model_tool_seo_url->rewrite($this->url->http('information/information&information_id=' . $result['information_id']))
       		);
     	}
 

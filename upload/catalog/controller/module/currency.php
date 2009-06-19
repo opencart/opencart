@@ -1,21 +1,19 @@
 <?php   
 class ControllerModuleCurrency extends Controller {
 	protected function index() {
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && (isset($this->request->post['currency']))) {
-      		$this->currency->set($this->request->post['currency']);
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && (isset($this->request->post['currency_code']))) {
+      		$this->currency->set($this->request->post['currency_code']);
 
-			if ($this->request->post['redirect']) {
+			if (isset($this->request->post['redirect'])) {
 				$this->redirect($this->request->post['redirect']);
 			} else {
 				$this->redirect($this->url->http('common/home'));
 			}
    		}
     	
-		$this->load->language('module/currency');
+		$this->language->load('module/currency');
 		
    		$this->data['heading_title'] = $this->language->get('heading_title');
-   		
-		$this->data['text_currency'] = $this->language->get('text_currency');
  
 		$this->data['entry_currency'] = $this->language->get('entry_currency');
 		
@@ -24,7 +22,21 @@ class ControllerModuleCurrency extends Controller {
 		if (!isset($this->request->get['route'])) {
 			$this->data['redirect'] = $this->url->http('common/home');
 		} else {
-			$this->data['redirect'] = $this->url->http(str_replace('route=', '', urldecode(http_build_query($this->request->get))));
+			$this->load->model('tool/seo_url');
+			
+			$data = $this->request->get;
+			
+			$route = $data['route'];
+			
+			unset($data['route']);
+			
+			$url = '';
+			
+			if ($data) {
+				$url = '&' . urldecode(http_build_query($data));
+			}
+			
+			$this->data['redirect'] = $this->model_tool_seo_url->rewrite($this->url->http($route . $url));
 		}
 		
 		$this->data['default'] = $this->currency->getCode(); 

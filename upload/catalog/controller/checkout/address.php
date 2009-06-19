@@ -9,7 +9,7 @@ class ControllerCheckoutAddress extends Controller {
 			$this->redirect($this->url->https('account/login'));
     	}	
 	
-    	$this->load->language('checkout/address');
+    	$this->language->load('checkout/address');
 
     	$this->document->title = $this->language->get('heading_title');
 
@@ -69,7 +69,7 @@ class ControllerCheckoutAddress extends Controller {
       		$this->redirect($this->url->https('account/login'));
     	}		
 		
-		$this->load->language('checkout/address');
+		$this->language->load('checkout/address');
 
     	$this->document->title = $this->language->get('heading_title');  
 
@@ -186,7 +186,7 @@ class ControllerCheckoutAddress extends Controller {
     	if (isset($this->request->post['zone_id'])) {
       		$this->data['zone_id'] = $this->request->post['zone_id'];
     	} else {
-      		$this->data['zone_id'] = $this->config->get('config_zone_id');
+      		$this->data['zone_id'] = 0;
     	}
 
 		$this->load->model('localisation/country');

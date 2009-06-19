@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentBankTransfer extends Controller {
 	protected function index() {
-		$this->load->language('payment/bank_transfer');
+		$this->language->load('payment/bank_transfer');
 		
 		$this->data['text_instruction'] = $this->language->get('text_instruction');
 		$this->data['text_payment'] = $this->language->get('text_payment');
@@ -21,7 +21,7 @@ class ControllerPaymentBankTransfer extends Controller {
 	}
 	
 	public function confirm() {
-		$this->load->language('payment/bank_transfer');
+		$this->language->load('payment/bank_transfer');
 		
 		$this->load->model('checkout/order');
 		

@@ -31,36 +31,34 @@ class ControllerCheckoutShipping extends Controller {
 
 		$this->load->model('checkout/extension');
 		
-		if (!isset($this->session->data['shipping_methods'])) {
-			$quote_data = array();
+		$quote_data = array();
 		
-			$results = $this->model_checkout_extension->getExtensions('shipping');
+		$results = $this->model_checkout_extension->getExtensions('shipping');
 		
-			foreach ($results as $result) {
-				$this->load->model('shipping/' . $result['key']);
+		foreach ($results as $result) {
+			$this->load->model('shipping/' . $result['key']);
 			
-				$quote = $this->{'model_shipping_' . $result['key']}->getQuote(); 
+			$quote = $this->{'model_shipping_' . $result['key']}->getQuote(); 
 
-				if ($quote) {
-					$quote_data[$result['key']] = array(
-						'title'      => $quote['title'],
-						'quote'      => $quote['quote'], 
-						'sort_order' => $quote['sort_order'],
-						'error'      => $quote['error']
-					);
-				}
+			if ($quote) {
+				$quote_data[$result['key']] = array(
+					'title'      => $quote['title'],
+					'quote'      => $quote['quote'], 
+					'sort_order' => $quote['sort_order'],
+					'error'      => $quote['error']
+				);
 			}
-
-			$sort_order = array();
-	  
-			foreach ($quote_data as $key => $value) {
-      			$sort_order[$key] = $value['sort_order'];
-    		}
-
-    		array_multisort($sort_order, SORT_ASC, $quote_data);
-		
-			$this->session->data['shipping_methods'] = $quote_data;
 		}
+
+		$sort_order = array();
+	  
+		foreach ($quote_data as $key => $value) {
+      		$sort_order[$key] = $value['sort_order'];
+    	}
+
+    	array_multisort($sort_order, SORT_ASC, $quote_data);
+		
+		$this->session->data['shipping_methods'] = $quote_data;
 		
 		$this->language->load('checkout/shipping');
 		

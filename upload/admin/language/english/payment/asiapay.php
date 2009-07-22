@@ -13,14 +13,11 @@ $_['entry_email']        = 'E-Mail:';
 $_['entry_receiver']     = 'AsiaPay User ID:';
 $_['entry_account']      = 'AsiaPay Account ID:';
 $_['entry_method']       = 'Method:';
-$_['entry_callback']     = 'IPN URL:';
+$_['entry_callback']     = 'IPN URL:<br /><span class="help">If IPN is selected you must login to AsiaPay and setup your IPN settings.</span>';
 $_['entry_order_status'] = 'Order Status:';
 $_['entry_geo_zone']     = 'Geo Zone:';
 $_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
-
-// Help
-$_['help_callback']      = 'If IPN is selected you must login to AsiaPay and setup your IPN settings.';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify payment AsiaPay!';

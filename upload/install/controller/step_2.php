@@ -65,7 +65,6 @@ class ControllerStep2 extends Controller {
 			$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
 			$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'cache/\');' . "\n";
 			$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'download/\');' . "\n";
-			$output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";

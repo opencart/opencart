@@ -82,17 +82,36 @@ class ModelLocalisationCurrency extends Model {
 	}	
 
 	public function updateCurrencies() {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "' AND date_modified > '" . date(strtotime('-1 day')) . "'");
-		
-		foreach ($query->rows as $result) {
-			$value = @file_get_contents('http://quote.yahoo.com/d/quotes.csv?f=l1&s=' . $this->config->get('config_currency') . $result['code'] . '=X', 'r');
+		if (extension_loaded('curl')) {
+			$data = array();
 			
-			if ($value != 0.00) {
-				$this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '" . (float)$value . "', date_modified = NOW() WHERE currency_id = '" . (int)$result['currency_id'] . "'");
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "' AND date_modified > '" . date(strtotime('-1 day')) . "'");
+
+			foreach ($query->rows as $result) {
+				$data[] = $this->config->get('config_currency') . $result['code'] . '=X';
+			}	
+			
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, 'http://download.finance.yahoo.com/d/quotes.csv?s=' . implode(',', $data) . '&f=sl1&e=.csv');
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			
+			$content = curl_exec($ch);
+			
+			curl_close($ch);
+			
+			$lines = explode("\n", trim($content));
+				
+			foreach ($lines as $line) {
+				$currency = substr($line, 4, 3);
+				$value = substr($line, 11, 6);
+				
+				if ((float)$value) {
+					$this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '" . (float)$value . "', date_modified = NOW() WHERE code = '" . (int)$currency . "'");
+				}
 			}
+				
+			$this->cache->delete('currency');
 		}
-		
-		$this->cache->delete('currency');
 	}
 	
 	public function getTotalCurrencies() {

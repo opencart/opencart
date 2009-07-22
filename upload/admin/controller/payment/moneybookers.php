@@ -27,7 +27,11 @@ class ControllerPaymentMoneyBookers extends Controller {
 		$this->data['text_none'] = $this->language->get('text_none');
 				
 		$this->data['entry_email'] = $this->language->get('entry_email');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');	
+		$this->data['entry_order_status_pending'] = $this->language->get('entry_order_status_pending');	
+		$this->data['entry_order_status_canceled'] = $this->language->get('entry_order_status_canceled');	
+		$this->data['entry_order_status_failed'] = $this->language->get('entry_order_status_failed');	
+		$this->data['entry_order_status_chargeback'] = $this->language->get('entry_order_status_chargeback');	
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
@@ -77,6 +81,30 @@ class ControllerPaymentMoneyBookers extends Controller {
 		} else {
 			$this->data['moneybookers_order_status_id'] = $this->config->get('moneybookers_order_status_id'); 
 		} 
+
+		if (isset($this->request->post['moneybookers_order_status_pending_id'])) {
+			$this->data['moneybookers_order_status_pending_id'] = $this->request->post['moneybookers_order_status_pending_id'];
+		} else {
+			$this->data['moneybookers_order_status_pending_id'] = $this->config->get('moneybookers_order_status_pending_id');
+		}
+
+		if (isset($this->request->post['moneybookers_order_status_canceled_id'])) {
+			$this->data['moneybookers_order_status_canceled_id'] = $this->request->post['moneybookers_order_status_canceled_id'];
+		} else {
+			$this->data['moneybookers_order_status_canceled_id'] = $this->config->get('moneybookers_order_status_canceled_id');
+		}
+
+		if (isset($this->request->post['moneybookers_order_status_failed_id'])) {
+			$this->data['moneybookers_order_status_failed_id'] = $this->request->post['moneybookers_order_status_failed_id'];
+		} else {
+			$this->data['moneybookers_order_status_failed_id'] = $this->config->get('moneybookers_order_status_failed_id');
+		}
+
+		if (isset($this->request->post['moneybookers_order_status_chargeback_id'])) {
+			$this->data['moneybookers_order_status_chargeback_id'] = $this->request->post['moneybookers_order_status_chargeback_id'];
+		} else {
+			$this->data['moneybookers_order_status_chargeback_id'] = $this->config->get('moneybookers_order_status_chargeback_id');
+		}
 		
 		$this->load->model('localisation/order_status');
 		

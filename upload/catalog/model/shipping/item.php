@@ -2,7 +2,7 @@
 class ModelShippingItem extends Model {
 	function getQuote() {
 		$this->load->language('shipping/item');
-	
+		
 		if ($this->config->get('item_status')) {
 			$address = $this->customer->getAddress($this->session->data['shipping_address_id']);
 			

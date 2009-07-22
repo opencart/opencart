@@ -19,13 +19,14 @@ class ControllerSettingSetting extends Controller {
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
+		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');
-		$this->data['text_none'] = $this->language->get('text_none');
-
+		$this->data['text_mail'] = $this->language->get('text_mail');
+		$this->data['text_smtp'] = $this->language->get('text_smtp');
+		
 		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
-		$this->data['entry_logo'] = $this->language->get('entry_logo');
 		$this->data['entry_welcome'] = $this->language->get('entry_welcome');
 		$this->data['entry_owner'] = $this->language->get('entry_owner');
 		$this->data['entry_address'] = $this->language->get('entry_address');
@@ -51,35 +52,36 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_stock_status'] = $this->language->get('entry_stock_status');
 		$this->data['entry_download'] = $this->language->get('entry_download');
 		$this->data['entry_download_status'] = $this->language->get('entry_download_status');
+		$this->data['entry_logo'] = $this->language->get('entry_logo');
+		$this->data['entry_icon'] = $this->language->get('entry_icon');
+		$this->data['entry_image_thumb'] = $this->language->get('entry_image_thumb');
+		$this->data['entry_image_popup'] = $this->language->get('entry_image_popup');
+		$this->data['entry_image_category'] = $this->language->get('entry_image_category');
+		$this->data['entry_image_product'] = $this->language->get('entry_image_product');
+		$this->data['entry_image_additional'] = $this->language->get('entry_image_additional');
+		$this->data['entry_image_related'] = $this->language->get('entry_image_related');
+		$this->data['entry_image_cart'] = $this->language->get('entry_image_cart');
+		$this->data['entry_mail_protocol'] = $this->language->get('entry_mail_protocol');
+		$this->data['entry_smtp_host'] = $this->language->get('entry_smtp_host');
+		$this->data['entry_smtp_username'] = $this->language->get('entry_smtp_username');
+		$this->data['entry_smtp_password'] = $this->language->get('entry_smtp_password');
+		$this->data['entry_smtp_port'] = $this->language->get('entry_smtp_port');
+		$this->data['entry_smtp_timeout'] = $this->language->get('entry_smtp_timeout');
 		$this->data['entry_ssl'] = $this->language->get('entry_ssl');
 		$this->data['entry_encryption'] = $this->language->get('entry_encryption');
 		$this->data['entry_seo_url'] = $this->language->get('entry_seo_url');
 		$this->data['entry_compression'] = $this->language->get('entry_compression');
 		$this->data['entry_parse_time'] = $this->language->get('entry_parse_time');
-
- 		$this->data['help_currency_auto'] = $this->language->get('help_currency_auto');
-		$this->data['help_alert_mail'] = $this->language->get('help_alert_mail');
-		$this->data['help_account'] = $this->language->get('help_account');
-		$this->data['help_checkout'] = $this->language->get('help_checkout');
-		$this->data['help_order_status'] = $this->language->get('help_order_status');
-		$this->data['help_stock_check'] = $this->language->get('help_stock_check');
-		$this->data['help_stock_checkout'] = $this->language->get('help_stock_checkout');
-		$this->data['help_stock_subtract'] = $this->language->get('help_stock_subtract');
-		$this->data['help_download_status'] = $this->language->get('help_download_status');
-		$this->data['help_ssl'] = $this->language->get('help_ssl'); 
-		$this->data['help_encryption'] = $this->language->get('help_encryption'); 
-		$this->data['help_seo_url'] = $this->language->get('help_seo_url'); 
-		$this->data['help_compression'] = $this->language->get('help_compression');
-		$this->data['help_parse_time'] = $this->language->get('help_parse_time');
-		
+		 
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
 		$this->data['tab_shop'] = $this->language->get('tab_shop');
-		$this->data['tab_server'] = $this->language->get('tab_server');
-		$this->data['tab_admin'] = $this->language->get('tab_admin');
 		$this->data['tab_local'] = $this->language->get('tab_local');
 		$this->data['tab_option'] = $this->language->get('tab_option');
+		$this->data['tab_image'] = $this->language->get('tab_image');
+		$this->data['tab_mail'] = $this->language->get('tab_mail');
+		$this->data['tab_server'] = $this->language->get('tab_server');
 
 		$this->data['error_warning'] = @$this->error['warning'];
 		
@@ -182,12 +184,12 @@ class ControllerSettingSetting extends Controller {
 		
 		$this->data['templates'] = array();
 		
-		$directories = glob(DIR_CATALOG . 'view/theme/*', GLOB_ONLYDIR);
+		$directories = glob(DIR_IMAGE . 'templates/*.png');
 		
 		foreach ($directories as $directory) {
 			$this->data['templates'][] = array(
-				'name'  => basename($directory),
-				'value' => basename($directory) . '/template/'
+				'name'  => basename($directory, '.png'),
+				'value' => basename($directory, '.png') . '/template/'
 			);
 		}
 		
@@ -333,6 +335,130 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_download_status'] = $this->config->get('config_download_status');
 		}
 		
+		if (isset($this->request->post['config_image_thumb_width'])) {
+			$this->data['config_image_thumb_width'] = $this->request->post['config_image_thumb_width'];
+		} else {
+			$this->data['config_image_thumb_width'] = $this->config->get('config_image_thumb_width');
+		}
+		
+		if (isset($this->request->post['config_image_thumb_height'])) {
+			$this->data['config_image_thumb_height'] = $this->request->post['config_image_thumb_height'];
+		} else {
+			$this->data['config_image_thumb_height'] = $this->config->get('config_image_thumb_height');
+		}
+		
+		if (isset($this->request->post['config_image_popup_width'])) {
+			$this->data['config_image_popup_width'] = $this->request->post['config_image_popup_width'];
+		} else {
+			$this->data['config_image_popup_width'] = $this->config->get('config_image_popup_width');
+		}
+		
+		if (isset($this->request->post['config_image_popup_height'])) {
+			$this->data['config_image_popup_height'] = $this->request->post['config_image_popup_height'];
+		} else {
+			$this->data['config_image_popup_height'] = $this->config->get('config_image_popup_height');
+		}
+
+		if (isset($this->request->post['config_image_category_width'])) {
+			$this->data['config_image_category_width'] = $this->request->post['config_image_category_width'];
+		} else {
+			$this->data['config_image_category_width'] = $this->config->get('config_image_category_width');
+		}
+		
+		if (isset($this->request->post['config_image_category_height'])) {
+			$this->data['config_image_category_height'] = $this->request->post['config_image_category_height'];
+		} else {
+			$this->data['config_image_category_height'] = $this->config->get('config_image_category_height');
+		}
+		
+		if (isset($this->request->post['config_image_product_width'])) {
+			$this->data['config_image_product_width'] = $this->request->post['config_image_product_width'];
+		} else {
+			$this->data['config_image_product_width'] = $this->config->get('config_image_product_width');
+		}
+		
+		if (isset($this->request->post['config_image_product_height'])) {
+			$this->data['config_image_product_height'] = $this->request->post['config_image_product_height'];
+		} else {
+			$this->data['config_image_product_height'] = $this->config->get('config_image_product_height');
+		}
+
+		if (isset($this->request->post['config_image_additional_width'])) {
+			$this->data['config_image_additional_width'] = $this->request->post['config_image_additional_width'];
+		} else {
+			$this->data['config_image_additional_width'] = $this->config->get('config_image_additional_width');
+		}
+		
+		if (isset($this->request->post['config_image_additional_height'])) {
+			$this->data['config_image_additional_height'] = $this->request->post['config_image_additional_height'];
+		} else {
+			$this->data['config_image_additional_height'] = $this->config->get('config_image_additional_height');
+		}
+		
+		if (isset($this->request->post['config_image_related_width'])) {
+			$this->data['config_image_related_width'] = $this->request->post['config_image_related_width'];
+		} else {
+			$this->data['config_image_related_width'] = $this->config->get('config_image_related_width');
+		}
+		
+		if (isset($this->request->post['config_image_related_height'])) {
+			$this->data['config_image_related_height'] = $this->request->post['config_image_related_height'];
+		} else {
+			$this->data['config_image_related_height'] = $this->config->get('config_image_related_height');
+		}
+		
+		if (isset($this->request->post['config_image_cart_width'])) {
+			$this->data['config_image_cart_width'] = $this->request->post['config_image_cart_width'];
+		} else {
+			$this->data['config_image_cart_width'] = $this->config->get('config_image_cart_width');
+		}
+		
+		if (isset($this->request->post['config_image_cart_height'])) {
+			$this->data['config_image_cart_height'] = $this->request->post['config_image_cart_height'];
+		} else {
+			$this->data['config_image_cart_height'] = $this->config->get('config_image_cart_height');
+		}
+		
+		if (isset($this->request->post['config_mail_protocol'])) {
+			$this->data['config_mail_protocol'] = $this->request->post['config_mail_protocol'];
+		} else {
+			$this->data['config_mail_protocol'] = $this->config->get('config_mail_protocol');
+		}
+		
+		if (isset($this->request->post['config_smtp_host'])) {
+			$this->data['config_smtp_host'] = $this->request->post['config_smtp_host'];
+		} else {
+			$this->data['config_smtp_host'] = $this->config->get('config_smtp_host');
+		}		
+
+		if (isset($this->request->post['config_smtp_username'])) {
+			$this->data['config_smtp_username'] = $this->request->post['config_smtp_username'];
+		} else {
+			$this->data['config_smtp_username'] = $this->config->get('config_smtp_username');
+		}	
+		
+		if (isset($this->request->post['config_smtp_password'])) {
+			$this->data['config_smtp_password'] = $this->request->post['config_smtp_password'];
+		} else {
+			$this->data['config_smtp_password'] = $this->config->get('config_smtp_password');
+		}	
+		
+		if (isset($this->request->post['config_smtp_port'])) {
+			$this->data['config_smtp_port'] = $this->request->post['config_smtp_port'];
+		} elseif ($this->config->get('config_smtp_port')) {
+			$this->data['config_smtp_port'] = $this->config->get('config_smtp_port');
+		} else {
+			$this->data['config_smtp_port'] = 25;
+		}	
+		
+		if (isset($this->request->post['config_smtp_timeout'])) {
+			$this->data['config_smtp_timeout'] = $this->request->post['config_smtp_timeout'];
+		} elseif ($this->config->get('config_smtp_timeout')) {
+			$this->data['config_smtp_timeout'] = $this->config->get('config_smtp_timeout');
+		} else {
+			$this->data['config_smtp_timeout'] = 5;	
+		}	
+		
 		if (isset($this->request->post['config_ssl'])) {
 			$this->data['config_ssl'] = $this->request->post['config_ssl'];
 		} else {
@@ -448,7 +574,7 @@ class ControllerSettingSetting extends Controller {
 		if (isset($this->request->get['logo'])) {
 			$this->load->helper('image');
 		
-			if (@$this->request->server['HTTPS'] != 'on') {
+			if ((!isset($this->request->server['HTTPS'])) || ($this->request->server['HTTPS'] != 'on')) {
 				$image = HTTP_IMAGE . basename($this->request->get['logo']);
 			} else {
 				$image = HTTPS_IMAGE . basename($this->request->get['logo']);
@@ -459,12 +585,18 @@ class ControllerSettingSetting extends Controller {
 	}
 	
 	public function template() {
-		$directory = DIR_CATALOG . '/view/theme/' . dirname($this->request->get['template']) . '/';
- 
-		if (file_exists($directory . 'preview.png')) {
-			$image = HTTP_CATALOG . 'catalog/view/theme/' . dirname($this->request->get['template']) . '/preview.png';
+		$file = 'templates/' . basename(dirname($this->request->get['template'])) . '.png';
+		
+		if ((!isset($this->request->server['HTTPS'])) || ($this->request->server['HTTPS'] != 'on')) {
+			$server = HTTP_IMAGE;
 		} else {
-			$image = HTTP_IMAGE . 'no_image.jpg';
+			$server = HTTPS_IMAGE;
+		}
+		
+		if (file_exists(DIR_IMAGE . $file)) {
+			$image = $server . $file;
+		} else {
+			$image = $server . 'no_image.jpg';
 		}
 		
 		$this->response->setOutput('<img src="' . $image . '" alt="" title="" style="border: 1px solid #EEEEEE;" />');

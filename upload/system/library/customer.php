@@ -63,7 +63,7 @@ final class Customer {
 		if ($customer_query->num_rows) {
 			$this->session->data['customer_id'] = $customer_query->row['customer_id'];	
 		    
-			if (is_string($customer_query->row['cart'])) {
+			if (($customer_query->row['cart']) && (is_string($customer_query->row['cart']))) {
 				$cart = unserialize($customer_query->row['cart']);
 				
 				foreach ($cart as $key => $value) {

@@ -49,8 +49,8 @@ class ModelTotalCoupon extends Model {
 					$discount_total += $discount;
 				}
 				
-				if ($coupon['shipping']) {
-					if ($this->session->data['shipping_method']['tax_class_id']) {
+				if ($coupon['shipping'] && isset($this->session->data['shipping_method'])) {
+					if (isset($this->session->data['shipping_method']['tax_class_id']) && $this->session->data['shipping_method']['tax_class_id']) {
 						$taxes[$this->session->data['shipping_method']['tax_class_id']] -= $this->session->data['shipping_method']['cost'] / 100 * $this->tax->getRate($this->session->data['shipping_method']['tax_class_id']);
 					}
 					

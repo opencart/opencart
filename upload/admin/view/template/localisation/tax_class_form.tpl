@@ -10,7 +10,7 @@
   <div id="tab_general" class="page">
     <table class="form">
       <tr>
-        <td><span class="required">*</span> <?php echo $entry_title; ?></td>
+        <td width="25%"><span class="required">*</span> <?php echo $entry_title; ?></td>
         <td><input type="text" name="title" value="<?php echo $title; ?>" />
           <br />
           <?php if ($error_title) { ?>

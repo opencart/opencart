@@ -26,8 +26,7 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_callback; ?><br />
-          <span class="help"><?php echo $help_callback; ?></span></td>
+        <td><?php echo $entry_callback; ?></td>
         <td><textarea cols="40" rows="5"><?php echo $callback; ?></textarea></td>
       </tr>
       <tr>

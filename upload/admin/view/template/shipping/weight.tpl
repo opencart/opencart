@@ -11,9 +11,8 @@
     <table class="form">
       <?php foreach ($geo_zones as $geo_zone) { ?>
       <tr>
-        <td><?php echo $geo_zone['name']; ?> <?php echo $entry_cost; ?><br /> 
-          <span class="help"><?php echo $help_cost; ?></span></td>
-        <td><input type="text" name="weight_<?php echo $geo_zone['geo_zone_id']; ?>_cost" value="<?php echo ${'weight_' . $geo_zone['geo_zone_id'] . '_cost'}; ?>" /></td>
+        <td width="25%"><?php echo $geo_zone['name']; ?> <?php echo $entry_rate; ?></td>
+        <td><textarea name="weight_<?php echo $geo_zone['geo_zone_id']; ?>_rate" cols="40" rows="5"><?php echo ${'weight_' . $geo_zone['geo_zone_id'] . '_rate'}; ?></textarea></td>
       </tr>
       <tr>
         <td><?php echo $geo_zone['name']; ?> <?php echo $entry_status; ?></td>
@@ -42,7 +41,7 @@
           </select></td>
       </tr>
       <tr>
-        <td width="25%"><?php echo $entry_status; ?></td>
+        <td><?php echo $entry_status; ?></td>
         <td><select name="weight_status">
             <?php if ($weight_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>

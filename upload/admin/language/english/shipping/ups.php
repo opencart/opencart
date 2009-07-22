@@ -26,19 +26,15 @@ $_['text_xpd']         = 'Worldwide Expedited';
 
 // Entry
 $_['entry_postcode']   = 'Post Code:';
-$_['entry_packaging']  = 'Packaging Code:';
+$_['entry_packaging']  = 'Packaging Code:<br /><span class="help">Customer Packaging (CP)<br />UPS Letter Envelope (ULE)<br />UPS Tube (UT)<br />Express Box (UEB)<br />Worldwide 25 kilo (UW25)<br />Worldwide 10 kilo (UW10).</span>';
 $_['entry_rate']       = 'Rate:';
-$_['entry_type']       = 'Address Type:';
+$_['entry_type']       = 'Address Type:<br /><span class="help">(Destination)</span>';
 $_['entry_service']    = 'Services:';
 $_['entry_geo_zone']   = 'Geo Zone:';
 $_['entry_tax']        = 'Tax Class:';
 $_['entry_geo_zone']   = 'Geo Zone:';
 $_['entry_status']     = 'Status:';
 $_['entry_sort_order'] = 'Sort Order:';
-
-// Help
-$_['help_packaging']   = 'Customer Packaging (CP)<br />UPS Letter Envelope (ULE)<br />UPS Tube (UT)<br />Express Box (UEB)<br />Worldwide 25 kilo (UW25)<br />Worldwide 10 kilo (UW10)';
-$_['help_type']        = '(Destination)';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify UPS shipping!';

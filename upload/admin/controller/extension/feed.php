@@ -43,37 +43,39 @@ class ControllerExtensionFeed extends Controller {
 						
 		$files = glob(DIR_APPLICATION . 'controller/feed/*.php');
 		
-		foreach ($files as $file) {
-			$extension = basename($file, '.php');
+		if ($files) {
+			foreach ($files as $file) {
+				$extension = basename($file, '.php');
 			
-			$this->load->language('feed/' . $extension);
+				$this->load->language('feed/' . $extension);
 
-			$action = array();
+				$action = array();
 			
-			if (!in_array($extension, $extensions)) {
-				$action[] = array(
-					'text' => $this->language->get('text_install'),
-					'href' => $this->url->https('extension/feed/install&extension=' . $extension)
-				);
-			} else {
-				$action[] = array(
-					'text' => $this->language->get('text_edit'),
-					'href' => $this->url->https('feed/' . $extension)
-				);
+				if (!in_array($extension, $extensions)) {
+					$action[] = array(
+						'text' => $this->language->get('text_install'),
+						'href' => $this->url->https('extension/feed/install&extension=' . $extension)
+					);
+				} else {
+					$action[] = array(
+						'text' => $this->language->get('text_edit'),
+						'href' => $this->url->https('feed/' . $extension)
+					);
 							
-				$action[] = array(
-					'text' => $this->language->get('text_uninstall'),
-					'href' => $this->url->https('extension/feed/uninstall&extension=' . $extension)
+					$action[] = array(
+						'text' => $this->language->get('text_uninstall'),
+						'href' => $this->url->https('extension/feed/uninstall&extension=' . $extension)
+					);
+				}
+									
+				$this->data['extensions'][] = array(
+					'name'   => $this->language->get('heading_title'),
+					'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'action' => $action
 				);
 			}
-									
-			$this->data['extensions'][] = array(
-				'name'   => $this->language->get('heading_title'),
-				'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'action' => $action
-			);
 		}
-						
+		
 		$this->id       = 'content';
 		$this->template = 'extension/feed.tpl';
 		$this->layout   = 'common/layout';

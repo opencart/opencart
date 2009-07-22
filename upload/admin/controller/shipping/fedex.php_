@@ -24,10 +24,10 @@ class ControllerShippingFlat extends Controller {
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
 		
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_cost'] = $this->language->get('entry_cost');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -61,18 +61,6 @@ class ControllerShippingFlat extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/shipping');
 	
-		if (isset($this->request->post['fedex_status'])) {
-			$this->data['fedex_status'] = $this->request->post['fedex_status'];
-		} else {
-			$this->data['fedex_status'] = $this->config->get('fedex_status');
-		}
-
-		if (isset($this->request->post['fedex_geo_zone_id'])) {
-			$this->data['fedex_geo_zone_id'] = $this->request->post['fedex_geo_zone_id'];
-		} else {
-			$this->data['fedex_geo_zone_id'] = $this->config->get('fedex_geo_zone_id');
-		}
-		
 		if (isset($this->request->post['fedex_cost'])) {
 			$this->data['fedex_cost'] = $this->request->post['fedex_cost'];
 		} else {
@@ -84,6 +72,18 @@ class ControllerShippingFlat extends Controller {
 		} else {
 			$this->data['fedex_tax_class_id'] = $this->config->get('fedex_tax_class_id');
 		}
+
+		if (isset($this->request->post['fedex_geo_zone_id'])) {
+			$this->data['fedex_geo_zone_id'] = $this->request->post['fedex_geo_zone_id'];
+		} else {
+			$this->data['fedex_geo_zone_id'] = $this->config->get('fedex_geo_zone_id');
+		}
+		
+		if (isset($this->request->post['fedex_status'])) {
+			$this->data['fedex_status'] = $this->request->post['fedex_status'];
+		} else {
+			$this->data['fedex_status'] = $this->config->get('fedex_status');
+		}	
 		
 		if (isset($this->request->post['fedex_sort_order'])) {
 			$this->data['fedex_sort_order'] = $this->request->post['fedex_sort_order'];

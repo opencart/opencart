@@ -1,27 +1,12 @@
-.png {
-	behavior: url('catalog/view/javascript/png/iepngfix.htc');
-}
-#header .div2 img {
-	behavior: url('catalog/view/javascript/png/iepngfix.htc');	
-	width: auto;
-	height: auto;
-}
 #header .div3 {
-	behavior: url('catalog/view/javascript/png/iepngfix.htc');
 	width: 268px;
 	height: 67px;
-}
-#header .div4 img {
-	behavior: url('catalog/view/javascript/png/iepngfix.htc');
-	width: 16px;
-	height: 16px;
 }
 #content {
 	float: left;
 	width: 580px;	
 }
 #content .top {
-	behavior: url('catalog/view/javascript/png/iepngfix.htc');
 	float: left;
 	clear: both;
 	width: 100%;	
@@ -36,17 +21,11 @@
 	clear: both;
 	width: 100%;	
 	line-height: 5px;
-	behavior: url('catalog/view/javascript/png/iepngfix.htc');
 }
 .box {
 	float: left;
 	clear: both;
 	width: 100%;
-}
-.box .top img {
-	behavior: url('catalog/view/javascript/png/iepngfix.htc');
-	width: 16px;
-	height: 16px;	
 }
 .box .top {
 	float: left;

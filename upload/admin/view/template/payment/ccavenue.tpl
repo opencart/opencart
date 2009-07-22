@@ -10,8 +10,7 @@
   <div id="tab_general" class="page">
     <table class="form">
       <tr>
-        <td width="25%"><span class="required">*</span> <?php echo $entry_key; ?><br />
-          <span class="help"><?php echo $help_key; ?></span></td>
+        <td width="25%"><span class="required">*</span> <?php echo $entry_key; ?></td>
         <td><input type="text" name="ccavenue_key" value="<?php echo $ccavenue_key; ?>" />
           <br />
           <?php if ($error_key) { ?>

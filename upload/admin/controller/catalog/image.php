@@ -22,7 +22,7 @@ class ControllerCatalogImage extends Controller {
 			$data['error'] = $this->error['message'];
 		}
 		
-		$this->load->helper('json');
+		$this->load->library('json');
 		
 		$this->response->setOutput(Json::encode($data));
 	}

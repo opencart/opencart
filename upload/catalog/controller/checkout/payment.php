@@ -41,31 +41,29 @@ class ControllerCheckoutPayment extends Controller {
 
 		$this->load->model('checkout/extension');
 		
-		if (!isset($this->session->data['payment_methods'])) {
-			$method_data = array();
+		$method_data = array();
 		
-			$results = $this->model_checkout_extension->getExtensions('payment');
+		$results = $this->model_checkout_extension->getExtensions('payment');
 
-			foreach ($results as $result) {
-				$this->load->model('payment/' . $result['key']);
+		foreach ($results as $result) {
+			$this->load->model('payment/' . $result['key']);
 			
-				$method = $this->{'model_payment_' . $result['key']}->getMethod(); 
+			$method = $this->{'model_payment_' . $result['key']}->getMethod(); 
 			 
-				if ($method) {
-					$method_data[$result['key']] = $method;
-				}
+			if ($method) {
+				$method_data[$result['key']] = $method;
 			}
-					 
-			$sort_order = array(); 
-	  
-			foreach ($method_data as $key => $value) {
-      			$sort_order[$key] = $value['sort_order'];
-    		}
-
-    		array_multisort($sort_order, SORT_ASC, $method_data);			
-		
-			$this->session->data['payment_methods'] = $method_data;
 		}
+					 
+		$sort_order = array(); 
+	  
+		foreach ($method_data as $key => $value) {
+      		$sort_order[$key] = $value['sort_order'];
+    	}
+
+    	array_multisort($sort_order, SORT_ASC, $method_data);			
+		
+		$this->session->data['payment_methods'] = $method_data;
 		
 		$this->language->load('checkout/payment');
 		
@@ -165,10 +163,12 @@ class ControllerCheckoutPayment extends Controller {
 		
 		$this->data['methods'] = $this->session->data['payment_methods'];
 
-		if (isset($this->session->data['payment_method']['id'])) {
+		if (isset($this->request->post['payment'])) {
+			$this->data['default'] = $this->request->post['payment'];
+		} elseif (isset($this->session->data['payment_method']['id'])) {
     		$this->data['default'] = $this->session->data['payment_method']['id'];
 		} else {
-			$this->data['default'] = @$this->request->post['payment'];
+			$this->data['default'] = '';
 		}
 		
     	$this->data['comment'] = @$this->session->data['comment'];

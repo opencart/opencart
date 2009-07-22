@@ -10,8 +10,7 @@
   <div id="tab_general" class="page">
     <table class="form">
       <tr>
-        <td><?php echo $entry_total; ?><br />
-          <span class="help"><?php echo $help_total; ?></span></td>
+        <td width="25%"><?php echo $entry_total; ?></td>
         <td><input type="text" name="free_total" value="<?php echo $free_total; ?>" /></td>
       </tr>
       <tr>
@@ -28,7 +27,7 @@
           </select></td>
       </tr>
       <tr>
-        <td width="25%"><?php echo $entry_status; ?></td>
+        <td><?php echo $entry_status; ?></td>
         <td><select name="free_status">
             <?php if ($free_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>

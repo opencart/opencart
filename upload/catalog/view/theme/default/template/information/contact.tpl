@@ -45,7 +45,7 @@
       <?php if ($error_captcha) { ?>
       <span class="error"><?php echo $error_captcha; ?></span>
       <?php } ?>
-      <img src="index.php?route=product/product/captcha" /></div>
+      <img src="index.php?route=information/contact/captcha" /></div>
     <div class="buttons">
       <table>
         <tr>

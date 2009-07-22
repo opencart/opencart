@@ -10,7 +10,7 @@
   <div id="tab_general" class="page">
     <table class="form">
       <tr>
-        <td><?php echo $entry_cost; ?></td>
+        <td width="25%"><?php echo $entry_cost; ?></td>
         <td><input type="text" name="item_cost" value="<?php echo $item_cost; ?>" /></td>
       </tr>
       <tr>
@@ -40,7 +40,7 @@
           </select></td>
       </tr>
       <tr>
-        <td width="25%"><?php echo $entry_status; ?></td>
+        <td><?php echo $entry_status; ?></td>
         <td><select name="item_status">
             <?php if ($item_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>

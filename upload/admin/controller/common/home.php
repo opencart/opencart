@@ -38,7 +38,7 @@ class ControllerCommonHome extends Controller {
 		
 		$this->load->model('customer/order');
 		
-		$this->data['orders'] = array();
+		$this->data['orders'] = array(); 
 		
 		$data = array(
 			'sort'  => 'o.date_added',

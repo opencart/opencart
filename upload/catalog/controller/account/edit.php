@@ -49,7 +49,6 @@ class ControllerAccountEdit extends Controller {
 
 		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
-		$this->data['entry_date_of_birth'] = $this->language->get('entry_date_of_birth');
 		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
 		$this->data['entry_fax'] = $this->language->get('entry_fax');

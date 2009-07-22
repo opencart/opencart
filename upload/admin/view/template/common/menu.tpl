@@ -55,7 +55,7 @@
       <li><a href="<?php echo $customer; ?>"><?php echo $text_customer; ?></a></li>
       <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
       <li><a href="<?php echo $coupon; ?>"><?php echo $text_coupon; ?></a></li>
-      <li><a href="<?php echo $mail; ?>"><?php echo $text_mail; ?></a></li>
+      <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
     </ul>
   </li>
   <li id="reports"><a class="top"><?php echo $text_reports; ?></a>
@@ -68,7 +68,7 @@
   <li id="help"><a class="top"><?php echo $text_help; ?></a>
     <ul>
       <li><a onclick="window.open('http://www.opencart.com');"><?php echo $text_opencart; ?></a></li>
-      <li><a onclick="window.open('http://wiki.opencart.com');"><?php echo $text_documentation; ?></a></li>
+      <li><a onclick="window.open('http://www.opencart.com/index.php?route=documentation/introduction');"><?php echo $text_documentation; ?></a></li>
       <li><a onclick="window.open('http://forum.opencart.com');"><?php echo $text_support; ?></a></li>
     </ul>
   </li>  

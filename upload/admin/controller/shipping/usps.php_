@@ -24,10 +24,10 @@ class ControllerShippingUsps extends Controller {
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
 		
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_cost'] = $this->language->get('entry_cost');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -60,19 +60,7 @@ class ControllerShippingUsps extends Controller {
 		$this->data['action'] = $this->url->https('shipping/flat');
 		
 		$this->data['cancel'] = $this->url->https('extension/shipping');
-	
-		if (isset($this->request->post['flat_status'])) {
-			$this->data['flat_status'] = $this->request->post['flat_status'];
-		} else {
-			$this->data['flat_status'] = $this->config->get('flat_status');
-		}
 
-		if (isset($this->request->post['flat_geo_zone_id'])) {
-			$this->data['flat_geo_zone_id'] = $this->request->post['flat_geo_zone_id'];
-		} else {
-			$this->data['flat_geo_zone_id'] = $this->config->get('flat_geo_zone_id');
-		}
-		
 		if (isset($this->request->post['flat_cost'])) {
 			$this->data['flat_cost'] = $this->request->post['flat_cost'];
 		} else {
@@ -83,6 +71,18 @@ class ControllerShippingUsps extends Controller {
 			$this->data['flat_tax_class_id'] = $this->request->post['flat_tax_class_id'];
 		} else {
 			$this->data['flat_tax_class_id'] = $this->config->get('flat_tax_class_id');
+		}
+
+		if (isset($this->request->post['flat_geo_zone_id'])) {
+			$this->data['flat_geo_zone_id'] = $this->request->post['flat_geo_zone_id'];
+		} else {
+			$this->data['flat_geo_zone_id'] = $this->config->get('flat_geo_zone_id');
+		}
+	
+		if (isset($this->request->post['flat_status'])) {
+			$this->data['flat_status'] = $this->request->post['flat_status'];
+		} else {
+			$this->data['flat_status'] = $this->config->get('flat_status');
 		}
 		
 		if (isset($this->request->post['flat_sort_order'])) {

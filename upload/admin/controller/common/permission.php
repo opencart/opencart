@@ -14,7 +14,7 @@ class ControllerCommonPermission extends Controller {
 				'error/error_403',
 				'error/error_404'		
 			);
-		
+			
 			if (!in_array(@$part[0] . '/' . @$part[1], $ignore)) {
 				if (!$this->user->hasPermission('access', @$part[0] . '/' . @$part[1])) {
 					return $this->forward('error/permission');

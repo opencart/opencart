@@ -18,8 +18,7 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><span class="required">*</span> <?php echo $entry_packaging; ?><br />
-          <span class="help"><?php echo $help_packaging; ?></span></td>
+        <td><span class="required">*</span> <?php echo $entry_packaging; ?></td>
         <td><input type="text" name="ups_packaging" value="<?php echo $ups_packaging; ?>" />
           <br />
           <?php if ($error_packaging) { ?>
@@ -39,8 +38,7 @@
           </select></td>
       </tr>
       <tr>
-        <td><?php echo $entry_type; ?><br />
-          <span class="help"><?php echo $help_type; ?></span></td>
+        <td><?php echo $entry_type; ?></td>
         <td><select name="ups_type">
             <?php foreach ($types as $type) { ?>
             <?php if ($type['code'] == $ups_type) { ?>

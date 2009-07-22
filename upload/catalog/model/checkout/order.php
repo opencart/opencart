@@ -35,7 +35,7 @@ class ModelCheckoutOrder extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "order_download SET order_id = '" . (int)$order_id . "', order_product_id = '" . (int)$order_product_id . "', name = '" . $this->db->escape($download['name']) . "', filename = '" . $this->db->escape($download['filename']) . "', mask = '" . $this->db->escape($download['mask']) . "', remaining = '" . (int)($download['remaining'] * $product['quantity']) . "'");
 			}	
 		}
-
+		
 		foreach ($data['totals'] as $total) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_total SET order_id = '" . (int)$order_id . "', title = '" . $this->db->escape($total['title']) . "', text = '" . $this->db->escape($total['text']) . "', `value` = '" . (float)$total['value'] . "', sort_order = '" . (int)$total['sort_order'] . "'");
 		}	
@@ -54,18 +54,19 @@ class ModelCheckoutOrder extends Model {
 			$language = new Language($order_query->row['language']);
 			$language->load('checkout/confirm');
 			
-			$subject = sprintf($language->get('mail_new_order_subject'), $this->config->get('config_store'), $order_id);
+			$this->load->model('localisation/currency');
 			
-			$message  = $language->get('mail_new_order_greeting') . "\n\n";
+			$subject = sprintf($language->get('mail_new_order_subject'), $this->config->get('config_store'), $order_id);
+			$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_query->row['language_id'] . "'");
+			$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+			$order_total_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
+			$order_download_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_download WHERE order_id = '" . (int)$order_id . "'");
+			
+			$message  = sprintf($language->get('mail_new_order_greeting'), $this->config->get('config_store')) . "\n\n";
 			$message .= $language->get('mail_new_order_order') . ' ' . $order_id . "\n";
 			$message .= $language->get('mail_new_order_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_query->row['date_added'])) . "\n";
-			
-			$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_query->row['language_id'] . "'");
-
 			$message .= $language->get('mail_new_order_order_status') . ' ' . @$order_status_query->row['name'] . "\n\n";
 			$message .= $language->get('mail_new_order_product') . "\n";
-			
-			$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
 			
 			foreach ($order_product_query->rows as $result) {
 				$message .= $result['quantity'] . 'x ' . $result['name'] . ' (' . $result['model'] . ') ' . $this->currency->format($result['total'], $order_query->row['currency'], $order_query->row['value']) . "\n";
@@ -75,8 +76,6 @@ class ModelCheckoutOrder extends Model {
 			
 			$message .= $language->get('mail_new_order_total') . "\n";
 			
-			$order_total_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
-			
 			foreach ($order_total_query->rows as $result) {
 				$message .= $result['title'] . ' ' . $result['text'] . "\n";
 			}			
@@ -85,8 +84,6 @@ class ModelCheckoutOrder extends Model {
 			
 			$message .= $language->get('mail_new_order_invoice') . "\n";
 			$message .= html_entity_decode($this->url->http('account/invoice&order_id=' . $order_id)) . "\n\n";
-			
-			$order_download_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_download WHERE order_id = '" . (int)$order_id . "'");
 			
 			if ($order_download_query->num_rows) {
 				$message .= $language->get('mail_new_order_download') . "\n";
@@ -100,7 +97,7 @@ class ModelCheckoutOrder extends Model {
 			
 			$message .= $language->get('mail_new_order_footer');
 
-			$mail = new Mail(); 
+			$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), html_entity_decode($this->config->get('config_smtp_password')), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout')); 
 			$mail->setTo($order_query->row['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($this->config->get('config_store'));
@@ -109,7 +106,37 @@ class ModelCheckoutOrder extends Model {
 			$mail->send();
 			
 			if ($this->config->get('config_alert_mail')) {
-				$mail = new Mail(); 
+				$message  = $language->get('mail_new_order_received') . "\n\n";
+				$message .= $language->get('mail_new_order_order') . ' ' . $order_id . "\n";
+				$message .= $language->get('mail_new_order_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_query->row['date_added'])) . "\n";
+				$message .= $language->get('mail_new_order_order_status') . ' ' . @$order_status_query->row['name'] . "\n\n";
+				$message .= $language->get('mail_new_order_product') . "\n";
+				
+				foreach ($order_product_query->rows as $result) {
+					$message .= $result['quantity'] . 'x ' . $result['name'] . ' (' . $result['model'] . ') ' . $this->currency->format($result['total'], $order_query->row['currency'], $order_query->row['value']) . "\n";
+				}
+				
+				$message .= "\n";
+				
+				$message .= $language->get('mail_new_order_total') . "\n";
+				
+				foreach ($order_total_query->rows as $result) {
+					$message .= $result['title'] . ' ' . $result['text'] . "\n";
+				}			
+				
+				$message .= "\n";
+				
+				if ($order_download_query->num_rows) {
+					$message .= $language->get('mail_new_order_download') . "\n";
+					$message .= $this->url->http('account/download') . "\n\n";
+				}
+				
+				if ($comment) {
+					$message .= $language->get('mail_new_order_comment') . "\n\n";
+					$message .= $comment . "\n\n";
+				}
+			
+				$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), $this->config->get('config_smtp_password'), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout')); 
 				$mail->setTo($this->config->get('config_email'));
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($this->config->get('config_store'));
@@ -129,7 +156,7 @@ class ModelCheckoutOrder extends Model {
 	}
 	
 	public function update($order_id, $order_status_id, $comment = '', $notifiy = FALSE) {
-		$order_query = $this->db->query("SELECT *, os.name AS status, l.code AS language FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id AND os.language_id = o.language_id) LEFT JOIN " . DB_PREFIX . "language l ON (o.language_id = l.language_id) WHERE o.order_id = '" . (int)$order_id . "' AND o.order_status_id > '0'");
+		$order_query = $this->db->query("SELECT *, o.language_id, l.code AS language FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "language l ON (o.language_id = l.language_id) WHERE o.order_id = '" . (int)$order_id . "' AND o.order_status_id > '0'");
 		
 		if ($order_query->num_rows) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
@@ -145,10 +172,13 @@ class ModelCheckoutOrder extends Model {
 				$message  = $language->get('mail_update_order_order') . ' ' . $order_id . "\n";
 				$message .= $language->get('mail_update_order_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_query->row['date_added'])) . "\n\n";
 				$message .= $language->get('mail_update_order_order_status') . "\n\n";
-				$message .= $query->row['status'] . "\n\n";
+				
+				$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_query->row['language_id'] . "'");
+				
+				$message .= $order_status_query->row['name'] . "\n\n";
 					
 				$message .= $language->get('mail_update_order_invoice') . "\n";
-				$message .= html_entity_decode($this->url->http('account/invoice&order_id=' . $order_id));
+				$message .= html_entity_decode($this->url->http('account/invoice&order_id=' . $order_id)) . "\n\n";
 					
 				if ($comment) { 
 					$message .= $language->get('mail_update_order_comment') . "\n\n";
@@ -157,7 +187,7 @@ class ModelCheckoutOrder extends Model {
 					
 				$message .= $language->get('mail_update_order_footer');
 
-				$mail = new Mail();
+				$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), html_entity_decode($this->config->get('config_smtp_password')), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout'));
 				$mail->setTo($order_query->row['email']);
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($this->config->get('config_store'));

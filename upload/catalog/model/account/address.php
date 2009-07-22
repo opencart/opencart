@@ -6,7 +6,7 @@ class ModelAccountAddress extends Model {
 		$address_id = $this->db->getLastId();
 		
       	if (@$data['default']) {
-        	$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
+        	$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
       	}
 		
 		return $address_id;

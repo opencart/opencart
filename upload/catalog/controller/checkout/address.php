@@ -70,7 +70,7 @@ class ControllerCheckoutAddress extends Controller {
     	}		
 		
 		$this->language->load('checkout/address');
-
+		
     	$this->document->title = $this->language->get('heading_title');  
 
 		$this->document->breadcrumbs = array();

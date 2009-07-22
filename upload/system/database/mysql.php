@@ -13,6 +13,7 @@ final class MySQL {
 		
 		mysql_query("SET NAMES 'utf8'", $this->connection);
 		mysql_query("SET CHARACTER SET utf8", $this->connection);
+		mysql_query("SET CHARACTER_SET_CONNECTION=utf8", $this->connection);
   	}
 		
   	public function query($sql) {
@@ -44,7 +45,7 @@ final class MySQL {
 				return TRUE;
 			}
 		} else {
-      		exit('Error: ' . mysql_error() . '<br />Error No: ' . mysql_errno() . '<br />' . $sql);
+      		exit('Error: ' . mysql_error($this->connection) . '<br />Error No: ' . mysql_errno($this->connection) . '<br />' . $sql);
     	}
   	}
 	

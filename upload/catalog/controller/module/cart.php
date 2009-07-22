@@ -55,6 +55,11 @@ class ControllerModuleCart extends Controller {
 			}
 			
       		$this->cart->add($this->request->post['product_id'], $this->request->post['quantity'], $option);
+			
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['payment_methods']);
+			unset($this->session->data['payment_method']);			
 		}
 				
 		$output = '<table cellpadding="2" cellspacing="0" style="width: 100%;">';

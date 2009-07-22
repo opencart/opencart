@@ -406,7 +406,7 @@ class ControllerUserUser extends Controller {
     	}
   	}
 
-  	private function validateDelete() { 	
+  	private function validateDelete() { 
     	if (!$this->user->hasPermission('modify', 'user/user')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	} 

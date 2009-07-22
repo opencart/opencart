@@ -46,7 +46,7 @@ Registry::set('request', $request);
 
 // Response
 $response = new Response();
-$response->addHeader('Content-Type', 'text/html; charset=UTF-8');
+$response->addHeader('Content-Type', 'text/html; charset=utf-8');
 Registry::set('response', $response);
 
 // Cache

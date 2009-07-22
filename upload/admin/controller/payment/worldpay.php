@@ -39,9 +39,6 @@ class ControllerPaymentWorldPay extends Controller {
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		
-		$this->data['help_password'] = $this->language->get('help_password');
-		$this->data['help_callback'] = $this->language->get('help_callback');
 
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');

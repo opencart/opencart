@@ -48,6 +48,11 @@
         <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" /></td>
         <td><select name="filter_order_status_id">
             <option value="*"></option>
+            <?php if ($filter_order_status_id == '0') { ?>
+            <option value="0" selected="selected"><?php echo $text_no_status; ?></option>
+            <?php } else { ?>
+            <option value="0"><?php echo $text_no_status; ?></option>
+            <?php } ?>
             <?php foreach ($order_statuses as $order_status) { ?>
             <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
             <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>

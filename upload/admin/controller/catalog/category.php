@@ -22,12 +22,6 @@ class ControllerCatalogCategory extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
 			$this->model_catalog_category->addCategory($this->request->post);
 
-			if ($this->config->get('config_seo_url')) {
-				$this->load->model('tool/seo_url');
-				
-				$this->model_tool_seo_url->generate();
-			}
-			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
 			$this->redirect($this->url->https('catalog/category'));
@@ -45,12 +39,6 @@ class ControllerCatalogCategory extends Controller {
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
 			$this->model_catalog_category->editCategory($this->request->get['category_id'], $this->request->post);
-
-			if ($this->config->get('config_seo_url')) {
-				$this->load->model('tool/seo_url');
-				
-				$this->model_tool_seo_url->generate();
-			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
@@ -72,12 +60,6 @@ class ControllerCatalogCategory extends Controller {
 				$this->model_catalog_category->deleteCategory($category_id);
 			}
 
-			if ($this->config->get('config_seo_url')) {
-				$this->load->model('tool/seo_url');
-				
-				$this->model_tool_seo_url->generate();
-			}
-			
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->redirect($this->url->https('catalog/category'));

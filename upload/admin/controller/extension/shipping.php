@@ -44,38 +44,40 @@ class ControllerExtensionShipping extends Controller {
 		
 		$files = glob(DIR_APPLICATION . 'controller/shipping/*.php');
 		
-		foreach ($files as $file) {
-			$extension = basename($file, '.php');
-			
-			$this->load->language('shipping/' . $extension);
-
-			$action = array();
-			
-			if (!in_array($extension, $extensions)) {
-				$action[] = array(
-					'text' => $this->language->get('text_install'),
-					'href' => $this->url->https('extension/shipping/install&extension=' . $extension)
-				);
-			} else {
-				$action[] = array(
-					'text' => $this->language->get('text_edit'),
-					'href' => $this->url->https('shipping/' . $extension)
-				);
-							
-				$action[] = array(
-					'text' => $this->language->get('text_uninstall'),
-					'href' => $this->url->https('extension/shipping/uninstall&extension=' . $extension)
+		if ($files) {
+			foreach ($files as $file) {
+				$extension = basename($file, '.php');
+				
+				$this->load->language('shipping/' . $extension);
+	
+				$action = array();
+				
+				if (!in_array($extension, $extensions)) {
+					$action[] = array(
+						'text' => $this->language->get('text_install'),
+						'href' => $this->url->https('extension/shipping/install&extension=' . $extension)
+					);
+				} else {
+					$action[] = array(
+						'text' => $this->language->get('text_edit'),
+						'href' => $this->url->https('shipping/' . $extension)
+					);
+								
+					$action[] = array(
+						'text' => $this->language->get('text_uninstall'),
+						'href' => $this->url->https('extension/shipping/uninstall&extension=' . $extension)
+					);
+				}
+										
+				$this->data['extensions'][] = array(
+					'name'       => $this->language->get('heading_title'),
+					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'sort_order' => $this->config->get($extension . '_sort_order'),
+					'action'     => $action
 				);
 			}
-									
-			$this->data['extensions'][] = array(
-				'name'       => $this->language->get('heading_title'),
-				'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'sort_order' => $this->config->get($extension . '_sort_order'),
-				'action'     => $action
-			);
 		}
-	
+		
 		$this->id       = 'content';
 		$this->template = 'extension/shipping.tpl';
 		$this->layout   = 'common/layout';

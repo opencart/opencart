@@ -44,38 +44,40 @@ class ControllerExtensionTotal extends Controller {
 				
 		$files = glob(DIR_APPLICATION . 'controller/total/*.php');
 		
-		foreach ($files as $file) {
-			$extension = basename($file, '.php');
-			
-			$this->load->language('total/' . $extension);
-
-			$action = array();
-			
-			if (!in_array($extension, $extensions)) {
-				$action[] = array(
-					'text' => $this->language->get('text_install'),
-					'href' => $this->url->https('extension/total/install&extension=' . $extension)
-				);
-			} else {
-				$action[] = array(
-					'text' => $this->language->get('text_edit'),
-					'href' => $this->url->https('total/' . $extension)
-				);
-							
-				$action[] = array(
-					'text' => $this->language->get('text_uninstall'),
-					'href' => $this->url->https('extension/total/uninstall&extension=' . $extension)
+		if ($files) {
+			foreach ($files as $file) {
+				$extension = basename($file, '.php');
+				
+				$this->load->language('total/' . $extension);
+	
+				$action = array();
+				
+				if (!in_array($extension, $extensions)) {
+					$action[] = array(
+						'text' => $this->language->get('text_install'),
+						'href' => $this->url->https('extension/total/install&extension=' . $extension)
+					);
+				} else {
+					$action[] = array(
+						'text' => $this->language->get('text_edit'),
+						'href' => $this->url->https('total/' . $extension)
+					);
+								
+					$action[] = array(
+						'text' => $this->language->get('text_uninstall'),
+						'href' => $this->url->https('extension/total/uninstall&extension=' . $extension)
+					);
+				}
+										
+				$this->data['extensions'][] = array(
+					'name'       => $this->language->get('heading_title'),
+					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'sort_order' => $this->config->get($extension . '_sort_order'),
+					'action'     => $action
 				);
 			}
-									
-			$this->data['extensions'][] = array(
-				'name'       => $this->language->get('heading_title'),
-				'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'sort_order' => $this->config->get($extension . '_sort_order'),
-				'action'     => $action
-			);
 		}
-													
+		
 		$this->id       = 'content';
 		$this->template = 'extension/total.tpl';
 		$this->layout   = 'common/layout';

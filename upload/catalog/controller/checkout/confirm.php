@@ -105,7 +105,7 @@ class ControllerCheckoutConfirm extends Controller {
 		$data['payment_country'] = $payment_address['country'];
 		$data['payment_address_format'] = $payment_address['address_format'];
 		$data['payment_method'] = @$this->session->data['payment_method']['title'];
-
+		
 		$product_data = array();
 	
 		foreach ($this->cart->getProducts() as $product) {
@@ -125,14 +125,14 @@ class ControllerCheckoutConfirm extends Controller {
         		'model'      => $product['model'],
         		'option'     => $option_data,
 				'download'   => $product['download'],
-				'quantity'   => $product['quantity'],
+				'quantity'   => $product['quantity'], 
 				'price'      => $product['price'],
 				'discount'   => $product['discount'],
         		'total'      => $product['total'],
 				'tax'        => $this->tax->getRate($product['tax_class_id'])
       		); 
     	}
-				
+		
 		$data['products'] = $product_data;
 		$data['totals'] = $total_data;
 		$data['comment'] = $this->session->data['comment'];
@@ -310,7 +310,7 @@ class ControllerCheckoutConfirm extends Controller {
     	$this->data['checkout_payment'] = $this->url->https('checkout/payment');
 
     	$this->data['checkout_payment_address'] = $this->url->https('checkout/address/payment');
-
+		
     	$this->data['products'] = array();
 
     	foreach ($this->cart->getProducts() as $product) {

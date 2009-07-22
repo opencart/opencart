@@ -53,7 +53,7 @@ class ControllerProductManufacturer extends Controller {
 				}
 			
 				$this->load->model('catalog/review');
-			
+				
 				$this->data['products'] = array();
         		
 				$results = $this->model_catalog_product->getProductsByManufacturerId($this->request->get['manufacturer_id'], $sort, $order, ($page - 1) * 12, 12);
@@ -80,7 +80,7 @@ class ControllerProductManufacturer extends Controller {
 						'model'   => $result['model'],
 						'rating'  => $rating,
 						'stars'   => sprintf($this->language->get('text_stars'), $rating),            			
-						'thumb'   => HelperImage::resize($image, 120, 120),
+						'thumb'   => HelperImage::resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
             			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 						'special' => $special,
 						'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&product_id=' . $result['product_id']))

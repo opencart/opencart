@@ -34,8 +34,8 @@ class ControllerCustomerOrder extends Controller {
 				$url .= '&filter_name=' . $this->request->get['filter_name'];
 			}
 
-			if (isset($this->request->get['filter_status'])) {
-				$url .= '&filter_status=' . $this->request->get['filter_status'];
+			if (isset($this->request->get['filter_order_status_id'])) {
+				$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 			}
 
 			if (isset($this->request->get['filter_date_added'])) {
@@ -88,8 +88,8 @@ class ControllerCustomerOrder extends Controller {
 				$url .= '&filter_name=' . $this->request->get['filter_name'];
 			}
 
-			if (isset($this->request->get['filter_status'])) {
-				$url .= '&filter_status=' . $this->request->get['filter_status'];
+			if (isset($this->request->get['filter_order_status_id'])) {
+				$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 			}
 
 			if (isset($this->request->get['filter_date_added'])) {
@@ -190,10 +190,9 @@ class ControllerCustomerOrder extends Controller {
 		$this->data['orders'] = array();
 
 		$data = array(
-			'filter_order_id' => @$this->request->get['filter_order_id'],
+			'order_id'        => @$this->request->get['filter_order_id'],
 			'name'	          => @$this->request->get['filter_name'], 
 			'order_status_id' => @$this->request->get['filter_order_status_id'], 
-			'status'          => @$this->request->get['filter_status'],
 			'date_added'      => @$this->request->get['filter_date_added'],
 			'total'           => @$this->request->get['filter_total'],
 			'sort'            => $sort,
@@ -228,6 +227,7 @@ class ControllerCustomerOrder extends Controller {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
+		$this->data['text_no_status'] = $this->language->get('text_no_status');
 
 		$this->data['column_order'] = $this->language->get('column_order');
     	$this->data['column_name'] = $this->language->get('column_name');
@@ -325,7 +325,6 @@ class ControllerCustomerOrder extends Controller {
 		$this->data['filter_order_id'] = @$this->request->get['filter_order_id'];
 		$this->data['filter_name'] = @$this->request->get['filter_name'];
 		$this->data['filter_order_status_id'] = @$this->request->get['filter_order_status_id'];
-		$this->data['filter_status'] = @$this->request->get['filter_status'];
 		$this->data['filter_date_added'] = @$this->request->get['filter_date_added'];
 		$this->data['filter_total'] = @$this->request->get['filter_total'];
 		

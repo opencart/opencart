@@ -22,7 +22,7 @@ class ControllerAccountForgotten extends Controller {
 			$message .= $this->language->get('mail_password') . "\n\n";
 			$message .= $password;
 
-			$mail = new Mail();
+			$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), html_entity_decode($this->config->get('config_smtp_password')), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout'));
 			$mail->setTo($this->request->post['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($this->config->get('config_store'));

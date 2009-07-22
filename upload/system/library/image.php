@@ -69,7 +69,7 @@ final class Image {
     	$xpos = (int)(($width - $new_width) / 2);
    		$ypos = (int)(($height - $new_height) / 2);
         		        
-       	$image_old   = $this->image;
+       	$image_old = $this->image;
         $this->image = imagecreatetruecolor($width, $height);
 			
 		$background = imagecolorallocate($this->image, 255, 255, 255);
@@ -85,7 +85,7 @@ final class Image {
     public function watermark($file, $position = 'bottomright') {
         $watermark = $this->create($file);
         
-        $watermark_width  = imagesx($watermark);
+        $watermark_width = imagesx($watermark);
         $watermark_height = imagesy($watermark);
         
         switch($position) {
@@ -113,13 +113,13 @@ final class Image {
     }
     
     public function crop($top_x, $top_y, $bottom_x, $bottom_y) {
-        $image_old   = $this->image;
+        $image_old = $this->image;
         $this->image = imagecreatetruecolor($bottom_x - $top_x, $bottom_y - $top_y);
         
         imagecopy($this->image, $image_old, 0, 0, $top_x, $top_y, $this->info['width'], $this->info['height']);
         imagedestroy($image_old);
         
-        $this->info['width']  = $bottom_x - $top_x;
+        $this->info['width'] = $bottom_x - $top_x;
         $this->info['height'] = $bottom_y - $top_y;
     }
     
@@ -128,7 +128,7 @@ final class Image {
 		
         $this->image = imagerotate($this->image, $degree, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
         
-		$this->info['width']  = imagesx($this->image);
+		$this->info['width'] = imagesx($this->image);
 		$this->info['height'] = imagesy($this->image);
     }
 	    

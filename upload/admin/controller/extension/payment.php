@@ -44,47 +44,48 @@ class ControllerExtensionPayment extends Controller {
 						
 		$files = glob(DIR_APPLICATION . 'controller/payment/*.php');
 		
-		foreach ($files as $file) {
-			$extension = basename($file, '.php');
-			
-			$this->load->language('payment/' . $extension);
-
-			$action = array();
-			
-			if (!in_array($extension, $extensions)) {
-				$action[] = array(
-					'text' => $this->language->get('text_install'),
-					'href' => $this->url->https('extension/payment/install&extension=' . $extension)
-				);
-			} else {
-				$action[] = array(
-					'text' => $this->language->get('text_edit'),
-					'href' => $this->url->https('payment/' . $extension)
-				);
-							
-				$action[] = array(
-					'text' => $this->language->get('text_uninstall'),
-					'href' => $this->url->https('extension/payment/uninstall&extension=' . $extension)
+		if ($files) {
+			foreach ($files as $file) {
+				$extension = basename($file, '.php');
+				
+				$this->load->language('payment/' . $extension);
+	
+				$action = array();
+				
+				if (!in_array($extension, $extensions)) {
+					$action[] = array(
+						'text' => $this->language->get('text_install'),
+						'href' => $this->url->https('extension/payment/install&extension=' . $extension)
+					);
+				} else {
+					$action[] = array(
+						'text' => $this->language->get('text_edit'),
+						'href' => $this->url->https('payment/' . $extension)
+					);
+								
+					$action[] = array(
+						'text' => $this->language->get('text_uninstall'),
+						'href' => $this->url->https('extension/payment/uninstall&extension=' . $extension)
+					);
+				}
+				
+				$text_link = $this->language->get('text_' . $extension);
+				
+				if ($text_link != 'text_' . $extension) {
+					$link = $this->language->get('text_' . $extension);
+				} else {
+					$link = '';
+				}
+				
+				$this->data['extensions'][] = array(
+					'name'       => $this->language->get('heading_title'),
+					'link'       => $link,
+					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'sort_order' => $this->config->get($extension . '_sort_order'),
+					'action'     => $action
 				);
 			}
-			
-			$text_link = $this->language->get('text_' . $extension);
-			
-			if ($text_link != 'text_' . $extension) {
-				$link = $this->language->get('text_' . $extension);
-			} else {
-				$link = '';
-			}
-			
-			$this->data['extensions'][] = array(
-				'name'       => $this->language->get('heading_title'),
-				'link'       => $link,
-				'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'sort_order' => $this->config->get($extension . '_sort_order'),
-				'action'     => $action
-			);
 		}
-						
 		$this->id       = 'content';
 		$this->template = 'extension/payment.tpl';
 		$this->layout   = 'common/layout';

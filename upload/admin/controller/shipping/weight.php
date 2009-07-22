@@ -23,12 +23,10 @@ class ControllerShippingWeight extends Controller {
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_cost'] = $this->language->get('entry_cost');
+		$this->data['entry_rate'] = $this->language->get('entry_rate');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		
-		$this->data['help_cost'] = $this->language->get('help_cost');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -59,23 +57,17 @@ class ControllerShippingWeight extends Controller {
 		
 		$this->data['action'] = $this->url->https('shipping/weight');
 		
-		$this->data['cancel'] = $this->url->https('extension/shipping');
+		$this->data['cancel'] = $this->url->https('extension/shipping'); 
 
 		$this->load->model('localisation/geo_zone');
-		
-		if (isset($this->request->post['weight_status'])) {
-			$this->data['weight_status'] = $this->request->post['weight_status'];
-		} else {
-			$this->data['weight_status'] = $this->config->get('weight_status');
-		}
 		
 		$geo_zones = $this->model_localisation_geo_zone->getGeoZones();
 		
 		foreach ($geo_zones as $geo_zone) {
-			if (isset($this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_cost'])) {
-				$this->data['weight_' . $geo_zone['geo_zone_id'] . '_cost'] = $this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_cost'];
+			if (isset($this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_rate'])) {
+				$this->data['weight_' . $geo_zone['geo_zone_id'] . '_rate'] = $this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_rate'];
 			} else {
-				$this->data['weight_' . $geo_zone['geo_zone_id'] . '_cost'] = $this->config->get('weight_' . $geo_zone['geo_zone_id'] . '_cost');
+				$this->data['weight_' . $geo_zone['geo_zone_id'] . '_rate'] = $this->config->get('weight_' . $geo_zone['geo_zone_id'] . '_rate');
 			}		
 			
 			if (isset($this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_status'])) {
@@ -91,6 +83,12 @@ class ControllerShippingWeight extends Controller {
 			$this->data['weight_tax_class_id'] = $this->request->post['weight_tax_class_id'];
 		} else {
 			$this->data['weight_tax_class_id'] = $this->config->get('weight_tax_class_id');
+		}
+		
+		if (isset($this->request->post['weight_status'])) {
+			$this->data['weight_status'] = $this->request->post['weight_status'];
+		} else {
+			$this->data['weight_status'] = $this->config->get('weight_status');
 		}
 		
 		if (isset($this->request->post['weight_sort_order'])) {

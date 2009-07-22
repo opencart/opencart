@@ -20,9 +20,9 @@ class ModelInstall extends Model {
 					$query .= $line;
   
 					if (preg_match('/;\s*$/', $line)) {
-						$query = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $query);
-						$query = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $query);
-						$query = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $query);
+						$query = str_replace("DROP TABLE IF EXISTS `opencart_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $query);
+						$query = str_replace("CREATE TABLE `opencart_", "CREATE TABLE `" . $data['db_prefix'], $query);
+						$query = str_replace("INSERT INTO `opencart_", "INSERT INTO `" . $data['db_prefix'], $query);
 						
 						$result = mysql_query($query, $connection);
   

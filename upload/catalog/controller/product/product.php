@@ -148,8 +148,8 @@ class ControllerProductProduct extends Controller {
 				$image = 'no_image.jpg';
 			}	
 					
-			$this->data['popup'] = HelperImage::resize($image, 400, 400);
-	  		$this->data['thumb'] = HelperImage::resize($image, 250, 250);
+			$this->data['popup'] = HelperImage::resize($image, $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+	  		$this->data['thumb'] = HelperImage::resize($image, $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
 			$this->data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
 			
 			$special = $this->model_catalog_product->getProductSpecial($this->request->get['product_id']);
@@ -197,8 +197,8 @@ class ControllerProductProduct extends Controller {
 			
       		foreach ($results as $result) {
         		$this->data['images'][] = array(
-          			'popup' => HelperImage::resize($result['image'] , 500, 500),
-          			'thumb' => HelperImage::resize($result['image'], 150, 150)
+          			'popup' => HelperImage::resize($result['image'] , $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
+          			'thumb' => HelperImage::resize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height'))
         		);
       		}
 
@@ -228,7 +228,7 @@ class ControllerProductProduct extends Controller {
 					'model'   => $result['model'],
             		'rating'  => $rating,
 					'stars'   => sprintf($this->language->get('text_stars'), $rating),
-					'thumb'   => HelperImage::resize($image, 120, 120),
+					'thumb'   => HelperImage::resize($image, $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height')),
             		'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 					'special' => $special,
 					'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $result['product_id']))

@@ -22,12 +22,6 @@ class ControllerCatalogInformation extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
 			$this->model_catalog_information->addInformation($this->request->post);
 			
-			if ($this->config->get('config_seo_url')) {
-				$this->load->model('tool/seo_url');
-				
-				$this->model_tool_seo_url->generate();
-			}
-			
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
@@ -59,12 +53,6 @@ class ControllerCatalogInformation extends Controller {
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
 			$this->model_catalog_information->editInformation($this->request->get['information_id'], $this->request->post);
-			
-			if ($this->config->get('config_seo_url')) {
-				$this->load->model('tool/seo_url');
-				
-				$this->model_tool_seo_url->generate();
-			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -98,12 +86,6 @@ class ControllerCatalogInformation extends Controller {
 		if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
 			foreach ($this->request->post['delete'] as $information_id) {
 				$this->model_catalog_information->deleteInformation($information_id);
-			}
-			
-			if ($this->config->get('config_seo_url')) {
-				$this->load->model('tool/seo_url');
-				
-				$this->model_tool_seo_url->generate();
 			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');

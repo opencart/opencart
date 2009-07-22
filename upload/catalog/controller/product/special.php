@@ -63,7 +63,6 @@ class ControllerProductSpecial extends Controller {
 			$url = '';
 				
 			$this->load->model('catalog/review');
-			
 			$this->load->model('tool/seo_url');
 			
 			$this->load->helper('image');
@@ -86,7 +85,7 @@ class ControllerProductSpecial extends Controller {
 					'model'   => $result['model'],
 					'rating'  => $rating,
 					'stars'   => sprintf($this->language->get('text_stars'), $rating),
-           			'thumb'   => HelperImage::resize($image, 120, 120),
+           			'thumb'   => HelperImage::resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
            			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 					'special' => $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax'))),
 					'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product' . $url . '&product_id=' . $result['product_id']))

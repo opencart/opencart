@@ -1,5 +1,11 @@
 <?php 
 final class Mail {
+	protected $protocol = 'mail';	
+	protected $smtp_host = '';
+	protected $smtp_username = '';
+	protected $smtp_password = '';
+	protected $smtp_port = '25';
+	protected $smtp_timeout	= 5;
 	protected $to;
   	protected $from;
   	protected $sender;
@@ -8,6 +14,15 @@ final class Mail {
   	protected $html;
   	protected $attachments = array();
 
+	public function __construct($protocol = 'mail', $smtp_host = '', $smtp_username = '', $smtp_password = '', $smtp_port = '25', $smtp_timeout = '5') {
+		$this->protocol = $protocol;
+		$this->smtp_host = $smtp_host;
+		$this->smtp_username = $smtp_username;
+		$this->smtp_password = $smtp_password;
+		$this->smtp_port = $smtp_port;
+		$this->smtp_timeout = $smtp_timeout;
+	}
+	
 	public function setTo($to) {
     	$this->to = $to;
   	}
@@ -58,7 +73,7 @@ final class Mail {
     	}
 
 		if (is_array($this->to)) {
-      		$to = implode($this->to, ',');
+      		$to = implode(',', $this->to);
     	} else {
       		$to = $this->to;
     	}
@@ -67,7 +82,7 @@ final class Mail {
 	    
 		if (strtoupper(substr(PHP_OS, 0, 3) == 'WIN')) { 
       		$eol = "\r\n"; 
-    	} elseif (strtoupper(substr(PHP_OS, 0, 3)=='MAC')) { 
+    	} elseif (strtoupper(substr(PHP_OS, 0, 3) == 'MAC')) { 
       		$eol = "\r"; 
     	} else { 
       		$eol = "\n"; 
@@ -77,7 +92,7 @@ final class Mail {
     	$headers .= 'Reply-To: ' . $this->sender . '<' . $this->from . '>' . $eol;   
     	$headers .= 'X-Mailer: PHP/' . phpversion() . $eol;  
     	$headers .= 'MIME-Version: 1.0' . $eol; 
-    	$headers .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . $eol . $eol;  
+    	$headers .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . $eol;  
 	
 		if (!$this->html) {
 	  		$message  = '--' . $boundary . $eol;  
@@ -119,9 +134,36 @@ final class Mail {
       		$message .= chunk_split(base64_encode($content));
     	}  
 
-		ini_set('sendmail_from', $this->from);
+		if ($this->protocol == 'mail') {
+			ini_set('sendmail_from', $this->from);
 		
-    	mail($to, $this->subject, $message, $headers);  
+    		mail($to, $this->subject, $message, $headers);  
+		} elseif ($this->protocol == 'smtp') {
+			$fp = fsockopen($this->smtp_host, $this->smtp_port, $errno, $errstr, $this->smtp_timeout);	
+
+			if ($fp) {
+				fputs($fp, 'HELO ' . $_SERVER['SERVER_NAME'] . $eol);
+				fputs($fp, 'AUTH LOGIN ' . $eol);
+				fputs($fp, base64_encode($this->smtp_username) . $eol);
+				fputs($fp, base64_encode($this->smtp_password) . $eol);
+				fputs($fp, 'MAIL FROM: <' . $this->from . '>' . $eol);
+				
+				if (!is_array($this->to)) {
+					fputs($fp, 'RCPT TO: <' . $to . '>' . $eol);
+				} else {
+					foreach ($this->to as $recipient) {
+						fputs($fp, 'RCPT TO: <' . $recipient . '>' . $eol);
+					}					
+				}
+				
+				fputs($fp, 'DATA' . $eol);
+				fputs($fp, 'To: ' . $to . $eol . 'Subject: ' . $this->subject . $eol . $headers . $message . $eol . $eol . '.' . $eol);
+				fputs($fp, 'QUIT' . $eol);
+				fputs($fp, base64_encode($this->smtp_username) . $eol);
+				
+				fclose($fp);
+			}
+		}
 	} 
 }
 ?>

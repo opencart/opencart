@@ -22,17 +22,19 @@ class ControllerProductCategory extends Controller {
 			foreach ($parts as $path_id) {
 				$category_info = $this->model_catalog_category->getCategory($path_id);
 				
-				if (!$path) {
-					$path = $path_id;
-				} else {
-					$path .= '_' . $path_id;
-				}
+				if ($category_info) {
+					if (!$path) {
+						$path = $path_id;
+					} else {
+						$path .= '_' . $path_id;
+					}
 
-	       		$this->document->breadcrumbs[] = array(
-   	    			'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $path)),
-    	   			'text'      => $category_info['name'],
-        			'separator' => $this->language->get('text_separator')
-        		);
+	       			$this->document->breadcrumbs[] = array(
+   	    				'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $path)),
+    	   				'text'      => $category_info['name'],
+        				'separator' => $this->language->get('text_separator')
+        			);
+				}
 			}		
 		
 			$category_id = array_pop($parts);
@@ -103,12 +105,12 @@ class ControllerProductCategory extends Controller {
 					$this->data['categories'][] = array(
             			'name'  => $result['name'],
             			'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)),
-            			'thumb' => HelperImage::resize($image, 120, 120)
+            			'thumb' => HelperImage::resize($image, $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'))
           			);
         		}
 				
 				$this->load->model('catalog/review');
-				 
+				
 				$this->data['products'] = array();
         		
 				$results = $this->model_catalog_product->getProductsByCategoryId($category_id, $sort, $order, ($page - 1) * 12, 12);
@@ -135,7 +137,7 @@ class ControllerProductCategory extends Controller {
 						'model'   => $result['model'],
             			'rating'  => $rating,
 						'stars'   => sprintf($this->language->get('text_stars'), $rating),
-						'thumb'   => HelperImage::resize($image, 120, 120),
+						'thumb'   => HelperImage::resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
             			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 						'special' => $special,
 						'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&path=' . $this->request->get['path'] . '&product_id=' . $result['product_id']))

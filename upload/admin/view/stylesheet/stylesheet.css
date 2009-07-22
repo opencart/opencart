@@ -415,7 +415,7 @@ form {
 .page {
 	min-height: 300px;
 	padding: 15px;
-	background: #F8F8F8;
+	background: #FAFAFA;
 	border-bottom: 1px solid #EEEEEE;
 }
 .form {
@@ -485,10 +485,10 @@ form {
 #login .div2 {
 	border-left: 1px solid #CCCCCC;
 	border-right: 1px solid #CCCCCC;
-	background: #F7F7F7;
+	background: #FAFAFA;
 }
 #login .div3 {
-	background: #F7F7F7 url('../image/login_bottom.png') bottom no-repeat;
+	background: #FAFAFA url('../image/login_bottom.png') bottom no-repeat;
 	height: 5px;
 }
 #default #report1 {

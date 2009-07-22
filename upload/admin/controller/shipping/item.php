@@ -23,11 +23,11 @@ class ControllerShippingItem extends Controller {
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
-
-		$this->data['entry_status'] = $this->language->get('entry_status');		
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		
 		$this->data['entry_cost'] = $this->language->get('entry_cost');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 				
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -60,19 +60,7 @@ class ControllerShippingItem extends Controller {
 		$this->data['action'] = $this->url->https('shipping/item');
 		
 		$this->data['cancel'] = $this->url->https('extension/shipping');
-		
-		if (isset($this->request->post['item_status'])) {
-			$this->data['item_status'] = $this->request->post['item_status'];
-		} else {
-			$this->data['item_status'] = $this->config->get('item_status');
-		}
-				
-		if (isset($this->request->post['item_geo_zone_id'])) {
-			$this->data['item_geo_zone_id'] = $this->request->post['item_geo_zone_id'];
-		} else {
-			$this->data['item_geo_zone_id'] = $this->config->get('item_geo_zone_id');
-		}
-		
+
 		if (isset($this->request->post['item_cost'])) {
 			$this->data['item_cost'] = $this->request->post['item_cost'];
 		} else {
@@ -83,6 +71,18 @@ class ControllerShippingItem extends Controller {
 			$this->data['item_tax_class_id'] = $this->request->post['item_tax_class_id'];
 		} else {
 			$this->data['item_tax_class_id'] = $this->config->get('item_tax_class_id');
+		}
+				
+		if (isset($this->request->post['item_geo_zone_id'])) {
+			$this->data['item_geo_zone_id'] = $this->request->post['item_geo_zone_id'];
+		} else {
+			$this->data['item_geo_zone_id'] = $this->config->get('item_geo_zone_id');
+		}
+		
+		if (isset($this->request->post['item_status'])) {
+			$this->data['item_status'] = $this->request->post['item_status'];
+		} else {
+			$this->data['item_status'] = $this->config->get('item_status');
 		}
 		
 		if (isset($this->request->post['item_sort_order'])) {

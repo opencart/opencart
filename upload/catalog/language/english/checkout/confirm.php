@@ -27,7 +27,8 @@ $_['entry_coupon']                   = 'Coupon:';
 
 // Mail
 $_['mail_new_order_subject']         = '%s - Order %s';
-$_['mail_new_order_greeting']        = 'Thank your for interest in Your Store products. Your order has been received and will be processed once payment has been confirmed.';
+$_['mail_new_order_greeting']        = 'Thank your for interest in %s products. Your order has been received and will be processed once payment has been confirmed.';
+$_['mail_new_order_received']        = 'You have received an order.';
 $_['mail_new_order_order']           = 'Order ID:';
 $_['mail_new_order_date_added']      = 'Date Ordered:';
 $_['mail_new_order_order_status']    = 'Order Status:';

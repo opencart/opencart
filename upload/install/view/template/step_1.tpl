@@ -36,12 +36,6 @@
       <td align="center"><?php echo (ini_get('file_uploads')) ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
     </tr>
     <tr>
-      <td>Allow Url fopen:</td>
-      <td><?php echo (ini_get('allow_url_fopen')) ? 'On' : 'Off'; ?></td>
-      <td>On</td>
-      <td align="center"><?php echo (ini_get('allow_url_fopen')) ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
-    </tr>
-    <tr>
       <td>Session Auto Start:</td>
       <td><?php echo (ini_get('session_auto_start')) ? 'On' : 'Off'; ?></td>
       <td>Off</td>

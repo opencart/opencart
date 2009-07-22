@@ -43,7 +43,7 @@ final class Response {
 			return $data;
 		}
 
-		if (connection_status()) {
+		if (connection_status()) { 
 			return $data;
 		}
 
@@ -59,12 +59,14 @@ final class Response {
 			$ouput = $this->compress($this->output, $level);
 		} else {
 			$ouput = $this->output;
-		}		
-		
-		foreach ($this->headers as $key => $value) {
-			header($key. ': ' . $value);
+		}	
+			
+		if (!headers_sent()) {
+			foreach ($this->headers as $key => $value) {
+				header($key. ': ' . $value);
+			}
 		}
-				
+		
 		echo $ouput;
 	}
 }

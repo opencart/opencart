@@ -16,11 +16,13 @@
 <div id="container">
   <div id="column_left"></div>
   <div id="content">
+    <?php if ($breadcrumbs) { ?>
     <div class="breadcrumb">
       <?php foreach ($breadcrumbs as $breadcrumb) { ?>
       <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
       <?php } ?>
     </div>
+    <?php } ?>
     <?php echo $content; ?></div>
   <div id="column_right"></div>
 </div>

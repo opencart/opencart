@@ -1,20 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 2.11.9.5
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Jun 19, 2009 at 02:00 AM
--- Server version: 5.0.77
--- PHP Version: 5.2.6
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
 --
 -- Database: `opencart_dev`
 --
@@ -22,79 +5,78 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_address`
+-- Table structure for table `opencart_address`
 --
 
-DROP TABLE IF EXISTS `oc_address`;
-CREATE TABLE `oc_address` (
+DROP TABLE IF EXISTS `opencart_address`;
+CREATE TABLE `opencart_address` (
   `address_id` int(11) NOT NULL auto_increment,
-  `customer_id` int(11) NOT NULL default '0',
-  `company` varchar(32) collate utf8_unicode_ci default NULL,
+  `customer_id` int(11) NOT NULL,
+  `company` varchar(32) collate utf8_unicode_ci NOT NULL,
   `firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `address_1` varchar(128) collate utf8_unicode_ci NOT NULL,
-  `address_2` varchar(128) collate utf8_unicode_ci default NULL,
+  `address_2` varchar(128) collate utf8_unicode_ci NOT NULL,
   `postcode` varchar(10) collate utf8_unicode_ci NOT NULL default '',
   `city` varchar(128) collate utf8_unicode_ci NOT NULL,
   `country_id` int(11) NOT NULL default '0',
   `zone_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`address_id`),
   KEY `customer_id` (`customer_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_address`
+-- Dumping data for table `opencart_address`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_category`
+-- Table structure for table `opencart_category`
 --
 
-DROP TABLE IF EXISTS `oc_category`;
-CREATE TABLE `oc_category` (
+DROP TABLE IF EXISTS `opencart_category`;
+CREATE TABLE `opencart_category` (
   `category_id` int(11) NOT NULL auto_increment,
-  `keyword` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `image` varchar(255) collate utf8_unicode_ci NOT NULL default '0',
+  `image` varchar(255) collate utf8_unicode_ci NOT NULL,
   `parent_id` int(11) NOT NULL default '0',
-  `sort_order` int(3) default '0',
+  `sort_order` int(3) NOT NULL default '0',
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`category_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_category`
+-- Dumping data for table `opencart_category`
 --
 
-INSERT INTO `oc_category` (`category_id`, `keyword`, `image`, `parent_id`, `sort_order`, `date_added`, `date_modified`) VALUES
-(25, '', '', 0, 3, '2009-01-31 01:04:25', '2009-02-02 14:11:14'),
-(27, 'mac', '', 20, 2, '2009-01-31 01:55:34', '2009-06-14 02:03:25'),
-(20, 'desktops', '', 0, 1, '2009-01-05 21:49:43', '2009-06-18 23:58:09'),
-(24, '', '', 0, 5, '2009-01-20 02:36:26', '2009-02-03 14:22:23'),
-(18, '', '', 0, 2, '2009-01-05 21:49:15', '2009-02-03 13:54:50'),
-(17, '', '', 0, 4, '2009-01-03 21:08:57', '2009-02-02 14:12:10'),
-(28, '', '', 25, 1, '2009-02-02 13:11:12', '2009-02-02 14:11:26'),
-(26, 'pc', '', 20, 1, '2009-01-31 01:55:14', '2009-06-15 17:17:25'),
-(29, '', '', 25, 1, '2009-02-02 13:11:37', '2009-02-03 14:23:10'),
-(30, '', '', 25, 1, '2009-02-02 13:11:59', '2009-02-03 14:22:59'),
-(31, '', '', 25, 1, '2009-02-03 14:17:24', '2009-02-03 14:17:24'),
-(32, '', '', 25, 1, '2009-02-03 14:17:34', '2009-02-03 14:17:34'),
-(33, '', '', 0, 6, '2009-02-03 14:17:55', '2009-02-03 14:19:56'),
-(34, 'mp3_players', '', 0, 7, '2009-02-03 14:18:11', '2009-06-14 23:40:29');
+INSERT INTO `opencart_category` (`category_id`, `image`, `parent_id`, `sort_order`, `date_added`, `date_modified`) VALUES
+(25, '', 0, 3, '2009-01-31 01:04:25', '2009-02-02 14:11:14'),
+(27, '', 20, 2, '2009-01-31 01:55:34', '2009-07-18 21:40:51'),
+(20, '', 0, 1, '2009-01-05 21:49:43', '2009-07-19 03:01:40'),
+(24, '', 0, 5, '2009-01-20 02:36:26', '2009-02-03 14:22:23'),
+(18, '', 0, 2, '2009-01-05 21:49:15', '2009-02-03 13:54:50'),
+(17, '', 0, 4, '2009-01-03 21:08:57', '2009-02-02 14:12:10'),
+(28, '', 25, 1, '2009-02-02 13:11:12', '2009-02-02 14:11:26'),
+(26, '', 20, 1, '2009-01-31 01:55:14', '2009-07-18 21:40:44'),
+(29, '', 25, 1, '2009-02-02 13:11:37', '2009-02-03 14:23:10'),
+(30, '', 25, 1, '2009-02-02 13:11:59', '2009-02-03 14:22:59'),
+(31, '', 25, 1, '2009-02-03 14:17:24', '2009-02-03 14:17:24'),
+(32, '', 25, 1, '2009-02-03 14:17:34', '2009-02-03 14:17:34'),
+(33, '', 0, 6, '2009-02-03 14:17:55', '2009-02-03 14:19:56'),
+(34, '', 0, 7, '2009-02-03 14:18:11', '2009-06-14 23:40:29');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_category_description`
+-- Table structure for table `opencart_category_description`
 --
 
-DROP TABLE IF EXISTS `oc_category_description`;
-CREATE TABLE `oc_category_description` (
-  `category_id` int(11) NOT NULL default '0',
-  `language_id` int(11) NOT NULL default '1',
+DROP TABLE IF EXISTS `opencart_category_description`;
+CREATE TABLE `opencart_category_description` (
+  `category_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
   `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `meta_description` varchar(66) collate utf8_unicode_ci NOT NULL,
   `description` text collate utf8_unicode_ci NOT NULL,
@@ -103,10 +85,10 @@ CREATE TABLE `oc_category_description` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_category_description`
+-- Dumping data for table `opencart_category_description`
 --
 
-INSERT INTO `oc_category_description` (`category_id`, `language_id`, `name`, `meta_description`, `description`) VALUES
+INSERT INTO `opencart_category_description` (`category_id`, `language_id`, `name`, `meta_description`, `description`) VALUES
 (18, 1, 'Laptops &amp; Notebooks', '', ''),
 (24, 1, ' Phones &amp; PDAs', '', ''),
 (25, 1, 'Components', '', ''),
@@ -125,11 +107,11 @@ INSERT INTO `oc_category_description` (`category_id`, `language_id`, `name`, `me
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_country`
+-- Table structure for table `opencart_country`
 --
 
-DROP TABLE IF EXISTS `oc_country`;
-CREATE TABLE `oc_country` (
+DROP TABLE IF EXISTS `opencart_country`;
+CREATE TABLE `opencart_country` (
   `country_id` int(11) NOT NULL auto_increment,
   `name` varchar(128) collate utf8_unicode_ci NOT NULL,
   `iso_code_2` varchar(2) collate utf8_unicode_ci NOT NULL default '',
@@ -139,10 +121,10 @@ CREATE TABLE `oc_country` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_country`
+-- Dumping data for table `opencart_country`
 --
 
-INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `address_format`) VALUES
+INSERT INTO `opencart_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `address_format`) VALUES
 (1, 'Afghanistan', 'AF', 'AFG', ''),
 (2, 'Albania', 'AL', 'ALB', ''),
 (3, 'Algeria', 'DZ', 'DZA', ''),
@@ -386,11 +368,11 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_coupon`
+-- Table structure for table `opencart_coupon`
 --
 
-DROP TABLE IF EXISTS `oc_coupon`;
-CREATE TABLE `oc_coupon` (
+DROP TABLE IF EXISTS `opencart_coupon`;
+CREATE TABLE `opencart_coupon` (
   `coupon_id` int(11) NOT NULL auto_increment,
   `code` varchar(10) collate utf8_unicode_ci NOT NULL,
   `type` char(1) collate utf8_unicode_ci NOT NULL,
@@ -407,22 +389,22 @@ CREATE TABLE `oc_coupon` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_coupon`
+-- Dumping data for table `opencart_coupon`
 --
 
-INSERT INTO `oc_coupon` (`coupon_id`, `code`, `type`, `discount`, `shipping`, `total`, `date_start`, `date_end`, `uses_total`, `uses_customer`, `status`, `date_added`) VALUES
+INSERT INTO `opencart_coupon` (`coupon_id`, `code`, `type`, `discount`, `shipping`, `total`, `date_start`, `date_end`, `uses_total`, `uses_customer`, `status`, `date_added`) VALUES
 (4, '2222', 'P', '10.0000', 0, '0.0000', '2009-01-27', '2009-12-31', 10, '10', 1, '2009-01-27 13:55:03'),
-(5, '3333', 'P', '0.0000', 1, '100.0000', '2009-03-01', '2009-04-01', 10, '10', 1, '2009-03-14 21:13:53'),
+(5, '3333', 'P', '0.0000', 1, '100.0000', '2009-03-01', '2009-08-31', 10, '10', 1, '2009-03-14 21:13:53'),
 (6, '1111', 'P', '10.0000', 0, '10.0000', '2009-03-01', '2009-05-31', 10, '1', 1, '2009-03-14 21:15:18');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_coupon_description`
+-- Table structure for table `opencart_coupon_description`
 --
 
-DROP TABLE IF EXISTS `oc_coupon_description`;
-CREATE TABLE `oc_coupon_description` (
+DROP TABLE IF EXISTS `opencart_coupon_description`;
+CREATE TABLE `opencart_coupon_description` (
   `coupon_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `name` varchar(128) collate utf8_unicode_ci NOT NULL,
@@ -431,10 +413,10 @@ CREATE TABLE `oc_coupon_description` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_coupon_description`
+-- Dumping data for table `opencart_coupon_description`
 --
 
-INSERT INTO `oc_coupon_description` (`coupon_id`, `language_id`, `name`, `description`) VALUES
+INSERT INTO `opencart_coupon_description` (`coupon_id`, `language_id`, `name`, `description`) VALUES
 (4, 1, 'Coupon (-10%)', '10% Discount'),
 (5, 1, 'Coupon (Free Shipping)', 'Free Shipping'),
 (6, 1, 'Coupon (-10.00)', 'Fixed Amount Discount');
@@ -442,11 +424,11 @@ INSERT INTO `oc_coupon_description` (`coupon_id`, `language_id`, `name`, `descri
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_coupon_product`
+-- Table structure for table `opencart_coupon_product`
 --
 
-DROP TABLE IF EXISTS `oc_coupon_product`;
-CREATE TABLE `oc_coupon_product` (
+DROP TABLE IF EXISTS `opencart_coupon_product`;
+CREATE TABLE `opencart_coupon_product` (
   `coupon_product_id` int(11) NOT NULL auto_increment,
   `coupon_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -454,47 +436,47 @@ CREATE TABLE `oc_coupon_product` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_coupon_product`
+-- Dumping data for table `opencart_coupon_product`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_currency`
+-- Table structure for table `opencart_currency`
 --
 
-DROP TABLE IF EXISTS `oc_currency`;
-CREATE TABLE `oc_currency` (
+DROP TABLE IF EXISTS `opencart_currency`;
+CREATE TABLE `opencart_currency` (
   `currency_id` int(11) NOT NULL auto_increment,
   `title` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `code` varchar(3) collate utf8_unicode_ci NOT NULL default '',
-  `symbol_left` varchar(12) collate utf8_unicode_ci default NULL,
-  `symbol_right` varchar(12) collate utf8_unicode_ci default NULL,
-  `decimal_place` char(1) collate utf8_unicode_ci default NULL,
-  `value` float(13,8) default NULL,
+  `symbol_left` varchar(12) collate utf8_unicode_ci NOT NULL,
+  `symbol_right` varchar(12) collate utf8_unicode_ci NOT NULL,
+  `decimal_place` char(1) collate utf8_unicode_ci NOT NULL,
+  `value` float(15,8) NOT NULL,
   `status` int(1) NOT NULL,
   `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`currency_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_currency`
+-- Dumping data for table `opencart_currency`
 --
 
-INSERT INTO `oc_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`) VALUES
-(1, 'Pound Sterling', 'GBP', '£', '', '2', 1.00000000, 1, '2009-06-18 23:51:56'),
-(2, 'US Dollar', 'USD', '$', '', '2', 1.63320005, 1, '2009-06-19 00:24:22'),
-(3, 'Euro', 'EUR', '', '€', '2', 1.17480004, 1, '2009-06-19 00:24:22');
+INSERT INTO `opencart_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`) VALUES
+(1, 'Pound Sterling', 'GBP', '£', '', '2', 1.00000000, 1, '2009-07-04 17:00:59'),
+(2, 'US Dollar', 'USD', '$', '', '2', 1.63399994, 1, '2009-07-05 16:39:30'),
+(3, 'Euro', 'EUR', '', '€', '2', 1.16989994, 1, '2009-07-05 16:39:30');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_customer`
+-- Table structure for table `opencart_customer`
 --
 
-DROP TABLE IF EXISTS `oc_customer`;
-CREATE TABLE `oc_customer` (
+DROP TABLE IF EXISTS `opencart_customer`;
+CREATE TABLE `opencart_customer` (
   `customer_id` int(11) NOT NULL auto_increment,
   `firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
@@ -502,68 +484,68 @@ CREATE TABLE `oc_customer` (
   `telephone` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `fax` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `password` varchar(40) collate utf8_unicode_ci NOT NULL default '',
-  `cart` text collate utf8_unicode_ci,
+  `cart` text collate utf8_unicode_ci NOT NULL,
   `newsletter` int(1) NOT NULL default '0',
   `address_id` int(11) NOT NULL default '0',
   `status` int(1) NOT NULL,
-  `ip` varchar(15) collate utf8_unicode_ci default NULL,
+  `ip` varchar(15) collate utf8_unicode_ci NOT NULL,
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`customer_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_customer`
+-- Dumping data for table `opencart_customer`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_download`
+-- Table structure for table `opencart_download`
 --
 
-DROP TABLE IF EXISTS `oc_download`;
-CREATE TABLE `oc_download` (
+DROP TABLE IF EXISTS `opencart_download`;
+CREATE TABLE `opencart_download` (
   `download_id` int(11) NOT NULL auto_increment,
   `filename` varchar(128) collate utf8_unicode_ci NOT NULL default '',
   `mask` varchar(128) collate utf8_unicode_ci NOT NULL default '',
   `remaining` int(11) NOT NULL default '0',
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`download_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_download`
+-- Dumping data for table `opencart_download`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_download_description`
+-- Table structure for table `opencart_download_description`
 --
 
-DROP TABLE IF EXISTS `oc_download_description`;
-CREATE TABLE `oc_download_description` (
-  `download_id` int(11) NOT NULL default '0',
-  `language_id` int(11) NOT NULL default '0',
+DROP TABLE IF EXISTS `opencart_download_description`;
+CREATE TABLE `opencart_download_description` (
+  `download_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
   `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
   PRIMARY KEY  (`download_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_download_description`
+-- Dumping data for table `opencart_download_description`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_extension`
+-- Table structure for table `opencart_extension`
 --
 
-DROP TABLE IF EXISTS `oc_extension`;
-CREATE TABLE `oc_extension` (
+DROP TABLE IF EXISTS `opencart_extension`;
+CREATE TABLE `opencart_extension` (
   `extension_id` int(11) NOT NULL auto_increment,
   `type` varchar(32) collate utf8_unicode_ci NOT NULL,
   `key` varchar(32) collate utf8_unicode_ci NOT NULL,
@@ -571,10 +553,10 @@ CREATE TABLE `oc_extension` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_extension`
+-- Dumping data for table `opencart_extension`
 --
 
-INSERT INTO `oc_extension` (`extension_id`, `type`, `key`) VALUES
+INSERT INTO `opencart_extension` (`extension_id`, `type`, `key`) VALUES
 (23, 'payment', 'cod'),
 (14, 'total', 'coupon'),
 (22, 'total', 'shipping'),
@@ -589,22 +571,16 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `key`) VALUES
 (80, 'module', 'information'),
 (81, 'module', 'manufacturer'),
 (82, 'module', 'bestseller'),
-(103, 'payment', 'paypal_direct'),
-(99, 'payment', 'worldpay'),
-(102, 'payment', 'sagepay'),
-(104, 'payment', 'bank_transfer'),
-(105, 'payment', 'cheque'),
-(106, 'payment', 'paypal'),
-(107, 'shipping', 'ups');
+(102, 'total', 'handling');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_geo_zone`
+-- Table structure for table `opencart_geo_zone`
 --
 
-DROP TABLE IF EXISTS `oc_geo_zone`;
-CREATE TABLE `oc_geo_zone` (
+DROP TABLE IF EXISTS `opencart_geo_zone`;
+CREATE TABLE `opencart_geo_zone` (
   `geo_zone_id` int(11) NOT NULL auto_increment,
   `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `description` varchar(255) collate utf8_unicode_ci NOT NULL default '',
@@ -614,55 +590,55 @@ CREATE TABLE `oc_geo_zone` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_geo_zone`
+-- Dumping data for table `opencart_geo_zone`
 --
 
-INSERT INTO `oc_geo_zone` (`geo_zone_id`, `name`, `description`, `date_modified`, `date_added`) VALUES
-(3, 'UK VAT Zone', 'UK VAT', '2009-06-18 23:53:00', '2009-01-06 23:26:25');
+INSERT INTO `opencart_geo_zone` (`geo_zone_id`, `name`, `description`, `date_modified`, `date_added`) VALUES
+(3, 'UK VAT Zone', 'UK VAT', '2009-07-04 17:04:28', '2009-01-06 23:26:25'),
+(4, 'UK Shipping', 'UK Shippng Zones', '0000-00-00 00:00:00', '2009-06-23 01:14:53');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_information`
+-- Table structure for table `opencart_information`
 --
 
-DROP TABLE IF EXISTS `oc_information`;
-CREATE TABLE `oc_information` (
+DROP TABLE IF EXISTS `opencart_information`;
+CREATE TABLE `opencart_information` (
   `information_id` int(11) NOT NULL auto_increment,
-  `keyword` varchar(255) collate utf8_unicode_ci NOT NULL,
   `sort_order` int(3) NOT NULL default '0',
   PRIMARY KEY  (`information_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_information`
+-- Dumping data for table `opencart_information`
 --
 
-INSERT INTO `oc_information` (`information_id`, `keyword`, `sort_order`) VALUES
-(3, '', 2),
-(4, 'about', 1),
-(5, '', 3);
+INSERT INTO `opencart_information` (`information_id`, `sort_order`) VALUES
+(3, 2),
+(4, 1),
+(5, 3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_information_description`
+-- Table structure for table `opencart_information_description`
 --
 
-DROP TABLE IF EXISTS `oc_information_description`;
-CREATE TABLE `oc_information_description` (
-  `information_id` int(11) NOT NULL default '0',
-  `language_id` int(11) NOT NULL default '0',
+DROP TABLE IF EXISTS `opencart_information_description`;
+CREATE TABLE `opencart_information_description` (
+  `information_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
   `title` varchar(64) collate utf8_unicode_ci NOT NULL default '',
   `description` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`information_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_information_description`
+-- Dumping data for table `opencart_information_description`
 --
 
-INSERT INTO `oc_information_description` (`information_id`, `language_id`, `title`, `description`) VALUES
+INSERT INTO `opencart_information_description` (`information_id`, `language_id`, `title`, `description`) VALUES
 (4, 1, 'About Us', '&lt;p&gt;About Us&lt;/p&gt;'),
 (5, 1, 'Terms &amp; Conditions', '&lt;p&gt;Terms &amp;amp; Conditions&lt;/p&gt;'),
 (3, 1, 'Privacy Policy', '&lt;p&gt;Privacy Policy&lt;/p&gt;');
@@ -670,104 +646,103 @@ INSERT INTO `oc_information_description` (`information_id`, `language_id`, `titl
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_language`
+-- Table structure for table `opencart_language`
 --
 
-DROP TABLE IF EXISTS `oc_language`;
-CREATE TABLE `oc_language` (
+DROP TABLE IF EXISTS `opencart_language`;
+CREATE TABLE `opencart_language` (
   `language_id` int(11) NOT NULL auto_increment,
   `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `code` varchar(5) collate utf8_unicode_ci NOT NULL,
   `locale` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `image` varchar(64) collate utf8_unicode_ci default NULL,
+  `image` varchar(64) collate utf8_unicode_ci NOT NULL,
   `directory` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `filename` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `sort_order` int(3) default NULL,
+  `sort_order` int(3) NOT NULL default '0',
   `status` int(1) NOT NULL,
   PRIMARY KEY  (`language_id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_language`
+-- Dumping data for table `opencart_language`
 --
 
-INSERT INTO `oc_language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `filename`, `sort_order`, `status`) VALUES
+INSERT INTO `opencart_language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `filename`, `sort_order`, `status`) VALUES
 (1, 'English', 'en', 'en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'english', 'english', 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_manufacturer`
+-- Table structure for table `opencart_manufacturer`
 --
 
-DROP TABLE IF EXISTS `oc_manufacturer`;
-CREATE TABLE `oc_manufacturer` (
+DROP TABLE IF EXISTS `opencart_manufacturer`;
+CREATE TABLE `opencart_manufacturer` (
   `manufacturer_id` int(11) NOT NULL auto_increment,
   `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `keyword` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `image` varchar(255) collate utf8_unicode_ci NOT NULL default '0',
-  `sort_order` int(3) NOT NULL default '0',
+  `image` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `sort_order` int(3) NOT NULL,
   PRIMARY KEY  (`manufacturer_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_manufacturer`
+-- Dumping data for table `opencart_manufacturer`
 --
 
-INSERT INTO `oc_manufacturer` (`manufacturer_id`, `name`, `keyword`, `image`, `sort_order`) VALUES
-(5, 'HTC', '', 'htc_logo.jpg', 0),
-(6, 'Palm', '', 'palm_logo.jpg', 0),
-(7, 'Hewlett-Packard', '', 'hp_logo.jpg', 0),
-(8, 'Apple', 'apple', 'apple_logo.jpg', 0),
-(9, 'Canon', '', 'canon_logo.jpg', 0),
-(10, 'Sony', '', 'sony_logo.jpg', 0);
+INSERT INTO `opencart_manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`) VALUES
+(5, 'HTC', 'htc_logo.jpg', 0),
+(6, 'Palm', 'palm_logo.jpg', 0),
+(7, 'Hewlett-Packard', 'hp_logo.jpg', 0),
+(8, 'Apple', 'apple_logo.jpg', 0),
+(9, 'Canon', 'canon_logo.jpg', 0),
+(10, 'Sony', 'sony_logo.jpg', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_order`
+-- Table structure for table `opencart_order`
 --
 
-DROP TABLE IF EXISTS `oc_order`;
-CREATE TABLE `oc_order` (
+DROP TABLE IF EXISTS `opencart_order`;
+CREATE TABLE `opencart_order` (
   `order_id` int(11) NOT NULL auto_increment,
-  `customer_id` int(11) NOT NULL default '0',
+  `customer_id` int(11) NOT NULL,
   `firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `lastname` varchar(32) collate utf8_unicode_ci default NULL,
+  `lastname` varchar(32) collate utf8_unicode_ci NOT NULL,
   `telephone` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `fax` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `email` varchar(96) collate utf8_unicode_ci NOT NULL default '',
   `shipping_firstname` varchar(32) collate utf8_unicode_ci NOT NULL,
   `shipping_lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `shipping_company` varchar(32) collate utf8_unicode_ci default NULL,
+  `shipping_company` varchar(32) collate utf8_unicode_ci NOT NULL,
   `shipping_address_1` varchar(128) collate utf8_unicode_ci NOT NULL,
-  `shipping_address_2` varchar(128) collate utf8_unicode_ci default NULL,
+  `shipping_address_2` varchar(128) collate utf8_unicode_ci NOT NULL,
   `shipping_city` varchar(128) collate utf8_unicode_ci NOT NULL,
   `shipping_postcode` varchar(10) collate utf8_unicode_ci NOT NULL default '',
-  `shipping_zone` varchar(128) collate utf8_unicode_ci default NULL,
+  `shipping_zone` varchar(128) collate utf8_unicode_ci NOT NULL,
   `shipping_country` varchar(128) collate utf8_unicode_ci NOT NULL,
   `shipping_address_format` text collate utf8_unicode_ci NOT NULL,
   `shipping_method` varchar(128) collate utf8_unicode_ci NOT NULL default '',
   `payment_firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `payment_lastname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `payment_company` varchar(32) collate utf8_unicode_ci default NULL,
+  `payment_company` varchar(32) collate utf8_unicode_ci NOT NULL,
   `payment_address_1` varchar(128) collate utf8_unicode_ci NOT NULL,
-  `payment_address_2` varchar(128) collate utf8_unicode_ci default NULL,
+  `payment_address_2` varchar(128) collate utf8_unicode_ci NOT NULL,
   `payment_city` varchar(128) collate utf8_unicode_ci NOT NULL,
   `payment_postcode` varchar(10) collate utf8_unicode_ci NOT NULL default '',
-  `payment_zone` varchar(128) collate utf8_unicode_ci default NULL,
+  `payment_zone` varchar(128) collate utf8_unicode_ci NOT NULL,
   `payment_country` varchar(128) collate utf8_unicode_ci NOT NULL,
   `payment_address_format` text collate utf8_unicode_ci NOT NULL,
   `payment_method` varchar(128) collate utf8_unicode_ci NOT NULL default '',
   `comment` text collate utf8_unicode_ci NOT NULL,
   `total` decimal(15,4) NOT NULL default '0.0000',
   `order_status_id` int(11) NOT NULL default '0',
-  `language_id` int(11) NOT NULL default '0',
-  `currency_id` int(11) NOT NULL default '0',
+  `language_id` int(11) NOT NULL,
+  `currency_id` int(11) NOT NULL,
   `currency` varchar(3) collate utf8_unicode_ci NOT NULL,
   `value` decimal(15,8) NOT NULL,
-  `coupon_id` int(11) NOT NULL default '0',
+  `coupon_id` int(11) NOT NULL,
   `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   `ip` varchar(15) collate utf8_unicode_ci NOT NULL default '',
@@ -775,21 +750,21 @@ CREATE TABLE `oc_order` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_order`
+-- Dumping data for table `opencart_order`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_order_download`
+-- Table structure for table `opencart_order_download`
 --
 
-DROP TABLE IF EXISTS `oc_order_download`;
-CREATE TABLE `oc_order_download` (
+DROP TABLE IF EXISTS `opencart_order_download`;
+CREATE TABLE `opencart_order_download` (
   `order_download_id` int(11) NOT NULL auto_increment,
-  `order_id` int(11) NOT NULL default '0',
-  `order_product_id` int(11) NOT NULL default '0',
+  `order_id` int(11) NOT NULL,
+  `order_product_id` int(11) NOT NULL,
   `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
   `filename` varchar(128) collate utf8_unicode_ci NOT NULL default '',
   `mask` varchar(128) collate utf8_unicode_ci NOT NULL default '',
@@ -798,43 +773,43 @@ CREATE TABLE `oc_order_download` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_order_download`
+-- Dumping data for table `opencart_order_download`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_order_history`
+-- Table structure for table `opencart_order_history`
 --
 
-DROP TABLE IF EXISTS `oc_order_history`;
-CREATE TABLE `oc_order_history` (
+DROP TABLE IF EXISTS `opencart_order_history`;
+CREATE TABLE `opencart_order_history` (
   `order_history_id` int(11) NOT NULL auto_increment,
-  `order_id` int(11) NOT NULL default '0',
-  `order_status_id` int(5) NOT NULL default '0',
-  `notify` int(1) default '0',
-  `comment` text collate utf8_unicode_ci,
+  `order_id` int(11) NOT NULL,
+  `order_status_id` int(5) NOT NULL,
+  `notify` int(1) NOT NULL default '0',
+  `comment` text collate utf8_unicode_ci NOT NULL,
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`order_history_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_order_history`
+-- Dumping data for table `opencart_order_history`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_order_option`
+-- Table structure for table `opencart_order_option`
 --
 
-DROP TABLE IF EXISTS `oc_order_option`;
-CREATE TABLE `oc_order_option` (
+DROP TABLE IF EXISTS `opencart_order_option`;
+CREATE TABLE `opencart_order_option` (
   `order_option_id` int(11) NOT NULL auto_increment,
-  `order_id` int(11) NOT NULL default '0',
-  `order_product_id` int(11) NOT NULL default '0',
+  `order_id` int(11) NOT NULL,
+  `order_product_id` int(11) NOT NULL,
   `name` varchar(255) collate utf8_unicode_ci NOT NULL,
   `value` varchar(255) collate utf8_unicode_ci NOT NULL,
   `price` decimal(15,4) NOT NULL default '0.0000',
@@ -843,20 +818,20 @@ CREATE TABLE `oc_order_option` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_order_option`
+-- Dumping data for table `opencart_order_option`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_order_product`
+-- Table structure for table `opencart_order_product`
 --
 
-DROP TABLE IF EXISTS `oc_order_product`;
-CREATE TABLE `oc_order_product` (
+DROP TABLE IF EXISTS `opencart_order_product`;
+CREATE TABLE `opencart_order_product` (
   `order_product_id` int(11) NOT NULL auto_increment,
-  `order_id` int(11) NOT NULL default '0',
+  `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `name` varchar(255) collate utf8_unicode_ci NOT NULL,
   `model` varchar(24) collate utf8_unicode_ci NOT NULL,
@@ -869,18 +844,18 @@ CREATE TABLE `oc_order_product` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_order_product`
+-- Dumping data for table `opencart_order_product`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_order_status`
+-- Table structure for table `opencart_order_status`
 --
 
-DROP TABLE IF EXISTS `oc_order_status`;
-CREATE TABLE `oc_order_status` (
+DROP TABLE IF EXISTS `opencart_order_status`;
+CREATE TABLE `opencart_order_status` (
   `order_status_id` int(11) NOT NULL auto_increment,
   `language_id` int(11) NOT NULL,
   `name` varchar(32) collate utf8_unicode_ci NOT NULL,
@@ -888,29 +863,36 @@ CREATE TABLE `oc_order_status` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_order_status`
+-- Dumping data for table `opencart_order_status`
 --
 
-INSERT INTO `oc_order_status` (`order_status_id`, `language_id`, `name`) VALUES
+INSERT INTO `opencart_order_status` (`order_status_id`, `language_id`, `name`) VALUES
 (1, 1, 'Pending'),
 (2, 1, 'Processing'),
 (2, 4, 'Processing'),
 (3, 1, 'Shipped'),
 (3, 4, 'Shipped'),
-(7, 1, 'Cancelled'),
+(7, 1, 'Canceled'),
 (5, 1, 'Complete'),
-(5, 4, 'Complete');
+(5, 4, 'Complete'),
+(8, 1, 'Denied'),
+(9, 1, 'Canceled Reversal'),
+(10, 1, 'Failed'),
+(11, 1, 'Refunded'),
+(12, 1, 'Reversed'),
+(13, 1, 'Chargeback'),
+(14, 1, 'Unspecified Error');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_order_total`
+-- Table structure for table `opencart_order_total`
 --
 
-DROP TABLE IF EXISTS `oc_order_total`;
-CREATE TABLE `oc_order_total` (
-  `order_total_id` int(10) unsigned NOT NULL auto_increment,
-  `order_id` int(11) NOT NULL default '0',
+DROP TABLE IF EXISTS `opencart_order_total`;
+CREATE TABLE `opencart_order_total` (
+  `order_total_id` int(10) NOT NULL auto_increment,
+  `order_id` int(11) NOT NULL,
   `title` varchar(255) collate utf8_unicode_ci NOT NULL default '',
   `text` varchar(255) collate utf8_unicode_ci NOT NULL default '',
   `value` decimal(15,4) NOT NULL default '0.0000',
@@ -920,32 +902,34 @@ CREATE TABLE `oc_order_total` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_order_total`
+-- Dumping data for table `opencart_order_total`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_product`
+-- Table structure for table `opencart_product`
 --
 
-DROP TABLE IF EXISTS `oc_product`;
-CREATE TABLE `oc_product` (
+DROP TABLE IF EXISTS `opencart_product`;
+CREATE TABLE `opencart_product` (
   `product_id` int(11) NOT NULL auto_increment,
   `model` varchar(24) collate utf8_unicode_ci NOT NULL,
-  `keyword` varchar(255) collate utf8_unicode_ci NOT NULL,
   `quantity` int(4) NOT NULL default '0',
   `stock_status_id` int(11) NOT NULL,
   `image` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `manufacturer_id` int(11) NOT NULL default '0',
+  `manufacturer_id` int(11) NOT NULL,
   `shipping` int(1) NOT NULL default '1',
   `price` decimal(15,4) NOT NULL default '0.0000',
   `tax_class_id` int(11) NOT NULL,
-  `date_available` date default NULL,
+  `date_available` date NOT NULL,
   `weight` decimal(5,2) NOT NULL default '0.00',
   `weight_class_id` int(11) NOT NULL default '0',
-  `sort_order` int(3) NOT NULL,
+  `length` decimal(5,2) NOT NULL,
+  `width` decimal(5,2) NOT NULL,
+  `height` decimal(5,2) NOT NULL,
+  `sort_order` int(3) NOT NULL default '0',
   `status` int(1) NOT NULL default '0',
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -954,51 +938,51 @@ CREATE TABLE `oc_product` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_product`
+-- Dumping data for table `opencart_product`
 --
 
-INSERT INTO `oc_product` (`product_id`, `model`, `keyword`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `sort_order`, `status`, `date_added`, `date_modified`, `viewed`) VALUES
-(28, 'Product 1', '', 10, 7, 'htc_touch_hd_1.jpg', 5, 1, '484.4400', 9, '2009-02-03', '146.40', 2, 0, 1, '2009-02-03 16:06:50', '2009-02-22 22:25:07', 75),
-(29, 'Product 2', '', 10, 5, 'palm_treo_pro_1.jpg', 6, 1, '279.9900', 9, '2009-02-03', '133.00', 2, 0, 1, '2009-02-03 16:42:17', '2009-02-22 22:07:34', 16),
-(30, 'Product 3', '', 10, 6, 'canon_eos_5d_1.jpg', 9, 1, '100.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 16:59:00', '2009-05-06 22:47:38', 56),
-(31, 'Product 4', '', 50, 6, 'nikon_d300_1.jpg', 0, 1, '80.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 17:00:10', '2009-03-14 22:44:42', 10),
-(32, 'Product 5', '', 10, 6, 'ipod_touch_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 0, 1, '2009-02-03 17:07:26', '2009-02-22 21:53:58', 13),
-(33, 'Product 6', '', 10, 6, 'samsung_syncmaster_941bw.jpg', 0, 1, '200.0000', 9, '2009-02-03', '5.00', 1, 0, 1, '2009-02-03 17:08:31', '2009-02-22 22:07:57', 3),
-(34, 'Product 7', '', 0, 6, 'ipod_shuffle_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 1, 1, '2009-02-03 18:07:54', '2009-02-22 21:51:54', 17),
-(35, 'Product 8', '', 10, 5, '', 0, 0, '100.0000', 9, '2009-02-03', '5.00', 1, 1, 1, '2009-02-03 18:08:31', '2009-05-20 13:55:22', 12),
-(36, 'Product 9', '', 8, 6, 'ipod_nano_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, 10, 1, '2009-02-03 18:09:19', '2009-02-22 21:50:36', 55),
-(40, 'product 11', '', 7, 5, 'iphone_1.jpg', 8, 1, '342.5000', 9, '2009-02-03', '133.00', 2, 0, 1, '2009-02-03 21:07:12', '2009-06-19 00:22:32', 204),
-(41, 'Product 14', '', 0, 5, 'imac_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:07:26', '2009-02-22 22:25:39', 294),
-(42, 'Product 15', '', 8, 5, 'apple_cinema_30.jpg', 8, 1, '100.0000', 9, '2009-02-03', '12.50', 1, 1, 1, '2009-02-03 21:07:37', '2009-05-17 23:50:04', 66),
-(43, 'Product 16', '', 10, 5, 'macbook_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:07:49', '2009-02-22 21:57:56', 39),
-(44, 'Product 17', '', 10, 5, 'macbook_air_1.jpg', 8, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:00', '2009-02-22 22:04:58', 27),
-(45, 'Product 18', '', 0, 5, 'macbook_pro_1.jpg', 8, 1, '2000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:17', '2009-02-22 22:05:50', 42),
-(46, 'Product 19', '', 10, 5, 'sony_vaio_1.jpg', 10, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:29', '2009-02-22 22:08:39', 181),
-(47, 'Product 20', '', 10, 5, 'hp_1.jpg', 7, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, 0, 1, '2009-02-03 21:08:40', '2009-02-22 22:24:17', 207),
-(48, 'product 20', 'ipod_classic', 10, 5, 'ipod_classic_1.jpg', 8, 1, '100.0000', 9, '2009-02-08', '0.00', 1, 0, 1, '2009-02-08 17:21:51', '2009-06-17 21:57:04', 764);
+INSERT INTO `opencart_product` (`product_id`, `model`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `sort_order`, `status`, `date_added`, `date_modified`, `viewed`) VALUES
+(28, 'Product 1', 10, 7, 'htc_touch_hd_1.jpg', 5, 1, '484.4400', 9, '2009-02-03', '146.40', 2, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 16:06:50', '2009-02-22 22:25:07', 79),
+(29, 'Product 2', 10, 5, 'palm_treo_pro_1.jpg', 6, 1, '279.9900', 9, '2009-02-03', '133.00', 2, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 16:42:17', '2009-02-22 22:07:34', 18),
+(30, 'Product 3', 10, 6, 'canon_eos_5d_1.jpg', 9, 1, '100.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 16:59:00', '2009-05-06 22:47:38', 59),
+(31, 'Product 4', 50, 6, 'nikon_d300_1.jpg', 0, 1, '80.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 17:00:10', '2009-03-14 22:44:42', 20),
+(32, 'Product 5', 10, 6, 'ipod_touch_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 17:07:26', '2009-02-22 21:53:58', 20),
+(33, 'Product 6', 10, 6, 'samsung_syncmaster_941bw.jpg', 0, 1, '200.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 17:08:31', '2009-02-22 22:07:57', 3),
+(34, 'Product 7', 0, 6, 'ipod_shuffle_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 1, 1, '2009-02-03 18:07:54', '2009-02-22 21:51:54', 22),
+(35, 'Product 8', 10, 5, '', 0, 0, '100.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 1, 1, '2009-02-03 18:08:31', '2009-05-20 13:55:22', 12),
+(36, 'Product 9', 8, 6, 'ipod_nano_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 10, 1, '2009-02-03 18:09:19', '2009-02-22 21:50:36', 60),
+(40, 'product 11', 7, 5, 'iphone_1.jpg', 8, 1, '342.5000', 9, '2009-02-03', '10.00', 1, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 21:07:12', '2009-06-22 19:38:35', 218),
+(41, 'Product 14', 0, 5, 'imac_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 21:07:26', '2009-07-04 17:05:55', 303),
+(42, 'Product 15', 8, 5, 'apple_cinema_30.jpg', 8, 1, '100.0000', 9, '2009-02-03', '12.50', 1, '0.00', '0.00', '0.00', 1, 1, '2009-02-03 21:07:37', '2009-05-17 23:50:04', 85),
+(43, 'Product 16', 10, 5, 'macbook_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 21:07:49', '2009-02-22 21:57:56', 48),
+(44, 'Product 17', 10, 5, 'macbook_air_1.jpg', 8, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 21:08:00', '2009-02-22 22:04:58', 35),
+(45, 'Product 18', 0, 5, 'macbook_pro_1.jpg', 8, 1, '2000.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 21:08:17', '2009-02-22 22:05:50', 59),
+(46, 'Product 19', 10, 5, 'sony_vaio_1.jpg', 10, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 21:08:29', '2009-02-22 22:08:39', 203),
+(47, 'Product 20', 10, 5, 'hp_1.jpg', 7, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 21:08:40', '2009-02-22 22:24:17', 231),
+(48, 'product 20', 10, 5, 'ipod_classic_1.jpg', 8, 1, '150.0000', 9, '2009-02-08', '1.00', 1, '0.00', '0.00', '0.00', 0, 1, '2009-02-08 17:21:51', '2009-07-18 21:39:56', 856);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_product_description`
+-- Table structure for table `opencart_product_description`
 --
 
-DROP TABLE IF EXISTS `oc_product_description`;
-CREATE TABLE `oc_product_description` (
+DROP TABLE IF EXISTS `opencart_product_description`;
+CREATE TABLE `opencart_product_description` (
   `product_id` int(11) NOT NULL auto_increment,
-  `language_id` int(11) NOT NULL default '1',
+  `language_id` int(11) NOT NULL,
   `name` varchar(255) collate utf8_unicode_ci NOT NULL,
   `meta_description` varchar(66) collate utf8_unicode_ci NOT NULL,
-  `description` text collate utf8_unicode_ci,
+  `description` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`product_id`,`language_id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_product_description`
+-- Dumping data for table `opencart_product_description`
 --
 
-INSERT INTO `oc_product_description` (`product_id`, `language_id`, `name`, `meta_description`, `description`) VALUES
+INSERT INTO `opencart_product_description` (`product_id`, `language_id`, `name`, `meta_description`, `description`) VALUES
 (28, 1, 'HTC Touch HD', '', '&lt;p&gt;HTC Touch - in High Definition. Watch music videos and streaming content in awe-inspiring high definition clarity for a mobile experience you never thought possible. Seductively sleek, the HTC Touch HD provides the next generation of mobile functionality, all at a simple touch. Fully integrated with Windows Mobile Professional 6.1, ultrafast 3.5G, GPS, 5MP camera, plus lots more - all delivered on a breathtakingly crisp 3.8&amp;quot; WVGA touchscreen - you can take control of your mobile world with the HTC Touch HD.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Processor Qualcomm&amp;reg; MSM 7201A&amp;trade; 528 MHz&lt;/li&gt;\r\n    &lt;li&gt;Windows Mobile&amp;reg; 6.1 Professional Operating System&lt;/li&gt;\r\n    &lt;li&gt;Memory: 512 MB ROM, 288 MB RAM&lt;/li&gt;\r\n    &lt;li&gt;Dimensions: 115 mm x 62.8 mm x 12 mm / 146.4 grams&lt;/li&gt;\r\n    &lt;li&gt;3.8-inch TFT-LCD flat touch-sensitive screen with 480 x 800 WVGA resolution&lt;/li&gt;\r\n    &lt;li&gt;HSDPA/WCDMA: Europe/Asia: 900/2100 MHz; Up to 2 Mbps up-link and 7.2 Mbps down-link speeds&lt;/li&gt;\r\n    &lt;li&gt;Quad-band GSM/GPRS/EDGE: Europe/Asia: 850/900/1800/1900 MHz (Band frequency, HSUPA availability, and data speed are operator dependent.)&lt;/li&gt;\r\n    &lt;li&gt;Device Control via HTC TouchFLO&amp;trade; 3D &amp;amp; Touch-sensitive front panel buttons&lt;/li&gt;\r\n    &lt;li&gt;GPS and A-GPS ready&lt;/li&gt;\r\n    &lt;li&gt;Bluetooth&amp;reg; 2.0 with Enhanced Data Rate and A2DP for wireless stereo headsets&lt;/li&gt;\r\n    &lt;li&gt;Wi-Fi&amp;reg;: IEEE 802.11 b/g&lt;/li&gt;\r\n    &lt;li&gt;HTC ExtUSB&amp;trade; (11-pin mini-USB 2.0)&lt;/li&gt;\r\n    &lt;li&gt;5 megapixel color camera with auto focus&lt;/li&gt;\r\n    &lt;li&gt;VGA CMOS color camera&lt;/li&gt;\r\n    &lt;li&gt;Built-in 3.5 mm audio jack, microphone, speaker, and FM radio&lt;/li&gt;\r\n    &lt;li&gt;Ring tone formats: AAC, AAC+, eAAC+, AMR-NB, AMR-WB, QCP, MP3, WMA, WAV&lt;/li&gt;\r\n    &lt;li&gt;40 polyphonic and standard MIDI format 0 and 1 (SMF)/SP MIDI&lt;/li&gt;\r\n    &lt;li&gt;Rechargeable Lithium-ion or Lithium-ion polymer 1350 mAh battery&lt;/li&gt;\r\n    &lt;li&gt;Expansion Slot: microSD&amp;trade; memory card (SD 2.0 compatible)&lt;/li&gt;\r\n    &lt;li&gt;AC Adapter Voltage range/frequency: 100 ~ 240V AC, 50/60 Hz DC output: 5V and 1A&lt;/li&gt;\r\n    &lt;li&gt;Special Features: FM Radio, G-Sensor&lt;/li&gt;\r\n&lt;/ul&gt;'),
 (42, 1, 'Apple Cinema 30&quot;', 'test', '&lt;p&gt;&lt;font size=&quot;2&quot; face=&quot;helvetica,geneva,arial&quot;&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution. Designed specifically for the creative professional, this display provides more space for easier access to all the tools and palettes needed to edit, format and composite your work. Combine this display with a Mac Pro, MacBook Pro, or PowerMac G5 and there&#039;s no limit to what you can achieve. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;The Cinema HD features an active-matrix liquid crystal display that produces flicker-free images that deliver twice the brightness, twice the sharpness and twice the contrast ratio of a typical CRT display. Unlike other flat panels, it&#039;s designed with a pure digital interface to deliver distortion-free images that never need adjusting. With over 4 million digital pixels, the display is uniquely suited for scientific and technical applications such as visualizing molecular structures or analyzing geological data. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;Offering accurate, brilliant color performance, the Cinema HD delivers up to 16.7 million colors across a wide gamut allowing you to see subtle nuances between colors from soft pastels to rich jewel tones. A wide viewing angle ensures uniform color from edge to edge. Apple&#039;s ColorSync technology allows you to create custom profiles to maintain consistent color onscreen and in print. The result: You can confidently use this display in all your color-critical applications. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;Housed in a new aluminum design, the display has a very thin bezel that enhances visual accuracy. Each display features two FireWire 400 ports and two USB 2.0 ports, making attachment of desktop peripherals, such as iSight, iPod, digital and still cameras, hard drives, printers and scanners, even more accessible and convenient. Taking advantage of the much thinner and lighter footprint of an LCD, the new displays support the VESA (Video Electronics Standards Association) mounting interface standard. Customers with the optional Cinema Display VESA Mount Adapter kit gain the flexibility to mount their display in locations most appropriate for their work environment. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;The Cinema HD features a single cable design with elegant breakout for the USB 2.0, FireWire 400 and a pure digital connection using the industry standard Digital Video Interface (DVI) interface. The DVI connection allows for a direct pure-digital connection.&lt;br /&gt;\r\n&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;\r\n&lt;h3&gt;Features:&lt;/h3&gt;\r\n&lt;p&gt;Unrivaled display performance&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;30-inch (viewable) active-matrix liquid crystal display provides breathtaking image quality and vivid, richly saturated color.&lt;/li&gt;\r\n    &lt;li&gt;Support for 2560-by-1600 pixel resolution for display of high definition still and video imagery.&lt;/li&gt;\r\n    &lt;li&gt;Wide-format design for simultaneous display of two full pages of text and graphics.&lt;/li&gt;\r\n    &lt;li&gt;Industry standard DVI connector for direct attachment to Mac- and Windows-based desktops and notebooks&lt;/li&gt;\r\n    &lt;li&gt;Incredibly wide (170 degree) horizontal and vertical viewing angle for maximum visibility and color performance.&lt;/li&gt;\r\n    &lt;li&gt;Lightning-fast pixel response for full-motion digital video playback.&lt;/li&gt;\r\n    &lt;li&gt;Support for 16.7 million saturated colors, for use in all graphics-intensive applications.&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;Simple setup and operation&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Single cable with elegant breakout for connection to DVI, USB and FireWire ports&lt;/li&gt;\r\n    &lt;li&gt;Built-in two-port USB 2.0 hub for easy connection of desktop peripheral devices.&lt;/li&gt;\r\n    &lt;li&gt;Two FireWire 400 ports to support iSight and other desktop peripherals&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;Sleek, elegant design&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Huge virtual workspace, very small footprint.&lt;/li&gt;\r\n    &lt;li&gt;Narrow Bezel design to minimize visual impact of using dual displays&lt;/li&gt;\r\n    &lt;li&gt;Unique hinge design for effortless adjustment&lt;/li&gt;\r\n    &lt;li&gt;Support for VESA mounting solutions (Apple Cinema Display VESA Mount Adapter sold separately)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;h3&gt;Technical specifications&lt;/h3&gt;\r\n&lt;p&gt;&lt;b&gt;Screen size (diagonal viewable image size)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Apple Cinema HD Display: 30 inches (29.7-inch viewable)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Screen type&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Thin film transistor (TFT) active-matrix liquid crystal display (AMLCD)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Resolutions&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;2560 x 1600 pixels (optimum resolution)&lt;/li&gt;\r\n    &lt;li&gt;2048 x 1280&lt;/li&gt;\r\n    &lt;li&gt;1920 x 1200&lt;/li&gt;\r\n    &lt;li&gt;1280 x 800&lt;/li&gt;\r\n    &lt;li&gt;1024 x 640&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Display colors (maximum)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;16.7 million&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Viewing angle (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;170&amp;deg; horizontal; 170&amp;deg; vertical&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Brightness (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;30-inch Cinema HD Display: 400 cd/m2&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Contrast ratio (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;700:1&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Response time (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;16 ms&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Pixel pitch&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;30-inch Cinema HD Display: 0.250 mm&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Screen treatment&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Antiglare hardcoat&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;User controls (hardware and software)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Display Power,&lt;/li&gt;\r\n    &lt;li&gt;System sleep, wake&lt;/li&gt;\r\n    &lt;li&gt;Brightness&lt;/li&gt;\r\n    &lt;li&gt;Monitor tilt&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Connectors and cables&lt;/b&gt;&lt;br /&gt;\r\nCable&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;DVI (Digital Visual Interface)&lt;/li&gt;\r\n    &lt;li&gt;FireWire 400&lt;/li&gt;\r\n    &lt;li&gt;USB 2.0&lt;/li&gt;\r\n    &lt;li&gt;DC power (24 V)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;Connectors&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Two-port, self-powered USB 2.0 hub&lt;/li&gt;\r\n    &lt;li&gt;Two FireWire 400 ports&lt;/li&gt;\r\n    &lt;li&gt;Kensington security port&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;VESA mount adapter&lt;/b&gt;&lt;br /&gt;\r\nRequires optional Cinema Display VESA Mount Adapter (M9649G/A)&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Compatible with VESA FDMI (MIS-D, 100, C) compliant mounting solutions&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Electrical requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Input voltage: 100-240 VAC 50-60Hz&lt;/li&gt;\r\n    &lt;li&gt;Maximum power when operating: 150W&lt;/li&gt;\r\n    &lt;li&gt;Energy saver mode: 3W or less&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Environmental requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Operating temperature: 50&amp;deg; to 95&amp;deg; F (10&amp;deg; to 35&amp;deg; C)&lt;/li&gt;\r\n    &lt;li&gt;Storage temperature: -40&amp;deg; to 116&amp;deg; F (-40&amp;deg; to 47&amp;deg; C)&lt;/li&gt;\r\n    &lt;li&gt;Operating humidity: 20% to 80% noncondensing&lt;/li&gt;\r\n    &lt;li&gt;Maximum operating altitude: 10,000 feet&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Agency approvals&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;FCC Part 15 Class B&lt;/li&gt;\r\n    &lt;li&gt;EN55022 Class B&lt;/li&gt;\r\n    &lt;li&gt;EN55024&lt;/li&gt;\r\n    &lt;li&gt;VCCI Class B&lt;/li&gt;\r\n    &lt;li&gt;AS/NZS 3548 Class B&lt;/li&gt;\r\n    &lt;li&gt;CNS 13438 Class B&lt;/li&gt;\r\n    &lt;li&gt;ICES-003 Class B&lt;/li&gt;\r\n    &lt;li&gt;ISO 13406 part 2&lt;/li&gt;\r\n    &lt;li&gt;MPR II&lt;/li&gt;\r\n    &lt;li&gt;IEC 60950&lt;/li&gt;\r\n    &lt;li&gt;UL 60950&lt;/li&gt;\r\n    &lt;li&gt;CSA 60950&lt;/li&gt;\r\n    &lt;li&gt;EN60950&lt;/li&gt;\r\n    &lt;li&gt;ENERGY STAR&lt;/li&gt;\r\n    &lt;li&gt;TCO &#039;03&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Size and weight&lt;/b&gt;&lt;br /&gt;\r\n30-inch Apple Cinema HD Display&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Height: 21.3 inches (54.3 cm)&lt;/li&gt;\r\n    &lt;li&gt;Width: 27.2 inches (68.8 cm)&lt;/li&gt;\r\n    &lt;li&gt;Depth: 8.46 inches (21.5 cm)&lt;/li&gt;\r\n    &lt;li&gt;Weight: 27.5 pounds (12.5 kg)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;System Requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Mac Pro, all graphic options&lt;/li&gt;\r\n    &lt;li&gt;MacBook Pro&lt;/li&gt;\r\n    &lt;li&gt;Power Mac G5 (PCI-X) with ATI Radeon 9650 or better or NVIDIA GeForce 6800 GT DDL or better&lt;/li&gt;\r\n    &lt;li&gt;Power Mac G5 (PCI Express), all graphics options&lt;/li&gt;\r\n    &lt;li&gt;PowerBook G4 with dual-link DVI support&lt;/li&gt;\r\n    &lt;li&gt;Windows PC and graphics card that supports DVI ports with dual-link digital bandwidth and VESA DDC standard for plug-and-play setup&lt;/li&gt;\r\n&lt;/ul&gt;'),
 (29, 1, 'Palm Treo Pro', '', '&lt;p&gt;Redefine your workday with the Palm Treo Pro smartphone. Perfectly balanced, you can respond to business and personal email, stay on top of appointments and contacts, and use Wi-Fi or GPS when you&amp;rsquo;re out and about. Then watch a video on YouTube, catch up with news and sports on the web, or listen to a few songs. Balance your work and play the way you like it, with the Palm Treo Pro.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Windows Mobile&amp;reg; 6.1 Professional Edition&lt;/li&gt;\r\n    &lt;li&gt;Qualcomm&amp;reg; MSM7201 400MHz Processor&lt;/li&gt;\r\n    &lt;li&gt;320x320 transflective colour TFT touchscreen&lt;/li&gt;\r\n    &lt;li&gt;HSDPA/UMTS/EDGE/GPRS/GSM radio&lt;/li&gt;\r\n    &lt;li&gt;Tri-band UMTS &amp;mdash; 850MHz, 1900MHz, 2100MHz&lt;/li&gt;\r\n    &lt;li&gt;Quad-band GSM &amp;mdash; 850/900/1800/1900&lt;/li&gt;\r\n    &lt;li&gt;802.11b/g with WPA, WPA2, and 801.1x authentication&lt;/li&gt;\r\n    &lt;li&gt;Built-in GPS&lt;/li&gt;\r\n    &lt;li&gt;Bluetooth Version: 2.0 + Enhanced Data Rate&lt;/li&gt;\r\n    &lt;li&gt;256MB storage (100MB user available), 128MB RAM&lt;/li&gt;\r\n    &lt;li&gt;2.0 megapixel camera, up to 8x digital zoom and video capture&lt;/li&gt;\r\n    &lt;li&gt;Removable, rechargeable 1500mAh lithium-ion battery&lt;/li&gt;\r\n    &lt;li&gt;Up to 5.0 hours talk time and up to 250 hours standby&lt;/li&gt;\r\n    &lt;li&gt;MicroSDHC card expansion (up to 32GB supported)&lt;/li&gt;\r\n    &lt;li&gt;MicroUSB 2.0 for synchronization and charging&lt;/li&gt;\r\n    &lt;li&gt;3.5mm stereo headset jack&lt;/li&gt;\r\n    &lt;li&gt;60mm (W) x 114mm (L) x 13.5mm (D) / 133g&lt;/li&gt;\r\n&lt;/ul&gt;'),
@@ -1021,11 +1005,11 @@ INSERT INTO `oc_product_description` (`product_id`, `language_id`, `name`, `meta
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_product_discount`
+-- Table structure for table `opencart_product_discount`
 --
 
-DROP TABLE IF EXISTS `oc_product_discount`;
-CREATE TABLE `oc_product_discount` (
+DROP TABLE IF EXISTS `opencart_product_discount`;
+CREATE TABLE `opencart_product_discount` (
   `product_discount_id` int(11) NOT NULL auto_increment,
   `product_id` int(11) NOT NULL,
   `quantity` int(4) NOT NULL,
@@ -1034,47 +1018,47 @@ CREATE TABLE `oc_product_discount` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_product_discount`
+-- Dumping data for table `opencart_product_discount`
 --
 
-INSERT INTO `oc_product_discount` (`product_discount_id`, `product_id`, `quantity`, `discount`) VALUES
+INSERT INTO `opencart_product_discount` (`product_discount_id`, `product_id`, `quantity`, `discount`) VALUES
 (286, 42, 3, '10.0000');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_product_image`
+-- Table structure for table `opencart_product_image`
 --
 
-DROP TABLE IF EXISTS `oc_product_image`;
-CREATE TABLE `oc_product_image` (
+DROP TABLE IF EXISTS `opencart_product_image`;
+CREATE TABLE `opencart_product_image` (
   `product_image_id` int(11) NOT NULL auto_increment,
-  `product_id` int(11) NOT NULL default '0',
-  `image` varchar(255) collate utf8_unicode_ci NOT NULL default '0',
+  `product_id` int(11) NOT NULL,
+  `image` varchar(255) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`product_image_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_product_image`
+-- Dumping data for table `opencart_product_image`
 --
 
-INSERT INTO `oc_product_image` (`product_image_id`, `product_id`, `image`) VALUES
+INSERT INTO `opencart_product_image` (`product_image_id`, `product_id`, `image`) VALUES
 (86, 30, 'canon_eos_5d_2.jpg'),
 (85, 30, 'canon_eos_5d_3.jpg'),
 (58, 47, 'hp_3.jpg'),
 (57, 47, 'hp_2.jpg'),
 (65, 28, 'htc_touch_hd_3.jpg'),
 (64, 28, 'htc_touch_hd_2.jpg'),
-(67, 41, 'imac_3.jpg'),
-(66, 41, 'imac_2.jpg'),
-(168, 40, 'iphone_2.jpg'),
-(167, 40, 'iphone_3.jpg'),
-(166, 40, 'iphone_4.jpg'),
-(165, 40, 'iphone_5.jpg'),
-(164, 40, 'iphone_6.jpg'),
-(158, 48, 'ipod_classic_4.jpg'),
-(157, 48, 'ipod_classic_3.jpg'),
-(156, 48, 'ipod_classic_2.jpg'),
+(220, 41, 'imac_2.jpg'),
+(219, 41, 'imac_3.jpg'),
+(179, 40, 'iphone_6.jpg'),
+(178, 40, 'iphone_5.jpg'),
+(177, 40, 'iphone_4.jpg'),
+(176, 40, 'iphone_3.jpg'),
+(175, 40, 'iphone_2.jpg'),
+(223, 48, 'ipod_classic_4.jpg'),
+(222, 48, 'ipod_classic_3.jpg'),
+(221, 48, 'ipod_classic_2.jpg'),
 (19, 36, 'ipod_nano_2.jpg'),
 (20, 36, 'ipod_nano_3.jpg'),
 (21, 36, 'ipod_nano_4.jpg'),
@@ -1113,32 +1097,32 @@ INSERT INTO `oc_product_image` (`product_image_id`, `product_id`, `image`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_product_option`
+-- Table structure for table `opencart_product_option`
 --
 
-DROP TABLE IF EXISTS `oc_product_option`;
-CREATE TABLE `oc_product_option` (
+DROP TABLE IF EXISTS `opencart_product_option`;
+CREATE TABLE `opencart_product_option` (
   `product_option_id` int(11) NOT NULL auto_increment,
-  `product_id` int(11) NOT NULL default '0',
+  `product_id` int(11) NOT NULL,
   `sort_order` int(3) NOT NULL default '0',
   PRIMARY KEY  (`product_option_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_product_option`
+-- Dumping data for table `opencart_product_option`
 --
 
-INSERT INTO `oc_product_option` (`product_option_id`, `product_id`, `sort_order`) VALUES
-(25, 40, 1);
+INSERT INTO `opencart_product_option` (`product_option_id`, `product_id`, `sort_order`) VALUES
+(26, 40, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_product_option_description`
+-- Table structure for table `opencart_product_option_description`
 --
 
-DROP TABLE IF EXISTS `oc_product_option_description`;
-CREATE TABLE `oc_product_option_description` (
+DROP TABLE IF EXISTS `opencart_product_option_description`;
+CREATE TABLE `opencart_product_option_description` (
   `product_option_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -1147,20 +1131,20 @@ CREATE TABLE `oc_product_option_description` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_product_option_description`
+-- Dumping data for table `opencart_product_option_description`
 --
 
-INSERT INTO `oc_product_option_description` (`product_option_id`, `language_id`, `product_id`, `name`) VALUES
-(25, 1, 40, 'Memory Size');
+INSERT INTO `opencart_product_option_description` (`product_option_id`, `language_id`, `product_id`, `name`) VALUES
+(26, 1, 40, 'Memory Size');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_product_option_value`
+-- Table structure for table `opencart_product_option_value`
 --
 
-DROP TABLE IF EXISTS `oc_product_option_value`;
-CREATE TABLE `oc_product_option_value` (
+DROP TABLE IF EXISTS `opencart_product_option_value`;
+CREATE TABLE `opencart_product_option_value` (
   `product_option_value_id` int(11) NOT NULL auto_increment,
   `product_option_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -1171,21 +1155,21 @@ CREATE TABLE `oc_product_option_value` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_product_option_value`
+-- Dumping data for table `opencart_product_option_value`
 --
 
-INSERT INTO `oc_product_option_value` (`product_option_value_id`, `product_option_id`, `product_id`, `price`, `prefix`, `sort_order`) VALUES
-(43, 25, 40, '50.0000', '+', 2),
-(42, 25, 40, '0.0000', '+', 1);
+INSERT INTO `opencart_product_option_value` (`product_option_value_id`, `product_option_id`, `product_id`, `price`, `prefix`, `sort_order`) VALUES
+(45, 26, 40, '50.0000', '+', 2),
+(44, 26, 40, '0.0000', '+', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_product_option_value_description`
+-- Table structure for table `opencart_product_option_value_description`
 --
 
-DROP TABLE IF EXISTS `oc_product_option_value_description`;
-CREATE TABLE `oc_product_option_value_description` (
+DROP TABLE IF EXISTS `opencart_product_option_value_description`;
+CREATE TABLE `opencart_product_option_value_description` (
   `product_option_value_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -1194,44 +1178,47 @@ CREATE TABLE `oc_product_option_value_description` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_product_option_value_description`
+-- Dumping data for table `opencart_product_option_value_description`
 --
 
-INSERT INTO `oc_product_option_value_description` (`product_option_value_id`, `language_id`, `product_id`, `name`) VALUES
-(43, 1, 40, '16GB'),
-(42, 1, 40, '8GB');
+INSERT INTO `opencart_product_option_value_description` (`product_option_value_id`, `language_id`, `product_id`, `name`) VALUES
+(45, 1, 40, '16GB'),
+(44, 1, 40, '8GB');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_product_related`
+-- Table structure for table `opencart_product_related`
 --
 
-DROP TABLE IF EXISTS `oc_product_related`;
-CREATE TABLE `oc_product_related` (
+DROP TABLE IF EXISTS `opencart_product_related`;
+CREATE TABLE `opencart_product_related` (
   `product_id` int(11) NOT NULL,
   `related_id` int(11) NOT NULL,
   PRIMARY KEY  (`product_id`,`related_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_product_related`
+-- Dumping data for table `opencart_product_related`
 --
 
-INSERT INTO `oc_product_related` (`product_id`, `related_id`) VALUES
+INSERT INTO `opencart_product_related` (`product_id`, `related_id`) VALUES
 (42, 28),
 (42, 40),
 (42, 41),
-(42, 47);
+(42, 47),
+(48, 32),
+(48, 34),
+(48, 36);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_product_special`
+-- Table structure for table `opencart_product_special`
 --
 
-DROP TABLE IF EXISTS `oc_product_special`;
-CREATE TABLE `oc_product_special` (
+DROP TABLE IF EXISTS `opencart_product_special`;
+CREATE TABLE `opencart_product_special` (
   `product_special_id` int(11) NOT NULL auto_increment,
   `product_id` int(11) NOT NULL,
   `price` decimal(15,4) NOT NULL,
@@ -1241,31 +1228,31 @@ CREATE TABLE `oc_product_special` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_product_special`
+-- Dumping data for table `opencart_product_special`
 --
 
-INSERT INTO `oc_product_special` (`product_special_id`, `product_id`, `price`, `date_start`, `date_end`) VALUES
+INSERT INTO `opencart_product_special` (`product_special_id`, `product_id`, `price`, `date_start`, `date_end`) VALUES
 (18, 42, '100.0000', '2009-03-01', '2009-03-31'),
 (17, 30, '90.0000', '2009-05-01', '2009-05-31');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_product_to_category`
+-- Table structure for table `opencart_product_to_category`
 --
 
-DROP TABLE IF EXISTS `oc_product_to_category`;
-CREATE TABLE `oc_product_to_category` (
-  `product_id` int(11) NOT NULL default '0',
-  `category_id` int(11) NOT NULL default '0',
+DROP TABLE IF EXISTS `opencart_product_to_category`;
+CREATE TABLE `opencart_product_to_category` (
+  `product_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
   PRIMARY KEY  (`product_id`,`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_product_to_category`
+-- Dumping data for table `opencart_product_to_category`
 --
 
-INSERT INTO `oc_product_to_category` (`product_id`, `category_id`) VALUES
+INSERT INTO `opencart_product_to_category` (`product_id`, `category_id`) VALUES
 (28, 24),
 (29, 24),
 (30, 33),
@@ -1288,35 +1275,35 @@ INSERT INTO `oc_product_to_category` (`product_id`, `category_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_product_to_download`
+-- Table structure for table `opencart_product_to_download`
 --
 
-DROP TABLE IF EXISTS `oc_product_to_download`;
-CREATE TABLE `oc_product_to_download` (
-  `product_id` int(11) NOT NULL default '0',
-  `download_id` int(11) NOT NULL default '0',
+DROP TABLE IF EXISTS `opencart_product_to_download`;
+CREATE TABLE `opencart_product_to_download` (
+  `product_id` int(11) NOT NULL,
+  `download_id` int(11) NOT NULL,
   PRIMARY KEY  (`product_id`,`download_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_product_to_download`
+-- Dumping data for table `opencart_product_to_download`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_review`
+-- Table structure for table `opencart_review`
 --
 
-DROP TABLE IF EXISTS `oc_review`;
-CREATE TABLE `oc_review` (
+DROP TABLE IF EXISTS `opencart_review`;
+CREATE TABLE `opencart_review` (
   `review_id` int(11) NOT NULL auto_increment,
-  `product_id` int(11) NOT NULL default '0',
-  `customer_id` int(11) NOT NULL default '0',
+  `product_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
   `author` varchar(64) collate utf8_unicode_ci NOT NULL default '',
   `text` text collate utf8_unicode_ci NOT NULL,
-  `rating` int(1) default NULL,
+  `rating` int(1) NOT NULL,
   `status` int(1) NOT NULL default '0',
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -1324,20 +1311,22 @@ CREATE TABLE `oc_review` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_review`
+-- Dumping data for table `opencart_review`
 --
 
-INSERT INTO `oc_review` (`review_id`, `product_id`, `customer_id`, `author`, `text`, `rating`, `status`, `date_added`, `date_modified`) VALUES
-(58, 40, 0, 'Daniel', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ', 3, 1, '2009-06-19 00:23:19', '0000-00-00 00:00:00');
+INSERT INTO `opencart_review` (`review_id`, `product_id`, `customer_id`, `author`, `text`, `rating`, `status`, `date_added`, `date_modified`) VALUES
+(58, 40, 0, 'Daniel', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ', 3, 1, '2009-07-04 17:11:15', '0000-00-00 00:00:00'),
+(59, 47, 0, 'Danel', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ', 2, 0, '2009-07-11 16:23:54', '0000-00-00 00:00:00'),
+(60, 47, 0, 'Daniel ', ' test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test', 3, 0, '2009-07-11 16:26:03', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_setting`
+-- Table structure for table `opencart_setting`
 --
 
-DROP TABLE IF EXISTS `oc_setting`;
-CREATE TABLE `oc_setting` (
+DROP TABLE IF EXISTS `opencart_setting`;
+CREATE TABLE `opencart_setting` (
   `setting_id` int(11) NOT NULL auto_increment,
   `group` varchar(32) collate utf8_unicode_ci NOT NULL,
   `key` varchar(64) collate utf8_unicode_ci NOT NULL default '',
@@ -1346,46 +1335,24 @@ CREATE TABLE `oc_setting` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_setting`
+-- Dumping data for table `opencart_setting`
 --
 
-INSERT INTO `oc_setting` (`setting_id`, `group`, `key`, `value`) VALUES
+INSERT INTO `opencart_setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (7653, 'coupon', 'coupon_sort_order', '4'),
 (5874, 'free', 'free_sort_order', '1'),
 (5873, 'free', 'free_status', '1'),
 (5872, 'free', 'free_geo_zone_id', '0'),
 (5585, 'shipping', 'shipping_sort_order', '3'),
 (5584, 'shipping', 'shipping_status', '1'),
-(5596, 'cod', 'cod_sort_order', '1'),
+(7780, 'cod', 'cod_sort_order', '1'),
 (5393, 'sub_total', 'sub_total_status', '1'),
-(5595, 'cod', 'cod_status', '1'),
-(5594, 'cod', 'cod_geo_zone_id', '0'),
+(7779, 'cod', 'cod_status', '1'),
+(7778, 'cod', 'cod_geo_zone_id', '0'),
 (7652, 'coupon', 'coupon_status', '1'),
 (5394, 'sub_total', 'sub_total_sort_order', '1'),
-(7566, 'paypal_direct', 'paypal_direct_sort_order', '1'),
-(7431, 'sagepay', 'sagepay_sort_order', '1'),
-(7430, 'sagepay', 'sagepay_status', '1'),
-(7429, 'sagepay', 'sagepay_geo_zone_id', '0'),
-(7428, 'sagepay', 'sagepay_order_status_id', '5'),
-(7506, 'worldpay', 'worldpay_sort_order', '1'),
-(7565, 'paypal_direct', 'paypal_direct_status', '1'),
-(7505, 'worldpay', 'worldpay_status', '1'),
-(7504, 'worldpay', 'worldpay_geo_zone_id', '0'),
-(7503, 'worldpay', 'worldpay_order_status_id', '5'),
-(7502, 'worldpay', 'worldpay_test', '100'),
-(7501, 'worldpay', 'worldpay_password', 'test123'),
-(7500, 'worldpay', 'worldpay_merchant', '234292'),
-(7640, 'cheque', 'cheque_geo_zone_id', '0'),
-(7632, 'config', 'config_parse_time', '0'),
-(7631, 'config', 'config_compression', '4'),
-(7630, 'config', 'config_seo_url', '0'),
-(7629, 'config', 'config_encryption', '123456'),
-(7628, 'config', 'config_ssl', '0'),
-(7627, 'config', 'config_download_status', '5'),
-(7625, 'config', 'config_stock_status_id', '5'),
-(7626, 'config', 'config_download', '1'),
 (5871, 'free', 'free_total', ''),
-(5593, 'cod', 'cod_order_status_id', '1'),
+(7777, 'cod', 'cod_order_status_id', '1'),
 (5512, 'low_order_fee', 'low_order_fee_sort_order', '2'),
 (5511, 'low_order_fee', 'low_order_fee_status', '0'),
 (5510, 'low_order_fee', 'low_order_fee_fee', '5'),
@@ -1394,29 +1361,6 @@ INSERT INTO `oc_setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (5509, 'low_order_fee', 'low_order_fee_total', '100'),
 (5587, 'total', 'total_sort_order', '6'),
 (5586, 'total', 'total_status', '1'),
-(7623, 'config', 'config_stock_subtract', '0'),
-(7624, 'config', 'config_order_status_id', '1'),
-(7622, 'config', 'config_stock_checkout', '0'),
-(7621, 'config', 'config_stock_check', '1'),
-(7620, 'config', 'config_checkout', '5'),
-(7619, 'config', 'config_account', '3'),
-(7618, 'config', 'config_alert_mail', '0'),
-(7617, 'config', 'config_weight_class_id', '1'),
-(7616, 'config', 'config_tax', '1'),
-(7615, 'config', 'config_currency_auto', '1'),
-(7614, 'config', 'config_currency', 'GBP'),
-(7613, 'config', 'config_admin_language', 'en'),
-(7612, 'config', 'config_language', 'en'),
-(7611, 'config', 'config_zone_id', '3563'),
-(7610, 'config', 'config_country_id', '222'),
-(7609, 'config', 'config_welcome_1', '&lt;p&gt;Welcome to my store!&lt;/p&gt;'),
-(7608, 'config', 'config_template', 'default/template/'),
-(7606, 'config', 'config_telephone', '123456789'),
-(7607, 'config', 'config_fax', ''),
-(7657, 'config', 'config_email', 'webmaster@opencart.com'),
-(7604, 'config', 'config_address', 'Address 1'),
-(7603, 'config', 'config_owner', 'Your Name'),
-(7602, 'config', 'config_logo', 'logo.png'),
 (5915, 'category', 'category_position', 'left'),
 (5916, 'category', 'category_status', '1'),
 (5917, 'category', 'category_sort_order', '1'),
@@ -1429,45 +1373,77 @@ INSERT INTO `oc_setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (5924, 'manufacturer', 'manufacturer_position', 'left'),
 (5925, 'manufacturer', 'manufacturer_status', '1'),
 (5926, 'manufacturer', 'manufacturer_sort_order', '2'),
-(7427, 'sagepay', 'sagepay_transaction', 'PAYMENT'),
-(7426, 'sagepay', 'sagepay_test', 'test'),
-(7425, 'sagepay', 'sagepay_password', 'KnN3n74AhSsmpENF'),
-(7424, 'sagepay', 'sagepay_vendor', 'marplechinacent'),
-(7661, 'bestseller', 'bestseller_sort_order', '3'),
-(7660, 'bestseller', 'bestseller_status', '1'),
-(7659, 'bestseller', 'bestseller_position', 'right'),
-(7658, 'bestseller', 'bestseller_limit', '5'),
-(7601, 'config', 'config_meta_description', 'your store of fun'),
+(7966, 'bestseller', 'bestseller_sort_order', '3'),
+(7965, 'bestseller', 'bestseller_status', '1'),
+(7964, 'bestseller', 'bestseller_position', 'right'),
+(7963, 'bestseller', 'bestseller_limit', '5'),
 (6987, 'cart', 'cart_sort_order', '1'),
 (6986, 'cart', 'cart_status', '1'),
 (6984, 'cart', 'cart_ajax', '1'),
 (6985, 'cart', 'cart_position', 'right'),
-(7564, 'paypal_direct', 'paypal_direct_geo_zone_id', '0'),
-(7563, 'paypal_direct', 'paypal_direct_order_status_id', '5'),
-(7561, 'paypal_direct', 'paypal_direct_test', '1'),
-(7562, 'paypal_direct', 'paypal_direct_transaction', '0'),
-(7560, 'paypal_direct', 'paypal_direct_signature', '123567'),
-(7559, 'paypal_direct', 'paypal_direct_password', '123567'),
-(7558, 'paypal_direct', 'paypal_direct_username', '123567'),
-(7600, 'config', 'config_store', 'Your Store'),
-(7639, 'cheque', 'cheque_order_status_id', '1'),
-(7638, 'cheque', 'cheque_payable', 'Daniel'),
-(7641, 'cheque', 'cheque_status', '1'),
-(7642, 'cheque', 'cheque_sort_order', '1'),
-(7643, 'bank_transfer', 'bank_transfer_bank_1', 'drop offf the money'),
-(7644, 'bank_transfer', 'bank_transfer_order_status_id', '1'),
-(7645, 'bank_transfer', 'bank_transfer_geo_zone_id', '0'),
-(7646, 'bank_transfer', 'bank_transfer_status', '1'),
-(7647, 'bank_transfer', 'bank_transfer_sort_order', '1');
+(9276, 'config', 'config_parse_time', '0'),
+(9275, 'config', 'config_compression', '4'),
+(9274, 'config', 'config_seo_url', '0'),
+(9270, 'config', 'config_smtp_port', '25'),
+(9271, 'config', 'config_smtp_timeout', '5'),
+(9272, 'config', 'config_ssl', '0'),
+(9273, 'config', 'config_encryption', '123456'),
+(9269, 'config', 'config_smtp_password', ''),
+(9268, 'config', 'config_smtp_username', ''),
+(9267, 'config', 'config_smtp_host', ''),
+(9266, 'config', 'config_mail_protocol', 'mail'),
+(9265, 'config', 'config_image_cart_height', '75'),
+(9264, 'config', 'config_image_cart_width', '75'),
+(9263, 'config', 'config_image_related_height', '120'),
+(9262, 'config', 'config_image_related_width', '120'),
+(9261, 'config', 'config_image_additional_height', '150'),
+(9260, 'config', 'config_image_additional_width', '150'),
+(9259, 'config', 'config_image_product_height', '120'),
+(9258, 'config', 'config_image_product_width', '120'),
+(9257, 'config', 'config_image_category_height', '120'),
+(9256, 'config', 'config_image_category_width', '120'),
+(9255, 'config', 'config_image_popup_height', '500'),
+(9254, 'config', 'config_image_popup_width', '500'),
+(9253, 'config', 'config_image_thumb_height', '250'),
+(9252, 'config', 'config_image_thumb_width', '250'),
+(9250, 'config', 'config_logo', 'logo.png'),
+(9251, 'config', 'config_icon', '&lt;br /&gt;\r\n&lt;b&gt;Notice&lt;/b&gt;:  Undefined variable: config_icon in &lt;b&gt;/home/opencart/public_html/dev/admin/view/template/setting/setting.tpl&lt;/b&gt; on line &lt;b&gt;341&lt;/b&gt;&lt;br /&gt;\r\n'),
+(9249, 'config', 'config_download_status', '5'),
+(9248, 'config', 'config_download', '1'),
+(9246, 'config', 'config_order_status_id', '1'),
+(9247, 'config', 'config_stock_status_id', '5'),
+(9245, 'config', 'config_stock_subtract', '0'),
+(9244, 'config', 'config_stock_checkout', '0'),
+(9243, 'config', 'config_stock_check', '1'),
+(9242, 'config', 'config_checkout', '5'),
+(9241, 'config', 'config_account', '3'),
+(9240, 'config', 'config_alert_mail', '0'),
+(9239, 'config', 'config_weight_class_id', '1'),
+(9238, 'config', 'config_tax', '1'),
+(9237, 'config', 'config_currency_auto', '1'),
+(9236, 'config', 'config_currency', 'GBP'),
+(9235, 'config', 'config_admin_language', 'en'),
+(9234, 'config', 'config_language', 'en'),
+(9233, 'config', 'config_zone_id', '3563'),
+(9232, 'config', 'config_country_id', '222'),
+(9231, 'config', 'config_welcome_1', '&lt;p&gt;Welcome to my store!&lt;/p&gt;'),
+(9230, 'config', 'config_template', 'default/template/'),
+(9229, 'config', 'config_fax', ''),
+(9228, 'config', 'config_telephone', '123456789'),
+(9227, 'config', 'config_email', 'webmaster@opencart.com'),
+(9226, 'config', 'config_address', 'Address 1'),
+(9225, 'config', 'config_owner', 'Your Name'),
+(9224, 'config', 'config_meta_description', 'your store of fun'),
+(9223, 'config', 'config_store', 'Your Store');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_stock_status`
+-- Table structure for table `opencart_stock_status`
 --
 
-DROP TABLE IF EXISTS `oc_stock_status`;
-CREATE TABLE `oc_stock_status` (
+DROP TABLE IF EXISTS `opencart_stock_status`;
+CREATE TABLE `opencart_stock_status` (
   `stock_status_id` int(11) NOT NULL auto_increment,
   `language_id` int(11) NOT NULL,
   `name` varchar(32) collate utf8_unicode_ci NOT NULL,
@@ -1475,10 +1451,10 @@ CREATE TABLE `oc_stock_status` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_stock_status`
+-- Dumping data for table `opencart_stock_status`
 --
 
-INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
+INSERT INTO `opencart_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 (7, 1, 'In Stock'),
 (5, 1, 'Out Of Stock'),
 (7, 4, 'In Stock'),
@@ -1487,11 +1463,11 @@ INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_tax_class`
+-- Table structure for table `opencart_tax_class`
 --
 
-DROP TABLE IF EXISTS `oc_tax_class`;
-CREATE TABLE `oc_tax_class` (
+DROP TABLE IF EXISTS `opencart_tax_class`;
+CREATE TABLE `opencart_tax_class` (
   `tax_class_id` int(11) NOT NULL auto_increment,
   `title` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `description` varchar(255) collate utf8_unicode_ci NOT NULL default '',
@@ -1501,24 +1477,24 @@ CREATE TABLE `oc_tax_class` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_tax_class`
+-- Dumping data for table `opencart_tax_class`
 --
 
-INSERT INTO `oc_tax_class` (`tax_class_id`, `title`, `description`, `date_added`, `date_modified`) VALUES
-(9, 'Taxable Goods', 'Taxed Stuff', '2009-01-06 23:21:53', '2009-06-18 23:53:20');
+INSERT INTO `opencart_tax_class` (`tax_class_id`, `title`, `description`, `date_added`, `date_modified`) VALUES
+(9, 'Taxable Goods', 'Taxed Stuff', '2009-01-06 23:21:53', '2009-07-04 17:04:45');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_tax_rate`
+-- Table structure for table `opencart_tax_rate`
 --
 
-DROP TABLE IF EXISTS `oc_tax_rate`;
-CREATE TABLE `oc_tax_rate` (
+DROP TABLE IF EXISTS `opencart_tax_rate`;
+CREATE TABLE `opencart_tax_rate` (
   `tax_rate_id` int(11) NOT NULL auto_increment,
   `geo_zone_id` int(11) NOT NULL default '0',
-  `tax_class_id` int(11) NOT NULL default '0',
-  `priority` int(5) default '1',
+  `tax_class_id` int(11) NOT NULL,
+  `priority` int(5) NOT NULL default '1',
   `rate` decimal(7,4) NOT NULL default '0.0000',
   `description` varchar(255) collate utf8_unicode_ci NOT NULL default '',
   `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -1527,51 +1503,48 @@ CREATE TABLE `oc_tax_rate` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_tax_rate`
+-- Dumping data for table `opencart_tax_rate`
 --
 
-INSERT INTO `oc_tax_rate` (`tax_rate_id`, `geo_zone_id`, `tax_class_id`, `priority`, `rate`, `description`, `date_modified`, `date_added`) VALUES
-(33, 3, 9, 1, '17.5000', 'VAT 17.5%', '0000-00-00 00:00:00', '2009-06-18 23:53:20');
+INSERT INTO `opencart_tax_rate` (`tax_rate_id`, `geo_zone_id`, `tax_class_id`, `priority`, `rate`, `description`, `date_modified`, `date_added`) VALUES
+(36, 3, 9, 1, '17.5000', 'VAT 17.5%', '0000-00-00 00:00:00', '2009-07-04 17:04:45');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_url_alias`
+-- Table structure for table `opencart_url_alias`
 --
 
-DROP TABLE IF EXISTS `oc_url_alias`;
-CREATE TABLE `oc_url_alias` (
+DROP TABLE IF EXISTS `opencart_url_alias`;
+CREATE TABLE `opencart_url_alias` (
   `url_alias_id` int(11) NOT NULL auto_increment,
   `query` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `alias` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `keyword` varchar(255) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`url_alias_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_url_alias`
+-- Dumping data for table `opencart_url_alias`
 --
 
-INSERT INTO `oc_url_alias` (`url_alias_id`, `query`, `alias`) VALUES
-(1, 'route=product/product&product_id=48', 'ipod_classic'),
-(2, 'route=product/category&path=20', 'desktops'),
-(3, 'route=product/category&path=20_27', 'desktops/mac'),
-(4, 'route=product/category&path=20_26', 'desktops/pc'),
-(5, 'route=product/category&path=34', 'mp3_players'),
-(6, 'route=product/product&path=34&product_id=48', 'mp3_players/ipod_classic'),
-(7, 'route=product/manufacturer&manufacturer_id=8', 'apple'),
-(8, 'route=product/product&manufacturer_id=8&product_id=48', 'apple/ipod_classic'),
-(9, 'route=information/information&information_id=4', 'about');
+INSERT INTO `opencart_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
+(11, 'product_id=48', 'ipod_classic'),
+(17, 'category_id=20', 'desktops'),
+(12, 'category_id=26', 'pc'),
+(13, 'category_id=27', 'mac'),
+(14, 'manufacturer_id=8', 'apple'),
+(16, 'information_id=4', 'about_us');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_user`
+-- Table structure for table `opencart_user`
 --
 
-DROP TABLE IF EXISTS `oc_user`;
-CREATE TABLE `oc_user` (
+DROP TABLE IF EXISTS `opencart_user`;
+CREATE TABLE `opencart_user` (
   `user_id` int(11) NOT NULL auto_increment,
-  `user_group_id` int(11) NOT NULL default '0',
+  `user_group_id` int(11) NOT NULL,
   `username` varchar(20) collate utf8_unicode_ci NOT NULL default '',
   `password` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
@@ -1585,39 +1558,39 @@ CREATE TABLE `oc_user` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_user`
+-- Dumping data for table `opencart_user`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_user_group`
+-- Table structure for table `opencart_user_group`
 --
 
-DROP TABLE IF EXISTS `oc_user_group`;
-CREATE TABLE `oc_user_group` (
+DROP TABLE IF EXISTS `opencart_user_group`;
+CREATE TABLE `opencart_user_group` (
   `user_group_id` int(11) NOT NULL auto_increment,
-  `name` varchar(64) collate utf8_unicode_ci default NULL,
+  `name` varchar(64) collate utf8_unicode_ci NOT NULL,
   `permission` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`user_group_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_user_group`
+-- Dumping data for table `opencart_user_group`
 --
 
-INSERT INTO `oc_user_group` (`user_group_id`, `name`, `permission`) VALUES
-(1, 'Top Administrator', 'a:2:{s:6:"access";a:103:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:13:"common/footer";i:8;s:13:"common/header";i:9;s:11:"common/menu";i:10;s:15:"customer/coupon";i:11;s:17:"customer/customer";i:12;s:13:"customer/mail";i:13;s:14:"customer/order";i:14;s:14:"extension/feed";i:15;s:16:"extension/module";i:16;s:17:"extension/payment";i:17;s:18:"extension/shipping";i:18;s:15:"extension/total";i:19;s:14:"feed/bidhopper";i:20;s:12:"feed/bizrate";i:21;s:15:"feed/edirectory";i:22;s:15:"feed/googlebase";i:23;s:13:"feed/shopping";i:24;s:10:"feed/yahoo";i:25;s:20:"localisation/country";i:26;s:21:"localisation/currency";i:27;s:21:"localisation/geo_zone";i:28;s:21:"localisation/language";i:29;s:25:"localisation/order_status";i:30;s:25:"localisation/stock_status";i:31;s:22:"localisation/tax_class";i:32;s:25:"localisation/weight_class";i:33;s:17:"localisation/zone";i:34;s:17:"module/bestseller";i:35;s:11:"module/cart";i:36;s:15:"module/category";i:37;s:15:"module/currency";i:38;s:18:"module/information";i:39;s:19:"module/manufacturer";i:40;s:15:"payment/asiapay";i:41;s:24:"payment/authorizenet_aim";i:42;s:24:"payment/authorizenet_sim";i:43;s:21:"payment/bank_transfer";i:44;s:15:"payment/bluepay";i:45;s:16:"payment/ccavenue";i:46;s:13:"payment/ccnow";i:47;s:14:"payment/cheque";i:48;s:17:"payment/chronopay";i:49;s:11:"payment/cod";i:50;s:13:"payment/egold";i:51;s:12:"payment/eway";i:52;s:12:"payment/hsbc";i:53;s:17:"payment/linkpoint";i:54;s:14:"payment/liqpay";i:55;s:13:"payment/malse";i:56;s:20:"payment/moneybookers";i:57;s:14:"payment/nochex";i:58;s:19:"payment/payjunction";i:59;s:15:"payment/paymate";i:60;s:14:"payment/paypal";i:61;s:21:"payment/paypal_direct";i:62;s:24:"payment/paypal_direct_uk";i:63;s:22:"payment/paypal_express";i:64;s:25:"payment/paypal_express_uk";i:65;s:16:"payment/paypoint";i:66;s:15:"payment/psigate";i:67;s:15:"payment/sagepay";i:68;s:19:"payment/twocheckout";i:69;s:16:"payment/verisign";i:70;s:16:"payment/worldpay";i:71;s:16:"report/purchased";i:72;s:11:"report/sale";i:73;s:13:"report/viewed";i:74;s:15:"setting/setting";i:75;s:14:"shipping/fedex";i:76;s:13:"shipping/flat";i:77;s:13:"shipping/free";i:78;s:13:"shipping/item";i:79;s:19:"shipping/royal_mail";i:80;s:12:"shipping/ups";i:81;s:13:"shipping/usps";i:82;s:15:"shipping/weight";i:83;s:11:"tool/backup";i:84;s:12:"total/coupon";i:85;s:19:"total/low_order_fee";i:86;s:14:"total/shipping";i:87;s:15:"total/sub_total";i:88;s:9:"total/tax";i:89;s:11:"total/total";i:90;s:9:"user/user";i:91;s:15:"user/user_group";i:92;s:15:"payment/sagepay";i:93;s:16:"payment/worldpay";i:94;s:16:"payment/worldpay";i:95;s:15:"payment/sagepay";i:96;s:14:"payment/paypal";i:97;s:15:"payment/sagepay";i:98;s:21:"payment/paypal_direct";i:99;s:21:"payment/bank_transfer";i:100;s:14:"payment/cheque";i:101;s:14:"payment/paypal";i:102;s:12:"shipping/ups";}s:6:"modify";a:103:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:13:"common/footer";i:8;s:13:"common/header";i:9;s:11:"common/menu";i:10;s:15:"customer/coupon";i:11;s:17:"customer/customer";i:12;s:13:"customer/mail";i:13;s:14:"customer/order";i:14;s:14:"extension/feed";i:15;s:16:"extension/module";i:16;s:17:"extension/payment";i:17;s:18:"extension/shipping";i:18;s:15:"extension/total";i:19;s:14:"feed/bidhopper";i:20;s:12:"feed/bizrate";i:21;s:15:"feed/edirectory";i:22;s:15:"feed/googlebase";i:23;s:13:"feed/shopping";i:24;s:10:"feed/yahoo";i:25;s:20:"localisation/country";i:26;s:21:"localisation/currency";i:27;s:21:"localisation/geo_zone";i:28;s:21:"localisation/language";i:29;s:25:"localisation/order_status";i:30;s:25:"localisation/stock_status";i:31;s:22:"localisation/tax_class";i:32;s:25:"localisation/weight_class";i:33;s:17:"localisation/zone";i:34;s:17:"module/bestseller";i:35;s:11:"module/cart";i:36;s:15:"module/category";i:37;s:15:"module/currency";i:38;s:18:"module/information";i:39;s:19:"module/manufacturer";i:40;s:15:"payment/asiapay";i:41;s:24:"payment/authorizenet_aim";i:42;s:24:"payment/authorizenet_sim";i:43;s:21:"payment/bank_transfer";i:44;s:15:"payment/bluepay";i:45;s:16:"payment/ccavenue";i:46;s:13:"payment/ccnow";i:47;s:14:"payment/cheque";i:48;s:17:"payment/chronopay";i:49;s:11:"payment/cod";i:50;s:13:"payment/egold";i:51;s:12:"payment/eway";i:52;s:12:"payment/hsbc";i:53;s:17:"payment/linkpoint";i:54;s:14:"payment/liqpay";i:55;s:13:"payment/malse";i:56;s:20:"payment/moneybookers";i:57;s:14:"payment/nochex";i:58;s:19:"payment/payjunction";i:59;s:15:"payment/paymate";i:60;s:14:"payment/paypal";i:61;s:21:"payment/paypal_direct";i:62;s:24:"payment/paypal_direct_uk";i:63;s:22:"payment/paypal_express";i:64;s:25:"payment/paypal_express_uk";i:65;s:16:"payment/paypoint";i:66;s:15:"payment/psigate";i:67;s:15:"payment/sagepay";i:68;s:19:"payment/twocheckout";i:69;s:16:"payment/verisign";i:70;s:16:"payment/worldpay";i:71;s:16:"report/purchased";i:72;s:11:"report/sale";i:73;s:13:"report/viewed";i:74;s:15:"setting/setting";i:75;s:14:"shipping/fedex";i:76;s:13:"shipping/flat";i:77;s:13:"shipping/free";i:78;s:13:"shipping/item";i:79;s:19:"shipping/royal_mail";i:80;s:12:"shipping/ups";i:81;s:13:"shipping/usps";i:82;s:15:"shipping/weight";i:83;s:11:"tool/backup";i:84;s:12:"total/coupon";i:85;s:19:"total/low_order_fee";i:86;s:14:"total/shipping";i:87;s:15:"total/sub_total";i:88;s:9:"total/tax";i:89;s:11:"total/total";i:90;s:9:"user/user";i:91;s:15:"user/user_group";i:92;s:15:"payment/sagepay";i:93;s:16:"payment/worldpay";i:94;s:16:"payment/worldpay";i:95;s:15:"payment/sagepay";i:96;s:14:"payment/paypal";i:97;s:15:"payment/sagepay";i:98;s:21:"payment/paypal_direct";i:99;s:21:"payment/bank_transfer";i:100;s:14:"payment/cheque";i:101;s:14:"payment/paypal";i:102;s:12:"shipping/ups";}}'),
-(10, 'Demonstration', 'a:1:{s:6:"access";a:54:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:15:"customer/coupon";i:8;s:17:"customer/customer";i:9;s:14:"customer/order";i:10;s:14:"extension/feed";i:11;s:16:"extension/module";i:12;s:17:"extension/payment";i:13;s:18:"extension/shipping";i:14;s:15:"extension/total";i:15;s:20:"localisation/country";i:16;s:21:"localisation/currency";i:17;s:21:"localisation/geo_zone";i:18;s:21:"localisation/language";i:19;s:25:"localisation/order_status";i:20;s:25:"localisation/stock_status";i:21;s:22:"localisation/tax_class";i:22;s:25:"localisation/weight_class";i:23;s:17:"localisation/zone";i:24;s:17:"module/bestseller";i:25;s:11:"module/cart";i:26;s:15:"module/category";i:27;s:15:"module/currency";i:28;s:18:"module/information";i:29;s:19:"module/manufacturer";i:30;s:21:"payment/bank_transfer";i:31;s:14:"payment/cheque";i:32;s:11:"payment/cod";i:33;s:14:"payment/paypal";i:34;s:15:"payment/sagepay";i:35;s:16:"payment/worldpay";i:36;s:16:"report/purchased";i:37;s:11:"report/sale";i:38;s:13:"report/viewed";i:39;s:15:"setting/setting";i:40;s:13:"shipping/flat";i:41;s:13:"shipping/free";i:42;s:13:"shipping/item";i:43;s:12:"shipping/ups";i:44;s:15:"shipping/weight";i:45;s:11:"tool/backup";i:46;s:12:"total/coupon";i:47;s:19:"total/low_order_fee";i:48;s:14:"total/shipping";i:49;s:15:"total/sub_total";i:50;s:9:"total/tax";i:51;s:11:"total/total";i:52;s:9:"user/user";i:53;s:15:"user/user_group";}}');
+INSERT INTO `opencart_user_group` (`user_group_id`, `name`, `permission`) VALUES
+(1, 'Top Administrator', 'a:2:{s:6:"access";a:74:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:16:"customer/contact";i:8;s:15:"customer/coupon";i:9;s:17:"customer/customer";i:10;s:14:"customer/order";i:11;s:14:"extension/feed";i:12;s:16:"extension/module";i:13;s:17:"extension/payment";i:14;s:18:"extension/shipping";i:15;s:15:"extension/total";i:16;s:20:"localisation/country";i:17;s:21:"localisation/currency";i:18;s:21:"localisation/geo_zone";i:19;s:21:"localisation/language";i:20;s:25:"localisation/order_status";i:21;s:25:"localisation/stock_status";i:22;s:22:"localisation/tax_class";i:23;s:25:"localisation/weight_class";i:24;s:17:"localisation/zone";i:25;s:17:"module/bestseller";i:26;s:11:"module/cart";i:27;s:15:"module/category";i:28;s:15:"module/currency";i:29;s:18:"module/information";i:30;s:19:"module/manufacturer";i:31;s:21:"payment/bank_transfer";i:32;s:14:"payment/cheque";i:33;s:11:"payment/cod";i:34;s:20:"payment/moneybookers";i:35;s:17:"payment/pp_direct";i:36;s:20:"payment/pp_direct_uk";i:37;s:19:"payment/pp_standard";i:38;s:15:"payment/sagepay";i:39;s:16:"payment/worldpay";i:40;s:16:"report/purchased";i:41;s:11:"report/sale";i:42;s:13:"report/viewed";i:43;s:15:"setting/setting";i:44;s:17:"shipping/citylink";i:45;s:14:"shipping/fedex";i:46;s:13:"shipping/flat";i:47;s:13:"shipping/free";i:48;s:13:"shipping/item";i:49;s:23:"shipping/parcelforce_48";i:50;s:38:"shipping/royal_mail_1st_class_recorded";i:51;s:38:"shipping/royal_mail_1st_class_standard";i:52;s:38:"shipping/royal_mail_2nd_class_recorded";i:53;s:38:"shipping/royal_mail_2nd_class_standard";i:54;s:27:"shipping/royal_mail_airmail";i:55;s:27:"shipping/royal_mail_airsure";i:56;s:40:"shipping/royal_mail_international_signed";i:57;s:36:"shipping/royal_mail_special_delivery";i:58;s:36:"shipping/royal_mail_standard_parcels";i:59;s:27:"shipping/royal_mail_surface";i:60;s:12:"shipping/ups";i:61;s:13:"shipping/usps";i:62;s:15:"shipping/weight";i:63;s:11:"tool/backup";i:64;s:12:"total/coupon";i:65;s:14:"total/handling";i:66;s:19:"total/low_order_fee";i:67;s:14:"total/shipping";i:68;s:15:"total/sub_total";i:69;s:9:"total/tax";i:70;s:11:"total/total";i:71;s:9:"user/user";i:72;s:20:"user/user_permission";i:73;s:14:"payment/cheque";}s:6:"modify";a:74:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:16:"customer/contact";i:8;s:15:"customer/coupon";i:9;s:17:"customer/customer";i:10;s:14:"customer/order";i:11;s:14:"extension/feed";i:12;s:16:"extension/module";i:13;s:17:"extension/payment";i:14;s:18:"extension/shipping";i:15;s:15:"extension/total";i:16;s:20:"localisation/country";i:17;s:21:"localisation/currency";i:18;s:21:"localisation/geo_zone";i:19;s:21:"localisation/language";i:20;s:25:"localisation/order_status";i:21;s:25:"localisation/stock_status";i:22;s:22:"localisation/tax_class";i:23;s:25:"localisation/weight_class";i:24;s:17:"localisation/zone";i:25;s:17:"module/bestseller";i:26;s:11:"module/cart";i:27;s:15:"module/category";i:28;s:15:"module/currency";i:29;s:18:"module/information";i:30;s:19:"module/manufacturer";i:31;s:21:"payment/bank_transfer";i:32;s:14:"payment/cheque";i:33;s:11:"payment/cod";i:34;s:20:"payment/moneybookers";i:35;s:17:"payment/pp_direct";i:36;s:20:"payment/pp_direct_uk";i:37;s:19:"payment/pp_standard";i:38;s:15:"payment/sagepay";i:39;s:16:"payment/worldpay";i:40;s:16:"report/purchased";i:41;s:11:"report/sale";i:42;s:13:"report/viewed";i:43;s:15:"setting/setting";i:44;s:17:"shipping/citylink";i:45;s:14:"shipping/fedex";i:46;s:13:"shipping/flat";i:47;s:13:"shipping/free";i:48;s:13:"shipping/item";i:49;s:23:"shipping/parcelforce_48";i:50;s:38:"shipping/royal_mail_1st_class_recorded";i:51;s:38:"shipping/royal_mail_1st_class_standard";i:52;s:38:"shipping/royal_mail_2nd_class_recorded";i:53;s:38:"shipping/royal_mail_2nd_class_standard";i:54;s:27:"shipping/royal_mail_airmail";i:55;s:27:"shipping/royal_mail_airsure";i:56;s:40:"shipping/royal_mail_international_signed";i:57;s:36:"shipping/royal_mail_special_delivery";i:58;s:36:"shipping/royal_mail_standard_parcels";i:59;s:27:"shipping/royal_mail_surface";i:60;s:12:"shipping/ups";i:61;s:13:"shipping/usps";i:62;s:15:"shipping/weight";i:63;s:11:"tool/backup";i:64;s:12:"total/coupon";i:65;s:14:"total/handling";i:66;s:19:"total/low_order_fee";i:67;s:14:"total/shipping";i:68;s:15:"total/sub_total";i:69;s:9:"total/tax";i:70;s:11:"total/total";i:71;s:9:"user/user";i:72;s:20:"user/user_permission";i:73;s:14:"payment/cheque";}}'),
+(10, 'Demonstration', 'a:1:{s:6:"access";a:73:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:13:"catalog/image";i:3;s:19:"catalog/information";i:4;s:20:"catalog/manufacturer";i:5;s:15:"catalog/product";i:6;s:14:"catalog/review";i:7;s:16:"customer/contact";i:8;s:15:"customer/coupon";i:9;s:17:"customer/customer";i:10;s:14:"customer/order";i:11;s:14:"extension/feed";i:12;s:16:"extension/module";i:13;s:17:"extension/payment";i:14;s:18:"extension/shipping";i:15;s:15:"extension/total";i:16;s:20:"localisation/country";i:17;s:21:"localisation/currency";i:18;s:21:"localisation/geo_zone";i:19;s:21:"localisation/language";i:20;s:25:"localisation/order_status";i:21;s:25:"localisation/stock_status";i:22;s:22:"localisation/tax_class";i:23;s:25:"localisation/weight_class";i:24;s:17:"localisation/zone";i:25;s:17:"module/bestseller";i:26;s:11:"module/cart";i:27;s:15:"module/category";i:28;s:15:"module/currency";i:29;s:18:"module/information";i:30;s:19:"module/manufacturer";i:31;s:21:"payment/bank_transfer";i:32;s:14:"payment/cheque";i:33;s:11:"payment/cod";i:34;s:20:"payment/moneybookers";i:35;s:17:"payment/pp_direct";i:36;s:20:"payment/pp_direct_uk";i:37;s:19:"payment/pp_standard";i:38;s:15:"payment/sagepay";i:39;s:16:"payment/worldpay";i:40;s:16:"report/purchased";i:41;s:11:"report/sale";i:42;s:13:"report/viewed";i:43;s:15:"setting/setting";i:44;s:17:"shipping/citylink";i:45;s:14:"shipping/fedex";i:46;s:13:"shipping/flat";i:47;s:13:"shipping/free";i:48;s:13:"shipping/item";i:49;s:23:"shipping/parcelforce_48";i:50;s:38:"shipping/royal_mail_1st_class_recorded";i:51;s:38:"shipping/royal_mail_1st_class_standard";i:52;s:38:"shipping/royal_mail_2nd_class_recorded";i:53;s:38:"shipping/royal_mail_2nd_class_standard";i:54;s:27:"shipping/royal_mail_airmail";i:55;s:27:"shipping/royal_mail_airsure";i:56;s:40:"shipping/royal_mail_international_signed";i:57;s:36:"shipping/royal_mail_special_delivery";i:58;s:36:"shipping/royal_mail_standard_parcels";i:59;s:27:"shipping/royal_mail_surface";i:60;s:12:"shipping/ups";i:61;s:13:"shipping/usps";i:62;s:15:"shipping/weight";i:63;s:11:"tool/backup";i:64;s:12:"total/coupon";i:65;s:14:"total/handling";i:66;s:19:"total/low_order_fee";i:67;s:14:"total/shipping";i:68;s:15:"total/sub_total";i:69;s:9:"total/tax";i:70;s:11:"total/total";i:71;s:9:"user/user";i:72;s:20:"user/user_permission";}}');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_weight_class`
+-- Table structure for table `opencart_weight_class`
 --
 
-DROP TABLE IF EXISTS `oc_weight_class`;
-CREATE TABLE `oc_weight_class` (
+DROP TABLE IF EXISTS `opencart_weight_class`;
+CREATE TABLE `opencart_weight_class` (
   `weight_class_id` int(11) NOT NULL auto_increment,
   `language_id` int(11) NOT NULL,
   `title` varchar(32) collate utf8_unicode_ci NOT NULL,
@@ -1626,54 +1599,66 @@ CREATE TABLE `oc_weight_class` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_weight_class`
+-- Dumping data for table `opencart_weight_class`
 --
 
-INSERT INTO `oc_weight_class` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES
+INSERT INTO `opencart_weight_class` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES
 (2, 1, 'Grams', 'g'),
-(1, 1, 'Kilograms', 'kg');
+(1, 1, 'Kilograms', 'kg'),
+(3, 1, 'Pounds', 'lb'),
+(4, 1, 'Ounces', 'oz');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_weight_rule`
+-- Table structure for table `opencart_weight_rule`
 --
 
-DROP TABLE IF EXISTS `oc_weight_rule`;
-CREATE TABLE `oc_weight_rule` (
-  `from_id` int(11) NOT NULL default '0',
-  `to_id` int(11) NOT NULL default '0',
+DROP TABLE IF EXISTS `opencart_weight_rule`;
+CREATE TABLE `opencart_weight_rule` (
+  `from_id` int(11) NOT NULL,
+  `to_id` int(11) NOT NULL,
   `rule` decimal(15,4) NOT NULL default '0.0000'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_weight_rule`
+-- Dumping data for table `opencart_weight_rule`
 --
 
-INSERT INTO `oc_weight_rule` (`from_id`, `to_id`, `rule`) VALUES
+INSERT INTO `opencart_weight_rule` (`from_id`, `to_id`, `rule`) VALUES
+(2, 4, '0.0353'),
+(1, 4, '35.2740'),
+(3, 1, '0.4536'),
+(3, 2, '453.5924'),
+(4, 3, '0.0625'),
+(4, 1, '0.0283'),
+(4, 2, '28.3495'),
+(1, 3, '2.2046'),
+(1, 2, '1000.0000'),
+(2, 3, '0.0022'),
 (2, 1, '0.0010'),
-(1, 2, '1000.0000');
+(3, 4, '16.0000');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_zone`
+-- Table structure for table `opencart_zone`
 --
 
-DROP TABLE IF EXISTS `oc_zone`;
-CREATE TABLE `oc_zone` (
+DROP TABLE IF EXISTS `opencart_zone`;
+CREATE TABLE `opencart_zone` (
   `zone_id` int(11) NOT NULL auto_increment,
-  `country_id` int(11) NOT NULL default '0',
+  `country_id` int(11) NOT NULL,
   `code` varchar(32) collate utf8_unicode_ci NOT NULL default '',
   `name` varchar(128) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`zone_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_zone`
+-- Dumping data for table `opencart_zone`
 --
 
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
+INSERT INTO `opencart_zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1, 1, 'BDS', 'Badakhshan'),
 (2, 1, 'BDG', 'Badghis'),
 (3, 1, 'BGL', 'Baghlan'),
@@ -3360,7 +3345,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1684, 107, 'NR', 'Nara'),
 (1685, 107, 'NI', 'Niigata'),
 (1686, 107, 'OI', 'Oita');
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
+INSERT INTO `opencart_zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1687, 107, 'OK', 'Okayama'),
 (1688, 107, 'ON', 'Okinawa'),
 (1689, 107, 'OS', 'Osaka'),
@@ -4990,7 +4975,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3313, 214, 'TU', 'Tunis'),
 (3314, 214, 'ZA', 'Zaghouan'),
 (3315, 215, 'ADA', 'Adana');
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
+INSERT INTO `opencart_zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3316, 215, 'ADI', 'Adiyaman'),
 (3317, 215, 'AFY', 'Afyonkarahisar'),
 (3318, 215, 'AGR', 'Agri'),
@@ -5521,23 +5506,24 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_zone_to_geo_zone`
+-- Table structure for table `opencart_zone_to_geo_zone`
 --
 
-DROP TABLE IF EXISTS `oc_zone_to_geo_zone`;
-CREATE TABLE `oc_zone_to_geo_zone` (
+DROP TABLE IF EXISTS `opencart_zone_to_geo_zone`;
+CREATE TABLE `opencart_zone_to_geo_zone` (
   `zone_to_geo_zone_id` int(11) NOT NULL auto_increment,
-  `country_id` int(11) NOT NULL default '0',
-  `zone_id` int(11) default NULL,
-  `geo_zone_id` int(11) default NULL,
+  `country_id` int(11) NOT NULL,
+  `zone_id` int(11) NOT NULL default '0',
+  `geo_zone_id` int(11) NOT NULL,
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`zone_to_geo_zone_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `oc_zone_to_geo_zone`
+-- Dumping data for table `opencart_zone_to_geo_zone`
 --
 
-INSERT INTO `oc_zone_to_geo_zone` (`zone_to_geo_zone_id`, `country_id`, `zone_id`, `geo_zone_id`, `date_added`, `date_modified`) VALUES
-(6, 222, 0, 3, '2009-06-18 23:53:00', '0000-00-00 00:00:00');
+INSERT INTO `opencart_zone_to_geo_zone` (`zone_to_geo_zone_id`, `country_id`, `zone_id`, `geo_zone_id`, `date_added`, `date_modified`) VALUES
+(8, 222, 0, 3, '2009-07-04 17:04:28', '0000-00-00 00:00:00'),
+(7, 222, 0, 4, '2009-06-23 01:14:53', '0000-00-00 00:00:00');

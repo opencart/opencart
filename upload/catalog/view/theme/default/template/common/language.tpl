@@ -3,7 +3,7 @@
   <?php if ($language['status']) { ?>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <div style="display: inline;">
-      <input type="image" src="catalog/view/theme/default/image/flags/<?php echo $language['image']; ?>" alt="<?php echo $language['name']; ?>" style="position: relative; top: 4px;" />
+      <input type="image" src="image/flags/<?php echo $language['image']; ?>" alt="<?php echo $language['name']; ?>" style="position: relative; top: 4px;" />
       <input type="hidden" name="language_code" value="<?php echo $language['code']; ?>" />
       <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
     </div>

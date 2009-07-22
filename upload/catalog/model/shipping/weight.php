@@ -25,26 +25,29 @@ class ModelShippingWeight extends Model {
 			
 				if ($status) {
 					$cost = 0;
-				
-					$rates = explode(',', $this->config->get('weight_' . $result['geo_zone_id'] . '_cost'));
-
+					$weight = $this->cart->getWeight();
+					
+					$rates = explode(',', $this->config->get('weight_' . $result['geo_zone_id'] . '_rate'));
+					
 					foreach ($rates as $rate) {
   						$data = explode(':', $rate);
   					
-						if ($this->cart->getWeight() <= $data[0]) {
+						if ($data[0] >= $weight) {
     						$cost = @$data[1];
 						
    							break;
   						}
 					}
-			
-      				$quote_data['weight_' . $result['geo_zone_id']] = array(
-        				'id'           => 'weight.weight_' . $result['geo_zone_id'],
-        				'title'        => $result['name'],
-        				'cost'         => $cost,
-						'tax_class_id' => $this->config->get('weight_tax_class_id'),
-        				'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('weight_tax_class_id'), $this->config->get('config_tax')))
-      				);			
+					
+					if ((int)$cost) {
+      					$quote_data['weight_' . $result['geo_zone_id']] = array(
+        					'id'           => 'weight.weight_' . $result['geo_zone_id'],
+        					'title'        => $result['name'] . '  (' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')',
+        					'cost'         => $cost,
+							'tax_class_id' => $this->config->get('weight_tax_class_id'),
+        					'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('weight_tax_class_id'), $this->config->get('config_tax')))
+      					);	
+					}
 				}
 			}
 		}

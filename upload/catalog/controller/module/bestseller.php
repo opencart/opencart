@@ -6,11 +6,8 @@ class ControllerModuleBestSeller extends Controller {
       	$this->data['heading_title'] = $this->language->get('heading_title');
 		
 		$this->load->model('catalog/product');
-		
 		$this->load->model('catalog/review');
-		
 		$this->load->model('tool/seo_url');
-		
 		$this->load->helper('image');
 		
 		$this->data['products'] = array();

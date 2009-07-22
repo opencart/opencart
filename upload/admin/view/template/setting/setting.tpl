@@ -8,7 +8,7 @@
   <h1><?php echo $heading_title; ?></h1>
   <div class="buttons"><a onclick="$('#form').submit();" class="button"><span class="button_left button_save"></span><span class="button_middle"><?php echo $button_save; ?></span><span class="button_right"></span></a><a onclick="location='<?php echo $cancel; ?>';" class="button"><span class="button_left button_cancel"></span><span class="button_middle"><?php echo $button_cancel; ?></span><span class="button_right"></span></a></div>
 </div>
-<div class="tabs"><a tab="#tab_shop"><?php echo $tab_shop; ?></a><a tab="#tab_local"><?php echo $tab_local; ?></a><a tab="#tab_option"><?php echo $tab_option; ?></a><a tab="#tab_server"><?php echo $tab_server; ?></a></div>
+<div class="tabs"><a tab="#tab_shop"><?php echo $tab_shop; ?></a><a tab="#tab_local"><?php echo $tab_local; ?></a><a tab="#tab_option"><?php echo $tab_option; ?></a><a tab="#tab_image"><?php echo $tab_image; ?></a><a tab="#tab_mail"><?php echo $tab_mail; ?></a><a tab="#tab_server"><?php echo $tab_server; ?></a></div>
 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
   <div id="tab_shop" class="page">
     <table class="form">
@@ -26,15 +26,6 @@
           <?php if ($error_meta_description) { ?>
           <span class="error"><?php echo $error_meta_description; ?></span>
           <?php } ?></td>
-      </tr>
-      <tr>
-        <td><?php echo $entry_logo; ?></td>
-        <td><input type="file" id="upload" />
-          <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" /></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td id="logo"></td>
       </tr>
       <tr>
         <td><span class="required">*</span> <?php echo $entry_owner; ?></td>
@@ -156,8 +147,7 @@
           </select></td>
       </tr>
       <tr>
-        <td><?php echo $entry_currency_auto; ?><br />
-          <span class="help"><?php echo $help_currency_auto; ?></span></td>
+        <td><?php echo $entry_currency_auto; ?></td>
         <td><?php if ($config_currency_auto) { ?>
           <input type="radio" name="config_currency_auto" value="1" checked="checked" />
           <?php echo $text_yes; ?>
@@ -201,8 +191,7 @@
   <div id="tab_option" class="page">
     <table class="form">
       <tr>
-        <td width="25%"><?php echo $entry_alert_mail; ?><br />
-          <span class="help"><?php echo $help_alert_mail; ?></span></td>
+        <td width="25%"><?php echo $entry_alert_mail; ?></td>
         <td><?php if ($config_alert_mail) { ?>
           <input type="radio" name="config_alert_mail" value="1" checked="checked" />
           <?php echo $text_yes; ?>
@@ -216,8 +205,7 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_account; ?><br />
-          <span class="help"><?php echo $help_account; ?></span></td>
+        <td><?php echo $entry_account; ?></td>
         <td><select name="config_account">
             <option value="0"><?php echo $text_none; ?></option>
             <?php foreach ($informations as $information) { ?>
@@ -230,8 +218,7 @@
           </select></td>
       </tr>
       <tr>
-        <td><?php echo $entry_checkout; ?><br />
-          <span class="help"><?php echo $help_checkout; ?></span></td>
+        <td><?php echo $entry_checkout; ?></td>
         <td><select name="config_checkout">
             <option value="0"><?php echo $text_none; ?></option>
             <?php foreach ($informations as $information) { ?>
@@ -244,8 +231,7 @@
           </select></td>
       </tr>
       <tr>
-        <td><?php echo $entry_stock_check; ?><br />
-          <span class="help"><?php echo $help_stock_check; ?></span></td>
+        <td><?php echo $entry_stock_check; ?></td>
         <td><?php if ($config_stock_check) { ?>
           <input type="radio" name="config_stock_check" value="1" checked="checked" />
           <?php echo $text_yes; ?>
@@ -259,8 +245,7 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_stock_checkout; ?><br />
-          <span class="help"><?php echo $help_stock_checkout; ?></span></td>
+        <td><?php echo $entry_stock_checkout; ?></td>
         <td><?php if ($config_stock_checkout) { ?>
           <input type="radio" name="config_stock_checkout" value="1" checked="checked" />
           <?php echo $text_yes; ?>
@@ -274,8 +259,7 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_stock_subtract; ?><br />
-          <span class="help"><?php echo $help_stock_subtract; ?></span></td>
+        <td><?php echo $entry_stock_subtract; ?></td>
         <td><?php if ($config_stock_subtract) { ?>
           <input type="radio" name="config_stock_subtract" value="1" checked="checked" />
           <?php echo $text_yes; ?>
@@ -327,8 +311,7 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_download_status; ?><br />
-          <span class="help"><?php echo $help_download_status; ?></span></td>
+        <td><?php echo $entry_download_status; ?></td>
         <td><select name="config_download_status">
             <?php foreach ($order_statuses as $order_status) { ?>
             <?php if ($order_status['order_status_id'] == $config_download_status) { ?>
@@ -341,11 +324,113 @@
       </tr>
     </table>
   </div>
+  <div id="tab_image" class="page">
+    <table class="form">
+      <tr>
+        <td width="25%"><?php echo $entry_logo; ?></td>
+        <td><input type="file" id="upload" />
+          <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" /></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td id="logo"></td>
+      </tr>
+      <tr>
+        <td width="25%"><?php echo $entry_icon; ?></td>
+        <td><input type="file" id="upload" />
+          <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" /></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td id="icon"></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_image_thumb; ?></td>
+        <td><input type="text" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" size="3" />
+          x
+          <input type="text" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" size="3" /></td>
+      </tr>
+      <tr>
+        <td width="25%"><?php echo $entry_image_popup; ?></td>
+        <td><input type="text" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" size="3" />
+          x
+          <input type="text" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" size="3" /></td>
+      </tr>
+      <tr>
+        <td width="25%"><?php echo $entry_image_category; ?></td>
+        <td><input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" size="3" />
+          x
+          <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" size="3" /></td>
+      </tr>
+      <tr>
+        <td width="25%"><?php echo $entry_image_product; ?></td>
+        <td><input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" size="3" />
+          x
+          <input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" size="3" /></td>
+      </tr>
+      <tr>
+        <td width="25%"><?php echo $entry_image_additional; ?></td>
+        <td><input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" size="3" />
+          x
+          <input type="text" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" size="3" /></td>
+      </tr>
+      <tr>
+        <td width="25%"><?php echo $entry_image_related; ?></td>
+        <td><input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" size="3" />
+          x
+          <input type="text" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" size="3" /></td>
+      </tr>
+      <tr>
+        <td width="25%"><?php echo $entry_image_cart; ?></td>
+        <td><input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" size="3" />
+          x
+          <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" size="3" /></td>
+      </tr>
+    </table>
+  </div>
+  <div id="tab_mail" class="page">
+    <table class="form">
+      <tr>
+        <td width="25%"><?php echo $entry_mail_protocol; ?></td>
+        <td><select name="config_mail_protocol">
+            <?php if ($config_mail_protocol == 'mail') { ?>
+            <option value="mail" selected="selected"><?php echo $text_mail; ?></option>
+            <?php } else { ?>
+            <option value="mail"><?php echo $text_mail; ?></option>
+            <?php } ?>
+            <?php if ($config_mail_protocol == 'smtp') { ?>
+            <option value="smtp" selected="selected"><?php echo $text_smtp; ?></option>
+            <?php } else { ?>
+            <option value="smtp"><?php echo $text_smtp; ?></option>
+            <?php } ?>
+          </select></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_smtp_host; ?></td>
+        <td><input type="text" name="config_smtp_host" value="<?php echo $config_smtp_host; ?>" /></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_smtp_username; ?></td>
+        <td><input type="text" name="config_smtp_username" value="<?php echo $config_smtp_username; ?>" /></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_smtp_password; ?></td>
+        <td><input type="text" name="config_smtp_password" value="<?php echo $config_smtp_password; ?>" /></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_smtp_port; ?></td>
+        <td><input type="text" name="config_smtp_port" value="<?php echo $config_smtp_port; ?>" /></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_smtp_timeout; ?></td>
+        <td><input type="text" name="config_smtp_timeout" value="<?php echo $config_smtp_timeout; ?>" /></td>
+      </tr>
+    </table>
+  </div>
   <div id="tab_server" class="page">
     <table class="form">
       <tr>
-        <td width="25%"><?php echo $entry_ssl; ?><br />
-          <span class="help"><?php echo $help_ssl; ?></span></td>
+        <td width="25%"><?php echo $entry_ssl; ?></td>
         <td><?php if ($config_ssl) { ?>
           <input type="radio" name="config_ssl" value="1" checked="checked" />
           <?php echo $text_yes; ?>
@@ -359,8 +444,7 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><span class="required">*</span> <?php echo $entry_encryption; ?><br />
-          <span class="help"><?php echo $help_encryption; ?></span></td>
+        <td><span class="required">*</span> <?php echo $entry_encryption; ?></td>
         <td><input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" />
           <br />
           <?php if ($error_encryption) { ?>
@@ -368,8 +452,7 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_seo_url; ?><br />
-          <span class="help"><?php echo $help_seo_url; ?></span></td>
+        <td><?php echo $entry_seo_url; ?></td>
         <td><?php if ($config_seo_url) { ?>
           <input type="radio" name="config_seo_url" value="1" checked="checked" />
           <?php echo $text_yes; ?>
@@ -383,13 +466,11 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_compression; ?><br />
-          <span class="help"><?php echo $help_compression; ?></span></td>
+        <td><?php echo $entry_compression; ?></td>
         <td><input type="text" name="config_compression" value="<?php echo $config_compression; ?>" size="3" /></td>
       </tr>
       <tr>
-        <td><?php echo $entry_parse_time; ?><br />
-          <span class="help"><?php echo $help_parse_time; ?></span></td>
+        <td><?php echo $entry_parse_time; ?></td>
         <td><?php if ($config_parse_time) { ?>
           <input type="radio" name="config_parse_time" value="1" checked="checked" />
           <?php echo $text_yes; ?>
@@ -420,6 +501,7 @@ var oFCKeditor<?php echo $language['language_id']; ?>          = new FCKeditor('
 <script type="text/javascript" src="view/javascript/jquery/ajaxupload.3.1.js"></script>
 <script type="text/javascript"><!--
 $('#logo').load('index.php?route=setting/setting/logo&logo=' + encodeURIComponent($('input[name=\'config_logo\']').attr('value')));
+$('#template').load('index.php?route=setting/setting/template&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
 $('#template').load('index.php?route=setting/setting/template&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
 $(document).ready(function() { 
 	new AjaxUpload('#upload', {

@@ -23,7 +23,7 @@ class ControllerCommonMenu extends Controller {
 		$this->data['text_language'] = $this->language->get('text_language');
       	$this->data['text_localisation'] = $this->language->get('text_localisation');
      	$this->data['text_logout'] = $this->language->get('text_logout');			
-		$this->data['text_mail'] = $this->language->get('text_mail');
+		$this->data['text_contact'] = $this->language->get('text_contact');
 		$this->data['text_manufacturer'] = $this->language->get('text_manufacturer');
 		$this->data['text_module'] = $this->language->get('text_module');
 		$this->data['text_order'] = $this->language->get('text_order');
@@ -63,7 +63,7 @@ class ControllerCommonMenu extends Controller {
 		$this->data['information'] = $this->url->https('catalog/information');
 		$this->data['language'] = $this->url->https('localisation/language');
 		$this->data['logout'] = $this->url->https('common/logout');
-		$this->data['mail'] = $this->url->https('customer/mail');
+		$this->data['contact'] = $this->url->https('customer/contact');
 		$this->data['manufacturer'] = $this->url->https('catalog/manufacturer');
 		$this->data['module'] = $this->url->https('extension/module');
 		$this->data['order'] = $this->url->https('customer/order');
@@ -81,7 +81,7 @@ class ControllerCommonMenu extends Controller {
       	$this->data['tax_class'] = $this->url->https('localisation/tax_class');
 		$this->data['total'] = $this->url->https('extension/total');
 		$this->data['user'] = $this->url->https('user/user');
-      	$this->data['user_group'] = $this->url->https('user/user_group');
+      	$this->data['user_group'] = $this->url->https('user/user_permission');
       	$this->data['weight_class'] = $this->url->https('localisation/weight_class');
       	$this->data['zone'] = $this->url->https('localisation/zone');
 		

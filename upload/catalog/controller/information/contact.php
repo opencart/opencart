@@ -8,7 +8,7 @@ class ControllerInformationContact extends Controller {
     	$this->document->title = $this->language->get('heading_title');  
 	 
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
-			$mail = new Mail();
+			$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), html_entity_decode($this->config->get('config_smtp_password')), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout'));
 			$mail->setTo($this->config->get('config_email'));
 	  		$mail->setFrom($this->request->post['email']);
 	  		$mail->setSender($this->request->post['name']);

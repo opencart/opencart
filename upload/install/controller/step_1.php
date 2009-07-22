@@ -34,10 +34,6 @@ class ControllerStep1 extends Controller {
 			$this->error['warning'] = 'Warning: file_uploads needs to be enabled!';
 		}
 	
-		if (!ini_get('allow_url_fopen')) {
-			$this->error['warning'] = 'Warning: allow_url_fopen needs to be enabled!';
-		}
-	
 		if (ini_get('session.auto_start')) {
 			$this->error['warning'] = 'Warning: OpenCart will not work with session.auto_start enabled!';
 		}

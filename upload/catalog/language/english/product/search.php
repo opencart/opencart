@@ -13,7 +13,7 @@ $_['text_name_asc']     = 'Name A - Z';
 $_['text_name_desc']    = 'Name Z - A';
 $_['text_price_asc']    = 'Price Low &gt; High';
 $_['text_price_desc']   = 'Price High &lt; Low';
-$_['text_rating_asc']   = 'Rating Lowset'; 
+$_['text_rating_asc']   = 'Rating Lowest'; 
 $_['text_rating_desc']  = 'Rating Highest';
 
 // Entry

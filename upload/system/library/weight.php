@@ -24,11 +24,11 @@ final class Weight {
     	}
   	}
 	  
-  	public function convert($value, $from, $to, $decimal_point = '.', $thousand_point = ',') {
+  	public function convert($value, $from, $to) {
     	if ($from == $to) {
-      		return number_format($value, 2, $decimal_point, $this->language->get('thousand_point'));
+      		return $value;
     	} else {
-      		return number_format($value * (float)$this->rules[$from][$to], 2, $decimal_point, $thousand_point);
+      		return $value * (float)$this->rules[$from][$to];
     	}
   	}
 

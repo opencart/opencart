@@ -76,7 +76,6 @@ class ControllerCheckoutCart extends Controller {
 			$this->data['action'] = $this->url->http('checkout/cart');
 			
 			$this->load->model('tool/seo_url'); 
-			
 			$this->load->helper('image');
 			
       		$this->data['products'] = array();
@@ -101,7 +100,7 @@ class ControllerCheckoutCart extends Controller {
           			'key'      => $result['key'],
           			'name'     => $result['name'],
           			'model'    => $result['model'],
-          			'thumb'    => HelperImage::resize($image, 75, 75),
+          			'thumb'    => HelperImage::resize($image, $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height')),
           			'option'   => $option_data,
           			'quantity' => $result['quantity'],
           			'stock'    => $result['stock'],

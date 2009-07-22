@@ -87,7 +87,7 @@ class ControllerPaymentSagePay extends Controller {
 		
         	$url .= '&DeliveryCity=' . $order_info['payment_city'];
         	$url .= '&DeliveryPostCode=' . $order_info['payment_postcode'];
-		
+			
 			$payment_address = $this->customer->getAddress($this->session->data['payment_address_id']);
 		
         	$url .= '&DeliveryCountry=' . $payment_address['iso_code_2'];

@@ -45,47 +45,49 @@ class ControllerExtensionModule extends Controller {
 						
 		$files = glob(DIR_APPLICATION . 'controller/module/*.php');
 		
-		foreach ($files as $file) {
-			$extension = basename($file, '.php');
-			
-			$this->load->language('module/' . $extension);
-
-			$action = array();
-			
-			if (!in_array($extension, $extensions)) {
-				$action[] = array(
-					'text' => $this->language->get('text_install'),
-					'href' => $this->url->https('extension/module/install&extension=' . $extension)
-				);
-			} else {
-				$action[] = array(
-					'text' => $this->language->get('text_edit'),
-					'href' => $this->url->https('module/' . $extension)
-				);
-							
-				$action[] = array(
-					'text' => $this->language->get('text_uninstall'),
-					'href' => $this->url->https('extension/module/uninstall&extension=' . $extension)
+		if ($files) {
+			foreach ($files as $file) {
+				$extension = basename($file, '.php');
+				
+				$this->load->language('module/' . $extension);
+	
+				$action = array();
+				
+				if (!in_array($extension, $extensions)) {
+					$action[] = array(
+						'text' => $this->language->get('text_install'),
+						'href' => $this->url->https('extension/module/install&extension=' . $extension)
+					);
+				} else {
+					$action[] = array(
+						'text' => $this->language->get('text_edit'),
+						'href' => $this->url->https('module/' . $extension)
+					);
+								
+					$action[] = array(
+						'text' => $this->language->get('text_uninstall'),
+						'href' => $this->url->https('extension/module/uninstall&extension=' . $extension)
+					);
+				}
+				
+				$postion = $this->config->get($extension . '_position');						
+				
+				if ($postion == 'left') {
+					$postion = $this->language->get('text_left');
+				} elseif ($postion == 'right') {
+					$postion = $this->language->get('text_right');
+				}
+				
+				$this->data['extensions'][] = array(
+					'name'        => $this->language->get('heading_title'),
+					'position'    => $postion,
+					'status'      => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'sort_order'  => $this->config->get($extension . '_sort_order'),
+					'action'      => $action
 				);
 			}
-			
-			$postion = $this->config->get($extension . '_position');						
-			
-			if ($postion == 'left') {
-				$postion = $this->language->get('text_left');
-			} elseif ($postion == 'right') {
-				$postion = $this->language->get('text_right');
-			}
-			
-			$this->data['extensions'][] = array(
-				'name'        => $this->language->get('heading_title'),
-				'position'    => $postion,
-				'status'      => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'sort_order'  => $this->config->get($extension . '_sort_order'),
-				'action'      => $action
-			);
 		}
-						
+		
 		$this->id       = 'content';
 		$this->template = 'extension/module.tpl';
 		$this->layout   = 'common/layout';

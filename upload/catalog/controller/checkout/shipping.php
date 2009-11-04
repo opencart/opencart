@@ -9,7 +9,7 @@ class ControllerCheckoutShipping extends Controller {
 	  		$this->redirect($this->url->https('account/login'));
     	} 
 
-    	if ((!$this->cart->hasProducts()) || ((!$this->cart->hasStock()) && (!$this->config->get('config_stock_checkout')))) {
+    	if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 	  		$this->redirect($this->url->https('checkout/cart'));
     	}
 
@@ -21,11 +21,15 @@ class ControllerCheckoutShipping extends Controller {
 			$this->redirect($this->url->https('checkout/payment'));
     	}
 
-    	if (!$this->customer->hasAddress(@$this->session->data['shipping_address_id'])) {
+		if (!isset($this->session->data['shipping_address_id'])) {
+			$this->session->data['shipping_address_id'] = 0;
+		}
+		
+    	if (!$this->customer->hasAddress($this->session->data['shipping_address_id'])) {
 	  		$this->session->data['shipping_address_id'] = $this->customer->getAddressId();
     	}
 
-    	if (!$this->customer->hasAddress(@$this->session->data['shipping_address_id'])) {
+    	if (!$this->customer->hasAddress($this->session->data['shipping_address_id'])) {
 	  		$this->redirect($this->url->https('checkout/address/shipping'));
 		}
 
@@ -62,7 +66,7 @@ class ControllerCheckoutShipping extends Controller {
 		
 		$this->language->load('checkout/shipping');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$shipping = explode('.', $this->request->post['shipping']);
 			
 			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
@@ -105,9 +109,13 @@ class ControllerCheckoutShipping extends Controller {
 		$this->data['button_change_address'] = $this->language->get('button_change_address');
     	$this->data['button_back'] = $this->language->get('button_back');
     	$this->data['button_continue'] = $this->language->get('button_continue');
-    
-		$this->data['error_warning'] = @$this->error['warning'];
-    
+   
+   		if (isset($this->error['warning'])) {
+    		$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+		
 		$this->data['action'] = $this->url->https('checkout/shipping');
 		
 		$address = $this->customer->getAddress($this->session->data['shipping_address_id']);
@@ -148,10 +156,18 @@ class ControllerCheckoutShipping extends Controller {
 
 		$this->data['methods'] = $this->session->data['shipping_methods']; 
     	
-		$this->data['default'] = @$this->session->data['shipping_method']['id'];
+		if (isset($this->session->data['shipping_method']['id'])) {
+			$this->data['default'] = $this->session->data['shipping_method']['id'];
+		} else {
+			$this->data['default'] = '';
+		}
 		
-    	$this->data['comment'] = @$this->session->data['comment'];
-
+		if (isset($this->session->data['comment'])) {
+    		$this->data['comment'] = $this->session->data['comment'];
+		} else {
+			$this->data['comment'] = '';
+		}
+		
     	$this->data['back'] = $this->url->https('checkout/cart');
 		
 		$this->id       = 'content';

@@ -5,7 +5,7 @@
     <table cellpadding="2" cellspacing="0" style="width: 100%;">
       <?php foreach ($products as $product) { ?>
       <tr>
-        <td valign="top" align="right"><?php echo $product['quantity']; ?>&nbsp;x&nbsp;</td>
+        <td valign="top" align="right" width="1"><?php echo $product['quantity']; ?>&nbsp;x&nbsp;</td>
         <td align="left" valign="top"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
           <div>
             <?php foreach ($product['option'] as $option) { ?>

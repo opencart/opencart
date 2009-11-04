@@ -11,7 +11,7 @@ class ControllerAccountLogin extends Controller {
 
     	$this->document->title = $this->language->get('heading_title');
 						
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {			
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {			
       		if (isset($this->request->post['redirect'])) {
 				$this->redirect($this->request->post['redirect']);
       		} else {
@@ -55,22 +55,32 @@ class ControllerAccountLogin extends Controller {
     	$this->data['button_continue'] = $this->language->get('button_continue');
     	$this->data['button_login'] = $this->language->get('button_login');
 
-		$this->data['error'] = @$this->error['message'];
-    
+		if (isset($this->error['message'])) {
+			$this->data['error'] = $this->error['message'];
+		} else {
+			$this->data['error'] = '';
+		}
+		
 		$this->data['action'] = $this->url->https('account/login');
 
     	if (isset($this->request->post['redirect'])) {
 			$this->data['redirect'] = $this->request->post['redirect'];
-		} else {
-      		$this->data['redirect'] = @$this->session->data['redirect'];
+		} elseif (isset($this->session->data['redirect'])) {
+      		$this->data['redirect'] = $this->session->data['redirect'];
 	  		
 			unset($this->session->data['redirect']);		  	
-    	}
+    	} else {
+			$this->data['redirect'] = '';
+		}
 
-    	$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+    		$this->data['success'] = $this->session->data['success'];
     
-		unset($this->session->data['success']);
-
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
+		
 		$this->data['continue'] = $this->url->https('account/create');
 
     	$this->data['forgotten'] = $this->url->https('account/forgotten');

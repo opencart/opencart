@@ -8,6 +8,7 @@
         <td style="text-align: center; width: 250px; vertical-align: top;"><a href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>" class="thickbox"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" id="image" style="margin-bottom: 3px;" /></a><br />
           <span style="font-size: 11px;"><?php echo $text_enlarge; ?></span></td>
         <td style="padding-left: 15px; width: 296px; vertical-align: top;"><table width="100%">
+            <?php if ($display_price) { ?>
             <tr>
               <td><b><?php echo $text_price; ?></b></td>
               <td><?php if (!$special) { ?>
@@ -16,6 +17,7 @@
                 <span style="text-decoration: line-through;"><?php echo $price; ?></span> <span style="color: #F00;"><?php echo $special; ?></span>
                 <?php } ?></td>
             </tr>
+            <?php } ?>
             <tr>
               <td><b><?php echo $text_availability; ?></b></td>
               <td><?php echo $stock; ?></td>
@@ -40,10 +42,11 @@
             </tr>
           </table>
           <br />
+          <?php if ($display_price) { ?>
           <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="product">
             <?php if ($options) { ?>
             <b><?php echo $text_options; ?></b><br />
-            <div style="background: #FBFAEA; border: 1px solid #EFEBAA; padding: 10px; margin-top: 3px; margin-bottom: 10px;">
+            <div style="background: #FBFAEA; border: 1px solid #EFEBAA; padding: 10px; margin-top: 2px; margin-bottom: 15px;">
               <table style="width: 100%;">
                 <?php foreach ($options as $option) { ?>
                 <tr>
@@ -60,13 +63,33 @@
                 </tr>
                 <?php } ?>
               </table>
+              <?php } ?>
             </div>
+            <?php if ($display_price) { ?>
+            <?php if ($discounts) { ?>
+            <b><?php echo $text_discount; ?></b><br />
+            <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-top: 2px; margin-bottom: 15px;">
+              <table style="width: 100%;">
+                <tr>
+                  <td style="text-align: right;"><b><?php echo $text_order_quantity; ?></b></td>
+                  <td style="text-align: right;"><b><?php echo $text_price_per_item; ?></b></td>
+                </tr>
+                <?php foreach ($discounts as $discount) { ?>
+                <tr>
+                  <td style="text-align: right;"><?php echo $discount['quantity']; ?></td>
+                  <td style="text-align: right;"><?php echo $discount['price']; ?></td>
+                </tr>
+                <?php } ?>
+              </table>
+            </div>
+            <?php } ?>
             <?php } ?>
             <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px;"><?php echo $text_qty; ?>
               <input type="text" name="quantity" size="3" value="1" />
               <a onclick="$('#product').submit();" id="add_to_cart" class="button"><span><?php echo $button_add_to_cart; ?></span></a></div>
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
-          </form></td>
+          </form>
+          <?php } ?></td>
       </tr>
     </table>
   </div>
@@ -129,10 +152,12 @@
           <a href="<?php echo $products[$j]['href']; ?>"><img src="<?php echo $products[$j]['thumb']; ?>" title="<?php echo $products[$j]['name']; ?>" alt="<?php echo $products[$j]['name']; ?>" /></a><br />
           <a href="<?php echo $products[$j]['href']; ?>"><?php echo $products[$j]['name']; ?></a><br />
           <span style="color: #999; font-size: 11px;"><?php echo $products[$j]['model']; ?></span><br />
+          <?php if ($display_price) { ?>
           <?php if (!$products[$j]['special']) { ?>
           <span style="color: #900; font-weight: bold;"><?php echo $products[$j]['price']; ?></span><br />
           <?php } else { ?>
           <span style="color: #900; font-weight: bold; text-decoration: line-through;"><?php echo $products[$j]['price']; ?></span> <span style="color: #F00;"><?php echo $products[$j]['special']; ?></span>
+          <?php } ?>
           <?php } ?>
           <?php if ($products[$j]['rating']) { ?>
           <img src="catalog/view/theme/default/image/stars_<?php echo $products[$j]['rating'] . '.png'; ?>" alt="<?php echo $products[$j]['stars']; ?>" />

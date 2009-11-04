@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -25,7 +25,7 @@
 var FCKSpellCheckCommand = function()
 {
 	this.Name = 'SpellCheck' ;
-	this.IsEnabled = ( FCKConfig.SpellChecker == 'ieSpell' || FCKConfig.SpellChecker == 'SpellerPages' ) ;
+	this.IsEnabled = true ;
 }
 
 FCKSpellCheckCommand.prototype.Execute = function()
@@ -39,6 +39,9 @@ FCKSpellCheckCommand.prototype.Execute = function()
 		case 'SpellerPages' :
 			FCKDialog.OpenDialog( 'FCKDialog_SpellCheck', 'Spell Check', 'dialog/fck_spellerpages.html', 440, 480 ) ;
 			break ;
+
+		case 'WSC' :
+			FCKDialog.OpenDialog( 'FCKDialog_SpellCheck', 'Spell Check', 'wsc/w.html', 530, 480 ) ;
 	}
 }
 

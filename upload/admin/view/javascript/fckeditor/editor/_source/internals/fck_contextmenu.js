@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -127,6 +127,8 @@ function FCK_ContextMenu_GetListener( listenerName )
 					if ( bIsAnchor )
 						return ;
 
+					menu.AddSeparator() ;
+					menu.AddItem( 'VisitLink', FCKLang.VisitLink ) ;
 					menu.AddSeparator() ;
 					if ( bInsideLink )
 						menu.AddItem( 'Link', FCKLang.EditLink		, 34 ) ;
@@ -292,6 +294,21 @@ function FCK_ContextMenu_GetListener( listenerName )
 					menu.AddItem( 'NumberedList', FCKLang.NumberedListProp, 26 ) ;
 				}
 			}} ;
+
+		case 'DivContainer':
+			return {
+			AddItems : function( menu, tag, tagName )
+			{
+				var currentBlocks = FCKDomTools.GetSelectedDivContainers() ;
+
+				if ( currentBlocks.length > 0 )
+				{
+					menu.AddSeparator() ;
+					menu.AddItem( 'EditDiv', FCKLang.EditDiv, 75 ) ;
+					menu.AddItem( 'DeleteDiv', FCKLang.DeleteDiv, 76 ) ;
+				}
+			}} ;
+
 	}
 	return null ;
 }
@@ -320,6 +337,9 @@ function FCK_ContextMenu_OnBeforeOpen()
 
 function FCK_ContextMenu_OnItemClick( item )
 {
-	FCK.Focus() ;
+	// IE might work incorrectly if we refocus the editor #798
+	if ( !FCKBrowserInfo.IsIE )
+		FCK.Focus() ;
+
 	FCKCommands.GetCommand( item.Name ).Execute( item.CustomData ) ;
 }

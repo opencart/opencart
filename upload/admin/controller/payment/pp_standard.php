@@ -34,13 +34,6 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_transaction'] = $this->language->get('entry_transaction');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');	
-		$this->data['entry_order_status_pending'] = $this->language->get('entry_order_status_pending');	
-		$this->data['entry_order_status_denied'] = $this->language->get('entry_order_status_denied');	
-		$this->data['entry_order_status_failed'] = $this->language->get('entry_order_status_failed');	
-		$this->data['entry_order_status_refunded'] = $this->language->get('entry_order_status_refunded');	
-		$this->data['entry_order_status_canceled_reversal'] = $this->language->get('entry_order_status_canceled_reversal');	
-		$this->data['entry_order_status_reversed'] = $this->language->get('entry_order_status_reversed');	
-		$this->data['entry_order_status_unspecified'] = $this->language->get('entry_order_status_unspecified');	
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
@@ -50,8 +43,17 @@ class ControllerPaymentPPStandard extends Controller {
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_email'] = @$this->error['email'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+		
+ 		if (isset($this->error['email'])) {
+			$this->data['error_email'] = $this->error['email'];
+		} else {
+			$this->data['error_email'] = '';
+		}
 
 		$this->document->breadcrumbs = array();
 
@@ -99,48 +101,6 @@ class ControllerPaymentPPStandard extends Controller {
 			$this->data['pp_standard_order_status_id'] = $this->request->post['pp_standard_order_status_id'];
 		} else {
 			$this->data['pp_standard_order_status_id'] = $this->config->get('pp_standard_order_status_id'); 
-		} 
-		
-		if (isset($this->request->post['pp_standard_order_status_pending_id'])) {
-			$this->data['pp_standard_order_status_pending_id'] = $this->request->post['pp_standard_order_status_pending_id'];
-		} else {
-			$this->data['pp_standard_order_status_pending_id'] = $this->config->get('pp_standard_order_status_pending_id'); 
-		} 
-
-		if (isset($this->request->post['pp_standard_order_status_denied_id'])) {
-			$this->data['pp_standard_order_status_denied_id'] = $this->request->post['pp_standard_order_status_denied_id'];
-		} else {
-			$this->data['pp_standard_order_status_denied_id'] = $this->config->get('pp_standard_order_status_denied_id'); 
-		} 
-		
-		if (isset($this->request->post['pp_standard_order_status_failed_id'])) {
-			$this->data['pp_standard_order_status_failed_id'] = $this->request->post['pp_standard_order_status_failed_id'];
-		} else {
-			$this->data['pp_standard_order_status_failed_id'] = $this->config->get('pp_standard_order_status_failed_id'); 
-		} 
-		
-		if (isset($this->request->post['pp_standard_order_status_refunded_id'])) {
-			$this->data['pp_standard_order_status_refunded_id'] = $this->request->post['pp_standard_order_status_refunded_id'];
-		} else {
-			$this->data['pp_standard_order_status_refunded_id'] = $this->config->get('pp_standard_order_status_refunded_id'); 
-		} 
-		
-		if (isset($this->request->post['pp_standard_order_status_canceled_reversal_id'])) {
-			$this->data['pp_standard_order_status_canceled_reversal_id'] = $this->request->post['pp_standard_order_status_canceled_reversal_id'];
-		} else {
-			$this->data['pp_standard_order_status_canceled_reversal_id'] = $this->config->get('pp_standard_order_status_canceled_reversal_id'); 
-		} 
-		
-		if (isset($this->request->post['pp_standard_order_status_reversed_id'])) {
-			$this->data['pp_standard_order_status_reversed_id'] = $this->request->post['pp_standard_order_status_reversed_id'];
-		} else {
-			$this->data['pp_standard_order_status_reversed_id'] = $this->config->get('pp_standard_order_status_reversed_id'); 
-		} 
-		
-		if (isset($this->request->post['pp_standard_order_status_unspecified_id'])) {
-			$this->data['pp_standard_order_status_unspecified_id'] = $this->request->post['pp_standard_order_status_unspecified_id'];
-		} else {
-			$this->data['pp_standard_order_status_unspecified_id'] = $this->config->get('pp_standard_order_status_unspecified_id'); 
 		} 
 
 		$this->load->model('localisation/order_status');

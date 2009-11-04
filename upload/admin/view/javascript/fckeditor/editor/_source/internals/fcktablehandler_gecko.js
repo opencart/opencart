@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -48,7 +48,7 @@ FCKTableHandler.GetSelectedCells = function()
 		else
 			oCell = oRange.startContainer.childNodes[ oRange.startOffset ] ;
 
-		if ( oCell.tagName.Equals( 'TD', 'TH' ) )
+		if ( oCell.nodeName.Equals( 'TD', 'TH' ) )
 			aCells[aCells.length] = oCell ;
 	}
 

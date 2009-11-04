@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "Poništi format",
 InsertLinkLbl		: "Link",
 InsertLink			: "Ubaci/Izmjeni link",
 RemoveLink			: "Izbriši link",
+VisitLink			: "Open Link",	//MISSING
 Anchor				: "Insert/Edit Anchor",	//MISSING
 AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "Slika",
@@ -72,6 +73,9 @@ BlockJustify		: "Puno poravnanje",
 DecreaseIndent		: "Smanji uvod",
 IncreaseIndent		: "Poveæaj uvod",
 Blockquote			: "Blockquote",	//MISSING
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "Vrati",
 Redo				: "Ponovi",
 NumberedListLbl		: "Numerisana lista",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "Traka sa alatima \"%1\" ne postoji",
 NoActiveX			: "Your browser's security settings could limit some features of the editor. You must enable the option \"Run ActiveX controls and plug-ins\". You may experience errors and notice missing features.",	//MISSING
 BrowseServerBlocked : "The resources browser could not be opened. Make sure that all popup blockers are disabled.",	//MISSING
 DialogBlocked		: "It was not possible to open the dialog window. Make sure all popup blockers are disabled.",	//MISSING
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "OK",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Razmak æelija",
 DlgTableCellPad		: "Uvod æelija",
 DlgTableCaption		: "Naslov",
 DlgTableSummary		: "Summary",	//MISSING
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Svojstva æelije",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "Gore",
 DlgCellVerAlignMiddle	: "Sredina",
 DlgCellVerAlignBottom	: "Dno",
 DlgCellVerAlignBaseline	: "Bazno",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "Spajanje æelija",
 DlgCellCollSpan		: "Spajanje kolona",
 DlgCellBackColor	: "Boja pozadine",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "About",	//MISSING
 DlgAboutBrowserInfoTab	: "Browser Info",	//MISSING
 DlgAboutLicenseTab	: "License",	//MISSING
 DlgAboutVersion		: "verzija",
-DlgAboutInfo		: "Za više informacija posjetite"
+DlgAboutInfo		: "Za više informacija posjetite",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style"	//MISSING
 };

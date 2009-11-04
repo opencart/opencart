@@ -23,8 +23,10 @@
               <li><a href="<?php echo $geo_zone; ?>"><?php echo $text_geo_zone; ?></a></li>
               <li><a href="<?php echo $tax_class; ?>"><?php echo $text_tax_class; ?></a></li>
               <li><a href="<?php echo $weight_class; ?>"><?php echo $text_weight_class; ?></a></li>
+              <li><a href="<?php echo $measurement_class; ?>"><?php echo $text_measurement_class; ?></a></li>
             </ul>
           </li>
+          <li><a href="<?php echo $error_log; ?>"><?php echo $text_error_log; ?></a></li>
           <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
         </ul>
       </li>
@@ -53,6 +55,7 @@
   <li id="customers"><a class="top"><?php echo $text_customers; ?></a>
     <ul>
       <li><a href="<?php echo $customer; ?>"><?php echo $text_customer; ?></a></li>
+      <li><a href="<?php echo $customer_group; ?>"><?php echo $text_customer_group; ?></a></li>
       <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
       <li><a href="<?php echo $coupon; ?>"><?php echo $text_coupon; ?></a></li>
       <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>

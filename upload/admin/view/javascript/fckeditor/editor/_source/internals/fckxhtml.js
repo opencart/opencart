@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -70,8 +70,13 @@ FCKXHtml.GetXHTML = function( node, includeNode, format )
 	// Strip the "XHTML" root node.
 	sXHTML = sXHTML.substr( 7, sXHTML.length - 15 ).Trim() ;
 
-	// Add a space in the tags with no closing tags, like <br/> -> <br />
-	sXHTML = sXHTML.replace( FCKRegexLib.SpaceNoClose, ' />');
+	// According to the doctype set the proper end for self-closing tags
+	// HTML: <br>
+	// XHTML: Add a space, like <br/> -> <br />
+	if (FCKConfig.DocType.length > 0 && FCKRegexLib.HtmlDocType.test( FCKConfig.DocType ) )
+		sXHTML = sXHTML.replace( FCKRegexLib.SpaceNoClose, '>');
+	else
+		sXHTML = sXHTML.replace( FCKRegexLib.SpaceNoClose, ' />');
 
 	if ( FCKConfig.ForceSimpleAmpersand )
 		sXHTML = sXHTML.replace( FCKRegexLib.ForceSimpleAmpersand, '&' ) ;
@@ -199,9 +204,16 @@ FCKXHtml._AppendNode = function( xmlNode, htmlNode )
 
 			// Ignore bogus BR nodes in the DOM.
 			if ( FCKBrowserInfo.IsGecko &&
-					htmlNode.nextSibling &&
 					( htmlNode.hasAttribute('_moz_editor_bogus_node') || htmlNode.getAttribute( 'type' ) == '_moz' ) )
-				return false ;
+			{
+				if ( htmlNode.nextSibling )
+					return false ;
+				else
+				{
+					htmlNode.removeAttribute( '_moz_editor_bogus_node' ) ;
+					htmlNode.removeAttribute( 'type' ) ;
+				}
+			}
 
 			// This is for elements that are instrumental to FCKeditor and
 			// must be removed from the final HTML.
@@ -284,7 +296,7 @@ FCKXHtml._AppendNode = function( xmlNode, htmlNode )
 // Append an item to the SpecialBlocks array and returns the tag to be used.
 FCKXHtml._AppendSpecialItem = function( item )
 {
-	return '___FCKsi___' + FCKXHtml.SpecialBlocks.AddItem( item ) ;
+	return '___FCKsi___' + ( FCKXHtml.SpecialBlocks.push( item ) - 1 ) ;
 }
 
 FCKXHtml._AppendEntity = function( xmlNode, entity )
@@ -399,6 +411,13 @@ FCKXHtml.TagProcessors =
 		var sSavedUrl = htmlNode.getAttribute( '_fcksavedurl' ) ;
 		if ( sSavedUrl != null )
 			FCKXHtml._AppendAttribute( node, 'src', sSavedUrl ) ;
+
+		// Bug #768 : If the width and height are defined inline CSS,
+		// don't define it again in the HTML attributes.
+		if ( htmlNode.style.width )
+			node.removeAttribute( 'width' ) ;
+		if ( htmlNode.style.height )
+			node.removeAttribute( 'height' ) ;
 
 		return node ;
 	},

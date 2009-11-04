@@ -129,7 +129,7 @@ class ControllerPaymentPPDirect extends Controller {
 			'IPADDRESS'      => $this->request->server['REMOTE_ADDR'],
 			'STREET'         => $order_info['payment_address_1'],
 			'CITY'           => $order_info['payment_city'],
-			'STATE'          => $order_info['payment_zone'],
+			'STATE'          => ($payment_address['iso_code_2'] != 'US') ? $order_info['payment_zone'] : $payment_address['code'],
 			'ZIP'            => $order_info['payment_postcode'],
 			'COUNTRYCODE'    => $payment_address['iso_code_2'],
 			'CURRENCYCODE'   => $order_info['currency']
@@ -160,7 +160,7 @@ class ControllerPaymentPPDirect extends Controller {
 
 		$json = array();
 		
-		if ($response_data['ACK'] == 'Success') {
+		if (($response_data['ACK'] == 'Success') || ($response_data['ACK'] == 'SuccessWithWarning')) {
 			$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
 			
 			$message = '';
@@ -180,9 +180,7 @@ class ControllerPaymentPPDirect extends Controller {
 			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('pp_direct_order_status_id'), $message, FALSE);
 		
 			$json['success'] = TRUE; 
-		}
-		
-        if (($response_data['ACK'] != 'Success') && ($response_data['ACK'] != 'SuccessWithWarning')) {
+		} else {
         	$json['error'] = $response_data['L_LONGMESSAGE0'];
         }
 		

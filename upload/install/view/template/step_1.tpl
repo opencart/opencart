@@ -101,6 +101,10 @@
       <td><?php echo is_writable($cache) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
     </tr>
     <tr>
+      <td><?php echo $logs . '/'; ?></td>
+      <td><?php echo is_writable($logs) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
+    </tr>    
+    <tr>
       <td><?php echo $image . '/'; ?></td>
       <td><?php echo is_writable($image) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
     </tr>

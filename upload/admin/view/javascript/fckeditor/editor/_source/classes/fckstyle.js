@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -221,6 +221,8 @@ FCKStyle.prototype =
 											if ( FCKDomTools.GetAttributeValue( pathElement, att ) != this.GetFinalAttributeValue( att ) )
 												continue ;
 
+											/*jsl:fallthru*/
+
 										default :
 											FCKDomTools.RemoveAttribute( pathElement, att ) ;
 									}
@@ -372,6 +374,8 @@ FCKStyle.prototype =
 									// The 'class' element value must match (#1318).
 									if ( FCKDomTools.GetAttributeValue( currentNode, att ) != this.GetFinalAttributeValue( att ) )
 										continue ;
+
+									/*jsl:fallthru*/
 
 								default :
 									FCKDomTools.RemoveAttribute( currentNode, att ) ;
@@ -545,6 +549,8 @@ FCKStyle.prototype =
 							// The 'class' element value must match (#1318).
 							if ( FCKDomTools.GetAttributeValue( innerElement, att ) != this.GetFinalAttributeValue( att ) )
 								continue ;
+
+							/*jsl:fallthru*/
 
 						default :
 							FCKDomTools.RemoveAttribute( innerElement, att ) ;
@@ -781,7 +787,7 @@ FCKStyle.prototype =
 			{
 				if ( !isTag )
 				{
-					value = value.replace( /\n/g, '<BR>' ) ;
+					value = value.replace( /\n/g, '<br>' ) ;
 					value = value.replace( /[ \t]{2,}/g,
 							function ( match )
 							{
@@ -802,38 +808,124 @@ FCKStyle.prototype =
 		// Handle converting from a regular block to a <pre> block.
 		var innerHTML = block.innerHTML.Trim() ;
 
-		// 1. Delete ANSI whitespaces immediately before and after <BR> because they are not visible.
-		// 2. Mark down any <BR /> nodes here so they can be turned into \n in the next step and avoid being compressed.
-		innerHTML = innerHTML.replace( /[ \t\r\n]*(<br[^>]*>)[ \t\r\n]*/gi, '<BR />' ) ;
+		// 1. Delete ANSI whitespaces immediately before and after <BR> because
+		//    they are not visible.
+		// 2. Mark down any <BR /> nodes here so they can be turned into \n in
+		//    the next step and avoid being compressed.
+		innerHTML = innerHTML.replace( /[ \t\r\n]*(<br[^>]*>)[ \t\r\n]*/gi, '<br />' ) ;
 
-		// 3. Compress other ANSI whitespaces since they're only visible as one single space previously.
+		// 3. Compress other ANSI whitespaces since they're only visible as one
+		//    single space previously.
 		// 4. Convert &nbsp; to spaces since &nbsp; is no longer needed in <PRE>.
-		// 5. Convert any <BR /> to \n. This must not be done earlier because the \n would then get compressed.
+		// 5. Convert any <BR /> to \n. This must not be done earlier because
+		//    the \n would then get compressed.
 		var htmlIterator = new FCKHtmlIterator( innerHTML ) ;
 		var results = [] ;
 		htmlIterator.Each( function( isTag, value )
 			{
 				if ( !isTag )
 					value = value.replace( /([ \t\n\r]+|&nbsp;)/g, ' ' ) ;
-				else if ( isTag && value == '<BR />' )
+				else if ( isTag && value == '<br />' )
 					value = '\n' ;
 				results.push( value ) ;
 			} ) ;
 
-		// Assigning innerHTML to <PRE> in IE causes all linebreaks to be reduced to spaces.
-		// Assigning outerHTML to <PRE> in IE doesn't work if the <PRE> isn't contained in another node
-		// since the node reference is changed after outerHTML assignment.
+		// Assigning innerHTML to <PRE> in IE causes all linebreaks to be
+		// reduced to spaces.
+		// Assigning outerHTML to <PRE> in IE doesn't work if the <PRE> isn't
+		// contained in another node since the node reference is changed after
+		// outerHTML assignment.
 		// So, we need some hacks to workaround IE bugs here.
 		if ( FCKBrowserInfo.IsIE )
 		{
 			var temp = doc.createElement( 'div' ) ;
 			temp.appendChild( newBlock ) ;
-			newBlock.outerHTML = '<PRE>\n' + results.join( '' ) + '</PRE>' ;
+			newBlock.outerHTML = '<pre>\n' + results.join( '' ) + '</pre>' ;
 			newBlock = temp.removeChild( temp.firstChild ) ;
 		}
 		else
 			newBlock.innerHTML = results.join( '' ) ;
+
 		return newBlock ;
+	},
+
+	/**
+	 * Merge a <pre> block with a previous <pre> block, if available.
+	 */
+	_CheckAndMergePre : function( previousBlock, preBlock )
+	{
+		// Check if the previous block and the current block are next
+		// to each other.
+		if ( previousBlock != FCKDomTools.GetPreviousSourceElement( preBlock, true ) )
+			return ;
+
+		// Merge the previous <pre> block contents into the current <pre>
+		// block.
+		//
+		// Another thing to be careful here is that currentBlock might contain
+		// a '\n' at the beginning, and previousBlock might contain a '\n'
+		// towards the end. These new lines are not normally displayed but they
+		// become visible after merging.
+		var innerHTML = previousBlock.innerHTML.replace( /\n$/, '' ) + '\n\n' +
+				preBlock.innerHTML.replace( /^\n/, '' ) ;
+
+		// Buggy IE normalizes innerHTML from <pre>, breaking whitespaces.
+		if ( FCKBrowserInfo.IsIE )
+			preBlock.outerHTML = '<pre>' + innerHTML + '</pre>' ;
+		else
+			preBlock.innerHTML = innerHTML ;
+
+		// Remove the previous <pre> block.
+		//
+		// The preBlock must not be moved or deleted from the DOM tree. This
+		// guarantees the FCKDomRangeIterator in _ApplyBlockStyle would not
+		// get lost at the next iteration.
+		FCKDomTools.RemoveNode( previousBlock ) ;
+	},
+
+	_CheckAndSplitPre : function( newBlock )
+	{
+		var lastNewBlock ;
+
+		var cursor = newBlock.firstChild ;
+
+		// We are not splitting <br><br> at the beginning of the block, so
+		// we'll start from the second child.
+		cursor = cursor && cursor.nextSibling ;
+
+		while ( cursor )
+		{
+			var next = cursor.nextSibling ;
+
+			// If we have two <BR>s, and they're not at the beginning or the end,
+			// then we'll split up the contents following them into another block.
+			// Stop processing if we are at the last child couple.
+			if ( next && next.nextSibling && cursor.nodeName.IEquals( 'br' ) && next.nodeName.IEquals( 'br' ) )
+			{
+				// Remove the first <br>.
+				FCKDomTools.RemoveNode( cursor ) ;
+
+				// Move to the node after the second <br>.
+				cursor = next.nextSibling ;
+
+				// Remove the second <br>.
+				FCKDomTools.RemoveNode( next ) ;
+
+				// Create the block that will hold the child nodes from now on.
+				lastNewBlock = FCKDomTools.InsertAfterNode( lastNewBlock || newBlock, FCKDomTools.CloneElement( newBlock ) ) ;
+
+				continue ;
+			}
+
+			// If we split it, then start moving the nodes to the new block.
+			if ( lastNewBlock )
+			{
+				cursor = cursor.previousSibling ;
+				FCKDomTools.MoveNode(cursor.nextSibling, lastNewBlock ) ;
+			}
+
+			cursor = cursor.nextSibling ;
+		}
 	},
 
 	/**
@@ -856,76 +948,41 @@ FCKStyle.prototype =
 
 		var block ;
 		var doc = range.Window.document ;
-
-		var preBlocks = [] ;
-		var convertedPreBlocks = [] ;
+		var previousPreBlock ;
 
 		while( ( block = iterator.GetNextParagraph() ) )		// Only one =
 		{
 			// Create the new node right before the current one.
 			var newBlock = this.BuildElement( doc ) ;
 
+			// Check if we are changing from/to <pre>.
+			var newBlockIsPre	= newBlock.nodeName.IEquals( 'pre' ) ;
+			var blockIsPre		= block.nodeName.IEquals( 'pre' ) ;
+
+			var toPre	= newBlockIsPre && !blockIsPre ;
+			var fromPre	= !newBlockIsPre && blockIsPre ;
+
 			// Move everything from the current node to the new one.
-			var newBlockIsPre = newBlock.nodeName.IEquals( 'pre' ) ;
-			var blockIsPre = block.nodeName.IEquals( 'pre' ) ;
-			if ( newBlockIsPre && !blockIsPre )
-			{
+			if ( toPre )
 				newBlock = this._ToPre( doc, block, newBlock ) ;
-				preBlocks.push( newBlock ) ;
-			}
-			else if ( !newBlockIsPre && blockIsPre )
-			{
+			else if ( fromPre )
 				newBlock = this._FromPre( doc, block, newBlock ) ;
-				convertedPreBlocks.push( newBlock ) ;
-			}
 			else	// Convering from a regular block to another regular block.
 				FCKDomTools.MoveChildren( block, newBlock ) ;
 
 			// Replace the current block.
 			block.parentNode.insertBefore( newBlock, block ) ;
 			FCKDomTools.RemoveNode( block ) ;
-		}
 
-		// Merge adjacent <PRE> blocks for #1229.
-		for ( var i = 0 ; i < preBlocks.length - 1 ; i++ )
-		{
-			// Check if the next block in HTML equals the next <PRE> block generated.
-			if ( FCKDomTools.GetNextSourceElement( preBlocks[i], true, [], [], true ) != preBlocks[i+1] )
-				continue ;
-
-			// Merge the upper <PRE> block's content into the lower <PRE> block.
-			// Remove the upper <PRE> block.
-			preBlocks[i+1].innerHTML = preBlocks[i].innerHTML + '\n\n' + preBlocks[i+1].innerHTML ;
-			FCKDomTools.RemoveNode( preBlocks[i] ) ;
-		}
-
-		// Split converted <PRE> blocks for #1229.
-		for ( var i = 0 ; i < convertedPreBlocks.length ; i++ )
-		{
-			var currentBlock = convertedPreBlocks[i] ;
-			var lastNewBlock = null ;
-			for ( var j = 0 ; j < currentBlock.childNodes.length ; j++ )
+			// Complete other tasks after inserting the node in the DOM.
+			if ( newBlockIsPre )
 			{
-				var cursor = currentBlock.childNodes[j] ;
-
-				// If we have two <BR>s, and they're not at the beginning or the end,
-				// then we'll split up the contents following them into another block.
-				if ( cursor.nodeName.IEquals( 'br' ) && j != 0 && j != currentBlock.childNodes.length - 2
-						&& cursor.nextSibling && cursor.nextSibling.nodeName.IEquals( 'br' ) )
-				{
-					FCKDomTools.RemoveNode( cursor.nextSibling ) ;
-					FCKDomTools.RemoveNode( cursor ) ;
-					j-- ;	// restart at current index at next iteration
-					lastNewBlock = FCKDomTools.InsertAfterNode( lastNewBlock || currentBlock, doc.createElement( currentBlock.nodeName ) ) ;
-					continue ;
-				}
-
-				if ( lastNewBlock )
-				{
-					FCKDomTools.MoveNode( cursor, lastNewBlock ) ;
-					j-- ;	// restart at current index at next iteration
-				}
+				if ( previousPreBlock )
+					this._CheckAndMergePre( previousPreBlock, newBlock ) ;	// Merge successive <pre> blocks.
+				previousPreBlock = newBlock ;
 			}
+			else if ( fromPre )
+				this._CheckAndSplitPre( newBlock ) ;	// Split <br><br> in successive <pre>s.
 		}
 
 		// Re-select the original range.

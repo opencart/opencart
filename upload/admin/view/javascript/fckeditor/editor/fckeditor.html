@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -28,6 +28,37 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Cache-Control" content="public">
 	<script type="text/javascript">
+
+// #1645: Alert the user if opening FCKeditor in FF3 from local filesystem
+// without security.fileuri.strict_origin_policy disabled.
+if ( document.location.protocol == 'file:' )
+{
+	try
+	{
+		window.parent.document.domain ;
+	}
+	catch ( e )
+	{
+		window.addEventListener( 'load', function()
+			{
+				document.body.innerHTML = '\
+					<div style="border: 1px red solid; font-family: arial; font-size: 12px; color: red; padding:10px;">\
+						<p>\
+							<b>Your browser security settings don\'t allow FCKeditor to be opened from\
+							the local filesystem.<\/b>\
+						<\/p>\
+						<p>\
+							Please open the <b>about:config<\/b> page and disable the\
+							&quot;security.fileuri.strict_origin_policy&quot; option; then load this page again.\
+						<\/p>\
+						<p>\
+							Check our <a href="http://docs.fckeditor.net/FCKeditor_2.x/Developers_Guide/FAQ#ff3perms">FAQ<\/a>\
+							for more information.\
+						<\/p>\
+					<\/div>' ;
+			}, false ) ;
+	}
+}
 
 // Save a reference to the default domain.
 var FCK_ORIGINAL_DOMAIN ;
@@ -134,9 +165,16 @@ FCKConfig_LoadPageConfig() ;
 
 FCKConfig_PreProcess() ;
 
-// CSS minified by http://iceyboard.no-ip.org/projects/css_compressor
-var FCK_InternalCSS			= FCKTools.FixCssUrls( FCKConfig.FullBasePath + 'css/', 'html{min-height:100%}table.FCK__ShowTableBorders,table.FCK__ShowTableBorders td,table.FCK__ShowTableBorders th{border:#d3d3d3 1px solid}form{border:1px dotted #F00;padding:2px}.FCK__Flash{border:#a9a9a9 1px solid;background-position:center center;background-image:url(images/fck_flashlogo.gif);background-repeat:no-repeat;width:80px;height:80px}.FCK__Anchor{border:1px dotted #00F;background-position:center center;background-image:url(images/fck_anchor.gif);background-repeat:no-repeat;width:16px;height:15px;vertical-align:middle}.FCK__AnchorC{border:1px dotted #00F;background-position:1px center;background-image:url(images/fck_anchor.gif);background-repeat:no-repeat;padding-left:18px}a[name]{border:1px dotted #00F;background-position:0 center;background-image:url(images/fck_anchor.gif);background-repeat:no-repeat;padding-left:18px}.FCK__PageBreak{background-position:center center;background-image:url(images/fck_pagebreak.gif);background-repeat:no-repeat;clear:both;display:block;float:none;width:100%;border-top:#999 1px dotted;border-bottom:#999 1px dotted;border-right:0;border-left:0;height:5px}.FCK__InputHidden{width:19px;height:18px;background-image:url(images/fck_hiddenfield.gif);background-repeat:no-repeat;vertical-align:text-bottom;background-position:center center}.FCK__ShowBlocks p,.FCK__ShowBlocks div,.FCK__ShowBlocks pre,.FCK__ShowBlocks address,.FCK__ShowBlocks blockquote,.FCK__ShowBlocks h1,.FCK__ShowBlocks h2,.FCK__ShowBlocks h3,.FCK__ShowBlocks h4,.FCK__ShowBlocks h5,.FCK__ShowBlocks h6{background-repeat:no-repeat;border:1px dotted gray;padding-top:8px;padding-left:8px}.FCK__ShowBlocks p{background-image:url(images/block_p.png)}.FCK__ShowBlocks div{background-image:url(images/block_div.png)}.FCK__ShowBlocks pre{background-image:url(images/block_pre.png)}.FCK__ShowBlocks address{background-image:url(images/block_address.png)}.FCK__ShowBlocks blockquote{background-image:url(images/block_blockquote.png)}.FCK__ShowBlocks h1{background-image:url(images/block_h1.png)}.FCK__ShowBlocks h2{background-image:url(images/block_h2.png)}.FCK__ShowBlocks h3{background-image:url(images/block_h3.png)}.FCK__ShowBlocks h4{background-image:url(images/block_h4.png)}.FCK__ShowBlocks h5{background-image:url(images/block_h5.png)}.FCK__ShowBlocks h6{background-image:url(images/block_h6.png)}' ) ;
-var FCK_ShowTableBordersCSS	= FCKTools.FixCssUrls( FCKConfig.FullBasePath + 'css/', 'table:not([border]),table:not([border]) > tr > td,table:not([border]) > tr > th,table:not([border]) > tbody > tr > td,table:not([border]) > tbody > tr > th,table:not([border]) > thead > tr > td,table:not([border]) > thead > tr > th,table:not([border]) > tfoot > tr > td,table:not([border]) > tfoot > tr > th,table[border=\"0\"],table[border=\"0\"] > tr > td,table[border=\"0\"] > tr > th,table[border=\"0\"] > tbody > tr > td,table[border=\"0\"] > tbody > tr > th,table[border=\"0\"] > thead > tr > td,table[border=\"0\"] > thead > tr > th,table[border=\"0\"] > tfoot > tr > td,table[border=\"0\"] > tfoot > tr > th{border:#d3d3d3 1px dotted}' ) ;
+// Load the full debug script.
+if ( FCKConfig.Debug )
+	LoadScript( '_source/internals/fckdebug.js' ) ;
+
+	</script>
+	<script type="text/javascript">
+
+// CSS minified by http://iceyboard.no-ip.org/projects/css_compressor (see _dev/css_compression.txt).
+var FCK_InternalCSS			= FCKTools.FixCssUrls( FCKConfig.BasePath + 'css/', 'html{min-height:100%}table.FCK__ShowTableBorders,table.FCK__ShowTableBorders td,table.FCK__ShowTableBorders th{border:#d3d3d3 1px solid}form{border:1px dotted #F00;padding:2px}.FCK__Flash{border:#a9a9a9 1px solid;background-position:center center;background-image:url(images/fck_flashlogo.gif);background-repeat:no-repeat;width:80px;height:80px}.FCK__UnknownObject{border:#a9a9a9 1px solid;background-position:center center;background-image:url(images/fck_plugin.gif);background-repeat:no-repeat;width:80px;height:80px}.FCK__Anchor{border:1px dotted #00F;background-position:center center;background-image:url(images/fck_anchor.gif);background-repeat:no-repeat;width:16px;height:15px;vertical-align:middle}.FCK__AnchorC{border:1px dotted #00F;background-position:1px center;background-image:url(images/fck_anchor.gif);background-repeat:no-repeat;padding-left:18px}a[name]{border:1px dotted #00F;background-position:0 center;background-image:url(images/fck_anchor.gif);background-repeat:no-repeat;padding-left:18px}.FCK__PageBreak{background-position:center center;background-image:url(images/fck_pagebreak.gif);background-repeat:no-repeat;clear:both;display:block;float:none;width:100%;border-top:#999 1px dotted;border-bottom:#999 1px dotted;border-right:0;border-left:0;height:5px}.FCK__InputHidden{width:19px;height:18px;background-image:url(images/fck_hiddenfield.gif);background-repeat:no-repeat;vertical-align:text-bottom;background-position:center center}.FCK__ShowBlocks p,.FCK__ShowBlocks div,.FCK__ShowBlocks pre,.FCK__ShowBlocks address,.FCK__ShowBlocks blockquote,.FCK__ShowBlocks h1,.FCK__ShowBlocks h2,.FCK__ShowBlocks h3,.FCK__ShowBlocks h4,.FCK__ShowBlocks h5,.FCK__ShowBlocks h6{background-repeat:no-repeat;border:1px dotted gray;padding-top:8px;padding-left:8px}.FCK__ShowBlocks p{background-image:url(images/block_p.png)}.FCK__ShowBlocks div{background-image:url(images/block_div.png)}.FCK__ShowBlocks pre{background-image:url(images/block_pre.png)}.FCK__ShowBlocks address{background-image:url(images/block_address.png)}.FCK__ShowBlocks blockquote{background-image:url(images/block_blockquote.png)}.FCK__ShowBlocks h1{background-image:url(images/block_h1.png)}.FCK__ShowBlocks h2{background-image:url(images/block_h2.png)}.FCK__ShowBlocks h3{background-image:url(images/block_h3.png)}.FCK__ShowBlocks h4{background-image:url(images/block_h4.png)}.FCK__ShowBlocks h5{background-image:url(images/block_h5.png)}.FCK__ShowBlocks h6{background-image:url(images/block_h6.png)}' ) ;
+var FCK_ShowTableBordersCSS	= FCKTools.FixCssUrls( FCKConfig.BasePath + 'css/', 'table:not([border]),table:not([border]) > tr > td,table:not([border]) > tr > th,table:not([border]) > tbody > tr > td,table:not([border]) > tbody > tr > th,table:not([border]) > thead > tr > td,table:not([border]) > thead > tr > th,table:not([border]) > tfoot > tr > td,table:not([border]) > tfoot > tr > th,table[border=\"0\"],table[border=\"0\"] > tr > td,table[border=\"0\"] > tr > th,table[border=\"0\"] > tbody > tr > td,table[border=\"0\"] > tbody > tr > th,table[border=\"0\"] > thead > tr > td,table[border=\"0\"] > thead > tr > th,table[border=\"0\"] > tfoot > tr > td,table[border=\"0\"] > tfoot > tr > th{border:#d3d3d3 1px dotted}' ) ;
 
 // Popup the debug window if debug mode is set to true. It guarantees that the
 // first debug message will not be lost.
@@ -215,7 +253,8 @@ function WaitForActive( editorInstance, newStatus )
 		if ( FCKBrowserInfo.IsGecko )
 			FCKTools.RunFunction( window.onresize ) ;
 
-		_AttachFormSubmitToAPI() ;
+		if ( !FCKConfig.PreventSubmitHandler )
+			_AttachFormSubmitToAPI() ;
 
 		FCK.SetStatus( FCK_STATUS_COMPLETE ) ;
 

@@ -36,7 +36,7 @@ class ControllerPaymentPPExpress extends Controller {
 			'SIGNATURE'     => MODULE_PAYMENT_pp_EXPRESS_API_SIGNATURE,
 			'METHOD'        => 'DoExpressCheckoutPayment',
 			'TOKEN'         => $ppe_token,
-			'PAYMENTACTION' => ((MODULE_PAYMENT_pp_EXPRESS_TRANSACTION_METHOD == 'Sale') ? 'Sale' : 'Authorization'),
+			'PAYMENTACTION' => (MODULE_PAYMENT_pp_EXPRESS_TRANSACTION_METHOD == 'Sale') ? 'Sale' : 'Authorization',
 			'PAYERID'       => $ppe_payerid,
 			'AMT'           => $this->format_raw($order->info['total']),
 			'CURRENCYCODE'  => $order->info['currency'],

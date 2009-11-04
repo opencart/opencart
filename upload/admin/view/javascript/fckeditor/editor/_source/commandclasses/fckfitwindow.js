@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -36,6 +36,21 @@ FCKFitWindow.prototype.Execute = function()
 	var eBody				= eMainWindow.document.body ;
 	var eBodyStyle			= eBody.style ;
 	var eParent ;
+
+	// Save the current selection and scroll position.
+	var oRange, oEditorScrollPos ;
+	if ( FCK.EditMode == FCK_EDITMODE_WYSIWYG )
+	{
+		oRange = new FCKDomRange( FCK.EditorWindow ) ;
+		oRange.MoveToSelection() ;
+		oEditorScrollPos = FCKTools.GetScrollPosition( FCK.EditorWindow ) ;
+	}
+	else
+	{
+		var eTextarea = FCK.EditingArea.Textarea ;
+		oRange = !FCKBrowserInfo.IsIE && [ eTextarea.selectionStart, eTextarea.selectionEnd ] ;
+		oEditorScrollPos = [ eTextarea.scrollLeft, eTextarea.scrollTop ] ;
+	}
 
 	// No original style properties known? Go fullscreen.
 	if ( !this.IsMaximized )
@@ -83,6 +98,7 @@ FCKFitWindow.prototype.Execute = function()
 		var oViewPaneSize = FCKTools.GetViewPaneSize( eMainWindow ) ;
 
 		eEditorFrameStyle.position	= "absolute";
+		eEditorFrame.offsetLeft ;		// Kludge for Safari 3.1 browser bug, do not remove. See #2066.
 		eEditorFrameStyle.zIndex	= FCKConfig.FloatingPanelsZIndex - 1;
 		eEditorFrameStyle.left		= "0px";
 		eEditorFrameStyle.top		= "0px";
@@ -159,6 +175,23 @@ FCKFitWindow.prototype.Execute = function()
 		FCK.EditingArea.MakeEditable() ;
 
 	FCK.Focus() ;
+
+	// Restore the selection and scroll position of inside the document.
+	if ( FCK.EditMode == FCK_EDITMODE_WYSIWYG )
+	{
+		oRange.Select() ;
+		FCK.EditorWindow.scrollTo( oEditorScrollPos.X, oEditorScrollPos.Y ) ;
+	}
+	else
+	{
+		if ( !FCKBrowserInfo.IsIE )
+		{
+			eTextarea.selectionStart = oRange[0] ;
+			eTextarea.selectionEnd = oRange[1] ;
+		}
+		eTextarea.scrollLeft = oEditorScrollPos[0] ;
+		eTextarea.scrollTop = oEditorScrollPos[1] ;
+	}
 }
 
 FCKFitWindow.prototype.GetState = function()

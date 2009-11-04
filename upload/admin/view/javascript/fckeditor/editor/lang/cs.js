@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "Odstranit formátování",
 InsertLinkLbl		: "Odkaz",
 InsertLink			: "Vložit/změnit odkaz",
 RemoveLink			: "Odstranit odkaz",
+VisitLink			: "Otevřít odkaz",
 Anchor				: "Vložít/změnit záložku",
 AnchorDelete		: "Odstranit kotvu",
 InsertImageLbl		: "Obrázek",
@@ -72,6 +73,9 @@ BlockJustify		: "Zarovnat do bloku",
 DecreaseIndent		: "Zmenšit odsazení",
 IncreaseIndent		: "Zvětšit odsazení",
 Blockquote			: "Citace",
+CreateDiv			: "Vytvořit Div kontejner",
+EditDiv				: "Upravit Div kontejner",
+DeleteDiv			: "Odstranit Div kontejner",
 Undo				: "Zpět",
 Redo				: "Znovu",
 NumberedListLbl		: "Číslování",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "Panel nástrojů \"%1\" neexistuje",
 NoActiveX			: "Nastavení bezpečnosti Vašeho prohlížeče omezuje funkčnost některých jeho možností. Je třeba zapnout volbu \"Spouštět ovládáací prvky ActiveX a moduly plug-in\", jinak nebude možné využívat všechny dosputné schopnosti editoru.",
 BrowseServerBlocked : "Průzkumník zdrojů nelze otevřít. Prověřte, zda nemáte aktivováno blokování popup oken.",
 DialogBlocked		: "Nelze otevřít dialogové okno. Prověřte, zda nemáte aktivováno blokování popup oken.",
+VisitLinkBlocked	: "Není možné otevřít nové okno. Prověřte, zda všechny nástroje pro blokování vyskakovacích oken jsou vypnuty.",
 
 // Dialogs
 DlgBtnOK			: "OK",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Vzdálenost buněk",
 DlgTableCellPad		: "Odsazení obsahu",
 DlgTableCaption		: "Popis",
 DlgTableSummary		: "Souhrn",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Vlastnosti buňky",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "Nahoru",
 DlgCellVerAlignMiddle	: "Doprostřed",
 DlgCellVerAlignBottom	: "Dolů",
 DlgCellVerAlignBaseline	: "Na účaří",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "Sloučené řádky",
 DlgCellCollSpan		: "Sloučené sloupce",
 DlgCellBackColor	: "Barva pozadí",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "O aplikaci",
 DlgAboutBrowserInfoTab	: "Informace o prohlížeči",
 DlgAboutLicenseTab	: "Licence",
 DlgAboutVersion		: "verze",
-DlgAboutInfo		: "Více informací získáte na"
+DlgAboutInfo		: "Více informací získáte na",
+
+// Div Dialog
+DlgDivGeneralTab	: "Obecné",
+DlgDivAdvancedTab	: "Rozšířené",
+DlgDivStyle		: "Styl",
+DlgDivInlineStyle	: "Vložený styl"
 };

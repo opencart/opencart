@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -37,6 +37,13 @@ FCKDocumentFragment.prototype =
 	AppendTo : function( targetNode )
 	{
 		targetNode.appendChild( this.RootNode ) ;
+	},
+
+	AppendHtml : function( html )
+	{
+		var eTmpDiv = this.RootNode.ownerDocument.createElement( 'div' ) ;
+		eTmpDiv.innerHTML = html ;
+		FCKDomTools.MoveChildren( eTmpDiv, this.RootNode ) ;
 	},
 
 	InsertAfterNode : function( existingNode )

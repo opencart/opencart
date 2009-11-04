@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -29,7 +29,8 @@ FCKXHtml._GetMainXmlString = function()
 
 FCKXHtml._AppendAttributes = function( xmlNode, htmlNode, node, nodeName )
 {
-	var aAttributes = htmlNode.attributes ;
+	var aAttributes = htmlNode.attributes,
+		bHasStyle ;
 
 	for ( var n = 0 ; n < aAttributes.length ; n++ )
 	{
@@ -47,9 +48,9 @@ FCKXHtml._AppendAttributes = function( xmlNode, htmlNode, node, nodeName )
 			// attribute. It returns "null" for the nodeValue.
 			else if ( sAttName == 'style' )
 			{
-				var data = FCKTools.ProtectFormStyles( htmlNode ) ;
-				sAttValue = htmlNode.style.cssText.replace( FCKRegexLib.StyleProperties, FCKTools.ToLowerCase ) ;
-				FCKTools.RestoreFormStyles( htmlNode, data ) ;
+				// Just mark it to do it later in this function.
+				bHasStyle = true ;
+				continue ;
 			}
 			// There are two cases when the oAttribute.nodeValue must be used:
 			//		- for the "class" attribute
@@ -79,6 +80,15 @@ FCKXHtml._AppendAttributes = function( xmlNode, htmlNode, node, nodeName )
 			}
 			this._AppendAttribute( node, sAttName, sAttValue || oAttribute.nodeValue ) ;
 		}
+	}
+
+	// IE loses the style attribute in JavaScript-created elements tags. (#2390)
+	if ( bHasStyle || htmlNode.style.cssText.length > 0 )
+	{
+		var data = FCKTools.ProtectFormStyles( htmlNode ) ;
+		var sStyleValue = htmlNode.style.cssText.replace( FCKRegexLib.StyleProperties, FCKTools.ToLowerCase ) ;
+		FCKTools.RestoreFormStyles( htmlNode, data ) ;
+		this._AppendAttribute( node, 'style', sStyleValue ) ;
 	}
 }
 

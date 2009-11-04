@@ -19,7 +19,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 		
 		$this->load->model('localisation/order_status');
 			
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
       		$this->model_localisation_order_status->addOrderStatus($this->request->post);
 		  	
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 		
 		$this->load->model('localisation/order_status');
 		
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 	  		$this->model_localisation_order_status->editOrderStatus($this->request->get['order_status_id'], $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -83,7 +83,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 		
 		$this->load->model('localisation/order_status');
 		
-    	if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
+    	if (isset($this->request->post['delete']) && $this->validateDelete()) {
 			foreach ($this->request->post['delete'] as $order_status_id) {
 				$this->model_localisation_order_status->deleteOrderStatus($order_status_id);
 			}
@@ -184,7 +184,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 			$this->data['order_statuses'][] = array(
 				'order_status_id' => $result['order_status_id'],
 				'name'            => $result['name'] . (($result['order_status_id'] == $this->config->get('config_order_status_id')) ? $this->language->get('text_default') : NULL),
-				'delete'          => in_array($result['order_status_id'], (array)@$this->request->post['delete']),
+				'delete'          => isset($this->request->post['delete']) && in_array($result['order_status_id'], $this->request->post['delete']),
 				'action'          => $action
 			);
 		}	
@@ -199,11 +199,19 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 		
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 
 		$url = '';
 
@@ -259,8 +267,17 @@ class ControllerLocalisationOrderStatus extends Controller {
 
     	$this->data['tab_general'] = $this->language->get('tab_general');
     
-		$this->data['error_warning'] = @$this->error['warning'];
-    	$this->data['error_name'] = @$this->error['name'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+
+ 		if (isset($this->error['name'])) {
+			$this->data['error_name'] = $this->error['name'];
+		} else {
+			$this->data['error_name'] = '';
+		}
 		
 		$url = '';
 			

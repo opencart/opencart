@@ -23,12 +23,11 @@
       </tr>
       <tr>
         <td><?php echo $entry_image; ?></td>
-        <td><input type="file" id="upload" />
-          <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" /></td>
+        <td><input type="file" name="image" /></td>
       </tr>
       <tr>
         <td></td>
-        <td><img src="<?php echo $preview; ?>" alt="" id="preview" style="border: 1px solid #EEEEEE;" /></td>
+        <td><img src="<?php echo $preview; ?>" alt="" style="border: 1px solid #EEEEEE;" /></td>
       </tr>
       <tr>
         <td><?php echo $entry_sort_order; ?></td>
@@ -37,32 +36,6 @@
     </table>
   </div>
 </form>
-<script type="text/javascript" src="view/javascript/jquery/ajaxupload.3.1.js"></script>
-<script type="text/javascript"><!--
-$(document).ready(function() { 
-	new AjaxUpload('#upload', {
-		action: 'index.php?route=catalog/image',
-		name: 'image',
-		autoSubmit: true,
-		responseType: 'json',
-		onChange: function(file, extension) {},
-		onSubmit: function(file, extension) {
-			$('#upload').after('<img src="view/image/loading.gif" id="loading" />');
-		},
-		onComplete: function(file, json) {
-			if (json.error) {
-				alert(json.error);
-			} else {
-				$('#preview').attr('src', json.src);
-
-				$('#image').attr('value', json.file);
-			}
-			
-			$('#loading').remove();	
-		}
-	});
-});	
-//--></script>
 <script type="text/javascript"><!--
 $.tabs('.tabs a'); 
 //--></script>

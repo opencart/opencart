@@ -49,9 +49,9 @@
         <td><select name="filter_order_status_id">
             <option value="*"></option>
             <?php if ($filter_order_status_id == '0') { ?>
-            <option value="0" selected="selected"><?php echo $text_no_status; ?></option>
+            <option value="0" selected="selected"><?php echo $text_missing_orders; ?></option>
             <?php } else { ?>
-            <option value="0"><?php echo $text_no_status; ?></option>
+            <option value="0"><?php echo $text_missing_orders; ?></option>
             <?php } ?>
             <?php foreach ($order_statuses as $order_status) { ?>
             <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>

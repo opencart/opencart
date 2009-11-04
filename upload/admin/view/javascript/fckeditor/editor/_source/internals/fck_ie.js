@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -29,11 +29,11 @@ FCK._GetBehaviorsStyle = function()
 {
 	if ( !FCK._BehaviorsStyle )
 	{
-		var sBasePath = FCKConfig.FullBasePath ;
+		var sBasePath = FCKConfig.BasePath ;
 		var sTableBehavior = '' ;
 		var sStyle ;
 
-		// The behaviors should be pointed using the FullBasePath to avoid security
+		// The behaviors should be pointed using the BasePath to avoid security
 		// errors when using a different BaseHref.
 		sStyle = '<style type="text/css" _fcktemp="true">' ;
 
@@ -136,6 +136,8 @@ FCK.InitializeBehaviors = function( dontReturn )
 
 	this.EditorDocument.attachEvent("ondblclick", Doc_OnDblClick ) ;
 
+	this.EditorDocument.attachEvent("onbeforedeactivate", function(){ FCKSelection.Save() ; } ) ;
+
 	// Catch cursor selection changes.
 	this.EditorDocument.attachEvent("onselectionchange", Doc_OnSelectionChange ) ;
 
@@ -150,6 +152,7 @@ FCK.InsertHtml = function( html )
 	html = FCK.ProtectTags( html ) ;
 
 //	FCK.Focus() ;
+	FCKSelection.Restore() ;
 	FCK.EditorWindow.focus() ;
 
 	FCKUndo.SaveUndoStep() ;

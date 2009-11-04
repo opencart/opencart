@@ -3,7 +3,7 @@ class ModelCustomerOrder extends Model {
 	public function editOrder($order_id, $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$data['order_status_id'] . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
 
-      	$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$data['order_status_id'] . "', notify = '" . (int)@$data['notify'] . "', comment = '" . $this->db->escape(strip_tags($data['comment'])) . "', date_added = NOW()");
+      	$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$data['order_status_id'] . "', notify = '" . (isset($data['notify']) ? (int)$data['notify'] : 0) . "', comment = '" . $this->db->escape(strip_tags($data['comment'])) . "', date_added = NOW()");
 
       	if (isset($data['notify'])) {
         	$query = $this->db->query("SELECT *, os.name AS status, l.code AS language FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id AND os.language_id = o.language_id) LEFT JOIN " . DB_PREFIX . "language l ON (o.language_id = l.language_id) WHERE o.order_id = '" . (int)$order_id . "'");
@@ -52,7 +52,7 @@ class ModelCustomerOrder extends Model {
 		
 		if ($this->config->get('config_stock_subtract')) {
 			foreach($products as $product) {
-				$this->db->query("UPDATE `product` SET quantity = (quantity + " . (int)$product['quantity'] . ") WHERE product_id = '" . (int)$product['product_id'] . "'");
+				$this->db->query("UPDATE `" . DB_PREFIX . "product` SET quantity = (quantity + " . (int)$product['quantity'] . ") WHERE product_id = '" . (int)$product['product_id'] . "'");
 			}
 		}
 	}
@@ -66,26 +66,26 @@ class ModelCustomerOrder extends Model {
 	public function getOrders($data = array()) {
 		$sql = "SELECT o.order_id, CONCAT(o.firstname, ' ', o.lastname) AS name, (SELECT os.name FROM " . DB_PREFIX . "order_status os WHERE os.order_status_id = o.order_status_id AND os.language_id = '" . (int)$this->language->getId() . "') AS status, o.date_added, o.total, o.currency, o.value FROM `" . DB_PREFIX . "order` o";
 		
-		if (isset($data['order_status_id'])) {
-			$sql .= " WHERE o.order_status_id = '" . (int)$data['order_status_id'] . "'";
+		if (isset($data['filter_order_status_id']) && !is_null($data['filter_order_status_id'])) {
+			$sql .= " WHERE o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
 			$sql .= " WHERE o.order_status_id > '0'";
 		}
 		
-		if (isset($data['order_id'])) {
-			$sql .= " AND o.order_id = '" . (int)$data['order_id'] . "'";
+		if (isset($data['filter_order_id']) && !is_null($data['filter_order_id'])) {
+			$sql .= " AND o.order_id = '" . (int)$data['filter_order_id'] . "'";
 		}
 
-		if (isset($data['name'])) {
-			$sql .= " AND CONCAT(o.firstname, ' ', o.lastname) LIKE '%" . $this->db->escape($data['name']) . "%'";
+		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
+			$sql .= " AND CONCAT(o.firstname, ' ', o.lastname) LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
 		}
 		
-		if (isset($data['date_added'])) {
-			$sql .= " AND DATE(o.date_added) = DATE('" . $this->db->escape($data['date_added']) . "')";
+		if (isset($data['filter_date_added']) && !is_null($data['filter_date_added'])) {
+			$sql .= " AND DATE(o.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 		
-		if (isset($data['total'])) {
-			$sql .= " AND o.total = '" . (float)$data['total'] . "'";
+		if (isset($data['filter_total']) && !is_null($data['filter_total'])) {
+			$sql .= " AND o.total = '" . (float)$data['filter_total'] . "'";
 		}
 
 		$sort_data = array(
@@ -96,13 +96,13 @@ class ModelCustomerOrder extends Model {
 			'o.total',
 		);	
 			
-		if (in_array(@$data['sort'], $sort_data)) {
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];	
 		} else {
 			$sql .= " ORDER BY o.order_id";	
 		}
 			
-		if (@$data['order'] == 'DESC') {
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";
 		} else {
 			$sql .= " ASC";
@@ -150,26 +150,26 @@ class ModelCustomerOrder extends Model {
 	public function getTotalOrders($data = array()) {
       	$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order`";
 
-		if (isset($data['order_status_id'])) {
-			$sql .= " WHERE order_status_id = '" . (int)$data['order_status_id'] . "'";
+		if (isset($data['filter_order_status_id']) && !is_null($data['filter_order_status_id'])) {
+			$sql .= " WHERE order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
 			$sql .= " WHERE order_status_id > '0'";
 		}
 		
-		if (isset($data['order_id'])) {
-			$sql .= " AND order_id = '" . (int)$data['order_id'] . "'";
+		if (isset($data['filter_order_id']) && !is_null($data['filter_order_id'])) {
+			$sql .= " AND order_id = '" . (int)$data['filter_order_id'] . "'";
 		}
 
-		if (isset($data['name'])) {
-			$sql .= " AND CONCAT(firstname, ' ', lastname) LIKE '%" . $this->db->escape($data['name']) . "%'";
+		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
+			$sql .= " AND CONCAT(firstname, ' ', lastname) LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
 		}
 		
-		if (isset($data['date_added'])) {
-			$sql .= " AND DATE(date_added) = DATE('" . $this->db->escape($data['date_added']) . "')";
+		if (isset($data['filter_date_added']) && !is_null($data['filter_date_added'])) {
+			$sql .= " AND DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 		
-		if (isset($data['total'])) {
-			$sql .= " AND total = '" . (float)$data['total'] . "'";
+		if (isset($data['filter_total']) && !is_null($data['filter_total'])) {
+			$sql .= " AND total = '" . (float)$data['filter_total'] . "'";
 		}
 		
 		$query = $this->db->query($sql);

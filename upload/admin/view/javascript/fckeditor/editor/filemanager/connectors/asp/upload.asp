@@ -5,7 +5,7 @@ Response.Buffer = True
 %>
 <%
  ' FCKeditor - The text editor for Internet - http://www.fckeditor.net
- ' Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ ' Copyright (C) 2003-2009 Frederico Caldeira Knabben
  '
  ' == BEGIN LICENSE ==
  '
@@ -48,7 +48,7 @@ End If
 	sResourceType = Request.QueryString("Type")
 	If ( sResourceType = "" ) Then sResourceType = "File"
 
-	sCurrentFolder = GetCurrentFolder()
+	sCurrentFolder = "/"
 
 	' Is Upload enabled?
 	if ( Not IsAllowedCommand( sCommand ) ) then

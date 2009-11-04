@@ -12,8 +12,10 @@ class ControllerCommonMenu extends Controller {
 		$this->data['text_coupon'] = $this->language->get('text_coupon');
 		$this->data['text_currency'] = $this->language->get('text_currency');			
 		$this->data['text_customer'] = $this->language->get('text_customer');
+		$this->data['text_customer_group'] = $this->language->get('text_customer_group');
       	$this->data['text_customers'] = $this->language->get('text_customers');
 		$this->data['text_download'] = $this->language->get('text_download');
+		$this->data['text_error_log'] = $this->language->get('text_error_log');
 		$this->data['text_extension'] = $this->language->get('text_extension');
 		$this->data['text_feed'] = $this->language->get('text_feed');
 		$this->data['text_geo_zone'] = $this->language->get('text_geo_zone');
@@ -47,6 +49,7 @@ class ControllerCommonMenu extends Controller {
 		$this->data['text_users'] = $this->language->get('text_users');
       	$this->data['text_documentation'] = $this->language->get('text_documentation');
       	$this->data['text_weight_class'] = $this->language->get('text_weight_class');
+		$this->data['text_measurement_class'] = $this->language->get('text_measurement_class');
 		$this->data['text_opencart'] = $this->language->get('text_opencart');
       	$this->data['text_zone'] = $this->language->get('text_zone');
 		 
@@ -56,7 +59,9 @@ class ControllerCommonMenu extends Controller {
 		$this->data['currency'] = $this->url->https('localisation/currency');
 		$this->data['coupon'] = $this->url->https('customer/coupon');
 		$this->data['customer'] = $this->url->https('customer/customer');
+		$this->data['customer_group'] = $this->url->https('customer/customer_group');
 		$this->data['download'] = $this->url->https('catalog/download');
+		$this->data['error_log'] = $this->url->https('tool/error_log');
 		$this->data['feed'] = $this->url->https('extension/feed');			
 		$this->data['geo_zone'] = $this->url->https('localisation/geo_zone');
 		$this->data['home'] = $this->url->https('common/home'); 
@@ -83,6 +88,7 @@ class ControllerCommonMenu extends Controller {
 		$this->data['user'] = $this->url->https('user/user');
       	$this->data['user_group'] = $this->url->https('user/user_permission');
       	$this->data['weight_class'] = $this->url->https('localisation/weight_class');
+		$this->data['measurement_class'] = $this->url->https('localisation/measurement_class');
       	$this->data['zone'] = $this->url->https('localisation/zone');
 		
 		$this->id       = 'menu';

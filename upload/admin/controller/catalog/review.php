@@ -19,7 +19,7 @@ class ControllerCatalogReview extends Controller {
 		
 		$this->load->model('catalog/review');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_catalog_review->addReview($this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerCatalogReview extends Controller {
 		
 		$this->load->model('catalog/review');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_catalog_review->editReview($this->request->get['review_id'], $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -83,7 +83,7 @@ class ControllerCatalogReview extends Controller {
 		
 		$this->load->model('catalog/review');
 
-		if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
+		if (isset($this->request->post['delete']) && $this->validateDelete()) {
 			foreach ($this->request->post['delete'] as $review_id) {
 				$this->model_catalog_review->deleteReview($review_id);
 			}
@@ -188,7 +188,7 @@ class ControllerCatalogReview extends Controller {
 				'rating'     => $result['rating'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'delete'     => in_array($result['review_id'], (array)@$this->request->post['delete']),
+				'delete'     => isset($this->request->post['delete']) && in_array($result['review_id'], $this->request->post['delete']),
 				'action'     => $action
 			);
 		}	
@@ -207,11 +207,19 @@ class ControllerCatalogReview extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 		
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 
 		$url = '';
 
@@ -279,10 +287,30 @@ class ControllerCatalogReview extends Controller {
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_author'] = @$this->error['author'];
-		$this->data['error_text'] = @$this->error['text'];
-
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+		
+ 		if (isset($this->error['author'])) {
+			$this->data['error_author'] = $this->error['author'];
+		} else {
+			$this->data['error_author'] = '';
+		}
+		
+ 		if (isset($this->error['text'])) {
+			$this->data['error_text'] = $this->error['text'];
+		} else {
+			$this->data['error_text'] = '';
+		}
+		
+ 		if (isset($this->error['rating'])) {
+			$this->data['error_rating'] = $this->error['rating'];
+		} else {
+			$this->data['error_rating'] = '';
+		}
+		
    		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
@@ -319,14 +347,16 @@ class ControllerCatalogReview extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('catalog/review' . $url);
 
-		if ((isset($this->request->get['review_id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['review_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$review_info = $this->model_catalog_review->getReview($this->request->get['review_id']);
 		}
 
 		if (isset($this->request->post['product_id'])) {
 			$this->data['product_id'] = $this->request->post['product_id'];
+		} elseif (isset($review_info)) {
+			$this->data['product_id'] = $review_info['product_id'];
 		} else {
-			$this->data['product_id'] = @$review_info['product_id'];
+			$this->data['product_id'] = '';
 		}
 
 		$this->load->model('catalog/product');
@@ -335,26 +365,34 @@ class ControllerCatalogReview extends Controller {
 
 		if (isset($this->request->post['author'])) {
 			$this->data['author'] = $this->request->post['author'];
+		} elseif (isset($review_info)) {
+			$this->data['author'] = $review_info['author'];
 		} else {
-			$this->data['author'] = @$review_info['author'];
+			$this->data['author'] = '';
 		}
 
 		if (isset($this->request->post['text'])) {
 			$this->data['text'] = $this->request->post['text'];
+		} elseif (isset($review_info)) {
+			$this->data['text'] = $review_info['text'];
 		} else {
-			$this->data['text'] = @$review_info['text'];
+			$this->data['text'] = '';
 		}
 
 		if (isset($this->request->post['rating'])) {
 			$this->data['rating'] = $this->request->post['rating'];
+		} elseif (isset($review_info)) {
+			$this->data['rating'] = $review_info['rating'];
 		} else {
-			$this->data['rating'] = @$review_info['rating'];
+			$this->data['rating'] = '';
 		}
 
 		if (isset($this->request->post['status'])) {
 			$this->data['status'] = $this->request->post['status'];
+		} elseif (isset($review_info)) {
+			$this->data['status'] = $review_info['status'];
 		} else {
-			$this->data['status'] = @$review_info['status'];
+			$this->data['status'] = '';
 		}
 		
 		$this->id       = 'content';
@@ -376,7 +414,15 @@ class ControllerCatalogReview extends Controller {
 		if ((strlen(utf8_decode($this->request->post['text'])) < 25) || (strlen(utf8_decode($this->request->post['text'])) > 1000)) {
 			$this->error['text'] = $this->language->get('error_text');
 		}
-
+		
+		if ((strlen(utf8_decode($this->request->post['text'])) < 25) || (strlen(utf8_decode($this->request->post['text'])) > 1000)) {
+			$this->error['text'] = $this->language->get('error_text');
+		}
+		
+		if (!isset($this->request->post['rating'])) {
+			$this->error['rating'] = $this->language->get('error_rating');
+		}
+		
 		if (!$this->error) {
 			return TRUE;
 		} else {

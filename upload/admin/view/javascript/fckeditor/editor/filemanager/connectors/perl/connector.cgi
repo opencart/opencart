@@ -2,7 +2,7 @@
 
 #####
 #  FCKeditor - The text editor for Internet - http://www.fckeditor.net
-#  Copyright (C) 2003-2008 Frederico Caldeira Knabben
+#  Copyright (C) 2003-2009 Frederico Caldeira Knabben
 #
 #  == BEGIN LICENSE ==
 #
@@ -24,7 +24,7 @@
 #####
 
 ##
-# ATTENTION: To enable this connector, look for the "SECURITY" comment in this file.
+# ATTENTION: To enable this connector, look for the "SECURITY" comment in config.pl.
 ##
 
 ## START: Hack for Windows (Not important to understand the editor code... Perl specific).
@@ -58,28 +58,10 @@ require 'io.pl';
 require 'basexml.pl';
 require 'commands.pl';
 require 'upload_fck.pl';
+require 'config.pl';
 
-##
-# SECURITY: REMOVE/COMMENT THE FOLLOWING LINE TO ENABLE THIS CONNECTOR.
-##
-	&SendError( 1, 'This connector is disabled. Please check the "editor/filemanager/connectors/perl/connector.cgi" file' ) ;
-
-	&read_input();
-
-	if($FORM{'ServerPath'} ne "") {
-		$GLOBALS{'UserFilesPath'} = $FORM{'ServerPath'};
-		if(!($GLOBALS{'UserFilesPath'} =~ /\/$/)) {
-			$GLOBALS{'UserFilesPath'} .= '/' ;
-		}
-	} else {
-		$GLOBALS{'UserFilesPath'} = '/userfiles/';
-	}
-
-	# Map the "UserFiles" path to a local directory.
-	$rootpath = &GetRootPath();
-	$GLOBALS{'UserFilesDirectory'} = $rootpath . $GLOBALS{'UserFilesPath'};
-
-	&DoResponse();
+&read_input();
+&DoResponse();
 
 sub DoResponse
 {
@@ -88,9 +70,17 @@ sub DoResponse
 		return ;
 	}
 	# Get the main request informaiton.
-	$sCommand		= $FORM{'Command'};
-	$sResourceType	= $FORM{'Type'};
+	$sCommand		= &specialchar_cnv($FORM{'Command'});
+	$sResourceType	= &specialchar_cnv($FORM{'Type'});
 	$sCurrentFolder	= $FORM{'CurrentFolder'};
+
+	if ( !($sCommand =~ /^(FileUpload|GetFolders|GetFoldersAndFiles|CreateFolder)$/) ) {
+		SendError( 1, "Command not allowed" ) ;
+	}
+
+	if ( !($sResourceType =~ /^(File|Image|Flash|Media)$/) ) {
+		SendError( 1, "Invalid type specified" ) ;
+	}
 
 	# Check the current folder syntax (must begin and start with a slash).
 	if(!($sCurrentFolder =~ /\/$/)) {
@@ -102,6 +92,9 @@ sub DoResponse
 
 	# Check for invalid folder paths (..)
 	if ( $sCurrentFolder =~ /(?:\.\.|\\)/ ) {
+		SendError( 102, "" ) ;
+	}
+	if ( $sCurrentFolder =~ /(\/\.)|[[:cntrl:]]|(\/\/)|(\\\\)|([\:\*\?\"\<\>\|])/ ) {
 		SendError( 102, "" ) ;
 	}
 

@@ -34,7 +34,11 @@ class ControllerModuleBestSeller extends Controller {
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 
   		$this->document->breadcrumbs = array();
 

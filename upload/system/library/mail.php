@@ -1,11 +1,5 @@
 <?php 
 final class Mail {
-	protected $protocol = 'mail';	
-	protected $smtp_host = '';
-	protected $smtp_username = '';
-	protected $smtp_password = '';
-	protected $smtp_port = '25';
-	protected $smtp_timeout	= 5;
 	protected $to;
   	protected $from;
   	protected $sender;
@@ -13,7 +7,13 @@ final class Mail {
   	protected $text;
   	protected $html;
   	protected $attachments = array();
-
+	protected $protocol = 'mail';
+	protected $smtp_host = '';
+	protected $smtp_username = '';
+	protected $smtp_password = '';
+	protected $smtp_port = '25';
+	protected $smtp_timeout	= 5;
+	
 	public function __construct($protocol = 'mail', $smtp_host = '', $smtp_username = '', $smtp_password = '', $smtp_port = '25', $smtp_timeout = '5') {
 		$this->protocol = $protocol;
 		$this->smtp_host = $smtp_host;
@@ -26,7 +26,7 @@ final class Mail {
 	public function setTo($to) {
     	$this->to = $to;
   	}
- 
+	
   	public function setFrom($from) {
     	$this->from = $from;
   	}
@@ -38,7 +38,7 @@ final class Mail {
   	public function setSubject($subject) {
     	$this->subject = $subject;
   	}
-
+	
 	public function setText($text) {
     	$this->text = $text;
   	}
@@ -80,16 +80,15 @@ final class Mail {
 	  	
 		$boundary = '----=_NextPart_' . md5(rand());  
 	    
-		if (strtoupper(substr(PHP_OS, 0, 3) == 'WIN')) { 
-      		$eol = "\r\n"; 
-    	} elseif (strtoupper(substr(PHP_OS, 0, 3) == 'MAC')) { 
-      		$eol = "\r"; 
-    	} else { 
-      		$eol = "\n"; 
-    	} 	
+		if (strpos(PHP_OS, 'WIN') === false) {
+			$eol = "\n";
+		} else {
+			$eol = "\r\n";
+		}
 		
 		$headers  = 'From: ' . $this->sender . '<' . $this->from . '>' . $eol; 
     	$headers .= 'Reply-To: ' . $this->sender . '<' . $this->from . '>' . $eol;   
+		$headers .= 'Return-Path: ' . $this->from . $eol;
     	$headers .= 'X-Mailer: PHP/' . phpversion() . $eol;  
     	$headers .= 'MIME-Version: 1.0' . $eol; 
     	$headers .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . $eol;  
@@ -140,26 +139,106 @@ final class Mail {
     		mail($to, $this->subject, $message, $headers);  
 		} elseif ($this->protocol == 'smtp') {
 			$fp = fsockopen($this->smtp_host, $this->smtp_port, $errno, $errstr, $this->smtp_timeout);	
+			
+			if (!$fp) {
+				exit('Error: ' . $errstr . ' (' . $errno . ')');
+			} else {
+				$response = fgets($fp, 515);
+				
+				if (substr($response, 0, 3) != 220) {
+					exit(' ' . substr(trim($response), 3));
+				}
+				
+				if (!empty($this->smtp_username)  && !empty($this->smtp_password)) {
+ 					fputs($fp, 'EHLO ' . getenv('SERVER_ADDR') . $eol);
+					
+					$response = fgets($fp, 515);
 
-			if ($fp) {
-				fputs($fp, 'HELO ' . $_SERVER['SERVER_NAME'] . $eol);
-				fputs($fp, 'AUTH LOGIN ' . $eol);
-				fputs($fp, base64_encode($this->smtp_username) . $eol);
-				fputs($fp, base64_encode($this->smtp_password) . $eol);
+					if (substr($response, 0, 3) != 250) {
+						exit('Error: EHLO command failed!');
+					}	
+					
+					fputs($fp, 'AUTH LOGIN ' . $eol);
+				
+					$response = fgets($fp, 515);
+				
+					if (substr($response, 0, 3) != 334) {
+						exit('Error: AUTH LOGIN command failed!');
+					}	
+				
+					fputs($fp, base64_encode($this->smtp_username) . $eol);
+				
+					$response = fgets($fp, 515);
+
+					if (substr($response, 0, 3) != 334) {
+						exit('Error: SMTP username command failed!');
+					}
+					
+					fputs($fp, base64_encode($this->smtp_password) . $eol);
+				
+					$response = fgets($fp, 515);
+					
+					if (substr($response, 0, 3) != 235) {
+						exit('Error: SMTP password command failed!');					
+					}	
+				} else {
+					fputs($fp, 'HELO ' . getenv('SERVER_ADDR') . $eol);
+					
+					$response = fgets($fp, 515);
+
+					if (substr($response, 0, 3) != 250) {
+						exit('Error: HELO command failed!');
+					}					
+				}
+				
 				fputs($fp, 'MAIL FROM: <' . $this->from . '>' . $eol);
 				
+				$response = fgets($fp, 515);
+					
+				if (substr($response, 0, 3) != 250) {
+					exit('Error: MAIL FROM command failed!');
+				}
+					
 				if (!is_array($this->to)) {
 					fputs($fp, 'RCPT TO: <' . $to . '>' . $eol);
+
+					$response = fgets($fp, 515);
+					
+					if (substr($response, 0, 3) != 250) {
+						exit('Error: RCPT TO command failed!');
+					}
 				} else {
 					foreach ($this->to as $recipient) {
 						fputs($fp, 'RCPT TO: <' . $recipient . '>' . $eol);
+						
+						$response = fgets($fp, 515);
+				
+						if (substr($response, 0, 3) != 250) {
+							exit('Error: RCPT TO command failed!');
+						}				
 					}					
 				}
 				
 				fputs($fp, 'DATA' . $eol);
-				fputs($fp, 'To: ' . $to . $eol . 'Subject: ' . $this->subject . $eol . $headers . $message . $eol . $eol . '.' . $eol);
+				
+				$response = fgets($fp, 515);
+
+				if (substr($response, 0, 3) != 354) {
+					exit('Error: DATA command failed!');
+				}
+				
+				fputs($fp, 'To: ' . $to . $eol);
+				fputs($fp, 'Subject: ' . $this->subject . $eol);
+				fputs($fp, $headers . $message . $eol);
+				fputs($fp, '.' . $eol);
+
+				$response = fgets($fp, 515);
+
+				if (substr($response, 0, 3) != 250) {
+					exit('Error: Message could not be sent!');
+				}
+				
 				fputs($fp, 'QUIT' . $eol);
-				fputs($fp, base64_encode($this->smtp_username) . $eol);
 				
 				fclose($fp);
 			}

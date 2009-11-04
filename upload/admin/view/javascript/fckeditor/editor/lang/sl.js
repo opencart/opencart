@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "Odstrani oblikovanje",
 InsertLinkLbl		: "Povezava",
 InsertLink			: "Vstavi/uredi povezavo",
 RemoveLink			: "Odstrani povezavo",
+VisitLink			: "Open Link",	//MISSING
 Anchor				: "Vstavi/uredi zaznamek",
 AnchorDelete		: "Odstrani zaznamek",
 InsertImageLbl		: "Slika",
@@ -72,6 +73,9 @@ BlockJustify		: "Obojestranska poravnava",
 DecreaseIndent		: "Zmanjšaj zamik",
 IncreaseIndent		: "Povečaj zamik",
 Blockquote			: "Citat",
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "Razveljavi",
 Redo				: "Ponovi",
 NumberedListLbl		: "Oštevilčen seznam",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "Skupina orodnih vrstic \"%1\" ne obstoja",
 NoActiveX			: "Varnostne nastavitve vašega brskalnika lahko omejijo delovanje nekaterih zmožnosti urejevalnika. Če ne želite zaznavati napak in sporočil o manjkajočih zmožnostih, omogočite možnost \"Zaženi ActiveX kontrolnike in vtičnike\".",
 BrowseServerBlocked : "Brskalnik virov se ne more odpreti. Prepričajte se, da je preprečevanje pojavnih oken onemogočeno.",
 DialogBlocked		: "Pogovorno okno se ni moglo odpreti. Prepričajte se, da je preprečevanje pojavnih oken onemogočeno.",
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "V redu",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Razmik med celicami",
 DlgTableCellPad		: "Polnilo med celicami",
 DlgTableCaption		: "Naslov",
 DlgTableSummary		: "Povzetek",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Lastnosti celice",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "Na vrh",
 DlgCellVerAlignMiddle	: "V sredino",
 DlgCellVerAlignBottom	: "Na dno",
 DlgCellVerAlignBaseline	: "Na osnovno črto",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "Spojenih vrstic (row-span)",
 DlgCellCollSpan		: "Spojenih stolpcev (col-span)",
 DlgCellBackColor	: "Barva ozadja",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "Vizitka",
 DlgAboutBrowserInfoTab	: "Informacije o brskalniku",
 DlgAboutLicenseTab	: "Dovoljenja",
 DlgAboutVersion		: "različica",
-DlgAboutInfo		: "Za več informacij obiščite"
+DlgAboutInfo		: "Za več informacij obiščite",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style"	//MISSING
 };

@@ -2,7 +2,7 @@
 
 """
 FCKeditor - The text editor for Internet - http://www.fckeditor.net
-Copyright (C) 2003-2008 Frederico Caldeira Knabben
+Copyright (C) 2003-2009 Frederico Caldeira Knabben
 
 == BEGIN LICENSE ==
 
@@ -71,9 +71,13 @@ class GetFoldersAndFilesCommandMixin (object):
 						)
 			elif os.path.isfile(someObjectPath):
 				size = os.path.getsize(someObjectPath)
-				files += """<File name="%s" size="%s" />""" % (
+				if size > 0:
+					size = round(size/1024)
+					if size < 1:
+						size = 1
+				files += """<File name="%s" size="%d" />""" % (
 						convertToXmlAttribute(someObject),
-						os.path.getsize(someObjectPath)
+						size
 						)
 		# Close the folders / files node
 		folders += """</Folders>"""
@@ -163,7 +167,7 @@ class UploadFileCommandMixin (object):
 					newFilePath = os.path.join (currentFolderPath,newFileName)
 					if os.path.exists(newFilePath):
 						i += 1
-						newFileName = "%s(%04d).%s" % (
+						newFileName = "%s(%d).%s" % (
 								newFileNameOnly, i, newFileExtension
 								)
 						errorNo= 201 # file renamed
@@ -189,10 +193,10 @@ class UploadFileCommandMixin (object):
 								os.chmod( newFilePath, permissions )
 								os.umask( oldumask )
 
-						newFileUrl = self.webUserFilesFolder + currentFolder + newFileName
+						newFileUrl = combinePaths(self.webUserFilesFolder, currentFolder) + newFileName
 
 						return self.sendUploadResults( errorNo , newFileUrl, newFileName )
 			else:
-				return self.sendUploadResults( errorNo = 203, customMsg = "Extension not allowed" )
+				return self.sendUploadResults( errorNo = 202, customMsg = "" )
 		else:
 			return self.sendUploadResults( errorNo = 202, customMsg = "No File" )

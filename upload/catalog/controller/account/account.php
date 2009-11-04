@@ -37,9 +37,13 @@ class ControllerAccountAccount extends Controller {
     	$this->data['text_download'] = $this->language->get('text_download');
 		$this->data['text_newsletter'] = $this->language->get('text_newsletter');
 
-    	$this->data['success'] = @$this->session->data['success'];
-    
-		unset($this->session->data['success']);
+		if (isset($this->session->data['success'])) {
+    		$this->data['success'] = $this->session->data['success'];
+			
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 
     	$this->data['information'] = $this->url->https('account/edit');
     	$this->data['password'] = $this->url->https('account/password');

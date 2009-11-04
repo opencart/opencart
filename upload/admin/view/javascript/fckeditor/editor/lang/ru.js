@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "Убрать форматирование",
 InsertLinkLbl		: "Ссылка",
 InsertLink			: "Вставить/Редактировать ссылку",
 RemoveLink			: "Убрать ссылку",
+VisitLink			: "Перейти по ссылке",
 Anchor				: "Вставить/Редактировать якорь",
 AnchorDelete		: "Убрать якорь",
 InsertImageLbl		: "Изображение",
@@ -72,6 +73,9 @@ BlockJustify		: "По ширине",
 DecreaseIndent		: "Уменьшить отступ",
 IncreaseIndent		: "Увеличить отступ",
 Blockquote			: "Цитата",
+CreateDiv			: "Создать Div контейнер",
+EditDiv				: "Редактировать Div контейнер",
+DeleteDiv			: "Удалить Div контейнер",
 Undo				: "Отменить",
 Redo				: "Повторить",
 NumberedListLbl		: "Нумерованный список",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "Панель инструментов \"%1\" не суще�
 NoActiveX			: "Настройки безопасности вашего браузера могут ограничивать некоторые свойства редактора. Вы должны включить опцию \"Запускать элементы управления ActiveX и плугины\". Вы можете видеть ошибки и замечать отсутствие возможностей.",
 BrowseServerBlocked : "Ресурсы браузера не могут быть открыты. Проверьте что блокировки всплывающих окон выключены.",
 DialogBlocked		: "Невозможно открыть окно диалога. Проверьте что блокировки всплывающих окон выключены.",
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "ОК",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Промежуток (spacing)",
 DlgTableCellPad		: "Отступ (padding)",
 DlgTableCaption		: "Заголовок",
 DlgTableSummary		: "Резюме",
+DlgTableHeaders		: "Заголовки",
+DlgTableHeadersNone		: "Нет",
+DlgTableHeadersColumn	: "Первый столбец",
+DlgTableHeadersRow		: "Первая строка",
+DlgTableHeadersBoth		: "Оба варианта",
 
 // Table Cell Dialog
 DlgCellTitle		: "Свойства ячейки",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "Сверху",
 DlgCellVerAlignMiddle	: "Посередине",
 DlgCellVerAlignBottom	: "Снизу",
 DlgCellVerAlignBaseline	: "По базовой линии",
+DlgCellType		: "Тип ячейки",
+DlgCellTypeData		: "Данные",
+DlgCellTypeHeader	: "Заголовок",
 DlgCellRowSpan		: "Диапазон строк (span)",
 DlgCellCollSpan		: "Диапазон колонок (span)",
 DlgCellBackColor	: "Цвет фона",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "О программе",
 DlgAboutBrowserInfoTab	: "Информация браузера",
 DlgAboutLicenseTab	: "Лицензия",
 DlgAboutVersion		: "Версия",
-DlgAboutInfo		: "Для большей информации, посетите"
+DlgAboutInfo		: "Для большей информации, посетите",
+
+// Div Dialog
+DlgDivGeneralTab	: "Информация",
+DlgDivAdvancedTab	: "Расширенные настройки",
+DlgDivStyle		: "Стиль",
+DlgDivInlineStyle	: "Встроенные стили"
 };

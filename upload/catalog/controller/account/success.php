@@ -1,12 +1,8 @@
 <?php 
 class ControllerAccountSuccess extends Controller {  
 	public function index() {
-		if (!$this->customer->isLogged()) {
-      		$this->redirect($this->url->https('account/login'));
-    	}
-	
     	$this->language->load('account/success');
-
+  
     	$this->document->title = $this->language->get('heading_title');
 
 		$this->document->breadcrumbs = array();
@@ -31,8 +27,12 @@ class ControllerAccountSuccess extends Controller {
 
     	$this->data['heading_title'] = $this->language->get('heading_title');
 
-    	$this->data['text_message'] = $this->language->get('text_message');
-
+		if (!$this->config->get('config_customer_approval')) {
+    		$this->data['text_message'] = sprintf($this->language->get('text_message'), $this->url->http('information/contact'));
+		} else {
+			$this->data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_store'), $this->url->http('information/contact'));
+		}
+		
     	$this->data['button_continue'] = $this->language->get('button_continue');
 		
 		if ($this->cart->hasProducts()) {

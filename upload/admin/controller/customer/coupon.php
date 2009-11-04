@@ -19,7 +19,7 @@ class ControllerCustomerCoupon extends Controller {
 		
 		$this->load->model('customer/coupon');
 		
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_customer_coupon->addCoupon($this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerCustomerCoupon extends Controller {
 		
 		$this->load->model('customer/coupon');
 				
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_customer_coupon->editCoupon($this->request->get['coupon_id'], $this->request->post);
       		
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -83,7 +83,7 @@ class ControllerCustomerCoupon extends Controller {
 		
 		$this->load->model('customer/coupon');
 		
-    	if ((isset($this->request->post['delete'])) && ($this->validateDelete())) { 
+    	if (isset($this->request->post['delete']) && $this->validateDelete()) { 
 			foreach ($this->request->post['delete'] as $coupon_id) {
 				$this->model_customer_coupon->deleteCoupon($coupon_id);
 			}
@@ -189,7 +189,7 @@ class ControllerCustomerCoupon extends Controller {
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'delete'     => in_array($result['coupon_id'], (array)@$this->request->post['delete']),
+				'delete'     => isset($this->request->post['delete']) && in_array($result['coupon_id'], $this->request->post['delete']),
 				'action'     => $action
 			);
 		}
@@ -209,11 +209,19 @@ class ControllerCustomerCoupon extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 		
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 
 		$url = '';
 
@@ -292,13 +300,42 @@ class ControllerCustomerCoupon extends Controller {
 
     	$this->data['tab_general'] = $this->language->get('tab_general');
 
-    	$this->data['error_warning'] = @$this->error['warning'];
-    	$this->data['error_name'] = @$this->error['name'];
-    	$this->data['error_description'] = @$this->error['description'];
-    	$this->data['error_code'] = @$this->error['code'];
-    	$this->data['error_date_start'] = @$this->error['date_start'];
-		$this->data['error_date_end'] = @$this->error['date_end'];
-				
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+	 	
+		if (isset($this->error['name'])) {
+			$this->data['error_name'] = $this->error['name'];
+		} else {
+			$this->data['error_name'] = '';
+		}
+		
+		if (isset($this->error['description'])) {
+			$this->data['error_description'] = $this->error['description'];
+		} else {
+			$this->data['error_description'] = '';
+		}
+		
+		if (isset($this->error['code'])) {
+			$this->data['error_code'] = $this->error['code'];
+		} else {
+			$this->data['error_code'] = '';
+		}		
+		
+		if (isset($this->error['date_start'])) {
+			$this->data['error_date_start'] = $this->error['date_start'];
+		} else {
+			$this->data['error_date_start'] = '';
+		}	
+		
+		if (isset($this->error['date_end'])) {
+			$this->data['error_date_end'] = $this->error['date_end'];
+		} else {
+			$this->data['error_date_end'] = '';
+		}	
+
 		$url = '';
 			
 		if (isset($this->request->get['page'])) {
@@ -335,7 +372,7 @@ class ControllerCustomerCoupon extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('customer/coupon' . $url);
   		
-		if ((isset($this->request->get['coupon_id'])) && (!$this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['coupon_id']) && (!$this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$coupon_info = $this->model_customer_coupon->getCoupon($this->request->get['coupon_id']);
     	}
 		
@@ -353,32 +390,42 @@ class ControllerCustomerCoupon extends Controller {
 
     	if (isset($this->request->post['code'])) {
       		$this->data['code'] = $this->request->post['code'];
-    	} else {
-      		$this->data['code'] = @$coupon_info['code'];
+    	} elseif (isset($coupon_info)) {
+			$this->data['code'] = $coupon_info['code'];
+		} else {
+      		$this->data['code'] = '';
     	}
 		
     	if (isset($this->request->post['type'])) {
       		$this->data['type'] = $this->request->post['type'];
-    	} else {
-      		$this->data['type'] = @$coupon_info['type'];
+    	} elseif (isset($coupon_info)) {
+			$this->data['type'] = $coupon_info['type'];
+		} else {
+      		$this->data['type'] = '';
     	}
 		
     	if (isset($this->request->post['discount'])) {
       		$this->data['discount'] = $this->request->post['discount'];
-    	} else {
-      		$this->data['discount'] = @$coupon_info['discount'];
+    	} elseif (isset($coupon_info)) {
+			$this->data['discount'] = $coupon_info['discount'];
+		} else {
+      		$this->data['discount'] = '';
     	}
 		
     	if (isset($this->request->post['shipping'])) {
       		$this->data['shipping'] = $this->request->post['shipping'];
-    	} else {
-      		$this->data['shipping'] = @$coupon_info['shipping'];
+    	} elseif (isset($coupon_info)) {
+			$this->data['shipping'] = $coupon_info['shipping'];
+		} else {
+      		$this->data['shipping'] = '';
     	}
 
     	if (isset($this->request->post['total'])) {
       		$this->data['total'] = $this->request->post['total'];
-    	} else {
-      		$this->data['total'] = @$coupon_info['total'];
+    	} elseif (isset($coupon_info)) {
+			$this->data['total'] = $coupon_info['total'];
+		} else {
+      		$this->data['total'] = '';
     	}
 
 		$this->load->model('catalog/product'); 
@@ -395,7 +442,7 @@ class ControllerCustomerCoupon extends Controller {
 		
 		if (isset($this->request->post['date_start'])) {
        		$this->data['date_start'] = $this->request->post['date_start'];
-		} elseif (@$coupon_info['date_start']) {
+		} elseif (isset($coupon_info)) {
 			$this->data['date_start'] = date('Y-m-d', strtotime($coupon_info['date_start']));
 		} else {
 			$this->data['date_start'] = date('Y-m-d', time());
@@ -403,7 +450,7 @@ class ControllerCustomerCoupon extends Controller {
 
 		if (isset($this->request->post['date_end'])) {
        		$this->data['date_end'] = $this->request->post['date_end'];
-		} elseif (@$coupon_info['date_end']) {
+		} elseif (isset($coupon_info)) {
 			$this->data['date_end'] = date('Y-m-d', strtotime($coupon_info['date_end']));
 		} else {
 			$this->data['date_end'] = date('Y-m-d', time());
@@ -411,20 +458,26 @@ class ControllerCustomerCoupon extends Controller {
 
     	if (isset($this->request->post['uses_total'])) {
       		$this->data['uses_total'] = $this->request->post['uses_total'];
+		} elseif (isset($coupon_info)) {
+			$this->data['uses_total'] = $coupon_info['uses_total'];
     	} else {
-      		$this->data['uses_total'] = @$coupon_info['uses_total'];
+      		$this->data['uses_total'] = 1;
     	}
   
     	if (isset($this->request->post['uses_customer'])) {
       		$this->data['uses_customer'] = $this->request->post['uses_customer'];
-    	} else {
-      		$this->data['uses_customer'] = @$coupon_info['uses_customer'];
+    	} elseif (isset($coupon_info)) {
+			$this->data['uses_customer'] = $coupon_info['uses_customer'];
+		} else {
+      		$this->data['uses_customer'] = 1;
     	}
  
     	if (isset($this->request->post['status'])) { 
       		$this->data['status'] = $this->request->post['status'];
-    	} else {
-      		$this->data['status'] = @$coupon_info['status'];
+    	} elseif (isset($coupon_info)) {
+			$this->data['status'] = $coupon_info['status'];
+		} else {
+      		$this->data['status'] = 1;
     	}
 		
 		$this->id       = 'content';

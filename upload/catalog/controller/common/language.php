@@ -1,7 +1,7 @@
 <?php  
 class ControllerCommonLanguage extends Controller {
 	protected function index() {
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && (isset($this->request->post['language_code']))) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['language_code'])) {
 			$this->language->set($this->request->post['language_code']);
 		
 			if (isset($this->request->post['redirect'])) {
@@ -25,6 +25,8 @@ class ControllerCommonLanguage extends Controller {
 			$this->load->model('tool/seo_url');
 			
 			$data = $this->request->get;
+			
+			unset($data['_route_']);
 			
 			$route = $data['route'];
 			

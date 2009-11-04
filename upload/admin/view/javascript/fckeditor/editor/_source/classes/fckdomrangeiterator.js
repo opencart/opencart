@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -136,7 +136,7 @@ FCKDomRangeIterator.prototype =
 						// The found boundary must be set as the next one at this
 						// point. (#1717)
 						if ( nodeName != 'br' )
-							this._NextNode = currentNode ;
+							this._NextNode = FCKDomTools.GetNextSourceNode( currentNode, true, null, lastNode ) || currentNode ;
 					}
 
 					closeRange = true ;

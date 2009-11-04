@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -146,13 +146,6 @@ String.prototype.Replace = function( regExp, replacement, thisObj )
 	}
 	else
 		return this.replace( regExp, replacement ) ;
-}
-
-Array.prototype.AddItem = function( item )
-{
-	var i = this.length ;
-	this[ i ] = item ;
-	return i ;
 }
 
 Array.prototype.IndexOf = function( value )

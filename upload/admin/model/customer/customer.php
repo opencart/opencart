@@ -1,14 +1,14 @@
 <?php
 class ModelCustomerCustomer extends Model {
 	public function addCustomer($data) {
-      	$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET firstname = '" . $this->db->escape(@$data['firstname']) . "', lastname = '" . $this->db->escape(@$data['lastname']) . "', email = '" . $this->db->escape(@$data['email']) . "', telephone = '" . $this->db->escape(@$data['telephone']) . "', fax = '" . $this->db->escape(@$data['fax']) . "', newsletter = '" . (int)@$data['newsletter'] . "', password = '" . $this->db->escape(md5(@$data['password'])) . "', status = '" . (int)@$data['status'] . "', date_added = NOW()");
+      	$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', newsletter = '" . (int)$data['newsletter'] . "', customer_group_id = '" . (int)$data['customer_group_id'] . "', password = '" . $this->db->escape(md5($data['password'])) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
 	}
 	
 	public function editCustomer($customer_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "customer SET firstname = '" . $this->db->escape(@$data['firstname']) . "', lastname = '" . $this->db->escape(@$data['lastname']) . "', email = '" . $this->db->escape(@$data['email']) . "', telephone = '" . $this->db->escape(@$data['telephone']) . "', fax = '" . $this->db->escape(@$data['fax']) . "', newsletter = '" . (int)@$data['newsletter'] . "', status = '" . (int)@$data['status'] . "' WHERE customer_id = '" . (int)$customer_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "customer SET firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', newsletter = '" . (int)$data['newsletter'] . "', customer_group_id = '" . (int)$data['customer_group_id'] . "', status = '" . (int)$data['status'] . "' WHERE customer_id = '" . (int)$customer_id . "'");
 	
-      	if (@$data['password']) {
-        	$this->db->query("UPDATE " . DB_PREFIX . "customer SET password = '" . $this->db->escape(md5(@$data['password'])) . "' WHERE customer_id = '" . (int)$customer_id . "'");
+      	if ($data['password']) {
+        	$this->db->query("UPDATE " . DB_PREFIX . "customer SET password = '" . $this->db->escape(md5($data['password'])) . "' WHERE customer_id = '" . (int)$customer_id . "'");
       	}
 	}
 	
@@ -28,16 +28,20 @@ class ModelCustomerCustomer extends Model {
 
 		$implode = array();
 		
-		if (isset($data['name'])) {
-			$implode[] = "CONCAT(firstname, ' ', lastname) LIKE '%" . $this->db->escape($data['name']) . "%'";
+		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
+			$implode[] = "CONCAT(firstname, ' ', lastname) LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
 		}
 		
-		if (isset($data['status'])) {
-			$implode[] = "status = '" . (int)$data['status'] . "'";
+		if (isset($data['filter_email']) && !is_null($data['filter_email'])) {
+			$implode[] = "email = '" . $this->db->escape($data['filter_email']) . "'";
+		}	
+		
+		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+			$implode[] = "status = '" . (int)$data['filter_status'] . "'";
 		}			
 		
-		if (isset($data['date_added'])) {
-			$implode[] = "DATE(date_added) = DATE('" . $this->db->escape($data['date_added']) . "')";
+		if (isset($data['filter_date_added']) && !is_null($data['filter_date_added'])) {
+			$implode[] = "DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 		
 		if ($implode) {
@@ -46,17 +50,18 @@ class ModelCustomerCustomer extends Model {
 		
 		$sort_data = array(
 			'name',
+			'email',
 			'status',
 			'date_added'
 		);	
 			
-		if (in_array(@$data['sort'], $sort_data)) {
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];	
 		} else {
 			$sql .= " ORDER BY name";	
 		}
 			
-		if (@$data['order'] == 'DESC') {
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";
 		} else {
 			$sql .= " ASC";
@@ -70,11 +75,25 @@ class ModelCustomerCustomer extends Model {
 		
 		return $query->rows;	
 	}
-
+	
+	public function activate($customer_id) {
+		$this->db->query("UPDATE " . DB_PREFIX . "customer SET status = '1' WHERE customer_id = '" . (int)$customer_id . "'");
+	}
+	
 	public function getCustomersByNewsletter() {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE newsletter = '1' ORDER BY firstname, lastname, email");
 	
 		return $query->rows;
+	}
+	
+	public function getCustomersByKeyword($keyword) {
+		if ($keyword) {
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE CONCAT(firstname, ' ', lastname) LIKE '%" . $this->db->escape($keyword) . "%' ORDER BY firstname, lastname, email");
+	
+			return $query->rows;
+		} else {
+			return array();	
+		}
 	}
 	
 	public function getTotalCustomers($data = array()) {
@@ -82,16 +101,20 @@ class ModelCustomerCustomer extends Model {
 		
 		$implode = array();
 		
-		if (isset($data['name'])) {
-			$implode[] = "CONCAT(firstname, ' ', lastname) LIKE '%" . $this->db->escape($data['name']) . "%'";
+		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
+			$implode[] = "CONCAT(firstname, ' ', lastname) LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
 		}
 		
-		if (isset($data['status'])) {
-			$implode[] = "status = '" . (int)$data['status'] . "'";
-		}		
+		if (isset($data['filter_email']) && !is_null($data['filter_email'])) {
+			$implode[] = "email = '" . $this->db->escape($data['filter_email']) . "'";
+		}	
 		
-		if (isset($data['date_added'])) {
-			$implode[] = "DATE(date_added) = DATE('" . $this->db->escape($data['date_added']) . "')";
+		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+			$implode[] = "status = '" . (int)$data['filter_status'] . "'";
+		}			
+		
+		if (isset($data['filter_date_added']) && !is_null($data['filter_date_added'])) {
+			$implode[] = "DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 		
 		if ($implode) {
@@ -119,6 +142,12 @@ class ModelCustomerCustomer extends Model {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "address WHERE zone_id = '" . (int)$zone_id . "'");
 		
 		return $query->row['total'];
-	}			
+	}
+	
+	public function getTotalCustomersByGroupId($customer_group_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE customer_group_id = '" . (int)$customer_group_id . "'");
+		
+		return $query->row['total'];
+	}	
 }
 ?>

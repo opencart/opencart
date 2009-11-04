@@ -23,7 +23,7 @@ class ModelCheckoutOrder extends Model {
 		$order_id = $this->db->getLastId();
 
 		foreach ($data['products'] as $product) { 
-			$this->db->query("INSERT INTO " . DB_PREFIX . "order_product SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', name = '" . $this->db->escape($product['name']) . "', model = '" . $this->db->escape($product['model']) . "', price = '" . (float)$product['price'] . "', discount = '" . (float)$product['discount'] . "', total = '" . (float)$product['total'] . "', tax = '" . (float)$product['tax'] . "', quantity = '" . (int)$product['quantity'] . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "order_product SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', name = '" . $this->db->escape($product['name']) . "', model = '" . $this->db->escape($product['model']) . "', price = '" . (float)$product['price'] . "', total = '" . (float)$product['total'] . "', tax = '" . (float)$product['tax'] . "', quantity = '" . (int)$product['quantity'] . "'");
  
 			$order_product_id = $this->db->getLastId();
 
@@ -65,7 +65,7 @@ class ModelCheckoutOrder extends Model {
 			$message  = sprintf($language->get('mail_new_order_greeting'), $this->config->get('config_store')) . "\n\n";
 			$message .= $language->get('mail_new_order_order') . ' ' . $order_id . "\n";
 			$message .= $language->get('mail_new_order_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_query->row['date_added'])) . "\n";
-			$message .= $language->get('mail_new_order_order_status') . ' ' . @$order_status_query->row['name'] . "\n\n";
+			$message .= $language->get('mail_new_order_order_status') . ' ' . $order_status_query->row['name'] . "\n\n";
 			$message .= $language->get('mail_new_order_product') . "\n";
 			
 			foreach ($order_product_query->rows as $result) {
@@ -109,7 +109,7 @@ class ModelCheckoutOrder extends Model {
 				$message  = $language->get('mail_new_order_received') . "\n\n";
 				$message .= $language->get('mail_new_order_order') . ' ' . $order_id . "\n";
 				$message .= $language->get('mail_new_order_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_query->row['date_added'])) . "\n";
-				$message .= $language->get('mail_new_order_order_status') . ' ' . @$order_status_query->row['name'] . "\n\n";
+				$message .= $language->get('mail_new_order_order_status') . ' ' . $order_status_query->row['name'] . "\n\n";
 				$message .= $language->get('mail_new_order_product') . "\n";
 				
 				foreach ($order_product_query->rows as $result) {

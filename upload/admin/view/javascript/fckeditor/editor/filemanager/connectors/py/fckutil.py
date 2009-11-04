@@ -2,7 +2,7 @@
 
 """
 FCKeditor - The text editor for Internet - http://www.fckeditor.net
-Copyright (C) 2003-2008 Frederico Caldeira Knabben
+Copyright (C) 2003-2009 Frederico Caldeira Knabben
 
 == BEGIN LICENSE ==
 
@@ -62,17 +62,17 @@ def getFileName(filename):
 def sanitizeFolderName( newFolderName ):
 	"Do a cleanup of the folder name to avoid possible problems"
 	# Remove . \ / | : ? * " < > and control characters
-	return re.sub( '(?u)\\.|\\\\|\\/|\\||\\:|\\?|\\*|"|<|>|[^\u0000-\u001f\u007f-\u009f]', '_', newFolderName )
+	return re.sub( '\\.|\\\\|\\/|\\||\\:|\\?|\\*|"|<|>|[\x00-\x1f\x7f-\x9f]', '_', newFolderName )
 
 def sanitizeFileName( newFileName ):
 	"Do a cleanup of the file name to avoid possible problems"
 	# Replace dots in the name with underscores (only one dot can be there... security issue).
 	if ( Config.ForceSingleExtension ): # remove dots
-		newFileName = re.sub ( '/\\.(?![^.]*$)/', '_', newFileName ) ;
+		newFileName = re.sub ( '\\.(?![^.]*$)', '_', newFileName ) ;
 	newFileName = newFileName.replace('\\','/')		# convert windows to unix path
 	newFileName = os.path.basename (newFileName)	# strip directories
 	# Remove \ / | : ? *
-	return re.sub ( '(?u)/\\\\|\\/|\\||\\:|\\?|\\*|"|<|>|[^\u0000-\u001f\u007f-\u009f]/', '_', newFileName )
+	return re.sub ( '\\\\|\\/|\\||\\:|\\?|\\*|"|<|>|[\x00-\x1f\x7f-\x9f]/', '_', newFileName )
 
 def getCurrentFolder(currentFolder):
 	if not currentFolder:
@@ -90,6 +90,10 @@ def getCurrentFolder(currentFolder):
 
 	# Check for invalid folder paths (..)
 	if '..' in currentFolder or '\\' in currentFolder:
+		return None
+
+	# Check for invalid folder paths (..)
+	if re.search( '(/\\.)|(//)|([\\\\:\\*\\?\\""\\<\\>\\|]|[\x00-\x1F]|[\x7f-\x9f])', currentFolder ):
 		return None
 
 	return currentFolder

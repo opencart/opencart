@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -81,7 +81,7 @@ FCKTools.AppendStyleSheet = function( domDocument, cssFileOrArrayOrDef )
 	if ( typeof( cssFileOrArrayOrDef ) == 'string' )
 	{
 		// Test if the passed argument is an URL.
-		if ( /[\\\/\.]\w*$/.test( cssFileOrArrayOrDef ) )
+		if ( /[\\\/\.][^{}]*$/.test( cssFileOrArrayOrDef ) )
 		{
 			// The string may have several URLs separated by comma.
 			return this.AppendStyleSheet( domDocument, cssFileOrArrayOrDef.split(',') ) ;
@@ -126,7 +126,7 @@ FCKTools.GetStyleHtml = (function()
 		if ( typeof( cssFileOrArrayOrDef ) == 'string' )
 		{
 			// Test if the passed argument is an URL.
-			if ( /[\\\/\.]\w*$/.test( cssFileOrArrayOrDef ) )
+			if ( /[\\\/\.][^{}]*$/.test( cssFileOrArrayOrDef ) )
 			{
 				// The string may have several URLs separated by comma.
 				return this.GetStyleHtml( cssFileOrArrayOrDef.split(','), markTemp ) ;
@@ -737,4 +737,13 @@ FCKTools.GetVoidUrl = function()
 	}
 
 	return "javascript: void(0);" ;		// All other browsers.
+}
+
+FCKTools.ResetStyles = function( element )
+{
+	element.style.cssText = 'margin:0;' +
+		'padding:0;' +
+		'border:0;' +
+		'background-color:transparent;' +
+		'background-image:none;' ;
 }

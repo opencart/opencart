@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "הסרת העיצוב",
 InsertLinkLbl		: "קישור",
 InsertLink			: "הוספת/עריכת קישור",
 RemoveLink			: "הסרת הקישור",
+VisitLink			: "פתח קישור",
 Anchor				: "הוספת/עריכת נקודת עיגון",
 AnchorDelete		: "הסר נקודת עיגון",
 InsertImageLbl		: "תמונה",
@@ -72,6 +73,9 @@ BlockJustify		: "יישור לשוליים",
 DecreaseIndent		: "הקטנת אינדנטציה",
 IncreaseIndent		: "הגדלת אינדנטציה",
 Blockquote			: "בלוק ציטוט",
+CreateDiv			: "צור מיכל(תג)DIV",
+EditDiv				: "ערוך מיכל (תג)DIV",
+DeleteDiv			: "הסר מיכל(תג) DIV",
 Undo				: "ביטול צעד אחרון",
 Redo				: "חזרה על צעד אחרון",
 NumberedListLbl		: "רשימה ממוספרת",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "ערכת סרגל הכלים \"%1\" לא קיימת",
 NoActiveX			: "הגדרות אבטחה של הדפדפן עלולות לגביל את אפשרויות העריכה.יש לאפשר את האופציה \"הרץ פקדים פעילים ותוספות\". תוכל לחוות טעויות וחיווים של אפשרויות שחסרים.",
 BrowseServerBlocked : "לא ניתן לגשת לדפדפן משאבים.אנא וודא שחוסם חלונות הקופצים לא פעיל.",
 DialogBlocked		: "לא היה ניתן לפתוח חלון דיאלוג. אנא וודא שחוסם חלונות קופצים לא פעיל.",
+VisitLinkBlocked	: "לא ניתן לפתוח חלון חדש.נא לוודא שחוסמי החלונות הקופצים לא פעילים.",
 
 // Dialogs
 DlgBtnOK			: "אישור",
@@ -166,7 +171,7 @@ DlgBtnBrowseServer	: "סייר השרת",
 DlgAdvancedTag		: "אפשרויות מתקדמות",
 DlgOpOther			: "<אחר>",
 DlgInfoTab			: "מידע",
-DlgAlertUrl			: "אנה הזן URL",
+DlgAlertUrl			: "אנא הזן URL",
 
 // General Dialogs Labels
 DlgGenNotSet		: "<לא נקבע>",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "מרווח תא",
 DlgTableCellPad		: "ריפוד תא",
 DlgTableCaption		: "כיתוב",
 DlgTableSummary		: "סיכום",
+DlgTableHeaders		: "כותרות",
+DlgTableHeadersNone		: "אין",
+DlgTableHeadersColumn	: "עמודה ראשונה",
+DlgTableHeadersRow		: "שורה ראשונה",
+DlgTableHeadersBoth		: "שניהם",
 
 // Table Cell Dialog
 DlgCellTitle		: "תכונות תא",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "למעלה",
 DlgCellVerAlignMiddle	: "לאמצע",
 DlgCellVerAlignBottom	: "לתחתית",
 DlgCellVerAlignBaseline	: "קו תחתית",
+DlgCellType		: "סוג תא",
+DlgCellTypeData		: "סוג",
+DlgCellTypeHeader	: "כותרת",
 DlgCellRowSpan		: "טווח שורות",
 DlgCellCollSpan		: "טווח עמודות",
 DlgCellBackColor	: "צבע רקע",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "אודות",
 DlgAboutBrowserInfoTab	: "גירסת דפדפן",
 DlgAboutLicenseTab	: "רשיון",
 DlgAboutVersion		: "גירסא",
-DlgAboutInfo		: "מידע נוסף ניתן למצוא כאן:"
+DlgAboutInfo		: "מידע נוסף ניתן למצוא כאן:",
+
+// Div Dialog
+DlgDivGeneralTab	: "כללי",
+DlgDivAdvancedTab	: "מתקדם",
+DlgDivStyle		: "סגנון",
+DlgDivInlineStyle	: "סגנון בתוך השורה"
 };

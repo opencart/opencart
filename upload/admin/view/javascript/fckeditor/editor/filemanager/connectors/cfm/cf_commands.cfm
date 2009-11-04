@@ -1,7 +1,7 @@
 <cfsetting enablecfoutputonly="Yes">
 <!---
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -35,7 +35,7 @@
 	<cfset var sTempDir = "">
 	<cfset var sTempFilePath = "">
 	<cfset var errorNumber = 0>
-	<cfset var customMsg = 0>
+	<cfset var customMsg = "">
 	<cfset var counter = 0>
 	<cfset var destination = "">
 
@@ -226,5 +226,5 @@
 		</cftry>
 	</cfif>
 
-	<cfoutput><Error number="#errorNumber#" originalDescription="#HTMLEditFormat(sErrorMsg)#" /></cfoutput>
+	<cfoutput><Error number="#errorNumber#" /></cfoutput>
 </cffunction>

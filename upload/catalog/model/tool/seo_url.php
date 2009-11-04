@@ -2,13 +2,13 @@
 class ModelToolSeoUrl extends Model {
 	public function rewrite($link) {
 		if ($this->config->get('config_seo_url')) {
-			$url_data = parse_url($link);
+			$url_data = parse_url(str_replace('&amp;', '&', $link));
 		
-			$url = '';
-		
+			$url = ''; 
+			
 			$data = array();
 		
-			parse_str(html_entity_decode($url_data['query']), $data);
+			parse_str($url_data['query'], $data);
 			
 			foreach ($data as $key => $value) {
 				if (($key == 'product_id') || ($key == 'manufacturer_id') || ($key == 'information_id')) {
@@ -40,10 +40,16 @@ class ModelToolSeoUrl extends Model {
 				$query = '';
 			
 				if ($data) {
-					$query = '?' . str_replace('&', '&amp;', http_build_query($data));
+					foreach ($data as $key => $value) {
+						$query .= '&' . $key . '=' . $value;
+					}
+					
+					if ($query) {
+						$query = '?' . str_replace('&amp;', '&', trim($query, '&'));
+					}
 				}
 
-				return $url_data['scheme'] . '://' . $url_data['host'] . str_replace('/index.php', '', $url_data['path']) . $url . $query;
+				return $url_data['scheme'] . '://' . $url_data['host'] . (isset($url_data['port']) ? ':' . $url_data['port'] : '') . str_replace('/index.php', '', $url_data['path']) . $url . $query;
 			} else {
 				return $link;
 			}

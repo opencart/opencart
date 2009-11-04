@@ -13,7 +13,13 @@ class ControllerInformationInformation extends Controller {
         	'separator' => FALSE
       	);
 		
-		$information_info = $this->model_catalog_information->getInformation(@$this->request->get['information_id']);
+		if (isset($this->request->get['information_id'])) {
+			$information_id = $this->request->get['information_id'];
+		} else {
+			$information_id = 0;
+		}
+		
+		$information_info = $this->model_catalog_information->getInformation($information_id);
    		
 		if ($information_info) {
 	  		$this->document->title = $information_info['title']; 

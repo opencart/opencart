@@ -46,11 +46,35 @@ class ControllerPaymentPPDirectUK extends Controller {
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_vendor'] = @$this->error['vendor'];
-		$this->data['error_user'] = @$this->error['user'];
-		$this->data['error_password'] = @$this->error['password'];
-		$this->data['error_partner'] = @$this->error['partner'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+
+ 		if (isset($this->error['vendor'])) {
+			$this->data['error_vendor'] = $this->error['vendor'];
+		} else {
+			$this->data['error_vendor'] = '';
+		}
+
+ 		if (isset($this->error['user'])) {
+			$this->data['error_user'] = $this->error['user'];
+		} else {
+			$this->data['error_user'] = '';
+		}
+
+ 		if (isset($this->error['password'])) {
+			$this->data['error_password'] = $this->error['password'];
+		} else {
+			$this->data['error_password'] = '';
+		}
+
+ 		if (isset($this->error['partner'])) {
+			$this->data['error_partner'] = $this->error['partner'];
+		} else {
+			$this->data['error_partner'] = '';
+		}
 
 		$this->document->breadcrumbs = array();
 
@@ -156,19 +180,19 @@ class ControllerPaymentPPDirectUK extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!@$this->request->post['pp_direct_uk_vendor']) {
+		if (!$this->request->post['pp_direct_uk_vendor']) {
 			$this->error['vendor'] = $this->language->get('error_vendor');
 		}
 		
-		if (!@$this->request->post['pp_direct_uk_user']) {
+		if (!$this->request->post['pp_direct_uk_user']) {
 			$this->error['user'] = $this->language->get('error_user');
 		}
 
-		if (!@$this->request->post['pp_direct_uk_password']) {
+		if (!$this->request->post['pp_direct_uk_password']) {
 			$this->error['password'] = $this->language->get('error_password');
 		}
 
-		if (!@$this->request->post['pp_direct_uk_partner']) {
+		if (!$this->request->post['pp_direct_uk_partner']) {
 			$this->error['partner'] = $this->language->get('error_partner');
 		}
 		

@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,8 +44,9 @@ RemoveFormat		: "Xoá Định dạng",
 InsertLinkLbl		: "Liên kết",
 InsertLink			: "Chèn/Sửa Liên kết",
 RemoveLink			: "Xoá Liên kết",
+VisitLink			: "Mở Liên Kết",
 Anchor				: "Chèn/Sửa Neo",
-AnchorDelete		: "Remove Anchor",	//MISSING
+AnchorDelete		: "Gỡ bỏ Neo",
 InsertImageLbl		: "Hình ảnh",
 InsertImage			: "Chèn/Sửa Hình ảnh",
 InsertFlashLbl		: "Flash",
@@ -71,7 +72,10 @@ RightJustify		: "Canh phải",
 BlockJustify		: "Canh đều",
 DecreaseIndent		: "Dịch ra ngoài",
 IncreaseIndent		: "Dịch vào trong",
-Blockquote			: "Blockquote",	//MISSING
+Blockquote			: "Khối Trích dẫn",
+CreateDiv			: "Tạo Div Container",
+EditDiv				: "Chỉnh sửa Div Container",
+DeleteDiv			: "Gỡ bỏ Div Container",
 Undo				: "Khôi phục thao tác",
 Redo				: "Làm lại thao tác",
 NumberedListLbl		: "Danh sách có thứ tự",
@@ -105,27 +109,27 @@ SelectionField	: "Ô chọn",
 ImageButton		: "Nút hình ảnh",
 
 FitWindow		: "Mở rộng tối đa kích thước trình biên tập",
-ShowBlocks		: "Show Blocks",	//MISSING
+ShowBlocks		: "Hiển thị các Khối",
 
 // Context Menu
 EditLink			: "Sửa Liên kết",
 CellCM				: "Ô",
 RowCM				: "Hàng",
 ColumnCM			: "Cột",
-InsertRowAfter		: "Insert Row After",	//MISSING
-InsertRowBefore		: "Insert Row Before",	//MISSING
+InsertRowAfter		: "Chèn Hàng Phía sau",
+InsertRowBefore		: "Chèn Hàng Phía trước",
 DeleteRows			: "Xoá Hàng",
-InsertColumnAfter	: "Insert Column After",	//MISSING
-InsertColumnBefore	: "Insert Column Before",	//MISSING
+InsertColumnAfter	: "Chèn Cột Phía sau",
+InsertColumnBefore	: "Chèn Cột Phía trước",
 DeleteColumns		: "Xoá Cột",
-InsertCellAfter		: "Insert Cell After",	//MISSING
-InsertCellBefore	: "Insert Cell Before",	//MISSING
+InsertCellAfter		: "Chèn Ô Phía sau",
+InsertCellBefore	: "Chèn Ô Phía trước",
 DeleteCells			: "Xoá Ô",
-MergeCells			: "Trộn Ô",
-MergeRight			: "Merge Right",	//MISSING
-MergeDown			: "Merge Down",	//MISSING
-HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
-VerticalSplitCell	: "Split Cell Vertically",	//MISSING
+MergeCells			: "Kết hợp Ô",
+MergeRight			: "Kết hợp Sang phải",
+MergeDown			: "Kết hợp Xuống dưới",
+HorizontalSplitCell	: "Tách ngang Ô",
+VerticalSplitCell	: "Tách dọc Ô",
 TableDelete			: "Xóa Bảng",
 CellProperties		: "Thuộc tính Ô",
 TableProperties		: "Thuộc tính Bảng",
@@ -154,9 +158,10 @@ UnknownToolbarItem	: "Không rõ mục trên thanh công cụ \"%1\"",
 UnknownCommand		: "Không rõ lệnh \"%1\"",
 NotImplemented		: "Lệnh không được thực hiện",
 UnknownToolbarSet	: "Thanh công cụ \"%1\" không tồn tại",
-NoActiveX			: "Các thiết lập bảo mật của trình duyệt có thể giới hạn một số chức năng của trình biên tập. Bạn phải bật tùy chọn \"Run ActiveX controls and plug-ins\". Bạn có thể gặp một số lỗi và thấy thiếu đi một số chức năng.",
+NoActiveX			: "Các thiết lập bảo mật của trình duyệt có thể giới hạn một số chức năng của trình biên tập. Bạn phải bật tùy chọn \"Run ActiveX controls and plug-ins\". Bạn có thể gặp một số lỗi và thấy thiếu một số chức năng.",
 BrowseServerBlocked : "Không thể mở được bộ duyệt tài nguyên. Hãy đảm bảo chức năng chặn popup đã bị vô hiệu hóa.",
 DialogBlocked		: "Không thể mở được cửa sổ hộp thoại. Hãy đảm bảo chức năng chặn popup đã bị vô hiệu hóa.",
+VisitLinkBlocked	: "Không thể mở được cửa sổ trình duyệt mới. Hãy đảm bảo chức năng chặn popup đã bị vô hiệu hóa.",
 
 // Dialogs
 DlgBtnOK			: "Đồng ý",
@@ -194,7 +199,7 @@ DlgImgUpload		: "Tải lên",
 DlgImgAlt			: "Chú thích Hình ảnh",
 DlgImgWidth			: "Rộng",
 DlgImgHeight		: "Cao",
-DlgImgLockRatio		: "Giữ tỷ lệ",
+DlgImgLockRatio		: "Giữ nguyên tỷ lệ",
 DlgBtnResetSize		: "Kích thước gốc",
 DlgImgBorder		: "Đường viền",
 DlgImgHSpace		: "HSpace",
@@ -203,7 +208,7 @@ DlgImgAlign			: "Vị trí",
 DlgImgAlignLeft		: "Trái",
 DlgImgAlignAbsBottom: "Dưới tuyệt đối",
 DlgImgAlignAbsMiddle: "Giữa tuyệt đối",
-DlgImgAlignBaseline	: "Baseline",
+DlgImgAlignBaseline	: "Đường cơ sở",
 DlgImgAlignBottom	: "Dưới",
 DlgImgAlignMiddle	: "Giữa",
 DlgImgAlignRight	: "Phải",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Khoảng cách Ô",
 DlgTableCellPad		: "Đệm Ô",
 DlgTableCaption		: "Đầu đề",
 DlgTableSummary		: "Tóm lược",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Thuộc tính Ô",
@@ -324,7 +334,10 @@ DlgCellVerAlignNotSet	: "<Chưa thiết lập>",
 DlgCellVerAlignTop	: "Trên",
 DlgCellVerAlignMiddle	: "Giữa",
 DlgCellVerAlignBottom	: "Dưới",
-DlgCellVerAlignBaseline	: "Baseline",
+DlgCellVerAlignBaseline	: "Đường cơ sở",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "Nối Hàng",
 DlgCellCollSpan		: "Nối Cột",
 DlgCellBackColor	: "Màu nền",
@@ -332,7 +345,7 @@ DlgCellBorderColor	: "Màu viền",
 DlgCellBtnSelect	: "Chọn...",
 
 // Find and Replace Dialog
-DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
+DlgFindAndReplaceTitle	: "Tìm kiếm và Thay Thế",
 
 // Find Dialog
 DlgFindTitle		: "Tìm kiếm",
@@ -370,7 +383,7 @@ DocProps		: "Thuộc tính Tài liệu",
 // Anchor Dialog
 DlgAnchorTitle		: "Thuộc tính Neo",
 DlgAnchorName		: "Tên của Neo",
-DlgAnchorErrorName	: "Hãy đưa vào tên của Neo",
+DlgAnchorErrorName	: "Hãy nhập vào tên của Neo",
 
 // Speller Pages Dialog
 DlgSpellNotInDic		: "Không có trong từ điển",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "Giới thiệu",
 DlgAboutBrowserInfoTab	: "Thông tin trình duyệt",
 DlgAboutLicenseTab	: "Giấy phép",
 DlgAboutVersion		: "phiên bản",
-DlgAboutInfo		: "Để biết thêm thông tin, hãy truy cập"
+DlgAboutInfo		: "Để biết thêm thông tin, hãy truy cập",
+
+// Div Dialog
+DlgDivGeneralTab	: "Chung",
+DlgDivAdvancedTab	: "Nâng cao",
+DlgDivStyle		: "Kiểu Style",
+DlgDivInlineStyle	: "Kiểu Style Trực tiếp"
 };

@@ -15,7 +15,7 @@ class ControllerAccountEdit extends Controller {
 		
 		$this->load->model('account/customer');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_account_customer->editCustomer($this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -56,11 +56,35 @@ class ControllerAccountEdit extends Controller {
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		$this->data['button_back'] = $this->language->get('button_back');
 
-		$this->data['error'] = @$this->error['message'];
-		$this->data['error_firstname'] = @$this->error['firstname'];
-		$this->data['error_lastname'] = @$this->error['lastname'];
-		$this->data['error_email'] = @$this->error['email'];
-		$this->data['error_telephone'] = @$this->error['telephone'];
+		if (isset($this->error['message'])) {
+			$this->data['error'] = $this->error['message'];
+		} else {
+			$this->data['error'] = '';
+		}
+
+		if (isset($this->error['error_firstname'])) {
+			$this->data['error_firstname'] = $this->error['error_firstname'];
+		} else {
+			$this->data['error_firstname'] = '';
+		}
+
+		if (isset($this->error['error_lastname'])) {
+			$this->data['error_lastname'] = $this->error['error_lastname'];
+		} else {
+			$this->data['error_lastname'] = '';
+		}
+		
+		if (isset($this->error['error_email'])) {
+			$this->data['error_email'] = $this->error['error_email'];
+		} else {
+			$this->data['error_email'] = '';
+		}	
+		
+		if (isset($this->error['error_telephone'])) {
+			$this->data['error_telephone'] = $this->error['error_telephone'];
+		} else {
+			$this->data['error_telephone'] = '';
+		}	
 
 		$this->data['action'] = $this->url->https('account/edit');
 
@@ -70,32 +94,42 @@ class ControllerAccountEdit extends Controller {
 
 		if (isset($this->request->post['firstname'])) {
 			$this->data['firstname'] = $this->request->post['firstname'];
+		} elseif (isset($customer_info)) {
+			$this->data['firstname'] = $customer_info['firstname'];
 		} else {
-			$this->data['firstname'] = @$customer_info['firstname'];
+			$this->data['firstname'] = '';
 		}
 
 		if (isset($this->request->post['lastname'])) {
 			$this->data['lastname'] = $this->request->post['lastname'];
+		} elseif (isset($customer_info)) {
+			$this->data['lastname'] = $customer_info['lastname'];
 		} else {
-			$this->data['lastname'] = @$customer_info['lastname'];
+			$this->data['lastname'] = '';
 		}
 
 		if (isset($this->request->post['email'])) {
 			$this->data['email'] = $this->request->post['email'];
+		} elseif (isset($customer_info)) {
+			$this->data['email'] = $customer_info['email'];
 		} else {
-			$this->data['email'] = @$customer_info['email'];
+			$this->data['email'] = '';
 		}
 
 		if (isset($this->request->post['telephone'])) {
 			$this->data['telephone'] = $this->request->post['telephone'];
+		} elseif (isset($customer_info)) {
+			$this->data['telephone'] = $customer_info['telephone'];
 		} else {
-			$this->data['telephone'] = @$customer_info['telephone'];
+			$this->data['telephone'] = '';
 		}
 
 		if (isset($this->request->post['fax'])) {
 			$this->data['fax'] = $this->request->post['fax'];
+		} elseif (isset($customer_info)) {
+			$this->data['fax'] = $customer_info['fax'];
 		} else {
-			$this->data['fax'] = @$customer_info['fax'];
+			$this->data['fax'] = '';
 		}
 
 		$this->data['back'] = $this->url->https('account/account');
@@ -116,11 +150,13 @@ class ControllerAccountEdit extends Controller {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((strlen(utf8_decode($this->request->post['email'])) > 32) || (!eregi('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', $this->request->post['email']))) {
+		$pattern = '/^([a-z0-9])(([-a-z0-9._])*([a-z0-9]))*\@([a-z0-9])(([a-z0-9-])*([a-z0-9]))+(\.([a-z0-9])([-a-z0-9_-])?([a-z0-9])+)+$/i';
+
+		if ((strlen(utf8_decode($this->request->post['email'])) > 32) || (!preg_match($pattern, $this->request->post['email']))) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 		
-		if (($this->customer->getEmail() != $this->request->post['email']) && ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email']))) {
+		if (($this->customer->getEmail() != $this->request->post['email']) && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
 			$this->error['message'] = $this->language->get('error_exists');
 		}
 

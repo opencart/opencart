@@ -5,11 +5,7 @@ class ModelToolBackup extends Model {
     		$sql = trim($sql);
     		
 			if ($sql) {
-      			$result = mysql_query($sql);
-      			
-				if (!$result) {
-        			exit('Error: ' . mysql_error() . '<br />Error No: ' . mysql_errno() . '<br />' . $sql);
-      			}
+      			$this->db->query($sql);
     		}
   		}
 	}
@@ -17,11 +13,11 @@ class ModelToolBackup extends Model {
 	public function backup() {
 		$output = '';
 		
-		$list_tables = mysql_list_tables(DB_DATABASE);
+		$table_query = $this->db->query("SHOW TABLES FROM " . DB_DATABASE);
 
-		while ($row = mysql_fetch_row($list_tables)) {
+		foreach ($table_query->rows as $table) {
 			if (DB_PREFIX) {
-				if (strpos($row[0], DB_PREFIX) === FALSE) {
+				if (strpos($table['Tables_in_opencart_dev'], DB_PREFIX) === FALSE) {
 					$status = FALSE;
 				} else {
 					$status = TRUE;
@@ -31,9 +27,9 @@ class ModelToolBackup extends Model {
 			}
 			
 			if ($status) {
-				$output .= 'TRUNCATE TABLE `' . $row[0] . '`;' . "\n\n";
+				$output .= 'TRUNCATE TABLE `' . $table['Tables_in_opencart_dev'] . '`;' . "\n\n";
 			
-				$query = $this->db->query("SELECT * FROM `" . $row[0] . "`");
+				$query = $this->db->query("SELECT * FROM `" . $table['Tables_in_opencart_dev'] . "`");
 				
 				foreach ($query->rows as $result) {
 					$fields = '';
@@ -56,7 +52,7 @@ class ModelToolBackup extends Model {
 						$values .= '\'' . $value . '\', ';
 					}
 					
-					$output .= 'INSERT INTO `' . $row[0] . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";
+					$output .= 'INSERT INTO `' . $table['Tables_in_opencart_dev'] . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";
 				}
 				
 				$output .= "\n\n";

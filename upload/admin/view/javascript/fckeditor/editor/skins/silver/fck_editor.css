@@ -1,29 +1,24 @@
 /*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
- * 
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
+ *
  * == BEGIN LICENSE ==
- * 
+ *
  * Licensed under the terms of any of the following licenses at your
  * choice:
- * 
+ *
  *  - GNU General Public License Version 2 or later (the "GPL")
  *    http://www.gnu.org/licenses/gpl.html
- * 
+ *
  *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
  *    http://www.gnu.org/licenses/lgpl.html
- * 
+ *
  *  - Mozilla Public License Version 1.1 or later (the "MPL")
  *    http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * == END LICENSE ==
- * 
- * File Name: fck_editor.css
- * 	Styles used by the editor IFRAME and Toolbar.
- * 
- * File Authors:
- * 		Frederico Caldeira Knabben (www.fckeditor.net)
- * 		gazou[Fr]
+ *
+ * Styles used by the editor IFRAME and Toolbar.
  */
 
 /*
@@ -32,14 +27,14 @@
 
 body
 {
-	padding: 0px 0px 0px 0px;
-	margin: 0px 0px 0px 0px;
-	border: 1px solid #CCCCCC;
+	padding: 1px;
+	margin: 0;
+	background-color: #ffffff;
 }
 
 #xEditingArea
 {
-
+	border: #696969 1px solid;
 }
 
 .SourceField
@@ -62,7 +57,8 @@ body
 .TB_ToolbarSet
 {
 	padding: 1px;
-	border-bottom: #CCCCCC 1px solid;
+	border-top: #efefde 1px outset;
+	border-bottom: #efefde 1px outset;
 }
 
 .TB_ToolbarSet TD
@@ -114,19 +110,18 @@ body
 
 .TB_SideBorder
 {
-	
+	background-color: #696969;
 }
 
 .TB_Expand, .TB_Collapse
 {
 	padding: 2px 2px 2px 2px;
-	border-bottom: 1px solid #CCCCCC;
+	border: #efefde 1px outset;
 }
 
 .TB_Collapse
 {
-	border-bottom: 1px solid #CCCCCC;
-	border-right: 1px solid #CCCCCC;
+	border: #efefde 1px outset;
 	width: 5px;
 }
 
@@ -200,8 +195,8 @@ body
 }
 
 /* For composed button ( icon + text, icon + arrow ), we must compensate the table */
-.TB_Button_On TABLE .TB_Button_Image, 
-.TB_Button_Off TABLE .TB_Button_Image, 
+.TB_Button_On TABLE .TB_Button_Image,
+.TB_Button_Off TABLE .TB_Button_Image,
 .TB_Button_On_Over TABLE .TB_Button_Image,
 .TB_Button_Off_Over TABLE .TB_Button_Image,
 .TB_Button_Disabled TABLE .TB_Button_Image
@@ -344,7 +339,6 @@ body
     border: 1px solid #8f8f73;
     padding-left: 2px;
     padding-right: 2px;
-    background-color: #ffffff;
 }
 
 .SC_Panel, .SC_Panel TD
@@ -424,7 +418,7 @@ body
     background-repeat: no-repeat;
 }
 
-.SC_FieldDisabled .SC_FieldButton, .SC_FieldDisabled .SC_FieldCaption
+.SC_FieldDisabled .SC_FieldButton, .SC_FieldDisabled .SC_FieldCaption, .SC_FieldDisabled .TB_ButtonType_Text
 {
     opacity: 0.30; /* Safari, Opera and Mozilla */
     filter: gray() alpha(opacity=30); /* IE */ /* -moz-opacity: 0.30; Mozilla (Old) */

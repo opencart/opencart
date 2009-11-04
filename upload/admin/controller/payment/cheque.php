@@ -37,8 +37,17 @@ class ControllerPaymentCheque extends Controller {
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_payable'] = @$this->error['payable'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+
+ 		if (isset($this->error['payable'])) {
+			$this->data['error_payable'] = $this->error['payable'];
+		} else {
+			$this->data['error_payable'] = '';
+		}
 
   		$this->document->breadcrumbs = array();
 
@@ -114,7 +123,7 @@ class ControllerPaymentCheque extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (!@$this->request->post['cheque_payable']) {
+		if (!$this->request->post['cheque_payable']) {
 			$this->error['payable'] = $this->language->get('error_payable');
 		}
 

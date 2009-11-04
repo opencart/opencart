@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -40,14 +40,19 @@ FCKXml.prototype =
 
 		oXmlHttp.send( null ) ;
 
-		if ( oXmlHttp.status == 200 || oXmlHttp.status == 304 )
-			this.DOMDocument = oXmlHttp.responseXML ;
-		else if ( oXmlHttp.status == 0 && oXmlHttp.readyState == 4 )
+		if ( oXmlHttp.status == 200 || oXmlHttp.status == 304 || ( oXmlHttp.status == 0 && oXmlHttp.readyState == 4 ) )
 		{
-			this.DOMDocument = FCKTools.CreateXmlObject( 'DOMDocument' ) ;
-			this.DOMDocument.async = false ;
-			this.DOMDocument.resolveExternals = false ;
-			this.DOMDocument.loadXML( oXmlHttp.responseText ) ;
+			this.DOMDocument = oXmlHttp.responseXML ;
+
+			// #1426: Fallback if responseXML isn't set for some
+			// reason (e.g. improperly configured web server)
+			if ( !this.DOMDocument || this.DOMDocument.firstChild == null )
+			{
+				this.DOMDocument = FCKTools.CreateXmlObject( 'DOMDocument' ) ;
+				this.DOMDocument.async = false ;
+				this.DOMDocument.resolveExternals = false ;
+				this.DOMDocument.loadXML( oXmlHttp.responseText ) ;
+			}
 		}
 		else
 		{

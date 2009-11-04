@@ -12,17 +12,17 @@
       <?php foreach ($languages as $language) { ?>
       <tr>
         <td width="25%"><span class="required">*</span> <?php echo $entry_name; ?></td>
-        <td><input name="coupon_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo @$coupon_description[$language['language_id']]['name']; ?>" /> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" />
+        <td><input name="coupon_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($coupon_description[$language['language_id']]) ? $coupon_description[$language['language_id']]['name'] : ''; ?>" /> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" />
           <br />
-          <?php if (@$error_name[$language['language_id']]) { ?>
+          <?php if (isset($error_name[$language['language_id']])) { ?>
           <span class="error"><?php echo $error_name[$language['language_id']]; ?></span>
           <?php } ?></td>
       </tr>
       <tr>
         <td><span class="required">*</span> <?php echo $entry_description; ?></td>
-        <td><textarea name="coupon_description[<?php echo $language['language_id']; ?>][description]" cols="40" rows="5"><?php echo @$coupon_description[$language['language_id']]['description']; ?></textarea> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" />
+        <td><textarea name="coupon_description[<?php echo $language['language_id']; ?>][description]" cols="40" rows="5"><?php echo isset($coupon_description[$language['language_id']]) ? $coupon_description[$language['language_id']]['description'] : ''; ?></textarea> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" />
           <br />
-          <?php if (@$error_description[$language['language_id']]) { ?>
+          <?php if (isset($error_description[$language['language_id']])) { ?>
           <span class="error"><?php echo $error_description[$language['language_id']]; ?></span>
           <?php } ?></td>
       </tr>

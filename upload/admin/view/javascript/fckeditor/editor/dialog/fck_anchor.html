@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -119,10 +119,7 @@ function Ok()
 	var aNewAnchors = oEditor.FCK.CreateLink( '#' ) ;
 
 	if ( aNewAnchors.length == 0 )
-	{
-		// Nothing was selected, so now just create a normal A
-		aNewAnchors.push( oEditor.FCK.InsertElement( 'a' ) ) ;
-	}
+			aNewAnchors.push( oEditor.FCK.InsertElement( 'a' ) ) ;
 	else
 	{
 		// Remove the fake href
@@ -136,7 +133,18 @@ function Ok()
 		oAnchor = aNewAnchors[i] ;
 
 		// Set the name
-		oAnchor.name = sNewName ;
+		if ( FCKBrowserInfo.IsIE )
+		{
+			// Setting anchor names directly in IE will trash the HTML code stored
+			// in FCKTempBin after undos. See #2263.
+			var replaceAnchor = oEditor.FCK.EditorDocument.createElement( '<a name="' +
+					FCKTools.HTMLEncode( sNewName ).replace( '"', '&quot;' ) + '">' ) ;
+			oEditor.FCKDomTools.MoveChildren( oAnchor, replaceAnchor ) ;
+			oAnchor.parentNode.replaceChild( replaceAnchor, oAnchor ) ;
+			oAnchor = replaceAnchor ;
+		}
+		else
+			oAnchor.name = sNewName ;
 
 		// IE does require special processing to show the Anchor's image
 		// Opera doesn't allow to select empty anchors

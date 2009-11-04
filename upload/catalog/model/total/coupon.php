@@ -1,7 +1,7 @@
 <?php
 class ModelTotalCoupon extends Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
-		if ((isset($this->session->data['coupon'])) && ($this->config->get('coupon_status'))) {
+		if (isset($this->session->data['coupon']) && $this->config->get('coupon_status')) {
 			$this->load->model('checkout/coupon');
 			 
 			$coupon = $this->model_checkout_coupon->getCoupon($this->session->data['coupon']);

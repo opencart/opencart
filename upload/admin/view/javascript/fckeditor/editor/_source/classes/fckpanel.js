@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -66,11 +66,12 @@ var FCKPanel = function( parentWindow )
 	else
 	{
 		var oIFrame = this._IFrame = this._Window.document.createElement('iframe') ;
+		FCKTools.ResetStyles( oIFrame );
 		oIFrame.src					= 'javascript:void(0)' ;
 		oIFrame.allowTransparency	= true ;
 		oIFrame.frameBorder			= '0' ;
 		oIFrame.scrolling			= 'no' ;
-		oIFrame.width = oIFrame.height = 0 ;
+		oIFrame.style.width = oIFrame.style.height = '0px' ;
 		FCKDomTools.SetElementStyles( oIFrame,
 			{
 				position	: 'absolute',
@@ -127,6 +128,60 @@ FCKPanel.prototype.Preload = function( x, y, relElement )
 		this._Popup.show( x, y, 0, 0, relElement ) ;
 }
 
+// Workaround for IE7 problem. See #1982
+// Submenus are restricted to the size of its parent, so we increase it as needed.
+// Returns true if the panel has been repositioned
+FCKPanel.prototype.ResizeForSubpanel = function( panel, width, height )
+{
+	if ( !FCKBrowserInfo.IsIE7 )
+		return false ;
+
+	if ( !this._Popup.isOpen )
+	{
+		this.Subpanel = null ;
+		return false ;
+	}
+
+	// If we are resetting the extra space
+	if ( width == 0 && height == 0 )
+	{
+		// Another subpanel is being shown, so we must not shrink back
+		if (this.Subpanel !== panel)
+			return false ;
+
+		// Reset values.
+		// We leave the IncreasedY untouched to avoid vertical movement of the
+		// menu if the submenu is higher than the main menu.
+		this.Subpanel = null ;
+		this.IncreasedX = 0 ;
+	}
+	else
+	{
+		this.Subpanel = panel ;
+		// If the panel has already been increased enough, get out
+		if ( ( this.IncreasedX >= width ) && ( this.IncreasedY >= height ) )
+			return false ;
+
+		this.IncreasedX = Math.max( this.IncreasedX, width ) ;
+		this.IncreasedY = Math.max( this.IncreasedY, height ) ;
+	}
+
+	var x = this.ShowRect.x ;
+	var w = this.IncreasedX ;
+	if ( this.IsRTL )
+		x  = x - w ;
+
+	// Horizontally increase as needed (sum of widths).
+	// Vertically, use only the maximum of this menu or the submenu
+	var finalWidth = this.ShowRect.w + w ;
+	var finalHeight = Math.max( this.ShowRect.h, this.IncreasedY ) ;
+	if ( this.ParentPanel )
+		this.ParentPanel.ResizeForSubpanel( this, finalWidth, finalHeight ) ;
+	this._Popup.show( x, this.ShowRect.y, finalWidth, finalHeight, this.RelativeElement ) ;
+
+	return this.IsRTL ;
+}
+
 FCKPanel.prototype.Show = function( x, y, relElement, width, height )
 {
 	var iMainWidth ;
@@ -149,12 +204,31 @@ FCKPanel.prototype.Show = function( x, y, relElement, width, height )
 
 		iMainWidth = eMainNode.offsetWidth ;
 
+		if ( FCKBrowserInfo.IsIE7 )
+		{
+			if (this.ParentPanel && this.ParentPanel.ResizeForSubpanel(this, iMainWidth, eMainNode.offsetHeight) )
+			{
+				// As the parent has moved, allow the browser to update its internal data, so the new position is correct.
+				FCKTools.RunFunction( this.Show, this, [x, y, relElement] ) ;
+				return ;
+			}
+		}
+
 		if ( this.IsRTL )
 		{
 			if ( this.IsContextMenu )
 				x  = x - iMainWidth + 1 ;
 			else if ( relElement )
 				x  = ( x * -1 ) + relElement.offsetWidth - iMainWidth ;
+		}
+
+		if ( FCKBrowserInfo.IsIE7 )
+		{
+			// Store the values that will be used by the ResizeForSubpanel function
+			this.ShowRect = {x:x, y:y, w:iMainWidth, h:eMainNode.offsetHeight} ;
+			this.IncreasedX = 0 ;
+			this.IncreasedY = 0 ;
+			this.RelativeElement = relElement ;
 		}
 
 		// Second call: Show the Popup at the specified location, with the correct size.
@@ -277,8 +351,8 @@ FCKPanel.prototype.Show = function( x, y, relElement, width, height )
 			{
 				var iWidth = eMainNode.offsetWidth || eMainNode.firstChild.offsetWidth ;
 				var iHeight = eMainNode.offsetHeight ;
-				me._IFrame.width = iWidth ;
-				me._IFrame.height = iHeight ;
+				me._IFrame.style.width = iWidth + 'px' ;
+				me._IFrame.style.height = iHeight + 'px' ;
 
 			}, 0 ) ;
 
@@ -303,7 +377,7 @@ FCKPanel.prototype.Hide = function( ignoreOnHide, ignoreFocusManagerUnlock )
 
 		// It is better to set the sizes to 0, otherwise Firefox would have
 		// rendering problems.
-		this._IFrame.width = this._IFrame.height = 0 ;
+		this._IFrame.style.width = this._IFrame.style.height = '0px' ;
 
 		this._IsOpened = false ;
 
@@ -372,6 +446,9 @@ function CheckPopupOnHide( forceHide )
 		window.clearInterval( this._Timer ) ;
 		this._Timer = null ;
 
+		if (this._Popup && this.ParentPanel && !forceHide)
+			this.ParentPanel.ResizeForSubpanel(this, 0, 0) ;
+
 		FCKTools.RunFunction( this.OnHide, this ) ;
 	}
 }
@@ -382,4 +459,5 @@ function FCKPanel_Cleanup()
 	this._Window = null ;
 	this.Document = null ;
 	this.MainNode = null ;
+	this.RelativeElement = null ;
 }

@@ -41,7 +41,7 @@ class ControllerCheckoutAddress extends Controller {
 
 		$this->load->model('account/address');
 				  
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && (@$this->request->post['address_id'])) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['address_id'])) {
 	  		unset($this->session->data['shipping_methods']);
 			unset($this->session->data['shipping_method']);
 			
@@ -50,7 +50,7 @@ class ControllerCheckoutAddress extends Controller {
 			$this->redirect($this->url->https('checkout/shipping'));
 		}
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 	  		unset($this->session->data['shipping_methods']);
 			unset($this->session->data['shipping_method']);
 			
@@ -109,7 +109,7 @@ class ControllerCheckoutAddress extends Controller {
 		
 		$this->load->model('account/address');
 		 	 
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && (@$this->request->post['address_id'])) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['address_id'])) {
 	  		unset($this->session->data['payment_methods']);
 			unset($this->session->data['payment_method']);
 			
@@ -118,7 +118,7 @@ class ControllerCheckoutAddress extends Controller {
 			$this->redirect($this->url->https('checkout/payment'));
 		} 
 	   
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 	  		unset($this->session->data['payment_methods']);
 			unset($this->session->data['payment_method']);
 			
@@ -148,10 +148,29 @@ class ControllerCheckoutAddress extends Controller {
     
 		$this->data['button_continue'] = $this->language->get('button_continue');
     
-		$this->data['error_firstname'] = @$this->error['firstname'];
-    	$this->data['error_lastname'] = @$this->error['lastname'];
-    	$this->data['error_address_1'] = @$this->error['address_1'];
-    	$this->data['error_city'] = @$this->error['city'];
+		if (isset($this->error['firstname'])) {
+			$this->data['error_firstname'] = $this->error['firstname'];
+		} else {
+			$this->data['error_firstname'] = '';
+		}
+		
+		if (isset($this->error['lastname'])) {
+			$this->data['error_lastname'] = $this->error['lastname'];
+		} else {
+			$this->data['error_lastname'] = '';
+		}
+		
+		if (isset($this->error['address_1'])) {
+			$this->data['error_address_1'] = $this->error['address_1'];
+		} else {
+			$this->data['error_address_1'] = '';
+		}
+		
+		if (isset($this->error['city'])) {
+			$this->data['error_city'] = $this->error['city'];
+		} else {
+			$this->data['error_city'] = '';
+		}
 
     	$this->data['action'] = $this->url->https('checkout/address/' . $type);
 				
@@ -169,13 +188,47 @@ class ControllerCheckoutAddress extends Controller {
       		);
     	}
 
-    	$this->data['firstname'] = @$this->request->post['firstname'];
-    	$this->data['lastname'] = @$this->request->post['lastname'];
-    	$this->data['company'] = @$this->request->post['company'];
-    	$this->data['address_1'] = @$this->request->post['address_1'];
-    	$this->data['address_2'] = @$this->request->post['address_2'];
-    	$this->data['city'] = @$this->request->post['city'];
-    	$this->data['postcode'] = @$this->request->post['postcode'];
+		if (isset($this->request->post['firstname'])) {
+    		$this->data['firstname'] = $this->request->post['firstname'];
+		} else {
+			$this->data['firstname'] = '';
+		}
+		
+		if (isset($this->request->post['lastname'])) {
+    		$this->data['lastname'] = $this->request->post['lastname'];
+		} else {
+			$this->data['lastname'] = '';
+		}		
+		
+		if (isset($this->request->post['company'])) {
+    		$this->data['company'] = $this->request->post['company'];
+		} else {
+			$this->data['company'] = '';
+		}	
+
+		if (isset($this->request->post['address_1'])) {
+    		$this->data['address_1'] = $this->request->post['address_1'];
+		} else {
+			$this->data['address_1'] = '';
+		}	
+
+		if (isset($this->request->post['address_2'])) {
+    		$this->data['address_2'] = $this->request->post['address_2'];
+		} else {
+			$this->data['address_2'] = '';
+		}	
+		
+		if (isset($this->request->post['city'])) {
+    		$this->data['city'] = $this->request->post['city'];
+		} else {
+			$this->data['city'] = '';
+		}
+		
+		if (isset($this->request->post['postcode'])) {
+    		$this->data['postcode'] = $this->request->post['postcode'];
+		} else {
+			$this->data['postcode'] = '';
+		}		
 
     	if (isset($this->request->post['country_id'])) {
       		$this->data['country_id'] = $this->request->post['country_id'];
@@ -229,12 +282,12 @@ class ControllerCheckoutAddress extends Controller {
 
 		$this->load->model('localisation/zone');
 
-    	$results = $this->model_localisation_zone->getZonesByCountryId(@$this->request->get['country_id']);
+    	$results = $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']);
         
       	foreach ($results as $result) {
         	$output .= '<option value="' . $result['zone_id'] . '"';
 	
-	    	if (@$this->request->get['zone_id'] == $result['zone_id']) {
+	    	if (isset($this->request->get['zone_id']) && ($this->request->get['zone_id'] == $result['zone_id'])) {
 	      		$output .= ' selected="selected"';
 	    	}
 	

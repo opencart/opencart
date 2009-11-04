@@ -21,6 +21,7 @@
   <input type="hidden" name="no_note" value="1" />
   <input type="hidden" name="cancel_return" value="<?php echo $cancel_return; ?>" />
   <input type="hidden" name="paymentaction" value="<?php echo $paymentaction; ?>" />
+  <input type="hidden" name="custom" value="<?php echo $custom; ?>" />
 </form>
 <div class="buttons">
   <table>

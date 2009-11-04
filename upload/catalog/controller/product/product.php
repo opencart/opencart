@@ -17,7 +17,6 @@ class ControllerProductProduct extends Controller {
 		
 		$this->load->model('catalog/category');	
 		
-		// Categories
       	if (isset($this->request->get['path'])) {
 			$path = '';
 				
@@ -30,28 +29,30 @@ class ControllerProductProduct extends Controller {
 					$path .= '_' . $path_id;
 				}
 				
-        		$this->document->breadcrumbs[] = array(
-					'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $path)),
-           			'text'      => $category_info['name'],
-           			'separator' => $this->language->get('text_separator')
-        		);
+				if ($category_info) {
+        			$this->document->breadcrumbs[] = array(
+						'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $path)),
+           				'text'      => $category_info['name'],
+           				'separator' => $this->language->get('text_separator')
+        			);
+				}
         	}			
       	}
 		
 		$this->load->model('catalog/manufacturer');	
 		
-		// Manufacturer
 		if (isset($this->request->get['manufacturer_id'])) {
-			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer(@$this->request->get['manufacturer_id']);
+			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
 	      		
-			$this->document->breadcrumbs[] = array(
-        		'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'])),
-        		'text'      => @$manufacturer_info['name'],
-        		'separator' => $this->language->get('text_separator')
-      		);	
+			if ($manufacturer_info) {	
+				$this->document->breadcrumbs[] = array(
+        			'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'])),
+        			'text'      => $manufacturer_info['name'],
+        			'separator' => $this->language->get('text_separator')
+      			);	
+			}
 		}
 		
-		// Search
 		if (isset($this->request->get['keyword'])) {
 			$url = '';
 			
@@ -68,7 +69,13 @@ class ControllerProductProduct extends Controller {
 		
 		$this->load->model('catalog/product');
 		
-		$product_info = $this->model_catalog_product->getProduct(@$this->request->get['product_id']);
+		if (isset($this->request->get['product_id'])) {
+			$product_id = $this->request->get['product_id'];
+		} else {
+			$product_id = 0;
+		}
+		
+		$product_info = $this->model_catalog_product->getProduct($product_id);
     	
 		if ($product_info) {
 			$url = '';
@@ -102,11 +109,14 @@ class ControllerProductProduct extends Controller {
 			$this->data['heading_title'] = $product_info['name'];
 			
 			$this->data['text_enlarge'] = $this->language->get('text_enlarge');
-      		$this->data['text_options'] = $this->language->get('text_options');
+      		$this->data['text_discount'] = $this->language->get('text_discount');
+			$this->data['text_options'] = $this->language->get('text_options');
 			$this->data['text_price'] = $this->language->get('text_price');
 			$this->data['text_availability'] = $this->language->get('text_availability');
 			$this->data['text_model'] = $this->language->get('text_model');
 			$this->data['text_manufacturer'] = $this->language->get('text_manufacturer');
+			$this->data['text_order_quantity'] = $this->language->get('text_order_quantity');
+			$this->data['text_price_per_item'] = $this->language->get('text_price_per_item');
 			$this->data['text_qty'] = $this->language->get('text_qty');
 			$this->data['text_write'] = $this->language->get('text_write');
 			$this->data['text_average'] = $this->language->get('text_average');
@@ -148,8 +158,8 @@ class ControllerProductProduct extends Controller {
 				$image = 'no_image.jpg';
 			}	
 					
-			$this->data['popup'] = HelperImage::resize($image, $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
-	  		$this->data['thumb'] = HelperImage::resize($image, $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+			$this->data['popup'] = image_resize($image, $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+	  		$this->data['thumb'] = image_resize($image, $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
 			$this->data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
 			
 			$special = $this->model_catalog_product->getProductSpecial($this->request->get['product_id']);
@@ -160,7 +170,28 @@ class ControllerProductProduct extends Controller {
 				$this->data['special'] = FALSE;
 			}
 			
-			$this->data['stock'] = ($product_info['quantity'] > 0) ? $this->language->get('text_instock') : $product_info['stock'];
+			$discounts = $this->model_catalog_product->getProductDiscounts($this->request->get['product_id']);
+			
+			$this->data['discounts'] = array(); 
+			
+			foreach ($discounts as $discount) {
+				$this->data['discounts'][] = array(
+					'quantity' => $discount['quantity'],
+					'price'    => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')))
+				);
+			}
+			
+			
+			if ($product_info['quantity'] <= 0) {
+				$this->data['stock'] = $product_info['stock'];
+			} else {
+				if ($this->config->get('config_stock_display')) {
+					$this->data['stock'] = $product_info['quantity'];
+				} else {
+					$this->data['stock'] = $this->language->get('text_instock');
+				}
+			}
+			
 			$this->data['model'] = $product_info['model'];
 			$this->data['manufacturer'] = $product_info['manufacturer'];
 			$this->data['manufacturers'] = $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $product_info['manufacturer_id']));
@@ -179,7 +210,7 @@ class ControllerProductProduct extends Controller {
 					$option_value_data[] = array(
             			'option_value_id' => $option_value['product_option_value_id'],
             			'name'            => $option_value['name'],
-            			'price'           => (int)$option_value['price'] ? $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax'))) : FALSE,
+            			'price'           => (float)$option_value['price'] ? $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax'))) : FALSE,
             			'prefix'          => $option_value['prefix']
           			);
 				}
@@ -197,8 +228,8 @@ class ControllerProductProduct extends Controller {
 			
       		foreach ($results as $result) {
         		$this->data['images'][] = array(
-          			'popup' => HelperImage::resize($result['image'] , $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
-          			'thumb' => HelperImage::resize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height'))
+          			'popup' => image_resize($result['image'] , $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
+          			'thumb' => image_resize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height'))
         		);
       		}
 
@@ -228,12 +259,20 @@ class ControllerProductProduct extends Controller {
 					'model'   => $result['model'],
             		'rating'  => $rating,
 					'stars'   => sprintf($this->language->get('text_stars'), $rating),
-					'thumb'   => HelperImage::resize($image, $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height')),
+					'thumb'   => image_resize($image, $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height')),
             		'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 					'special' => $special,
 					'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $result['product_id']))
           		);
       		}
+
+			if (!$this->config->get('config_customer_price')) {
+				$this->data['display_price'] = TRUE;
+			} elseif ($this->customer->isLogged()) {
+				$this->data['display_price'] = TRUE;
+			} else {
+				$this->data['display_price'] = FALSE;
+			}
 			
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 						
@@ -262,7 +301,7 @@ class ControllerProductProduct extends Controller {
 			}		
 					
       		$this->document->breadcrumbs[] = array(
-        		'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/product' . $url . '&product_id=' . @$this->request->get['product_id'])),
+        		'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/product' . $url . '&product_id=' . $product_id)),
         		'text'      => $this->language->get('text_error'),
         		'separator' => $this->language->get('text_separator')
       		);			
@@ -333,9 +372,9 @@ class ControllerProductProduct extends Controller {
 		
 		$this->load->model('catalog/review');
 		
-		$jason = array();
+		$json = array();
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_catalog_review->addReview($this->request->get['product_id'], $this->request->post);
     		
 			$json['success'] = $this->language->get('text_success');
@@ -367,11 +406,11 @@ class ControllerProductProduct extends Controller {
       		$this->error['message'] = $this->language->get('error_text');
     	}
 
-    	if (!@$this->request->post['rating']) {
+    	if (!$this->request->post['rating']) {
       		$this->error['message'] = $this->language->get('error_rating');
     	}
 
-    	if (@$this->session->data['captcha'] != $this->request->post['captcha']) {
+    	if ($this->session->data['captcha'] != $this->request->post['captcha']) {
       		$this->error['message'] = $this->language->get('error_captcha');
     	}
 		

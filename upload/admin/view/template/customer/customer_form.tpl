@@ -74,6 +74,18 @@
           </select></td>
       </tr>
       <tr>
+        <td><?php echo $entry_customer_group; ?></td>
+        <td><select name="customer_group_id">
+            <?php foreach ($customer_groups as $customer_group) { ?>
+            <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+            <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+            <?php } else { ?>
+            <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+            <?php } ?>
+            <?php } ?>
+          </select></td>
+      </tr>          
+      <tr>
         <td><?php echo $entry_status; ?></td>
         <td><select name="status">
             <?php if ($status) { ?>
@@ -89,5 +101,5 @@
   </div>
 </form>
 <script type="text/javascript"><!--
-$.tabs('.tabs a'); 
+$.tabs('.tabs a');
 //--></script>

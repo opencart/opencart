@@ -11,12 +11,18 @@ class ControllerCommonLogin extends Controller {
 			$this->redirect($this->url->https('common/home'));
 		}
 
-		if (($this->request->post) && ($this->validate())) { 
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) { 
 	  		$this->redirect($this->url->https('common/home'));
 		}
 		
 		$this->data['title'] = $this->language->get('heading_title');
-		$this->data['base'] = (@$this->request->server['HTTPS'] != 'on') ? HTTP_SERVER : HTTPS_SERVER;
+		
+		if (isset($this->request->server['HTTPS']) && ($this->request->server['HTTPS'] == 'on')) {
+			$this->data['base'] = HTTPS_SERVER;
+		} else {
+			$this->data['base'] = HTTP_SERVER;
+		}
+		
 		$this->data['charset'] = $this->language->get('charset');
 		$this->data['direction'] = $this->language->get('direction');
 		$this->data['language'] = $this->language->get('code');				
@@ -28,8 +34,12 @@ class ControllerCommonLogin extends Controller {
 
     	$this->data['button_login'] = $this->language->get('button_login');
 		
-		$this->data['error_warning'] = @$this->error['warning'];
- 
+		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+		
     	$this->data['action'] = $this->url->https('common/login');
 		
 		$this->template = 'common/login.tpl';
@@ -38,7 +48,7 @@ class ControllerCommonLogin extends Controller {
   	}
 		
 	private function validate() {
-		if (!$this->user->login(@$this->request->post['username'], @$this->request->post['password'])) {
+		if (isset($this->request->post['username']) && isset($this->request->post['password']) && !$this->user->login($this->request->post['username'], $this->request->post['password'])) {
 			$this->error['warning'] = $this->language->get('error_login');
 		}
 		

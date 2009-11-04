@@ -58,35 +58,37 @@ class ControllerAccountDownload extends Controller {
 			$results = $this->model_account_download->getDownloads(($page - 1) * 10, 10);
 			
 			foreach ($results as $result) {
-				$size = @filesize(DIR_DOWNLOAD . $result['filename']);
+				if (file_exists(DIR_DOWNLOAD . $result['filename'])) {
+					$size = filesize(DIR_DOWNLOAD . $result['filename']);
 
-				$i = 0;
+					$i = 0;
 
-				$suffix = array(
-					'B',
-					'KB',
-					'MB',
-					'GB',
-					'TB',
-					'PB',
-					'EB',
-					'ZB',
-					'YB'
-				);
+					$suffix = array(
+						'B',
+						'KB',
+						'MB',
+						'GB',
+						'TB',
+						'PB',
+						'EB',
+						'ZB',
+						'YB'
+					);
 
-				while (($size / 1024) > 1) {
-					$size = $size / 1024;
-					$i++;
+					while (($size / 1024) > 1) {
+						$size = $size / 1024;
+						$i++;
+					}
+
+					$this->data['downloads'][] = array(
+						'order_id'   => $result['order_id'],
+						'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+						'name'       => $result['name'],
+						'remaining'  => $result['remaining'],
+						'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
+						'href'       => $this->url->https('account/download/download&order_download_id=' . $result['order_download_id'])
+					);
 				}
-
-				$this->data['downloads'][] = array(
-					'order_id'   => $result['order_id'],
-					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-					'name'       => $result['name'],
-					'remaining'  => $result['remaining'],
-					'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
-					'href'       => $this->url->https('account/download/download&order_download_id=' . $result['order_download_id'])
-				);
 			}
 		
 			$pagination = new Pagination();
@@ -131,7 +133,13 @@ class ControllerAccountDownload extends Controller {
 
 		$this->load->model('account/download');
 		
-		$download_info = $this->model_account_download->getDownload(@$this->request->get['order_download_id']);
+		if (isset($this->request->get['order_download_id'])) {
+			$order_download_id = $this->request->get['order_download_id'];
+		} else {
+			$order_download_id = 0;
+		}
+		
+		$download_info = $this->model_account_download->getDownload($order_download_id);
 		
 		if ($download_info) {
 			$file = DIR_DOWNLOAD . $download_info['filename'];

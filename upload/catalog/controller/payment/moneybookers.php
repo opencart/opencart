@@ -64,7 +64,11 @@ class ControllerPaymentMoneybookers extends Controller {
 		
 		$encryption = new Encryption($this->config->get('config_encryption'));
 		
-		$order_id = $encryption->decrypt(@$this->request->post['order_id']);
+		if (isset($this->request->post['order_id'])) {
+			$order_id = $encryption->decrypt($this->request->post['order_id']);
+		} else {
+			$order_id = 0;
+		}
 		
 		$this->load->model('checkout/order');
 		

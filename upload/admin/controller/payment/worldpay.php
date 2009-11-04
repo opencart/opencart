@@ -45,9 +45,23 @@ class ControllerPaymentWorldPay extends Controller {
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_merchant'] = @$this->error['merchant'];
-		$this->data['error_password'] = @$this->error['password'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+
+ 		if (isset($this->error['merchant'])) {
+			$this->data['error_merchant'] = $this->error['merchant'];
+		} else {
+			$this->data['error_merchant'] = '';
+		}
+
+ 		if (isset($this->error['password'])) {
+			$this->data['error_password'] = $this->error['password'];
+		} else {
+			$this->data['error_password'] = '';
+		}
 
   		$this->document->breadcrumbs = array();
 
@@ -137,11 +151,11 @@ class ControllerPaymentWorldPay extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (!@$this->request->post['worldpay_merchant']) {
+		if (!$this->request->post['worldpay_merchant']) {
 			$this->error['merchant'] = $this->language->get('error_merchant');
 		}
 		
-		if (!@$this->request->post['worldpay_password']) {
+		if (!$this->request->post['worldpay_password']) {
 			$this->error['password'] = $this->language->get('error_password');
 		}
 		

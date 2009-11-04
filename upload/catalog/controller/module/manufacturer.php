@@ -5,8 +5,12 @@ class ControllerModuleManufacturer extends Controller {
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		$this->data['text_select'] = $this->language->get('text_select');
-			
-		$this->data['manufacturer_id'] = @$this->request->get['manufacturer_id'];
+		
+		if (isset($this->request->get['manufacturer_id'])) {
+			$this->data['manufacturer_id'] = $this->request->get['manufacturer_id'];
+		} else {
+			$this->data['manufacturer_id'] = 0;
+		}
 		
 		$this->load->model('catalog/manufacturer');
 		 

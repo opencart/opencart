@@ -47,7 +47,7 @@ class ModelLocalisationTaxClass extends Model {
 
 			$sql .= " ORDER BY title";	
 			
-			if (@$data['order'] == 'DESC') {
+			if (isset($data['order']) && ($data['order'] == 'DESC')) {
 				$sql .= " DESC";
 			} else {
 				$sql .= " ASC";

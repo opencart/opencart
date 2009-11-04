@@ -19,7 +19,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		
 		$this->load->model('localisation/weight_class');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_localisation_weight_class->addWeightClass($this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		
 		$this->load->model('localisation/weight_class');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_localisation_weight_class->editWeightClass($this->request->get['weight_class_id'], $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -83,7 +83,7 @@ class ControllerLocalisationWeightClass extends Controller {
  		
 		$this->load->model('localisation/weight_class');
 		
-		if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
+		if (isset($this->request->post['delete']) && $this->validateDelete()) {
 			foreach ($this->request->post['delete'] as $weight_class_id) {
 				$this->model_localisation_weight_class->deleteWeightClass($weight_class_id);
 			}
@@ -185,7 +185,7 @@ class ControllerLocalisationWeightClass extends Controller {
 				'weight_class_id' => $result['weight_class_id'],
 				'title'           => $result['title'] . (($result['weight_class_id'] == $this->config->get('config_weight_class_id')) ? $this->language->get('text_default') : NULL),
 				'unit'            => $result['unit'],
-				'delete'          => in_array($result['weight_class_id'], (array)@$this->request->post['delete']),
+				'delete'          => isset($this->request->post['delete']) && in_array($result['weight_class_id'], $this->request->post['delete']),
 				'action'          => $action
 			);
 		}
@@ -201,11 +201,19 @@ class ControllerLocalisationWeightClass extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 		
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 
 		$url = '';
 
@@ -261,11 +269,24 @@ class ControllerLocalisationWeightClass extends Controller {
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
-		$this->data['tab_data'] = $this->language->get('tab_data');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_title'] = @$this->error['title'];
-		$this->data['error_unit'] = @$this->error['unit'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+		
+ 		if (isset($this->error['title'])) {
+			$this->data['error_title'] = $this->error['title'];
+		} else {
+			$this->data['error_title'] = '';
+		}	
+		
+ 		if (isset($this->error['unit'])) {
+			$this->data['error_unit'] = $this->error['unit'];
+		} else {
+			$this->data['error_unit'] = '';
+		}	
 
 		$url = '';
 
@@ -315,7 +336,11 @@ class ControllerLocalisationWeightClass extends Controller {
 			$this->data['weight_class'] = array();
 		}	
 
-		$this->data['weight_tos'] = $this->model_localisation_weight_class->getWeightTo(@$this->request->get['weight_class_id']);
+		if (isset($this->request->get['weight_class_id'])) {
+			$this->data['weight_tos'] = $this->model_localisation_weight_class->getWeightTo($this->request->get['weight_class_id']);
+		} else {
+			$this->data['weight_tos'] = $this->model_localisation_weight_class->getWeightTo(0);
+		}
 		
 		if (isset($this->request->post['weight_rule'])) {
 			$this->data['weight_rule'] = $this->request->post['weight_rule'];

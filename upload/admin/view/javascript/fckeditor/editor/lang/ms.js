@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "Buang Format",
 InsertLinkLbl		: "Sambungan",
 InsertLink			: "Masukkan/Sunting Sambungan",
 RemoveLink			: "Buang Sambungan",
+VisitLink			: "Open Link",	//MISSING
 Anchor				: "Masukkan/Sunting Pautan",
 AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "Gambar",
@@ -72,6 +73,9 @@ BlockJustify		: "Jajaran Blok",
 DecreaseIndent		: "Kurangkan Inden",
 IncreaseIndent		: "Tambahkan Inden",
 Blockquote			: "Blockquote",	//MISSING
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "Batalkan",
 Redo				: "Ulangkan",
 NumberedListLbl		: "Senarai bernombor",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "Set toolbar \"%1\" tidak wujud",
 NoActiveX			: "Your browser's security settings could limit some features of the editor. You must enable the option \"Run ActiveX controls and plug-ins\". You may experience errors and notice missing features.",	//MISSING
 BrowseServerBlocked : "The resources browser could not be opened. Make sure that all popup blockers are disabled.",	//MISSING
 DialogBlocked		: "It was not possible to open the dialog window. Make sure all popup blockers are disabled.",	//MISSING
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "OK",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Ruangan Antara Sel",
 DlgTableCellPad		: "Tambahan Ruang Sel",
 DlgTableCaption		: "Keterangan",
 DlgTableSummary		: "Summary",	//MISSING
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Ciri-ciri Sel",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "Atas",
 DlgCellVerAlignMiddle	: "Tengah",
 DlgCellVerAlignBottom	: "Bawah",
 DlgCellVerAlignBaseline	: "Garis Dasar",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "Penggunaan Baris",
 DlgCellCollSpan		: "Penggunaan Lajur",
 DlgCellBackColor	: "Warna Latarbelakang",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "Tentang",
 DlgAboutBrowserInfoTab	: "Maklumat Perisian Browser",
 DlgAboutLicenseTab	: "License",	//MISSING
 DlgAboutVersion		: "versi",
-DlgAboutInfo		: "Untuk maklumat lanjut sila pergi ke"
+DlgAboutInfo		: "Untuk maklumat lanjut sila pergi ke",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style"	//MISSING
 };

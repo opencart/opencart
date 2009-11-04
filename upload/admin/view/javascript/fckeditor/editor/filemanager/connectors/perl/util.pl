@@ -1,6 +1,6 @@
 #####
 #  FCKeditor - The text editor for Internet - http://www.fckeditor.net
-#  Copyright (C) 2003-2008 Frederico Caldeira Knabben
+#  Copyright (C) 2003-2009 Frederico Caldeira Knabben
 #
 #  == BEGIN LICENSE ==
 #
@@ -40,9 +40,7 @@ sub RemoveFromEnd
 sub ConvertToXmlAttribute
 {
 	local($value) = @_;
-	return $value;
-#	return utf8_encode(htmlspecialchars($value));
-
+	return(&specialchar_cnv($value));
 }
 
 sub specialchar_cnv

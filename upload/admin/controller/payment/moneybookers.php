@@ -43,8 +43,17 @@ class ControllerPaymentMoneyBookers extends Controller {
 		
 		$this->data['tab_general'] = $this->language->get('tab_general');
 		
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_email'] = @$this->error['email'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+ 		
+		if (isset($this->error['email'])) {
+			$this->data['error_email'] = $this->error['email'];
+		} else {
+			$this->data['error_email'] = '';
+		}
 		
   		$this->document->breadcrumbs = array();
 		
@@ -156,7 +165,7 @@ class ControllerPaymentMoneyBookers extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (!@$this->request->post['moneybookers_email']) {
+		if (!$this->request->post['moneybookers_email']) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 				

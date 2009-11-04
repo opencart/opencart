@@ -13,7 +13,7 @@ class ControllerAccountPassword extends Controller {
 
     	$this->document->title = $this->language->get('heading_title');
 			  
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('account/customer');
 			
 			$this->model_account_customer->editPassword($this->customer->getEmail(), $this->request->post['password']);
@@ -52,14 +52,32 @@ class ControllerAccountPassword extends Controller {
 
     	$this->data['button_continue'] = $this->language->get('button_continue');
     	$this->data['button_back'] = $this->language->get('button_back');
-    
-		$this->data['error_password'] = @$this->error['password'];
-    	$this->data['error_confirm'] = @$this->error['confirm'];
+    	
+		if (isset($this->error['password'])) { 
+			$this->data['error_password'] = $this->error['password'];
+		} else {
+			$this->data['error_password'] = '';
+		}
+
+		if (isset($this->error['confirm'])) { 
+			$this->data['error_confirm'] = $this->error['confirm'];
+		} else {
+			$this->data['error_confirm'] = '';
+		}
 	
     	$this->data['action'] = $this->url->https('account/password');
 		
-    	$this->data['password'] = @$this->request->post['password'];
-    	$this->data['confirm'] = @$this->request->post['confirm'];
+		if (isset($this->request->post['password'])) {
+    		$this->data['password'] = $this->request->post['password'];
+		} else {
+			$this->data['password'] = $this->request->post['password'];
+		}
+
+		if (isset($this->request->post['confirm'])) {
+    		$this->data['confirm'] = $this->request->post['confirm'];
+		} else {
+			$this->data['confirm'] = $this->request->post['confirm'];
+		}
 
     	$this->data['back'] = $this->url->https('account/account');
 

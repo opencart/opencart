@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -167,8 +167,8 @@ if ( FCKBrowserInfo.IsAIR )
 		FCK.StartEditor = function()
 		{
 			// Force pointing to the CSS files instead of using the inline CSS cached styles.
-			window.FCK_InternalCSS			= FCKConfig.FullBasePath + 'css/fck_internal.css' ;
-			window.FCK_ShowTableBordersCSS	= FCKConfig.FullBasePath + 'css/fck_showtableborders_gecko.css' ;
+			window.FCK_InternalCSS			= FCKConfig.BasePath + 'css/fck_internal.css' ;
+			window.FCK_ShowTableBordersCSS	= FCKConfig.BasePath + 'css/fck_showtableborders_gecko.css' ;
 
 			_Original_FCK_StartEditor.apply( this, arguments ) ;
 		}

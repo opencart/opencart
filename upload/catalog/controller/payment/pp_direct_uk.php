@@ -117,7 +117,7 @@ class ControllerPaymentPPDirectUK extends Controller {
 			'NAME'      => $this->request->post['cc_owner'],
 			'STREET'    => $order_info['payment_address_1'],
 			'CITY'      => $order_info['payment_city'],
-            'STATE'     => $order_info['payment_zone'],
+            'STATE'     => ($payment_address['iso_code_2'] != 'US') ? $order_info['payment_zone'] : $payment_address['code'],
 			'COUNTRY'   => $payment_address['iso_code_2'],
 			'ZIP'       => $order_info['payment_postcode'],
 			'CLIENTIP'  => $this->request->server['REMOTE_ADDR'],

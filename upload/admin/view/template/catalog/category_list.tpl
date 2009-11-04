@@ -11,8 +11,8 @@
 <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
   <table class="list">
     <thead>
-      <tr>
-        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);" /></td>
+      <tr> 
+        <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);" /></td>
         <td class="left"><?php echo $column_name; ?></td>
         <td class="right"><?php echo $column_sort_order; ?></td>
         <td class="right"><?php echo $column_action; ?></td>
@@ -24,7 +24,7 @@
       <?php foreach ($categories as $category) { ?>
       <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
       <tr class="<?php echo $class; ?>">
-        <td style="align: center;"><?php if ($category['delete']) { ?>
+        <td style="text-align: center;"><?php if ($category['delete']) { ?>
           <input type="checkbox" name="delete[]" value="<?php echo $category['category_id']; ?>" checked="checked" />
           <?php } else { ?>
           <input type="checkbox" name="delete[]" value="<?php echo $category['category_id']; ?>" />

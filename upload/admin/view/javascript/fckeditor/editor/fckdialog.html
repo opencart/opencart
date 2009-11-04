@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -27,6 +27,8 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="robots" content="noindex, nofollow" />
 		<script type="text/javascript">
+// <![CDATA[
+
 // Domain relaxation logic.
 (function()
 {
@@ -84,7 +86,7 @@ window.focus() ;
 document.write( FCKTools.GetStyleHtml( FCKConfig.SkinDialogCSS ) ) ;
 
 // Sets the language direction.
-var langDir = document.documentElement.dir = E.FCKLang.Dir ;
+var langDir = E.FCKLang.Dir ;
 
 // For IE6-, the fck_dialog_ie6.js is loaded, used to fix limitations in the browser.
 if ( FCKBrowserInfo.IsIE && !FCKBrowserInfo.IsIE7 )
@@ -190,6 +192,19 @@ var Sizer = function()
 		}
 	}
 
+	/**
+	 * IE6 has a similar bug where it sometimes thinks $('contents') has an
+	 * offsetHeight of 0 (#2114).
+	 */
+	if ( FCKBrowserInfo.IsIE && !FCKBrowserInfo.IsIE7 )
+	{
+		var originalRefreshContainerSize = retval.RefreshContainerSize ;
+		retval.RefreshContainerSize = function()
+		{
+			FCKTools.SetTimeout( originalRefreshContainerSize, 1, retval ) ;
+		}
+	}
+
 	window.onresize = function()
 	{
 		retval.RefreshContainerSize() ;
@@ -232,10 +247,13 @@ var Throbber = function()
 
 			var throbberParent = $( 'throbberBlock' ) ;
 
-			// Create the throbber blocks.
-			var classIds = [ 1,2,3,4,5,4,3,2 ] ;
-			while ( classIds.length > 0 )
-				throbberParent.appendChild( document.createElement( 'div' ) ).className = ' throbber_' + classIds.shift() ;
+			if (throbberParent.childNodes.length == 0)
+			{
+				// Create the throbber blocks.
+				var classIds = [ 1,2,3,4,5,4,3,2 ] ;
+				while ( classIds.length > 0 )
+					throbberParent.appendChild( document.createElement( 'div' ) ).className = ' throbber_' + classIds.shift() ;
+			}
 
 			// Center the throbber.
 			var frm = $( 'contents' ) ;
@@ -247,6 +265,10 @@ var Throbber = function()
 
 			// Show it.
 			throbberParent.style.visibility = ''  ;
+
+			// Hide tabs and buttons:
+			$( 'Tabs' ).style.visibility = 'hidden' ;
+			$( 'PopupButtons' ).style.visibility = 'hidden' ;
 
 			// Setup the animation interval.
 			timer = setInterval( updateThrobber, 100 ) ;
@@ -260,9 +282,11 @@ var Throbber = function()
 				timer = null ;
 			}
 
-			var throbberParent = document.getElementById( 'throbberBlock' ) ;
-			if ( throbberParent )
-				FCKDomTools.RemoveNode( throbberParent ) ;
+			$( 'throbberBlock' ).style.visibility = 'hidden' ;
+
+			// Show tabs and buttons:
+			$( 'Tabs' ).style.visibility = '' ;
+			$( 'PopupButtons' ).style.visibility = '' ;
 		}
 	} ;
 }() ;
@@ -385,6 +409,11 @@ var Selection =
 	 */
 	EnsureSelection : function()
 	{
+		// Move the focus to the Cancel button so even if the dialog contains a
+		// contentEditable element the selection is properly restored in the editor #2496
+		window.focus() ;
+		$( 'btnCancel' ).focus() ;
+
 		FCK.Selection.Restore() ;
 	},
 
@@ -549,6 +578,8 @@ var onReadyRegister = function()
 	// Program entry point.
 	window.Init = function()
 	{
+		$( 'contents' ).dir = langDir;
+
 		// Start the throbber timer.
 		Throbber.Show( 1000 ) ;
 
@@ -617,7 +648,7 @@ var onReadyRegister = function()
 		E.FCKLanguageManager.TranslatePage( document ) ;
 
 		// Create the IFRAME that holds the dialog contents.
-		$( 'innerContents' ).innerHTML = '<iframe id="frmMain" src="' + Args().Page + '" name="frmMain" frameborder="0" width="100%" height="100%" scrolling="auto" style="visibility: hidden;" allowtransparency="true"></iframe>' ;
+		$( 'innerContents' ).innerHTML = '<iframe id="frmMain" src="' + Args().Page + '" name="frmMain" frameborder="0" width="100%" height="100%" scrolling="auto" style="visibility: hidden;" allowtransparency="true"><\/iframe>' ;
 	} ;
 
 	window.InnerDialogLoaded = function()
@@ -727,6 +758,7 @@ var onReadyRegister = function()
 		}
 	} ;
 })() ;
+// ]]>
 		</script>
 	</head>
 	<body onload="Init();" class="PopupBody">
@@ -734,7 +766,9 @@ var onReadyRegister = function()
 			<div id="header">
 				<div id="TitleArea" class="PopupTitle PopupTitleBorder">
 					<script type="text/javascript">
+// <![CDATA[
 document.write( Args().Title ) ;
+// ]]>
 					</script>
 					<div id="closeButton" onclick="Cancel();"></div>
 				</div>
@@ -772,12 +806,14 @@ document.write( Args().Title ) ;
 		<div class="cover" id="cover" style="display:none"></div>
 		<div id="throbberBlock" style="position: absolute; visibility: hidden"></div>
 		<script type="text/javascript">
+// <![CDATA[
 			// Set the class name for language direction.
 			document.body.className += ' ' + langDir ;
 
 			var cover = $( 'cover' ) ;
 			cover.style.backgroundColor = FCKConfig.BackgroundBlockerColor ;
 			FCKDomTools.SetOpacity( cover, FCKConfig.BackgroundBlockerOpacity ) ;
+// ]]>
 		</script>
 	</body>
 </html>

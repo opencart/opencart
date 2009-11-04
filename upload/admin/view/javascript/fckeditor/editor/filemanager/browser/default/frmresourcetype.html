@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -23,10 +23,11 @@
 -->
 <html>
 	<head>
+		<title>Available types</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<link href="browser.css" type="text/css" rel="stylesheet">
 		<script type="text/javascript" src="js/common.js"></script>
-		<script language="javascript">
+		<script type="text/javascript">
 
 function SetResourceType( type )
 {
@@ -42,21 +43,24 @@ var aTypes = [
 
 window.onload = function()
 {
+	var oCombo = document.getElementById('cmbType') ;
+	oCombo.innerHTML = '' ;
 	for ( var i = 0 ; i < aTypes.length ; i++ )
 	{
 		if ( oConnector.ShowAllTypes || aTypes[i][0] == oConnector.ResourceType )
-			AddSelectOption( document.getElementById('cmbType'), aTypes[i][1], aTypes[i][0] ) ;
+			AddSelectOption( oCombo, aTypes[i][1], aTypes[i][0] ) ;
 	}
 }
 
 		</script>
 	</head>
-	<body bottomMargin="0" topMargin="0">
-		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+	<body>
+		<table class="fullHeight" cellSpacing="0" cellPadding="0" width="100%" border="0">
 			<tr>
 				<td nowrap>
 					Resource Type<BR>
 					<select id="cmbType" style="WIDTH: 100%" onchange="SetResourceType(this.value);">
+						<option>&nbsp;
 					</select>
 				</td>
 			</tr>

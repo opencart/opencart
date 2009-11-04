@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,8 +44,9 @@ RemoveFormat		: "Radera formatering",
 InsertLinkLbl		: "Länk",
 InsertLink			: "Infoga/Redigera länk",
 RemoveLink			: "Radera länk",
+VisitLink			: "Open Link",	//MISSING
 Anchor				: "Infoga/Redigera ankarlänk",
-AnchorDelete		: "Remove Anchor",	//MISSING
+AnchorDelete		: "Radera ankarlänk",
 InsertImageLbl		: "Bild",
 InsertImage			: "Infoga/Redigera bild",
 InsertFlashLbl		: "Flash",
@@ -72,6 +73,9 @@ BlockJustify		: "Justera till marginaler",
 DecreaseIndent		: "Minska indrag",
 IncreaseIndent		: "Öka indrag",
 Blockquote			: "Blockquote",	//MISSING
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "Ångra",
 Redo				: "Gör om",
 NumberedListLbl		: "Numrerad lista",
@@ -112,20 +116,20 @@ EditLink			: "Redigera länk",
 CellCM				: "Cell",
 RowCM				: "Rad",
 ColumnCM			: "Kolumn",
-InsertRowAfter		: "Insert Row After",	//MISSING
-InsertRowBefore		: "Insert Row Before",	//MISSING
+InsertRowAfter		: "Lägg till Rad Efter",
+InsertRowBefore		: "Lägg till Rad Före",
 DeleteRows			: "Radera rad",
-InsertColumnAfter	: "Insert Column After",	//MISSING
-InsertColumnBefore	: "Insert Column Before",	//MISSING
+InsertColumnAfter	: "Lägg till Kolumn Efter",
+InsertColumnBefore	: "Lägg till Kolumn Före",
 DeleteColumns		: "Radera kolumn",
-InsertCellAfter		: "Insert Cell After",	//MISSING
-InsertCellBefore	: "Insert Cell Before",	//MISSING
+InsertCellAfter		: "Lägg till Cell Efter",
+InsertCellBefore	: "Lägg till Cell Före",
 DeleteCells			: "Radera celler",
 MergeCells			: "Sammanfoga celler",
-MergeRight			: "Merge Right",	//MISSING
-MergeDown			: "Merge Down",	//MISSING
-HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
-VerticalSplitCell	: "Split Cell Vertically",	//MISSING
+MergeRight			: "Sammanfoga Höger",
+MergeDown			: "Sammanfoga Ner",
+HorizontalSplitCell	: "Dela Cell Horisontellt",
+VerticalSplitCell	: "Dela Cell Vertikalt",
 TableDelete			: "Radera tabell",
 CellProperties		: "Cellegenskaper",
 TableProperties		: "Tabellegenskaper",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "Verktygsfält \"%1\" finns ej",
 NoActiveX			: "Din webläsares säkerhetsinställningar kan begränsa funktionaliteten. Du bör aktivera \"Kör ActiveX kontroller och plug-ins\". Fel och avsaknad av funktioner kan annars uppstå.",
 BrowseServerBlocked : "Kunde Ej öppna resursfönstret. Var god och avaktivera alla popup-blockerare.",
 DialogBlocked		: "Kunde Ej öppna dialogfönstret. Var god och avaktivera alla popup-blockerare.",
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "OK",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Cellavstånd",
 DlgTableCellPad		: "Cellutfyllnad",
 DlgTableCaption		: "Rubrik",
 DlgTableSummary		: "Sammanfattning",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Cellegenskaper",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "Topp",
 DlgCellVerAlignMiddle	: "Mitten",
 DlgCellVerAlignBottom	: "Nederkant",
 DlgCellVerAlignBaseline	: "Underst",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "Radomfång",
 DlgCellCollSpan		: "Kolumnomfång",
 DlgCellBackColor	: "Bakgrundsfärg",
@@ -332,7 +345,7 @@ DlgCellBorderColor	: "Kantfärg",
 DlgCellBtnSelect	: "Välj...",
 
 // Find and Replace Dialog
-DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
+DlgFindAndReplaceTitle	: "Sök och ersätt",
 
 // Find Dialog
 DlgFindTitle		: "Sök",
@@ -443,7 +456,7 @@ DlgHiddenValue	: "Värde",
 // Bulleted List Dialog
 BulletedListProp	: "Egenskaper för punktlista",
 NumberedListProp	: "Egenskaper för numrerad lista",
-DlgLstStart			: "Start",	//MISSING
+DlgLstStart			: "Start",
 DlgLstType			: "Typ",
 DlgLstTypeCircle	: "Cirkel",
 DlgLstTypeDisc		: "Punkt",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "Om",
 DlgAboutBrowserInfoTab	: "Webläsare",
 DlgAboutLicenseTab	: "Licens",
 DlgAboutVersion		: "version",
-DlgAboutInfo		: "För mer information se"
+DlgAboutInfo		: "För mer information se",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style"	//MISSING
 };

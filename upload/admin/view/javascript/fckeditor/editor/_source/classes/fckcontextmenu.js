@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -89,6 +89,9 @@ FCKContextMenu.prototype.AttachToElement = function( element )
 
 function FCKContextMenu_Document_OnContextMenu( e )
 {
+	if ( FCKConfig.BrowserContextMenu )
+		return true ;
+
 	var el = e.target ;
 
 	while ( el )
@@ -113,6 +116,9 @@ function FCKContextMenu_Document_OnMouseDown( e )
 {
 	if( !e || e.button != 2 )
 		return false ;
+
+	if ( FCKConfig.BrowserContextMenu )
+		return true ;
 
 	var el = e.target ;
 
@@ -145,6 +151,9 @@ function FCKContextMenu_Document_OnMouseDown( e )
 
 function FCKContextMenu_Document_OnMouseUp( e )
 {
+	if ( FCKConfig.BrowserContextMenu )
+		return true ;
+
 	var overrideButton = FCKContextMenu_OverrideButton ;
 
 	if ( overrideButton )
@@ -164,7 +173,7 @@ function FCKContextMenu_Document_OnMouseUp( e )
 
 function FCKContextMenu_AttachedElement_OnContextMenu( ev, fckContextMenu, el )
 {
-	if ( fckContextMenu.CtrlDisable && ( ev.ctrlKey || ev.metaKey ) )
+	if ( ( fckContextMenu.CtrlDisable && ( ev.ctrlKey || ev.metaKey ) ) || FCKConfig.BrowserContextMenu )
 		return true ;
 
 	var eTarget = el || this ;

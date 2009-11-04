@@ -19,7 +19,7 @@ class ControllerUserUserPermission extends Controller {
 		
 		$this->load->model('user/user_group');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_user_user_group->addUserGroup($this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerUserUserPermission extends Controller {
 		
 		$this->load->model('user/user_group');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_user_user_group->editUserGroup($this->request->get['user_group_id'], $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -83,7 +83,7 @@ class ControllerUserUserPermission extends Controller {
 		
 		$this->load->model('user/user_group');
 		
-		if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
+		if (isset($this->request->post['delete']) && $this->validateDelete()) {
       		foreach ($this->request->post['delete'] as $user_group_id) {
 				$this->model_user_user_group->deleteUserGroup($user_group_id);	
 			}
@@ -184,7 +184,7 @@ class ControllerUserUserPermission extends Controller {
 			$this->data['user_groups'][] = array(
 				'user_group_id' => $result['user_group_id'],
 				'name'          => $result['name'],
-				'delete'        => in_array($result['user_group_id'], (array)@$this->request->post['delete']),
+				'delete'        => isset($this->request->post['delete']) && in_array($result['user_group_id'], $this->request->post['delete']),
 				'action'        => $action
 			);
 		}	
@@ -199,11 +199,19 @@ class ControllerUserUserPermission extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 		
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 		
 		$url = '';
 
@@ -260,8 +268,17 @@ class ControllerUserUserPermission extends Controller {
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_name'] = @$this->error['name'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+		
+ 		if (isset($this->error['name'])) {
+			$this->data['error_name'] = $this->error['name'];
+		} else {
+			$this->data['error_name'] = '';
+		}
 
 		$url = '';
 			
@@ -299,14 +316,16 @@ class ControllerUserUserPermission extends Controller {
 		  
     	$this->data['cancel'] = $this->url->https('user/user_permission' . $url);
 
-		if ((isset($this->request->get['user_group_id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['user_group_id']) && $this->request->server['REQUEST_METHOD'] != 'POST') {
 			$user_group_info = $this->model_user_user_group->getUserGroup($this->request->get['user_group_id']);
 		}
 
 		if (isset($this->request->post['name'])) {
 			$this->data['name'] = $this->request->post['name'];
+		} elseif (isset($user_group_info)) {
+			$this->data['name'] = $user_group_info['name'];
 		} else {
-			$this->data['name'] = @$user_group_info['name'];
+			$this->data['name'] = '';
 		}
 		
 		$ignore = array(
@@ -327,7 +346,9 @@ class ControllerUserUserPermission extends Controller {
 		$files = glob(DIR_APPLICATION . 'controller/*/*.php');
 		
 		foreach ($files as $file) {
-			$permission = end(explode('/', dirname($file))) . '/' . basename($file, '.php');
+			$data = explode('/', dirname($file));
+			
+			$permission = end($data) . '/' . basename($file, '.php');
 			
 			if (!in_array($permission, $ignore)) {
 				$this->data['permissions'][] = $permission;
@@ -381,10 +402,10 @@ class ControllerUserUserPermission extends Controller {
 		$this->load->model('user/user');
       	
 		foreach ($this->request->post['delete'] as $user_group_id) {
-			$user_info = $this->model_user_user->getTotalUsersByGroupId($user_group_id);
+			$user_total = $this->model_user_user->getTotalUsersByGroupId($user_group_id);
 
-			if ($user_info['total']) {
-				$this->error['warning'] = sprintf($this->language->get('error_user'), $user_info['total']);
+			if ($user_total) {
+				$this->error['warning'] = sprintf($this->language->get('error_user'), $user_total);
 			}
 		}
 		

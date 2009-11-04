@@ -2,9 +2,13 @@
 class ModelLocalisationStockStatus extends Model {
 	public function addStockStatus($data) {
 		foreach ($data['stock_status'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "stock_status SET stock_status_id = '" . (int)@$stock_status_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
-			
-			$stock_status_id = $this->db->getLastId();
+			if (isset($stock_status_id)) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "stock_status SET stock_status_id = '" . (int)$stock_status_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			} else {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "stock_status SET language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+				
+				$stock_status_id = $this->db->getLastId();
+			}
 		}
 		
 		$this->cache->delete('stock_status');
@@ -38,7 +42,7 @@ class ModelLocalisationStockStatus extends Model {
       		
 			$sql .= " ORDER BY name";	
 			
-			if (@$data['order'] == 'DESC') {
+			if (isset($data['order']) && ($data['order'] == 'DESC')) {
 				$sql .= " DESC";
 			} else {
 				$sql .= " ASC";

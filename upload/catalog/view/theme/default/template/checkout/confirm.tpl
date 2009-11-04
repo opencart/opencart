@@ -49,12 +49,7 @@
           <?php } ?></td>
         <td align="left" valign="top"><?php echo $product['model']; ?></td>
         <td align="right" valign="top"><?php echo $product['quantity']; ?></td>
-        <td align="right" valign="top"><?php if (!$product['discount']) { ?>
-          <?php echo $product['price']; ?>
-          <?php } else { ?>
-          <u style="color: #F00; text-decoration: line-through;"><?php echo $product['price']; ?></u><br />
-          <?php echo $product['discount']; ?>
-          <?php } ?></td>
+        <td align="right" valign="top"><?php echo $product['price']; ?></td>
         <td align="right" valign="top"><?php echo $product['total']; ?></td>
       </tr>
       <?php } ?>

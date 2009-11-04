@@ -32,7 +32,9 @@ class ModelShippingRoyalMail1stClassRecorded extends Model {
   				$data = explode(':', $rate);
   					
 				if ($data[0] >= $weight) {
-    				$cost = @$data[1];
+					if (isset($data[1])) {
+    					$cost = $data[1];
+					}
 					
    					break;
   				}
@@ -44,7 +46,9 @@ class ModelShippingRoyalMail1stClassRecorded extends Model {
   				$data = explode(':', $rate);
   				
 				if ($data[0] >= $sub_total) {
-    				$compensation = @$data[1];
+					if (isset($data[1])) {
+    					$compensation = $data[1];
+					}
 					
    					break;
   				}
@@ -59,7 +63,7 @@ class ModelShippingRoyalMail1stClassRecorded extends Model {
 					$text .= ' Weight ' . $this->weight->format($weight, $this->config->get('config_weight_class_id'));
 				}
 			
-				if ($this->config->get('royal_mail_1st_class_recorded_display_insurance') && ((int)$compensation)) {
+				if ($this->config->get('royal_mail_1st_class_recorded_display_insurance') && (int)$compensation) {
 					$text .= ' (' . sprintf($this->language->get('text_insurance'), $this->currency->format($compensation));
 				}		
 

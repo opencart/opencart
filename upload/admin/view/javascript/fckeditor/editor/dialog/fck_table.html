@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -31,14 +31,13 @@
 
 var dialog	= window.parent ;
 var oEditor = dialog.InnerDialogLoaded() ;
-var dialogArguments = dialog.Args() ;
 
-// Gets the document DOM
-var oDOM = oEditor.FCK.EditorDocument ;
+var FCKDomTools = oEditor.FCKDomTools ;
 
 // Gets the table if there is one selected.
 var table ;
 var e = dialog.Selection.GetSelectedElement() ;
+var hasColumnHeaders ;
 
 if ( ( !e && document.location.search.substr(1) == 'Parent' ) || ( e && e.tagName != 'TABLE' ) )
 	e = oEditor.FCKSelection.MoveToAncestorNode( 'TABLE' ) ;
@@ -88,6 +87,36 @@ window.onload = function()
 		var eCaption = oEditor.FCKDomTools.GetFirstChild( table, 'CAPTION' ) ;
 		if ( eCaption ) document.getElementById('txtCaption').value = eCaption.innerHTML ;
 
+		hasColumnHeaders = true ;
+		// Check if all the first cells in every row are TH
+		for (var row=0; row<table.rows.length; row++)
+		{
+			// If just one cell isn't a TH then it isn't a header column
+			if ( table.rows[row].cells[0].nodeName != 'TH' )
+			{
+				hasColumnHeaders = false ;
+
+				break;
+			}
+		}
+
+		// Check if the table contains <thead>
+		if ((table.tHead !== null) )
+		{
+			if (hasColumnHeaders)
+				GetE('selHeaders').value = 'both' ;
+			else
+				GetE('selHeaders').value = 'row' ;
+		}
+		else
+		{
+			if (hasColumnHeaders)
+				GetE('selHeaders').value = 'col' ;
+			else
+				GetE('selHeaders').value = '' ;
+		}
+
+
 		document.getElementById('txtRows').disabled    = true ;
 		document.getElementById('txtColumns').disabled = true ;
 		SelectField( 'txtWidth' ) ;
@@ -104,8 +133,11 @@ function Ok()
 {
 	var bExists = ( table != null ) ;
 
+	var oDoc = oEditor.FCK.EditorDocument ;
+	oEditor.FCKUndo.SaveUndoStep() ;
+
 	if ( ! bExists )
-		table = oEditor.FCK.EditorDocument.createElement( "TABLE" ) ;
+		table = oDoc.createElement( "TABLE" ) ;
 
 	// Removes the Width and Height styles
 	if ( bExists && table.style.width )		table.style.width = null ; //.removeAttribute("width") ;
@@ -129,7 +161,7 @@ function Ok()
 	{
 		if ( !eCaption )
 		{
-			eCaption = oEditor.FCK.EditorDocument.createElement( 'CAPTION' ) ;
+			eCaption = oDoc.createElement( 'CAPTION' ) ;
 			table.insertBefore( eCaption, table.firstChild ) ;
 		}
 
@@ -145,23 +177,132 @@ function Ok()
 			eCaption.parentNode.removeChild( eCaption ) ;
 	}
 
+	var headers = GetE('selHeaders').value ;
+	if ( bExists )
+	{
+		// Should we make a <thead>?
+		if ( table.tHead==null && (headers=='row' || headers=='both') )
+		{
+			var oThead = table.createTHead() ;
+			var tbody = FCKDomTools.GetFirstChild( table, 'TBODY' ) ;
+			var theRow= FCKDomTools.GetFirstChild( tbody, 'TR' ) ;
+
+			//now change TD to TH:
+			for (var i = 0; i<theRow.childNodes.length ; i++)
+			{
+				var th = RenameNode(theRow.childNodes[i], 'TH') ;
+				if (th != null)
+					th.scope='col' ;
+			}
+			oThead.appendChild( theRow ) ;
+		}
+
+		if ( table.tHead!==null && !(headers=='row' || headers=='both') )
+		{
+			// Move the row out of the THead and put it in the TBody:
+			var tHead = table.tHead ;
+			var tbody = FCKDomTools.GetFirstChild( table, 'TBODY' ) ;
+
+			var previousFirstRow = tbody.firstChild ;
+			while ( tHead.firstChild )
+			{
+				var theRow = tHead.firstChild ;
+				for (var i = 0; i < theRow.childNodes.length ; i++ )
+				{
+					var newCell = RenameNode( theRow.childNodes[i], 'TD' ) ;
+					if ( newCell != null )
+						newCell.removeAttribute( 'scope' ) ;
+				}
+				tbody.insertBefore( theRow, previousFirstRow ) ;
+			}
+			table.removeChild( tHead ) ;
+		}
+
+		// Should we make all first cells in a row TH?
+		if ( (!hasColumnHeaders)  && (headers=='col' || headers=='both') )
+		{
+			for( var row=0 ; row < table.rows.length ; row++ )
+			{
+				var newCell = RenameNode(table.rows[row].cells[0], 'TH') ;
+				if ( newCell != null )
+					newCell.scope = 'row' ;
+			}
+		}
+
+		// Should we make all first TH-cells in a row make TD? If 'yes' we do it the other way round :-)
+		if ( (hasColumnHeaders)  && !(headers=='col' || headers=='both') )
+		{
+			for( var row=0 ; row < table.rows.length ; row++ )
+			{
+				var oRow = table.rows[row] ;
+				if ( oRow.parentNode.nodeName == 'TBODY' )
+				{
+					var newCell = RenameNode(oRow.cells[0], 'TD') ;
+					if (newCell != null)
+						newCell.removeAttribute( 'scope' ) ;
+				}
+			}
+		}
+	}
+
 	if (! bExists)
 	{
-		var iRows = document.getElementById('txtRows').value ;
-		var iCols = document.getElementById('txtColumns').value ;
+		var iRows = GetE('txtRows').value ;
+		var iCols = GetE('txtColumns').value ;
 
-		for ( var r = 0 ; r < iRows ; r++ )
+		var startRow = 0 ;
+		// Should we make a <thead> ?
+		if (headers=='row' || headers=='both')
 		{
+			startRow++ ;
+			var oThead = table.createTHead() ;
 			var oRow = table.insertRow(-1) ;
+			oThead.appendChild(oRow);
+
 			for ( var c = 0 ; c < iCols ; c++ )
 			{
-				var oCell = oRow.insertCell(-1) ;
+				var oThcell = oDoc.createElement( 'TH' ) ;
+				oThcell.scope = 'col' ;
+				oRow.appendChild( oThcell ) ;
+				if ( oEditor.FCKBrowserInfo.IsGeckoLike )
+					oEditor.FCKTools.AppendBogusBr( oThcell ) ;
+			}
+		}
+
+		// Opera automatically creates a tbody when a thead has been added
+		var oTbody = FCKDomTools.GetFirstChild( table, 'TBODY' ) ;
+		if ( !oTbody )
+		{
+			// make TBODY if it doesn't exist
+			oTbody = oDoc.createElement( 'TBODY' ) ;
+			table.appendChild( oTbody ) ;
+		}
+		for ( var r = startRow ; r < iRows; r++ )
+		{
+			var oRow = oDoc.createElement( 'TR' ) ;
+			oTbody.appendChild(oRow) ;
+
+			var startCol = 0 ;
+			// Is the first column a header?
+			if (headers=='col' || headers=='both')
+			{
+				var oThcell = oDoc.createElement( 'TH' ) ;
+				oThcell.scope = 'row' ;
+				oRow.appendChild( oThcell ) ;
+				if ( oEditor.FCKBrowserInfo.IsGeckoLike )
+					oEditor.FCKTools.AppendBogusBr( oThcell ) ;
+
+				startCol++ ;
+			}
+			for ( var c = startCol ; c < iCols ; c++ )
+			{
+				// IE will leave the TH at the end of the row if we use now oRow.insertCell(-1)
+				var oCell = oDoc.createElement( 'TD' ) ;
+				oRow.appendChild( oCell ) ;
 				if ( oEditor.FCKBrowserInfo.IsGeckoLike )
 					oEditor.FCKTools.AppendBogusBr( oCell ) ;
 			}
 		}
-
-		oEditor.FCKUndo.SaveUndoStep() ;
 
 		oEditor.FCK.InsertElement( table ) ;
 	}
@@ -178,39 +319,44 @@ function Ok()
 				<table cellspacing="1" cellpadding="1" width="100%" border="0">
 					<tr>
 						<td valign="top">
-							<table cellspacing="0" cellpadding="0" border="0">
+							<table cellspacing="1" cellpadding="0" border="0">
 								<tr>
 									<td>
 										<span fcklang="DlgTableRows">Rows</span>:</td>
 									<td>
-										&nbsp;<input id="txtRows" type="text" maxlength="3" size="2" value="3" name="txtRows"
+										&nbsp;<input id="txtRows" type="text" maxlength="3" size="2" value="3"
 											onkeypress="return IsDigit(event);" /></td>
 								</tr>
 								<tr>
 									<td>
 										<span fcklang="DlgTableColumns">Columns</span>:</td>
 									<td>
-										&nbsp;<input id="txtColumns" type="text" maxlength="2" size="2" value="2" name="txtColumns"
+										&nbsp;<input id="txtColumns" type="text" maxlength="2" size="2" value="2"
 											onkeypress="return IsDigit(event);" /></td>
 								</tr>
 								<tr>
+									<td><span fcklang="DlgTableHeaders">Headers</span>:</td>
 									<td>
-										&nbsp;</td>
-									<td>
-										&nbsp;</td>
+										&nbsp;<select id="selHeaders">
+											<option fcklang="DlgTableHeadersNone" value="">None</option>
+											<option fcklang="DlgTableHeadersRow" value="row">First row</option>
+											<option fcklang="DlgTableHeadersColumn" value="col">First column</option>
+											<option fcklang="DlgTableHeadersBoth" value="both">Both</option>
+										</select>
+									</td>
 								</tr>
 								<tr>
 									<td>
 										<span fcklang="DlgTableBorder">Border size</span>:</td>
 									<td>
-										&nbsp;<input id="txtBorder" type="text" maxlength="2" size="2" value="1" name="txtBorder"
+										&nbsp;<input id="txtBorder" type="text" maxlength="2" size="2" value="1"
 											onkeypress="return IsDigit(event);" /></td>
 								</tr>
 								<tr>
 									<td>
 										<span fcklang="DlgTableAlign">Alignment</span>:</td>
 									<td>
-										&nbsp;<select id="selAlignment" name="selAlignment">
+										&nbsp;<select id="selAlignment">
 											<option fcklang="DlgTableAlignNotSet" value="" selected="selected">&lt;Not set&gt;</option>
 											<option fcklang="DlgTableAlignLeft" value="left">Left</option>
 											<option fcklang="DlgTableAlignCenter" value="center">Center</option>
@@ -227,10 +373,10 @@ function Ok()
 									<td>
 										<span fcklang="DlgTableWidth">Width</span>:</td>
 									<td>
-										&nbsp;<input id="txtWidth" type="text" maxlength="4" size="3" value="200" name="txtWidth"
+										&nbsp;<input id="txtWidth" type="text" maxlength="4" size="3" value="200"
 											onkeypress="return IsDigit(event);" /></td>
 									<td>
-										&nbsp;<select id="selWidthType" name="selWidthType">
+										&nbsp;<select id="selWidthType">
 											<option fcklang="DlgTableWidthPx" value="pixels" selected="selected">pixels</option>
 											<option fcklang="DlgTableWidthPc" value="percent">percent</option>
 										</select></td>
@@ -239,23 +385,18 @@ function Ok()
 									<td>
 										<span fcklang="DlgTableHeight">Height</span>:</td>
 									<td>
-										&nbsp;<input id="txtHeight" type="text" maxlength="4" size="3" name="txtHeight" onkeypress="return IsDigit(event);" /></td>
+										&nbsp;<input id="txtHeight" type="text" maxlength="4" size="3" onkeypress="return IsDigit(event);" /></td>
 									<td>
 										&nbsp;<span fcklang="DlgTableWidthPx">pixels</span></td>
 								</tr>
 								<tr>
-									<td>
-										&nbsp;</td>
-									<td>
-										&nbsp;</td>
-									<td>
-										&nbsp;</td>
+									<td colspan="3">&nbsp;</td>
 								</tr>
 								<tr>
 									<td nowrap="nowrap">
 										<span fcklang="DlgTableCellSpace">Cell spacing</span>:</td>
 									<td>
-										&nbsp;<input id="txtCellSpacing" type="text" maxlength="2" size="2" value="1" name="txtCellSpacing"
+										&nbsp;<input id="txtCellSpacing" type="text" maxlength="2" size="2" value="1"
 											onkeypress="return IsDigit(event);" /></td>
 									<td>
 										&nbsp;</td>
@@ -264,7 +405,7 @@ function Ok()
 									<td nowrap="nowrap">
 										<span fcklang="DlgTableCellPad">Cell padding</span>:</td>
 									<td>
-										&nbsp;<input id="txtCellPadding" type="text" maxlength="2" size="2" value="1" name="txtCellPadding"
+										&nbsp;<input id="txtCellPadding" type="text" maxlength="2" size="2" value="1"
 											onkeypress="return IsDigit(event);" /></td>
 									<td>
 										&nbsp;</td>

@@ -19,8 +19,16 @@ class ControllerCatalogManufacturer extends Controller {
 		
 		$this->load->model('catalog/manufacturer');
 			
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
-			$this->model_catalog_manufacturer->addManufacturer($this->request->post, $this->request->files);
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			if (is_uploaded_file($this->request->files['image']['tmp_name']) && is_writable(DIR_IMAGE) && is_writable(DIR_IMAGE . 'cache/')) {
+				move_uploaded_file($this->request->files['image']['tmp_name'], DIR_IMAGE . $this->request->files['image']['name']);
+			
+				if (file_exists(DIR_IMAGE . $this->request->files['image']['name'])) {
+					$this->request->post['image'] = $this->request->files['image']['name'];
+				}			
+			}
+			
+			$this->model_catalog_manufacturer->addManufacturer($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 			
@@ -51,7 +59,15 @@ class ControllerCatalogManufacturer extends Controller {
 		
 		$this->load->model('catalog/manufacturer');
 		
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			if (is_uploaded_file($this->request->files['image']['tmp_name']) && is_writable(DIR_IMAGE) && is_writable(DIR_IMAGE . 'cache/')) {
+				move_uploaded_file($this->request->files['image']['tmp_name'], DIR_IMAGE . $this->request->files['image']['name']);
+			
+				if (file_exists(DIR_IMAGE . $this->request->files['image']['name'])) {
+					$this->request->post['image'] = $this->request->files['image']['name'];
+				}			
+			}
+			
 			$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -83,7 +99,7 @@ class ControllerCatalogManufacturer extends Controller {
 		
 		$this->load->model('catalog/manufacturer');
 			
-    	if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
+    	if (isset($this->request->post['delete']) && $this->validateDelete()) {
 			foreach ($this->request->post['delete'] as $manufacturer_id) {
 				$this->model_catalog_manufacturer->deleteManufacturer($manufacturer_id);
 			}
@@ -185,7 +201,7 @@ class ControllerCatalogManufacturer extends Controller {
 				'manufacturer_id' => $result['manufacturer_id'],
 				'name'            => $result['name'],
 				'sort_order'      => $result['sort_order'],
-				'delete'          => in_array($result['manufacturer_id'], (array)@$this->request->post['delete']),
+				'delete'          => isset($this->request->post['delete']) && in_array($result['manufacturer_id'], $this->request->post['delete']),
 				'action'          => $action
 			);
 		}	
@@ -201,11 +217,19 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 		
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 
 		$url = '';
 
@@ -267,8 +291,17 @@ class ControllerCatalogManufacturer extends Controller {
 	
 		$this->data['tab_general'] = $this->language->get('tab_general');
 	  
-    	$this->data['error_warning'] = @$this->error['warning'];
-    	$this->data['error_name'] = @$this->error['name'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+
+ 		if (isset($this->error['name'])) {
+			$this->data['error_name'] = $this->error['name'];
+		} else {
+			$this->data['error_name'] = '';
+		}
 
   		$this->document->breadcrumbs = array();
 
@@ -306,42 +339,40 @@ class ControllerCatalogManufacturer extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('catalog/manufacturer' . $url);
 
-    	if ((isset($this->request->get['manufacturer_id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+    	if (isset($this->request->get['manufacturer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
     	}
 
     	if (isset($this->request->post['name'])) {
       		$this->data['name'] = $this->request->post['name'];
-    	} else {
-      		$this->data['name'] = @$manufacturer_info['name'];
+    	} elseif (isset($manufacturer_info)) {
+			$this->data['name'] = $manufacturer_info['name'];
+		} else {	
+      		$this->data['name'] = '';
     	}
 
 		if (isset($this->request->post['keyword'])) {
 			$this->data['keyword'] = $this->request->post['keyword'];
+		} elseif (isset($manufacturer_info)) {
+			$this->data['keyword'] = $manufacturer_info['keyword'];
 		} else {
-			$this->data['keyword'] = @$manufacturer_info['keyword'];
-		}
-		
-		if (isset($this->request->post['image'])) {
-			$this->data['image'] = $this->request->post['image'];
-		} else {
-			$this->data['image'] = @$manufacturer_info['image'];
+			$this->data['keyword'] = '';
 		}
 		
 		$this->load->helper('image');
 		
-		if (isset($this->request->post['image'])) {
-			$this->data['preview'] = HelperImage::resize($this->request->post['image'], 100, 100);
-		} elseif (@$manufacturer_info['image']) {
-			$this->data['preview'] = HelperImage::resize($manufacturer_info['image'], 100, 100);
+		if (isset($manufacturer_info) && $manufacturer_info['image'] && file_exists(DIR_IMAGE . $manufacturer_info['image'])) {
+			$this->data['preview'] = image_resize($manufacturer_info['image'], 100, 100);
 		} else {
-			$this->data['preview'] = HelperImage::resize('no_image.jpg', 100, 100);
+			$this->data['preview'] = image_resize('no_image.jpg', 100, 100);
 		}
-
+		
 		if (isset($this->request->post['sort_order'])) {
       		$this->data['sort_order'] = $this->request->post['sort_order'];
-    	} else {
-      		$this->data['sort_order'] = @$manufacturer_info['sort_order'];
+    	} elseif (isset($manufacturer_info)) {
+			$this->data['sort_order'] = $manufacturer_info['sort_order'];
+		} else {
+      		$this->data['sort_order'] = '';
     	}
 
 		$this->id       = 'content';
@@ -359,7 +390,37 @@ class ControllerCatalogManufacturer extends Controller {
     	if ((strlen(utf8_decode($this->request->post['name'])) < 3) || (strlen(utf8_decode($this->request->post['name'])) > 32)) {
       		$this->error['name'] = $this->language->get('error_name');
     	}
+		
+  		if ($this->request->files['image']['name']) {
+	  		if ((strlen(utf8_decode($this->request->files['image']['name'])) < 3) || (strlen(utf8_decode($this->request->files['image']['name'])) > 255)) {
+        		$this->error['warning'] = $this->language->get('error_filename');
+	  		}
 
+		    $allowed = array(
+		    	'image/jpeg',
+		    	'image/pjpeg',
+				'image/png',
+				'image/x-png',
+				'image/gif'
+		    );
+				
+			if (!in_array($this->request->files['image']['type'], $allowed)) {
+				$this->error['warning'] = $this->language->get('error_filetype');
+			}
+			
+			if (!is_writable(DIR_IMAGE)) {
+				$this->error['warning'] = $this->language->get('error_writable_image');
+			}
+			
+			if (!is_writable(DIR_IMAGE . 'cache/')) {
+				$this->error['warning'] = $this->language->get('error_writable_image_cache');
+			}
+			
+			if ($this->request->files['image']['error'] != UPLOAD_ERR_OK) { 
+				$this->error['warning'] = $this->language->get('error_upload_' . $this->request->files['image']['error']);
+			}
+		}
+		
 		if (!$this->error) {
 	  		return TRUE;
 		} else {

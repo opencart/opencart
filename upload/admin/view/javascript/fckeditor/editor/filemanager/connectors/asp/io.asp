@@ -1,6 +1,6 @@
 ﻿<%
  ' FCKeditor - The text editor for Internet - http://www.fckeditor.net
- ' Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ ' Copyright (C) 2003-2009 Frederico Caldeira Knabben
  '
  ' == BEGIN LICENSE ==
  '
@@ -22,7 +22,14 @@
 %>
 <%
 function CombinePaths( sBasePath, sFolder)
+	sFolder = replace(sFolder, "\", "/")
 	CombinePaths =  RemoveFromEnd( sBasePath, "/" ) & "/" & RemoveFromStart( sFolder, "/" )
+end function
+
+function CombineLocalPaths( sBasePath, sFolder)
+	sFolder = replace(sFolder, "/", "\")
+	' The RemoveFrom* functions use RegExp, so we must escape the \
+	CombineLocalPaths =  RemoveFromEnd( sBasePath, "\\" ) & "\" & RemoveFromStart( sFolder, "\\" )
 end function
 
 Function GetResourceTypePath( resourceType, sCommand )
@@ -69,7 +76,7 @@ Function ServerMapFolder( resourceType, folderPath, sCommand )
 	CreateServerFolder sResourceTypePath
 
 	' Return the resource type directory combined with the required path.
-	ServerMapFolder = CombinePaths( sResourceTypePath, folderPath )
+	ServerMapFolder = CombineLocalPaths( sResourceTypePath, folderPath )
 End Function
 
 Sub CreateServerFolder( folderPath )
@@ -78,6 +85,10 @@ Sub CreateServerFolder( folderPath )
 
 	Dim sParent
 	sParent = oFSO.GetParentFolderName( folderPath )
+
+	' If folderPath is a network path (\\server\folder\) then sParent is an empty string.
+	' Get out.
+	if (sParent = "") then exit sub
 
 	' Check if the parent exists, or create it.
 	If ( NOT oFSO.FolderExists( sParent ) ) Then CreateServerFolder( sParent )
@@ -141,7 +152,7 @@ End Function
 Function IsAllowedType( resourceType )
 	Dim oRE
 	Set oRE	= New RegExp
-	oRE.IgnoreCase	= True
+	oRE.IgnoreCase	= False
 	oRE.Global		= True
 	oRE.Pattern		= "^(" & ConfigAllowedTypes & ")$"
 
@@ -164,6 +175,8 @@ End Function
 
 function GetCurrentFolder()
 	dim sCurrentFolder
+	dim oRegex
+
 	sCurrentFolder = Request.QueryString("CurrentFolder")
 	If ( sCurrentFolder = "" ) Then sCurrentFolder = "/"
 
@@ -173,6 +186,14 @@ function GetCurrentFolder()
 
 	' Check for invalid folder paths (..)
 	If ( InStr( 1, sCurrentFolder, ".." ) <> 0 OR InStr( 1, sCurrentFolder, "\" ) <> 0) Then
+		SendError 102, ""
+	End If
+
+	Set oRegex = New RegExp
+	oRegex.Global		= True
+	oRegex.Pattern = "(/\.)|(//)|([\\:\*\?\""\<\>\|]|[\u0000-\u001F]|\u007F)"
+
+	if (oRegex.Test(sCurrentFolder)) Then
 		SendError 102, ""
 	End If
 
@@ -214,37 +235,9 @@ end function
 Sub SendUploadResults( errorNumber, fileUrl, fileName, customMsg )
 	Response.Clear
 	Response.Write "<script type=""text/javascript"">"
-	Response.Write "(function()"
-	Response.Write "{"
-	Response.Write "var d = document.domain ;"
-
-	Response.Write " while ( true )"
-	Response.Write "	{"
-	' Test if we can access a parent property.
-	Response.Write "		try"
-	Response.Write "		{"
-	Response.Write "			var test = window.top.opener.document.domain ;"
-	Response.Write "			break ;"
-	Response.Write "		}"
-	Response.Write "		catch( e ) {}"
-
-	' Remove a domain part: www.mytest.example.com => mytest.example.com => example.com ...
-	Response.Write "		d = d.replace( /.*?(?:\.|$)/, '' ) ;"
-
-	Response.Write "		if ( d.length == 0 )"
-	' It was not able to detect the domain.
-	Response.Write "			break ;"
-	Response.Write ""
-	Response.Write "		try"
-	Response.Write "		{"
-	Response.Write "			document.domain = d ;"
-	Response.Write "		}"
-	Response.Write "		catch (e)"
-	Response.Write "		{"
-	Response.Write "			break ;"
-	Response.Write "		}"
-	Response.Write "	}"
-	Response.Write "})() ;"
+	' Minified version of the document.domain automatic fix script (#1919).
+	' The original script can be found at _dev/domain_fix_template.js
+	Response.Write "(function(){var d=document.domain;while (true){try{var A=window.parent.document.domain;break;}catch(e) {};d=d.replace(/.*?(?:\.|$)/,'');if (d.length==0) break;try{document.domain=d;}catch (e){break;}}})();"
 
 	Response.Write "window.parent.OnUploadCompleted(" & errorNumber & ",""" & Replace( fileUrl, """", "\""" ) & """,""" & Replace( fileName, """", "\""" ) & """,""" & Replace( customMsg , """", "\""" ) & """) ;"
 	Response.Write "</script>"

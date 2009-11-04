@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -132,7 +132,7 @@ function Ok()
 						<tr>
 							<td nowrap><span fckLang="DlgSelectSize">Size</span>&nbsp;</td>
 							<td nowrap><input id="txtLines" type="text" size="2" value="">&nbsp;<span fckLang="DlgSelectLines">lines</span></td>
-							<td nowrap align="right"><input id="chkMultiple" name="chkMultiple" type="checkbox"><label for="chkMultiple" fckLang="DlgSelectChkMulti">Allow
+							<td nowrap align="right"><input id="chkMultiple" type="checkbox"><label for="chkMultiple" fckLang="DlgSelectChkMulti">Allow
 									multiple selections</label></td>
 						</tr>
 					</table>
@@ -143,20 +143,20 @@ function Ok()
 					<table width="100%">
 						<tr>
 							<td width="50%"><span fckLang="DlgSelectOpText">Text</span><br>
-								<input id="txtText" style="WIDTH: 100%" type="text" name="txtText">
+								<input id="txtText" style="WIDTH: 100%" type="text">
 							</td>
 							<td width="50%"><span fckLang="DlgSelectOpValue">Value</span><br>
-								<input id="txtValue" style="WIDTH: 100%" type="text" name="txtValue">
+								<input id="txtValue" style="WIDTH: 100%" type="text">
 							</td>
 							<td vAlign="bottom"><input onclick="Add();" type="button" fckLang="DlgSelectBtnAdd" value="Add"></td>
 							<td vAlign="bottom"><input onclick="Modify();" type="button" fckLang="DlgSelectBtnModify" value="Modify"></td>
 						</tr>
 						<tr>
 							<td rowSpan="2"><select id="cmbText" style="WIDTH: 100%" onchange="GetE('cmbValue').selectedIndex = this.selectedIndex;Select(this);"
-									size="5" name="cmbText"></select>
+									size="5"></select>
 							</td>
 							<td rowSpan="2"><select id="cmbValue" style="WIDTH: 100%" onchange="GetE('cmbText').selectedIndex = this.selectedIndex;Select(this);"
-									size="5" name="cmbValue"></select>
+									size="5"></select>
 							</td>
 							<td vAlign="top" colSpan="2">
 							</td>

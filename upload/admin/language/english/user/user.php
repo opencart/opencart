@@ -23,6 +23,7 @@ $_['entry_status']      = 'Status:';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify users!';
+$_['error_account']     = 'Warning: You can not delete your own account!';
 $_['error_username']    = 'Username must be greater than 3 and less than 20 characters!';
 $_['error_password']    = 'Password must be greater than 3 and less than 20 characters!';
 $_['error_confirm']     = 'Password and password confirmation do not match!';

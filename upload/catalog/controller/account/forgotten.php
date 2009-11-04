@@ -13,7 +13,7 @@ class ControllerAccountForgotten extends Controller {
 		
 		$this->load->model('account/customer');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$password = substr(md5(rand()), 0, 7);
 			
 			$subject = sprintf($this->language->get('mail_subject'), $this->config->get('config_store'));
@@ -67,8 +67,12 @@ class ControllerAccountForgotten extends Controller {
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		$this->data['button_back'] = $this->language->get('button_back');
 
-		$this->data['error'] = @$this->error['message'];
-
+		if (isset($this->error['message'])) {
+			$this->data['error'] = $this->error['message'];
+		} else {
+			$this->data['error'] = '';
+		}
+		
 		$this->data['action'] = $this->url->https('account/forgotten');
  
 		$this->data['back'] = $this->url->https('account/account');

@@ -1,7 +1,7 @@
 <cfsetting enablecfoutputonly="Yes">
 <!---
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -193,8 +193,12 @@
 	<!--- Ensure the folder path has no double-slashes, or mkdir may fail on certain platforms --->
 	<cfset sCurrentFolder = rereplace( sCurrentFolder, "//+", "/", "all" )>
 
-	<cfif find( "..", sCurrentFolder) or find( "\", sCurrentFolder) >
-		<cfset SendError( 102, "" )>
+	<cfif find( "..", sCurrentFolder) or find( "\", sCurrentFolder) or REFind('(/\.)|(//)|[[:cntrl:]]|([\\:\*\?\"<>])', sCurrentFolder)>
+		<cfif URL.Command eq "FileUpload" or URL.Command eq "QuickUpload">
+			<cfset SendUploadResults( 102, "", "", "") >
+		<cfelse>
+			<cfset SendError( 102, "" )>
+		</cfif>
 	</cfif>
 
 	<cfreturn sCurrentFolder>
@@ -265,41 +269,17 @@
 	<cfargument name="fileName" required="false" type="String" default="">
 	<cfargument name="customMsg" required="false" type="String" default="">
 
+	<cfif errorNumber and errorNumber neq 201>
+		<cfset fileUrl = "">
+		<cfset fileName = "">
+	</cfif>
+	<!--- Minified version of the document.domain automatic fix script (#1919).
+	The original script can be found at _dev/domain_fix_template.js --->
 	<cfoutput>
 <script type="text/javascript">
-(function()
-{
-	var d = document.domain ;
-
-	while ( true )
-	{
-		// Test if we can access a parent property.
-		try
-		{
-			var test = window.top.opener.document.domain ;
-			break ;
-		}
-		catch( e ) {}
-
-		// Remove a domain part: www.mytest.example.com => mytest.example.com => example.com ...
-		d = d.replace( /.*?(?:\.|$)/, '' ) ;
-
-		if ( d.length == 0 )
-			break ;		// It was not able to detect the domain.
-
-		try
-		{
-			document.domain = d ;
-		}
-		catch (e)
-		{
-			break ;
-		}
-	}
-})() ;
-
-			window.parent.OnUploadCompleted( #errorNumber#, "#JSStringFormat(fileUrl)#", "#JSStringFormat(fileName)#", "#JSStringFormat(customMsg)#" );
-		</script>
+(function(){var d=document.domain;while (true){try{var A=window.parent.document.domain;break;}catch(e) {};d=d.replace(/.*?(?:\.|$)/,'');if (d.length==0) break;try{document.domain=d;}catch (e){break;}}})();
+window.parent.OnUploadCompleted( #errorNumber#, "#JSStringFormat(fileUrl)#", "#JSStringFormat(fileName)#", "#JSStringFormat(customMsg)#" );
+</script>
 	</cfoutput>
 	<cfabort>
 </cffunction>

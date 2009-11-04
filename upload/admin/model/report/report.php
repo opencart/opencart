@@ -32,25 +32,31 @@ class ModelReportReport extends Model {
 	public function getSaleReport($data = array()) {
 		$sql = "SELECT MIN(date_added) AS date_start, MAX(date_added) AS date_end, COUNT(*) AS orders, SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'"; 
 		
-		if (isset($data['date_start'])) {
-			$date_start = $data['date_start'];
+		if (isset($data['filter_date_start'])) {
+			$date_start = $data['filter_date_start'];
 		} else {
 			$date_start = date('Y-m-d', strtotime('-7 day'));
 		}
 
-		if (isset($data['date_end'])) {
-			$date_end = $data['date_end'];
+		if (isset($data['filter_date_end'])) {
+			$date_end = $data['filter_date_end'];
 		} else {
 			$date_end = date('Y-m-d', time());
 		}
 		
 		$sql .= " AND (DATE(date_added) >= '" . $this->db->escape($date_start) . "' AND DATE(date_added) <= '" . $this->db->escape($date_end) . "')";
 		
-		if (@$data['order_status_id']) {
-			$sql .= " AND order_status_id = '" . (int)$data['order_status_id'] . "'";
+		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+			$sql .= " AND order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		}
 		
-		switch(@$data['group']) {
+		if (isset($data['filter_group'])) {
+			$group = $data['filter_group'];
+		} else {
+			$group = 'week';
+		}
+		
+		switch($group) {
 			case 'day';
 				$sql .= " GROUP BY DAY(date_added)";
 				break;
@@ -82,27 +88,33 @@ class ModelReportReport extends Model {
 	}
 	
 	public function getSaleReportTotal($data = array()) {
-		$sql = "SELECT MIN(date_added) AS date_start, MAX(date_added) AS date_end, COUNT(*) AS orders, SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'";
+		$sql = "SELECT MIN(date_added) AS date_start, MAX(date_added) AS date_end, COUNT(*) AS orders, SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'"; 
 		
-		if (isset($data['date_start'])) {
-			$date_start = $data['date_start'];
+		if (isset($data['filter_date_start'])) {
+			$date_start = $data['filter_date_start'];
 		} else {
 			$date_start = date('Y-m-d', strtotime('-7 day'));
 		}
 
-		if (isset($data['date_end'])) {
-			$date_end = $data['date_end'];
+		if (isset($data['filter_date_end'])) {
+			$date_end = $data['filter_date_end'];
 		} else {
-			$date_end = date('Y-m-d', strtotime($date_start));
+			$date_end = date('Y-m-d', time());
 		}
 		
 		$sql .= " AND (DATE(date_added) >= '" . $this->db->escape($date_start) . "' AND DATE(date_added) <= '" . $this->db->escape($date_end) . "')";
 		
-		if (@$data['order_status_id']) {
-			$sql .= " AND order_status_id = '" . (int)$data['order_status_id'] . "'";
+		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+			$sql .= " AND order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		}
 		
-		switch(@$data['group']) {
+		if (isset($data['filter_group'])) {
+			$group = $data['filter_group'];
+		} else {
+			$group = 'week';
+		}
+		
+		switch($group) {
 			case 'day';
 				$sql .= " GROUP BY DAY(date_added)";
 				break;
@@ -117,7 +129,7 @@ class ModelReportReport extends Model {
 				$sql .= " GROUP BY YEAR(date_added)";
 				break;									
 		}
-
+		
 		$query = $this->db->query($sql);
 
 		return $query->num_rows;	

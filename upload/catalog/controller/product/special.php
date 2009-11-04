@@ -85,13 +85,21 @@ class ControllerProductSpecial extends Controller {
 					'model'   => $result['model'],
 					'rating'  => $rating,
 					'stars'   => sprintf($this->language->get('text_stars'), $rating),
-           			'thumb'   => HelperImage::resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
+           			'thumb'   => image_resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
            			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 					'special' => $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax'))),
 					'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product' . $url . '&product_id=' . $result['product_id']))
        			);
         	}
-				
+
+			if (!$this->config->get('config_customer_price')) {
+				$this->data['display_price'] = TRUE;
+			} elseif ($this->customer->isLogged()) {
+				$this->data['display_price'] = TRUE;
+			} else {
+				$this->data['display_price'] = FALSE;
+			}
+
 			$url = '';
 
 			if (isset($this->request->get['page'])) {

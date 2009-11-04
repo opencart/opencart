@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -27,7 +27,7 @@
 <Package>
 	<Header><![CDATA[/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -77,7 +77,7 @@
 		<File path="editor/_source/internals/fck.js" />
 		<File path="editor/_source/internals/fck_ie.js" />
 		<File path="editor/_source/internals/fckconfig.js" />
-		<File path="editor/_source/internals/fckdebug.js" />
+		<File path="editor/_source/internals/fckdebug_empty.js" />
 		<File path="editor/_source/internals/fckdomtools.js" />
 		<File path="editor/_source/internals/fcktools.js" />
 		<File path="editor/_source/internals/fcktools_ie.js" />
@@ -173,7 +173,7 @@
 		<File path="editor/_source/internals/fck.js" />
 		<File path="editor/_source/internals/fck_gecko.js" />
 		<File path="editor/_source/internals/fckconfig.js" />
-		<File path="editor/_source/internals/fckdebug.js" />
+		<File path="editor/_source/internals/fckdebug_empty.js" />
 		<File path="editor/_source/internals/fckdomtools.js" />
 		<File path="editor/_source/internals/fcktools.js" />
 		<File path="editor/_source/internals/fcktools_gecko.js" />

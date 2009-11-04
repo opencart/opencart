@@ -9,7 +9,7 @@ class ControllerCheckoutPayment extends Controller {
 	  		$this->redirect($this->url->https('account/login'));
     	} 
  
-    	if ((!$this->cart->hasProducts()) || ((!$this->cart->hasStock()) && (!$this->config->get('config_stock_checkout')))) {
+    	if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
       		$this->redirect($this->url->https('checkout/cart'));
     	}
 			
@@ -26,9 +26,13 @@ class ControllerCheckoutPayment extends Controller {
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 		}
-			
-    	if (!$this->customer->hasAddress(@$this->session->data['payment_address_id'])) {
-      		$this->session->data['payment_address_id'] = @$this->session->data['shipping_address_id'];
+		
+		if (!isset($this->session->data['payment_address_id'])) {
+			$this->session->data['payment_address_id'] = 0;
+		}
+		
+    	if (!$this->customer->hasAddress($this->session->data['payment_address_id'])) {
+      		$this->session->data['payment_address_id'] = $this->session->data['shipping_address_id'];
     	}
 	
     	if (!$this->customer->hasAddress($this->session->data['payment_address_id'])) {
@@ -67,7 +71,7 @@ class ControllerCheckoutPayment extends Controller {
 		
 		$this->language->load('checkout/payment');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment']];
 		  
 	  	  	$this->session->data['comment'] = strip_tags($this->request->post['comment']);
@@ -119,8 +123,10 @@ class ControllerCheckoutPayment extends Controller {
 			$this->data['error_warning'] = $this->session->data['error'];
 			
 			unset($this->session->data['error']);
+		} elseif (isset($this->error['warning'])) {
+    		$this->data['error_warning'] = $this->error['warning'];
 		} else {
-    		$this->data['error_warning'] = @$this->error['warning'];
+			$this->data['error_warning'] = '';
 		}
 		
     	$this->data['action'] = $this->url->https('checkout/payment');
@@ -171,8 +177,12 @@ class ControllerCheckoutPayment extends Controller {
 			$this->data['default'] = '';
 		}
 		
-    	$this->data['comment'] = @$this->session->data['comment'];
-
+		if (isset($this->session->data['comment'])) {
+    		$this->data['comment'] = $this->session->data['comment'];
+		} else {
+			$this->data['comment'] = '';
+		}
+		
 		if ($this->config->get('config_checkout')) {
 			$this->load->model('catalog/information');
 			
@@ -187,7 +197,11 @@ class ControllerCheckoutPayment extends Controller {
 			$this->data['text_agree'] = '';
 		}
 		
-      	$this->data['agree'] = @$this->request->post['agree'];
+		if (isset($this->request->post['agree'])) { 
+      		$this->data['agree'] = $this->request->post['agree'];
+		} else {
+			$this->data['agree'] = '';
+		}
 		
     	if ($this->cart->hasShipping()) {
       		$this->data['back'] = $this->url->https('checkout/shipping');
@@ -217,7 +231,7 @@ class ControllerCheckoutPayment extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout'));
 			
 			if ($information_info) {
-    			if (!@$this->request->post['agree']) {
+    			if (!isset($this->request->post['agree'])) {
       				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
     			}
 			}

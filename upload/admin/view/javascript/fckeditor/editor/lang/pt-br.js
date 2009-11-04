@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "Remover Formatação",
 InsertLinkLbl		: "Hiperlink",
 InsertLink			: "Inserir/Editar Hiperlink",
 RemoveLink			: "Remover Hiperlink",
+VisitLink			: "Open Link",	//MISSING
 Anchor				: "Inserir/Editar Âncora",
 AnchorDelete		: "Remover Âncora",
 InsertImageLbl		: "Figura",
@@ -72,6 +73,9 @@ BlockJustify		: "Justificado",
 DecreaseIndent		: "Diminuir Recuo",
 IncreaseIndent		: "Aumentar Recuo",
 Blockquote			: "Recuo",
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "Desfazer",
 Redo				: "Refazer",
 NumberedListLbl		: "Numeração",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "A barra de ferramentas \"%1\" não existe",
 NoActiveX			: "As configurações de segurança do seu browser podem limitar algumas características do editor. Você precisa habilitar a opção \"Executar controles e plug-ins ActiveX\". Você pode experimentar erros e alertas de características faltantes.",
 BrowseServerBlocked : "Os recursos do browser não puderam ser abertos. Tenha certeza que todos os bloqueadores de popup estão desabilitados.",
 DialogBlocked		: "Não foi possível abrir a janela de diálogo. Tenha certeza que todos os bloqueadores de popup estão desabilitados.",
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "OK",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Espaçamento",
 DlgTableCellPad		: "Enchimento",
 DlgTableCaption		: "Legenda",
 DlgTableSummary		: "Resumo",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Formatar célula",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "Superior",
 DlgCellVerAlignMiddle	: "Centralizado",
 DlgCellVerAlignBottom	: "Inferior",
 DlgCellVerAlignBaseline	: "Baseline",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "Transpor Linhas",
 DlgCellCollSpan		: "Transpor Colunas",
 DlgCellBackColor	: "Cor do Plano de Fundo",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "Sobre",
 DlgAboutBrowserInfoTab	: "Informações do Navegador",
 DlgAboutLicenseTab	: "Licença",
 DlgAboutVersion		: "versão",
-DlgAboutInfo		: "Para maiores informações visite"
+DlgAboutInfo		: "Para maiores informações visite",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style"	//MISSING
 };

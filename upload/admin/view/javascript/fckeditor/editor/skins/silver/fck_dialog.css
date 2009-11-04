@@ -1,6 +1,6 @@
 /*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -266,7 +266,6 @@ body, .BackColor
 
 .bl
 {
-
 	bottom: 0px;
 	left: 0px;
 	width: 30px;

@@ -57,13 +57,13 @@ class ModelCustomerCoupon extends Model {
 			'c.status'
 		);	
 			
-		if (in_array(@$data['sort'], $sort_data)) {
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];	
 		} else {
 			$sql .= " ORDER BY cd.name";	
 		}
 			
-		if (@$data['order'] == 'DESC') {
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";
 		} else {
 			$sql .= " ASC";

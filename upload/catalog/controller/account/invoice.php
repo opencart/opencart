@@ -2,8 +2,15 @@
 class ControllerAccountInvoice extends Controller {
 	public function index() { 
     	if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->https('account/invoice&order_id=' . @$this->request->get['order_id']);
-      		
+			if (isset($this->request->get['order_id'])) {
+				$order_id = $this->request->get['order_id'];
+			} else {
+				$order_id = 0;
+			}	
+			
+			$this->session->data['redirect'] = $this->url->https('account/invoice&order_id=' . $order_id);
+			
+			
 			$this->redirect($this->url->https('account/login'));
     	}
 	  
@@ -38,8 +45,14 @@ class ControllerAccountInvoice extends Controller {
       	);
 		
 		$this->load->model('account/order');
-		
-		$order_info = $this->model_account_order->getOrder(@$this->request->get['order_id']);
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = $this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+			
+		$order_info = $this->model_account_order->getOrder($order_id);
 		
 		if ($order_info) {
       		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -161,7 +174,6 @@ class ControllerAccountInvoice extends Controller {
           			'option'   => $option_data,
           			'quantity' => $product['quantity'],
           			'price'    => $this->currency->format($product['price'], $order_info['currency'], $order_info['value']),
-          			'discount' => (ceil($product['discount']) ? $this->currency->format($product['price'] - $product['discount'], $order_info['currency'], $order_info['value']) : NULL),
 					'total'    => $this->currency->format($product['total'], $order_info['currency'], $order_info['value'])
         		);
       		}

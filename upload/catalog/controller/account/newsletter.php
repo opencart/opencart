@@ -14,7 +14,7 @@ class ControllerAccountNewsletter extends Controller {
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			$this->load->model('account/customer');
 			
-			$this->model_account_customer->editNewsletter($this->customer->getId(), $this->request->post['newsletter']);
+			$this->model_account_customer->editNewsletter($this->request->post['newsletter']);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			

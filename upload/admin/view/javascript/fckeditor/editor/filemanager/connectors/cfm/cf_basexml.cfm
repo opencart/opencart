@@ -1,7 +1,7 @@
 <cfsetting enablecfoutputonly="Yes">
 <!---
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -64,5 +64,9 @@
 <cffunction name="SendErrorNode" returntype="void" output="true">
 	<cfargument name="number" required="true" type="Numeric">
 	<cfargument name="text" required="true">
-	<cfoutput><Error number="#ARGUMENTS.number#" text="#htmleditformat(ARGUMENTS.text)#" /></cfoutput>
+	<cfif Len(ARGUMENTS.text)>
+		<cfoutput><Error number="#ARGUMENTS.number#" text="#htmleditformat(ARGUMENTS.text)#" /></cfoutput>
+	<cfelse>
+		<cfoutput><Error number="#ARGUMENTS.number#" /></cfoutput>
+	</cfif>
 </cffunction>

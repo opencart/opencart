@@ -18,6 +18,11 @@
           <?php } else { ?>
           <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
           <?php } ?></td>
+        <td class="left"><?php if ($sort == 'email') { ?>
+          <a href="<?php echo $sort_email; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_email; ?></a>
+          <?php } else { ?>
+          <a href="<?php echo $sort_email; ?>"><?php echo $column_email; ?></a>
+          <?php } ?></td>
         <td class="left"><?php if ($sort == 'status') { ?>
           <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
           <?php } else { ?>
@@ -35,6 +40,7 @@
       <tr class="filter">
         <td></td>
         <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" /></td>
+        <td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" /></td>
         <td><select name="filter_status">
             <option value="*"></option>
             <?php if ($filter_status) { ?>
@@ -62,6 +68,7 @@
           <input type="checkbox" name="delete[]" value="<?php echo $customer['customer_id']; ?>" />
           <?php } ?></td>
         <td class="left"><?php echo $customer['name']; ?></td>
+        <td class="left"><?php echo $customer['email']; ?></td>
         <td class="left"><?php echo $customer['status']; ?></td>
         <td class="left"><?php echo $customer['date_added']; ?></td>
         <td class="right"><?php foreach ($customer['action'] as $action) { ?>
@@ -71,7 +78,7 @@
       <?php } ?>
       <?php } else { ?>
       <tr class="even">
-        <td class="center" colspan="5"><?php echo $text_no_results; ?></td>
+        <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
       </tr>
       <?php } ?>
     </tbody>
@@ -86,6 +93,12 @@ function filter() {
 	
 	if (filter_name) {
 		url += '&filter_name=' + encodeURIComponent(filter_name);
+	}
+	
+	var filter_email = $('input[name=\'filter_email\']').attr('value');
+	
+	if (filter_email) {
+		url += '&filter_email=' + encodeURIComponent(filter_email);
 	}
 	
 	var filter_status = $('select[name=\'filter_status\']').attr('value');

@@ -71,14 +71,23 @@ class ControllerProductSearch extends Controller {
 		} else {
 			$order = 'ASC';
 		}
-				
-		$this->data['keyword'] = @$this->request->get['keyword'];
-		$this->data['description'] = @$this->request->get['description'];
-	
+		
+		if (isset($this->request->get['keyword'])) {
+			$this->data['keyword'] = $this->request->get['keyword'];
+		} else {
+			$this->data['keyword'] = '';
+		}
+		
+		if (isset($this->request->get['description'])) {
+			$this->data['description'] = $this->request->get['description'];
+		} else {
+			$this->data['description'] = '';
+		}
+		
 		if (isset($this->request->get['keyword'])) {
 			$this->load->model('catalog/product');
 			
-			$product_total = $this->model_catalog_product->getTotalProductsByKeyword($this->request->get['keyword'], @$this->request->get['description']);
+			$product_total = $this->model_catalog_product->getTotalProductsByKeyword($this->request->get['keyword'], isset($this->request->get['description']) ? $this->request->get['description'] : '');
 						
 			if ($product_total) {
 				$url = '';
@@ -93,7 +102,7 @@ class ControllerProductSearch extends Controller {
 				
         		$this->data['products'] = array();
 				
-				$results = $this->model_catalog_product->getProductsByKeyword($this->request->get['keyword'], @$this->request->get['description'], $sort, $order, ($page - 1) * 12, 12);
+				$results = $this->model_catalog_product->getProductsByKeyword($this->request->get['keyword'], isset($this->request->get['description']) ? $this->request->get['description'] : '', $sort, $order, ($page - 1) * 12, 12);
         		
 				foreach ($results as $result) {
 					if ($result['image']) {
@@ -101,8 +110,6 @@ class ControllerProductSearch extends Controller {
 					} else {
 						$image = 'no_image.jpg';
 					}						
-					
-					$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
 					
 					$special = $this->model_catalog_product->getProductSpecial($result['product_id']);
 			
@@ -112,17 +119,27 @@ class ControllerProductSearch extends Controller {
 						$special = FALSE;
 					}
 					
+					$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
+					
 					$this->data['products'][] = array(
             			'name'    => $result['name'],
 						'model'   => $result['model'],
 						'rating'  => $rating,
 						'stars'   => sprintf($this->language->get('text_stars'), $rating),
-            			'thumb'   => HelperImage::resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
+            			'thumb'   => image_resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
             			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 						'special' => $special,
 						'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&keyword=' . $this->request->get['keyword'] . $url . '&product_id=' . $result['product_id'])),
           			);
         		}
+				
+				if (!$this->config->get('config_customer_price')) {
+					$this->data['display_price'] = TRUE;
+				} elseif ($this->customer->isLogged()) {
+					$this->data['display_price'] = TRUE;
+				} else {
+					$this->data['display_price'] = FALSE;
+				}
 				
 				$url = '';
 				

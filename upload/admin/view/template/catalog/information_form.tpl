@@ -12,10 +12,18 @@
       <?php foreach ($languages as $language) { ?>
       <tr>
         <td width="25%"><span class="required">*</span> <?php echo $entry_title; ?></td>
-        <td><input name="information_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo @$information_description[$language['language_id']]['title']; ?>" />
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <br />
-          <?php if (@$error_title[$language['language_id']]) { ?>
+        <td><input name="information_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" />
+          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
+          <?php if (isset($error_title[$language['language_id']])) { ?>
           <span class="error"><?php echo $error_title[$language['language_id']]; ?></span>
+          <?php } ?></td>
+      </tr>
+      <tr>
+        <td><span class="required">*</span> <?php echo $entry_description; ?></td>
+        <td><textarea name="information_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['description'] : ''; ?></textarea>
+          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" />
+          <?php if (isset($error_description[$language['language_id']])) { ?>
+          <span class="error"><?php echo $error_description[$language['language_id']]; ?></span>
           <?php } ?></td>
       </tr>
       <?php } ?>
@@ -23,16 +31,6 @@
         <td><?php echo $entry_keyword; ?></td>
         <td><input type="text" name="keyword" value="<?php echo $keyword; ?>" /></td>
       </tr>
-      <?php foreach ($languages as $language) { ?>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_description; ?></td>
-        <td><textarea name="information_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo @$information_description[$language['language_id']]['description']; ?></textarea>
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" />
-          <?php if (@$error_description[$language['language_id']]) { ?>
-          <span class="error"><?php echo $error_description[$language['language_id']]; ?></span>
-          <?php } ?></td>
-      </tr>
-      <?php } ?>
       <tr>
         <td><?php echo $entry_sort_order; ?></td>
         <td><input name="sort_order" value="<?php echo $sort_order; ?>" size="1" /></td>

@@ -43,12 +43,12 @@ class ControllerPaymentWorldPay extends Controller {
 	}
 	
 	public function callback() {
-		if ((isset($this->request->post['callbackPW'])) && ($this->request->post['callbackPW'] == $this->config->get('worldpay_password'))) {
+		if (isset($this->request->post['callbackPW']) && ($this->request->post['callbackPW'] == $this->config->get('worldpay_password'))) {
 			$this->language->load('payment/worldpay');
 		
 			$this->data['title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_store'));
 
-			if (@$this->request->server['HTTPS'] != 'on') {
+			if (!isset($this->request->server['HTTPS']) || ($this->request->server['HTTPS'] != 'on')) {
 				$this->data['base'] = HTTP_SERVER;
 			} else {
 				$this->data['base'] = HTTPS_SERVER;

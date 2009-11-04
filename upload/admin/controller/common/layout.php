@@ -3,10 +3,10 @@ class ControllerCommonLayout extends Controller {
 	protected function index() { 
 		$this->data['title'] = $this->document->title;
 		
-		if (@$this->request->server['HTTPS'] != 'on') {
-			$this->data['base'] = HTTP_SERVER;
-		} else {
+		if (isset($this->request->server['HTTPS']) && ($this->request->server['HTTPS'] == 'on')) {
 			$this->data['base'] = HTTPS_SERVER;
+		} else {
+			$this->data['base'] = HTTP_SERVER;
 		}
 		
 		$this->data['charset'] = $this->language->get('charset');

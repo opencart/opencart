@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "Remove Format",
 InsertLinkLbl		: "Link",
 InsertLink			: "Insert/Edit Link",
 RemoveLink			: "Remove Link",
+VisitLink			: "Open Link",
 Anchor				: "Insert/Edit Anchor",
 AnchorDelete		: "Remove Anchor",
 InsertImageLbl		: "Image",
@@ -72,6 +73,9 @@ BlockJustify		: "Block Justify",
 DecreaseIndent		: "Decrease Indent",
 IncreaseIndent		: "Increase Indent",
 Blockquote			: "Blockquote",
+CreateDiv			: "Create Div Container",
+EditDiv				: "Edit Div Container",
+DeleteDiv			: "Remove Div Container",
 Undo				: "Undo",
 Redo				: "Redo",
 NumberedListLbl		: "Numbered List",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "Toolbar set \"%1\" doesn't exist",
 NoActiveX			: "Your browser's security settings could limit some features of the editor. You must enable the option \"Run ActiveX controls and plug-ins\". You may experience errors and notice missing features.",
 BrowseServerBlocked : "The resources browser could not be opened. Make sure that all popup blockers are disabled.",
 DialogBlocked		: "It was not possible to open the dialog window. Make sure all popup blockers are disabled.",
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",
 
 // Dialogs
 DlgBtnOK			: "OK",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Cell spacing",
 DlgTableCellPad		: "Cell padding",
 DlgTableCaption		: "Caption",
 DlgTableSummary		: "Summary",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Cell Properties",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "Top",
 DlgCellVerAlignMiddle	: "Middle",
 DlgCellVerAlignBottom	: "Bottom",
 DlgCellVerAlignBaseline	: "Baseline",
+DlgCellType		: "Cell Type",
+DlgCellTypeData		: "Data",
+DlgCellTypeHeader	: "Header",
 DlgCellRowSpan		: "Rows Span",
 DlgCellCollSpan		: "Columns Span",
 DlgCellBackColor	: "Background Colour",
@@ -355,7 +368,7 @@ PasteErrorCopy	: "Your browser security settings don't permit the editor to auto
 PasteAsText		: "Paste as Plain Text",
 PasteFromWord	: "Paste from Word",
 
-DlgPasteMsg2	: "Please paste inside the following box using the keyboard (<STRONG>Ctrl+V</STRONG>) and hit <STRONG>OK</STRONG>.",
+DlgPasteMsg2	: "Please paste inside the following box using the keyboard (<strong>Ctrl+V</strong>) and hit <strong>OK</strong>.",
 DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",
 DlgPasteIgnoreFont		: "Ignore Font Face definitions",
 DlgPasteRemoveStyles	: "Remove Styles definitions",
@@ -501,7 +514,7 @@ DlgDocPreview		: "Preview",
 // Templates Dialog
 Templates			: "Templates",
 DlgTemplatesTitle	: "Content Templates",
-DlgTemplatesSelMsg	: "Please select the template to open in the editor<br>(the actual contents will be lost):",
+DlgTemplatesSelMsg	: "Please select the template to open in the editor<br />(the actual contents will be lost):",
 DlgTemplatesLoading	: "Loading templates list. Please wait...",
 DlgTemplatesNoTpl	: "(No templates defined)",
 DlgTemplatesReplace	: "Replace actual contents",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "About",
 DlgAboutBrowserInfoTab	: "Browser Info",
 DlgAboutLicenseTab	: "License",
 DlgAboutVersion		: "version",
-DlgAboutInfo		: "For further information go to"
+DlgAboutInfo		: "For further information go to",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",
+DlgDivAdvancedTab	: "Advanced",
+DlgDivStyle		: "Style",
+DlgDivInlineStyle	: "Inline Style"
 };

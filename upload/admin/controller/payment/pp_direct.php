@@ -45,10 +45,29 @@ class ControllerPaymentPPDirect extends Controller {
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_username'] = @$this->error['username'];
-		$this->data['error_password'] = @$this->error['password'];
-		$this->data['error_signature'] = @$this->error['signature'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+
+ 		if (isset($this->error['username'])) {
+			$this->data['error_username'] = $this->error['username'];
+		} else {
+			$this->data['error_username'] = '';
+		}
+		
+ 		if (isset($this->error['password'])) {
+			$this->data['error_password'] = $this->error['password'];
+		} else {
+			$this->data['error_password'] = '';
+		}
+		
+ 		if (isset($this->error['signature'])) {
+			$this->data['error_signature'] = $this->error['signature'];
+		} else {
+			$this->data['error_signature'] = '';
+		}
 
 		$this->document->breadcrumbs = array();
 
@@ -148,15 +167,15 @@ class ControllerPaymentPPDirect extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (!@$this->request->post['pp_direct_username']) {
+		if (!$this->request->post['pp_direct_username']) {
 			$this->error['username'] = $this->language->get('error_username');
 		}
 
-		if (!@$this->request->post['pp_direct_password']) {
+		if (!$this->request->post['pp_direct_password']) {
 			$this->error['password'] = $this->language->get('error_password');
 		}
 
-		if (!@$this->request->post['pp_direct_signature']) {
+		if (!$this->request->post['pp_direct_signature']) {
 			$this->error['signature'] = $this->language->get('error_signature');
 		}
 		

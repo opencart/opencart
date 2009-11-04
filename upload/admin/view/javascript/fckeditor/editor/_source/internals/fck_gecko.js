@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -104,7 +104,7 @@ FCK.InitializeBehaviors = function()
 
 			// only perform the patched behavior if we're in an <a> tag, or the End key is pressed.
 			var parentTag = node.parentNode.tagName.toLowerCase() ;
-			if ( ! (  parentTag == 'a' || String(node.parentNode.contentEditable) == 'false' ||
+			if ( ! (  parentTag == 'a' || ( !FCKBrowserInfo.IsOpera && String(node.parentNode.contentEditable) == 'false' ) ||
 					( ! ( FCKListsLib.BlockElements[parentTag] || FCKListsLib.NonEmptyBlockElements[parentTag] )
 					  && keyCode == 35 ) ) )
 				return ;
@@ -229,9 +229,8 @@ FCK.InitializeBehaviors = function()
 	}
 	else if ( FCKBrowserInfo.IsSafari )
 	{
-		var cancelHandler = function( evt ){ if ( ! FCK.MouseDownFlag ) evt.returnValue = false ; }
-		this.EditorDocument.addEventListener( 'dragenter', cancelHandler, true ) ;
-		this.EditorDocument.addEventListener( 'dragover', cancelHandler, true ) ;
+		this.EditorDocument.addEventListener( 'dragover', function ( evt )
+				{ if ( !FCK.MouseDownFlag && FCK.Config.ForcePasteAsPlainText ) evt.returnValue = false ; }, true ) ;
 		this.EditorDocument.addEventListener( 'drop', this._ExecDrop, true ) ;
 		this.EditorDocument.addEventListener( 'mousedown',
 			function( ev )
@@ -322,7 +321,12 @@ FCK.ExecuteRedirectedNamedCommand = function( commandName, commandParameter )
 				if ( FCK.Paste() )
 					FCK.ExecuteNamedCommand( 'Paste', null, true ) ;
 			}
-			catch (e)	{ FCKDialog.OpenDialog( 'FCKDialog_Paste', FCKLang.Paste, 'dialog/fck_paste.html', 400, 330, 'Security' ) ; }
+			catch (e)	{
+				if ( FCKConfig.ForcePasteAsPlainText )
+					FCK.PasteAsPlainText() ;
+				else
+					FCKDialog.OpenDialog( 'FCKDialog_Paste', FCKLang.Paste, 'dialog/fck_paste.html', 400, 330, 'Security' ) ;
+			}
 			break ;
 		default :
 			FCK.ExecuteNamedCommand( commandName, commandParameter ) ;
@@ -349,6 +353,9 @@ FCK._ExecPaste = function()
 // selected content if any.
 FCK.InsertHtml = function( html )
 {
+	var doc = FCK.EditorDocument,
+		range;
+
 	html = FCKConfig.ProtectedSource.Protect( html ) ;
 	html = FCK.ProtectEvents( html ) ;
 	html = FCK.ProtectUrls( html ) ;
@@ -357,11 +364,45 @@ FCK.InsertHtml = function( html )
 	// Save an undo snapshot first.
 	FCKUndo.SaveUndoStep() ;
 
-	// Insert the HTML code.
-	this.EditorDocument.execCommand( 'inserthtml', false, html ) ;
+	if ( FCKBrowserInfo.IsGecko )
+	{
+		html = html.replace( /&nbsp;$/, '$&<span _fcktemp="1"/>' ) ;
+
+		var docFrag = new FCKDocumentFragment( this.EditorDocument ) ;
+		docFrag.AppendHtml( html ) ;
+
+		var lastNode = docFrag.RootNode.lastChild ;
+
+		range = new FCKDomRange( this.EditorWindow ) ;
+		range.MoveToSelection() ;
+		range.DeleteContents() ;
+		range.InsertNode( docFrag.RootNode ) ;
+
+		range.MoveToPosition( lastNode, 4 ) ;
+	}
+	else
+		doc.execCommand( 'inserthtml', false, html ) ;
+
 	this.Focus() ;
 
-	FCKDocumentProcessor.Process( FCK.EditorDocument ) ;
+	// Save the caret position before calling document processor.
+	if ( !range )
+	{
+		range = new FCKDomRange( this.EditorWindow ) ;
+		range.MoveToSelection() ;
+	}
+	var bookmark = range.CreateBookmark() ;
+
+	FCKDocumentProcessor.Process( doc ) ;
+
+	// Restore caret position, ignore any errors in case the document
+	// processor removed the bookmark <span>s for some reason.
+	try
+	{
+		range.MoveToBookmark( bookmark ) ;
+		range.Select() ;
+	}
+	catch ( e ) {}
 
 	// For some strange reason the SaveUndoStep() call doesn't activate the undo button at the first InsertHtml() call.
 	this.Events.FireEvent( "OnSelectionChange" ) ;
@@ -401,6 +442,12 @@ FCK.CreateLink = function( url, noUndo )
 	// Creates the array that will be returned. It contains one or more created links (see #220).
 	var aCreatedLinks = new Array() ;
 
+	// Only for Safari, a collapsed selection may create a link. All other
+	// browser will have no links created. So, we check it here and return
+	// immediatelly, having the same cross browser behavior.
+	if ( FCKSelection.GetSelection().isCollapsed )
+		return aCreatedLinks ;
+
 	FCK.ExecuteNamedCommand( 'Unlink', null, false, !!noUndo ) ;
 
 	if ( url.length > 0 )
@@ -419,12 +466,6 @@ FCK.CreateLink = function( url, noUndo )
 		{
 			var oLink = oLinksInteractor.snapshotItem( i ) ;
 			oLink.href = url ;
-
-			// It may happen that the browser (aka Safari) decides to use the
-			// URL as the link content to not leave it empty. In this case,
-			// let's reset it.
-			if ( sTempUrl == oLink.innerHTML )
-				oLink.innerHTML = '' ;
 
 			aCreatedLinks.push( oLink ) ;
 		}

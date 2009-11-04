@@ -48,13 +48,21 @@ class ControllerCommonHome extends Controller {
 				'model'   => $result['model'],
             	'rating'  => $rating,
 				'stars'   => sprintf($this->language->get('text_stars'), $rating),
-				'thumb'   => HelperImage::resize($image, 120, 120),
+				'thumb'   => image_resize($image, 120, 120),
             	'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 				'special' => $special,
 				'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $result['product_id']))
           	);
 		}
-		
+
+		if (!$this->config->get('config_customer_price')) {
+			$this->data['display_price'] = TRUE;
+		} elseif ($this->customer->isLogged()) {
+			$this->data['display_price'] = TRUE;
+		} else {
+			$this->data['display_price'] = FALSE;
+		}
+				
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'common/home.tpl';
 		$this->layout   = 'common/layout';

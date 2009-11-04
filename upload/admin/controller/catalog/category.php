@@ -19,12 +19,20 @@ class ControllerCatalogCategory extends Controller {
 		
 		$this->load->model('catalog/category');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			if (is_uploaded_file($this->request->files['image']['tmp_name']) && is_writable(DIR_IMAGE) && is_writable(DIR_IMAGE . 'cache/')) {
+				move_uploaded_file($this->request->files['image']['tmp_name'], DIR_IMAGE . $this->request->files['image']['name']);
+				
+				if (file_exists(DIR_IMAGE . $this->request->files['image']['name'])) {
+					$this->request->post['image'] = $this->request->files['image']['name'];
+				}
+			}
+			
 			$this->model_catalog_category->addCategory($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect($this->url->https('catalog/category'));
+			$this->redirect($this->url->https('catalog/category')); 
 		}
 
 		$this->getForm();
@@ -37,7 +45,15 @@ class ControllerCatalogCategory extends Controller {
 		
 		$this->load->model('catalog/category');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			if (is_uploaded_file($this->request->files['image']['tmp_name']) && is_writable(DIR_IMAGE) && is_writable(DIR_IMAGE . 'cache/')) {
+				move_uploaded_file($this->request->files['image']['tmp_name'], DIR_IMAGE . $this->request->files['image']['name']);
+				
+				if (file_exists(DIR_IMAGE . $this->request->files['image']['name'])) {
+					$this->request->post['image'] = $this->request->files['image']['name'];
+				}
+			}
+
 			$this->model_catalog_category->editCategory($this->request->get['category_id'], $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -55,7 +71,7 @@ class ControllerCatalogCategory extends Controller {
 		
 		$this->load->model('catalog/category');
 		
-		if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
+		if (isset($this->request->post['delete']) && $this->validateDelete()) {
 			foreach ($this->request->post['delete'] as $category_id) {
 				$this->model_catalog_category->deleteCategory($category_id);
 			}
@@ -102,7 +118,7 @@ class ControllerCatalogCategory extends Controller {
 				'category_id' => $result['category_id'],
 				'name'        => $result['name'],
 				'sort_order'  => $result['sort_order'],
-				'delete'      => in_array($result['category_id'], (array)@$this->request->post['delete']),
+				'delete'      => isset($this->request->post['delete']) && in_array($result['category_id'], $this->request->post['delete']),
 				'action'      => $action
 			);
 		}
@@ -118,11 +134,19 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 		
 		$this->id       = 'content';
 		$this->template = 'catalog/category_list.tpl';
@@ -150,9 +174,17 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['tab_general'] = $this->language->get('tab_general');
 		$this->data['tab_data'] = $this->language->get('tab_data');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_name'] = @$this->error['name'];
-		$this->data['error_meta_description'] = @$this->error['meta_description'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+	
+ 		if (isset($this->error['name'])) {
+			$this->data['error_name'] = $this->error['name'];
+		} else {
+			$this->data['error_name'] = '';
+		}
 
   		$this->document->breadcrumbs = array();
 
@@ -176,7 +208,7 @@ class ControllerCatalogCategory extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('catalog/category');
 
-		if ((isset($this->request->get['category_id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['category_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$category_info = $this->model_catalog_category->getCategory($this->request->get['category_id']);
     	}
 		
@@ -194,38 +226,36 @@ class ControllerCatalogCategory extends Controller {
 
 		if (isset($this->request->post['keyword'])) {
 			$this->data['keyword'] = $this->request->post['keyword'];
+		} elseif (isset($category_info)) {
+			$this->data['keyword'] = $category_info['keyword'];
 		} else {
-			$this->data['keyword'] = @$category_info['keyword'];
+			$this->data['keyword'] = '';
 		}
 		
 		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
 
 		if (isset($this->request->post['parent_id'])) {
 			$this->data['parent_id'] = $this->request->post['parent_id'];
+		} elseif (isset($category_info)) {
+			$this->data['parent_id'] = $category_info['parent_id'];
 		} else {
-			$this->data['parent_id'] = @$category_info['parent_id'];
-		}
-
-		if (isset($this->request->post['image'])) {
-			$this->data['image'] = $this->request->post['image'];
-		} else {
-			$this->data['image'] = @$category_info['image'];
+			$this->data['parent_id'] = 0;
 		}
 
 		$this->load->helper('image');
-		
-		if (@$this->request->post['image']) {
-			$this->data['preview'] = HelperImage::resize($this->request->post['image'], 100, 100);
-		} elseif (@$category_info['image']) {
-			$this->data['preview'] = HelperImage::resize($category_info['image'], 100, 100);
+
+		if (isset($category_info) && $category_info['image'] && file_exists(DIR_IMAGE . $category_info['image'])) {
+			$this->data['preview'] = image_resize($category_info['image'], 100, 100);
 		} else {
-			$this->data['preview'] = HelperImage::resize('no_image.jpg', 100, 100);
+			$this->data['preview'] = image_resize('no_image.jpg', 100, 100);
 		}
 		
 		if (isset($this->request->post['sort_order'])) {
 			$this->data['sort_order'] = $this->request->post['sort_order'];
+		} elseif (isset($category_info)) {
+			$this->data['sort_order'] = $category_info['sort_order'];
 		} else {
-			$this->data['sort_order'] = @$category_info['sort_order'];
+			$this->data['sort_order'] = 0;
 		}
 		
 		$this->id       = 'content';
@@ -244,12 +274,38 @@ class ControllerCatalogCategory extends Controller {
 			if ((strlen(utf8_decode($value['name'])) < 2) || (strlen(utf8_decode($value['name'])) > 32)) {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
-
-      		if (strlen(utf8_decode($value['meta_description'])) > 66) {
-        		$this->error['meta_description'][$language_id] = $this->language->get('error_meta_description');
-      		}
 		}
-    	
+   
+  		if ($this->request->files['image']['name']) {
+	  		if ((strlen(utf8_decode($this->request->files['image']['name'])) < 3) || (strlen(utf8_decode($this->request->files['image']['name'])) > 255)) {
+        		$this->error['warning'] = $this->language->get('error_filename');
+	  		}
+
+		    $allowed = array(
+		    	'image/jpeg',
+		    	'image/pjpeg',
+				'image/png',
+				'image/x-png',
+				'image/gif'
+		    );
+				
+			if (!in_array($this->request->files['image']['type'], $allowed)) {
+				$this->error['warning'] = $this->language->get('error_filetype');
+			}
+			
+			if (!is_writable(DIR_IMAGE)) {
+				$this->error['warning'] = $this->language->get('error_writable_image');
+			}
+			
+			if (!is_writable(DIR_IMAGE . 'cache/')) {
+				$this->error['warning'] = $this->language->get('error_writable_image_cache');
+			}
+			
+			if ($this->request->files['image']['error'] != UPLOAD_ERR_OK) { 
+				$this->error['warning'] = $this->language->get('error_upload_' . $this->request->files['image']['error']);
+			}
+		}
+
 		if (!$this->error) {
 			return TRUE;
 		} else {

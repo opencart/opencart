@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -21,11 +21,11 @@
  *
  * Page used to upload new files in the current folder.
 -->
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 	<head>
 		<title>File Upload</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<link href="browser.css" type="text/css" rel="stylesheet" />
+		<link href="browser.css" type="text/css" rel="stylesheet" >
 		<script type="text/javascript" src="js/common.js"></script>
 		<script type="text/javascript">
 
@@ -95,9 +95,9 @@ window.onload = function()
 }
 		</script>
 	</head>
-	<body bottommargin="0" topmargin="0">
+	<body>
 		<form id="frmUpload" action="" target="frmUploadWorker" method="post" enctype="multipart/form-data" onsubmit="return OnSubmit();">
-			<table height="100%" cellspacing="0" cellpadding="0" width="100%" border="0">
+			<table class="fullHeight" cellspacing="0" cellpadding="0" width="100%" border="0">
 				<tr>
 					<td nowrap="nowrap">
 						<span id="eUploadMessage">Upload a new file in this folder</span><br>

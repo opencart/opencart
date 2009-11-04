@@ -12,9 +12,9 @@
       <tr>
         <td width="25%"><span class="required">*</span> <?php echo $entry_name; ?></td>
         <td><?php foreach ($languages as $language) { ?>
-          <input name="stock_status[<?php echo $language['language_id']; ?>][name]" value="<?php echo @$stock_status[$language['language_id']]['name']; ?>" />
+          <input name="stock_status[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($stock_status[$language['language_id']]) ? $stock_status[$language['language_id']]['name'] : ''; ?>" />
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-          <?php if (@$error_name[$language['language_id']]) { ?>
+          <?php if (isset($error_name[$language['language_id']])) { ?>
           <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
           <?php } ?>
           <?php } ?></td>

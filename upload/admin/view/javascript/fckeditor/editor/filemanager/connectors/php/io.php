@@ -1,7 +1,7 @@
 <?php
 /*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -154,6 +154,8 @@ function GetRootPath()
 		global $_SERVER;
 	}
 	$sRealPath = realpath( './' ) ;
+	// #2124 ensure that no slash is at the end
+	$sRealPath = rtrim($sRealPath,"\\/");
 
 	$sSelfPath = $_SERVER['PHP_SELF'] ;
 	$sSelfPath = substr( $sSelfPath, 0, strrpos( $sSelfPath, '/' ) ) ;
@@ -243,6 +245,9 @@ function GetCurrentFolder()
 	if ( strpos( $sCurrentFolder, '..' ) || strpos( $sCurrentFolder, "\\" ))
 		SendError( 102, '' ) ;
 
+	if ( preg_match(",(/\.)|[[:cntrl:]]|(//)|(\\\\)|([\:\*\?\"\<\>\|]),", $sCurrentFolder))
+		SendError( 102, '' ) ;
+
 	return $sCurrentFolder ;
 }
 
@@ -277,40 +282,18 @@ function SanitizeFileName( $sNewFileName )
 // This is the function that sends the results of the uploading process.
 function SendUploadResults( $errorNumber, $fileUrl = '', $fileName = '', $customMsg = '' )
 {
+	// Minified version of the document.domain automatic fix script (#1919).
+	// The original script can be found at _dev/domain_fix_template.js
 	echo <<<EOF
 <script type="text/javascript">
-(function()
-{
-	var d = document.domain ;
-
-	while ( true )
-	{
-		// Test if we can access a parent property.
-		try
-		{
-			var test = window.top.opener.document.domain ;
-			break ;
-		}
-		catch( e ) {}
-
-		// Remove a domain part: www.mytest.example.com => mytest.example.com => example.com ...
-		d = d.replace( /.*?(?:\.|$)/, '' ) ;
-
-		if ( d.length == 0 )
-			break ;		// It was not able to detect the domain.
-
-		try
-		{
-			document.domain = d ;
-		}
-		catch (e)
-		{
-			break ;
-		}
-	}
-})() ;
-
+(function(){var d=document.domain;while (true){try{var A=window.parent.document.domain;break;}catch(e) {};d=d.replace(/.*?(?:\.|$)/,'');if (d.length==0) break;try{document.domain=d;}catch (e){break;}}})();
 EOF;
+
+	if ($errorNumber && $errorNumber != 201) {
+		$fileUrl = "";
+		$fileName = "";
+	}
+
 	$rpl = array( '\\' => '\\\\', '"' => '\\"' ) ;
 	echo 'window.parent.OnUploadCompleted(' . $errorNumber . ',"' . strtr( $fileUrl, $rpl ) . '","' . strtr( $fileName, $rpl ) . '", "' . strtr( $customMsg, $rpl ) . '") ;' ;
 	echo '</script>' ;

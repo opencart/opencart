@@ -16,7 +16,13 @@ class ControllerProductManufacturer extends Controller {
         	'separator' => FALSE
       	);
 
-		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer(@$this->request->get['manufacturer_id']);
+		if (isset($this->request->get['manufacturer_id'])) {
+			$manufacturer_id = $this->request->get['manufacturer_id'];
+		} else {
+			$manufacturer_id = 0;
+		}
+		
+		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
 	
 		if ($manufacturer_info) {
       		$this->document->breadcrumbs[] = array(
@@ -65,8 +71,6 @@ class ControllerProductManufacturer extends Controller {
 						$image = 'no_image.jpg';
 					}
 					
-					$rating = $this->model_catalog_review->getAverageRating($result['product_id']);
-
 					$special = $this->model_catalog_product->getProductSpecial($result['product_id']);
 			
 					if ($special) {
@@ -75,17 +79,27 @@ class ControllerProductManufacturer extends Controller {
 						$special = FALSE;
 					}
 					
+					$rating = $this->model_catalog_review->getAverageRating($result['product_id']);
+					
           			$this->data['products'][] = array(
             			'name'    => $result['name'],
 						'model'   => $result['model'],
 						'rating'  => $rating,
 						'stars'   => sprintf($this->language->get('text_stars'), $rating),            			
-						'thumb'   => HelperImage::resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
+						'thumb'   => image_resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
             			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 						'special' => $special,
 						'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&product_id=' . $result['product_id']))
           			);
         		}
+				
+				if (!$this->config->get('config_customer_price')) {
+					$this->data['display_price'] = TRUE;
+				} elseif ($this->customer->isLogged()) {
+					$this->data['display_price'] = TRUE;
+				} else {
+					$this->data['display_price'] = FALSE;
+				}
 
 				$url = '';
 		

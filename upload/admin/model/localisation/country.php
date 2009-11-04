@@ -34,13 +34,13 @@ class ModelLocalisationCountry extends Model {
 				'iso_code_3'
 			);	
 			
-			if (in_array(@$data['sort'], $sort_data)) {
+			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 				$sql .= " ORDER BY " . $data['sort'];	
 			} else {
 				$sql .= " ORDER BY name";	
 			}
 			
-			if (@$data['order'] == 'DESC') {
+			if (isset($data['order']) && ($data['order'] == 'DESC')) {
 				$sql .= " DESC";
 			} else {
 				$sql .= " ASC";

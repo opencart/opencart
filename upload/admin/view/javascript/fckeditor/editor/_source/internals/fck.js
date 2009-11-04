@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -198,6 +198,13 @@ var FCK =
 					// Ignore space only or empty text.
 					if ( oNewBlock || oNode.nodeValue.Trim().length > 0 )
 						bMoveNode = true ;
+					break;
+
+				// Comment Node
+				case 8 :
+					if ( oNewBlock )
+						bMoveNode = true ;
+					break;
 			}
 
 			if ( bMoveNode )
@@ -401,6 +408,12 @@ var FCK =
 		{
 			FCK.EditorDocument.detachEvent("onselectionchange", Doc_OnSelectionChange ) ;
 		}
+
+		FCKTempBin.Reset() ;
+
+		// Bug #2469: SelectionData.createRange becomes undefined after the editor
+		// iframe is changed by FCK.SetData().
+		FCK.Selection.Release() ;
 
 		if ( FCK.EditMode == FCK_EDITMODE_WYSIWYG )
 		{
@@ -622,7 +635,8 @@ var FCK =
 
 		var sHtml ;
 
-		// Update the HTML in the view output to show.
+		// Update the HTML in the view output to show, also update
+		// FCKTempBin for IE to avoid #2263.
 		if ( bIsWysiwyg )
 		{
 			FCKCommands.GetCommand( 'ShowBlocks' ).SaveState() ;
@@ -630,6 +644,9 @@ var FCK =
 				FCKUndo.SaveUndoStep() ;
 
 			sHtml = FCK.GetXHTML( FCKConfig.FormatSource ) ;
+
+			if ( FCKBrowserInfo.IsIE )
+				FCKTempBin.ToHtml() ;
 
 			if ( sHtml == null )
 				return false ;
@@ -664,9 +681,22 @@ var FCK =
 		// object that may internally supply this feature.
 		var range = new FCKDomRange( this.EditorWindow ) ;
 
+		// Move to the selection and delete it.
+		range.MoveToSelection() ;
+		range.DeleteContents() ;
+
 		if ( FCKListsLib.BlockElements[ elementName ] != null )
 		{
-			range.SplitBlock() ;
+			if ( range.StartBlock )
+			{
+				if ( range.CheckStartOfBlock() )
+					range.MoveToPosition( range.StartBlock, 3 ) ;
+				else if ( range.CheckEndOfBlock() )
+					range.MoveToPosition( range.StartBlock, 4 ) ;
+				else
+					range.SplitBlock() ;
+			}
+
 			range.InsertNode( element ) ;
 
 			var next = FCKDomTools.GetNextSourceElement( element, false, null, [ 'hr','br','param','img','area','input' ], true ) ;
@@ -687,18 +717,16 @@ var FCK =
 			else
 				range.MoveToPosition( element, 4 ) ;
 
-			if ( FCKBrowserInfo.IsGecko )
+			if ( FCKBrowserInfo.IsGeckoLike )
 			{
 				if ( next )
-					next.scrollIntoView( false ) ;
-				element.scrollIntoView( false ) ;
+					FCKDomTools.ScrollIntoView( next, false );
+				FCKDomTools.ScrollIntoView( element, false );
 			}
 		}
 		else
 		{
-			// Delete the current selection and insert the node.
-			range.MoveToSelection() ;
-			range.DeleteContents() ;
+			// Insert the node.
 			range.InsertNode( element ) ;
 
 			// Move the selection right after the new element.
@@ -887,6 +915,14 @@ function _FCK_PaddingNodeListener()
 			if ( FCK.EditorDocument.body.childNodes.length == 1
 					&& FCK.EditorDocument.body.firstChild == paddingNode )
 			{
+				/*
+				 * Bug #1764: Don't move the selection if the
+				 * current selection isn't in the editor
+				 * document.
+				 */
+				if ( FCKSelection._GetSelectionDocument( FCK.EditorDocument.selection ) != FCK.EditorDocument )
+					return ;
+
 				var range = FCK.EditorDocument.body.createTextRange() ;
 				var clearContents = false ;
 				if ( !paddingNode.childNodes.firstChild )
@@ -908,6 +944,9 @@ function _FCK_EditingArea_OnLoad()
 	// Get the editor's window and document (DOM)
 	FCK.EditorWindow	= FCK.EditingArea.Window ;
 	FCK.EditorDocument	= FCK.EditingArea.Document ;
+
+	if ( FCKBrowserInfo.IsIE )
+		FCKTempBin.ToElements() ;
 
 	FCK.InitializeBehaviors() ;
 
@@ -1061,6 +1100,28 @@ var FCKTempBin =
 		while ( i < this.Elements.length )
 			this.Elements[ i++ ] = null ;
 		this.Elements.length = 0 ;
+	},
+
+	ToHtml : function()
+	{
+		for ( var i = 0 ; i < this.Elements.length ; i++ )
+		{
+			this.Elements[i] = '<div>&nbsp;' + this.Elements[i].outerHTML + '</div>' ;
+			this.Elements[i].isHtml = true ;
+		}
+	},
+
+	ToElements : function()
+	{
+		var node = FCK.EditorDocument.createElement( 'div' ) ;
+		for ( var i = 0 ; i < this.Elements.length ; i++ )
+		{
+			if ( this.Elements[i].isHtml )
+			{
+				node.innerHTML = this.Elements[i] ;
+				this.Elements[i] = node.firstChild.removeChild( node.firstChild.lastChild ) ;
+			}
+		}
 	}
 } ;
 
@@ -1173,3 +1234,23 @@ function FCKFocusManager_Win_OnFocus()
 		FCK.Events.FireEvent( "OnFocus" ) ;
 	}
 }
+
+/*
+ * #1633 : Protect the editor iframe from external styles.
+ * Notice that we can't use FCKTools.ResetStyles here since FCKTools isn't
+ * loaded yet.
+ */
+(function()
+{
+	var el = window.frameElement ;
+	var width = el.width ;
+	var height = el.height ;
+	if ( /^\d+$/.test( width ) ) width += 'px' ;
+	if ( /^\d+$/.test( height ) ) height += 'px' ;
+	var style = el.style ;
+	style.border = style.padding = style.margin = 0 ;
+	style.backgroundColor = 'transparent';
+	style.backgroundImage = 'none';
+	style.width = width ;
+	style.height = height ;
+})() ;

@@ -1,6 +1,6 @@
 #####
 #  FCKeditor - The text editor for Internet - http://www.fckeditor.net
-#  Copyright (C) 2003-2008 Frederico Caldeira Knabben
+#  Copyright (C) 2003-2009 Frederico Caldeira Knabben
 #
 #  == BEGIN LICENSE ==
 #
@@ -112,7 +112,7 @@ sub CreateFolder
 	}
 	# Create the "Error" node.
 	$cnv_errmsg = &ConvertToXmlAttribute($sErrorMsg);
-	print '<Error number="' . $sErrorNumber . '" originalDescription="' . $cnv_errmsg . '" />';
+	print '<Error number="' . $sErrorNumber . '" />';
 }
 
 sub FileUpload
@@ -120,6 +120,7 @@ sub FileUpload
 eval("use File::Copy;");
 
 	local($resourceType, $currentFolder) = @_;
+	$allowedExtensions = $allowedExtensions{$resourceType};
 
 	$sErrorNumber = '0' ;
 	$sFileName = '' ;
@@ -130,6 +131,18 @@ eval("use File::Copy;");
 		# Get the uploaded file name.
 		$sFileName = $new_fname;
 		$sFileName =~ s/\\|\/|\||\:|\?|\*|\"|<|>|[[:cntrl:]]/_/g;
+		$sFileName =~ s/\.(?![^.]*$)/_/g;
+
+		$ext = '';
+		if($sFileName =~ /([^\\\/]*)\.(.*)$/) {
+			$ext  = $2;
+		}
+
+		$allowedRegex = qr/^($allowedExtensions)$/i;
+		if (!($ext =~ $allowedRegex)) {
+			SendUploadResults('202', '', '', '');
+		}
+
 		$sOriginalFileName = $sFileName;
 
 		$iCounter = 0;
@@ -161,7 +174,7 @@ eval("use File::Copy;");
 	}
 	$sFileName	=~ s/"/\\"/g;
 
-	SendUploadResults($sErrorNumber, $resourceType.$currentFolder.$sFileName, $sFileName, '');
+	SendUploadResults($sErrorNumber, $GLOBALS{'UserFilesPath'}.$resourceType.$currentFolder.$sFileName, $sFileName, '');
 }
 
 sub SendUploadResults
@@ -169,41 +182,14 @@ sub SendUploadResults
 
 	local($sErrorNumber, $sFileUrl, $sFileName, $customMsg) = @_;
 
+	# Minified version of the document.domain automatic fix script (#1919).
+	# The original script can be found at _dev/domain_fix_template.js
+	# Note: in Perl replace \ with \\ and $ with \$
 	print <<EOF;
 Content-type: text/html
 
 <script type="text/javascript">
-// Automatically detect the correct document.domain (#1919).
-(function()
-{
-	var d = document.domain ;
-
-	while ( true )
-	{
-		// Test if we can access a parent property.
-		try
-		{
-			var test = window.top.opener.document.domain ;
-			break ;
-		}
-		catch( e ) {}
-
-		// Remove a domain part: www.mytest.example.com => mytest.example.com => example.com ...
-		d = d.replace( /.*?(?:\\.|\$)/, '' ) ;
-
-		if ( d.length == 0 )
-			break ;		// It was not able to detect the domain.
-
-		try
-		{
-			document.domain = d ;
-		}
-		catch (e)
-		{
-			break ;
-		}
-	}
-})() ;
+(function(){var d=document.domain;while (true){try{var A=window.parent.document.domain;break;}catch(e) {};d=d.replace(/.*?(?:\\.|\$)/,'');if (d.length==0) break;try{document.domain=d;}catch (e){break;}}})();
 
 EOF
 	print 'window.parent.OnUploadCompleted(' . $sErrorNumber . ',"' . JS_cnv($sFileUrl) . '","' . JS_cnv($sFileName) . '","' . JS_cnv($customMsg) . '") ;';

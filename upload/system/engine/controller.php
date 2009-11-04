@@ -7,11 +7,11 @@ abstract class Controller {
 	protected $data = array();
 	protected $output;
 	
-	protected function __get($key) {
+	public function __get($key) {
 		return Registry::get($key);
 	}
 	
-	protected function __set($key, $value) {
+	public function __set($key, $value) {
 		Registry::set($key, $value);
 	}
 			
@@ -20,7 +20,7 @@ abstract class Controller {
 	}
 
 	protected function redirect($url) {
-		header('Location: ' . html_entity_decode($url));
+		header('Location: ' . str_replace('&amp;', '&', $url));
 		exit();
 	}
 	

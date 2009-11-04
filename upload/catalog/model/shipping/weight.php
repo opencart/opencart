@@ -33,8 +33,10 @@ class ModelShippingWeight extends Model {
   						$data = explode(':', $rate);
   					
 						if ($data[0] >= $weight) {
-    						$cost = @$data[1];
-						
+							if (isset($data[1])) {
+    							$cost = $data[1];
+							}
+					
    							break;
   						}
 					}

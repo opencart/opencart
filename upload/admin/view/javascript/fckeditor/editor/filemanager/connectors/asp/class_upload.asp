@@ -1,6 +1,6 @@
 ﻿<%
  ' FCKeditor - The text editor for Internet - http://www.fckeditor.net
- ' Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ ' Copyright (C) 2003-2009 Frederico Caldeira Knabben
  '
  ' == BEGIN LICENSE ==
  '
@@ -350,4 +350,4 @@ End Class
 Class NetRube_FileInfo
 	Dim FormName, ClientPath, Path, Name, Ext, Content, Size, MIME, Start
 End Class
-%>
+%>

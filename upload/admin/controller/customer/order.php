@@ -71,7 +71,7 @@ class ControllerCustomerOrder extends Controller {
 		
 		$this->load->model('customer/order');
 			
-    	if ((isset($this->request->post['delete'])) && ($this->validate())) {
+    	if (isset($this->request->post['delete']) && ($this->validate())) {
 			foreach ($this->request->post['delete'] as $order_id) {
 				$this->model_customer_order->deleteOrder($order_id);
 			}	
@@ -137,6 +137,36 @@ class ControllerCustomerOrder extends Controller {
 			$order = 'DESC';
 		}
 		
+		if (isset($this->request->get['filter_order_id'])) {
+			$filter_order_id = $this->request->get['filter_order_id'];
+		} else {
+			$filter_order_id = NULL;
+		}		
+		
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = $this->request->get['filter_name'];
+		} else {
+			$filter_name = NULL;
+		}
+
+		if (isset($this->request->get['filter_order_status_id'])) {
+			$filter_order_status_id = $this->request->get['filter_order_status_id'];
+		} else {
+			$filter_order_status_id = NULL;
+		}
+
+		if (isset($this->request->get['filter_date_added'])) {
+			$filter_date_added = $this->request->get['filter_date_added'];
+		} else {
+			$filter_date_added = NULL;
+		}
+
+		if (isset($this->request->get['filter_total'])) {
+			$filter_total = $this->request->get['filter_total'];
+		} else {
+			$filter_total = NULL;
+		}		
+		
 		$url = '';
 				
 		if (isset($this->request->get['filter_order_id'])) {
@@ -190,15 +220,15 @@ class ControllerCustomerOrder extends Controller {
 		$this->data['orders'] = array();
 
 		$data = array(
-			'order_id'        => @$this->request->get['filter_order_id'],
-			'name'	          => @$this->request->get['filter_name'], 
-			'order_status_id' => @$this->request->get['filter_order_status_id'], 
-			'date_added'      => @$this->request->get['filter_date_added'],
-			'total'           => @$this->request->get['filter_total'],
-			'sort'            => $sort,
-			'order'           => $order,
-			'start'           => ($page - 1) * 10,
-			'limit'           => 10
+			'filter_order_id'        => $filter_order_id,
+			'filter_name'	         => $filter_name, 
+			'filter_order_status_id' => $filter_order_status_id, 
+			'filter_date_added'      => $filter_date_added,
+			'filter_total'           => $filter_total,
+			'sort'                   => $sort,
+			'order'                  => $order,
+			'start'                  => ($page - 1) * 10,
+			'limit'                  => 10
 		);
 		
 		$order_total = $this->model_customer_order->getTotalOrders($data);
@@ -219,7 +249,7 @@ class ControllerCustomerOrder extends Controller {
 				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'total'      => $this->currency->format($result['total'], $result['currency'], $result['value']),
-				'delete'     => in_array($result['order_id'], (array)@$this->request->post['delete']),
+				'delete'     => isset($this->request->post['delete']) && in_array($result['order_id'], $this->request->post['delete']),
 				'action'     => $action
 			);
 		}	
@@ -227,7 +257,7 @@ class ControllerCustomerOrder extends Controller {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_no_status'] = $this->language->get('text_no_status');
+		$this->data['text_missing_orders'] = $this->language->get('text_missing_orders');
 
 		$this->data['column_order'] = $this->language->get('column_order');
     	$this->data['column_name'] = $this->language->get('column_name');
@@ -239,11 +269,19 @@ class ControllerCustomerOrder extends Controller {
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_filter'] = $this->language->get('button_filter');
 
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 		
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 
 		$url = '';
 
@@ -322,11 +360,11 @@ class ControllerCustomerOrder extends Controller {
 			
 		$this->data['pagination'] = $pagination->render();
 		
-		$this->data['filter_order_id'] = @$this->request->get['filter_order_id'];
-		$this->data['filter_name'] = @$this->request->get['filter_name'];
-		$this->data['filter_order_status_id'] = @$this->request->get['filter_order_status_id'];
-		$this->data['filter_date_added'] = @$this->request->get['filter_date_added'];
-		$this->data['filter_total'] = @$this->request->get['filter_total'];
+		$this->data['filter_order_id'] = $filter_order_id;
+		$this->data['filter_name'] = $filter_name;
+		$this->data['filter_order_status_id'] = $filter_order_status_id;
+		$this->data['filter_date_added'] = $filter_date_added;
+		$this->data['filter_total'] = $filter_total;
 		
 		$this->load->model('localisation/order_status');
 		
@@ -385,7 +423,11 @@ class ControllerCustomerOrder extends Controller {
 		$this->data['button_back'] = $this->language->get('button_back');
 		$this->data['button_invoice'] = $this->language->get('button_invoice');
 
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 
 		$url = '';
 
@@ -538,7 +580,6 @@ class ControllerCustomerOrder extends Controller {
           		'option'   => $option_data,
           		'quantity' => $product['quantity'],
           		'price'    => $this->currency->format($product['price'], $order_info['currency'], $order_info['value']),
-          		'discount' => (ceil($product['discount']) ? $this->currency->format($product['price'] - $product['discount'], $order_info['currency'], $order_info['value']) : NULL),
 				'total'    => $this->currency->format($product['total'], $order_info['currency'], $order_info['value'])
         	);
     	}
@@ -576,12 +617,23 @@ class ControllerCustomerOrder extends Controller {
 		
 		if (isset($this->request->post['order_status_id'])) {
 			$this->data['order_status_id'] = $this->request->post['order_status_id'];
+		} elseif (isset($order_info['order_status_id'])) {
+			$this->data['order_status_id'] = $order_info['order_status_id'];
 		} else {
-			$this->data['order_status_id'] = @$order_info['order_status_id'];
+			$this->data['order_status_id'] = 0;
 		}
 		
-		$this->data['comment'] = @$this->request->post['comment'];
-		$this->data['notify'] = @$this->request->post['notify'];
+		if (isset($this->request->post['comment'])) {
+			$this->data['comment'] = $this->request->post['comment'];
+		} else {
+			$this->data['comment'] = '';
+		}
+		
+		if (isset($this->request->post['notify'])) {
+			$this->data['notify'] = $this->request->post['notify'];
+		} else {
+			$this->data['notify'] = '';
+		}
 	
 		$this->id       = 'content';
 		$this->template = 'customer/order_form.tpl';
@@ -594,7 +646,13 @@ class ControllerCustomerOrder extends Controller {
 		$this->load->language('customer/order');
 
 		$this->data['title'] = $this->language->get('heading_title') . ' #' . $this->request->get['order_id'];
-		$this->data['base'] = (@$this->request->server['HTTPS'] != 'on') ? HTTP_SERVER : HTTPS_SERVER;
+		
+		if (isset($this->request->server['HTTPS']) && ($this->request->server['HTTPS'] == 'on')) {
+			$this->data['base'] = HTTPS_SERVER;
+		} else {
+			$this->data['base'] = HTTP_SERVER;
+		}
+		
 		$this->data['direction'] = $this->language->get('direction');
 		$this->data['language'] = $this->language->get('code');	
 		
@@ -712,7 +770,6 @@ class ControllerCustomerOrder extends Controller {
           		'option'   => $option_data,
           		'quantity' => $product['quantity'],
           		'price'    => $this->currency->format($product['price'], $order_info['currency'], $order_info['value']),
-          		'discount' => (ceil($product['discount']) ? $this->currency->format($product['price'] - $product['discount'], $order_info['currency'], $order_info['value']) : NULL),
 				'total'    => $this->currency->format($product['total'], $order_info['currency'], $order_info['value'])
         	);
     	}

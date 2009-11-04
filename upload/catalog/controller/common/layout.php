@@ -4,7 +4,7 @@ class ControllerCommonLayout extends Controller {
 		$this->data['title'] = $this->document->title;
 		$this->data['description'] = $this->document->description;
 		
-		if ((!isset($this->request->server['HTTPS'])) || ($this->request->server['HTTPS'] != 'on')) {
+		if (!isset($this->request->server['HTTPS']) || ($this->request->server['HTTPS'] != 'on')) {
 			$this->data['base'] = HTTP_SERVER;
 		} else {
 			$this->data['base'] = HTTPS_SERVER;
@@ -17,6 +17,7 @@ class ControllerCommonLayout extends Controller {
 		$this->data['styles'] = $this->document->styles;
 		$this->data['scripts'] = $this->document->scripts;		
 		$this->data['breadcrumbs'] = $this->document->breadcrumbs;
+		$this->data['icon'] = $this->config->get('config_icon');
 		
 		$this->template = $this->config->get('config_template') . 'common/layout.tpl';		
 		$this->children = array(

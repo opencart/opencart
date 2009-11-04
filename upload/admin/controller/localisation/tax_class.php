@@ -19,7 +19,7 @@ class ControllerLocalisationTaxClass extends Controller {
 		
 		$this->load->model('localisation/tax_class');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_localisation_tax_class->addTaxClass($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationTaxClass extends Controller {
 		
 		$this->load->model('localisation/tax_class');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_localisation_tax_class->editTaxClass($this->request->get['tax_class_id'], $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -83,7 +83,7 @@ class ControllerLocalisationTaxClass extends Controller {
  		
 		$this->load->model('localisation/tax_class');
 		
-		if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
+		if (isset($this->request->post['delete']) && $this->validateDelete()) {
 			foreach ($this->request->post['delete'] as $tax_class_id) {
 				$this->model_localisation_tax_class->deleteTaxClass($tax_class_id);
 			}
@@ -184,7 +184,7 @@ class ControllerLocalisationTaxClass extends Controller {
 			$this->data['tax_classes'][] = array(
 				'tax_class_id' => $result['tax_class_id'],
 				'title'        => $result['title'],
-				'delete'       => in_array($result['tax_class_id'], (array)@$this->request->post['delete']),
+				'delete'       => isset($this->request->post['delete']) && in_array($result['tax_class_id'], $this->request->post['delete']),
 				'action'       => $action				
 			);
 		}
@@ -199,11 +199,19 @@ class ControllerLocalisationTaxClass extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 		
 		$url = '';
 
@@ -265,9 +273,23 @@ class ControllerLocalisationTaxClass extends Controller {
 		$this->data['tab_general'] = $this->language->get('tab_general');
 		$this->data['tab_rate'] = $this->language->get('tab_rate');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_title'] = @$this->error['title'];
-		$this->data['error_description'] = @$this->error['description'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+
+ 		if (isset($this->error['title'])) {
+			$this->data['error_title'] = $this->error['title'];
+		} else {
+			$this->data['error_title'] = '';
+		}
+		
+ 		if (isset($this->error['description'])) {
+			$this->data['error_description'] = $this->error['description'];
+		} else {
+			$this->data['error_description'] = '';
+		}
 				
 		$url = '';
 			
@@ -305,20 +327,24 @@ class ControllerLocalisationTaxClass extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('localisation/tax_class' . $url);
 
-		if ((isset($this->request->get['tax_class_id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['tax_class_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$tax_class_info = $this->model_localisation_tax_class->getTaxClass($this->request->get['tax_class_id']);
 		}
 
 		if (isset($this->request->post['title'])) {
 			$this->data['title'] = $this->request->post['title'];
+		} elseif (isset($tax_class_info)) {
+			$this->data['title'] = $tax_class_info['title'];
 		} else {
-			$this->data['title'] = @$tax_class_info['title'];
+			$this->data['title'] = '';
 		}
 
 		if (isset($this->request->post['description'])) {
 			$this->data['description'] = $this->request->post['description'];
+		} elseif (isset($tax_class_info)) {
+			$this->data['description'] = $tax_class_info['description'];
 		} else {
-			$this->data['description'] = @$tax_class_info['description'];
+			$this->data['description'] = '';
 		}
 
 		$this->load->model('localisation/geo_zone');

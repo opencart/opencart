@@ -1,6 +1,6 @@
 #####
 #  FCKeditor - The text editor for Internet - http://www.fckeditor.net
-#  Copyright (C) 2003-2008 Frederico Caldeira Knabben
+#  Copyright (C) 2003-2009 Frederico Caldeira Knabben
 #
 #  == BEGIN LICENSE ==
 #
@@ -55,7 +55,12 @@ _HTML_HEAD_
 	# Create the XML document header
 	print '<?xml version="1.0" encoding="utf-8" ?>' ;
 
-	print '<Connector><Error number="' . $number . '" text="' . &specialchar_cnv( $text ) . '" /></Connector>' ;
+	if ($text) {
+		print '<Connector><Error number="' . $number . '" text="' . &specialchar_cnv( $text ) . '" /></Connector>' ;
+	}
+	else {
+		print '<Connector><Error number="' . $number . '" /></Connector>' ;
+	}
 
 	exit ;
 }

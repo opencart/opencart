@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -52,7 +52,12 @@ function OnSpellerControlsLoad( controlsWindow )
 function oSpeller_OnFinished( numberOCorrections )
 {
 	if ( numberOCorrections > 0 )
-		oEditor.FCK.SetData( document.getElementById('txtHtml').value ) ;
+	{
+		oEditor.FCKUndo.SaveUndoStep() ;
+		oEditor.FCK.EditorDocument.body.innerHTML = document.getElementById('txtHtml').value ;
+		if ( oEditor.FCKBrowserInfo.IsIE )
+			oEditor.FCKSelection.Collapse( true ) ;
+	}
 	window.parent.Cancel() ;
 }
 

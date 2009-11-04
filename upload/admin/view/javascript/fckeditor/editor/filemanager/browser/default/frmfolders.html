@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -24,10 +24,11 @@
 -->
 <html>
 	<head>
+		<title>Folders</title>
 		<link href="browser.css" type="text/css" rel="stylesheet">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<script type="text/javascript" src="js/common.js"></script>
-		<script language="javascript">
+		<script type="text/javascript">
 
 var sActiveFolder ;
 
@@ -66,12 +67,12 @@ oListManager.AddItem = function( folderName, folderPath )
 	// Add the folder icon cell.
 	var oCell = oRow.insertCell(-1) ;
 	oCell.width = 16 ;
-	oCell.innerHTML = sLink + '<img alt="" src="images/spacer.gif" width="16" height="16" border="0"></a>' ;
+	oCell.innerHTML = sLink + '<img alt="" src="images/spacer.gif" width="16" height="16" border="0"><\/a>' ;
 
 	// Add the folder name cell.
 	oCell = oRow.insertCell(-1) ;
 	oCell.noWrap = true ;
-	oCell.innerHTML = '&nbsp;' + sLink + folderName + '</a>' ;
+	oCell.innerHTML = '&nbsp;' + sLink + folderName + '<\/a>' ;
 
 	this.TableRows[ folderPath ] = oRow ;
 }
@@ -186,7 +187,7 @@ window.onload = function()
 }
 		</script>
 	</head>
-	<body class="FileArea" bottomMargin="10" leftMargin="10" topMargin="10" rightMargin="10">
+	<body class="FileArea">
 		<table id="tableFiles" cellSpacing="0" cellPadding="0" width="100%" border="0">
 			<tr id="trUp" style="DISPLAY: none">
 				<td width="16"><a id="linkUpIcon" href="#"><img alt="" src="images/FolderUp.gif" width="16" height="16" border="0"></a></td>

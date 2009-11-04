@@ -37,14 +37,22 @@ class ControllerPaymentBankTransfer extends Controller {
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 		
 		$this->load->model('localisation/language');
 		
 		$languages = $this->model_localisation_language->getLanguages();
 		
 		foreach ($languages as $language) {
-			$this->data['error_bank_' . $language['language_id']] = @$this->error['bank_' . $language['language_id']];
+			if (isset($this->error['bank_' . $language['language_id']])) {
+				$this->data['error_bank_' . $language['language_id']] = $this->error['bank_' . $language['language_id']];
+			} else {
+				$this->data['error_bank_' . $language['language_id']] = '';
+			}
 		}
 		
   		$this->document->breadcrumbs = array();
@@ -132,7 +140,7 @@ class ControllerPaymentBankTransfer extends Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 		
 		foreach ($languages as $language) {
-			if (!@$this->request->post['bank_transfer_bank_' . $language['language_id']]) {
+			if (!$this->request->post['bank_transfer_bank_' . $language['language_id']]) {
 				$this->error['bank_' .  $language['language_id']] = $this->language->get('error_bank');
 			}
 		}

@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "포맷 지우기",
 InsertLinkLbl		: "링크",
 InsertLink			: "링크 삽입/변경",
 RemoveLink			: "링크 삭제",
+VisitLink			: "Open Link",	//MISSING
 Anchor				: "책갈피 삽입/변경",
 AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "이미지",
@@ -72,6 +73,9 @@ BlockJustify		: "양쪽 맞춤",
 DecreaseIndent		: "내어쓰기",
 IncreaseIndent		: "들여쓰기",
 Blockquote			: "Blockquote",	//MISSING
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "취소",
 Redo				: "재실행",
 NumberedListLbl		: "순서있는 목록",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "툴바 설정이 없습니다. : \"%1\"",
 NoActiveX			: "브러우저의 보안 설정으로 인해 몇몇 기능의 작동에 장애가 있을 수 있습니다. \"액티브-액스 기능과 플러그 인\" 옵션을 허용하여 주시지 않으면 오류가 발생할 수 있습니다.",
 BrowseServerBlocked : "브러우저 요소가 열리지 않습니다. 팝업차단 설정이 꺼져있는지 확인하여 주십시오.",
 DialogBlocked		: "윈도우 대화창을 열 수 없습니다. 팝업차단 설정이 꺼져있는지 확인하여 주십시오.",
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "예",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "셀 간격",
 DlgTableCellPad		: "셀 여백",
 DlgTableCaption		: "캡션",
 DlgTableSummary		: "Summary",	//MISSING
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "셀 설정",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "위",
 DlgCellVerAlignMiddle	: "중간",
 DlgCellVerAlignBottom	: "아래",
 DlgCellVerAlignBaseline	: "기준선",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "세로 합치기",
 DlgCellCollSpan		: "가로 합치기",
 DlgCellBackColor	: "배경 색상",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "About",
 DlgAboutBrowserInfoTab	: "브라우저 정보",
 DlgAboutLicenseTab	: "License",	//MISSING
 DlgAboutVersion		: "버전",
-DlgAboutInfo		: "더 많은 정보를 보시려면 다음 사이트로 가십시오."
+DlgAboutInfo		: "더 많은 정보를 보시려면 다음 사이트로 가십시오.",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style"	//MISSING
 };

@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -41,7 +41,6 @@ FCKDomRange.prototype =
 		{
 			// For text nodes, the node itself is the StartNode.
 			var eStart	= innerRange.startContainer ;
-			var eEnd	= innerRange.endContainer ;
 
 			var oElementPath = new FCKElementPath( eStart ) ;
 			this.StartNode			= eStart.nodeType == 3 ? eStart : eStart.childNodes[ innerRange.startOffset ] ;
@@ -49,28 +48,40 @@ FCKDomRange.prototype =
 			this.StartBlock			= oElementPath.Block ;
 			this.StartBlockLimit	= oElementPath.BlockLimit ;
 
-			if ( eStart != eEnd )
-				oElementPath = new FCKElementPath( eEnd ) ;
-
-			// The innerRange.endContainer[ innerRange.endOffset ] is not
-			// usually part of the range, but the marker for the range end. So,
-			// let's get the previous available node as the real end.
-			var eEndNode = eEnd ;
-			if ( innerRange.endOffset == 0 )
+			if ( innerRange.collapsed )
 			{
-				while ( eEndNode && !eEndNode.previousSibling )
-					eEndNode = eEndNode.parentNode ;
-
-				if ( eEndNode )
-					eEndNode = eEndNode.previousSibling ;
+				this.EndNode		= this.StartNode ;
+				this.EndContainer	= this.StartContainer ;
+				this.EndBlock		= this.StartBlock ;
+				this.EndBlockLimit	= this.StartBlockLimit ;
 			}
-			else if ( eEndNode.nodeType == 1 )
-				eEndNode = eEndNode.childNodes[ innerRange.endOffset - 1 ] ;
+			else
+			{
+				var eEnd	= innerRange.endContainer ;
 
-			this.EndNode			= eEndNode ;
-			this.EndContainer		= eEnd ;
-			this.EndBlock			= oElementPath.Block ;
-			this.EndBlockLimit		= oElementPath.BlockLimit ;
+				if ( eStart != eEnd )
+					oElementPath = new FCKElementPath( eEnd ) ;
+
+				// The innerRange.endContainer[ innerRange.endOffset ] is not
+				// usually part of the range, but the marker for the range end. So,
+				// let's get the previous available node as the real end.
+				var eEndNode = eEnd ;
+				if ( innerRange.endOffset == 0 )
+				{
+					while ( eEndNode && !eEndNode.previousSibling )
+						eEndNode = eEndNode.parentNode ;
+
+					if ( eEndNode )
+						eEndNode = eEndNode.previousSibling ;
+				}
+				else if ( eEndNode.nodeType == 1 )
+					eEndNode = eEndNode.childNodes[ innerRange.endOffset - 1 ] ;
+
+				this.EndNode			= eEndNode ;
+				this.EndContainer		= eEnd ;
+				this.EndBlock			= oElementPath.Block ;
+				this.EndBlockLimit		= oElementPath.BlockLimit ;
+			}
 		}
 
 		this._Cache = {} ;
@@ -458,13 +469,13 @@ FCKDomRange.prototype =
 		// Also note that the node that we use for "address base" would change during backtracking.
 		var addrStart = this._Range.startContainer ;
 		var addrEnd = this._Range.endContainer ;
-		while ( curStart && curStart.nodeType == 3 )
+		while ( curStart && curStart.nodeType == 3 && addrStart.nodeType == 3 )
 		{
 			bookmark.Start[0] += curStart.length ;
 			addrStart = curStart ;
 			curStart = curStart.previousSibling ;
 		}
-		while ( curEnd && curEnd.nodeType == 3 )
+		while ( curEnd && curEnd.nodeType == 3 && addrEnd.nodeType == 3 )
 		{
 			bookmark.End[0] += curEnd.length ;
 			addrEnd = curEnd ;
@@ -862,6 +873,12 @@ FCKDomRange.prototype =
 		// Move the contents of the temporary range to the fixed block.
 		this.ExtractContents().AppendTo( oFixedBlock ) ;
 		FCKDomTools.TrimNode( oFixedBlock ) ;
+
+		// If the fixed block is empty (not counting bookmark nodes)
+		// Add a <br /> inside to expand it.
+		if ( FCKDomTools.CheckIsEmptyElement(oFixedBlock, function( element ) { return element.getAttribute('_fck_bookmark') != 'true' ; } )
+				&& FCKBrowserInfo.IsGeckoLike )
+				FCKTools.AppendBogusBr( oFixedBlock ) ;
 
 		// Insert the fixed block into the DOM.
 		this.InsertNode( oFixedBlock ) ;

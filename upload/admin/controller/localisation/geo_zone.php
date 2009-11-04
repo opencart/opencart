@@ -19,7 +19,7 @@ class ControllerLocalisationGeoZone extends Controller {
 		
 		$this->load->model('localisation/geo_zone');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_localisation_geo_zone->addGeoZone($this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationGeoZone extends Controller {
 		
 		$this->load->model('localisation/geo_zone');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_localisation_geo_zone->editGeoZone($this->request->get['geo_zone_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -83,7 +83,7 @@ class ControllerLocalisationGeoZone extends Controller {
 		
 		$this->load->model('localisation/geo_zone');
 		
-		if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
+		if (isset($this->request->post['delete']) && $this->validateDelete()) {
 			foreach ($this->request->post['delete'] as $geo_zone_id) {
 				$this->model_localisation_geo_zone->deleteGeoZone($geo_zone_id);
 			}
@@ -185,8 +185,8 @@ class ControllerLocalisationGeoZone extends Controller {
 				'geo_zone_id' => $result['geo_zone_id'],
 				'name'        => $result['name'],
 				'description' => $result['description'],
-				'delete'     => in_array($result['geo_zone_id'], (array)@$this->request->post['delete']),
-				'action'     => $action
+				'delete'      => isset($this->request->post['delete']) && in_array($result['geo_zone_id'], $this->request->post['delete']),
+				'action'      => $action
 			);
 		}
 		
@@ -201,11 +201,19 @@ class ControllerLocalisationGeoZone extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 		
 		$url = '';
 
@@ -266,9 +274,23 @@ class ControllerLocalisationGeoZone extends Controller {
 				
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_name'] = @$this->error['name'];
-		$this->data['error_description'] = @$this->error['description'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+
+ 		if (isset($this->error['name'])) {
+			$this->data['error_name'] = $this->error['name'];
+		} else {
+			$this->data['error_name'] = '';
+		}
+
+ 		if (isset($this->error['description'])) {
+			$this->data['error_description'] = $this->error['description'];
+		} else {
+			$this->data['error_description'] = '';
+		}
 		
 		$url = '';
 			
@@ -306,20 +328,24 @@ class ControllerLocalisationGeoZone extends Controller {
 
 		$this->data['cancel'] = $this->url->https('localisation/geo_zone' . $url);
 
-		if ((isset($this->request->get['geo_zone_id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['geo_zone_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($this->request->get['geo_zone_id']);
 		}
 
 		if (isset($this->request->post['name'])) {
 			$this->data['name'] = $this->request->post['name'];
+		} elseif (isset($geo_zone_info)) {
+			$this->data['name'] = $geo_zone_info['name'];
 		} else {
-			$this->data['name'] = @$geo_zone_info['name'];
+			$this->data['name'] = '';
 		}
 
 		if (isset($this->request->post['description'])) {
 			$this->data['description'] = $this->request->post['description'];
+		} elseif (isset($geo_zone_info)) {
+			$this->data['description'] = $geo_zone_info['description'];
 		} else {
-			$this->data['description'] = @$geo_zone_info['description'];
+			$this->data['description'] = '';
 		}
 		
 		$this->load->model('localisation/country');

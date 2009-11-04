@@ -1,7 +1,7 @@
 <?php   
 class ControllerModuleCurrency extends Controller {
 	protected function index() {
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && (isset($this->request->post['currency_code']))) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['currency_code'])) {
       		$this->currency->set($this->request->post['currency_code']);
 
 			if (isset($this->request->post['redirect'])) {
@@ -25,6 +25,8 @@ class ControllerModuleCurrency extends Controller {
 			$this->load->model('tool/seo_url');
 			
 			$data = $this->request->get;
+			
+			unset($data['_route_']);
 			
 			$route = $data['route'];
 			

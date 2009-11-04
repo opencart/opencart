@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "Изтрий форматирането",
 InsertLinkLbl		: "Връзка",
 InsertLink			: "Добави/Редактирай връзка",
 RemoveLink			: "Изтрий връзка",
+VisitLink			: "Open Link",	//MISSING
 Anchor				: "Добави/Редактирай котва",
 AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "Изображение",
@@ -72,6 +73,9 @@ BlockJustify		: "Двустранно подравняване",
 DecreaseIndent		: "Намали отстъпа",
 IncreaseIndent		: "Увеличи отстъпа",
 Blockquote			: "Blockquote",	//MISSING
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "Отмени",
 Redo				: "Повтори",
 NumberedListLbl		: "Нумериран списък",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "Панелът \"%1\" не съществува",
 NoActiveX			: "Your browser's security settings could limit some features of the editor. You must enable the option \"Run ActiveX controls and plug-ins\". You may experience errors and notice missing features.",	//MISSING
 BrowseServerBlocked : "The resources browser could not be opened. Make sure that all popup blockers are disabled.",	//MISSING
 DialogBlocked		: "It was not possible to open the dialog window. Make sure all popup blockers are disabled.",	//MISSING
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "ОК",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Разстояние между клетките",
 DlgTableCellPad		: "Отстъп на съдържанието в клетките",
 DlgTableCaption		: "Заглавие",
 DlgTableSummary		: "Резюме",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Параметри на клетката",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "Горе",
 DlgCellVerAlignMiddle	: "По средата",
 DlgCellVerAlignBottom	: "Долу",
 DlgCellVerAlignBaseline	: "По базовата линия",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "повече от един ред",
 DlgCellCollSpan		: "повече от една колона",
 DlgCellBackColor	: "фонов цвят",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "За",
 DlgAboutBrowserInfoTab	: "Информация за браузъра",
 DlgAboutLicenseTab	: "License",	//MISSING
 DlgAboutVersion		: "версия",
-DlgAboutInfo		: "За повече информация посетете"
+DlgAboutInfo		: "За повече информация посетете",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style"	//MISSING
 };

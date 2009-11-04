@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -150,7 +150,7 @@ FCKXHtmlEntities.Initialize = function()
 			'"':'quot',
 		//	'&':'amp',		// This entity is automatically handled by the XHTML parser.
 		//	'<':'lt',		// This entity is automatically handled by the XHTML parser.
-		//	'>':'gt',		// This entity is automatically handled by the XHTML parser.
+			'>':'gt',			// Opera and Safari don't encode it in their implementation
 			'ˆ':'circ',
 			'˜':'tilde',
 			' ':'ensp',
@@ -331,12 +331,15 @@ FCKXHtmlEntities.Initialize = function()
 	}
 	else
 	{
-		FCKXHtmlEntities.Entities = {} ;
+		FCKXHtmlEntities.Entities = {
+			'>':'gt' // Opera and Safari don't encode it in their implementation
+		} ;
+		sChars = '>';
 
 		// Even if we are not processing the entities, we must render the &nbsp;
 		// correctly. As we don't want HTML entities, let's use its numeric
 		// representation (&#160).
-		sChars = ' ' ;
+		sChars += ' ' ;
 	}
 
 	// Create the Regex used to find entities in the text.

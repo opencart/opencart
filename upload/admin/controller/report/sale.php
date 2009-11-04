@@ -66,14 +66,14 @@ class ControllerReportSale extends Controller {
 		$this->data['orders'] = array();
 		
 		$data = array(
-			'date_start'	  => @$this->request->get['filter_date_start'], 
-			'date_end'	      => @$this->request->get['filter_date_end'], 
-			'group'           => @$this->request->get['filter_group'],
-			'order_status_id' => @$this->request->get['filter_order_status_id'],
-			'sort'            => $sort,
-			'order'           => $order,
-			'start'           => ($page - 1) * 10,
-			'limit'           => 10
+			'filter_date_start'	     => $filter_date_start, 
+			'filter_date_end'	     => $filter_date_end, 
+			'filter_group'           => $filter_group,
+			'filter_order_status_id' => $filter_order_status_id,
+			'sort'                   => $sort,
+			'order'                  => $order,
+			'start'                  => ($page - 1) * 10,
+			'limit'                  => 10
 		);
 		
 		$order_total = $this->model_report_report->getSaleReportTotal($data);

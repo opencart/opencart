@@ -13,18 +13,24 @@ class ControllerAccountCreate extends Controller {
 		
 		$this->load->model('account/customer');
 		
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_account_customer->addCustomer($this->request->post);
-			
+
 			$this->customer->login($this->request->post['email'], $this->request->post['password']);
-	
+			
 			$subject = sprintf($this->language->get('mail_subject'), $this->config->get('config_store'));
 			
-			$message  = sprintf($this->language->get('mail_line_1'), $this->config->get('config_store')) . "\n\n";
-			$message .= $this->language->get('mail_line_2') . "\n";
+			$message = sprintf($this->language->get('mail_welcome'), $this->config->get('config_store')) . "\n\n";
+			
+			if (!$this->config->get('config_customer_approval')) {
+				$message .= $this->language->get('mail_login') . "\n";
+			} else {
+				$message .= $this->language->get('mail_approval') . "\n";
+			}
+			
 			$message .= $this->url->https('account/login') . "\n\n";
-			$message .= $this->language->get('mail_line_3') . "\n\n";
-			$message .= $this->language->get('mail_line_4') . "\n";
+			$message .= $this->language->get('mail_services') . "\n\n";
+			$message .= $this->language->get('mail_thanks') . "\n";
 			$message .= $this->config->get('config_store');
 			
 			$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), html_entity_decode($this->config->get('config_smtp_password')), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout'));
@@ -86,28 +92,121 @@ class ControllerAccountCreate extends Controller {
 
 		$this->data['button_continue'] = $this->language->get('button_continue');
     
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_firstname'] = @$this->error['firstname'];
-    	$this->data['error_lastname'] = @$this->error['lastname'];
-    	$this->data['error_email'] = @$this->error['email'];
-    	$this->data['error_telephone'] = @$this->error['telephone'];
-    	$this->data['error_password'] = @$this->error['password'];
-    	$this->data['error_confirm'] = @$this->error['confirm'];
-    	$this->data['error_address_1'] = @$this->error['address_1'];
-    	$this->data['error_city'] = @$this->error['city'];
+		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+		
+		if (isset($this->error['firstname'])) {
+			$this->data['error_firstname'] = $this->error['firstname'];
+		} else {
+			$this->data['error_firstname'] = '';
+		}	
+		
+		if (isset($this->error['lastname'])) {
+			$this->data['error_lastname'] = $this->error['lastname'];
+		} else {
+			$this->data['error_lastname'] = '';
+		}		
+	
+		if (isset($this->error['email'])) {
+			$this->data['error_email'] = $this->error['email'];
+		} else {
+			$this->data['error_email'] = '';
+		}
+		
+		if (isset($this->error['telephone'])) {
+			$this->data['error_telephone'] = $this->error['telephone'];
+		} else {
+			$this->data['error_telephone'] = '';
+		}
+		
+		if (isset($this->error['password'])) {
+			$this->data['error_password'] = $this->error['password'];
+		} else {
+			$this->data['error_password'] = '';
+		}
+		
+ 		if (isset($this->error['confirm'])) {
+			$this->data['error_confirm'] = $this->error['confirm'];
+		} else {
+			$this->data['error_confirm'] = '';
+		}
+		
+  		if (isset($this->error['address_1'])) {
+			$this->data['error_address_1'] = $this->error['address_1'];
+		} else {
+			$this->data['error_address_1'] = '';
+		}
+   		
+		if (isset($this->error['city'])) {
+			$this->data['error_city'] = $this->error['city'];
+		} else {
+			$this->data['error_city'] = '';
+		}
 
     	$this->data['action'] = $this->url->https('account/create');
 
-    	$this->data['firstname'] = @$this->request->post['firstname'];
-    	$this->data['lastname'] = @$this->request->post['lastname'];
-    	$this->data['email'] = @$this->request->post['email'];
-    	$this->data['telephone'] = @$this->request->post['telephone'];
-    	$this->data['fax'] = @$this->request->post['fax'];
-    	$this->data['company'] = @$this->request->post['company'];
-    	$this->data['address_1'] = @$this->request->post['address_1'];
-    	$this->data['address_2'] = @$this->request->post['address_2'];
-    	$this->data['postcode'] = @$this->request->post['postcode'];
-    	$this->data['city'] = @$this->request->post['city'];
+		if (isset($this->request->post['firstname'])) {
+    		$this->data['firstname'] = $this->request->post['firstname'];
+		} else {
+			$this->data['firstname'] = '';
+		}
+
+		if (isset($this->request->post['lastname'])) {
+    		$this->data['lastname'] = $this->request->post['lastname'];
+		} else {
+			$this->data['lastname'] = '';
+		}
+		
+		if (isset($this->request->post['email'])) {
+    		$this->data['email'] = $this->request->post['email'];
+		} else {
+			$this->data['email'] = '';
+		}
+		
+		if (isset($this->request->post['telephone'])) {
+    		$this->data['telephone'] = $this->request->post['telephone'];
+		} else {
+			$this->data['telephone'] = '';
+		}
+		
+		if (isset($this->request->post['fax'])) {
+    		$this->data['fax'] = $this->request->post['fax'];
+		} else {
+			$this->data['fax'] = '';
+		}
+		
+		if (isset($this->request->post['company'])) {
+    		$this->data['company'] = $this->request->post['company'];
+		} else {
+			$this->data['company'] = '';
+		}
+		
+		if (isset($this->request->post['address_1'])) {
+    		$this->data['address_1'] = $this->request->post['address_1'];
+		} else {
+			$this->data['address_1'] = '';
+		}
+
+		if (isset($this->request->post['address_2'])) {
+    		$this->data['address_2'] = $this->request->post['address_2'];
+		} else {
+			$this->data['address_2'] = '';
+		}
+
+		if (isset($this->request->post['postcode'])) {
+    		$this->data['postcode'] = $this->request->post['postcode'];
+		} else {
+			$this->data['postcode'] = '';
+		}
+		
+		if (isset($this->request->post['city'])) {
+    		$this->data['city'] = $this->request->post['city'];
+		} else {
+			$this->data['city'] = '';
+		}
 
     	if (isset($this->request->post['country_id'])) {
       		$this->data['country_id'] = $this->request->post['country_id'];
@@ -125,9 +224,23 @@ class ControllerAccountCreate extends Controller {
 		
     	$this->data['countries'] = $this->model_localisation_country->getCountries();
 		
-    	$this->data['password'] = @$this->request->post['password'];
-    	$this->data['confirm'] = @$this->request->post['confirm'];
-		$this->data['newsletter'] = @$this->request->post['newsletter'];
+		if (isset($this->request->post['password'])) {
+    		$this->data['password'] = $this->request->post['password'];
+		} else {
+			$this->data['password'] = '';
+		}
+		
+		if (isset($this->request->post['confirm'])) {
+    		$this->data['confirm'] = $this->request->post['confirm'];
+		} else {
+			$this->data['confirm'] = '';
+		}
+		
+		if (isset($this->request->post['newsletter'])) {
+    		$this->data['newsletter'] = $this->request->post['newsletter'];
+		} else {
+			$this->data['newsletter'] = '';
+		}	
 
 		if ($this->config->get('config_account')) {
 			$this->load->model('catalog/information');
@@ -143,7 +256,11 @@ class ControllerAccountCreate extends Controller {
 			$this->data['text_agree'] = '';
 		}
 		
-      	$this->data['agree'] = @$this->request->post['agree'];
+		if (isset($this->request->post['agree'])) {
+      		$this->data['agree'] = $this->request->post['agree'];
+		} else {
+			$this->data['agree'] = FALSE;
+		}
 		
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'account/create.tpl';
@@ -161,7 +278,9 @@ class ControllerAccountCreate extends Controller {
       		$this->error['lastname'] = $this->language->get('error_lastname');
     	}
 
-    	if (!eregi('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', $this->request->post['email'])) {
+		$pattern = '/^([a-z0-9])(([-a-z0-9._])*([a-z0-9]))*\@([a-z0-9])(([a-z0-9-])*([a-z0-9]))+(\.([a-z0-9])([-a-z0-9_-])?([a-z0-9])+)+$/i';
+		
+    	if (!preg_match($pattern, $this->request->post['email'])) {
       		$this->error['email'] = $this->language->get('error_email');
     	}
 
@@ -195,7 +314,7 @@ class ControllerAccountCreate extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account'));
 			
 			if ($information_info) {
-    			if (!@$this->request->post['agree']) {
+    			if (!isset($this->request->post['agree'])) {
       				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
     			}
 			}
@@ -213,12 +332,12 @@ class ControllerAccountCreate extends Controller {
 
 		$this->load->model('localisation/zone');
 
-    	$results = $this->model_localisation_zone->getZonesByCountryId(@$this->request->get['country_id']);
+    	$results = $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']);
         
       	foreach ($results as $result) {
         	$output .= '<option value="' . $result['zone_id'] . '"';
 	
-	    	if (@$this->request->get['zone_id'] == $result['zone_id']) {
+	    	if (isset($this->request->get['zone_id']) && ($this->request->get['zone_id'] == $result['zone_id'])) {
 	      		$output .= ' selected="selected"';
 	    	}
 	

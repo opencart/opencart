@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -51,6 +51,7 @@ FCKCommands.GetCommand = function( commandName )
 		case 'Templates'	: oCommand = new FCKDialogCommand( 'Templates'	, FCKLang.DlgTemplatesTitle		, 'dialog/fck_template.html'	, 380, 450 ) ; break ;
 		case 'Link'			: oCommand = new FCKDialogCommand( 'Link'		, FCKLang.DlgLnkWindowTitle		, 'dialog/fck_link.html'		, 400, 300 ) ; break ;
 		case 'Unlink'		: oCommand = new FCKUnlinkCommand() ; break ;
+		case 'VisitLink'	: oCommand = new FCKVisitLinkCommand() ; break ;
 		case 'Anchor'		: oCommand = new FCKDialogCommand( 'Anchor'		, FCKLang.DlgAnchorTitle		, 'dialog/fck_anchor.html'		, 370, 160 ) ; break ;
 		case 'AnchorDelete'	: oCommand = new FCKAnchorDeleteCommand() ; break ;
 		case 'BulletedList'	: oCommand = new FCKDialogCommand( 'BulletedList', FCKLang.BulletedListProp		, 'dialog/fck_listprop.html?UL'	, 370, 160 ) ; break ;
@@ -79,6 +80,7 @@ FCKCommands.GetCommand = function( commandName )
 		case 'NewPage'		: oCommand = new FCKNewPageCommand() ; break ;
 		case 'PageBreak'	: oCommand = new FCKPageBreakCommand() ; break ;
 		case 'Rule'			: oCommand = new FCKRuleCommand() ; break ;
+		case 'Nbsp'			: oCommand = new FCKNbsp() ; break ;
 
 		case 'TextColor'	: oCommand = new FCKTextColorCommand('ForeColor') ; break ;
 		case 'BGColor'		: oCommand = new FCKTextColorCommand('BackColor') ; break ;
@@ -94,6 +96,9 @@ FCKCommands.GetCommand = function( commandName )
 		case 'Indent'	: oCommand = new FCKIndentCommand( 'indent', FCKConfig.IndentLength ) ; break ;
 		case 'Outdent'	: oCommand = new FCKIndentCommand( 'outdent', FCKConfig.IndentLength * -1 ) ; break ;
 		case 'Blockquote'	: oCommand = new FCKBlockQuoteCommand() ; break ;
+		case 'CreateDiv'	: oCommand = new FCKDialogCommand( 'CreateDiv', FCKLang.CreateDiv, 'dialog/fck_div.html', 380, 210, null, null, true ) ; break ;
+		case 'EditDiv'		: oCommand = new FCKDialogCommand( 'EditDiv', FCKLang.EditDiv, 'dialog/fck_div.html', 380, 210, null, null, false ) ; break ;
+		case 'DeleteDiv'	: oCommand = new FCKDeleteDivCommand() ; break ;
 
 		case 'TableInsertRowAfter'		: oCommand = new FCKTableCommand('TableInsertRowAfter') ; break ;
 		case 'TableInsertRowBefore'		: oCommand = new FCKTableCommand('TableInsertRowBefore') ; break ;

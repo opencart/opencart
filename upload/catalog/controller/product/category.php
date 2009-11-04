@@ -90,7 +90,7 @@ class ControllerProductCategory extends Controller {
 			$category_total = $this->model_catalog_category->getTotalCategoriesByCategoryId($category_id);
 			$product_total = $this->model_catalog_product->getTotalProductsByCategoryId($category_id);
 			
-			if (($category_total) || ($product_total)) {
+			if ($category_total || $product_total) {
         		$this->data['categories'] = array();
         		
 				$results = $this->model_catalog_category->getCategories($category_id);
@@ -105,10 +105,10 @@ class ControllerProductCategory extends Controller {
 					$this->data['categories'][] = array(
             			'name'  => $result['name'],
             			'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)),
-            			'thumb' => HelperImage::resize($image, $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'))
+            			'thumb' => image_resize($image, $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'))
           			);
         		}
-				
+		
 				$this->load->model('catalog/review');
 				
 				$this->data['products'] = array();
@@ -121,9 +121,7 @@ class ControllerProductCategory extends Controller {
 					} else {
 						$image = 'no_image.jpg';
 					}
-			
-					$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
-
+	
 					$special = $this->model_catalog_product->getProductSpecial($result['product_id']);
 			
 					if ($special) {
@@ -132,18 +130,28 @@ class ControllerProductCategory extends Controller {
 						$special = FALSE;
 					}
 				
-          			$this->data['products'][] = array(
+					$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
+          		
+					$this->data['products'][] = array(
             			'name'    => $result['name'],
 						'model'   => $result['model'],
             			'rating'  => $rating,
 						'stars'   => sprintf($this->language->get('text_stars'), $rating),
-						'thumb'   => HelperImage::resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
+						'thumb'   => image_resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
             			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
 						'special' => $special,
 						'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&path=' . $this->request->get['path'] . '&product_id=' . $result['product_id']))
           			);
         		}
 
+				if (!$this->config->get('config_customer_price')) {
+					$this->data['display_price'] = TRUE;
+				} elseif ($this->customer->isLogged()) {
+					$this->data['display_price'] = TRUE;
+				} else {
+					$this->data['display_price'] = FALSE;
+				}
+		
 				$url = '';
 		
 				if (isset($this->request->get['page'])) {

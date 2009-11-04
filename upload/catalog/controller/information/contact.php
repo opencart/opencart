@@ -7,7 +7,7 @@ class ControllerInformationContact extends Controller {
 
     	$this->document->title = $this->language->get('heading_title');  
 	 
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), html_entity_decode($this->config->get('config_smtp_password')), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout'));
 			$mail->setTo($this->config->get('config_email'));
 	  		$mail->setFrom($this->request->post['email']);
@@ -44,10 +44,29 @@ class ControllerInformationContact extends Controller {
     	$this->data['entry_enquiry'] = $this->language->get('entry_enquiry');
 		$this->data['entry_captcha'] = $this->language->get('entry_captcha');
 
-    	$this->data['error_name'] = @$this->error['name'];
-    	$this->data['error_email'] = @$this->error['email'];
-    	$this->data['error_enquiry'] = @$this->error['enquiry'];
-		$this->data['error_captcha'] = @$this->error['captcha'];
+		if (isset($this->error['name'])) {
+    		$this->data['error_name'] = $this->error['name'];
+		} else {
+			$this->data['error_name'] = '';
+		}
+		
+		if (isset($this->error['email'])) {
+			$this->data['error_email'] = $this->error['email'];
+		} else {
+			$this->data['error_email'] = '';
+		}		
+		
+		if (isset($this->error['enquiry'])) {
+			$this->data['error_enquiry'] = $this->error['enquiry'];
+		} else {
+			$this->data['error_enquiry'] = '';
+		}		
+		
+ 		if (isset($this->error['captcha'])) {
+			$this->data['error_captcha'] = $this->error['captcha'];
+		} else {
+			$this->data['error_captcha'] = '';
+		}	
 
     	$this->data['button_continue'] = $this->language->get('button_continue');
     
@@ -56,10 +75,30 @@ class ControllerInformationContact extends Controller {
     	$this->data['address'] = nl2br($this->config->get('config_address'));
     	$this->data['telephone'] = $this->config->get('config_telephone');
     	$this->data['fax'] = $this->config->get('config_fax');
-    	$this->data['name'] = @$this->request->post['name'];
-    	$this->data['email'] = @$this->request->post['email'];
-    	$this->data['enquiry'] = @$this->request->post['enquiry'];
-		$this->data['captcha'] = @$this->request->post['captcha'];
+    	
+		if (isset($this->request->post['name'])) {
+			$this->data['name'] = $this->request->post['name'];
+		} else {
+			$this->data['name'] = '';
+		}
+
+		if (isset($this->request->post['email'])) {
+			$this->data['email'] = $this->request->post['email'];
+		} else {
+			$this->data['email'] = '';
+		}
+		
+		if (isset($this->request->post['enquiry'])) {
+			$this->data['enquiry'] = $this->request->post['enquiry'];
+		} else {
+			$this->data['enquiry'] = '';
+		}
+		
+		if (isset($this->request->post['captcha'])) {
+			$this->data['captcha'] = $this->request->post['captcha'];
+		} else {
+			$this->data['captcha'] = '';
+		}		
 	
 		$this->id       = 'content';
 		$this->template = $this->config->get('config_template') . 'information/contact.tpl';
@@ -117,7 +156,9 @@ class ControllerInformationContact extends Controller {
       		$this->error['name'] = $this->language->get('error_name');
     	}
 
-    	if (!eregi('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$', $this->request->post['email'])) {
+		$pattern = '/^([a-z0-9])(([-a-z0-9._])*([a-z0-9]))*\@([a-z0-9])(([a-z0-9-])*([a-z0-9]))+(\.([a-z0-9])([-a-z0-9_-])?([a-z0-9])+)+$/i';
+
+    	if (!preg_match($pattern, $this->request->post['email'])) {
       		$this->error['email'] = $this->language->get('error_email');
     	}
 
@@ -125,7 +166,7 @@ class ControllerInformationContact extends Controller {
       		$this->error['enquiry'] = $this->language->get('error_enquiry');
     	}
 
-    	if (@$this->session->data['captcha'] != $this->request->post['captcha']) {
+    	if ((!isset($this->session->data['captcha'])) && ($this->session->data['captcha'] != $this->request->post['captcha'])) {
       		$this->error['captcha'] = $this->language->get('error_captcha');
     	}
 		

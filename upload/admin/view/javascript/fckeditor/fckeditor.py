@@ -1,6 +1,6 @@
 """
 FCKeditor - The text editor for Internet - http://www.fckeditor.net
-Copyright (C) 2003-2008 Frederico Caldeira Knabben
+Copyright (C) 2003-2009 Frederico Caldeira Knabben
 
 == BEGIN LICENSE ==
 
@@ -67,7 +67,7 @@ class FCKeditor(object):
 					self.InstanceName
 					)
 			if (self.ToolbarSet is not None):
-				Link += "&amp;ToolBar=%s" % self.ToolbarSet
+				Link += "&amp;Toolbar=%s" % self.ToolbarSet
 
 			# Render the linked hidden field
 			Html += "<input type=\"hidden\" id=\"%s\" name=\"%s\" value=\"%s\" style=\"display:none\" />" % (

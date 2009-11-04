@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "ล้างรูปแบบ",
 InsertLinkLbl		: "ลิงค์เชื่อมโยงเว็บ อีเมล์ รูปภาพ หรือไฟล์อื่นๆ",
 InsertLink			: "แทรก/แก้ไข ลิงค์",
 RemoveLink			: "ลบ ลิงค์",
+VisitLink			: "Open Link",	//MISSING
 Anchor				: "แทรก/แก้ไข Anchor",
 AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "รูปภาพ",
@@ -72,6 +73,9 @@ BlockJustify		: "จัดพอดีหน้ากระดาษ",
 DecreaseIndent		: "ลดระยะย่อหน้า",
 IncreaseIndent		: "เพิ่มระยะย่อหน้า",
 Blockquote			: "Blockquote",	//MISSING
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "ยกเลิกคำสั่ง",
 Redo				: "ทำซ้ำคำสั่ง",
 NumberedListLbl		: "ลำดับรายการแบบตัวเลข",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "ไม่มีการติดตั้งชุดค�
 NoActiveX			: "โปรแกรมท่องอินเตอร์เน็ตของท่านไม่อนุญาติให้อีดิตเตอร์ทำงาน \"Run ActiveX controls and plug-ins\". หากไม่อนุญาติให้ใช้งาน ActiveX controls ท่านจะไม่สามารถใช้งานได้อย่างเต็มประสิทธิภาพ.",
 BrowseServerBlocked : "เปิดหน้าต่างป๊อบอัพเพื่อทำงานต่อไม่ได้ กรุณาปิดเครื่องมือป้องกันป๊อบอัพในโปรแกรมท่องอินเตอร์เน็ตของท่านด้วย",
 DialogBlocked		: "เปิดหน้าต่างป๊อบอัพเพื่อทำงานต่อไม่ได้ กรุณาปิดเครื่องมือป้องกันป๊อบอัพในโปรแกรมท่องอินเตอร์เน็ตของท่านด้วย",
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "ตกลง",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "ระยะแนวนอนน",
 DlgTableCellPad		: "ระยะแนวตั้ง",
 DlgTableCaption		: "หัวเรื่องของตาราง",
 DlgTableSummary		: "สรุปความ",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "คุณสมบัติของ ช่อง",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "บนสุด",
 DlgCellVerAlignMiddle	: "กึ่งกลาง",
 DlgCellVerAlignBottom	: "ล่างสุด",
 DlgCellVerAlignBaseline	: "อิงบรรทัด",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "จำนวนแถวที่คร่อมกัน",
 DlgCellCollSpan		: "จำนวนสดมน์ที่คร่อมกัน",
 DlgCellBackColor	: "สีพื้นหลัง",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "เกี่ยวกับโปรแกรม",
 DlgAboutBrowserInfoTab	: "โปรแกรมท่องเว็บที่ท่านใช้",
 DlgAboutLicenseTab	: "ลิขสิทธิ์",
 DlgAboutVersion		: "รุ่น",
-DlgAboutInfo		: "For further information go to"	//MISSING
+DlgAboutInfo		: "For further information go to",	//MISSING
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style"	//MISSING
 };

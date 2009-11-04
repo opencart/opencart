@@ -14,7 +14,8 @@ class ControllerStep1 extends Controller {
 		$this->data['config_catalog'] = DIR_OPENCART . 'config.php';
 		$this->data['config_admin'] = DIR_OPENCART . 'admin/config.php';
 		
-		$this->data['cache'] = DIR_OPENCART . 'cache';
+		$this->data['cache'] = DIR_SYSTEM . 'cache';
+		$this->data['logs'] = DIR_SYSTEM . 'logs';
 		$this->data['image'] = DIR_OPENCART . 'image';
 		$this->data['image_cache'] = DIR_OPENCART . 'image/cache';
 		$this->data['download'] = DIR_OPENCART . 'download';
@@ -58,10 +59,14 @@ class ControllerStep1 extends Controller {
 			$this->error['warning'] = 'Warning: config.php needs to be writable for OpenCart to be installed!';
 		}
 
-		if (!is_writable(DIR_OPENCART . 'cache')) {
+		if (!is_writable(DIR_SYSTEM . 'cache')) {
 			$this->error['warning'] = 'Warning: Cache directory needs to be writable for OpenCart to work!';
 		}
-
+		
+		if (!is_writable(DIR_SYSTEM . 'logs')) {
+			$this->error['warning'] = 'Warning: Logs directory needs to be writable for OpenCart to work!';
+		}
+		
 		if (!is_writable(DIR_OPENCART . 'image')) {
 			$this->error['warning'] = 'Warning: Image directory needs to be writable for OpenCart to work!';
 		}

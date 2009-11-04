@@ -1,7 +1,8 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
+   "http://www.w3.org/TR/html4/frameset.dtd">
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -27,7 +28,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<link href="browser.css" type="text/css" rel="stylesheet">
 		<script type="text/javascript" src="js/fckxml.js"></script>
-		<script language="javascript">
+		<script type="text/javascript">
 // Automatically detect the correct document.domain (#1919).
 (function()
 {
@@ -41,7 +42,8 @@
 			var test = window.opener.document.domain ;
 			break ;
 		}
-		catch( e ) {}
+		catch( e )
+		{}
 
 		// Remove a domain part: www.mytest.example.com => mytest.example.com => example.com ...
 		d = d.replace( /.*?(?:\.|$)/, '' ) ;

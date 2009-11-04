@@ -1,6 +1,6 @@
 ﻿<%
  ' FCKeditor - The text editor for Internet - http://www.fckeditor.net
- ' Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ ' Copyright (C) 2003-2009 Frederico Caldeira Knabben
  '
  ' == BEGIN LICENSE ==
  '
@@ -30,6 +30,7 @@ Sub SetXmlHeaders()
 	Response.CacheControl = "no-cache"
 
 	' Set the response format.
+	Response.CodePage 		= 65001
 	Response.CharSet		= "UTF-8"
 	Response.ContentType	= "text/xml"
 End Sub
@@ -55,7 +56,11 @@ Sub SendError( number, text )
 	' Create the XML document header.
 	Response.Write "<?xml version=""1.0"" encoding=""utf-8"" ?>"
 
+	If text <> "" then
 	Response.Write "<Connector><Error number=""" & number & """ text=""" & Server.HTMLEncode( text ) & """ /></Connector>"
+	else
+	Response.Write "<Connector><Error number=""" & number & """ /></Connector>"
+	end if
 
 	Response.End
 End Sub

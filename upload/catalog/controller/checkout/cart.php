@@ -100,12 +100,11 @@ class ControllerCheckoutCart extends Controller {
           			'key'      => $result['key'],
           			'name'     => $result['name'],
           			'model'    => $result['model'],
-          			'thumb'    => HelperImage::resize($image, $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height')),
+          			'thumb'    => image_resize($image, $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height')),
           			'option'   => $option_data,
           			'quantity' => $result['quantity'],
           			'stock'    => $result['stock'],
 					'price'    => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
-          			'discount' => ($result['discount'] ? $this->currency->format($this->tax->calculate($result['price'] - $result['discount'], $result['tax_class_id'], $this->config->get('config_tax'))) : NULL),
 					'total'    => $this->currency->format($this->tax->calculate($result['total'], $result['tax_class_id'], $this->config->get('config_tax'))),
 					'href'     => $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $result['product_id']))
         		);

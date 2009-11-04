@@ -1,6 +1,6 @@
 /*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -24,27 +24,24 @@
 body
 {
 	background-color: #f1f1e3;
+	margin-top:0;
+	margin-bottom:0;
 }
 
 form
 {
-	margin: 0px 0px 0px 0px ;
-	padding: 0px 0px 0px 0px ;
+	margin: 0;
+	padding: 0;
 }
 
 .Frame
 {
 	background-color: #f1f1e3;
-	border-color: #f1f1e3;
-	border-right: thin inset;
-	border-top: thin inset;
-	border-left: thin inset;
-	border-bottom: thin inset;
+	border: thin inset #f1f1e3;
 }
 
 body.FileArea
 {
-
 	background-color: #ffffff;
 	margin: 10px;
 }
@@ -70,11 +67,8 @@ body, td, input, select
 
 .Button, button
 {
-	border-right: #737357 1px solid;
-	border-top: #737357 1px solid;
-	border-left: #737357 1px solid;
 	color: #3b3b1f;
-	border-bottom: #737357 1px solid;
+	border: #737357 1px solid;
 	background-color: #c7c78f;
 }
 
@@ -86,4 +80,8 @@ body, td, input, select
 .FolderListFolder img
 {
 	background-image: url(images/Folder.gif);
+}
+
+.fullHeight {
+	height: 100%;
 }

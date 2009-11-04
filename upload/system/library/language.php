@@ -26,9 +26,9 @@ final class Language {
 		if ($code) {
 			$this->code = $code; 
 		} else {
-    		if (array_key_exists(@$this->session->data['language'], $this->languages)) {
+    		if ((isset($this->session->data['language'])) && (array_key_exists($this->session->data['language'], $this->languages))) {
       			$this->set($this->session->data['language']);
-    		} elseif (array_key_exists(@$this->request->cookie['language'], $this->languages)) {
+    		} elseif ((isset($this->request->cookie['language'])) && array_key_exists($this->request->cookie['language'], $this->languages)) {
       			$this->set($this->request->cookie['language']);
     		} elseif ($browser = $this->detect()) {
 	    		$this->set($browser);
@@ -41,16 +41,14 @@ final class Language {
 	}
 
 	public function set($language) {
-		if (isset($this->languages[$language])) {
-    		$this->code = $language;
-		}
+		$this->code = $language;
 		
-    	if ((!isset($this->session->data['language'])) || ($this->session->data['language'] != $this->code)) {
-      		$this->session->data['language'] = $this->code;
+    	if ((!isset($this->session->data['language'])) || ($this->session->data['language'] != $language)) {
+      		$this->session->data['language'] = $language;
     	}
 
-    	if ((!isset($this->request->cookie['language'])) || ($this->request->cookie['language'] != $this->code)) {	  
-	  		setcookie('language', $this->code, time() + 60 * 60 * 24 * 30, '/', $_SERVER['HTTP_HOST']);
+    	if ((!isset($this->request->cookie['language'])) || ($this->request->cookie['language'] != $language)) {	  
+	  		setcookie('language', $language, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
     	}	
 	}
 	
@@ -73,8 +71,8 @@ final class Language {
   	}
 
 	private function detect() {
-    	if (@$this->request->server['HTTP_ACCEPT_LANGUAGE']) { 
-      		$browser_languages = explode(',', @$this->request->server['HTTP_ACCEPT_LANGUAGE']);
+    	if (isset($this->request->server['HTTP_ACCEPT_LANGUAGE']) && ($this->request->server['HTTP_ACCEPT_LANGUAGE'])) { 
+      		$browser_languages = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
 			
       		foreach ($browser_languages as $browser_language) {
         		foreach ($this->languages as $key => $language) {

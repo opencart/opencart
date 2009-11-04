@@ -12,9 +12,9 @@
       <?php foreach ($languages as $language) { ?>
       <tr>
         <td width="25%"><span class="required">*</span> <?php echo $entry_bank; ?></td>
-        <td><textarea name="bank_transfer_bank_<?php echo $language['language_id']; ?>" cols="80" rows="10"><?php echo ${'bank_transfer_bank_' . $language['language_id']}; ?></textarea>
+        <td><textarea name="bank_transfer_bank_<?php echo $language['language_id']; ?>" cols="80" rows="10"><?php echo isset(${'bank_transfer_bank_' . $language['language_id']}) ? ${'bank_transfer_bank_' . $language['language_id']} : ''; ?></textarea>
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" /><br />
-          <?php if (@${'error_bank_' . $language['language_id']}) { ?>
+          <?php if (isset(${'error_bank_' . $language['language_id']})) { ?>
           <span class="error"><?php echo ${'error_bank_' . $language['language_id']}; ?></span>
           <?php } ?></td>
       </tr>

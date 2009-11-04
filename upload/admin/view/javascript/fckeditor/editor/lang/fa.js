@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,8 +44,9 @@ RemoveFormat		: "برداشتن فرمت",
 InsertLinkLbl		: "پیوند",
 InsertLink			: "گنجاندن/ویرایش ِپیوند",
 RemoveLink			: "برداشتن پیوند",
+VisitLink			: "باز کردن پیوند",
 Anchor				: "گنجاندن/ویرایش ِلنگر",
-AnchorDelete		: "Remove Anchor",	//MISSING
+AnchorDelete		: "برداشتن لنگر",
 InsertImageLbl		: "تصویر",
 InsertImage			: "گنجاندن/ویرایش ِتصویر",
 InsertFlashLbl		: "Flash",
@@ -71,7 +72,10 @@ RightJustify		: "راست‌چین",
 BlockJustify		: "بلوک‌چین",
 DecreaseIndent		: "کاهش تورفتگی",
 IncreaseIndent		: "افزایش تورفتگی",
-Blockquote			: "Blockquote",	//MISSING
+Blockquote			: "بلوک نقل قول",
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "واچیدن",
 Redo				: "بازچیدن",
 NumberedListLbl		: "فهرست شماره‌دار",
@@ -105,27 +109,27 @@ SelectionField	: "فیلد چندگزینه‌ای",
 ImageButton		: "دکمهٴ تصویری",
 
 FitWindow		: "بیشینه‌سازی ِاندازهٴ ویرایشگر",
-ShowBlocks		: "Show Blocks",	//MISSING
+ShowBlocks		: "نمایش بلوک‌ها",
 
 // Context Menu
 EditLink			: "ویرایش پیوند",
 CellCM				: "سلول",
 RowCM				: "سطر",
 ColumnCM			: "ستون",
-InsertRowAfter		: "Insert Row After",	//MISSING
-InsertRowBefore		: "Insert Row Before",	//MISSING
+InsertRowAfter		: "افزودن سطر بعد از",
+InsertRowBefore		: "افزودن سطر قبل از",
 DeleteRows			: "حذف سطرها",
-InsertColumnAfter	: "Insert Column After",	//MISSING
-InsertColumnBefore	: "Insert Column Before",	//MISSING
+InsertColumnAfter	: "افزودن ستون بعد از",
+InsertColumnBefore	: "افزودن ستون قبل از",
 DeleteColumns		: "حذف ستونها",
-InsertCellAfter		: "Insert Cell After",	//MISSING
-InsertCellBefore	: "Insert Cell Before",	//MISSING
+InsertCellAfter		: "افزودن سلول بعد از",
+InsertCellBefore	: "افزودن سلول قبل از",
 DeleteCells			: "حذف سلولها",
 MergeCells			: "ادغام سلولها",
-MergeRight			: "Merge Right",	//MISSING
-MergeDown			: "Merge Down",	//MISSING
-HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
-VerticalSplitCell	: "Split Cell Vertically",	//MISSING
+MergeRight			: "ادغام به راست",
+MergeDown			: "ادغام به پایین",
+HorizontalSplitCell	: "جدا کردن افقی سلول",
+VerticalSplitCell	: "جدا کردن عمودی سلول",
 TableDelete			: "پاک‌کردن جدول",
 CellProperties		: "ویژگیهای سلول",
 TableProperties		: "ویژگیهای جدول",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "مجموعهٴ نوارابزار \"%1\" وجود ندار�
 NoActiveX			: "تنظیمات امنیتی مرورگر شما ممکن است در بعضی از ویژگیهای مرورگر محدودیت ایجاد کند. شما باید گزینهٴ \"Run ActiveX controls and plug-ins\" را فعال کنید. ممکن است شما با خطاهایی روبرو باشید و متوجه کمبود ویژگیهایی شوید.",
 BrowseServerBlocked : "توانایی بازگشایی مرورگر منابع فراهم نیست. اطمینان حاصل کنید که تمامی برنامه‌های پیشگیری از نمایش popup را از کار بازداشته‌اید.",
 DialogBlocked		: "توانایی بازگشایی پنجرهٴ کوچک ِگفتگو فراهم نیست. اطمینان حاصل کنید که تمامی برنامه‌های پیشگیری از نمایش popup را از کار بازداشته‌اید.",
+VisitLinkBlocked	: "امکان بازکردن یک پنجره جدید نیست. اطمینان حاصل کنید که تمامی برنامه‌های پیشگیری از نمایش popup را از کار بازداشته‌اید.",
 
 // Dialogs
 DlgBtnOK			: "پذیرش",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "فاصلهٴ میان سلولها",
 DlgTableCellPad		: "فاصلهٴ پرشده در سلول",
 DlgTableCaption		: "عنوان",
 DlgTableSummary		: "خلاصه",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "ویژگیهای سلول",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "بالا",
 DlgCellVerAlignMiddle	: "میان",
 DlgCellVerAlignBottom	: "پائین",
 DlgCellVerAlignBaseline	: "خط‌پایه",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "گستردگی سطرها",
 DlgCellCollSpan		: "گستردگی ستونها",
 DlgCellBackColor	: "رنگ پس‌زمینه",
@@ -332,7 +345,7 @@ DlgCellBorderColor	: "رنگ لبه",
 DlgCellBtnSelect	: "برگزینید...",
 
 // Find and Replace Dialog
-DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
+DlgFindAndReplaceTitle	: "جستجو و جایگزینی",
 
 // Find Dialog
 DlgFindTitle		: "یافتن",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "درباره",
 DlgAboutBrowserInfoTab	: "اطلاعات مرورگر",
 DlgAboutLicenseTab	: "گواهینامه",
 DlgAboutVersion		: "نگارش",
-DlgAboutInfo		: "برای آگاهی بیشتر به این نشانی بروید"
+DlgAboutInfo		: "برای آگاهی بیشتر به این نشانی بروید",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style"	//MISSING
 };

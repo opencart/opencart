@@ -12,14 +12,12 @@ if (!defined('HTTP_SERVER')) {
 require_once(DIR_SYSTEM . 'startup.php');
 
 // Load the application classes
-require_once(DIR_SYSTEM . 'library/customer.php');
-require_once(DIR_SYSTEM . 'library/currency.php');
-require_once(DIR_SYSTEM . 'library/tax.php');
-require_once(DIR_SYSTEM . 'library/weight.php');
-require_once(DIR_SYSTEM . 'library/cart.php');
-
-// Page Time
-$time = (time() + microtime());
+require_once(DIR_SYSTEM . 'helper/customer.php');
+require_once(DIR_SYSTEM . 'helper/currency.php');
+require_once(DIR_SYSTEM . 'helper/tax.php');
+require_once(DIR_SYSTEM . 'helper/weight.php');
+require_once(DIR_SYSTEM . 'helper/measurement.php');
+require_once(DIR_SYSTEM . 'helper/cart.php');
 
 // Loader
 $loader = new Loader();
@@ -39,6 +37,45 @@ $query = $db->query("SELECT * FROM " . DB_PREFIX . "setting");
 foreach ($query->rows as $setting) {
 	$config->set($setting['key'], $setting['value']);
 }
+
+$log = new Logger($config->get('config_error_filename'));
+Registry::set('log', $log);
+
+// Error Handler
+function error_handler($errno, $errstr, $errfile, $errline) {
+	global $config, $log;
+	
+	switch ($errno) {
+		case E_NOTICE:
+		case E_USER_NOTICE:
+			$errors = "Notice";
+			break;
+		case E_WARNING:
+		case E_USER_WARNING:
+			$errors = "Warning";
+			break;
+		case E_ERROR:
+		case E_USER_ERROR:
+			$errors = "Fatal Error";
+			break;
+		default:
+			$errors = "Unknown";
+			break;
+	}
+		
+    if ($config->get('config_error_display')) {
+        echo '<b>' . $errors . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
+	}
+	
+	if ($config->get('config_error_log')) {
+		$log->write('PHP ' . $errors . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
+	}
+
+	return true;
+}
+
+// set to the user defined error handler
+set_error_handler('error_handler');
 
 // Request
 $request = new Request();
@@ -67,19 +104,22 @@ Registry::set('language', $language);
 Registry::set('document', new Document());
 
 // Customer
-Registry::set('customer', new Customer());
+Registry::set('customer', new HelperCustomer());
 
 // Currency
-Registry::set('currency', new Currency());
+Registry::set('currency', new HelperCurrency());
 
 // Tax
-Registry::set('tax', new Tax());
+Registry::set('tax', new HelperTax());
 
 // Weight
-Registry::set('weight', new Weight());
+Registry::set('weight', new HelperWeight());
+
+// Weight
+Registry::set('measurement', new HelperMeasurement());
 
 // Cart
-Registry::set('cart', new Cart());
+Registry::set('cart', new HelperCart());
 
 // Front Controller 
 $controller = new Front();
@@ -98,10 +138,5 @@ if (isset($request->get['route'])) {
 $controller->dispatch($action, new Router('error/not_found'));
 
 // Output
-$response->output();
-
-// Parse Time
-if ($config->get('config_parse_time')) {
-	echo sprintf($language->get('text_time'), round((time() + microtime()) - $time, 4));
-}
+$response->output($config->get('config_compression'));
 ?>

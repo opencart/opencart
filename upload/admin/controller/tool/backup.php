@@ -26,8 +26,20 @@ class ControllerToolBackup extends Controller {
 		
 		$this->data['tab_general'] = $this->language->get('tab_general');
 		
-		$this->data['error_warning'] = @$this->error['warning'];
-
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+		
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
+		
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
+		
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
@@ -43,10 +55,6 @@ class ControllerToolBackup extends Controller {
    		);
 		
 		$this->data['action'] = $this->url->https('tool/backup');
-
-		$this->data['success'] = @$this->session->data['success'];
-		
-		unset($this->session->data['success']);
 				
 		$this->data['backup'] = $this->url->https('tool/backup/backup');
 		

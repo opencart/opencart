@@ -4,16 +4,16 @@ error_reporting(E_ALL);
 
 // Check Version
 if (version_compare(phpversion(), '5.1.0', '<') == TRUE) {
-	exit('PHP5.1 Only');
+	exit('PHP5.1+ Required');
 }
 
-// Register Globals Fix
+// Register Globals
 if (ini_get('register_globals')) {
-	@ini_set('session.use_cookies', '1');
-	@ini_set('session.use_trans_sid', '0');
+	ini_set('session.use_cookies', '1');
+	ini_set('session.use_trans_sid', '0');
 		
-	@session_set_cookie_params(0, '/');
-	@session_start();
+	session_set_cookie_params(0, '/');
+	session_start();
 	
 	$globals = array($_REQUEST, $_SESSION, $_SERVER, $_FILES);
 
@@ -47,6 +47,11 @@ if (ini_get('magic_quotes_gpc')) {
 	ini_set('magic_quotes_gpc', 'Off');
 }
 
+// Set default time zone if not set in php.ini
+if (!ini_get('date.timezone')) {
+	date_default_timezone_set(date('e', $_SERVER['REQUEST_TIME']));
+}
+
 // Engine
 require_once(DIR_SYSTEM . 'engine/controller.php');
 require_once(DIR_SYSTEM . 'engine/front.php');
@@ -63,6 +68,7 @@ require_once(DIR_SYSTEM . 'library/db.php');
 require_once(DIR_SYSTEM . 'library/document.php');
 require_once(DIR_SYSTEM . 'library/image.php');
 require_once(DIR_SYSTEM . 'library/language.php');
+require_once(DIR_SYSTEM . 'library/logger.php');
 require_once(DIR_SYSTEM . 'library/mail.php');
 require_once(DIR_SYSTEM . 'library/pagination.php');
 require_once(DIR_SYSTEM . 'library/request.php');

@@ -28,13 +28,21 @@ class ControllerExtensionShipping extends Controller {
 		$this->data['column_sort_order'] = $this->language->get('column_sort_order');
 		$this->data['column_action'] = $this->language->get('column_action');
 		
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 		
-    	$this->data['error'] = @$this->session->data['error'];
-    
-		unset($this->session->data['error']);
+		if (isset($this->session->data['error'])) {
+			$this->data['error'] = $this->session->data['error'];
+		
+			unset($this->session->data['success']);
+		} else {
+			$this->data['error'] = '';
+		}
 
 		$this->load->model('setting/extension');
 

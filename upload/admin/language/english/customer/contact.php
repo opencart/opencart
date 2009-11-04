@@ -5,6 +5,7 @@ $_['heading_title']    = 'Mail';
 // Text
 $_['text_newsletter']  = 'All Newsletter Subscribers';
 $_['text_customer']    = 'All Customers';
+$_['text_search']      = 'Search';
 $_['text_success']     = 'Your message has been successfully sent!';
 
 // Entry

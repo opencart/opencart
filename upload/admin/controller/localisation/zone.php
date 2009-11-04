@@ -19,7 +19,7 @@ class ControllerLocalisationZone extends Controller {
 		
 		$this->load->model('localisation/zone');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_localisation_zone->addZone($this->request->post);
 	
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationZone extends Controller {
 		
 		$this->load->model('localisation/zone');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_localisation_zone->editZone($this->request->get['zone_id'], $this->request->post);			
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -83,7 +83,7 @@ class ControllerLocalisationZone extends Controller {
 		
 		$this->load->model('localisation/zone');
 		
-		if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
+		if (isset($this->request->post['delete']) && $this->validateDelete()) {
 			foreach ($this->request->post['delete'] as $zone_id) {
 				$this->model_localisation_zone->deleteZone($zone_id);
 			}			
@@ -186,7 +186,7 @@ class ControllerLocalisationZone extends Controller {
 				'country' => $result['country'],
 				'name'    => $result['name'] . (($result['zone_id'] == $this->config->get('config_zone_id')) ? $this->language->get('text_default') : NULL),
 				'code'    => $result['code'],
-				'delete'  => in_array($result['zone_id'], (array)@$this->request->post['delete']),
+				'delete'  => isset($this->request->post['delete']) && in_array($result['zone_id'], $this->request->post['delete']),
 				'action'  => $action			
 			);
 		}
@@ -203,11 +203,19 @@ class ControllerLocalisationZone extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
  
 		$url = '';
 
@@ -263,12 +271,21 @@ class ControllerLocalisationZone extends Controller {
 
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_name'] = @$this->error['name'];
-
+		
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+		
+ 		if (isset($this->error['name'])) {
+			$this->data['error_name'] = $this->error['name'];
+		} else {
+			$this->data['error_name'] = '';
+		}
+		
 		$url = '';
 			
 		if (isset($this->request->get['page'])) {
@@ -305,26 +322,32 @@ class ControllerLocalisationZone extends Controller {
 		 
 		$this->data['cancel'] = $this->url->https('localisation/zone' . $url);
 
-		if ((isset($this->request->get['zone_id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['zone_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$zone_info = $this->model_localisation_zone->getZone($this->request->get['zone_id']);
 		}
 
 		if (isset($this->request->post['name'])) {
 			$this->data['name'] = $this->request->post['name'];
+		} elseif (isset($zone_info)) {
+			$this->data['name'] = $zone_info['name'];
 		} else {
-			$this->data['name'] = @$zone_info['name'];
+			$this->data['name'] = '';
 		}
 
 		if (isset($this->request->post['code'])) {
 			$this->data['code'] = $this->request->post['code'];
+		} elseif (isset($zone_info)) {
+			$this->data['code'] = $zone_info['code'];
 		} else {
-			$this->data['code'] = @$zone_info['code'];
+			$this->data['code'] = '';
 		}
 
 		if (isset($this->request->post['country_id'])) {
 			$this->data['country_id'] = $this->request->post['country_id'];
+		} elseif (isset($zone_info)) {
+			$this->data['country_id'] = $zone_info['country_id'];
 		} else {
-			$this->data['country_id'] = @$zone_info['country_id'];
+			$this->data['country_id'] = '';
 		}
 		
 		$this->load->model('localisation/country');

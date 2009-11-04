@@ -7,20 +7,20 @@ final class Request {
 	public $server = array();
 	
   	public function __construct() {
-		$this->get =& $this->clean($_GET);
-		$this->post =& $this->clean($_POST);
-		$this->cookie =& $this->clean($_COOKIE);
-		$this->files =& $this->clean($_FILES);
-		$this->server =& $this->clean($_SERVER);
+		$this->get = $this->clean($_GET);
+		$this->post = $this->clean($_POST);
+		$this->cookie = $this->clean($_COOKIE);
+		$this->files = $this->clean($_FILES);
+		$this->server = $this->clean($_SERVER);
 	}
 	
-  	public function clean($data) {
+  	public function clean(&$data) {
     	if (is_array($data)) {
 	  		foreach ($data as $key => $value) {
-	    		$data[$key] =& $this->clean($value);
+	    		$data[$key] = $this->clean($value);
 	  		}
 		} else {
-	  		$data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+	  		$data = htmlentities($data, ENT_QUOTES, 'UTF-8');
 		}
 	
 		return $data;

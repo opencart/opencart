@@ -1,16 +1,13 @@
-1.2.9 > 1.3.0
+1.3.0 > 1.3.1
 
 To Upgrade:
 1. First off backup your site.
 2. Goto your db manager and run this SQL:
 
-ALTER TABLE `oc_category` DROP `keyword`; 
-ALTER TABLE `oc_product` DROP `keyword`; 
-ALTER TABLE `oc_manufacturer` DROP `keyword`; 
-ALTER TABLE `oc_information` DROP `keyword`; 
-DROP TABLE `oc_url_alias`;
-
 (Remember to replace the oc_ with the prefix of your site)
+
+DROP TABLE `oc_product_special`;
+ALTER TABLE `oc_product_discount` CHANGE `discount` `price` DECIMAL( 15, 4 ) NOT NULL DEFAULT '0.0000';
 
 3. Goto your opencart's store admin and download a backup of your database.
 4. Delete the files in your hosting directory.

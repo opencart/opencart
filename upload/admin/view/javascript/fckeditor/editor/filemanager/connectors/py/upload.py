@@ -2,7 +2,7 @@
 
 """
 FCKeditor - The text editor for Internet - http://www.fckeditor.net
-Copyright (C) 2003-2008 Frederico Caldeira Knabben
+Copyright (C) 2003-2009 Frederico Caldeira Knabben
 
 == BEGIN LICENSE ==
 
@@ -41,7 +41,7 @@ class FCKeditorQuickUpload(	FCKeditorConnectorBase,
 		command = 'QuickUpload'
 		# The file type (from the QueryString, by default 'File').
 		resourceType  = self.request.get('Type','File')
-		currentFolder = getCurrentFolder(self.request.get("CurrentFolder",""))
+		currentFolder = "/"
 		# Check for invalid paths
 		if currentFolder is None:
 			return self.sendUploadResults(102, '', '', "")

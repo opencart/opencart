@@ -9,7 +9,7 @@ class ControllerCheckoutConfirm extends Controller {
 	  		$this->redirect($this->url->https('account/login'));
     	}
 
-    	if ((!$this->cart->hasProducts()) || ((!$this->cart->hasStock()) && (!$this->config->get('config_stock_checkout')))) {
+    	if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 	  		$this->redirect($this->url->https('checkout/cart'));
     	}
 
@@ -41,7 +41,15 @@ class ControllerCheckoutConfirm extends Controller {
 		 
 		$this->load->model('checkout/extension');
 		
+		$sort_order = array(); 
+		
 		$results = $this->model_checkout_extension->getExtensions('total');
+		
+		foreach ($results as $key => $value) {
+			$sort_order[$key] = $this->config->get($value['key'] . '_sort_order');
+		}
+		
+		array_multisort($sort_order, SORT_ASC, $results);
 		
 		foreach ($results as $result) {
 			$this->load->model('total/' . $result['key']);
@@ -61,7 +69,7 @@ class ControllerCheckoutConfirm extends Controller {
 
     	$this->document->title = $this->language->get('heading_title'); 
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->session->data['coupon'] = $this->request->post['coupon'];
 			
 			$this->session->data['success'] = $this->language->get('text_coupon');
@@ -78,33 +86,83 @@ class ControllerCheckoutConfirm extends Controller {
 		$data['telephone'] = $this->customer->getTelephone();
 		$data['fax'] = $this->customer->getFax();
 		
-		$shipping_address = $this->customer->getAddress(@$this->session->data['shipping_address_id']);
+		if (isset($this->session->data['shipping_address_id'])) {
+			$shipping_address_id = $this->session->data['shipping_address_id'];	
+		} else {
+			$shipping_address_id = 0;	
+		}
 		
-		$data['shipping_firstname'] = @$shipping_address['firstname'];
-		$data['shipping_lastname'] = @$shipping_address['lastname'];	
-		$data['shipping_company'] = @$shipping_address['company'];	
-		$data['shipping_address_1'] = @$shipping_address['address_1'];
-		$data['shipping_address_2'] = @$shipping_address['address_2'];
-		$data['shipping_city'] = @$shipping_address['city'];
-		$data['shipping_postcode'] = @$shipping_address['postcode'];
-		$data['shipping_zone'] = @$shipping_address['zone'];
-		$data['shipping_country'] = @$shipping_address['country'];
-		$data['shipping_address_format'] = @$shipping_address['address_format'];
-		$data['shipping_method'] = @$this->session->data['shipping_method']['title'];
+		$shipping_address = $this->customer->getAddress($shipping_address_id);
 		
-		$payment_address = $this->customer->getAddress($this->session->data['payment_address_id']);
+		if ($shipping_address) {
+			$data['shipping_firstname'] = $shipping_address['firstname'];
+			$data['shipping_lastname'] = $shipping_address['lastname'];	
+			$data['shipping_company'] = $shipping_address['company'];	
+			$data['shipping_address_1'] = $shipping_address['address_1'];
+			$data['shipping_address_2'] = $shipping_address['address_2'];
+			$data['shipping_city'] = $shipping_address['city'];
+			$data['shipping_postcode'] = $shipping_address['postcode'];
+			$data['shipping_zone'] = $shipping_address['zone'];
+			$data['shipping_country'] = $shipping_address['country'];
+			$data['shipping_address_format'] = $shipping_address['address_format'];
 		
-		$data['payment_firstname'] = $payment_address['firstname'];
-		$data['payment_lastname'] = $payment_address['lastname'];	
-		$data['payment_company'] = $payment_address['company'];	
-		$data['payment_address_1'] = $payment_address['address_1'];
-		$data['payment_address_2'] = $payment_address['address_2'];
-		$data['payment_city'] = $payment_address['city'];
-		$data['payment_postcode'] = $payment_address['postcode'];
-		$data['payment_zone'] = $payment_address['zone'];
-		$data['payment_country'] = $payment_address['country'];
-		$data['payment_address_format'] = $payment_address['address_format'];
-		$data['payment_method'] = @$this->session->data['payment_method']['title'];
+			if (isset($this->session->data['shipping_method']['title'])) {
+				$data['shipping_method'] = $this->session->data['shipping_method']['title'];
+			} else {
+				$data['shipping_method'] = '';
+			}
+		} else {
+			$data['shipping_firstname'] = '';
+			$data['shipping_lastname'] = '';	
+			$data['shipping_company'] = '';	
+			$data['shipping_address_1'] = '';
+			$data['shipping_address_2'] = '';
+			$data['shipping_city'] = '';
+			$data['shipping_postcode'] = '';
+			$data['shipping_zone'] = '';
+			$data['shipping_country'] = '';
+			$data['shipping_address_format'] = '';
+			$data['shipping_method'] = '';
+		}
+
+		if (isset($this->session->data['payment_address_id'])) {
+			$payment_address_id = $this->session->data['payment_address_id'];	
+		} else {
+			$payment_address_id = 0;	
+		}
+		
+		$payment_address = $this->customer->getAddress($payment_address_id);
+		
+		if ($payment_address) {
+			$data['payment_firstname'] = $payment_address['firstname'];
+			$data['payment_lastname'] = $payment_address['lastname'];	
+			$data['payment_company'] = $payment_address['company'];	
+			$data['payment_address_1'] = $payment_address['address_1'];
+			$data['payment_address_2'] = $payment_address['address_2'];
+			$data['payment_city'] = $payment_address['city'];
+			$data['payment_postcode'] = $payment_address['postcode'];
+			$data['payment_zone'] = $payment_address['zone'];
+			$data['payment_country'] = $payment_address['country'];
+			$data['payment_address_format'] = $payment_address['address_format'];
+		
+			if (isset($this->session->data['payment_method']['title'])) {
+				$data['payment_method'] = $this->session->data['payment_method']['title'];
+			} else {
+				$data['payment_method'] = '';
+			}
+		} else {
+			$data['payment_firstname'] = '';
+			$data['payment_lastname'] = '';	
+			$data['payment_company'] = '';	
+			$data['payment_address_1'] = '';
+			$data['payment_address_2'] = '';
+			$data['payment_city'] = '';
+			$data['payment_postcode'] = '';
+			$data['payment_zone'] = '';
+			$data['payment_country'] = '';
+			$data['payment_address_format'] = '';
+			$data['payment_method'] = '';
+		}
 		
 		$product_data = array();
 	
@@ -127,7 +185,6 @@ class ControllerCheckoutConfirm extends Controller {
 				'download'   => $product['download'],
 				'quantity'   => $product['quantity'], 
 				'price'      => $product['price'],
-				'discount'   => $product['discount'],
         		'total'      => $product['total'],
 				'tax'        => $this->tax->getRate($product['tax_class_id'])
       		); 
@@ -213,21 +270,31 @@ class ControllerCheckoutConfirm extends Controller {
 		
     	$this->data['button_update'] = $this->language->get('button_update');
 	
-		$this->data['error'] = @$this->error['message'];
+		if (isset($this->error['message'])) {
+			$this->data['error'] = $this->error['message'];
+		} else {
+			$this->data['error'] = '';
+		}
 		
 		$this->data['action'] = $this->url->https('checkout/confirm');
 		
 		if (isset($this->request->post['coupon'])) {
 			$this->data['coupon'] = $this->request->post['coupon'];
+		} elseif (isset($this->session->data['coupon'])) {
+			$this->data['coupon'] = $this->session->data['coupon'];
 		} else {
-			$this->data['coupon'] = @$this->session->data['coupon'];
+			$this->data['coupon'] = '';
 		}
 
-    	$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+    		$this->data['success'] = $this->session->data['success'];
     
-		unset($this->session->data['success']);
-
-		$shipping_address = $this->customer->getAddress(@$this->session->data['shipping_address_id']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
+		
+		$shipping_address = $this->customer->getAddress($shipping_address_id);
 		
 		if ($shipping_address) {
 			if ($shipping_address['address_format']) {
@@ -265,47 +332,59 @@ class ControllerCheckoutConfirm extends Controller {
 			$this->data['shipping_address'] = '';
 		}
 		
-		$this->data['shipping_method'] = @$this->session->data['shipping_method']['title'];
+		if (isset($this->session->data['shipping_method']['title'])) {
+			$this->data['shipping_method'] = $this->session->data['shipping_method']['title'];
+		} else {
+			$this->data['shipping_method'] = '';
+		}
 		
     	$this->data['checkout_shipping'] = $this->url->https('checkout/shipping');
 
     	$this->data['checkout_shipping_address'] = $this->url->https('checkout/address/shipping');
 		
-		$payment_address = $this->customer->getAddress($this->session->data['payment_address_id']);
+		$payment_address = $this->customer->getAddress($payment_address_id);
     	
-		if ($payment_address['address_format']) {
-      		$format = $payment_address['address_format'];
-    	} else {
-			$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+		if ($payment_address) {
+			if ($payment_address['address_format']) {
+      			$format = $payment_address['address_format'];
+    		} else {
+				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+			}
+		
+    		$find = array(
+	  			'{firstname}',
+	  			'{lastname}',
+	  			'{company}',
+      			'{address_1}',
+      			'{address_2}',
+     			'{city}',
+      			'{postcode}',
+      			'{zone}',
+      			'{country}'
+			);
+	
+			$replace = array(
+	  			'firstname' => $payment_address['firstname'],
+	  			'lastname'  => $payment_address['lastname'],
+	  			'company'   => $payment_address['company'],
+      			'address_1' => $payment_address['address_1'],
+      			'address_2' => $payment_address['address_2'],
+      			'city'      => $payment_address['city'],
+      			'postcode'  => $payment_address['postcode'],
+      			'zone'      => $payment_address['zone'],
+      			'country'   => $payment_address['country']  
+			);
+			
+			$this->data['payment_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+		} else {
+			$this->data['payment_address'] = '';
 		}
-		
-    	$find = array(
-	  		'{firstname}',
-	  		'{lastname}',
-	  		'{company}',
-      		'{address_1}',
-      		'{address_2}',
-     		'{city}',
-      		'{postcode}',
-      		'{zone}',
-      		'{country}'
-		);
-	
-		$replace = array(
-	  		'firstname' => $payment_address['firstname'],
-	  		'lastname'  => $payment_address['lastname'],
-	  		'company'   => $payment_address['company'],
-      		'address_1' => $payment_address['address_1'],
-      		'address_2' => $payment_address['address_2'],
-      		'city'      => $payment_address['city'],
-      		'postcode'  => $payment_address['postcode'],
-      		'zone'      => $payment_address['zone'],
-      		'country'   => $payment_address['country']  
-		);
-		
-		$this->data['payment_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
-	
-    	$this->data['payment_method'] = @$this->session->data['payment_method']['title'];
+
+		if (isset($this->session->data['payment_method']['title'])) {
+			$this->data['payment_method'] = $this->session->data['payment_method']['title'];
+		} else {
+			$this->data['payment_method'] = '';
+		}
 	
     	$this->data['checkout_payment'] = $this->url->https('checkout/payment');
 
@@ -331,7 +410,6 @@ class ControllerCheckoutConfirm extends Controller {
         		'quantity'   => $product['quantity'],
 				'tax'        => $this->tax->getRate($product['tax_class_id']),
         		'price'      => $this->currency->format($product['price']),
-				'discount'   => ($product['discount'] ? $this->currency->format($product['price'] - $product['discount']) : NULL),
         		'total'      => $this->currency->format($product['total']),
 				'href'       => $this->url->http('product/product&product_id=' . $product['product_id'])
       		); 

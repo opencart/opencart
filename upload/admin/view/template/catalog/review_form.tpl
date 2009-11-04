@@ -69,7 +69,10 @@
           <?php } else { ?>
           <input type="radio" name="rating" value="5" />
           <?php } ?>
-          &nbsp; <b class="rating"><?php echo $entry_good; ?></b></td>
+          &nbsp; <b class="rating"><?php echo $entry_good; ?></b> <br />
+          <?php if ($error_rating) { ?>
+          <span class="error"><?php echo $error_rating; ?></span>
+          <?php } ?></td>
       </tr>
       <tr>
         <td><?php echo $entry_status; ?></td>

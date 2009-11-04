@@ -5,10 +5,10 @@ class ControllerCommonHeader extends Controller {
 	    	
 		$this->data['store'] = $this->config->get('config_store');
 		
-		if (@$this->request->server['HTTPS'] != 'on') {
-			$this->data['logo'] = HTTP_IMAGE . $this->config->get('config_logo');
-		} else {
+		if (isset($this->request->server['HTTPS']) && ($this->request->server['HTTPS'] == 'on')) {
 			$this->data['logo'] = HTTPS_IMAGE . $this->config->get('config_logo');
+		} else {
+			$this->data['logo'] = HTTP_IMAGE . $this->config->get('config_logo');
 		}
 		
 		$this->data['text_home'] = $this->language->get('text_home');

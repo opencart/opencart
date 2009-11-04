@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -43,7 +43,7 @@ FCKIECleanup.prototype.AddItem = function( dirtyItem, cleanupFunction )
 
 function FCKIECleanup_Cleanup()
 {
-	if ( !this._FCKCleanupObj || !window.FCKUnloadFlag )
+	if ( !this._FCKCleanupObj || ( FCKConfig.MsWebBrowserControlCompat && !window.FCKUnloadFlag ) )
 		return ;
 
 	var aItems = this._FCKCleanupObj.Items ;

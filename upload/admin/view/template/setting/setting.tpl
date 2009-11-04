@@ -16,7 +16,7 @@
         <td width="25%"><span class="required">*</span> <?php echo $entry_store; ?></td>
         <td><input type="text" name="config_store" value="<?php echo $config_store; ?>" />
           <br />
-          <?php if (@$error_store) { ?>
+          <?php if ($error_store) { ?>
           <span class="error"><?php echo $error_store; ?></span>
           <?php } ?></td>
       </tr>
@@ -84,7 +84,7 @@
         <td><span class="required">*</span> <?php echo $entry_welcome; ?></td>
         <td><textarea name="config_welcome_<?php echo $language['language_id']; ?>" id="description<?php echo $language['language_id']; ?>"><?php echo ${'config_welcome_' . $language['language_id']}; ?></textarea>
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" />
-          <?php if (@${'error_welcome_' . $language['language_id']}) { ?>
+          <?php if (isset(${'error_welcome_' . $language['language_id']})) { ?>
           <span class="error"><?php echo ${'error_welcome_' . $language['language_id']}; ?></span>
           <?php } ?></td>
       </tr>
@@ -186,6 +186,18 @@
             <?php } ?>
           </select></td>
       </tr>
+      <tr>
+        <td><?php echo $entry_measurement; ?></td>
+        <td><select name="config_measurement_class_id">
+            <?php foreach ($measurement_classes as $measurement_class) { ?>
+            <?php if ($measurement_class['measurement_class_id'] == $config_measurement_class_id) { ?>
+            <option value="<?php echo $measurement_class['measurement_class_id']; ?>" selected="selected"><?php echo $measurement_class['title']; ?></option>
+            <?php } else { ?>
+            <option value="<?php echo $measurement_class['measurement_class_id']; ?>"><?php echo $measurement_class['title']; ?></option>
+            <?php } ?>
+            <?php } ?>
+          </select></td>
+      </tr>
     </table>
   </div>
   <div id="tab_option" class="page">
@@ -201,6 +213,46 @@
           <input type="radio" name="config_alert_mail" value="1" />
           <?php echo $text_yes; ?>
           <input type="radio" name="config_alert_mail" value="0" checked="checked" />
+          <?php echo $text_no; ?>
+          <?php } ?></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_customer_group; ?></td>
+        <td><select name="config_customer_group_id">
+            <?php foreach ($customer_groups as $customer_group) { ?>
+            <?php if ($customer_group['customer_group_id'] == $config_customer_group_id) { ?>
+            <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+            <?php } else { ?>
+            <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+            <?php } ?>
+            <?php } ?>
+          </select></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_customer_price; ?></td>
+        <td><?php if ($config_customer_price) { ?>
+          <input type="radio" name="config_customer_price" value="1" checked="checked" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_customer_price" value="0" />
+          <?php echo $text_no; ?>
+          <?php } else { ?>
+          <input type="radio" name="config_customer_price" value="1" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_customer_price" value="0" checked="checked" />
+          <?php echo $text_no; ?>
+          <?php } ?></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_customer_approval; ?></td>
+        <td><?php if ($config_customer_approval) { ?>
+          <input type="radio" name="config_customer_approval" value="1" checked="checked" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_customer_approval" value="0" />
+          <?php echo $text_no; ?>
+          <?php } else { ?>
+          <input type="radio" name="config_customer_approval" value="1" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_customer_approval" value="0" checked="checked" />
           <?php echo $text_no; ?>
           <?php } ?></td>
       </tr>
@@ -229,6 +281,20 @@
             <?php } ?>
             <?php } ?>
           </select></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_stock_display; ?></td>
+        <td><?php if ($config_stock_display) { ?>
+          <input type="radio" name="config_stock_display" value="1" checked="checked" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_stock_display" value="0" />
+          <?php echo $text_no; ?>
+          <?php } else { ?>
+          <input type="radio" name="config_stock_display" value="1" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_stock_display" value="0" checked="checked" />
+          <?php echo $text_no; ?>
+          <?php } ?></td>
       </tr>
       <tr>
         <td><?php echo $entry_stock_check; ?></td>
@@ -328,21 +394,21 @@
     <table class="form">
       <tr>
         <td width="25%"><?php echo $entry_logo; ?></td>
-        <td><input type="file" id="upload" />
+        <td><input type="file" name="config_logo" />
           <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" /></td>
       </tr>
       <tr>
-        <td></td>
-        <td id="logo"></td>
+        <td>&nbsp;</td>
+        <td><img src="<?php echo $preview_logo; ?>" alt="" style="margin: 4px 0px; border: 1px solid #EEEEEE;" /></td>
       </tr>
       <tr>
         <td width="25%"><?php echo $entry_icon; ?></td>
-        <td><input type="file" id="upload" />
+        <td><input type="file" name="config_icon" />
           <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" /></td>
       </tr>
       <tr>
-        <td></td>
-        <td id="icon"></td>
+        <td>&nbsp;</td>
+        <td><img src="<?php echo $preview_icon; ?>" alt="" style="margin: 4px 0px; border: 1px solid #EEEEEE;" /></td>
       </tr>
       <tr>
         <td><?php echo $entry_image_thumb; ?></td>
@@ -470,17 +536,39 @@
         <td><input type="text" name="config_compression" value="<?php echo $config_compression; ?>" size="3" /></td>
       </tr>
       <tr>
-        <td><?php echo $entry_parse_time; ?></td>
-        <td><?php if ($config_parse_time) { ?>
-          <input type="radio" name="config_parse_time" value="1" checked="checked" />
+        <td><?php echo $entry_error_display; ?></td>
+        <td><?php if ($config_error_display) { ?>
+          <input type="radio" name="config_error_display" value="1" checked="checked" />
           <?php echo $text_yes; ?>
-          <input type="radio" name="config_parse_time" value="0" />
+          <input type="radio" name="config_error_display" value="0" />
           <?php echo $text_no; ?>
           <?php } else { ?>
-          <input type="radio" name="config_parse_time" value="1" />
+          <input type="radio" name="config_error_display" value="1" />
           <?php echo $text_yes; ?>
-          <input type="radio" name="config_parse_time" value="0" checked="checked" />
+          <input type="radio" name="config_error_display" value="0" checked="checked" />
           <?php echo $text_no; ?>
+          <?php } ?></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_error_log; ?></td>
+        <td><?php if ($config_error_log) { ?>
+          <input type="radio" name="config_error_log" value="1" checked="checked" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_error_log" value="0" />
+          <?php echo $text_no; ?>
+          <?php } else { ?>
+          <input type="radio" name="config_error_log" value="1" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_error_log" value="0" checked="checked" />
+          <?php echo $text_no; ?>
+          <?php } ?></td>
+      </tr>
+      <tr>
+        <td><span class="required">*</span> <?php echo $entry_error_filename; ?></td>
+        <td><input type="text" name="config_error_filename" value="<?php echo $config_error_filename; ?>" />
+          <br />
+          <?php if ($error_error_filename) { ?>
+          <span class="error"><?php echo $error_error_filename; ?></span>
           <?php } ?></td>
       </tr>
     </table>
@@ -498,36 +586,9 @@ var oFCKeditor<?php echo $language['language_id']; ?>          = new FCKeditor('
 	oFCKeditor<?php echo $language['language_id']; ?>.ReplaceTextarea();
 <?php } ?>
 //--></script>
-<script type="text/javascript" src="view/javascript/jquery/ajaxupload.3.1.js"></script>
 <script type="text/javascript"><!--
-$('#logo').load('index.php?route=setting/setting/logo&logo=' + encodeURIComponent($('input[name=\'config_logo\']').attr('value')));
 $('#template').load('index.php?route=setting/setting/template&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
-$('#template').load('index.php?route=setting/setting/template&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
-$(document).ready(function() { 
-	new AjaxUpload('#upload', {
-		action: 'index.php?route=catalog/image',
-		name: 'image',
-		autoSubmit: true,
-		responseType: 'json',
-		onChange: function(file, extension) {},
-		onSubmit: function(file, extension) {
-			$('#upload').after('<img src="view/image/loading.gif" id="loading" />');
-		},
-		onComplete: function(file, json) {
-			if (json.error) {
-				alert(json.error);
-			} else {
-				$('input[name=\'config_logo\']').attr('value', json.file);
-				
-				$('#logo').load('index.php?route=setting/setting/logo&logo=' + encodeURIComponent($('input[name=\'config_logo\']').attr('value')));
-			}
-			
-			$('#loading').remove();	
-		}
-	});
-});	
-//--></script>
-<script type="text/javascript"><!--
+
 $('#zone').load('index.php?route=setting/setting/zone&country_id=' + $('#country').attr('value') + '&zone_id=<?php echo $config_zone_id; ?>');
 
 $('#country_id').attr('value', '<?php echo $config_country_id; ?>');

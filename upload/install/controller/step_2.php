@@ -26,8 +26,9 @@ class ControllerStep2 extends Controller {
 			$output .= 'define(\'DIR_TEMPLATE\', \'' . DIR_OPENCART . 'catalog/view/theme/\');' . "\n";
 			$output .= 'define(\'DIR_CONFIG\', \'' . DIR_OPENCART . 'system/config/\');' . "\n";
 			$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
-			$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'cache/\');' . "\n";
-			$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'download/\');' . "\n\n";
+			$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
+			$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'download/\');' . "\n";
+			$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n\n";
 		
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
@@ -63,8 +64,10 @@ class ControllerStep2 extends Controller {
 			$output .= 'define(\'DIR_TEMPLATE\', \'' . DIR_OPENCART . 'admin/view/template/\');' . "\n";
 			$output .= 'define(\'DIR_CONFIG\', \'' . DIR_OPENCART . 'system/config/\');' . "\n";
 			$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
-			$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'cache/\');' . "\n";
+			$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
 			$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'download/\');' . "\n";
+			$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n";
+			$output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
@@ -100,9 +103,9 @@ class ControllerStep2 extends Controller {
 			$this->data['db_host'] = 'localhost';
 		}
 		
-		$this->data['db_user'] = @$this->request->post['db_user'];
-		$this->data['db_password'] = @$this->request->post['db_password'];
-		$this->data['db_name'] = @$this->request->post['db_name'];
+		$this->data['db_user'] = html_entity_decode(@$this->request->post['db_user']);
+		$this->data['db_password'] = html_entity_decode(@$this->request->post['db_password']);
+		$this->data['db_name'] = html_entity_decode(@$this->request->post['db_name']);
 		$this->data['db_prefix'] = @$this->request->post['db_prefix'];
 		
 		if (isset($this->request->post['username'])) {
@@ -141,7 +144,9 @@ class ControllerStep2 extends Controller {
 			$this->error['password'] = 'Password required!';
 		}
 
-		if (!eregi('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', @$this->request->post['email'])) {
+		$pattern = '/^([a-z0-9])(([-a-z0-9._])*([a-z0-9]))*\@([a-z0-9])(([a-z0-9-])*([a-z0-9]))+(\.([a-z0-9])([-a-z0-9_-])?([a-z0-9])+)+$/i';
+
+		if (!preg_match($pattern, $this->request->post['email'])) {
 			$this->error['email'] = 'Invalid E-Mail!';
 		}
 

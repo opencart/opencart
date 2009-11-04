@@ -1,11 +1,11 @@
 <?php
 class ModelUserUserGroup extends Model {
 	public function addUserGroup($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "user_group SET name = '" . $this->db->escape(@$data['name']) . "', permission = '" . serialize(@$data['permission']) . "'");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($data['name']) . "', permission = '" . (isset($data['permission']) ? serialize($data['permission']) : '') . "'");
 	}
 	
 	public function editUserGroup($user_group_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape(@$data['name']) . "', permission = '" . serialize(@$data['permission']) . "' WHERE user_group_id = '" . (int)$user_group_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($data['name']) . "', permission = '" . (isset($data['permission']) ? serialize($data['permission']) : '') . "' WHERE user_group_id = '" . (int)$user_group_id . "'");
 	}
 	
 	public function deleteUserGroup($user_group_id) {
@@ -19,7 +19,7 @@ class ModelUserUserGroup extends Model {
 			$user_group_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
 		
 			if ($user_group_query->num_rows) {
-				$data = @unserialize($user_group_query->row['permission']);
+				$data = unserialize($user_group_query->row['permission']);
 		
 				$data[$type][] = $page;
 		
@@ -33,7 +33,7 @@ class ModelUserUserGroup extends Model {
 		
 		$user_group = array(
 			'name'       => $query->row['name'],
-			'permission' => @unserialize($query->row['permission'])
+			'permission' => unserialize($query->row['permission'])
 		);
 		
 		return $user_group;
@@ -44,7 +44,7 @@ class ModelUserUserGroup extends Model {
 		
 		$sql .= " ORDER BY name";	
 			
-		if (@$data['order'] == 'DESC') {
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";
 		} else {
 			$sql .= " ASC";

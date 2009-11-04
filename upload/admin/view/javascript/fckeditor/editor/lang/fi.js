@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "Poista muotoilu",
 InsertLinkLbl		: "Linkki",
 InsertLink			: "Lisää linkki/muokkaa linkkiä",
 RemoveLink			: "Poista linkki",
+VisitLink			: "Open Link",	//MISSING
 Anchor				: "Lisää ankkuri/muokkaa ankkuria",
 AnchorDelete		: "Poista ankkuri",
 InsertImageLbl		: "Kuva",
@@ -72,6 +73,9 @@ BlockJustify		: "Tasaa molemmat reunat",
 DecreaseIndent		: "Pienennä sisennystä",
 IncreaseIndent		: "Suurenna sisennystä",
 Blockquote			: "Lainaus",
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "Kumoa",
 Redo				: "Toista",
 NumberedListLbl		: "Numerointi",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "Työkalukokonaisuus \"%1\" ei ole olemassa",
 NoActiveX			: "Selaimesi turvallisuusasetukset voivat rajoittaa joitain editorin ominaisuuksia. Sinun pitää ottaa käyttöön asetuksista \"Suorita ActiveX komponentit ja -plugin-laajennukset\". Saatat kohdata virheitä ja huomata puuttuvia ominaisuuksia.",
 BrowseServerBlocked : "Resurssiselainta ei voitu avata. Varmista, että ponnahdusikkunoiden estäjät eivät ole päällä.",
 DialogBlocked		: "Apuikkunaa ei voitu avaata. Varmista, että ponnahdusikkunoiden estäjät eivät ole päällä.",
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "OK",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Solujen väli",
 DlgTableCellPad		: "Solujen sisennys",
 DlgTableCaption		: "Otsikko",
 DlgTableSummary		: "Yhteenveto",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Solun ominaisuudet",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "Ylös",
 DlgCellVerAlignMiddle	: "Keskelle",
 DlgCellVerAlignBottom	: "Alas",
 DlgCellVerAlignBaseline	: "Tekstin alas",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "Rivin jatkuvuus",
 DlgCellCollSpan		: "Sarakkeen jatkuvuus",
 DlgCellBackColor	: "Taustaväri",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "Editorista",
 DlgAboutBrowserInfoTab	: "Selaimen tiedot",
 DlgAboutLicenseTab	: "Lisenssi",
 DlgAboutVersion		: "versio",
-DlgAboutInfo		: "Lisää tietoa osoitteesta"
+DlgAboutInfo		: "Lisää tietoa osoitteesta",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style"	//MISSING
 };

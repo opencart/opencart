@@ -12,9 +12,13 @@ class ControllerCommonSearch extends Controller {
     	
 		$this->data['button_search'] = $this->language->get('button_search');
     	
-		$this->data['keyword'] = @$this->request->get['keyword'];
+		if (isset($this->request->get['keyword'])) {
+			$this->data['keyword'] = $this->request->get['keyword'];
+		} else {
+			$this->data['keyword'] = '';
+		}
 		
-		$this->data['advanced'] = @$this->url->http('product/search');
+		$this->data['advanced'] = $this->url->http('product/search');
 		
 		$this->id       = 'search';
 		$this->template = $this->config->get('config_template') . 'common/search.tpl';

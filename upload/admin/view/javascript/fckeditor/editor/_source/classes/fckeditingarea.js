@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -96,11 +96,11 @@ FCKEditingArea.prototype.Start = function( html, secondCall )
 		var sOverrideError = '<script type="text/javascript" _fcktemp="true">window.onerror=function(){return true;};</script>' ;
 
 		oIFrame.frameBorder = 0 ;
-		oIFrame.width = oIFrame.height = '100%' ;
+		oIFrame.style.width = oIFrame.style.height = '100%' ;
 
 		if ( FCK_IS_CUSTOM_DOMAIN && FCKBrowserInfo.IsIE )
 		{
-			window._FCKHtmlToLoad = sOverrideError + html ;
+			window._FCKHtmlToLoad = html.replace( /<head>/i, '<head>' + sOverrideError ) ;
 			oIFrame.src = 'javascript:void( (function(){' +
 				'document.open() ;' +
 				'document.domain="' + document.domain + '" ;' +
@@ -132,7 +132,7 @@ FCKEditingArea.prototype.Start = function( html, secondCall )
 			var oDoc = this.Window.document ;
 
 			oDoc.open() ;
-			oDoc.write( sOverrideError + html ) ;
+			oDoc.write( html.replace( /<head>/i, '<head>' + sOverrideError ) ) ;
 			oDoc.close() ;
 		}
 
@@ -150,18 +150,23 @@ FCKEditingArea.prototype.Start = function( html, secondCall )
 		if ( oIFrame.readyState && oIFrame.readyState != 'completed' )
 		{
 			var editArea = this ;
-			( oIFrame.onreadystatechange = function()
-			{
-				if ( oIFrame.readyState == 'complete' )
-				{
-					oIFrame.onreadystatechange = null ;
-					editArea.Window._FCKEditingArea = editArea ;
-					FCKEditingArea_CompleteStart.call( editArea.Window ) ;
-				}
-			// It happened that IE changed the state to "complete" after the
-			// "if" and before the "onreadystatechange" assignement, making we
-			// lost the event call, so we do a manual call just to be sure.
-			} )() ;
+
+			// Using a IE alternative for DOMContentLoaded, similar to the
+			// solution proposed at http://javascript.nwbox.com/IEContentLoaded/
+			setTimeout( function()
+					{
+						try
+						{
+							editArea.Window.document.documentElement.doScroll("left") ;
+						}
+						catch(e)
+						{
+							setTimeout( arguments.callee, 0 ) ;
+							return ;
+						}
+						editArea.Window._FCKEditingArea = editArea ;
+						FCKEditingArea_CompleteStart.call( editArea.Window ) ;
+					}, 0 ) ;
 		}
 		else
 		{
@@ -246,6 +251,7 @@ FCKEditingArea.prototype.MakeEditable = function()
 			if ( this._BodyHTML )
 			{
 				oDoc.body.innerHTML = this._BodyHTML ;
+				oDoc.body.offsetLeft ;		// Don't remove, this is a hack to fix Opera 9.50, see #2264.
 				this._BodyHTML = null ;
 			}
 

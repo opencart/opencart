@@ -19,7 +19,7 @@ class ControllerUserUser extends Controller {
 		
 		$this->load->model('user/user');
 		
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_user_user->addUser($this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerUserUser extends Controller {
 		
 		$this->load->model('user/user');
 		
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_user_user->editUser($this->request->get['user_id'], $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -83,7 +83,7 @@ class ControllerUserUser extends Controller {
 		
 		$this->load->model('user/user');
 		
-    	if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
+    	if (isset($this->request->post['delete']) && $this->validateDelete()) {
       		foreach ($this->request->post['delete'] as $user_id) {
 				$this->model_user_user->deleteUser($user_id);	
 			}
@@ -186,7 +186,7 @@ class ControllerUserUser extends Controller {
 				'username'   => $result['username'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'delete'     => in_array($result['user_id'], (array)@$this->request->post['delete']),
+				'delete'     => isset($this->request->post['delete']) && in_array($result['user_id'], $this->request->post['delete']),
 				'action'     => $action
 			);
 		}	
@@ -203,11 +203,19 @@ class ControllerUserUser extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 		
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 		
 		$url = '';
 
@@ -274,12 +282,41 @@ class ControllerUserUser extends Controller {
 
     	$this->data['tab_general'] = $this->language->get('tab_general');
     
-		$this->data['error_warning'] = @$this->error['warning'];
-    	$this->data['error_username'] = @$this->error['username'];
-    	$this->data['error_password'] = @$this->error['password'];
-    	$this->data['error_confirm'] = @$this->error['confirm'];
-    	$this->data['error_firstname'] = @$this->error['firstname'];
-    	$this->data['error_lastname'] = @$this->error['lastname'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+
+ 		if (isset($this->error['username'])) {
+			$this->data['error_username'] = $this->error['username'];
+		} else {
+			$this->data['error_username'] = '';
+		}
+
+ 		if (isset($this->error['password'])) {
+			$this->data['error_password'] = $this->error['password'];
+		} else {
+			$this->data['error_password'] = '';
+		}
+		
+ 		if (isset($this->error['confirm'])) {
+			$this->data['error_confirm'] = $this->error['confirm'];
+		} else {
+			$this->data['error_confirm'] = '';
+		}
+		
+	 	if (isset($this->error['firstname'])) {
+			$this->data['error_firstname'] = $this->error['firstname'];
+		} else {
+			$this->data['error_firstname'] = '';
+		}
+		
+	 	if (isset($this->error['lastname'])) {
+			$this->data['error_lastname'] = $this->error['lastname'];
+		} else {
+			$this->data['error_lastname'] = '';
+		}		
 		
 		$url = '';
 			
@@ -317,42 +354,60 @@ class ControllerUserUser extends Controller {
 		  
     	$this->data['cancel'] = $this->url->https('user/user' . $url);
 
-    	if ((isset($this->request->get['user_id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+    	if (isset($this->request->get['user_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$user_info = $this->model_user_user->getUser($this->request->get['user_id']);
     	}
 
     	if (isset($this->request->post['username'])) {
       		$this->data['username'] = $this->request->post['username'];
-    	} else {
-      		$this->data['username'] = @$user_info['username'];
+    	} elseif (isset($user_info)) {
+			$this->data['username'] = $user_info['username'];
+		} else {
+      		$this->data['username'] = '';
     	}
   
-    	$this->data['password'] = @$this->request->post['password'];
-
-    	$this->data['confirm'] = @$this->request->post['confirm'];
+  		if (isset($this->request->post['password'])) {
+    		$this->data['password'] = $this->request->post['password'];
+		} else {
+			$this->data['password'] = '';
+		}
+		
+  		if (isset($this->request->post['confirm'])) {
+    		$this->data['confirm'] = $this->request->post['confirm'];
+		} else {
+			$this->data['confirm'] = '';
+		}
   
     	if (isset($this->request->post['firstname'])) {
       		$this->data['firstname'] = $this->request->post['firstname'];
-    	} else {
-      		$this->data['firstname'] = @$user_info['firstname'];
+    	} elseif (isset($user_info)) {
+			$this->data['firstname'] = $user_info['firstname'];
+		} else {
+      		$this->data['firstname'] = '';
     	}
 
     	if (isset($this->request->post['lastname'])) {
       		$this->data['lastname'] = $this->request->post['lastname'];
-    	} else {
-      		$this->data['lastname'] = @$user_info['lastname'];
+    	} elseif (isset($user_info)) {
+			$this->data['lastname'] = $user_info['lastname'];
+		} else {
+      		$this->data['lastname'] = '';
    		}
   
     	if (isset($this->request->post['email'])) {
       		$this->data['email'] = $this->request->post['email'];
-    	} else {
-      		$this->data['email'] = @$user_info['email'];
+    	} elseif (isset($user_info)) {
+			$this->data['email'] = $user_info['email'];
+		} else {
+      		$this->data['email'] = '';
     	}
 
     	if (isset($this->request->post['user_group_id'])) {
       		$this->data['user_group_id'] = $this->request->post['user_group_id'];
-    	} else {
-      		$this->data['user_group_id'] = @$user_info['user_group_id'];
+    	} elseif (isset($user_info)) {
+			$this->data['user_group_id'] = $user_info['user_group_id'];
+		} else {
+      		$this->data['user_group_id'] = '';
     	}
 		
 		$this->load->model('user/user_group');
@@ -361,8 +416,10 @@ class ControllerUserUser extends Controller {
  
      	if (isset($this->request->post['status'])) {
       		$this->data['status'] = $this->request->post['status'];
-    	} else {
-      		$this->data['status'] = @$user_info['status'];
+    	} elseif (isset($user_info)) {
+			$this->data['status'] = $user_info['status'];
+		} else {
+      		$this->data['status'] = 0;
     	}
 		
 		$this->id       = 'content';
@@ -410,7 +467,13 @@ class ControllerUserUser extends Controller {
     	if (!$this->user->hasPermission('modify', 'user/user')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	} 
-	  	  	
+	  	  
+		foreach ($this->request->post['delete'] as $user_id) {
+			if ($this->user->getId() == $user_id) {
+				$this->error['warning'] = $this->language->get('error_account');
+			}
+		}
+		 
 		if (!$this->error) {
 	  		return TRUE;
 		} else { 

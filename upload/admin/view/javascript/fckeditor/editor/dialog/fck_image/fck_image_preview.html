@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -34,9 +34,9 @@
 var FCKTools	= window.parent.FCKTools ;
 var FCKConfig	= window.parent.FCKConfig ;
 
-// Sets the Skin CSS
-document.write( FCKTools.GetStyleHtml( FCKConfig.SkinDialogCSS ) ) ;
-document.write( FCKTools.GetStyleHtml( GetCommonDialogCss( '../' ) ) ) ;
+// Set the preview CSS
+document.write( FCKTools.GetStyleHtml( FCKConfig.EditorAreaCSS ) ) ;
+document.write( FCKTools.GetStyleHtml( FCKConfig.EditorAreaStyles ) ) ;
 
 if ( window.parent.FCKConfig.BaseHref.length > 0 )
 	document.write( '<base href="' + window.parent.FCKConfig.BaseHref + '">' ) ;
@@ -50,7 +50,7 @@ window.onload = function()
 
 	</script>
 </head>
-<body style="color: #000000; background-color: #ffffff">
+<body>
 	<div>
 		<a id="lnkPreview" onclick="return false;" style="cursor: default">
 			<img id="imgPreview" onload="window.parent.UpdateOriginal();"

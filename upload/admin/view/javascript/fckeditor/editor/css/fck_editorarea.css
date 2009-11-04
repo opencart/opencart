@@ -1,6 +1,6 @@
 /*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -26,10 +26,10 @@
  * file.
  */
 
-/*
-    The "body" styles should match your editor web site, mainly regarding
-    background color and font family and size.
-*/
+/**
+ * The "body" styles should match your editor web site, mainly regarding
+ * background color and font family and size.
+ */
 
 body
 {
@@ -50,10 +50,10 @@ a[href]
 	text-decoration: -moz-anchor-decoration;	/* For Firefox 3, otherwise no underline will be used */
 }
 
-/*
-	Just uncomment the following block if you want to avoid spaces between
-	paragraphs. Remember to apply the same style in your output front end page.
-*/
+/**
+ * Just uncomment the following block if you want to avoid spaces between
+ * paragraphs. Remember to apply the same style in your output front end page.
+ */
 
 /*
 p, ul, li
@@ -63,11 +63,29 @@ p, ul, li
 }
 */
 
+/**
+ * Uncomment the following block, or only selected lines if appropriate,
+ * if you have some style items that would break the styles combo box.
+ * You can also write other CSS overrides inside the style block below
+ * as needed and they will be applied to inside the style combo only.
+ */
+
 /*
-    The following are some sample styles used in the "Styles" toolbar command.
-    You should instead remove them, and include the styles used by the site
-    you are using the editor in.
+.SC_Item *, .SC_ItemSelected *
+{
+	margin: 0px !important;
+	padding: 0px !important;
+	text-indent: 0px !important;
+	clip: auto !important;
+	position: static !important;
+}
 */
+
+/**
+ * The following are some sample styles used in the "Styles" toolbar command.
+ * You should instead remove them, and include the styles used by the site
+ * you are using the editor in.
+ */
 
 .Bold
 {

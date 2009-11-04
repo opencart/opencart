@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "Forigi Formaton",
 InsertLinkLbl		: "Ligilo",
 InsertLink			: "Enmeti/Ŝanĝi Ligilon",
 RemoveLink			: "Forigi Ligilon",
+VisitLink			: "Open Link",	//MISSING
 Anchor				: "Enmeti/Ŝanĝi Ankron",
 AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "Bildo",
@@ -72,6 +73,9 @@ BlockJustify		: "Ĝisrandigi Ambaŭflanke",
 DecreaseIndent		: "Malpligrandigi Krommarĝenon",
 IncreaseIndent		: "Pligrandigi Krommarĝenon",
 Blockquote			: "Blockquote",	//MISSING
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "Malfari",
 Redo				: "Refari",
 NumberedListLbl		: "Numera Listo",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "La ilobreto \"%1\" ne ekzistas",
 NoActiveX			: "Your browser's security settings could limit some features of the editor. You must enable the option \"Run ActiveX controls and plug-ins\". You may experience errors and notice missing features.",	//MISSING
 BrowseServerBlocked : "The resources browser could not be opened. Make sure that all popup blockers are disabled.",	//MISSING
 DialogBlocked		: "It was not possible to open the dialog window. Make sure all popup blockers are disabled.",	//MISSING
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "Akcepti",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Interspacigo de Ĉeloj",
 DlgTableCellPad		: "Ĉirkaŭenhava Plenigado",
 DlgTableCaption		: "Titolo",
 DlgTableSummary		: "Summary",	//MISSING
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Atributoj de Celo",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "Supre",
 DlgCellVerAlignMiddle	: "Centre",
 DlgCellVerAlignBottom	: "Malsupre",
 DlgCellVerAlignBaseline	: "Je Malsupro de Teksto",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "Linioj Kunfanditaj",
 DlgCellCollSpan		: "Kolumnoj Kunfanditaj",
 DlgCellBackColor	: "Fono",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "Pri",
 DlgAboutBrowserInfoTab	: "Informoj pri TTT-legilo",
 DlgAboutLicenseTab	: "License",	//MISSING
 DlgAboutVersion		: "versio",
-DlgAboutInfo		: "Por pli da informoj, vizitu"
+DlgAboutInfo		: "Por pli da informoj, vizitu",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style"	//MISSING
 };

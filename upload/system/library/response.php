@@ -23,11 +23,11 @@ final class Response {
 	}
 
 	private function compress($data, $level = 4) {
-		if (strpos(@$_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
+		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
 			$encoding = 'gzip';
 		} 
 
-		if (strpos(@$_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip')) {
+		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip')) {
 			$encoding = 'x-gzip';
 		}
 

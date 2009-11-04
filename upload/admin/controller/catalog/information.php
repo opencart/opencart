@@ -19,7 +19,7 @@ class ControllerCatalogInformation extends Controller {
 		
 		$this->load->model('catalog/information');
 				
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_catalog_information->addInformation($this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerCatalogInformation extends Controller {
 		
 		$this->load->model('catalog/information');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_catalog_information->editInformation($this->request->get['information_id'], $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -83,7 +83,7 @@ class ControllerCatalogInformation extends Controller {
 		
 		$this->load->model('catalog/information');
 		
-		if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
+		if (isset($this->request->post['delete']) && $this->validateDelete()) {
 			foreach ($this->request->post['delete'] as $information_id) {
 				$this->model_catalog_information->deleteInformation($information_id);
 			}
@@ -185,7 +185,7 @@ class ControllerCatalogInformation extends Controller {
 				'information_id' => $result['information_id'],
 				'title'      => $result['title'],
 				'sort_order' => $result['sort_order'],
-				'delete'     => in_array($result['information_id'], (array)@$this->request->post['delete']),
+				'delete'     => isset($this->request->post['delete']) && in_array($result['information_id'], $this->request->post['delete']),
 				'action'     => $action
 			);
 		}	
@@ -201,11 +201,19 @@ class ControllerCatalogInformation extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 		
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 
 		$url = '';
 
@@ -264,9 +272,23 @@ class ControllerCatalogInformation extends Controller {
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_title'] = @$this->error['title'];
-		$this->data['error_description'] = @$this->error['description'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+
+ 		if (isset($this->error['title'])) {
+			$this->data['error_title'] = $this->error['title'];
+		} else {
+			$this->data['error_title'] = '';
+		}
+		
+	 	if (isset($this->error['description'])) {
+			$this->data['error_description'] = $this->error['description'];
+		} else {
+			$this->data['error_description'] = '';
+		}
 
   		$this->document->breadcrumbs = array();
 
@@ -304,7 +326,7 @@ class ControllerCatalogInformation extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('catalog/information' . $url);
 
-		if ((isset($this->request->get['information_id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['information_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);
 		}
 		
@@ -322,14 +344,18 @@ class ControllerCatalogInformation extends Controller {
 
 		if (isset($this->request->post['keyword'])) {
 			$this->data['keyword'] = $this->request->post['keyword'];
+		} elseif (isset($information_info)) {
+			$this->data['keyword'] = $information_info['keyword'];
 		} else {
-			$this->data['keyword'] = @$information_info['keyword'];
+			$this->data['keyword'] = '';
 		}
 		
 		if (isset($this->request->post['sort_order'])) {
 			$this->data['sort_order'] = $this->request->post['sort_order'];
+		} elseif (isset($information_info)) {
+			$this->data['sort_order'] = $information_info['sort_order'];
 		} else {
-			$this->data['sort_order'] = @$information_info['sort_order'];
+			$this->data['sort_order'] = '';
 		}
 
 		$this->id       = 'content';

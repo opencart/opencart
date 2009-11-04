@@ -12,9 +12,9 @@
       <?php foreach ($languages as $language) { ?>
       <tr>
         <td width="25%"><span class="required">*</span> <?php echo $entry_name; ?></td>
-        <td><input name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo @$download_description[$language['language_id']]['name']; ?>" />
+        <td><input name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" />
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-          <?php if (@$error_name[$language['language_id']]) { ?>
+          <?php if (isset($error_name[$language['language_id']])) { ?>
           <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
           <?php } ?>
           <?php } ?></td>

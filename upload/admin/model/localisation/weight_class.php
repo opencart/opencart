@@ -2,9 +2,13 @@
 class ModelLocalisationWeightClass extends Model {
 	public function addWeightClass($data) {
 		foreach ($data['weight_class'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "weight_class SET weight_class_id = '" . (int)@$weight_class_id . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($value['title']) . "', unit = '" . $this->db->escape($value['unit']) . "'");
-
-			$weight_class_id = $this->db->getLastId();
+			if (isset($weight_class_id)) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "weight_class SET weight_class_id = '" . (int)$weight_class_id . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($value['title']) . "', unit = '" . $this->db->escape($value['unit']) . "'");
+			} else {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "weight_class SET language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($value['title']) . "', unit = '" . $this->db->escape($value['unit']) . "'");
+				
+				$weight_class_id = $this->db->getLastId();
+			}
 		}
 		
 		if (isset($data['weight_rule'])) {
@@ -50,13 +54,13 @@ class ModelLocalisationWeightClass extends Model {
 				'unit'
 			);	
 			
-			if (in_array(@$data['sort'], $sort_data)) {
+			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 				$sql .= " ORDER BY " . $data['sort'];	
 			} else {
 				$sql .= " ORDER BY title";	
 			}
 			
-			if (@$data['order'] == 'DESC') {
+			if (isset($data['order']) && ($data['order'] == 'DESC')) {
 				$sql .= " DESC";
 			} else {
 				$sql .= " ASC";

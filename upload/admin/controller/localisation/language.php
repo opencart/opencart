@@ -19,7 +19,7 @@ class ControllerLocalisationLanguage extends Controller {
 		
 		$this->load->model('localisation/language');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_localisation_language->addLanguage($this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationLanguage extends Controller {
 		
 		$this->load->model('localisation/language');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_localisation_language->editLanguage($this->request->get['language_id'], $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -83,7 +83,7 @@ class ControllerLocalisationLanguage extends Controller {
 		
 		$this->load->model('localisation/language');
 		
-		if ((isset($this->request->post['delete'])) && ($this->validateDelete())) {
+		if (isset($this->request->post['delete']) && $this->validateDelete()) {
 			foreach ($this->request->post['delete'] as $language_id) {
 				$this->model_localisation_language->deleteLanguage($language_id);
 			}
@@ -186,7 +186,7 @@ class ControllerLocalisationLanguage extends Controller {
 				'name'        => $result['name'] . (($result['code'] == $this->config->get('config_language')) ? $this->language->get('text_default') : NULL),
 				'code'        => $result['code'],
 				'sort_order'  => $result['sort_order'],
-				'delete'      => in_array($result['language_id'], (array)@$this->request->post['delete']),
+				'delete'      => isset($this->request->post['delete']) && in_array($result['language_id'], $this->request->post['delete']),
 				'action'      => $action	
 			);		
 		}
@@ -203,11 +203,19 @@ class ControllerLocalisationLanguage extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
 		
-		unset($this->session->data['success']);
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
 		
 		$url = '';
 		
@@ -274,13 +282,47 @@ class ControllerLocalisationLanguage extends Controller {
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_name'] = @$this->error['name'];
-		$this->data['error_code'] = @$this->error['code'];
-		$this->data['error_locale'] = @$this->error['locale'];
-		$this->data['error_image'] = @$this->error['image'];
-		$this->data['error_directory'] = @$this->error['directory'];
-		$this->data['error_filename'] = @$this->error['filename'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+
+ 		if (isset($this->error['name'])) {
+			$this->data['error_name'] = $this->error['name'];
+		} else {
+			$this->data['error_name'] = '';
+		}
+
+ 		if (isset($this->error['code'])) {
+			$this->data['error_code'] = $this->error['code'];
+		} else {
+			$this->data['error_code'] = '';
+		}
+		
+ 		if (isset($this->error['locale'])) {
+			$this->data['error_locale'] = $this->error['locale'];
+		} else {
+			$this->data['error_locale'] = '';
+		}		
+		
+ 		if (isset($this->error['image'])) {
+			$this->data['error_image'] = $this->error['image'];
+		} else {
+			$this->data['error_image'] = '';
+		}	
+		
+ 		if (isset($this->error['directory'])) {
+			$this->data['error_directory'] = $this->error['directory'];
+		} else {
+			$this->data['error_directory'] = '';
+		}	
+		
+ 		if (isset($this->error['filename'])) {
+			$this->data['error_filename'] = $this->error['filename'];
+		} else {
+			$this->data['error_filename'] = '';
+		}
 		
 		$url = '';
 			
@@ -318,56 +360,72 @@ class ControllerLocalisationLanguage extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('localisation/language' . $url);
 
-		if ((isset($this->request->get['language_id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['language_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$language_info = $this->model_localisation_language->getLanguage($this->request->get['language_id']);
 		}
 
 		if (isset($this->request->post['name'])) {
 			$this->data['name'] = $this->request->post['name'];
+		} elseif (isset($language_info)) {
+			$this->data['name'] = $language_info['name'];
 		} else {
-			$this->data['name'] = @$language_info['name'];
+			$this->data['name'] = '';
 		}
 
 		if (isset($this->request->post['code'])) {
 			$this->data['code'] = $this->request->post['code'];
+		} elseif (isset($language_info)) {
+			$this->data['code'] = $language_info['code'];
 		} else {
-			$this->data['code'] = @$language_info['code'];
+			$this->data['code'] = '';
 		}
 
 		if (isset($this->request->post['locale'])) {
 			$this->data['locale'] = $this->request->post['locale'];
+		} elseif (isset($language_info)) {
+			$this->data['locale'] = $language_info['locale'];
 		} else {
-			$this->data['locale'] = @$language_info['locale'];
+			$this->data['locale'] = '';
 		}
 		
 		if (isset($this->request->post['image'])) {
 			$this->data['image'] = $this->request->post['image'];
+		} elseif (isset($language_info)) {
+			$this->data['image'] = $language_info['image'];
 		} else {
-			$this->data['image'] = @$language_info['image'];
+			$this->data['image'] = '';
 		}
 
 		if (isset($this->request->post['directory'])) {
 			$this->data['directory'] = $this->request->post['directory'];
+		} elseif (isset($language_info)) {
+			$this->data['directory'] = $language_info['directory'];
 		} else {
-			$this->data['directory'] = @$language_info['directory'];
+			$this->data['directory'] = '';
 		}
 
 		if (isset($this->request->post['filename'])) {
 			$this->data['filename'] = $this->request->post['filename'];
+		} elseif (isset($language_info)) {
+			$this->data['filename'] = $language_info['filename'];
 		} else {
-			$this->data['filename'] = @$language_info['filename'];
+			$this->data['filename'] = '';
 		}
 
 		if (isset($this->request->post['sort_order'])) {
 			$this->data['sort_order'] = $this->request->post['sort_order'];
+		} elseif (isset($language_info)) {
+			$this->data['sort_order'] = $language_info['sort_order'];
 		} else {
-			$this->data['sort_order'] = @$language_info['sort_order'];
+			$this->data['sort_order'] = '';
 		}
 
     	if (isset($this->request->post['status'])) {
       		$this->data['status'] = $this->request->post['status'];
-    	} else {
-      		$this->data['status'] = @$language_info['status'];
+    	} elseif (isset($language_info)) {
+			$this->data['status'] = $language_info['status'];
+		} else {
+      		$this->data['status'] = 1;
     	}
 		
 		$this->id       = 'content';

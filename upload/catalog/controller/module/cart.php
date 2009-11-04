@@ -66,7 +66,7 @@ class ControllerModuleCart extends Controller {
 		
     	foreach ($this->cart->getProducts() as $product) {
       		$output .= '<tr>';
-        	$output .= '<td valign="top" align="right">' . $product['quantity'] . '&nbsp;x&nbsp;</td>';
+        	$output .= '<td width="1" valign="top" align="right">' . $product['quantity'] . '&nbsp;x&nbsp;</td>';
         	$output .= '<td align="left" valign="top"><a href="' . $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $product['product_id'])) . '">' . $product['name'] . '</a>';
           	$output .= '<div>';
             

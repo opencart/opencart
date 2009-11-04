@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,8 +44,9 @@ RemoveFormat		: "Прибрати форматування",
 InsertLinkLbl		: "Посилання",
 InsertLink			: "Вставити/Редагувати посилання",
 RemoveLink			: "Знищити посилання",
+VisitLink			: "Відкрити посилання",
 Anchor				: "Вставити/Редагувати якір",
-AnchorDelete		: "Remove Anchor",	//MISSING
+AnchorDelete		: "Видалити якір",
 InsertImageLbl		: "Зображення",
 InsertImage			: "Вставити/Редагувати зображення",
 InsertFlashLbl		: "Flash",
@@ -71,7 +72,10 @@ RightJustify		: "По правому краю",
 BlockJustify		: "По ширині",
 DecreaseIndent		: "Зменшити відступ",
 IncreaseIndent		: "Збільшити відступ",
-Blockquote			: "Blockquote",	//MISSING
+Blockquote			: "Цитата",
+CreateDiv			: "Створити Div контейнер",
+EditDiv				: "Редагувати Div контейнер",
+DeleteDiv			: "Видалити Div контейнер",
 Undo				: "Повернути",
 Redo				: "Повторити",
 NumberedListLbl		: "Нумерований список",
@@ -105,27 +109,27 @@ SelectionField	: "Список",
 ImageButton		: "Кнопка із зображенням",
 
 FitWindow		: "Розвернути вікно редактора",
-ShowBlocks		: "Show Blocks",	//MISSING
+ShowBlocks		: "Показувати блоки",
 
 // Context Menu
 EditLink			: "Вставити посилання",
 CellCM				: "Осередок",
 RowCM				: "Рядок",
 ColumnCM			: "Колонка",
-InsertRowAfter		: "Insert Row After",	//MISSING
-InsertRowBefore		: "Insert Row Before",	//MISSING
+InsertRowAfter		: "Вставити рядок після",
+InsertRowBefore		: "Вставити рядок до",
 DeleteRows			: "Видалити строки",
-InsertColumnAfter	: "Insert Column After",	//MISSING
-InsertColumnBefore	: "Insert Column Before",	//MISSING
+InsertColumnAfter	: "Вставити колонку після",
+InsertColumnBefore	: "Вставити колонку до",
 DeleteColumns		: "Видалити колонки",
-InsertCellAfter		: "Insert Cell After",	//MISSING
-InsertCellBefore	: "Insert Cell Before",	//MISSING
+InsertCellAfter		: "Вставити комірку після",
+InsertCellBefore	: "Вставити комірку до",
 DeleteCells			: "Видалити комірки",
 MergeCells			: "Об'єднати комірки",
-MergeRight			: "Merge Right",	//MISSING
-MergeDown			: "Merge Down",	//MISSING
-HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
-VerticalSplitCell	: "Split Cell Vertically",	//MISSING
+MergeRight			: "Об'єднати зправа",
+MergeDown			: "Об'єднати до низу",
+HorizontalSplitCell	: "Розділити комірку по горизонталі",
+VerticalSplitCell	: "Розділити комірку по вертикалі",
 TableDelete			: "Видалити таблицю",
 CellProperties		: "Властивості комірки",
 TableProperties		: "Властивості таблиці",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "Панель інструментів \"%1\" не існу�
 NoActiveX			: "Настройки безпеки вашого браузера можуть обмежувати деякі властивості редактора. Ви повинні включити опцію \"Запускати елементи управління ACTIVEX і плугіни\". Ви можете бачити помилки і помічати відсутність можливостей.",
 BrowseServerBlocked : "Ресурси браузера не можуть бути відкриті. Перевірте що блокування спливаючих вікон вимкнені.",
 DialogBlocked		: "Не можливо відкрити вікно діалогу. Перевірте що блокування спливаючих вікон вимкнені.",
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "ОК",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "Проміжок (spacing)",
 DlgTableCellPad		: "Відступ (padding)",
 DlgTableCaption		: "Заголовок",
 DlgTableSummary		: "Резюме",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Властивості комірки",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "Зверху",
 DlgCellVerAlignMiddle	: "Посередині",
 DlgCellVerAlignBottom	: "Знизу",
 DlgCellVerAlignBaseline	: "По базовій лінії",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "Діапазон строк (span)",
 DlgCellCollSpan		: "Діапазон колонок (span)",
 DlgCellBackColor	: "Колір фона",
@@ -332,7 +345,7 @@ DlgCellBorderColor	: "Колір бордюра",
 DlgCellBtnSelect	: "Оберіть...",
 
 // Find and Replace Dialog
-DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
+DlgFindAndReplaceTitle	: "Знайти і замінити",
 
 // Find Dialog
 DlgFindTitle		: "Пошук",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "Про програму",
 DlgAboutBrowserInfoTab	: "Інформація браузера",
 DlgAboutLicenseTab	: "Ліцензія",
 DlgAboutVersion		: "Версія",
-DlgAboutInfo		: "Додаткову інформацію дивіться на "
+DlgAboutInfo		: "Додаткову інформацію дивіться на ",
+
+// Div Dialog
+DlgDivGeneralTab	: "Загальна",
+DlgDivAdvancedTab	: "Розширена",
+DlgDivStyle		: "Стиль",
+DlgDivInlineStyle	: "Inline стиль"
 };

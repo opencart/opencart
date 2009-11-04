@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -75,9 +75,17 @@ FCKSelection.GetParentElement = function()
 		var oSel = this.GetSelection() ;
 		if ( oSel )
 		{
-			// make the common case fast - for collapsed/nearly collapsed selections just return anchor.parent.
+			// if anchorNode == focusNode, see if the selection is text only or including nodes.
+			// if text only, return the parent node.
+			// if the selection includes DOM nodes, then the anchorNode is the nearest container.
 			if ( oSel.anchorNode && oSel.anchorNode == oSel.focusNode )
-				return oSel.anchorNode.parentNode ;
+			{
+				var oRange = oSel.getRangeAt( 0 ) ;
+				if ( oRange.collapsed || oRange.startContainer.nodeType == 3 )
+					return oSel.anchorNode.parentNode ;
+				else
+					return oSel.anchorNode ;
+			}
 
 			// looks like we're having a large selection here. To make the behavior same as IE's TextRange.parentElement(),
 			// we need to find the nearest ancestor node which encapsulates both the beginning and the end of the selection.
@@ -162,7 +170,7 @@ FCKSelection.HasAncestorNode = function( nodeTagName )
 
 	while ( oContainer )
 	{
-		if ( oContainer.nodeType == 1 && oContainer.tagName == nodeTagName ) return true ;
+		if ( oContainer.nodeType == 1 && oContainer.nodeName.IEquals( nodeTagName ) ) return true ;
 		oContainer = oContainer.parentNode ;
 	}
 
@@ -180,7 +188,7 @@ FCKSelection.MoveToAncestorNode = function( nodeTagName )
 
 	while ( oContainer )
 	{
-		if ( oContainer.nodeName == nodeTagName )
+		if ( oContainer.nodeName.IEquals( nodeTagName ) )
 			return oContainer ;
 
 		oContainer = oContainer.parentNode ;

@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -311,6 +311,65 @@ FCKUnlinkCommand.prototype.GetState = function()
 	return state ;
 }
 
+var FCKVisitLinkCommand = function()
+{
+	this.Name = 'VisitLink';
+}
+FCKVisitLinkCommand.prototype =
+{
+	GetState : function()
+	{
+		if ( FCK.EditMode != FCK_EDITMODE_WYSIWYG )
+			return FCK_TRISTATE_DISABLED ;
+		var state = FCK.GetNamedCommandState( 'Unlink' ) ;
+
+		if ( state == FCK_TRISTATE_OFF )
+		{
+			var el = FCKSelection.MoveToAncestorNode( 'A' ) ;
+			if ( !el.href )
+				state = FCK_TRISTATE_DISABLED ;
+		}
+
+		return state ;
+	},
+
+	Execute : function()
+	{
+		var el = FCKSelection.MoveToAncestorNode( 'A' ) ;
+		var url = el.getAttribute( '_fcksavedurl' ) || el.getAttribute( 'href', 2 ) ;
+
+		// Check if it's a full URL.
+		// If not full URL, we'll need to apply the BaseHref setting.
+		if ( ! /:\/\//.test( url ) )
+		{
+			var baseHref = FCKConfig.BaseHref ;
+			var parentWindow = FCK.GetInstanceObject( 'parent' ) ;
+			if ( !baseHref )
+			{
+				baseHref = parentWindow.document.location.href ;
+				baseHref = baseHref.substring( 0, baseHref.lastIndexOf( '/' ) + 1 ) ;
+			}
+
+			if ( /^\//.test( url ) )
+			{
+				try
+				{
+					baseHref = baseHref.match( /^.*:\/\/+[^\/]+/ )[0] ;
+				}
+				catch ( e )
+				{
+					baseHref = parentWindow.document.location.protocol + '://' + parentWindow.parent.document.location.host ;
+				}
+			}
+
+			url = baseHref + url ;
+		}
+
+		if ( !window.open( url, '_blank' ) )
+			alert( FCKLang.VisitLinkBlocked ) ;
+	}
+} ;
+
 // FCKSelectAllCommand
 var FCKSelectAllCommand = function()
 {
@@ -516,3 +575,60 @@ FCKAnchorDeleteCommand.prototype =
 		return FCK.GetNamedCommandState( 'Unlink') ;
 	}
 };
+
+var FCKDeleteDivCommand = function()
+{
+}
+FCKDeleteDivCommand.prototype =
+{
+	GetState : function()
+	{
+		if ( FCK.EditMode != FCK_EDITMODE_WYSIWYG )
+			return FCK_TRISTATE_DISABLED ;
+
+		var node = FCKSelection.GetParentElement() ;
+		var path = new FCKElementPath( node ) ;
+		return path.BlockLimit && path.BlockLimit.nodeName.IEquals( 'div' ) ? FCK_TRISTATE_OFF : FCK_TRISTATE_DISABLED ;
+	},
+
+	Execute : function()
+	{
+		// Create an undo snapshot before doing anything.
+		FCKUndo.SaveUndoStep() ;
+
+		// Find out the nodes to delete.
+		var nodes = FCKDomTools.GetSelectedDivContainers() ;
+
+		// Remember the current selection position.
+		var range = new FCKDomRange( FCK.EditorWindow ) ;
+		range.MoveToSelection() ;
+		var bookmark = range.CreateBookmark() ;
+
+		// Delete the container DIV node.
+		for ( var i = 0 ; i < nodes.length ; i++)
+			FCKDomTools.RemoveNode( nodes[i], true ) ;
+
+		// Restore selection.
+		range.MoveToBookmark( bookmark ) ;
+		range.Select() ;
+	}
+} ;
+
+// FCKRuleCommand
+var FCKNbsp = function()
+{
+	this.Name = 'Non Breaking Space' ;
+}
+
+FCKNbsp.prototype =
+{
+	Execute : function()
+	{
+		FCK.InsertHtml( '&nbsp;' ) ;
+	},
+
+	GetState : function()
+	{
+		return ( FCK.EditMode != FCK_EDITMODE_WYSIWYG ? FCK_TRISTATE_DISABLED : FCK_TRISTATE_OFF ) ;
+	}
+} ;

@@ -31,7 +31,7 @@ class ControllerAccountAddress extends Controller {
 		
 		$this->load->model('account/address');
 			
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_account_address->addAddress($this->request->post);
 			
       		$this->session->data['success'] = $this->language->get('text_insert');
@@ -55,15 +55,15 @@ class ControllerAccountAddress extends Controller {
 		
 		$this->load->model('account/address');
 		
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
        		$this->model_account_address->editAddress($this->request->get['address_id'], $this->request->post);
 	  		
-			if ($this->request->get['address_id'] == @$this->session->data['shipping_address_id']) {
+			if (isset($this->session->data['shipping_address_id']) && ($this->request->get['address_id'] == $this->session->data['shipping_address_id'])) {
 	  			unset($this->session->data['shipping_methods']);
 				unset($this->session->data['shipping_method']);				
 			}
 
-			if ($this->request->get['address_id'] == @$this->session->data['payment_address_id']) {
+			if (isset($this->session->data['payment_address_id']) && ($this->request->get['address_id'] == $this->session->data['payment_address_id'])) {
 	  			unset($this->session->data['payment_methods']);
 				unset($this->session->data['payment_method']);				
 			}
@@ -89,7 +89,7 @@ class ControllerAccountAddress extends Controller {
 		
 		$this->load->model('account/address');
 		
-    	if ((isset($this->request->get['address_id'])) && ($this->validateDelete())) {
+    	if (isset($this->request->get['address_id']) && $this->validateDelete()) {
 			$this->model_account_address->deleteAddress($this->request->get['address_id']);	
 												
 			$this->session->data['success'] = $this->language->get('text_delete');
@@ -128,12 +128,20 @@ class ControllerAccountAddress extends Controller {
     	$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_back'] = $this->language->get('button_back');
 
-    	$this->data['error_warning'] = @$this->error['warning'];
-    
-		$this->data['success'] = @$this->session->data['success'];
+		if (isset($this->error['warning'])) {
+    		$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 		
-    	unset($this->session->data['success']);
-
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
+		
+    		unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
+		
     	$this->data['addresses'] = array();
 		
 		$results = $this->model_account_address->getAddresses();
@@ -242,10 +250,29 @@ class ControllerAccountAddress extends Controller {
     	$this->data['button_continue'] = $this->language->get('button_continue');
     	$this->data['button_back'] = $this->language->get('button_back');
 
-    	$this->data['error_firstname'] = @$this->error['firstname'];
-    	$this->data['error_lastname'] = @$this->error['lastname'];
-    	$this->data['error_address_1'] = @$this->error['address_1'];
-    	$this->data['error_city'] = @$this->error['city'];
+		if (isset($this->error['firstname'])) {
+    		$this->data['error_firstname'] = $this->error['firstname'];
+		} else {
+			$this->data['error_firstname'] = '';
+		}
+		
+		if (isset($this->error['lastname'])) {
+    		$this->data['error_lastname'] = $this->error['lastname'];
+		} else {
+			$this->data['error_lastname'] = '';
+		}
+		
+		if (isset($this->error['address_1'])) {
+    		$this->data['error_address_1'] = $this->error['address_1'];
+		} else {
+			$this->data['error_address_1'] = '';
+		}
+		
+		if (isset($this->error['city'])) {
+    		$this->data['error_city'] = $this->error['city'];
+		} else {
+			$this->data['error_city'] = '';
+		}		
 		
 		if (!isset($this->request->get['address_id'])) {
     		$this->data['action'] = $this->url->https('account/address/insert');
@@ -253,55 +280,69 @@ class ControllerAccountAddress extends Controller {
     		$this->data['action'] = $this->url->https('account/address/update&address_id=' . $this->request->get['address_id']);
 		}
 		
-    	if ((isset($this->request->get['address_id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+    	if (isset($this->request->get['address_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$address_info = $this->model_account_address->getAddress($this->request->get['address_id']);
 		}
 	
     	if (isset($this->request->post['firstname'])) {
       		$this->data['firstname'] = $this->request->post['firstname'];
+    	} elseif (isset($address_info)) {
+      		$this->data['firstname'] = $address_info['firstname'];
     	} else {
-      		$this->data['firstname'] = @$address_info['firstname'];
-    	}
+			$this->data['firstname'] = '';
+		}
 
     	if (isset($this->request->post['lastname'])) {
       		$this->data['lastname'] = $this->request->post['lastname'];
+    	} elseif (isset($address_info)) {
+      		$this->data['lastname'] = $address_info['lastname'];
     	} else {
-      		$this->data['lastname'] = @$address_info['lastname'];
-    	}
+			$this->data['lastname'] = '';
+		}
 
     	if (isset($this->request->post['company'])) {
       		$this->data['company'] = $this->request->post['company'];
-    	} else {
-      		$this->data['company'] = @$address_info['company'];
+    	} elseif (isset($address_info)) {
+			$this->data['company'] = $address_info['company'];
+		} else {
+      		$this->data['company'] = '';
     	}
 
     	if (isset($this->request->post['address_1'])) {
       		$this->data['address_1'] = $this->request->post['address_1'];
-    	} else {
-      		$this->data['address_1'] = @$address_info['address_1'];
+    	} elseif (isset($address_info)) {
+			$this->data['address_1'] = $address_info['address_1'];
+		} else {
+      		$this->data['address_1'] = '';
     	}
 
     	if (isset($this->request->post['address_2'])) {
       		$this->data['address_2'] = $this->request->post['address_2'];
-    	} else {
-      		$this->data['address_2'] = @$address_info['address_2'];
+    	} elseif (isset($address_info)) {
+			$this->data['address_2'] = $address_info['address_2'];
+		} else {
+      		$this->data['address_2'] = '';
     	}	
 
     	if (isset($this->request->post['postcode'])) {
       		$this->data['postcode'] = $this->request->post['postcode'];
-    	} else {
-      		$this->data['postcode'] = @$address_info['postcode'];
+    	} elseif (isset($address_info)) {
+			$this->data['postcode'] = $address_info['postcode'];
+		} else {
+      		$this->data['postcode'] = '';
     	}
 
     	if (isset($this->request->post['city'])) {
       		$this->data['city'] = $this->request->post['city'];
-    	} else {
-      		$this->data['city'] = @$address_info['city'];
+    	} elseif (isset($address_info)) {
+			$this->data['city'] = $address_info['city'];
+		} else {
+      		$this->data['city'] = '';
     	}
 
     	if (isset($this->request->post['country_id'])) {
       		$this->data['country_id'] = $this->request->post['country_id'];
-    	}  elseif (isset($address_info['country_id'])) {
+    	}  elseif (isset($address_info)) {
       		$this->data['country_id'] = $address_info['country_id'];
     	} else {
       		$this->data['country_id'] = $this->config->get('config_country_id');
@@ -309,7 +350,7 @@ class ControllerAccountAddress extends Controller {
 
     	if (isset($this->request->post['zone_id'])) {
       		$this->data['zone_id'] = $this->request->post['zone_id'];
-    	}  elseif (isset($address_info['zone_id'])) {
+    	}  elseif (isset($address_info)) {
       		$this->data['zone_id'] = $address_info['zone_id'];
     	} else {
       		$this->data['zone_id'] = 0;
@@ -321,9 +362,11 @@ class ControllerAccountAddress extends Controller {
 
     	if (isset($this->request->post['default'])) {
       		$this->data['default'] = $this->request->post['default'];
+    	} elseif (isset($this->request->get['address_id'])) {
+      		$this->data['default'] = $this->customer->getAddressId() == $this->request->get['address_id'];
     	} else {
-      		$this->data['default'] = $this->customer->getAddressId() == @$this->request->get['address_id'];
-    	}
+			$this->data['default'] = FALSE;
+		}
 
     	$this->data['back'] = $this->url->https('account/address');
 		
@@ -379,12 +422,12 @@ class ControllerAccountAddress extends Controller {
 
 		$this->load->model('localisation/zone');
 
-    	$results = $this->model_localisation_zone->getZonesByCountryId(@$this->request->get['country_id']);
+    	$results = $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']);
         
       	foreach ($results as $result) {
         	$output .= '<option value="' . $result['zone_id'] . '"';
 	
-	    	if (@$this->request->get['zone_id'] == $result['zone_id']) {
+	    	if (isset($this->request->get['zone_id']) && ($this->request->get['zone_id'] == $result['zone_id'])) {
 	      		$output .= ' selected="selected"';
 	    	}
 	

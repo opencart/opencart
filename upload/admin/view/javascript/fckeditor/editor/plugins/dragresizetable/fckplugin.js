@@ -88,8 +88,6 @@
 	},
 	"_ResizeBarMouseDownListener" : function( evt )
 	{
-		if ( ! evt )
-			evt = window.event ;
 		if ( FCKDragTableHandler._LeftCell )
 			FCKDragTableHandler._MouseMoveMode = 1 ;
 		if ( FCKBrowserInfo.IsIE )
@@ -121,11 +119,14 @@
 		FCKDragTableHandler._MinimumX = minX + offset.x ;
 		FCKDragTableHandler._MaximumX = maxX + offset.x ;
 		FCKDragTableHandler._LastX = null ;
+
+		if (evt.preventDefault)
+			evt.preventDefault();
+		else
+			evt.returnValue = false;
 	},
 	"_ResizeBarMouseUpListener" : function( evt )
 	{
-		if ( ! evt )
-			evt = window.event ;
 		FCKDragTableHandler._MouseMoveMode = 0 ;
 		FCKDragTableHandler._HideResizeBar() ;
 
@@ -218,8 +219,6 @@
 	},
 	"_ResizeBarMouseMoveListener" : function( evt )
 	{
-		if ( ! evt )
-			evt = window.event ;
 		if ( FCKDragTableHandler._MouseMoveMode == 0 )
 			return FCKDragTableHandler._MouseFindHandler( FCK, evt ) ;
 		else
@@ -421,8 +420,6 @@
 			// Disable drag and drop, and selection for the filler image.
 			var disabledListener = function( evt )
 			{
-				if ( ! evt )
-					evt = window.event ;
 				if ( evt.preventDefault )
 					evt.preventDefault() ;
 				else
@@ -520,8 +517,13 @@
 				backgroundImage	: 'none',
 				border		: '0'
 			} ) ;
+	},
+	"Reset" : function()
+	{
+		FCKDragTableHandler._LeftCell = FCKDragTableHandler._RightCell = FCKDragTableHandler._TableMap = null ;
 	}
 
 };
 
 FCK.Events.AttachEvent( "OnMouseMove", FCKDragTableHandler.MouseMoveListener ) ;
+FCK.Events.AttachEvent( "OnAfterSetHTML", FCKDragTableHandler.Reset ) ;

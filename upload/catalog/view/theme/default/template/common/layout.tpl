@@ -7,6 +7,9 @@
 <meta name="description" content="<?php echo $description; ?>" />
 <?php } ?>
 <base href="<?php echo $base; ?>" />
+<?php if ($icon) { ?>
+<link href="image/<?php echo $icon; ?>" rel="icon" />
+<?php } ?>
 <link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/stylesheet.css" />
 <!--[if lt IE 7]>
 <link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/ie6.css" />

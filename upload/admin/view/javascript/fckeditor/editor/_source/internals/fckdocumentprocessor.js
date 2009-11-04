@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -27,7 +27,7 @@ FCKDocumentProcessor._Items = new Array() ;
 FCKDocumentProcessor.AppendNew = function()
 {
 	var oNewItem = new Object() ;
-	this._Items.AddItem( oNewItem ) ;
+	this._Items.push( oNewItem ) ;
 	return oNewItem ;
 }
 
@@ -45,7 +45,7 @@ var FCKDocumentProcessor_CreateFakeImage = function( fakeClass, realElement )
 {
 	var oImg = FCKTools.GetElementDocument( realElement ).createElement( 'IMG' ) ;
 	oImg.className = fakeClass ;
-	oImg.src = FCKConfig.FullBasePath + 'images/spacer.gif' ;
+	oImg.src = FCKConfig.BasePath + 'images/spacer.gif' ;
 	oImg.setAttribute( '_fckfakelement', 'true', 0 ) ;
 	oImg.setAttribute( '_fckrealelement', FCKTempBin.AddElement( realElement ), 0 ) ;
 	return oImg ;
@@ -122,7 +122,7 @@ FCKPageBreaksProcessor.ProcessDocument = function( document )
 }
 
 // EMBED and OBJECT tags.
-FCKEmbedAndObjectProcessor = (function()
+var FCKEmbedAndObjectProcessor = (function()
 {
 	var customProcessors = [] ;
 
@@ -142,24 +142,29 @@ FCKEmbedAndObjectProcessor = (function()
 		el.parentNode.replaceChild( replaceElement, el ) ;
 	}
 
+	var processElementsByName = function( elementName, doc )
+	{
+		var aObjects = doc.getElementsByTagName( elementName );
+		for ( var i = aObjects.length - 1 ; i >= 0 ; i-- )
+			processElement( aObjects[i] ) ;
+	}
+
+	var processObjectAndEmbed = function( doc )
+	{
+		processElementsByName( 'object', doc );
+		processElementsByName( 'embed', doc );
+	}
+
 	return FCKTools.Merge( FCKDocumentProcessor.AppendNew(),
 		       {
 				ProcessDocument : function( doc )
 				{
 					// Firefox 3 would sometimes throw an unknown exception while accessing EMBEDs and OBJECTs
 					// without the setTimeout().
-					FCKTools.RunFunction( function()
-						{
-							// Process OBJECTs first, since EMBEDs can sometimes go inside OBJECTS (e.g. Flash).
-							var aObjects = doc.getElementsByTagName( 'object' );
-							for ( var i = aObjects.length - 1 ; i >= 0 ; i-- )
-								processElement( aObjects[i] ) ;
-
-							// Now process any EMBEDs left.
-							var aEmbeds = doc.getElementsByTagName( 'embed' ) ;
-							for ( var i = aEmbeds.length - 1 ; i >= 0 ; i-- )
-								processElement( aEmbeds[i] ) ;
-						} ) ;
+					if ( FCKBrowserInfo.IsGecko )
+						FCKTools.RunFunction( processObjectAndEmbed, this, [ doc ] ) ;
+					else
+						processObjectAndEmbed( doc ) ;
 				},
 
 				RefreshView : function( placeHolder, original )
@@ -247,3 +252,19 @@ FCKEmbedAndObjectProcessor.AddCustomHandler( function( el, fakeImg )
 		fakeImg.className = 'FCK__Flash' ;
 		fakeImg.setAttribute( '_fckflash', 'true', 0 );
 	} ) ;
+
+// Buggy <span class="Apple-style-span"> tags added by Safari.
+if ( FCKBrowserInfo.IsSafari )
+{
+	FCKDocumentProcessor.AppendNew().ProcessDocument = function( doc )
+	{
+		var spans = doc.getElementsByClassName ?
+			doc.getElementsByClassName( 'Apple-style-span' ) :
+			Array.prototype.filter.call(
+					doc.getElementsByTagName( 'span' ),
+					function( item ){ return item.className == 'Apple-style-span' ; }
+					) ;
+		for ( var i = spans.length - 1 ; i >= 0 ; i-- )
+			FCKDomTools.RemoveNode( spans[i], true ) ;
+	}
+}

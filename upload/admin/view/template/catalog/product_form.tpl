@@ -12,33 +12,21 @@
       <?php foreach ($languages as $language) { ?>
       <tr>
         <td width="180"><span class="required">*</span> <?php echo $entry_name; ?></td>
-        <td><input type="text" name="product_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo @$product_description[$language['language_id']]['name']; ?>" />
+        <td><input type="text" name="product_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['name'] : ''; ?>" />
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-          <?php if (@$error_name[$language['language_id']]) { ?>
+          <?php if (isset($error_name[$language['language_id']])) { ?>
           <span class="error"><?php echo $error_name[$language['language_id']]; ?></span>
           <?php } ?></td>
       </tr>
-      <?php } ?>
-      <tr>
-        <td><?php echo $entry_keyword; ?></td>
-        <td><input type="text" name="keyword" value="<?php echo $keyword; ?>" /></td>
-      </tr>
-      <?php foreach ($languages as $language) { ?>
       <tr>
         <td><?php echo $entry_meta_description; ?></td>
-        <td><textarea name="product_description[<?php echo $language['language_id']; ?>][meta_description]" cols="40" rows="5"><?php echo @$product_description[$language['language_id']]['meta_description']; ?></textarea>
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" /><br />
-          <?php if (@$error_meta_description[$language['language_id']]) { ?>
-          <span class="error"><?php echo $error_meta_description[$language['language_id']]; ?></span>
-          <?php } ?></td>
+        <td><textarea name="product_description[<?php echo $language['language_id']; ?>][meta_description]" cols="40" rows="5"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
+          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" /></td>
       </tr>
       <tr>
-        <td><span class="required">*</span> <?php echo $entry_description; ?></td>
-        <td><textarea name="product_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo @$product_description[$language['language_id']]['description']; ?></textarea>
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" />
-          <?php if (@$error_description[$language['language_id']]) { ?>
-          <span class="error"><?php echo $error_description[$language['language_id']]; ?></span>
-          <?php } ?></td>
+        <td><?php echo $entry_description; ?></td>
+        <td><textarea name="product_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['description'] : ''; ?></textarea>
+          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" /></td>
       </tr>
       <?php } ?>
     </table>
@@ -54,13 +42,16 @@
           <?php } ?></td>
       </tr>
       <tr>
+        <td><?php echo $entry_keyword; ?></td>
+        <td><input type="text" name="keyword" value="<?php echo $keyword; ?>" /></td>
+      </tr>
+      <tr>
         <td><?php echo $entry_image; ?></td>
-        <td><input type="file" id="upload" />
-          <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" /></td>
+        <td><input type="file" name="image" /></td>
       </tr>
       <tr>
         <td></td>
-        <td><img src="<?php echo $preview; ?>" alt="" id="preview" style="margin: 4px 0px; border: 1px solid #EEEEEE;" /></td>
+        <td><img src="<?php echo $preview; ?>" alt="" style="margin: 4px 0px; border: 1px solid #EEEEEE;" /></td>
       </tr>
       <tr>
         <td><?php echo $entry_manufacturer; ?></td>
@@ -156,7 +147,25 @@
       </tr>
       <tr>
         <td><?php echo $entry_weight; ?></td>
-        <td><input name="weight" value="<?php echo $weight; ?>" /></td>
+        <td><input type="text" name="weight" value="<?php echo $weight; ?>" /></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_measurement; ?></td>
+        <td><select name="measurement_class_id">
+            <?php foreach ($measurement_classes as $measurement_class) { ?>
+            <?php if ($measurement_class['measurement_class_id'] == $measurement_class_id) { ?>
+            <option value="<?php echo $measurement_class['measurement_class_id']; ?>" selected="selected"><?php echo $measurement_class['title']; ?></option>
+            <?php } else { ?>
+            <option value="<?php echo $measurement_class['measurement_class_id']; ?>"><?php echo $measurement_class['title']; ?></option>
+            <?php } ?>
+            <?php } ?>
+          </select></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_dimension; ?></td>
+        <td><input type="text" name="length" value="<?php echo $length; ?>" size="4" />
+          <input type="text" name="width" value="<?php echo $width; ?>" size="4" />
+          <input type="text" name="height" value="<?php echo $height; ?>" size="4" /></td>
       </tr>
       <tr>
         <td><?php echo $entry_category; ?></td>
@@ -196,21 +205,26 @@
       </tr>
       <tr>
         <td><?php echo $entry_related; ?></td>
-        <td><div class="scrollbox">
-            <?php $class = 'odd'; ?>
-            <?php foreach ($products as $product) { ?>
-            <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-            <div class="<?php echo $class; ?>">
-              <?php if (in_array($product['product_id'], $product_related)) { ?>
-              <input type="checkbox" name="product_related[]" value="<?php echo $product['product_id']; ?>" checked="checked" />
-              <?php echo $product['name']; ?>
-              <?php } else { ?>
-              <input type="checkbox" name="product_related[]" value="<?php echo $product['product_id']; ?>" />
-              <?php echo $product['name']; ?>
-              <?php } ?>
-            </div>
-            <?php } ?>
-          </div></td>
+        <td><table>
+            <tr>
+              <td style="padding: 0;" colspan="3"><select id="category" style="margin-bottom: 5px;" onchange="getProducts();">
+                  <?php foreach ($categories as $category) { ?>
+                  <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
+                  <?php } ?>
+                </select></td>
+            </tr>
+            <tr>
+              <td style="padding: 0;"><select multiple="multiple" id="product" size="10" style="width: 200px;">
+                </select></td>
+              <td style="vertical-align: middle;"><input type="button" value="--&gt;" onclick="addRelated();" /><br />
+                <input type="button" value="&lt;--" onclick="removeRelated();" /></td>
+              <td style="padding: 0;"><select multiple="multiple" id="related" size="10" style="width: 200px;">
+                </select></td>
+            </tr>
+          </table>
+          <div id="product_related"><?php foreach ($product_related as $related_id) { ?>
+          <input type="hidden" name="product_related[]" value="<?php echo $related_id; ?>" />
+          <?php } ?></div></td>
       </tr>
     </table>
   </div>
@@ -276,46 +290,45 @@
       <?php foreach ($product_discounts as $product_discount) { ?>
       <table width="100%" class="green" id="discount_row<?php echo $k; ?>">
         <tr>
+          <td><?php echo $entry_customer_group; ?><br />
+            <select name="product_discount[<?php echo $k; ?>][customer_group_id]" style="margin-top: 3px;">
+              <?php foreach ($customer_groups as $customer_group) { ?>
+              <?php if ($customer_group['customer_group_id'] == $product_discount['customer_group_id']) { ?>
+              <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select></td>
           <td><?php echo $entry_quantity; ?><br />
-            <input type="text" name="product_discount[<?php echo $k; ?>][quantity]" value="<?php echo $product_discount['quantity']; ?>" size="2" /></td>
-          <td><?php echo $entry_discount; ?><br />
-            <input type="text" name="product_discount[<?php echo $k; ?>][discount]" value="<?php echo $product_discount['discount']; ?>" /></td>
-          <td><a onclick="$('#discount_row<?php echo $k; ?>').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>
+            <input type="text" name="product_discount[<?php echo $k; ?>][quantity]" value="<?php echo $product_discount['quantity']; ?>" size="2" style="margin-top: 3px;" /></td>
+          <td><?php echo $entry_price; ?><br />
+            <input type="text" name="product_discount[<?php echo $k; ?>][price]" value="<?php echo $product_discount['price']; ?>" style="margin-top: 3px;" /></td>
+          <td rowspan="2"><a onclick="$('#discount_row<?php echo $k; ?>').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>
+        </tr>
+        <tr>
+          <td><?php echo $entry_date_start; ?><br />
+            <input type="text" name="product_discount[<?php echo $k; ?>][date_start]" value="<?php echo $product_discount['date_start']; ?>" class="date" style="margin-top: 3px;" /></td>
+          <td><?php echo $entry_date_end; ?><br />
+            <input type="text" name="product_discount[<?php echo $k; ?>][date_end]" value="<?php echo $product_discount['date_end']; ?>" class="date" style="margin-top: 3px;" /></td>
+          <td><?php echo $entry_priority; ?><br />
+            <input type="text" name="product_discount[<?php echo $k; ?>][priority]" value="<?php echo $product_discount['priority']; ?>" size="2" style="margin-top: 3px;" /></td>
         </tr>
       </table>
       <?php $k++; ?>
       <?php } ?>
     </div>
-    <a onclick="addDiscount();" class="button"><span class="button_left button_insert"></span><span class="button_middle"><?php echo $button_add_discount; ?></span><span class="button_right"></span></a>
-    <hr />
-    <div id="special">
-      <?php $l = 0; ?>
-      <?php foreach ($product_specials as $product_special) { ?>
-      <table width="100%" class="green" id="special_row<?php echo $l; ?>">
-        <tr>
-          <td><?php echo $entry_price; ?><br />
-            <input type="text" name="product_special[<?php echo $l; ?>][price]" value="<?php echo $product_special['price']; ?>" /></td>
-          <td><?php echo $entry_date_start; ?><br />
-            <input type="text" name="product_special[<?php echo $l; ?>][date_start]" value="<?php echo $product_special['date_start']; ?>" class="date" /></td>
-          <td><?php echo $entry_date_end; ?><br />
-            <input type="text" name="product_special[<?php echo $l; ?>][date_end]" value="<?php echo $product_special['date_end']; ?>" class="date" /></td>
-          <td><a onclick="$('#special_row<?php echo $l; ?>').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>
-        </tr>
-      </table>
-      <?php $l++; ?>
-      <?php } ?>
-    </div>
-    <a onclick="addSpecial();" class="button"><span class="button_left button_insert"></span><span class="button_middle"><?php echo $button_add_special; ?></span><span class="button_right"></span></a></div>
+    <a onclick="addDiscount();" class="button"><span class="button_left button_insert"></span><span class="button_middle"><?php echo $button_add_discount; ?></span><span class="button_right"></span></a></div>
   <div id="tab_image" class="page">
     <div id="images">
       <?php $m = 0; ?>
       <?php foreach ($product_images as $product_image) { ?>
       <table width="100%" id="image_row<?php echo $m; ?>" class="green">
         <tr>
-          <td><img src="<?php echo $product_image['image']; ?>" alt="" id="preview<?php echo $m; ?>" /></td>
+          <td><img src="<?php echo $product_image['preview']; ?>" alt="" /></td>
           <td><div style="margin-bottom: 4px;"><?php echo $entry_image; ?></div>
-            <input type="file" id="upload<?php echo $m; ?>" />
-            <input type="hidden" name="product_image[]" value="<?php echo $product_image['file']; ?>" id="image<?php echo $m; ?>" /></td>
+            <input type="file" name="product_image[]"  />
+            <input type="hidden" name="product_image[]" value="<?php echo $product_image['file']; ?>"  /></td>
           <td><a onclick="$('#image_row<?php echo $m; ?>').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>
         </tr>
       </table>
@@ -335,6 +348,66 @@ var oFCKeditor<?php echo $language['language_id']; ?>          = new FCKeditor('
 	oFCKeditor<?php echo $language['language_id']; ?>.Height   = '300';
 	oFCKeditor<?php echo $language['language_id']; ?>.ReplaceTextarea();
 <?php } ?>
+//--></script>
+<script type="text/javascript"><!--
+function addRelated() {
+	$('#product :selected').each(function() {
+		$(this).remove();
+		
+		$('#related option[value=\'' + $(this).attr('value') + '\']').remove();
+		
+		$('#related').append('<option value="' + $(this).attr('value') + '">' + $(this).text() + '</option>');
+		
+		$('#product_related input[value=\'' + $(this).attr('value') + '\']').remove();
+		
+		$('#product_related').append('<input type="hidden" name="product_related[]" value="' + $(this).attr('value') + '" />');
+	});
+}
+
+function removeRelated() {
+	$('#related :selected').each(function() {
+		$(this).remove();
+		
+		$('#product_related input[value=\'' + $(this).attr('value') + '\']').remove();
+	});
+}
+
+function getProducts() {
+	$('#product option').remove();
+	
+	$.ajax({
+		url: 'index.php?route=catalog/product/category&category_id=' + $('#category').attr('value'),
+		dataType: 'json',
+		success: function(data) {
+			for (i = 0; i < data.length; i++) {
+	 			$('#product').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + '</option>');
+			}
+		}
+	});
+}
+
+function getRelated() {
+	$('#related option').remove();
+	
+	$.ajax({
+		url: 'index.php?route=catalog/product/related',
+		type: 'POST',
+		dataType: 'json',
+		data: $('#product_related input'),
+		success: function(data) {
+			$('#product_related input').remove();
+			
+			for (i = 0; i < data.length; i++) {
+	 			$('#related').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + '</option>');
+				
+				$('#product_related').append('<input type="hidden" name="product_related[]" value="' + data[i]['product_id'] + '" />');
+			} 
+		}
+	});
+}
+
+getProducts();
+getRelated();
 //--></script>
 <script type="text/javascript"><!--
 var option_row = <?php echo $i; ?>;
@@ -410,35 +483,28 @@ var discount_row = <?php echo $k ?>;
 
 function addDiscount() {
 	html  = '<table class="green" id="discount_row' + discount_row + '">';
-	html += '<tr>';   
-    html += '<td><?php echo $entry_quantity; ?><br /><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" size="2" /></td>';
-    html += '<td><?php echo $entry_discount; ?><br /><input type="text" name="product_discount[' + discount_row + '][discount]" value="" /></td>';
-    html += '<td><a onclick="$(\'#discount_row' + discount_row + '\').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>';
+	html += '<tr>'; 
+    html += '<td><?php echo $entry_customer_group; ?><br /><select name="product_discount[' + discount_row + '][customer_group_id]" style="margin-top: 3px;">';
+    <?php foreach ($customer_groups as $customer_group) { ?>
+    html += '<option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>';
+    <?php } ?>
+    html += '</select></td>';		
+    html += '<td><?php echo $entry_quantity; ?><br /><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" size="2" style="margin-top: 3px;" /></td>';
+    html += '<td><?php echo $entry_price; ?><br /><input type="text" name="product_discount[' + discount_row + '][price]" value="" style="margin-top: 3px;" /></td>';
+	html += '<td rowspan="2"><a onclick="$(\'#discount_row' + discount_row + '\').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>';
+	html += '</tr>';
+	html += '<tr>'; 
+    html += '<td><?php echo $entry_date_start; ?><br /><input type="text" name="product_discount[' + discount_row + '][date_start]" value="" class="date" style="margin-top: 3px;" /></td>';
+	html += '<td><?php echo $entry_date_end; ?><br /><input type="text" name="product_discount[' + discount_row + '][date_end]" value="" class="date" style="margin-top: 3px;" /></td>';
+	html += '<td><?php echo $entry_priority; ?><br /><input type="text" name="product_discount[' + discount_row + '][priority]" value="" size="2" style="margin-top: 3px;" /></td>';
 	html += '</tr>';
     html += '</table>';
 	
 	$('#discount').append(html);
 	
+	$('#discount .date').datepicker({dateFormat: 'yy-mm-dd'});
+	
 	discount_row++;
-}
-
-var special_row = <?php echo $l ?>;
-
-function addSpecial() {
-	html  = '<table class="green" id="special_row' + special_row + '">';
-	html += '<tr>';   
-    html += '<td><?php echo $entry_price; ?><br /><input type="text" name="product_special[' + special_row + '][price]" value="" /></td>';
-    html += '<td><?php echo $entry_date_start; ?><br /><input type="text" name="product_special[' + special_row + '][date_start]" value="" class="date" /></td>';
-	html += '<td><?php echo $entry_date_end; ?><br /><input type="text" name="product_special[' + special_row + '][date_end]" value="" class="date" /></td>';
-    html += '<td><a onclick="$(\'#special_row' + special_row + '\').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>';
-	html += '</tr>';
-    html += '</table>';
-	
-	$('#special').append(html);
-	
-	$('#special .date').datepicker({dateFormat: 'yy-mm-dd'});
-	
-	special_row++;
 }
 //--></script>
 <script type="text/javascript"><!--
@@ -448,8 +514,8 @@ function addImage() {
     html  = '<div id="image_row' + image_row + '" class="green">';
 	html += '<table width="100%">';
 	html += '<tr>';
-	html += '<td><img src="<?php echo $no_image; ?>" alt="" id="preview' + image_row + '" style="margin: 4px 0px; border: 1px solid #EEEEEE;" /></td>';
-	html += '<td><div style="margin-bottom: 4px;"><?php echo $entry_image; ?></div><input type="file" id="upload' + image_row + '" /><input type="hidden" name="product_image[]" value="" id="image' + image_row + '" /></td>';
+	html += '<td><img src="<?php echo $no_image; ?>" alt="" style="margin: 4px 0px; border: 1px solid #EEEEEE;" /></td>';
+	html += '<td><div style="margin-bottom: 4px;"><?php echo $entry_image; ?></div><input type="file" name="product_image[]" /></td>';
 	html += '<td><a onclick="$(\'#image_row' + image_row  + '\').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>';
 	html += '</tr>';
 	html += '</table>';
@@ -457,41 +523,7 @@ function addImage() {
 	
 	$('#images').append(html);
 	
-	setUploader('#upload' + image_row, '#preview' + image_row, '#image' + image_row);
-	
 	image_row++;
-}
-//--></script>
-<script type="text/javascript" src="view/javascript/jquery/ajaxupload.3.1.js"></script>
-<script type="text/javascript"><!--
-$(document).ready(function() { 
-	setUploader('#upload', '#preview', '#image');
-	
-	$.tabs('.tabs a'); 
-});	
-
-function setUploader(upload, preview, image) {
-	new AjaxUpload(upload, {
-		action: 'index.php?route=catalog/image',
-		name: 'image',
-		autoSubmit: true,
-		responseType: 'json',
-		onChange: function(file, extension) {},
-		onSubmit: function(file, extension) {
-			$(upload).after('<img src="view/image/loading.gif" id="loading" />');
-		},
-		onComplete: function(file, json) {
-			if (json.error) {
-				alert(json.error);
-			} else {
-				$(preview).attr('src', json.src);
-
-				$(image).attr('value', json.file);
-			}
-			
-			$('#loading').remove();	
-		}
-	});
 }
 //--></script>
 <link rel="stylesheet" type="text/css" href="view/stylesheet/datepicker.css" />
@@ -501,4 +533,7 @@ function setUploader(upload, preview, image) {
 $(document).ready(function() {
 	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
 });
+//--></script>
+<script type="text/javascript"><!--
+$.tabs('.tabs a'); 
 //--></script>

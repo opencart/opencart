@@ -29,7 +29,7 @@ $_['text_order_comment']    = 'Order Comments';
 $_['text_status']           = 'Status';
 $_['text_notify']           = 'Customer Notified';
 $_['text_comment']          = 'Comments';
-$_['text_no_status']        = 'No Status Orders';
+$_['text_missing_orders']   = 'Missing Orders';
 
 // Column
 $_['column_order']          = 'Order ID';

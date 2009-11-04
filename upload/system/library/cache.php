@@ -1,16 +1,16 @@
 <?php
 final class Cache { 
-	private $expire = 3600;
+	private $expire = 3600; 
 
   	public function __construct() {
 		$files = glob(DIR_CACHE . 'cache.*');
     	
 		if ($files) {
 			foreach ($files as $file) {
-      			$time = end(explode('.', basename($file)));
+				$time = substr(strrchr($file, '.'), 1);
 
       			if ($time < time()) {
-					@unlink($file);
+					unlink($file);
       			}
     		}
 		}
@@ -22,7 +22,7 @@ final class Cache {
 		if ($files) {
     		foreach ($files as $file) {
       			$handle = fopen($file, 'r');
-      			$cache  = fread($handle, filesize($file));
+      			$cache = fread($handle, filesize($file));
 	  
       			fclose($handle);
 
@@ -48,7 +48,7 @@ final class Cache {
 		
 		if ($files) {
     		foreach ($files as $file) {
-      			@unlink($file);
+      			unlink($file);
     		}
 		}
   	}

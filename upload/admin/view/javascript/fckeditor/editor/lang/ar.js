@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -44,6 +44,7 @@ RemoveFormat		: "إزالة التنسيقات",
 InsertLinkLbl		: "رابط",
 InsertLink			: "إدراج/تحرير رابط",
 RemoveLink			: "إزالة رابط",
+VisitLink			: "افتح الرابط",
 Anchor				: "إدراج/تحرير إشارة مرجعية",
 AnchorDelete		: "إزالة إشارة مرجعية",
 InsertImageLbl		: "صورة",
@@ -72,6 +73,9 @@ BlockJustify		: "ضبط",
 DecreaseIndent		: "إنقاص المسافة البادئة",
 IncreaseIndent		: "زيادة المسافة البادئة",
 Blockquote			: "اقتباس",
+CreateDiv			: "إنشاء حاوية Div",
+EditDiv				: "تعديل حاوية Div",
+DeleteDiv			: "إزالة حاوية Div",
 Undo				: "تراجع",
 Redo				: "إعادة",
 NumberedListLbl		: "تعداد رقمي",
@@ -157,6 +161,7 @@ UnknownToolbarSet	: "لم أتمكن من العثور على طقم الأدو�
 NoActiveX			: "لتأمين متصفحك يجب أن تحدد بعض مميزات المحرر. يتوجب عليك تمكين الخيار \"Run ActiveX controls and plug-ins\". قد تواجة أخطاء وتلاحظ مميزات مفقودة",
 BrowseServerBlocked : "لايمكن فتح مصدر المتصفح. فضلا يجب التأكد بأن جميع موانع النوافذ المنبثقة معطلة",
 DialogBlocked		: "لايمكن فتح نافذة الحوار . فضلا تأكد من أن  مانع النوافذ المنبثة معطل .",
+VisitLinkBlocked	: "لا يمكن فتح نافذة جديدة. تأكد من إيقاف كل مانعي فتح النوافذ من العمل.",
 
 // Dialogs
 DlgBtnOK			: "موافق",
@@ -303,6 +308,11 @@ DlgTableCellSpace	: "تباعد الخلايا",
 DlgTableCellPad		: "المسافة البادئة",
 DlgTableCaption		: "الوصف",
 DlgTableSummary		: "الخلاصة",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "خصائص الخلية",
@@ -325,6 +335,9 @@ DlgCellVerAlignTop	: "أعلى",
 DlgCellVerAlignMiddle	: "وسط",
 DlgCellVerAlignBottom	: "أسفل",
 DlgCellVerAlignBaseline	: "على السطر",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "إمتداد الصفوف",
 DlgCellCollSpan		: "إمتداد الأعمدة",
 DlgCellBackColor	: "لون الخلفية",
@@ -511,5 +524,11 @@ DlgAboutAboutTab	: "نبذة",
 DlgAboutBrowserInfoTab	: "معلومات متصفحك",
 DlgAboutLicenseTab	: "الترخيص",
 DlgAboutVersion		: "الإصدار",
-DlgAboutInfo		: "لمزيد من المعلومات تفضل بزيارة"
+DlgAboutInfo		: "لمزيد من المعلومات تفضل بزيارة",
+
+// Div Dialog
+DlgDivGeneralTab	: "عام",
+DlgDivAdvancedTab	: "متقدم",
+DlgDivStyle		: "المظهر",
+DlgDivInlineStyle	: "المظهر المضمن"
 };

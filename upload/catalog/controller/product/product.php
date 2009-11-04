@@ -160,14 +160,23 @@ class ControllerProductProduct extends Controller {
 					
 			$this->data['popup'] = image_resize($image, $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
 	  		$this->data['thumb'] = image_resize($image, $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
-			$this->data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+
+			$discount = $this->model_catalog_product->getProductDiscount($this->request->get['product_id']);
 			
-			$special = $this->model_catalog_product->getProductSpecial($this->request->get['product_id']);
-			
-			if ($special) {
-				$this->data['special'] = $this->currency->format($this->tax->calculate($special, $product_info['tax_class_id'], $this->config->get('config_tax')));
-			} else {
+			if ($discount) {
+				$this->data['price'] = $this->currency->format($this->tax->calculate($discount, $product_info['tax_class_id'], $this->config->get('config_tax')));
+				
 				$this->data['special'] = FALSE;
+			} else {
+				$this->data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+			
+				$special = $this->model_catalog_product->getProductSpecial($this->request->get['product_id']);
+			
+				if ($special) {
+					$this->data['special'] = $this->currency->format($this->tax->calculate($special, $product_info['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$this->data['special'] = FALSE;
+				}			
 			}
 			
 			$discounts = $this->model_catalog_product->getProductDiscounts($this->request->get['product_id']);
@@ -180,7 +189,6 @@ class ControllerProductProduct extends Controller {
 					'price'    => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')))
 				);
 			}
-			
 			
 			if ($product_info['quantity'] <= 0) {
 				$this->data['stock'] = $product_info['stock'];
@@ -245,13 +253,21 @@ class ControllerProductProduct extends Controller {
 				}
 			
 				$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
-
-				$special = $this->model_catalog_product->getProductSpecial($result['product_id']);
+				
+				$special = FALSE;
+				
+				$discount = $this->model_catalog_product->getProductDiscount($result['product_id']);
 			
-				if ($special) {
-					$special = $this->currency->format($this->tax->calculate($special, $result['tax_class_id'], $this->config->get('config_tax')));
+				if ($discount) {
+					$price = $this->currency->format($this->tax->calculate($discount, $result['tax_class_id'], $this->config->get('config_tax')));
 				} else {
-					$special = FALSE;
+					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
+					
+					$special = $this->model_catalog_product->getProductSpecial($result['product_id']);
+				
+					if ($special) {
+						$special = $this->currency->format($this->tax->calculate($special, $result['tax_class_id'], $this->config->get('config_tax')));
+					}
 				}
 			
           		$this->data['products'][] = array(
@@ -260,7 +276,7 @@ class ControllerProductProduct extends Controller {
             		'rating'  => $rating,
 					'stars'   => sprintf($this->language->get('text_stars'), $rating),
 					'thumb'   => image_resize($image, $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height')),
-            		'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
+            		'price'   => $price,
 					'special' => $special,
 					'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $result['product_id']))
           		);

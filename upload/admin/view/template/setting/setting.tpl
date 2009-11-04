@@ -84,7 +84,7 @@
         <td><span class="required">*</span> <?php echo $entry_welcome; ?></td>
         <td><textarea name="config_welcome_<?php echo $language['language_id']; ?>" id="description<?php echo $language['language_id']; ?>"><?php echo ${'config_welcome_' . $language['language_id']}; ?></textarea>
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" />
-          <?php if (isset(${'error_welcome_' . $language['language_id']})) { ?>
+          <?php if (${'error_welcome_' . $language['language_id']}) { ?>
           <span class="error"><?php echo ${'error_welcome_' . $language['language_id']}; ?></span>
           <?php } ?></td>
       </tr>

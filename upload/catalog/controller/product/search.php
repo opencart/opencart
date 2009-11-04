@@ -111,15 +111,23 @@ class ControllerProductSearch extends Controller {
 						$image = 'no_image.jpg';
 					}						
 					
-					$special = $this->model_catalog_product->getProductSpecial($result['product_id']);
-			
-					if ($special) {
-						$special = $this->currency->format($this->tax->calculate($special, $result['tax_class_id'], $this->config->get('config_tax')));
-					} else {
-						$special = FALSE;
-					}
-					
 					$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
+					
+					$special = FALSE;
+					
+					$discount = $this->model_catalog_product->getProductDiscount($result['product_id']);
+ 					
+					if ($discount) {
+						$price = $this->currency->format($this->tax->calculate($discount, $result['tax_class_id'], $this->config->get('config_tax')));
+					} else {
+						$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
+					
+						$special = $this->model_catalog_product->getProductSpecial($result['product_id']);
+					
+						if ($special) {
+							$special = $this->currency->format($this->tax->calculate($special, $result['tax_class_id'], $this->config->get('config_tax')));
+						}					
+					}
 					
 					$this->data['products'][] = array(
             			'name'    => $result['name'],
@@ -127,7 +135,7 @@ class ControllerProductSearch extends Controller {
 						'rating'  => $rating,
 						'stars'   => sprintf($this->language->get('text_stars'), $rating),
             			'thumb'   => image_resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
-            			'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
+            			'price'   => $price,
 						'special' => $special,
 						'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&keyword=' . $this->request->get['keyword'] . $url . '&product_id=' . $result['product_id'])),
           			);

@@ -20,15 +20,17 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->load->model('catalog/manufacturer');
 			
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			$data = array();
+			
 			if (is_uploaded_file($this->request->files['image']['tmp_name']) && is_writable(DIR_IMAGE) && is_writable(DIR_IMAGE . 'cache/')) {
 				move_uploaded_file($this->request->files['image']['tmp_name'], DIR_IMAGE . $this->request->files['image']['name']);
 			
 				if (file_exists(DIR_IMAGE . $this->request->files['image']['name'])) {
-					$this->request->post['image'] = $this->request->files['image']['name'];
+					$data['image'] = $this->request->files['image']['name'];
 				}			
 			}
 			
-			$this->model_catalog_manufacturer->addManufacturer($this->request->post);
+			$this->model_catalog_manufacturer->addManufacturer(array_merge($this->request->post, $data));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 			
@@ -60,15 +62,17 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->load->model('catalog/manufacturer');
 		
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			$data = array();
+			
 			if (is_uploaded_file($this->request->files['image']['tmp_name']) && is_writable(DIR_IMAGE) && is_writable(DIR_IMAGE . 'cache/')) {
 				move_uploaded_file($this->request->files['image']['tmp_name'], DIR_IMAGE . $this->request->files['image']['name']);
 			
 				if (file_exists(DIR_IMAGE . $this->request->files['image']['name'])) {
-					$this->request->post['image'] = $this->request->files['image']['name'];
+					$data['image'] = $this->request->files['image']['name'];
 				}			
 			}
 			
-			$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], $this->request->post);
+			$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], array_merge($this->request->post, $data));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

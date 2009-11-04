@@ -20,18 +20,20 @@ class ControllerCatalogDownload extends Controller {
 		$this->load->model('catalog/download');
 			
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			$data = array();
+			
 			if (is_uploaded_file($this->request->files['download']['tmp_name'])) {
 				$filename = $this->request->files['download']['name'] . '.' . md5(rand());
 				
 				move_uploaded_file($this->request->files['download']['tmp_name'], DIR_DOWNLOAD . $filename);
 
-				if (file_exists(DIR_IMAGE . $this->request->files['download']['name'])) {
-					$this->request->post['download'] = $filename;
-					$this->request->post['mask'] = $this->request->files['download']['name'];
+				if (file_exists(DIR_DOWNLOAD . $filename)) {
+					$data['download'] = $filename;
+					$data['mask'] = $this->request->files['download']['name'];
 				}
 			}
 
-			$this->model_catalog_download->addDownload($this->request->post);
+			$this->model_catalog_download->addDownload(array_merge($this->request->post, $data));
    	  		
 			$this->session->data['success'] = $this->language->get('text_success');
 	  
@@ -63,18 +65,20 @@ class ControllerCatalogDownload extends Controller {
 		$this->load->model('catalog/download');
 			
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			$data = array();
+			
 			if (is_uploaded_file($this->request->files['download']['tmp_name'])) {
 				$filename = $this->request->files['download']['name'] . '.' . md5(rand());
 				
 				move_uploaded_file($this->request->files['download']['tmp_name'], DIR_DOWNLOAD . $filename);
 
-				if (file_exists(DIR_IMAGE . $this->request->files['download']['name'])) {
-					$this->request->post['download'] = $filename;
-					$this->request->post['mask'] = $this->request->files['download']['name'];
+				if (file_exists(DIR_DOWNLOAD . $filename)) {
+					$data['download'] = $filename;
+					$data['mask'] = $this->request->files['download']['name'];
 				}
 			}
 			
-			$this->model_catalog_download->editDownload($this->request->get['download_id'], $this->request->post);
+			$this->model_catalog_download->editDownload($this->request->get['download_id'], array_merge($this->request->post, $data));
 	  		
 			$this->session->data['success'] = $this->language->get('text_success');
 	      

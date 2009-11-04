@@ -10,11 +10,13 @@ class ControllerSettingSetting extends Controller {
 		$this->load->model('setting/setting');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$data = array();
+			
 			if (is_uploaded_file($this->request->files['config_logo']['tmp_name']) && is_writable(DIR_IMAGE) && is_writable(DIR_IMAGE . 'cache/')) {
 				move_uploaded_file($this->request->files['config_logo']['tmp_name'], DIR_IMAGE . $this->request->files['config_logo']['name']);
 				
 				if (file_exists(DIR_IMAGE . $this->request->files['config_logo']['name'])) {
-					$this->request->post['config_logo'] = $this->request->files['config_logo']['name'];
+					$data['config_logo'] = $this->request->files['config_logo']['name'];
 				}				
 			}
 
@@ -22,11 +24,11 @@ class ControllerSettingSetting extends Controller {
 				move_uploaded_file($this->request->files['config_icon']['tmp_name'], DIR_IMAGE . $this->request->files['config_icon']['name']);
 
 				if (file_exists(DIR_IMAGE . $this->request->files['config_icon']['name'])) {
-					$this->request->post['config_icon'] = $this->request->files['config_icon']['name'];
+					$data['config_icon'] = $this->request->files['config_icon']['name'];
 				}	
 			}
 			
-			$this->model_setting_setting->editSetting('config', $this->request->post);
+			$this->model_setting_setting->editSetting('config', array_merge($this->request->post, $data));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -135,7 +137,7 @@ class ControllerSettingSetting extends Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 		 
 		foreach ($languages as $language) {
- 			if (isset($this->error['error_welcome_' . $language['language_id']])) {
+ 			if (isset($this->error['welcome_' . $language['language_id']])) {
 				$this->data['error_welcome_' . $language['language_id']] = $this->error['welcome_' . $language['language_id']];
 			} else {
 				$this->data['error_welcome_' . $language['language_id']] = '';

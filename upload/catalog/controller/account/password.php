@@ -70,13 +70,13 @@ class ControllerAccountPassword extends Controller {
 		if (isset($this->request->post['password'])) {
     		$this->data['password'] = $this->request->post['password'];
 		} else {
-			$this->data['password'] = $this->request->post['password'];
+			$this->data['password'] = '';
 		}
 
 		if (isset($this->request->post['confirm'])) {
     		$this->data['confirm'] = $this->request->post['confirm'];
 		} else {
-			$this->data['confirm'] = $this->request->post['confirm'];
+			$this->data['confirm'] = '';
 		}
 
     	$this->data['back'] = $this->url->https('account/account');

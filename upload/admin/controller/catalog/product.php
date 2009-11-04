@@ -20,27 +20,29 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/product');
 		
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			$data = array();
+			
 			if (is_uploaded_file($this->request->files['image']['tmp_name']) && is_writable(DIR_IMAGE) && is_writable(DIR_IMAGE . 'cache/')) {
 				move_uploaded_file($this->request->files['image']['tmp_name'], DIR_IMAGE . $this->request->files['image']['name']);
 				
 				if (file_exists(DIR_IMAGE . $this->request->files['image']['name'])) {
-					$this->request->post['image'] = $this->request->files['image']['name'];
+					$data['image'] = $this->request->files['image']['name'];
 				}			
 			}
 			
 			if (isset($this->request->files['product_image'])) {
-				for ($i = 0; $i < count($this->request->files['product_image']['name']); $i++) {
-					if (is_uploaded_file($this->request->files['product_image']['tmp_name'][$i]) && is_writable(DIR_IMAGE) && is_writable(DIR_IMAGE . 'cache/')) {
-						move_uploaded_file($this->request->files['product_image']['tmp_name'][$i], DIR_IMAGE . $this->request->files['product_image']['name'][$i]);
+				foreach (array_keys($this->request->files['product_image']['name']) as $key) {
+					if (is_uploaded_file($this->request->files['product_image']['tmp_name'][$key]) && is_writable(DIR_IMAGE) && is_writable(DIR_IMAGE . 'cache/')) {
+						move_uploaded_file($this->request->files['product_image']['tmp_name'][$key], DIR_IMAGE . $this->request->files['product_image']['name'][$key]);
 						
-						if (file_exists(DIR_IMAGE . $this->request->files['product_image']['name'][$i])) {
-							$this->request->post['product_image'][] = $this->request->files['product_image']['name'][$i];
+						if (file_exists(DIR_IMAGE . $this->request->files['product_image']['name'][$key])) {
+							$data['product_image'][] = $this->request->files['product_image']['name'][$key];
 						}
 					}
 				}
 			}
 			
-			$this->model_catalog_product->addProduct($this->request->post);
+			$this->model_catalog_product->addProduct(array_merge($this->request->post, $data));
 	  		
 			$this->session->data['success'] = $this->language->get('text_success');
 	  
@@ -88,27 +90,39 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/product');
 	
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			$data = array(); 
+			
 			if (is_uploaded_file($this->request->files['image']['tmp_name']) && is_writable(DIR_IMAGE) && is_writable(DIR_IMAGE . 'cache/')) {
 				move_uploaded_file($this->request->files['image']['tmp_name'], DIR_IMAGE . $this->request->files['image']['name']);
 				
 				if (file_exists(DIR_IMAGE . $this->request->files['image']['name'])) {
-					$this->request->post['image'] = $this->request->files['image']['name'];
+					$data['image'] = $this->request->files['image']['name'];
 				}			
-			}
+			} 
 	
 			if (isset($this->request->files['product_image'])) {
-				for ($i = 0; $i < count($this->request->files['product_image']['name']); $i++) {
-					if (is_uploaded_file($this->request->files['product_image']['tmp_name'][$i]) && is_writable(DIR_IMAGE) && is_writable(DIR_IMAGE . 'cache/')) {
-						move_uploaded_file($this->request->files['product_image']['tmp_name'][$i], DIR_IMAGE . $this->request->files['product_image']['name'][$i]);
+				foreach (array_keys($this->request->files['product_image']['name']) as $key) {
+					if (is_uploaded_file($this->request->files['product_image']['tmp_name'][$key]) && is_writable(DIR_IMAGE) && is_writable(DIR_IMAGE . 'cache/')) {
+						move_uploaded_file($this->request->files['product_image']['tmp_name'][$key], DIR_IMAGE . $this->request->files['product_image']['name'][$key]);
 						
-						if (file_exists(DIR_IMAGE . $this->request->files['product_image']['name'][$i])) {
-							$this->request->post['product_image'][] = $this->request->files['product_image']['name'][$i];
+						if (file_exists(DIR_IMAGE . $this->request->files['product_image']['name'][$key])) {
+							$data['product_image'][] = $this->request->files['product_image']['name'][$key];
 						}
+						
+						unset($this->request->post['product_image'][$key]);
 					}
 				}
 			}
 			
-			$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
+			if (isset($this->request->post['product_image'])) {
+				foreach (array_keys($this->request->post['product_image']) as $key) {
+					$data['product_image'][] = $this->request->post['product_image'][$key];
+					
+					unset($this->request->post['product_image'][$key]);
+				}
+			}	
+				
+			$this->model_catalog_product->editProduct($this->request->get['product_id'], array_merge($this->request->post, $data));
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
@@ -486,12 +500,14 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['button_add_option'] = $this->language->get('button_add_option');
 		$this->data['button_add_option_value'] = $this->language->get('button_add_option_value');
 		$this->data['button_add_discount'] = $this->language->get('button_add_discount');
+		$this->data['button_add_special'] = $this->language->get('button_add_special');
 		$this->data['button_add_image'] = $this->language->get('button_add_image');
 		$this->data['button_remove'] = $this->language->get('button_remove');
 		
     	$this->data['tab_general'] = $this->language->get('tab_general');
     	$this->data['tab_data'] = $this->language->get('tab_data');
 		$this->data['tab_discount'] = $this->language->get('tab_discount');
+		$this->data['tab_special'] = $this->language->get('tab_special');
 		$this->data['tab_option'] = $this->language->get('tab_option');
     	$this->data['tab_image'] = $this->language->get('tab_image');
  
@@ -782,6 +798,14 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$this->data['product_discounts'] = array();
 		}
+
+		if (isset($this->request->post['product_special'])) {
+			$this->data['product_specials'] = $this->request->post['product_special'];
+		} elseif (isset($product_info)) {
+			$this->data['product_specials'] = $this->model_catalog_product->getProductSpecials($this->request->get['product_id']);
+		} else {
+			$this->data['product_specials'] = array();
+		}
 		
 		$this->data['no_image'] = image_resize('no_image.jpg', 100, 100);
 		
@@ -890,9 +914,9 @@ class ControllerCatalogProduct extends Controller {
 		}
 		
 		if (isset($this->request->files['product_image'])) {
-			for ($i = 0; $i < count($this->request->files['product_image']['name']); $i++) {
-				if ($this->request->files['product_image']['name'][$i]) {
-					if ((strlen(utf8_decode($this->request->files['product_image']['name'][$i])) < 3) || (strlen(utf8_decode($this->request->files['product_image']['name'][$i])) > 255)) {
+			foreach (array_keys($this->request->files['product_image']['name']) as $key) {
+				if ($this->request->files['product_image']['name'][$key]) {
+					if ((strlen(utf8_decode($this->request->files['product_image']['name'][$key])) < 3) || (strlen(utf8_decode($this->request->files['product_image']['name'][$key])) > 255)) {
 						$this->error['warning'] = $this->language->get('error_filename');
 					}
 	
@@ -904,7 +928,7 @@ class ControllerCatalogProduct extends Controller {
 						'image/gif'
 					);
 						
-					if (!in_array($this->request->files['product_image']['type'][$i], $allowed)) {
+					if (!in_array($this->request->files['product_image']['type'][$key], $allowed)) {
 						$this->error['warning'] = $this->language->get('error_filetype');
 					}
 					
@@ -916,8 +940,8 @@ class ControllerCatalogProduct extends Controller {
 						$this->error['warning'] = $this->language->get('error_writable_image_cache');
 					}
 					
-					if ($this->request->files['product_image']['error'][$i] != UPLOAD_ERR_OK) { 
-						$this->error['warning'] = $this->language->get('error_upload_' . $this->request->files['product_image']['error'][$i]);
+					if ($this->request->files['product_image']['error'][$key] != UPLOAD_ERR_OK) { 
+						$this->error['warning'] = $this->language->get('error_upload_' . $this->request->files['product_image']['error'][$key]);
 					}	
 				}
 			}

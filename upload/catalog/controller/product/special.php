@@ -122,14 +122,14 @@ class ControllerProductSpecial extends Controller {
 
 			$this->data['sorts'][] = array(
 				'text'  => $this->language->get('text_price_asc'),
-				'value' => 'p.price-ASC',
-				'href'  => $this->url->http('product/special' . $url . '&sort=p.price&order=ASC')
+				'value' => 'special-ASC',
+				'href'  => $this->url->http('product/special' . $url . '&sort=special&order=ASC')
 			); 
 
 			$this->data['sorts'][] = array(
 				'text'  => $this->language->get('text_price_desc'),
-				'value' => 'p.price-DESC',
-				'href'  => $this->url->http('product/special' . $url . '&sort=p.price&order=DESC')
+				'value' => 'special-DESC',
+				'href'  => $this->url->http('product/special' . $url . '&sort=special&order=DESC')
 			); 
 				
 			$this->data['sorts'][] = array(

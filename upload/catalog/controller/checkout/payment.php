@@ -31,7 +31,7 @@ class ControllerCheckoutPayment extends Controller {
 			$this->session->data['payment_address_id'] = 0;
 		}
 		
-    	if (!$this->customer->hasAddress($this->session->data['payment_address_id'])) {
+    	if (!$this->customer->hasAddress($this->session->data['payment_address_id']) && isset($this->session->data['shipping_address_id'])) {
       		$this->session->data['payment_address_id'] = $this->session->data['shipping_address_id'];
     	}
 	

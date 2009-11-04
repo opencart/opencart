@@ -12,11 +12,17 @@ class ModelReportReport extends Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->language->getId() . "' ORDER BY viewed DESC LIMIT " . (int)$start . "," . (int)$limit);
 		
 		foreach ($query->rows as $result) {
+			if ($result['viewed']) {
+				$percent = round(($result['viewed'] / $total) * 100, 2) . '%';
+			} else {
+				$percent = '0%';
+			}
+			
 			$product_data[] = array(
 				'name'    => $result['name'],
 				'model'   => $result['model'],
 				'viewed'  => $result['viewed'],
-				'percent' => round(($result['viewed'] / $total) * 100, 2) . '%'
+				'percent' => $percent
 			);
 		}
 		

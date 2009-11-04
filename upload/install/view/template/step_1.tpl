@@ -83,11 +83,11 @@
     </tr>
     <tr>
       <td><?php echo $config_catalog; ?></td>
-      <td><?php echo ($config_catalog) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
+      <td><?php echo is_writable($config_catalog) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
     </tr>
     <tr>
       <td><?php echo $config_admin; ?></td>
-      <td><?php echo ($config_admin) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
+      <td><?php echo is_writable($config_admin) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
     </tr>
   </table>
   <p>4. Please make sure you have set the correct permissions on the directories list below.</p>

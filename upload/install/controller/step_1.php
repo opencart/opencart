@@ -56,7 +56,7 @@ class ControllerStep1 extends Controller {
 		}
 				
 		if (!is_writable(DIR_OPENCART . 'admin/config.php')) {
-			$this->error['warning'] = 'Warning: config.php needs to be writable for OpenCart to be installed!';
+			$this->error['warning'] = 'Warning: admin/config.php needs to be writable for OpenCart to be installed!';
 		}
 
 		if (!is_writable(DIR_SYSTEM . 'cache')) {

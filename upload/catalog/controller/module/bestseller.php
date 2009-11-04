@@ -23,17 +23,25 @@ class ControllerModuleBestSeller extends Controller {
 			
 			$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
 
-			$special = $this->model_catalog_product->getProductSpecial($result['product_id']);
+			$special = FALSE;
 			
-			if ($special) {
-				$special = $this->currency->format($this->tax->calculate($special, $result['tax_class_id'], $this->config->get('config_tax')));
+			$discount = $this->model_catalog_product->getProductDiscount($result['product_id']);
+			
+			if ($discount) {
+				$price = $this->currency->format($this->tax->calculate($discount, $result['tax_class_id'], $this->config->get('config_tax')));
 			} else {
-				$special = FALSE;
+				$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
+			
+				$special = $this->model_catalog_product->getProductSpecial($result['product_id']);
+			
+				if ($special) {
+					$special = $this->currency->format($this->tax->calculate($special, $result['tax_class_id'], $this->config->get('config_tax')));
+				}						
 			}
 			
 			$this->data['products'][] = array(											  
 				'name'    => $result['name'],
-				'price'   => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
+				'price'   => $price,
 				'special' => $special,
 				'image'   => image_resize($image, 38, 38),
 				'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $result['product_id']))

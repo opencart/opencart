@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -46,3 +47,4 @@
 <script type="text/javascript"><!--
 $.tabs('.tabs a'); 
 //--></script>
+<?php echo $footer; ?>

@@ -69,16 +69,13 @@ p {
 	padding-left: 10px;
 	padding-right: 10px;
 	height: 40px;
-	background: url('../image/header.png') repeat-x;
+	background: url('../image/header.png') no-repeat;
 }
 #header .div4 img {
-	float: left;
 	margin-right: 5px;
 }
 #header .div4 a {
-	padding: 12px 0px 12px 0px;
-	margin-left: 10px;
-	margin-right: 10px;
+	padding: 12px 0px 12px 20px;
 	display: inline-block;
 	color: #FFFFFF;
 	text-align: center;
@@ -86,16 +83,24 @@ p {
 	font-size: 14px;
 	font-family: Verdana, Geneva, sans-serif;
 }
-#header .div5 a {
+#header .div5 a, #header .div5 img {
 	float: left;
+	margin-left: 8px;
+	margin-right: 8px;
 }
-#header .div6 a {
+#header .div6 a, #header .div6 img {
 	float: right;
+	margin-left: 8px;
+	margin-right: 8px;	
 }
 #breadcrumb {
-	padding-top: 8px;
-	padding-bottom: 10px;
+	padding-top: 7px;
+	padding-bottom: 11px;
 	padding-left: 10px;
+	background: url('../image/breadcrumb.png') no-repeat;
+	height: 13px;
+	margin-bottom: 10px;
+	color: #999;
 }
 #column_left {
 	float: left;
@@ -233,9 +238,9 @@ a.button span {
 .buttons {
 	background: #F8F8F8;
 	border: 1px solid #DDDDDD;
-	margin-bottom: 10px;
 	clear: both;
 	padding: 5px;
+	margin-bottom: 10px;
 }
 .buttons input {
 	padding: 0px;
@@ -249,8 +254,8 @@ a.button span {
 	vertical-align: middle;
 }
 .list {
-	width: 100%;
 	margin-bottom: 10px;
+	width: 100%;
 }
 .list td {
 	text-align: center;
@@ -335,7 +340,7 @@ a.button span {
 	padding-bottom: 8px;
 	z-index: 3;
 }
-.page {
+.tab_page {
 	border: 1px solid #DDDDDD;
 	background: #FFFFFF;
 	display: inline-block;
@@ -376,9 +381,9 @@ a.button span {
 }
 .cart {
 	border-collapse: collapse;
-	margin-bottom: 10px;
 	width: 100%;
 	border: 1px solid #EEEEEE;
+	margin-bottom: 10px;
 }
 .cart th {
 	background: #EEEEEE;

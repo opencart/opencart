@@ -7,22 +7,30 @@ final class Request {
 	public $server = array();
 	
   	public function __construct() {
-		$this->get = $this->clean($_GET);
-		$this->post = $this->clean($_POST);
-		$this->cookie = $this->clean($_COOKIE);
-		$this->files = $this->clean($_FILES);
-		$this->server = $this->clean($_SERVER);
+		$_GET = $this->clean($_GET);
+		$_POST = $this->clean($_POST);
+		$_COOKIE = $this->clean($_COOKIE);
+		$_FILES = $this->clean($_FILES);
+		$_SERVER = $this->clean($_SERVER);
+		
+		$this->get = $_GET;
+		$this->post = $_POST;
+		$this->cookie = $_COOKIE;
+		$this->files = $_FILES;
+		$this->server = $_SERVER;
 	}
 	
-  	public function clean(&$data) {
+  	public function clean($data) {
     	if (is_array($data)) {
 	  		foreach ($data as $key => $value) {
-	    		$data[$key] = $this->clean($value);
+				unset($data[$key]);
+				
+	    		$data[$this->clean($key)] = $this->clean($value);
 	  		}
-		} else {
+		} else { 
 	  		$data = htmlentities($data, ENT_QUOTES, 'UTF-8');
 		}
-	
+
 		return $data;
 	}
 }

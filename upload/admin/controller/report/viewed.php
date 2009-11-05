@@ -35,9 +35,9 @@ class ControllerReportViewed extends Controller {
 		
 		$product_total = $this->model_catalog_product->getTotalProducts(); 
 		
-		$this->load->model('report/report');
+		$this->load->model('report/viewed');
 		
-		$this->data['products'] = $this->model_report_report->getProductViewedReport(($page - 1) * 10, 10);
+		$this->data['products'] = $this->model_report_viewed->getProductViewedReport(($page - 1) * 10, 10);
 		 
  		$this->data['heading_title'] = $this->language->get('heading_title');
 		 
@@ -56,12 +56,15 @@ class ControllerReportViewed extends Controller {
 		$pagination->url = $this->url->https('report/viewed&page=%s');
 			
 		$this->data['pagination'] = $pagination->render();
-						
-		$this->id       = 'content'; 
-		$this->template = 'report/viewed.tpl';
-		$this->layout   = 'common/layout';
 		 
-		$this->render();
+		$this->template = 'report/viewed.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 }
 ?>

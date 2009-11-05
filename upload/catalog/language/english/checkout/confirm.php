@@ -6,14 +6,14 @@ $_['heading_title']                  = 'Checkout Confirmation';
 $_['text_basket']                    = 'Basket';
 $_['text_shipping']                  = 'Shipping';
 $_['text_payment']                   = 'Payment';
+$_['text_guest']                     = 'Guest Checkout';
 $_['text_confirm']                   = 'Confirm';
 $_['text_shipping_address']          = 'Shipping Address';
 $_['text_shipping_method']           = 'Shipping Method';
 $_['text_payment_address']           = 'Payment Address'; 
 $_['text_payment_method']            = 'Payment Method';
-$_['text_comment']                   = 'Your Comments';
 $_['text_change']                    = 'Change';
-$_['text_coupon']                    = 'Success: Your coupon discount has been applied!';
+$_['text_comment']                   = 'Your Comments';
 
 // Columns
 $_['column_product']                 = 'Product';
@@ -21,9 +21,6 @@ $_['column_model']                   = 'Model';
 $_['column_quantity']                = 'Quantity';
 $_['column_price']                   = 'Price';
 $_['column_total']                   = 'Total';	
-
-// Entry
-$_['entry_coupon']                   = 'Coupon:';
 
 // Mail
 $_['mail_new_order_subject']         = '%s - Order %s';
@@ -45,7 +42,4 @@ $_['mail_update_order_order_status'] = 'Your order has been updated to the follo
 $_['mail_update_order_comment']      = 'The comments for your order are:';
 $_['mail_update_order_invoice']      = 'To view your order click on the link below:';
 $_['mail_update_order_footer']       = 'Please reply to this email if you have any questions.';
-
-// Error
-$_['error_coupon']                   = 'Error: Coupon is either invalid, expired or reached its usage limit!';	
 ?>

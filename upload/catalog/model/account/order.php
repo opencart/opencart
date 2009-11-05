@@ -6,7 +6,11 @@ class ModelAccountOrder extends Model {
 		return $query->row;	
 	}
 	 
-	public function getOrders($start = 1, $limit = 20) {
+	public function getOrders($start = 0, $limit = 20) {
+		if ($start < 0) {
+			$start = 0;
+		}
+		
 		$query = $this->db->query("SELECT o.order_id, o.firstname, o.lastname, os.name as status, o.date_added, o.total, o.currency, o.value FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id) WHERE customer_id = '" . (int)$this->customer->getId() . "' AND o.order_status_id > '0' AND os.language_id = '" . (int)$this->language->getId() . "' ORDER BY o.order_id DESC LIMIT " . (int)$start . "," . (int)$limit);	
 	
 		return $query->rows;

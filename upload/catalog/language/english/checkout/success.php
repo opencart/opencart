@@ -7,6 +7,7 @@ $_['text_message']  = '<p>Your order has been successfully processed! Your produ
 $_['text_basket']   = 'Basket';
 $_['text_shipping'] = 'Shipping';
 $_['text_payment']  = 'Payment';
+$_['text_guest']    = 'Guest Checkout';
 $_['text_confirm']  = 'Confirm';
 $_['text_success']  = 'Success';
 ?>

@@ -37,4 +37,6 @@ $_['button_checkout']       = 'Checkout';
 $_['button_confirm']        = 'Confirm Order';
 $_['button_view']           = 'View';
 $_['button_search']         = 'Search';
+$_['button_coupon']         = 'Apply Coupon';
+$_['button_guest']          = 'Guest Checkout';
 ?>

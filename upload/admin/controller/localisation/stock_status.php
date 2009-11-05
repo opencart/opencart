@@ -83,8 +83,8 @@ class ControllerLocalisationStockStatus extends Controller {
 		
 		$this->load->model('localisation/stock_status');
 		
-    	if (isset($this->request->post['delete']) && $this->validateDelete()) {
-			foreach ($this->request->post['delete'] as $stock_status_id) {
+    	if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $stock_status_id) {
 				$this->model_localisation_stock_status->deleteStockStatus($stock_status_id);
 			}
 			      		
@@ -184,7 +184,7 @@ class ControllerLocalisationStockStatus extends Controller {
 			$this->data['stock_statuses'][] = array(
 				'stock_status_id' => $result['stock_status_id'],
 				'name'            => $result['name'] . (($result['stock_status_id'] == $this->config->get('config_stock_status_id')) ? $this->language->get('text_default') : NULL),
-				'delete'          => isset($this->request->post['delete']) && in_array($result['stock_status_id'], $this->request->post['delete']),
+				'selected'        => isset($this->request->post['selected']) && in_array($result['stock_status_id'], $this->request->post['selected']),
 				'action'          => $action
 			);
 		}	
@@ -248,12 +248,15 @@ class ControllerLocalisationStockStatus extends Controller {
 
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-
-		$this->id       = 'content';
+		
 		$this->template = 'localisation/stock_status_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
   	}
   
   	private function getForm() {
@@ -326,12 +329,15 @@ class ControllerLocalisationStockStatus extends Controller {
 		} else {
 			$this->data['stock_status'] = array();
 		}
-				
-		$this->id       = 'content';
-		$this->template = 'localisation/stock_status_form.tpl';
-		$this->layout   = 'common/layout';
 		
- 		$this->render();	
+		$this->template = 'localisation/stock_status_form.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));	
   	}
   	
 	private function validateForm() {
@@ -359,7 +365,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		
 		$this->load->model('catalog/product');
 		
-		foreach ($this->request->post['delete'] as $stock_status_id) {
+		foreach ($this->request->post['selected'] as $stock_status_id) {
 			if ($this->config->get('config_stock_status_id') == $stock_status_id) {
 				$this->error['warning'] = $this->language->get('error_default');
 			}

@@ -83,8 +83,8 @@ class ControllerLocalisationCurrency extends Controller {
 		
 		$this->load->model('localisation/currency');
 		
-		if (isset($this->request->post['delete']) && $this->validateDelete()) {
-			foreach ($this->request->post['delete'] as $currency_id) {
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $currency_id) {
 				$this->model_localisation_currency->deleteCurrency($currency_id);
 			}
 			
@@ -187,7 +187,7 @@ class ControllerLocalisationCurrency extends Controller {
 				'code'          => $result['code'],
 				'value'         => $result['value'],
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'delete'        => isset($this->request->post['delete']) && in_array($result['currency_id'], $this->request->post['delete']),
+				'selected'      => isset($this->request->post['selected']) && in_array($result['currency_id'], $this->request->post['selected']),
 				'action'        => $action
 			);
 		}	
@@ -257,12 +257,15 @@ class ControllerLocalisationCurrency extends Controller {
 		
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-
-		$this->id       = 'content';
-		$this->template = 'localisation/currency_list.tpl';
-		$this->layout   = 'common/layout';
 		
-		$this->render();
+		$this->template = 'localisation/currency_list.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function getForm() {
@@ -398,11 +401,14 @@ class ControllerLocalisationCurrency extends Controller {
       		$this->data['status'] = '';
     	}
 		
-		$this->id       = 'content';
 		$this->template = 'localisation/currency_form.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
-		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 	
 	private function validateForm() { 
@@ -432,7 +438,7 @@ class ControllerLocalisationCurrency extends Controller {
 
 		$this->load->model('customer/order');
 		
-		foreach ($this->request->post['delete'] as $currency_id) {
+		foreach ($this->request->post['selected'] as $currency_id) {
 			$currency_info = $this->model_localisation_currency->getCurrency($currency_id);
 
 			if ($this->config->get('config_currency') == $currency_info['code']) {

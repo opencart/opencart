@@ -28,6 +28,12 @@ class ControllerSettingSetting extends Controller {
 				}	
 			}
 			
+			if ($this->config->get('config_currency_auto')) {
+				$this->load->model('localisation/currency');
+			
+				$this->model_localisation_currency->updateCurrencies();
+			}			
+			
 			$this->model_setting_setting->editSetting('config', array_merge($this->request->post, $data));
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -44,6 +50,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['text_smtp'] = $this->language->get('text_smtp');
 		
 		$this->data['entry_store'] = $this->language->get('entry_store');
+		$this->data['entry_title'] = $this->language->get('entry_title');
 		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$this->data['entry_welcome'] = $this->language->get('entry_welcome');
 		$this->data['entry_owner'] = $this->language->get('entry_owner');
@@ -59,12 +66,13 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_currency'] = $this->language->get('entry_currency');
 		$this->data['entry_currency_auto'] = $this->language->get('entry_currency_auto');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
-		$this->data['entry_weight'] = $this->language->get('entry_weight');
-		$this->data['entry_measurement'] = $this->language->get('entry_measurement');
+		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
+		$this->data['entry_measurement_class'] = $this->language->get('entry_measurement_class');
 		$this->data['entry_alert_mail'] = $this->language->get('entry_alert_mail');
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$this->data['entry_customer_price'] = $this->language->get('entry_customer_price');
 		$this->data['entry_customer_approval'] = $this->language->get('entry_customer_approval');
+		$this->data['entry_guest_checkout'] = $this->language->get('entry_guest_checkout');
 		$this->data['entry_account'] = $this->language->get('entry_account');
 		$this->data['entry_checkout'] = $this->language->get('entry_checkout');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
@@ -119,30 +127,18 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['error_store'] = '';
 		}
-		
- 		if (isset($this->error['meta_description'])) {
-			$this->data['error_meta_description'] = $this->error['meta_description'];
+
+ 		if (isset($this->error['title'])) {
+			$this->data['error_title'] = $this->error['title'];
 		} else {
-			$this->data['error_meta_description'] = '';
-		}	
+			$this->data['error_title'] = '';
+		}
 		
  		if (isset($this->error['error_filename'])) {
 			$this->data['error_error_filename'] = $this->error['error_filename'];
 		} else {
 			$this->data['error_error_filename'] = '';
 		}		
-		
-		$this->load->model('localisation/language');
-		
-		$languages = $this->model_localisation_language->getLanguages();
-		 
-		foreach ($languages as $language) {
- 			if (isset($this->error['welcome_' . $language['language_id']])) {
-				$this->data['error_welcome_' . $language['language_id']] = $this->error['welcome_' . $language['language_id']];
-			} else {
-				$this->data['error_welcome_' . $language['language_id']] = '';
-			}				
-		}
 
  		if (isset($this->error['owner'])) {
 			$this->data['error_owner'] = $this->error['owner'];
@@ -166,12 +162,6 @@ class ControllerSettingSetting extends Controller {
 			$this->data['error_telephone'] = $this->error['telephone'];
 		} else {
 			$this->data['error_telephone'] = '';
-		}
-		
-		if (isset($this->error['encryption'])) {
-			$this->data['error_encryption'] = $this->error['encryption'];
-		} else {
-			$this->data['error_encryption'] = '';
 		}
 
   		$this->document->breadcrumbs = array();
@@ -206,6 +196,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_store'] = $this->config->get('config_store');
 		}
 
+		if (isset($this->request->post['config_title'])) {
+			$this->data['config_title'] = $this->request->post['config_title'];
+		} else {
+			$this->data['config_title'] = $this->config->get('config_title');
+		}
+		
 		if (isset($this->request->post['config_meta_description'])) {
 			$this->data['config_meta_description'] = $this->request->post['config_meta_description'];
 		} else {
@@ -237,6 +233,10 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['preview_icon'] = image_resize('no_image.jpg', 100, 100);
 		}
+
+		$this->load->model('localisation/language');
+		
+		$languages = $this->model_localisation_language->getLanguages();
 		
 		foreach ($languages as $language) {
 			if (isset($this->request->post['config_welcome_' . $language['language_id']])) {
@@ -281,10 +281,7 @@ class ControllerSettingSetting extends Controller {
 		$directories = glob(DIR_CATALOG . 'view/theme/*', GLOB_ONLYDIR);
 		
 		foreach ($directories as $directory) {
-			$this->data['templates'][] = array(
-				'name'  => basename($directory),
-				'value' => basename($directory) . '/template/'
-			);
+			$this->data['templates'][] = basename($directory);
 		}
 		
 		if (isset($this->request->post['config_template'])) {
@@ -393,6 +390,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_customer_approval'] = $this->request->post['config_customer_approval'];
 		} else {
 			$this->data['config_customer_approval'] = $this->config->get('config_customer_approval');
+		}
+		
+		if (isset($this->request->post['config_guest_checkout'])) {
+			$this->data['config_guest_checkout'] = $this->request->post['config_guest_checkout'];
+		} else {
+			$this->data['config_guest_checkout'] = $this->config->get('config_guest_checkout');
 		}
 		
 		if (isset($this->request->post['config_account'])) {
@@ -632,12 +635,15 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_error_filename'] = $this->config->get('config_error_filename');
 		}
-		
-		$this->id       = 'content'; 
+		 
 		$this->template = 'setting/setting.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {
@@ -647,23 +653,13 @@ class ControllerSettingSetting extends Controller {
 
 		if (!$this->request->post['config_store']) {
 			$this->error['store'] = $this->language->get('error_store');
-		}				
-
-      	if (strlen(utf8_decode($this->request->post['config_meta_description'])) > 66) {
-        	$this->error['meta_description'] = $this->language->get('error_meta_description');
-      	}
-
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
+		}	
 		
-		foreach ($languages as $language) {
-			if (!$this->request->post['config_welcome_' . $language['language_id']]) {
-				$this->error['welcome_' . $language['language_id']] = $this->language->get('error_welcome');
-			}	
-		}
-
-		if ((strlen(utf8_decode($this->request->post['config_owner'])) < 3) || (strlen(utf8_decode($this->request->post['config_owner'])) > 32)) {
+		if (!$this->request->post['config_title']) {
+			$this->error['title'] = $this->language->get('error_title');
+		}	
+		
+		if ((strlen(utf8_decode($this->request->post['config_owner'])) < 3) || (strlen(utf8_decode($this->request->post['config_owner'])) > 64)) {
 			$this->error['owner'] = $this->language->get('error_owner');
 		}
 
@@ -680,10 +676,6 @@ class ControllerSettingSetting extends Controller {
     	if ((strlen(utf8_decode($this->request->post['config_telephone'])) < 3) || (strlen(utf8_decode($this->request->post['config_telephone'])) > 32)) {
       		$this->error['telephone'] = $this->language->get('error_telephone');
     	}
-
-		if (!$this->request->post['config_encryption']) {
-			$this->error['encryption'] = $this->language->get('error_encryption');
-		}
 		
 		if (!$this->request->post['config_error_filename']) {
 			$this->error['error_filename'] = $this->language->get('error_error_filename');
@@ -781,7 +773,7 @@ class ControllerSettingSetting extends Controller {
 	}
 	
 	public function template() {
-		$template = str_replace('../', '', dirname($this->request->get['template']));
+		$template = basename($this->request->get['template']);
 		
 		if ((!isset($this->request->server['HTTPS'])) || ($this->request->server['HTTPS'] != 'on')) {
 			$server = HTTP_IMAGE;

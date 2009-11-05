@@ -2,7 +2,25 @@
 class ControllerCommonHeader extends Controller {
 	protected function index() {
 		$this->language->load('common/header');
-	    	
+		
+		$this->data['title'] = $this->document->title;
+		$this->data['description'] = $this->document->description;
+
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$this->data['base'] = HTTPS_SERVER;
+		} else {
+			$this->data['base'] = HTTP_SERVER;
+		}
+		
+		$this->data['charset'] = $this->language->get('charset');
+		$this->data['lang'] = $this->language->get('code');
+		$this->data['direction'] = $this->language->get('direction');
+		$this->data['links'] = $this->document->links;	
+		$this->data['styles'] = $this->document->styles;
+		$this->data['scripts'] = $this->document->scripts;		
+		$this->data['breadcrumbs'] = $this->document->breadcrumbs;
+		$this->data['icon'] = $this->config->get('config_icon');
+		
 		$this->data['store'] = $this->config->get('config_store');
 		
 		if (isset($this->request->server['HTTPS']) && ($this->request->server['HTTPS'] == 'on')) {
@@ -28,8 +46,14 @@ class ControllerCommonHeader extends Controller {
     	$this->data['cart'] = $this->url->http('checkout/cart');
 		$this->data['checkout'] = $this->url->https('checkout/shipping');
 
-		$this->id       = 'header';
-		$this->template = $this->config->get('config_template') . 'common/header.tpl';
+		$this->id = 'header';
+		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/common/header.tpl';
+		} else {
+			$this->template = 'default/template/common/header.tpl';
+		}
+		
 		$this->children = array(
 			'common/language',
 			'common/search'

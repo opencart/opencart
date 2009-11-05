@@ -1,7 +1,7 @@
 <?php
 class ModelTotalTax extends Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
-		if ($this->config->get('tax_status')) { 
+		if ($this->config->get('tax_status')) {
 			foreach ($taxes as $key => $value) {
 				if ($value > 0) {
 					$tax_classes = $this->tax->getDescription($key);

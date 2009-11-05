@@ -1,4 +1,12 @@
 <?php 
+//-----------------------------------------------------------------
+// OpenCart Paymate Payment Module
+// Version: 1.0
+// Author: SuperJuice (Sam) (portions based on OpenCart GPL'd code)
+// Email: opencart@pixeldrift.net
+// Web: http://www.pixeldrift.net/opencart/
+//-----------------------------------------------------------------
+
 class ControllerPaymentPayMate extends Controller {
 	private $error = array(); 
 
@@ -23,22 +31,38 @@ class ControllerPaymentPayMate extends Controller {
 
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
+		$this->data['text_yes'] = $this->language->get('text_yes');
+		$this->data['text_no'] = $this->language->get('text_no');
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
 				
 		$this->data['entry_username'] = $this->language->get('entry_username');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_include_order'] = $this->language->get('entry_include_order');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		$this->data['entry_author'] = $this->language->get('entry_author');
+		$this->data['entry_version_status'] = $this->language->get('entry_version_status');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_username'] = @$this->error['username'];
+
+                if (isset($this->error['warning'])) {
+                       $this->data['error_warning'] = $this->error['warning'];
+                } else {
+                       $this->data['error_warning'] = '';
+                }
+
+
+                if (isset($this->error['username'])) {
+                       $this->data['error_username'] = $this->error['username'];
+                } else {
+                       $this->data['error_username'] = '';
+                }
 
   		$this->document->breadcrumbs = array();
 
@@ -75,10 +99,16 @@ class ControllerPaymentPayMate extends Controller {
 		} else {
 			$this->data['paymate_order_status_id'] = $this->config->get('paymate_order_status_id'); 
 		} 
-
+		
 		$this->load->model('localisation/order_status');
 		
 		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+		if (isset($this->request->post['paymate_include_order'])) {
+                        $this->data['paymate_include_order'] = $this->request->post['paymate_include_order'];
+                } else {
+                        $this->data['paymate_include_order'] = $this->config->get('paymate_include_order');
+                }
 		
 		if (isset($this->request->post['paymate_geo_zone_id'])) {
 			$this->data['paymate_geo_zone_id'] = $this->request->post['paymate_geo_zone_id'];
@@ -101,12 +131,15 @@ class ControllerPaymentPayMate extends Controller {
 		} else {
 			$this->data['paymate_sort_order'] = $this->config->get('paymate_sort_order');
 		}
-
-		$this->id       = 'content';
-		$this->template = 'payment/paymate.tpl';
-		$this->layout   = 'common/layout';
 		
- 		$this->render();
+		$this->template = 'payment/paymate.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {

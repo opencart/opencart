@@ -1,12 +1,10 @@
 <?php 
 class ModelPaymentPayMate extends Model {
-  	public function getMethod() {
+  	public function getMethod($country_id, $zone_id) {
 		$this->load->language('payment/paymate');
-		
+	
 		if ($this->config->get('paymate_status')) {
-			$address = $this->customer->getAddress($this->session->data['payment_address_id']);
-			
-      		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('paymate_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+      		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('paymate_geo_zone_id') . "' AND country_id = '" . (int)$country_id . "' AND (zone_id = '" . (int)$zone_id . "' OR zone_id = '0')");
 			
 			if (!$this->config->get('paymate_geo_zone_id')) {
         		$status = TRUE;
@@ -14,7 +12,7 @@ class ModelPaymentPayMate extends Model {
       		  	$status = TRUE;
       		} else {
      	  		$status = FALSE;
-			}	
+			}
       	} else {
 			$status = FALSE;
 		}

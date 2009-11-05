@@ -103,11 +103,14 @@ class ControllerCommonHome extends Controller {
 			$this->model_localisation_currency->updateCurrencies();
 		}
 		
-		$this->id       = 'content'; 
 		$this->template = 'common/home.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
-		$this->render();  
+		$this->response->setOutput($this->render(TRUE));
   	}
 	
 	public function report() {

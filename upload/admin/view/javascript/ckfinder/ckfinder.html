@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--
+ * CKFinder
+ * ========
+ * http://ckfinder.com
+ * Copyright (C) 2007-2009, CKSource - Frederico Knabben. All rights reserved.
+ *
+ * The software, this file and its contents are subject to the CKFinder
+ * License. Please read the license.txt file before using, installing, copying,
+ * modifying or distribute this file or part of its contents. The contents of
+ * this file is part of the Source Code of CKFinder.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>CKFinder 1.4.1.1</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="noindex, nofollow" />
+	<script type="text/javascript">var mN=document.location.protocol+'//'+document.location.host+'/';var am=mN+document.location.pathname.substring(1,document.location.pathname.lastIndexOf('/')+1);var CKF_CORE_PATH=am+'core/';</script>
+	<script type="text/javascript">
+
+// CKFinder specific settings.
+var CKFConfig =
+{
+	AutoDetectLanguage	: true,
+	DefaultLanguage		: 'en',
+	Languages			: 'en,de,es,es-mx,fr,it,lv,pl,pt-br,ru,sk,zh-cn,zh-tw',
+
+	SkinPath			: CKF_CORE_PATH + 'skins/default/',
+	DirectDownload		: false
+};
+
+</script>
+	<script type="text/javascript">function LoadScript(url){document.write('<script type="text/javascript" src="'+url+'"><\/script>');}(function(){var lang=false;if(CKFConfig.AutoDetectLanguage){var ey=(navigator.userLanguage||navigator.language).toLowerCase();CKFConfig.Languages=','+CKFConfig.Languages+',';if(ey.length>=5){ey=ey.substr(0,5);if(CKFConfig.Languages.indexOf(','+ey+',')>=0)lang=ey;}if(!lang&&ey.length>=2){ey=ey.substr(0,2);if(CKFConfig.Languages.indexOf(','+ey+',')>=0)lang=ey;}}LoadScript('core/lang/'+(lang||CKFConfig.DefaultLanguage)+'.js');})();</script>
+	<script type="text/javascript">
+var sSuffix = /msie/.test( navigator.userAgent.toLowerCase() ) ? 'ie' : 'gecko' ;
+
+LoadScript( 'core/js/ckfinder_' + sSuffix + '.js' ) ;
+</script>
+	<script type="text/javascript">window.onload=function(){ab.Init();$('xDialogButtonCancel').value=CKFLang.CancelBtn;$('xDialogButtonOk').value=CKFLang.OkBtn;};window.onunload=ab.jy;if(U.dF){try{document.execCommand('BackgroundImageCache',false,true);}catch(e){}cl.af=new hw(window);}document.write('<link href="'+CKFConfig.SkinPath+'fck_editor.css" type="text/css" rel="stylesheet" />');document.write('<link href="'+CKFConfig.SkinPath+'fck_dialog.css" type="text/css" rel="stylesheet" />');</script>
+	<link href="core/css/ckfinder.css" type="text/css" rel="stylesheet" />
+</head>
+<body style="margin: 0px; padding: 0px; overflow: hidden;">
+	<table style="height: 100%; width: 100%; table-layout:fixed;" cellpadding="0" cellspacing="0">
+		<tr>
+			<td style="width: 200px; height: 100%;">
+				<table style="height: 100%; width: 100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td class="PopupTitle">
+							<script type="text/javascript">document.write(CKFLang.FoldersTitle);</script>
+						</td>
+					</tr>
+					<tr>
+						<td id="hf" style="height: 100%;">
+							&nbsp;
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td id="qB" class="PopupTabArea" style="width: 5px">
+			</td>
+			<td id="iO" style="height: 100%; vertical-align:top">
+				&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td id="jR" class="PopupTabArea dY" colspan="3">
+				&nbsp;
+			</td>
+		</tr>
+	</table>
+	<div id="xCover" class="BackColor" style="display: none">
+	</div>
+	<div id="xDialog" class="DarkBackground" style="display: none">
+		<div class="DialogInner BackColor">
+			<div id="iM">
+				Alert message</div>
+				<input id="xDialogField" type="text" />
+			<div id="xDialogButtons">
+				<input id="xDialogButtonOk" type="button" value="Ok" />
+				<input id="xDialogButtonCancel" type="button" value="Cancel" />
+			</div>
+		</div>
+	</div>
+</body>
+</html>

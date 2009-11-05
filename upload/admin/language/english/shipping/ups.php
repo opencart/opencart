@@ -4,7 +4,7 @@ $_['heading_title']    = 'UPS';
 
 // Text
 $_['text_shipping']    = 'Shipping';
-$_['text_success']     = 'Success: You have modified UPS shipping!';
+$_['text_success']     = 'Success: You have modified UPS (US) shipping!';
 $_['text_rdp']         = 'Regular Daily Pickup';
 $_['text_oca']         = 'On Call Air';
 $_['text_otp']         = 'One Time Pickup';
@@ -37,7 +37,7 @@ $_['entry_status']     = 'Status:';
 $_['entry_sort_order'] = 'Sort Order:';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify UPS shipping!';
+$_['error_permission'] = 'Warning: You do not have permission to modify UPS (US) shipping!';
 $_['error_postcode']   = 'Post Code Required!';
 $_['error_packaging']  = 'Packaging code required!';
 ?>

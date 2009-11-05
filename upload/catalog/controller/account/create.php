@@ -16,6 +16,8 @@ class ControllerAccountCreate extends Controller {
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_account_customer->addCustomer($this->request->post);
 
+			unset($this->session->data['guest']);
+
 			$this->customer->login($this->request->post['email'], $this->request->post['password']);
 			
 			$subject = sprintf($this->language->get('mail_subject'), $this->config->get('config_store'));
@@ -68,6 +70,7 @@ class ControllerAccountCreate extends Controller {
 
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');
+		$this->data['text_select'] = $this->language->get('text_select');
     	$this->data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->https('account/login'));
     	$this->data['text_your_details'] = $this->language->get('text_your_details');
     	$this->data['text_your_address'] = $this->language->get('text_your_address');
@@ -146,6 +149,18 @@ class ControllerAccountCreate extends Controller {
 			$this->data['error_city'] = '';
 		}
 
+		if (isset($this->error['country'])) {
+			$this->data['error_country'] = $this->error['country'];
+		} else {
+			$this->data['error_country'] = '';
+		}
+
+		if (isset($this->error['zone'])) {
+			$this->data['error_zone'] = $this->error['zone'];
+		} else {
+			$this->data['error_zone'] = '';
+		}
+		
     	$this->data['action'] = $this->url->https('account/create');
 
 		if (isset($this->request->post['firstname'])) {
@@ -210,14 +225,14 @@ class ControllerAccountCreate extends Controller {
 
     	if (isset($this->request->post['country_id'])) {
       		$this->data['country_id'] = $this->request->post['country_id'];
-    	} else {
+		} else {	
       		$this->data['country_id'] = $this->config->get('config_country_id');
     	}
 
     	if (isset($this->request->post['zone_id'])) {
-      		$this->data['zone_id'] = $this->request->post['zone_id'];
-    	} else {
-      		$this->data['zone_id'] = 0;
+      		$this->data['zone_id'] = $this->request->post['zone_id']; 	
+		} else {
+      		$this->data['zone_id'] = 'FALSE';
     	}
 		
 		$this->load->model('localisation/country');
@@ -262,19 +277,28 @@ class ControllerAccountCreate extends Controller {
 			$this->data['agree'] = FALSE;
 		}
 		
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'account/create.tpl';
-		$this->layout   = 'common/layout';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/create.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/account/create.tpl';
+		} else {
+			$this->template = 'default/template/account/create.tpl';
+		}
 		
-		$this->render();	
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right'
+		);
+
+		$this->response->setOutput($this->render(TRUE));	
   	}
 
   	private function validate() {
-    	if ((strlen(utf8_decode($this->request->post['firstname'])) < 3) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['firstname'])) < 1) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
       		$this->error['firstname'] = $this->language->get('error_firstname');
     	}
 
-    	if ((strlen(utf8_decode($this->request->post['lastname'])) < 3) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['lastname'])) < 1) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
       		$this->error['lastname'] = $this->language->get('error_lastname');
     	}
 
@@ -287,13 +311,9 @@ class ControllerAccountCreate extends Controller {
     	if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
       		$this->error['warning'] = $this->language->get('error_exists');
     	}
-
-    	if ((strlen(utf8_decode($this->request->post['password'])) < 4) || (strlen(utf8_decode($this->request->post['password'])) > 20)) {
-      		$this->error['password'] = $this->language->get('error_password');
-    	}
-
-    	if ($this->request->post['confirm'] != $this->request->post['password']) {
-      		$this->error['confirm'] = $this->language->get('error_confirm');
+		
+    	if ((strlen(utf8_decode($this->request->post['telephone'])) < 3) || (strlen(utf8_decode($this->request->post['telephone'])) > 32)) {
+      		$this->error['telephone'] = $this->language->get('error_telephone');
     	}
 
     	if ((strlen(utf8_decode($this->request->post['address_1'])) < 3) || (strlen(utf8_decode($this->request->post['address_1'])) > 128)) {
@@ -304,8 +324,20 @@ class ControllerAccountCreate extends Controller {
       		$this->error['city'] = $this->language->get('error_city');
     	}
 
-    	if ((strlen(utf8_decode($this->request->post['telephone'])) < 3) || (strlen(utf8_decode($this->request->post['telephone'])) > 32)) {
-      		$this->error['telephone'] = $this->language->get('error_telephone');
+    	if ($this->request->post['country_id'] == 'FALSE') {
+      		$this->error['country'] = $this->language->get('error_country');
+    	}
+		
+    	if ($this->request->post['zone_id'] == 'FALSE') {
+      		$this->error['zone'] = $this->language->get('error_zone');
+    	}
+
+    	if ((strlen(utf8_decode($this->request->post['password'])) < 4) || (strlen(utf8_decode($this->request->post['password'])) > 20)) {
+      		$this->error['password'] = $this->language->get('error_password');
+    	}
+
+    	if ($this->request->post['confirm'] != $this->request->post['password']) {
+      		$this->error['confirm'] = $this->language->get('error_confirm');
     	}
 		
 		if ($this->config->get('config_account')) {
@@ -327,9 +359,9 @@ class ControllerAccountCreate extends Controller {
     	}
   	}
   
-  	public function zone() {	
-    	$output = '<select name="zone_id">';
-
+  	public function zone() {
+		$output = '<option value="FALSE">' . $this->language->get('text_select') . '</option>';
+		
 		$this->load->model('localisation/zone');
 
     	$results = $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']);
@@ -345,10 +377,12 @@ class ControllerAccountCreate extends Controller {
     	} 
 		
 		if (!$results) {
-		  	$output .= '<option value="0">' . $this->language->get('text_none') . '</option>';
-    	}
-
-    	$output .= '</select>';
+			if (!$this->request->get['zone_id']) {
+		  		$output .= '<option value="0" selected="selected">' . $this->language->get('text_none') . '</option>';
+			} else {
+				$output .= '<option value="0">' . $this->language->get('text_none') . '</option>';
+			}
+		}
 	
 		$this->response->setOutput($output);
   	}  

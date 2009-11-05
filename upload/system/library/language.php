@@ -26,9 +26,9 @@ final class Language {
 		if ($code) {
 			$this->code = $code; 
 		} else {
-    		if ((isset($this->session->data['language'])) && (array_key_exists($this->session->data['language'], $this->languages))) {
+    		if (isset($this->session->data['language']) && array_key_exists($this->session->data['language'], $this->languages)) {
       			$this->set($this->session->data['language']);
-    		} elseif ((isset($this->request->cookie['language'])) && array_key_exists($this->request->cookie['language'], $this->languages)) {
+    		} elseif (isset($this->request->cookie['language']) && array_key_exists($this->request->cookie['language'], $this->languages)) {
       			$this->set($this->request->cookie['language']);
     		} elseif ($browser = $this->detect()) {
 	    		$this->set($browser);
@@ -43,11 +43,11 @@ final class Language {
 	public function set($language) {
 		$this->code = $language;
 		
-    	if ((!isset($this->session->data['language'])) || ($this->session->data['language'] != $language)) {
+    	if (!isset($this->session->data['language']) || $this->session->data['language'] != $language) {
       		$this->session->data['language'] = $language;
     	}
 
-    	if ((!isset($this->request->cookie['language'])) || ($this->request->cookie['language'] != $language)) {	  
+    	if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $language) {	  
 	  		setcookie('language', $language, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
     	}	
 	}

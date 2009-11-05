@@ -83,8 +83,8 @@ class ControllerCustomerCustomerGroup extends Controller {
 		
 		$this->load->model('customer/customer_group');
 		
-		if (isset($this->request->post['delete']) && $this->validateDelete()) {
-      		foreach ($this->request->post['delete'] as $customer_group_id) {
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+      		foreach ($this->request->post['selected'] as $customer_group_id) {
 				$this->model_customer_customer_group->deleteCustomerGroup($customer_group_id);	
 			}
 						
@@ -184,7 +184,7 @@ class ControllerCustomerCustomerGroup extends Controller {
 			$this->data['customer_groups'][] = array(
 				'customer_group_id' => $result['customer_group_id'],
 				'name'              => $result['name'] . (($result['customer_group_id'] == $this->config->get('config_customer_group_id')) ? $this->language->get('text_default') : NULL),
-				'delete'            => isset($this->request->post['delete']) && in_array($result['customer_group_id'], $this->request->post['delete']),
+				'selected'          => isset($this->request->post['selected']) && in_array($result['customer_group_id'], $this->request->post['selected']),
 				'action'            => $action
 			);
 		}	
@@ -248,12 +248,15 @@ class ControllerCustomerCustomerGroup extends Controller {
 
 		$this->data['sort'] = $sort; 
 		$this->data['order'] = $order;
-
-		$this->id       = 'content';
+		
 		$this->template = 'customer/customer_group_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
  	}
 
 	private function getForm() {
@@ -326,11 +329,14 @@ class ControllerCustomerCustomerGroup extends Controller {
 			$this->data['name'] = '';
 		}
 			
-		$this->id       = 'content';
 		$this->template = 'customer/customer_group_form.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
-		$this->render(); 
+		$this->response->setOutput($this->render(TRUE)); 
 	}
 
 	private function validateForm() {
@@ -356,7 +362,7 @@ class ControllerCustomerCustomerGroup extends Controller {
 		
 		$this->load->model('customer/customer');
       	
-		foreach ($this->request->post['delete'] as $customer_group_id) {
+		foreach ($this->request->post['selected'] as $customer_group_id) {
     		if ($this->config->get('config_customer_group_id') == $customer_group_id) {
 	  			$this->error['warning'] = $this->language->get('error_default');	
 			}  

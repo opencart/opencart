@@ -1,9 +1,9 @@
 <?php 
-class ControllerPaymentSECPay extends Controller {
+class ControllerPaymentPayPoint extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('payment/secpay');
+		$this->load->language('payment/paypoint');
 
 		$this->document->title = $this->language->get('heading_title');
 		
@@ -12,7 +12,7 @@ class ControllerPaymentSECPay extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$this->load->model('setting/setting');
 			
-			$this->model_setting_setting->editSetting('secpay', $this->request->post);				
+			$this->model_setting_setting->editSetting('paypoint', $this->request->post);				
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -27,6 +27,9 @@ class ControllerPaymentSECPay extends Controller {
 		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');
+		$this->data['text_live'] = $this->language->get('text_live');
+		$this->data['text_successful'] = $this->language->get('text_successful');
+		$this->data['text_fail'] = $this->language->get('text_fail');
 				
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
 		$this->data['entry_test'] = $this->language->get('entry_test');
@@ -40,8 +43,17 @@ class ControllerPaymentSECPay extends Controller {
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_merchant'] = @$this->error['merchant'];
+		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+		
+		if (isset($this->error['merchant'])) {
+			$this->data['error_merchant'] = $this->error['merchant'];
+		} else {
+			$this->data['error_merchant'] = '';
+		}
 
   		$this->document->breadcrumbs = array();
 
@@ -58,72 +70,75 @@ class ControllerPaymentSECPay extends Controller {
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('payment/secpay'),
+       		'href'      => $this->url->https('payment/paypoint'),
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 				
-		$this->data['action'] = $this->url->https('payment/secpay');
+		$this->data['action'] = $this->url->https('payment/paypoint');
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
 		
-		if (isset($this->request->post['secpay_merchant'])) {
-			$this->data['secpay_merchant'] = $this->request->post['secpay_merchant'];
+		if (isset($this->request->post['paypoint_merchant'])) {
+			$this->data['paypoint_merchant'] = $this->request->post['paypoint_merchant'];
 		} else {
-			$this->data['secpay_merchant'] = $this->config->get('secpay_merchant');
+			$this->data['paypoint_merchant'] = $this->config->get('paypoint_merchant');
 		}
 		
-		if (isset($this->request->post['secpay_test'])) {
-			$this->data['secpay_test'] = $this->request->post['secpay_test'];
+		if (isset($this->request->post['paypoint_test'])) {
+			$this->data['paypoint_test'] = $this->request->post['paypoint_test'];
 		} else {
-			$this->data['secpay_test'] = $this->config->get('secpay_test');
+			$this->data['paypoint_test'] = $this->config->get('paypoint_test');
 		}
 		
-		if (isset($this->request->post['secpay_order_status_id'])) {
-			$this->data['secpay_order_status_id'] = $this->request->post['secpay_order_status_id'];
+		if (isset($this->request->post['paypoint_order_status_id'])) {
+			$this->data['paypoint_order_status_id'] = $this->request->post['paypoint_order_status_id'];
 		} else {
-			$this->data['secpay_order_status_id'] = $this->config->get('secpay_order_status_id'); 
+			$this->data['paypoint_order_status_id'] = $this->config->get('paypoint_order_status_id'); 
 		} 
 
 		$this->load->model('localisation/order_status');
 		
 		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 		
-		if (isset($this->request->post['secpay_geo_zone_id'])) {
-			$this->data['secpay_geo_zone_id'] = $this->request->post['secpay_geo_zone_id'];
+		if (isset($this->request->post['paypoint_geo_zone_id'])) {
+			$this->data['paypoint_geo_zone_id'] = $this->request->post['paypoint_geo_zone_id'];
 		} else {
-			$this->data['secpay_geo_zone_id'] = $this->config->get('secpay_geo_zone_id'); 
+			$this->data['paypoint_geo_zone_id'] = $this->config->get('paypoint_geo_zone_id'); 
 		} 
 		
 		$this->load->model('localisation/geo_zone');
 										
 		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 		
-		if (isset($this->request->post['secpay_status'])) {
-			$this->data['secpay_status'] = $this->request->post['secpay_status'];
+		if (isset($this->request->post['paypoint_status'])) {
+			$this->data['paypoint_status'] = $this->request->post['paypoint_status'];
 		} else {
-			$this->data['secpay_status'] = $this->config->get('secpay_status');
+			$this->data['paypoint_status'] = $this->config->get('paypoint_status');
 		}
 		
-		if (isset($this->request->post['secpay_sort_order'])) {
-			$this->data['secpay_sort_order'] = $this->request->post['secpay_sort_order'];
+		if (isset($this->request->post['paypoint_sort_order'])) {
+			$this->data['paypoint_sort_order'] = $this->request->post['paypoint_sort_order'];
 		} else {
-			$this->data['secpay_sort_order'] = $this->config->get('secpay_sort_order');
+			$this->data['paypoint_sort_order'] = $this->config->get('paypoint_sort_order');
 		}
-
-		$this->id       = 'content';
-		$this->template = 'payment/secpay.tpl';
-		$this->layout   = 'common/layout';
 		
- 		$this->render();
+		$this->template = 'payment/paypoint.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/secpay')) {
+		if (!$this->user->hasPermission('modify', 'payment/paypoint')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (!@$this->request->post['secpay_merchant']) {
+		if (!$this->request->post['paypoint_merchant']) {
 			$this->error['merchant'] = $this->language->get('error_merchant');
 		}
 				

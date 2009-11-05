@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+ * CKFinder
+ * ========
+ * http://ckfinder.com
+ * Copyright (C) 2007-2009, CKSource - Frederico Knabben. All rights reserved.
+ *
+ * The software, this file and its contents are subject to the CKFinder
+ * License. Please read the license.txt file before using, installing, copying,
+ * modifying or distribute this file or part of its contents. The contents of
+ * this file is part of the Source Code of CKFinder.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>CKFinder - Sample - Popups</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="noindex, nofollow" />
+	<link href="../sample.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+	img {
+		padding:10px;
+		margin:5px;
+		border:1px solid #d5d5d5;
+	}
+	div.thumb {
+		float:left;
+	}
+	div.caption {
+		padding-left:5px;
+		font-size:10px;
+	}
+	</style>
+	<script type="text/javascript" src="../../ckfinder.js"></script>
+	<script type="text/javascript">
+
+function BrowseServer( startupPath, functionData )
+{
+	// You can use the "CKFinder" class to render CKFinder in a page:
+	var finder = new CKFinder() ;
+	
+	// The path for the installation of CKFinder (default = "/ckfinder/").
+	finder.BasePath = '../../' ;
+	
+	//Startup path in a form: "Type:/path/to/directory/"
+	finder.StartupPath = startupPath ;
+	
+	// Name of a function which is called when a file is selected in CKFinder.
+	finder.SelectFunction = SetFileField ;
+	
+	// Additional data to be passed to the SelectFunction in a second argument.
+	// We'll use this feature to pass the Id of a field that will be updated.
+	finder.SelectFunctionData = functionData ;
+	
+	// Name of a function which is called when a thumbnail is selected in CKFinder.
+	finder.SelectThumbnailFunction = ShowThumbnails ;
+
+	// Launch CKFinder
+	finder.Popup() ;
+}
+
+// This is a sample function which is called when a file is selected in CKFinder.
+function SetFileField( fileUrl, data )
+{
+	document.getElementById( data["selectFunctionData"] ).value = fileUrl ;
+}
+
+// This is a sample function which is called when a thumbnail is selected in CKFinder.
+function ShowThumbnails( fileUrl, data )
+{
+	var sFileName = decodeURIComponent( fileUrl.replace( /^.*[\/\\]/g, '' ) ) ;
+	document.getElementById( 'thumbnails' ).innerHTML += 
+			'<div class="thumb">' +
+				'<img src="' + fileUrl + '" />' +
+				'<div class="caption">' +
+					'<a href="' + data["fileUrl"] + '" target="_blank">' + sFileName + '</a> (' + data["fileSize"] + 'KB)' +
+				'</div>' +
+			'</div>' ;
+
+	document.getElementById( 'preview' ).style.display = "";
+	// It is not required to return any value.
+	// When false is returned, CKFinder will not close automatically.
+	return false;
+}
+	</script>
+</head>
+<body>
+	<h1>
+		CKFinder - Sample - Popups<br />
+	</h1>
+	<hr />
+	<p>
+		CKFinder may be used in standalone mode inside any page, to create a repository
+		manager with easy. You may define a custom JavaScript function to be called when
+		an image is selected (double-clicked).</p>
+	<p>
+		<strong>Selected File URL</strong><br/>
+		<input id="xFilePath" name="FilePath" type="text" size="60" />
+		<input type="button" value="Browse Server" onclick="BrowseServer( 'Files:/', 'xFilePath' );" />
+	</p>
+	<p>
+		<strong>Selected Image URL</strong><br/>
+		<input id="xImagePath" name="ImagePath" type="text" size="60" />
+		<input type="button" value="Browse Server" onclick="BrowseServer( 'Images:/', 'xImagePath' );" />
+	</p>
+	<div id="preview" style="display:none">
+		<strong>Selected Thumbnails</strong><br/>
+		<div id="thumbnails"></div>
+	</div>
+</body>
+</html>

@@ -169,8 +169,8 @@ class ControllerCatalogProduct extends Controller {
 		
 		$this->load->model('catalog/product');
 		
-		if (isset($this->request->post['delete']) && $this->validateDelete()) {
-			foreach ($this->request->post['delete'] as $product_id) {
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $product_id) {
 				$this->model_catalog_product->deleteProduct($product_id);
 	  		}
 
@@ -333,8 +333,7 @@ class ControllerCatalogProduct extends Controller {
 				'model'      => $result['model'],
 				'quantity'   => $result['quantity'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'sort_order' => $result['sort_order'],
-				'delete'     => isset($this->request->post['delete']) && in_array($result['product_id'], $this->request->post['delete']),
+				'selected'   => isset($this->request->post['selected']) && in_array($result['product_id'], $this->request->post['selected']),
 				'action'     => $action
 			);
     	}
@@ -349,7 +348,6 @@ class ControllerCatalogProduct extends Controller {
     	$this->data['column_model'] = $this->language->get('column_model');
 		$this->data['column_quantity'] = $this->language->get('column_quantity');
 		$this->data['column_status'] = $this->language->get('column_status');
-		$this->data['column_sort_order'] = $this->language->get('column_sort_order');
 		$this->data['column_action'] = $this->language->get('column_action');
 
 		$this->data['button_insert'] = $this->language->get('button_insert');
@@ -447,11 +445,14 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 
-		$this->id       = 'content';
 		$this->template = 'catalog/product_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
   	}
 
   	private function getForm() {
@@ -470,15 +471,17 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$this->data['entry_description'] = $this->language->get('entry_description');
     	$this->data['entry_model'] = $this->language->get('entry_model');
+		$this->data['entry_sku'] = $this->language->get('entry_sku');
+		$this->data['entry_location'] = $this->language->get('entry_location');
 		$this->data['entry_manufacturer'] = $this->language->get('entry_manufacturer');
     	$this->data['entry_shipping'] = $this->language->get('entry_shipping');
     	$this->data['entry_date_available'] = $this->language->get('entry_date_available');
     	$this->data['entry_quantity'] = $this->language->get('entry_quantity');
 		$this->data['entry_stock_status'] = $this->language->get('entry_stock_status');
     	$this->data['entry_status'] = $this->language->get('entry_status');
-    	$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
     	$this->data['entry_tax_class'] = $this->language->get('entry_tax_class');
     	$this->data['entry_price'] = $this->language->get('entry_price');
+		$this->data['entry_subtract'] = $this->language->get('entry_subtract');
     	$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
     	$this->data['entry_weight'] = $this->language->get('entry_weight');
 		$this->data['entry_dimension'] = $this->language->get('entry_dimension');
@@ -489,6 +492,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['entry_related'] = $this->language->get('entry_related');
 		$this->data['entry_option'] = $this->language->get('entry_option');
 		$this->data['entry_option_value'] = $this->language->get('entry_option_value');
+		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_prefix'] = $this->language->get('entry_prefix');
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$this->data['entry_date_start'] = $this->language->get('entry_date_start');
@@ -622,6 +626,22 @@ class ControllerCatalogProduct extends Controller {
 		} else {
       		$this->data['model'] = '';
     	}
+
+		if (isset($this->request->post['sku'])) {
+      		$this->data['sku'] = $this->request->post['sku'];
+    	} elseif (isset($product_info)) {
+			$this->data['sku'] = $product_info['sku'];
+		} else {
+      		$this->data['sku'] = '';
+    	}
+		
+		if (isset($this->request->post['location'])) {
+      		$this->data['location'] = $this->request->post['location'];
+    	} elseif (isset($product_info)) {
+			$this->data['location'] = $product_info['location'];
+		} else {
+      		$this->data['location'] = '';
+    	}
 		
 		if (isset($this->request->post['keyword'])) {
 			$this->data['keyword'] = $this->request->post['keyword'];
@@ -693,14 +713,6 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['price'] = $product_info['price'];
 		} else {
       		$this->data['price'] = '';
-    	}
-  
-    	if (isset($this->request->post['sort_order'])) {
-      		$this->data['sort_order'] = $this->request->post['sort_order'];
-    	} else if (isset($product_info)) {
-			$this->data['sort_order'] = $product_info['sort_order'];
-		} else {
-      		$this->data['sort_order'] = 0;
     	}
 
     	if (isset($this->request->post['status'])) {
@@ -861,11 +873,14 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['product_related'] = array();
 		}	
 		
-		$this->id       = 'content';
 		$this->template = 'catalog/product_form.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();
+		$this->response->setOutput($this->render(TRUE));
   	} 
 	
   	private function validateForm() { 

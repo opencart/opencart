@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -38,18 +39,13 @@
     </table>
   </div>
 </form>
-<script type="text/javascript" src="view/javascript/fckeditor/fckeditor.js"></script>
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
-var sBasePath           = document.location.href.replace(/index\.php.*/, 'view/javascript/fckeditor/');
 <?php foreach ($languages as $language) { ?>
-var oFCKeditor          = new FCKeditor('description<?php echo $language['language_id']; ?>');
-	oFCKeditor.BasePath = sBasePath;
-	oFCKeditor.Value	= document.getElementById('description<?php echo $language['language_id']; ?>').value;
-	oFCKeditor.Width    = '520';
-	oFCKeditor.Height   = '300';
-	oFCKeditor.ReplaceTextarea();
+CKEDITOR.replace('description<?php echo $language['language_id']; ?>');
 <?php } ?>	  
 //--></script>
 <script type="text/javascript"><!--
 $.tabs('.tabs a'); 
 //--></script>
+<?php echo $footer; ?>

@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -72,15 +73,9 @@
     <?php } ?>
   </div>
 </form>
-<script type="text/javascript" src="view/javascript/fckeditor/fckeditor.js"></script>
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
-var sBasePath           = document.location.href.replace(/index\.php.*/, 'view/javascript/fckeditor/');
-var oFCKeditor          = new FCKeditor('message');
-	oFCKeditor.BasePath = sBasePath;
-	oFCKeditor.Value	= document.getElementById('message').value;
-	oFCKeditor.Width    = '100%';
-	oFCKeditor.Height   = '300';
-	oFCKeditor.ReplaceTextarea();
+CKEDITOR.replace('message');
 //--></script>
 <script type="text/javascript"><!--
 function addCustomer() {
@@ -120,3 +115,4 @@ function getCustomers() {
 <script type="text/javascript"><!--
 $.tabs('.tabs a'); 
 //--></script>
+<?php echo $footer; ?>

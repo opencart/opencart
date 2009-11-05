@@ -83,8 +83,8 @@ class ControllerLocalisationMeasurementClass extends Controller {
  		
 		$this->load->model('localisation/measurement_class');
 		
-		if (isset($this->request->post['delete']) && $this->validateDelete()) {
-			foreach ($this->request->post['delete'] as $measurement_class_id) {
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $measurement_class_id) {
 				$this->model_localisation_measurement_class->deleteMeasurementClass($measurement_class_id);
 			}
 			
@@ -185,7 +185,7 @@ class ControllerLocalisationMeasurementClass extends Controller {
 				'measurement_class_id' => $result['measurement_class_id'],
 				'title'                => $result['title'] . (($result['measurement_class_id'] == $this->config->get('config_measurement_class_id')) ? $this->language->get('text_default') : NULL),
 				'unit'                 => $result['unit'],
-				'delete'               => isset($this->request->post['delete']) && in_array($result['measurement_class_id'], $this->request->post['delete']),
+				'selected'             => isset($this->request->post['selected']) && in_array($result['measurement_class_id'], $this->request->post['selected']),
 				'action'               => $action
 			);
 		}
@@ -251,12 +251,15 @@ class ControllerLocalisationMeasurementClass extends Controller {
 		
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-
-		$this->id       = 'content';
+		
 		$this->template = 'localisation/measurement_class_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function getForm() {
@@ -350,11 +353,14 @@ class ControllerLocalisationMeasurementClass extends Controller {
 			$this->data['measurement_rule'] = array();
 		}				
 		
-		$this->id       = 'content';
 		$this->template = 'localisation/measurement_class_form.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
-		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validateForm() {
@@ -386,7 +392,7 @@ class ControllerLocalisationMeasurementClass extends Controller {
 		
 		$this->load->model('catalog/product');
 		
-		foreach ($this->request->post['delete'] as $measurement_class_id) {
+		foreach ($this->request->post['selected'] as $measurement_class_id) {
 			if ($this->config->get('config_measurement_class_id') == $measurement_class_id) {
 				$this->error['warning'] = $this->language->get('error_default');
 			}

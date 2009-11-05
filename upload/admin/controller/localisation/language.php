@@ -83,8 +83,8 @@ class ControllerLocalisationLanguage extends Controller {
 		
 		$this->load->model('localisation/language');
 		
-		if (isset($this->request->post['delete']) && $this->validateDelete()) {
-			foreach ($this->request->post['delete'] as $language_id) {
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $language_id) {
 				$this->model_localisation_language->deleteLanguage($language_id);
 			}
 
@@ -186,7 +186,7 @@ class ControllerLocalisationLanguage extends Controller {
 				'name'        => $result['name'] . (($result['code'] == $this->config->get('config_language')) ? $this->language->get('text_default') : NULL),
 				'code'        => $result['code'],
 				'sort_order'  => $result['sort_order'],
-				'delete'      => isset($this->request->post['delete']) && in_array($result['language_id'], $this->request->post['delete']),
+				'selected'    => isset($this->request->post['selected']) && in_array($result['language_id'], $this->request->post['selected']),
 				'action'      => $action	
 			);		
 		}
@@ -254,12 +254,15 @@ class ControllerLocalisationLanguage extends Controller {
 		
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-
-		$this->id       = 'content';
+		
 		$this->template = 'localisation/language_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function getForm() {
@@ -428,11 +431,14 @@ class ControllerLocalisationLanguage extends Controller {
       		$this->data['status'] = 1;
     	}
 		
-		$this->id       = 'content';
 		$this->template = 'localisation/language_form.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
-		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 	
 	private function validateForm() {
@@ -478,7 +484,7 @@ class ControllerLocalisationLanguage extends Controller {
 		
 		$this->load->model('customer/order');
 		
-		foreach ($this->request->post['delete'] as $language_id) {
+		foreach ($this->request->post['selected'] as $language_id) {
 			$language_info = $this->model_localisation_language->getLanguage($language_id);
 
 			if ($this->config->get('config_language') == @$language_info['code']) {

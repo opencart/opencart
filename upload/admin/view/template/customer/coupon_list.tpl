@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -12,7 +13,7 @@
   <table class="list">
     <thead>
       <tr>
-        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);" /></td>
+        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
         <td class="left"><?php if ($sort == 'cd.name') { ?>
           <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
           <?php } else { ?>
@@ -52,10 +53,10 @@
       <?php foreach ($coupons as $coupon) { ?>
       <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
       <tr class="<?php echo $class; ?>">
-        <td style="align: center;"><?php if ($coupon['delete']) { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $coupon['coupon_id']; ?>" checked="checked" />
+        <td style="align: center;"><?php if ($coupon['selected']) { ?>
+          <input type="checkbox" name="selected[]" value="<?php echo $coupon['coupon_id']; ?>" checked="checked" />
           <?php } else { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $coupon['coupon_id']; ?>" />
+          <input type="checkbox" name="selected[]" value="<?php echo $coupon['coupon_id']; ?>" />
           <?php } ?></td>
         <td class="left"><?php echo $coupon['name']; ?></td>
         <td class="left"><?php echo $coupon['code']; ?></td>
@@ -77,3 +78,4 @@
   </table>
 </form>
 <div class="pagination"><?php echo $pagination; ?></div>
+<?php echo $footer; ?>

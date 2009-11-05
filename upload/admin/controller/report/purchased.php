@@ -31,13 +31,13 @@ class ControllerReportPurchased extends Controller {
       		'separator' => ' :: '
    		);		
 		
-		$this->load->model('report/report');
+		$this->load->model('report/purchased');
 		
-		$product_total = $this->model_report_report->getTotalOrderedProducts();
+		$product_total = $this->model_report_purchased->getTotalOrderedProducts();
 		
 		$this->data['products'] = array();
 
-		$results = $this->model_report_report->getProductPurchasedReport(($page - 1) * 10, 10);
+		$results = $this->model_report_purchased->getProductPurchasedReport(($page - 1) * 10, 10);
 		
 		foreach ($results as $result) {
 			$this->data['products'][] = array(
@@ -62,15 +62,18 @@ class ControllerReportPurchased extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('report/purchased' . $url . '&page=%s');
+		$pagination->url = $this->url->https('report/purchased&page=%s');
 			
 		$this->data['pagination'] = $pagination->render();		
 		
-		$this->id       = 'content'; 
 		$this->template = 'report/purchased.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
-		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}	
 }
 ?>

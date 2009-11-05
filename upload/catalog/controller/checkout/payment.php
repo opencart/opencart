@@ -3,46 +3,54 @@ class ControllerCheckoutPayment extends Controller {
 	private $error = array();
 	
   	public function index() {
+    	if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+      		$this->redirect($this->url->https('checkout/cart'));
+    	}
+		
     	if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->https('checkout/shipping');
 			
 	  		$this->redirect($this->url->https('account/login'));
     	} 
- 
-    	if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-      		$this->redirect($this->url->https('checkout/cart'));
-    	}
-			
+		
+		$this->load->model('account/address');
+		
     	if ($this->cart->hasShipping()) {
+			if (!isset($this->session->data['shipping_address_id']) || !$this->session->data['shipping_address_id']) {
+	  			$this->redirect($this->url->https('checkout/shipping'));
+			}
+			
 			if (!isset($this->session->data['shipping_method'])) {
 	  			$this->redirect($this->url->https('checkout/shipping'));
 			}
-
-			if (!$this->customer->hasAddress($this->session->data['shipping_address_id'])) {
-	  			$this->redirect($this->url->https('checkout/address/shipping'));
-    		}
 		} else {
 			unset($this->session->data['shipping_address_id']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
+			
+			$this->tax->setZone($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}
 		
-		if (!isset($this->session->data['payment_address_id'])) {
-			$this->session->data['payment_address_id'] = 0;
-		}
-		
-    	if (!$this->customer->hasAddress($this->session->data['payment_address_id']) && isset($this->session->data['shipping_address_id'])) {
+    	if (!isset($this->session->data['payment_address_id']) && isset($this->session->data['shipping_address_id']) && $this->session->data['shipping_address_id']) {
       		$this->session->data['payment_address_id'] = $this->session->data['shipping_address_id'];
     	}
-	
-    	if (!$this->customer->hasAddress($this->session->data['payment_address_id'])) {
+		
+    	if (!isset($this->session->data['payment_address_id'])) {
 	  		$this->session->data['payment_address_id'] = $this->customer->getAddressId();
     	}
 
-    	if (!isset($this->session->data['payment_address_id'])) {
+    	if (!$this->session->data['payment_address_id']) {
 	  		$this->redirect($this->url->https('checkout/address/payment'));
     	}
-
+		
+		$this->load->model('account/address');
+		
+		$payment_address = $this->model_account_address->getAddress($this->session->data['payment_address_id']);		
+		
+    	if (!$payment_address) {
+	  		$this->redirect($this->url->https('checkout/address/payment'));
+    	}		
+		
 		$this->load->model('checkout/extension');
 		
 		$method_data = array();
@@ -52,7 +60,7 @@ class ControllerCheckoutPayment extends Controller {
 		foreach ($results as $result) {
 			$this->load->model('payment/' . $result['key']);
 			
-			$method = $this->{'model_payment_' . $result['key']}->getMethod(); 
+			$method = $this->{'model_payment_' . $result['key']}->getMethod($payment_address['country_id'], $payment_address['zone_id']); 
 			 
 			if ($method) {
 				$method_data[$result['key']] = $method;
@@ -72,7 +80,7 @@ class ControllerCheckoutPayment extends Controller {
 		$this->language->load('checkout/payment');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment']];
+			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
 		  
 	  	  	$this->session->data['comment'] = strip_tags($this->request->post['comment']);
 		  
@@ -130,11 +138,9 @@ class ControllerCheckoutPayment extends Controller {
 		}
 		
     	$this->data['action'] = $this->url->https('checkout/payment');
-    
-		$address = $this->customer->getAddress($this->session->data['payment_address_id']);
-    	
-		if ($address['address_format']) {
-      		$format = $address['address_format'];
+		
+		if ($payment_address['address_format']) {
+      		$format = $payment_address['address_format'];
     	} else {
 			$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 		}
@@ -152,15 +158,15 @@ class ControllerCheckoutPayment extends Controller {
 		);
 	
 		$replace = array(
-	  		'firstname' => $address['firstname'],
-	  		'lastname'  => $address['lastname'],
-	  		'company'   => $address['company'],
-      		'address_1' => $address['address_1'],
-      		'address_2' => $address['address_2'],
-      		'city'      => $address['city'],
-      		'postcode'  => $address['postcode'],
-      		'zone'      => $address['zone'],
-      		'country'   => $address['country']  
+	  		'firstname' => $payment_address['firstname'],
+	  		'lastname'  => $payment_address['lastname'],
+	  		'company'   => $payment_address['company'],
+      		'address_1' => $payment_address['address_1'],
+      		'address_2' => $payment_address['address_2'],
+      		'city'      => $payment_address['city'],
+      		'postcode'  => $payment_address['postcode'],
+      		'zone'      => $payment_address['zone'],
+      		'country'   => $payment_address['country']  
 		);
 	
 		$this->data['address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
@@ -169,8 +175,8 @@ class ControllerCheckoutPayment extends Controller {
 		
 		$this->data['methods'] = $this->session->data['payment_methods'];
 
-		if (isset($this->request->post['payment'])) {
-			$this->data['default'] = $this->request->post['payment'];
+		if (isset($this->request->post['payment_method'])) {
+			$this->data['default'] = $this->request->post['payment_method'];
 		} elseif (isset($this->session->data['payment_method']['id'])) {
     		$this->data['default'] = $this->session->data['payment_method']['id'];
 		} else {
@@ -208,19 +214,28 @@ class ControllerCheckoutPayment extends Controller {
     	} else {
       		$this->data['back'] = $this->url->https('checkout/cart');
     	}
-	
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'checkout/payment.tpl';
-		$this->layout   = 'common/layout';
 		
-		$this->render();	
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/payment.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/checkout/payment.tpl';
+		} else {
+			$this->template = 'default/template/checkout/payment.tpl';
+		}
+		
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right'
+		);
+		
+		$this->response->setOutput($this->render(TRUE));	
   	}
   
   	private function validate() {
-    	if (!isset($this->request->post['payment'])) {
+    	if (!isset($this->request->post['payment_method'])) {
 	  		$this->error['warning'] = $this->language->get('error_payment');
 		} else {
-			if (!isset($this->session->data['payment_methods'][$this->request->post['payment']])) {
+			if (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
 				$this->error['warning'] = $this->language->get('error_payment');
 			}
 		}

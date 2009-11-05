@@ -14,13 +14,19 @@ class ControllerPaymentMoneybookers extends Controller {
 		$this->data['description'] = $this->config->get('config_store');
 		$this->data['transaction_id'] = $this->session->data['order_id'];
         $this->data['return_url'] = $this->url->https('checkout/success');
-        $this->data['cancel_url'] = $this->url->https('checkout/payment');	
+		
+		if ($this->request->get['route'] != 'checkout/guest/confirm') {
+			$this->data['cancel_url'] = $this->url->https('checkout/payment');
+		} else {
+			$this->data['cancel_url'] = $this->url->https('checkout/guest');
+		}
+		
 		$this->data['status_url'] = $this->url->https('payment/moneybookers/callback');
 		$this->data['language'] = $this->language->getCode();		
 		$this->data['logo'] = HTTP_IMAGE . $this->config->get('config_logo');
 		
         $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-
+			
 		$this->data['pay_from_email'] = $order_info['email'];
 		$this->data['firstname'] = $order_info['payment_firstname'];
         $this->data['lastname'] = $order_info['payment_lastname'];
@@ -30,11 +36,7 @@ class ControllerPaymentMoneybookers extends Controller {
 		$this->data['postal_code'] = $order_info['payment_postcode'];
         $this->data['city'] = $order_info['payment_city'];
         $this->data['state'] = $order_info['payment_zone'];
-		
-		$payment_address = $this->customer->getAddress($this->session->data['payment_address_id']);
-		
-		$this->data['country'] = $payment_address['iso_code_3'];
-        
+		$this->data['country'] = $order_info['payment_iso_code_3'];
 		$this->data['amount'] = $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
         $this->data['currency'] = $order_info['currency'];
 		
@@ -51,11 +53,21 @@ class ControllerPaymentMoneybookers extends Controller {
 		$encryption = new Encryption($this->config->get('config_encryption'));
 		
 		$this->data['order_id'] = $encryption->encrypt($this->session->data['order_id']);
+
+		if ($this->request->get['route'] != 'checkout/guest/confirm') {
+			$this->data['back'] = $this->url->https('checkout/payment');
+		} else {
+			$this->data['back'] = $this->url->https('checkout/guest');
+		}
 		
-		$this->data['back']	= $this->data['cancel_url'];
+		$this->id = 'payment';
 		
-		$this->id       = 'payment';
-		$this->template = $this->config->get('config_template') . 'payment/moneybookers.tpl';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/moneybookers.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/payment/moneybookers.tpl';
+		} else {
+			$this->template = 'default/template/payment/moneybookers.tpl';
+		}	
+		
 		$this->render();
 	}
 	

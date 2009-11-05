@@ -109,8 +109,8 @@ class ControllerCatalogDownload extends Controller {
 		
 		$this->load->model('catalog/download');
 			
-    	if (isset($this->request->post['delete']) && $this->validateDelete()) {	  
-			foreach ($this->request->post['delete'] as $download_id) {
+    	if (isset($this->request->post['selected']) && $this->validateDelete()) {	  
+			foreach ($this->request->post['selected'] as $download_id) {
 				$this->model_catalog_download->deleteDownload($download_id);
 			}
 			
@@ -211,7 +211,7 @@ class ControllerCatalogDownload extends Controller {
 				'download_id' => $result['download_id'],
 				'name'        => $result['name'],
 				'remaining'   => $result['remaining'],
-				'delete'      => isset($this->request->post['delete']) && in_array($result['download_id'], $this->request->post['delete']),
+				'selected'    => isset($this->request->post['selected']) && in_array($result['download_id'], $this->request->post['selected']),
 				'action'      => $action
 			);
 		}	
@@ -277,12 +277,15 @@ class ControllerCatalogDownload extends Controller {
 
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-
-		$this->id       = 'content';
+		
 		$this->template = 'catalog/download_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
   	}
   
   	private function getForm() {
@@ -374,12 +377,15 @@ class ControllerCatalogDownload extends Controller {
     	} else {
       		$this->data['remaining'] = 0;
     	}
- 
-		$this->id       = 'content';
-		$this->template = 'catalog/download_form.tpl';
-		$this->layout   = 'common/layout';
 		
- 		$this->render();		
+		$this->template = 'catalog/download_form.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));	
   	}
 
   	private function validateForm() { 
@@ -421,7 +427,7 @@ class ControllerCatalogDownload extends Controller {
 		
 		$this->load->model('catalog/product');
 
-		foreach ($this->request->post['delete'] as $download_id) {
+		foreach ($this->request->post['selected'] as $download_id) {
   			$product_total = $this->model_catalog_product->getTotalProductsByDownloadId($download_id);
     
 			if ($product_total) {

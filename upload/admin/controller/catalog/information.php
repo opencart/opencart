@@ -83,8 +83,8 @@ class ControllerCatalogInformation extends Controller {
 		
 		$this->load->model('catalog/information');
 		
-		if (isset($this->request->post['delete']) && $this->validateDelete()) {
-			foreach ($this->request->post['delete'] as $information_id) {
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $information_id) {
 				$this->model_catalog_information->deleteInformation($information_id);
 			}
 			
@@ -185,7 +185,7 @@ class ControllerCatalogInformation extends Controller {
 				'information_id' => $result['information_id'],
 				'title'      => $result['title'],
 				'sort_order' => $result['sort_order'],
-				'delete'     => isset($this->request->post['delete']) && in_array($result['information_id'], $this->request->post['delete']),
+				'selected'   => isset($this->request->post['selected']) && in_array($result['information_id'], $this->request->post['selected']),
 				'action'     => $action
 			);
 		}	
@@ -251,12 +251,15 @@ class ControllerCatalogInformation extends Controller {
 
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-
-		$this->id       = 'content';
+		
 		$this->template = 'catalog/information_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function getForm() {
@@ -357,12 +360,15 @@ class ControllerCatalogInformation extends Controller {
 		} else {
 			$this->data['sort_order'] = '';
 		}
-
-		$this->id       = 'content';
-		$this->template = 'catalog/information_form.tpl';
-		$this->layout   = 'common/layout';
 		
- 		$this->render();
+		$this->template = 'catalog/information_form.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validateForm() {

@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -12,7 +13,7 @@
   <table class="list">
     <thead>
       <tr>
-        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);" /></td>
+        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
         <td class="left"><?php if ($sort == 'pd.name') { ?>
           <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
           <?php } else { ?>
@@ -62,10 +63,10 @@
       <?php foreach ($products as $product) { ?>
       <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
       <tr class="<?php echo $class; ?>">
-        <td style="align: center;"><?php if ($product['delete']) { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $product['product_id']; ?>" checked="checked" />
+        <td style="align: center;"><?php if ($product['selected']) { ?>
+          <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" checked="checked" />
           <?php } else { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $product['product_id']; ?>" />
+          <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" />
           <?php } ?></td>
         <td class="left"><?php echo $product['name']; ?></td>
         <td class="left"><?php echo $product['model']; ?></td>
@@ -116,3 +117,4 @@ function filter() {
 	location = url;
 }
 //--></script>
+<?php echo $footer; ?>

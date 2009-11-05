@@ -1,7 +1,7 @@
 <?php
 class ModelTotalShipping extends Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
-		if ($this->cart->hasShipping() && $this->config->get('shipping_status')) {
+		if ($this->cart->hasShipping() && isset($this->session->data['shipping_method']) && $this->config->get('shipping_status')) {
 			$total_data[] = array( 
         		'title'      => $this->session->data['shipping_method']['title'] . ':',
         		'text'       => $this->currency->format($this->session->data['shipping_method']['cost']),

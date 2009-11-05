@@ -1,0 +1,65 @@
+/*
+ * CKFinder
+ * ========
+ * http://ckfinder.com
+ * Copyright (C) 2007-2009, CKSource - Frederico Knabben. All rights reserved.
+ *
+ * The software, this file and its contents are subject to the CKFinder
+ * License. Please read the license.txt file before using, installing, copying,
+ * modifying or distribute this file or part of its contents. The contents of
+ * this file is part of the Source Code of CKFinder.
+ *
+ * Styles used in the samples pages.
+ */
+
+body, td, th, input, select, textarea
+{
+	font-size: 12px;
+	font-family: Arial, Verdana, Sans-Serif;
+}
+
+h1
+{
+	font-weight: bold;
+	font-size: 180%;
+	margin-bottom: 10px;
+}
+
+form
+{
+	margin: 0;
+	padding: 0;
+}
+
+#outputSample
+{
+	table-layout: fixed;
+	width: 100%;
+}
+
+pre
+{
+	margin: 0;
+	padding: 0;
+
+	white-space: pre; /* CSS2 */
+	white-space: -moz-pre-wrap; /* Mozilla*/
+	white-space: -o-pre-wrap; /* Opera 7 */
+	white-space: pre-wrap; /* CSS 2.1 */
+	white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+	word-wrap: break-word; /* IE */
+}
+
+#outputSample thead th
+{
+	color: #dddddd;
+	background-color: #999999;
+	padding: 4px;
+	white-space: nowrap;
+}
+
+#outputSample tbody th
+{
+	vertical-align: top;
+	text-align: left;
+}

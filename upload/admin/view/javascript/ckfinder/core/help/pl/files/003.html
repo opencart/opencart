@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML	4.0	Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>CKFinder - Podręcznik Użytkownika</title>
+        <link href="other/help.css" type="text/css" rel="stylesheet" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type="text/javascript" src="other/help.js">
+        </script>
+    </head>
+    <body>
+    <h1>Okno z katalogami</h1>
+    <p>
+        W oknie z katalogami wyświetlone są katalogi w postaci drzewa, które służą do nawigacji
+        po strukturze katalogów. Katalogi służą do lepszego zorganizowania plików.
+    </p>
+    <h2>Podstawowe operacje</h2>
+    <h3>Otwieranie folderu</h3>
+    <p>
+        Ażeby otworzyć folder, i tym samy zobaczyć jego podfoldery, kliknij w znak "plus"
+        (<img src="images/002.gif" height="9" width="9" />) umieszczony przed nazwą folderu.
+        Jeżli znak plus nie jest widoczny, oznacza to że folder nie zawiera podrzędnych katalogów.
+    </p>
+    <p>
+        Spójrz na skecję "Ładowanie na żądanie" w dolnej partii tej strony, ażeby zrozumieć
+        w jaki sposób katalogi są załadowywane.
+    </p>
+    <h3>Zamykanie katalogu</h3>
+    <p>
+        Żeby zamknąć katalog i schować podrzędne katalogi, kliknij w znak "minus" (<img src="images/003.gif" height="9" width="9" />) znajdujący się z przodu nazwy katalogu.
+    </p><h3>Wybieranie katalogu</h3>
+    <p>
+        W celu zaznaczenia katalogu w CKFinderze, kliknij na nazwe katalogu albo na jego ikonkę.
+        Zaznaczony katalog będzie miał inny kolor tła.
+    </p>
+    <h2>Pozostałe operacje</h2>
+    <p>
+        Inne bardziej zaawansowane operacje na folderach mogą zostać wykonane przy użyciu
+        "<a href="012.html">menu kontekstowego</a>".
+        Następujące operacje są dostępne:
+    </p>
+    <p style="text-align: center">
+        <img src="images/004.png" width="117" height="75" />&nbsp;
+    </p>
+    <p>
+        <span class="info">Wskazówka:</span>
+        Pewne operacje mogą być niedostępne, w zależności od ustawień
+        przydzielonych przez administratora. Zobacz sekcję "<a href="014.html">Uprawnienia</a>" w celu uzyskania informacji na ten temat.
+    </p>
+    <div>
+        <h3>Tworzenie katalogów</h3>
+    </div>
+    <p>
+        Ażeby utworzyć pokatalog wewnątrz bieżącego katalogu, kliknij na opcję "Nowy Podkatalog"
+        dostepna w menu kontekstowym. Po kliknięciu pojawi się okno dialogowe z pytaniem o nazwę katalogu.
+        Po prostu wpisz nazwę katalogu i potwierdź.
+    </p>
+    <p>
+        Nie wszystkie znaki mogą być użyte w nazwach plików i katalogów z powodu ograniczeń
+        systemów operacyjnych, na których CKFinder może zostać uruchomiony. Przykładowo, następujące znaki
+        nie moga zostać użyte w nazwach plików/katalogów:
+        <strong>\</strong>
+        <strong>/</strong>
+        <strong>:</strong>
+        <strong>*</strong>
+        <strong>?</strong>
+        <strong>&quot;</strong>
+        <strong>&lt;</strong>
+        <strong>&gt;</strong>
+        <strong>|</strong>
+    </p>
+    <div>
+        <h3>Zmiana nazwy katalogów</h3>
+    </div>
+    <p>
+        Ażeby zmienić nazwę katalogu, kliknij opcję "Zmień nazwę" w menu kontekstowym.
+        Po kliknięciu pojawi się okno dialogowe, zawierające obecną nazwę katalogu.
+        Wpisz nową nazwe i potwierdź.
+    </p>
+    <p>
+        Nie wszystkie znaki mogą być użyte w nazwach plików i katalogów z powodu ograniczeń
+        systemów operacyjnych, na których CKFinder może zostać uruchomiony. Przykładowo, następujące znaki
+        nie moga zostać użyte w nazwach plików/katalogów:<strong>\</strong>
+        <strong>/</strong>
+        <strong>:</strong>
+        <strong>*</strong>
+        <strong>?</strong>
+        <strong>&quot;</strong>
+        <strong>&lt;</strong>
+        <strong>&gt;</strong>
+        <strong>|</strong>
+    </p>
+    <p>
+    <span class="warning">Uwaga:</span>
+    zmieniając nazwę folderu, odnośniki do plików w nim zawartych
+    przestaną być "prawidłowe", tym samym strony internetowe zawierające pliki z tego folderu nie
+    będą wyświetlać poprawnej zawartości. Z tego powodu zalecamy ostrożność przy korzystaniu z tej możliwości.
+    </p>
+    <div>
+        <h3>Kasowanie katalogów</h3>
+    </div>
+    <p>
+        Ażeby skasować katalog wraz z zawartością, kliknij opcję "Usuń" w menu kontekstowym.
+        Przed usunięciem CKFinder poprosi Cię o potwierdzenie operacji.
+    </p>
+    <p>
+        <span class="warning">Uwaga:</span>
+        po usunięciu katalogu, odnośniki do plików w nim zawartych
+        przestaną być "prawidłowe", tym samym strony internetowe zawierające pliki z tego folderu nie
+        będą wyświetlać poprawnej zawartości. Z tego powodu zalecamy ostrożność przy korzystaniu z tej możliwości.
+    </p>
+    <div>
+        <h2>Ładowanie "na żądanie"</h2>
+    </div>
+    <p>
+        The most important difference between CKFinder and the folders tree found in operating
+        systems, is that, in CKFinder, the folders are loaded "under request". It means
+        that it doesn't load the entire folders tree at startup, but loads a small subset
+        of them when "opening" the folder. This is a requirement on advanced web applications
+        like CKFinder.
+    </p>
+    <p>
+        To indicate that folders are being loaded, the "Loading..." label may appear when
+        opening a folder:
+    </p>
+    <p style="text-align: center">
+        <img src="images/005.png" width="162" height="74" />&nbsp;
+    </p>
+    <p>
+        The label will automatically disappear once the folders load is completed. Once
+        loaded, the label should not appear anymore for that folder.
+    </p>
+</body>
+</html>

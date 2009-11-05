@@ -14,10 +14,20 @@ class ControllerPaymentCheque extends Controller {
 		$this->data['address'] = $this->config->get('config_address');
 
 		$this->data['continue'] = $this->url->https('checkout/success');
-		$this->data['back'] = $this->url->https('checkout/payment');
+
+		if ($this->request->get['route'] != 'checkout/guest/confirm') {
+			$this->data['back'] = $this->url->https('checkout/payment');
+		} else {
+			$this->data['back'] = $this->url->https('checkout/guest');
+		}
 		
-		$this->id       = 'payment';
-		$this->template = $this->config->get('config_template') . 'payment/cheque.tpl';
+		$this->id = 'payment';
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/cheque.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/payment/cheque.tpl';
+		} else {
+			$this->template = 'default/template/payment/cheque.tpl';
+		}	
 		
 		$this->render(); 
 	}

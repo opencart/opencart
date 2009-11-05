@@ -21,11 +21,14 @@ class ControllerErrorPermission extends Controller {
       		'separator' => ' :: '
    		);
 		
-		$this->id       = 'content'; 
 		$this->template = 'error/permission.tpl';
-		$this->layout   = 'common/layout';
-		    
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
   	}
 }
 ?>

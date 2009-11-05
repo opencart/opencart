@@ -100,11 +100,20 @@ class ControllerInformationContact extends Controller {
 			$this->data['captcha'] = '';
 		}		
 	
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'information/contact.tpl';
-		$this->layout   = 'common/layout';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/information/contact.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/information/contact.tpl';
+		} else {
+			$this->template = 'default/template/information/contact.tpl';
+		}
 		
- 		$this->render();		
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right'
+		);
+		
+ 		$this->response->setOutput($this->render(TRUE));		
   	}
 
   	public function success() {
@@ -134,11 +143,20 @@ class ControllerInformationContact extends Controller {
 
     	$this->data['continue'] = $this->url->http('common/home');
 
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'common/success.tpl';
-		$this->layout   = 'common/layout';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/common/success.tpl';
+		} else {
+			$this->template = 'default/template/common/success.tpl';
+		}
 		
- 		$this->render();
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right'
+		);
+		
+ 		$this->response->setOutput($this->render(TRUE)); 
 	}
 
 	public function captcha() {
@@ -166,7 +184,7 @@ class ControllerInformationContact extends Controller {
       		$this->error['enquiry'] = $this->language->get('error_enquiry');
     	}
 
-    	if ((!isset($this->session->data['captcha'])) && ($this->session->data['captcha'] != $this->request->post['captcha'])) {
+    	if (!isset($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
       		$this->error['captcha'] = $this->language->get('error_captcha');
     	}
 		

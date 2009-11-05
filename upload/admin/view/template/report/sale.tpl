@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <div class="heading">
   <h1><?php echo $heading_title; ?></h1>
 </div>
@@ -101,3 +102,4 @@ $(document).ready(function() {
 	$('#date_end').datepicker({dateFormat: 'yy-mm-dd'});
 });
 //--></script>
+<?php echo $footer; ?>

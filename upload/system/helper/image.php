@@ -13,10 +13,10 @@ function image_resize($filename, $width, $height) {
 		$image->save(DIR_IMAGE . $new_image);
 	}
 
-	if ((isset($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] == 'on')) {
+	if (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1'))) {
 		return HTTPS_IMAGE . $new_image;
 	} else {
 		return HTTP_IMAGE . $new_image;
-	}
+	}	
 }
 ?>

@@ -1,14 +1,12 @@
 <?php 
-class ModelPaymentSecPay extends Model {
-  	public function getMethod() {
-		$this->load->language('payment/secpay');
+class ModelPaymentPayPoint extends Model {
+  	public function getMethod($country_id, $zone_id) {
+		$this->load->language('payment/paypoint');
 		
-		if ($this->config->get('secpay_status')) {
-			$address = $this->customer->getAddress($this->session->data['payment_address_id']);
+		if ($this->config->get('paypoint_status')) {
+      		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('paypoint_geo_zone_id') . "' AND country_id = '" . (int)$country_id . "' AND (zone_id = '" . (int)$zone_id . "' OR zone_id = '0')");
 			
-      		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('secpay_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
-			
-			if (!$this->config->get('secpay_geo_zone_id')) {
+			if (!$this->config->get('paypoint_geo_zone_id')) {
         		$status = TRUE;
       		} elseif ($query->num_rows) {
       		  	$status = TRUE; 
@@ -23,9 +21,9 @@ class ModelPaymentSecPay extends Model {
 	
 		if ($status) {  
       		$method_data = array( 
-        		'id'         => 'secpay',
+        		'id'         => 'paypoint',
         		'title'      => $this->language->get('text_title'),
-				'sort_order' => $this->config->get('secpay_sort_order')
+				'sort_order' => $this->config->get('paypoint_sort_order')
       		);
     	}
    

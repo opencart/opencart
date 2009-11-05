@@ -1,5 +1,5 @@
 <?php 
-class ControllerPaymentSagePay extends Controller {
+class ControllerPaymentSagepay extends Controller {
 	private $error = array(); 
 
 	public function index() {
@@ -144,12 +144,15 @@ class ControllerPaymentSagePay extends Controller {
 		} else {
 			$this->data['sagepay_sort_order'] = $this->config->get('sagepay_sort_order');
 		}
-
-		$this->id       = 'content';
-		$this->template = 'payment/sagepay.tpl';
-		$this->layout   = 'common/layout';
 		
- 		$this->render();
+		$this->template = 'payment/sagepay.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {

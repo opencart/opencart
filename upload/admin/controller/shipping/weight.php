@@ -104,12 +104,15 @@ class ControllerShippingWeight extends Controller {
 		$this->load->model('localisation/tax_class');
 				
 		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
-								
-		$this->id       = 'content';
-		$this->template = 'shipping/weight.tpl';
-		$this->layout   = 'common/layout';
 		
- 		$this->render();
+		$this->template = 'shipping/weight.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 		
 	private function validate() {

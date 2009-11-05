@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <div class="heading">
   <h1><?php echo $heading_title; ?></h1>
 </div>
@@ -30,3 +31,4 @@
   </tbody>
 </table>
 <div class="pagination"><?php echo $pagination; ?></div>
+<?php echo $footer; ?>

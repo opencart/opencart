@@ -96,11 +96,14 @@ class ControllerExtensionModule extends Controller {
 			}
 		}
 		
-		$this->id       = 'content';
 		$this->template = 'extension/module.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 	
 	public function install() {

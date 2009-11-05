@@ -72,11 +72,20 @@ class ControllerPaymentNochex extends Controller {
         $this->data['declined_url']       = $this->url->https('checkout/failure');
         //$this->data['callback_url']       = $this->url->https('checkout/payment'); // ???Not sure about this
 
-        $this->data['back'] = $this->url->https('checkout/payment');
+		if ($this->request->get['route'] != 'checkout/guest/confirm') {
+			$this->data['back'] = $this->url->https('checkout/payment');
+		} else {
+			$this->data['back'] = $this->url->https('checkout/guest');
+		}
+		
+		$this->id = 'payment';
 
-		$this->id       = 'payment';
-		$this->template = $this->config->get('config_template') . 'payment/nochex.tpl';
-
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/nochex.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/payment/nochex.tpl';
+		} else {
+			$this->template = 'default/template/payment/nochex.tpl';
+		}	
+		
 		$this->render();
 	}
 

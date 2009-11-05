@@ -12,10 +12,20 @@ class ControllerPaymentBankTransfer extends Controller {
 		$this->data['bank'] = nl2br($this->config->get('bank_transfer_bank_' . $this->language->getId()));
 
 		$this->data['continue'] = $this->url->https('checkout/success');
-		$this->data['back'] = $this->url->https('checkout/payment');
+
+		if ($this->request->get['route'] != 'checkout/guest/confirm') {
+			$this->data['back'] = $this->url->https('checkout/payment');
+		} else {
+			$this->data['back'] = $this->url->https('checkout/guest');
+		}
 		
-		$this->id       = 'payment';
-		$this->template = $this->config->get('config_template') . 'payment/bank_transfer.tpl';
+		$this->id = 'payment';
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/bank_transfer.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/payment/bank_transfer.tpl';
+		} else {
+			$this->template = 'default/template/payment/bank_transfer.tpl';
+		}	
 		
 		$this->render(); 
 	}

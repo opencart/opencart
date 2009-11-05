@@ -103,11 +103,14 @@ class ControllerShippingFlat extends Controller {
 		
 		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 								
-		$this->id       = 'content';
 		$this->template = 'shipping/flat.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 	
 	private function validate() {

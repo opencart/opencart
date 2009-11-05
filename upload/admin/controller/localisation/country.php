@@ -83,8 +83,8 @@ class ControllerLocalisationCountry extends Controller {
 		
 		$this->load->model('localisation/country');
 		
-		if (isset($this->request->post['delete']) && $this->validateDelete()) {
-			foreach ($this->request->post['delete'] as $country_id) {
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $country_id) {
 				$this->model_localisation_country->deleteCountry($country_id);
 			}
 			
@@ -186,7 +186,7 @@ class ControllerLocalisationCountry extends Controller {
 				'name'       => $result['name'] . (($result['country_id'] == $this->config->get('config_country_id')) ? $this->language->get('text_default') : NULL),
 				'iso_code_2' => $result['iso_code_2'],
 				'iso_code_3' => $result['iso_code_3'],
-				'delete'     => isset($this->request->post['delete']) && in_array($result['country_id'], $this->request->post['delete']),				
+				'selected'   => isset($this->request->post['selected']) && in_array($result['country_id'], $this->request->post['selected']),				
 				'action'     => $action
 			);
 		}
@@ -255,11 +255,14 @@ class ControllerLocalisationCountry extends Controller {
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 		
-		$this->id       = 'content';
 		$this->template = 'localisation/country_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function getForm() {
@@ -359,11 +362,14 @@ class ControllerLocalisationCountry extends Controller {
 			$this->data['address_format'] = '';
 		}
 
-		$this->id       = 'content';
 		$this->template = 'localisation/country_form.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
-		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validateForm() {
@@ -391,7 +397,7 @@ class ControllerLocalisationCountry extends Controller {
 		$this->load->model('localisation/zone');
 		$this->load->model('localisation/geo_zone');
 		
-		foreach ($this->request->post['delete'] as $country_id) {
+		foreach ($this->request->post['selected'] as $country_id) {
 			if ($this->config->get('config_country_id') == $country_id) {
 				$this->error['warning'] = $this->language->get('error_default');
 			}

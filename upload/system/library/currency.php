@@ -23,9 +23,9 @@ final class Currency {
       		); 
     	}
 
-    	if (array_key_exists(@$this->session->data['currency'], $this->currencies)) {
+    	if ((isset($this->session->data['currency'])) && (array_key_exists($this->session->data['currency'], $this->currencies))) {
       		$this->set($this->session->data['currency']);
-    	} elseif (array_key_exists(@$this->request->cookie['currency'], $this->currencies)) {
+    	} elseif ((isset($this->request->cookie['currency'])) && (array_key_exists($this->request->cookie['currency'], $this->currencies))) {
       		$this->set($this->request->cookie['currency']);
     	} else {
       		$this->set($this->config->get('config_currency'));
@@ -39,7 +39,7 @@ final class Currency {
       		$this->session->data['currency'] = $currency;
     	}
 
-    	if ((!isset($this->request->cookie['currency'])) || (@$this->request->cookie['currency'] != $currency)) {
+    	if ((!isset($this->request->cookie['currency'])) || ($this->request->cookie['currency'] != $currency)) {
 	  		setcookie('currency', $currency, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
     	}
   	}
@@ -94,6 +94,12 @@ final class Currency {
     	}
 
     	return $string;
+  	}
+	
+  	public function convert($number, $from, $to) {
+		$value = $this->currency->getValue($from) / $this->currency->getValue($to);
+		
+		return $number * $value;
   	}
 	
   	public function getId() {

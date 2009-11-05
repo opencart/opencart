@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -12,7 +13,7 @@
   <table class="list">
     <thead>
       <tr>
-        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);" /></td>
+        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
         <td class="left"><?php if ($sort == 'pd.name') { ?>
           <a href="<?php echo $sort_product; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_product; ?></a>
           <?php } else { ?>
@@ -47,10 +48,10 @@
       <?php foreach ($reviews as $review) { ?>
       <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
       <tr class="<?php echo $class; ?>">
-        <td style="align: center;"><?php if ($review['delete']) { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $review['review_id']; ?>" checked="checked" />
+        <td style="align: center;"><?php if ($review['selected']) { ?>
+          <input type="checkbox" name="selected[]" value="<?php echo $review['review_id']; ?>" checked="checked" />
           <?php } else { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $review['review_id']; ?>" />
+          <input type="checkbox" name="selected[]" value="<?php echo $review['review_id']; ?>" />
           <?php } ?></td>
         <td class="left"><?php echo $review['name']; ?></td>
         <td class="left"><?php echo $review['author']; ?></td>
@@ -71,3 +72,4 @@
   </table>
 </form>
 <div class="pagination"><?php echo $pagination; ?></div>
+<?php echo $footer; ?>

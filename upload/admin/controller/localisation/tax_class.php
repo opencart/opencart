@@ -83,8 +83,8 @@ class ControllerLocalisationTaxClass extends Controller {
  		
 		$this->load->model('localisation/tax_class');
 		
-		if (isset($this->request->post['delete']) && $this->validateDelete()) {
-			foreach ($this->request->post['delete'] as $tax_class_id) {
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $tax_class_id) {
 				$this->model_localisation_tax_class->deleteTaxClass($tax_class_id);
 			}
 			
@@ -184,7 +184,7 @@ class ControllerLocalisationTaxClass extends Controller {
 			$this->data['tax_classes'][] = array(
 				'tax_class_id' => $result['tax_class_id'],
 				'title'        => $result['title'],
-				'delete'       => isset($this->request->post['delete']) && in_array($result['tax_class_id'], $this->request->post['delete']),
+				'selected'     => isset($this->request->post['selected']) && in_array($result['tax_class_id'], $this->request->post['selected']),
 				'action'       => $action				
 			);
 		}
@@ -248,12 +248,15 @@ class ControllerLocalisationTaxClass extends Controller {
 
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-				
-		$this->id       = 'content';
+		
 		$this->template = 'localisation/tax_class_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function getForm() {
@@ -358,12 +361,15 @@ class ControllerLocalisationTaxClass extends Controller {
 		} else {
 			$this->data['tax_rates'] = array();
 		}
-
-		$this->id       = 'content';
-		$this->template = 'localisation/tax_class_form.tpl';
-		$this->layout   = 'common/layout';
 		
-		$this->render();
+		$this->template = 'localisation/tax_class_form.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validateForm() {
@@ -409,7 +415,7 @@ class ControllerLocalisationTaxClass extends Controller {
 		
 		$this->load->model('catalog/product');
 
-		foreach ($this->request->post['delete'] as $tax_class_id) {
+		foreach ($this->request->post['selected'] as $tax_class_id) {
 			$product_total = $this->model_catalog_product->getTotalproductsByTaxClassId($tax_class_id);
 
 			if ($product_total) {

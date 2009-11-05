@@ -6,8 +6,10 @@ require_once('config.php');
 require_once(DIR_SYSTEM . 'startup.php');
 
 // Load the application classes
-require_once(DIR_SYSTEM . 'helper/currency.php');
-require_once(DIR_SYSTEM . 'helper/user.php');
+require_once(DIR_SYSTEM . 'library/currency.php');
+require_once(DIR_SYSTEM . 'library/user.php');
+require_once(DIR_SYSTEM . 'library/weight.php');
+require_once(DIR_SYSTEM . 'library/measurement.php');
 
 // Loader
 $loader = new Loader();
@@ -38,30 +40,30 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	switch ($errno) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
-			$errors = "Notice";
+			$error = "Notice";
 			break;
 		case E_WARNING:
 		case E_USER_WARNING:
-			$errors = "Warning";
+			$error = "Warning";
 			break;
 		case E_ERROR:
 		case E_USER_ERROR:
-			$errors = "Fatal Error";
+			$error = "Fatal Error";
 			break;
 		default:
-			$errors = "Unknown";
+			$error = "Unknown";
 			break;
 	}
 		
     if ($config->get('config_error_display')) {
-        echo '<b>' . $errors . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
+        echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
 	}
 	
 	if ($config->get('config_error_log')) {
-		$log->write('PHP ' . $errors . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
+		$log->write('PHP ' . $error . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
 	}
 
-	return true;
+	return TRUE;
 }
 
 // set to the user defined error handler
@@ -85,18 +87,24 @@ Registry::set('cache', new Cache());
 // Url
 Registry::set('url', new Url());
 
+// Document
+Registry::set('document', new Document());
+
 // Language
 $language = new Language($config->get('config_admin_language'));
 Registry::set('language', $language);
 
-// Document
-Registry::set('document', new Document());
-
 // Currency
-Registry::set('currency', new HelperCurrency());
+Registry::set('currency', new Currency());
+
+// Weight
+Registry::set('weight', new Weight());
+
+// Measurement
+Registry::set('measurement', new Measurement());
 
 // User
-Registry::set('user', new HelperUser());
+Registry::set('user', new User());
 
 // Front Controller
 $controller = new Front();

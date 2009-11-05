@@ -1,9 +1,9 @@
 <?php
 abstract class Controller {
 	protected $id;
-	protected $template;
 	protected $layout;
 	protected $children = array();
+	protected $template;
 	protected $data = array();
 	protected $output;
 	
@@ -24,9 +24,9 @@ abstract class Controller {
 		exit();
 	}
 	
-	protected function render() {
+	protected function render($return = FALSE) {
 		foreach ($this->children as $child) {
-			$file  = DIR_APPLICATION . 'controller/' . $child . '.php';
+			$file  = DIR_APPLICATION . 'controller/' . str_replace('../', '', $child) . '.php';
 			$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $child);
 		
 			if (file_exists($file)) {
@@ -42,28 +42,11 @@ abstract class Controller {
 			}
 		}
 		
-		$this->output = $this->fetch($this->template);
-		
-		if ($this->layout) {
-			$file  = DIR_APPLICATION . 'controller/' . $this->layout . '.php';
-			$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $this->layout);
-			
-			if (file_exists($file)) {
-				require_once($file);
-				
-				$controller = new $class();
-				
-				$controller->data[$this->id] = $this->output;
-				
-				$controller->index();
-				
-				$this->output = $controller->output;
-			} else {
-				exit('Error: Could not load controller ' . $this->layout . '!');
-			}	
+		if ($return) {
+			return $this->fetch($this->template);
+		} else {
+			$this->output = $this->fetch($this->template);
 		}
-		
-		$this->response->setOutput($this->output);
 	}
 	
 	protected function fetch($filename) {

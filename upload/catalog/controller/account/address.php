@@ -60,7 +60,9 @@ class ControllerAccountAddress extends Controller {
 	  		
 			if (isset($this->session->data['shipping_address_id']) && ($this->request->get['address_id'] == $this->session->data['shipping_address_id'])) {
 	  			unset($this->session->data['shipping_methods']);
-				unset($this->session->data['shipping_method']);				
+				unset($this->session->data['shipping_method']);	
+
+				$this->tax->setZone($this->request->post['country_id'], $this->request->post['zone_id']);
 			}
 
 			if (isset($this->session->data['payment_address_id']) && ($this->request->get['address_id'] == $this->session->data['payment_address_id'])) {
@@ -91,7 +93,19 @@ class ControllerAccountAddress extends Controller {
 		
     	if (isset($this->request->get['address_id']) && $this->validateDelete()) {
 			$this->model_account_address->deleteAddress($this->request->get['address_id']);	
-												
+
+			if ($this->request->get['address_id'] == $this->session->data['shipping_address_id']) {
+	  			unset($this->session->data['shipping_address_id']);
+				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['shipping_method']);	
+			}
+
+			if ($this->request->get['address_id'] == $this->session->data['payment_address_id']) {
+	  			unset($this->session->data['payment_address_id']);
+				unset($this->session->data['payment_methods']);
+				unset($this->session->data['payment_method']);				
+			}
+			
 			$this->session->data['success'] = $this->language->get('text_delete');
 	  
 	  		$this->redirect($this->url->https('account/address'));
@@ -188,11 +202,20 @@ class ControllerAccountAddress extends Controller {
     	$this->data['insert'] = $this->url->https('account/address/insert');
 		$this->data['back'] = $this->url->https('account/account');
 		
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'account/addresses.tpl';
-		$this->layout   = 'common/layout';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/addresses.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/account/addresses.tpl';
+		} else {
+			$this->template = 'default/template/account/addresses.tpl';
+		}
 		
-		$this->render();		
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right'
+		);
+		
+		$this->response->setOutput($this->render(TRUE));		
   	}
 
   	private function getForm() {
@@ -235,6 +258,7 @@ class ControllerAccountAddress extends Controller {
 		$this->data['text_edit_address'] = $this->language->get('text_edit_address');
     	$this->data['text_yes'] = $this->language->get('text_yes');
     	$this->data['text_no'] = $this->language->get('text_no');
+		$this->data['text_select'] = $this->language->get('text_select');
 		
     	$this->data['entry_firstname'] = $this->language->get('entry_firstname');
     	$this->data['entry_lastname'] = $this->language->get('entry_lastname');
@@ -273,6 +297,18 @@ class ControllerAccountAddress extends Controller {
 		} else {
 			$this->data['error_city'] = '';
 		}		
+
+		if (isset($this->error['country'])) {
+			$this->data['error_country'] = $this->error['country'];
+		} else {
+			$this->data['error_country'] = '';
+		}
+
+		if (isset($this->error['zone'])) {
+			$this->data['error_zone'] = $this->error['zone'];
+		} else {
+			$this->data['error_zone'] = '';
+		}
 		
 		if (!isset($this->request->get['address_id'])) {
     		$this->data['action'] = $this->url->https('account/address/insert');
@@ -327,7 +363,7 @@ class ControllerAccountAddress extends Controller {
     	if (isset($this->request->post['postcode'])) {
       		$this->data['postcode'] = $this->request->post['postcode'];
     	} elseif (isset($address_info)) {
-			$this->data['postcode'] = $address_info['postcode'];
+			$this->data['postcode'] = $address_info['postcode'];			
 		} else {
       		$this->data['postcode'] = '';
     	}
@@ -343,7 +379,7 @@ class ControllerAccountAddress extends Controller {
     	if (isset($this->request->post['country_id'])) {
       		$this->data['country_id'] = $this->request->post['country_id'];
     	}  elseif (isset($address_info)) {
-      		$this->data['country_id'] = $address_info['country_id'];
+      		$this->data['country_id'] = $address_info['country_id'];			
     	} else {
       		$this->data['country_id'] = $this->config->get('config_country_id');
     	}
@@ -351,9 +387,9 @@ class ControllerAccountAddress extends Controller {
     	if (isset($this->request->post['zone_id'])) {
       		$this->data['zone_id'] = $this->request->post['zone_id'];
     	}  elseif (isset($address_info)) {
-      		$this->data['zone_id'] = $address_info['zone_id'];
+      		$this->data['zone_id'] = $address_info['zone_id'];			
     	} else {
-      		$this->data['zone_id'] = 0;
+      		$this->data['zone_id'] = 'FALSE';
     	}
 		
 		$this->load->model('localisation/country');
@@ -370,19 +406,28 @@ class ControllerAccountAddress extends Controller {
 
     	$this->data['back'] = $this->url->https('account/address');
 		
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'account/address.tpl';
-		$this->layout   = 'common/layout';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/address.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/account/address.tpl';
+		} else {
+			$this->template = 'default/template/account/address.tpl';
+		}
 		
-		$this->render();		
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right'
+		);
+		
+		$this->response->setOutput($this->render(TRUE));		
   	}
 	
   	private function validateForm() {
-    	if ((strlen(utf8_decode($this->request->post['firstname'])) < 3) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['firstname'])) < 1) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
       		$this->error['firstname'] = $this->language->get('error_firstname');
     	}
 
-    	if ((strlen(utf8_decode($this->request->post['lastname'])) < 3) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['lastname'])) < 1) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
       		$this->error['lastname'] = $this->language->get('error_lastname');
     	}
 
@@ -393,7 +438,15 @@ class ControllerAccountAddress extends Controller {
     	if ((strlen(utf8_decode($this->request->post['city'])) < 3) || (strlen(utf8_decode($this->request->post['city'])) > 128)) {
       		$this->error['city'] = $this->language->get('error_city');
     	}
-
+		
+    	if ($this->request->post['country_id'] == 'FALSE') {
+      		$this->error['country'] = $this->language->get('error_country');
+    	}
+		
+    	if ($this->request->post['zone_id'] == 'FALSE') {
+      		$this->error['zone'] = $this->language->get('error_zone');
+    	}
+		
     	if (!$this->error) {
       		return TRUE;
 		} else {
@@ -418,7 +471,7 @@ class ControllerAccountAddress extends Controller {
   	}
 	
   	public function zone() {	
-    	$output = '<select name="zone_id">';
+		$output = '<option value="FALSE">' . $this->language->get('text_select') . '</option>';
 
 		$this->load->model('localisation/zone');
 
@@ -435,10 +488,12 @@ class ControllerAccountAddress extends Controller {
     	} 
 		
 		if (!$results) {
-		  	$output .= '<option value="0">' . $this->language->get('text_none') . '</option>';
+			if (!$this->request->get['zone_id']) {
+		  		$output .= '<option value="0" selected="selected">' . $this->language->get('text_none') . '</option>';
+			} else {
+				$output .= '<option value="0">' . $this->language->get('text_none') . '</option>';
+			}
     	}
-
-    	$output .= '</select>';
 	
 		$this->response->setOutput($output);
   	}  

@@ -122,12 +122,15 @@ class ControllerPaymentBankTransfer extends Controller {
 		} else {
 			$this->data['bank_transfer_sort_order'] = $this->config->get('bank_transfer_sort_order');
 		}
-
-		$this->id       = 'content';
-		$this->template = 'payment/bank_transfer.tpl';
-		$this->layout   = 'common/layout';
 		
- 		$this->render();
+		$this->template = 'payment/bank_transfer.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {

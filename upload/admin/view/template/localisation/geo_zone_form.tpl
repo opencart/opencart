@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -28,12 +29,12 @@
     </table>
     <br />
     <div id="zone_to_geo_zone">
-      <?php $i = 0; ?>
+      <?php $zone_to_geo_zone_row = 0; ?>
       <?php foreach ($zone_to_geo_zones as $zone_to_geo_zone) { ?>
-      <table class="green" id="zone_to_geo_zone_row<?php echo $i; ?>">
+      <table class="green" id="zone_to_geo_zone_row<?php echo $zone_to_geo_zone_row; ?>">
         <tr>
           <td><?php echo $entry_country; ?><br />
-            <select name="zone_to_geo_zone[<?php echo $i; ?>][country_id]" id="country<?php echo $i; ?>" onchange="$('#zone<?php echo $i; ?>').load('index.php?route=localisation/geo_zone/zone&country_id=' + this.value + '&zone_id=0');">
+            <select name="zone_to_geo_zone[<?php echo $zone_to_geo_zone_row; ?>][country_id]" id="country<?php echo $zone_to_geo_zone_row; ?>" onchange="$('#zone<?php echo $zone_to_geo_zone_row; ?>').load('index.php?route=localisation/geo_zone/zone&country_id=' + this.value + '&zone_id=0');">
               <?php foreach ($countries as $country) { ?>
               <?php  if ($country['country_id'] == $zone_to_geo_zone['country_id']) { ?>
               <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
@@ -42,24 +43,24 @@
               <?php } ?>
               <?php } ?>
             </select></td>
-          <td rowspan="2"><a onclick="$('#zone_to_geo_zone_row<?php echo $i; ?>').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>
+          <td rowspan="2"><a onclick="$('#zone_to_geo_zone_row<?php echo $zone_to_geo_zone_row; ?>').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>
         </tr>
         <tr>
           <td><?php echo $entry_zone; ?><br />
-            <select name="zone_to_geo_zone[<?php echo $i; ?>][zone_id]" id="zone<?php echo $i; ?>">
+            <select name="zone_to_geo_zone[<?php echo $zone_to_geo_zone_row; ?>][zone_id]" id="zone<?php echo $zone_to_geo_zone_row; ?>">
             </select></td>
         </tr>
       </table>
       <script type="text/javascript"><!--
-	  $('#zone<?php echo $i; ?>').load('index.php?route=localisation/geo_zone/zone&country_id=<?php echo $zone_to_geo_zone['country_id']; ?>&zone_id=<?php echo $zone_to_geo_zone['zone_id']; ?>');
+	  $('#zone<?php echo $zone_to_geo_zone_row; ?>').load('index.php?route=localisation/geo_zone/zone&country_id=<?php echo $zone_to_geo_zone['country_id']; ?>&zone_id=<?php echo $zone_to_geo_zone['zone_id']; ?>');
 	  //--></script>
-      <?php $i++; ?>
+      <?php $zone_to_geo_zone_row++; ?>
       <?php } ?>
     </div>
     <a onclick="addGeoZone();" class="button"><span class="button_left button_insert"></span><span class="button_middle"><?php echo $button_add_geo_zone; ?></span><span class="button_right"></span></a></div>
 </form>
 <script type="text/javascript"><!--
-var zone_to_geo_zone_row = <?php echo $i; ?>;
+var zone_to_geo_zone_row = <?php echo $zone_to_geo_zone_row; ?>;
 
 function addGeoZone() {
 	html  = '<table class="green" id="zone_to_geo_zone_row' + zone_to_geo_zone_row + '">';
@@ -86,3 +87,4 @@ function addGeoZone() {
 <script type="text/javascript"><!--
 $.tabs('.tabs a'); 
 //--></script>
+<?php echo $footer; ?>

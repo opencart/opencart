@@ -17,7 +17,7 @@ class ControllerCommonLogin extends Controller {
 		
 		$this->data['title'] = $this->language->get('heading_title');
 		
-		if (isset($this->request->server['HTTPS']) && ($this->request->server['HTTPS'] == 'on')) {
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
 			$this->data['base'] = HTTPS_SERVER;
 		} else {
 			$this->data['base'] = HTTP_SERVER;
@@ -26,7 +26,8 @@ class ControllerCommonLogin extends Controller {
 		$this->data['charset'] = $this->language->get('charset');
 		$this->data['direction'] = $this->language->get('direction');
 		$this->data['language'] = $this->language->get('code');				
-
+		
+		$this->data['text_heading'] = $this->language->get('text_heading');
     	$this->data['text_login'] = $this->language->get('text_login');
 		
 		$this->data['entry_username'] = $this->language->get('entry_username');
@@ -43,8 +44,8 @@ class ControllerCommonLogin extends Controller {
     	$this->data['action'] = $this->url->https('common/login');
 		
 		$this->template = 'common/login.tpl';
-		$this->children = array('common/header');		
-    	$this->render();
+		
+    	$this->response->setOutput($this->render(TRUE));
   	}
 		
 	private function validate() {

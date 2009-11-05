@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -21,11 +22,16 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_meta_description; ?></td>
-        <td><textarea name="config_meta_description" cols="40" rows="5"><?php echo $config_meta_description; ?></textarea>
-          <?php if ($error_meta_description) { ?>
-          <span class="error"><?php echo $error_meta_description; ?></span>
+        <td><span class="required">*</span> <?php echo $entry_title; ?></td>
+        <td><input type="text" name="config_title" value="<?php echo $config_title; ?>" />
+          <br />
+          <?php if ($error_title) { ?>
+          <span class="error"><?php echo $error_title; ?></span>
           <?php } ?></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_meta_description; ?></td>
+        <td><textarea name="config_meta_description" cols="40" rows="5"><?php echo $config_meta_description; ?></textarea></td>
       </tr>
       <tr>
         <td><span class="required">*</span> <?php echo $entry_owner; ?></td>
@@ -67,10 +73,10 @@
         <td><?php echo $entry_template; ?></td>
         <td><select name="config_template" onchange="$('#template').load('index.php?route=setting/setting/template&template=' + encodeURIComponent(this.value));">
             <?php foreach ($templates as $template) { ?>
-            <?php if ($template['value'] == $config_template) { ?>
-            <option value="<?php echo $template['value']; ?>" selected="selected"><?php echo $template['name']; ?></option>
+            <?php if ($template == $config_template) { ?>
+            <option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
             <?php } else { ?>
-            <option value="<?php echo $template['value']; ?>"><?php echo $template['name']; ?></option>
+            <option value="<?php echo $template; ?>"><?php echo $template; ?></option>
             <?php } ?>
             <?php } ?>
           </select></td>
@@ -81,12 +87,9 @@
       </tr>
       <?php foreach ($languages as $language) { ?>
       <tr>
-        <td><span class="required">*</span> <?php echo $entry_welcome; ?></td>
+        <td><?php echo $entry_welcome; ?></td>
         <td><textarea name="config_welcome_<?php echo $language['language_id']; ?>" id="description<?php echo $language['language_id']; ?>"><?php echo ${'config_welcome_' . $language['language_id']}; ?></textarea>
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" />
-          <?php if (${'error_welcome_' . $language['language_id']}) { ?>
-          <span class="error"><?php echo ${'error_welcome_' . $language['language_id']}; ?></span>
-          <?php } ?></td>
+          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" /></td>
       </tr>
       <?php } ?>
     </table>
@@ -175,25 +178,25 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_weight; ?></td>
-        <td><select name="config_weight_class_id">
-            <?php foreach ($weight_classes as $weight_class) { ?>
-            <?php if ($weight_class['weight_class_id'] == $config_weight_class_id) { ?>
-            <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
-            <?php } else { ?>
-            <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
-            <?php } ?>
-            <?php } ?>
-          </select></td>
-      </tr>
-      <tr>
-        <td><?php echo $entry_measurement; ?></td>
+        <td><?php echo $entry_measurement_class; ?></td>
         <td><select name="config_measurement_class_id">
             <?php foreach ($measurement_classes as $measurement_class) { ?>
             <?php if ($measurement_class['measurement_class_id'] == $config_measurement_class_id) { ?>
             <option value="<?php echo $measurement_class['measurement_class_id']; ?>" selected="selected"><?php echo $measurement_class['title']; ?></option>
             <?php } else { ?>
             <option value="<?php echo $measurement_class['measurement_class_id']; ?>"><?php echo $measurement_class['title']; ?></option>
+            <?php } ?>
+            <?php } ?>
+          </select></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_weight_class; ?></td>
+        <td><select name="config_weight_class_id">
+            <?php foreach ($weight_classes as $weight_class) { ?>
+            <?php if ($weight_class['weight_class_id'] == $config_weight_class_id) { ?>
+            <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
+            <?php } else { ?>
+            <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
             <?php } ?>
             <?php } ?>
           </select></td>
@@ -253,6 +256,20 @@
           <input type="radio" name="config_customer_approval" value="1" />
           <?php echo $text_yes; ?>
           <input type="radio" name="config_customer_approval" value="0" checked="checked" />
+          <?php echo $text_no; ?>
+          <?php } ?></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_guest_checkout; ?></td>
+        <td><?php if ($config_guest_checkout) { ?>
+          <input type="radio" name="config_guest_checkout" value="1" checked="checked" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_guest_checkout" value="0" />
+          <?php echo $text_no; ?>
+          <?php } else { ?>
+          <input type="radio" name="config_guest_checkout" value="1" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_guest_checkout" value="0" checked="checked" />
           <?php echo $text_no; ?>
           <?php } ?></td>
       </tr>
@@ -511,11 +528,7 @@
       </tr>
       <tr>
         <td><span class="required">*</span> <?php echo $entry_encryption; ?></td>
-        <td><input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" />
-          <br />
-          <?php if ($error_encryption) { ?>
-          <span class="error"><?php echo $error_encryption; ?></span>
-          <?php } ?></td>
+        <td><input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" /></td>
       </tr>
       <tr>
         <td><?php echo $entry_seo_url; ?></td>
@@ -574,17 +587,11 @@
     </table>
   </div>
 </form>
-<script type="text/javascript" src="view/javascript/fckeditor/fckeditor.js"></script>
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
-var sBasePath = document.location.href.replace(/index\.php.*/, 'view/javascript/fckeditor/');
 <?php foreach ($languages as $language) { ?>
-var oFCKeditor<?php echo $language['language_id']; ?>          = new FCKeditor('description<?php echo $language['language_id']; ?>');
-	oFCKeditor<?php echo $language['language_id']; ?>.BasePath = sBasePath;
-	oFCKeditor<?php echo $language['language_id']; ?>.Value	   = document.getElementById('description<?php echo $language['language_id']; ?>').value;
-	oFCKeditor<?php echo $language['language_id']; ?>.Width    = '520';
-	oFCKeditor<?php echo $language['language_id']; ?>.Height   = '300';
-	oFCKeditor<?php echo $language['language_id']; ?>.ReplaceTextarea();
-<?php } ?>
+CKEDITOR.replace('description<?php echo $language['language_id']; ?>');
+<?php } ?>	
 //--></script>
 <script type="text/javascript"><!--
 $('#template').load('index.php?route=setting/setting/template&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
@@ -597,3 +604,4 @@ $('#zone_id').attr('value', '<?php echo $config_zone_id; ?>');
 <script type="text/javascript"><!--
 $.tabs('.tabs a'); 
 //--></script>
+<?php echo $footer; ?>

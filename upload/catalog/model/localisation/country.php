@@ -1,5 +1,11 @@
 <?php
 class ModelLocalisationCountry extends Model {
+	public function getCountry($country_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE country_id = '" . (int)$country_id . "'");
+		
+		return $query->row;
+	}	
+	
 	public function getCountries() {
 		$country_data = $this->cache->get('country');
 		
@@ -13,11 +19,5 @@ class ModelLocalisationCountry extends Model {
 
 		return $country_data;
 	}
-	
-	public function getCountry($country_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE country_id = '" . (int)$country_id . "'");
-		
-		return $query->row;
-	}	
 }
 ?>

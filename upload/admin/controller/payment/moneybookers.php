@@ -153,11 +153,14 @@ class ControllerPaymentMoneyBookers extends Controller {
 			$this->data['moneybookers_custnote'] = $this->config->get('moneybookers_custnote');
 		}
 		
-		$this->id       = 'content';
 		$this->template = 'payment/moneybookers.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {

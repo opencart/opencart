@@ -110,12 +110,15 @@ class ControllerPaymentCheque extends Controller {
 		} else {
 			$this->data['cheque_sort_order'] = $this->config->get('cheque_sort_order');
 		}
-
-		$this->id       = 'content';
-		$this->template = 'payment/cheque.tpl';
-		$this->layout   = 'common/layout';
 		
- 		$this->render();
+		$this->template = 'payment/cheque.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {

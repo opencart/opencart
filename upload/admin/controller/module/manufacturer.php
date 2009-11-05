@@ -81,11 +81,14 @@ class ControllerModuleManufacturer extends Controller {
 			$this->data['manufacturer_sort_order'] = $this->config->get('manufacturer_sort_order');
 		}				
 		
-		$this->id       = 'content';
 		$this->template = 'module/manufacturer.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 	
 	private function validate() {

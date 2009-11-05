@@ -56,32 +56,32 @@ class ControllerAccountEdit extends Controller {
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		$this->data['button_back'] = $this->language->get('button_back');
 
-		if (isset($this->error['message'])) {
-			$this->data['error'] = $this->error['message'];
+		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error'] = '';
+			$this->data['error_warning'] = '';
 		}
 
-		if (isset($this->error['error_firstname'])) {
-			$this->data['error_firstname'] = $this->error['error_firstname'];
+		if (isset($this->error['firstname'])) {
+			$this->data['error_firstname'] = $this->error['firstname'];
 		} else {
 			$this->data['error_firstname'] = '';
 		}
 
-		if (isset($this->error['error_lastname'])) {
-			$this->data['error_lastname'] = $this->error['error_lastname'];
+		if (isset($this->error['lastname'])) {
+			$this->data['error_lastname'] = $this->error['lastname'];
 		} else {
 			$this->data['error_lastname'] = '';
 		}
 		
-		if (isset($this->error['error_email'])) {
-			$this->data['error_email'] = $this->error['error_email'];
+		if (isset($this->error['email'])) {
+			$this->data['error_email'] = $this->error['email'];
 		} else {
 			$this->data['error_email'] = '';
 		}	
 		
-		if (isset($this->error['error_telephone'])) {
-			$this->data['error_telephone'] = $this->error['error_telephone'];
+		if (isset($this->error['telephone'])) {
+			$this->data['error_telephone'] = $this->error['telephone'];
 		} else {
 			$this->data['error_telephone'] = '';
 		}	
@@ -134,19 +134,28 @@ class ControllerAccountEdit extends Controller {
 
 		$this->data['back'] = $this->url->https('account/account');
 		
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'account/edit.tpl';
-		$this->layout   = 'common/layout';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/edit.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/account/edit.tpl';
+		} else {
+			$this->template = 'default/template/account/edit.tpl';
+		}
 		
-		$this->render();		
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right'
+		);
+		
+		$this->response->setOutput($this->render(TRUE));		
 	}
 
 	private function validate() {
-		if ((strlen(utf8_decode($this->request->post['firstname'])) < 3) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
+		if ((strlen(utf8_decode($this->request->post['firstname'])) < 1) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if ((strlen(utf8_decode($this->request->post['lastname'])) < 3) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
+		if ((strlen(utf8_decode($this->request->post['lastname'])) < 1) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
@@ -157,7 +166,7 @@ class ControllerAccountEdit extends Controller {
 		}
 		
 		if (($this->customer->getEmail() != $this->request->post['email']) && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-			$this->error['message'] = $this->language->get('error_exists');
+			$this->error['warning'] = $this->language->get('error_exists');
 		}
 
 		if ((strlen(utf8_decode($this->request->post['telephone'])) < 3) || (strlen(utf8_decode($this->request->post['telephone'])) > 32)) {

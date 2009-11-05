@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -12,7 +13,7 @@
   <table class="list">
     <thead>
       <tr>
-        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);" /></td>
+        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
         <td class="left"><?php if ($sort == 'c.name') { ?>
           <a href="<?php echo $sort_country; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_country; ?></a>
           <?php } else { ?>
@@ -37,10 +38,10 @@
       <?php foreach ($zones as $zone) { ?>
       <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
       <tr class="<?php echo $class; ?>">
-        <td style="align: center;"><?php if ($zone['delete']) { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $zone['zone_id']; ?>" checked="checked" />
+        <td style="align: center;"><?php if ($zone['selected']) { ?>
+          <input type="checkbox" name="selected[]" value="<?php echo $zone['zone_id']; ?>" checked="checked" />
           <?php } else { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $zone['zone_id']; ?>" />
+          <input type="checkbox" name="selected[]" value="<?php echo $zone['zone_id']; ?>" />
           <?php } ?></td>
         <td class="left"><?php echo $zone['country']; ?></td>
         <td class="left"><?php echo $zone['name']; ?></td>
@@ -59,3 +60,4 @@
   </table>
 </form>
 <div class="pagination"><?php echo $pagination; ?></div>
+<?php echo $footer; ?>

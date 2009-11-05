@@ -3,12 +3,20 @@ class ControllerCheckoutAddress extends Controller {
 	private $error = array(); 
 	
 	public function shipping() {
+		if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+	  		$this->redirect($this->url->https('checkout/cart'));
+    	}
+		
+    	if (!$this->cart->hasShipping()) {
+			$this->redirect($this->url->https('checkout/cart'));
+    	}
+		
 		if (!$this->customer->isLogged()) {  
 			$this->session->data['redirect'] = $this->url->https('checkout/shipping');
       		
 			$this->redirect($this->url->https('account/login'));
     	}	
-	
+
     	$this->language->load('checkout/address');
 
     	$this->document->title = $this->language->get('heading_title');
@@ -40,34 +48,50 @@ class ControllerCheckoutAddress extends Controller {
       	);
 
 		$this->load->model('account/address');
-				  
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['address_id'])) {
-	  		unset($this->session->data['shipping_methods']);
+		
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['address_id'])) {
+			$this->session->data['shipping_address_id'] = $this->request->post['address_id'];
+			
+			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['shipping_method']);
 			
-			$this->session->data['shipping_address_id'] = $this->request->post['address_id'];
-
+			if ($this->cart->hasShipping()) {
+				$address_info = $this->model_account_address->getAddress($this->request->post['address_id']);
+			
+				if ($address_info) {
+					$this->tax->setZone($address_info['country_id'], $address_info['zone_id']);
+				}
+			}
+			
 			$this->redirect($this->url->https('checkout/shipping'));
 		}
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-	  		unset($this->session->data['shipping_methods']);
-			unset($this->session->data['shipping_method']);
-			
 			$this->session->data['shipping_address_id'] = $this->model_account_address->addAddress($this->request->post);
+			
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['shipping_method']);
 
-	  		$this->redirect($this->url->https('checkout/shipping'));
-    	}
+			if ($this->cart->hasShipping()) {
+				$this->tax->setZone($this->request->post['country_id'], $this->request->post['zone_id']);
+			}	
+
+			$this->redirect($this->url->https('checkout/shipping'));
+		}
 	
 		$this->getForm('shipping');
   	}
   
   	public function payment() {
+    	if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+	  		$this->redirect($this->url->https('checkout/cart'));
+    	}
+		
 		if (!$this->customer->isLogged()) {  
-      		$this->session->data['redirect'] = $this->url->https('checkout/shipping');
-
-      		$this->redirect($this->url->https('account/login'));
-    	}		
+			$this->session->data['redirect'] = $this->url->https('checkout/shipping');
+      		
+			$this->redirect($this->url->https('account/login'));
+    	}	
 		
 		$this->language->load('checkout/address');
 		
@@ -110,20 +134,20 @@ class ControllerCheckoutAddress extends Controller {
 		$this->load->model('account/address');
 		 	 
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['address_id'])) {
-	  		unset($this->session->data['payment_methods']);
-			unset($this->session->data['payment_method']);
-			
 			$this->session->data['payment_address_id'] = $this->request->post['address_id'];
 	  		
+			unset($this->session->data['payment_methods']);
+			unset($this->session->data['payment_method']);
+			
 			$this->redirect($this->url->https('checkout/payment'));
 		} 
 	   
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-	  		unset($this->session->data['payment_methods']);
+			$this->session->data['payment_address_id'] = $this->model_account_address->addAddress($this->request->post);
+	  		
+			unset($this->session->data['payment_methods']);
 			unset($this->session->data['payment_method']);
 			
-			$this->session->data['payment_address_id'] = $this->model_account_address->addAddress($this->request->post);
-	    
 	  		$this->redirect($this->url->https('checkout/payment'));
     	}
 	
@@ -135,6 +159,7 @@ class ControllerCheckoutAddress extends Controller {
 
     	$this->data['text_new_address'] = $this->language->get('text_new_address');
    	 	$this->data['text_entries'] = $this->language->get('text_entries');
+		$this->data['text_select'] = $this->language->get('text_select');
 
     	$this->data['entry_firstname'] = $this->language->get('entry_firstname');
     	$this->data['entry_lastname'] = $this->language->get('entry_lastname');
@@ -171,10 +196,26 @@ class ControllerCheckoutAddress extends Controller {
 		} else {
 			$this->data['error_city'] = '';
 		}
+		
+		if (isset($this->error['country'])) {
+			$this->data['error_country'] = $this->error['country'];
+		} else {
+			$this->data['error_country'] = '';
+		}
 
+		if (isset($this->error['zone'])) {
+			$this->data['error_zone'] = $this->error['zone'];
+		} else {
+			$this->data['error_zone'] = '';
+		}
+		
     	$this->data['action'] = $this->url->https('checkout/address/' . $type);
-				
-    	$this->data['default'] = $this->session->data[$type . '_address_id'];
+		
+		if (isset($this->session->data[$type . '_address_id'])) {
+			$this->data['default'] = $this->session->data[$type . '_address_id'];
+		} else {
+			$this->data['default'] = '';
+		}
 
     	$this->data['addresses'] = array();
 
@@ -187,78 +228,87 @@ class ControllerCheckoutAddress extends Controller {
         		'href'       => $this->url->https('account/address/' . $type . '&address_id=' . $result['address_id'])
       		);
     	}
-
+		
 		if (isset($this->request->post['firstname'])) {
     		$this->data['firstname'] = $this->request->post['firstname'];
 		} else {
 			$this->data['firstname'] = '';
 		}
-		
+
 		if (isset($this->request->post['lastname'])) {
     		$this->data['lastname'] = $this->request->post['lastname'];
 		} else {
 			$this->data['lastname'] = '';
-		}		
-		
+		}
+
 		if (isset($this->request->post['company'])) {
     		$this->data['company'] = $this->request->post['company'];
 		} else {
 			$this->data['company'] = '';
-		}	
+		}
 
 		if (isset($this->request->post['address_1'])) {
     		$this->data['address_1'] = $this->request->post['address_1'];
 		} else {
 			$this->data['address_1'] = '';
-		}	
+		}
 
 		if (isset($this->request->post['address_2'])) {
     		$this->data['address_2'] = $this->request->post['address_2'];
 		} else {
 			$this->data['address_2'] = '';
-		}	
-		
+		}
+
 		if (isset($this->request->post['city'])) {
     		$this->data['city'] = $this->request->post['city'];
 		} else {
 			$this->data['city'] = '';
 		}
-		
+
 		if (isset($this->request->post['postcode'])) {
-    		$this->data['postcode'] = $this->request->post['postcode'];
+    		$this->data['postcode'] = $this->request->post['postcode'];				
 		} else {
 			$this->data['postcode'] = '';
-		}		
+		}
 
-    	if (isset($this->request->post['country_id'])) {
-      		$this->data['country_id'] = $this->request->post['country_id'];
-    	} else {
-      		$this->data['country_id'] = $this->config->get('config_country_id');
-    	}
- 
-    	if (isset($this->request->post['zone_id'])) {
-      		$this->data['zone_id'] = $this->request->post['zone_id'];
-    	} else {
-      		$this->data['zone_id'] = 0;
-    	}
+		if (isset($this->request->post['country_id'])) {
+    		$this->data['country_id'] = $this->request->post['country_id'];			
+		} else {
+			$this->data['country_id'] = $this->config->get('config_country_id');
+		}
 
+		if (isset($this->request->post['zone_id'])) {
+    		$this->data['zone_id'] = $this->request->post['zone_id'];			
+		} else {
+			$this->data['zone_id'] = 'FALSE';
+		}
+		
 		$this->load->model('localisation/country');
 		
     	$this->data['countries'] = $this->model_localisation_country->getCountries();
 		
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'checkout/address.tpl';
-		$this->layout   = 'common/layout';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/address.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/checkout/address.tpl';
+		} else {
+			$this->template = 'default/template/checkout/address.tpl';
+		}
 		
-		$this->render();			
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right'
+		);
+		
+		$this->response->setOutput($this->render(TRUE));			
   	}
 
   	private function validate() {
-    	if ((strlen(utf8_decode($this->request->post['firstname'])) < 3) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['firstname'])) < 1) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
       		$this->error['firstname'] = $this->language->get('error_firstname');
     	}
 
-    	if ((strlen(utf8_decode($this->request->post['lastname'])) < 3) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['lastname'])) < 1) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
       		$this->error['lastname'] = $this->language->get('error_lastname');
     	}
 
@@ -269,7 +319,15 @@ class ControllerCheckoutAddress extends Controller {
     	if ((strlen(utf8_decode($this->request->post['city'])) < 3) || (strlen(utf8_decode($this->request->post['city'])) > 32)) {
       		$this->error['city'] = $this->language->get('error_city');
     	} 
-	
+    	
+		if ($this->request->post['country_id'] == 'FALSE') {
+      		$this->error['country'] = $this->language->get('error_country');
+    	}
+		
+    	if ($this->request->post['zone_id'] == 'FALSE') {
+      		$this->error['zone'] = $this->language->get('error_zone');
+    	}
+		
 		if (!$this->error) {
 	  		return TRUE;
 		} else {
@@ -278,7 +336,7 @@ class ControllerCheckoutAddress extends Controller {
   	}
 
   	public function zone() {	
-    	$output = '<select name="zone_id">';
+		$output = '<option value="FALSE">' . $this->language->get('text_select') . '</option>';
 
 		$this->load->model('localisation/zone');
 
@@ -295,10 +353,12 @@ class ControllerCheckoutAddress extends Controller {
     	} 
 		 
 		if (!$results) {
-		  	$output .= '<option value="0">' . $this->language->get('text_none') . '</option>';
+			if (!$this->request->get['zone_id']) {
+		  		$output .= '<option value="0" selected="selected">' . $this->language->get('text_none') . '</option>';
+			} else {
+				$output .= '<option value="0">' . $this->language->get('text_none') . '</option>';
+			}
     	}
-
-    	$output .= '</select>';
 	
 		$this->response->setOutput($output);
   	}  

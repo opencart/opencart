@@ -1,0 +1,97 @@
+/*
+Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+.cke_skin_office2003 .cke_editor
+{
+/*
+	border: solid 1px #dcdcdc;
+*/
+	display: inline-table;
+	width: 100%;
+}
+
+.cke_skin_office2003,
+.cke_skin_office2003 .cke_wrapper
+{
+	display: block;
+}
+
+.cke_skin_office2003 .cke_top, .cke_skin_office2003 .cke_bottom
+{
+	background-color: #f7f8fd;
+}
+
+.cke_skin_office2003 .cke_top
+{
+    border-top: solid 1px #fafaf5;
+    border-left: solid 1px #fafaf5;
+    border-right: solid 1px #696969;
+    border-bottom: solid 2px #696969;
+}
+
+.cke_skin_office2003 .cke_rtl .cke_top
+{
+    border-left: solid 1px #696969;
+    border-right: solid 1px #fafaf5;
+}
+
+.cke_skin_office2003 .cke_bottom
+{
+    border-left: solid 1px #696969;
+    border-right: solid 1px #696969;
+    border-bottom: solid 1px #696969;
+}
+
+.cke_skin_office2003 .cke_contents
+{
+	border: solid 1px #696969;
+}
+
+.cke_skin_office2003 .cke_focus
+{
+	outline: auto 5px -webkit-focus-ring-color;
+}
+
+.cke_skin_office2003 textarea.cke_source
+{
+	font-family: 'Courier New' , Monospace;
+	font-size: small;
+	white-space: pre;
+	background-color: #fff;
+}
+
+.cke_skin_office2003 .cke_resizer
+{
+	width: 12px;
+	height: 12px;
+	margin-top: 16px;
+	display: block;
+	float: right;
+	/* resizer.gif*/
+	background-image: url(images/sprites.png);
+	_background-image: url(images/sprites_ie6.png);
+	background-position: 0 -1088px;
+	background-repeat: no-repeat;
+	cursor: se-resize;
+}
+
+.cke_skin_office2003 .cke_maximized .cke_resizer
+{
+	display: none;
+}
+
+.cke_skin_office2003 .cke_rtl .cke_resizer
+{
+	cursor: sw-resize;
+	/* resizer_rtl.gif*/
+	background-position: 0 -1115px;
+	float: left;
+}
+
+.cke_skin_office2003 .cke_browser_ie6 .cke_contents textarea,
+.cke_skin_office2003 .cke_browser_ie7 .cke_contents textarea
+{
+	position: absolute;
+}

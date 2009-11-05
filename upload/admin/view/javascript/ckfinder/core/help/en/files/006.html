@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML	4.0	Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>CKFinder User's Guide</title>
+	<link href="other/help.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="other/help.js"></script>
+</head>
+<body>
+	<h1>
+		Upload Button
+	</h1>
+	<p>
+		The upload* button, in the <a href="005.html">toolbar</a>, opens the "Upload Pane",
+		which can be used to add new files to the current folder. Here is a screenshot of
+		it:</p>
+	<p style="text-align: center">
+		<img height="153" src="images/012.gif" width="404" />&nbsp;</p>
+	<p>
+		To close the Upload Pane, just click in the "Cancel" button, or click "Upload" again
+		in the toolbar.</p>
+	<p>
+		* "<strong>Upload</strong>" is a technical term. It means the action of transferring
+		a file from your local computer to a central computer (also known as server).</p>
+	<h2>
+		Upload Steps</h2>
+	<ol>
+		<li>Select the file from your computer by using the "Browse..." button. The text in
+			the button may vary from browsers, but it will always be right after the "Select
+			the file to upload" field.</li>
+		<li>Click the "Upload Selected File" button. A message will appear, indicating that
+			the upload is in progress.</li>
+		<li>Wait for the upload to terminate. Once completed, the Upload Pane will close automatically,
+			and the uploaded file will be selected in the <a href="004.html">Files Pane</a>.</li>
+	</ol>
+	<h2>
+		Upload Messages</h2>
+	<p>
+		The following are messages that may appear when uploading files:</p>
+	<h3>
+		A file with the same name is already available. The uploaded file has been renamed
+		to "filename(1).ext"</h3>
+	<p>
+		Indicates that the uploaded file name is already in use by another
+		file in the same folder. To avoid conflict, a progressive number, the "(1)", has
+		been appended to the original name.</p>
+	<h3>
+		Invalid file</h3>
+	<p>
+		The uploaded file has not been accepted.
+	</p>
+	<p>
+		The most common cause for this messages is that CKFinder has been configured to
+		not accept the kind of file you are trying to upload, based on its extension. This
+		is a security restriction. Another cause of it may be that the file size is too
+		big for your system. In this case the server must be configured to accept bigger
+		files.
+	</p>
+	<h3>Upload cancelled for security reasons. The file contains HTML like data.</h3>
+	<p>The uploaded file contains HTML code. For security reasons, only files with selected extensions are allowed to contain HTML code.</p>
+
+	<p>
+		Please contact your system administrator to have more information regarding the
+		accepted file types and their size limits.</p>
+</body>
+</html>

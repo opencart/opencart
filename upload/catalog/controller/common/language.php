@@ -47,8 +47,13 @@ class ControllerCommonLanguage extends Controller {
 		
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();
 		
-		$this->id       = 'language';
-		$this->template = $this->config->get('config_template') . 'common/language.tpl';
+		$this->id = 'language';
+		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/language.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/common/language.tpl';
+		} else {
+			$this->template = 'default/template/common/language.tpl';
+		}
 		
 		$this->render(); 
 	}

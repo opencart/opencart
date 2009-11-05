@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -28,12 +29,12 @@
     </table>
     <br />
     <div id="tax_rate">
-      <?php $i = 0; ?>
+      <?php $tax_rate_row = 0; ?>
       <?php foreach ($tax_rates as $tax_rate) { ?>
-      <table class="green" id="tax_rate_row<?php echo $i; ?>">
+      <table class="green" id="tax_rate_row<?php echo $tax_rate_row; ?>">
         <tr>
           <td><?php echo $entry_geo_zone; ?><br />
-            <select name="tax_rate[<?php echo $i; ?>][geo_zone_id]" id="geo_zone_id<?php echo $i; ?>">
+            <select name="tax_rate[<?php echo $tax_rate_row; ?>][geo_zone_id]" id="geo_zone_id<?php echo $tax_rate_row; ?>">
               <?php foreach ($geo_zones as $geo_zone) { ?>
               <?php  if ($geo_zone['geo_zone_id'] == $tax_rate['geo_zone_id']) { ?>
               <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
@@ -43,21 +44,21 @@
               <?php } ?>
             </select></td>
           <td><span class="required">*</span> <?php echo $entry_description; ?><br />
-            <input type="text" name="tax_rate[<?php echo $i; ?>][description]" value="<?php echo $tax_rate['description']; ?>" /></td>
+            <input type="text" name="tax_rate[<?php echo $tax_rate_row; ?>][description]" value="<?php echo $tax_rate['description']; ?>" /></td>
           <td><span class="required">*</span> <?php echo $entry_rate; ?><br />
-            <input type="text" name="tax_rate[<?php echo $i; ?>][rate]" value="<?php echo $tax_rate['rate']; ?>" /></td>
+            <input type="text" name="tax_rate[<?php echo $tax_rate_row; ?>][rate]" value="<?php echo $tax_rate['rate']; ?>" /></td>
           <td><span class="required">*</span> <?php echo $entry_priority; ?><br />
-            <input type="text" name="tax_rate[<?php echo $i; ?>][priority]" value="<?php echo $tax_rate['priority']; ?>" size="1" /></td>
-          <td><a onclick="$('#tax_rate_row<?php echo $i; ?>').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>
+            <input type="text" name="tax_rate[<?php echo $tax_rate_row; ?>][priority]" value="<?php echo $tax_rate['priority']; ?>" size="1" /></td>
+          <td><a onclick="$('#tax_rate_row<?php echo $tax_rate_row; ?>').remove();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_remove; ?></span><span class="button_right"></span></a></td>
         </tr>
       </table>
-      <?php $i++; ?>
+      <?php $tax_rate_row++; ?>
       <?php } ?>
     </div>
     <a onclick="addRate();" class="button"><span class="button_left button_insert"></span><span class="button_middle"><?php echo $button_add_rate; ?></span><span class="button_right"></span></a></div>
 </form>
 <script type="text/javascript"><!--
-var tax_rate_row = <?php echo $i; ?>;
+var tax_rate_row = <?php echo $tax_rate_row; ?>;
 
 function addRate() {
 	html  = '<table class="green" id="tax_rate_row' + tax_rate_row + '">';
@@ -82,3 +83,4 @@ function addRate() {
 <script type="text/javascript"><!--
 $.tabs('.tabs a'); 
 //--></script>
+<?php echo $footer; ?>

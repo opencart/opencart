@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -10,48 +11,19 @@
   <div id="tab_general" class="page">
     <table class="form">
       <tr>
-        <td width="25%"><?php echo $entry_status; ?></td>
-        <td><select name="twocheckout_status">
-            <?php if ($twocheckout_status) { ?>
-            <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-            <option value="0"><?php echo $text_disabled; ?></option>
-            <?php } else { ?>
-            <option value="1"><?php echo $text_enabled; ?></option>
-            <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-            <?php } ?>
-          </select></td>
-      </tr>
-      <tr>
-        <td><?php echo $entry_geo_zone; ?></td>
-        <td><select name="twocheckout_geo_zone_id">
-            <option value="0"><?php echo $text_all_zones; ?></option>
-            <?php foreach ($geo_zones as $geo_zone) { ?>
-            <?php if ($geo_zone['geo_zone_id'] == $twocheckout_geo_zone_id) { ?>
-            <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-            <?php } else { ?>
-            <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
-            <?php } ?>
-            <?php } ?>
-          </select></td>
-      </tr>
-      <tr>
-        <td><?php echo $entry_order_status; ?></td>
-        <td><select name="twocheckout_order_status_id">
-            <?php foreach ($order_statuses as $order_status) { ?>
-            <?php if ($order_status['order_status_id'] == $twocheckout_order_status_id) { ?>
-            <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-            <?php } else { ?>
-            <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-            <?php } ?>
-            <?php } ?>
-          </select></td>
-      </tr>
-      <tr>
-        <td><?php echo $entry_email; ?></td>
-        <td><input type="text" name="twocheckout_email" value="<?php echo $twocheckout_email; ?>" />
+        <td width="25%"><?php echo $entry_account; ?></td>
+        <td><input type="text" name="twocheckout_account" value="<?php echo $twocheckout_account; ?>" />
           <br />
-          <?php if ($error_email) { ?>
-          <span class="error"><?php echo $error_email; ?></span>
+          <?php if ($error_account) { ?>
+          <span class="error"><?php echo $error_account; ?></span>
+          <?php } ?></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_secret; ?></td>
+        <td><input type="text" name="twocheckout_secret" value="<?php echo $twocheckout_secret; ?>" />
+          <br />
+          <?php if ($error_secret) { ?>
+          <span class="error"><?php echo $error_secret; ?></span>
           <?php } ?></td>
       </tr>
       <tr>
@@ -69,6 +41,43 @@
           <?php } ?></td>
       </tr>
       <tr>
+        <td><?php echo $entry_order_status; ?></td>
+        <td><select name="twocheckout_order_status_id">
+            <?php foreach ($order_statuses as $order_status) { ?>
+            <?php if ($order_status['order_status_id'] == $twocheckout_order_status_id) { ?>
+            <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+            <?php } else { ?>
+            <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+            <?php } ?>
+            <?php } ?>
+          </select></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_geo_zone; ?></td>
+        <td><select name="twocheckout_geo_zone_id">
+            <option value="0"><?php echo $text_all_zones; ?></option>
+            <?php foreach ($geo_zones as $geo_zone) { ?>
+            <?php if ($geo_zone['geo_zone_id'] == $twocheckout_geo_zone_id) { ?>
+            <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
+            <?php } else { ?>
+            <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+            <?php } ?>
+            <?php } ?>
+          </select></td>
+      </tr>
+      <tr>
+        <td><?php echo $entry_status; ?></td>
+        <td><select name="twocheckout_status">
+            <?php if ($twocheckout_status) { ?>
+            <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+            <option value="0"><?php echo $text_disabled; ?></option>
+            <?php } else { ?>
+            <option value="1"><?php echo $text_enabled; ?></option>
+            <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+            <?php } ?>
+          </select></td>
+      </tr>
+      <tr>
         <td><?php echo $entry_sort_order; ?></td>
         <td><input type="text" name="twocheckout_sort_order" value="<?php echo $twocheckout_sort_order; ?>" size="1" /></td>
       </tr>
@@ -78,3 +87,4 @@
 <script type="text/javascript"><!--
 $.tabs('.tabs a'); 
 //--></script>
+<?php echo $footer; ?>

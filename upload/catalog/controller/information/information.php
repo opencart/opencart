@@ -38,11 +38,20 @@ class ControllerInformationInformation extends Controller {
       		
 			$this->data['continue'] = $this->url->http('common/home');
 
-			$this->id       = 'content';
-			$this->template = $this->config->get('config_template') . 'information/information.tpl';
-			$this->layout   = 'common/layout';
-				  
-	  		$this->render();
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/information/information.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/information/information.tpl';
+			} else {
+				$this->template = 'default/template/information/information.tpl';
+			}
+			
+			$this->children = array(
+				'common/header',
+				'common/footer',
+				'common/column_left',
+				'common/column_right'
+			);		
+			
+	  		$this->response->setOutput($this->render(TRUE));
     	} else {
       		$this->document->breadcrumbs[] = array(
         		'href'      => $this->url->http('information/information&information_id=' . $this->request->get['information_id']),
@@ -60,11 +69,20 @@ class ControllerInformationInformation extends Controller {
 
       		$this->data['continue'] = $this->url->http('common/home');
 
-			$this->id       = 'content';
-			$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
-			$this->layout   = 'common/layout';
-			  
-	  		$this->render();
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
+			} else {
+				$this->template = 'default/template/error/not_found.tpl';
+			}
+			
+			$this->children = array(
+				'common/header',
+				'common/footer',
+				'common/column_left',
+				'common/column_right'
+			);
+		
+	  		$this->response->setOutput($this->render(TRUE));
     	}
   	}
 }

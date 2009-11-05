@@ -71,12 +71,15 @@ class ControllerTotalCoupon extends Controller {
 		} else {
 			$this->data['coupon_sort_order'] = $this->config->get('coupon_sort_order');
 		}
-																				
-		$this->id       = 'content';
-		$this->template = 'total/coupon.tpl';
-		$this->layout   = 'common/layout';
 		
- 		$this->render();
+		$this->template = 'total/coupon.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {

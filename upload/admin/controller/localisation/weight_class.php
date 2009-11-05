@@ -83,8 +83,8 @@ class ControllerLocalisationWeightClass extends Controller {
  		
 		$this->load->model('localisation/weight_class');
 		
-		if (isset($this->request->post['delete']) && $this->validateDelete()) {
-			foreach ($this->request->post['delete'] as $weight_class_id) {
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $weight_class_id) {
 				$this->model_localisation_weight_class->deleteWeightClass($weight_class_id);
 			}
 			
@@ -185,7 +185,7 @@ class ControllerLocalisationWeightClass extends Controller {
 				'weight_class_id' => $result['weight_class_id'],
 				'title'           => $result['title'] . (($result['weight_class_id'] == $this->config->get('config_weight_class_id')) ? $this->language->get('text_default') : NULL),
 				'unit'            => $result['unit'],
-				'delete'          => isset($this->request->post['delete']) && in_array($result['weight_class_id'], $this->request->post['delete']),
+				'selected'        => isset($this->request->post['selected']) && in_array($result['weight_class_id'], $this->request->post['selected']),
 				'action'          => $action
 			);
 		}
@@ -252,11 +252,14 @@ class ControllerLocalisationWeightClass extends Controller {
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 
-		$this->id       = 'content';
 		$this->template = 'localisation/weight_class_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function getForm() {
@@ -350,11 +353,14 @@ class ControllerLocalisationWeightClass extends Controller {
 			$this->data['weight_rule'] = array();
 		}				
 		
-		$this->id       = 'content';
 		$this->template = 'localisation/weight_class_form.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
-		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validateForm() {
@@ -386,7 +392,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		
 		$this->load->model('catalog/product');
 		
-		foreach ($this->request->post['delete'] as $weight_class_id) {
+		foreach ($this->request->post['selected'] as $weight_class_id) {
 			if ($this->config->get('config_weight_class_id') == $weight_class_id) {
 				$this->error['warning'] = $this->language->get('error_default');
 			}

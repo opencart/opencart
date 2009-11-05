@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 13, 2009 at 09:39 PM
+-- Generation Time: Oct 30, 2009 at 01:12 AM
 -- Server version: 5.0.81
 -- PHP Version: 5.2.6
 
@@ -40,7 +40,7 @@ CREATE TABLE `opencart_address` (
   `zone_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`address_id`),
   KEY `customer_id` (`customer_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `opencart_address`
@@ -56,7 +56,7 @@ CREATE TABLE `opencart_address` (
 DROP TABLE IF EXISTS `opencart_category`;
 CREATE TABLE `opencart_category` (
   `category_id` int(11) NOT NULL auto_increment,
-  `image` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `image` varchar(255) collate utf8_unicode_ci default NULL,
   `parent_id` int(11) NOT NULL default '0',
   `sort_order` int(3) NOT NULL default '0',
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -71,8 +71,8 @@ CREATE TABLE `opencart_category` (
 INSERT INTO `opencart_category` (`category_id`, `image`, `parent_id`, `sort_order`, `date_added`, `date_modified`) VALUES
 (25, '', 0, 3, '2009-01-31 01:04:25', '2009-02-02 14:11:14'),
 (27, '', 20, 2, '2009-01-31 01:55:34', '2009-07-18 21:40:51'),
-(20, '', 0, 1, '2009-01-05 21:49:43', '2009-08-07 14:04:42'),
-(24, '', 0, 5, '2009-01-20 02:36:26', '2009-02-03 14:22:23'),
+(20, '', 0, 1, '2009-01-05 21:49:43', '2009-10-28 19:03:44'),
+(24, '', 0, 5, '2009-01-20 02:36:26', '2009-08-17 23:31:52'),
 (18, '', 0, 2, '2009-01-05 21:49:15', '2009-02-03 13:54:50'),
 (17, '', 0, 4, '2009-01-03 21:08:57', '2009-02-02 14:12:10'),
 (28, '', 25, 1, '2009-02-02 13:11:12', '2009-02-02 14:11:26'),
@@ -95,7 +95,7 @@ CREATE TABLE `opencart_category_description` (
   `category_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
-  `meta_description` varchar(66) collate utf8_unicode_ci NOT NULL,
+  `meta_description` varchar(255) collate utf8_unicode_ci NOT NULL,
   `description` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`category_id`,`language_id`),
   KEY `name` (`name`)
@@ -107,7 +107,7 @@ CREATE TABLE `opencart_category_description` (
 
 INSERT INTO `opencart_category_description` (`category_id`, `language_id`, `name`, `meta_description`, `description`) VALUES
 (18, 1, 'Laptops &amp; Notebooks', '', ''),
-(24, 1, ' Phones &amp; PDAs', '', ''),
+(24, 1, 'Phones &amp; PDAs', '', ''),
 (25, 1, 'Components', '', ''),
 (17, 1, 'Software', '', ''),
 (26, 1, 'PC', '', ''),
@@ -119,7 +119,7 @@ INSERT INTO `opencart_category_description` (`category_id`, `language_id`, `name
 (32, 1, 'Web Cameras', '', ''),
 (33, 1, 'Cameras', '', ''),
 (34, 1, 'MP3 Players', '', ''),
-(20, 1, 'Desktops', 'test', '&lt;p&gt;test&lt;/p&gt;');
+(20, 1, 'Desktops', 'Example of category description textExample of category descriptio', '&lt;p&gt;\r\n	Example of category description text&lt;/p&gt;\r\n');
 
 -- --------------------------------------------------------
 
@@ -253,7 +253,7 @@ INSERT INTO `opencart_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`
 (109, 'Kazakhstan', 'KZ', 'KAZ', ''),
 (110, 'Kenya', 'KE', 'KEN', ''),
 (111, 'Kiribati', 'KI', 'KIR', ''),
-(112, 'Korea Democratic People&#039;s Republic Of (North Korea)', 'KP', 'PRK', ''),
+(112, 'North Korea', 'KP', 'PRK', ''),
 (113, 'Korea, Republic of', 'KR', 'KOR', ''),
 (114, 'Kuwait', 'KW', 'KWT', ''),
 (115, 'Kyrgyzstan', 'KG', 'KGZ', ''),
@@ -267,7 +267,7 @@ INSERT INTO `opencart_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`
 (123, 'Lithuania', 'LT', 'LTU', ''),
 (124, 'Luxembourg', 'LU', 'LUX', ''),
 (125, 'Macau', 'MO', 'MAC', ''),
-(126, 'Macedonia, The Former Yugoslav Republic of', 'MK', 'MKD', ''),
+(126, 'Macedonia', 'MK', 'MKD', ''),
 (127, 'Madagascar', 'MG', 'MDG', ''),
 (128, 'Malawi', 'MW', 'MWI', ''),
 (129, 'Malaysia', 'MY', 'MYS', ''),
@@ -335,7 +335,7 @@ INSERT INTO `opencart_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`
 (191, 'Solomon Islands', 'SB', 'SLB', ''),
 (192, 'Somalia', 'SO', 'SOM', ''),
 (193, 'South Africa', 'ZA', 'ZAF', ''),
-(194, 'South Georgia and the South Sandwich Islands', 'GS', 'SGS', ''),
+(194, 'South Georgia &amp; South Sandwich Islands', 'GS', 'SGS', ''),
 (195, 'Spain', 'ES', 'ESP', ''),
 (196, 'Sri Lanka', 'LK', 'LKA', ''),
 (197, 'St. Helena', 'SH', 'SHN', ''),
@@ -394,10 +394,11 @@ CREATE TABLE `opencart_coupon` (
   `code` varchar(10) collate utf8_unicode_ci NOT NULL,
   `type` char(1) collate utf8_unicode_ci NOT NULL,
   `discount` decimal(15,4) NOT NULL,
+  `logged` int(1) NOT NULL,
   `shipping` int(1) NOT NULL,
   `total` decimal(15,4) NOT NULL,
-  `date_start` date NOT NULL,
-  `date_end` date NOT NULL,
+  `date_start` date NOT NULL default '0000-00-00',
+  `date_end` date NOT NULL default '0000-00-00',
   `uses_total` int(11) NOT NULL,
   `uses_customer` varchar(11) collate utf8_unicode_ci NOT NULL,
   `status` int(1) NOT NULL,
@@ -409,10 +410,10 @@ CREATE TABLE `opencart_coupon` (
 -- Dumping data for table `opencart_coupon`
 --
 
-INSERT INTO `opencart_coupon` (`coupon_id`, `code`, `type`, `discount`, `shipping`, `total`, `date_start`, `date_end`, `uses_total`, `uses_customer`, `status`, `date_added`) VALUES
-(4, '2222', 'P', '10.0000', 0, '0.0000', '2009-01-27', '2009-12-31', 10, '10', 1, '2009-01-27 13:55:03'),
-(5, '3333', 'P', '0.0000', 1, '100.0000', '2009-03-01', '2009-08-31', 10, '10', 1, '2009-03-14 21:13:53'),
-(6, '1111', 'P', '10.0000', 0, '10.0000', '2009-03-01', '2009-05-31', 10, '1', 1, '2009-03-14 21:15:18');
+INSERT INTO `opencart_coupon` (`coupon_id`, `code`, `type`, `discount`, `logged`, `shipping`, `total`, `date_start`, `date_end`, `uses_total`, `uses_customer`, `status`, `date_added`) VALUES
+(4, '2222', 'P', '10.0000', 0, 0, '0.0000', '2009-01-27', '2009-12-31', 10, '10', 1, '2009-01-27 13:55:03'),
+(5, '3333', 'P', '0.0000', 0, 1, '100.0000', '2009-03-01', '2009-08-31', 10, '10', 1, '2009-03-14 21:13:53'),
+(6, '1111', 'P', '10.0000', 0, 0, '10.0000', '2007-01-01', '2011-03-01', 10, '10', 1, '2009-03-14 21:15:18');
 
 -- --------------------------------------------------------
 
@@ -485,9 +486,9 @@ CREATE TABLE `opencart_currency` (
 --
 
 INSERT INTO `opencart_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`) VALUES
-(1, 'Pound Sterling', 'GBP', '£', '', '2', 1.00000000, 1, '2009-07-04 17:00:59'),
-(2, 'US Dollar', 'USD', '$', '', '2', 1.65789998, 1, '2009-08-13 21:10:42'),
-(3, 'Euro', 'EUR', '', '€', '2', 1.16050005, 1, '2009-08-13 21:10:42');
+(1, 'Pound Sterling', 'GBP', '&pound;', '', '2', 1.00000000, 1, '2009-10-30 00:48:39'),
+(2, 'US Dollar', 'USD', '$', '', '2', 1.65450001, 1, '2009-10-30 00:48:39'),
+(3, 'Euro', 'EUR', '', '&euro;', '2', 1.11549997, 1, '2009-10-30 00:48:39');
 
 -- --------------------------------------------------------
 
@@ -512,7 +513,7 @@ CREATE TABLE `opencart_customer` (
   `ip` varchar(15) collate utf8_unicode_ci NOT NULL default '0',
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`customer_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `opencart_customer`
@@ -600,19 +601,20 @@ CREATE TABLE `opencart_extension` (
 
 INSERT INTO `opencart_extension` (`extension_id`, `type`, `key`) VALUES
 (23, 'payment', 'cod'),
-(14, 'total', 'coupon'),
 (22, 'total', 'shipping'),
 (63, 'total', 'low_order_fee'),
 (57, 'total', 'sub_total'),
 (58, 'total', 'tax'),
 (59, 'total', 'total'),
-(76, 'shipping', 'free'),
 (77, 'module', 'cart'),
 (78, 'module', 'category'),
 (79, 'module', 'currency'),
 (80, 'module', 'information'),
 (81, 'module', 'manufacturer'),
-(115, 'module', 'bestseller');
+(115, 'module', 'bestseller'),
+(126, 'feed', 'google_base'),
+(128, 'total', 'coupon'),
+(184, 'shipping', 'free');
 
 -- --------------------------------------------------------
 
@@ -636,7 +638,8 @@ CREATE TABLE `opencart_geo_zone` (
 
 INSERT INTO `opencart_geo_zone` (`geo_zone_id`, `name`, `description`, `date_modified`, `date_added`) VALUES
 (3, 'UK VAT Zone', 'UK VAT', '2009-07-04 17:04:28', '2009-01-06 23:26:25'),
-(4, 'UK Shipping', 'UK Shippng Zones', '0000-00-00 00:00:00', '2009-06-23 01:14:53');
+(4, 'UK Shipping', 'UK Shipping Zones', '2009-08-22 23:56:27', '2009-06-23 01:14:53'),
+(5, 'German VAT Zone', 'German VAT', '2009-10-20 17:36:51', '2009-10-20 17:36:30');
 
 -- --------------------------------------------------------
 
@@ -722,7 +725,7 @@ DROP TABLE IF EXISTS `opencart_manufacturer`;
 CREATE TABLE `opencart_manufacturer` (
   `manufacturer_id` int(11) NOT NULL auto_increment,
   `name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-  `image` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `image` varchar(255) collate utf8_unicode_ci default NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY  (`manufacturer_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -782,10 +785,10 @@ CREATE TABLE `opencart_measurement_rule` (
 
 INSERT INTO `opencart_measurement_rule` (`from_id`, `to_id`, `rule`) VALUES
 (2, 1, '2.5400'),
-(1, 3, '10.0000'),
+(1, 2, '0.3937'),
 (3, 2, '0.0394'),
 (3, 1, '0.1000'),
-(1, 2, '0.3937'),
+(1, 3, '10.0000'),
 (2, 3, '25.4000');
 
 -- --------------------------------------------------------
@@ -811,7 +814,9 @@ CREATE TABLE `opencart_order` (
   `shipping_city` varchar(128) collate utf8_unicode_ci NOT NULL,
   `shipping_postcode` varchar(10) collate utf8_unicode_ci NOT NULL default '',
   `shipping_zone` varchar(128) collate utf8_unicode_ci NOT NULL,
+  `shipping_zone_id` int(11) NOT NULL,
   `shipping_country` varchar(128) collate utf8_unicode_ci NOT NULL,
+  `shipping_country_id` int(11) NOT NULL,
   `shipping_address_format` text collate utf8_unicode_ci NOT NULL,
   `shipping_method` varchar(128) collate utf8_unicode_ci NOT NULL default '',
   `payment_firstname` varchar(32) collate utf8_unicode_ci NOT NULL default '',
@@ -822,7 +827,9 @@ CREATE TABLE `opencart_order` (
   `payment_city` varchar(128) collate utf8_unicode_ci NOT NULL,
   `payment_postcode` varchar(10) collate utf8_unicode_ci NOT NULL default '',
   `payment_zone` varchar(128) collate utf8_unicode_ci NOT NULL,
+  `payment_zone_id` int(11) NOT NULL,
   `payment_country` varchar(128) collate utf8_unicode_ci NOT NULL,
+  `payment_country_id` int(11) NOT NULL,
   `payment_address_format` text collate utf8_unicode_ci NOT NULL,
   `payment_method` varchar(128) collate utf8_unicode_ci NOT NULL default '',
   `comment` text collate utf8_unicode_ci NOT NULL,
@@ -837,7 +844,7 @@ CREATE TABLE `opencart_order` (
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   `ip` varchar(15) collate utf8_unicode_ci NOT NULL default '',
   PRIMARY KEY  (`order_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `opencart_order`
@@ -860,7 +867,7 @@ CREATE TABLE `opencart_order_download` (
   `mask` varchar(128) collate utf8_unicode_ci NOT NULL default '',
   `remaining` int(3) NOT NULL default '0',
   PRIMARY KEY  (`order_download_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `opencart_order_download`
@@ -882,7 +889,7 @@ CREATE TABLE `opencart_order_history` (
   `comment` text collate utf8_unicode_ci NOT NULL,
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`order_history_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `opencart_order_history`
@@ -900,12 +907,13 @@ CREATE TABLE `opencart_order_option` (
   `order_option_id` int(11) NOT NULL auto_increment,
   `order_id` int(11) NOT NULL,
   `order_product_id` int(11) NOT NULL,
+  `product_option_value_id` int(11) NOT NULL default '0',
   `name` varchar(255) collate utf8_unicode_ci NOT NULL,
   `value` varchar(255) collate utf8_unicode_ci NOT NULL,
   `price` decimal(15,4) NOT NULL default '0.0000',
   `prefix` char(1) collate utf8_unicode_ci NOT NULL default '',
   PRIMARY KEY  (`order_option_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `opencart_order_option`
@@ -930,7 +938,7 @@ CREATE TABLE `opencart_order_product` (
   `tax` decimal(15,4) NOT NULL default '0.0000',
   `quantity` int(4) NOT NULL default '0',
   PRIMARY KEY  (`order_product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `opencart_order_product`
@@ -984,7 +992,7 @@ CREATE TABLE `opencart_order_total` (
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY  (`order_total_id`),
   KEY `idx_orders_total_orders_id` (`order_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `opencart_order_total`
@@ -1000,10 +1008,12 @@ CREATE TABLE `opencart_order_total` (
 DROP TABLE IF EXISTS `opencart_product`;
 CREATE TABLE `opencart_product` (
   `product_id` int(11) NOT NULL auto_increment,
-  `model` varchar(24) collate utf8_unicode_ci NOT NULL,
+  `model` varchar(64) collate utf8_unicode_ci NOT NULL,
+  `sku` varchar(64) collate utf8_unicode_ci NOT NULL,
+  `location` varchar(128) collate utf8_unicode_ci NOT NULL,
   `quantity` int(4) NOT NULL default '0',
   `stock_status_id` int(11) NOT NULL,
-  `image` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `image` varchar(255) collate utf8_unicode_ci default NULL,
   `manufacturer_id` int(11) NOT NULL,
   `shipping` int(1) NOT NULL default '1',
   `price` decimal(15,4) NOT NULL default '0.0000',
@@ -1014,8 +1024,7 @@ CREATE TABLE `opencart_product` (
   `length` decimal(5,2) NOT NULL default '0.00',
   `width` decimal(5,2) NOT NULL default '0.00',
   `height` decimal(5,2) NOT NULL default '0.00',
-  `measurement_class_id` int(11) NOT NULL,
-  `sort_order` int(3) NOT NULL default '0',
+  `measurement_class_id` int(11) NOT NULL default '0',
   `status` int(1) NOT NULL default '0',
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -1027,25 +1036,25 @@ CREATE TABLE `opencart_product` (
 -- Dumping data for table `opencart_product`
 --
 
-INSERT INTO `opencart_product` (`product_id`, `model`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `measurement_class_id`, `sort_order`, `status`, `date_added`, `date_modified`, `viewed`) VALUES
-(28, 'Product 1', 10, 7, 'htc_touch_hd_1.jpg', 5, 1, '484.4400', 9, '2009-02-03', '146.40', 2, '0.00', '0.00', '0.00', 1, 0, 1, '2009-02-03 16:06:50', '2009-07-25 17:57:49', 86),
-(29, 'Product 2', 10, 5, 'palm_treo_pro_1.jpg', 6, 1, '279.9900', 9, '2009-02-03', '133.00', 2, '0.00', '0.00', '0.00', 0, 0, 1, '2009-02-03 16:42:17', '2009-02-22 22:07:34', 21),
-(30, 'Product 3', 10, 6, 'canon_eos_5d_1.jpg', 9, 1, '100.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 1, 0, 1, '2009-02-03 16:59:00', '2009-07-25 17:57:20', 64),
-(31, 'Product 4', 50, 6, 'nikon_d300_1.jpg', 0, 1, '80.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 0, 0, 1, '2009-02-03 17:00:10', '2009-03-14 22:44:42', 25),
-(32, 'Product 5', 10, 6, 'ipod_touch_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 1, 0, 1, '2009-02-03 17:07:26', '2009-08-13 17:08:03', 22),
-(33, 'Product 6', 10, 6, 'samsung_syncmaster_941bw.jpg', 0, 1, '200.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 0, 1, '2009-02-03 17:08:31', '2009-07-25 18:01:00', 7),
-(34, 'Product 7', 10, 6, 'ipod_shuffle_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, '2009-02-03 18:07:54', '2009-08-13 17:08:13', 26),
-(35, 'Product 8', 10, 5, '', 0, 0, '100.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 0, 1, 1, '2009-02-03 18:08:31', '2009-05-20 13:55:22', 12),
-(36, 'Product 9', 8, 6, 'ipod_nano_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 10, 1, '2009-02-03 18:09:19', '2009-08-13 17:07:54', 68),
-(40, 'product 11', 7, 5, 'iphone_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '10.00', 1, '0.00', '0.00', '0.00', 1, 0, 1, '2009-02-03 21:07:12', '2009-08-11 22:33:08', 233),
-(41, 'Product 14', 0, 5, 'imac_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 1, 0, 1, '2009-02-03 21:07:26', '2009-07-25 17:58:01', 310),
-(42, 'Product 15', 8, 5, 'apple_cinema_30.jpg', 8, 1, '100.0000', 0, '2009-02-03', '12.50', 1, '1.00', '2.00', '3.00', 1, 1, 1, '2009-02-03 21:07:37', '2009-08-13 18:05:15', 165),
-(43, 'Product 16', 10, 5, 'macbook_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 0, 1, '2009-02-03 21:07:49', '2009-07-25 17:59:55', 54),
-(44, 'Product 17', 10, 5, 'macbook_air_1.jpg', 8, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 0, 1, '2009-02-03 21:08:00', '2009-07-25 18:00:03', 39),
-(45, 'Product 18', 0, 5, 'macbook_pro_1.jpg', 8, 1, '2000.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 0, 1, '2009-02-03 21:08:17', '2009-07-25 18:00:37', 70),
-(46, 'Product 19', 10, 5, 'sony_vaio_1.jpg', 10, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 0, 1, '2009-02-03 21:08:29', '2009-07-25 18:00:52', 216),
-(47, 'Product 20', 10, 5, 'hp_1.jpg', 7, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 1, 0, 1, '2009-02-03 21:08:40', '2009-07-25 17:57:38', 238),
-(48, 'product 20', 10, 5, 'ipod_classic_1.jpg', 8, 1, '100.0000', 0, '2009-02-08', '1.00', 1, '0.00', '0.00', '0.00', 2, 0, 1, '2009-02-08 17:21:51', '2009-08-13 21:11:02', 1090);
+INSERT INTO `opencart_product` (`product_id`, `model`, `sku`, `location`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `measurement_class_id`, `status`, `date_added`, `date_modified`, `viewed`) VALUES
+(28, 'Product 1', '', '', 10, 7, 'htc_touch_hd_1.jpg', 5, 1, '484.4400', 9, '2009-02-03', '146.40', 2, '0.00', '0.00', '0.00', 1, 1, '2009-02-03 16:06:50', '2009-07-25 17:57:49', 21),
+(29, 'Product 2', '', '', 10, 5, 'palm_treo_pro_1.jpg', 6, 1, '279.9900', 9, '2009-02-03', '133.00', 2, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 16:42:17', '2009-02-22 22:07:34', 16),
+(30, 'Product 3', '', '', 10, 6, 'canon_eos_5d_1.jpg', 9, 1, '100.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 1, 1, '2009-02-03 16:59:00', '2009-08-27 14:44:52', 70),
+(31, 'Product 4', '', '', 50, 6, 'nikon_d300_1.jpg', 0, 1, '80.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 17:00:10', '2009-03-14 22:44:42', 26),
+(32, 'Product 5', '', '', 10, 6, 'ipod_touch_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 1, 1, '2009-02-03 17:07:26', '2009-08-13 17:08:03', 35),
+(33, 'Product 6', '', '', 10, 6, 'samsung_syncmaster_941bw.jpg', 0, 1, '200.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, '2009-02-03 17:08:31', '2009-07-25 18:01:00', 7),
+(34, 'Product 7', '', '', 10, 6, 'ipod_shuffle_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, '2009-02-03 18:07:54', '2009-08-13 17:08:13', 10),
+(35, 'Product 8', '', '', 10, 5, '', 0, 0, '100.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 0, 1, '2009-02-03 18:08:31', '2009-05-20 13:55:22', 4),
+(36, 'Product 9', '', '', 8, 6, 'ipod_nano_1.jpg', 8, 0, '100.0000', 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, '2009-02-03 18:09:19', '2009-10-29 23:55:26', 29),
+(40, 'product 11', '', '', 7, 5, 'iphone_1.jpg', 8, 1, '100.0000', 9, '2009-02-03', '10.00', 1, '0.00', '0.00', '0.00', 1, 1, '2009-02-03 21:07:12', '2009-08-11 22:33:08', 55),
+(41, 'Product 14', '', '', 10, 5, 'imac_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 1, 1, '2009-02-03 21:07:26', '2009-08-15 01:47:36', 35),
+(42, 'Product 15', '', '', 8, 5, 'apple_cinema_30.jpg', 8, 1, '100.0000', 0, '2009-02-03', '12.50', 1, '1.00', '2.00', '3.00', 1, 1, '2009-02-03 21:07:37', '2009-10-28 19:04:02', 157),
+(43, 'Product 16', '', '', 10, 5, 'macbook_1.jpg', 8, 0, '500.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, '2009-02-03 21:07:49', '2009-07-25 17:59:55', 49),
+(44, 'Product 17', '', '', 10, 5, 'macbook_air_1.jpg', 8, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, '2009-02-03 21:08:00', '2009-07-25 18:00:03', 33),
+(45, 'Product 18', '', '', 0, 5, 'macbook_pro_1.jpg', 8, 1, '2000.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, '2009-02-03 21:08:17', '2009-07-25 18:00:37', 89),
+(46, 'Product 19', '', '', 10, 5, 'sony_vaio_1.jpg', 10, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, '2009-02-03 21:08:29', '2009-07-25 18:00:52', 146),
+(47, 'Product 20', '', '', 10, 5, 'hp_1.jpg', 7, 1, '1000.0000', 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 1, 1, '2009-02-03 21:08:40', '2009-07-25 17:57:38', 168),
+(48, 'product 20', 'test 1', 'test 2', 17, 5, 'ipod_classic_1.jpg', 8, 1, '100.0000', 9, '2009-02-08', '1.00', 1, '0.00', '0.00', '0.00', 2, 1, '2009-02-08 17:21:51', '2009-10-20 22:21:11', 712);
 
 -- --------------------------------------------------------
 
@@ -1058,7 +1067,7 @@ CREATE TABLE `opencart_product_description` (
   `product_id` int(11) NOT NULL auto_increment,
   `language_id` int(11) NOT NULL,
   `name` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `meta_description` varchar(66) collate utf8_unicode_ci NOT NULL,
+  `meta_description` varchar(255) collate utf8_unicode_ci NOT NULL,
   `description` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`product_id`,`language_id`),
   KEY `name` (`name`)
@@ -1074,19 +1083,19 @@ INSERT INTO `opencart_product_description` (`product_id`, `language_id`, `name`,
 (35, 1, 'Product 8', '', '&lt;p&gt;Product 8&lt;/p&gt;'),
 (34, 1, 'iPod Shuffle', '', '&lt;div&gt;&lt;strong&gt;Born to be worn.&lt;/strong&gt;\r\n&lt;p&gt;Clip on the worlds most wearable music player and take up to 240 songs with you anywhere. Choose from five colors including four new hues to make your musical fashion statement.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Random meets rhythm.&lt;/strong&gt;&lt;/p&gt;\r\n&lt;p&gt;With iTunes autofill, iPod shuffle can deliver a new musical experience every time you sync. For more randomness, you can shuffle songs during playback with the slide of a switch.&lt;/p&gt;\r\n&lt;strong&gt;Everything is easy.&lt;/strong&gt;\r\n&lt;p&gt;Charge and sync with the included USB dock. Operate the iPod shuffle controls with one hand. Enjoy up to 12 hours straight of skip-free music playback.&lt;/p&gt;\r\n&lt;/div&gt;'),
 (40, 1, 'iPhone', '', '&lt;p class=&quot;intro&quot;&gt;iPhone is a revolutionary new mobile phone that allows you to make a call by simply tapping a name or number in your address book, a favorites list, or a call log. It also automatically syncs all your contacts from a PC, Mac, or Internet service. And it lets you select and listen to voicemail messages in whatever order you want just like email.&lt;/p&gt;'),
-(36, 1, 'iPod Nano', '', '&lt;div&gt;\r\n&lt;p&gt;&lt;strong&gt;Video in your pocket.&lt;/strong&gt;&lt;/p&gt;\r\n&lt;p&gt;Its the small iPod with one very big idea: video. The worlds most popular music player now lets you enjoy movies, TV shows, and more on a two-inch display thats 65% brighter than before.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;\r\n&lt;p&gt;Browse through your music collection by flipping through album art. Select an album to turn it over and see the track list.&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Enhanced interface.&lt;/strong&gt;&lt;/p&gt;\r\n&lt;p&gt;Experience a whole new way to browse and view your music and video.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Sleek and colorful.&lt;/strong&gt;&lt;/p&gt;\r\n&lt;p&gt;With an anodized aluminum and polished stainless steel enclosure and a choice of five colors, iPod nano is dressed to impress.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;iTunes.&lt;/strong&gt;&lt;/p&gt;\r\n&lt;p&gt;Available as a free download, iTunes makes it easy to browse and buy millions of songs, movies, TV shows, audiobooks, and games and download free podcasts all at the iTunes Store. And you can import your own music, manage your whole media library, and sync your iPod or iPhone with ease.&lt;/p&gt;\r\n&lt;/div&gt;'),
+(36, 1, 'iPod Nano', '', '&lt;div&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Video in your pocket.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Its the small iPod with one very big idea: video. The worlds most popular music player now lets you enjoy movies, TV shows, and more on a two-inch display thats 65% brighter than before.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Browse through your music collection by flipping through album art. Select an album to turn it over and see the track list.&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Enhanced interface.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Experience a whole new way to browse and view your music and video.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Sleek and colorful.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		With an anodized aluminum and polished stainless steel enclosure and a choice of five colors, iPod nano is dressed to impress.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;iTunes.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Available as a free download, iTunes makes it easy to browse and buy millions of songs, movies, TV shows, audiobooks, and games and download free podcasts all at the iTunes Store. And you can import your own music, manage your whole media library, and sync your iPod or iPhone with ease.&lt;/p&gt;\r\n&lt;/div&gt;\r\n'),
 (41, 1, 'iMac', '', '&lt;div&gt;Just when you thought iMac had everything, now there&amp;rsquo;s even more. More powerful Intel Core 2 Duo processors. And more memory standard. Combine this with Mac OS X Leopard and iLife &amp;rsquo;08, and it&amp;rsquo;s more all-in-one than ever. iMac packs amazing performance into a stunningly slim space.&lt;/div&gt;\r\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;'),
 (46, 1, 'Sony VAIO', '', '&lt;div&gt;Unprecedented power. The next generation of processing technology has arrived. Built into the newest VAIO notebooks lies Intel&#039;s latest, most powerful innovation yet: Intel&amp;reg; Centrino&amp;reg; 2 processor technology. Boasting incredible speed, expanded wireless connectivity, enhanced multimedia support and greater energy efficiency, all the high-performance essentials are seamlessly combined into a single chip.&lt;/div&gt;'),
 (47, 1, 'HP LP3065', '', '&lt;p&gt;Stop your co-workers in their tracks with the stunning new 30-inch diagonal HP LP3065 Flat Panel Monitor. This flagship monitor features best-in-class performance and presentation features on a huge wide-aspect screen while letting you work as comfortably as possible - you might even forget you&#039;re at the office&lt;/p&gt;'),
 (43, 1, 'MacBook', '', '&lt;div&gt;\r\n&lt;p&gt;&lt;b&gt;Intel Core 2 Duo processor&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;Powered by an Intel Core 2 Duo processor at speeds up to 2.16GHz, the new MacBook is the fastest ever.&lt;/p&gt;\r\n&lt;p&gt;&lt;b&gt;1GB memory, larger hard drives&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;The new MacBook now comes with 1GB of memory standard and larger hard drives for the entire line perfect for running more of your favorite applications and storing growing media collections.&lt;/p&gt;\r\n&lt;p&gt;&lt;b&gt;Sleek, 1.08-inch-thin design&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;MacBook makes it easy to hit the road thanks to its tough polycarbonate case, built-in wireless technologies, and innovative MagSafe Power Adapter that releases automatically if someone accidentally trips on the cord.&lt;/p&gt;\r\n&lt;p&gt;&lt;b&gt;Built-in iSight camera&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;Right out of the box, you can have a video chat with friends or family,2 record a video at your desk, or take fun pictures with Photo Booth&lt;/p&gt;\r\n&lt;/div&gt;\r\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;'),
 (44, 1, 'MacBook Air', '', '&lt;div&gt;MacBook Air is ultrathin, ultraportable, and ultra unlike anything else. But you don&amp;rsquo;t lose inches and pounds overnight. It&amp;rsquo;s the result of rethinking conventions. Of multiple wireless innovations. And of breakthrough design. With MacBook Air, mobile computing suddenly has a new standard.&lt;/div&gt;'),
 (28, 1, 'HTC Touch HD', '', '&lt;p&gt;HTC Touch - in High Definition. Watch music videos and streaming content in awe-inspiring high definition clarity for a mobile experience you never thought possible. Seductively sleek, the HTC Touch HD provides the next generation of mobile functionality, all at a simple touch. Fully integrated with Windows Mobile Professional 6.1, ultrafast 3.5G, GPS, 5MP camera, plus lots more - all delivered on a breathtakingly crisp 3.8&amp;quot; WVGA touchscreen - you can take control of your mobile world with the HTC Touch HD.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Processor Qualcomm&amp;reg; MSM 7201A&amp;trade; 528 MHz&lt;/li&gt;\r\n    &lt;li&gt;Windows Mobile&amp;reg; 6.1 Professional Operating System&lt;/li&gt;\r\n    &lt;li&gt;Memory: 512 MB ROM, 288 MB RAM&lt;/li&gt;\r\n    &lt;li&gt;Dimensions: 115 mm x 62.8 mm x 12 mm / 146.4 grams&lt;/li&gt;\r\n    &lt;li&gt;3.8-inch TFT-LCD flat touch-sensitive screen with 480 x 800 WVGA resolution&lt;/li&gt;\r\n    &lt;li&gt;HSDPA/WCDMA: Europe/Asia: 900/2100 MHz; Up to 2 Mbps up-link and 7.2 Mbps down-link speeds&lt;/li&gt;\r\n    &lt;li&gt;Quad-band GSM/GPRS/EDGE: Europe/Asia: 850/900/1800/1900 MHz (Band frequency, HSUPA availability, and data speed are operator dependent.)&lt;/li&gt;\r\n    &lt;li&gt;Device Control via HTC TouchFLO&amp;trade; 3D &amp;amp; Touch-sensitive front panel buttons&lt;/li&gt;\r\n    &lt;li&gt;GPS and A-GPS ready&lt;/li&gt;\r\n    &lt;li&gt;Bluetooth&amp;reg; 2.0 with Enhanced Data Rate and A2DP for wireless stereo headsets&lt;/li&gt;\r\n    &lt;li&gt;Wi-Fi&amp;reg;: IEEE 802.11 b/g&lt;/li&gt;\r\n    &lt;li&gt;HTC ExtUSB&amp;trade; (11-pin mini-USB 2.0)&lt;/li&gt;\r\n    &lt;li&gt;5 megapixel color camera with auto focus&lt;/li&gt;\r\n    &lt;li&gt;VGA CMOS color camera&lt;/li&gt;\r\n    &lt;li&gt;Built-in 3.5 mm audio jack, microphone, speaker, and FM radio&lt;/li&gt;\r\n    &lt;li&gt;Ring tone formats: AAC, AAC+, eAAC+, AMR-NB, AMR-WB, QCP, MP3, WMA, WAV&lt;/li&gt;\r\n    &lt;li&gt;40 polyphonic and standard MIDI format 0 and 1 (SMF)/SP MIDI&lt;/li&gt;\r\n    &lt;li&gt;Rechargeable Lithium-ion or Lithium-ion polymer 1350 mAh battery&lt;/li&gt;\r\n    &lt;li&gt;Expansion Slot: microSD&amp;trade; memory card (SD 2.0 compatible)&lt;/li&gt;\r\n    &lt;li&gt;AC Adapter Voltage range/frequency: 100 ~ 240V AC, 50/60 Hz DC output: 5V and 1A&lt;/li&gt;\r\n    &lt;li&gt;Special Features: FM Radio, G-Sensor&lt;/li&gt;\r\n&lt;/ul&gt;'),
-(48, 1, 'iPod Classic', '', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n&lt;div&gt;\r\n&lt;p&gt;&lt;strong&gt;More room to move.&lt;/strong&gt;&lt;/p&gt;\r\n&lt;p&gt;With 80GB or 160GB of storage and up to 40 hours of battery life, the new iPod classic lets you enjoy up to 40,000 songs or up to 200 hours of video or any combination wherever you go.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;\r\n&lt;p&gt;Browse through your music collection by flipping through album art. Select an album to turn it over and see the track list.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Enhanced interface.&lt;/strong&gt;&lt;/p&gt;\r\n&lt;p&gt;Experience a whole new way to browse and view your music and video.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Sleeker design.&lt;/strong&gt;&lt;/p&gt;\r\n&lt;p&gt;Beautiful, durable, and sleeker than ever, iPod classic now features an anodized aluminum and polished stainless steel enclosure with rounded edges.&lt;/p&gt;\r\n&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;'),
+(48, 1, 'iPod Classic', '', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;More room to move.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			With 80GB or 160GB of storage and up to 40 hours of battery life, the new iPod classic lets you enjoy up to 40,000 songs or up to 200 hours of video or any combination wherever you go.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Browse through your music collection by flipping through album art. Select an album to turn it over and see the track list.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Enhanced interface.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Experience a whole new way to browse and view your music and video.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Sleeker design.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Beautiful, durable, and sleeker than ever, iPod classic now features an anodized aluminum and polished stainless steel enclosure with rounded edges.&lt;/p&gt;\r\n	&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;'),
 (30, 1, 'Canon EOS 5D', '', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n&lt;div&gt;Canon&#039;s press material for the EOS 5D states that it &#039;defines (a) new D-SLR category&#039;, while we&#039;re not typically too concerned with marketing talk this particular statement is clearly pretty accurate. The EOS 5D is unlike any previous digital SLR in that it combines a full-frame (35 mm sized) high resolution sensor (12.8 megapixels) with a relatively compact body (slightly larger than the EOS 20D, although in your hand it feels noticeably &#039;chunkier&#039;). The EOS 5D is aimed to slot in between the EOS 20D and the EOS-1D professional digital SLR&#039;s, an important difference when compared to the latter is that the EOS 5D doesn&#039;t have any environmental seals. While Canon don&#039;t specifically refer to the EOS 5D as a &#039;professional&#039; digital SLR it will have obvious appeal to professionals who want a high quality digital SLR in a body lighter than the EOS-1D. It will also no doubt appeal to current EOS 20D owners (although lets hope they&#039;ve not bought too many EF-S lenses...)&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;'),
-(42, 1, 'Apple Cinema 30&quot;', 'test', '&lt;p&gt;&lt;font size=&quot;2&quot; face=&quot;helvetica,geneva,arial&quot;&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution. Designed specifically for the creative professional, this display provides more space for easier access to all the tools and palettes needed to edit, format and composite your work. Combine this display with a Mac Pro, MacBook Pro, or PowerMac G5 and there&#039;s no limit to what you can achieve. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;The Cinema HD features an active-matrix liquid crystal display that produces flicker-free images that deliver twice the brightness, twice the sharpness and twice the contrast ratio of a typical CRT display. Unlike other flat panels, it&#039;s designed with a pure digital interface to deliver distortion-free images that never need adjusting. With over 4 million digital pixels, the display is uniquely suited for scientific and technical applications such as visualizing molecular structures or analyzing geological data. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;Offering accurate, brilliant color performance, the Cinema HD delivers up to 16.7 million colors across a wide gamut allowing you to see subtle nuances between colors from soft pastels to rich jewel tones. A wide viewing angle ensures uniform color from edge to edge. Apple&#039;s ColorSync technology allows you to create custom profiles to maintain consistent color onscreen and in print. The result: You can confidently use this display in all your color-critical applications. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;Housed in a new aluminum design, the display has a very thin bezel that enhances visual accuracy. Each display features two FireWire 400 ports and two USB 2.0 ports, making attachment of desktop peripherals, such as iSight, iPod, digital and still cameras, hard drives, printers and scanners, even more accessible and convenient. Taking advantage of the much thinner and lighter footprint of an LCD, the new displays support the VESA (Video Electronics Standards Association) mounting interface standard. Customers with the optional Cinema Display VESA Mount Adapter kit gain the flexibility to mount their display in locations most appropriate for their work environment. &lt;br /&gt;\r\n&lt;br /&gt;\r\n&lt;/font&gt;&lt;font size=&quot;2&quot; face=&quot;Helvetica&quot;&gt;The Cinema HD features a single cable design with elegant breakout for the USB 2.0, FireWire 400 and a pure digital connection using the industry standard Digital Video Interface (DVI) interface. The DVI connection allows for a direct pure-digital connection.&lt;br /&gt;\r\n&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;\r\n&lt;h3&gt;Features:&lt;/h3&gt;\r\n&lt;p&gt;Unrivaled display performance&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;30-inch (viewable) active-matrix liquid crystal display provides breathtaking image quality and vivid, richly saturated color.&lt;/li&gt;\r\n    &lt;li&gt;Support for 2560-by-1600 pixel resolution for display of high definition still and video imagery.&lt;/li&gt;\r\n    &lt;li&gt;Wide-format design for simultaneous display of two full pages of text and graphics.&lt;/li&gt;\r\n    &lt;li&gt;Industry standard DVI connector for direct attachment to Mac- and Windows-based desktops and notebooks&lt;/li&gt;\r\n    &lt;li&gt;Incredibly wide (170 degree) horizontal and vertical viewing angle for maximum visibility and color performance.&lt;/li&gt;\r\n    &lt;li&gt;Lightning-fast pixel response for full-motion digital video playback.&lt;/li&gt;\r\n    &lt;li&gt;Support for 16.7 million saturated colors, for use in all graphics-intensive applications.&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;Simple setup and operation&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Single cable with elegant breakout for connection to DVI, USB and FireWire ports&lt;/li&gt;\r\n    &lt;li&gt;Built-in two-port USB 2.0 hub for easy connection of desktop peripheral devices.&lt;/li&gt;\r\n    &lt;li&gt;Two FireWire 400 ports to support iSight and other desktop peripherals&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;Sleek, elegant design&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Huge virtual workspace, very small footprint.&lt;/li&gt;\r\n    &lt;li&gt;Narrow Bezel design to minimize visual impact of using dual displays&lt;/li&gt;\r\n    &lt;li&gt;Unique hinge design for effortless adjustment&lt;/li&gt;\r\n    &lt;li&gt;Support for VESA mounting solutions (Apple Cinema Display VESA Mount Adapter sold separately)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;h3&gt;Technical specifications&lt;/h3&gt;\r\n&lt;p&gt;&lt;b&gt;Screen size (diagonal viewable image size)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Apple Cinema HD Display: 30 inches (29.7-inch viewable)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Screen type&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Thin film transistor (TFT) active-matrix liquid crystal display (AMLCD)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Resolutions&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;2560 x 1600 pixels (optimum resolution)&lt;/li&gt;\r\n    &lt;li&gt;2048 x 1280&lt;/li&gt;\r\n    &lt;li&gt;1920 x 1200&lt;/li&gt;\r\n    &lt;li&gt;1280 x 800&lt;/li&gt;\r\n    &lt;li&gt;1024 x 640&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Display colors (maximum)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;16.7 million&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Viewing angle (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;170&amp;deg; horizontal; 170&amp;deg; vertical&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Brightness (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;30-inch Cinema HD Display: 400 cd/m2&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Contrast ratio (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;700:1&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Response time (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;16 ms&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Pixel pitch&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;30-inch Cinema HD Display: 0.250 mm&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Screen treatment&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Antiglare hardcoat&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;User controls (hardware and software)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Display Power,&lt;/li&gt;\r\n    &lt;li&gt;System sleep, wake&lt;/li&gt;\r\n    &lt;li&gt;Brightness&lt;/li&gt;\r\n    &lt;li&gt;Monitor tilt&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Connectors and cables&lt;/b&gt;&lt;br /&gt;\r\nCable&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;DVI (Digital Visual Interface)&lt;/li&gt;\r\n    &lt;li&gt;FireWire 400&lt;/li&gt;\r\n    &lt;li&gt;USB 2.0&lt;/li&gt;\r\n    &lt;li&gt;DC power (24 V)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;Connectors&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Two-port, self-powered USB 2.0 hub&lt;/li&gt;\r\n    &lt;li&gt;Two FireWire 400 ports&lt;/li&gt;\r\n    &lt;li&gt;Kensington security port&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;VESA mount adapter&lt;/b&gt;&lt;br /&gt;\r\nRequires optional Cinema Display VESA Mount Adapter (M9649G/A)&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Compatible with VESA FDMI (MIS-D, 100, C) compliant mounting solutions&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Electrical requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Input voltage: 100-240 VAC 50-60Hz&lt;/li&gt;\r\n    &lt;li&gt;Maximum power when operating: 150W&lt;/li&gt;\r\n    &lt;li&gt;Energy saver mode: 3W or less&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Environmental requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Operating temperature: 50&amp;deg; to 95&amp;deg; F (10&amp;deg; to 35&amp;deg; C)&lt;/li&gt;\r\n    &lt;li&gt;Storage temperature: -40&amp;deg; to 116&amp;deg; F (-40&amp;deg; to 47&amp;deg; C)&lt;/li&gt;\r\n    &lt;li&gt;Operating humidity: 20% to 80% noncondensing&lt;/li&gt;\r\n    &lt;li&gt;Maximum operating altitude: 10,000 feet&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Agency approvals&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;FCC Part 15 Class B&lt;/li&gt;\r\n    &lt;li&gt;EN55022 Class B&lt;/li&gt;\r\n    &lt;li&gt;EN55024&lt;/li&gt;\r\n    &lt;li&gt;VCCI Class B&lt;/li&gt;\r\n    &lt;li&gt;AS/NZS 3548 Class B&lt;/li&gt;\r\n    &lt;li&gt;CNS 13438 Class B&lt;/li&gt;\r\n    &lt;li&gt;ICES-003 Class B&lt;/li&gt;\r\n    &lt;li&gt;ISO 13406 part 2&lt;/li&gt;\r\n    &lt;li&gt;MPR II&lt;/li&gt;\r\n    &lt;li&gt;IEC 60950&lt;/li&gt;\r\n    &lt;li&gt;UL 60950&lt;/li&gt;\r\n    &lt;li&gt;CSA 60950&lt;/li&gt;\r\n    &lt;li&gt;EN60950&lt;/li&gt;\r\n    &lt;li&gt;ENERGY STAR&lt;/li&gt;\r\n    &lt;li&gt;TCO &#039;03&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;Size and weight&lt;/b&gt;&lt;br /&gt;\r\n30-inch Apple Cinema HD Display&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Height: 21.3 inches (54.3 cm)&lt;/li&gt;\r\n    &lt;li&gt;Width: 27.2 inches (68.8 cm)&lt;/li&gt;\r\n    &lt;li&gt;Depth: 8.46 inches (21.5 cm)&lt;/li&gt;\r\n    &lt;li&gt;Weight: 27.5 pounds (12.5 kg)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;&lt;b&gt;System Requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n    &lt;li&gt;Mac Pro, all graphic options&lt;/li&gt;\r\n    &lt;li&gt;MacBook Pro&lt;/li&gt;\r\n    &lt;li&gt;Power Mac G5 (PCI-X) with ATI Radeon 9650 or better or NVIDIA GeForce 6800 GT DDL or better&lt;/li&gt;\r\n    &lt;li&gt;Power Mac G5 (PCI Express), all graphics options&lt;/li&gt;\r\n    &lt;li&gt;PowerBook G4 with dual-link DVI support&lt;/li&gt;\r\n    &lt;li&gt;Windows PC and graphics card that supports DVI ports with dual-link digital bandwidth and VESA DDC standard for plug-and-play setup&lt;/li&gt;\r\n&lt;/ul&gt;'),
 (32, 1, 'iPod Touch', '', '&lt;p&gt;&lt;strong&gt;Revolutionary multi-touch interface.&lt;/strong&gt;&lt;br /&gt;\r\niPod touch features the same multi-touch screen technology as iPhone. Pinch to zoom in on a photo. Scroll through your songs and videos with a flick. Flip through your library by album artwork with Cover Flow.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Gorgeous 3.5-inch widescreen display.&lt;/strong&gt;&lt;br /&gt;\r\nWatch your movies, TV shows, and photos come alive with bright, vivid color on the 320-by-480-pixel display.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Music downloads straight from iTunes.&lt;/strong&gt;&lt;br /&gt;\r\nShop the iTunes Wi-Fi Music Store from anywhere with Wi-Fi.1 Browse or search to find the music youre looking for, preview it, and buy it with just a tap.&lt;/p&gt;\r\n&lt;p&gt;&lt;strong&gt;Surf the web with Wi-Fi.&lt;/strong&gt;&lt;br /&gt;\r\nBrowse the web using Safari and watch YouTube videos on the first iPod with Wi-Fi built in&lt;br /&gt;\r\n&amp;nbsp;&lt;/p&gt;'),
 (33, 1, 'Samsung SyncMaster 941BW', '', '&lt;div&gt;Imagine the advantages of going big without slowing down. The big 19&amp;quot; 941BW monitor combines wide aspect ratio with fast pixel response time, for bigger images, more room to work and crisp motion. In addition, the exclusive MagicBright 2, MagicColor and MagicTune technologies help deliver the ideal image in every situation, while sleek, narrow bezels and adjustable stands deliver style just the way you want it. With the Samsung 941BW widescreen analog/digital LCD monitor, it&#039;s not hard to imagine.&lt;/div&gt;'),
-(45, 1, 'MacBook Pro', '', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n&lt;div&gt;\r\n&lt;p&gt;&lt;b&gt;Latest Intel mobile architecture&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;Powered by the most advanced mobile processors from Intel, the new Core 2 Duo MacBook Pro is over 50% faster than the original Core Duo MacBook Pro and now supports up to 4GB of RAM.&lt;/p&gt;\r\n&lt;p&gt;&lt;b&gt;Leading-edge graphics&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;The NVIDIA GeForce 8600M GT delivers exceptional graphics processing power. For the ultimate creative canvas, you can even configure the 17-inch model with a 1920-by-1200 resolution display.&lt;/p&gt;\r\n&lt;p&gt;&lt;b&gt;Designed for life on the road&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;Innovations such as a magnetic power connection and an illuminated keyboard with ambient light sensor put the MacBook Pro in a class by itself.&lt;/p&gt;\r\n&lt;p&gt;&lt;b&gt;Connect. Create. Communicate.&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;Quickly set up a video conference with the built-in iSight camera. Control presentations and media from up to 30 feet away with the included Apple Remote. Connect to high-bandwidth peripherals with FireWire 800 and DVI.&lt;/p&gt;\r\n&lt;p&gt;&lt;b&gt;Next-generation wireless&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;Featuring 802.11n wireless technology, the MacBook Pro delivers up to five times the performance and up to twice the range of previous-generation technologies.&lt;/p&gt;\r\n&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;');
+(45, 1, 'MacBook Pro', '', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n&lt;div&gt;\r\n&lt;p&gt;&lt;b&gt;Latest Intel mobile architecture&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;Powered by the most advanced mobile processors from Intel, the new Core 2 Duo MacBook Pro is over 50% faster than the original Core Duo MacBook Pro and now supports up to 4GB of RAM.&lt;/p&gt;\r\n&lt;p&gt;&lt;b&gt;Leading-edge graphics&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;The NVIDIA GeForce 8600M GT delivers exceptional graphics processing power. For the ultimate creative canvas, you can even configure the 17-inch model with a 1920-by-1200 resolution display.&lt;/p&gt;\r\n&lt;p&gt;&lt;b&gt;Designed for life on the road&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;Innovations such as a magnetic power connection and an illuminated keyboard with ambient light sensor put the MacBook Pro in a class by itself.&lt;/p&gt;\r\n&lt;p&gt;&lt;b&gt;Connect. Create. Communicate.&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;Quickly set up a video conference with the built-in iSight camera. Control presentations and media from up to 30 feet away with the included Apple Remote. Connect to high-bandwidth peripherals with FireWire 800 and DVI.&lt;/p&gt;\r\n&lt;p&gt;&lt;b&gt;Next-generation wireless&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;Featuring 802.11n wireless technology, the MacBook Pro delivers up to five times the performance and up to twice the range of previous-generation technologies.&lt;/p&gt;\r\n&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;'),
+(42, 1, 'Apple Cinema 30&quot;', 'test', '&lt;p&gt;\r\n	&lt;font face=&quot;helvetica,geneva,arial&quot; size=&quot;2&quot;&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution. Designed specifically for the creative professional, this display provides more space for easier access to all the tools and palettes needed to edit, format and composite your work. Combine this display with a Mac Pro, MacBook Pro, or PowerMac G5 and there&amp;#39;s no limit to what you can achieve. &lt;br /&gt;\r\n	&lt;br /&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The Cinema HD features an active-matrix liquid crystal display that produces flicker-free images that deliver twice the brightness, twice the sharpness and twice the contrast ratio of a typical CRT display. Unlike other flat panels, it&amp;#39;s designed with a pure digital interface to deliver distortion-free images that never need adjusting. With over 4 million digital pixels, the display is uniquely suited for scientific and technical applications such as visualizing molecular structures or analyzing geological data. &lt;br /&gt;\r\n	&lt;br /&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Offering accurate, brilliant color performance, the Cinema HD delivers up to 16.7 million colors across a wide gamut allowing you to see subtle nuances between colors from soft pastels to rich jewel tones. A wide viewing angle ensures uniform color from edge to edge. Apple&amp;#39;s ColorSync technology allows you to create custom profiles to maintain consistent color onscreen and in print. The result: You can confidently use this display in all your color-critical applications. &lt;br /&gt;\r\n	&lt;br /&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Housed in a new aluminum design, the display has a very thin bezel that enhances visual accuracy. Each display features two FireWire 400 ports and two USB 2.0 ports, making attachment of desktop peripherals, such as iSight, iPod, digital and still cameras, hard drives, printers and scanners, even more accessible and convenient. Taking advantage of the much thinner and lighter footprint of an LCD, the new displays support the VESA (Video Electronics Standards Association) mounting interface standard. Customers with the optional Cinema Display VESA Mount Adapter kit gain the flexibility to mount their display in locations most appropriate for their work environment. &lt;br /&gt;\r\n	&lt;br /&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The Cinema HD features a single cable design with elegant breakout for the USB 2.0, FireWire 400 and a pure digital connection using the industry standard Digital Video Interface (DVI) interface. The DVI connection allows for a direct pure-digital connection.&lt;br /&gt;\r\n	&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;\r\n&lt;h3&gt;\r\n	Features:&lt;/h3&gt;\r\n&lt;p&gt;\r\n	Unrivaled display performance&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch (viewable) active-matrix liquid crystal display provides breathtaking image quality and vivid, richly saturated color.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for 2560-by-1600 pixel resolution for display of high definition still and video imagery.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Wide-format design for simultaneous display of two full pages of text and graphics.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Industry standard DVI connector for direct attachment to Mac- and Windows-based desktops and notebooks&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Incredibly wide (170 degree) horizontal and vertical viewing angle for maximum visibility and color performance.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Lightning-fast pixel response for full-motion digital video playback.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for 16.7 million saturated colors, for use in all graphics-intensive applications.&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Simple setup and operation&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Single cable with elegant breakout for connection to DVI, USB and FireWire ports&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Built-in two-port USB 2.0 hub for easy connection of desktop peripheral devices.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Two FireWire 400 ports to support iSight and other desktop peripherals&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Sleek, elegant design&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Huge virtual workspace, very small footprint.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Narrow Bezel design to minimize visual impact of using dual displays&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Unique hinge design for effortless adjustment&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for VESA mounting solutions (Apple Cinema Display VESA Mount Adapter sold separately)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;h3&gt;\r\n	Technical specifications&lt;/h3&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen size (diagonal viewable image size)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Apple Cinema HD Display: 30 inches (29.7-inch viewable)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen type&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Thin film transistor (TFT) active-matrix liquid crystal display (AMLCD)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Resolutions&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		2560 x 1600 pixels (optimum resolution)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		2048 x 1280&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1920 x 1200&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1280 x 800&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1024 x 640&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Display colors (maximum)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		16.7 million&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Viewing angle (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		170&amp;deg; horizontal; 170&amp;deg; vertical&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Brightness (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch Cinema HD Display: 400 cd/m2&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Contrast ratio (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		700:1&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Response time (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		16 ms&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Pixel pitch&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch Cinema HD Display: 0.250 mm&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen treatment&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Antiglare hardcoat&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;User controls (hardware and software)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Display Power,&lt;/li&gt;\r\n	&lt;li&gt;\r\n		System sleep, wake&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Brightness&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Monitor tilt&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Connectors and cables&lt;/b&gt;&lt;br /&gt;\r\n	Cable&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		DVI (Digital Visual Interface)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		FireWire 400&lt;/li&gt;\r\n	&lt;li&gt;\r\n		USB 2.0&lt;/li&gt;\r\n	&lt;li&gt;\r\n		DC power (24 V)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Connectors&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Two-port, self-powered USB 2.0 hub&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Two FireWire 400 ports&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Kensington security port&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;VESA mount adapter&lt;/b&gt;&lt;br /&gt;\r\n	Requires optional Cinema Display VESA Mount Adapter (M9649G/A)&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Compatible with VESA FDMI (MIS-D, 100, C) compliant mounting solutions&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Electrical requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Input voltage: 100-240 VAC 50-60Hz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Maximum power when operating: 150W&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Energy saver mode: 3W or less&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Environmental requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Operating temperature: 50&amp;deg; to 95&amp;deg; F (10&amp;deg; to 35&amp;deg; C)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Storage temperature: -40&amp;deg; to 116&amp;deg; F (-40&amp;deg; to 47&amp;deg; C)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Operating humidity: 20% to 80% noncondensing&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Maximum operating altitude: 10,000 feet&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Agency approvals&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		FCC Part 15 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN55022 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN55024&lt;/li&gt;\r\n	&lt;li&gt;\r\n		VCCI Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		AS/NZS 3548 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		CNS 13438 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ICES-003 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ISO 13406 part 2&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MPR II&lt;/li&gt;\r\n	&lt;li&gt;\r\n		IEC 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		UL 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		CSA 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ENERGY STAR&lt;/li&gt;\r\n	&lt;li&gt;\r\n		TCO &amp;#39;03&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Size and weight&lt;/b&gt;&lt;br /&gt;\r\n	30-inch Apple Cinema HD Display&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Height: 21.3 inches (54.3 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Width: 27.2 inches (68.8 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Depth: 8.46 inches (21.5 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Weight: 27.5 pounds (12.5 kg)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;System Requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Mac Pro, all graphic options&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MacBook Pro&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Power Mac G5 (PCI-X) with ATI Radeon 9650 or better or NVIDIA GeForce 6800 GT DDL or better&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Power Mac G5 (PCI Express), all graphics options&lt;/li&gt;\r\n	&lt;li&gt;\r\n		PowerBook G4 with dual-link DVI support&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Windows PC and graphics card that supports DVI ports with dual-link digital bandwidth and VESA DDC standard for plug-and-play setup&lt;/li&gt;\r\n&lt;/ul&gt;\r\n');
 
 -- --------------------------------------------------------
 
@@ -1111,8 +1120,6 @@ CREATE TABLE `opencart_product_discount` (
 -- Dumping data for table `opencart_product_discount`
 --
 
-INSERT INTO `opencart_product_discount` (`product_discount_id`, `product_id`, `customer_group_id`, `quantity`, `priority`, `price`, `date_start`, `date_end`) VALUES
-(572, 48, 8, 1, 0, '50.0000', '0000-00-00', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -1124,7 +1131,7 @@ DROP TABLE IF EXISTS `opencart_product_image`;
 CREATE TABLE `opencart_product_image` (
   `product_image_id` int(11) NOT NULL auto_increment,
   `product_id` int(11) NOT NULL,
-  `image` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `image` varchar(255) collate utf8_unicode_ci default NULL,
   PRIMARY KEY  (`product_image_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1133,23 +1140,23 @@ CREATE TABLE `opencart_product_image` (
 --
 
 INSERT INTO `opencart_product_image` (`product_image_id`, `product_id`, `image`) VALUES
-(270, 30, 'canon_eos_5d_2.jpg'),
-(269, 30, 'canon_eos_5d_3.jpg'),
+(659, 30, 'canon_eos_5d_3.jpg'),
+(658, 30, 'canon_eos_5d_2.jpg'),
 (272, 47, 'hp_3.jpg'),
 (271, 47, 'hp_2.jpg'),
 (274, 28, 'htc_touch_hd_2.jpg'),
 (273, 28, 'htc_touch_hd_3.jpg'),
-(276, 41, 'imac_2.jpg'),
-(275, 41, 'imac_3.jpg'),
+(591, 41, 'imac_3.jpg'),
+(590, 41, 'imac_2.jpg'),
 (396, 40, 'iphone_6.jpg'),
 (395, 40, 'iphone_5.jpg'),
 (394, 40, 'iphone_4.jpg'),
 (393, 40, 'iphone_3.jpg'),
 (392, 40, 'iphone_2.jpg'),
-(534, 36, 'ipod_nano_5.jpg'),
-(533, 36, 'ipod_nano_4.jpg'),
-(532, 36, 'ipod_nano_3.jpg'),
-(531, 36, 'ipod_nano_2.jpg'),
+(725, 36, 'ipod_nano_2.jpg'),
+(724, 36, 'ipod_nano_3.jpg'),
+(723, 36, 'ipod_nano_4.jpg'),
+(722, 36, 'ipod_nano_5.jpg'),
 (544, 34, 'ipod_shuffle_5.jpg'),
 (543, 34, 'ipod_shuffle_4.jpg'),
 (542, 34, 'ipod_shuffle_3.jpg'),
@@ -1180,9 +1187,9 @@ INSERT INTO `opencart_product_image` (`product_image_id`, `product_id`, `image`)
 (309, 46, 'sony_vaio_4.jpg'),
 (308, 46, 'sony_vaio_3.jpg'),
 (307, 46, 'sony_vaio_2.jpg'),
-(580, 48, 'ipod_classic_4.jpg'),
-(579, 48, 'ipod_classic_3.jpg'),
-(578, 48, 'ipod_classic_2.jpg');
+(721, 48, 'ipod_classic_2.jpg'),
+(720, 48, 'ipod_classic_3.jpg'),
+(719, 48, 'ipod_classic_4.jpg');
 
 -- --------------------------------------------------------
 
@@ -1204,7 +1211,7 @@ CREATE TABLE `opencart_product_option` (
 
 INSERT INTO `opencart_product_option` (`product_option_id`, `product_id`, `sort_order`) VALUES
 (61, 40, 1),
-(114, 48, 1);
+(151, 48, 1);
 
 -- --------------------------------------------------------
 
@@ -1227,7 +1234,7 @@ CREATE TABLE `opencart_product_option_description` (
 
 INSERT INTO `opencart_product_option_description` (`product_option_id`, `language_id`, `product_id`, `name`) VALUES
 (61, 1, 40, 'Memory Size'),
-(114, 1, 48, 'Memory');
+(151, 1, 48, 'Memory');
 
 -- --------------------------------------------------------
 
@@ -1240,6 +1247,8 @@ CREATE TABLE `opencart_product_option_value` (
   `product_option_value_id` int(11) NOT NULL auto_increment,
   `product_option_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
+  `quantity` int(4) NOT NULL default '0',
+  `subtract` int(1) NOT NULL default '0',
   `price` decimal(15,4) NOT NULL,
   `prefix` char(1) collate utf8_unicode_ci NOT NULL,
   `sort_order` int(3) NOT NULL,
@@ -1250,11 +1259,12 @@ CREATE TABLE `opencart_product_option_value` (
 -- Dumping data for table `opencart_product_option_value`
 --
 
-INSERT INTO `opencart_product_option_value` (`product_option_value_id`, `product_option_id`, `product_id`, `price`, `prefix`, `sort_order`) VALUES
-(117, 61, 40, '50.0000', '+', 2),
-(116, 61, 40, '0.0000', '+', 1),
-(223, 114, 48, '50.0000', '+', 2),
-(222, 114, 48, '0.0000', '+', 1);
+INSERT INTO `opencart_product_option_value` (`product_option_value_id`, `product_option_id`, `product_id`, `quantity`, `subtract`, `price`, `prefix`, `sort_order`) VALUES
+(117, 61, 40, 0, 0, '50.0000', '+', 2),
+(116, 61, 40, 0, 0, '0.0000', '+', 1),
+(308, 151, 48, 3, 1, '10.0000', '+', 3),
+(307, 151, 48, 2, 0, '50.0000', '+', 2),
+(306, 151, 48, 1, 0, '0.0000', '+', 1);
 
 -- --------------------------------------------------------
 
@@ -1278,8 +1288,9 @@ CREATE TABLE `opencart_product_option_value_description` (
 INSERT INTO `opencart_product_option_value_description` (`product_option_value_id`, `language_id`, `product_id`, `name`) VALUES
 (117, 1, 40, '16GB'),
 (116, 1, 40, '8GB'),
-(223, 1, 48, '8GB'),
-(222, 1, 48, '1GB');
+(308, 1, 48, '123456'),
+(307, 1, 48, '8GB'),
+(306, 1, 48, '1GB');
 
 -- --------------------------------------------------------
 
@@ -1329,9 +1340,7 @@ CREATE TABLE `opencart_product_special` (
 --
 
 INSERT INTO `opencart_product_special` (`product_special_id`, `product_id`, `customer_group_id`, `priority`, `price`, `date_start`, `date_end`) VALUES
-(71, 48, 8, 1, '80.0000', '0000-00-00', '0000-00-00'),
-(70, 48, 8, 1, '70.0000', '0000-00-00', '0000-00-00'),
-(55, 42, 8, 1, '50.0000', '0000-00-00', '0000-00-00');
+(116, 42, 8, 1, '50.0000', '0000-00-00', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -1427,9 +1436,9 @@ CREATE TABLE `opencart_review` (
 --
 
 INSERT INTO `opencart_review` (`review_id`, `product_id`, `customer_id`, `author`, `text`, `rating`, `status`, `date_added`, `date_modified`) VALUES
-(58, 48, 0, 'Daniel', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ', 3, 1, '2009-08-13 00:10:20', '0000-00-00 00:00:00'),
-(59, 47, 0, 'Danel', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ', 2, 0, '2009-07-11 16:23:54', '0000-00-00 00:00:00'),
-(60, 47, 0, 'Daniel ', ' test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test', 3, 0, '2009-07-11 16:26:03', '0000-00-00 00:00:00');
+(58, 42, 0, 'Daniel', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ', 3, 1, '2009-09-11 01:48:28', '0000-00-00 00:00:00'),
+(59, 31, 0, 'Danel', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ', 2, 1, '2009-09-11 01:55:46', '0000-00-00 00:00:00'),
+(60, 47, 0, 'Daniel ', ' test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test', 3, 1, '2009-10-01 13:06:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1451,19 +1460,15 @@ CREATE TABLE `opencart_setting` (
 --
 
 INSERT INTO `opencart_setting` (`setting_id`, `group`, `key`, `value`) VALUES
-(15142, 'coupon', 'coupon_sort_order', '4'),
-(15065, 'free', 'free_sort_order', '1'),
-(15064, 'free', 'free_status', '1'),
-(15063, 'free', 'free_geo_zone_id', '0'),
+(15917, 'coupon', 'coupon_sort_order', '4'),
 (11615, 'shipping', 'shipping_sort_order', '3'),
 (11614, 'shipping', 'shipping_status', '1'),
 (15124, 'cod', 'cod_sort_order', '1'),
 (11617, 'sub_total', 'sub_total_sort_order', '1'),
 (15123, 'cod', 'cod_status', '1'),
 (15122, 'cod', 'cod_geo_zone_id', '0'),
-(15141, 'coupon', 'coupon_status', '1'),
+(15916, 'coupon', 'coupon_status', '1'),
 (11616, 'sub_total', 'sub_total_status', '1'),
-(15062, 'free', 'free_total', ''),
 (15121, 'cod', 'cod_order_status_id', '1'),
 (11613, 'low_order_fee', 'low_order_fee_sort_order', '2'),
 (11612, 'low_order_fee', 'low_order_fee_status', '0'),
@@ -1482,79 +1487,85 @@ INSERT INTO `opencart_setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (15110, 'information', 'information_position', 'left'),
 (15115, 'manufacturer', 'manufacturer_sort_order', '2'),
 (15114, 'manufacturer', 'manufacturer_status', '1'),
-(15099, 'bestseller', 'bestseller_sort_order', '3'),
-(15098, 'bestseller', 'bestseller_status', '1'),
-(15097, 'bestseller', 'bestseller_position', 'right'),
-(15096, 'bestseller', 'bestseller_limit', '5'),
-(15103, 'cart', 'cart_sort_order', '1'),
-(15102, 'cart', 'cart_status', '1'),
-(15101, 'cart', 'cart_position', 'right'),
-(15629, 'config', 'config_error_filename', 'error.txt'),
-(15628, 'config', 'config_error_log', '1'),
-(15627, 'config', 'config_error_display', '1'),
-(15626, 'config', 'config_compression', '4'),
-(15625, 'config', 'config_seo_url', '0'),
-(15624, 'config', 'config_encryption', '123456'),
-(15623, 'config', 'config_ssl', '0'),
-(15622, 'config', 'config_smtp_timeout', '5'),
-(15621, 'config', 'config_smtp_port', '25'),
-(15620, 'config', 'config_smtp_password', ''),
-(15619, 'config', 'config_smtp_username', ''),
-(15618, 'config', 'config_smtp_host', ''),
-(15617, 'config', 'config_mail_protocol', 'mail'),
-(15616, 'config', 'config_image_cart_height', '75'),
-(15615, 'config', 'config_image_cart_width', '75'),
-(15614, 'config', 'config_image_related_height', '120'),
-(15613, 'config', 'config_image_related_width', '120'),
-(15100, 'cart', 'cart_ajax', '1'),
+(18117, 'bestseller', 'bestseller_sort_order', '3'),
+(18116, 'bestseller', 'bestseller_status', '1'),
+(18115, 'bestseller', 'bestseller_position', 'right'),
+(18114, 'bestseller', 'bestseller_limit', '5'),
+(18492, 'cart', 'cart_status', '1'),
+(18491, 'cart', 'cart_position', 'right'),
+(16400, 'google_base', 'google_base_status', '1'),
+(18130, 'free', 'free_sort_order', '1'),
+(18129, 'free', 'free_status', '1'),
+(18127, 'free', 'free_total', ''),
+(18128, 'free', 'free_geo_zone_id', '0'),
+(18493, 'cart', 'cart_sort_order', '1'),
+(18490, 'cart', 'cart_ajax', '0'),
 (15104, 'category', 'category_position', 'left'),
 (15107, 'currency', 'currency_position', 'right'),
 (15113, 'manufacturer', 'manufacturer_position', 'left'),
-(15612, 'config', 'config_image_additional_height', '150'),
-(15611, 'config', 'config_image_additional_width', '150'),
-(15610, 'config', 'config_image_product_height', '120'),
-(15609, 'config', 'config_image_product_width', '120'),
-(15608, 'config', 'config_image_category_height', '120'),
-(15607, 'config', 'config_image_category_width', '120'),
-(15606, 'config', 'config_image_popup_height', '500'),
-(15604, 'config', 'config_image_thumb_height', '250'),
-(15605, 'config', 'config_image_popup_width', '500'),
-(15603, 'config', 'config_image_thumb_width', '250'),
-(15602, 'config', 'config_icon', 'cart.png'),
-(15601, 'config', 'config_logo', 'logo.png'),
-(15600, 'config', 'config_download_status', '5'),
-(15599, 'config', 'config_download', '1'),
-(15598, 'config', 'config_stock_status_id', '5'),
-(15597, 'config', 'config_order_status_id', '1'),
-(15596, 'config', 'config_stock_subtract', '0'),
-(15595, 'config', 'config_stock_checkout', '0'),
-(15594, 'config', 'config_stock_check', '1'),
-(15593, 'config', 'config_stock_display', '0'),
-(15592, 'config', 'config_checkout', '5'),
-(15591, 'config', 'config_account', '3'),
-(15590, 'config', 'config_customer_approval', '0'),
-(15589, 'config', 'config_customer_price', '0'),
-(15586, 'config', 'config_measurement_class_id', '1'),
-(15587, 'config', 'config_alert_mail', '0'),
-(15588, 'config', 'config_customer_group_id', '8'),
-(15585, 'config', 'config_weight_class_id', '1'),
-(15584, 'config', 'config_tax', '1'),
-(15583, 'config', 'config_currency_auto', '1'),
-(15582, 'config', 'config_currency', 'GBP'),
-(15581, 'config', 'config_admin_language', 'en'),
-(15580, 'config', 'config_language', 'en'),
-(15579, 'config', 'config_zone_id', '3563'),
-(15578, 'config', 'config_country_id', '222'),
-(15577, 'config', 'config_welcome_6', '&lt;p&gt;Welcome to my store!&lt;/p&gt;'),
-(15576, 'config', 'config_welcome_1', '&lt;p&gt;Welcome to my store!&lt;/p&gt;'),
-(15575, 'config', 'config_template', 'default/template/'),
-(15574, 'config', 'config_fax', ''),
-(15573, 'config', 'config_telephone', '123456789'),
-(15572, 'config', 'config_email', 'webmaster@opencart.com'),
-(15571, 'config', 'config_address', 'Address 1'),
-(15570, 'config', 'config_owner', 'Your Name'),
-(15569, 'config', 'config_meta_description', 'your store of fun'),
-(15568, 'config', 'config_store', 'Your Store');
+(18482, 'config', 'config_error_display', '1'),
+(18484, 'config', 'config_error_filename', 'error.txt'),
+(18483, 'config', 'config_error_log', '1'),
+(18481, 'config', 'config_compression', '4'),
+(18480, 'config', 'config_seo_url', '0'),
+(18479, 'config', 'config_encryption', '123456'),
+(18478, 'config', 'config_ssl', '0'),
+(18477, 'config', 'config_smtp_timeout', '5'),
+(18476, 'config', 'config_smtp_port', '25'),
+(18475, 'config', 'config_smtp_password', ''),
+(18474, 'config', 'config_smtp_username', ''),
+(18473, 'config', 'config_smtp_host', ''),
+(18472, 'config', 'config_mail_protocol', 'mail'),
+(18471, 'config', 'config_image_cart_height', '75'),
+(18470, 'config', 'config_image_cart_width', '75'),
+(18469, 'config', 'config_image_related_height', '120'),
+(18468, 'config', 'config_image_related_width', '120'),
+(18467, 'config', 'config_image_additional_height', '150'),
+(18466, 'config', 'config_image_additional_width', '150'),
+(18465, 'config', 'config_image_product_height', '120'),
+(18462, 'config', 'config_image_category_width', '120'),
+(18463, 'config', 'config_image_category_height', '120'),
+(18464, 'config', 'config_image_product_width', '120'),
+(18461, 'config', 'config_image_popup_height', '500'),
+(18458, 'config', 'config_image_thumb_width', '250'),
+(18459, 'config', 'config_image_thumb_height', '250'),
+(18460, 'config', 'config_image_popup_width', '500'),
+(18457, 'config', 'config_icon', 'cart.png'),
+(18456, 'config', 'config_logo', 'logo.png'),
+(18455, 'config', 'config_download_status', '5'),
+(18454, 'config', 'config_download', '1'),
+(18452, 'config', 'config_order_status_id', '1'),
+(18453, 'config', 'config_stock_status_id', '5'),
+(18451, 'config', 'config_stock_subtract', '1'),
+(18450, 'config', 'config_stock_checkout', '0'),
+(18449, 'config', 'config_stock_check', '1'),
+(18448, 'config', 'config_stock_display', '0'),
+(18445, 'config', 'config_guest_checkout', '1'),
+(18446, 'config', 'config_account', '3'),
+(18447, 'config', 'config_checkout', '5'),
+(18444, 'config', 'config_customer_approval', '0'),
+(18443, 'config', 'config_customer_price', '0'),
+(18442, 'config', 'config_customer_group_id', '8'),
+(18441, 'config', 'config_alert_mail', '0'),
+(18440, 'config', 'config_weight_class_id', '1'),
+(18439, 'config', 'config_measurement_class_id', '1'),
+(18438, 'config', 'config_tax', '1'),
+(18437, 'config', 'config_currency_auto', '1'),
+(18436, 'config', 'config_currency', 'GBP'),
+(18435, 'config', 'config_admin_language', 'en'),
+(18434, 'config', 'config_language', 'en'),
+(18429, 'config', 'config_fax', ''),
+(18430, 'config', 'config_template', 'default'),
+(18431, 'config', 'config_welcome_1', '&lt;p&gt;Welcome to my store!&lt;/p&gt;\r\n'),
+(18432, 'config', 'config_country_id', '222'),
+(18433, 'config', 'config_zone_id', '3563'),
+(18427, 'config', 'config_email', 'webmaster@opencart.com'),
+(18428, 'config', 'config_telephone', '123456789'),
+(18426, 'config', 'config_address', 'Address 1'),
+(18424, 'config', 'config_meta_description', 'your store of fun'),
+(18425, 'config', 'config_owner', 'Your Name'),
+(18423, 'config', 'config_title', 'Your Store'),
+(18422, 'config', 'config_store', 'Your Store');
 
 -- --------------------------------------------------------
 
@@ -1600,7 +1611,7 @@ CREATE TABLE `opencart_tax_class` (
 --
 
 INSERT INTO `opencart_tax_class` (`tax_class_id`, `title`, `description`, `date_added`, `date_modified`) VALUES
-(9, 'Taxable Goods', 'Taxed Stuff', '2009-01-06 23:21:53', '2009-08-12 01:42:08');
+(9, 'Taxable Goods', 'Taxed Stuff', '2009-01-06 23:21:53', '2009-10-20 17:37:35');
 
 -- --------------------------------------------------------
 
@@ -1626,7 +1637,8 @@ CREATE TABLE `opencart_tax_rate` (
 --
 
 INSERT INTO `opencart_tax_rate` (`tax_rate_id`, `geo_zone_id`, `tax_class_id`, `priority`, `rate`, `description`, `date_modified`, `date_added`) VALUES
-(49, 3, 9, 1, '17.5000', 'VAT 17.5%', '0000-00-00 00:00:00', '2009-08-12 01:42:08');
+(53, 3, 9, 1, '17.5000', 'VAT 17.5%', '0000-00-00 00:00:00', '2009-10-20 17:37:35'),
+(54, 5, 9, 1, '19.0000', 'VAT 19%', '0000-00-00 00:00:00', '2009-10-20 17:37:35');
 
 -- --------------------------------------------------------
 
@@ -1647,12 +1659,12 @@ CREATE TABLE `opencart_url_alias` (
 --
 
 INSERT INTO `opencart_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
-(114, 'product_id=48', 'ipod_classic'),
-(40, 'category_id=20', 'desktops'),
+(165, 'product_id=48', 'ipod_classic'),
+(166, 'category_id=20', 'desktops'),
 (12, 'category_id=26', 'pc'),
 (13, 'category_id=27', 'mac'),
-(14, 'manufacturer_id=8', 'apple'),
-(22, 'information_id=4', 'about_us');
+(160, 'manufacturer_id=8', 'apple'),
+(159, 'information_id=4', 'about_us');
 
 -- --------------------------------------------------------
 
@@ -1699,7 +1711,7 @@ CREATE TABLE `opencart_user_group` (
 --
 
 INSERT INTO `opencart_user_group` (`user_group_id`, `name`, `permission`) VALUES
-(1, 'Top Administrator', 'a:2:{s:6:"access";a:66:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:19:"catalog/information";i:3;s:20:"catalog/manufacturer";i:4;s:15:"catalog/product";i:5;s:14:"catalog/review";i:6;s:16:"customer/contact";i:7;s:15:"customer/coupon";i:8;s:17:"customer/customer";i:9;s:23:"customer/customer_group";i:10;s:14:"customer/order";i:11;s:14:"extension/feed";i:12;s:16:"extension/module";i:13;s:17:"extension/payment";i:14;s:18:"extension/shipping";i:15;s:15:"extension/total";i:16;s:20:"localisation/country";i:17;s:21:"localisation/currency";i:18;s:21:"localisation/geo_zone";i:19;s:21:"localisation/language";i:20;s:30:"localisation/measurement_class";i:21;s:25:"localisation/order_status";i:22;s:25:"localisation/stock_status";i:23;s:22:"localisation/tax_class";i:24;s:25:"localisation/weight_class";i:25;s:17:"localisation/zone";i:26;s:17:"module/bestseller";i:27;s:11:"module/cart";i:28;s:15:"module/category";i:29;s:15:"module/currency";i:30;s:18:"module/information";i:31;s:19:"module/manufacturer";i:32;s:21:"payment/bank_transfer";i:33;s:14:"payment/cheque";i:34;s:11:"payment/cod";i:35;s:20:"payment/moneybookers";i:36;s:17:"payment/pp_direct";i:37;s:20:"payment/pp_direct_uk";i:38;s:19:"payment/pp_standard";i:39;s:15:"payment/sagepay";i:40;s:16:"payment/worldpay";i:41;s:16:"report/purchased";i:42;s:11:"report/sale";i:43;s:13:"report/viewed";i:44;s:15:"setting/setting";i:45;s:17:"shipping/citylink";i:46;s:13:"shipping/flat";i:47;s:13:"shipping/free";i:48;s:13:"shipping/item";i:49;s:23:"shipping/parcelforce_48";i:50;s:15:"shipping/weight";i:51;s:11:"tool/backup";i:52;s:14:"tool/error_log";i:53;s:12:"total/coupon";i:54;s:14:"total/handling";i:55;s:19:"total/low_order_fee";i:56;s:14:"total/shipping";i:57;s:15:"total/sub_total";i:58;s:9:"total/tax";i:59;s:11:"total/total";i:60;s:9:"user/user";i:61;s:20:"user/user_permission";i:62;s:23:"shipping/parcelforce_48";i:63;s:13:"shipping/item";i:64;s:13:"shipping/flat";i:65;s:17:"shipping/citylink";}s:6:"modify";a:66:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:19:"catalog/information";i:3;s:20:"catalog/manufacturer";i:4;s:15:"catalog/product";i:5;s:14:"catalog/review";i:6;s:16:"customer/contact";i:7;s:15:"customer/coupon";i:8;s:17:"customer/customer";i:9;s:23:"customer/customer_group";i:10;s:14:"customer/order";i:11;s:14:"extension/feed";i:12;s:16:"extension/module";i:13;s:17:"extension/payment";i:14;s:18:"extension/shipping";i:15;s:15:"extension/total";i:16;s:20:"localisation/country";i:17;s:21:"localisation/currency";i:18;s:21:"localisation/geo_zone";i:19;s:21:"localisation/language";i:20;s:30:"localisation/measurement_class";i:21;s:25:"localisation/order_status";i:22;s:25:"localisation/stock_status";i:23;s:22:"localisation/tax_class";i:24;s:25:"localisation/weight_class";i:25;s:17:"localisation/zone";i:26;s:17:"module/bestseller";i:27;s:11:"module/cart";i:28;s:15:"module/category";i:29;s:15:"module/currency";i:30;s:18:"module/information";i:31;s:19:"module/manufacturer";i:32;s:21:"payment/bank_transfer";i:33;s:14:"payment/cheque";i:34;s:11:"payment/cod";i:35;s:20:"payment/moneybookers";i:36;s:17:"payment/pp_direct";i:37;s:20:"payment/pp_direct_uk";i:38;s:19:"payment/pp_standard";i:39;s:15:"payment/sagepay";i:40;s:16:"payment/worldpay";i:41;s:16:"report/purchased";i:42;s:11:"report/sale";i:43;s:13:"report/viewed";i:44;s:15:"setting/setting";i:45;s:17:"shipping/citylink";i:46;s:13:"shipping/flat";i:47;s:13:"shipping/free";i:48;s:13:"shipping/item";i:49;s:23:"shipping/parcelforce_48";i:50;s:15:"shipping/weight";i:51;s:11:"tool/backup";i:52;s:14:"tool/error_log";i:53;s:12:"total/coupon";i:54;s:14:"total/handling";i:55;s:19:"total/low_order_fee";i:56;s:14:"total/shipping";i:57;s:15:"total/sub_total";i:58;s:9:"total/tax";i:59;s:11:"total/total";i:60;s:9:"user/user";i:61;s:20:"user/user_permission";i:62;s:23:"shipping/parcelforce_48";i:63;s:13:"shipping/item";i:64;s:13:"shipping/flat";i:65;s:17:"shipping/citylink";}}'),
+(1, 'Top Administrator', 'a:2:{s:6:"access";a:90:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:19:"catalog/information";i:3;s:20:"catalog/manufacturer";i:4;s:15:"catalog/product";i:5;s:14:"catalog/review";i:6;s:16:"customer/contact";i:7;s:15:"customer/coupon";i:8;s:17:"customer/customer";i:9;s:23:"customer/customer_group";i:10;s:14:"customer/order";i:11;s:14:"extension/feed";i:12;s:16:"extension/module";i:13;s:17:"extension/payment";i:14;s:18:"extension/shipping";i:15;s:15:"extension/total";i:16;s:16:"feed/google_base";i:17;s:20:"localisation/country";i:18;s:21:"localisation/currency";i:19;s:21:"localisation/geo_zone";i:20;s:21:"localisation/language";i:21;s:30:"localisation/measurement_class";i:22;s:25:"localisation/order_status";i:23;s:25:"localisation/stock_status";i:24;s:22:"localisation/tax_class";i:25;s:25:"localisation/weight_class";i:26;s:17:"localisation/zone";i:27;s:17:"module/bestseller";i:28;s:11:"module/cart";i:29;s:15:"module/category";i:30;s:15:"module/currency";i:31;s:18:"module/google_talk";i:32;s:18:"module/information";i:33;s:19:"module/manufacturer";i:34;s:16:"payment/alertpay";i:35;s:21:"payment/bank_transfer";i:36;s:14:"payment/cheque";i:37;s:11:"payment/cod";i:38;s:23:"payment/google_checkout";i:39;s:14:"payment/liqpay";i:40;s:20:"payment/moneybookers";i:41;s:16:"payment/paypoint";i:42;s:26:"payment/perpetual_payments";i:43;s:18:"payment/pp_express";i:44;s:21:"payment/pp_express_uk";i:45;s:14:"payment/pp_pro";i:46;s:17:"payment/pp_pro_uk";i:47;s:19:"payment/pp_standard";i:48;s:15:"payment/sagepay";i:49;s:22:"payment/sagepay_direct";i:50;s:18:"payment/sagepay_us";i:51;s:19:"payment/twocheckout";i:52;s:16:"payment/worldpay";i:53;s:16:"report/purchased";i:54;s:11:"report/sale";i:55;s:13:"report/viewed";i:56;s:15:"setting/setting";i:57;s:16:"shipping/auspost";i:58;s:17:"shipping/citylink";i:59;s:14:"shipping/fedex";i:60;s:13:"shipping/flat";i:61;s:13:"shipping/free";i:62;s:13:"shipping/item";i:63;s:23:"shipping/parcelforce_48";i:64;s:19:"shipping/royal_mail";i:65;s:12:"shipping/ups";i:66;s:13:"shipping/usps";i:67;s:15:"shipping/weight";i:68;s:11:"tool/backup";i:69;s:14:"tool/error_log";i:70;s:12:"total/coupon";i:71;s:14:"total/handling";i:72;s:19:"total/low_order_fee";i:73;s:14:"total/shipping";i:74;s:15:"total/sub_total";i:75;s:9:"total/tax";i:76;s:11:"total/total";i:77;s:9:"user/user";i:78;s:20:"user/user_permission";i:79;s:16:"shipping/auspost";i:80;s:13:"shipping/free";i:81;s:23:"payment/google_checkout";i:82;s:16:"shipping/auspost";i:83;s:17:"shipping/citylink";i:84;s:13:"shipping/flat";i:85;s:13:"shipping/item";i:86;s:23:"shipping/parcelforce_48";i:87;s:13:"shipping/usps";i:88;s:15:"shipping/weight";i:89;s:14:"payment/pp_pro";}s:6:"modify";a:90:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:19:"catalog/information";i:3;s:20:"catalog/manufacturer";i:4;s:15:"catalog/product";i:5;s:14:"catalog/review";i:6;s:16:"customer/contact";i:7;s:15:"customer/coupon";i:8;s:17:"customer/customer";i:9;s:23:"customer/customer_group";i:10;s:14:"customer/order";i:11;s:14:"extension/feed";i:12;s:16:"extension/module";i:13;s:17:"extension/payment";i:14;s:18:"extension/shipping";i:15;s:15:"extension/total";i:16;s:16:"feed/google_base";i:17;s:20:"localisation/country";i:18;s:21:"localisation/currency";i:19;s:21:"localisation/geo_zone";i:20;s:21:"localisation/language";i:21;s:30:"localisation/measurement_class";i:22;s:25:"localisation/order_status";i:23;s:25:"localisation/stock_status";i:24;s:22:"localisation/tax_class";i:25;s:25:"localisation/weight_class";i:26;s:17:"localisation/zone";i:27;s:17:"module/bestseller";i:28;s:11:"module/cart";i:29;s:15:"module/category";i:30;s:15:"module/currency";i:31;s:18:"module/google_talk";i:32;s:18:"module/information";i:33;s:19:"module/manufacturer";i:34;s:16:"payment/alertpay";i:35;s:21:"payment/bank_transfer";i:36;s:14:"payment/cheque";i:37;s:11:"payment/cod";i:38;s:23:"payment/google_checkout";i:39;s:14:"payment/liqpay";i:40;s:20:"payment/moneybookers";i:41;s:16:"payment/paypoint";i:42;s:26:"payment/perpetual_payments";i:43;s:18:"payment/pp_express";i:44;s:21:"payment/pp_express_uk";i:45;s:14:"payment/pp_pro";i:46;s:17:"payment/pp_pro_uk";i:47;s:19:"payment/pp_standard";i:48;s:15:"payment/sagepay";i:49;s:22:"payment/sagepay_direct";i:50;s:18:"payment/sagepay_us";i:51;s:19:"payment/twocheckout";i:52;s:16:"payment/worldpay";i:53;s:16:"report/purchased";i:54;s:11:"report/sale";i:55;s:13:"report/viewed";i:56;s:15:"setting/setting";i:57;s:16:"shipping/auspost";i:58;s:17:"shipping/citylink";i:59;s:14:"shipping/fedex";i:60;s:13:"shipping/flat";i:61;s:13:"shipping/free";i:62;s:13:"shipping/item";i:63;s:23:"shipping/parcelforce_48";i:64;s:19:"shipping/royal_mail";i:65;s:12:"shipping/ups";i:66;s:13:"shipping/usps";i:67;s:15:"shipping/weight";i:68;s:11:"tool/backup";i:69;s:14:"tool/error_log";i:70;s:12:"total/coupon";i:71;s:14:"total/handling";i:72;s:19:"total/low_order_fee";i:73;s:14:"total/shipping";i:74;s:15:"total/sub_total";i:75;s:9:"total/tax";i:76;s:11:"total/total";i:77;s:9:"user/user";i:78;s:20:"user/user_permission";i:79;s:16:"shipping/auspost";i:80;s:13:"shipping/free";i:81;s:23:"payment/google_checkout";i:82;s:16:"shipping/auspost";i:83;s:17:"shipping/citylink";i:84;s:13:"shipping/flat";i:85;s:13:"shipping/item";i:86;s:23:"shipping/parcelforce_48";i:87;s:13:"shipping/usps";i:88;s:15:"shipping/weight";i:89;s:14:"payment/pp_pro";}}'),
 (10, 'Demonstration', 'a:1:{s:6:"access";a:62:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:19:"catalog/information";i:3;s:20:"catalog/manufacturer";i:4;s:15:"catalog/product";i:5;s:14:"catalog/review";i:6;s:16:"customer/contact";i:7;s:15:"customer/coupon";i:8;s:17:"customer/customer";i:9;s:23:"customer/customer_group";i:10;s:14:"customer/order";i:11;s:14:"extension/feed";i:12;s:16:"extension/module";i:13;s:17:"extension/payment";i:14;s:18:"extension/shipping";i:15;s:15:"extension/total";i:16;s:20:"localisation/country";i:17;s:21:"localisation/currency";i:18;s:21:"localisation/geo_zone";i:19;s:21:"localisation/language";i:20;s:30:"localisation/measurement_class";i:21;s:25:"localisation/order_status";i:22;s:25:"localisation/stock_status";i:23;s:22:"localisation/tax_class";i:24;s:25:"localisation/weight_class";i:25;s:17:"localisation/zone";i:26;s:17:"module/bestseller";i:27;s:11:"module/cart";i:28;s:15:"module/category";i:29;s:15:"module/currency";i:30;s:18:"module/information";i:31;s:19:"module/manufacturer";i:32;s:21:"payment/bank_transfer";i:33;s:14:"payment/cheque";i:34;s:11:"payment/cod";i:35;s:20:"payment/moneybookers";i:36;s:17:"payment/pp_direct";i:37;s:20:"payment/pp_direct_uk";i:38;s:19:"payment/pp_standard";i:39;s:15:"payment/sagepay";i:40;s:16:"payment/worldpay";i:41;s:16:"report/purchased";i:42;s:11:"report/sale";i:43;s:13:"report/viewed";i:44;s:15:"setting/setting";i:45;s:17:"shipping/citylink";i:46;s:13:"shipping/flat";i:47;s:13:"shipping/free";i:48;s:13:"shipping/item";i:49;s:23:"shipping/parcelforce_48";i:50;s:15:"shipping/weight";i:51;s:11:"tool/backup";i:52;s:14:"tool/error_log";i:53;s:12:"total/coupon";i:54;s:14:"total/handling";i:55;s:19:"total/low_order_fee";i:56;s:14:"total/shipping";i:57;s:15:"total/sub_total";i:58;s:9:"total/tax";i:59;s:11:"total/total";i:60;s:9:"user/user";i:61;s:20:"user/user_permission";}}');
 
 -- --------------------------------------------------------
@@ -5732,5 +5744,6 @@ CREATE TABLE `opencart_zone_to_geo_zone` (
 
 INSERT INTO `opencart_zone_to_geo_zone` (`zone_to_geo_zone_id`, `country_id`, `zone_id`, `geo_zone_id`, `date_added`, `date_modified`) VALUES
 (8, 222, 0, 3, '2009-07-04 17:04:28', '0000-00-00 00:00:00'),
-(7, 222, 0, 4, '2009-06-23 01:14:53', '0000-00-00 00:00:00'),
-(11, 4, 118, 5, '2009-08-08 16:31:22', '0000-00-00 00:00:00');
+(20, 81, 0, 5, '2009-10-20 17:36:51', '0000-00-00 00:00:00'),
+(19, 4, 118, 5, '2009-10-20 17:36:51', '0000-00-00 00:00:00'),
+(15, 222, 0, 4, '2009-08-22 23:56:27', '0000-00-00 00:00:00');

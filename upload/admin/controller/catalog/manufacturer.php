@@ -103,8 +103,8 @@ class ControllerCatalogManufacturer extends Controller {
 		
 		$this->load->model('catalog/manufacturer');
 			
-    	if (isset($this->request->post['delete']) && $this->validateDelete()) {
-			foreach ($this->request->post['delete'] as $manufacturer_id) {
+    	if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $manufacturer_id) {
 				$this->model_catalog_manufacturer->deleteManufacturer($manufacturer_id);
 			}
 
@@ -205,7 +205,7 @@ class ControllerCatalogManufacturer extends Controller {
 				'manufacturer_id' => $result['manufacturer_id'],
 				'name'            => $result['name'],
 				'sort_order'      => $result['sort_order'],
-				'delete'          => isset($this->request->post['delete']) && in_array($result['manufacturer_id'], $this->request->post['delete']),
+				'selected'        => isset($this->request->post['selected']) && in_array($result['manufacturer_id'], $this->request->post['selected']),
 				'action'          => $action
 			);
 		}	
@@ -271,12 +271,15 @@ class ControllerCatalogManufacturer extends Controller {
 
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-
-		$this->id       = 'content';
+		
 		$this->template = 'catalog/manufacturer_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
   
   	private function getForm() {
@@ -378,12 +381,15 @@ class ControllerCatalogManufacturer extends Controller {
 		} else {
       		$this->data['sort_order'] = '';
     	}
-
-		$this->id       = 'content';
-		$this->template = 'catalog/manufacturer_form.tpl';
-		$this->layout   = 'common/layout';
 		
- 		$this->render();
+		$this->template = 'catalog/manufacturer_form.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}  
 	 
   	private function validateForm() {
@@ -439,7 +445,7 @@ class ControllerCatalogManufacturer extends Controller {
 		
 		$this->load->model('catalog/product');
 
-		foreach ($this->request->post['delete'] as $manufacturer_id) {
+		foreach ($this->request->post['selected'] as $manufacturer_id) {
   			$product_total = $this->model_catalog_product->getTotalProductsByManufacturerId($manufacturer_id);
     
 			if ($product_total) {

@@ -36,8 +36,13 @@ class ControllerModuleCart extends Controller {
 		
 		$this->data['ajax'] = $this->config->get('cart_ajax');
 
-		$this->id       = 'cart';
-		$this->template = $this->config->get('config_template') . 'module/cart.tpl';
+		$this->id = 'cart';
+		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/cart.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/module/cart.tpl';
+		} else {
+			$this->template = 'default/template/module/cart.tpl';
+		}
 		
 		$this->render();
 	}

@@ -23,11 +23,11 @@ final class Response {
 	}
 
 	private function compress($data, $level = 4) {
-		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
+		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
 			$encoding = 'gzip';
 		} 
 
-		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip')) {
+		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== false) {
 			$encoding = 'x-gzip';
 		}
 
@@ -63,7 +63,7 @@ final class Response {
 			
 		if (!headers_sent()) {
 			foreach ($this->headers as $key => $value) {
-				header($key. ': ' . $value);
+				header($key . ': ' . $value);
 			}
 		}
 		

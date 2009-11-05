@@ -28,7 +28,8 @@ class ControllerPaymentTwoCheckout extends Controller {
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');
 		
-		$this->data['entry_email'] = $this->language->get('entry_email');
+		$this->data['entry_account'] = $this->language->get('entry_account');
+		$this->data['entry_secret'] = $this->language->get('entry_secret');
 		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
@@ -39,10 +40,25 @@ class ControllerPaymentTwoCheckout extends Controller {
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
-
-		$this->data['error_warning'] = @$this->error['warning'];
-		$this->data['error_email'] = @$this->error['email'];
-
+		 
+		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+		
+		if (isset($this->error['account'])) {
+			$this->data['error_account'] = $this->error['account'];
+		} else {
+			$this->data['error_account'] = '';
+		}	
+		
+		if (isset($this->error['secret'])) {
+			$this->data['error_secret'] = $this->error['secret'];
+		} else {
+			$this->data['error_secret'] = '';
+		}	
+		
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
@@ -67,10 +83,16 @@ class ControllerPaymentTwoCheckout extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/payment');
 		
-		if (isset($this->request->post['twocheckout_email'])) {
-			$this->data['twocheckout_email'] = $this->request->post['twocheckout_email'];
+		if (isset($this->request->post['twocheckout_account'])) {
+			$this->data['twocheckout_account'] = $this->request->post['twocheckout_account'];
 		} else {
-			$this->data['twocheckout_email'] = $this->config->get('twocheckout_email');
+			$this->data['twocheckout_account'] = $this->config->get('twocheckout_account');
+		}
+
+		if (isset($this->request->post['twocheckout_secret'])) {
+			$this->data['twocheckout_secret'] = $this->request->post['twocheckout_secret'];
+		} else {
+			$this->data['twocheckout_secret'] = $this->config->get('twocheckout_secret');
 		}
 		
 		if (isset($this->request->post['twocheckout_test'])) {
@@ -111,11 +133,14 @@ class ControllerPaymentTwoCheckout extends Controller {
 			$this->data['twocheckout_sort_order'] = $this->config->get('twocheckout_sort_order');
 		}
 
-		$this->id       = 'content';
 		$this->template = 'payment/twocheckout.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {
@@ -123,10 +148,14 @@ class ControllerPaymentTwoCheckout extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (!@$this->request->post['twocheckout_email']) {
-			$this->error['email'] = $this->language->get('error_email');
+		if (!$this->request->post['twocheckout_account']) {
+			$this->error['account'] = $this->language->get('error_account');
 		}
-				
+
+		if (!$this->request->post['twocheckout_secret']) {
+			$this->error['secret'] = $this->language->get('error_secret');
+		}
+		
 		if (!$this->error) {
 			return TRUE;
 		} else {

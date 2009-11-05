@@ -13,7 +13,7 @@ class ModelToolBackup extends Model {
 	public function backup() {
 		$output = '';
 		
-		$table_query = $this->db->query("SHOW TABLES FROM `'" . DB_DATABASE . "`");
+		$table_query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
 
 		foreach ($table_query->rows as $table) {
 			if (DB_PREFIX) {

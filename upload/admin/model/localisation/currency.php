@@ -48,6 +48,14 @@ class ModelLocalisationCurrency extends Model {
 			}
 			
 			if (isset($data['start']) || isset($data['limit'])) {
+				if ($data['start'] < 0) {
+					$data['start'] = 0;
+				}				
+
+				if ($data['limit'] < 1) {
+					$data['limit'] = 20;
+				}	
+			
 				$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 			}
 			
@@ -109,7 +117,9 @@ class ModelLocalisationCurrency extends Model {
 					$this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '" . (float)$value . "', date_modified = NOW() WHERE code = '" . $this->db->escape($currency) . "'");
 				}
 			}
-				
+			
+			$this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '1.00000', date_modified = NOW() WHERE code = '" . $this->db->escape($this->config->get('config_currency')) . "'");
+			
 			$this->cache->delete('currency');
 		}
 	}

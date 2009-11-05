@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -19,15 +20,24 @@
       </tr>
       <tr>
         <td><?php echo $entry_product; ?></td>
-        <td><select name="product_id">
-            <?php foreach ($products as $product) { ?>
-            <?php if ($product['product_id'] == $product_id) { ?>
-            <option value="<?php echo $product['product_id']; ?>" selected="selected"><?php echo $product['name']; ?></option>
+        <td><select id="category" style="margin-bottom: 5px;" onchange="getProducts();">
+            <option value="0"><?php echo $text_select; ?></option>
+            <?php foreach ($categories as $category) { ?>
+            <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
+            <?php } ?>
+          </select>
+          <br />
+          <select name="product_id" id="product">
+            <?php if ($product) { ?>
+            <option value="<?php echo $product_id; ?>"><?php echo $product; ?></option>
             <?php } else { ?>
-            <option value="<?php echo $product['product_id']; ?>"><?php echo $product['name']; ?></option>
+            <option value="0"><?php echo $text_none; ?></option>
             <?php } ?>
-            <?php } ?>
-          </select></td>
+          </select>
+          <br />
+          <?php if ($error_product) { ?>
+          <span class="error"><?php echo $error_product; ?></span>
+          <?php } ?></td>
       </tr>
       <tr>
         <td><span class="required">*</span> <?php echo $entry_text; ?></td>
@@ -69,7 +79,7 @@
           <?php } else { ?>
           <input type="radio" name="rating" value="5" />
           <?php } ?>
-          &nbsp; <b class="rating"><?php echo $entry_good; ?></b> <br />
+          &nbsp; <b class="rating"><?php echo $entry_good; ?></b><br />
           <?php if ($error_rating) { ?>
           <span class="error"><?php echo $error_rating; ?></span>
           <?php } ?></td>
@@ -90,5 +100,21 @@
   </div>
 </form>
 <script type="text/javascript"><!--
+function getProducts() {
+	$('#product option').remove();
+	
+	$.ajax({
+		url: 'index.php?route=catalog/review/category&category_id=' + $('#category').attr('value'),
+		dataType: 'json',
+		success: function(data) {
+			for (i = 0; i < data.length; i++) {
+	 			$('#product').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + '</option>');
+			}
+		}
+	});
+}
+//--></script>
+<script type="text/javascript"><!--
 $.tabs('.tabs a'); 
 //--></script>
+<?php echo $footer; ?>

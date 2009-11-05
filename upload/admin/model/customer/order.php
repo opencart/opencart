@@ -12,7 +12,7 @@ class ModelCustomerOrder extends Model {
 				$language = new Language($query->row['language']);
 				$language->load('customer/order');
 
-				$subject = sprintf($language->get('mail_subject'), $this->config->get('config_store'), $order_id);
+				$subject = sprintf($language->get('mail_subject'), html_entity_decode($this->config->get('config_store'), ENT_QUOTES, 'UTF-8'), $order_id);
 	
 				$message  = $language->get('mail_order') . ' ' . $order_id . "\n";
 				$message .= $language->get('mail_date_added') . ' ' . date($language->get('date_format_short'), strtotime($query->row['date_added'])) . "\n\n";
@@ -20,19 +20,19 @@ class ModelCustomerOrder extends Model {
 				$message .= $query->row['status'] . "\n\n";
 					
 				$message .= $language->get('mail_invoice') . "\n";
-				$message .= html_entity_decode(HTTP_CATALOG . 'index.php?route=account/invoice&order_id=' . $order_id) . "\n\n";
+				$message .= html_entity_decode(HTTP_CATALOG . 'index.php?route=account/invoice&order_id=' . $order_id, ENT_QUOTES, 'UTF-8') . "\n\n";
 					
 				if (isset($data['comment'])) { 
 					$message .= $language->get('mail_comment') . "\n\n";
-					$message .= strip_tags(html_entity_decode($data['comment'])) . "\n\n";
+					$message .= strip_tags(html_entity_decode($data['comment'], ENT_QUOTES, 'UTF-8')) . "\n\n";
 				}
 					
 				$message .= $language->get('mail_footer');
 
-				$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), html_entity_decode($this->config->get('config_smtp_password')), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout'));
+				$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), html_entity_decode($this->config->get('config_smtp_password'), ENT_QUOTES, 'UTF-8'), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout'));
 	    		$mail->setTo($query->row['email']);
 				$mail->setFrom($this->config->get('config_email'));
-	    		$mail->setSender($this->config->get('config_store'));
+	    		$mail->setSender(html_entity_decode($this->config->get('config_store'), ENT_QUOTES, 'UTF-8'));
 	    		$mail->setSubject($subject);
 	    		$mail->setText($message);
 	    		$mail->send();
@@ -41,20 +41,30 @@ class ModelCustomerOrder extends Model {
 	}
 	
 	public function deleteOrder($order_id) {
-		$products = $this->getOrderProducts($order_id);
-
-      	$this->db->query("DELETE FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "'");
+		if ($this->config->get('config_stock_subtract')) {
+			$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND order_id = '" . (int)$order_id . "'");
+			
+			if ($order_query->num_rows) {
+				$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+				
+				foreach($product_query->rows as $product) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET quantity = (quantity + " . (int)$product['quantity'] . ") WHERE product_id = '" . (int)$product['product_id'] . "'");
+					
+					$option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$product['order_product_id'] . "'");
+				
+					foreach ($option_query->rows as $option) {
+						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity + " . (int)$product['quantity'] . ") WHERE product_option_value_id = '" . (int)$option['product_option_value_id'] . "' AND subtract = '1'");
+					}				
+				}
+			}
+		}
+		
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "'");
       	$this->db->query("DELETE FROM " . DB_PREFIX . "order_history WHERE order_id = '" . (int)$order_id . "'");
       	$this->db->query("DELETE FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
       	$this->db->query("DELETE FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "'");
 	  	$this->db->query("DELETE FROM " . DB_PREFIX . "order_download WHERE order_id = '" . (int)$order_id . "'");
       	$this->db->query("DELETE FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "'");
-		
-		if ($this->config->get('config_stock_subtract')) {
-			foreach($products as $product) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "product` SET quantity = (quantity + " . (int)$product['quantity'] . ") WHERE product_id = '" . (int)$product['product_id'] . "'");
-			}
-		}
 	}
 		
 	public function getOrder($order_id) {
@@ -91,7 +101,7 @@ class ModelCustomerOrder extends Model {
 		$sort_data = array(
 			'o.order_id',
 			'name',
-			'os.name',
+			'status',
 			'o.date_added',
 			'o.total',
 		);	
@@ -107,8 +117,16 @@ class ModelCustomerOrder extends Model {
 		} else {
 			$sql .= " ASC";
 		}
-			
+		
 		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}			
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}	
+			
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}		
 		

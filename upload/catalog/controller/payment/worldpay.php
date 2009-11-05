@@ -7,14 +7,14 @@ class ControllerPaymentWorldPay extends Controller {
 		$this->load->model('checkout/order');
 		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-
+		
 		$this->load->library('encryption');
 		
 		$this->data['action'] = 'https://select.worldpay.com/wcc/purchase';
 
 		$this->data['merchant'] = $this->config->get('worldpay_merchant');
 		$this->data['order_id'] = $order_info['order_id'];
-		$this->data['amount'] = $order_info['total'];
+		$this->data['amount'] = $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
 		$this->data['currency'] = $order_info['currency'];
 		$this->data['description'] = $this->config->get('config_store') . ' - #' . $order_info['order_id'];
 		$this->data['name'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
@@ -26,18 +26,24 @@ class ControllerPaymentWorldPay extends Controller {
 		}
 		
 		$this->data['postcode'] = $order_info['payment_postcode'];
-		
-		$payment_address = $this->customer->getAddress($this->session->data['payment_address_id']);
-		
-		$this->data['country'] = $payment_address['iso_code_2'];
+		$this->data['country'] = $order_info['payment_iso_code_2'];
 		$this->data['telephone'] = $order_info['telephone'];
 		$this->data['email'] = $order_info['email'];
 		$this->data['test'] = $this->config->get('worldpay_test');
 		
-		$this->data['back'] = $this->url->https('checkout/payment');
+		if ($this->request->get['route'] != 'checkout/guest/confirm') {
+			$this->data['back'] = $this->url->https('checkout/payment');
+		} else {
+			$this->data['back'] = $this->url->https('checkout/guest');
+		}
 		
-		$this->id       = 'payment';
-		$this->template = $this->config->get('config_template') . 'payment/worldpay.tpl';
+		$this->id = 'payment';
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/worldpay.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/payment/worldpay.tpl';
+		} else {
+			$this->template = 'default/template/payment/worldpay.tpl';
+		}	
 		
 		$this->render();
 	}
@@ -64,9 +70,12 @@ class ControllerPaymentWorldPay extends Controller {
 			$this->data['text_success'] = $this->language->get('text_success');
 			$this->data['text_success_wait'] = sprintf($this->language->get('text_success_wait'), $this->url->https('checkout/success'));
 			$this->data['text_failure'] = $this->language->get('text_failure');
-			$this->data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->https('checkout/payment'));
-		
-			$this->data['button_continue'] = $this->language->get('button_continue');
+			
+			if ($this->request->get['route'] != 'checkout/guest/confirm') {
+				$this->data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->https('checkout/payment'));
+			} else {
+				$this->data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->https('checkout/guest'));
+			}
 		
 			if (isset($this->request->post['transStatus']) && $this->request->post['transStatus'] == 'Y') { 
 				$this->load->model('checkout/order');
@@ -111,15 +120,23 @@ class ControllerPaymentWorldPay extends Controller {
 		
 				$this->data['continue'] = $this->url->https('checkout/success');
 				
-				$this->template = $this->config->get('config_template') . 'payment/worldpay_success.tpl';
-			  
-	  			$this->render();				
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/worldpay_success.tpl')) {
+					$this->template = $this->config->get('config_template') . '/template/payment/worldpay_success.tpl';
+				} else {
+					$this->template = 'default/template/payment/worldpay_success.tpl';
+				}	
+		
+	  			$this->response->setOutput($this->render(TRUE));				
 			} else {
-    			$this->data['continue'] = $this->url->https('checkout/payment');
+    			$this->data['continue'] = $this->url->https('checkout/cart');
+		
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/worldpay_failure.tpl')) {
+					$this->template = $this->config->get('config_template') . '/template/payment/worldpay_failure.tpl';
+				} else {
+					$this->template = 'default/template/payment/worldpay_failure.tpl';
+				}
 				
-				$this->template = $this->config->get('config_template') . 'payment/worldpay_failure.tpl';
-			  
-	  			$this->render();					
+	  			$this->response->setOutput($this->render(TRUE));					
 			}
 		}
 	}

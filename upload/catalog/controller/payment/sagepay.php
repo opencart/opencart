@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentSagePay extends Controller {
+class ControllerPaymentSagepay extends Controller {
 	protected function index() {
 		$this->language->load('payment/sagepay');
 		
@@ -20,101 +20,108 @@ class ControllerPaymentSagePay extends Controller {
 		$this->load->model('checkout/order');
 		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-
-		$url  = 'VendorTxCode=' . $this->session->data['order_id'];
-		$url .= '&ReferrerID=' . 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
-		$url .= '&Amount=' . $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
-		$url .= '&Currency=' . $order_info['currency'];
-		$url .= '&Description=' . sprintf($this->language->get('text_description'), date($this->language->get('date_format_short')), $this->session->data['order_id']);
-		$url .= '&SuccessURL=' . html_entity_decode($this->url->https('payment/sagepay/success&order_id=' . $this->session->data['order_id']));
-		$url .= '&FailureURL=' . $this->url->https('checkout/payment');
-		$url .= '&CustomerName=' . $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
-		$url .= '&SendEMail=1';
-		$url .= '&CustomerEMail=' . $order_info['email'];
-		$url .= '&VendorEMail=' . $this->config->get('config_email');  
 		
-		$url .= '&BillingFirstnames=' . $order_info['payment_firstname'];
-        $url .= '&BillingSurname=' . $order_info['payment_lastname'];
-        $url .= '&BillingAddress1=' . $order_info['payment_address_1'];
+		$data = array();
+		
+		$data['VendorTxCode'] = $this->session->data['order_id'];
+		$data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
+		$data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
+		$data['Currency'] = $order_info['currency'];
+		$data['Description'] = sprintf($this->language->get('text_description'), date($this->language->get('date_format_short')), $this->session->data['order_id']);
+		$data['SuccessURL'] = html_entity_decode($this->url->https('payment/sagepay/success&order_id=' . $this->session->data['order_id']));
+		
+		if ($this->request->get['route'] != 'checkout/guest/confirm') {
+			$this->data['FailureURL'] = $this->url->https('checkout/payment');
+		} else {
+			$this->data['FailureURL'] = $this->url->https('checkout/guest');
+		}
+		
+		$data['CustomerName'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
+		$data['SendEMail'] = '1';
+		$data['CustomerEMail'] = $order_info['email'];
+		$data['VendorEMail'] = $this->config->get('config_email');  
+		
+		$data['BillingFirstnames'] = $order_info['payment_firstname'];
+        $data['BillingSurname'] = $order_info['payment_lastname'];
+        $data['BillingAddress1'] = $order_info['payment_address_1'];
 		
 		if ($order_info['payment_address_2']) {
-        	$url .= '&BillingAddress2=' . $order_info['payment_address_2'];
+        	$data['BillingAddress2'] = $order_info['payment_address_2'];
 		}
 		
-		$url .= '&BillingCity=' . $order_info['payment_city'];
-        $url .= '&BillingPostCode=' . $order_info['payment_postcode'];	
+		$data['BillingCity'] = $order_info['payment_city'];
+       	$data['BillingPostCode'] = $order_info[payment_'postcode'];	
+        $data['BillingCountry'] = $order_info['payment_iso_code_2'];
 		
-		$payment_address = $this->customer->getAddress($this->session->data['payment_address_id']);
-		
-        $url .= '&BillingCountry=' . $payment_address['iso_code_2'];
-		
-		if ($payment_address['iso_code_2'] == 'US') {
-			$url .= '&BillingState=' . $payment_address['code'];
+		if ($order_info['payment_iso_code_2'] == 'US') {
+			$data['BillingState'] = $order_info['payment_zone_code'];
 		}
 		
-		$url .= '&BillingPhone=' . $order_info['telephone'];
+		$data['BillingPhone=' . $order_info['telephone'];
 		
-		// Check if there is a delivery address
-		if (isset($this->session->data['shipping_address_id'])) {
-			$url .= '&DeliveryFirstnames=' . $order_info['shipping_firstname'];
-        	$url .= '&DeliverySurname=' . $order_info['shipping_lastname'];
-        	$url .= '&DeliveryAddress1=' . $order_info['shipping_address_1'];
+		if ($this->cart->hasShipping()) {
+			$data['DeliveryFirstnames'] = $order_info['shipping_firstname'];
+        	$data['DeliverySurname'] = $order_info['shipping_lastname'];
+        	$data['DeliveryAddress1'] = $order_info['shipping_address_1'];
 		
 			if ($order_info['shipping_address_2']) {
-        		$url .= '&DeliveryAddress2=' . $order_info['shipping_address_2'];
+        		$data['DeliveryAddress2'] = $order_info['shipping_address_2'];
 			}
 		
-        	$url .= '&DeliveryCity=' . $order_info['shipping_city'];
-        	$url .= '&DeliveryPostCode=' . $order_info['shipping_postcode'];
+        	$data['DeliveryCity'] = $order_info['shipping_city'];
+        	$data['DeliveryPostCode'] = $order_info['shipping_postcode'];
+        	$data['DeliveryCountry'] = $order_info['shipping_iso_code_2'];
 		
-			$shipping_address = $this->customer->getAddress($this->session->data['shipping_address_id']);
-		
-        	$url .= '&DeliveryCountry=' . $shipping_address['iso_code_2'];
-		
-			if ($shipping_address['iso_code_2'] == 'US') {
-				$url .= '&DeliveryState=' . $shipping_address['code'];
+			if ($order_info['shipping_iso_code_2'] == 'US') {
+				$data['DeliveryState'] = $order_info['shipping_zone_code'];
 			}
 		
-			$url .= '&DeliveryPhone=' . $order_info['telephone'];
+			$data['DeliveryPhone'] = $order_info['telephone'];
 		} else {
-			$url .= '&DeliveryFirstnames=' . $order_info['payment_firstname'];
-        	$url .= '&DeliverySurname=' . $order_info['payment_lastname'];
-        	$url .= '&DeliveryAddress1=' . $order_info['payment_address_1'];
+			$data['DeliveryFirstnames'] = $order_info['payment_firstname'];
+        	$data['DeliverySurname'] = $order_info['payment_lastname'];
+        	$data['DeliveryAddress1'] = $order_info['payment_address_1'];
 		
 			if ($order_info['payment_address_2']) {
-        		$url .= '&DeliveryAddress2=' . $order_info['payment_address_2'];
+        		$data['DeliveryAddress2'] = $order_info['payment_address_2'];
 			}
 		
-        	$url .= '&DeliveryCity=' . $order_info['payment_city'];
-        	$url .= '&DeliveryPostCode=' . $order_info['payment_postcode'];
-			
-			$payment_address = $this->customer->getAddress($this->session->data['payment_address_id']);
+        	$data['DeliveryCity'] = $order_info['payment_city'];
+        	$data['DeliveryPostCode'] = $order_info['payment_postcode'];
+        	$data['DeliveryCountry'] = $order_info['payment_iso_code_2'];
 		
-        	$url .= '&DeliveryCountry=' . $payment_address['iso_code_2'];
-		
-			if ($payment_address['iso_code_2'] == 'US') {
-				$url .= '&DeliveryState=' . $payment_address['code'];
+			if ($order_info['$payment_iso_code_2'] == 'US') {
+				$data['DeliveryState'] = $order_info['payment_zone_code'];
 			}
 		
-			$url .= '&DeliveryPhone=' . $order_info['telephone'];			
+			$data['DeliveryPhone'] = $order_info['telephone'];			
 		}
 		
-		$url .= '&AllowGiftAid=0';
+		$data['AllowGiftAid'] = '0';
 		
 		if (!$this->config->get('sagepay_transaction')) {
-			$url .= '&ApplyAVSCV2=0';
+			$data['ApplyAVSCV2'] = '0';
 		}
 		
- 		$url .= '&Apply3DSecure=0';
+ 		$data['Apply3DSecure'] = '0';
 		
 		$this->data['transaction'] = $this->config->get('sagepay_transaction');
 		$this->data['vendor'] = $vendor;
-		$this->data['crypt'] = base64_encode($this->simpleXor($url, $password));
-
-		$this->data['back'] = $this->url->https('checkout/payment');
+		$this->data['crypt'] = base64_encode($this->simpleXor(http_build_query($data), $password));
 		
-		$this->id       = 'payment';
-		$this->template = $this->config->get('config_template') . 'payment/sagepay.tpl';
+		if ($this->request->get['route'] != 'checkout/guest/confirm') {
+			$this->data['back'] = $this->url->https('checkout/payment');
+		} else {
+			$this->data['back'] = $this->url->https('checkout/guest');
+		}
+		
+		$this->id = 'payment';
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/sagepay.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/payment/sagepay.tpl';
+		} else {
+			$this->template = 'default/template/payment/sagepay.tpl';
+		}	
 		
 		$this->render();		
 	}

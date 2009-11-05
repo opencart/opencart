@@ -15,6 +15,8 @@ class ControllerAccountLogout extends Controller {
 			unset($this->session->data['order_id']);
 			unset($this->session->data['coupon']);
 			
+			$this->tax->setZone($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
+			
       		$this->redirect($this->url->https('account/logout'));
     	}
  
@@ -50,11 +52,20 @@ class ControllerAccountLogout extends Controller {
 
     	$this->data['continue'] = $this->url->http('common/home');
 
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'common/success.tpl';
-		$this->layout   = 'common/layout';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/common/success.tpl';
+		} else {
+			$this->template = 'default/template/common/success.tpl';
+		}
 		
-		$this->render();	
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right'
+		);
+		
+		$this->response->setOutput($this->render(TRUE));	
   	}
 }
 ?>

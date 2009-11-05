@@ -1,5 +1,5 @@
 <?php
-class ControllerShippingFlat extends Controller {
+class ControllerShippingFedex extends Controller {
 	private $error = array(); 
 	
 	public function index() {   
@@ -23,8 +23,12 @@ class ControllerShippingFlat extends Controller {
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
+		$this->data['text_yes'] = $this->language->get('text_yes');
+		$this->data['text_no'] = $this->language->get('text_no');
 		
-		$this->data['entry_cost'] = $this->language->get('entry_cost');
+		$this->data['entry_account'] = $this->language->get('entry_account');
+		$this->data['entry_meter'] = $this->language->get('entry_meter');
+		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -35,8 +39,24 @@ class ControllerShippingFlat extends Controller {
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
-		$this->data['error_warning'] = @$this->error['warning'];
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
 
+ 		if (isset($this->error['account'])) {
+			$this->data['error_account'] = $this->error['account'];
+		} else {
+			$this->data['error_account'] = '';
+		}
+ 		
+		if (isset($this->error['meter'])) {
+			$this->data['error_meter'] = $this->error['meter'];
+		} else {
+			$this->data['error_meter'] = '';
+		}
+		
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
@@ -61,18 +81,30 @@ class ControllerShippingFlat extends Controller {
 		
 		$this->data['cancel'] = $this->url->https('extension/shipping');
 	
-		if (isset($this->request->post['fedex_cost'])) {
-			$this->data['fedex_cost'] = $this->request->post['fedex_cost'];
+		if (isset($this->request->post['fedex_account'])) {
+			$this->data['fedex_account'] = $this->request->post['fedex_account'];
 		} else {
-			$this->data['fedex_cost'] = $this->config->get('fedex_cost');
+			$this->data['fedex_account'] = $this->config->get('fedex_account');
 		}
 
+		if (isset($this->request->post['fedex_meter'])) {
+			$this->data['fedex_meter'] = $this->request->post['fedex_meter'];
+		} else {
+			$this->data['fedex_meter'] = $this->config->get('fedex_meter');
+		}
+
+		if (isset($this->request->post['fedex_test'])) {
+			$this->data['fedex_test'] = $this->request->post['fedex_test'];
+		} else {
+			$this->data['fedex_test'] = $this->config->get('fedex_test');
+		}
+		
 		if (isset($this->request->post['fedex_tax_class_id'])) {
 			$this->data['fedex_tax_class_id'] = $this->request->post['fedex_tax_class_id'];
 		} else {
 			$this->data['fedex_tax_class_id'] = $this->config->get('fedex_tax_class_id');
 		}
-
+		
 		if (isset($this->request->post['fedex_geo_zone_id'])) {
 			$this->data['fedex_geo_zone_id'] = $this->request->post['fedex_geo_zone_id'];
 		} else {
@@ -109,6 +141,14 @@ class ControllerShippingFlat extends Controller {
 	private function validate() {
 		if (!$this->user->hasPermission('modify', 'shipping/fedex')) {
 			$this->error['warning'] = $this->language->get('error_permission');
+		}
+		
+		if (!$this->request->post['fedex_account']) {
+			$this->error['account'] = $this->language->get('error_account');
+		}
+		
+		if (!$this->request->post['fedex_meter']) {
+			$this->error['meter'] = $this->language->get('error_meter');
 		}
 		
 		if (!$this->error) {

@@ -1,8 +1,9 @@
 <?php
-// Heading
-$_['heading_title']  = 'User Login';
+// header
+$_['heading_title']  = 'Administration';
 
 // Text
+$_['text_heading']   = 'Administration';
 $_['text_login']     = 'Please enter your login details.';
 
 // Entry

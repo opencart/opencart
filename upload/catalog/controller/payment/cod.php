@@ -5,12 +5,22 @@ class ControllerPaymentCod extends Controller {
 		$this->data['button_back'] = $this->language->get('button_back');
 
 		$this->data['continue'] = $this->url->https('checkout/success');
-		$this->data['back'] = $this->url->https('checkout/payment');
 
-		$this->id       = 'payment';
-		$this->template = $this->config->get('config_template') . 'payment/cod.tpl';
+		if ($this->request->get['route'] != 'checkout/guest/confirm') {
+			$this->data['back'] = $this->url->https('checkout/payment');
+		} else {
+			$this->data['back'] = $this->url->https('checkout/guest');
+		}
 		
-		$this->render();		 
+		$this->id = 'payment';
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/cod.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/payment/cod.tpl';
+		} else {
+			$this->template = 'default/template/payment/cod.tpl';
+		}	
+		
+		$this->render();
 	}
 	
 	public function confirm() {

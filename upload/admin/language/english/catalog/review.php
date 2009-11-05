@@ -24,6 +24,7 @@ $_['entry_bad']         = 'Bad';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify reviews!';
+$_['error_product']     = 'Product required!';
 $_['error_author']      = 'Author must be greater than 3 and less than 64 characters!';
 $_['error_text']        = 'Review Text must be greater than 25 and less than 1000 characters!';
 $_['error_rating']      = 'Review rating required!';

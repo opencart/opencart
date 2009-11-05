@@ -83,8 +83,8 @@ class ControllerCustomerCoupon extends Controller {
 		
 		$this->load->model('customer/coupon');
 		
-    	if (isset($this->request->post['delete']) && $this->validateDelete()) { 
-			foreach ($this->request->post['delete'] as $coupon_id) {
+    	if (isset($this->request->post['selected']) && $this->validateDelete()) { 
+			foreach ($this->request->post['selected'] as $coupon_id) {
 				$this->model_customer_coupon->deleteCoupon($coupon_id);
 			}
       		
@@ -189,7 +189,7 @@ class ControllerCustomerCoupon extends Controller {
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'delete'     => isset($this->request->post['delete']) && in_array($result['coupon_id'], $this->request->post['delete']),
+				'selected'   => isset($this->request->post['selected']) && in_array($result['coupon_id'], $this->request->post['selected']),
 				'action'     => $action
 			);
 		}
@@ -263,12 +263,15 @@ class ControllerCustomerCoupon extends Controller {
 
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-
-		$this->id       = 'content';
+		
 		$this->template = 'customer/coupon_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
   	}
 
   	private function getForm() {
@@ -285,6 +288,7 @@ class ControllerCustomerCoupon extends Controller {
     	$this->data['entry_description'] = $this->language->get('entry_description');
     	$this->data['entry_code'] = $this->language->get('entry_code');
 		$this->data['entry_discount'] = $this->language->get('entry_discount');
+		$this->data['entry_logged'] = $this->language->get('entry_logged');
 		$this->data['entry_shipping'] = $this->language->get('entry_shipping');
 		$this->data['entry_type'] = $this->language->get('entry_type');
 		$this->data['entry_total'] = $this->language->get('entry_total');
@@ -411,6 +415,14 @@ class ControllerCustomerCoupon extends Controller {
 		} else {
       		$this->data['discount'] = '';
     	}
+
+    	if (isset($this->request->post['logged'])) {
+      		$this->data['logged'] = $this->request->post['logged'];
+    	} elseif (isset($coupon_info)) {
+			$this->data['logged'] = $coupon_info['logged'];
+		} else {
+      		$this->data['logged'] = '';
+    	}
 		
     	if (isset($this->request->post['shipping'])) {
       		$this->data['shipping'] = $this->request->post['shipping'];
@@ -427,10 +439,6 @@ class ControllerCustomerCoupon extends Controller {
 		} else {
       		$this->data['total'] = '';
     	}
-
-		$this->load->model('catalog/product'); 
-		
-    	$this->data['products'] = $this->model_catalog_product->getProducts();
 		
     	if (isset($this->request->post['product'])) {
       		$this->data['coupon_product'] = $this->request->post['product'];
@@ -439,6 +447,10 @@ class ControllerCustomerCoupon extends Controller {
     	} else {
 			$this->data['coupon_product'] = array();
 		}
+
+		$this->load->model('catalog/category');
+				
+		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
 		
 		if (isset($this->request->post['date_start'])) {
        		$this->data['date_start'] = $this->request->post['date_start'];
@@ -480,11 +492,14 @@ class ControllerCustomerCoupon extends Controller {
       		$this->data['status'] = 1;
     	}
 		
-		$this->id       = 'content';
 		$this->template = 'customer/coupon_form.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();		
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));		
   	}
 	
   	private function validateForm() {
@@ -512,6 +527,58 @@ class ControllerCustomerCoupon extends Controller {
       		return FALSE;
     	}
   	}
+
+	public function category() {
+		$this->load->model('catalog/product');
+		
+		if (isset($this->request->get['category_id'])) {
+			$category_id = $this->request->get['category_id'];
+		} else {
+			$category_id = 0;
+		}
+		
+		$product_data = array();
+		
+		$results = $this->model_catalog_product->getProductsByCategoryId($category_id);
+		
+		foreach ($results as $result) {
+			$product_data[] = array(
+				'product_id' => $result['product_id'],
+				'name'       => $result['name']
+			);
+		}
+		
+		$this->load->library('json');
+		
+		$this->response->setOutput(Json::encode($product_data));
+	}
+	
+	public function product() {
+		$this->load->model('catalog/product');
+		
+		if (isset($this->request->post['coupon_product'])) {
+			$products = $this->request->post['coupon_product'];
+		} else {
+			$products = array();
+		}
+	
+		$product_data = array();
+		
+		foreach ($products as $product_id) {
+			$product_info = $this->model_catalog_product->getProduct($product_id);
+			
+			if ($product_info) {
+				$product_data[] = array(
+					'product_id' => $product_info['product_id'],
+					'name'       => $product_info['name']
+				);
+			}
+		}
+		
+		$this->load->library('json');
+		
+		$this->response->setOutput(Json::encode($product_data));
+	}
 
   	private function validateDelete() {
     	if (!$this->user->hasPermission('modify', 'customer/coupon')) {

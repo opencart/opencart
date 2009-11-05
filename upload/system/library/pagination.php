@@ -15,7 +15,13 @@ final class Pagination {
 	 
 	public function render() {
 		$total = $this->total;
-		$page = $this->page;
+		
+		if ($this->page < 1) {
+			$page = 1;
+		} else {
+			$page = $this->page;
+		}
+		
 		$limit = $this->limit;
 		$num_links = $this->num_links;
 		$num_pages = ceil($total / $limit);

@@ -84,11 +84,14 @@ class ControllerExtensionFeed extends Controller {
 			}
 		}
 		
-		$this->id       = 'content';
 		$this->template = 'extension/feed.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 	
 	public function install() {

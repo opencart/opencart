@@ -175,11 +175,20 @@ class ControllerProductManufacturer extends Controller {
 				$this->data['sort'] = $sort;
 				$this->data['order'] = $order;
 				
-				$this->id       = 'content';
-				$this->template = $this->config->get('config_template') . 'product/manufacturer.tpl';
-				$this->layout   = 'common/layout';
-		
-				$this->render();										
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/manufacturer.tpl')) {
+					$this->template = $this->config->get('config_template') . '/template/product/manufacturer.tpl';
+				} else {
+					$this->template = 'default/template/product/manufacturer.tpl';
+				}	
+				
+				$this->children = array(
+					'common/header',
+					'common/footer',
+					'common/column_left',
+					'common/column_right'
+				);		
+				
+				$this->response->setOutput($this->render(TRUE));										
       		} else {
         		$this->document->title = $manufacturer_info['name'];
 
@@ -191,11 +200,20 @@ class ControllerProductManufacturer extends Controller {
 
         		$this->data['continue'] = $this->url->http('common/home');
 		
-				$this->id       = 'content';
-				$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
-				$this->layout   = 'common/layout';
-		
-				$this->render();					
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
+					$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
+				} else {
+					$this->template = 'default/template/error/not_found.tpl';
+				}
+				
+				$this->children = array(
+					'common/header',
+					'common/footer',
+					'common/column_left',
+					'common/column_right'
+				);		
+				
+				$this->response->setOutput($this->render(TRUE));					
       		}
     	} else {
 			$url = '';
@@ -228,11 +246,20 @@ class ControllerProductManufacturer extends Controller {
 
       		$this->data['continue'] = $this->url->http('common/home');
 	  			
-			$this->id       = 'content';
-			$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
-			$this->layout   = 'common/layout';
-		
-			$this->render();
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
+			} else {
+				$this->template = 'default/template/error/not_found.tpl';
+			}
+			
+			$this->children = array(
+				'common/header',
+				'common/footer',
+				'common/column_left',
+				'common/column_right'
+			);		
+			
+			$this->response->setOutput($this->render(TRUE));
 		}
   	}
 }

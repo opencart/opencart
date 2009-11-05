@@ -1,39 +1,39 @@
 <?php 
 class ControllerCheckoutConfirm extends Controller { 
-	private $error = array(); 
-	
 	public function index() {
+	   	if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+	  		$this->redirect($this->url->https('checkout/cart'));
+    	}		
+		
     	if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->https('checkout/shipping');
 
 	  		$this->redirect($this->url->https('account/login'));
     	}
 
-    	if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-	  		$this->redirect($this->url->https('checkout/cart'));
-    	}
-
     	if ($this->cart->hasShipping()) {
-			if (!isset($this->session->data['shipping_method'])) {
+			if (!isset($this->session->data['shipping_address_id']) || !$this->session->data['shipping_address_id']) {
 	  			$this->redirect($this->url->https('checkout/shipping'));
     		}
-
-    		if (!isset($this->session->data['shipping_address_id'])) {
-	  			$this->redirect($this->url->https('checkout/address/shipping'));
+			
+			if (!isset($this->session->data['shipping_method'])) {
+	  			$this->redirect($this->url->https('checkout/shipping'));
     		}
 		} else {
 			unset($this->session->data['shipping_address_id']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
+			
+			$this->tax->setZone($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}
+		
+    	if (!isset($this->session->data['payment_address_id']) || !$this->session->data['payment_address_id']) { 
+	  		$this->redirect($this->url->https('checkout/payment'));
+    	}  
 		
 		if (!isset($this->session->data['payment_method'])) {
 	  		$this->redirect($this->url->https('checkout/payment'));
     	}
-
-    	if (!$this->customer->hasAddress($this->session->data['payment_address_id'])) { 
-	  		$this->redirect($this->url->https('checkout/address/payment'));
-    	}    
 		
 		$total_data = array();
 		$total = 0;
@@ -69,14 +69,6 @@ class ControllerCheckoutConfirm extends Controller {
 
     	$this->document->title = $this->language->get('heading_title'); 
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->session->data['coupon'] = $this->request->post['coupon'];
-			
-			$this->session->data['success'] = $this->language->get('text_coupon');
-			
-			$this->redirect($this->url->https('checkout/confirm'));
-		}	
-		
 		$data = array();
 		
 		$data['customer_id'] = $this->customer->getId();
@@ -86,15 +78,13 @@ class ControllerCheckoutConfirm extends Controller {
 		$data['telephone'] = $this->customer->getTelephone();
 		$data['fax'] = $this->customer->getFax();
 		
-		if (isset($this->session->data['shipping_address_id'])) {
+		$this->load->model('account/address');
+		
+		if ($this->cart->hasShipping()) {
 			$shipping_address_id = $this->session->data['shipping_address_id'];	
-		} else {
-			$shipping_address_id = 0;	
-		}
-		
-		$shipping_address = $this->customer->getAddress($shipping_address_id);
-		
-		if ($shipping_address) {
+			
+			$shipping_address = $this->model_account_address->getAddress($shipping_address_id);			
+			
 			$data['shipping_firstname'] = $shipping_address['firstname'];
 			$data['shipping_lastname'] = $shipping_address['lastname'];	
 			$data['shipping_company'] = $shipping_address['company'];	
@@ -103,7 +93,9 @@ class ControllerCheckoutConfirm extends Controller {
 			$data['shipping_city'] = $shipping_address['city'];
 			$data['shipping_postcode'] = $shipping_address['postcode'];
 			$data['shipping_zone'] = $shipping_address['zone'];
+			$data['shipping_zone_id'] = $shipping_address['zone_id'];
 			$data['shipping_country'] = $shipping_address['country'];
+			$data['shipping_country_id'] = $shipping_address['country_id'];
 			$data['shipping_address_format'] = $shipping_address['address_format'];
 		
 			if (isset($this->session->data['shipping_method']['title'])) {
@@ -120,47 +112,33 @@ class ControllerCheckoutConfirm extends Controller {
 			$data['shipping_city'] = '';
 			$data['shipping_postcode'] = '';
 			$data['shipping_zone'] = '';
+			$data['shipping_zone_id'] = '';
 			$data['shipping_country'] = '';
+			$data['shipping_country_id'] = '';
 			$data['shipping_address_format'] = '';
 			$data['shipping_method'] = '';
 		}
 
-		if (isset($this->session->data['payment_address_id'])) {
-			$payment_address_id = $this->session->data['payment_address_id'];	
+		$payment_address_id = $this->session->data['payment_address_id'];	
+		
+		$payment_address = $this->model_account_address->getAddress($payment_address_id);
+		
+		$data['payment_firstname'] = $payment_address['firstname'];
+		$data['payment_lastname'] = $payment_address['lastname'];	
+		$data['payment_company'] = $payment_address['company'];	
+		$data['payment_address_1'] = $payment_address['address_1'];
+		$data['payment_address_2'] = $payment_address['address_2'];
+		$data['payment_city'] = $payment_address['city'];
+		$data['payment_postcode'] = $payment_address['postcode'];
+		$data['payment_zone'] = $payment_address['zone'];
+		$data['payment_zone_id'] = $payment_address['zone_id'];
+		$data['payment_country'] = $payment_address['country'];
+		$data['payment_country_id'] = $payment_address['country_id'];
+		$data['payment_address_format'] = $payment_address['address_format'];
+	
+		if (isset($this->session->data['payment_method']['title'])) {
+			$data['payment_method'] = $this->session->data['payment_method']['title'];
 		} else {
-			$payment_address_id = 0;	
-		}
-		
-		$payment_address = $this->customer->getAddress($payment_address_id);
-		
-		if ($payment_address) {
-			$data['payment_firstname'] = $payment_address['firstname'];
-			$data['payment_lastname'] = $payment_address['lastname'];	
-			$data['payment_company'] = $payment_address['company'];	
-			$data['payment_address_1'] = $payment_address['address_1'];
-			$data['payment_address_2'] = $payment_address['address_2'];
-			$data['payment_city'] = $payment_address['city'];
-			$data['payment_postcode'] = $payment_address['postcode'];
-			$data['payment_zone'] = $payment_address['zone'];
-			$data['payment_country'] = $payment_address['country'];
-			$data['payment_address_format'] = $payment_address['address_format'];
-		
-			if (isset($this->session->data['payment_method']['title'])) {
-				$data['payment_method'] = $this->session->data['payment_method']['title'];
-			} else {
-				$data['payment_method'] = '';
-			}
-		} else {
-			$data['payment_firstname'] = '';
-			$data['payment_lastname'] = '';	
-			$data['payment_company'] = '';	
-			$data['payment_address_1'] = '';
-			$data['payment_address_2'] = '';
-			$data['payment_city'] = '';
-			$data['payment_postcode'] = '';
-			$data['payment_zone'] = '';
-			$data['payment_country'] = '';
-			$data['payment_address_format'] = '';
 			$data['payment_method'] = '';
 		}
 		
@@ -171,9 +149,10 @@ class ControllerCheckoutConfirm extends Controller {
 
       		foreach ($product['option'] as $option) {
         		$option_data[] = array(
-          			'name'   => $option['name'],
-          			'value'  => $option['value'],
-		  			'prefix' => $option['prefix']
+					'product_option_value_id' => $option['product_option_value_id'],			   
+          			'name'                    => $option['name'],
+          			'value'                   => $option['value'],
+		  			'prefix'                  => $option['prefix']
         		);
       		}
  
@@ -232,13 +211,15 @@ class ControllerCheckoutConfirm extends Controller {
         	'text'      => $this->language->get('text_basket'),
         	'separator' => $this->language->get('text_separator')
       	);
-
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/shipping'),
-        	'text'      => $this->language->get('text_shipping'),
-        	'separator' => $this->language->get('text_separator')
-      	);
-
+		
+		if ($this->cart->hasShipping()) {
+      		$this->document->breadcrumbs[] = array(
+        		'href'      => $this->url->http('checkout/shipping'),
+        		'text'      => $this->language->get('text_shipping'),
+        		'separator' => $this->language->get('text_separator')
+      		);
+		}
+		
       	$this->document->breadcrumbs[] = array(
         	'href'      => $this->url->http('checkout/payment'),
         	'text'      => $this->language->get('text_payment'),
@@ -265,38 +246,8 @@ class ControllerCheckoutConfirm extends Controller {
     	$this->data['column_quantity'] = $this->language->get('column_quantity');
     	$this->data['column_price'] = $this->language->get('column_price');
     	$this->data['column_total'] = $this->language->get('column_total');
-    	
-		$this->data['entry_coupon'] = $this->language->get('entry_coupon');
 		
-    	$this->data['button_update'] = $this->language->get('button_update');
-	
-		if (isset($this->error['message'])) {
-			$this->data['error'] = $this->error['message'];
-		} else {
-			$this->data['error'] = '';
-		}
-		
-		$this->data['action'] = $this->url->https('checkout/confirm');
-		
-		if (isset($this->request->post['coupon'])) {
-			$this->data['coupon'] = $this->request->post['coupon'];
-		} elseif (isset($this->session->data['coupon'])) {
-			$this->data['coupon'] = $this->session->data['coupon'];
-		} else {
-			$this->data['coupon'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-    		$this->data['success'] = $this->session->data['success'];
-    
-			unset($this->session->data['success']);
-		} else {
-			$this->data['success'] = '';
-		}
-		
-		$shipping_address = $this->customer->getAddress($shipping_address_id);
-		
-		if ($shipping_address) {
+		if ($this->cart->hasShipping()) {
 			if ($shipping_address['address_format']) {
       			$format = $shipping_address['address_format'];
     		} else {
@@ -341,8 +292,6 @@ class ControllerCheckoutConfirm extends Controller {
     	$this->data['checkout_shipping'] = $this->url->https('checkout/shipping');
 
     	$this->data['checkout_shipping_address'] = $this->url->https('checkout/address/shipping');
-		
-		$payment_address = $this->customer->getAddress($payment_address_id);
     	
 		if ($payment_address) {
 			if ($payment_address['address_format']) {
@@ -418,29 +367,22 @@ class ControllerCheckoutConfirm extends Controller {
 		$this->data['totals'] = $total_data;
 	
 		$this->data['comment'] = nl2br($this->session->data['comment']);
-    
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'checkout/confirm.tpl';
-		$this->layout   = 'common/layout';
-		$this->children = array('payment/' . $this->session->data['payment_method']['id']);
-		
-		$this->render();
-  	}
-			
-	private function validate() {
-		$this->load->model('checkout/coupon');
-			
-		$coupon = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);
-			
-		if (!$coupon) {
-			$this->error['message'] = $this->language->get('error_coupon');
-		}
-		
-		if (!$this->error) {
-			return TRUE;
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/confirm.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/checkout/confirm.tpl';
 		} else {
-			return FALSE;
+			$this->template = 'default/template/checkout/confirm.tpl';
 		}
-	}
+		
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right',
+			'payment/' . $this->session->data['payment_method']['id']
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
+  	}
 }
 ?>

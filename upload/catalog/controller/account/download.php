@@ -102,11 +102,20 @@ class ControllerAccountDownload extends Controller {
 			
 			$this->data['continue'] = $this->url->https('account/account');
 
-			$this->id       = 'content';
-			$this->template = $this->config->get('config_template') . 'account/download.tpl';
-			$this->layout   = 'common/layout';
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/download.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/account/download.tpl';
+			} else {
+				$this->template = 'default/template/account/download.tpl';
+			}
+			
+			$this->children = array(
+				'common/header',
+				'common/footer',
+				'common/column_left',
+				'common/column_right'
+			);
 		
-			$this->render();				
+			$this->response->setOutput($this->render(TRUE));				
 		} else {
 			$this->data['heading_title'] = $this->language->get('heading_title');
 
@@ -116,11 +125,20 @@ class ControllerAccountDownload extends Controller {
 
 			$this->data['continue'] = $this->url->https('account/account');
 
-			$this->id       = 'content';
-			$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
-			$this->layout   = 'common/layout';
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
+			} else {
+				$this->template = 'default/template/error/not_found.tpl';
+			}
+			
+			$this->children = array(
+				'common/header',
+				'common/footer',
+				'common/column_left',
+				'common/column_right'
+			);
 		
-			$this->render();
+			$this->response->setOutput($this->render(TRUE));
 		}
 	}
 

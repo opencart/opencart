@@ -1,6 +1,10 @@
 <?php 
 class ControllerCheckoutCart extends Controller {
+	private $error = array();
+	
 	public function index() {
+		$this->language->load('checkout/cart');
+		
     	if ($this->request->server['REQUEST_METHOD'] == 'POST') {
       		if (isset($this->request->post['quantity'])) {
 				if (!is_array($this->request->post['quantity'])) {
@@ -16,6 +20,11 @@ class ControllerCheckoutCart extends Controller {
 	      				$this->cart->update($key, $value);
 					}
 				}
+				
+				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['payment_methods']);
+				unset($this->session->data['payment_method']);
       		}
 
       		if (isset($this->request->post['remove'])) {
@@ -23,16 +32,30 @@ class ControllerCheckoutCart extends Controller {
           			$this->cart->remove($key);
 				}
       		}
-      		
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['payment_methods']);
-			unset($this->session->data['payment_method']);
 			
-	  		$this->redirect($this->url->https('checkout/cart'));
+			if (isset($this->request->post['redirect'])) {
+				$this->session->data['redirect'] = $this->request->post['redirect'];
+			}	
+			
+			if (isset($this->request->post['quantity']) || isset($this->request->post['remove'])) {
+				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['payment_methods']);
+				unset($this->session->data['payment_method']);	
+				
+				$this->redirect($this->url->https('checkout/cart'));
+			}
+			
+			if (isset($this->request->post['coupon'])) {
+				if ($this->validate()) {
+					$this->session->data['coupon'] = $this->request->post['coupon'];
+					
+					$this->session->data['success'] = $this->language->get('text_success');
+					
+					$this->redirect($this->url->https('checkout/cart'));
+				}
+			}
     	}
-
-		$this->language->load('checkout/cart');
 
     	$this->document->title = $this->language->get('heading_title');
 
@@ -52,10 +75,12 @@ class ControllerCheckoutCart extends Controller {
 			
     	if ($this->cart->hasProducts()) {
       		$this->data['heading_title'] = $this->language->get('heading_title');
-
-      		$this->data['text_subtotal'] = $this->language->get('text_subtotal');
-
-      		$this->data['column_remove'] = $this->language->get('column_remove');
+			
+			$this->data['text_select'] = $this->language->get('text_select');
+      		$this->data['text_sub_total'] = $this->language->get('text_sub_total');
+			$this->data['text_coupon'] = $this->language->get('text_coupon');
+		
+     		$this->data['column_remove'] = $this->language->get('column_remove');
       		$this->data['column_image'] = $this->language->get('column_image');
       		$this->data['column_name'] = $this->language->get('column_name');
       		$this->data['column_model'] = $this->language->get('column_model');
@@ -63,16 +88,29 @@ class ControllerCheckoutCart extends Controller {
 			$this->data['column_price'] = $this->language->get('column_price');
       		$this->data['column_total'] = $this->language->get('column_total');
 
+			$this->data['entry_coupon'] = $this->language->get('entry_coupon');
+
       		$this->data['button_update'] = $this->language->get('button_update');
       		$this->data['button_shopping'] = $this->language->get('button_shopping');
       		$this->data['button_checkout'] = $this->language->get('button_checkout');
+			$this->data['button_coupon'] = $this->language->get('button_coupon');
 			
-			if (!$this->cart->hasStock() && $this->config->get('config_stock_check')) {
-      			$this->data['error'] = $this->language->get('error_stock');
+			if (isset($this->error['warning'])) {
+				$this->data['error_warning'] = $this->error['warning'];			
+			} elseif (!$this->cart->hasStock() && $this->config->get('config_stock_check')) {
+      			$this->data['error_warning'] = $this->language->get('error_stock');
 			} else {
-				$this->data['error'] = FALSE;
+				$this->data['error_warning'] = '';
 			}
-      		
+	
+			if (isset($this->session->data['success'])) {
+				$this->data['success'] = $this->session->data['success'];
+		
+				unset($this->session->data['success']);
+			} else {
+				$this->data['success'] = '';
+			}
+		
 			$this->data['action'] = $this->url->http('checkout/cart');
 			
 			$this->load->model('tool/seo_url'); 
@@ -110,17 +148,40 @@ class ControllerCheckoutCart extends Controller {
         		);
       		}
 			
-      		$this->data['subtotal'] = $this->currency->format($this->cart->getTotal());
-
-      		$this->data['continue'] = $this->url->http('common/home');
-
-      		$this->data['checkout'] = $this->url->http('checkout/shipping');
-
-			$this->id       = 'content';
-			$this->template = $this->config->get('config_template') . 'checkout/cart.tpl';
-			$this->layout   = 'common/layout';
+      		$this->data['sub_total'] = $this->currency->format($this->cart->getTotal());
+		
+			if (isset($this->request->post['coupon'])) {
+				$this->data['coupon'] = $this->request->post['coupon'];
+			} elseif (isset($this->session->data['coupon'])) {
+				$this->data['coupon'] = $this->session->data['coupon'];
+			} else {
+				$this->data['coupon'] = '';
+			}
 			
-			$this->render();					
+			if (isset($this->session->data['redirect'])) {
+      			$this->data['continue'] = $this->session->data['redirect'];
+				
+				unset($this->session->data['redirect']);
+			} else {
+				$this->data['continue'] = $this->url->http('common/home');
+			}
+			
+			$this->data['checkout'] = $this->url->http('checkout/shipping');
+			
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/cart.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/checkout/cart.tpl';
+			} else {
+				$this->template = 'default/template/checkout/cart.tpl';
+			}
+			
+			$this->children = array(
+				'common/header',
+				'common/footer',
+				'common/column_left',
+				'common/column_right'
+			);		
+			
+			$this->response->setOutput($this->render(TRUE));					
     	} else {
       		$this->data['heading_title'] = $this->language->get('heading_title');
 
@@ -130,12 +191,37 @@ class ControllerCheckoutCart extends Controller {
 
       		$this->data['continue'] = $this->url->http('common/home');
 
-			$this->id       = 'content';
-			$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
-			$this->layout   = 'common/layout';
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
+			} else {
+				$this->template = 'default/template/error/not_found.tpl';
+			}
 			
-			$this->render();			
+			$this->children = array(
+				'common/header',
+				'common/footer',
+				'common/column_left',
+				'common/column_right'
+			);
+		
+			$this->response->setOutput($this->render(TRUE));			
     	}
   	}
+	
+	private function validate() {
+		$this->load->model('checkout/coupon');
+			
+		$coupon = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);
+			
+		if (!$coupon) {
+			$this->error['warning'] = $this->language->get('error_coupon');
+		}
+		
+		if (!$this->error) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}	
 }
 ?>

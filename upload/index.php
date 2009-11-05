@@ -12,12 +12,12 @@ if (!defined('HTTP_SERVER')) {
 require_once(DIR_SYSTEM . 'startup.php');
 
 // Load the application classes
-require_once(DIR_SYSTEM . 'helper/customer.php');
-require_once(DIR_SYSTEM . 'helper/currency.php');
-require_once(DIR_SYSTEM . 'helper/tax.php');
-require_once(DIR_SYSTEM . 'helper/weight.php');
-require_once(DIR_SYSTEM . 'helper/measurement.php');
-require_once(DIR_SYSTEM . 'helper/cart.php');
+require_once(DIR_SYSTEM . 'library/customer.php');
+require_once(DIR_SYSTEM . 'library/currency.php');
+require_once(DIR_SYSTEM . 'library/tax.php');
+require_once(DIR_SYSTEM . 'library/weight.php');
+require_once(DIR_SYSTEM . 'library/measurement.php');
+require_once(DIR_SYSTEM . 'library/cart.php');
 
 // Loader
 $loader = new Loader();
@@ -48,30 +48,30 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	switch ($errno) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
-			$errors = "Notice";
+			$error = "Notice";
 			break;
 		case E_WARNING:
 		case E_USER_WARNING:
-			$errors = "Warning";
+			$error = "Warning";
 			break;
 		case E_ERROR:
 		case E_USER_ERROR:
-			$errors = "Fatal Error";
+			$error = "Fatal Error";
 			break;
 		default:
-			$errors = "Unknown";
+			$error = "Unknown";
 			break;
 	}
 		
     if ($config->get('config_error_display')) {
-        echo '<b>' . $errors . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
+        echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
 	}
 	
 	if ($config->get('config_error_log')) {
-		$log->write('PHP ' . $errors . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
+		$log->write('PHP ' . $error . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
 	}
 
-	return true;
+	return TRUE;
 }
 
 // set to the user defined error handler
@@ -95,31 +95,31 @@ Registry::set('url', new Url());
 // Session
 $session = new Session();
 Registry::set('session', $session);
-
-// Language		
-$language = new Language();
-Registry::set('language', $language);
 	
 // Document
 Registry::set('document', new Document());
 
+// Language		
+$language = new Language();
+Registry::set('language', $language);
+
 // Customer
-Registry::set('customer', new HelperCustomer());
+Registry::set('customer', new Customer());
 
 // Currency
-Registry::set('currency', new HelperCurrency());
+Registry::set('currency', new Currency());
 
 // Tax
-Registry::set('tax', new HelperTax());
+Registry::set('tax', new Tax());
 
 // Weight
-Registry::set('weight', new HelperWeight());
+Registry::set('weight', new Weight());
 
 // Weight
-Registry::set('measurement', new HelperMeasurement());
+Registry::set('measurement', new Measurement());
 
 // Cart
-Registry::set('cart', new HelperCart());
+Registry::set('cart', new Cart());
 
 // Front Controller 
 $controller = new Front();

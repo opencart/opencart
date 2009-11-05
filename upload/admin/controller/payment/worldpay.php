@@ -139,11 +139,14 @@ class ControllerPaymentWorldPay extends Controller {
 			$this->data['worldpay_sort_order'] = $this->config->get('worldpay_sort_order');
 		}
 		
-		$this->id       = 'content';
 		$this->template = 'payment/worldpay.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {

@@ -6,7 +6,7 @@ class ControllerErrorNotFound extends Controller {
 		$this->document->title = $this->language->get('heading_title');
 		
 		$this->document->breadcrumbs = array();
-
+ 
       	$this->document->breadcrumbs[] = array(
         	'href'      => $this->url->http('common/home'),
         	'text'      => $this->language->get('text_home'),
@@ -29,11 +29,20 @@ class ControllerErrorNotFound extends Controller {
 		
 		$this->data['continue'] = $this->url->http('common/home');
 		
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
-		$this->layout   = 'common/layout';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
+		} else {
+			$this->template = 'default/template/error/not_found.tpl';
+		}
 		
-		$this->render();		
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right'
+		);
+		
+		$this->response->setOutput($this->render(TRUE));		
   	}
 }
 ?>

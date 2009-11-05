@@ -7,6 +7,10 @@ final class Encryption {
 	}
 	
 	function encrypt($value) {
+		if (!$this->key) { 
+			return $value;
+		}
+		
 		$output = '';
 		
 		for ($i = 0; $i < strlen($value); $i++) {
@@ -21,6 +25,10 @@ final class Encryption {
 	}
 	
 	function decrypt($value) {
+		if (!$this->key) { 
+			return $value;
+		}
+		
 		$output = '';
 		
 		$value = base64_decode($value);

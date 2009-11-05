@@ -8,19 +8,21 @@ final class Mail {
   	protected $html;
   	protected $attachments = array();
 	protected $protocol = 'mail';
-	protected $smtp_host = '';
-	protected $smtp_username = '';
-	protected $smtp_password = '';
-	protected $smtp_port = '25';
-	protected $smtp_timeout	= 5;
-	
-	public function __construct($protocol = 'mail', $smtp_host = '', $smtp_username = '', $smtp_password = '', $smtp_port = '25', $smtp_timeout = '5') {
+	protected $hostname;
+	protected $username;
+	protected $password;
+	protected $port = 25;
+	protected $timeout = 5;
+	public $charset = 'utf-8';
+	public $eol = "\r\n";
+
+	public function __construct($protocol = 'mail', $hostname = '', $username = '', $password = '', $port = '25', $timeout = '5') {
 		$this->protocol = $protocol;
-		$this->smtp_host = $smtp_host;
-		$this->smtp_username = $smtp_username;
-		$this->smtp_password = $smtp_password;
-		$this->smtp_port = $smtp_port;
-		$this->smtp_timeout = $smtp_timeout;
+		$this->hostname = $hostname;
+		$this->username = $username;
+		$this->password = $password;
+		$this->port = $port;
+		$this->timeout = $timeout;	
 	}
 	
 	public function setTo($to) {
@@ -30,7 +32,11 @@ final class Mail {
   	public function setFrom($from) {
     	$this->from = $from;
   	}
- 
+	
+ 	public function addheader($header, $value) {
+		$this->headers[$header] = $value;
+	}
+	
   	public function setSender($sender) {
     	$this->sender = $sender;
   	}
@@ -79,31 +85,32 @@ final class Mail {
     	}
 	  	
 		$boundary = '----=_NextPart_' . md5(rand());  
-	    
-		if (strpos(PHP_OS, 'WIN') === false) {
-			$eol = "\n";
-		} else {
-			$eol = "\r\n";
+		
+		$header = '';
+		
+		if ($this->protocol != 'mail') {
+			$header .= 'To: ' . $to . $this->eol;
+			$header .= 'Subject: ' . $this->subject . $this->eol;
 		}
 		
-		$headers  = 'From: ' . $this->sender . '<' . $this->from . '>' . $eol; 
-    	$headers .= 'Reply-To: ' . $this->sender . '<' . $this->from . '>' . $eol;   
-		$headers .= 'Return-Path: ' . $this->from . $eol;
-    	$headers .= 'X-Mailer: PHP/' . phpversion() . $eol;  
-    	$headers .= 'MIME-Version: 1.0' . $eol; 
-    	$headers .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . $eol;  
+		$header .= 'From: ' . $this->sender . '<' . $this->from . '>' . $this->eol; 
+    	$header .= 'Reply-To: ' . $this->sender . '<' . $this->from . '>' . $this->eol;   
+		$header .= 'Return-Path: ' . $this->from . $this->eol;
+		$header .= 'X-Mailer: PHP/' . phpversion() . $this->eol;  
+    	$header .= 'MIME-Version: 1.0' . $this->eol; 
+		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . $this->eol;  
 	
 		if (!$this->html) {
-	  		$message  = '--' . $boundary . $eol;  
-	  		$message .= 'Content-Type: text/plain; charset="utf-8"' . $eol; 
-	  		$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
+	  		$message  = '--' . $boundary . $this->eol;  
+	  		$message .= 'Content-Type: text/plain; charset="' . $this->charset . '"' . $this->eol; 
+	  		$message .= 'Content-Transfer-Encoding: base64' . $this->eol . $this->eol;
       		$message .= chunk_split(base64_encode($this->text));
 		} else {
-	  		$message  = '--' . $boundary . $eol;
-	  		$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . $eol . $eol;
-	  		$message .= '--' . $boundary . '_alt' . $eol;
-	  		$message .= 'Content-Type: text/plain; charset="utf-8"' . $eol; 
-	  		$message .= 'Content-Transfer-Encoding: base64' . $eol;
+	  		$message  = '--' . $boundary . $this->eol;
+	  		$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . $this->eol . $this->eol;
+	  		$message .= '--' . $boundary . '_alt' . $this->eol;
+	  		$message .= 'Content-Type: text/plain; charset="' . $this->charset . '"' . $this->eol; 
+	  		$message .= 'Content-Transfer-Encoding: base64' . $this->eol;
 	  
 	  		if ($this->text) {
         		$message .= chunk_split(base64_encode($this->text));
@@ -111,11 +118,11 @@ final class Mail {
 	    		$message .= chunk_split(base64_encode('This is a HTML email and your email client software does not support HTML email!'));
       		}	
 	  
-	  		$message .= '--' . $boundary . '_alt' . $eol;
-      		$message .= 'Content-Type: text/html; charset="utf-8"' . $eol; 
-      		$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
+	  		$message .= '--' . $boundary . '_alt' . $this->eol;
+      		$message .= 'Content-Type: text/html; charset="' . $this->charset . '"' . $this->eol; 
+      		$message .= 'Content-Transfer-Encoding: base64' . $this->eol . $this->eol;
 	  		$message .= chunk_split(base64_encode($this->html)); 
-			$message .= '--' . $boundary . '_alt--' . $eol;		 
+			$message .= '--' . $boundary . '_alt--' . $this->eol;		 
 		}
 		
     	foreach ($this->attachments as $attachment) {  
@@ -125,124 +132,237 @@ final class Mail {
       
 	  		fclose($handle);  
 	  
-      		$message .= '--' . $boundary . $eol;
-      		$message .= 'Content-Type: application/octetstream' . $eol;    
-      		$message .= 'Content-Transfer-Encoding: base64' . $eol; 
-      		$message .= 'Content-Disposition: attachment; filename="' . $filename . '"' . $eol; 
-      		$message .= 'Content-ID: <' . $filename . '>' . $eol . $eol;
+      		$message .= '--' . $boundary . $this->eol;
+      		$message .= 'Content-Type: application/octetstream' . $this->eol;    
+      		$message .= 'Content-Transfer-Encoding: base64' . $this->eol; 
+      		$message .= 'Content-Disposition: attachment; filename="' . $filename . '"' . $this->eol; 
+      		$message .= 'Content-ID: <' . $filename . '>' . $this->eol . $this->eol;
       		$message .= chunk_split(base64_encode($content));
     	}  
 
 		if ($this->protocol == 'mail') {
 			ini_set('sendmail_from', $this->from);
 		
-    		mail($to, $this->subject, $message, $headers);  
+    		mail($to, $this->subject, $message, $header);  
 		} elseif ($this->protocol == 'smtp') {
-			$fp = fsockopen($this->smtp_host, $this->smtp_port, $errno, $errstr, $this->smtp_timeout);	
+			$handle = fsockopen($this->hostname, $this->port, $errno, $errstr, $this->timeout);	
 			
-			if (!$fp) {
-				exit('Error: ' . $errstr . ' (' . $errno . ')');
+			if (!$handle) {
+				error_log('Error: ' . $errstr . ' (' . $errno . ')');
 			} else {
-				$response = fgets($fp, 515);
-				
-				if (substr($response, 0, 3) != 220) {
-					exit(' ' . substr(trim($response), 3));
+				if (substr(PHP_OS, 0, 3) != 'WIN') {
+					socket_set_timeout($handle, $this->timeout, 0);
 				}
 				
-				if (!empty($this->smtp_username)  && !empty($this->smtp_password)) {
- 					fputs($fp, 'EHLO ' . getenv('SERVER_ADDR') . $eol);
-					
-					$response = fgets($fp, 515);
-
-					if (substr($response, 0, 3) != 250) {
-						exit('Error: EHLO command failed!');
-					}	
-					
-					fputs($fp, 'AUTH LOGIN ' . $eol);
-				
-					$response = fgets($fp, 515);
-				
-					if (substr($response, 0, 3) != 334) {
-						exit('Error: AUTH LOGIN command failed!');
-					}	
-				
-					fputs($fp, base64_encode($this->smtp_username) . $eol);
-				
-					$response = fgets($fp, 515);
-
-					if (substr($response, 0, 3) != 334) {
-						exit('Error: SMTP username command failed!');
+				while ($line = fgets($handle, 515)) {
+					if (substr($line, 3, 1) == ' ') { 
+						break; 
 					}
+				}
+			
+				if (substr($this->hostname, 0, 3) == 'tls') {
+					fputs($handle, 'STARTTLS' . $this->eol);
 					
-					fputs($fp, base64_encode($this->smtp_password) . $eol);
+					
+					while ($line = fgets($handle, 515)) {
+						$reply .= $line;
+					
+						if (substr($line, 3, 1) == ' ') { 
+							break; 
+						}
+					}
 				
-					$response = fgets($fp, 515);
-					
-					if (substr($response, 0, 3) != 235) {
-						exit('Error: SMTP password command failed!');					
-					}	
-				} else {
-					fputs($fp, 'HELO ' . getenv('SERVER_ADDR') . $eol);
-					
-					$response = fgets($fp, 515);
-
-					if (substr($response, 0, 3) != 250) {
-						exit('Error: HELO command failed!');
+					if (substr($reply, 0, 3) != 220) {
+						error_log('Error: STARTTLS not accepted from server!');
 					}					
 				}
+			
+				if (!empty($this->username)  && !empty($this->password)) {
+					fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . $this->eol);
+					
+					$reply = '';
 				
-				fputs($fp, 'MAIL FROM: <' . $this->from . '>' . $eol);
-				
-				$response = fgets($fp, 515);
+					while ($line = fgets($handle, 515)) {
+						$reply .= $line;
 					
-				if (substr($response, 0, 3) != 250) {
-					exit('Error: MAIL FROM command failed!');
-				}
-					
-				if (!is_array($this->to)) {
-					fputs($fp, 'RCPT TO: <' . $to . '>' . $eol);
-
-					$response = fgets($fp, 515);
-					
-					if (substr($response, 0, 3) != 250) {
-						exit('Error: RCPT TO command failed!');
+						if (substr($line, 3, 1) == ' ') { 
+							break; 
+						}
 					}
+				
+					if (substr($reply, 0, 3) != 250) {
+						error_log('Error: EHLO not accepted from server!');
+					}
+					
+					fputs($handle, 'AUTH LOGIN' . $this->eol);
+	
+					$reply = '';
+				
+					while ($line = fgets($handle, 515)) {
+						$reply .= $line;
+					
+						if (substr($line, 3, 1) == ' ') { 
+							break; 
+						}
+					}
+					
+					if (substr($reply, 0, 3) != 334) {
+						error_log('Error: AUTH LOGIN not accepted from server!');
+					}
+	
+					fputs($handle, base64_encode($this->username) . $this->eol);
+	
+					$reply = '';
+				
+					while ($line = fgets($handle, 515)) {
+						$reply .= $line;
+					
+						if (substr($line, 3, 1) == ' ') { 
+							break; 
+						}
+					}
+					
+					if (substr($reply, 0, 3) != 334) {
+						error_log('Error: Username not accepted from server!');
+					}				
+	
+					fputs($handle, base64_encode($this->password) . $this->eol);
+	
+					$reply = '';
+				
+					while ($line = fgets($handle, 515)) {
+						$reply .= $line;
+					
+						if (substr($line, 3, 1) == ' ') { 
+							break; 
+						}
+					}
+					
+					if (substr($reply, 0, 3) != 235) {
+						error_log('Error: Password not accepted from server!');					
+					}	
+				} else {
+					fputs($handle, 'HELO ' . getenv('SERVER_NAME') . $this->eol);
+	
+					$reply = '';
+				
+					while ($line = fgets($handle, 515)) {
+						$reply .= $line;
+					
+						if (substr($line, 3, 1) == ' ') { 
+							break; 
+						}
+					}
+					
+					if (substr($reply, 0, 3) != 250) {
+						error_log('Error: HELO not accepted from server!');
+					}				
+				}
+	
+				fputs($handle, 'MAIL FROM: <' . $this->from . '>XVERP' . $this->eol);
+	
+				$reply = '';
+			
+				while ($line = fgets($handle, 515)) {
+					$reply .= $line;
+				
+					if (substr($line, 3, 1) == ' ') { 
+						break; 
+					}
+				}
+				
+				if (substr($reply, 0, 3) != 250) {
+					error_log('Error: MAIL FROM not accepted from server!');
+				}
+				
+				if (!is_array($this->to)) {
+					fputs($handle, 'RCPT TO: <' . $this->to . '>' . $this->eol);
+		
+					$reply = '';
+				
+					while ($line = fgets($handle, 515)) {
+						$reply .= $line;
+					
+						if (substr($line, 3, 1) == ' ') { 
+							break; 
+						}
+					}
+				
+					if ((substr($reply, 0, 3) != 250) && (substr($reply, 0, 3) != 251)) {
+						error_log('Error: RCPT TO not accepted from server!');
+					}			
 				} else {
 					foreach ($this->to as $recipient) {
-						fputs($fp, 'RCPT TO: <' . $recipient . '>' . $eol);
+						fputs($handle, 'RCPT TO: <' . $recipient . '>' . $this->eol);
+			
+						$reply = '';
+					
+						while ($line = fgets($handle, 515)) {
+							$reply .= $line;
 						
-						$response = fgets($fp, 515);
+							if (substr($line, 3, 1) == ' ') { 
+								break; 
+							}
+						}
+					
+						if ((substr($reply, 0, 3) != 250) && (substr($reply, 0, 3) != 251)) {
+							error_log('Error: RCPT TO not accepted from server!');
+						}						
+					}
+				}
+	
+				fputs($handle, 'DATA' . $this->eol);
+	
+				$reply = '';
+			
+				while ($line = fgets($handle, 515)) {
+					$reply .= $line;
 				
-						if (substr($response, 0, 3) != 250) {
-							exit('Error: RCPT TO command failed!');
-						}				
-					}					
+					if (substr($line, 3, 1) == ' ') { 
+						break; 
+					}
+				}
+						
+				if (substr($reply, 0, 3) != 354) {
+					error_log('Error: DATA not accepted from server!');
 				}
 				
-				fputs($fp, 'DATA' . $eol);
+				fputs($handle, $header . $message . $this->eol);
+				fputs($handle, '.' . $this->eol);
 				
-				$response = fgets($fp, 515);
-
-				if (substr($response, 0, 3) != 354) {
-					exit('Error: DATA command failed!');
+				$reply = '';
+			
+				while ($line = fgets($handle, 515)) {
+					$reply .= $line;
+				
+					if (substr($line, 3, 1) == ' ') { 
+						break; 
+					}
 				}
 				
-				fputs($fp, 'To: ' . $to . $eol);
-				fputs($fp, 'Subject: ' . $this->subject . $eol);
-				fputs($fp, $headers . $message . $eol);
-				fputs($fp, '.' . $eol);
-
-				$response = fgets($fp, 515);
-
-				if (substr($response, 0, 3) != 250) {
-					exit('Error: Message could not be sent!');
+				if (substr($reply, 0, 3) != 250) {
+					error_log('Error: DATA not accepted from server!');
+				}
+	
+				fputs($handle, 'QUIT' . $this->eol);
+	
+				$reply = '';
+			
+				while ($line = fgets($handle, 515)) {
+					$reply .= $line;
+				
+					if (substr($line, 3, 1) == ' ') { 
+						break; 
+					}
 				}
 				
-				fputs($fp, 'QUIT' . $eol);
+				if (substr($reply, 0, 3) != 221) {
+					error_log('Error: QUIT not accepted from server!');
+				}			
 				
-				fclose($fp);
+				fclose($handle);
 			}
 		}
-	} 
+	}
 }
 ?>

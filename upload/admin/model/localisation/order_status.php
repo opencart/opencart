@@ -49,6 +49,14 @@ class ModelLocalisationOrderStatus extends Model {
 			}
 			
 			if (isset($data['start']) || isset($data['limit'])) {
+				if ($data['start'] < 0) {
+					$data['start'] = 0;
+				}				
+
+				if ($data['limit'] < 1) {
+					$data['limit'] = 20;
+				}	
+			
 				$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 			}	
 			

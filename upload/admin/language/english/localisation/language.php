@@ -13,7 +13,7 @@ $_['column_action']     = 'Action';
 
 // Entry
 $_['entry_name']        = 'Language Name:';
-$_['entry_code']        = 'Code:';
+$_['entry_code']        = 'Code:<br /><span class="help">Do not change if this is your default language.</span>';
 $_['entry_locale']      = 'Locale:';
 $_['entry_image']       = 'Image:';
 $_['entry_directory']   = 'Directory:';

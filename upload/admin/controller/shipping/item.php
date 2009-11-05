@@ -102,12 +102,15 @@ class ControllerShippingItem extends Controller {
 		$this->load->model('localisation/geo_zone');
 		
 		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-								
-		$this->id       = 'content';
-		$this->template = 'shipping/item.tpl';
-		$this->layout   = 'common/layout';
 		
- 		$this->render();
+		$this->template = 'shipping/item.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {

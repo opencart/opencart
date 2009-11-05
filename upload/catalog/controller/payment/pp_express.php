@@ -13,27 +13,18 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->load->model('checkout/order');
 		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-		
 
-		if (empty($comments)) {
-			if (isset($HTTP_POST_VARS['ppecomments']) && tep_not_null($HTTP_POST_VARS['ppecomments'])) {
-				$comments = tep_db_prepare_input($HTTP_POST_VARS['ppecomments']);
-
-				$order->info['comments'] = $comments;
-			}
-		}
-
-		if (MODULE_PAYMENT_pp_EXPRESS_TRANSACTION_SERVER == 'Live') {
-			$api_url = 'https://api-3t.pp.com/nvp';
+		if (!$this->config->get('pp_direct_test')) {
+			$api_endpoint = 'https://api-3t.pp.com/nvp';
 		} else {
-			$api_url = 'https://api-3t.sandbox.pp.com/nvp';
+			$api_endpoint = 'https://api-3t.sandbox.pp.com/nvp';
 		}
 
-		$params = array(
-			'USER'          => MODULE_PAYMENT_pp_EXPRESS_API_USERNAME,
-			'PWD'           => MODULE_PAYMENT_pp_EXPRESS_API_PASSWORD,
+		$payment_data = array(
+			'USER'          => $this->config->get('pp_direct_username'),
+			'PWD'           => $this->config->get('pp_direct_password'),
 			'VERSION'       => '3.2',
-			'SIGNATURE'     => MODULE_PAYMENT_pp_EXPRESS_API_SIGNATURE,
+			'SIGNATURE'     => $this->config->get('pp_direct_signature'),
 			'METHOD'        => 'DoExpressCheckoutPayment',
 			'TOKEN'         => $ppe_token,
 			'PAYMENTACTION' => (MODULE_PAYMENT_pp_EXPRESS_TRANSACTION_METHOD == 'Sale') ? 'Sale' : 'Authorization',
@@ -73,49 +64,15 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$this->data['back'] = $this->url->https('checkout/payment');
 		
-		$this->id       = 'payment';
-		$this->template = $this->config->get('config_template') . 'payment/pp_express.tpl';
-		
-		$this->render();		
-	}
-	
-	function before_process() {
-		global $order, $sendto, $ppe_token, $ppe_payerid, $HTTP_POST_VARS, $comments;
+		$this->id = 'payment';
 
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_express.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/payment/pp_express.tpl';
+		} else {
+			$this->template = 'default/template/payment/pp_express.tpl';
+		}	
 
-	}
-	
-	function sendTransactionToGateway($url, $parameters) {
-		$server = parse_url($url);
-	
-		if (!isset($server['port'])) {
-			$server['port'] = ($server['scheme'] == 'https') ? 443 : 80;
-		}
-		
-		if (!isset($server['path'])) {
-			$server['path'] = '/';
-		}
-		
-		if (isset($server['user']) && isset($server['pass'])) {
-			$header[] = 'Authorization: Basic ' . base64_encode($server['user'] . ':' . $server['pass']);
-		}
-		
-		$curl = curl_init($server['scheme'] . '://' . $server['host'] . $server['path'] . (isset($server['query']) ? '?' . $server['query'] : ''));
-			
-		curl_setopt($curl, CURLOPT_PORT, $server['port']);
-		curl_setopt($curl, CURLOPT_HEADER, 0);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $parameters);
-		
-		$result = curl_exec($curl);
-		
-		curl_close($curl);
-		
-		return $result;
+		$this->response->setOutput($this->render(TRUE));		
 	}
 }
 ?>

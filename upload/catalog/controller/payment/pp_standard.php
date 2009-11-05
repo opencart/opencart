@@ -13,7 +13,7 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->load->model('checkout/order');
 		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-																				   
+		
 		$this->data['business'] = $this->config->get('pp_standard_email');
 		$this->data['item_name'] = html_entity_decode($this->config->get('config_store'), ENT_QUOTES, 'UTF-8');				
 		$this->data['currency_code'] = $order_info['currency'];
@@ -24,11 +24,7 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->data['address2'] = html_entity_decode($order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');	
 		$this->data['city'] = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');	
 		$this->data['zip'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');	
-		
-		$payment_address = $this->customer->getAddress($this->session->data['payment_address_id']);
-		
-		$this->data['country'] = $payment_address['iso_code_2'];
-		
+		$this->data['country'] = $order_info['payment_iso_code_2'];
 		$this->data['notify_url'] = $this->url->http('payment/pp_standard/callback');
 		$this->data['email'] = $order_info['email'];
 		$this->data['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
@@ -41,18 +37,32 @@ class ControllerPaymentPPStandard extends Controller {
 		}
 		
 		$this->data['return'] = $this->url->https('checkout/success');
-		$this->data['cancel_return'] = $this->url->https('checkout/payment');
+		
+		if ($this->request->get['route'] != 'checkout/guest/confirm') {
+			$this->data['cancel_return'] = $this->url->https('checkout/payment');
+		} else {
+			$this->data['cancel_return'] = $this->url->https('checkout/guest');
+		}
 		
 		$this->load->library('encryption');
 		
 		$encryption = new Encryption($this->config->get('config_encryption'));
 		
 		$this->data['custom'] = $encryption->encrypt($this->session->data['order_id']);
-
-		$this->data['back'] = $this->url->https('checkout/payment');
 		
-		$this->id       = 'payment';
-		$this->template = $this->config->get('config_template') . 'payment/pp_standard.tpl';
+		if ($this->request->get['route'] != 'checkout/guest/confirm') {
+			$this->data['back'] = $this->url->https('checkout/payment');
+		} else {
+			$this->data['back'] = $this->url->https('checkout/guest');
+		}
+		
+		$this->id = 'payment';
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_standard.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/payment/pp_standard.tpl';
+		} else {
+			$this->template = 'default/template/payment/pp_standard.tpl';
+		}	
 		
 		$this->render();	
 	}
@@ -76,7 +86,7 @@ class ControllerPaymentPPStandard extends Controller {
 			$request = 'cmd=_notify-validate';
 		
 			foreach ($this->request->post as $key => $value) {
-				$request .= '&' . $key . '=' . urlencode(stripslashes($value));
+				$request .= '&' . $key . '=' . urlencode(stripslashes(html_entity_decode($value, ENT_QUOTES, 'UTF-8')));
 			}
 				
 			if (extension_loaded('curl')) {
@@ -94,8 +104,8 @@ class ControllerPaymentPPStandard extends Controller {
 				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		
 				$response = curl_exec($ch);
-		
-				if (strcmp($response, 'VERIFIED') == 0) {
+			
+				if (strcmp($response, 'VERIFIED') == 0 || $this->request->post['payment_status'] == 'Completed') {
 					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id'));
 				}
 					
@@ -103,7 +113,7 @@ class ControllerPaymentPPStandard extends Controller {
 			} else {
 				$header  = 'POST /cgi-bin/webscr HTTP/1.0' . "\r\n";
 				$header .= 'Content-Type: application/x-www-form-urlencoded' . "\r\n";
-				$header .= 'Content-Length: ' . strlen(utf8_decode($request)) . "\r\n\r\n";
+				$header .= 'Content-Length: ' . strlen(utf8_decode($request)) . "\r\n";
 				$header .= 'Connection: close'  ."\r\n\r\n";
 				
 				if (!$this->config->get('pp_standard_test')) {
@@ -118,7 +128,7 @@ class ControllerPaymentPPStandard extends Controller {
 					while (!feof($fp)) {
 						$response = fgets($fp, 1024);
 					
-						if (strcmp($response, 'VERIFIED') == 0) {
+						if (strcmp($response, 'VERIFIED') == 0 || $this->request->post['payment_status'] == 'Completed') {
 							$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id'));
 						}
 					}

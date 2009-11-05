@@ -41,11 +41,20 @@ class ControllerAccountSuccess extends Controller {
 			$this->data['continue'] = $this->url->http('account/account');
 		}
 		
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'common/success.tpl';
-		$this->layout   = 'common/layout';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/common/success.tpl';
+		} else {
+			$this->template = 'default/template/common/success.tpl';
+		}
 		
-		$this->render();				
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right'
+		);
+		
+		$this->response->setOutput($this->render(TRUE));				
   	}
 }
 ?>

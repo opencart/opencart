@@ -47,7 +47,7 @@ class ControllerCustomerContact extends Controller {
 				$message .= '<title>' . $this->request->post['subject'] . '</title>' . "\n";
 				$message .= '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . "\n";
 				$message .= '</head>' . "\n";
-				$message .= '<body>' . htmlspecialchars_decode($this->request->post['message']) . '</body>' . "\n";
+				$message .= '<body>' . html_entity_decode($this->request->post['message']) . '</body>' . "\n";
 				$message .= '</html>' . "\n";
 				
 				foreach ($emails as $email) {
@@ -63,7 +63,7 @@ class ControllerCustomerContact extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 					 
-			//$this->redirect($this->url->https('customer/contact'));
+			$this->redirect($this->url->https('customer/contact'));
 		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -157,11 +157,14 @@ class ControllerCustomerContact extends Controller {
 			$this->data['message'] = '';
 		}
 
-		$this->id       = 'content';
 		$this->template = 'customer/contact.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	public function customer() {

@@ -20,9 +20,14 @@ class ControllerCommonSearch extends Controller {
 		
 		$this->data['advanced'] = $this->url->http('product/search');
 		
-		$this->id       = 'search';
-		$this->template = $this->config->get('config_template') . 'common/search.tpl';
-
+		$this->id = 'search';
+		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/search.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/common/search.tpl';
+		} else {
+			$this->template = 'default/template/common/search.tpl';
+		}
+		
     	$this->render();
   	}
 }

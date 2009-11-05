@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -12,7 +13,7 @@
   <table class="list">
     <thead>
       <tr>
-        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);" /></td>
+        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
         <td class="left"><?php if ($sort == 'title') { ?>
           <a href="<?php echo $sort_title; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_title; ?></a>
           <?php } else { ?>
@@ -42,10 +43,10 @@
       <?php foreach ($currencies as $currency) { ?>
       <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
       <tr class="<?php echo $class; ?>">
-        <td style="align: center;"><?php if ($currency['delete']) { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $currency['currency_id']; ?>" checked="checked" />
+        <td style="align: center;"><?php if ($currency['selected']) { ?>
+          <input type="checkbox" name="selected[]" value="<?php echo $currency['currency_id']; ?>" checked="checked" />
           <?php } else { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $currency['currency_id']; ?>" />
+          <input type="checkbox" name="selected[]" value="<?php echo $currency['currency_id']; ?>" />
           <?php } ?></td>
         <td class="left"><?php echo $currency['title']; ?></td>
         <td class="left"><?php echo $currency['code']; ?></td>
@@ -65,3 +66,4 @@
   </table>
 </form>
 <div class="pagination"><?php echo $pagination; ?></div>
+<?php echo $footer; ?>

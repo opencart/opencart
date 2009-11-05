@@ -35,8 +35,8 @@ $_['mail_thanks']          = 'Thanks,';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify customers!';
-$_['error_firstname']      = 'First Name must be greater than 3 and less than 32 characters!';
-$_['error_lastname']       = 'Last Name must be greater than 3 and less than 32 characters!';
+$_['error_firstname']      = 'First Name must be greater than 1 and less than 32 characters!';
+$_['error_lastname']       = 'Last Name must be greater than 1 and less than 32 characters!';
 $_['error_email']          = 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']      = 'Telephone must be greater than 3 and less than 32 characters!';
 $_['error_password']       = 'Password must be greater than 3 and less than 20 characters!';

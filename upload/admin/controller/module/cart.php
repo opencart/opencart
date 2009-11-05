@@ -88,11 +88,14 @@ class ControllerModuleCart extends Controller {
 			$this->data['cart_sort_order'] = $this->config->get('cart_sort_order');
 		}				
 		
-		$this->id       = 'content';
 		$this->template = 'module/cart.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 	
 	private function validate() {

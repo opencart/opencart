@@ -1,7 +1,4 @@
 <?php
-// Title
-$_['title']         = '%s (Powered By OpenCart)';
-
 // Heading 
 $_['heading_title'] = 'Welcome to %s';
 

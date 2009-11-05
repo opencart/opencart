@@ -85,11 +85,20 @@ class ControllerAccountHistory extends Controller {
 
       		$this->data['continue'] = $this->url->https('account/account');
 			
-			$this->id       = 'content';
-			$this->template = $this->config->get('config_template') . 'account/history.tpl';
-			$this->layout   = 'common/layout';
-		
-			$this->render();				
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/history.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/account/history.tpl';
+			} else {
+				$this->template = 'default/template/account/history.tpl';
+			}
+			
+			$this->children = array(
+				'common/header',
+				'common/footer',
+				'common/column_left',
+				'common/column_right'
+			);	
+			
+			$this->response->setOutput($this->render(TRUE));				
     	} else {
       		$this->data['heading_title'] = $this->language->get('heading_title');
 
@@ -99,11 +108,20 @@ class ControllerAccountHistory extends Controller {
 
       		$this->data['continue'] = $this->url->https('account/account');
 			
-			$this->id       = 'content';
-			$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
-			$this->layout   = 'common/layout';
-		
-			$this->render();				
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
+			} else {
+				$this->template = 'default/template/error/not_found.tpl';
+			}
+			
+			$this->children = array(
+				'common/header',
+				'common/footer',
+				'common/column_left',
+				'common/column_right'
+			);
+					
+			$this->response->setOutput($this->render(TRUE));				
 		}
 	}
 }

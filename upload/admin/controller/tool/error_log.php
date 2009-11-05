@@ -44,12 +44,15 @@ class ControllerToolErrorLog extends Controller {
 		} else {
 			$this->data['log'] = '';
 		}
-		
-		$this->id       = 'content'; 
+		 
 		$this->template = 'tool/error_log.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
-		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 	
 	public function clear() {

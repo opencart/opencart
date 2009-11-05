@@ -81,11 +81,14 @@ class ControllerModuleInformation extends Controller {
 			$this->data['information_sort_order'] = $this->config->get('information_sort_order');
 		}				
 		
-		$this->id       = 'content';
 		$this->template = 'module/information.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 	
 	private function validate() {

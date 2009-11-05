@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -213,3 +214,4 @@
     </table>
   </form>
 </div>
+<?php echo $footer; ?>

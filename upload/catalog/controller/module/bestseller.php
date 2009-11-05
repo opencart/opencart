@@ -56,11 +56,15 @@ class ControllerModuleBestSeller extends Controller {
 			$this->data['display_price'] = FALSE;
 		}
 		
-		$this->id       = 'bestseller';
-		$this->template = $this->config->get('config_template') . 'module/bestseller.tpl';
+		$this->id = 'bestseller';
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/bestseller.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/module/bestseller.tpl';
+		} else {
+			$this->template = 'default/template/module/bestseller.tpl';
+		}
 		
 		$this->render();
-		
 	}
 }
 ?>

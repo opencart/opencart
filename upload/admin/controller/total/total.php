@@ -72,11 +72,14 @@ class ControllerTotalTotal extends Controller {
 			$this->data['total_sort_order'] = $this->config->get('total_sort_order');
 		}
 																				
-		$this->id       = 'content';
 		$this->template = 'total/total.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {

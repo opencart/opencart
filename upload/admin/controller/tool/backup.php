@@ -57,12 +57,15 @@ class ControllerToolBackup extends Controller {
 		$this->data['action'] = $this->url->https('tool/backup');
 				
 		$this->data['backup'] = $this->url->https('tool/backup/backup');
-		
-		$this->id       = 'content'; 
+		 
 		$this->template = 'tool/backup.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
-		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 	
 	public function backup() {

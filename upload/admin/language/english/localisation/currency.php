@@ -14,7 +14,7 @@ $_['column_action']        = 'Action';
 
 // Entry
 $_['entry_title']          = 'Currency Title:';
-$_['entry_code']           = 'Code:';
+$_['entry_code']           = 'Code:<br /><span class="help">Do not change if this is your default currency.</span>';
 $_['entry_value']          = 'Value:';
 $_['entry_symbol_left']    = 'Symbol Left:';
 $_['entry_symbol_right']   = 'Symbol Right:';

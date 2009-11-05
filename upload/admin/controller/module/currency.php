@@ -81,11 +81,14 @@ class ControllerModuleCurrency extends Controller {
 			$this->data['currency_sort_order'] = $this->config->get('currency_sort_order');
 		}				
 		
-		$this->id       = 'content';
 		$this->template = 'module/currency.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 	
 	private function validate() {

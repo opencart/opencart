@@ -1,10 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
-</head>
+<?php
+// Text
+$_['text_title']           = 'Credit Card / Debit Card (Authorize.Net)';
+$_['text_credit_card']     = 'Credit Card Details';
+$_['text_wait']            = 'Please wait!';
 
-<body>
-</body>
-</html>
+// Entry
+$_['entry_cc_owner']       = 'Card Owner:';
+$_['entry_cc_number']      = 'Card Number:';
+$_['entry_cc_expire_date'] = 'Card Expiry Date:';
+$_['entry_cc_cvv2']        = 'Card Security Code (CVV2):';
+?>

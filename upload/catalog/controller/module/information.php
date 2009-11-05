@@ -22,8 +22,13 @@ class ControllerModuleInformation extends Controller {
 		$this->data['contact'] = $this->url->http('information/contact');
     	$this->data['sitemap'] = $this->url->http('information/sitemap');
 		
-		$this->id       = 'information';
-		$this->template = $this->config->get('config_template') . 'module/information.tpl';
+		$this->id = 'information';
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/information.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/module/information.tpl';
+		} else {
+			$this->template = 'default/template/module/information.tpl';
+		}
 		
 		$this->render();
 	}

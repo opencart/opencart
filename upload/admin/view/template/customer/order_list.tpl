@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -6,13 +7,13 @@
 <?php } ?>
 <div class="heading">
   <h1><?php echo $heading_title; ?></h1>
-  <div class="buttons"><a onclick="$('form').submit();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_delete; ?></span><span class="button_right"></span></a></div>
+  <div class="buttons"><a onclick="$('#form').attr('action', '<?php echo $invoice; ?>'); $('#form').attr('target', '_blank'); $('#form').submit();" class="button"><span class="button_left button_print"></span><span class="button_middle"><?php echo $button_invoices; ?></span><span class="button_right"></span></a><a onclick="$('#form').attr('action', '<?php echo $delete; ?>'); $('#form').attr('target', '_self'); $('#form').submit();" class="button"><span class="button_left button_delete"></span><span class="button_middle"><?php echo $button_delete; ?></span><span class="button_right"></span></a></div>
 </div>
-<form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
+<form action="" method="post" enctype="multipart/form-data" id="form">
   <table class="list">
     <thead>
       <tr>
-        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);" /></td>
+        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
         <td class="right"><?php if ($sort == 'o.order_id') { ?>
           <a href="<?php echo $sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_order; ?></a>
           <?php } else { ?>
@@ -23,7 +24,7 @@
           <?php } else { ?>
           <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
           <?php } ?></td>
-        <td class="left"><?php if ($sort == 'os.name') { ?>
+        <td class="left"><?php if ($sort == 'status') { ?>
           <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
           <?php } else { ?>
           <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
@@ -70,10 +71,10 @@
       <?php foreach ($orders as $order) { ?>
       <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
       <tr class="<?php echo $class; ?>">
-        <td style="align: center;"><?php if ($order['delete']) { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $order['order_id']; ?>" checked="checked" />
+        <td style="align: center;"><?php if ($order['selected']) { ?>
+          <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" checked="checked" />
           <?php } else { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $order['order_id']; ?>" />
+          <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" />
           <?php } ?></td>
         <td class="right"><?php echo $order['order_id']; ?></td>
         <td class="left"><?php echo $order['name']; ?></td>
@@ -139,3 +140,4 @@ $(document).ready(function() {
 	$('#date').datepicker({dateFormat: 'yy-mm-dd'});
 });
 //--></script>
+<?php echo $footer; ?>

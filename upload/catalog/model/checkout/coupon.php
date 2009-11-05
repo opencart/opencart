@@ -3,7 +3,7 @@ class ModelCheckoutCoupon extends Model {
 	public function getCoupon($coupon) {
 		$status = TRUE;
 		
-		$coupon_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "coupon c LEFT JOIN " . DB_PREFIX . "coupon_description cd ON (c.coupon_id = cd.coupon_id) WHERE cd.language_id = '" . (int)$this->language->getId() . "' AND c.code = '" . $this->db->escape($coupon) . "' AND c.date_start < NOW() AND c.date_end > NOW() AND c.status = '1'");
+		$coupon_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "coupon c LEFT JOIN " . DB_PREFIX . "coupon_description cd ON (c.coupon_id = cd.coupon_id) WHERE cd.language_id = '" . (int)$this->language->getId() . "' AND c.code = '" . $this->db->escape($coupon) . "' AND ((date_start = '0000-00-00' OR date_start < NOW()) AND (date_end = '0000-00-00' OR date_end > NOW())) AND c.status = '1'");
 			
 		if ($coupon_query->num_rows) {
 			if ($coupon_query->row['total'] >= $this->cart->getSubTotal()) {
@@ -16,12 +16,18 @@ class ModelCheckoutCoupon extends Model {
 				$status = FALSE;
 			}
 			
-			$coupon_redeem_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "' AND customer_id = '" . (int)$this->customer->getId() . "'");
-				
-			if ($coupon_redeem_query->row['total'] >= $coupon_query->row['uses_customer']) {
+			if ($coupon_query->row['logged'] && !$this->customer->getId()) {
 				$status = FALSE;
 			}
+			
+			if ($this->customer->getId()) {
+				$coupon_redeem_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "' AND customer_id = '" . (int)$this->customer->getId() . "'");
 				
+				if ($coupon_redeem_query->row['total'] >= $coupon_query->row['uses_customer']) {
+					$status = FALSE;
+				}
+			}
+			
 			$coupon_product_data = array();
 				
 			$coupon_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "coupon_product WHERE coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "'");

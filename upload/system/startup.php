@@ -9,8 +9,8 @@ if (version_compare(phpversion(), '5.1.0', '<') == TRUE) {
 
 // Register Globals
 if (ini_get('register_globals')) {
-	ini_set('session.use_cookies', '1');
-	ini_set('session.use_trans_sid', '0');
+	ini_set('session.use_cookies', 'On');
+	ini_set('session.use_trans_sid', 'Off');
 		
 	session_set_cookie_params(0, '/');
 	session_start();
@@ -22,8 +22,6 @@ if (ini_get('register_globals')) {
 			unset($$key);
 		}
 	}
-	
-	ini_set('register_globals', 'Off');
 }
 
 // Magic Quotes Fix
@@ -31,7 +29,7 @@ if (ini_get('magic_quotes_gpc')) {
 	function clean($data) {
    		if (is_array($data)) {
   			foreach ($data as $key => $value) {
-    			$data[$key] = clean($value);
+    			$data[clean($key)] = clean($value);
   			}
 		} else {
   			$data = stripslashes($data);
@@ -43,8 +41,6 @@ if (ini_get('magic_quotes_gpc')) {
 	$_GET = clean($_GET);
 	$_POST = clean($_POST);
 	$_COOKIE = clean($_COOKIE);
-	
-	ini_set('magic_quotes_gpc', 'Off');
 }
 
 // Set default time zone if not set in php.ini

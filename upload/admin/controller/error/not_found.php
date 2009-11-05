@@ -21,11 +21,14 @@ class ControllerErrorNotFound extends Controller {
       		'separator' => ' :: '
    		);
 		
-		$this->id       = 'content'; 
 		$this->template = 'error/not_found.tpl';
-		$this->layout   = 'common/layout';
-		    
-		$this->render();	
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));	
   	}
 }
 ?>

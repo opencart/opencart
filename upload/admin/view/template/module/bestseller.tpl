@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -9,10 +10,10 @@
 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
   <div id="tab_general" class="page">
     <table class="form">
-         <tr>
+      <tr>
         <td><?php echo $entry_limit; ?></td>
         <td><input type="text" name="bestseller_limit" value="<?php echo $bestseller_limit; ?>" size="1" /></td>
-      </tr> 
+      </tr>
       <tr>
         <td width="25%"><?php echo $entry_position; ?></td>
         <td><select name="bestseller_position">
@@ -50,3 +51,4 @@
 <script type="text/javascript"><!--
 $.tabs('.tabs a'); 
 //--></script>
+<?php echo $footer; ?>

@@ -83,8 +83,8 @@ class ControllerUserUserPermission extends Controller {
 		
 		$this->load->model('user/user_group');
 		
-		if (isset($this->request->post['delete']) && $this->validateDelete()) {
-      		foreach ($this->request->post['delete'] as $user_group_id) {
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+      		foreach ($this->request->post['selected'] as $user_group_id) {
 				$this->model_user_user_group->deleteUserGroup($user_group_id);	
 			}
 						
@@ -184,7 +184,7 @@ class ControllerUserUserPermission extends Controller {
 			$this->data['user_groups'][] = array(
 				'user_group_id' => $result['user_group_id'],
 				'name'          => $result['name'],
-				'delete'        => isset($this->request->post['delete']) && in_array($result['user_group_id'], $this->request->post['delete']),
+				'selected'      => isset($this->request->post['selected']) && in_array($result['user_group_id'], $this->request->post['selected']),
 				'action'        => $action
 			);
 		}	
@@ -249,11 +249,14 @@ class ControllerUserUserPermission extends Controller {
 		$this->data['sort'] = $sort; 
 		$this->data['order'] = $order;
 
-		$this->id       = 'content';
 		$this->template = 'user/user_group_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
  	}
 
 	private function getForm() {
@@ -371,11 +374,14 @@ class ControllerUserUserPermission extends Controller {
 			$this->data['modify'] = array();
 		}
 			
-		$this->id       = 'content';
 		$this->template = 'user/user_group_form.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
-		$this->render(); 
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validateForm() {
@@ -401,7 +407,7 @@ class ControllerUserUserPermission extends Controller {
 		
 		$this->load->model('user/user');
       	
-		foreach ($this->request->post['delete'] as $user_group_id) {
+		foreach ($this->request->post['selected'] as $user_group_id) {
 			$user_total = $this->model_user_user->getTotalUsersByGroupId($user_group_id);
 
 			if ($user_total) {

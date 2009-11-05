@@ -77,11 +77,20 @@ class ControllerAccountForgotten extends Controller {
  
 		$this->data['back'] = $this->url->https('account/account');
 		
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'account/forgotten.tpl';
-		$this->layout   = 'common/layout';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/forgotten.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/account/forgotten.tpl';
+		} else {
+			$this->template = 'default/template/account/forgotten.tpl';
+		}
 		
-		$this->render();		
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right'
+		);
+		
+		$this->response->setOutput($this->render(TRUE));		
 	}
 
 	private function validate() {

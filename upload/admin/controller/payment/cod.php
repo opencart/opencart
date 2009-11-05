@@ -95,12 +95,15 @@ class ControllerPaymentCod extends Controller {
 		} else {
 			$this->data['cod_sort_order'] = $this->config->get('cod_sort_order');
 		}
-								
-		$this->id       = 'content';
-		$this->template = 'payment/cod.tpl';
-		$this->layout   = 'common/layout';
 		
- 		$this->render();
+		$this->template = 'payment/cod.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 	
 	private function validate() {

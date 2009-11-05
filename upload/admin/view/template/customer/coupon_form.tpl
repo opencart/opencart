@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -12,16 +13,16 @@
       <?php foreach ($languages as $language) { ?>
       <tr>
         <td width="25%"><span class="required">*</span> <?php echo $entry_name; ?></td>
-        <td><input name="coupon_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($coupon_description[$language['language_id']]) ? $coupon_description[$language['language_id']]['name'] : ''; ?>" /> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" />
-          <br />
+        <td><input name="coupon_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($coupon_description[$language['language_id']]) ? $coupon_description[$language['language_id']]['name'] : ''; ?>" />
+          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <br />
           <?php if (isset($error_name[$language['language_id']])) { ?>
           <span class="error"><?php echo $error_name[$language['language_id']]; ?></span>
           <?php } ?></td>
       </tr>
       <tr>
         <td><span class="required">*</span> <?php echo $entry_description; ?></td>
-        <td><textarea name="coupon_description[<?php echo $language['language_id']; ?>][description]" cols="40" rows="5"><?php echo isset($coupon_description[$language['language_id']]) ? $coupon_description[$language['language_id']]['description'] : ''; ?></textarea> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" />
-          <br />
+        <td><textarea name="coupon_description[<?php echo $language['language_id']; ?>][description]" cols="40" rows="5"><?php echo isset($coupon_description[$language['language_id']]) ? $coupon_description[$language['language_id']]['description'] : ''; ?></textarea>
+          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" /> <br />
           <?php if (isset($error_description[$language['language_id']])) { ?>
           <span class="error"><?php echo $error_description[$language['language_id']]; ?></span>
           <?php } ?></td>
@@ -59,6 +60,20 @@
         <td><input type="text" name="total" value="<?php echo $total; ?>" /></td>
       </tr>
       <tr>
+        <td><?php echo $entry_logged; ?></td>
+        <td><?php if ($logged) { ?>
+          <input type="radio" name="logged" value="1" checked="checked" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="logged" value="0" />
+          <?php echo $text_no; ?>
+          <?php } else { ?>
+          <input type="radio" name="logged" value="1" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="logged" value="0" checked="checked" />
+          <?php echo $text_no; ?>
+          <?php } ?></td>
+      </tr>
+      <tr>
         <td><?php echo $entry_shipping; ?></td>
         <td><?php if ($shipping) { ?>
           <input type="radio" name="shipping" value="1" checked="checked" />
@@ -74,22 +89,30 @@
       </tr>
       <tr>
         <td><?php echo $entry_product; ?></td>
-        <td><div class="scrollbox">
-            <?php $class = 'odd'; ?>
-            <?php foreach ($products as $product) { ?>
-            <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-            <div class="<?php echo $class; ?>">
-              <?php if (in_array($product['product_id'], $coupon_product)) { ?>
-              <input type="checkbox" name="coupon_product[]" value="<?php echo $product['product_id']; ?>" checked="checked" />
-              <?php echo $product['name']; ?>
-              <?php } else { ?>
-              <input type="checkbox" name="coupon_product[]" value="<?php echo $product['product_id']; ?>" />
-              <?php echo $product['name']; ?>
-              <?php } ?>
-            </div>
+        <td><table>
+            <tr>
+              <td style="padding: 0;" colspan="3"><select id="category" style="margin-bottom: 5px;" onchange="getProducts();">
+                  <?php foreach ($categories as $category) { ?>
+                  <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
+                  <?php } ?>
+                </select></td>
+            </tr>
+            <tr>
+              <td style="padding: 0;"><select multiple="multiple" id="product" size="10" style="width: 200px;">
+                </select></td>
+              <td style="vertical-align: middle;"><input type="button" value="--&gt;" onclick="addProduct();" />
+                <br />
+                <input type="button" value="&lt;--" onclick="removeProduct();" /></td>
+              <td style="padding: 0;"><select multiple="multiple" id="coupon" size="10" style="width: 200px;">
+                </select></td>
+            </tr>
+          </table>
+          <div id="coupon_product">
+            <?php foreach ($coupon_product as $product_id) { ?>
+            <input type="hidden" name="coupon_product[]" value="<?php echo $product_id; ?>" />
             <?php } ?>
           </div></td>
-      </tr>
+      </tr>      
       <tr>
         <td><?php echo $entry_date_start; ?></td>
         <td><input type="text" name="date_start" value="<?php echo $date_start; ?>" size="12" id="date_start" /></td>
@@ -121,6 +144,66 @@
     </table>
   </div>
 </form>
+<script type="text/javascript"><!--
+function addProduct() {
+	$('#product :selected').each(function() {
+		$(this).remove();
+		
+		$('#coupon option[value=\'' + $(this).attr('value') + '\']').remove();
+		
+		$('#coupon').append('<option value="' + $(this).attr('value') + '">' + $(this).text() + '</option>');
+		
+		$('#coupon_product input[value=\'' + $(this).attr('value') + '\']').remove();
+		
+		$('#coupon_product').append('<input type="hidden" name="coupon_product[]" value="' + $(this).attr('value') + '" />');
+	});
+}
+
+function removeProduct() {
+	$('#coupon :selected').each(function() {
+		$(this).remove();
+		
+		$('#coupon_product input[value=\'' + $(this).attr('value') + '\']').remove();
+	});
+}
+
+function getProducts() {
+	$('#product option').remove();
+	
+	$.ajax({
+		url: 'index.php?route=customer/coupon/category&category_id=' + $('#category').attr('value'),
+		dataType: 'json',
+		success: function(data) {
+			for (i = 0; i < data.length; i++) {
+	 			$('#product').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + '</option>');
+			}
+		}
+	});
+}
+
+function getProduct() {
+	$('#coupon option').remove();
+	
+	$.ajax({
+		url: 'index.php?route=customer/coupon/product',
+		type: 'POST',
+		dataType: 'json',
+		data: $('#coupon_product input'),
+		success: function(data) {
+			$('#coupon_product input').remove();
+			
+			for (i = 0; i < data.length; i++) {
+	 			$('#coupon').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + '</option>');
+				
+				$('#coupon_product').append('<input type="hidden" name="coupon_product[]" value="' + data[i]['product_id'] + '" />');
+			} 
+		}
+	});
+}
+
+getProducts();
+getProduct();
+//--></script>
 <link rel="stylesheet" type="text/css" href="view/stylesheet/datepicker.css" />
 <script type="text/javascript" src="view/javascript/jquery/ui/ui.core.min.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/ui/ui.datepicker.min.js"></script>
@@ -134,3 +217,4 @@ $(document).ready(function() {
 <script type="text/javascript"><!--
 $.tabs('.tabs a'); 
 //--></script>
+<?php echo $footer; ?>

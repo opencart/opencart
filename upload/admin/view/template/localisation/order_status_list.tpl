@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -12,7 +13,7 @@
   <table class="list">
     <thead>
       <tr>
-        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);" /></td>
+        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
         <td class="left"><?php if ($sort == 'name') { ?>
           <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
           <?php } else { ?>
@@ -27,10 +28,10 @@
       <?php foreach ($order_statuses as $order_status) { ?>
       <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
       <tr class="<?php echo $class; ?>">
-        <td style="align: center;"><?php if ($order_status['delete']) { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $order_status['order_status_id']; ?>" checked="checked" />
+        <td style="align: center;"><?php if ($order_status['selected']) { ?>
+          <input type="checkbox" name="selected[]" value="<?php echo $order_status['order_status_id']; ?>" checked="checked" />
           <?php } else { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $order_status['order_status_id']; ?>" />
+          <input type="checkbox" name="selected[]" value="<?php echo $order_status['order_status_id']; ?>" />
           <?php } ?></td>
         <td class="left"><?php echo $order_status['name']; ?></td>
         <td class="right"><?php foreach ($order_status['action'] as $action) { ?>
@@ -47,3 +48,4 @@
   </table>
 </form>
 <div class="pagination"><?php echo $pagination; ?></div>
+<?php echo $footer; ?>

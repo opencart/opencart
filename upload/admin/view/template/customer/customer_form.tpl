@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -84,7 +85,7 @@
             <?php } ?>
             <?php } ?>
           </select></td>
-      </tr>          
+      </tr>
       <tr>
         <td><?php echo $entry_status; ?></td>
         <td><select name="status">
@@ -103,3 +104,4 @@
 <script type="text/javascript"><!--
 $.tabs('.tabs a');
 //--></script>
+<?php echo $footer; ?>

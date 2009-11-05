@@ -7,8 +7,8 @@ final class Customer {
 	private $telephone;
 	private $fax;
 	private $newsletter;
+	private $customer_group_id;
 	private $address_id;
-	private $address = array();
 	
   	public function __construct() {
 		$this->db = Registry::get('db');
@@ -26,30 +26,9 @@ final class Customer {
 				$this->telephone = $customer_query->row['telephone'];
 				$this->fax = $customer_query->row['fax'];
 				$this->newsletter = $customer_query->row['newsletter'];
+				$this->customer_group_id = $customer_query->row['customer_group_id'];
 				$this->address_id = $customer_query->row['address_id'];
-			
-				$address_query = $this->db->query("SELECT *, c.name AS country, z.name AS zone FROM " . DB_PREFIX . "address a LEFT JOIN " . DB_PREFIX . "country c ON a.country_id = c.country_id LEFT JOIN " . DB_PREFIX . "zone z ON a.zone_id = z.zone_id WHERE a.customer_id = '" . (int)$this->session->data['customer_id'] . "'");
-						 
-				foreach ($address_query->rows as $result) {
-					$this->address[$result['address_id']] = array(
-						'firstname'      => $result['firstname'],
-						'lastname'       => $result['lastname'],
-						'company'        => $result['company'],
-						'address_1'      => $result['address_1'],
-						'address_2'      => $result['address_2'],
-						'postcode'       => $result['postcode'],
-						'city'           => $result['city'],
-						'country_id'     => $result['country_id'],
-						'zone_id'        => $result['zone_id'],
-						'iso_code_2'     => $result['iso_code_2'],
-						'iso_code_3'     => $result['iso_code_3'],
-						'code'           => $result['code'],
-						'zone'           => $result['zone'],
-						'country'        => $result['country'],	
-						'address_format' => $result['address_format']
-					);
-				}
-			
+							
       			$this->db->query("UPDATE " . DB_PREFIX . "customer SET cart = '" . $this->db->escape(serialize($this->session->data['cart'])) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->session->data['customer_id'] . "'");
 			} else {
 				$this->logout();
@@ -82,29 +61,8 @@ final class Customer {
 			$this->telephone = $customer_query->row['telephone'];
 			$this->fax = $customer_query->row['fax'];
 			$this->newsletter = $customer_query->row['newsletter'];
+			$this->customer_group_id = $customer_query->row['customer_group_id'];
 			$this->address_id = $customer_query->row['address_id'];
-			
-			$address_query = $this->db->query("SELECT *, c.name AS country, z.name AS zone FROM " . DB_PREFIX . "address a LEFT JOIN " . DB_PREFIX . "country c ON a.country_id = c.country_id LEFT JOIN " . DB_PREFIX . "zone z ON a.zone_id = z.zone_id WHERE a.customer_id = '" . (int)$this->session->data['customer_id'] . "'");
-						 
-			foreach ($address_query->rows as $result) {
-				$this->address[$result['address_id']] = array(
-					'firstname'      => $result['firstname'],
-					'lastname'       => $result['lastname'],
-					'company'        => $result['company'],
-					'address_1'      => $result['address_1'],
-					'address_2'      => $result['address_2'],
-					'postcode'       => $result['postcode'],
-					'city'           => $result['city'],
-					'country_id'     => $result['country_id'],
-					'zone_id'        => $result['zone_id'],
-					'iso_code_2'     => $result['iso_code_2'],
-					'iso_code_3'     => $result['iso_code_3'],
-					'code'           => $result['code'],
-					'zone'           => $result['zone'],
-					'country'        => $result['country'],	
-					'address_format' => $result['address_format']
-				);
-			}			
       
 	  		return TRUE;
     	} else {
@@ -122,8 +80,8 @@ final class Customer {
 		$this->telephone = '';
 		$this->fax = '';
 		$this->newsletter = '';
+		$this->customer_group_id = '';
 		$this->address_id = '';
-		$this->address = array();
   	}
   
   	public function isLogged() {
@@ -157,17 +115,13 @@ final class Customer {
   	public function getNewsletter() {
 		return $this->newsletter;	
   	}
+
+  	public function getCustomerGroupId() {
+		return $this->customer_group_id;	
+  	}
 	
   	public function getAddressId() {
 		return $this->address_id;	
   	}
-
-	public function getAddress($address_id) {
-		return (isset($this->address[$address_id]) ? $this->address[$address_id] : array());
-	}
-	
-	public function hasAddress($address_id) {
-		return isset($this->address[$address_id]);	
-	}
 }
 ?>

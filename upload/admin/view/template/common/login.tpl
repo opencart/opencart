@@ -9,7 +9,11 @@
 <script type="text/javascript" src="view/javascript/jquery/jquery-1.3.2.min.js"></script>
 </head>
 <body>
-<div id="header"><?php echo $header; ?></div>
+<div id="header">
+  <div class="div1">
+    <div class="div2"><?php echo $text_heading; ?></div>
+  </div>
+</div>
 <div id="menu"></div>
 <div id="login">
   <div class="div1"><?php echo $text_login; ?></div>

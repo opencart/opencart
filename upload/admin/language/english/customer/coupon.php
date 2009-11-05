@@ -22,6 +22,7 @@ $_['entry_description']   = 'Coupon Description:';
 $_['entry_code']          = 'Code:';
 $_['entry_type']          = 'Type:';
 $_['entry_discount']      = 'Discount:';
+$_['entry_logged']        = 'Customer Login:<br /><span class="help">Customer must be logged in to use the coupon.</span>';
 $_['entry_shipping']      = 'Free Shipping:';
 $_['entry_total']         = 'Total Amount:';
 $_['entry_product']       = 'Products:';

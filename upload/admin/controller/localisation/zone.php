@@ -83,8 +83,8 @@ class ControllerLocalisationZone extends Controller {
 		
 		$this->load->model('localisation/zone');
 		
-		if (isset($this->request->post['delete']) && $this->validateDelete()) {
-			foreach ($this->request->post['delete'] as $zone_id) {
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $zone_id) {
 				$this->model_localisation_zone->deleteZone($zone_id);
 			}			
 			
@@ -182,12 +182,12 @@ class ControllerLocalisationZone extends Controller {
 			);
 					
 			$this->data['zones'][] = array(
-				'zone_id' => $result['zone_id'],
-				'country' => $result['country'],
-				'name'    => $result['name'] . (($result['zone_id'] == $this->config->get('config_zone_id')) ? $this->language->get('text_default') : NULL),
-				'code'    => $result['code'],
-				'delete'  => isset($this->request->post['delete']) && in_array($result['zone_id'], $this->request->post['delete']),
-				'action'  => $action			
+				'zone_id'  => $result['zone_id'],
+				'country'  => $result['country'],
+				'name'     => $result['name'] . (($result['zone_id'] == $this->config->get('config_zone_id')) ? $this->language->get('text_default') : NULL),
+				'code'     => $result['code'],
+				'selected' => isset($this->request->post['selected']) && in_array($result['zone_id'], $this->request->post['selected']),
+				'action'   => $action			
 			);
 		}
 	
@@ -255,11 +255,14 @@ class ControllerLocalisationZone extends Controller {
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 		
-		$this->id       = 'content';
 		$this->template = 'localisation/zone_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function getForm() {
@@ -354,11 +357,14 @@ class ControllerLocalisationZone extends Controller {
 		
 		$this->data['countries'] = $this->model_localisation_country->getCountries();
 
-		$this->id       = 'content';
 		$this->template = 'localisation/zone_form.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
-		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validateForm() {
@@ -385,7 +391,7 @@ class ControllerLocalisationZone extends Controller {
 		$this->load->model('customer/customer');
 		$this->load->model('localisation/geo_zone');
 		
-		foreach ($this->request->post['delete'] as $zone_id) {
+		foreach ($this->request->post['selected'] as $zone_id) {
 			if ($this->config->get('config_zone_id') == $zone_id) {
 				$this->error['warning'] = $this->language->get('error_default');
 			}

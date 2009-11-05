@@ -85,12 +85,15 @@ class ControllerTotalHandling extends Controller {
 		} else {
 			$this->data['handling_sort_order'] = $this->config->get('handling_sort_order');
 		}
-																				
-		$this->id       = 'content';
-		$this->template = 'total/handling.tpl';
-		$this->layout   = 'common/layout';
 		
- 		$this->render();
+		$this->template = 'total/handling.tpl';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {

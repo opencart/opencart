@@ -3,7 +3,7 @@ class ControllerCommonHome extends Controller {
 	public function index() {
 		$this->language->load('common/home');
 		
-		$this->document->title = sprintf($this->language->get('title'), $this->config->get('config_store'));
+		$this->document->title = $this->config->get('config_title');
 		$this->document->description = $this->config->get('config_meta_description');
 
 		$this->document->breadcrumbs = array();
@@ -43,7 +43,7 @@ class ControllerCommonHome extends Controller {
 				$price = $this->currency->format($this->tax->calculate($discount, $result['tax_class_id'], $this->config->get('config_tax')));
 			} else {
 				$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
-			
+			 
 				$special = $this->model_catalog_product->getProductSpecial($result['product_id']);
 			
 				if ($special) {
@@ -71,11 +71,20 @@ class ControllerCommonHome extends Controller {
 			$this->data['display_price'] = FALSE;
 		}
 				
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'common/home.tpl';
-		$this->layout   = 'common/layout';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/home.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/common/home.tpl';
+		} else {
+			$this->template = 'default/template/common/home.tpl';
+		}
 		
-		$this->render();
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right'
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 }
 ?>

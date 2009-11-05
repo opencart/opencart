@@ -51,12 +51,21 @@ class ControllerAccountAccount extends Controller {
     	$this->data['history'] = $this->url->https('account/history');
     	$this->data['download'] = $this->url->https('account/download');
 		$this->data['newsletter'] = $this->url->https('account/newsletter');
-	
-		$this->id       = 'content';
-		$this->template = $this->config->get('config_template') . 'account/account.tpl';
-		$this->layout   = 'common/layout';
 		
-		$this->render();		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/account/account.tpl';
+		} else {
+			$this->template = 'default/template/account/account.tpl';
+		}
+		
+		$this->children = array(
+			'common/header',
+			'common/footer',
+			'common/column_left',
+			'common/column_right'
+		);
+
+		$this->response->setOutput($this->render(TRUE));		
   	}
 }
 ?>

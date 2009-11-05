@@ -129,11 +129,14 @@ class ControllerPaymentPPStandard extends Controller {
 			$this->data['pp_standard_sort_order'] = $this->config->get('pp_standard_sort_order');
 		}
 		
-		$this->id       = 'content';
 		$this->template = 'payment/pp_standard.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {
@@ -141,7 +144,7 @@ class ControllerPaymentPPStandard extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (!@$this->request->post['pp_standard_email']) {
+		if (!$this->request->post['pp_standard_email']) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 		

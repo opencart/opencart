@@ -83,8 +83,8 @@ class ControllerUserUser extends Controller {
 		
 		$this->load->model('user/user');
 		
-    	if (isset($this->request->post['delete']) && $this->validateDelete()) {
-      		foreach ($this->request->post['delete'] as $user_id) {
+    	if (isset($this->request->post['selected']) && $this->validateDelete()) {
+      		foreach ($this->request->post['selected'] as $user_id) {
 				$this->model_user_user->deleteUser($user_id);	
 			}
 
@@ -186,7 +186,7 @@ class ControllerUserUser extends Controller {
 				'username'   => $result['username'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'delete'     => isset($this->request->post['delete']) && in_array($result['user_id'], $this->request->post['delete']),
+				'selected'   => isset($this->request->post['selected']) && in_array($result['user_id'], $this->request->post['selected']),
 				'action'     => $action
 			);
 		}	
@@ -254,12 +254,15 @@ class ControllerUserUser extends Controller {
 								
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-
-		$this->id       = 'content';
+		
 		$this->template = 'user/user_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
   	}
 	
 	private function getForm() {
@@ -422,11 +425,14 @@ class ControllerUserUser extends Controller {
       		$this->data['status'] = 0;
     	}
 		
-		$this->id       = 'content';
 		$this->template = 'user/user_form.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();	
+		$this->response->setOutput($this->render(TRUE));	
   	}
 
   	private function validateForm() {
@@ -468,7 +474,7 @@ class ControllerUserUser extends Controller {
       		$this->error['warning'] = $this->language->get('error_permission');
     	} 
 	  	  
-		foreach ($this->request->post['delete'] as $user_id) {
+		foreach ($this->request->post['selected'] as $user_id) {
 			if ($this->user->getId() == $user_id) {
 				$this->error['warning'] = $this->language->get('error_account');
 			}

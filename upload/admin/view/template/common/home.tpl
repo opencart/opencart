@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <div class="heading">
   <h1><?php echo $heading_title; ?></h1>
 </div>
@@ -41,7 +42,7 @@
           <?php } ?></td>
       </tr>
       <?php } ?>
-      <?php } else { ?> 
+      <?php } else { ?>
       <tr class="even">
         <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
       </tr>
@@ -101,3 +102,4 @@ getSalesChart($('#range').val());
 <script type="text/javascript"><!--
 $.tabs('.tabs a'); 
 //--></script>
+<?php echo $footer; ?>

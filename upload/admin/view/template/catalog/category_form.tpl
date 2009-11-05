@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -65,18 +66,13 @@
     </table>
   </div>
 </form>
-<script type="text/javascript" src="view/javascript/fckeditor/fckeditor.js"></script>
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
-var sBasePath = document.location.href.replace(/index\.php.*/, 'view/javascript/fckeditor/');
 <?php foreach ($languages as $language) { ?>
-var oFCKeditor<?php echo $language['language_id']; ?>          = new FCKeditor('description<?php echo $language['language_id']; ?>');
-	oFCKeditor<?php echo $language['language_id']; ?>.BasePath = sBasePath;
-	oFCKeditor<?php echo $language['language_id']; ?>.Value	   = document.getElementById('description<?php echo $language['language_id']; ?>').value;
-	oFCKeditor<?php echo $language['language_id']; ?>.Width    = '520';
-	oFCKeditor<?php echo $language['language_id']; ?>.Height   = '300';
-	oFCKeditor<?php echo $language['language_id']; ?>.ReplaceTextarea();
+CKEDITOR.replace('description<?php echo $language['language_id']; ?>');
 <?php } ?>
 //--></script>
 <script type="text/javascript"><!--
 $.tabs('.tabs a'); 
 //--></script>
+<?php echo $footer; ?>

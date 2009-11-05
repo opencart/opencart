@@ -81,11 +81,14 @@ class ControllerModuleCategory extends Controller {
 			$this->data['category_sort_order'] = $this->config->get('category_sort_order');
 		}				
 		
-		$this->id       = 'content';
 		$this->template = 'module/category.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 	
 	private function validate() {

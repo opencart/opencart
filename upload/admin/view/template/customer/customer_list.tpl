@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -12,7 +13,7 @@
   <table class="list">
     <thead>
       <tr>
-        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);" /></td>
+        <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
         <td class="left"><?php if ($sort == 'name') { ?>
           <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
           <?php } else { ?>
@@ -62,10 +63,10 @@
       <?php foreach ($customers as $customer) { ?>
       <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
       <tr class="<?php echo $class; ?>">
-        <td style="align: center;"><?php if ($customer['delete']) { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $customer['customer_id']; ?>" checked="checked" />
+        <td style="align: center;"><?php if ($customer['selected']) { ?>
+          <input type="checkbox" name="selected[]" value="<?php echo $customer['customer_id']; ?>" checked="checked" />
           <?php } else { ?>
-          <input type="checkbox" name="delete[]" value="<?php echo $customer['customer_id']; ?>" />
+          <input type="checkbox" name="selected[]" value="<?php echo $customer['customer_id']; ?>" />
           <?php } ?></td>
         <td class="left"><?php echo $customer['name']; ?></td>
         <td class="left"><?php echo $customer['email']; ?></td>
@@ -124,3 +125,4 @@ $(document).ready(function() {
 	$('#date').datepicker({dateFormat: 'yy-mm-dd'});
 });
 //--></script>
+<?php echo $footer; ?>

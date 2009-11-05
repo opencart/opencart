@@ -4,22 +4,20 @@
 }
 #content {
 	float: left;
-	width: 580px;	
+	width: 580px;
 }
 #content .top {
-	float: left;
-	clear: both;
-	width: 100%;	
-}
-#content .middle {
-	float: left;
 	clear: both;
 	width: 580px;
 }
-#content .bottom {
-	float: left;
+#content .middle {
 	clear: both;
-	width: 100%;	
+	display: block;
+	height: 380px;
+}
+#content .bottom {
+	clear: both;
+	width: 580px;
 	line-height: 5px;
 }
 .box {
@@ -35,7 +33,9 @@
 .box .middle {
 	float: left;
 	clear: both;
-	width: 100%;
+	width: 180px;
+	border-left: 1px solid #DDDDDD;
+	border-right: 1px solid #DDDDDD;	
 }
 .box .bottom {
 	line-height: 5px;
@@ -44,4 +44,10 @@
 }
 .buttons {
 	width: 100%;
+}
+.cart {
+	border-collapse: collapse;
+	margin-bottom: 10px;
+	width: 558px;
+	border: 1px solid #EEEEEE;
 }

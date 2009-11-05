@@ -1,6 +1,7 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
-<?php } ?> 
+<?php } ?>
 <div class="heading">
   <h1><?php echo $heading_title; ?></h1>
   <div class="buttons"><a onclick="$('#form').submit();" class="button"><span class="button_left button_save"></span><span class="button_middle"><?php echo $button_save; ?></span><span class="button_right"></span></a><a onclick="location='<?php echo $cancel; ?>';" class="button"><span class="button_left button_cancel"></span><span class="button_middle"><?php echo $button_cancel; ?></span><span class="button_right"></span></a></div>
@@ -31,3 +32,4 @@
 <script type="text/javascript"><!-- 
 $.tabs('.tabs a');  
 //--></script>
+<?php echo $footer; ?>

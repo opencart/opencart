@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -10,28 +11,35 @@
   <div id="tab_general" class="page">
     <table class="form">
       <tr>
-        <td width="25%"><span class="required">*</span> <?php echo $entry_merchant_id; ?></td>
-        <td><input type="text" name="liqpay_merchant_id" value="<?php echo $liqpay_merchant_id; ?>" />
+        <td width="25%"><span class="required">*</span> <?php echo $entry_merchant; ?></td>
+        <td><input type="text" name="liqpay_merchant" value="<?php echo $liqpay_merchant; ?>" />
           <br />
-          <?php if ($error_merchant_id) { ?>
-          <span class="error"><?php echo $error_merchant_id; ?></span>
+          <?php if ($error_merchant) { ?>
+          <span class="error"><?php echo $error_merchant; ?></span>
           <?php } ?></td>
       </tr>
       <tr>
-        <td><span class="required">*</span> <?php echo $entry_merchant_signature; ?></td>
-        <td><input type="text" name="liqpay_merchant_signature" value="<?php echo $liqpay_merchant_signature; ?>" />
+        <td><span class="required">*</span> <?php echo $entry_signature; ?></td>
+        <td><input type="text" name="liqpay_signature" value="<?php echo $liqpay_signature; ?>" />
           <br />
-          <?php if ($error_merchant_signature) { ?>
-          <span class="error"><?php echo $error_merchant_signature; ?></span>
+          <?php if ($error_signature) { ?>
+          <span class="error"><?php echo $error_signature; ?></span>
           <?php } ?></td>
       </tr>
       <tr>
-        <td><span class="required">*</span> <?php echo $entry_liqpay_type; ?></td>
-        <td><input type="text" name="liqpay_liqpay_type" value="<?php echo $liqpay_liqpay_type; ?>" />
-          <br />
-          <?php if ($error_liqpay_type) { ?>
-          <span class="error"><?php echo $error_liqpay_type; ?></span>
-          <?php } ?></td>
+        <td><?php echo $entry_type; ?></td>
+        <td><select name="liqpay_type">
+            <?php if ($liqpay_type == 'liqpay') { ?>
+            <option value="liqpay" selected="selected"><?php echo $text_liqpay; ?></option>
+            <?php } else { ?>
+            <option value="liqpay"><?php echo $text_liqpay; ?></option>
+            <?php } ?>
+            <?php if ($liqpay_type == 'card') { ?>
+            <option value="card" selected="selected"><?php echo $text_card; ?></option>
+            <?php } else { ?>
+            <option value="card"><?php echo $text_card; ?></option>
+            <?php } ?>
+          </select></td>
       </tr>
       <tr>
         <td><?php echo $entry_order_status; ?></td>
@@ -80,3 +88,4 @@
 <script type="text/javascript"><!--
 $.tabs('.tabs a'); 
 //--></script>
+<?php echo $footer; ?>

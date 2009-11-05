@@ -72,11 +72,14 @@ class ControllerTotalSubTotal extends Controller {
 			$this->data['sub_total_sort_order'] = $this->config->get('sub_total_sort_order');
 		}
 																				
-		$this->id       = 'content';
 		$this->template = 'total/sub_total.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function validate() {

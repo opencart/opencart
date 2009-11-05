@@ -83,8 +83,8 @@ class ControllerLocalisationGeoZone extends Controller {
 		
 		$this->load->model('localisation/geo_zone');
 		
-		if (isset($this->request->post['delete']) && $this->validateDelete()) {
-			foreach ($this->request->post['delete'] as $geo_zone_id) {
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $geo_zone_id) {
 				$this->model_localisation_geo_zone->deleteGeoZone($geo_zone_id);
 			}
 						
@@ -185,7 +185,7 @@ class ControllerLocalisationGeoZone extends Controller {
 				'geo_zone_id' => $result['geo_zone_id'],
 				'name'        => $result['name'],
 				'description' => $result['description'],
-				'delete'      => isset($this->request->post['delete']) && in_array($result['geo_zone_id'], $this->request->post['delete']),
+				'selected'    => isset($this->request->post['selected']) && in_array($result['geo_zone_id'], $this->request->post['selected']),
 				'action'      => $action
 			);
 		}
@@ -251,12 +251,15 @@ class ControllerLocalisationGeoZone extends Controller {
 
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-				
-		$this->id       = 'content';
+		
 		$this->template = 'localisation/geo_zone_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function getForm() {
@@ -360,11 +363,14 @@ class ControllerLocalisationGeoZone extends Controller {
 			$this->data['zone_to_geo_zones'] = array();
 		}
 		
-		$this->id       = 'content';
 		$this->template = 'localisation/geo_zone_form.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
-		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 	
 	private function validateForm() {
@@ -394,7 +400,7 @@ class ControllerLocalisationGeoZone extends Controller {
 		
 		$this->load->model('localisation/tax_class');
 
-		foreach ($this->request->post['delete'] as $geo_zone_id) {
+		foreach ($this->request->post['selected'] as $geo_zone_id) {
 			$tax_rate_total = $this->model_localisation_tax_class->getTotalTaxRatesByGeoZoneId($geo_zone_id);
 
 			if ($tax_rate_total) {

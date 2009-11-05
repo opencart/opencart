@@ -115,8 +115,8 @@ class ControllerCustomerCustomer extends Controller {
 		
 		$this->load->model('customer/customer');
 			
-    	if (isset($this->request->post['delete']) && $this->validateDelete()) {
-			foreach ($this->request->post['delete'] as $customer_id) {
+    	if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $customer_id) {
 				$this->model_customer_customer->deleteCustomer($customer_id);
 			}
 			
@@ -286,7 +286,7 @@ class ControllerCustomerCustomer extends Controller {
 				'email'       => $result['email'],
 				'status'      => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'delete'      => isset($this->request->post['delete']) && in_array($result['customer_id'], $this->request->post['delete']),
+				'selected'    => isset($this->request->post['selected']) && in_array($result['customer_id'], $this->request->post['selected']),
 				'action'      => $action
 			);
 		}	
@@ -400,12 +400,15 @@ class ControllerCustomerCustomer extends Controller {
 		
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-
-		$this->id       = 'content';
+		
 		$this->template = 'customer/customer_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
   	}
   
   	private function getForm() {
@@ -608,11 +611,14 @@ class ControllerCustomerCustomer extends Controller {
 			$this->data['confirm'] = '';
 		}
 		
-		$this->id       = 'content';
 		$this->template = 'customer/customer_form.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
- 		$this->render();	
+		$this->response->setOutput($this->render(TRUE));
 	}  
 	 
 	public function activate() {
@@ -687,11 +693,11 @@ class ControllerCustomerCustomer extends Controller {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
 
-    	if ((strlen(utf8_decode($this->request->post['firstname'])) < 3) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['firstname'])) < 1) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
       		$this->error['firstname'] = $this->language->get('error_firstname');
     	}
 
-    	if ((strlen(utf8_decode($this->request->post['lastname'])) < 3) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['lastname'])) < 1) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
       		$this->error['lastname'] = $this->language->get('error_lastname');
     	}
 

@@ -32,10 +32,10 @@ class ControllerCommonMenu extends Controller {
 		$this->data['text_order_status'] = $this->language->get('text_order_status');
 		$this->data['text_payment'] = $this->language->get('text_payment');
 		$this->data['text_product'] = $this->language->get('text_product');
-		$this->data['text_reports'] = $this->language->get('text_reports');     		
-      	$this->data['text_report_sale'] = $this->language->get('text_report_sale');
+		$this->data['text_reports'] = $this->language->get('text_reports');
+		$this->data['text_report_purchased'] = $this->language->get('text_report_purchased');     		
+		$this->data['text_report_sale'] = $this->language->get('text_report_sale');
       	$this->data['text_report_viewed'] = $this->language->get('text_report_viewed');
-      	$this->data['text_report_purchased'] = $this->language->get('text_report_purchased');	
 		$this->data['text_review'] = $this->language->get('text_review');
 		$this->data['text_support'] = $this->language->get('text_support');
 		$this->data['text_shipping'] = $this->language->get('text_shipping');
@@ -75,9 +75,9 @@ class ControllerCommonMenu extends Controller {
 		$this->data['order_status'] = $this->url->https('localisation/order_status');
 		$this->data['payment'] = $this->url->https('extension/payment');
 		$this->data['product'] = $this->url->https('catalog/product');
-      	$this->data['report_sale'] = $this->url->https('report/sale');
+		$this->data['report_purchased'] = $this->url->https('report/purchased');
+		$this->data['report_sale'] = $this->url->https('report/sale');
       	$this->data['report_viewed'] = $this->url->https('report/viewed');
-      	$this->data['report_purchased'] = $this->url->https('report/purchased');
 		$this->data['review'] = $this->url->https('catalog/review');
 		$this->data['shipping'] = $this->url->https('extension/shipping');
 		$this->data['shop'] = HTTP_CATALOG;
@@ -90,6 +90,8 @@ class ControllerCommonMenu extends Controller {
       	$this->data['weight_class'] = $this->url->https('localisation/weight_class');
 		$this->data['measurement_class'] = $this->url->https('localisation/measurement_class');
       	$this->data['zone'] = $this->url->https('localisation/zone');
+		
+		$this->data['logged'] = $this->user->isLogged();
 		
 		$this->id       = 'menu';
 		$this->template = 'common/menu.tpl';

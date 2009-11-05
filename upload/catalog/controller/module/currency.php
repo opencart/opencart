@@ -47,8 +47,13 @@ class ControllerModuleCurrency extends Controller {
 		
    		$this->data['currencies'] = $this->model_localisation_currency->getCurrencies();
 		
-		$this->id       = 'currency';
-		$this->template = $this->config->get('config_template') . 'module/currency.tpl';
+		$this->id = 'currency';
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/currency.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/module/currency.tpl';
+		} else {
+			$this->template = 'default/template/module/currency.tpl';
+		}
 		
    		$this->render();
 	} 

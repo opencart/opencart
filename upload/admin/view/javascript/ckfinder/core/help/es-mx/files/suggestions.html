@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML	4.0	Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>CKFinder User's Guide</title>
+	<link href="other/help.css" type="text/css" rel="stylesheet" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="other/help.js"></script>
+	<script type="text/javascript">
+
+function CheckForm()
+{
+	if ( document.getElementById( 'xSuggestion' ).value == '' )
+	{
+		alert( 'Please type your suggestion text before sending' ) ;
+		return false ;
+	}
+
+	document.getElementById( 'xSubmit' ).disabled = true ;
+	document.getElementById( 'spamcheck' ).value = 9945 + 13671 ;
+
+	return true ;
+}
+
+	</script>
+</head>
+<body>
+	<h1>
+	Sugerencias</h1>
+	<p>
+		Sientase libre de usar la siguiente forma para enviarnos sus sugerencias acerca de esta documentaci&oacute;n. Estamos siempre dispuestos a mejorarla, para ofrecerle siempre un mejor software cada dia.</p>
+	<h2>
+		Forma para sugerencias </h2>
+	<form action="http://cksource.com/ckfinder/doc_suggestion" target="_blank" method="post"
+		onsubmit="return CheckForm();">
+		<input type="hidden" name="doc" value="CKFinder User's Guide" />
+		<input type="hidden" name="spamcheck" id="spamcheck" value="7832" />
+		<p>
+			Sus Sugerencias: <br />
+			<textarea id="xSuggestion" name="suggestion" cols="70" rows="10"></textarea></p>
+		<p>
+			<input id="xSubmit" type="submit" value="Enviar" />
+			(abrir&aacute; una nueva ventana)</p>
+	</form>
+</body>
+</html>

@@ -35,17 +35,27 @@ class ControllerReportSale extends Controller {
 			$page = 1;
 		}
 		
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'date_added';
+		$url = '';
+						
+		if (isset($this->request->get['filter_date_start'])) {
+			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
 		}
 		
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}	
+		if (isset($this->request->get['filter_date_end'])) {
+			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
+		}
+		
+		if (isset($this->request->get['filter_group'])) {
+			$url .= '&filter_group=' . $this->request->get['filter_group'];
+		}		
+
+		if (isset($this->request->get['filter_order_status_id'])) {
+			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
+		}
+						
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
    		$this->document->breadcrumbs = array();
 
@@ -56,12 +66,12 @@ class ControllerReportSale extends Controller {
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('report/sale'),
+       		'href'      => $this->url->https('report/sale' . $url),
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->load->model('report/report');
+		$this->load->model('report/sale');
 		
 		$this->data['orders'] = array();
 		
@@ -70,15 +80,13 @@ class ControllerReportSale extends Controller {
 			'filter_date_end'	     => $filter_date_end, 
 			'filter_group'           => $filter_group,
 			'filter_order_status_id' => $filter_order_status_id,
-			'sort'                   => $sort,
-			'order'                  => $order,
 			'start'                  => ($page - 1) * 10,
 			'limit'                  => 10
 		);
 		
-		$order_total = $this->model_report_report->getSaleReportTotal($data);
+		$order_total = $this->model_report_sale->getSaleReportTotal($data);
 		
-		$results = $this->model_report_report->getSaleReport($data);
+		$results = $this->model_report_sale->getSaleReport($data);
 		
 		foreach ($results as $result) {
 			$this->data['orders'][] = array(
@@ -98,11 +106,11 @@ class ControllerReportSale extends Controller {
 		$this->data['column_date_end'] = $this->language->get('column_date_end');
     	$this->data['column_orders'] = $this->language->get('column_orders');
 		$this->data['column_total'] = $this->language->get('column_total');
-
-		$this->data['entry_status'] = $this->language->get('entry_status');
+		
 		$this->data['entry_date_start'] = $this->language->get('entry_date_start');
 		$this->data['entry_date_end'] = $this->language->get('entry_date_end');
 		$this->data['entry_group'] = $this->language->get('entry_group');	
+		$this->data['entry_status'] = $this->language->get('entry_status');
 
 		$this->data['button_filter'] = $this->language->get('button_filter');
 		
@@ -132,12 +140,30 @@ class ControllerReportSale extends Controller {
 			'value' => 'day',
 		);
 
+		$url = '';
+						
+		if (isset($this->request->get['filter_date_start'])) {
+			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
+		}
+		
+		if (isset($this->request->get['filter_date_end'])) {
+			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
+		}
+		
+		if (isset($this->request->get['filter_group'])) {
+			$url .= '&filter_group=' . $this->request->get['filter_group'];
+		}		
+
+		if (isset($this->request->get['filter_order_status_id'])) {
+			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
+		}
+		
 		$pagination = new Pagination();
 		$pagination->total = $order_total;
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('report/viewed&page=%s');
+		$pagination->url = $this->url->https('report/sale' . $url . '&page=%s');
 			
 		$this->data['pagination'] = $pagination->render();		
 
@@ -145,12 +171,15 @@ class ControllerReportSale extends Controller {
 		$this->data['filter_date_end'] = $filter_date_end;		
 		$this->data['filter_group'] = $filter_group;
 		$this->data['filter_order_status_id'] = $filter_order_status_id;
-
-		$this->id       = 'content'; 
+		 
 		$this->template = 'report/sale.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
 		
-		$this->render();
+		$this->response->setOutput($this->render(TRUE));
 	}
 }
 ?>

@@ -4,7 +4,6 @@ final class Weight {
 	private $rules = array();
 	
 	public function __construct() {
-    	$this->config = Registry::get('config');
 		$this->db = Registry::get('db');
 		$this->language = Registry::get('language');
 
@@ -35,5 +34,9 @@ final class Weight {
 	public function format($value, $weight_class_id, $decimal_point = '.', $thousand_point = ',') {
     	return number_format($value, 2, $decimal_point, $thousand_point) . $this->classes[$weight_class_id]['unit'];
   	}
+	
+	public function getCode($weight_class_id) {
+		return isset($this->classes[$weight_class_id]['unit']) ? $this->classes[$weight_class_id]['unit'] : NULL;
+	}
 }
 ?>

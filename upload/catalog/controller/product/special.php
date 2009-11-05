@@ -165,24 +165,41 @@ class ControllerProductSpecial extends Controller {
 				
 			$this->data['sort'] = $sort;
 			$this->data['order'] = $order;
+
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/special.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/product/special.tpl';
+			} else {
+				$this->template = 'default/template/product/special.tpl';
+			}
 			
-			$this->id       = 'content';
-			$this->template = $this->config->get('config_template') . 'product/special.tpl';
-			$this->layout   = 'common/layout';
+			$this->children = array(
+				'common/header',
+				'common/footer',
+				'common/column_left',
+				'common/column_right'
+			);
 		
-			$this->render();			
+			$this->response->setOutput($this->render(TRUE));			
 		} else {
       		$this->data['text_error'] = $this->language->get('text_empty');
 
       		$this->data['button_continue'] = $this->language->get('button_continue');
 
       		$this->data['continue'] = $this->url->http('common/home');
-	  			
-			$this->id       = 'content';
-			$this->template = $this->config->get('config_template') . 'error/not_found.tpl';
-			$this->layout   = 'common/layout';
-		
-			$this->render();
+	  				
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
+			} else {
+				$this->template = 'default/template/error/not_found.tpl';
+			}
+			
+			$this->children = array(
+				'common/header',
+				'common/footer',
+				'common/column_left',
+				'common/column_right'
+			);	
+			$this->response->setOutput($this->render(TRUE));
 		}
   	}
 }

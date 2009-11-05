@@ -83,8 +83,8 @@ class ControllerCatalogReview extends Controller {
 		
 		$this->load->model('catalog/review');
 
-		if (isset($this->request->post['delete']) && $this->validateDelete()) {
-			foreach ($this->request->post['delete'] as $review_id) {
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $review_id) {
 				$this->model_catalog_review->deleteReview($review_id);
 			}
 
@@ -188,7 +188,7 @@ class ControllerCatalogReview extends Controller {
 				'rating'     => $result['rating'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'delete'     => isset($this->request->post['delete']) && in_array($result['review_id'], $this->request->post['delete']),
+				'selected'   => isset($this->request->post['selected']) && in_array($result['review_id'], $this->request->post['selected']),
 				'action'     => $action
 			);
 		}	
@@ -261,11 +261,14 @@ class ControllerCatalogReview extends Controller {
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 
-		$this->id       = 'content';
 		$this->template = 'catalog/review_list.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
 
 	private function getForm() {
@@ -273,6 +276,8 @@ class ControllerCatalogReview extends Controller {
 
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
+		$this->data['text_none'] = $this->language->get('text_none');
+		$this->data['text_select'] = $this->language->get('text_select');
 
 		$this->data['entry_product'] = $this->language->get('entry_product');
 		$this->data['entry_author'] = $this->language->get('entry_author');
@@ -291,6 +296,12 @@ class ControllerCatalogReview extends Controller {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
 			$this->data['error_warning'] = '';
+		}
+ 		
+		if (isset($this->error['product'])) {
+			$this->data['error_product'] = $this->error['product'];
+		} else {
+			$this->data['error_product'] = '';
 		}
 		
  		if (isset($this->error['author'])) {
@@ -350,19 +361,37 @@ class ControllerCatalogReview extends Controller {
 		if (isset($this->request->get['review_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$review_info = $this->model_catalog_review->getReview($this->request->get['review_id']);
 		}
-
+		
+		$this->load->model('catalog/category');
+				
+		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
+		
+		$this->load->model('catalog/product');
+		
 		if (isset($this->request->post['product_id'])) {
 			$this->data['product_id'] = $this->request->post['product_id'];
+			
+			$product_info = $this->model_catalog_product->getProduct($this->request->post['product_id']);
+			
+			if ($product_info) {
+				$this->data['product'] = $product_info['name'];
+			} else {
+				$this->data['product'] = '';
+			}
 		} elseif (isset($review_info)) {
 			$this->data['product_id'] = $review_info['product_id'];
+			
+			$product_info = $this->model_catalog_product->getProduct($review_info['product_id']);
+			
+			if ($product_info) {
+				$this->data['product'] = $product_info['name'];
+			} else {
+				$this->data['product'] = '';
+			}
 		} else {
 			$this->data['product_id'] = '';
 		}
-
-		$this->load->model('catalog/product');
 		
-		$this->data['products'] = $this->model_catalog_product->getProducts();
-
 		if (isset($this->request->post['author'])) {
 			$this->data['author'] = $this->request->post['author'];
 		} elseif (isset($review_info)) {
@@ -395,18 +424,57 @@ class ControllerCatalogReview extends Controller {
 			$this->data['status'] = '';
 		}
 		
-		$this->id       = 'content';
 		$this->template = 'catalog/review_form.tpl';
-		$this->layout   = 'common/layout';
-				
-		$this->render();
+		$this->children = array(
+			'common/header',	
+			'common/footer',	
+			'common/menu'	
+		);
+		
+		$this->response->setOutput($this->render(TRUE));
 	}
- 
+	
+	public function category() {
+		$this->load->model('catalog/product');
+		
+		if (isset($this->request->get['category_id'])) {
+			$category_id = $this->request->get['category_id'];
+		} else {
+			$category_id = 0;
+		}
+		
+		$product_data = array();
+		
+		$results = $this->model_catalog_product->getProductsByCategoryId($category_id);
+		
+		if ($results) {
+			foreach ($results as $result) {
+				$product_data[] = array(
+					'product_id' => $result['product_id'],
+					'name'       => $result['name']
+				);
+			}
+		} else {
+			$product_data[] = array(
+				'product_id' => 0,
+				'name'       => $this->language->get('text_none')
+			);			
+		}
+		
+		$this->load->library('json');
+		
+		$this->response->setOutput(Json::encode($product_data));
+	}
+	
 	private function validateForm() {
 		if (!$this->user->hasPermission('modify', 'catalog/review')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
+		if (!$this->request->post['product_id']) {
+			$this->error['product'] = $this->language->get('error_product');
+		}
+		
 		if ((strlen(utf8_decode($this->request->post['author'])) < 3) || (strlen(utf8_decode($this->request->post['author'])) > 64)) {
 			$this->error['author'] = $this->language->get('error_author');
 		}

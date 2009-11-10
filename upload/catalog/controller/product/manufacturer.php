@@ -188,7 +188,7 @@ class ControllerProductManufacturer extends Controller {
 					'common/column_right'
 				);		
 				
-				$this->response->setOutput($this->render(TRUE));										
+				$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));										
       		} else {
         		$this->document->title = $manufacturer_info['name'];
 
@@ -213,7 +213,7 @@ class ControllerProductManufacturer extends Controller {
 					'common/column_right'
 				);		
 				
-				$this->response->setOutput($this->render(TRUE));					
+				$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));					
       		}
     	} else {
 			$url = '';
@@ -259,7 +259,7 @@ class ControllerProductManufacturer extends Controller {
 				'common/column_right'
 			);		
 			
-			$this->response->setOutput($this->render(TRUE));
+			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 		}
   	}
 }

@@ -60,11 +60,10 @@ class ControllerReportViewed extends Controller {
 		$this->template = 'report/viewed.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 }
 ?>

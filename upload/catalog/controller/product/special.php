@@ -179,7 +179,7 @@ class ControllerProductSpecial extends Controller {
 				'common/column_right'
 			);
 		
-			$this->response->setOutput($this->render(TRUE));			
+			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));			
 		} else {
       		$this->data['text_error'] = $this->language->get('text_empty');
 
@@ -199,7 +199,8 @@ class ControllerProductSpecial extends Controller {
 				'common/column_left',
 				'common/column_right'
 			);	
-			$this->response->setOutput($this->render(TRUE));
+			
+			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 		}
   	}
 }

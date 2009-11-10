@@ -104,7 +104,19 @@ class ControllerShippingAusPost extends Controller {
 		} else {
 			$this->data['auspost_estimate'] = $this->config->get('auspost_estimate');
 		}
+		
+		if (isset($this->request->post['auspost_tax_class_id'])) {
+			$this->data['auspost_tax_class_id'] = $this->request->post['auspost_tax_class_id'];
+		} else {
+			$this->data['auspost_tax_class_id'] = $this->config->get('auspost_tax_class_id');
+		}
 
+		if (isset($this->request->post['auspost_geo_zone_id'])) {
+			$this->data['auspost_geo_zone_id'] = $this->request->post['auspost_geo_zone_id'];
+		} else {
+			$this->data['auspost_geo_zone_id'] = $this->config->get('auspost_geo_zone_id');
+		}
+		
 		if (isset($this->request->post['auspost_status'])) {
 			$this->data['auspost_status'] = $this->request->post['auspost_status'];
 		} else {
@@ -128,11 +140,10 @@ class ControllerShippingAusPost extends Controller {
 		$this->template = 'shipping/auspost.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 	
 	private function validate() {

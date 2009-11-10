@@ -76,7 +76,7 @@ class ControllerInformationSitemap extends Controller {
 			'common/column_right'
 		);
 		
- 		$this->response->setOutput($this->render(TRUE));		
+ 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		
 	}
 	
 	protected function getCategories($parent_id, $current_path = '') {

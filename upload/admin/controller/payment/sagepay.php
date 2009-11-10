@@ -24,7 +24,6 @@ class ControllerPaymentSagepay extends Controller {
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
-		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_sim'] = $this->language->get('text_sim');
 		$this->data['text_test'] = $this->language->get('text_test');
 		$this->data['text_live'] = $this->language->get('text_live');
@@ -148,11 +147,10 @@ class ControllerPaymentSagepay extends Controller {
 		$this->template = 'payment/sagepay.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 
 	private function validate() {

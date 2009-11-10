@@ -258,11 +258,10 @@ class ControllerUserUser extends Controller {
 		$this->template = 'user/user_list.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
   	}
 	
 	private function getForm() {
@@ -428,11 +427,10 @@ class ControllerUserUser extends Controller {
 		$this->template = 'user/user_form.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));	
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));	
   	}
 
   	private function validateForm() {

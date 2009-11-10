@@ -264,11 +264,10 @@ class ControllerCatalogReview extends Controller {
 		$this->template = 'catalog/review_list.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 
 	private function getForm() {
@@ -427,11 +426,10 @@ class ControllerCatalogReview extends Controller {
 		$this->template = 'catalog/review_form.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 	
 	public function category() {

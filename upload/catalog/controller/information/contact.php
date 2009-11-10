@@ -11,9 +11,9 @@ class ControllerInformationContact extends Controller {
 			$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), html_entity_decode($this->config->get('config_smtp_password')), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout'));
 			$mail->setTo($this->config->get('config_email'));
 	  		$mail->setFrom($this->request->post['email']);
-	  		$mail->setSender($this->request->post['name']);
+	  		$mail->setSender(html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8'));
 	  		$mail->setSubject(sprintf($this->language->get('email_subject'), $this->request->post['name']));
-	  		$mail->setText(strip_tags(html_entity_decode($this->request->post['enquiry'])));
+	  		$mail->setText(strip_tags(html_entity_decode($this->request->post['enquiry'], ENT_QUOTES, 'UTF-8')));
       		$mail->send();
 
 	  		$this->redirect($this->url->https('information/contact/success'));
@@ -113,7 +113,7 @@ class ControllerInformationContact extends Controller {
 			'common/column_right'
 		);
 		
- 		$this->response->setOutput($this->render(TRUE));		
+ 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		
   	}
 
   	public function success() {
@@ -156,7 +156,7 @@ class ControllerInformationContact extends Controller {
 			'common/column_right'
 		);
 		
- 		$this->response->setOutput($this->render(TRUE)); 
+ 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression')); 
 	}
 
 	public function captcha() {

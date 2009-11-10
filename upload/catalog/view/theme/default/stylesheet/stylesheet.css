@@ -71,27 +71,31 @@ p {
 	height: 40px;
 	background: url('../image/header.png') no-repeat;
 }
-#header .div4 img {
-	margin-right: 5px;
-}
 #header .div4 a {
-	padding: 12px 0px 12px 20px;
-	display: inline-block;
+	position: relative;
+	padding: 12px 0px 10px 0px;
 	color: #FFFFFF;
 	text-align: center;
 	text-decoration: none;
 	font-size: 14px;
 	font-family: Verdana, Geneva, sans-serif;
 }
+#header .div4 .icon {
+	position: relative;
+	top: 12px;
+	margin-right: 4px;
+}
+#header .div4 .split {
+	position: relative;
+	top: 14px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
 #header .div5 a, #header .div5 img {
 	float: left;
-	margin-left: 8px;
-	margin-right: 8px;
 }
 #header .div6 a, #header .div6 img {
 	float: right;
-	margin-left: 8px;
-	margin-right: 8px;	
 }
 #breadcrumb {
 	padding-top: 7px;

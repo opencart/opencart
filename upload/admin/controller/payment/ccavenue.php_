@@ -24,7 +24,6 @@ class ControllerPaymentCCAvenue extends Controller {
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
-		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_american'] = $this->language->get('text_american');
 		$this->data['text_indian'] = $this->language->get('text_indian');
 		

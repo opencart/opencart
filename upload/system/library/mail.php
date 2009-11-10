@@ -53,8 +53,12 @@ final class Mail {
     	$this->html = $html;
   	}
 	
-  	public function addAttachment($attachments) {
-    	$this->attachments[] = $attachments;
+  	public function addAttachment($attachment) {
+		if (!is_array($attachment)) {
+			$this->attachments[] = $attachment;
+		} else{
+			$this->attachments = array_merge($this->attachments, $attachment);
+		}
   	}
 
   	public function send() {	

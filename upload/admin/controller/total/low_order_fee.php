@@ -89,11 +89,10 @@ class ControllerTotalLowOrderFee extends Controller {
 		$this->template = 'total/low_order_fee.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 
 	private function validate() {

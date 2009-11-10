@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 /*
 
  * ### CKFinder : Configuration File - Basic Instructions
@@ -58,7 +58,6 @@ function CheckAuthentication()
 
 	//user logs in your system.
 
-return TRUE;
 	if (isset($_SESSION['user_id'])) {
 		return TRUE;
 	} else {
@@ -108,7 +107,7 @@ ATTENTION: The trailing slash is required.
 
 */
 
-$baseUrl = '';
+$baseUrl = '/image/userfiles/';
 
 
 
@@ -142,10 +141,9 @@ ATTENTION: The trailing slash is required.
 
 */
 
-$baseDir = resolveUrl($baseUrl);
+$baseDir = resolveUrl('/image/userfiles/');
 
-
-
+//echo $baseDir;
 /*
 
  * ### Advanced Settings
@@ -343,7 +341,7 @@ Example: 'maxSize' => "8M",
 $config['DefaultResourceTypes'] = '';
 
 
-
+/*
 $config['ResourceType'][] = Array(
 
 		'name' => 'Files',				// Single quotes not allowed
@@ -357,7 +355,7 @@ $config['ResourceType'][] = Array(
 		'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,zip',
 
 		'deniedExtensions' => '');
-
+*/
 
 
 $config['ResourceType'][] = Array(
@@ -375,7 +373,7 @@ $config['ResourceType'][] = Array(
 		'deniedExtensions' => '');
 
 
-
+/*
 $config['ResourceType'][] = Array(
 
 		'name' => 'Flash',
@@ -391,7 +389,7 @@ $config['ResourceType'][] = Array(
 		'deniedExtensions' => '');
 
 
-
+*/
 /*
 
  Due to security issues with Apache modules, it is recommended to leave the

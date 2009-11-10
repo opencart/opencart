@@ -1,13 +1,3 @@
-<?php
-//-----------------------------------------------------------------
-// OpenCart Paymate Payment Module
-// Version: 1.0
-// Author: SuperJuice (Sam) (portions based on OpenCart GPL'd code)
-// Email: opencart@pixeldrift.net
-// Web: http://www.pixeldrift.net/opencart/
-//-----------------------------------------------------------------
-?>
-
 <form action="<?php echo $action; ?>" method="get" id="checkout">
   <input type="hidden" name="mid" value="<?php echo $mid; ?>" />
   <input type="hidden" name="amt" value="<?php echo $amt; ?>" />

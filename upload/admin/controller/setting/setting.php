@@ -639,11 +639,10 @@ class ControllerSettingSetting extends Controller {
 		$this->template = 'setting/setting.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 
 	private function validate() {
@@ -769,7 +768,7 @@ class ControllerSettingSetting extends Controller {
 			$output .= '<option value="0">' . $this->language->get('text_none') . '</option>';
 		}
 
-		$this->response->setOutput($output);
+		$this->response->setOutput($output, $this->config->get('config_compression'));
 	}
 	
 	public function template() {

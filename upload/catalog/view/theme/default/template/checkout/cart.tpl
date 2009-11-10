@@ -60,7 +60,7 @@
       <div style="float: left; width: 274px;">
         <div style="border: 1px solid #DDDDDD; min-height: 125px;">
           <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="coupon">
-            <div style="background: #F7F7F7 url('catalog/view/theme/default/image/icon_discount.png') 8px 8px no-repeat; border-bottom: 1px solid #DDDDDD; padding: 8px 8px 8px 29px;"><span style="text-transform: uppercase; font-size: 14px; font-weight: bold;">Discount Coupon</span></div>
+            <div style="background: #F7F7F7 url('catalog/view/theme/default/image/icon_discount.png') 8px 8px no-repeat; border-bottom: 1px solid #DDDDDD; padding: 8px 8px 8px 29px;"><span style="text-transform: uppercase; font-size: 14px; font-weight: bold;"><?php echo $text_discount; ?></span></div>
             <div style="padding: 8px;"><?php echo $text_coupon; ?><br />
               <input type="text" name="coupon" value="<?php echo $coupon; ?>" />
               <a onclick="$('#coupon').submit();" class="button"><span><?php echo $button_coupon; ?></span></a></div>

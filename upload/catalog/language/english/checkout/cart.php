@@ -7,6 +7,7 @@ $_['text_basket']     = 'Basket';
 $_['text_sub_total']  = 'Sub-Total:';
 $_['text_error']      = 'Your shopping cart is empty!';
 $_['text_success']    = 'Success: Your coupon discount has been applied!';
+$_['text_discount']   = 'Discount Coupon';
 $_['text_coupon']     = 'Enter your code, hit the "Apply Coupon" button and watch your discount instantly be applied to your order.';
 
 // Column

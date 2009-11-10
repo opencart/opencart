@@ -78,6 +78,7 @@ class ControllerCheckoutCart extends Controller {
 			
 			$this->data['text_select'] = $this->language->get('text_select');
       		$this->data['text_sub_total'] = $this->language->get('text_sub_total');
+			$this->data['text_discount'] = $this->language->get('text_discount');
 			$this->data['text_coupon'] = $this->language->get('text_coupon');
 		
      		$this->data['column_remove'] = $this->language->get('column_remove');
@@ -181,7 +182,7 @@ class ControllerCheckoutCart extends Controller {
 				'common/column_right'
 			);		
 			
-			$this->response->setOutput($this->render(TRUE));					
+			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));					
     	} else {
       		$this->data['heading_title'] = $this->language->get('heading_title');
 
@@ -204,7 +205,7 @@ class ControllerCheckoutCart extends Controller {
 				'common/column_right'
 			);
 		
-			$this->response->setOutput($this->render(TRUE));			
+			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));			
     	}
   	}
 	

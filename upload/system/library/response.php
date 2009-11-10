@@ -2,7 +2,8 @@
 final class Response {
 	private $headers = array(); 
 	private $output;
-
+	private $level = 0;
+	
 	public function addHeader($key, $value) {
 		$this->headers[$key] = $value;
 	}
@@ -18,16 +19,17 @@ final class Response {
 		exit;
 	}
 
-	public function setOutput($output) {
+	public function setOutput($output, $level = 0) {
 		$this->output = $output;
+		$this->level = $level;
 	}
 
-	private function compress($data, $level = 4) {
-		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
+	private function compress($data, $level = 0) {
+		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== FALSE)) {
 			$encoding = 'gzip';
 		} 
 
-		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== false) {
+		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== FALSE)) {
 			$encoding = 'x-gzip';
 		}
 
@@ -46,17 +48,15 @@ final class Response {
 		if (connection_status()) { 
 			return $data;
 		}
-
-		$gzdata = gzencode($data, (int)$level);
-
+		
 		$this->addHeader('Content-Encoding', $encoding);
 
-		return $gzdata;
+		return gzencode($data, (int)$level);
 	}
 
-	public function output($level = 4) {
-		if ($level) {
-			$ouput = $this->compress($this->output, $level);
+	public function output() {
+		if ($this->level) {
+			$ouput = $this->compress($this->output, $this->level);
 		} else {
 			$ouput = $this->output;
 		}	

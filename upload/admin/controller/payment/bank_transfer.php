@@ -24,7 +24,6 @@ class ControllerPaymentBankTransfer extends Controller {
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
-		$this->data['text_none'] = $this->language->get('text_none');
 		
 		$this->data['entry_bank'] = $this->language->get('entry_bank');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
@@ -126,11 +125,10 @@ class ControllerPaymentBankTransfer extends Controller {
 		$this->template = 'payment/bank_transfer.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 
 	private function validate() {

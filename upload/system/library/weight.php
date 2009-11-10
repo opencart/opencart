@@ -38,5 +38,9 @@ final class Weight {
 	public function getCode($weight_class_id) {
 		return isset($this->classes[$weight_class_id]['unit']) ? $this->classes[$weight_class_id]['unit'] : NULL;
 	}
+	
+	public function getId($code) {
+		return isset($this->classes[$weight_class_id]['unit']) ? $this->classes[$weight_class_id]['unit'] : NULL;
+	}	
 }
 ?>

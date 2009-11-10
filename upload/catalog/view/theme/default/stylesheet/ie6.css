@@ -2,6 +2,17 @@
 	width: 268px;
 	height: 67px;
 }
+#header .div4 .icon {
+	position: relative;
+	top: 12px;
+	margin-right: 4px;
+}
+#header .div4 .split {
+	position: relative;
+	top: 14px;
+	margin-left: 20px;
+	margin-right: 0px;
+}
 #content {
 	float: left;
 	width: 580px;

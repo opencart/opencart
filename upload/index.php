@@ -138,5 +138,5 @@ if (isset($request->get['route'])) {
 $controller->dispatch($action, new Router('error/not_found'));
 
 // Output
-$response->output($config->get('config_compression'));
+$response->output();
 ?>

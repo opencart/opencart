@@ -152,7 +152,7 @@ class ControllerPaymentPaypoint extends Controller {
 				$this->template = 'default/template/payment/paypoint_success.tpl';
 			}	
 		
-	  		$this->response->setOutput($this->render(TRUE));			
+	  		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));			
 		} else {
 			$this->data['continue'] = $this->url->https('checkout/cart');
 		
@@ -162,7 +162,7 @@ class ControllerPaymentPaypoint extends Controller {
 				$this->template = 'default/template/payment/paypoint_failure.tpl';
 			}	
 			
-			$this->response->setOutput($this->render(TRUE));
+			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 		}
 	}
 }

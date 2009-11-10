@@ -51,7 +51,7 @@ class ControllerInformationInformation extends Controller {
 				'common/column_right'
 			);		
 			
-	  		$this->response->setOutput($this->render(TRUE));
+	  		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
     	} else {
       		$this->document->breadcrumbs[] = array(
         		'href'      => $this->url->http('information/information&information_id=' . $this->request->get['information_id']),
@@ -82,7 +82,7 @@ class ControllerInformationInformation extends Controller {
 				'common/column_right'
 			);
 		
-	  		$this->response->setOutput($this->render(TRUE));
+	  		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
     	}
   	}
 }

@@ -1,9 +1,8 @@
 <?php
 abstract class Controller {
 	protected $id;
-	protected $layout;
-	protected $children = array();
 	protected $template;
+	protected $children = array();
 	protected $data = array();
 	protected $output;
 	
@@ -26,7 +25,7 @@ abstract class Controller {
 	
 	protected function render($return = FALSE) {
 		foreach ($this->children as $child) {
-			$file  = DIR_APPLICATION . 'controller/' . str_replace('../', '', $child) . '.php';
+			$file = DIR_APPLICATION . 'controller/' . str_replace('../', '', $child) . '.php';
 			$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $child);
 		
 			if (file_exists($file)) {

@@ -21,33 +21,40 @@
           <?php } ?>
         </div>
       </div>
-      <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;"><?php echo $entry_name; ?><br />
-        <input type="text" name="name" value="<?php echo $name; ?>" />
-        <br />
-        <?php if ($error_name) { ?>
-        <span class="error"><?php echo $error_name; ?></span>
-        <?php } ?>
-        <br />
-        <?php echo $entry_email; ?><br />
-        <input type="text" name="email" value="<?php echo $email; ?>" />
-        <br />
-        <?php if ($error_email) { ?>
-        <span class="error"><?php echo $error_email; ?></span>
-        <?php } ?>
-        <br />
-        <?php echo $entry_enquiry; ?><br />
-        <textarea name="enquiry" style="width: 99%;" rows="10"><?php echo $enquiry; ?></textarea>
-        <?php if ($error_enquiry) { ?>
-        <span class="error"><?php echo $error_enquiry; ?></span>
-        <?php } ?>
-        <br />
-        <?php echo $entry_captcha; ?><br />
-        <input type="text" name="captcha" value="<?php echo $captcha; ?>" />
-        <br />
-        <?php if ($error_captcha) { ?>
-        <span class="error"><?php echo $error_captcha; ?></span>
-        <?php } ?>
-        <img src="index.php?route=information/contact/captcha" /></div>
+      <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
+        <table width="536">
+          <tr>
+            <td><?php echo $entry_name; ?><br />
+              <input type="text" name="name" value="<?php echo $name; ?>" />
+              <?php if ($error_name) { ?>
+              <span class="error"><?php echo $error_name; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_email; ?><br />
+              <input type="text" name="email" value="<?php echo $email; ?>" />
+              <?php if ($error_email) { ?>
+              <span class="error"><?php echo $error_email; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_enquiry; ?><br />
+              <textarea name="enquiry" style="width: 99%;" rows="10"><?php echo $enquiry; ?></textarea>
+              <?php if ($error_enquiry) { ?>
+              <span class="error"><?php echo $error_enquiry; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_captcha; ?><br />
+              <input type="text" name="captcha" value="<?php echo $captcha; ?>" />
+              <?php if ($error_captcha) { ?>
+              <span class="error"><?php echo $error_captcha; ?></span>
+              <?php } ?>
+              <br />
+              <img src="index.php?route=information/contact/captcha" /></td>
+          </tr>
+        </table>
+      </div>
       <div class="buttons">
         <table>
           <tr>

@@ -308,7 +308,7 @@ class ControllerProductProduct extends Controller {
 				'common/column_right'
 			);		
 			
-			$this->response->setOutput($this->render(TRUE));
+			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
     	} else {
 			$url = '';
 			
@@ -357,7 +357,7 @@ class ControllerProductProduct extends Controller {
 				'common/column_right'
 			);	
 			
-			$this->response->setOutput($this->render(TRUE));
+			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
     	}
   	}
 	
@@ -405,7 +405,7 @@ class ControllerProductProduct extends Controller {
 			$this->template = 'default/template/product/review.tpl';
 		}
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 	
 	public function write() {

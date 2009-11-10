@@ -215,7 +215,7 @@ class ControllerAccountAddress extends Controller {
 			'common/column_right'
 		);
 		
-		$this->response->setOutput($this->render(TRUE));		
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		
   	}
 
   	private function getForm() {
@@ -419,7 +419,7 @@ class ControllerAccountAddress extends Controller {
 			'common/column_right'
 		);
 		
-		$this->response->setOutput($this->render(TRUE));		
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		
   	}
 	
   	private function validateForm() {
@@ -495,7 +495,7 @@ class ControllerAccountAddress extends Controller {
 			}
     	}
 	
-		$this->response->setOutput($output);
+		$this->response->setOutput($output, $this->config->get('config_compression'));
   	}  
 }
 ?>

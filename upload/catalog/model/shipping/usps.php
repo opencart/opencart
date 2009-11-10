@@ -20,6 +20,10 @@ class ModelShippingUsps extends Model {
 		$method_data = array();
 	
 		if ($status) {
+			$this->load->model('localisation/country');
+			
+			$country_info = $this->model_localisation_country->getCountry($country_id);
+
 			$quote_data = array();
 			
 			$weight = $this->cart->getWeight();
@@ -28,9 +32,9 @@ class ModelShippingUsps extends Model {
 			$pounds = floor($weight);
 			$ounces = round(16 * ($weight - floor($weight)));
 			
-			$postcode = str_replace(' ', '', $shipping_address['postcode']);
+			$postcode = str_replace(' ', '', $postcode);
 			
-			if ($address['iso_code_2'] == 'US') { 
+			if ($coutnry_info['iso_code_2'] == 'US') { 
 				$xml  = '<RateV3Request USERID="' . $this->config->get('usps_user_id') . '" PASSWORD="' . $this->config->get('usps_password') . '">';
 				$xml .= '	<Package ID="1">';
 				$xml .=	'		<Service>ALL</Service>';
@@ -279,13 +283,13 @@ class ModelShippingUsps extends Model {
                     'ZW' => 'Zimbabwe'
 				);
 	  			
-				if (isset($country[$shipping_address['iso_code_2']])) {
+				if (isset($country[$country_info['iso_code_2']])) {
 					$xml  = '<IntlRateRequest USERID="' . $this->config->get('usps_user_id') . '" PASSWORD="' . $this->config->get('usps_password') . '">';
 					$xml .=	'	<Package ID="0">';
 					$xml .=	'		<Pounds>' . $pounds . '</Pounds>';
 					$xml .=	'		<Ounces>' . $ounces . '</Ounces>';
 					$xml .=	'		<MailType>Package</MailType>';
-					$xml .=	'		<Country>' . $country[$shipping_address['iso_code_2']] . '</Country>';
+					$xml .=	'		<Country>' . $country[$country_info['iso_code_2']] . '</Country>';
 					$xml .=	'	</Package>';
 					$xml .=	'</IntlRateRequest>';
 		

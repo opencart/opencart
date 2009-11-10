@@ -87,7 +87,7 @@ class ControllerModuleCart extends Controller {
     	$output .= '<br />';
     	$output .= '<div style="text-align: right;">' . $this->language->get('text_subtotal') . '&nbsp;' .  $this->currency->format($this->cart->getTotal()) . '</div>';
 		
-		$this->response->setOutput($output);
+		$this->response->setOutput($output, $this->config->get('config_compression'));
 	} 	
 }
 ?>

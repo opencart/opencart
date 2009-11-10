@@ -11,7 +11,6 @@
           <tr>
             <td width="150"><span class="required">*</span> <?php echo $entry_firstname; ?></td>
             <td><input type="text" name="firstname" value="<?php echo $firstname; ?>" />
-              <br />
               <?php if ($error_firstname) { ?>
               <span class="error"><?php echo $error_firstname; ?></span>
               <?php } ?></td>
@@ -19,7 +18,6 @@
           <tr>
             <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
             <td><input type="text" name="lastname" value="<?php echo $lastname; ?>" />
-              <br />
               <?php if ($error_lastname) { ?>
               <span class="error"><?php echo $error_lastname; ?></span>
               <?php } ?></td>
@@ -31,7 +29,6 @@
           <tr>
             <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
             <td><input type="text" name="address_1" value="<?php echo $address_1; ?>" />
-              <br />
               <?php if ($error_address_1) { ?>
               <span class="error"><?php echo $error_address_1; ?></span>
               <?php } ?></td>
@@ -43,7 +40,6 @@
           <tr>
             <td><span class="required">*</span> <?php echo $entry_city; ?></td>
             <td><input type="text" name="city" value="<?php echo $city; ?>" />
-              <br />
               <?php if ($error_city) { ?>
               <span class="error"><?php echo $error_city; ?></span>
               <?php } ?></td>
@@ -60,7 +56,6 @@
                 <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
                 <?php } ?>
               </select>
-              <br />
               <?php if ($error_country) { ?>
               <span class="error"><?php echo $error_country; ?></span>
               <?php } ?></td>
@@ -69,7 +64,6 @@
             <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
             <td><select name="zone_id">
               </select>
-              <br />
               <?php if ($error_zone) { ?>
               <span class="error"><?php echo $error_zone; ?></span>
               <?php } ?></td>

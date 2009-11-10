@@ -253,11 +253,13 @@ class ControllerShippingUPS extends Controller {
 			$this->data['ups_sort_order'] = $this->config->get('ups_sort_order');
 		}				
 								
-		$this->id       = 'content';
 		$this->template = 'shipping/ups.tpl';
-		$this->layout   = 'common/layout';
+		$this->children = array(
+			'common/header',	
+			'common/footer'	
+		);
 		
- 		$this->render();
+ 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 	
 	private function validate() {

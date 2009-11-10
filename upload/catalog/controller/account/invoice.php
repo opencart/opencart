@@ -209,7 +209,7 @@ class ControllerAccountInvoice extends Controller {
 				'common/column_right'
 			);		
 			
-			$this->response->setOutput($this->render(TRUE));		
+			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		
     	} else {
       		$this->data['heading_title'] = $this->language->get('heading_title');
 
@@ -232,7 +232,7 @@ class ControllerAccountInvoice extends Controller {
 				'common/column_right'
 			);		
 			
-			$this->response->setOutput($this->render(TRUE));				
+			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));				
     	}
   	}
 }

@@ -72,7 +72,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->template = 'default/template/payment/pp_express.tpl';
 		}	
 
-		$this->response->setOutput($this->render(TRUE));		
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		
 	}
 }
 ?>

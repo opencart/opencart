@@ -89,11 +89,10 @@ class ControllerExtensionTotal extends Controller {
 		$this->template = 'extension/total.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 	
 	public function install() {

@@ -382,7 +382,7 @@ class ControllerCheckoutConfirm extends Controller {
 			'payment/' . $this->session->data['payment_method']['id']
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
   	}
 }
 ?>

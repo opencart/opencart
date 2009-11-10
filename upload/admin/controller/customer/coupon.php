@@ -267,11 +267,10 @@ class ControllerCustomerCoupon extends Controller {
 		$this->template = 'customer/coupon_list.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
   	}
 
   	private function getForm() {
@@ -495,11 +494,10 @@ class ControllerCustomerCoupon extends Controller {
 		$this->template = 'customer/coupon_form.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));		
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		
   	}
 	
   	private function validateForm() {

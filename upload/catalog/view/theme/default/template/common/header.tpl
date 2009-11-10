@@ -28,14 +28,14 @@
       <div class="div3"><?php echo $language; ?><?php echo $search; ?></div>
     </div>
     <div class="div4">
-      <div class="div5"><a href="<?php echo $home; ?>" style="background: url('catalog/view/theme/default/image/icon_home.png') center left no-repeat;"><?php echo $text_home; ?></a><img src="catalog/view/theme/default/image/split.png" alt="" style="position: relative; top: 14px;" /><a href="<?php echo $special; ?>" style="background: url('catalog/view/theme/default/image/icon_special.png') center left no-repeat;"><?php echo $text_special; ?></a>
+      <div class="div5"><img src="catalog/view/theme/default/image/icon_home.png" alt="" class="icon" /><a href="<?php echo $home; ?>"><?php echo $text_home; ?></a><img src="catalog/view/theme/default/image/split.png" alt="" class="split" /><img src="catalog/view/theme/default/image/icon_special.png" alt="" class="icon" /><a href="<?php echo $special; ?>"><?php echo $text_special; ?></a>
       <?php if (!$logged) { ?>
-      <img src="catalog/view/theme/default/image/split.png" alt="" style="position: relative; top: 14px;" /><a href="<?php echo $login; ?>" style="background: url('catalog/view/theme/default/image/icon_login.png') center left no-repeat;"><?php echo $text_login; ?></a>
+      <img src="catalog/view/theme/default/image/split.png" alt="" class="split" /><img src="catalog/view/theme/default/image/icon_login.png" alt="" class="icon" /><a href="<?php echo $login; ?>"><?php echo $text_login; ?></a>
       <?php } else { ?>
-      <img src="catalog/view/theme/default/image/split.png" alt="" style="position: relative; top: 14px;" /><a href="<?php echo $logout; ?>" style="background: url('catalog/view/theme/default/image/icon_logout.png') center left no-repeat;"><?php echo $text_logout; ?></a>
+      <img src="catalog/view/theme/default/image/split.png" alt="" class="split" /><img src="catalog/view/theme/default/image/icon_logout.png" alt="" class="icon" /><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a>
       <?php } ?>
-      <img src="catalog/view/theme/default/image/split.png" alt="" style="position: relative; top: 14px;" /><a href="<?php echo $account; ?>" style="background: url('catalog/view/theme/default/image/icon_account.png') center left no-repeat;"><?php echo $text_account; ?></a></div>
-      <div class="div6"><a href="<?php echo $checkout; ?>" style="background: url('catalog/view/theme/default/image/icon_checkout.png') center left no-repeat;"><?php echo $text_checkout; ?></a><img src="catalog/view/theme/default/image/split.png" alt="" style="position: relative; top: 14px;" /><a href="<?php echo $cart; ?>" style="background: url('catalog/view/theme/default/image/icon_basket.png') center left no-repeat;"><?php echo $text_cart; ?></a></div>
+      <img src="catalog/view/theme/default/image/split.png" alt="" class="split" /><img src="catalog/view/theme/default/image/icon_account.png" alt="" class="icon" /><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></div>
+      <div class="div6"><a href="<?php echo $checkout; ?>"><?php echo $text_checkout; ?></a><img src="catalog/view/theme/default/image/icon_checkout.png" alt="" class="icon" /><img src="catalog/view/theme/default/image/split.png" alt="" class="split" /><a href="<?php echo $cart; ?>"><?php echo $text_cart; ?></a><img src="catalog/view/theme/default/image/icon_basket.png" alt="" class="icon" /></div>
     </div>
     <div id="breadcrumb">
       <?php foreach ($breadcrumbs as $breadcrumb) { ?>

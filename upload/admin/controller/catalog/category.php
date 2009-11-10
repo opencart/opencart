@@ -155,11 +155,10 @@ class ControllerCatalogCategory extends Controller {
 		$this->template = 'catalog/category_list.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 
 	private function getForm() {
@@ -268,11 +267,10 @@ class ControllerCatalogCategory extends Controller {
 		$this->template = 'catalog/category_form.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 
 	private function validateForm() {

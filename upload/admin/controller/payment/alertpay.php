@@ -24,7 +24,6 @@ class ControllerPaymentAlertPay extends Controller {
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
-		$this->data['text_none'] = $this->language->get('text_none');
 		
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
 		$this->data['entry_security'] = $this->language->get('entry_security');
@@ -130,11 +129,10 @@ class ControllerPaymentAlertPay extends Controller {
 		$this->template = 'payment/alertpay.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 
 	private function validate() {

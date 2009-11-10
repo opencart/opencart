@@ -378,11 +378,10 @@ class ControllerCustomerOrder extends Controller {
 		$this->template = 'customer/order_list.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
   	}
   
   	private function getForm() {
@@ -650,11 +649,10 @@ class ControllerCustomerOrder extends Controller {
 			$this->template = 'customer/order_form.tpl';
 			$this->children = array(
 				'common/header',	
-				'common/footer',	
-				'common/menu'	
+				'common/footer'
 			);
 			
-			$this->response->setOutput($this->render(TRUE)); 
+			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression')); 
 		} 
   	}
 	
@@ -794,7 +792,7 @@ class ControllerCustomerOrder extends Controller {
 		
 		$this->template = 'customer/order_invoice.tpl';
 		
- 		$this->response->setOutput($this->render(TRUE));			
+ 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));			
 	}
 	
   	public function invoices() {
@@ -952,7 +950,7 @@ class ControllerCustomerOrder extends Controller {
 		
 		$this->template = 'customer/order_invoices.tpl';
 			
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 	  		
 	private function validate() {

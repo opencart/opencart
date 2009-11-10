@@ -108,11 +108,10 @@ class ControllerPaymentGoogleCheckout extends Controller {
 		$this->template = 'payment/google_checkout.tpl';
 		$this->children = array(
 			'common/header',
-			'common/menu',
 			'common/footer'
 		);
 		
- 		$this->response->setOutput($this->render(TRUE));
+ 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 
 	private function validate() {

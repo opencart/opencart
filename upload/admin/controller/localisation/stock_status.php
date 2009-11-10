@@ -252,11 +252,10 @@ class ControllerLocalisationStockStatus extends Controller {
 		$this->template = 'localisation/stock_status_list.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
   	}
   
   	private function getForm() {
@@ -333,11 +332,10 @@ class ControllerLocalisationStockStatus extends Controller {
 		$this->template = 'localisation/stock_status_form.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));	
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));	
   	}
   	
 	private function validateForm() {

@@ -8,7 +8,7 @@ class ControllerCatalogDownload extends Controller {
     	$this->document->title = $this->language->get('heading_title');
 	
 		$this->load->model('catalog/download');
-	 
+		
     	$this->getList();
   	}
   	        
@@ -281,11 +281,10 @@ class ControllerCatalogDownload extends Controller {
 		$this->template = 'catalog/download_list.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
   	}
   
   	private function getForm() {
@@ -381,11 +380,10 @@ class ControllerCatalogDownload extends Controller {
 		$this->template = 'catalog/download_form.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));	
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));	
   	}
 
   	private function validateForm() { 

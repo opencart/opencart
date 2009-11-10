@@ -255,11 +255,10 @@ class ControllerLocalisationGeoZone extends Controller {
 		$this->template = 'localisation/geo_zone_list.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 
 	private function getForm() {
@@ -366,11 +365,10 @@ class ControllerLocalisationGeoZone extends Controller {
 		$this->template = 'localisation/geo_zone_form.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 	
 	private function validateForm() {
@@ -432,7 +430,7 @@ class ControllerLocalisationGeoZone extends Controller {
 			$output .= '>' . $result['name'] . '</option>';
 		}
 
-		$this->response->setOutput($output);
+		$this->response->setOutput($output, $this->config->get('config_compression'))
 	} 		
 }
 ?>

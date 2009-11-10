@@ -344,7 +344,7 @@ class ControllerCheckoutGuest extends Controller {
 			'common/column_right'
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
   	}
 	
   	private function validate() {
@@ -446,7 +446,7 @@ class ControllerCheckoutGuest extends Controller {
 			}
 		}
 	
-		$this->response->setOutput($output);
+		$this->response->setOutput($output, $this->config->get('config_compression'));
   	} 	
 	
 	public function shipping() {
@@ -501,7 +501,7 @@ class ControllerCheckoutGuest extends Controller {
 				$this->template = 'default/template/checkout/guest_shipping.tpl';
 			}
 			
-			$this->response->setOutput($this->render(TRUE));
+			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 		}
 	}
 	
@@ -552,7 +552,7 @@ class ControllerCheckoutGuest extends Controller {
 				$this->template = 'default/template/checkout/guest_payment.tpl';
 			}
 			
-			$this->response->setOutput($this->render(TRUE));
+			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 		}
 	}		
 	
@@ -917,7 +917,7 @@ class ControllerCheckoutGuest extends Controller {
 			'payment/' . $this->session->data['payment_method']['id']
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 }
 ?>

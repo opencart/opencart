@@ -49,21 +49,31 @@ class ControllerCustomerContact extends Controller {
 				$message .= '</head>' . "\n";
 				$message .= '<body>' . html_entity_decode($this->request->post['message']) . '</body>' . "\n";
 				$message .= '</html>' . "\n";
+
+				$attachments = array();
+
+				$pattern = '#(src="([^"]*)")#mis';
+				
+				if (preg_match_all($pattern, $message, $matches)) {
+					foreach ($matches[2] as $key => $value) { 
+						$attachments[] = str_replace('/image/', DIR_IMAGE, $value);
+						$message = str_replace($value, 'cid:' . basename($value), $message);
+					}
+				}	
 				
 				foreach ($emails as $email) {
 					$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), html_entity_decode($this->config->get('config_smtp_password')), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout'));	
 					$mail->setTo($email);
 					$mail->setFrom($this->config->get('config_email'));
 	    			$mail->setSender($this->config->get('config_store'));
-	    			$mail->setSubject($this->request->post['subject']);
+	    			$mail->setSubject($this->request->post['subject']);					
+					$mail->addAttachment($attachments);
 					$mail->setHtml($message);
 	    			$mail->send();
 				}
 			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');
-					 
-			$this->redirect($this->url->https('customer/contact'));
 		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -160,11 +170,10 @@ class ControllerCustomerContact extends Controller {
 		$this->template = 'customer/contact.tpl';
 		$this->children = array(
 			'common/header',	
-			'common/footer',	
-			'common/menu'	
+			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 
 	public function customer() {

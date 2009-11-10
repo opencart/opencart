@@ -45,7 +45,7 @@
           <?php } ?>
           <?php } else { ?>
           <tr>
-            <td colspan="2"><div class="warning"><?php echo $method['error']; ?></div></td>
+            <td colspan="2"><div class="error"><?php echo $method['error']; ?></div></td>
           </tr>
           <?php } ?>
           <?php } ?>

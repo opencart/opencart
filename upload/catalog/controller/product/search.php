@@ -246,7 +246,7 @@ class ControllerProductSearch extends Controller {
 			'common/column_right'
 		);
 		
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
   	}
 }
 ?>

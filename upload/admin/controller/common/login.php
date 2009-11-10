@@ -45,7 +45,7 @@ class ControllerCommonLogin extends Controller {
 		
 		$this->template = 'common/login.tpl';
 		
-    	$this->response->setOutput($this->render(TRUE));
+    	$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
   	}
 		
 	private function validate() {

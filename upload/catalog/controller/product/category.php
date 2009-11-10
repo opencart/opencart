@@ -239,7 +239,7 @@ class ControllerProductCategory extends Controller {
 					'common/column_right'
 				);
 		
-				$this->response->setOutput($this->render(TRUE));										
+				$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));										
       		} else {
         		$this->document->title = $category_info['name'];
 				
@@ -266,7 +266,7 @@ class ControllerProductCategory extends Controller {
 					'common/column_right'
 				);
 		
-				$this->response->setOutput($this->render(TRUE));					
+				$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));					
       		}
     	} else {
 			$url = '';
@@ -314,7 +314,7 @@ class ControllerProductCategory extends Controller {
 				'common/column_right'
 			);
 		
-			$this->response->setOutput($this->render(TRUE));
+			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 		}
   	}
 }

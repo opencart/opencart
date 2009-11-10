@@ -1,11 +1,5 @@
 <?php
 class ModelShippingUps extends Model {
-    protected $user_id;  
-    protected $password;
-	protected $access_key; 
-    protected $shipper_number;
-    protected $credentials;
-	
 	function getQuote($country_id, $zone_id, $postcode = '') {
 		$this->load->language('shipping/ups');
 		

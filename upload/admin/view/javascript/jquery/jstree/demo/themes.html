@@ -1,0 +1,100 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>jsTree &raquo; Demos</title>
+
+	<script type="text/javascript" src="../lib/jquery.js"></script>
+	<script type="text/javascript" src="../lib/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../lib/jquery.hotkeys.js"></script>
+	<script type="text/javascript" src="../lib/jquery.metadata.js"></script>
+	<script type="text/javascript" src="../lib/sarissa.js"></script>
+	<script type="text/javascript" src="../jquery.tree.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.checkbox.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.contextmenu.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.cookie.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.hotkeys.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.metadata.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.themeroller.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.xml_flat.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.xml_nested.js"></script>
+
+	<link type="text/css" rel="stylesheet" href="syntax/shCore.css"/>
+	<link type="text/css" rel="stylesheet" href="syntax/shThemeDefault.css"/>
+	<style type="text/css">
+	html, body { margin:0; padding:0; }
+	body, td, th, pre, code, select, option, input, textarea { font-family:"Trebuchet MS", Sans-serif; font-size:10pt; }
+	#container { width:800px; margin:10px auto; overflow:hidden; }
+	.demo { height:200px; width:300px; float:left; margin:0; border:1px solid gray; font-family:Verdana; font-size:10px; background:white; }
+	.code { width:490px; float:right; margin:0 0 10px 0; border:1px solid gray; }
+	pre { display:block; }
+	.syntaxhighlighter { margin:0 0 0 0 !important; padding:0 !important; }
+	</style>
+	<script type="text/javascript" src="syntax/shCore.js"></script>
+	<script type="text/javascript" src="syntax/shBrushJScript.js"></script>
+	<script type="text/javascript" src="syntax/shBrushXml.js"></script>
+	<script type="text/javascript">
+		SyntaxHighlighter.config.clipboardSwf = 'syntax/clipboard.swf';
+		$(function () {
+			var h = 0;
+			$("#container .source").each(function () {
+				var code = $(this).html().replace(/</g,'&lt;').replace(/>/g,'&gt;');
+				var div = $('<div class="code"><pre class="brush:' + ( $(this).is("script") ? 'js' : 'xml' ) + ';">' + code + '</pre></div>');
+				$(this).after(div);
+			});
+			SyntaxHighlighter.all();
+		});
+	</script>
+</head>
+<body>
+<div id="container">
+	<h1 class="title">Themes demo</h1>
+	<p>You may find <a href="../documentation.html#theme_name">the theme documenation</a> useful. The included themes are apple, classic, default, checkbox &amp; themeroller - the latter two also need their respective plugins to function correctly.</p>
+	<script type="text/javascript" class="source">
+	$(function () { 
+		$("#demo_1").tree({
+			ui : {
+				theme_name : "classic"
+			}
+		});
+	});
+	</script>
+
+	<div class="demo" id="demo_1">
+		<ul>
+			<li id="phtml_1" class="open"><a href="#"><ins>&nbsp;</ins>Root node 1</a>
+				<ul>
+					<li id="phtml_2"><a href="#"><ins>&nbsp;</ins>Child node 1</a></li>
+					<li id="phtml_3"><a href="#"><ins>&nbsp;</ins>Child node 2</a></li>
+					<li id="phtml_4"><a href="#"><ins>&nbsp;</ins>Some other child node with longer text</a></li>
+				</ul>
+			</li>
+			<li id="phtml_5"><a href="#"><ins>&nbsp;</ins>Root node 2</a></li>
+		</ul>
+	</div>
+
+	<div class="demo" id="demo_2" style="clear:both;">
+		<ul>
+			<li id="aphtml_1" class="open"><a href="#"><ins>&nbsp;</ins>Root node 1</a>
+				<ul>
+					<li id="aphtml_2"><a href="#"><ins>&nbsp;</ins>Child node 1</a></li>
+					<li id="aphtml_3"><a href="#"><ins>&nbsp;</ins>Child node 2</a></li>
+					<li id="aphtml_4"><a href="#"><ins>&nbsp;</ins>Some other child node with longer text</a></li>
+				</ul>
+			</li>
+			<li id="aphtml_5"><a href="#"><ins>&nbsp;</ins>Root node 2</a></li>
+		</ul>
+	</div>
+	<script type="text/javascript" class="source">
+	$(function () { 
+		$("#demo_2").tree({
+			ui : {
+				theme_name : "apple"
+			}
+		});
+	});
+	</script>
+
+</div></body></html>

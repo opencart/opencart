@@ -1,0 +1,2 @@
+[01-Jan-2010 12:12:38] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/tool/backup.php on line 2
+[01-Jan-2010 12:12:38] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/tool/error_log.php on line 2

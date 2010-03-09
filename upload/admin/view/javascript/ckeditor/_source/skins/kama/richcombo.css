@@ -1,0 +1,260 @@
+/*
+Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+/* Special Combo */
+
+.cke_skin_kama .cke_rcombo
+{
+	display: inline;
+}
+
+.cke_skin_kama .cke_rtl .cke_rcombo
+{
+}
+
+.cke_skin_kama .cke_rcombopanel
+{
+	border: 1px solid #8F8F73;
+	-moz-border-radius-topleft: 0;
+	-webkit-border-top-left-radius: 0;
+	border-top-left-radius: 0;
+	height: auto;
+	_height: 100px;
+}
+
+/* IE6 workaround, shouldn't be here */
+.cke_skin_kama .cke_browser_iequirks .cke_rcombopanel,
+.cke_skin_kama .cke_browser_ie6 .cke_rcombopanel
+{
+/*	width: 150px;*/
+}
+
+.cke_skin_kama .cke_rcombo a,
+.cke_skin_kama .cke_rcombo a:active,
+.cke_skin_kama .cke_rcombo a:hover
+{
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	background-image: url(images/sprites.png);
+	_background-image: url(images/sprites_ie6.png);
+	background-repeat: repeat-x;
+	background-position: 0 -100px;
+	border-bottom:1px solid #DAD9D9;
+	border-right:1px solid #DAD9D9;
+	float:left;
+	padding: 2px;
+	height: 21px;
+	margin-right: 6px;
+}
+
+.cke_skin_kama .cke_rtl .cke_rcombo a,
+.cke_skin_kama .cke_rtl .cke_rcombo a:active,
+.cke_skin_kama .cke_rtl .cke_rcombo a:hover
+{
+	float:right;
+	margin-right: 0;
+	margin-left: 6px;
+}
+
+.cke_skin_kama .cke_hc .cke_rcombo a
+{
+	filter: alpha(opacity=100); /* IE */
+	opacity: 1.0; /* Safari, Opera and Mozilla */
+}
+
+.cke_skin_kama .cke_rcombo .cke_label
+{
+	display: none;
+	line-height: 26px;
+	vertical-align: top;
+	margin-right: 5px;
+	filter: alpha(opacity=70); /* IE */
+	opacity: 0.70; /* Safari, Opera and Mozilla */
+	/* background-color: #f1f1e3;	Because of IE6+ClearType */
+}
+
+.cke_skin_kama .cke_rtl .cke_rcombo .cke_label
+{
+	margin-right: 0;
+	margin-left: 5px;
+}
+
+.cke_skin_kama .cke_rcombo .cke_inline_label
+{
+	line-height: 21px;
+	font-style: italic;
+	color: #666666;
+}
+
+.cke_skin_kama .cke_browser_ie .cke_rcombo .cke_text
+{
+/*	float: left; */
+}
+
+.cke_skin_kama .cke_hc .cke_rcombo .cke_label
+{
+	filter: alpha(opacity=100);
+	opacity: 1.0;
+}
+
+.cke_skin_kama .cke_rcombo .cke_text
+{
+	filter: alpha(opacity=70); /* IE */
+	opacity: 0.70; /* Safari, Opera and Mozilla */
+
+	height: 21px;
+	line-height: 21px;
+	width:60px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	display: inline-block;
+	margin: 0 2px 0 4px;
+}
+
+.cke_skin_kama .cke_rtl .cke_rcombo .cke_text
+{
+	margin: 0 4px 0 2px;
+}
+
+.cke_skin_kama .cke_rcombo .cke_openbutton
+{
+	background-image: url(images/sprites.png);
+	_background-image: url(images/sprites_ie6.png);
+	background-position: 0 -68px;
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 17px;
+	height: 19px;
+	margin: 1px 2px;
+	background-repeat: no-repeat;
+}
+
+.cke_skin_kama .cke_browser_iequirks .cke_rcombo .cke_openbutton
+{
+	margin-bottom: 0;
+}
+
+.cke_skin_kama .cke_rcombo .cke_off a:hover .cke_text,
+.cke_skin_kama .cke_rcombo .cke_off a:focus .cke_text,
+.cke_skin_kama .cke_rcombo .cke_off a:active .cke_text,
+.cke_skin_kama .cke_rcombo .cke_on .cke_text
+{
+	border-color: #316ac5;
+	filter: alpha(opacity=100); /* IE */
+	opacity: 1; /* Safari, Opera and Mozilla */
+}
+
+.cke_skin_kama .cke_rcombo .cke_off a:hover .cke_openbutton,
+.cke_skin_kama .cke_rcombo .cke_off a:focus .cke_openbutton,
+.cke_skin_kama .cke_rcombo .cke_off a:active .cke_openbutton,
+.cke_skin_kama .cke_rcombo .cke_on .cke_openbutton
+{
+	border-color: #316ac5;
+	background-color: #dff1ff;
+}
+
+.cke_skin_kama .cke_rcombo .cke_on .cke_text
+{
+	-moz-border-radius-bottomleft: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+.cke_skin_kama .cke_rcombo .cke_on .cke_openbutton
+{
+	-moz-border-radius-bottomright: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.cke_skin_kama .cke_rcombo .cke_disabled .cke_label
+{
+	filter: alpha(opacity=30); /* IE */
+	opacity: 0.3; /* Safari, Opera and Mozilla */
+}
+
+.cke_skin_kama .cke_hc .cke_rcombo .cke_disabled .cke_label
+{
+	filter: alpha(opacity=70);
+	opacity: 0.7;
+}
+
+.cke_skin_kama .cke_rcombo .cke_disabled .cke_text,
+.cke_skin_kama .cke_rcombo .cke_disabled .cke_openbutton
+{
+	filter: alpha(opacity=50); /* IE */
+	opacity: 0.5; /* Safari, Opera and Mozilla */
+}
+
+.cke_skin_kama .cke_hc .cke_rcombo .cke_disabled .cke_text,
+.cke_skin_kama .cke_hc .cke_rcombo .cke_disabled .cke_openbutton
+{
+	filter: alpha(opacity=80);
+	opacity: 0.8;
+}
+
+.cke_skin_kama .cke_rcombo .cke_disabled .cke_text
+{
+	color: #fff;
+}
+
+/* RTL */
+
+.cke_skin_kama .cke_rtl .cke_rcombo span
+{
+/*	_zoom: 1;*/
+}
+
+.cke_skin_kama .cke_rtl .cke_rcombo .cke_text
+{
+/*	_float: left;*/
+}
+
+/* Firefox 2 & WebKit Section */
+
+.cke_skin_kama .cke_browser_gecko .cke_rcombo .cke_text,
+.cke_skin_kama .cke_browser_gecko .cke_rcombo .cke_openbutton,
+.cke_skin_kama .cke_browser_webkit .cke_rcombo .cke_text,
+.cke_skin_kama .cke_browser_webkit .cke_rcombo .cke_openbutton
+{
+	display: block;
+	float: left;
+}
+
+.cke_skin_kama .cke_browser_gecko .cke_rtl .cke_rcombo .cke_text,
+.cke_skin_kama .cke_browser_webkit .cke_rtl .cke_rcombo .cke_text
+{
+/*	float: right;*/
+}
+
+.cke_skin_kama .cke_browser_gecko .cke_rcombo .cke_label,
+.cke_skin_kama .cke_browser_webkit .cke_rcombo .cke_label
+{
+	/*display: block;*/
+	float: left;
+}
+
+.cke_skin_kama .cke_browser_gecko .cke_rtl .cke_rcombo .cke_label,
+.cke_skin_kama .cke_browser_gecko .cke_rtl .cke_rcombo .cke_text,
+.cke_skin_kama .cke_browser_gecko .cke_rtl .cke_rcombo .cke_openbutton,
+.cke_skin_kama .cke_browser_webkit .cke_rtl .cke_rcombo .cke_label,
+.cke_skin_kama .cke_browser_webkit .cke_rtl .cke_rcombo .cke_text,
+.cke_skin_kama .cke_browser_webkit .cke_rtl .cke_rcombo .cke_openbutton
+{
+	float: right;
+}
+
+.cke_skin_kama .cke_browser_ie7 .cke_rcombo .cke_text
+{
+	line-height: 18px;
+}
+
+.cke_skin_kama .cke_browser_ie6 .cke_rcombo .cke_text,
+.cke_skin_kama .cke_browser_iequirks .cke_rcombo .cke_text
+{
+	height: auto;
+	line-height: 17px;
+}

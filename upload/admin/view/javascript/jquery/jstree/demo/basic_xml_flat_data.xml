@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<item parent_id="0" id="xml_1"><content><name><![CDATA[Root node 1]]></name></content></item>
+	<item parent_id="xml_1" id="xml_2"><content><name><![CDATA[Child node 1]]></name></content></item>
+	<item parent_id="xml_1" id="xml_3"><content><name><![CDATA[Child node 2]]></name></content></item>
+	<item parent_id="xml_1" id="xml_4"><content><name><![CDATA[Some other child node]]></name></content></item>
+	<item parent_id="0" id="xml_5"><content><name><![CDATA[Root node 2]]></name></content></item>
+</root>

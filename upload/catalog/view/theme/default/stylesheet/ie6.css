@@ -1,0 +1,135 @@
+#container {
+	width: 960px;
+	margin-left: 0px;
+	margin-right: 0;
+}
+#header .div3 {
+	float: right;
+	padding-top: 7px;
+	height: 45px;
+}
+#header .div4 {
+	margin-bottom: -3px;
+}
+#header .div4 .selected {
+	color: #000;
+}
+#header .div5 {
+	width: 960px;
+	vertical-align: middle;
+}
+#header .div5 .left {
+	width: 5px;
+}
+#header .div5 .right {
+	width: 5px;
+}
+#header .div5 .center {
+	width: 950px;
+	margin-left: 0px;
+	margin-right: 0px;
+	float: left;
+}
+#header .div6 {
+	width: 960px;
+	height: 32px;
+}
+#header .div6 .left {
+	width: 5px;
+}
+#header .div6 .right {
+	width: 5px;
+}
+#header .div6 .center {
+	width: 950px;
+	height: 32px;
+	overflow: hidden;
+	margin-left: 0px;
+	margin-right: 0px;
+	float: left;
+}
+#column_left {
+	width: 180px;
+	float: left;
+	margin-right: 7px;
+}
+#column_right {
+	width: 180px;
+	float: right;
+	margin-left: 0;
+}
+/* convert min height values */
+#content {
+	width: 580px;
+	margin-left: 0;
+	margin-right: 0;
+}
+#content .top .center {
+	margin-left: 0px;
+	margin-right: 0px;
+	padding: 0px;
+	float: left;
+	width: 570px;
+}
+#content .middle {
+	width: 580px;
+	overflow: hidden;
+}
+#content .bottom {
+	display: inline-block;
+	width: 100%;
+}
+#content .bottom .left {
+
+}
+#content .bottom .right {
+
+}
+#content .bottom .center {
+	float: left;
+	width: 570px;
+	margin-left: 0px;
+	margin-right: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+.box {
+	width: 180px;
+}
+.box .top {
+	float: left;
+	height: 32px;
+	width: 170px;
+	padding: 8px 0px 8px 7px;
+	float: left;
+	overflow: hidden;
+}
+.box .top img {
+	overflow: hidden;
+}
+.box .middle {
+	width: 180px;
+}
+.box .bottom {
+	overflow: hidden;
+}
+.content {
+	width: 560px;
+}
+.button {
+	padding-left: 8px;
+	display: inline-block;
+	margin-right: 5px;
+	background: url('../image/button_left.gif') top left no-repeat;
+	text-decoration: none;
+	color:#FFF;
+}
+.button span {
+	color: #FFF;
+	display: inline-block;
+	padding: 4px 10px 5px 2px;
+	background: url('../image/button_right.gif') top right no-repeat;
+}
+.buttons {
+	width: 560px;
+}

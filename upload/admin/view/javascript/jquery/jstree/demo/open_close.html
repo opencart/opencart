@@ -1,0 +1,96 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>jsTree &raquo; Demos</title>
+
+	<script type="text/javascript" src="../lib/jquery.js"></script>
+	<script type="text/javascript" src="../lib/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../lib/jquery.hotkeys.js"></script>
+	<script type="text/javascript" src="../lib/jquery.metadata.js"></script>
+	<script type="text/javascript" src="../lib/sarissa.js"></script>
+	<script type="text/javascript" src="../jquery.tree.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.checkbox.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.contextmenu.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.cookie.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.hotkeys.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.metadata.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.themeroller.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.xml_flat.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.xml_nested.js"></script>
+
+	<link type="text/css" rel="stylesheet" href="syntax/shCore.css"/>
+	<link type="text/css" rel="stylesheet" href="syntax/shThemeDefault.css"/>
+	<style type="text/css">
+	html, body { margin:0; padding:0; }
+	body, td, th, pre, code, select, option, input, textarea { font-family:"Trebuchet MS", Sans-serif; font-size:10pt; }
+	#container { width:800px; margin:10px auto; overflow:hidden; }
+	.demo { height:200px; width:300px; float:left; margin:0; border:1px solid gray; font-family:Verdana; font-size:10px; background:white; }
+	.code { width:490px; float:right; margin:0 0 10px 0; border:1px solid gray; }
+	pre { display:block; }
+	.syntaxhighlighter { margin:0 0 0 0 !important; padding:0 !important; }
+	</style>
+	<script type="text/javascript" src="syntax/shCore.js"></script>
+	<script type="text/javascript" src="syntax/shBrushJScript.js"></script>
+	<script type="text/javascript" src="syntax/shBrushXml.js"></script>
+	<script type="text/javascript">
+		SyntaxHighlighter.config.clipboardSwf = 'syntax/clipboard.swf';
+		$(function () {
+			var h = 0;
+			$("#container .source").each(function () {
+				var code = $(this).html().replace(/</g,'&lt;').replace(/>/g,'&gt;');
+				var div = $('<div class="code"><pre class="brush:' + ( $(this).is("script") ? 'js' : 'xml' ) + ';">' + code + '</pre></div>');
+				$(this).after(div);
+			});
+			SyntaxHighlighter.all();
+		});
+	</script>
+</head>
+<body>
+<div id="container">
+	<h1 class="title">Opening and closing nodes demo</h1>
+	<p>You may also want to read the documentation on <a href="../documentation.html#open_branch">open_branch</a>, <a href="../documentation.html#close_branch">close_branch</a>, <a href="../documentation.html#open_all">open_all</a> and <a href="../documentation.html#close_all">close_all</a>. To initially open some nodes when the tree loads - take a look at the <a href="../documentation.html#opened">opened config option</a>. When opening/closing the <a href="../documentation.html#callback.beforeopen">beforeopen</a>, <a href="../documentation.html#callback.beforeclose">beforeclose</a>, <a href="../documentation.html#callback.onopen">onopen</a>, <a href="../documentation.html#callback.onclose">onclose</a>, <a href="../documentation.html#callback.onopen_all">onopen_all</a> and <a href="../documentation.html#callback.onclose_all">onclose_all</a>  callbacks are triggered.</p>
+	<script type="text/javascript" class="source">
+	$(function () { 
+		$("#demo_1").tree();
+	});
+	</script>
+	<p class="source" style="margin-top:10px;">
+		<input type="button" onclick='$.tree.focused().open_branch("#phtml_1");' value="Open" />
+		<input type="button" onclick='$.tree.focused().close_branch("#phtml_1");' value="Close" />
+		<input type="button" onclick='$.tree.focused().toggle_branch("#phtml_1");' value="Toggle" />
+		<input type="button" onclick='$.tree.focused().open_all("#phtml_1");' value="Open all children" />
+		<input type="button" onclick='$.tree.focused().close_all("#phtml_1");' value="Close all children" />
+	</p>
+	<div class="demo" id="demo_1">
+		<ul>
+			<li id="phtml_1"><a href="#"><ins>&nbsp;</ins>Root node 1</a>
+				<ul>
+					<li id="phtml_2"><a href="#"><ins>&nbsp;</ins>Child node 1</a>
+						<ul>
+							<li><a href="#"><ins>&nbsp;</ins>Child node 1.1</a></li>
+							<li><a href="#"><ins>&nbsp;</ins>Child node 1.2</a></li>
+						</ul>
+					</li>
+					<li id="phtml_3"><a href="#"><ins>&nbsp;</ins>Child node 2</a>
+						<ul>
+							<li><a href="#"><ins>&nbsp;</ins>Child node 2.1</a></li>
+							<li><a href="#"><ins>&nbsp;</ins>Child node 2.2</a></li>
+						</ul>
+					</li>
+					<li id="phtml_4"><a href="#"><ins>&nbsp;</ins>Some other child node with longer text</a></li>
+				</ul>
+			</li>
+			<li id="phtml_5"><a href="#"><ins>&nbsp;</ins>Root node 2</a>
+				<ul>
+					<li><a href="#"><ins>&nbsp;</ins>Child node</a></li>
+					<li><a href="#"><ins>&nbsp;</ins>Child node</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+
+</div></body></html>

@@ -1,0 +1,127 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: #F7F7F7;
+}
+body, td, th, input, select, textarea {
+	font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
+	font-size: 12px;
+	color: #666666;
+}
+h1 {
+	font-size: 20px;
+	font-weight: 200;
+	color: #999;
+	padding-top: 4px;
+	padding-bottom: 6px;
+	padding-left: 38px;	
+	margin-top: 0px;
+}
+a, a:visited {
+	color: #999;
+	text-decoration: underline;
+	cursor: pointer;
+}
+b {
+	color: #000000;
+}
+p {
+	margin-top: 0px;
+	margin-bottom: 20px;
+}
+form {
+	margin: 0;
+	padding: 0;
+} 
+.required {
+	color: #FF0000;
+	margin-right: 5px;
+}
+.error {
+	color: #FF0000;
+	display: block;
+	clear: both;
+}
+.warning {
+	padding: 5px 0px;
+	margin-bottom: 15px;
+	background: #FFDFE0;
+	border: 1px solid #FF9999;
+	font-size: 11px;
+	font-family: Verdana, Geneva, sans-serif;
+	text-align: center;
+}
+.buttons {
+	float: right;
+}
+.button {
+	display: inline-block;
+	text-decoration: none;
+}
+.buttons .button {
+	margin-left: 5px;
+}
+.button .button_left {
+	width: 30px;
+	height: 30px;
+	display: block;
+	float: left;
+}
+.button .button_middle {
+	background: url('../image/button_middle.png') repeat-x;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	display: block;
+	float: left;
+	color: #333333;
+}
+.button .button_right {
+	width: 15px;
+	height: 30px;
+	background: url('../image/button_right.png') no-repeat;
+	display: block;
+	float: left;
+}
+.button .button_continue {
+	background: url('../image/button_save.png') no-repeat;
+}
+.button .button_cancel {
+	background: url('../image/button_cancel.png') no-repeat;
+}
+#container {
+	margin-top: 20px;
+	width: 860px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#header {
+	margin-bottom: 10px;
+}
+#content_top {
+	background: url('../image/content_top.png') no-repeat;
+	height: 7px;
+}
+#content_middle {
+	border-left: 1px solid #DDDDDD;
+	border-right: 1px solid #DDDDDD;
+	background: #FFF;
+	padding-top: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	min-height: 400px;
+}
+#content_bottom {
+	background: url('../image/content_bottom.png') no-repeat;
+	height: 7px;
+	margin-bottom: 5px;
+}
+#footer {
+	text-align: center;
+	color: #CCC;
+}
+#footer a {
+	color: #999;
+	margin-left: 10px;
+	margin-right: 10px;
+}

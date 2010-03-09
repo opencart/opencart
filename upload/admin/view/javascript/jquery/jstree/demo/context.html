@@ -1,0 +1,120 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>jsTree &raquo; Demos</title>
+
+	<script type="text/javascript" src="../lib/jquery.js"></script>
+	<script type="text/javascript" src="../lib/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../lib/jquery.hotkeys.js"></script>
+	<script type="text/javascript" src="../lib/jquery.metadata.js"></script>
+	<script type="text/javascript" src="../lib/sarissa.js"></script>
+	<script type="text/javascript" src="../jquery.tree.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.checkbox.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.contextmenu.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.cookie.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.hotkeys.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.metadata.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.themeroller.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.xml_flat.js"></script>
+	<script type="text/javascript" src="../plugins/jquery.tree.xml_nested.js"></script>
+
+	<link type="text/css" rel="stylesheet" href="syntax/shCore.css"/>
+	<link type="text/css" rel="stylesheet" href="syntax/shThemeDefault.css"/>
+	<style type="text/css">
+	html, body { margin:0; padding:0; }
+	body, td, th, pre, code, select, option, input, textarea { font-family:"Trebuchet MS", Sans-serif; font-size:10pt; }
+	#container { width:800px; margin:10px auto; overflow:hidden; }
+	.demo { height:200px; width:300px; float:left; margin:0; border:1px solid gray; font-family:Verdana; font-size:10px; background:white; }
+	.code { width:490px; float:right; margin:0 0 10px 0; border:1px solid gray; }
+	pre { display:block; }
+	.syntaxhighlighter { margin:0 0 0 0 !important; padding:0 !important; }
+	</style>
+	<script type="text/javascript" src="syntax/shCore.js"></script>
+	<script type="text/javascript" src="syntax/shBrushJScript.js"></script>
+	<script type="text/javascript" src="syntax/shBrushXml.js"></script>
+	<script type="text/javascript">
+		SyntaxHighlighter.config.clipboardSwf = 'syntax/clipboard.swf';
+		$(function () {
+			var h = 0;
+			$("#container .source").each(function () {
+				var code = $(this).html().replace(/</g,'&lt;').replace(/>/g,'&gt;');
+				var div = $('<div class="code"><pre class="brush:' + ( $(this).is("script") ? 'js' : 'xml' ) + ';">' + code + '</pre></div>');
+				$(this).after(div);
+			});
+			SyntaxHighlighter.all();
+		});
+	</script>
+</head>
+<body>
+<div id="container">
+	<h1 class="title">Contextmenu demo</h1>
+	<script type="text/javascript" class="source">
+	$(function () { 
+		$("#demo_1").tree({
+			plugins : { 
+				contextmenu : { }
+			}
+		});
+	});
+	</script>
+	<div class="demo" id="demo_1">
+		<ul>
+			<li id="phtml_1" class="open"><a href="#"><ins>&nbsp;</ins>Root node 1</a>
+				<ul>
+					<li id="phtml_2"><a href="#"><ins>&nbsp;</ins>Child node 1</a></li>
+					<li id="phtml_3"><a href="#"><ins>&nbsp;</ins>Child node 2</a></li>
+					<li id="phtml_4"><a href="#"><ins>&nbsp;</ins>Some other child node with longer text</a></li>
+				</ul>
+			</li>
+			<li id="phtml_5"><a href="#"><ins>&nbsp;</ins>Root node 2</a></li>
+		</ul>
+	</div>
+
+	<div class="demo" id="demo_2" style="clear:both;">
+		<ul>
+			<li id="phtml_1a" class="open"><a href="#"><ins>&nbsp;</ins>Root node 1</a>
+				<ul>
+					<li id="phtml_2a"><a href="#"><ins>&nbsp;</ins>Child node 1</a></li>
+					<li id="phtml_3a"><a href="#"><ins>&nbsp;</ins>Child node 2</a></li>
+					<li id="phtml_4a"><a href="#"><ins>&nbsp;</ins>Some other child node with longer text</a></li>
+				</ul>
+			</li>
+			<li id="phtml_5a"><a href="#"><ins>&nbsp;</ins>Root node 2</a></li>
+		</ul>
+	</div>
+	<script type="text/javascript" class="source">
+	$(function () { 
+		$("#demo_2").tree({
+			plugins : { 
+				contextmenu : { 
+					items : {
+						// get rid of the remove item
+						remove : false,
+						// add an item of our own
+						my_act : {
+							label	: "My own action", 
+							icon	: "", // you can set this to a classname or a path to an icon like ./myimage.gif
+							visible	: function (NODE, TREE_OBJ) { 
+								// this action will be disabled if more than one node is selected
+								if(NODE.length != 1) return 0; 
+								// this action will not be in the list if condition is met
+								if(TREE_OBJ.get_text(NODE) == "Child node 1") return -1; 
+								// otherwise - OK
+								return 1; 
+							}, 
+							action	: function (NODE, TREE_OBJ) { 
+								alert(TREE_OBJ.get(NODE, "xml_nested", false)); 
+							},
+							separator_before : true
+						}
+					}
+				}
+			}
+		});
+	});
+	</script>
+
+</div></body></html>

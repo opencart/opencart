@@ -1,0 +1,38 @@
+/* LOCKED */
+.tree-checkbox .locked li a { color:gray; }
+/* DOTS */
+.tree-checkbox ul { background-position:6px 1px; background-repeat:repeat-y; background-image:url(data:image/gif;base64,R0lGODlhAgACAIAAAB4dGf///yH5BAEAAAEALAAAAAACAAIAAAICRF4AOw==); _background-image:url("dot_for_ie.gif"); *background-image:url("dot_for_ie.gif"); }
+.tree-checkbox li { background-position:-64px -16px; background-repeat:no-repeat; background-image:url("icons.png"); }
+/* NO DOTS */
+.tree-checkbox .no_dots, .tree-checkbox .no_dots ul { background:transparent; }
+.tree-checkbox .no_dots li.leaf { background-image:none; background-color:transparent; }
+/* OPEN or CLOSED */
+.tree-checkbox li.open { background:url("icons.png") -32px -48px no-repeat; }
+.tree-checkbox li.closed, #jstree-dragged.tree-checkbox li li.open { background:url("icons.png") -48px -32px no-repeat; }
+#jstree-marker { background-image:url("icons.png"); }
+/* DEFAULT, HOVER, CLICKED, LOADING STATES */
+.tree-checkbox li a, .tree-checkbox li span { border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; }
+/*
+.tree-checkbox li a:hover, .tree-checkbox li a.hover, .tree-checkbox li span { background: #e7f4f9; border:1px solid #d8f0fa; padding:0px 3px 0px 3px; }
+.tree-checkbox li a.clicked, .tree-checkbox li a.clicked:hover, .tree-checkbox li span.clicked { background: #beebff; border:1px solid #99defd; padding:0px 3px 0px 3px; }
+*/
+/* ICONS */
+.tree-checkbox ins { background-image:url("icons.png"); background-position:0 0; background-repeat:no-repeat; }
+.tree-checkbox ul li a.loading ins { background-image:url("throbber.gif") !important; background-position:0 0 !important; } /* UL is added to make selector stronger */
+.tree-checkbox li a ins.forbidden { background-position:-16px -48px; }
+
+.tree-checkbox li a.undetermined ins { background-position:0px -16px; }
+.tree-checkbox li a.checked ins { background-position:0px -32px; }
+
+.tree-checkbox li a:hover ins { background-position:-16px 0px; }
+.tree-checkbox li a.undetermined:hover ins { background-position:-16px -16px; }
+.tree-checkbox li a.checked:hover ins { background-position:-16px -32px; }
+
+#jstree-dragged.tree-checkbox ins { background:url("icons.png") 0 -48px no-repeat; }
+#jstree-dragged.tree-checkbox ins.forbidden { background:url("icons.png") -16px -48px no-repeat; }
+
+/* CONTEXT MENU */
+.tree-checkbox-context a ins { background-image:url("icons.png"); background-repeat:no-repeat; background-position:-64px -64px; }
+.tree-checkbox-context a ins.create { background-position:0 -16px; }
+.tree-checkbox-context a ins.rename { background-position:-16px 0px; }
+.tree-checkbox-context a ins.remove { background-position:0 -32px; }

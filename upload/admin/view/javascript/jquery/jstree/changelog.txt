@@ -1,0 +1,289 @@
+BUGS/FEATURES:
+   E: scroll_spd enhancement - accelerate/deccelerate
+   E: more programmatic move/create (without opening the parents)
+   E: PLUGIN: context menu plugin - slight flicker on two consecutive right clicks
+   E: DOCS: show how to build a datastore/plugin
+
+   ************ FOR LATER OR NO WAY TO FIX/TEST *****************
+   E: option to show loading as an icon - not below the node
+   B: horizontal scroll in Opera may be a bit too short
+   E: refresh X levels deep
+   E: multiple move callback to fire only once (or set a parameter if it is final)
+   E: finish RTL plugin
+   B: max_depth check - how about async?
+   B: on dump check for loading nodes and skip them
+   B: initial drag'n'drop does not work on OS X
+   E: preloading content (open_all)
+   E: native undo using rollback (maybe plugin)
+   E: whole row selection & columns
+
+CHANGELOG:
+ v.0.9.9a
+   fixed bug with creating root nodes
+ v.0.9.9
+   added use_max_children and use_max_depth settings
+   fixed small bug in get methods in all datastores (now classes like "my-last" are returned correctly)
+   drag_start, drag, drag_end callbacks
+   can now specify icons (even if using a sprite) for each node type
+   added tree_component.drag_drop.dragged variable to speed things up and to solve misterious bug :)
+   switched from DOM cloneNode to jQuery clone for drag_help (may cause slowdown) but is data() safe
+   sprites in all themes
+   themeroller theme + plugin BETA!
+   checkbox theme + plugin
+   delete function correctly resets selected variable
+   fixed refresh on a node, when async is not used
+   added a get function that expects data format and an object
+   fixed ctrl+click in IE7/IE8Compatibility
+   fixed context menu positioning if near edge
+   create stylesheet improvement
+   ondestroy callback
+   context menu css cleanup
+   onparentclose option
+   json get method fixed if tree is empty
+   reference function upgraded
+   fixed async reopening with cookies bug
+   fixed bug with moved function opening/closing nodes
+   search function now accepts a second optional argument (defaults to contains) so if you extend jQuery[:] with any case insensitive method - quote it there
+   onsearch callback
+   ondata and onparse - data is chained through all plugins
+   ondata and onparse - now called in create method
+   fixed datastores "get" functions (toString() on val)
+   fixed default theme using inline image and sprites (IE6 will no longer look nice - UPGRADE)
+   themeroller theme and plugin
+   checkbox theme & plugin
+   no more multiple inclusions of the same theme
+   can cut, copy, paste from one tree to another
+   better multitree - all, none or [ids] to accept from
+   multiple drag now max_children is correctly checked
+   drop just before loading -> node disappears bug FIXED
+   added get_text method
+   context menu as plugin
+   added onhover callback
+   keyboard navigation plugin (lost all the get_* functions and hover_mode setting)
+   metadata as plugin
+   beginning of a plugin system
+   oninit callback (mainly for plugins)
+   cookie is now plugin
+   fixed cookies with / in them (jQuery selector escaping issue)
+   added check move callback
+   restrict move to same parent - demo with function
+   added drop_mode function (jqueryUI connecting point?)
+   cookies changed
+   types rework - type_attr - meta_attr - meta_data - boolean
+   onrename LANG param removed (added tree.get_lang())
+   removed cycle_lang, improved show_lang
+   added CSS inside tree itself
+   plugin compatible (changed names)
+   no need to include stylesheet - will include itself (if you change the path - include it yourself and pass the $.tree.path)
+   flat & nested XSLs - merged into datasource itself
+   removed path setting in favour of global $.tree.path
+   no longer dependant on CSS.js and jquery.xslt.js
+   enabled datastore plugins + 4 data stores - JSON, HTML, XML_FLAT, XML_NESTED - all support async + fixed
+   defaults moved to $.tree - you can now modify all future tree's defaults
+   create, focused, rollback - become children of $.tree (no more polluting the jQuery object)
+   rename method accepts a string
+   onJSONdata becomes ondata callback - you get what the server returned before jsTree displays it
+   async_data becomes beforedata callback
+ v.0.9.8
+   fixed context menu icon wobble in IE
+   better error handling (no more infinite loading icon - now marks the node as closed again)
+   added TREE_OBJ as parameter to async_data
+   can now copy a node inside itself
+   when called on a node refresh() no longer reselects all selected nodes
+   onload was called multiple times in some occasions
+   CSS fixes, container can once more correctly autosize if overflow:hidden and zoom:1;
+   RTL improvements (Chrome nightly is OK, in RTL dots in IE7 will brake, still no horizontal scrollbar in Opera in RTL)
+   fixed Opera horizontal scrollbar (right-to-left mode still has problems)
+   themes redesign
+   destroy method die() part had to be rewritten
+   container can once more have position:relative
+   nested xml theme fix (was set on every ul)
+   fixed create function not to selected the newly created node if it will not be renamed
+   fixed create function to be able to pass children too
+   fixed create function not to modify the object passed to it
+   implemented next/prev/parent/children methods
+   can drag nodes onto an empty tree
+   can now paste root nodes
+   Opera xml_flat XSL bug workaround
+   jsTree should now be "immune" to object & array extending (prototype problem)
+   minor changes in create & paste functions (when before or after passed as position)
+   onJSONdata added (so that you can process any JSON to the required structure of jsTree)
+ v.0.9.7
+   can now create root nodes with 'create' function
+   create & paste functions rewritten
+   check stylesheet - fallback
+   disabled collapse when clicking below the arrow
+   numerous bugfixes
+   context menu is now appended to the body
+   bringing up the context menu does not change selection
+   tree can be created in a not yet appended node
+   refresh node bug
+   apple theme now works with dots (on/off)
+   added themeroller support - you can pass the classes in every data type (icons too), the active, hover & highlight classes are automatic
+   function to get a tree reference by ID
+   ondelete, oncreate, onmove, oncopy, onrename callbacks now receive additional rollback parameter
+   added getXML function to get the tree as XML (same as getJSON)
+   fixed default theme being included multiple times when more than 1 tree is used
+   fixed rename bug when html entities are used
+   added ability to pass an xml string as data source
+   added position argument in create function
+   option to which button initiates drag'n'drop
+   added 5px threshold for dragging
+   Chrome clear float
+   Fixed scrollbars (issue remains in ff - multiple root elements are not connected with dots)
+   small bug fixes in classic theme & apple theme
+ v.0.9.6
+   smarter drop location calculation (now if hovering a node where the before & after drops are not allowed, the whole node becomes a "inside" drop target)
+   open_all callback
+   no more hardcoded background - can now specify container background image
+   added checkbox theme (with optional onchange callback for tri-state checkboxes)
+   added apple theme with alternating background (!not compatible with dots)
+   can now disable a specific cookie type by setting settings.cookies._type_here_ : false
+   rightclick while dragging cancels drag'n'drop (by ali1024)
+   CSS rewrite for inline-block, instead of float - speed gain and drag&drop fixes
+   $.tree_focused() replaces tree_component.focusInst()
+   $.tree_create() replaces new tree_component(). No more leakage to the global name space. (by Johan "Spocke" Sörlin)
+   leakage of i and j variables fixed. (by Johan "Spocke" Sörlin)
+   wrapped in anonymous function (by Johan "Spocke" Sörlin)
+   added onselect, ondeselect callbacks
+   context menu in FF3 (linux) fixed (by KasperNyboHansen)
+   if theme_name is false, no CSS file is included, only images are looked up in theme_path (by groogs)
+   context menu Create & Delete functions fix for multiselect
+   reselect bug (by JensGabe)
+   fixed multiselector bug ($(".demo,#demo").tree...)
+   rewritten drag events (speed improvements, bug fixes)
+   now uses jQuery's native live instead of listen plugin
+   beforeopen and beforeclose callbacks added (by starmonkey)
+   context menu fix when refreshing (by airbedman)
+   can now use Dean Edward's packer (by Hafeyang)
+   create bug fixed (by dantan)
+   drag_copy bug fixed (by dantan)
+   theme background bug fixed (by JensGabe)
+ v.0.9.5
+   context menu items can be hidden or DISABLED (using the visible function)
+   fixed theme including on Mac OS (FF, Safari) (by alvin.schur)
+   fixed async JSON bug when server returned empty result (by JensGabe)
+   loading icon is now part of the theme
+   native context menu (by damir.secki)
+   multiple typeO (by JensGabe)
+   can now specify attributes for the nested <a> nodes (href, etc) - updated json format
+   event optimization (fixed bug where beforemove/copy/etc where called from the origin tree)
+   added scroll_spd setting (the speed at which the container scrolls if dragging near the edge)
+   fixed scoll while drag & drop
+   Safari & Chrome drag & drop fix
+   close_all - no animation
+   xml_flat and async bug fixed (by Alain)
+   can supply id in create function (by ludo)
+   more "IE8 compatible" :)
+   added support for themes (+2 themes) (by j9850s) - in any data type if icon does not contain a "/" it is loaded form the theme folder
+   fixed opening leaf nodes (by Limor.Schweitzer)
+   dragging bug (by ignoranceisbliss0)
+   added search functionality (opens all parents and adds class "search" to results) - if async - a request is made to the server with a GET parameter, that should return commaseparated id's of nodes to be opened
+   jQuery plugin mode - $().tree({opts})
+ v.0.9.2
+   async_data function fixed (by Alvin Schur)
+   remove enhancement and event order fix (by j9850s)
+   create bug fixed (by j9850s)
+   borderTopWidth bug in IE fixed (by me.khaled)
+   !NO MORE settings.dflt - now settings.selected - false, string or array & settings.opened - array
+   selected cookie is now CSV (if multiple is on)
+   getJSON attrib bug fixed (by eddie.con.carne)
+   negation dragrules - begin with "!" (order is respected)
+   drag various nodes on the tree (settings.rules.droppable)
+   jQuery compatible mode (all $ are now jQuery)
+   fixed remove bug when a node appears as selected but isn't (by nomen)
+   fixed create bug when passing a name for the new node and the parent node is closed (by Oliver)
+   async_data added in settings.data - a function to return an object that will be passed to the server in async mode
+   method added in settings.data - set all requests to GET or POST
+ v.0.9.1
+   various minor bugs fixed & optimizations
+   create function now accepts value & icon for the newly created node
+ v.0.9
+   multitree drag & drop - now the receiving tree's dragrules are respected
+   multitree language cleanup
+   added instance manager & focusInst function - tree_component.inst & tree_component.focusInst()
+   fixed get_left, get_right in RTL mode
+ v.0.8.2 
+   get_* functions receive a "force" argument that selects the node even if hover_mode is on
+   create function enhancement - can pass a node to create in (by anotherhero)
+   remove function enhancement - can pass a node to delete (by anotherhero)
+   fixed drag position in IE (by Nuno Mota)
+   fixed multitree drag rules check against origin tree (by bogdan)
+   rename function fix (when ESC is used) (by bogdan)
+   #marker z-index is now higher (by bogdan)
+   fixed get_json function (an attrib array can now be passed, icon fix) (by bogdan)
+   get_left, get_right functions fixed to match explorer functions' behavious (by bogdan)
+   implemented drag-to-copy - changes the default behaviour from drag to copy
+ v.0.8.1
+   fixed renaming bug (by anotherhero)
+   fixed #marker bug (by anotherhero)
+ v.0.8
+   onload callback - fired when the tree is loaded for the first time and when the tree or a node is refreshed
+   * in dragrules
+   refreshing a single node is possible (in async mode)
+   passed json can now be an object, not an array of objects (by Marius Bratu)
+   onchange called in deselect_branch (by jstreeuser)
+   id is urlencoded (by Arjan Haverkamp)
+ v.0.7.1
+   fixed create bug in async mode (by William)
+   create function returns the created node (by Nuno Mota)
+   fixed bug when dropped node did not open branch in async mode (by William)
+   fixed bug when passing empty array as children (by William)
+   fixed async xml loading (empty array && recursion problem)
+   fixed leaf bug (by Nuno Mota)
+   fixed inside moving to respect the createat rule
+ v.0.7
+   native async loading
+   added lock() function to lock/unlock the tree
+   added language customization for standard strings
+   hover_mode option added (for changing hover state with keyboard)
+   options object refactoring
+   fixed bug with closing parent of selected if parent is selected (multiple - on)
+   multiple added (can now be always on - no need for holding Ctrl)
+   onrgtclk callback added (See commented code on how to prevent default)
+   fixed bug where Ctrl+clicking selected node did not deselect the node
+   removed optional XML structure for single language
+   Google Code issues (typos) (by peter.kalvin)
+ v.0.6.5
+   tree now allows for some node sizing (see demo)
+   fixed bug when created nodes did not have the leaf class (by addwin)
+   optimized rtl position and images
+   can now change
+   fixed changing focus when closing focused node (by Karf)
+   fixed before- callbacks parameters (by Colin)
+   fixed dragging position (by Karf)
+   returned optional path parameter (by Karf)
+   added ondblclk callback, which defaults to toggle and then select node (by Arno)
+   tree object is passed as final argument in every callback
+ v.0.6.0.1
+   removed bug with switched beforemove/beforecreate callbacks (by Colin)
+   fixed mistake with mov / TYPE (by newuni)
+ v.0.6
+   added drag & drop between trees with correct marker placement
+   optimized jQuery selectors
+   added cut/copy/paste + oncopy callback
+   added error callback - attach custom function to errors
+   added multiple selection with move & delete
+   added getJSON - return the tree as an object
+   added before handlers
+   optimized css, added 'leaf' class
+   added basic rtl support (user opinions?)
+   added cookie support with definable prefix and options - default is false
+   added if selected node is within closed parent - select parent
+   added CSS solution when dragging large sets - all inner nodes are closed while dragging
+   added solid background color option (not white) - set background color on "li.last", ".tree"
+   added animation support (slideUp/slideDown) - specify duration (disabled for msie 6 - slow)
+   updated listen plugin
+   updated sarissa
+   added insertAt option for creating nodes ('top' or 'bottom')
+ v.0.5
+   current language is passed when renaming
+   added onbeforechange callback
+   'data' can be JSON and none (only events attached to structure)
+   Opera comaptible
+   scroll node into view when node selected
+   scroll container while dragging and mouse is near the edge
+   'remove' function 
+   rules and rule checking reinvented (added inline_rules, max_depth, max_children, valid_children, renameable)
+   dots are optional ('toggleDots' function, '.no_dots' classname)
+   various optimizations

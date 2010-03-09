@@ -1,0 +1,359 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>jsTree bundled plugins documentation</title>
+	<style type="text/css">
+	html, body { padding:0; margin:0; background:white; }
+	body, input, th, td, select, option { font-family:"Trebuchet MS",Verdana,Helvetica,Arial,sans-serif !important; font-size:62.5%; color:black; }
+	#container { width:800px; margin:0 auto; }
+	h1 { background:#1B3A6D; color:white; font-size:1.6em; margin:10px 0 1px 0; padding:0 0 0 1em; letter-spacing:0; line-height:25px; font-weight:normal; border-radius:5px; -moz-border-radius:5px; }
+	h2 { background:#E2EDF4; color:#1B3A6D; font-size:11pt; margin:0 0 0.5em 0; padding:0 0 0 1em; letter-spacing:0; line-height:25px; font-weight:normal; border-radius:5px; -moz-border-radius:5px; overflow:hidden; }
+	h3 { background:gray; color:white; font-size:11pt; margin:1.5em 0 1px 0; padding:0 0 0 1em; letter-spacing:0; line-height:25px; font-weight:normal; border-radius:5px; -moz-border-radius:5px; overflow:hidden; }
+	pre, p { font-size:10pt; line-height:1.6em; padding:0 1em; margin:0 0 0.5em 0; }
+	pre, code { font-size:10pt; }
+	.fp { color:navy; }
+	.type { color:green; }
+	h2 span { float:left; line-height:25px; }
+	h2 em { float:right; width:200px; font-size:10pt; line-height:25px; color:gray; margin:0; padding:0; font-style:none; }
+	h2 em code { padding:0 5px; }
+	.arguments { margin-bottom:10px; }
+	.arguments p { margin-bottom:0; }
+	.arguments strong, .arguments code { display:block; }
+	.arguments .inner_description { display:block; }
+	.arguments ul { list-style-type:none; }
+	.arguments code { display:inline; float:none; margin:0; }
+	.arguments li p { padding:0; }
+	.indent { margin-left:50px; }
+
+	@media print { 
+		#container { width:auto; margin:0 1em; }
+		h1, h2, h3 { page-break-after:avoid; }
+	}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<p style="line-height:20px; margin-top:10px; color:gray;">Go to: <a href="#checkbox">Checkbox</a> | <a href="#contextmenu">Contextmenu</a> | <a href="#cookie">Cookie</a> | <a href="#hotkeys">Hotkeys</a> | <a href="#metadata">Metadata</a> | <a href="#themeroller">Themeroller</a> | <a href="#xml_flat">XML flat</a> | <a href="#xml_nested">XML nested</a></p>
+
+		<p class="description">To be able to use any plugin, all you need to do is include its source:</p>
+		<p><code class="fp">&lt;script type=&quot;text/javascript&quot; src=&quot;</code><code class="type">path-to-source/jquery.tree.plugin.js</code><code class="fp">&quot;&gt;&lt;/script&gt;</code></p>
+
+		<p class="description">If you included a datastore you can already use it in any instance with the <code class="fp">get</code> function. Or to use it to populate an entire tree - check the <code class="fp">data.type</code> config option.</p>
+		<p class="description">If the included plugin is not a datasore you need to activate it for every instance you want to use it, or just activate it for all instances. To activate it on an instance check the <code class="fp">plugins</code> config option. To activate it on all instances modify the <code class="fp">jQuery.tree.defaults</code> object - all instances created AFTER the modification will have the plugin enabled.</p>
+		<p class="description">To just activate the plugin without modifying any options (if available) use this code in the <code class="fp">plugins</code> section:</p>
+<pre class="fp">
+plugins : {
+	"plugin-name" : { }
+}
+</pre>
+		<p class="description">To modify any of the options (if available) use this code in the <code class="fp">plugins</code> section:</p>
+<pre class="fp">
+plugins : {
+	"plugin-name" : { option : value, other-option : other-value }
+}
+</pre>
+
+		<h1 id="checkbox">Checkbox</h1>
+		<p class="description">Converts a tree to a checkbox three where each node can be checked, unchecked or undetermined (if for example it has two children and one of the is checked and the other isn't). To get the visual feedback it is recommended to use the "checkbox" theme or define your own classes to handle the visualization of the items.</p>
+		<h3>Options</h3>
+		<h2 id="checkbox.three_state">
+			<span>three_state</span>
+			<em><code class="type">Boolean</code></em>
+		</h2>
+		<p class="description">If set to <code class="fp">true</code> each node will respect the state of its children - like an options tree in windows, so the "undetermined" state will be available. If set to <code class="fp">false</code> each node is either checked or not, regardless of its children states.</p>
+		<p class="description">Default is: <code class="fp">true</code></p>
+
+		<h3>Functions</h3>
+		<h2 id="tree.plugins.checkbox.get_checked">
+			<span>jQuery.tree.plugins.checkbox.get_checked([ tree ])</span>
+			<em>Return value: <code class="type">jQuery</code></em>
+		</h2>
+		<p class="description">This functions returns a collection of all checked nodes within a tree.</p>
+		<div class="arguments">
+			<p>
+				<strong>Arguments:</strong>
+				<code class="type">jsTree</code> <code class="fp">tree</code>
+			</p>
+			<p>The instance to use - defaults to the currently focused tree.</p>
+		</div>
+
+		<h2 id="tree.plugins.checkbox.get_unchecked">
+			<span>jQuery.tree.plugins.checkbox.get_unchecked([ tree ])</span>
+			<em>Return value: <code class="type">jQuery</code></em>
+		</h2>
+		<p class="description">This functions returns a collection of all unchecked nodes within a tree.</p>
+		<div class="arguments">
+			<p>
+				<strong>Arguments:</strong>
+				<code class="type">jsTree</code> <code class="fp">tree</code>
+			</p>
+			<p>The instance to use - defaults to the currently focused tree.</p>
+		</div>
+
+		<h2 id="tree.plugins.checkbox.get_undetermined">
+			<span>jQuery.tree.plugins.checkbox.get_undetermined([ tree ])</span>
+			<em>Return value: <code class="type">jQuery</code></em>
+		</h2>
+		<p class="description">This functions returns a collection of all undetermined nodes within a tree.</p>
+		<div class="arguments">
+			<p>
+				<strong>Arguments:</strong>
+				<code class="type">jsTree</code> <code class="fp">tree</code>
+			</p>
+			<p>The instance to use - defaults to the currently focused tree.</p>
+		</div>
+
+		<h2 id="tree.plugins.checkbox.uncheck">
+			<span>jQuery.tree.plugins.checkbox.uncheck(node)</span>
+			<em>Return value: <code class="type">Boolean</code></em>
+		</h2>
+		<p class="description">This functions unchecks a node.</p>
+		<div class="arguments">
+			<p>
+				<strong>Arguments:</strong>
+				<code class="type">mixed</code> <code class="fp">node</code>
+			</p>
+			<p>A DOM node, jQuery object or selector, pointing to the node you want to uncheck inside the tree.</p>
+		</div>
+
+		<h2 id="tree.plugins.checkbox.check">
+			<span>jQuery.tree.plugins.checkbox.check(node)</span>
+			<em>Return value: <code class="type">Boolean</code></em>
+		</h2>
+		<p class="description">This functions checks a node.</p>
+		<div class="arguments">
+			<p>
+				<strong>Arguments:</strong>
+				<code class="type">mixed</code> <code class="fp">node</code>
+			</p>
+			<p>A DOM node, jQuery object or selector, pointing to the node you want to check inside the tree.</p>
+		</div>
+
+
+		<h1 id="contextmenu">Contextmenu</h1>
+		<p class="description">Enables a custom context menu in the tree. Please not this does not work in Opera, as the browser has a policy against custom context menus.</p>
+		<h3>Options</h3>
+		<h2 id="contextmenu.class_name">
+			<span>class_name</span>
+			<em><code class="type">String</code></em>
+		</h2>
+		<p class="description">A class name to use on the item that invoked the context menu.</p>
+		<p class="description">Default is: <code class="fp">"hover"</code></p>
+
+		<h2 id="contextmenu.items">
+			<span>items</span>
+			<em><code class="type">Object</code></em>
+		</h2>
+		<p class="description">An object containing all the items of the context menu.</p>
+		<p class="description">Default is:</p>
+<pre class="fp">
+items : {
+	create : {
+		label	: "Create", 
+		icon	: "create",
+		visible	: function (NODE, TREE_OBJ) { 
+			if(NODE.length != 1) return 0; 
+			return TREE_OBJ.check("creatable", NODE); 
+		}, 
+		action	: function (NODE, TREE_OBJ) { 
+			TREE_OBJ.create(false, TREE_OBJ.get_node(NODE[0])); 
+		},
+		separator_after : true
+	},
+	rename : {
+		label	: "Rename", 
+		icon	: "rename",
+		visible	: function (NODE, TREE_OBJ) { 
+			if(NODE.length != 1) return false; 
+			return TREE_OBJ.check("renameable", NODE); 
+		}, 
+		action	: function (NODE, TREE_OBJ) { 
+			TREE_OBJ.rename(NODE); 
+		} 
+	},
+	remove : {
+		label	: "Delete",
+		icon	: "remove",
+		visible	: function (NODE, TREE_OBJ) { 
+			var ok = true; 
+			$.each(NODE, function () { 
+				if(TREE_OBJ.check("deletable", this) == false) {
+					ok = false; 
+					return false; 
+				}
+			}); 
+			return ok; 
+		}, 
+		action	: function (NODE, TREE_OBJ) { 
+			$.each(NODE, function () { 
+				TREE_OBJ.remove(this); 
+			}); 
+		} 
+	}
+}
+</pre>
+		<div class="indent">
+			<p>Each item consists of a few settings:</p>
+
+			<h2 id="contextmenu.item.label">
+				<span>label</span>
+				<em><code class="type">String</code></em>
+			</h2>
+			<p>The label of the menu item.</p>
+
+			<h2 id="contextmenu.item.icon">
+				<span>icon</span>
+				<em><code class="type">String</code></em>
+			</h2>
+			<p>The icon used infront of the menu item - if left blank - no icon is shown. If the string contains a <code class="fp">/</code> it is interpreted as a path to an image, otherwise it is used as a class that you can style yourself using a selector like:<br /><code class="fp">.tree-<em style="color:red;">theme_name_here</em>-context a ins.<em style="color:red;">icon-string-here</em> { }</code></p>
+
+			<h2 id="contextmenu.item.visible">
+				<span>visible(node, tree)</span>
+				<em>Should return: <code class="type">1, 0 or -1</code></em>
+			</h2>
+			<p>This function is called just before the context menu is shown. You receive the node the menu is invoked on and the tree instance as arguments. You can hide or disable some of the items. <code class="fp">1</code> means show, <code class="fp">0</code> means disable and <code class="fp">-1</code> means hide.</p>
+
+			<h2 id="contextmenu.item.action">
+				<span>action(node, tree)</span>
+			</h2>
+			<p>This function is called when this specific menu item is clicked. You receive the node the menu is invoked on and the tree instance as arguments.</p>
+		</div>
+
+		<h1 id="cookie">Cookie</h1>
+		<p class="description">Enables the user to save the state of the tree across sessions. What this basically does is save the opened and selected nodes in a cookie, and reopens/reselects them the next time the user uses the tree. Depends on the jQuery Cookie plugin, which can be found in the <code class="type">lib/</code> folder.</p>
+		<h3>Options</h3>
+		<h2 id="cookie.prefix">
+			<span>prefix</span>
+			<em><code class="type">String</code></em>
+		</h2>
+		<p class="description">A prefix to prepent on all cookies created by that specific instance. Useful if you have multiple trees.</p>
+		<p class="description">Default is: <code class="fp">""</code></p>
+
+		<h2 id="cookie.options">
+			<span>options</span>
+			<em><code class="type">Object</code></em>
+		</h2>
+		<p class="description">All the options used in the jQuery Cookie plugin.</p>
+		<p class="description">Default is:</p>
+<pre class="fp">
+options : { 
+	expires: false, 
+	path: false, 
+	domain: false, 
+	secure: false 
+}
+</pre>
+		<h2 id="cookie.types">
+			<span>types</span>
+			<em><code class="type">Object</code></em>
+		</h2>
+		<p class="description">An object of Boolean values storing which cookies should be set (currently <code class="fp">selected</code> and <code class="fp">open</code> are the only options). If you don't want to save the selected state of the tree (for example) just set <code class="fp">selected</code> to <code class="fp">false</code>.</p>
+		<p class="description">Default is:</p>
+<pre class="fp">
+types : {
+	selected	: true,
+	open		: true
+}
+</pre>
+
+		<h2 id="cookie.keep_selected">
+			<span>keep_selected</span>
+			<em><code class="type">Boolean</code></em>
+		</h2>
+		<p class="description">If some nodes are marked for selection in the config of the tree (using <code class="fp">selected</code>) should the plugin respect those or remove them.</p>
+		<p class="description">Default is: <code class="fp">false</code></p>
+
+		<h2 id="cookie.keep_opened">
+			<span>keep_opened</span>
+			<em><code class="type">Boolean</code></em>
+		</h2>
+		<p class="description">If some nodes are marked for opening in the config of the tree (using <code class="fp">opened</code>) should the plugin respect those or remove them.</p>
+		<p class="description">Default is: <code class="fp">false</code></p>
+
+		<h1 id="hotkeys">Hotkeys</h1>
+		<p class="description">Enables keyboard navigation on the tree. Depends on the jQuery Hotkeys plugin, which can be found in the <code class="type">lib/</code> folder.</p>
+		<h3>Options</h3>
+		<h2 id="hotkeys.hover_move">
+			<span>hover_move</span>
+			<em><code class="type">Boolean</code></em>
+		</h2>
+		<p class="description">Should the navigation functions only move the hover state or change the selected node.</p>
+		<p class="description">Default is: <code class="fp">false</code>, meaning the selected node is changed.</p>
+
+		<h2 id="hotkeys.functions">
+			<span>functions</span>
+			<em><code class="type">Object</code></em>
+		</h2>
+		<p class="description">Each key in this object is a string representing a keyboard button (or combination of buttons) and its value is the function to be executed. In the function <code class="fp">this</code> points to the tree instance.</p>
+		<p class="description">Default is: </p>
+<pre class="fp">
+functions : {
+	"up"	: function () { $.tree.plugins.hotkeys.get_prev.apply(this); return false; },
+	"down"	: function () { $.tree.plugins.hotkeys.get_next.apply(this); return false; },
+	"left"	: function () { $.tree.plugins.hotkeys.get_left.apply(this); return false; },
+	"right"	: function () { $.tree.plugins.hotkeys.get_right.apply(this); return false; },
+	"f2"	: function () { if(this.selected) this.rename(); return false; },
+	"del"	: function () { if(this.selected) this.remove(); return false; },
+	"ctrl+c": function () { if(this.selected) this.copy(); return false; },
+	"ctrl+x": function () { if(this.selected) this.cut(); return false; },
+	"ctrl+v": function () { if(this.selected) this.paste(); return false; }
+}
+</pre>
+
+		<h1 id="metadata">Metadata</h1>
+		<p class="description">Enables inline rule definitions (such as clickable, deletable, etc). You can define those in an arbitrary attribute. Each bundled datastore provides the ability to pass attributes, so that should not be an issue. Depends on the jQuery Metadata plugin, which can be found in the <code class="type">lib/</code> folder.</p>
+		<h3>Options</h3>
+		<h2 id="metadata.attribute">
+			<span>attribute</span>
+			<em><code class="type">Sting</code></em>
+		</h2>
+		<p class="description">The attribute used for storing metadata.</p>
+		<p class="description">Default is: <code class="fp">"data"</code>.</p>
+
+		<h1 id="themeroller">Themeroller</h1>
+		<p class="description">Enables the tree to use the Themeroller (jQuery UI) styles by assigning various classes provided by the library. It is neccessary to use the "themeroller" theme when using this plugin.</p>
+
+		<h1 id="xml_flat">XML flat</h1>
+		<p>A datastore - depends on Sarrissa for transformations - Sarrissa can be found in the <code class="type">lib/</code> folder. Supports <code class="fp">async</code> and the <code class="fp">static</code> option (check the <code class="fp">data.opts</code> config option). Data should follow this structure:</p>
+<pre class="fp">
+&lt;root&gt;
+	&lt;item id=&quot;node_id&quot; parent_id=&quot;the_parent_node_id&quot; state=&quot;open&quot; attribute=&quot;value&quot;&gt;
+		&lt;content&gt;
+			&lt;name lang=&quot;language_code&quot; icon=&quot;&quot;&gt;&lt;![CDATA[Root node 1]]&gt;&lt;/name&gt;
+		&lt;/content&gt;
+	&lt;/item&gt;
+	&lt;item id=&quot;node_id&quot; parent_id=&quot;the_parent_node_id&quot; state=&quot;open&quot; attribute=&quot;value&quot;&gt;
+		&lt;content&gt;
+			&lt;name lang=&quot;language_code&quot; icon=&quot;&quot;&gt;&lt;![CDATA[Root node 2]]&gt;&lt;/name&gt;
+		&lt;/content&gt;
+	&lt;/item&gt;
+&lt;/root&gt;
+</pre>
+<p>For root nodes or when using async set <code class="fp">parent_id</code> to 0. All attributes of <code class="fp">&lt;item&gt;</code> nodes get copied over to the resulting <code class="fp">&lt;li&gt;</code> nodes. All attributes you set on <code class="fp">&lt;name&gt;</code> nodes get copied over to the resulting <code class="fp">&lt;a&gt;</code> nodes. Each language is represented by a <code class="fp">&lt;name&gt;</code> node. If you use only one language you may omit the <code class="fp">lang</code> attribute. Use the <code class="fp">icon</code> attribute only for a custom icon - otherwise theme and type icons are applied.</p>
+
+		<h1 id="xml_nested">XML nested</h1>
+		<p>A datastore - depends on Sarrissa for transformations - Sarrissa can be found in the <code class="type">lib/</code> folder. Supports <code class="fp">async</code> and the <code class="fp">static</code> option (check the <code class="fp">data.opts</code> config option). The structure is the same as in XML flat with all the same clarifications, the only thing different is that you should not set a <code class="fp">parent_id</code> attribute on <code class="fp">&lt;item&gt;</code> nodes and you should instead nest the nodes. Like so:
+<pre class="fp">
+&lt;root&gt;
+	&lt;item id=&quot;node_id&quot; state=&quot;open&quot; attribute=&quot;value&quot;&gt;
+		&lt;content&gt;
+			&lt;name&gt;&lt;![CDATA[Root node 1]]&gt;&lt;/name&gt;
+		&lt;/content&gt;<span style="color:red;">
+		&lt;item id=&quot;node_id&quot; state=&quot;open&quot; attribute=&quot;value&quot;&gt;
+			&lt;content&gt;
+				&lt;name&lt;![CDATA[Child node 1]]&gt;&lt;/name&gt;
+			&lt;/content&gt;
+		&lt;/item&gt;</span>
+	&lt;/item&gt;
+	&lt;item id=&quot;node_id&quot; attribute=&quot;value&quot;&gt;
+		&lt;content&gt;
+			&lt;name&gt;&lt;![CDATA[Root node 2]]&gt;&lt;/name&gt;
+		&lt;/content&gt;
+	&lt;/item&gt;
+&lt;/root&gt;
+</pre>
+
+</div></body></html>

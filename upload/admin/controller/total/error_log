@@ -1,0 +1,7 @@
+[01-Jan-2010 12:12:38] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/total/coupon.php on line 2
+[01-Jan-2010 12:12:38] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/total/handling.php on line 2
+[01-Jan-2010 12:12:38] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/total/low_order_fee.php on line 2
+[01-Jan-2010 12:12:38] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/total/shipping.php on line 2
+[01-Jan-2010 12:12:40] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/total/sub_total.php on line 2
+[01-Jan-2010 12:12:40] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/total/tax.php on line 2
+[01-Jan-2010 12:12:40] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/total/total.php on line 2

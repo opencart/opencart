@@ -1,0 +1,5 @@
+[01-Jan-2010 12:12:06] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/extension/feed.php on line 2
+[01-Jan-2010 12:12:06] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/extension/module.php on line 2
+[01-Jan-2010 12:12:08] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/extension/payment.php on line 2
+[01-Jan-2010 12:12:08] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/extension/shipping.php on line 2
+[01-Jan-2010 12:12:08] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/extension/total.php on line 2

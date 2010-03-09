@@ -1,0 +1,3 @@
+[01-Jan-2010 12:12:23] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/report/purchased.php on line 2
+[01-Jan-2010 12:12:23] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/report/sale.php on line 2
+[01-Jan-2010 12:12:23] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/report/viewed.php on line 2

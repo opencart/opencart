@@ -28,7 +28,7 @@ class ControllerModuleCart extends Controller {
         		'quantity' => $result['quantity'],
 				'stock'    => $result['stock'],
 				'price'    => $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'))),
-				'href'     => $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $result['product_id'])),
+				'href'     => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id']),
       		);
     	}
 
@@ -72,7 +72,7 @@ class ControllerModuleCart extends Controller {
     	foreach ($this->cart->getProducts() as $product) {
       		$output .= '<tr>';
         	$output .= '<td width="1" valign="top" align="right">' . $product['quantity'] . '&nbsp;x&nbsp;</td>';
-        	$output .= '<td align="left" valign="top"><a href="' . $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $product['product_id'])) . '">' . $product['name'] . '</a>';
+        	$output .= '<td align="left" valign="top"><a href="' . $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $product['product_id']) . '">' . $product['name'] . '</a>';
           	$output .= '<div>';
             
 			foreach ($product['option'] as $option) {

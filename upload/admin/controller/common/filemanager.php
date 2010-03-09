@@ -13,8 +13,23 @@ class ControllerCommonFileManager extends Controller {
 			$this->data['base'] = HTTP_SERVER;
 		}
 		
+		$this->data['entry_folder'] = $this->language->get('entry_folder');
+		$this->data['entry_move'] = $this->language->get('entry_move');
+		$this->data['entry_copy'] = $this->language->get('entry_copy');
+		$this->data['entry_rename'] = $this->language->get('entry_rename');
+		
+		$this->data['button_folder'] = $this->language->get('button_folder');
+		$this->data['button_delete'] = $this->language->get('button_delete');
+		$this->data['button_move'] = $this->language->get('button_move');
+		$this->data['button_copy'] = $this->language->get('button_copy');
+		$this->data['button_rename'] = $this->language->get('button_rename');
+		$this->data['button_upload'] = $this->language->get('button_upload');
+		$this->data['button_refresh'] = $this->language->get('button_refresh'); 
+		
 		$this->data['error_select'] = $this->language->get('error_select');
 		$this->data['error_directory'] = $this->language->get('error_directory');
+		
+		$this->data['directory'] = HTTP_IMAGE . 'data/';
 		
 		if (isset($this->request->get['field'])) {
 			$this->data['field'] = $this->request->get['field'];
@@ -34,10 +49,10 @@ class ControllerCommonFileManager extends Controller {
 	}	
 	
 	public function image() {
-		$this->load->helper('image');
+		$this->load->model('tool/image');
 		
 		if (isset($this->request->post['image'])) {
-			$this->response->setOutput(image_resize($this->request->post['image'], 100, 100));
+			$this->response->setOutput($this->model_tool_image->resize($this->request->post['image'], 100, 100));
 		}
 	}
 	
@@ -73,7 +88,7 @@ class ControllerCommonFileManager extends Controller {
 	public function files() {
 		$json = array();
 		
-		$this->load->helper('image');
+		$this->load->model('tool/image');
 		
 		if (isset($this->request->post['directory']) && $this->request->post['directory']) {
 			$directory = DIR_IMAGE . 'data/' . str_replace('../', '', $this->request->post['directory']);
@@ -81,36 +96,51 @@ class ControllerCommonFileManager extends Controller {
 			$directory = DIR_IMAGE . 'data/';
 		}
 		
-		$files = glob(rtrim($directory, '/') . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+		$allowed = array(
+			'.jpg',
+			'.jpeg',
+			'.png',
+			'.gif'
+		);
+		
+		$files = glob(rtrim($directory, '/') . '/*');
 		
 		foreach ($files as $file) {
-			$size = filesize($file);
-
-			$i = 0;
-
-			$suffix = array(
-				'B',
-				'KB',
-				'MB',
-				'GB',
-				'TB',
-				'PB',
-				'EB',
-				'ZB',
-				'YB'
-			);
-
-			while (($size / 1024) > 1) {
-				$size = $size / 1024;
-				$i++;
+			if (is_file($file)) {
+				$ext = strrchr($file, '.');
+			} else {
+				$ext = '';
+			}	
+			
+			if (in_array(strtolower($ext), $allowed)) {
+				$size = filesize($file);
+	
+				$i = 0;
+	
+				$suffix = array(
+					'B',
+					'KB',
+					'MB',
+					'GB',
+					'TB',
+					'PB',
+					'EB',
+					'ZB',
+					'YB'
+				);
+	
+				while (($size / 1024) > 1) {
+					$size = $size / 1024;
+					$i++;
+				}
+					
+				$json[] = array(
+					'file'     => substr($file, strlen(DIR_IMAGE . 'data/')),
+					'filename' => basename($file),
+					'size'     => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
+					'thumb'    => $this->model_tool_image->resize(substr($file, strlen(DIR_IMAGE)), 100, 100)
+				);
 			}
-				
-			$json[] = array(
-				'file'     => substr($file, strlen(DIR_IMAGE . 'data/')),
-				'filename' => basename($file),
-				'size'     => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
-				'thumb'    => image_resize(substr($file, strlen(DIR_IMAGE)), 100, 100)
-			);
 		}
 		
 		$this->load->library('json');
@@ -140,6 +170,10 @@ class ControllerCommonFileManager extends Controller {
 		} else {
 			$json['error'] = $this->language->get('error_directory');
 		}
+		
+		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
+      		$json['error'] = $this->language->get('error_permission');  
+    	}
 		
 		if (!isset($json['error'])) {	
 			mkdir($directory . '/' . str_replace('../', '', $this->request->post['name']), 0777);
@@ -171,9 +205,13 @@ class ControllerCommonFileManager extends Controller {
 			$json['error'] = $this->language->get('error_select');
 		}
 		
+		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
+      		$json['error'] = $this->language->get('error_permission');  
+    	}
+		
 		if (!isset($json['error'])) {
 			if (is_file($path)) {
-				unlink($path);;
+				unlink($path);
 			} elseif (is_dir($path)) {
 				$this->recursiveDelete($path);
 			}
@@ -235,12 +273,16 @@ class ControllerCommonFileManager extends Controller {
 			}	
 			
 			if (file_exists($to . '/' . basename($from))) {
-				$json['error'] = $this->language->get('error_exsits');
+				$json['error'] = $this->language->get('error_exists');
 			}
 		} else {
 			$json['error'] = $this->language->get('error_directory');
 		}
-			
+		
+		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
+      		$json['error'] = $this->language->get('error_permission');  
+    	}
+		
 		if (!isset($json['error'])) {
 			rename($from, $to . '/' . basename($from));
 			
@@ -282,6 +324,10 @@ class ControllerCommonFileManager extends Controller {
 		} else {
 			$json['error'] = $this->language->get('error_select');
 		}
+		
+		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
+      		$json['error'] = $this->language->get('error_permission');  
+    	}	
 		
 		if (!isset($json['error'])) {
 			if (is_file($old_name)) {
@@ -359,9 +405,13 @@ class ControllerCommonFileManager extends Controller {
 			$new_name = dirname($old_name) . '/' . str_replace('../', '', $this->request->post['name'] . $ext);
 																			   
 			if (file_exists($new_name)) {
-				$json['error'] = $this->language->get('error_exsits');
+				$json['error'] = $this->language->get('error_exists');
 			}			
 		}
+		
+		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
+      		$json['error'] = $this->language->get('error_permission');  
+    	}
 		
 		if (!isset($json['error'])) {
 			rename($old_name, $new_name);
@@ -391,6 +441,10 @@ class ControllerCommonFileManager extends Controller {
 					$json['error'] = $this->language->get('error_directory');
 				}
 				
+				if ($this->request->files['image']['size'] > 300000) {
+					$json['error'] = $this->language->get('error_file_size');
+				}
+				
 				$allowed = array(
 					'image/jpeg',
 					'image/pjpeg',
@@ -415,6 +469,7 @@ class ControllerCommonFileManager extends Controller {
 				if (!in_array(strtolower(strrchr($this->request->files['image']['name'], '.')), $allowed)) {
 					$json['error'] = $this->language->get('error_file_type');
 				}
+
 				
 				if ($this->request->files['image']['error'] != UPLOAD_ERR_OK) {
 					$json['error'] = 'error_upload_' . $this->request->files['image']['error'];
@@ -425,6 +480,10 @@ class ControllerCommonFileManager extends Controller {
 		} else {
 			$json['error'] = $this->language->get('error_directory');
 		}
+		
+		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
+      		$json['error'] = $this->language->get('error_permission');  
+    	}
 		
 		if (!isset($json['error'])) {	
 			if (@move_uploaded_file($this->request->files['image']['tmp_name'], $directory . '/' . basename($this->request->files['image']['name']))) {		

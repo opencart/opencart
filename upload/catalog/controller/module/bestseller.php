@@ -8,7 +8,7 @@ class ControllerModuleBestSeller extends Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('catalog/review');
 		$this->load->model('tool/seo_url');
-		$this->load->helper('image');
+		$this->load->model('tool/image');
 			
 		$this->data['products'] = array();
 		
@@ -43,8 +43,8 @@ class ControllerModuleBestSeller extends Controller {
 				'name'    => $result['name'],
 				'price'   => $price,
 				'special' => $special,
-				'image'   => image_resize($image, 38, 38),
-				'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $result['product_id']))
+				'image'   => $this->model_tool_image->resize($image, 38, 38),
+				'href'    => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id'])
 			);
 		}
 

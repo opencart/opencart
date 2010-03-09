@@ -2,9 +2,9 @@
 class ControllerAccountNewsletter extends Controller {  
 	public function index() {
 		if (!$this->customer->isLogged()) {
-	  		$this->session->data['redirect'] = $this->url->https('account/newsletter');
+	  		$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=account/newsletter';
 	  
-	  		$this->redirect($this->url->https('account/login'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
     	} 
 		
 		$this->language->load('account/newsletter');
@@ -18,25 +18,25 @@ class ControllerAccountNewsletter extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect($this->url->http('account/account'));
+			$this->redirect(HTTP_SERVER . 'index.php?route=account/account');
 		}
 
       	$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('account/account'),
+        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('account/newsletter'),
+        	'href'      => HTTP_SERVER . 'index.php?route=account/newsletter',
         	'text'      => $this->language->get('text_newsletter'),
         	'separator' => $this->language->get('text_separator')
       	);
@@ -51,11 +51,11 @@ class ControllerAccountNewsletter extends Controller {
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		$this->data['button_back'] = $this->language->get('button_back');
 
-    	$this->data['action'] = $this->url->https('account/newsletter');
+    	$this->data['action'] = HTTPS_SERVER . 'index.php?route=account/newsletter';
 		
 		$this->data['newsletter'] = $this->customer->getNewsletter();
 		
-		$this->data['back'] = $this->url->https('account/account');
+		$this->data['back'] = HTTPS_SERVER . 'index.php?route=account/account';
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/newsletter.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/account/newsletter.tpl';

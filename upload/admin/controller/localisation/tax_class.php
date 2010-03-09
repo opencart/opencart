@@ -38,7 +38,7 @@ class ControllerLocalisationTaxClass extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/tax_class' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/tax_class' . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationTaxClass extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/tax_class' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/tax_class' . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationTaxClass extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/tax_class' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/tax_class' . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerLocalisationTaxClass extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/tax_class' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/tax_class' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);		
 		
-		$this->data['insert'] = $this->url->https('localisation/tax_class/insert' . $url);
-		$this->data['delete'] = $this->url->https('localisation/tax_class/delete' . $url);		
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/tax_class/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/tax_class/delete' . $url;		
 		
 		$this->data['tax_classes'] = array();
 		
@@ -178,7 +178,7 @@ class ControllerLocalisationTaxClass extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('localisation/tax_class/update&tax_class_id=' . $result['tax_class_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=localisation/tax_class/update&tax_class_id=' . $result['tax_class_id'] . $url
 			);
 					
 			$this->data['tax_classes'][] = array(
@@ -225,7 +225,7 @@ class ControllerLocalisationTaxClass extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		 
-		$this->data['sort_title'] = $this->url->https('localisation/tax_class&sort=title' . $url);
+		$this->data['sort_title'] = HTTPS_SERVER . 'index.php?route=localisation/tax_class&sort=title' . $url;
 		
 		$url = '';
 
@@ -242,7 +242,7 @@ class ControllerLocalisationTaxClass extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('localisation/tax_class' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/tax_class' . $url . '&page={page}';
 
 		$this->data['pagination'] = $pagination->render();
 
@@ -310,24 +310,24 @@ class ControllerLocalisationTaxClass extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/tax_class' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/tax_class' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
 		if (!isset($this->request->get['tax_class_id'])) {
-			$this->data['action'] = $this->url->https('localisation/tax_class/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/tax_class/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('localisation/tax_class/update&tax_class_id=' . $this->request->get['tax_class_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/tax_class/update&tax_class_id=' . $this->request->get['tax_class_id'] . $url;
 		}
 		
-		$this->data['cancel'] = $this->url->https('localisation/tax_class' . $url);
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/tax_class' . $url;
 
 		if (isset($this->request->get['tax_class_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$tax_class_info = $this->model_localisation_tax_class->getTaxClass($this->request->get['tax_class_id']);

@@ -9,17 +9,21 @@ class ControllerToolBackup extends Controller {
 		
 		$this->load->model('tool/backup');
 				
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {			
+		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validate()) {
 			$this->model_tool_backup->restore(file_get_contents(@$this->request->files['import']['tmp_name']));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect($this->url->https('tool/backup'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=tool/backup');
 		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		
+		$this->data['text_select_all'] = $this->language->get('text_select_all');
+		$this->data['text_unselect_all'] = $this->language->get('text_unselect_all');
+		
 		$this->data['entry_restore'] = $this->language->get('entry_restore');
+		$this->data['entry_backup'] = $this->language->get('entry_backup');
 		 
 		$this->data['button_backup'] = $this->language->get('button_backup');
 		$this->data['button_restore'] = $this->language->get('button_restore');
@@ -43,21 +47,25 @@ class ControllerToolBackup extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('tool/backup'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=tool/backup',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['action'] = $this->url->https('tool/backup');
-				
-		$this->data['backup'] = $this->url->https('tool/backup/backup');
-		 
+		$this->data['restore'] = HTTPS_SERVER . 'index.php?route=tool/backup';
+
+		$this->data['backup'] = HTTPS_SERVER . 'index.php?route=tool/backup/backup';
+
+		$this->load->model('tool/backup');
+			
+		$this->data['tables'] = $this->model_tool_backup->getTables();
+		
 		$this->template = 'tool/backup.tpl';
 		$this->children = array(
 			'common/header',	
@@ -68,17 +76,17 @@ class ControllerToolBackup extends Controller {
 	}
 	
 	public function backup() {
-		if ($this->validate()) {
-			$this->response->addheader('Pragma', 'public');
-			$this->response->addheader('Expires', '0');
-			$this->response->addheader('Content-Description', 'File Transfer');
-			$this->response->addheader('Content-Type', 'application/octet-stream');
-			$this->response->addheader('Content-Disposition', 'attachment; filename=backup.sql');
-			$this->response->addheader('Content-Transfer-Encoding', 'binary');
+		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validate()) {
+			$this->response->addheader('Pragma: public');
+			$this->response->addheader('Expires: 0');
+			$this->response->addheader('Content-Description: File Transfer');
+			$this->response->addheader('Content-Type: application/octet-stream');
+			$this->response->addheader('Content-Disposition: attachment; filename=backup.sql');
+			$this->response->addheader('Content-Transfer-Encoding: binary');
 			
 			$this->load->model('tool/backup');
 			
-			$this->response->setOutput($this->model_tool_backup->backup());
+			$this->response->setOutput($this->model_tool_backup->backup($this->request->post['backup']));
 		} else {
 			return $this->forward('error/error_404', 'index');
 		}

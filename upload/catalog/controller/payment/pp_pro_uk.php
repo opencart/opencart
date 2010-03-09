@@ -77,9 +77,9 @@ class ControllerPaymentPPProUK extends Controller {
 		}
 		
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';
@@ -126,17 +126,17 @@ class ControllerPaymentPPProUK extends Controller {
 			'CITY'      => $order_info['payment_city'],
             'STATE'     => ($order_info['payment_iso_code_2'] != 'US') ? $order_info['payment_zone'] : $order_info['payment_zone_code'],
 			'COUNTRY'   => $order_info['payment_iso_code_2'],
-			'ZIP'       => $order_info['payment_postcode'],
+			'ZIP'       => str_replace(' ', '', $order_info['payment_postcode']),
 			'CLIENTIP'  => $this->request->server['REMOTE_ADDR'],
 			'EMAIL'     => $order_info['email'],
             'ACCT'      => str_replace(' ', '', $this->request->post['cc_number']),
             'ACCTTYPE'  => $this->request->post['cc_type'],
-            'CARDSTART' => $this->request->post['cc_start_date_month'] . $this->request->post['cc_start_date_year'],
-            'EXPDATE'   => $this->request->post['cc_expire_date_month'] . $this->request->post['cc_expire_date_year'],
+            'CARDSTART' => $this->request->post['cc_start_date_month'] . substr($this->request->post['cc_start_date_year']) - 2, 2),
+            'EXPDATE'   => $this->request->post['cc_expire_date_month'] . substr($this->request->post['cc_expire_date_year']) - 2, 2),
             'CVV2'      => $this->request->post['cc_cvv2'],
 			'CARDISSUE' => $this->request->post['cc_issue']
 		);
-		
+		 
 		$curl = curl_init($api_url);
 
 		curl_setopt($curl, CURLOPT_PORT, 443);
@@ -178,7 +178,7 @@ class ControllerPaymentPPProUK extends Controller {
 			
 			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('pp_pro_uk_order_status_id'), $message, FALSE);
 		
-			$json['success'] = $this->url->https('checkout/success'); 
+			$json['success'] = HTTPS_SERVER . 'index.php?route=checkout/success'; 
 		} else {
 			switch ($response_data['RESULT']) {
 				case '1':

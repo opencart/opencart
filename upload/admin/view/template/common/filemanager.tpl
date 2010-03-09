@@ -98,7 +98,7 @@ img {
 </head>
 <body>
 <div id="container">
-  <div id="menu"><a id="create" class="button" style="background-image: url('view/image/filemanager/folder.png');">New Folder</a><a id="delete" class="button" style="background-image: url('view/image/filemanager/edit-delete.png');">Delete</a><a id="move" class="button" style="background-image: url('view/image/filemanager/edit-cut.png');">Move</a><a id="copy" class="button" style="background-image: url('view/image/filemanager/edit-copy.png');">Copy</a><a id="rename" class="button" style="background-image: url('view/image/filemanager/edit-rename.png');">Rename</a><a id="upload" class="button" style="background-image: url('view/image/filemanager/upload.png');">Upload</a><a id="refresh" class="button" style="background-image: url('view/image/filemanager/refresh.png');">Refresh</a></div>
+  <div id="menu"><a id="create" class="button" style="background-image: url('view/image/filemanager/folder.png');"><?php echo $button_folder; ?></a><a id="delete" class="button" style="background-image: url('view/image/filemanager/edit-delete.png');"><?php echo $button_delete; ?></a><a id="move" class="button" style="background-image: url('view/image/filemanager/edit-cut.png');"><?php echo $button_move; ?></a><a id="copy" class="button" style="background-image: url('view/image/filemanager/edit-copy.png');"><?php echo $button_copy; ?></a><a id="rename" class="button" style="background-image: url('view/image/filemanager/edit-rename.png');"><?php echo $button_rename; ?></a><a id="upload" class="button" style="background-image: url('view/image/filemanager/upload.png');"><?php echo $button_upload; ?></a><a id="refresh" class="button" style="background-image: url('view/image/filemanager/refresh.png');"><?php echo $button_refresh; ?></a></div>
   <div id="column_left"></div>
   <div id="column_right"></div>
 </div>
@@ -198,7 +198,7 @@ $(document).ready(function () {
 	
 	$('#column_right a').live('dblclick', function () {
 		<?php if ($fckeditor) { ?>
-		window.opener.CKEDITOR.tools.callFunction(1, '<?php echo HTTP_IMAGE; ?>data/' + $(this).attr('file'));
+		window.opener.CKEDITOR.tools.callFunction(1, '<?php echo $directory; ?>' + $(this).attr('file'));
 		
 		self.close();	
 		<?php } else { ?>
@@ -216,13 +216,13 @@ $(document).ready(function () {
 			$('#dialog').remove();
 			
 			html  = '<div id="dialog">';
-			html += 'Folder Name: <input type="text" name="name" value="" /> <input type="button" value="Submit" />';
+			html += '<?php echo $entry_folder; ?> <input type="text" name="name" value="" /> <input type="button" value="Submit" />';
 			html += '</div>';
 			
 			$('#column_right').prepend(html);
 			
 			$('#dialog').dialog({
-				title: 'New Folder',
+				title: '<?php echo $button_folder; ?>',
 				resizable: false
 			});	
 			
@@ -306,13 +306,13 @@ $(document).ready(function () {
 		$('#dialog').remove();
 		
 		html  = '<div id="dialog">';
-		html += 'Move: <select name="to"></select> <input type="button" value="Submit" />';
+		html += '<?php echo $entry_move; ?> <select name="to"></select> <input type="button" value="Submit" />';
 		html += '</div>';
 
 		$('#column_right').prepend(html);
 		
 		$('#dialog').dialog({
-			title: 'Move',
+			title: '<?php echo $button_move; ?>',
 			resizable: false
 		});
 
@@ -375,13 +375,13 @@ $(document).ready(function () {
 		$('#dialog').remove();
 		
 		html  = '<div id="dialog">';
-		html += 'Name: <input type="text" name="name" value="" /> <input type="button" value="Submit" />';
+		html += '<?php echo $entry_copy; ?> <input type="text" name="name" value="" /> <input type="button" value="Submit" />';
 		html += '</div>';
 
 		$('#column_right').prepend(html);
 		
 		$('#dialog').dialog({
-			title: 'Copy',
+			title: '<?php echo $button_copy; ?>',
 			resizable: false
 		});
 		
@@ -444,13 +444,13 @@ $(document).ready(function () {
 		$('#dialog').remove();
 		
 		html  = '<div id="dialog">';
-		html += 'Name: <input type="text" name="name" value="" /> <input type="button" value="Submit" />';
+		html += '<?php echo $entry_rename; ?> <input type="text" name="name" value="" /> <input type="button" value="Submit" />';
 		html += '</div>';
 
 		$('#column_right').prepend(html);
 		
 		$('#dialog').dialog({
-			title: 'Rename',
+			title: '<?php echo $button_rename; ?>',
 			resizable: false
 		});
 		

@@ -1,56 +1,44 @@
 <?php
 final class Weight {
-	private $classes = array();
-	private $rules = array();
+	private $weights = array();
 	
-	public function __construct() {
-		$this->db = Registry::get('db');
-		$this->config = Registry::get('config');
+	public function __construct($registry) {
+		$this->db = $registry->get('db');
+		$this->config = $registry->get('config');
 
-		$weight_class_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "weight_class WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		$weight_class_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "weight_class wc LEFT JOIN " . DB_PREFIX . "weight_class_description wcd ON (wc.weight_class_id = wcd.weight_class_id) WHERE wcd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
     
     	foreach ($weight_class_query->rows as $result) {
-      		$this->classes[$result['weight_class_id']] = array(
-        		'unit'  => $result['unit'],
-        		'title' => $result['title']
+      		$this->weights[strtolower($result['unit'])] = array(
+        		'weight_class_id' => $result['weight_class_id'],
+        		'title'           => $result['title'],
+				'unit'            => $result['unit'],
+				'value'           => $result['value']
       		); 
-    	}
-		
-    	$weight_rule_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "weight_rule");
-	
-    	foreach ($weight_rule_query->rows as $result) {
-      		$this->rules[$result['from_id']][$result['to_id']] = $result['rule'];
     	}
   	}
 	  
   	public function convert($value, $from, $to) {
-    	if ($from == $to) {
+		if ($from == $to) {
       		return $value;
-    	} else {
-      		return $value * (float)$this->rules[$from][$to];
-    	}
-  	}
-
-	public function format($value, $weight_class_id, $decimal_point = '.', $thousand_point = ',') {
-    	return number_format($value, 2, $decimal_point, $thousand_point) . $this->classes[$weight_class_id]['unit'];
-  	}
-	
-	public function getId($unit) {
-		$weight_class_id = 0;
-		
-		foreach ($this->classes as $key => $value) {
-			if ($unit == $value['unit']) {
-				$weight_class_id = $key;
-				
-				break;
-			}
 		}
 		
-		return $weight_class_id;
-	}
-	
-	public function getCode($weight_class_id) {
-		return isset($this->classes[$weight_class_id]['unit']) ? $this->classes[$weight_class_id]['unit'] : NULL;
+		if (!isset($this->weights[strtolower($from)]) || !isset($this->weights[strtolower($to)])) {
+			return $value;
+		} else {			
+			$from = $this->weights[strtolower($from)]['value'];
+			$to = $this->weights[strtolower($to)]['value'];
+		
+			return $value * ($from / $to);
+		}
+  	}
+
+	public function format($value, $unit, $decimal_point = '.', $thousand_point = ',') {
+		if (isset($this->weights[strtolower($unit)])) {
+    		return number_format($value, 2, $decimal_point, $thousand_point) . $this->weights[strtolower($unit)]['unit'];
+		} else {
+			return number_format($value, 2, $decimal_point, $thousand_point);
+		}
 	}
 }
 ?>

@@ -16,7 +16,7 @@ class ControllerPaymentLiqPay extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect($this->url->https('extension/payment'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/payment');
 		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -24,7 +24,7 @@ class ControllerPaymentLiqPay extends Controller {
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
-		$this->data['text_liqpay'] = $this->language->get('text_liqpay');
+		$this->data['text_pay'] = $this->language->get('text_pay');
 		$this->data['text_card'] = $this->language->get('text_card');
 		
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
@@ -67,26 +67,26 @@ class ControllerPaymentLiqPay extends Controller {
 		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('extension/payment'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/payment',
        		'text'      => $this->language->get('text_payment'),
       		'separator' => ' :: '
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('payment/liqpay'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=payment/liqpay',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 				
-		$this->data['action'] = $this->url->https('payment/liqpay');
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=payment/liqpay';
 		
-		$this->data['cancel'] = $this->url->https('extension/payment');
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/payment';
 		
 		if (isset($this->request->post['liqpay_merchant'])) {
 			$this->data['liqpay_merchant'] = $this->request->post['liqpay_merchant'];

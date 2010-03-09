@@ -11,7 +11,7 @@
     <?php if ($error_warning) { ?>
     <div class="warning"><?php echo $error_warning; ?></div>
     <?php } ?>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="create">
+    <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="create">
       <p><?php echo $text_account_already; ?></p>
       <b style="margin-bottom: 2px; display: block;"><?php echo $text_your_details; ?></b>
       <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
@@ -84,7 +84,11 @@
             <td><select name="country_id" id="country_id" onchange="$('select[name=\'zone_id\']').load('index.php?route=account/create/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>');">
                 <option value="FALSE"><?php echo $text_select; ?></option>
                 <?php foreach ($countries as $country) { ?>
+                <?php if ($country['country_id'] == $country_id) { ?>
+                <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+                <?php } else { ?>
                 <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                <?php } ?>
                 <?php } ?>
               </select>
               <?php if ($error_country) { ?>
@@ -172,7 +176,5 @@
 </div>
   <script type="text/javascript"><!--
 $('select[name=\'zone_id\']').load('index.php?route=account/create/zone&country_id=<?php echo $country_id; ?>&zone_id=<?php echo $zone_id; ?>');
-
-$('#country_id').attr('value', '<?php echo $country_id; ?>');
 //--></script>
 <?php echo $footer; ?> 

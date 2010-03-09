@@ -4,7 +4,7 @@ class ControllerStep2 extends Controller {
 	
 	public function index() {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
-			$this->redirect($this->url->http('step_3'));
+			$this->redirect(HTTP_SERVER . 'index.php?route=step_3');
 		}
 
 		if (isset($this->error['warning'])) {
@@ -13,7 +13,7 @@ class ControllerStep2 extends Controller {
 			$this->data['error_warning'] = '';	
 		}
 		
-		$this->data['action'] = $this->url->http('step_2');
+		$this->data['action'] = HTTP_SERVER . 'index.php?route=step_2';
 
 		$this->data['config_catalog'] = DIR_OPENCART . 'config.php';
 		$this->data['config_admin'] = DIR_OPENCART . 'admin/config.php';

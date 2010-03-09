@@ -8,11 +8,11 @@ class ControllerCommonLogin extends Controller {
 		$this->document->title = $this->language->get('heading_title');
 
 		if ($this->user->isLogged()) {
-			$this->redirect($this->url->https('common/home'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=common/home');
 		}
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) { 
-	  		$this->redirect($this->url->https('common/home'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=common/home');
 		}
 		
 		$this->data['title'] = $this->language->get('heading_title');
@@ -41,7 +41,7 @@ class ControllerCommonLogin extends Controller {
 			$this->data['error_warning'] = '';
 		}
 		
-    	$this->data['action'] = $this->url->https('common/login');
+    	$this->data['action'] = HTTPS_SERVER . 'index.php?route=common/login';
 
 		if (isset($this->error['username'])) {
 			$this->data['username'] = $this->request->post['username'];

@@ -30,9 +30,9 @@
           <td><?php echo $entry_type; ?></td>
           <td><select name="liqpay_type">
               <?php if ($liqpay_type == 'liqpay') { ?>
-              <option value="liqpay" selected="selected"><?php echo $text_liqpay; ?></option>
+              <option value="liqpay" selected="selected"><?php echo $text_pay; ?></option>
               <?php } else { ?>
-              <option value="liqpay"><?php echo $text_liqpay; ?></option>
+              <option value="liqpay"><?php echo $text_pay; ?></option>
               <?php } ?>
               <?php if ($liqpay_type == 'card') { ?>
               <option value="card" selected="selected"><?php echo $text_card; ?></option>

@@ -17,7 +17,7 @@
     <div style="margin-bottom: 10px; display: inline-block; width: 100%;">
       <div style="float: left; display: inline-block; width: 49%;"><b style="margin-bottom: 2px; display: block;"><?php echo $text_i_am_new_customer; ?></b>
         <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; min-height: 210px;">
-          <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="account">
+          <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="account">
             <p><?php echo $text_checkout; ?></p>
             <label for="register" style="cursor: pointer;">
               <?php if ($account == 'register') { ?>
@@ -45,7 +45,7 @@
       </div>
       <div style="float: right; display: inline-block; width: 49%;"><b style="margin-bottom: 2px; display: block;"><?php echo $text_returning_customer; ?></b>
         <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; min-height: 210px;">
-          <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="login">
+          <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="login">
             <?php echo $text_i_am_returning_customer; ?><br />
             <br />
             <b><?php echo $entry_email; ?></b><br />
@@ -55,10 +55,10 @@
             <b><?php echo $entry_password; ?></b><br />
             <input type="password" name="password" />
             <br />
-            <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten_password; ?></a><br />
+            <a href="<?php echo str_replace('&', '&amp;', $forgotten); ?>"><?php echo $text_forgotten_password; ?></a><br />
             <div style="text-align: right;"><a onclick="$('#login').submit();" class="button"><span><?php echo $button_login; ?></span></a></div>
             <?php if ($redirect) { ?>
-            <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
+            <input type="hidden" name="redirect" value="<?php echo str_replace('&', '&amp;', $redirect); ?>" />
             <?php } ?>
           </form>
         </div>

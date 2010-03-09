@@ -10,13 +10,12 @@ $_['thousand_point']        = ',';
 
 // Text
 $_['text_home']             = 'Home';
-$_['text_time']             = 'Page created in %s seconds';
 $_['text_yes']              = 'Yes';
 $_['text_no']               = 'No';
 $_['text_none']             = ' --- None --- ';
 $_['text_select']           = ' --- Please Select --- ';
 $_['text_all_zones']        = 'All Zones';
-$_['text_pagination']       = 'Showing %s to %s of %s (%s Pages)';
+$_['text_pagination']       = 'Showing {start} to {end} of {total} ({pages} Pages)';
 $_['text_separator']        = ' &gt; ';
 
 // Buttons

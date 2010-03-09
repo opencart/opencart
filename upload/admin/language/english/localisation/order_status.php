@@ -15,6 +15,6 @@ $_['entry_name']       = 'Order Status Name:';
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify order statues!';
 $_['error_name']       = 'Order Status Name must be greater than 3 and less than 32 characters!';
+$_['error_store']      = 'Warning: This Order Status cannot be deleted as it is currently assigned to %s stores!';
 $_['error_order']      = 'Warning: This Order Status cannot be deleted as it is currently assigned to %s orders!';
-$_['error_default']    = 'Warning: This Order Status cannot be deleted as it is currently assigned as the default store order status!';
 ?>

@@ -20,9 +20,9 @@ class ModelInstall extends Model {
 					$query .= $line;
   
 					if (preg_match('/;\s*$/', $line)) {
-						$query = str_replace("DROP TABLE IF EXISTS `opencart_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $query);
-						$query = str_replace("CREATE TABLE `opencart_", "CREATE TABLE `" . $data['db_prefix'], $query);
-						$query = str_replace("INSERT INTO `opencart_", "INSERT INTO `" . $data['db_prefix'], $query);
+						$query = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $query);
+						$query = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $query);
+						$query = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $query);
 						
 						$result = mysql_query($query, $connection);
   
@@ -47,8 +47,10 @@ class ModelInstall extends Model {
 		
 			mysql_query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `group` = 'config', `key` = 'config_email', value = '" . mysql_real_escape_string($data['email']) . "'", $connection);
 			
-			mysql_query("UPDATE product SET viewed = '0'", $connection);
-						
+			mysql_query("UPDATE `" . $data['db_prefix'] . "product` SET `viewed` = '0'", $connection);
+			
+			mysql_query("UPDATE `" . $data['db_prefix'] . "store` SET `url` = '" . mysql_real_escape_string(HTTP_OPENCART) . "'", $connection);
+			
 			mysql_close($connection);	
 		}		
 	}	

@@ -28,12 +28,12 @@ class ControllerPaymentSagepay extends Controller {
 		$data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
 		$data['Currency'] = $order_info['currency'];
 		$data['Description'] = sprintf($this->language->get('text_description'), date($this->language->get('date_format_short')), $this->session->data['order_id']);
-		$data['SuccessURL'] = $this->url->https('payment/sagepay/success&order_id=' . $this->session->data['order_id']);
+		$data['SuccessURL'] = HTTPS_SERVER . 'index.php?route=payment/sagepay/success&order_id=' . $this->session->data['order_id'];
 		
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['FailureURL'] = $this->url->https('checkout/payment');
+			$this->data['FailureURL'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['FailureURL'] = $this->url->https('checkout/guest_step_2');
+			$this->data['FailureURL'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$data['CustomerName'] = html_entity_decode($order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
@@ -107,12 +107,19 @@ class ControllerPaymentSagepay extends Controller {
 		
 		$this->data['transaction'] = $this->config->get('sagepay_transaction');
 		$this->data['vendor'] = $vendor;
-		$this->data['crypt'] = base64_encode($this->simpleXor(http_build_query($data), $password));
+		
+		$crypt_data = array();
+   
+		foreach($data as $key => $value){
+   			$crypt_data[] = $key . '=' . $value;
+		}
+
+		$this->data['crypt'] = base64_encode($this->simpleXor(implode('&', $crypt_data), $password));
 		
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';
@@ -184,7 +191,7 @@ class ControllerPaymentSagepay extends Controller {
 				
 				$this->model_checkout_order->update($this->request->get['order_id'], $this->config->get('sagepay_order_status_id'), $message, FALSE);
 
-				$this->redirect($this->url->http('checkout/success'));
+				$this->redirect(HTTP_SERVER . 'index.php?route=checkout/success');
 			}
 		}
 	}	 

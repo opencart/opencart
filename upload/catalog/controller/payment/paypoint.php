@@ -42,7 +42,7 @@ class ControllerPaymentPaypoint extends Controller {
 		}
 		
 		$this->data['currency'] = $this->currency->getCode();
-		$this->data['callback'] = $this->url->https('payment/paypoint/callback');
+		$this->data['callback'] = HTTPS_SERVER . 'index.php?route=payment/paypoint/callback';
 		
 		$this->load->library('encryption');
 		
@@ -66,9 +66,9 @@ class ControllerPaymentPaypoint extends Controller {
 		$this->data['options'] = 'test_status=' . $status . ',dups=false,cb_flds=order_id';
 
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';
@@ -85,7 +85,7 @@ class ControllerPaymentPaypoint extends Controller {
 	public function callback() {
 		$this->language->load('payment/paypoint');
 	
-		$this->data['title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_store'));
+		$this->data['title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
 
 		if (!isset($this->request->server['HTTPS']) || ($this->request->server['HTTPS'] != 'on')) {
 			$this->data['base'] = HTTP_SERVER;
@@ -97,13 +97,13 @@ class ControllerPaymentPaypoint extends Controller {
 		$this->data['language'] = $this->language->get('code');
 		$this->data['direction'] = $this->language->get('direction');
 	
-		$this->data['heading_title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_store'));
+		$this->data['heading_title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
 		
 		$this->data['text_response'] = $this->language->get('text_response');
 		$this->data['text_success'] = $this->language->get('text_success');
-		$this->data['text_success_wait'] = sprintf($this->language->get('text_success_wait'), $this->url->https('checkout/success'));
+		$this->data['text_success_wait'] = sprintf($this->language->get('text_success_wait'), HTTPS_SERVER . 'index.php?route=checkout/success');
 		$this->data['text_failure'] = $this->language->get('text_failure');
-		$this->data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->https('checkout/cart'));
+		$this->data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), HTTPS_SERVER . 'index.php?route=checkout/cart');
 	
 		if (isset($this->request->get['valid']) && $this->request->get['valid'] == 'true') {
 			$this->load->library('encryption');
@@ -144,7 +144,7 @@ class ControllerPaymentPaypoint extends Controller {
 			
 			$this->model_checkout_order->update($order_id, $this->config->get('paypoint_order_status_id'), $message, FALSE);
 	
-			$this->data['continue'] = $this->url->https('checkout/success');
+			$this->data['continue'] = HTTPS_SERVER . 'index.php?route=checkout/success';
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paypoint_success.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/payment/paypoint_success.tpl';
@@ -154,7 +154,7 @@ class ControllerPaymentPaypoint extends Controller {
 		
 	  		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));			
 		} else {
-			$this->data['continue'] = $this->url->https('checkout/cart');
+			$this->data['continue'] = HTTPS_SERVER . 'index.php?route=checkout/cart';
 		
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paypoint_failure.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/payment/paypoint_failure.tpl';

@@ -38,7 +38,7 @@ class ControllerLocalisationCurrency extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/currency' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/currency' . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationCurrency extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 					
-			$this->redirect($this->url->https('localisation/currency' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/currency' . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationCurrency extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 
-			$this->redirect($this->url->https('localisation/currency' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/currency' . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerLocalisationCurrency extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/currency' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/currency' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['insert'] = $this->url->https('localisation/currency/insert' . $url);
-		$this->data['delete'] = $this->url->https('localisation/currency/delete' . $url);
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/currency/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/currency/delete' . $url;
 		
 		$this->data['currencies'] = array();
 
@@ -178,7 +178,7 @@ class ControllerLocalisationCurrency extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('localisation/currency/update&currency_id=' . $result['currency_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=localisation/currency/update&currency_id=' . $result['currency_id'] . $url
 			);
 						
 			$this->data['currencies'][] = array(
@@ -231,10 +231,10 @@ class ControllerLocalisationCurrency extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_title'] = $this->url->https('localisation/currency&sort=title' . $url);
-		$this->data['sort_code'] = $this->url->https('localisation/currency&sort=code' . $url);
-		$this->data['sort_value'] = $this->url->https('localisation/currency&sort=value' . $url);
-		$this->data['sort_date_modified'] = $this->url->https('localisation/currency&sort=date_modified' . $url);
+		$this->data['sort_title'] = HTTPS_SERVER . 'index.php?route=localisation/currency&sort=title' . $url;
+		$this->data['sort_code'] = HTTPS_SERVER . 'index.php?route=localisation/currency&sort=code' . $url;
+		$this->data['sort_value'] = HTTPS_SERVER . 'index.php?route=localisation/currency&sort=value' . $url;
+		$this->data['sort_date_modified'] = HTTPS_SERVER . 'index.php?route=localisation/currency&sort=date_modified' . $url;
 		
 		$url = '';
 
@@ -251,7 +251,7 @@ class ControllerLocalisationCurrency extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('localisation/currency' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/currency' . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 		
@@ -321,24 +321,24 @@ class ControllerLocalisationCurrency extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/currency' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/currency' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
 		if (!isset($this->request->get['currency_id'])) {
-			$this->data['action'] = $this->url->https('localisation/currency/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/currency/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('localisation/currency/update&currency_id=' . $this->request->get['currency_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/currency/update&currency_id=' . $this->request->get['currency_id'] . $url;
 		}
 				
-		$this->data['cancel'] = $this->url->https('localisation/currency' . $url);
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/currency' . $url;
 
 		if (isset($this->request->get['currency_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$currency_info = $this->model_localisation_currency->getCurrency($this->request->get['currency_id']);
@@ -434,13 +434,22 @@ class ControllerLocalisationCurrency extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
+		$this->load->model('setting/store');
 		$this->load->model('sale/order');
 		
 		foreach ($this->request->post['selected'] as $currency_id) {
 			$currency_info = $this->model_localisation_currency->getCurrency($currency_id);
 
-			if ($this->config->get('config_currency') == $currency_info['code']) {
-				$this->error['warning'] = $this->language->get('error_default');
+			if ($currency_info) {
+				if ($this->config->get('config_currency') == $currency_info['code']) {
+					$this->error['warning'] = $this->language->get('error_default');
+				}
+				
+				$store_total = $this->model_setting_store->getTotalStoresByCurrency($currency_info['code']);
+	
+				if ($store_total) {
+					$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+				}					
 			}
 			
 			$order_total = $this->model_sale_order->getTotalOrdersByCurrencyId($currency_id);
@@ -449,7 +458,7 @@ class ControllerLocalisationCurrency extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_order'), $order_total);
 			}					
 		}
-		
+		return FALSE;
 		if (!$this->error) {
 			return TRUE;
 		} else {

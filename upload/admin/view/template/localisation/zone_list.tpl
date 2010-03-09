@@ -17,7 +17,7 @@
       <table class="list">
         <thead>
           <tr>
-            <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+            <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
             <td class="left"><?php if ($sort == 'c.name') { ?>
               <a href="<?php echo $sort_country; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_country; ?></a>
               <?php } else { ?>
@@ -40,7 +40,7 @@
           <?php if ($zones) { ?>
           <?php foreach ($zones as $zone) { ?>
           <tr>
-            <td style="align: center;"><?php if ($zone['selected']) { ?>
+            <td style="text-align: center;"><?php if ($zone['selected']) { ?>
               <input type="checkbox" name="selected[]" value="<?php echo $zone['zone_id']; ?>" checked="checked" />
               <?php } else { ?>
               <input type="checkbox" name="selected[]" value="<?php echo $zone['zone_id']; ?>" />

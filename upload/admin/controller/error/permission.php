@@ -12,13 +12,13 @@ class ControllerErrorPermission extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('error/permission'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=error/permission',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);

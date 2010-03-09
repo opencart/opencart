@@ -8,13 +8,13 @@ class ControllerInformationSitemap extends Controller {
       	$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	);
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('information/sitemap'),
+        	'href'      => HTTP_SERVER . 'index.php?route=information/sitemap',
         	'text'      => $this->language->get('heading_title'),
         	'separator' => $this->language->get('text_separator')
       	);	
@@ -40,17 +40,17 @@ class ControllerInformationSitemap extends Controller {
 		
 		$this->data['category'] = $this->getCategories(0);
 		
-		$this->data['special'] = $this->url->https('product/special');
-		$this->data['account'] = $this->url->https('account/account');
-    	$this->data['edit'] = $this->url->https('account/edit');
-    	$this->data['password'] = $this->url->https('account/password');
-    	$this->data['address'] = $this->url->https('account/address');
-    	$this->data['history'] = $this->url->https('account/history');
-    	$this->data['download'] = $this->url->https('account/download');
-    	$this->data['cart'] = $this->url->http('checkout/cart');
-    	$this->data['checkout'] = $this->url->https('checkout/shipping');
-    	$this->data['search'] = $this->url->http('product/search');
-    	$this->data['contact'] = $this->url->http('information/contact');
+		$this->data['special'] = HTTPS_SERVER . 'index.php?route=product/special';
+		$this->data['account'] = HTTPS_SERVER . 'index.php?route=account/account';
+    	$this->data['edit'] = HTTPS_SERVER . 'index.php?route=account/edit';
+    	$this->data['password'] = HTTPS_SERVER . 'index.php?route=account/password';
+    	$this->data['address'] = HTTPS_SERVER . 'index.php?route=account/address';
+    	$this->data['history'] = HTTPS_SERVER . 'index.php?route=account/history';
+    	$this->data['download'] = HTTPS_SERVER . 'index.php?route=account/download';
+    	$this->data['cart'] = HTTP_SERVER . 'index.php?route=checkout/cart';
+    	$this->data['checkout'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
+    	$this->data['search'] = HTTP_SERVER . 'index.php?route=product/search';
+    	$this->data['contact'] = HTTP_SERVER . 'index.php?route=information/contact';
 		
 		$this->load->model('catalog/information');
 		
@@ -59,7 +59,7 @@ class ControllerInformationSitemap extends Controller {
 		foreach ($this->model_catalog_information->getInformations() as $result) {
       		$this->data['informations'][] = array(
         		'title' => $result['title'],
-        		'href'  => $this->model_tool_seo_url->rewrite($this->url->http('information/information&information_id=' . $result['information_id']))
+        		'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=information/information&information_id=' . $result['information_id'])
       		);
     	}
 		
@@ -97,7 +97,7 @@ class ControllerInformationSitemap extends Controller {
 			
 			$output .= '<li>';
 			
-			$output .= '<a href="' . $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $new_path))  . '">' . $result['name'] . '</a>';
+			$output .= '<a href="' . $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $new_path)  . '">' . $result['name'] . '</a>';
 			
         	$output .= $this->getCategories($result['category_id'], $new_path);
         

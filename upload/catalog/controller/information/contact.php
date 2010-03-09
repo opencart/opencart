@@ -8,27 +8,33 @@ class ControllerInformationContact extends Controller {
     	$this->document->title = $this->language->get('heading_title');  
 	 
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), html_entity_decode($this->config->get('config_smtp_password')), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout'));
+			$mail = new Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->hostname = $this->config->get('config_smtp_host');
+			$mail->username = $this->config->get('config_smtp_username');
+			$mail->password = $this->config->get('config_smtp_password');
+			$mail->port = $this->config->get('config_smtp_port');
+			$mail->timeout = $this->config->get('config_smtp_timeout');				
 			$mail->setTo($this->config->get('config_email'));
 	  		$mail->setFrom($this->request->post['email']);
-	  		$mail->setSender(html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8'));
+	  		$mail->setSender($this->request->post['name']);
 	  		$mail->setSubject(sprintf($this->language->get('email_subject'), $this->request->post['name']));
 	  		$mail->setText(strip_tags(html_entity_decode($this->request->post['enquiry'], ENT_QUOTES, 'UTF-8')));
       		$mail->send();
 
-	  		$this->redirect($this->url->https('information/contact/success'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=information/contact/success');
     	}
 
       	$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	);
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('information/contact'),
+        	'href'      => HTTP_SERVER . 'index.php?route=information/contact',
         	'text'      => $this->language->get('heading_title'),
         	'separator' => $this->language->get('text_separator')
       	);	
@@ -70,8 +76,8 @@ class ControllerInformationContact extends Controller {
 
     	$this->data['button_continue'] = $this->language->get('button_continue');
     
-		$this->data['action'] = $this->url->http('information/contact');
-		$this->data['store'] = $this->config->get('config_store');
+		$this->data['action'] = HTTP_SERVER . 'index.php?route=information/contact';
+		$this->data['store'] = $this->config->get('config_name');
     	$this->data['address'] = nl2br($this->config->get('config_address'));
     	$this->data['telephone'] = $this->config->get('config_telephone');
     	$this->data['fax'] = $this->config->get('config_fax');
@@ -124,13 +130,13 @@ class ControllerInformationContact extends Controller {
       	$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	);
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('information/contact'),
+        	'href'      => HTTP_SERVER . 'index.php?route=information/contact',
         	'text'      => $this->language->get('heading_title'),
         	'separator' => $this->language->get('text_separator')
       	);	
@@ -141,7 +147,7 @@ class ControllerInformationContact extends Controller {
 
     	$this->data['button_continue'] = $this->language->get('button_continue');
 
-    	$this->data['continue'] = $this->url->http('common/home');
+    	$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/common/success.tpl';

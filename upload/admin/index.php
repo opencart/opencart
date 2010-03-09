@@ -9,19 +9,22 @@ require_once(DIR_SYSTEM . 'startup.php');
 require_once(DIR_SYSTEM . 'library/currency.php');
 require_once(DIR_SYSTEM . 'library/user.php');
 require_once(DIR_SYSTEM . 'library/weight.php');
-require_once(DIR_SYSTEM . 'library/measurement.php');
+require_once(DIR_SYSTEM . 'library/length.php');
+
+// Registry
+$registry = new Registry();
 
 // Loader
-$loader = new Loader();
-Registry::set('load', $loader);
+$loader = new Loader($registry);
+$registry->set('load', $loader);
 
 // Config
 $config = new Config();
-Registry::set('config', $config);
+$registry->set('config', $config);
 
 // Database
 $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-Registry::set('db', $db);
+$registry->set('db', $db);
 
 // Settings
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "setting");
@@ -30,8 +33,9 @@ foreach ($query->rows as $setting) {
 	$config->set($setting['key'], $setting['value']);
 }
 
-$log = new Logger($config->get('config_error_filename'));
-Registry::set('log', $log);
+// Log 
+$log = new Log($config->get('config_error_filename'));
+$registry->set('log', $log);
 
 // Error Handler
 function error_handler($errno, $errstr, $errfile, $errline) {
@@ -40,18 +44,18 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	switch ($errno) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
-			$error = "Notice";
+			$error = 'Notice';
 			break;
 		case E_WARNING:
 		case E_USER_WARNING:
-			$error = "Warning";
+			$error = 'Warning';
 			break;
 		case E_ERROR:
 		case E_USER_ERROR:
-			$error = "Fatal Error";
+			$error = 'Fatal Error';
 			break;
 		default:
-			$error = "Unknown";
+			$error = 'Unknown';
 			break;
 	}
 		
@@ -66,29 +70,26 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	return TRUE;
 }
 
-// set to the user defined error handler
+// Error Handler
 set_error_handler('error_handler');
 
 // Request
 $request = new Request();
-Registry::set('request', $request);
+$registry->set('request', $request);
 
 // Response
 $response = new Response();
-$response->addHeader('Content-Type', 'text/html; charset=utf-8');
-Registry::set('response', $response);
+$response->addHeader('Content-Type: text/html; charset=utf-8');
+$registry->set('response', $response); 
 
 // Session
-Registry::set('session', new Session());
+$registry->set('session', new Session());
 
 // Cache
-Registry::set('cache', new Cache());
-
-// Url
-Registry::set('url', new Url());
+$registry->set('cache', new Cache());
 
 // Document
-Registry::set('document', new Document());
+$registry->set('document', new Document());
 
 // Language
 $languages = array();
@@ -106,26 +107,26 @@ foreach ($query->rows as $result) {
 	);
 }
 
-$config->set('config_language_id', $languages[$config->get('config_admin_language')]['language_id']);
+$config->set('config_language_id', $languages[$config->get('config_language')]['language_id']);
 
-$language = new Language($languages[$config->get('config_admin_language')]['directory']);
-$language->load($languages[$config->get('config_admin_language')]['filename']);	
-Registry::set('language', $language);
+$language = new Language($languages[$config->get('config_language')]['directory']);
+$language->load($languages[$config->get('config_language')]['filename']);	
+$registry->set('language', $language);
 
 // Currency
-Registry::set('currency', new Currency());
+$registry->set('currency', new Currency($registry));
 
 // Weight
-Registry::set('weight', new Weight());
+$registry->set('weight', new Weight($registry));
 
-// Measurement
-Registry::set('measurement', new Measurement());
+// Length
+$registry->set('length', new Length($registry));
 
 // User
-Registry::set('user', new User());
+$registry->set('user', new User($registry));
 
 // Front Controller
-$controller = new Front();
+$controller = new Front($registry);
 
 // Login
 $controller->addPreAction(new Action('common/home/login'));

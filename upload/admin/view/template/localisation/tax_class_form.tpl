@@ -29,7 +29,7 @@
         </tr>
       </table>
       <br />
-      <table class="list">
+      <table id="tax_rate" class="list">
         <thead>
           <tr>
             <td class="left"><?php echo $entry_geo_zone; ?></td>
@@ -60,19 +60,12 @@
         </tbody>
         <?php $tax_rate_row++; ?>
         <?php } ?>
-        <tbody id="tax_rate">
-          <tr class="filter">
-            <td class="left"><select id="geo_zone_id">
-                <?php foreach ($geo_zones as $geo_zone) { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
-                <?php } ?>
-              </select></td>
-            <td class="left"><input type="text" id="description" value="" /></td>
-            <td class="left"><input type="text" id="rate" value="" /></td>
-            <td class="left"><input type="text" id="priority" value="" size="1" /></td>
+        <tfoot>
+          <tr>
+            <td colspan="4"></td>
             <td class="left"><a onclick="addRate();" class="button"><span><?php echo $button_add_rate; ?></span></a></td>
           </tr>
-        </tbody>        
+        </tfoot>
       </table>
     </form>
   </div>
@@ -83,26 +76,19 @@ var tax_rate_row = <?php echo $tax_rate_row; ?>;
 function addRate() {
 	html  = '<tbody id="tax_rate_row' + tax_rate_row + '">';
 	html += '<tr>';
-	html += '<td class="left"><select name="tax_rate[' + tax_rate_row + '][geo_zone_id]" id="geo_zone_id' + tax_rate_row + '">';
+	html += '<td class="left"><select name="tax_rate[' + tax_rate_row + '][geo_zone_id]">';
     <?php foreach ($geo_zones as $geo_zone) { ?>
     html += '<option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>';
     <?php } ?>
 	html += '</select></td>';
-	html += '<td class="left"><input type="text" name="tax_rate[' + tax_rate_row + '][description]" value="' + $('#description').attr('value') + '" /></td>';
-	html += '<td class="left"><input type="text" name="tax_rate[' + tax_rate_row + '][rate]" value="' + $('#rate').attr('value') + '" /></td>';
-	html += '<td class="left"><input type="text" name="tax_rate[' + tax_rate_row + '][priority]" value="' + $('#priority').attr('value') + '" size="1" /></td>';
+	html += '<td class="left"><input type="text" name="tax_rate[' + tax_rate_row + '][description]" value="" /></td>';
+	html += '<td class="left"><input type="text" name="tax_rate[' + tax_rate_row + '][rate]" value="" /></td>';
+	html += '<td class="left"><input type="text" name="tax_rate[' + tax_rate_row + '][priority]" value="" size="1" /></td>';
 	html += '<td class="left"><a onclick="$(\'#tax_rate_row' + tax_rate_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
 	html += '</tr>';
 	html += '</tbody>';
 	
-	$('#tax_rate').before(html);
-	
-	$('#geo_zone_id' + tax_rate_row).attr('value', $('#geo_zone_id').attr('value'));
-	
-	$('#geo_zone_id option').attr('selected', '');
-	$('#description').attr('value', '');
-	$('#rate').attr('value', '')
-	$('#priority').attr('value', '')
+	$('#tax_rate > tfoot').before(html);
 	
 	tax_rate_row++;
 }

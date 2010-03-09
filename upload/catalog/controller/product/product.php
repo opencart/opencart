@@ -4,11 +4,11 @@ class ControllerProductProduct extends Controller {
 	
 	public function index() { 
 		$this->language->load('product/product');
-		
+				
 		$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	);
@@ -31,7 +31,7 @@ class ControllerProductProduct extends Controller {
 				
 				if ($category_info) {
         			$this->document->breadcrumbs[] = array(
-						'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $path)),
+						'href'      => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $path),
            				'text'      => $category_info['name'],
            				'separator' => $this->language->get('text_separator')
         			);
@@ -46,7 +46,7 @@ class ControllerProductProduct extends Controller {
 	      		
 			if ($manufacturer_info) {	
 				$this->document->breadcrumbs[] = array(
-        			'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'])),
+        			'href'      => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id']),
         			'text'      => $manufacturer_info['name'],
         			'separator' => $this->language->get('text_separator')
       			);	
@@ -65,7 +65,7 @@ class ControllerProductProduct extends Controller {
 			}				
 			
 			$this->document->breadcrumbs[] = array(
-        		'href'      => $this->url->http('product/search&keyword=' . $this->request->get['keyword'] . $url),
+        		'href'      => HTTP_SERVER . 'index.php?route=product/search&keyword=' . $this->request->get['keyword'] . $url,
         		'text'      => $this->language->get('text_search'),
         		'separator' => $this->language->get('text_separator')
       		);	
@@ -105,7 +105,7 @@ class ControllerProductProduct extends Controller {
 			}				
 									
       		$this->document->breadcrumbs[] = array(
-        		'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/product' . $url . '&product_id=' . $this->request->get['product_id'])),
+        		'href'      => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product' . $url . '&product_id=' . $this->request->get['product_id']),
         		'text'      => $product_info['name'],
         		'separator' => $this->language->get('text_separator')
       		);			
@@ -113,7 +113,14 @@ class ControllerProductProduct extends Controller {
 			$this->document->title = $product_info['name'];
 			
 			$this->document->description = $product_info['meta_description'];
-			
+
+			$this->document->links = array();
+	
+			$this->document->links[] = array(
+				'href' => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $this->request->get['product_id']),
+				'rel'  => 'canonical'
+			);
+		
 			$this->data['heading_title'] = $product_info['name'];
 			
 			$this->data['text_enlarge'] = $this->language->get('text_enlarge');
@@ -156,11 +163,11 @@ class ControllerProductProduct extends Controller {
 			
 			$this->data['button_add_to_cart'] = $this->language->get('button_add_to_cart');
 
-			$this->data['action'] = $this->url->http('checkout/cart');
+			$this->data['action'] = HTTP_SERVER . 'index.php?route=checkout/cart';
 			
-			$this->data['redirect'] = $this->url->http('product/product' . $url . '&product_id=' . $this->request->get['product_id']);
+			$this->data['redirect'] = HTTP_SERVER . 'index.php?route=product/product' . $url . '&product_id=' . $this->request->get['product_id'];
 			
-			$this->load->helper('image');
+			$this->load->model('tool/image');
 			
 			if ($product_info['image']) {
 				$image = $product_info['image'];
@@ -168,8 +175,8 @@ class ControllerProductProduct extends Controller {
 				$image = 'no_image.jpg';
 			}	
 					
-			$this->data['popup'] = image_resize($image, $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
-	  		$this->data['thumb'] = image_resize($image, $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+			$this->data['popup'] = $this->model_tool_image->resize($image, $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+	  		$this->data['thumb'] = $this->model_tool_image->resize($image, $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
 
 			$discount = $this->model_catalog_product->getProductDiscount($this->request->get['product_id']);
 			
@@ -212,7 +219,7 @@ class ControllerProductProduct extends Controller {
 			
 			$this->data['model'] = $product_info['model'];
 			$this->data['manufacturer'] = $product_info['manufacturer'];
-			$this->data['manufacturers'] = $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $product_info['manufacturer_id']));
+			$this->data['manufacturers'] = $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $product_info['manufacturer_id']);
 			$this->data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
       		$this->data['product_id'] = $this->request->get['product_id'];
 			$this->data['average'] = $average;
@@ -246,8 +253,8 @@ class ControllerProductProduct extends Controller {
 			
       		foreach ($results as $result) {
         		$this->data['images'][] = array(
-          			'popup' => image_resize($result['image'] , $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
-          			'thumb' => image_resize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height'))
+          			'popup' => $this->model_tool_image->resize($result['image'] , $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
+          			'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height'))
         		);
       		}
 
@@ -285,10 +292,10 @@ class ControllerProductProduct extends Controller {
 					'model'   => $result['model'],
             		'rating'  => $rating,
 					'stars'   => sprintf($this->language->get('text_stars'), $rating),
-					'thumb'   => image_resize($image, $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height')),
+					'thumb'   => $this->model_tool_image->resize($image, $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height')),
             		'price'   => $price,
 					'special' => $special,
-					'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $result['product_id']))
+					'href'    => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id'])
           		);
       		}
 
@@ -341,7 +348,7 @@ class ControllerProductProduct extends Controller {
 			}		
 					
       		$this->document->breadcrumbs[] = array(
-        		'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/product' . $url . '&product_id=' . $product_id)),
+        		'href'      => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product' . $url . '&product_id=' . $product_id),
         		'text'      => $this->language->get('text_error'),
         		'separator' => $this->language->get('text_separator')
       		);			
@@ -354,7 +361,7 @@ class ControllerProductProduct extends Controller {
 
       		$this->data['button_continue'] = $this->language->get('button_continue');
 
-      		$this->data['continue'] = $this->url->http('common/home');
+      		$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
 	  
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
@@ -407,7 +414,7 @@ class ControllerProductProduct extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 5; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->http('product/product/review&product_id=' . $this->request->get['product_id'] . '&page=%s');
+		$pagination->url = HTTP_SERVER . 'index.php?route=product/product/review&product_id=' . $this->request->get['product_id'] . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 

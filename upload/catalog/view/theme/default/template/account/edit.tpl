@@ -11,7 +11,7 @@
     <?php if ($error_warning) { ?>
     <div class="warning"><?php echo $error_warning; ?></div>
     <?php } ?>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="edit">
+    <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="edit">
       <b style="margin-bottom: 2px; display: block;"><?php echo $text_your_details; ?></b>
       <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
         <table>
@@ -52,7 +52,7 @@
       <div class="buttons">
         <table>
           <tr>
-            <td align="left"><a onclick="location='<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
+            <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
             <td align="right"><a onclick="$('#edit').submit();" class="button"><span><?php echo $button_continue; ?></span></a></td>
           </tr>
         </table>

@@ -38,7 +38,7 @@ class ControllerLocalisationZone extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/zone' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/zone' . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationZone extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/zone' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/zone' . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationZone extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 
-			$this->redirect($this->url->https('localisation/zone' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/zone' . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerLocalisationZone extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/zone' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/zone' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
-		$this->data['insert'] = $this->url->https('localisation/zone/insert' . $url);
-		$this->data['delete'] = $this->url->https('localisation/zone/delete' . $url);
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/zone/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/zone/delete' . $url;
 	
 		$this->data['zones'] = array();
 
@@ -178,13 +178,13 @@ class ControllerLocalisationZone extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('localisation/zone/update&zone_id=' . $result['zone_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=localisation/zone/update&zone_id=' . $result['zone_id'] . $url
 			);
 					
 			$this->data['zones'][] = array(
 				'zone_id'  => $result['zone_id'],
 				'country'  => $result['country'],
-				'name'     => $result['name'] . (($result['zone_id'] == $this->config->get('config_zone_id')) ? $this->language->get('text_default') : NULL),
+				'name'     => $result['name'],
 				'code'     => $result['code'],
 				'selected' => isset($this->request->post['selected']) && in_array($result['zone_id'], $this->request->post['selected']),
 				'action'   => $action			
@@ -229,9 +229,9 @@ class ControllerLocalisationZone extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		 
-		$this->data['sort_country'] = $this->url->https('localisation/zone&sort=c.name' . $url);
-		$this->data['sort_name'] = $this->url->https('localisation/zone&sort=z.name' . $url);
-		$this->data['sort_code'] = $this->url->https('localisation/zone&sort=z.code' . $url);
+		$this->data['sort_country'] = HTTPS_SERVER . 'index.php?route=localisation/zone&sort=c.name' . $url;
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=localisation/zone&sort=z.name' . $url;
+		$this->data['sort_code'] = HTTPS_SERVER . 'index.php?route=localisation/zone&sort=z.code' . $url;
 		
 		$url = '';
 
@@ -248,7 +248,7 @@ class ControllerLocalisationZone extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('localisation/zone' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/zone' . $url . '&page={page}';
 
 		$this->data['pagination'] = $pagination->render();
 		
@@ -305,24 +305,24 @@ class ControllerLocalisationZone extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/zone' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/zone' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
 		if (!isset($this->request->get['zone_id'])) {
-			$this->data['action'] = $this->url->https('localisation/zone/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/zone/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('localisation/zone/update&zone_id=' . $this->request->get['zone_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/zone/update&zone_id=' . $this->request->get['zone_id'] . $url;
 		}
 		 
-		$this->data['cancel'] = $this->url->https('localisation/zone' . $url);
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/zone' . $url;
 
 		if (isset($this->request->get['zone_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$zone_info = $this->model_localisation_zone->getZone($this->request->get['zone_id']);
@@ -386,12 +386,15 @@ class ControllerLocalisationZone extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
+		$this->load->model('setting/store');
 		$this->load->model('sale/customer');
 		$this->load->model('localisation/geo_zone');
 		
 		foreach ($this->request->post['selected'] as $zone_id) {
-			if ($this->config->get('config_zone_id') == $zone_id) {
-				$this->error['warning'] = $this->language->get('error_default');
+			$store_total = $this->model_setting_store->getTotalStoresByZoneId($zone_id);
+
+			if ($store_total) {
+				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 		
 			$address_total = $this->model_sale_customer->getTotalAddressesByZoneId($zone_id);

@@ -38,7 +38,7 @@ class ControllerUserUserPermission extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('user/user_permission' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=user/user_permission' . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerUserUserPermission extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('user/user_permission' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=user/user_permission' . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerUserUserPermission extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('user/user_permission' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=user/user_permission' . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerUserUserPermission extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('user/user_permission' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=user/user_permission' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
-		$this->data['insert'] = $this->url->https('user/user_permission/insert' . $url);
-		$this->data['delete'] = $this->url->https('user/user_permission/delete' . $url);	
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=user/user_permission/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=user/user_permission/delete' . $url;	
 	
 		$this->data['user_groups'] = array();
 
@@ -178,7 +178,7 @@ class ControllerUserUserPermission extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('user/user_permission/update&user_group_id=' . $result['user_group_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=user/user_permission/update&user_group_id=' . $result['user_group_id'] . $url
 			);		
 		
 			$this->data['user_groups'][] = array(
@@ -225,7 +225,7 @@ class ControllerUserUserPermission extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$this->data['sort_name'] = $this->url->https('user/user_permission&sort=name' . $url);
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=user/user_permission&sort=name' . $url;
 		
 		$url = '';
 
@@ -242,7 +242,7 @@ class ControllerUserUserPermission extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('user/user_permission' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=user/user_permission' . $url . '&page={page}';
 		
 		$this->data['pagination'] = $pagination->render();				
 
@@ -299,24 +299,24 @@ class ControllerUserUserPermission extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('user/user_permission' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=user/user_permission' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 			
 		if (!isset($this->request->get['user_group_id'])) {
-			$this->data['action'] = $this->url->https('user/user_permission/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=user/user_permission/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('user/user_permission/update&user_group_id=' . $this->request->get['user_group_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=user/user_permission/update&user_group_id=' . $this->request->get['user_group_id'] . $url;
 		}
 		  
-    	$this->data['cancel'] = $this->url->https('user/user_permission' . $url);
+    	$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=user/user_permission' . $url;
 
 		if (isset($this->request->get['user_group_id']) && $this->request->server['REQUEST_METHOD'] != 'POST') {
 			$user_group_info = $this->model_user_user_group->getUserGroup($this->request->get['user_group_id']);
@@ -338,7 +338,6 @@ class ControllerUserUserPermission extends Controller {
 			'common/permission',
 			'error/not_found',
 			'error/permission',
-			'common/filemanager',
 			'common/footer',
 			'common/header',
 			'common/menu'

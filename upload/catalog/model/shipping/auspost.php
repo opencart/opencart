@@ -17,7 +17,7 @@ class ModelShippingAuspost extends Model {
 			$status = FALSE;
 		}
 		
-		$weight = intval($this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), 2));
+		$weight = intval($this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class'), 2));
 		
 		$method_data = array();
 		

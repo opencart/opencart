@@ -23,7 +23,7 @@ class ControllerPaymentNochex extends Controller {
         // End minimum requirements
 
         $this->data['order_id']             = $this->session->data['order_id'];
-        $this->data['description']          = $this->config->get('config_store');
+        $this->data['description']          = $this->config->get('config_name');
 
         $this->data['billing_fullname']     = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
 
@@ -67,15 +67,15 @@ class ControllerPaymentNochex extends Controller {
         //$this->data['footer_html']        = $this->config->get('nochex_footer'); // Send your footer
         // There are more options available if you wish to implement them
 
-        $this->data['success_url']        = $this->url->https('checkout/success');
-        $this->data['cancel_url']         = $this->url->https('checkout/payment');
-        $this->data['declined_url']       = $this->url->https('checkout/failure');
-        //$this->data['callback_url']       = $this->url->https('checkout/payment'); // ???Not sure about this
+        $this->data['success_url']        = HTTPS_SERVER . 'index.php?route=checkout/success';
+        $this->data['cancel_url']         = HTTPS_SERVER . 'index.php?route=checkout/payment';
+        $this->data['declined_url']       = HTTPS_SERVER . 'index.php?route=checkout/failure';
+        //$this->data['callback_url']       = HTTPS_SERVER . 'index.php?route=checkout/payment'; // ???Not sure about this
 
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';

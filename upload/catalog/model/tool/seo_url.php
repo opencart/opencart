@@ -45,7 +45,7 @@ class ModelToolSeoUrl extends Model {
 					}
 					
 					if ($query) {
-						$query = '?' . str_replace('&amp;', '&', trim($query, '&'));
+						$query = '?' . trim($query, '&');
 					}
 				}
 

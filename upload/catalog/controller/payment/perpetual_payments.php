@@ -47,9 +47,9 @@ class ControllerPaymentPerpetualPayments extends Controller {
 		}
 
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';
@@ -131,7 +131,7 @@ class ControllerPaymentPerpetualPayments extends Controller {
 				
 				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('perpetual_payments_order_status_id'), $message, FALSE);
 					
-				$json['success'] = $this->url->https('checkout/success');
+				$json['success'] = HTTPS_SERVER . 'index.php?route=checkout/success';
 			} else {
 				$json['error'] = end($data);
 			}

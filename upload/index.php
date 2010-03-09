@@ -3,7 +3,7 @@
 require_once('config.php');
    
 // Install 
-if (!defined('HTTP_SERVER')) {
+if (!defined('DIR_APPLICATION')) {
 	header('Location: install/index.php');
 	exit;
 } 
@@ -16,30 +16,34 @@ require_once(DIR_SYSTEM . 'library/customer.php');
 require_once(DIR_SYSTEM . 'library/currency.php');
 require_once(DIR_SYSTEM . 'library/tax.php');
 require_once(DIR_SYSTEM . 'library/weight.php');
-require_once(DIR_SYSTEM . 'library/measurement.php');
+require_once(DIR_SYSTEM . 'library/length.php');
 require_once(DIR_SYSTEM . 'library/cart.php');
 
+// Registry
+$registry = new Registry();
+
 // Loader
-$loader = new Loader();
-Registry::set('load', $loader);
+$loader = new Loader($registry);
+$registry->set('load', $loader);
 
 // Config
 $config = new Config();
-Registry::set('config', $config);
+$registry->set('config', $config);
 
 // Database 
 $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-Registry::set('db', $db);
+$registry->set('db', $db);
 
 // Settings
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "setting");
 
 foreach ($query->rows as $setting) {
 	$config->set($setting['key'], $setting['value']);
-}
+}	
 
-$log = new Logger($config->get('config_error_filename'));
-Registry::set('log', $log);
+// Log 
+$log = new Log($config->get('config_error_filename'));
+$registry->set('log', $log);
 
 // Error Handler
 function error_handler($errno, $errstr, $errfile, $errline) {
@@ -48,18 +52,18 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	switch ($errno) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
-			$error = "Notice";
+			$error = 'Notice';
 			break;
 		case E_WARNING:
 		case E_USER_WARNING:
-			$error = "Warning";
+			$error = 'Warning';
 			break;
 		case E_ERROR:
 		case E_USER_ERROR:
-			$error = "Fatal Error";
+			$error = 'Fatal Error';
 			break;
 		default:
-			$error = "Unknown";
+			$error = 'Unknown';
 			break;
 	}
 		
@@ -74,30 +78,47 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	return TRUE;
 }
 
-// set to the user defined error handler
+// Error Handler
 set_error_handler('error_handler');
 
 // Request
 $request = new Request();
-Registry::set('request', $request);
-
+$registry->set('request', $request);
+ 
 // Response
 $response = new Response();
-$response->addHeader('Content-Type', 'text/html; charset=utf-8');
-Registry::set('response', $response);
+$response->addHeader('Content-Type: text/html; charset=utf-8');
+$registry->set('response', $response); 
+
+define('HTTP_SERVER', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/');
+define('HTTP_IMAGE', HTTP_SERVER . 'image/');
+
+if ($config->get('config_ssl')) {
+	define('HTTPS_SERVER', 'https://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/');
+	define('HTTPS_IMAGE', HTTPS_SERVER . 'image/');	
+} else {
+	define('HTTPS_SERVER', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/');
+	define('HTTPS_IMAGE', HTTPS_SERVER . 'image/');	
+}
+
+// Store
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "store WHERE url = '" . $db->escape(HTTP_SERVER)  . "'");
+
+if ($query->num_rows) {
+	foreach ($query->row as $key => $value) {
+		$config->set('config_' . $key, $value);
+	}
+}
 
 // Cache
-Registry::set('cache', new Cache());
-
-// Url
-Registry::set('url', new Url());
+$registry->set('cache', new Cache());
 
 // Session
 $session = new Session();
-Registry::set('session', $session);
+$registry->set('session', $session);
 	
 // Document
-Registry::set('document', new Document());
+$registry->set('document', new Document());
 
 // Language Detection
 $languages = array();
@@ -154,28 +175,28 @@ $config->set('config_language_id', $languages[$code]['language_id']);
 // Language		
 $language = new Language($languages[$code]['directory']);
 $language->load($languages[$code]['filename']);	
-Registry::set('language', $language);
+$registry->set('language', $language);
 
 // Customer
-Registry::set('customer', new Customer());
+$registry->set('customer', new Customer($registry));
 
 // Currency
-Registry::set('currency', new Currency());
+$registry->set('currency', new Currency($registry));
 
 // Tax
-Registry::set('tax', new Tax());
+$registry->set('tax', new Tax($registry));
 
 // Weight
-Registry::set('weight', new Weight());
+$registry->set('weight', new Weight($registry));
 
-// Weight
-Registry::set('measurement', new Measurement());
+// Length
+$registry->set('length', new Length($registry));
 
 // Cart
-Registry::set('cart', new Cart());
+$registry->set('cart', new Cart($registry));
 
 // Front Controller 
-$controller = new Front();
+$controller = new Front($registry);
 
 // SEO URL's
 $controller->addPreAction(new Action('common/seo_url'));
@@ -189,7 +210,7 @@ if (isset($request->get['route'])) {
 
 // Dispatch
 $controller->dispatch($action, new Action('error/not_found'));
-			
+
 // Output
 $response->output();
 ?>

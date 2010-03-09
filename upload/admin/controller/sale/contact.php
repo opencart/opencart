@@ -10,70 +10,91 @@ class ControllerSaleContact extends Controller {
 		$this->load->model('sale/customer');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
-			$emails = array();
+			$this->load->model('setting/store');
+		
+			$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);			
 			
-			if (isset($this->request->post['group'])) {
-				switch ($this->request->post['group']) {
-					case 'newsletter':
-						$results = $this->model_sale_customer->getCustomersByNewsletter();
-					
-						foreach ($results as $result) {
-							$emails[$result['customer_id']] = $result['email'];
-						}
-						break;
-					case 'customer':
-						$results = $this->model_sale_customer->getCustomers();
+			if ($store_info) {
+				$emails = array();
 				
-						foreach ($results as $result) {
-							$emails[$result['customer_id']] = $result['email'];
-						}						
-						break;
-				}
-			}
-			
-			if (isset($this->request->post['to']) && $this->request->post['to']) {					
-				foreach ($this->request->post['to'] as $customer_id) {
-					$customer_info = $this->model_sale_customer->getCustomer($customer_id);
+				if (isset($this->request->post['group'])) {
+					switch ($this->request->post['group']) {
+						case 'newsletter':
+							$results = $this->model_sale_customer->getCustomersByNewsletter();
+						
+							foreach ($results as $result) {
+								$emails[$result['customer_id']] = $result['email'];
+							}
+							break;
+						case 'customer':
+							$results = $this->model_sale_customer->getCustomers();
 					
-					if ($customer_info) {
-						$emails[] = $customer_info['email'];
+							foreach ($results as $result) {
+								$emails[$result['customer_id']] = $result['email'];
+							}						
+							break;
 					}
 				}
-			}	
-			
-			if ($emails) {
-				$message  = '<html dir="ltr" lang="en">' . "\n";
-				$message .= '<head>' . "\n";
-				$message .= '<title>' . $this->request->post['subject'] . '</title>' . "\n";
-				$message .= '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . "\n";
-				$message .= '</head>' . "\n";
-				$message .= '<body>' . html_entity_decode($this->request->post['message']) . '</body>' . "\n";
-				$message .= '</html>' . "\n";
-
-				$attachments = array();
-
-				$pattern = '#(src="([^"]*)")#mis';
 				
-				if (preg_match_all($pattern, $message, $matches)) {
-					foreach ($matches[2] as $key => $value) { 
-						$attachments[] = str_replace('/image/', DIR_IMAGE, $value);
-						$message = str_replace($value, 'cid:' . basename($value), $message);
+				if (isset($this->request->post['to']) && $this->request->post['to']) {					
+					foreach ($this->request->post['to'] as $customer_id) {
+						$customer_info = $this->model_sale_customer->getCustomer($customer_id);
+						
+						if ($customer_info) {
+							$emails[] = $customer_info['email'];
+						}
 					}
 				}	
 				
-				foreach ($emails as $email) {
-					$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), html_entity_decode($this->config->get('config_smtp_password')), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout'));	
-					$mail->setTo($email);
-					$mail->setFrom($this->config->get('config_email'));
-	    			$mail->setSender($this->config->get('config_store'));
-	    			$mail->setSubject($this->request->post['subject']);					
-					$mail->addAttachment($attachments);
-					$mail->setHtml($message);
-	    			$mail->send();
+				if ($emails) {
+					$message  = '<html dir="ltr" lang="en">' . "\n";
+					$message .= '<head>' . "\n";
+					$message .= '<title>' . $this->request->post['subject'] . '</title>' . "\n";
+					$message .= '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . "\n";
+					$message .= '</head>' . "\n";
+					$message .= '<body>' . html_entity_decode($this->request->post['message'], ENT_QUOTES, 'UTF-8') . '</body>' . "\n";
+					$message .= '</html>' . "\n";
+	
+					$attachments = array();
+	
+					if (preg_match_all('#(src="([^"]*)")#mis', $message, $matches)) {
+						foreach ($matches[2] as $key => $value) {
+							$filename = md5($value) . strrchr($value, '.');
+							$path = rtrim($this->request->server['DOCUMENT_ROOT'], '/') . parse_url($value, PHP_URL_PATH);
+							
+							$attachments[] = array(
+								'filename' => $filename,
+								'path'     => $path
+							);
+							
+							$message = str_replace($value, 'cid:' . basename($filename), $message);
+						}
+					}	
+					
+					foreach ($emails as $email) {
+						$mail = new Mail();	
+						$mail->protocol = $this->config->get('config_mail_protocol');
+						$mail->hostname = $this->config->get('config_smtp_host');
+						$mail->username = $this->config->get('config_smtp_username');
+						$mail->password = $this->config->get('config_smtp_password');
+						$mail->port = $this->config->get('config_smtp_port');
+						$mail->timeout = $this->config->get('config_smtp_timeout');				
+						$mail->setTo($email);
+						$mail->setFrom($this->config->get('config_email'));
+						$mail->setSender($store_info['name']);
+						$mail->setSubject($this->request->post['subject']);					
+						
+						foreach ($attachments as $attachment) {
+							$mail->addAttachment($attachment['path'], $attachment['filename']);
+						}
+						
+						$mail->setHtml($message);
+						$mail->send();
+					}
 				}
+				
+				$this->session->data['success'] = $this->language->get('text_success');
 			}
-			
-			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -82,6 +103,7 @@ class ControllerSaleContact extends Controller {
 		$this->data['text_customer'] = $this->language->get('text_customer');
 		$this->data['text_search'] = $this->language->get('text_search');
 		
+		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_to'] = $this->language->get('entry_to');
 		$this->data['entry_subject'] = $this->language->get('entry_subject');
 		$this->data['entry_message'] = $this->language->get('entry_message');
@@ -112,13 +134,13 @@ class ControllerSaleContact extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('sale/contact'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=sale/contact',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
@@ -131,8 +153,18 @@ class ControllerSaleContact extends Controller {
 			$this->data['success'] = '';
 		}
 				
-		$this->data['action'] = $this->url->https('sale/contact');
-    	$this->data['cancel'] = $this->url->https('sale/contact');
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/contact';
+    	$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=sale/contact';
+
+		if (isset($this->request->post['store_id'])) {
+			$this->data['store_id'] = $this->request->post['store_id'];
+		} else {
+			$this->data['store_id'] = '';
+		}
+
+		$this->load->model('setting/store');
+		
+		$this->data['stores'] = $this->model_setting_store->getStores();
 		
 		$this->data['customers'] = array();
 		
@@ -176,7 +208,7 @@ class ControllerSaleContact extends Controller {
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 
-	public function customer() {
+	public function customers() {
 		$this->load->model('sale/customer');
 			
 		$customer_data = array();

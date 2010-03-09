@@ -2,9 +2,9 @@
 class ControllerAccountAccount extends Controller { 
 	public function index() {
 		if (!$this->customer->isLogged()) {
-	  		$this->session->data['redirect'] = $this->url->https('account/account');
+	  		$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=account/account';
 	  
-	  		$this->redirect($this->url->https('account/login'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
     	} 
 	
 		$this->language->load('account/account');
@@ -12,13 +12,13 @@ class ControllerAccountAccount extends Controller {
       	$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('account/account'),
+        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);
@@ -45,12 +45,12 @@ class ControllerAccountAccount extends Controller {
 			$this->data['success'] = '';
 		}
 
-    	$this->data['information'] = $this->url->https('account/edit');
-    	$this->data['password'] = $this->url->https('account/password');
-		$this->data['address'] = $this->url->https('account/address');
-    	$this->data['history'] = $this->url->https('account/history');
-    	$this->data['download'] = $this->url->https('account/download');
-		$this->data['newsletter'] = $this->url->https('account/newsletter');
+    	$this->data['information'] = HTTPS_SERVER . 'index.php?route=account/edit';
+    	$this->data['password'] = HTTPS_SERVER . 'index.php?route=account/password';
+		$this->data['address'] = HTTPS_SERVER . 'index.php?route=account/address';
+    	$this->data['history'] = HTTPS_SERVER . 'index.php?route=account/history';
+    	$this->data['download'] = HTTPS_SERVER . 'index.php?route=account/download';
+		$this->data['newsletter'] = HTTPS_SERVER . 'index.php?route=account/newsletter';
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/account/account.tpl';

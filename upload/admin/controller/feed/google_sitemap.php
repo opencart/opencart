@@ -14,7 +14,7 @@ class ControllerFeedGoogleSitemap extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect($this->url->https('extension/feed'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/feed');
 		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -39,26 +39,26 @@ class ControllerFeedGoogleSitemap extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('extension/feed'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/feed',
        		'text'      => $this->language->get('text_feed'),
       		'separator' => ' :: '
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('feed/google_sitemap'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=feed/google_sitemap',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 				
-		$this->data['action'] = $this->url->https('feed/google_sitemap');
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=feed/google_sitemap';
 		
-		$this->data['cancel'] = $this->url->https('extension/feed');
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/feed';
 		
 		if (isset($this->request->post['google_sitemap_status'])) {
 			$this->data['google_sitemap_status'] = $this->request->post['google_sitemap_status'];

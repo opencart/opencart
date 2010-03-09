@@ -1,4 +1,4 @@
-<form action="<?php echo $action; ?>" method="post" id="checkout">
+<form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" id="checkout">
   <?php if (!$this->config->get('nochex_test')) { ?>
   <input type = "hidden" name = "merchant_id"         value = "<?php echo $merchant_id; ?>">
   <input type = "hidden" name = "success_url"         value = "<?php echo $success_url; ?>">
@@ -34,7 +34,7 @@
 <div class="buttons">
   <table>
     <tr>
-      <td align="left"><a onclick="location='<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
+      <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
       <td align="right"><a onclick="confirmSubmit();" class="button"><span><?php echo $button_confirm; ?></span></a></td>
     </tr>
   </table>

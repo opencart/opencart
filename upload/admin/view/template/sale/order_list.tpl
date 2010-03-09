@@ -10,14 +10,14 @@
   <div class="right"></div>
   <div class="heading">
     <h1 style="background-image: url('view/image/order.png');"><?php echo $heading_title; ?></h1>
-    <div class="buttons"><a onclick="$('#form').attr('action', '<?php echo $invoice; ?>'); $('#form').attr('target', '_blank'); $('#form').submit();" class="button"><span><?php echo $button_invoices; ?></span></a><a onclick="$('#form').attr('action', '<?php echo $delete; ?>'); $('#form').attr('target', '_self'); $('#form').submit();" class="button"><span><?php echo $button_delete; ?></span></a></div>
+    <div class="buttons"><a onclick="$('#form').attr('action', '<?php echo $invoice; ?>'); $('#form').attr('target', '_blank'); $('#form').submit();" class="button"><span><?php echo $button_invoices; ?></span></a><a onclick="location='<?php echo $insert; ?>'" class="button"><span><?php echo $button_insert; ?></span></a><a onclick="$('#form').attr('action', '<?php echo $delete; ?>'); $('#form').attr('target', '_self'); $('#form').submit();" class="button"><span><?php echo $button_delete; ?></span></a></div>
   </div>
   <div class="content">
     <form action="" method="post" enctype="multipart/form-data" id="form">
       <table class="list">
         <thead>
           <tr>
-            <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+            <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
             <td class="right"><?php if ($sort == 'o.order_id') { ?>
               <a href="<?php echo $sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_order; ?></a>
               <?php } else { ?>
@@ -73,7 +73,7 @@
           <?php if ($orders) { ?>
           <?php foreach ($orders as $order) { ?>
           <tr>
-            <td style="align: center;"><?php if ($order['selected']) { ?>
+            <td style="text-align: center;"><?php if ($order['selected']) { ?>
               <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" checked="checked" />
               <?php } else { ?>
               <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" />

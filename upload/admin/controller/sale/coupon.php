@@ -38,7 +38,7 @@ class ControllerSaleCoupon extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('sale/coupon' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/coupon' . $url);
     	}
     
     	$this->getForm();
@@ -70,7 +70,7 @@ class ControllerSaleCoupon extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('sale/coupon' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/coupon' . $url);
 		}
     
     	$this->getForm();
@@ -104,7 +104,7 @@ class ControllerSaleCoupon extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('sale/coupon' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/coupon' . $url);
     	}
 	
     	$this->getList();
@@ -146,20 +146,19 @@ class ControllerSaleCoupon extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('sale/coupon' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=sale/coupon' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
-		$this->data['insert'] = $this->url->https('sale/coupon/insert' . $url);
-		$this->data['delete'] = $this->url->https('sale/coupon/delete' . $url);	
-
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=sale/coupon/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=sale/coupon/delete' . $url;
 		$this->data['coupons'] = array();
 
 		$data = array(
@@ -178,7 +177,7 @@ class ControllerSaleCoupon extends Controller {
 						
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('sale/coupon/update&coupon_id=' . $result['coupon_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=sale/coupon/update&coupon_id=' . $result['coupon_id'] . $url
 			);
 						
 			$this->data['coupons'][] = array(
@@ -235,12 +234,12 @@ class ControllerSaleCoupon extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->https('sale/coupon&sort=cd.name' . $url);
-		$this->data['sort_code'] = $this->url->https('sale/coupon&sort=c.code' . $url);
-		$this->data['sort_discount'] = $this->url->https('sale/coupon&sort=c.discount' . $url);
-		$this->data['sort_date_start'] = $this->url->https('sale/coupon&sort=c.date_start' . $url);
-		$this->data['sort_date_end'] = $this->url->https('sale/coupon&sort=c.date_end' . $url);
-		$this->data['sort_status'] = $this->url->https('sale/coupon&sort=c.status' . $url);
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=sale/coupon&sort=cd.name' . $url;
+		$this->data['sort_code'] = HTTPS_SERVER . 'index.php?route=sale/coupon&sort=c.code' . $url;
+		$this->data['sort_discount'] = HTTPS_SERVER . 'index.php?route=sale/coupon&sort=c.discount' . $url;
+		$this->data['sort_date_start'] = HTTPS_SERVER . 'index.php?route=sale/coupon&sort=c.date_start' . $url;
+		$this->data['sort_date_end'] = HTTPS_SERVER . 'index.php?route=sale/coupon&sort=c.date_end' . $url;
+		$this->data['sort_status'] = HTTPS_SERVER . 'index.php?route=sale/coupon&sort=c.status' . $url;
 				
 		$url = '';
 
@@ -257,7 +256,7 @@ class ControllerSaleCoupon extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('sale/coupon' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=sale/coupon' . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 
@@ -356,24 +355,24 @@ class ControllerSaleCoupon extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('sale/coupon' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=sale/coupon' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 									
 		if (!isset($this->request->get['coupon_id'])) {
-			$this->data['action'] = $this->url->https('sale/coupon/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/coupon/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('sale/coupon/update&coupon_id=' . $this->request->get['coupon_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/coupon/update&coupon_id=' . $this->request->get['coupon_id'] . $url;
 		}
 		
-		$this->data['cancel'] = $this->url->https('sale/coupon' . $url);
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=sale/coupon' . $url;
   		
 		if (isset($this->request->get['coupon_id']) && (!$this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$coupon_info = $this->model_sale_coupon->getCoupon($this->request->get['coupon_id']);

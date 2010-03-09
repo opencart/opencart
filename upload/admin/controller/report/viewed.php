@@ -20,13 +20,13 @@ class ControllerReportViewed extends Controller {
 		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('report/viewed' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=report/viewed' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);		
@@ -48,12 +48,24 @@ class ControllerReportViewed extends Controller {
 		$this->data['column_viewed'] = $this->language->get('column_viewed');
 		$this->data['column_percent'] = $this->language->get('column_percent');
 		
+		$this->data['button_reset'] = $this->language->get('button_reset');
+		
+		$this->data['reset'] = HTTPS_SERVER . 'index.php?route=report/viewed/reset' . $url;
+
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
+		
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
+		
 		$pagination = new Pagination();
 		$pagination->total = $product_total;
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('report/viewed&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=report/viewed&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 		 
@@ -64,6 +76,24 @@ class ControllerReportViewed extends Controller {
 		);
 		
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+	}
+	
+	public function reset() {
+		$this->load->language('report/viewed');
+		
+		$this->load->model('report/viewed');
+		
+		$this->model_report_viewed->reset();
+		
+		$this->session->data['success'] = $this->language->get('text_success');
+		
+		$url = '';
+		
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+		
+		$this->redirect(HTTPS_SERVER . 'index.php?route=report/viewed' . $url);
 	}
 }
 ?>

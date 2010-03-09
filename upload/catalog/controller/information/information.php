@@ -8,7 +8,7 @@ class ControllerInformationInformation extends Controller {
 		$this->document->breadcrumbs = array();
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	);
@@ -25,7 +25,7 @@ class ControllerInformationInformation extends Controller {
 	  		$this->document->title = $information_info['title']; 
 
       		$this->document->breadcrumbs[] = array(
-        		'href'      => $this->url->http('information/information&information_id=' . $this->request->get['information_id']),
+        		'href'      => HTTP_SERVER . 'index.php?route=information/information&information_id=' . $this->request->get['information_id'],
         		'text'      => $information_info['title'],
         		'separator' => $this->language->get('text_separator')
       		);		
@@ -36,7 +36,7 @@ class ControllerInformationInformation extends Controller {
 			
 			$this->data['description'] = html_entity_decode($information_info['description']);
       		
-			$this->data['continue'] = $this->url->http('common/home');
+			$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/information/information.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/information/information.tpl';
@@ -54,7 +54,7 @@ class ControllerInformationInformation extends Controller {
 	  		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
     	} else {
       		$this->document->breadcrumbs[] = array(
-        		'href'      => $this->url->http('information/information&information_id=' . $this->request->get['information_id']),
+        		'href'      => HTTP_SERVER . 'index.php?route=information/information&information_id=' . $this->request->get['information_id'],
         		'text'      => $this->language->get('text_error'),
         		'separator' => $this->language->get('text_separator')
       		);
@@ -67,7 +67,7 @@ class ControllerInformationInformation extends Controller {
 
       		$this->data['button_continue'] = $this->language->get('button_continue');
 
-      		$this->data['continue'] = $this->url->http('common/home');
+      		$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';

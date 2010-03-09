@@ -15,7 +15,7 @@ class ControllerPaymentPPStandard extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		
 		$this->data['business'] = $this->config->get('pp_standard_email');
-		$this->data['item_name'] = html_entity_decode($this->config->get('config_store'), ENT_QUOTES, 'UTF-8');				
+		$this->data['item_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');				
 		$this->data['currency_code'] = $order_info['currency'];
 		$this->data['amount'] = $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
 		$this->data['first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');	
@@ -25,7 +25,7 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->data['city'] = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');	
 		$this->data['zip'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');	
 		$this->data['country'] = $order_info['payment_iso_code_2'];
-		$this->data['notify_url'] = $this->url->http('payment/pp_standard/callback');
+		$this->data['notify_url'] = HTTP_SERVER . 'index.php?route=payment/pp_standard/callback';
 		$this->data['email'] = $order_info['email'];
 		$this->data['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
 		$this->data['lc'] = $this->session->data['language'];
@@ -36,12 +36,12 @@ class ControllerPaymentPPStandard extends Controller {
 			$this->data['paymentaction'] = 'sale';
 		}
 		
-		$this->data['return'] = $this->url->https('checkout/success');
+		$this->data['return'] = HTTPS_SERVER . 'index.php?route=checkout/success';
 		
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['cancel_return'] = $this->url->https('checkout/payment');
+			$this->data['cancel_return'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['cancel_return'] = $this->url->https('checkout/guest_step_2');
+			$this->data['cancel_return'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->load->library('encryption');
@@ -51,9 +51,9 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->data['custom'] = $encryption->encrypt($this->session->data['order_id']);
 		
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';
@@ -107,6 +107,8 @@ class ControllerPaymentPPStandard extends Controller {
 			
 				if (strcmp($response, 'VERIFIED') == 0 || $this->request->post['payment_status'] == 'Completed') {
 					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id'));
+				} else {
+					$this->model_checkout_order->confirm($order_id, $this->config->get('config_order_status_id'));
 				}
 					
 				curl_close($ch);

@@ -4,13 +4,13 @@ class ControllerCheckoutShipping extends Controller {
  	
   	public function index() {
     	if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-	  		$this->redirect($this->url->https('checkout/cart'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/cart');
     	}
 		
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->https('checkout/shipping');
+			$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
 
-	  		$this->redirect($this->url->https('account/login'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
     	} 
 
     	if (!$this->cart->hasShipping()) {
@@ -20,7 +20,7 @@ class ControllerCheckoutShipping extends Controller {
 
 			$this->tax->setZone($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 
-			$this->redirect($this->url->https('checkout/payment'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/payment');
     	}
 
 		if (!isset($this->session->data['shipping_address_id'])) {
@@ -28,7 +28,7 @@ class ControllerCheckoutShipping extends Controller {
 		}
 	
     	if (!$this->session->data['shipping_address_id']) {
-	  		$this->redirect($this->url->https('checkout/address/shipping'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/address/shipping');
 		}
 		
 		$this->load->model('account/address');
@@ -36,7 +36,7 @@ class ControllerCheckoutShipping extends Controller {
 		$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);		
 
     	if (!$shipping_address) {
-	  		$this->redirect($this->url->https('checkout/address/shipping'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/address/shipping');
     	}	
 		
 		$this->tax->setZone($shipping_address['country_id'], $shipping_address['zone_id']);
@@ -83,7 +83,7 @@ class ControllerCheckoutShipping extends Controller {
 			
 			$this->session->data['comment'] = strip_tags($this->request->post['comment']);
 
-	  		$this->redirect($this->url->https('checkout/payment'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/payment');
     	}
  
 		$this->document->title = $this->language->get('heading_title');    
@@ -91,19 +91,19 @@ class ControllerCheckoutShipping extends Controller {
 		$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/cart'),
+        	'href'      => HTTP_SERVER . 'index.php?route=checkout/cart',
         	'text'      => $this->language->get('text_basket'),
         	'separator' => $this->language->get('text_separator')
       	);
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/shipping'),
+        	'href'      => HTTP_SERVER . 'index.php?route=checkout/shipping',
         	'text'      => $this->language->get('text_shipping'),
         	'separator' => $this->language->get('text_separator')
       	);
@@ -126,7 +126,7 @@ class ControllerCheckoutShipping extends Controller {
 			$this->data['error_warning'] = '';
 		}
 		
-		$this->data['action'] = $this->url->https('checkout/shipping');
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
 		
 		if ($shipping_address['address_format']) {
       		$format = $shipping_address['address_format'];
@@ -143,6 +143,7 @@ class ControllerCheckoutShipping extends Controller {
      		'{city}',
       		'{postcode}',
       		'{zone}',
+			'{zone_code}',
       		'{country}'
 		);
 	
@@ -155,14 +156,19 @@ class ControllerCheckoutShipping extends Controller {
       		'city'      => $shipping_address['city'],
       		'postcode'  => $shipping_address['postcode'],
       		'zone'      => $shipping_address['zone'],
+			'zone_code' => $shipping_address['zone_code'],
       		'country'   => $shipping_address['country']  
 		);
 	
 		$this->data['address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 		    	
-		$this->data['change_address'] = $this->url->https('checkout/address/shipping'); 
+		$this->data['change_address'] = HTTPS_SERVER . 'index.php?route=checkout/address/shipping'; 
 
-		$this->data['shipping_methods'] = $this->session->data['shipping_methods']; 
+		if (isset($this->session->data['shipping_methods'])) {
+         $this->data['shipping_methods'] = $this->session->data['shipping_methods']; 
+      } else {
+         $this->data['shipping_methods'] = array();
+      }
     	
 		if (isset($this->session->data['shipping_method']['id'])) {
 			$this->data['shipping'] = $this->session->data['shipping_method']['id'];
@@ -176,7 +182,7 @@ class ControllerCheckoutShipping extends Controller {
 			$this->data['comment'] = '';
 		}
 		
-    	$this->data['back'] = $this->url->https('checkout/cart');
+    	$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/cart';
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/shipping.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/checkout/shipping.tpl';

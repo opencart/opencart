@@ -4,17 +4,17 @@ class ControllerCheckoutAddress extends Controller {
 	
 	public function shipping() {
 		if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-	  		$this->redirect($this->url->https('checkout/cart'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/cart');
     	}
 		
     	if (!$this->cart->hasShipping()) {
-			$this->redirect($this->url->https('checkout/cart'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/cart');
     	}
 		
 		if (!$this->customer->isLogged()) {  
-			$this->session->data['redirect'] = $this->url->https('checkout/shipping');
+			$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
       		
-			$this->redirect($this->url->https('account/login'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
     	}	
 
     	$this->language->load('checkout/address');
@@ -24,25 +24,25 @@ class ControllerCheckoutAddress extends Controller {
 		$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/cart'),
+        	'href'      => HTTP_SERVER . 'index.php?route=checkout/cart',
         	'text'      => $this->language->get('text_basket'),
         	'separator' => $this->language->get('text_separator')
       	);
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/shipping'),
+        	'href'      => HTTP_SERVER . 'index.php?route=checkout/shipping',
         	'text'      => $this->language->get('text_shipping'),
         	'separator' => $this->language->get('text_separator')
       	);
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/address/shipping'),
+        	'href'      => HTTP_SERVER . 'index.php?route=checkout/address/shipping',
         	'text'      => $this->language->get('text_address'),
         	'separator' => $this->language->get('text_separator')
       	);
@@ -63,7 +63,7 @@ class ControllerCheckoutAddress extends Controller {
 				}
 			}
 			
-			$this->redirect($this->url->https('checkout/shipping'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/shipping');
 		}
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
@@ -76,7 +76,7 @@ class ControllerCheckoutAddress extends Controller {
 				$this->tax->setZone($this->request->post['country_id'], $this->request->post['zone_id']);
 			}	
 
-			$this->redirect($this->url->https('checkout/shipping'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/shipping');
 		}
 	
 		$this->getForm('shipping');
@@ -84,13 +84,13 @@ class ControllerCheckoutAddress extends Controller {
   
   	public function payment() {
     	if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-	  		$this->redirect($this->url->https('checkout/cart'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/cart');
     	}
 		
 		if (!$this->customer->isLogged()) {  
-			$this->session->data['redirect'] = $this->url->https('checkout/shipping');
+			$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
       		
-			$this->redirect($this->url->https('account/login'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
     	}	
 		
 		$this->language->load('checkout/address');
@@ -100,33 +100,33 @@ class ControllerCheckoutAddress extends Controller {
 		$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/cart'),
+        	'href'      => HTTP_SERVER . 'index.php?route=checkout/cart',
         	'text'      => $this->language->get('text_basket'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
 		if ($this->cart->hasShipping()) {
       		$this->document->breadcrumbs[] = array(
-        		'href'      => $this->url->http('checkout/shipping'),
+        		'href'      => HTTP_SERVER . 'index.php?route=checkout/shipping',
         		'text'      => $this->language->get('text_shipping'),
         		'separator' => $this->language->get('text_separator')
       		);
 		}
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/payment'),
+        	'href'      => HTTP_SERVER . 'index.php?route=checkout/payment',
         	'text'      => $this->language->get('text_payment'),
         	'separator' => $this->language->get('text_separator')
       	);
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/address/payment'),
+        	'href'      => HTTP_SERVER . 'index.php?route=checkout/address/payment',
         	'text'      => $this->language->get('text_address'),
         	'separator' => $this->language->get('text_separator')
       	);
@@ -139,7 +139,7 @@ class ControllerCheckoutAddress extends Controller {
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['payment_method']);
 			
-			$this->redirect($this->url->https('checkout/payment'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/payment');
 		} 
 	   
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
@@ -148,7 +148,7 @@ class ControllerCheckoutAddress extends Controller {
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['payment_method']);
 			
-	  		$this->redirect($this->url->https('checkout/payment'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/payment');
     	}
 	
     	$this->getForm('payment');  
@@ -209,7 +209,7 @@ class ControllerCheckoutAddress extends Controller {
 			$this->data['error_zone'] = '';
 		}
 		
-    	$this->data['action'] = $this->url->https('checkout/address/' . $type);
+    	$this->data['action'] = HTTPS_SERVER . 'index.php?route=checkout/address/' . $type;
 		
 		if (isset($this->session->data[$type . '_address_id'])) {
 			$this->data['default'] = $this->session->data[$type . '_address_id'];
@@ -224,8 +224,8 @@ class ControllerCheckoutAddress extends Controller {
 		foreach ($results as $result) {
       		$this->data['addresses'][] = array(
         		'address_id' => $result['address_id'],
-	    		'address'    => $result['firstname'] . ' ' . $result['lastname'] . ', ' . $result['address_1'] . ', ' . $result['city'] . ', ' . (($result['zone']) ? $result['zone']  . ', ' : FALSE) . $result['country'],
-        		'href'       => $this->url->https('account/address/' . $type . '&address_id=' . $result['address_id'])
+	    		'address'    => $result['firstname'] . ' ' . $result['lastname'] . ', ' . $result['address_1'] . ', ' . $result['city'] . ', ' . (($result['zone']) ? $result['zone']  . ', ' : FALSE) . (($result['postcode']) ? $result['postcode']  . ', ' : FALSE) . $result['country'],
+        		'href'       => HTTPS_SERVER . 'index.php?route=account/address/' . $type . '&address_id=' . $result['address_id']
       		);
     	}
 		

@@ -9,16 +9,7 @@ class ControllerStep3 extends Controller {
 			$this->model_install->mysql($this->request->post);
 			
 			$output  = '<?php' . "\n";
-			$output .= '// HTTP' . "\n";
-			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n";
-			$output .= 'define(\'HTTP_IMAGE\', \'' . HTTP_OPENCART . 'image/\');' . "\n\n";
-
-			$output .= '// HTTPS' . "\n";
-			$output .= 'define(\'HTTPS_SERVER\', \'\');' . "\n";
-			$output .= 'define(\'HTTPS_IMAGE\', \'\');' . "\n\n";
-
 			$output .= '// DIR' . "\n";
-		
 			$output .= 'define(\'DIR_APPLICATION\', \'' . DIR_OPENCART . 'catalog/\');' . "\n";
 			$output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART. 'system/\');' . "\n";
 			$output .= 'define(\'DIR_DATABASE\', \'' . DIR_OPENCART . 'system/database/\');' . "\n";
@@ -52,8 +43,8 @@ class ControllerStep3 extends Controller {
 			$output .= 'define(\'HTTP_IMAGE\', \'' . HTTP_OPENCART . 'image/\');' . "\n\n";
 
 			$output .= '// HTTPS' . "\n";
-			$output .= 'define(\'HTTPS_SERVER\', \'\');' . "\n";
-			$output .= 'define(\'HTTPS_IMAGE\', \'\');' . "\n\n";
+			$output .= 'define(\'HTTPS_SERVER\', \'' . HTTP_OPENCART . 'admin/\');' . "\n";
+			$output .= 'define(\'HTTPS_IMAGE\', \'' . HTTP_OPENCART . 'image/\');' . "\n\n";
 
 			$output .= '// DIR' . "\n";
 		
@@ -84,7 +75,7 @@ class ControllerStep3 extends Controller {
 
 			fclose($file);
 			
-			$this->redirect($this->url->http('step_4'));
+			$this->redirect(HTTP_SERVER . 'index.php?route=step_4');
 		}
 		
 		if (isset($this->error['warning'])) {
@@ -129,7 +120,7 @@ class ControllerStep3 extends Controller {
 			$this->data['error_email'] = '';
 		}	
 		
-		$this->data['action'] = $this->url->http('step_3');
+		$this->data['action'] = HTTP_SERVER . 'index.php?route=step_3';
 		
 		if (isset($this->request->post['db_host'])) {
 			$this->data['db_host'] = $this->request->post['db_host'];

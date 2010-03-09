@@ -62,7 +62,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 
 
-		$this->data['back'] = $this->url->https('checkout/payment');
+		$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		
 		$this->id = 'payment';
 

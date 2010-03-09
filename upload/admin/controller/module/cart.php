@@ -14,7 +14,7 @@ class ControllerModuleCart extends Controller {
 					
 			$this->session->data['success'] = $this->language->get('text_success');
 						
-			$this->redirect($this->url->https('extension/module'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module');
 		}
 				
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -41,26 +41,26 @@ class ControllerModuleCart extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('extension/module'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/module',
        		'text'      => $this->language->get('text_module'),
       		'separator' => ' :: '
    		);
 		
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('module/cart'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=module/cart',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['action'] = $this->url->https('module/cart');
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=module/cart';
 		
-		$this->data['cancel'] = $this->url->https('extension/module');
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/module';
 
 		if (isset($this->request->post['cart_ajax'])) {
 			$this->data['cart_ajax'] = $this->request->post['cart_ajax'];

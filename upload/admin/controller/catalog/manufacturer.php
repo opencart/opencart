@@ -38,7 +38,7 @@ class ControllerCatalogManufacturer extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('catalog/manufacturer' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/manufacturer' . $url);
 		}
     
     	$this->getForm();
@@ -70,7 +70,7 @@ class ControllerCatalogManufacturer extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('catalog/manufacturer' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/manufacturer' . $url);
 		}
     
     	$this->getForm();
@@ -104,7 +104,7 @@ class ControllerCatalogManufacturer extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('catalog/manufacturer' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/manufacturer' . $url);
     	}
 	
     	$this->getList();
@@ -146,19 +146,19 @@ class ControllerCatalogManufacturer extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('catalog/manufacturer' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/manufacturer' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
-		$this->data['insert'] = $this->url->https('catalog/manufacturer/insert' . $url);
-		$this->data['delete'] = $this->url->https('catalog/manufacturer/delete' . $url);	
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=catalog/manufacturer/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=catalog/manufacturer/delete' . $url;	
 
 		$this->data['manufacturers'] = array();
 
@@ -178,7 +178,7 @@ class ControllerCatalogManufacturer extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('catalog/manufacturer/update&manufacturer_id=' . $result['manufacturer_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=catalog/manufacturer/update&manufacturer_id=' . $result['manufacturer_id'] . $url
 			);
 						
 			$this->data['manufacturers'][] = array(
@@ -227,8 +227,8 @@ class ControllerCatalogManufacturer extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->https('catalog/manufacturer&sort=name' . $url);
-		$this->data['sort_sort_order'] = $this->url->https('catalog/manufacturer&sort=sort_order' . $url);
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=catalog/manufacturer&sort=name' . $url;
+		$this->data['sort_sort_order'] = HTTPS_SERVER . 'index.php?route=catalog/manufacturer&sort=sort_order' . $url;
 		
 		$url = '';
 
@@ -245,7 +245,7 @@ class ControllerCatalogManufacturer extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('catalog/manufacturer' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=catalog/manufacturer' . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 
@@ -269,6 +269,7 @@ class ControllerCatalogManufacturer extends Controller {
     	$this->data['text_image_manager'] = $this->language->get('text_image_manager');
 		
 		$this->data['entry_name'] = $this->language->get('entry_name');
+		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
     	$this->data['entry_image'] = $this->language->get('entry_image');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
@@ -291,13 +292,13 @@ class ControllerCatalogManufacturer extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('catalog/manufacturer'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/manufacturer',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
@@ -317,12 +318,12 @@ class ControllerCatalogManufacturer extends Controller {
 		}
 							
 		if (!isset($this->request->get['manufacturer_id'])) {
-			$this->data['action'] = $this->url->https('catalog/manufacturer/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/manufacturer/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('catalog/manufacturer/update&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/manufacturer/update&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url;
 		}
 		
-		$this->data['cancel'] = $this->url->https('catalog/manufacturer' . $url);
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=catalog/manufacturer' . $url;
 
     	if (isset($this->request->get['manufacturer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
@@ -335,7 +336,19 @@ class ControllerCatalogManufacturer extends Controller {
 		} else {	
       		$this->data['name'] = '';
     	}
-
+		
+		$this->load->model('setting/store');
+		
+		$this->data['stores'] = $this->model_setting_store->getStores();
+		
+		if (isset($this->request->post['manufacturer_store'])) {
+			$this->data['manufacturer_store'] = $this->request->post['manufacturer_store'];
+		} elseif (isset($manufacturer_info)) {
+			$this->data['manufacturer_store'] = $this->model_catalog_manufacturer->getManufacturerStores($this->request->get['manufacturer_id']);
+		} else {
+			$this->data['manufacturer_store'] = array();
+		}	
+		
 		if (isset($this->request->post['keyword'])) {
 			$this->data['keyword'] = $this->request->post['keyword'];
 		} elseif (isset($manufacturer_info)) {
@@ -352,12 +365,12 @@ class ControllerCatalogManufacturer extends Controller {
 			$this->data['image'] = '';
 		}
 		
-		$this->load->helper('image');
+		$this->load->model('tool/image');
 
 		if (isset($manufacturer_info) && $manufacturer_info['image'] && file_exists(DIR_IMAGE . $manufacturer_info['image'])) {
-			$this->data['preview'] = image_resize($manufacturer_info['image'], 100, 100);
+			$this->data['preview'] = $this->model_tool_image->resize($manufacturer_info['image'], 100, 100);
 		} else {
-			$this->data['preview'] = image_resize('no_image.jpg', 100, 100);
+			$this->data['preview'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 		}
 		
 		if (isset($this->request->post['sort_order'])) {

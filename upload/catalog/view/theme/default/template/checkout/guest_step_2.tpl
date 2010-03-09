@@ -11,7 +11,7 @@
     <?php if ($error_warning) { ?>
     <div class="warning"><?php echo $error_warning; ?></div>
     <?php } ?>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="guest">
+    <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="guest">
       <?php if ($shipping_methods) { ?>
       <b style="margin-bottom: 2px; display: block;"><?php echo $text_shipping_method; ?></b>
       <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
@@ -70,7 +70,7 @@
       <div class="buttons">
         <table>
           <tr>
-            <td align="left"><a onclick="location='<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
+            <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
             <td align="right" style="padding-right: 5px;"><?php echo $text_agree; ?></td>
             <td width="5" style="padding-right: 10px;"><?php if ($agree) { ?>
               <input type="checkbox" name="agree" value="1" checked="checked" />
@@ -85,7 +85,7 @@
       <div class="buttons">
         <table>
           <tr>
-            <td align="left"><a onclick="location='<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
+            <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
             <td align="right"><a onclick="$('#guest').submit();" class="button"><span><?php echo $button_continue; ?></span></a></td>
           </tr>
         </table>

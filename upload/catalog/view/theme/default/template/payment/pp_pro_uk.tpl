@@ -60,7 +60,7 @@
 <div class="buttons">
   <table>
     <tr>
-      <td align="left"><a onclick="location='<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
+      <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
       <td align="right"><a onclick="confirmSubmit();" id="paypal_button" class="button"><span><?php echo $button_confirm; ?></span></a></td>
     </tr>
   </table>

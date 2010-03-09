@@ -1,4 +1,4 @@
-<form action="<?php echo $action; ?>" method="get" id="checkout">
+<form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="get" id="checkout">
   <input type="hidden" name="mid" value="<?php echo $mid; ?>" />
   <input type="hidden" name="amt" value="<?php echo $amt; ?>" />
   <input type="hidden" name="amt_editable" value="N" />
@@ -20,7 +20,7 @@
 <div class="buttons">
   <table>
     <tr>
-      <td align="left"><a onclick="location = '<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
+      <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
       <td align="right"><a onclick="$('#checkout').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></td>
     </tr>
   </table>

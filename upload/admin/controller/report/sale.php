@@ -60,13 +60,13 @@ class ControllerReportSale extends Controller {
    		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('report/sale' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=report/sale' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
@@ -163,7 +163,7 @@ class ControllerReportSale extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('report/sale' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=report/sale' . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();		
 

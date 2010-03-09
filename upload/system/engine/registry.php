@@ -1,17 +1,17 @@
 <?php
 final class Registry {
-	static private $data = array();
+	private $data = array();
 
-	static public function get($key) {
-		return (isset(self::$data[$key]) ? self::$data[$key] : NULL);
+	public function get($key) {
+		return (isset($this->data[$key]) ? $this->data[$key] : NULL);
 	}
 
-	static public function set($key, $value) {
-		self::$data[$key] = $value;
+	public function set($key, $value) {
+		$this->data[$key] = $value;
 	}
 
-	static public function has($key) {
-    	return isset(self::$data[$key]);
+	public function has($key) {
+    	return isset($this->data[$key]);
   	}	
 }
 ?>

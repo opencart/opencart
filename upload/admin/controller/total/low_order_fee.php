@@ -14,7 +14,7 @@ class ControllerTotalLowOrderFee extends Controller {
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect($this->url->https('extension/total'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/total');
 		}
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -41,26 +41,26 @@ class ControllerTotalLowOrderFee extends Controller {
    		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('extension/total'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/total',
        		'text'      => $this->language->get('text_total'),
       		'separator' => ' :: '
    		);
 		
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('total/low_order_fee'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=total/low_order_fee',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['action'] = $this->url->https('total/low_order_fee');
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=total/low_order_fee';
 		
-		$this->data['cancel'] = $this->url->https('extension/total');
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/total';
 
 		if (isset($this->request->post['low_order_fee_total'])) {
 			$this->data['low_order_fee_total'] = $this->request->post['low_order_fee_total'];

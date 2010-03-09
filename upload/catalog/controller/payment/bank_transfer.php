@@ -11,12 +11,12 @@ class ControllerPaymentBankTransfer extends Controller {
 		
 		$this->data['bank'] = nl2br($this->config->get('bank_transfer_bank_' . $this->config->get('config_language_id')));
 
-		$this->data['continue'] = $this->url->https('checkout/success');
+		$this->data['continue'] = HTTPS_SERVER . 'index.php?route=checkout/success';
 
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';

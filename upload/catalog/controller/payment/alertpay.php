@@ -16,20 +16,20 @@ class ControllerPaymentAlertPay extends Controller {
 		$this->data['ap_amount'] = $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
 		$this->data['ap_currency'] = $order_info['currency'];
 		$this->data['ap_purchasetype'] = 'Item';
-		$this->data['ap_itemname'] = $this->config->get('config_store') . ' - #' . $this->session->data['order_id'];
+		$this->data['ap_itemname'] = $this->config->get('config_name') . ' - #' . $this->session->data['order_id'];
 		$this->data['ap_itemcode'] = $this->session->data['order_id'];
-		$this->data['ap_returnurl'] = $this->url->https('checkout/success');
+		$this->data['ap_returnurl'] = HTTPS_SERVER . 'index.php?route=checkout/success';
 		
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['ap_cancelurl'] = $this->url->https('checkout/payment');
+			$this->data['ap_cancelurl'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['ap_cancelurl'] = $this->url->https('checkout/guest_step_2');
+			$this->data['ap_cancelurl'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';

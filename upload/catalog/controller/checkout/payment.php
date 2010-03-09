@@ -4,24 +4,24 @@ class ControllerCheckoutPayment extends Controller {
 	
   	public function index() {
     	if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-      		$this->redirect($this->url->https('checkout/cart'));
+      		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/cart');
     	}
 		
     	if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->https('checkout/shipping');
+			$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
 			
-	  		$this->redirect($this->url->https('account/login'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
     	} 
 		
 		$this->load->model('account/address');
 		
     	if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address_id']) || !$this->session->data['shipping_address_id']) {
-	  			$this->redirect($this->url->https('checkout/shipping'));
+	  			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/shipping');
 			}
 			
 			if (!isset($this->session->data['shipping_method'])) {
-	  			$this->redirect($this->url->https('checkout/shipping'));
+	  			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/shipping');
 			}
 		} else {
 			unset($this->session->data['shipping_address_id']);
@@ -40,7 +40,7 @@ class ControllerCheckoutPayment extends Controller {
     	}
 
     	if (!$this->session->data['payment_address_id']) {
-	  		$this->redirect($this->url->https('checkout/address/payment'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/address/payment');
     	}
 		
 		$this->load->model('account/address');
@@ -48,7 +48,7 @@ class ControllerCheckoutPayment extends Controller {
 		$payment_address = $this->model_account_address->getAddress($this->session->data['payment_address_id']);		
 		
     	if (!$payment_address) {
-	  		$this->redirect($this->url->https('checkout/address/payment'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/address/payment');
     	}		
 		
 		$this->load->model('checkout/extension');
@@ -84,7 +84,7 @@ class ControllerCheckoutPayment extends Controller {
 		  
 	  	  	$this->session->data['comment'] = strip_tags($this->request->post['comment']);
 		  
-	  		$this->redirect($this->url->https('checkout/confirm'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/confirm');
     	}
 
     	$this->document->title = $this->language->get('heading_title'); 
@@ -92,25 +92,25 @@ class ControllerCheckoutPayment extends Controller {
 		$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/cart'),
+        	'href'      => HTTP_SERVER . 'index.php?route=checkout/cart',
         	'text'      => $this->language->get('text_basket'),
         	'separator' => $this->language->get('text_separator')
       	);
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/shipping'),
+        	'href'      => HTTP_SERVER . 'index.php?route=checkout/shipping',
         	'text'      => $this->language->get('text_shipping'),
         	'separator' => $this->language->get('text_separator')
       	);
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/payment'),
+        	'href'      => HTTP_SERVER . 'index.php?route=checkout/payment',
         	'text'      => $this->language->get('text_payment'),
         	'separator' => $this->language->get('text_separator')
       	); 
@@ -137,7 +137,7 @@ class ControllerCheckoutPayment extends Controller {
 			$this->data['error_warning'] = '';
 		}
 		
-    	$this->data['action'] = $this->url->https('checkout/payment');
+    	$this->data['action'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		
 		if ($payment_address['address_format']) {
       		$format = $payment_address['address_format'];
@@ -154,6 +154,7 @@ class ControllerCheckoutPayment extends Controller {
      		'{city}',
       		'{postcode}',
       		'{zone}',
+			'{zone_code}',
       		'{country}'
 		);
 	
@@ -166,15 +167,20 @@ class ControllerCheckoutPayment extends Controller {
       		'city'      => $payment_address['city'],
       		'postcode'  => $payment_address['postcode'],
       		'zone'      => $payment_address['zone'],
+			'zone_code' => $payment_address['zone_code'],
       		'country'   => $payment_address['country']  
 		);
 	
 		$this->data['address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 		
-		$this->data['change_address'] = $this->url->https('checkout/address/payment');
-		
-		$this->data['payment_methods'] = $this->session->data['payment_methods'];
+		$this->data['change_address'] = HTTPS_SERVER . 'index.php?route=checkout/address/payment';
 
+		if (isset($this->session->data['payment_methods'])) {
+        	$this->data['payment_methods'] = $this->session->data['payment_methods']; 
+      	} else {
+        	$this->data['payment_methods'] = array();
+		}
+	  
 		if (isset($this->request->post['payment_method'])) {
 			$this->data['payment'] = $this->request->post['payment_method'];
 		} elseif (isset($this->session->data['payment_method']['id'])) {
@@ -189,13 +195,13 @@ class ControllerCheckoutPayment extends Controller {
 			$this->data['comment'] = '';
 		}
 		
-		if ($this->config->get('config_checkout')) {
+		if ($this->config->get('config_checkout_id')) {
 			$this->load->model('catalog/information');
 			
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout'));
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
 			
 			if ($information_info) {
-				$this->data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->http('information/information&information_id=' . $this->config->get('config_checkout')), $information_info['title']);
+				$this->data['text_agree'] = sprintf($this->language->get('text_agree'), HTTP_SERVER . 'index.php?route=information/information&information_id=' . $this->config->get('config_checkout_id'), $information_info['title']);
 			} else {
 				$this->data['text_agree'] = '';
 			}
@@ -210,9 +216,9 @@ class ControllerCheckoutPayment extends Controller {
 		}
 		
     	if ($this->cart->hasShipping()) {
-      		$this->data['back'] = $this->url->https('checkout/shipping');
+      		$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
     	} else {
-      		$this->data['back'] = $this->url->https('checkout/cart');
+      		$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/cart';
     	}
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/payment.tpl')) {
@@ -240,10 +246,10 @@ class ControllerCheckoutPayment extends Controller {
 			}
 		}
 		
-		if ($this->config->get('config_checkout')) {
+		if ($this->config->get('config_checkout_id')) {
 			$this->load->model('catalog/information');
 			
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout'));
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
 			
 			if ($information_info) {
     			if (!isset($this->request->post['agree'])) {

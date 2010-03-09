@@ -14,7 +14,7 @@ class ControllerShippingCitylink extends Controller {
 					
 			$this->session->data['success'] = $this->language->get('text_success');
 						
-			$this->redirect($this->url->https('extension/shipping'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/shipping');
 		}
 				
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -25,6 +25,7 @@ class ControllerShippingCitylink extends Controller {
 		$this->data['text_none'] = $this->language->get('text_none');
 		
 		$this->data['entry_rate'] = $this->language->get('entry_rate');
+		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -44,26 +45,26 @@ class ControllerShippingCitylink extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('extension/shipping'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/shipping',
        		'text'      => $this->language->get('text_shipping'),
       		'separator' => ' :: '
    		);
 		
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('shipping/citylink'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=shipping/citylink',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['action'] = $this->url->https('shipping/citylink');
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=shipping/citylink';
 		
-		$this->data['cancel'] = $this->url->https('extension/shipping');
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/shipping';
 		
 		if (isset($this->request->post['citylink_rate'])) {
 			$this->data['citylink_rate'] = $this->request->post['citylink_rate'];

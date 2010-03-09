@@ -11,10 +11,12 @@ class ControllerModuleBestSeller extends Controller {
 				
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$this->model_setting_setting->editSetting('bestseller', $this->request->post);		
-					
+			
+			$this->cache->delete('product');
+			
 			$this->session->data['success'] = $this->language->get('text_success');
 						
-			$this->redirect($this->url->https('extension/module'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module');
 		}
 				
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -41,26 +43,26 @@ class ControllerModuleBestSeller extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('extension/module'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/module',
        		'text'      => $this->language->get('text_module'),
       		'separator' => ' :: '
    		);
 		
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('module/bestseller'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=module/bestseller',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['action'] = $this->url->https('module/bestseller');
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=module/bestseller';
 		
-		$this->data['cancel'] = $this->url->https('extension/module');
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/module';
 
 		if (isset($this->request->post['bestseller_limit'])) {
 			$this->data['bestseller_limit'] = $this->request->post['bestseller_limit'];

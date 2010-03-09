@@ -2,9 +2,9 @@
 class ControllerAccountDownload extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->https('account/download');
+			$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=account/download';
 
-			$this->redirect($this->url->https('account/login'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
 		}
          		
 		$this->language->load('account/download');
@@ -14,19 +14,19 @@ class ControllerAccountDownload extends Controller {
       	$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('account/account'),
+        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('account/download'),
+        	'href'      => HTTP_SERVER . 'index.php?route=account/download',
         	'text'      => $this->language->get('text_downloads'),
         	'separator' => $this->language->get('text_separator')
       	);
@@ -86,7 +86,7 @@ class ControllerAccountDownload extends Controller {
 						'name'       => $result['name'],
 						'remaining'  => $result['remaining'],
 						'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
-						'href'       => $this->url->https('account/download/download&order_download_id=' . $result['order_download_id'])
+						'href'       => HTTPS_SERVER . 'index.php?route=account/download/download&order_download_id=' . $result['order_download_id']
 					);
 				}
 			}
@@ -96,11 +96,11 @@ class ControllerAccountDownload extends Controller {
 			$pagination->page = $page;
 			$pagination->limit = 10; 
 			$pagination->text = $this->language->get('text_pagination');
-			$pagination->url = $this->url->http('account/download&page=%s');
+			$pagination->url = HTTP_SERVER . 'index.php?route=account/download&page=%s';
 			
 			$this->data['pagination'] = $pagination->render();
 			
-			$this->data['continue'] = $this->url->https('account/account');
+			$this->data['continue'] = HTTPS_SERVER . 'index.php?route=account/account';
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/download.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/account/download.tpl';
@@ -123,7 +123,7 @@ class ControllerAccountDownload extends Controller {
 
 			$this->data['button_continue'] = $this->language->get('button_continue');
 
-			$this->data['continue'] = $this->url->https('account/account');
+			$this->data['continue'] = HTTPS_SERVER . 'index.php?route=account/account';
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
@@ -144,9 +144,9 @@ class ControllerAccountDownload extends Controller {
 
 	public function download() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->https('account/download');
+			$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=account/download';
 
-			$this->redirect($this->url->https('account/login'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
 		}
 
 		$this->load->model('account/download');
@@ -187,7 +187,7 @@ class ControllerAccountDownload extends Controller {
 		
 			$this->model_account_download->updateRemaining($this->request->get['order_download_id']);
 		} else {
-			$this->redirect($this->url->https('account/download'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=account/download');
 		}
 	}
 }

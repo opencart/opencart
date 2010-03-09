@@ -5,12 +5,7 @@ class ControllerCommonHeader extends Controller {
 
 		$this->data['title'] = $this->document->title;
 		
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			$this->data['base'] = HTTPS_SERVER;
-		} else {
-			$this->data['base'] = HTTP_SERVER;
-		}
-		
+		$this->data['base'] = HTTPS_SERVER;
 		$this->data['charset'] = $this->language->get('charset');
 		$this->data['lang'] = $this->language->get('code');	
 		$this->data['direction'] = $this->language->get('direction');
@@ -21,6 +16,7 @@ class ControllerCommonHeader extends Controller {
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		
+		$this->data['text_affiliate'] = $this->language->get('text_affiliate');
 		$this->data['text_backup'] = $this->language->get('text_backup');
 		$this->data['text_catalog'] = $this->language->get('text_catalog');
 		$this->data['text_category'] = $this->language->get('text_category');
@@ -34,6 +30,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_error_log'] = $this->language->get('text_error_log');
 		$this->data['text_extension'] = $this->language->get('text_extension');
 		$this->data['text_feed'] = $this->language->get('text_feed');
+		$this->data['text_front'] = $this->language->get('text_front');
 		$this->data['text_geo_zone'] = $this->language->get('text_geo_zone');
 		$this->data['text_dashboard'] = $this->language->get('text_dashboard');
 		$this->data['text_help'] = $this->language->get('text_help');
@@ -66,7 +63,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_users'] = $this->language->get('text_users');
       	$this->data['text_documentation'] = $this->language->get('text_documentation');
       	$this->data['text_weight_class'] = $this->language->get('text_weight_class');
-		$this->data['text_measurement_class'] = $this->language->get('text_measurement_class');
+		$this->data['text_length_class'] = $this->language->get('text_length_class');
 		$this->data['text_opencart'] = $this->language->get('text_opencart');
       	$this->data['text_zone'] = $this->language->get('text_zone');
 		
@@ -75,44 +72,59 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$this->data['logged'] = '';
 		}
-		 
-		$this->data['backup'] = $this->url->https('tool/backup');
-		$this->data['category'] = $this->url->https('catalog/category');
-		$this->data['country'] = $this->url->https('localisation/country');
-		$this->data['currency'] = $this->url->https('localisation/currency');
-		$this->data['coupon'] = $this->url->https('sale/coupon');
-		$this->data['customer'] = $this->url->https('sale/customer');
-		$this->data['customer_group'] = $this->url->https('sale/customer_group');
-		$this->data['download'] = $this->url->https('catalog/download');
-		$this->data['error_log'] = $this->url->https('tool/error_log');
-		$this->data['feed'] = $this->url->https('extension/feed');			
-		$this->data['geo_zone'] = $this->url->https('localisation/geo_zone');
-		$this->data['home'] = $this->url->https('common/home'); 
-		$this->data['information'] = $this->url->https('catalog/information');
-		$this->data['language'] = $this->url->https('localisation/language');
-		$this->data['logout'] = $this->url->https('common/logout');
-		$this->data['contact'] = $this->url->https('sale/contact');
-		$this->data['manufacturer'] = $this->url->https('catalog/manufacturer');
-		$this->data['module'] = $this->url->https('extension/module');
-		$this->data['order'] = $this->url->https('sale/order');
-		$this->data['order_status'] = $this->url->https('localisation/order_status');
-		$this->data['payment'] = $this->url->https('extension/payment');
-		$this->data['product'] = $this->url->https('catalog/product');
-		$this->data['report_purchased'] = $this->url->https('report/purchased');
-		$this->data['report_sale'] = $this->url->https('report/sale');
-      	$this->data['report_viewed'] = $this->url->https('report/viewed');
-		$this->data['review'] = $this->url->https('catalog/review');
-		$this->data['shipping'] = $this->url->https('extension/shipping');
-		$this->data['setting'] = $this->url->https('setting/setting');
-		$this->data['stock_status'] = $this->url->https('localisation/stock_status');
-		$this->data['store'] = HTTP_CATALOG;
-      	$this->data['tax_class'] = $this->url->https('localisation/tax_class');
-		$this->data['total'] = $this->url->https('extension/total');
-		$this->data['user'] = $this->url->https('user/user');
-      	$this->data['user_group'] = $this->url->https('user/user_permission');
-      	$this->data['weight_class'] = $this->url->https('localisation/weight_class');
-		$this->data['measurement_class'] = $this->url->https('localisation/measurement_class');
-      	$this->data['zone'] = $this->url->https('localisation/zone');
+		
+		$this->data['affiliate'] = HTTPS_SERVER . 'index.php?route=extension/affiliate';
+		$this->data['backup'] = HTTPS_SERVER . 'index.php?route=tool/backup';
+		$this->data['category'] = HTTPS_SERVER . 'index.php?route=catalog/category';
+		$this->data['country'] = HTTPS_SERVER . 'index.php?route=localisation/country';
+		$this->data['currency'] = HTTPS_SERVER . 'index.php?route=localisation/currency';
+		$this->data['coupon'] = HTTPS_SERVER . 'index.php?route=sale/coupon';
+		$this->data['customer'] = HTTPS_SERVER . 'index.php?route=sale/customer';
+		$this->data['customer_group'] = HTTPS_SERVER . 'index.php?route=sale/customer_group';
+		$this->data['download'] = HTTPS_SERVER . 'index.php?route=catalog/download';
+		$this->data['error_log'] = HTTPS_SERVER . 'index.php?route=tool/error_log';
+		$this->data['feed'] = HTTPS_SERVER . 'index.php?route=extension/feed';			
+		
+		$this->data['stores'] = array();
+		
+		$this->load->model('setting/store');
+		
+		$results = $this->model_setting_store->getStores();
+		
+		foreach ($results as $result) {
+			$this->data['stores'][] = array(
+				'name' => $result['name'],
+				'href' => $result['url']
+			);
+		}
+		
+		$this->data['geo_zone'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone';
+		$this->data['home'] = HTTPS_SERVER . 'index.php?route=common/home'; 
+		$this->data['information'] = HTTPS_SERVER . 'index.php?route=catalog/information';
+		$this->data['language'] = HTTPS_SERVER . 'index.php?route=localisation/language';
+		$this->data['logout'] = HTTPS_SERVER . 'index.php?route=common/logout';
+		$this->data['contact'] = HTTPS_SERVER . 'index.php?route=sale/contact';
+		$this->data['manufacturer'] = HTTPS_SERVER . 'index.php?route=catalog/manufacturer';
+		$this->data['module'] = HTTPS_SERVER . 'index.php?route=extension/module';
+		$this->data['order'] = HTTPS_SERVER . 'index.php?route=sale/order';
+		$this->data['order_status'] = HTTPS_SERVER . 'index.php?route=localisation/order_status';
+		$this->data['payment'] = HTTPS_SERVER . 'index.php?route=extension/payment';
+		$this->data['product'] = HTTPS_SERVER . 'index.php?route=catalog/product';
+		$this->data['report_purchased'] = HTTPS_SERVER . 'index.php?route=report/purchased';
+		$this->data['report_sale'] = HTTPS_SERVER . 'index.php?route=report/sale';
+      	$this->data['report_viewed'] = HTTPS_SERVER . 'index.php?route=report/viewed';
+		$this->data['review'] = HTTPS_SERVER . 'index.php?route=catalog/review';
+		$this->data['shipping'] = HTTPS_SERVER . 'index.php?route=extension/shipping';
+		$this->data['setting'] = HTTPS_SERVER . 'index.php?route=setting/setting';
+		$this->data['store'] = HTTPS_SERVER . 'index.php?route=setting/store';
+		$this->data['stock_status'] = HTTPS_SERVER . 'index.php?route=localisation/stock_status';
+      	$this->data['tax_class'] = HTTPS_SERVER . 'index.php?route=localisation/tax_class';
+		$this->data['total'] = HTTPS_SERVER . 'index.php?route=extension/total';
+		$this->data['user'] = HTTPS_SERVER . 'index.php?route=user/user';
+      	$this->data['user_group'] = HTTPS_SERVER . 'index.php?route=user/user_permission';
+      	$this->data['weight_class'] = HTTPS_SERVER . 'index.php?route=localisation/weight_class';
+		$this->data['length_class'] = HTTPS_SERVER . 'index.php?route=localisation/length_class';
+      	$this->data['zone'] = HTTPS_SERVER . 'index.php?route=localisation/zone';
 
 		$this->id       = 'header';
 		$this->template = 'common/header.tpl';

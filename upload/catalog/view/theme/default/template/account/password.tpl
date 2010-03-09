@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="middle">
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="password">
+    <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="password">
       <b style="margin-bottom: 2px; display: block;"><?php echo $text_password; ?></b>
       <div class="content">
         <table>
@@ -31,7 +31,7 @@
       <div class="buttons">
         <table>
           <tr>
-            <td align="left"><a onclick="location='<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
+            <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
             <td align="right"><a onclick="$('#password').submit();" class="button"><span><?php echo $button_continue; ?></span></a></td>
           </tr>
         </table>

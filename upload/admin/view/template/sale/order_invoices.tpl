@@ -13,14 +13,14 @@
   <div class="div1">
     <table width="100%">
       <tr>
-        <td><?php echo $order['store']; ?><br />
+        <td><?php echo $order['store_name']; ?><br />
           <?php echo $order['address']; ?><br />
           <?php echo $text_telephone; ?> <?php echo $order['telephone']; ?><br />
           <?php if ($order['fax']) { ?>
           <?php echo $text_fax; ?> <?php echo $order['fax']; ?><br />
           <?php } ?>
           <?php echo $order['email']; ?><br />
-          <?php echo $order['website']; ?></td>
+          <?php echo $order['store_url']; ?></td>
         <td align="right" valign="top"><table>
             <tr>
               <td><b><?php echo $text_invoice_date; ?></b></td>

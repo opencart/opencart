@@ -15,8 +15,8 @@
       <tr>
         <?php for ($j = $i; $j < ($i + 4); $j++) { ?>
         <td style="width: 25%;"><?php if (isset($products[$j])) { ?>
-          <a href="<?php echo $products[$j]['href']; ?>"><img src="<?php echo $products[$j]['thumb']; ?>" title="<?php echo $products[$j]['name']; ?>" alt="<?php echo $products[$j]['name']; ?>" /></a><br />
-          <a href="<?php echo $products[$j]['href']; ?>"><?php echo $products[$j]['name']; ?></a><br />
+          <a href="<?php echo str_replace('&', '&amp;', $products[$j]['href']); ?>"><img src="<?php echo $products[$j]['thumb']; ?>" title="<?php echo $products[$j]['name']; ?>" alt="<?php echo $products[$j]['name']; ?>" /></a><br />
+          <a href="<?php echo str_replace('&', '&amp;', $products[$j]['href']); ?>"><?php echo $products[$j]['name']; ?></a><br />
           <span style="color: #999; font-size: 11px;"><?php echo $products[$j]['model']; ?></span><br />
           <?php if ($display_price) { ?>
           <?php if (!$products[$j]['special']) { ?>

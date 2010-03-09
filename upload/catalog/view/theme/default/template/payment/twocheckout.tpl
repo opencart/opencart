@@ -1,4 +1,4 @@
-<form action="<?php echo $action; ?>" method="post" id="checkout">
+<form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" id="checkout">
   <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
   <input type="hidden" name="total" value="<?php echo $total; ?>" />
   <input type="hidden" name="cart_order_id" value="<?php echo $cart_order_id; ?>" />
@@ -33,7 +33,7 @@
 <div class="buttons">
   <table>
     <tr>
-      <td align="left"><a onclick="location = '<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
+      <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
       <td align="right"><a onclick="$('#checkout').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></td>
     </tr>
   </table>

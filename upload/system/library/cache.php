@@ -4,7 +4,7 @@ final class Cache {
 
   	public function __construct() {
 		$files = glob(DIR_CACHE . 'cache.*');
-    	
+		
 		if ($files) {
 			foreach ($files as $file) {
 				$time = substr(strrchr($file, '.'), 1);

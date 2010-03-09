@@ -43,9 +43,8 @@ if (ini_get('magic_quotes_gpc')) {
 	$_COOKIE = clean($_COOKIE);
 }
 
-// Set default time zone if not set in php.ini
 if (!ini_get('date.timezone')) {
-	date_default_timezone_set(date('e', $_SERVER['REQUEST_TIME']));
+	date_default_timezone_set('UTC');
 }
 
 // Engine
@@ -55,7 +54,6 @@ require_once(DIR_SYSTEM . 'engine/front.php');
 require_once(DIR_SYSTEM . 'engine/loader.php'); 
 require_once(DIR_SYSTEM . 'engine/model.php');
 require_once(DIR_SYSTEM . 'engine/registry.php');
-require_once(DIR_SYSTEM . 'engine/url.php');
 
 // Common
 require_once(DIR_SYSTEM . 'library/cache.php');
@@ -64,7 +62,7 @@ require_once(DIR_SYSTEM . 'library/db.php');
 require_once(DIR_SYSTEM . 'library/document.php');
 require_once(DIR_SYSTEM . 'library/image.php');
 require_once(DIR_SYSTEM . 'library/language.php');
-require_once(DIR_SYSTEM . 'library/logger.php');
+require_once(DIR_SYSTEM . 'library/log.php');
 require_once(DIR_SYSTEM . 'library/mail.php');
 require_once(DIR_SYSTEM . 'library/pagination.php');
 require_once(DIR_SYSTEM . 'library/request.php');

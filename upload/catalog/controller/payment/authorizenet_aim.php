@@ -35,9 +35,9 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		}
 		
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';
@@ -84,7 +84,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		$data['x_phone'] = $order_info['telephone'];
 		$data['x_customer_ip'] = $this->request->server['REMOTE_ADDR'];
 		$data['x_email'] = $order_info['email'];
-		$data['x_description'] = html_entity_decode($this->config->get('config_store'), ENT_QUOTES, 'UTF-8');
+		$data['x_description'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 		$data['x_amount'] = $this->currency->format($order_info['total'], $order_info['currency'], 1.00000, FALSE);
 		$data['x_currency_code'] = $this->currency->getCode();
 		$data['x_method'] = 'CC';
@@ -155,7 +155,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('authorizenet_aim_order_status_id'), $message, FALSE);				
 			}
 			
-			$json['success'] = $this->url->https('checkout/success');
+			$json['success'] = HTTPS_SERVER . 'index.php?route=checkout/success';
 		} else {
 			$json['error'] = $response_data[4];
 		}

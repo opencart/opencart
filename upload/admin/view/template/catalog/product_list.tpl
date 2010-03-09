@@ -17,7 +17,7 @@
       <table class="list">
         <thead>
           <tr>
-            <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+            <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
             <td class="center"><?php echo $column_image; ?></td>
             <td class="left"><?php if ($sort == 'pd.name') { ?>
               <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
@@ -67,7 +67,7 @@
           <?php if ($products) { ?>
           <?php foreach ($products as $product) { ?>
           <tr>
-            <td style="align: center;"><?php if ($product['selected']) { ?>
+            <td style="text-align: center;"><?php if ($product['selected']) { ?>
               <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" checked="checked" />
               <?php } else { ?>
               <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" />

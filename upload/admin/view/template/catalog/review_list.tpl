@@ -17,7 +17,7 @@
       <table class="list">
         <thead>
           <tr>
-            <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+            <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
             <td class="left"><?php if ($sort == 'pd.name') { ?>
               <a href="<?php echo $sort_product; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_product; ?></a>
               <?php } else { ?>
@@ -50,7 +50,7 @@
           <?php if ($reviews) { ?>
           <?php foreach ($reviews as $review) { ?>
           <tr>
-            <td style="align: center;"><?php if ($review['selected']) { ?>
+            <td style="text-align: center;"><?php if ($review['selected']) { ?>
               <input type="checkbox" name="selected[]" value="<?php echo $review['review_id']; ?>" checked="checked" />
               <?php } else { ?>
               <input type="checkbox" name="selected[]" value="<?php echo $review['review_id']; ?>" />

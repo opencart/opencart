@@ -17,7 +17,7 @@
       <table class="list">
         <thead>
           <tr>
-            <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+            <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
             <td class="left"><?php if ($sort == 'title') { ?>
               <a href="<?php echo $sort_title; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_title; ?></a>
               <?php } else { ?>
@@ -45,7 +45,7 @@
           <?php if ($currencies) { ?>
           <?php foreach ($currencies as $currency) { ?>
           <tr>
-            <td style="align: center;"><?php if ($currency['selected']) { ?>
+            <td style="text-align: center;"><?php if ($currency['selected']) { ?>
               <input type="checkbox" name="selected[]" value="<?php echo $currency['currency_id']; ?>" checked="checked" />
               <?php } else { ?>
               <input type="checkbox" name="selected[]" value="<?php echo $currency['currency_id']; ?>" />

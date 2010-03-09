@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="middle">
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="guest">
+    <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="guest">
       <b style="margin-bottom: 2px; display: block;"><?php echo $text_your_details; ?></b>
       <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
         <table>
@@ -73,14 +73,18 @@
           </tr>
           <tr>
             <td><?php echo $entry_postcode; ?></td>
-            <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" onblur="getMethods();" /></td>
+            <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
           </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-            <td><select name="country_id" id="country_id" onchange="$('select[name=\'zone_id\']').load('index.php?route=checkout/guest_step_1/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>'); getMethods();">
+            <td><select name="country_id" id="country_id" onchange="$('select[name=\'zone_id\']').load('index.php?route=checkout/guest_step_1/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>');">
                 <option value="FALSE"><?php echo $text_select; ?></option>
                 <?php foreach ($countries as $country) { ?>
+                <?php if ($country['country_id'] == $country_id) { ?>
+                <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+                <?php } else { ?>
                 <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                <?php } ?>
                 <?php } ?>
               </select>
               <?php if ($error_country) { ?>
@@ -89,7 +93,7 @@
           </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
-            <td><select name="zone_id" onchange="getMethods();">
+            <td><select name="zone_id">
               </select>
               <?php if ($error_zone) { ?>
               <span class="error"><?php echo $error_zone; ?></span>
@@ -100,7 +104,7 @@
       <div class="buttons">
         <table>
           <tr>
-            <td align="left"><a onclick="location='<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
+            <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
             <td align="right"><a onclick="$('#guest').submit();" class="button"><span><?php echo $button_continue; ?></span></a></td>
           </tr>
         </table>
@@ -115,7 +119,5 @@
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'zone_id\']').load('index.php?route=checkout/guest_step_1/zone&country_id=<?php echo $country_id; ?>&zone_id=<?php echo $zone_id; ?>');
-
-$('#country_id').attr('value', '<?php echo $country_id; ?>');
 //--></script>
 <?php echo $footer; ?> 

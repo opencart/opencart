@@ -3,7 +3,7 @@ class ControllerCommonFooter extends Controller {
 	protected function index() {
 		$this->language->load('common/footer');
 		
-		$this->data['text_powered_by'] = sprintf($this->language->get('text_powered_by'), $this->config->get('config_store'), date('Y', time()));
+		$this->data['text_powered_by'] = sprintf($this->language->get('text_powered_by'), $this->config->get('config_name'), date('Y', time()));
 		
 		$this->id = 'footer';
 
@@ -14,7 +14,7 @@ class ControllerCommonFooter extends Controller {
 		}
 		
 		if ($this->config->get('google_analytics_status')) {
-			$this->data['google_analytics'] = $this->config->get('google_analytics_code');
+			$this->data['google_analytics'] = html_entity_decode($this->config->get('google_analytics_code'), ENT_QUOTES, 'UTF-8');
 		} else {
 			$this->data['google_analytics'] = '';
 		}

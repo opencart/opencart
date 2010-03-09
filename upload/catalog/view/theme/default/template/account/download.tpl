@@ -18,7 +18,7 @@
             <tr>
               <td width="40%"><?php echo $text_name; ?> <?php echo $download['name']; ?></td>
               <td width="50%"><?php echo $text_remaining; ?> <?php echo $download['remaining']; ?></td>
-              <td rowspan="2" style="text-align: right;"><a onclick="location='<?php echo $download['href']; ?>'" class="button"><span><?php echo $text_download; ?></span></a></td>
+              <td rowspan="2" style="text-align: right;"><a onclick="location = '<?php echo str_replace('&', '&amp;', $download['href']); ?>'" class="button"><span><?php echo $text_download; ?></span></a></td>
             </tr>
             <tr>
               <td colspan="2"><?php echo $text_date_added; ?> <?php echo $download['date_added']; ?></td>
@@ -32,7 +32,7 @@
     <div class="buttons">
       <table>
         <tr>
-          <td align="right"><a onclick="location='<?php echo $continue; ?>'" class="button"><span><?php echo $button_continue; ?></span></a></td>
+          <td align="right"><a onclick="location = '<?php echo str_replace('&', '&amp;', $continue); ?>'" class="button"><span><?php echo $button_continue; ?></span></a></td>
         </tr>
       </table>
     </div>

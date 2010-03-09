@@ -76,5 +76,9 @@ class ModelCheckoutCoupon extends Model {
 			return $coupon_data;
 		}
 	}
+	
+	public function redeem($coupon) {
+		
+	}
 }
 ?>

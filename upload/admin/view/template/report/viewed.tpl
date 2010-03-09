@@ -1,9 +1,13 @@
 <?php echo $header; ?>
+<?php if ($success) { ?>
+<div class="success"><?php echo $success; ?></div>
+<?php } ?>
 <div class="box">
   <div class="left"></div>
   <div class="right"></div>
   <div class="heading">
     <h1 style="background-image: url('view/image/report.png');"><?php echo $heading_title; ?></h1>
+    <div class="buttons"><a onclick="location = '<?php echo $reset; ?>';" class="button"><span><?php echo $button_reset; ?></span></a></div>  
   </div>
   <div class="content">
     <table class="list">

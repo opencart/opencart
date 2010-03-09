@@ -7,7 +7,7 @@ class ControllerCommonHeader extends Controller {
 			if (isset($this->request->post['redirect'])) {
 				$this->redirect($this->request->post['redirect']);
 			} else {
-				$this->redirect($this->url->http('common/home'));
+				$this->redirect(HTTP_SERVER . 'index.php?route=common/home');
 			}
     	}		
 		
@@ -17,12 +17,18 @@ class ControllerCommonHeader extends Controller {
 			if (isset($this->request->post['redirect'])) {
 				$this->redirect($this->request->post['redirect']);
 			} else {
-				$this->redirect($this->url->http('common/home'));
+				$this->redirect(HTTP_SERVER . 'index.php?route=common/home');
 			}
    		}
 		
 		$this->language->load('common/header');
 		
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$server = HTTPS_IMAGE;
+		} else {
+			$server = HTTP_IMAGE;
+		}
+			
 		$this->data['title'] = $this->document->title;
 		$this->data['description'] = $this->document->description;
 
@@ -32,6 +38,13 @@ class ControllerCommonHeader extends Controller {
 			$this->data['base'] = HTTP_SERVER;
 		}
 		
+		if ($this->config->get('config_icon') && file_exists(DIR_IMAGE . $this->config->get('config_icon'))) {
+			$this->document->links[] = array(
+				'href' => $server . $this->config->get('config_icon'),
+				'rel'  => 'icon'
+			);
+		}
+		
 		$this->data['charset'] = $this->language->get('charset');
 		$this->data['lang'] = $this->language->get('code');
 		$this->data['direction'] = $this->language->get('direction');
@@ -39,26 +52,21 @@ class ControllerCommonHeader extends Controller {
 		$this->data['styles'] = $this->document->styles;
 		$this->data['scripts'] = $this->document->scripts;		
 		$this->data['breadcrumbs'] = $this->document->breadcrumbs;
-		$this->data['icon'] = $this->config->get('config_icon');
 		
-		$this->data['store'] = $this->config->get('config_store');
+		$this->data['store'] = $this->config->get('config_name');
 		
-		if (isset($this->request->server['HTTPS']) && ($this->request->server['HTTPS'] == 'on')) {
-			$this->data['logo'] = HTTPS_IMAGE . $this->config->get('config_logo');
-		} else {
-			$this->data['logo'] = HTTP_IMAGE . $this->config->get('config_logo');
-		}
+		$this->data['logo'] = $server . $this->config->get('config_logo');
 		
 		$this->data['text_home'] = $this->language->get('text_home');
 		$this->data['text_special'] = $this->language->get('text_special');
 		$this->data['text_contact'] = $this->language->get('text_contact');
 		$this->data['text_sitemap'] = $this->language->get('text_sitemap');
+		$this->data['text_bookmark'] = $this->language->get('text_bookmark');
     	$this->data['text_account'] = $this->language->get('text_account');
     	$this->data['text_login'] = $this->language->get('text_login');
     	$this->data['text_logout'] = $this->language->get('text_logout');
     	$this->data['text_cart'] = $this->language->get('text_cart'); 
     	$this->data['text_checkout'] = $this->language->get('text_checkout');
-		$this->data['text_checkout'] = $this->language->get('text_checkout');
 		$this->data['text_keyword'] = $this->language->get('text_keyword');
 		$this->data['text_category'] = $this->language->get('text_category');
 		$this->data['text_advanced'] = $this->language->get('text_advanced');
@@ -67,16 +75,16 @@ class ControllerCommonHeader extends Controller {
 		
 		$this->data['button_go'] = $this->language->get('button_go');
 
-		$this->data['home'] = $this->url->http('common/home');
-		$this->data['special'] = $this->url->http('product/special');
-		$this->data['contact'] = $this->url->http('information/contact');
-    	$this->data['sitemap'] = $this->url->http('information/sitemap');
-    	$this->data['account'] = $this->url->https('account/account');
+		$this->data['home'] = HTTP_SERVER . 'index.php?route=common/home';
+		$this->data['special'] = HTTP_SERVER . 'index.php?route=product/special';
+		$this->data['contact'] = HTTP_SERVER . 'index.php?route=information/contact';
+    	$this->data['sitemap'] = HTTP_SERVER . 'index.php?route=information/sitemap';
+    	$this->data['account'] = HTTPS_SERVER . 'index.php?route=account/account';
 		$this->data['logged'] = $this->customer->isLogged();
-		$this->data['login'] = $this->url->https('account/login');
-		$this->data['logout'] = $this->url->http('account/logout');
-    	$this->data['cart'] = $this->url->http('checkout/cart');
-		$this->data['checkout'] = $this->url->https('checkout/shipping');
+		$this->data['login'] = HTTPS_SERVER . 'index.php?route=account/login';
+		$this->data['logout'] = HTTP_SERVER . 'index.php?route=account/logout';
+    	$this->data['cart'] = HTTP_SERVER . 'index.php?route=checkout/cart';
+		$this->data['checkout'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
 		
 		if (isset($this->request->get['keyword'])) {
 			$this->data['keyword'] = $this->request->get['keyword'];
@@ -94,16 +102,16 @@ class ControllerCommonHeader extends Controller {
 			$this->data['category_id'] = '';
 		}
 		
-		$this->data['advanced'] = $this->url->http('product/search');
+		$this->data['advanced'] = HTTP_SERVER . 'index.php?route=product/search';
 		
 		$this->load->model('catalog/category');
 		
 		$this->data['categories'] = $this->getCategories(0);
 		
-		$this->data['action'] = $this->url->http('common/home');
+		$this->data['action'] = HTTP_SERVER . 'index.php?route=common/home';
 
 		if (!isset($this->request->get['route'])) {
-			$this->data['redirect'] = $this->url->http('common/home');
+			$this->data['redirect'] = HTTP_SERVER . 'index.php?route=common/home';
 		} else {
 			$this->load->model('tool/seo_url');
 			
@@ -121,10 +129,10 @@ class ControllerCommonHeader extends Controller {
 				$url = '&' . urldecode(http_build_query($data));
 			}			
 			
-			$this->data['redirect'] = $this->model_tool_seo_url->rewrite($this->url->http($route . $url));
+			$this->data['redirect'] = $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=' . $route . $url);
 		}
 		
-		$this->data['language_code'] = $this->session->data['language'];	
+		$this->data['language_code'] = $this->session->data['language'];
 		
 		$this->load->model('localisation/language');
 		

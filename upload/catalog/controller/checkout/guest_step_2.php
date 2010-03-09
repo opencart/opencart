@@ -4,21 +4,21 @@ class ControllerCheckoutGuestStep2 extends Controller {
 	      
   	public function index() {
     	if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-	  		$this->redirect($this->url->https('checkout/cart'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/cart');
     	}
 		
 		if ($this->customer->isLogged()) {
-	  		$this->redirect($this->url->https('checkout/shipping'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/shipping');
     	} 
 
 		if (!$this->config->get('config_guest_checkout') || $this->cart->hasDownload()) {
-			$this->session->data['redirect'] = $this->url->https('checkout/shipping');
+			$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
 
-	  		$this->redirect($this->url->https('account/login'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
     	} 
 		
 		if (!isset($this->session->data['guest'])) {
-	  		$this->redirect($this->url->https('checkout/guest_step_1'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/guest_step_1');
     	} 
 		
     	if (!$this->cart->hasShipping()) {
@@ -100,7 +100,7 @@ class ControllerCheckoutGuestStep2 extends Controller {
 		
 			$this->session->data['comment'] = $this->request->post['comment'];
 			
-	  		$this->redirect($this->url->https('checkout/guest_step_3'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/guest_step_3');
     	} 
 
 		$this->document->title = $this->language->get('heading_title');
@@ -108,25 +108,25 @@ class ControllerCheckoutGuestStep2 extends Controller {
 		$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/cart'),
+        	'href'      => HTTP_SERVER . 'index.php?route=checkout/cart',
         	'text'      => $this->language->get('text_cart'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->https('checkout/guest_step_1'),
+        	'href'      => HTTPS_SERVER . 'index.php?route=checkout/guest_step_1',
         	'text'      => $this->language->get('text_guest_step_1'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->https('checkout/guest_step_2'),
+        	'href'      => HTTPS_SERVER . 'index.php?route=checkout/guest_step_2',
         	'text'      => $this->language->get('text_guest_step_2'),
         	'separator' => $this->language->get('text_separator')
       	);
@@ -155,11 +155,15 @@ class ControllerCheckoutGuestStep2 extends Controller {
 			$this->data['error_warning'] = '';
 		}
 		
-    	$this->data['action'] = $this->url->https('checkout/guest_step_2');
+    	$this->data['action'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 
-		$this->data['shipping_methods'] = $this->session->data['shipping_methods']; 
-
-   		if (isset($this->request->post['shipping'])) {
+		if (isset($this->session->data['shipping_methods'])) {
+			$this->data['shipping_methods'] = $this->session->data['shipping_methods']; 
+		} else {
+			$this->data['shipping_methods'] = array();
+		}
+	  
+   		if (isset($this->request->post['shipping_method'])) {
       		$this->data['shipping'] = $this->request->post['shipping_method'];
 		} elseif (isset($this->session->data['shipping_method'])) {
 			$this->data['shipping'] = $this->session->data['shipping_method']['id'];			
@@ -167,8 +171,12 @@ class ControllerCheckoutGuestStep2 extends Controller {
       		$this->data['shipping'] = '';
     	}
 
-		$this->data['payment_methods'] = $this->session->data['payment_methods'];
-
+		if (isset($this->session->data['payment_methods'])) {
+        	$this->data['payment_methods'] = $this->session->data['payment_methods']; 
+      	} else {
+        	$this->data['payment_methods'] = array();
+		}
+		
    		if (isset($this->request->post['payment_method'])) {
       		$this->data['payment'] = $this->request->post['payment_method'];
 		} elseif (isset($this->session->data['payment_method'])) {
@@ -187,13 +195,13 @@ class ControllerCheckoutGuestStep2 extends Controller {
 			$this->data['comment'] = '';
 		}
 
-		if ($this->config->get('config_checkout')) {
+		if ($this->config->get('config_checkout_id')) {
 			$this->load->model('catalog/information');
 			
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout'));
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
 			
 			if ($information_info) {
-				$this->data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->http('information/information&information_id=' . $this->config->get('config_checkout')), $information_info['title']);
+				$this->data['text_agree'] = sprintf($this->language->get('text_agree'), HTTP_SERVER . 'index.php?route=information/information&information_id=' . $this->config->get('config_checkout_id'), $information_info['title']);
 			} else {
 				$this->data['text_agree'] = '';
 			}
@@ -207,7 +215,7 @@ class ControllerCheckoutGuestStep2 extends Controller {
 			$this->data['agree'] = '';
 		}
 		
-		$this->data['back'] = $this->url->http('checkout/guest_step_1');
+		$this->data['back'] = HTTP_SERVER . 'index.php?route=checkout/guest_step_1';
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/guest_step_2.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/checkout/guest_step_2.tpl';
@@ -246,10 +254,10 @@ class ControllerCheckoutGuestStep2 extends Controller {
 			}
 		}
 		
-		if ($this->config->get('config_checkout')) {
+		if ($this->config->get('config_checkout_id')) {
 			$this->load->model('catalog/information');
 			
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout'));
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
 			
 			if ($information_info) {
     			if (!isset($this->request->post['agree'])) {

@@ -2,9 +2,9 @@
 class ControllerAccountHistory extends Controller {	
 	public function index() {
     	if (!$this->customer->isLogged()) {
-      		$this->session->data['redirect'] = $this->url->https('account/history');
+      		$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=account/history';
 
-	  		$this->redirect($this->url->https('account/login'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
     	}
  
     	$this->language->load('account/history');
@@ -14,19 +14,19 @@ class ControllerAccountHistory extends Controller {
       	$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('account/account'),
+        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('account/history'),
+        	'href'      => HTTP_SERVER . 'index.php?route=account/history',
         	'text'      => $this->language->get('text_history'),
         	'separator' => $this->language->get('text_separator')
       	);
@@ -48,7 +48,7 @@ class ControllerAccountHistory extends Controller {
       		$this->data['button_view'] = $this->language->get('button_view');
       		$this->data['button_continue'] = $this->language->get('button_continue');
 			
-			$this->data['action'] = $this->url->http('account/history');
+			$this->data['action'] = HTTP_SERVER . 'index.php?route=account/history';
 			
 			if (isset($this->request->get['page'])) {
 				$page = $this->request->get['page'];
@@ -70,7 +70,7 @@ class ControllerAccountHistory extends Controller {
           			'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
           			'products'   => $product_total,
           			'total'      => $this->currency->format($result['total'], $result['currency'], $result['value']),
-					'href'       => $this->url->https('account/invoice&order_id=' . $result['order_id'])
+					'href'       => HTTPS_SERVER . 'index.php?route=account/invoice&order_id=' . $result['order_id']
         		);
       		}
 
@@ -79,11 +79,11 @@ class ControllerAccountHistory extends Controller {
 			$pagination->page = $page;
 			$pagination->limit = 20; 
 			$pagination->text = $this->language->get('text_pagination');
-			$pagination->url = $this->url->http('account/history&page=%s');
+			$pagination->url = HTTP_SERVER . 'index.php?route=account/history&page=%s';
 			
 			$this->data['pagination'] = $pagination->render();
 
-      		$this->data['continue'] = $this->url->https('account/account');
+      		$this->data['continue'] = HTTPS_SERVER . 'index.php?route=account/account';
 			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/history.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/account/history.tpl';
@@ -106,7 +106,7 @@ class ControllerAccountHistory extends Controller {
 
       		$this->data['button_continue'] = $this->language->get('button_continue');
 
-      		$this->data['continue'] = $this->url->https('account/account');
+      		$this->data['continue'] = HTTPS_SERVER . 'index.php?route=account/account';
 			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';

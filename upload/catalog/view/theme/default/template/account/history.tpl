@@ -18,7 +18,7 @@
             <tr>
               <td><?php echo $text_date_added; ?> <?php echo $order['date_added']; ?></td>
               <td><?php echo $text_customer; ?> <?php echo $order['name']; ?></td>
-              <td rowspan="2" style="text-align: right;"><a onclick="location='<?php echo $order['href']; ?>'" class="button"><span><?php echo $button_view; ?></span></a></td>
+              <td rowspan="2" style="text-align: right;"><a onclick="location = '<?php echo str_replace('&', '&amp;', $order['href']); ?>'" class="button"><span><?php echo $button_view; ?></span></a></td>
             </tr>
             <tr>
               <td><?php echo $text_products; ?> <?php echo $order['products']; ?></td>
@@ -33,7 +33,7 @@
     <div class="buttons">
       <table>
         <tr>
-          <td align="right"><a onclick="location='<?php echo $continue; ?>'" class="button"><span><?php echo $button_continue; ?></span></a></td>
+          <td align="right"><a onclick="location = '<?php echo str_replace('&', '&amp;', $continue); ?>'" class="button"><span><?php echo $button_continue; ?></span></a></td>
         </tr>
       </table>
     </div>

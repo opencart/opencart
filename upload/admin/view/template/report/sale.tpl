@@ -6,8 +6,8 @@
     <h1 style="background-image: url('view/image/report.png');"><?php echo $heading_title; ?></h1>
   </div>
   <div class="content">
-    <div style="background: #E7EFEF; padding: 3px; margin-bottom: 15px;">
-      <table width="100%" cellspacing="0" cellpadding="6" style="margin-bottom: 20px;">
+    <div style="background: #E7EFEF; border: 1px solid #C6D7D7; padding: 3px; margin-bottom: 15px;">
+      <table width="100%" cellspacing="0" cellpadding="6">
         <tr>
           <td><?php echo $entry_date_start; ?><br />
             <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="date_start" size="12" style="margin-top: 4px;" /></td>

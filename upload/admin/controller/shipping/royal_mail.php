@@ -14,7 +14,7 @@ class ControllerShippingRoyalMail extends Controller {
 					
 			$this->session->data['success'] = $this->language->get('text_success');
 						
-			$this->redirect($this->url->https('extension/shipping'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/shipping');
 		}
 				
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -39,6 +39,7 @@ class ControllerShippingRoyalMail extends Controller {
 		$this->data['entry_display_weight'] = $this->language->get('entry_display_weight');
 		$this->data['entry_display_insurance'] = $this->language->get('entry_display_insurance');
 		$this->data['entry_display_time'] = $this->language->get('entry_display_time');
+		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -58,26 +59,26 @@ class ControllerShippingRoyalMail extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('extension/shipping'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/shipping',
        		'text'      => $this->language->get('text_shipping'),
       		'separator' => ' :: '
    		);
 		
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('shipping/royal_mail'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=shipping/royal_mail',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['action'] = $this->url->https('shipping/royal_mail');
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=shipping/royal_mail';
 		
-		$this->data['cancel'] = $this->url->https('extension/shipping');
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/shipping';
 
 		if (isset($this->request->post['royal_mail_1st_class_standard'])) {
 			$this->data['royal_mail_1st_class_standard'] = $this->request->post['royal_mail_1st_class_standard'];
@@ -156,6 +157,16 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$this->data['royal_mail_display_time'] = $this->config->get('royal_mail_display_time');
 		}
+
+		if (isset($this->request->post['royal_mail_weight_class'])) {
+			$this->data['royal_mail_weight_class'] = $this->request->post['royal_mail_weight_class'];
+		} else {
+			$this->data['royal_mail_weight_class'] = $this->config->get('royal_mail_weight_class');
+		}
+		
+		$this->load->model('localisation/weight_class');
+		
+		$this->data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
 		
 		if (isset($this->request->post['royal_mail_tax_class_id'])) {
 			$this->data['royal_mail_tax_class_id'] = $this->request->post['royal_mail_tax_class_id'];

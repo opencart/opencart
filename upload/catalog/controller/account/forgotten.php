@@ -4,7 +4,7 @@ class ControllerAccountForgotten extends Controller {
 
 	public function index() {
 		if ($this->customer->isLogged()) {
-			$this->redirect($this->url->https('account/forgotten'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=account/account');
 		}
 
 		$this->language->load('account/forgotten');
@@ -18,43 +18,49 @@ class ControllerAccountForgotten extends Controller {
 			
 			$password = substr(md5(rand()), 0, 7);
 			
-			$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_store'));
+			$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
 			
-			$message  = sprintf($this->language->get('text_greeting'), $this->config->get('config_store')) . "\n\n";
+			$message  = sprintf($this->language->get('text_greeting'), $this->config->get('config_name')) . "\n\n";
 			$message .= $this->language->get('text_password') . "\n\n";
 			$message .= $password;
 
-			$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), html_entity_decode($this->config->get('config_smtp_password')), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout'));
+			$mail = new Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->hostname = $this->config->get('config_smtp_host');
+			$mail->username = $this->config->get('config_smtp_username');
+			$mail->password = $this->config->get('config_smtp_password');
+			$mail->port = $this->config->get('config_smtp_port');
+			$mail->timeout = $this->config->get('config_smtp_timeout');				
 			$mail->setTo($this->request->post['email']);
 			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender($this->config->get('config_store'));
+			$mail->setSender($this->config->get('config_name'));
 			$mail->setSubject($subject);
-			$mail->setText($message);
+			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
 			
 			$this->model_account_customer->editPassword($this->request->post['email'], $password);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect($this->url->https('account/login'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
 		}
 
       	$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('account/account'),
+        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('account/forgotten'),
+        	'href'      => HTTP_SERVER . 'index.php?route=account/forgotten',
         	'text'      => $this->language->get('text_forgotten'),
         	'separator' => $this->language->get('text_separator')
       	);
@@ -75,9 +81,9 @@ class ControllerAccountForgotten extends Controller {
 			$this->data['error'] = '';
 		}
 		
-		$this->data['action'] = $this->url->https('account/forgotten');
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=account/forgotten';
  
-		$this->data['back'] = $this->url->https('account/account');
+		$this->data['back'] = HTTPS_SERVER . 'index.php?route=account/account';
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/forgotten.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/account/forgotten.tpl';

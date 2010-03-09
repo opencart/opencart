@@ -7,12 +7,21 @@ body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
-	background: #F7F7F7;
+	background: #FFFFFF;
 }
 body, td, th, input, select, textarea, option, optgroup {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #000000;
+}
+input[type='text'] {
+	padding: 2px;
+}
+select {
+	padding: 1px;
+}
+textarea {
+	padding: 2px;	
 }
 a, a:visited {
 	color: #003366;
@@ -122,18 +131,28 @@ ul.right {
 }
 #content {
 	background: #FFFFFF url('../image/background.png') 0px 1px repeat-x;
-	padding: 10px 30px 25px 30px;
-	min-width: 900px;	
+	padding: 10px 30px 0px 30px;
+	min-width: 900px;
+	padding-bottom: 128px;
+	clear: both;
+}
+#container {
+	height: 100%;
+}
+body > #container {
+	height: auto; 
+	min-height: 100%;
 }
 #footer {
-	background: #F7F7F7 url('../image/footer.png') repeat-x;
-	height: 38px;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	clear: both;
+	background: #FFFFFF url('../image/footer.png') repeat-x;
+	height: 90px;
+	padding-top: 38px;
 	text-align: center;
 	font-size: 12px;
 	color: #333;
+	position: relative;
+	margin-top: -128px;
+	clear: both;
 }
 #footer a {
 	color: #333;
@@ -159,6 +178,14 @@ ul.right {
 	border: 1px solid #FF9999;
 	font-size: 12px;
 	text-align: center;
+}
+.attention {
+	padding: 15px 0px;
+	margin-bottom: 15px;
+	background: #FEFBCC;
+	border: 1px solid #E6DB55;
+	font-size: 12px;
+	text-align: center;	
 }
 .box {
 	margin-bottom: 15px;
@@ -300,6 +327,7 @@ ul.right {
 .form {
 	width: 100%;
 	border-collapse: collapse;
+	margin-bottom: 15px;
 }
 table.form tr td:first-child {
 	width: 200px;
@@ -334,13 +362,13 @@ table.form tr td:first-child {
 	background: #FFFFFF;
 	overflow-y: scroll;
 }
-.tabs {
+.htabs {
 	padding: 0px 0px 0px 10px;
 	height: 30px;
 	border-bottom: 1px solid #DDDDDD;
 	margin-bottom: 15px;
 }
-.tabs a {
+.htabs a {
 	border-top: 1px solid #DDDDDD;
 	border-left: 1px solid #DDDDDD;
 	border-right: 1px solid #DDDDDD;
@@ -355,7 +383,7 @@ table.form tr td:first-child {
 	color: #000000;
 	margin-right: 2px;
 }
-.tabs a.selected {
+.htabs a.selected {
 	padding-bottom: 8px;
 	background: #FFFFFF;
 }
@@ -364,6 +392,7 @@ table.form tr td:first-child {
 	padding: 10px 0px;
 	min-height: 300px;
 	float: left;
+	display: block;
 	border-right: 1px solid #DDDDDD;
 }
 .vtabs a {

@@ -13,12 +13,12 @@ class ControllerPaymentCheque extends Controller {
 		$this->data['payable'] = $this->config->get('cheque_payable');
 		$this->data['address'] = $this->config->get('config_address');
 
-		$this->data['continue'] = $this->url->https('checkout/success');
+		$this->data['continue'] = HTTPS_SERVER . 'index.php?route=checkout/success';
 
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';

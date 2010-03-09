@@ -142,6 +142,18 @@
             <?php } ?></td>
         </tr>
         <tr>
+          <td><?php echo $entry_weight_class; ?></td>
+          <td><select name="royal_mail_weight_class">
+              <?php foreach ($weight_classes as $weight_class) { ?>
+              <?php if ($weight_class['unit'] == $royal_mail_weight_class) { ?>
+              <option value="<?php echo $weight_class['unit']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $weight_class['unit']; ?>"><?php echo $weight_class['title']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select></td>
+        </tr>        
+        <tr>
           <td><?php echo $entry_tax; ?></td>
           <td><select name="royal_mail_tax_class_id">
               <option value="0"><?php echo $text_none; ?></option>

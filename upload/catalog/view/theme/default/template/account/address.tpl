@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="middle">
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="address">
+    <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="address">
       <b style="margin-bottom: 2px; display: block;"><?php echo $text_edit_address; ?></b>
       <div class="content">
         <table>
@@ -57,7 +57,11 @@
             <td><select name="country_id" id="country_id" onchange="$('select[name=\'zone_id\']').load('index.php?route=account/address/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>');">
                 <option value="FALSE"><?php echo $text_select; ?></option>
                 <?php foreach ($countries as $country) { ?>
+                <?php if ($country['country_id'] == $country_id) { ?>
+                <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+                <?php } else { ?>
                 <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                <?php } ?>
                 <?php } ?>
               </select>
               <?php if ($error_country) { ?>
@@ -91,7 +95,7 @@
       <div class="buttons">
         <table>
           <tr>
-            <td align="left"><a onclick="location='<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
+            <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
             <td align="right"><a onclick="$('#address').submit();" class="button"><span><?php echo $button_continue; ?></span></a></td>
           </tr>
         </table>
@@ -106,7 +110,5 @@
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'zone_id\']').load('index.php?route=account/address/zone&country_id=<?php echo $country_id; ?>&zone_id=<?php echo $zone_id; ?>');
-
-$('#country_id').attr('value', '<?php echo $country_id; ?>');
 //--></script>
 <?php echo $footer; ?> 

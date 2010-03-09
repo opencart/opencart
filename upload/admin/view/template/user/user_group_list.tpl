@@ -17,8 +17,8 @@
       <table class="list">
         <thead>
           <tr>
-            <td width="1" style="align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
-            <td class="left"><?php if ($sort == 'name') { ?>
+            <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+            <td class="left"><?php if ($sort == 'name') { ?>   
               <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
               <?php } else { ?>
               <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
@@ -30,7 +30,7 @@
           <?php if ($user_groups) { ?>
           <?php foreach ($user_groups as $user_group) { ?>
           <tr>
-            <td style="align: center;"><?php if ($user_group['selected']) { ?>
+            <td style="text-align: center;"><?php if ($user_group['selected']) { ?>
               <input type="checkbox" name="selected[]" value="<?php echo $user_group['user_group_id']; ?>" checked="checked" />
               <?php } else { ?>
               <input type="checkbox" name="selected[]" value="<?php echo $user_group['user_group_id']; ?>" />

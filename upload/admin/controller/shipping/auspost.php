@@ -14,7 +14,7 @@ class ControllerShippingAusPost extends Controller {
 					
 			$this->session->data['success'] = $this->language->get('text_success');
 						
-			$this->redirect($this->url->https('extension/shipping'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/shipping');
 		}
 				
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -29,6 +29,7 @@ class ControllerShippingAusPost extends Controller {
 		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
 		$this->data['entry_handling'] = $this->language->get('entry_handling');
 		$this->data['entry_estimate'] = $this->language->get('entry_estimate');
+		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');		
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -54,26 +55,26 @@ class ControllerShippingAusPost extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('extension/shipping'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/shipping',
        		'text'      => $this->language->get('text_shipping'),
       		'separator' => ' :: '
    		);
 		
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('shipping/auspost'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=shipping/auspost',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['action'] = $this->url->https('shipping/auspost');
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=shipping/auspost';
 		
-		$this->data['cancel'] = $this->url->https('extension/shipping');
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/shipping';
 		
 		if (isset($this->request->post['auspost_standard'])) {
 			$this->data['auspost_standard'] = $this->request->post['auspost_standard'];

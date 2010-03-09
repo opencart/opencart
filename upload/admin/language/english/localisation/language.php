@@ -30,6 +30,7 @@ $_['error_image']       = 'Image Filename must be greater than 3 and less than 6
 $_['error_directory']   = 'Directory required!';
 $_['error_filename']    = 'Filename must be greater than 3 and less than 64 characters!';
 $_['error_default']     = 'Warning: This Language cannot be deleted as it is currently assigned as the default store language!';
+$_['error_store']       = 'Warning: This Language cannot be deleted as it is currently assigned to %s stores!';
 $_['error_admin']       = 'Warning: This Language cannot be deleted as it is currently assigned as the administration language!';
 $_['error_order']       = 'Warning: This Language cannot be deleted as it is currently assigned to %s orders!';
 ?>

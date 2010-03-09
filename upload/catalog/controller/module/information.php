@@ -15,12 +15,12 @@ class ControllerModuleInformation extends Controller {
 		foreach ($this->model_catalog_information->getInformations() as $result) {
       		$this->data['informations'][] = array(
         		'title' => $result['title'],
-	    		'href'  => $this->model_tool_seo_url->rewrite($this->url->http('information/information&information_id=' . $result['information_id']))
+	    		'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=information/information&information_id=' . $result['information_id'])
       		);
     	}
 
-		$this->data['contact'] = $this->url->http('information/contact');
-    	$this->data['sitemap'] = $this->url->http('information/sitemap');
+		$this->data['contact'] = HTTP_SERVER . 'index.php?route=information/contact';
+    	$this->data['sitemap'] = HTTP_SERVER . 'index.php?route=information/sitemap';
 		
 		$this->id = 'information';
 

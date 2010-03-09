@@ -14,7 +14,7 @@ class ControllerShippingFlat extends Controller {
 					
 			$this->session->data['success'] = $this->language->get('text_success');
 						
-			$this->redirect($this->url->https('extension/shipping'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/shipping');
 		}
 				
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -44,26 +44,26 @@ class ControllerShippingFlat extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('extension/shipping'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/shipping',
        		'text'      => $this->language->get('text_shipping'),
       		'separator' => ' :: '
    		);
 		
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('shipping/flat'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=shipping/flat',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['action'] = $this->url->https('shipping/flat');
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=shipping/flat';
 		
-		$this->data['cancel'] = $this->url->https('extension/shipping');
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/shipping';
 		
 		if (isset($this->request->post['flat_cost'])) {
 			$this->data['flat_cost'] = $this->request->post['flat_cost'];

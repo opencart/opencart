@@ -11,7 +11,7 @@
   </div>
   <div class="content">
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-      <div class="tabs">
+      <div class="htabs">
         <?php foreach ($languages as $language) { ?>
         <a tab="#language<?php echo $language['language_id']; ?>"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a>
         <?php } ?>
@@ -222,6 +222,6 @@ $(document).ready(function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$.tabs('.tabs a'); 
+$.tabs('.htabs a'); 
 //--></script>
 <?php echo $footer; ?>

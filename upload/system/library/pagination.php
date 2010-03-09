@@ -5,7 +5,7 @@ final class Pagination {
 	public $limit = 20;
 	public $num_links = 10;
 	public $url = '';
-	public $text = 'Showing %s to %s of %s (%s Pages)';
+	public $text = 'Showing {start} to {end} of {total} ({pages} Pages)';
 	public $text_first = '|&lt;';
 	public $text_last = '&gt;|';
 	public $text_next = '&gt;';
@@ -29,7 +29,7 @@ final class Pagination {
 		$output = '';
 		
 		if ($page > 1) {
-			$output .= ' <a href="' . sprintf($this->url, 1) . '">' . $this->text_first . '</a> <a href="' . sprintf($this->url, $page - 1) . '">' . $this->text_prev . '</a> ';
+			$output .= ' <a href="' . str_replace('{page}', 1, $this->url) . '">' . $this->text_first . '</a> <a href="' . str_replace('{page}', $page - 1, $this->url) . '">' . $this->text_prev . '</a> ';
     	}
 
 		if ($num_pages > 1) {
@@ -59,7 +59,7 @@ final class Pagination {
 				if ($page == $i) {
 					$output .= ' <b>' . $i . '</b> ';
 				} else {
-					$output .= ' <a href="' . sprintf($this->url, $i) . '">' . $i . '</a> ';
+					$output .= ' <a href="' . str_replace('{page}', $i, $this->url) . '">' . $i . '</a> ';
 				}	
 			}
 							
@@ -69,10 +69,24 @@ final class Pagination {
 		}
 		
    		if ($page < $num_pages) {
-			$output .= ' <a href="' . sprintf($this->url, $page + 1) . '">' . $this->text_next . '</a> <a href="' . sprintf($this->url, $num_pages) . '">' . $this->text_last . '</a> ';
+			$output .= ' <a href="' . str_replace('{page}', $page + 1, $this->url) . '">' . $this->text_next . '</a> <a href="' . str_replace('{page}', $num_pages, $this->url) . '">' . $this->text_last . '</a> ';
 		}
-				
-		return ($output ? '<div class="' . $this->style_links . '">' . $output . '</div>' : '') . '<div class="' . $this->style_results . '">' . sprintf($this->text, ($total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total - $limit)) ? $total : ((($page - 1) * $limit) + $limit), $total, $num_pages) . '</div>';
+		
+		$find = array(
+			'{start}',
+			'{end}',
+			'{total}',
+			'{pages}'
+		);
+		
+		$replace = array(
+			($total) ? (($page - 1) * $limit) + 1 : 0,
+			((($page - 1) * $limit) > ($total - $limit)) ? $total : ((($page - 1) * $limit) + $limit),
+			$total, 
+			$num_pages
+		);
+		
+		return ($output ? '<div class="' . $this->style_links . '">' . $output . '</div>' : '') . '<div class="' . $this->style_results . '">' . str_replace($find, $replace, $this->text) . '</div>';
 	}
 }
 ?>

@@ -6,12 +6,12 @@ class ControllerProductManufacturer extends Controller {
 		$this->load->model('catalog/manufacturer');
 		$this->load->model('catalog/product');
 		$this->load->model('tool/seo_url'); 
-		$this->load->helper('image');
+		$this->load->model('tool/image');
 		
 		$this->document->breadcrumbs = array();
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	);
@@ -26,7 +26,7 @@ class ControllerProductManufacturer extends Controller {
 	
 		if ($manufacturer_info) {
       		$this->document->breadcrumbs[] = array(
-        		'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'])),
+        		'href'      => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id']),
         		'text'      => $manufacturer_info['name'],
         		'separator' => $this->language->get('text_separator')
       		);
@@ -94,10 +94,10 @@ class ControllerProductManufacturer extends Controller {
 						'model'   => $result['model'],
 						'rating'  => $rating,
 						'stars'   => sprintf($this->language->get('text_stars'), $rating),            			
-						'thumb'   => image_resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
+						'thumb'   => $this->model_tool_image->resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
             			'price'   => $price,
 						'special' => $special,
-						'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&product_id=' . $result['product_id']))
+						'href'    => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&product_id=' . $result['product_id'])
           			);
         		}
 				
@@ -120,37 +120,37 @@ class ControllerProductManufacturer extends Controller {
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_name_asc'),
 					'value' => 'pd.name-ASC',
-					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=pd.name&order=ASC'))
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=pd.name&order=ASC')
 				);  
  
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_name_desc'),
 					'value' => 'pd.name-DESC',
-					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=pd.name&order=DESC'))
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=pd.name&order=DESC')
 				);  
 
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_price_asc'),
 					'value' => 'p.price-ASC',
-					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.price&order=ASC'))
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.price&order=ASC')
 				); 
 
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_price_desc'),
 					'value' => 'p.price-DESC',
-					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.price&order=DESC'))
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.price&order=DESC')
 				); 
 				
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_rating_desc'),
 					'value' => 'rating-DESC',
-					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=rating&order=DESC'))
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=rating&order=DESC')
 				); 
 				
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_rating_asc'),
 					'value' => 'rating-ASC',
-					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=rating&order=ASC'))
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=rating&order=ASC')
 				); 
 
 				$url = '';
@@ -168,7 +168,7 @@ class ControllerProductManufacturer extends Controller {
 				$pagination->page = $page;
 				$pagination->limit = 12; 
 				$pagination->text = $this->language->get('text_pagination');
-				$pagination->url = $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page=%s'));
+				$pagination->url = $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page={page}');
 			
 				$this->data['pagination'] = $pagination->render();
 
@@ -198,7 +198,7 @@ class ControllerProductManufacturer extends Controller {
 
         		$this->data['button_continue'] = $this->language->get('button_continue');
 
-        		$this->data['continue'] = $this->url->http('common/home');
+        		$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
 		
 				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 					$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
@@ -231,7 +231,7 @@ class ControllerProductManufacturer extends Controller {
 			}	
 			
       		$this->document->breadcrumbs[] = array(
-        		'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)),
+        		'href'      => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $manufacturer_id . $url),
         		'text'      => $this->language->get('text_error'),
         		'separator' => $this->language->get('text_separator')
       		);
@@ -244,7 +244,7 @@ class ControllerProductManufacturer extends Controller {
 
       		$this->data['button_continue'] = $this->language->get('button_continue');
 
-      		$this->data['continue'] = $this->url->http('common/home');
+      		$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
 	  			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';

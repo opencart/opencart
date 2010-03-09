@@ -15,10 +15,23 @@ class ControllerPaymentGoogleCheckout extends Controller {
 		$products = $this->cart->getProducts();
 		
 		foreach ($products as $product) { 
+			$option_data = array();
+			
+			foreach ($product['option'] as $option) {
+				$option_data[] = $option['name'] . ': ' . $option['value'];
+			}
+		
+			if ($option_data) {
+				$name = $product['name'] . ' ' . implode('; ', $option_data);
+			} else {
+				$name = $product['name'];
+			}
+			
 			$xml .= '			<item>';
-			$xml .= '				<item-name>' . $product['name'] . '</item-name>'; 
-			$xml .= '				<item-description>' . $product['model'] . '</item-description>';   
-			$xml .= '				<unit-price currency="' . $this->currency->getCode() . '">159.99</unit-price>';
+			$xml .= '				<merchant-item-id>' . $product['product_id'] . '</merchant-item-id>';
+			$xml .= '				<item-name>' . $name . '</item-name>'; 
+			$xml .= '				<item-description>' . substr(strip_tags($product['description']), 0, 299) . '</item-description>';   
+			$xml .= '				<unit-price currency="' . $this->currency->getCode() . '">' . $product['price'] . '</unit-price>';
 			$xml .= '				<quantity>' . $product['quantity'] . '</quantity>';
 			$xml .= '			</item>'; 
 		}
@@ -28,7 +41,7 @@ class ControllerPaymentGoogleCheckout extends Controller {
 		$xml .= '	<checkout-flow-support>';  
 		$xml .= '		<merchant-checkout-flow-support>';
 		$xml .= '			<merchant-calculations>'; 
-		$xml .= '				<merchant-calculations-url>' . $this->url->https('payment/google_checkout/shipping') . '</merchant-calculations-url>';
+		$xml .= '				<merchant-calculations-url>' . HTTPS_SERVER . 'index.php?route=payment/google_checkout/shipping' . '</merchant-calculations-url>';
 		$xml .= '			</merchant-calculations>';
 		$xml .= '			<shipping-methods>';
 		$xml .= '				<merchant-calculated-shipping name="SuperShip International">';
@@ -142,7 +155,7 @@ class ControllerPaymentGoogleCheckout extends Controller {
 */
 		$xml = '<shipping-methods>';
 		
-		//foreach ($quote_data as $shipping) {
+		foreach ($quote_data as $shipping) {
 			$xml .= '<merchant-calculated-shipping name="UPS Next Day Air">';
 			$xml .= '	<price currency="' . $this->currency->getCode() . '">20.00</price>';
 			$xml .= '		<address-filters>';
@@ -152,53 +165,11 @@ class ControllerPaymentGoogleCheckout extends Controller {
 			$xml .= '<merchant-calculated-shipping name="UPS Ground">';
 			$xml .= '	<price currency="' . $this->currency->getCode() . '">15.00</price>';
 			$xml .= '</merchant-calculated-shipping>';
-		//}
+		}
 		
 		$xml .= '</shipping-methods>';
 		
 		$this->response->setOutput($xml);
-	}
-	
-	public function test() {
-		$this->language->load('payment/google_checkout');
-		
-		$this->data['text_select'] = $this->language->get('text_select');
-    	
-		$this->data['entry_country'] = $this->language->get('entry_country');
-    	$this->data['entry_zone'] = $this->language->get('entry_zone');
-		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
-
-    	if (isset($this->request->post['country_id'])) {
-      		$this->data['country_id'] = $this->request->post['country_id'];
-    	} else {
-      		$this->data['country_id'] = $this->config->get('config_country_id');
-    	}
-
-    	if (isset($this->request->post['zone_id'])) {
-      		$this->data['zone_id'] = $this->request->post['zone_id'];
-    	} else {
-      		$this->data['zone_id'] = 'FALSE';
-    	}
-		
-		$this->load->model('localisation/country');
-		
-    	$this->data['countries'] = $this->model_localisation_country->getCountries();		
-
-		if (!$this->config->get('google_checkout_test')) {
-			$this->data['button'] = 'http://checkout.google.com/checkout/buttons/checkout.gif?merchant_id=' . $this->config->get('google_checkout_merchant_id') . '&w=180&h=46&style=white&variant=text&loc=en_US';	
-		} else {
-			$this->data['button'] = 'http://sandbox.google.com/checkout/buttons/checkout.gif?merchant_id=' . $this->config->get('google_checkout_merchant_id') . '&w=180&h=46&style=white&variant=text&loc=en_US';
-		}
-		
-		$this->id = 'google_checkout';
-		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/google_checkout.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/google_checkout.tpl';
-		} else {
-			$this->template = 'default/template/payment/google_checkout.tpl';
-		}
-	
-		$this->render();			
 	}
 }
 ?>

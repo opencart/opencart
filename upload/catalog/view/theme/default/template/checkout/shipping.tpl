@@ -11,14 +11,14 @@
     <?php if ($error_warning) { ?>
     <div class="warning"><?php echo $error_warning; ?></div>
     <?php } ?>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="shipping">
+    <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="shipping">
       <b style="margin-bottom: 2px; display: block;"><?php echo $text_shipping_address; ?></b>
       <div class="content">
         <table width="100%">
           <tr>
             <td width="50%" valign="top"><?php echo $text_shipping_to; ?><br />
               <br />
-              <div style="text-align: center;"><a onclick="location='<?php echo $change_address; ?>'" class="button"><span><?php echo $button_change_address; ?></span></a></div></td>
+              <div style="text-align: center;"><a onclick="location = '<?php echo str_replace('&', '&amp;', $change_address); ?>'" class="button"><span><?php echo $button_change_address; ?></span></a></div></td>
             <td width="50%" valign="top"><b><?php echo $text_shipping_address; ?></b><br />
               <?php echo $address; ?></td>
           </tr>
@@ -63,7 +63,7 @@
       <div class="buttons">
         <table>
           <tr>
-            <td align="left"><a onclick="location='<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
+            <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
             <td align="right"><a onclick="$('#shipping').submit();" class="button"><span><?php echo $button_continue; ?></span></a></td>
           </tr>
         </table>

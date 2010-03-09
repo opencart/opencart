@@ -37,6 +37,10 @@ class ControllerSaleCustomer extends Controller {
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
+			
+			if (isset($this->request->get['filter_approved'])) {
+				$url .= '&filter_approved=' . $this->request->get['filter_approved'];
+			}
 		
 			if (isset($this->request->get['filter_date_added'])) {
 				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
@@ -54,7 +58,7 @@ class ControllerSaleCustomer extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('sale/customer' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer' . $url);
 		}
     	
     	$this->getForm();
@@ -85,6 +89,10 @@ class ControllerSaleCustomer extends Controller {
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
+			
+			if (isset($this->request->get['filter_approved'])) {
+				$url .= '&filter_approved=' . $this->request->get['filter_approved'];
+			}
 		
 			if (isset($this->request->get['filter_date_added'])) {
 				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
@@ -102,7 +110,7 @@ class ControllerSaleCustomer extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('sale/customer' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer' . $url);
 		}
     
     	$this->getForm();
@@ -135,6 +143,10 @@ class ControllerSaleCustomer extends Controller {
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
+			
+			if (isset($this->request->get['filter_approved'])) {
+				$url .= '&filter_approved=' . $this->request->get['filter_approved'];
+			}		
 		
 			if (isset($this->request->get['filter_date_added'])) {
 				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
@@ -152,7 +164,7 @@ class ControllerSaleCustomer extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('sale/customer' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer' . $url);
     	}
     
     	$this->getList();
@@ -194,7 +206,13 @@ class ControllerSaleCustomer extends Controller {
 		} else {
 			$filter_status = NULL;
 		}
-
+		
+		if (isset($this->request->get['filter_approved'])) {
+			$filter_approved = $this->request->get['filter_approved'];
+		} else {
+			$filter_approved = NULL;
+		}
+		
 		if (isset($this->request->get['filter_date_added'])) {
 			$filter_date_added = $this->request->get['filter_date_added'];
 		} else {
@@ -215,6 +233,10 @@ class ControllerSaleCustomer extends Controller {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 		
+		if (isset($this->request->get['filter_approved'])) {
+			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
+		}	
+			
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
@@ -234,19 +256,20 @@ class ControllerSaleCustomer extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('sale/customer' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=sale/customer' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
-							
-		$this->data['insert'] = $this->url->https('sale/customer/insert' . $url);
-		$this->data['delete'] = $this->url->https('sale/customer/delete' . $url);
+		
+		$this->data['approve'] = HTTPS_SERVER . 'index.php?route=sale/customer/approve' . $url;
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=sale/customer/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=sale/customer/delete' . $url;
 
 		$this->data['customers'] = array();
 
@@ -254,6 +277,7 @@ class ControllerSaleCustomer extends Controller {
 			'filter_name'       => $filter_name, 
 			'filter_email'      => $filter_email, 
 			'filter_status'     => $filter_status, 
+			'filter_approved'   => $filter_approved, 
 			'filter_date_added' => $filter_date_added,
 			'sort'              => $sort,
 			'order'             => $order,
@@ -267,17 +291,10 @@ class ControllerSaleCustomer extends Controller {
  
     	foreach ($results as $result) {
 			$action = array();
-			
-			if (($this->config->get('config_customer_approval')) && (!$result['status'])) {
-				$action[] = array(
-					'text' => $this->language->get('text_activate'),
-					'href' => $this->url->https('sale/customer/activate&customer_id=' . $result['customer_id'] . $url)
-				);
-			}
 		
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('sale/customer/update&customer_id=' . $result['customer_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=sale/customer/update&customer_id=' . $result['customer_id'] . $url
 			);
 			
 			$this->data['customers'][] = array(
@@ -285,6 +302,7 @@ class ControllerSaleCustomer extends Controller {
 				'name'        => $result['name'],
 				'email'       => $result['email'],
 				'status'      => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'approved'    => ($result['approved'] ? $this->language->get('text_yes') : $this->language->get('text_no')),
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'selected'    => isset($this->request->post['selected']) && in_array($result['customer_id'], $this->request->post['selected']),
 				'action'      => $action
@@ -295,14 +313,18 @@ class ControllerSaleCustomer extends Controller {
 
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
+		$this->data['text_yes'] = $this->language->get('text_yes');
+		$this->data['text_no'] = $this->language->get('text_no');		
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_email'] = $this->language->get('column_email');
 		$this->data['column_status'] = $this->language->get('column_status');
+		$this->data['column_approved'] = $this->language->get('column_approved');
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
 		$this->data['column_action'] = $this->language->get('column_action');		
 		
+		$this->data['button_approve'] = $this->language->get('button_approve');
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_filter'] = $this->language->get('button_filter');
@@ -339,6 +361,10 @@ class ControllerSaleCustomer extends Controller {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 		
+		if (isset($this->request->get['filter_approved'])) {
+			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
+		}	
+		
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
@@ -353,10 +379,11 @@ class ControllerSaleCustomer extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->https('sale/customer&sort=name' . $url);
-		$this->data['sort_email'] = $this->url->https('sale/customer&sort=email' . $url);
-		$this->data['sort_status'] = $this->url->https('sale/customer&sort=status' . $url);
-		$this->data['sort_date_added'] = $this->url->https('sale/customer&sort=date_added' . $url);
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=sale/customer&sort=name' . $url;
+		$this->data['sort_email'] = HTTPS_SERVER . 'index.php?route=sale/customer&sort=email' . $url;
+		$this->data['sort_status'] = HTTPS_SERVER . 'index.php?route=sale/customer&sort=status' . $url;
+		$this->data['sort_approved'] = HTTPS_SERVER . 'index.php?route=sale/customer&sort=approved' . $url;
+		$this->data['sort_date_added'] = HTTPS_SERVER . 'index.php?route=sale/customer&sort=date_added' . $url;
 		
 		$url = '';
 
@@ -370,6 +397,10 @@ class ControllerSaleCustomer extends Controller {
 			
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+		
+		if (isset($this->request->get['filter_approved'])) {
+			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
 		}
 		
 		if (isset($this->request->get['filter_date_added'])) {
@@ -389,13 +420,14 @@ class ControllerSaleCustomer extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('sale/customer' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=sale/customer' . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 
 		$this->data['filter_name'] = $filter_name;
 		$this->data['filter_email'] = $filter_email;
 		$this->data['filter_status'] = $filter_status;
+		$this->data['filter_approved'] = $filter_approved;
 		$this->data['filter_date_added'] = $filter_date_added;
 		
 		$this->data['sort'] = $sort;
@@ -488,6 +520,10 @@ class ControllerSaleCustomer extends Controller {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 		
+		if (isset($this->request->get['filter_approved'])) {
+			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
+		}	
+		
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
@@ -507,24 +543,24 @@ class ControllerSaleCustomer extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('sale/customer' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=sale/customer' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 
 		if (!isset($this->request->get['customer_id'])) {
-			$this->data['action'] = $this->url->https('sale/customer/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/customer/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('sale/customer/update&customer_id=' . $this->request->get['customer_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/customer/update&customer_id=' . $this->request->get['customer_id'] . $url;
 		}
 		  
-    	$this->data['cancel'] = $this->url->https('sale/customer' . $url);
+    	$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=sale/customer' . $url;
 
     	if (isset($this->request->get['customer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$customer_info = $this->model_sale_customer->getCustomer($this->request->get['customer_id']);
@@ -619,37 +655,46 @@ class ControllerSaleCustomer extends Controller {
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}  
 	 
-	public function activate() {
+	public function approve() {
 		$this->load->language('sale/customer');
 		$this->load->language('mail/customer');
     	
 		if (!$this->user->hasPermission('modify', 'sale/customer')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 		} else {
-			if (isset($this->request->get['customer_id'])) {
+			if (isset($this->request->post['selected'])) {
 				$this->load->model('sale/customer');			
 			
-				$customer_info = $this->model_sale_customer->getCustomer($this->request->get['customer_id']);
-		
-				if (($customer_info) && (!$customer_info['status'])) {
-					$this->model_sale_customer->activate($this->request->get['customer_id']);
+				foreach ($this->request->post['selected'] as $customer_id) {
+					
+					$customer_info = $this->model_sale_customer->getCustomer($customer_id);
 			
-					$message  = sprintf($this->language->get('text_welcome'), $this->config->get('config_store')) . "\n\n";;
-					$message .= $this->language->get('text_login') . "\n";
-					$message .= HTTP_CATALOG . 'index.php?route=account/login' . "\n\n";
-					$message .= $this->language->get('text_services') . "\n\n";
-					$message .= $this->language->get('text_thanks') . "\n";
-					$message .= $this->config->get('config_store');
-			
-					$mail = new Mail($this->config->get('config_mail_protocol'), $this->config->get('config_smtp_host'), $this->config->get('config_smtp_username'), html_entity_decode($this->config->get('config_smtp_password')), $this->config->get('config_smtp_port'), $this->config->get('config_smtp_timeout'));
-					$mail->setTo($customer_info['email']);
-					$mail->setFrom($this->config->get('config_email'));
-	    			$mail->setSender($this->config->get('config_store'));
-	    			$mail->setSubject(sprintf($this->language->get('text_subject'), $this->config->get('config_store')));
-					$mail->setText($message);
-	    			$mail->send();
+					if (($customer_info) && (!$customer_info['approved'])) {
+						$this->model_sale_customer->approve($customer_id);
 				
-					$this->session->data['success'] = sprintf($this->language->get('text_activated'), $customer_info['firstname'] . ' ' . $customer_info['lastname']);
+						$message  = sprintf($this->language->get('text_welcome'), $this->config->get('config_name')) . "\n\n";;
+						$message .= $this->language->get('text_login') . "\n";
+						$message .= HTTP_CATALOG . 'index.php?route=account/login' . "\n\n";
+						$message .= $this->language->get('text_services') . "\n\n";
+						$message .= $this->language->get('text_thanks') . "\n";
+						$message .= $this->config->get('config_name');
+				
+						$mail = new Mail();
+						$mail->protocol = $this->config->get('config_mail_protocol');
+						$mail->hostname = $this->config->get('config_smtp_host');
+						$mail->username = $this->config->get('config_smtp_username');
+						$mail->password = $this->config->get('config_smtp_password');
+						$mail->port = $this->config->get('config_smtp_port');
+						$mail->timeout = $this->config->get('config_smtp_timeout');							
+						$mail->setTo($customer_info['email']);
+						$mail->setFrom($this->config->get('config_email'));
+						$mail->setSender($this->config->get('config_name'));
+						$mail->setSubject(sprintf($this->language->get('text_subject'), $this->config->get('config_name')));
+						$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+						$mail->send();
+					
+						$this->session->data['success'] = sprintf($this->language->get('text_approved'), $customer_info['firstname'] . ' ' . $customer_info['lastname']);
+					}
 				}
 			}			
 		}
@@ -667,7 +712,11 @@ class ControllerSaleCustomer extends Controller {
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
-	
+		
+		if (isset($this->request->get['filter_approved'])) {
+			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
+		}	
+		
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
@@ -684,7 +733,7 @@ class ControllerSaleCustomer extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}		
 
-		$this->redirect($this->url->http('sale/customer' . $url));
+		$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer' . $url);
 	} 
 	 
   	private function validateForm() {

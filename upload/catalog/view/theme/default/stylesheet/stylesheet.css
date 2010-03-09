@@ -54,9 +54,10 @@ p {
 	height: 38px;
 }
 #header .div3 a {
-	margin-left: 20px;
-	padding-left: 20px;
+	margin-left: 15px;
+	padding: 1px 0px 2px 20px;
 	background-repeat: no-repeat;
+	background-position: left center;
 }
 #header .div4 {
 	width: 510px;
@@ -136,6 +137,16 @@ p {
 	float: right;
 	padding-top: 2px;
 }
+#header .div8 {
+	float: left; margin-top: 6px;
+}
+#header .div9 {
+	float: left;
+}
+#header .div10 {
+	float: left; 
+	margin-top: 2px;	
+}
 #search {
 	padding-top: 7px;
 	padding-left: 5px;
@@ -159,7 +170,7 @@ p {
 	padding-bottom: 11px;
 	height: 13px;
 	margin-bottom: 10px;
-	color: #999;
+	color: #000000;
 }
 .switcher {
 	float: right;	
@@ -191,12 +202,14 @@ p {
 	border-bottom: 1px solid #CCCCCC;
 	background-color: #EEEEEE;
 	display: none;
-	width: 125px;
-	padding: 3px;
+	width: 131px;
 }
 .switcher .option a {
 	color: #000;
 	padding: 3px 5px 3px 5px;
+}
+.switcher .option a:hover {
+	background: #FFC;
 }
 .switcher img {
 	position: relative;
@@ -363,7 +376,7 @@ p {
 .button span {
 	color: #FFF;
 	display: block;
-	padding: 4px 10px 5px 2px;
+	padding: 4px 12px 5px 5px;
 	background: url('../image/button_right.png') top right no-repeat;
 }
 .buttons {

@@ -1,11 +1,11 @@
-<form action="<?php echo $action; ?>" method="post" id="checkout">
+<form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" id="checkout">
   <input type="hidden" name="xml" value="<?php echo $xml; ?>">
   <input type="hidden" name="signature" value="<?php echo $signature; ?>">
 </form>
 <div class="buttons">
   <table>
     <tr>
-      <td align="left"><a onclick="location='<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
+      <td align="left"><a onclick="location = '<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
       <td align="right"><a onclick="confirmSubmit();" class="button"><span><?php echo $button_confirm; ?></span></a></td>
     </tr>
   </table>

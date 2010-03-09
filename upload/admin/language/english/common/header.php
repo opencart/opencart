@@ -3,9 +3,10 @@
 $_['heading_title']          = 'Administration';
 
 // Text
+$_['text_affiliate']         = 'Affiliates';
 $_['text_backup']            = 'Backup / Restore';
 $_['text_catalog']           = 'Catalog';
-$_['text_category']          = 'Categories';
+$_['text_category']          = 'Categories'; 
 $_['text_country']           = 'Countries'; 
 $_['text_coupon']            = 'Coupons';
 $_['text_currency']          = 'Currencies';
@@ -16,6 +17,7 @@ $_['text_download']          = 'Downloads';
 $_['text_error_log']         = 'Error Logs';
 $_['text_extension']         = 'Extensions';
 $_['text_feed']              = 'Product Feeds';
+$_['text_front']             = 'Store Front';
 $_['text_geo_zone']          = 'Geo Zones';
 $_['text_help']              = 'Help';
 $_['text_information']       = 'Information';
@@ -40,7 +42,7 @@ $_['text_sale']              = 'Sales';
 $_['text_shipping']          = 'Shipping';
 $_['text_setting']           = 'Settings';
 $_['text_stock_status']      = 'Stock Statuses';
-$_['text_store']             = 'Store Front';
+$_['text_store']             = 'Store Manager';
 $_['text_support']           = 'Support Forum';
 $_['text_system']            = 'System';
 $_['text_tax_class']         = 'Tax Classes';
@@ -50,6 +52,6 @@ $_['text_documentation']     = 'Documentation';
 $_['text_users']             = 'Users';
 $_['text_user_group']        = 'User Groups';
 $_['text_weight_class']      = 'Weight Classes';
-$_['text_measurement_class'] = 'Measurement Classes';
+$_['text_length_class']      = 'Length Classes';
 $_['text_zone']              = 'Zones';
 ?>

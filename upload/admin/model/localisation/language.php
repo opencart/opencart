@@ -39,14 +39,14 @@ class ModelLocalisationLanguage extends Model {
 
 		$this->cache->delete('information');
 
-		// Measurement
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "measurement_class WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		// Length
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "length_class_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-		foreach ($query->rows as $measurement) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "measurement_class SET measurement_class_id = '" . (int)$measurement['measurement_class_id'] . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($measurement['title']) . "', unit = '" . $this->db->escape($measurement['unit']) . "'");
+		foreach ($query->rows as $length) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "length_class_description SET length_class_id = '" . (int)$length['length_class_id'] . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($length['title']) . "', unit = '" . $this->db->escape($length['unit']) . "'");
 		}	
 		
-		$this->cache->delete('measurement_class');
+		$this->cache->delete('length_class');
 		
 		// Order Status
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
@@ -89,11 +89,20 @@ class ModelLocalisationLanguage extends Model {
 		
 		$this->cache->delete('stock_status');
 		
+		// Store
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+		foreach ($query->rows as $store) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "store_description SET store_id = '" . (int)$store['store_id'] . "', language_id = '" . (int)$language_id . "', description = '" . $this->db->escape($store['description']) . "'");
+		}
+		
+		$this->cache->delete('store');		
+		
 		// Weight Class
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "weight_class WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "weight_class_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		foreach ($query->rows as $weight_class) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "weight_class SET weight_class_id = '" . (int)$weight_class['weight_class_id'] . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($weight_class['title']) . "', unit = '" . $this->db->escape($weight_class['unit']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "weight_class_description SET weight_class_id = '" . (int)$weight_class['weight_class_id'] . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($weight_class['title']) . "', unit = '" . $this->db->escape($weight_class['unit']) . "'");
 		}	
 		
 		$this->cache->delete('weight_class');
@@ -110,6 +119,10 @@ class ModelLocalisationLanguage extends Model {
 		
 		$this->cache->delete('language');
 		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "store_description WHERE language_id = '" . (int)$language_id . "'");
+		
+		$this->cache->delete('store');
+		
 		$this->db->query("DELETE FROM " . DB_PREFIX . "category_description WHERE language_id = '" . (int)$language_id . "'");
 		
 		$this->cache->delete('category');
@@ -121,9 +134,9 @@ class ModelLocalisationLanguage extends Model {
 		
 		$this->cache->delete('information');
 		
-		$this->db->query("DELETE FROM " . DB_PREFIX . "measurement_class WHERE language_id = '" . (int)$language_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "length_class_description WHERE language_id = '" . (int)$language_id . "'");
 		
-		$this->cache->delete('measurement_class');
+		$this->cache->delete('length_class');
 		
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_status WHERE language_id = '" . (int)$language_id . "'");
 		
@@ -139,7 +152,7 @@ class ModelLocalisationLanguage extends Model {
 		
 		$this->cache->delete('stock_status');
 		
-		$this->db->query("DELETE FROM " . DB_PREFIX . "weight_class WHERE language_id = '" . (int)$language_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "weight_class_description WHERE language_id = '" . (int)$language_id . "'");
 		
 		$this->cache->delete('weight_class');
 	}

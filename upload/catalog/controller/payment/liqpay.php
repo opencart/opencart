@@ -12,13 +12,13 @@ class ControllerPaymentLiqPay extends Controller {
 		
 		$xml  = '<request>';
 		$xml .= '	<version>1.2</version>';
-		$xml .= '	<result_url>' . $this->url->https('checkout/success') . '</result_url>';
-		$xml .= '	<server_url>' . $this->url->https('payment/liqpay/callback') . '</server_url>';
+		$xml .= '	<result_url>' . HTTPS_SERVER . 'index.php?route=checkout/success' . '</result_url>';
+		$xml .= '	<server_url>' . HTTPS_SERVER . 'index.php?route=payment/liqpay/callback' . '</server_url>';
 		$xml .= '	<merchant_id>' . $this->config->get('liqpay_merchant_id') . '</merchant_id>';
 		$xml .= '	<order_id>' . $this->session->data['order_id'] . '</order_id>';
 		$xml .= '	<amount>' . $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE) . '</amount>';
 		$xml .= '	<currency>' . $order_info['currency'] . '</currency>';
-		$xml .= '	<description>' . $this->config->get('config_store') . ' ' . $order_info['payment_firstname'] . ' ' . $order_info['payment_address_1'] . ' ' . $order_info['payment_address_2'] . ' ' . $order_info['payment_city'] . ' ' . $order_info['email'] . '</description>';
+		$xml .= '	<description>' . $this->config->get('config_name') . ' ' . $order_info['payment_firstname'] . ' ' . $order_info['payment_address_1'] . ' ' . $order_info['payment_address_2'] . ' ' . $order_info['payment_city'] . ' ' . $order_info['email'] . '</description>';
 		$xml .= '	<default_phone></default_phone>';
 		$xml .= '	<pay_way>' . $this->config->get('liqpay_type') . '</pay_way>';
 		$xml .= '</request>';
@@ -27,9 +27,9 @@ class ControllerPaymentLiqPay extends Controller {
 		$this->data['signature'] = base64_encode(sha1($this->config->get('liqpay_signature') . $xml . $this->config->get('liqpay_signature'), TRUE));
 		
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';

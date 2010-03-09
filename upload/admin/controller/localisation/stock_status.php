@@ -38,7 +38,7 @@ class ControllerLocalisationStockStatus extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 						
-      		$this->redirect($this->url->https('localisation/stock_status' . $url));
+      		$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/stock_status' . $url);
 		}
 	
     	$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationStockStatus extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/stock_status' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/stock_status' . $url);
     	}
 	
     	$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationStockStatus extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/stock_status' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/stock_status' . $url);
    		}
 	
     	$this->getList();
@@ -146,19 +146,19 @@ class ControllerLocalisationStockStatus extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/stock_status' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/stock_status' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
-		$this->data['insert'] = $this->url->https('localisation/stock_status/insert' . $url);
-		$this->data['delete'] = $this->url->https('localisation/stock_status/delete' . $url);	
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/stock_status/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/stock_status/delete' . $url;	
 
 		$this->data['stock_statuses'] = array();
 
@@ -178,12 +178,12 @@ class ControllerLocalisationStockStatus extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('localisation/stock_status/update&stock_status_id=' . $result['stock_status_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=localisation/stock_status/update&stock_status_id=' . $result['stock_status_id'] . $url
 			);
 						
 			$this->data['stock_statuses'][] = array(
 				'stock_status_id' => $result['stock_status_id'],
-				'name'            => $result['name'] . (($result['stock_status_id'] == $this->config->get('config_stock_status_id')) ? $this->language->get('text_default') : NULL),
+				'name'            => $result['name'],
 				'selected'        => isset($this->request->post['selected']) && in_array($result['stock_status_id'], $this->request->post['selected']),
 				'action'          => $action
 			);
@@ -225,7 +225,7 @@ class ControllerLocalisationStockStatus extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->https('localisation/stock_status&sort=name' . $url);
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=localisation/stock_status&sort=name' . $url;
 		
 		$url = '';
 
@@ -242,7 +242,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('localisation/stock_status' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/stock_status' . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 
@@ -298,24 +298,24 @@ class ControllerLocalisationStockStatus extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/stock_status' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/stock_status' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
 		if (!isset($this->request->get['stock_status_id'])) {
-			$this->data['action'] = $this->url->https('localisation/stock_status/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/stock_status/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('localisation/stock_status/update&stock_status_id=' . $this->request->get['stock_status_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/stock_status/update&stock_status_id=' . $this->request->get['stock_status_id'] . $url;
 		}
 			
-		$this->data['cancel'] = $this->url->https('localisation/stock_status' . $url);
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/stock_status' . $url;
 		
 		$this->load->model('localisation/language');
 		
@@ -361,11 +361,14 @@ class ControllerLocalisationStockStatus extends Controller {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
 		
+		$this->load->model('setting/store');
 		$this->load->model('catalog/product');
 		
 		foreach ($this->request->post['selected'] as $stock_status_id) {
-			if ($this->config->get('config_stock_status_id') == $stock_status_id) {
-				$this->error['warning'] = $this->language->get('error_default');
+			$store_total = $this->model_setting_store->getTotalStoresByStockStatusId($stock_status_id);
+
+			if ($store_total) {
+				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 			
 			$product_total = $this->model_catalog_product->getTotalProductsByStockStatusId($stock_status_id);

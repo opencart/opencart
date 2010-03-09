@@ -10,10 +10,11 @@ final class Customer {
 	private $customer_group_id;
 	private $address_id;
 	
-  	public function __construct() {
-		$this->db = Registry::get('db');
-		$this->request = Registry::get('request');
-		$this->session = Registry::get('session');
+  	public function __construct($registry) {
+		$this->config = $registry->get('config');
+		$this->db = $registry->get('db');
+		$this->request = $registry->get('request');
+		$this->session = $registry->get('session');
 				
 		if (isset($this->session->data['customer_id'])) { 
 			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$this->session->data['customer_id'] . "' AND status = '1'");
@@ -37,7 +38,11 @@ final class Customer {
 	}
 		
   	public function login($email, $password) {
-		$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE email = '" . $this->db->escape($email) . "' AND password = '" . $this->db->escape(md5($password)) . "' AND status = '1'");
+		if (!$this->config->get('config_customer_approval')) {
+			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE email = '" . $this->db->escape($email) . "' AND password = '" . $this->db->escape(md5($password)) . "' AND status = '1'");
+		} else {
+			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE email = '" . $this->db->escape($email) . "' AND password = '" . $this->db->escape(md5($password)) . "' AND status = '1' AND approved = '1'");
+		}
 		
 		if ($customer_query->num_rows) {
 			$this->session->data['customer_id'] = $customer_query->row['customer_id'];	

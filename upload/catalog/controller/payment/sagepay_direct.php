@@ -96,9 +96,9 @@ class ControllerPaymentSagepayDirect extends Controller {
 		}
 		
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';
@@ -133,7 +133,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 		$data['VendorTxCode'] = $this->session->data['order_id'];
 		$data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency'], 1.00000, FALSE);
 		$data['Currency'] = $this->currency->getCode();
-		$data['Description'] = substr($this->config->get('config_store'), 0, 100);
+		$data['Description'] = substr($this->config->get('config_name'), 0, 100);
 		$data['CardHolder'] = $this->request->post['cc_owner'];
 		$data['CardNumber'] = $this->request->post['cc_number'];
 		$data['ExpiryDate'] = $this->request->post['cc_expire_date_month'] . substr($this->request->post['cc_expire_date_year'], 2);
@@ -237,7 +237,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 			$json['ACSURL'] = $data['ACSURL'];
 			$json['MD'] = $data['MD'];
 			$json['PaReq'] = $data['PAReq'];
-			$json['TermUrl'] = $this->url->https('payment/sagepay_direct/callback');
+			$json['TermUrl'] = HTTPS_SERVER . 'index.php?route=payment/sagepay_direct/callback';
 		} elseif ($data['Status'] == 'OK' || $data['Status'] == 'AUTHENTICATED' || $data['Status'] == 'REGISTERED') {
 			$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
 			
@@ -273,7 +273,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 			
 			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('sagepay_direct_order_status_id'), $message, FALSE);
 
-			$json['success'] = $this->url->https('checkout/success'); 			
+			$json['success'] = HTTPS_SERVER . 'index.php?route=checkout/success'; 			
 		} else {
 			$json['error'] = $data['StatusDetail'];
 		}
@@ -357,18 +357,18 @@ class ControllerPaymentSagepayDirect extends Controller {
 				
 				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('sagepay_direct_order_status_id'), $message, FALSE);	
 				
-				$this->redirect($this->url->https('checkout/success'));
+				$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/success');
 			} else {
 				$this->session->data['error'] = $data['StatusDetail'];
 
 				if ($this->request->get['route'] != 'checkout/guest_step_3') {
-					$this->redirect($this->url->https('checkout/payment'));
+					$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/payment');
 				} else {
-					$this->redirect($this->url->https('checkout/guest_step_2'));
+					$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/guest_step_2');
 				}
 			}
 		} else {
-			$this->redirect($this->url->https('account/login'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
 		}
 	}
 }

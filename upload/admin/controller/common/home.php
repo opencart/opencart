@@ -38,7 +38,7 @@ class ControllerCommonHome extends Controller {
 		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
@@ -79,7 +79,7 @@ class ControllerCommonHome extends Controller {
 			 
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('sale/order/update&order_id=' . $result['order_id'])
+				'href' => HTTPS_SERVER . 'index.php?route=sale/order/update&order_id=' . $result['order_id']
 			);
 					
 			$this->data['orders'][] = array(
@@ -127,92 +127,95 @@ class ControllerCommonHome extends Controller {
 		
 		switch ($range) {
 			case 'day':
-				for ($i = 0; $i <= 23; $i++) {
+				for ($i = 0; $i < 24; $i++) {
 					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND (DATE(date_added) = DATE(NOW()) AND HOUR(date_added) = '" . (int)$i . "') GROUP BY HOUR(date_added) ORDER BY date_added ASC");
 					
 					if ($query->num_rows) {
-						$data['order']['data'][]  = array(date('G', strtotime('-' . (int)$i . ' hour')), (int)$query->row['total']);
+						$data['order']['data'][]  = array($i, (int)$query->row['total']);
 					} else {
-						$data['order']['data'][]  = array(date('G', strtotime('-' . (int)$i . ' hour')), 0);
+						$data['order']['data'][]  = array($i, 0);
 					}
 					
 					$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE DATE(date_added) = DATE(NOW()) AND HOUR(date_added) = '" . (int)$i . "' GROUP BY HOUR(date_added) ORDER BY date_added ASC");
 					
 					if ($query->num_rows) {
-						$data['customer']['data'][] = array(date('G', strtotime('-' . (int)$i . ' hour')), (int)$query->row['total']);
+						$data['customer']['data'][] = array($i, (int)$query->row['total']);
 					} else {
-						$data['customer']['data'][] = array(date('G', strtotime('-' . (int)$i . ' hour')), 0);
+						$data['customer']['data'][] = array($i, 0);
 					}
 			
-					$data['xaxis'][] = array(date('G', strtotime('-' . (int)$i . ' hour')), date('H', strtotime('-' . (int)$i . ' hour')));
+					$data['xaxis'][] = array($i, date('H', mktime($i, 0, 0, date('n'), date('j'), date('Y'))));
 				}					
 				break;
 			case 'week':
-				$week = mktime(0, 0, 0, date('m'), date('d') - date('w'), date('Y'));
-			
+				$date_start = strtotime('-' . date('w') . ' days'); 
+				
 				for ($i = 0; $i < 7; $i++) {
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND DATE(date_added) = DATE('" . date('Y-m-d', $week + ($i * 86400)) . "') GROUP BY DAY(date_added)");
+					$date = date('Y-m-d', $date_start + ($i * 86400));
+
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND DATE(date_added) = '" . $this->db->escape($date) . "' GROUP BY DATE(date_added)");
 			
 					if ($query->num_rows) {
-						$data['order']['data'][] = array(date('d', strtotime('-' . (int)$i . ' day')), (int)$query->row['total']);
+						$data['order']['data'][] = array($i, (int)$query->row['total']);
 					} else {
-						$data['order']['data'][] = array(date('d', strtotime('-' . (int)$i . ' day')), 0);
+						$data['order']['data'][] = array($i, 0);
 					}
 				
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE DATE(date_added) = DATE('" . date('Y-m-d', $week + ($i * 86400)) . "') GROUP BY DAY(date_added)");
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer` WHERE DATE(date_added) = '" . $this->db->escape($date) . "' GROUP BY DATE(date_added)");
 			
 					if ($query->num_rows) {
-						$data['customer']['data'][] = array(date('d', strtotime('-' . (int)$i . ' day')), (int)$query->row['total']);
+						$data['customer']['data'][] = array($i, (int)$query->row['total']);
 					} else {
-						$data['customer']['data'][] = array(date('d', strtotime('-' . (int)$i . ' day')), 0);
+						$data['customer']['data'][] = array($i, 0);
 					}
-					
-					$data['xaxis'][] = array(date('d', strtotime('-' . (int)$i . ' day')), date('d/m', strtotime('-' . (int)$i . ' day')));
-				}			
+		
+					$data['xaxis'][] = array($i, date('D', strtotime($date)));
+				}
+				
 				break;
 			default:
 			case 'month':
-				$last_day_of_the_month = mktime(23, 59, 59, date('m'), 0, date('Y')); 
-			
-				for ($i = 1; $i <= date('j', $last_day_of_the_month); $i++) {
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND (DATE(date_added) = '" . date('Y-m-d', strtotime('-' . (int)$i . ' day')) . "') GROUP BY DAY(date_added)");
+				for ($i = 1; $i <= date('t'); $i++) {
+					$date = date('Y') . '-' . date('m') . '-' . $i;
+					
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND (DATE(date_added) = '" . $this->db->escape($date) . "') GROUP BY DAY(date_added)");
 					
 					if ($query->num_rows) {
-						$data['order']['data'][] = array(date('d', strtotime('-' . (int)$i . ' day')), (int)$query->row['total']);
+						$data['order']['data'][] = array($i, (int)$query->row['total']);
 					} else {
-						$data['order']['data'][] = array(date('d', strtotime('-' . (int)$i . ' day')), 0);
+						$data['order']['data'][] = array($i, 0);
 					}	
 				
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE DATE(date_added) = '" . date('Y-m-d', strtotime('-' . (int)$i . ' day')) . "' GROUP BY DAY(date_added)");
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE DATE(date_added) = '" . $this->db->escape($date) . "' GROUP BY DAY(date_added)");
 			
 					if ($query->num_rows) {
-							$data['customer']['data'][] = array(date('d', strtotime('-' . (int)$i . ' day')), (int)$query->row['total']);
+						$data['customer']['data'][] = array($i, (int)$query->row['total']);
 					} else {
-							$data['customer']['data'][] = array(date('d', strtotime('-' . (int)$i . ' day')), 0);
+						$data['customer']['data'][] = array($i, 0);
 					}	
 					
-					$data['xaxis'][] = array(date('d', strtotime('-' . (int)$i . ' day')), date('d/m', strtotime('-' . (int)$i . ' day')));
+					$data['xaxis'][] = array($i, date('j', strtotime($date)));
 				}
 				break;
 			case 'year':
-				for ($i = 0; $i < date('n'); $i++) {
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND (YEAR(date_added) = '" . date('Y') . "' AND MONTH(date_added) = '" . date('m', strtotime('-' . $i . ' month')) . "') GROUP BY MONTH(date_added)");
+				for ($i = 1; $i <= 12; $i++) {
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND YEAR(date_added) = '" . date('Y') . "' AND MONTH(date_added) = '" . $i . "' GROUP BY MONTH(date_added)");
 					
 					if ($query->num_rows) {
-						$data['order']['data'][] = array(date('n', strtotime('-' . (int)$i . ' month')), (int)$query->row['total']);
+						$data['order']['data'][] = array($i, (int)$query->row['total']);
 					} else {
-						$data['order']['data'][] = array(date('n', strtotime('-' . (int)$i . ' month')), 0);
+						$data['order']['data'][] = array($i, 0);
 					}
 					
-					$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE YEAR(date_added) = '" . date('Y') . "' AND MONTH(date_added) = '" . date('m', strtotime('-' . $i . ' month')) . "' GROUP BY MONTH(date_added)");
+					$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE YEAR(date_added) = '" . date('Y') . "' AND MONTH(date_added) = '" . $i . "' GROUP BY MONTH(date_added)");
 					
-					if ($query->num_rows) {
-						$data['customer']['data'][] = array(date('n', strtotime('-' . (int)$i . ' month')), (int)$query->row['total']);
+					if ($query->num_rows) { 
+						$data['customer']['data'][] = array($i, (int)$query->row['total']);
 					} else {
-						$data['customer']['data'][] = array(date('n', strtotime('-' . (int)$i . ' month')), 0);
+						$data['customer']['data'][] = array($i, 0);
 					}
 					
-					$data['xaxis'][] = array(date('n', strtotime('-' . (int)$i . ' month')), date('m', strtotime('-' . (int)$i . ' month')));
+					$data['xaxis'][] = array($i, date('M', mktime(0, 0, 0, $i, 1, date('Y'))));
 				}			
 				break;	
 		}
@@ -238,7 +241,6 @@ class ControllerCommonHome extends Controller {
 				'common/home',
 				'common/login',
 				'common/logout',
-				'common/filemanager',
 				'common/permission',
 				'error/error_403',
 				'error/error_404'		

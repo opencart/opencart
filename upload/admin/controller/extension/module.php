@@ -8,13 +8,13 @@ class ControllerExtensionModule extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('extension/module'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/module',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
@@ -64,17 +64,17 @@ class ControllerExtensionModule extends Controller {
 				if (!in_array($extension, $extensions)) {
 					$action[] = array(
 						'text' => $this->language->get('text_install'),
-						'href' => $this->url->https('extension/module/install&extension=' . $extension)
+						'href' => HTTPS_SERVER . 'index.php?route=extension/module/install&extension=' . $extension
 					);
 				} else {
 					$action[] = array(
 						'text' => $this->language->get('text_edit'),
-						'href' => $this->url->https('module/' . $extension)
+						'href' => HTTPS_SERVER . 'index.php?route=module/' . $extension
 					);
 								
 					$action[] = array(
 						'text' => $this->language->get('text_uninstall'),
-						'href' => $this->url->https('extension/module/uninstall&extension=' . $extension)
+						'href' => HTTPS_SERVER . 'index.php?route=extension/module/uninstall&extension=' . $extension
 					);
 				}
 				
@@ -109,7 +109,7 @@ class ControllerExtensionModule extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/module')) {
 			$this->session['error'] = $this->language->get('error_permission'); 
 			
-			$this->redirect($this->url->https('extension/module'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module');
 		} else {
 			$this->load->model('setting/extension');
 		
@@ -120,7 +120,7 @@ class ControllerExtensionModule extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'module/' . $this->request->get['extension']);
 			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'module/' . $this->request->get['extension']);
 
-			$this->redirect($this->url->https('extension/module'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module');
 		}
 	}
 	
@@ -128,7 +128,7 @@ class ControllerExtensionModule extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/module')) {
 			$this->session['error'] = $this->language->get('error_permission'); 
 			
-			$this->redirect($this->url->https('extension/module'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module');
 		} else {		
 			$this->load->model('setting/extension');
 			$this->load->model('setting/setting');
@@ -137,7 +137,7 @@ class ControllerExtensionModule extends Controller {
 		
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 		
-			$this->redirect($this->url->https('extension/module'));	
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module');	
 		}
 	}
 }

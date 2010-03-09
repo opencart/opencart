@@ -14,12 +14,12 @@ class ControllerPaymentPaymate extends Controller {
 		
 		$encryption = new Encryption($this->config->get('config_encryption'));
 		
-		$this->data['return'] = $this->url->https('payment/paymate/callback&oid=' . base64_encode($encryption->encrypt($order_info['order_id'])) . '&conf=' . base64_encode($encryption->encrypt($order_info['payment_firstname'] . $order_info['payment_lastname'])));
+		$this->data['return'] = HTTPS_SERVER . 'index.php?route=payment/paymate/callback&oid=' . base64_encode($encryption->encrypt($order_info['order_id'])) . '&conf=' . base64_encode($encryption->encrypt($order_info['payment_firstname'] . $order_info['payment_lastname']));
 
 		if ($this->config->get('paymate_include_order')) {
-			$this->data['ref'] = html_entity_decode($this->config->get('config_store'), ENT_QUOTES, 'UTF-8') . " (#" . $order_info['order_id'] . ")";
+			$this->data['ref'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8') . " (#" . $order_info['order_id'] . ")";
 		} else {
-			$this->data['ref'] = html_entity_decode($this->config->get('config_store'), ENT_QUOTES, 'UTF-8');
+			$this->data['ref'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 		}
 
 		$currency = array(
@@ -59,7 +59,7 @@ class ControllerPaymentPaymate extends Controller {
 
 		$this->data['action'] = 'https://www.paymate.com/PayMate/ExpressPayment';
 
-		$this->data['back'] = $this->url->https('checkout/payment');
+		$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		
 		$this->id = 'payment';
 
@@ -107,15 +107,15 @@ class ControllerPaymentPaymate extends Controller {
 
 		if ($error != '') {
 			$this->data['heading_title'] = $this->language->get('text_failed');
-			$this->data['text_message'] = sprintf($this->language->get('text_failed_message'), $error, $this->url->http('information/contact'));
+			$this->data['text_message'] = sprintf($this->language->get('text_failed_message'), $error, HTTP_SERVER . 'index.php?route=information/contact');
 			$this->data['button_continue'] = $this->language->get('button_continue');
-			$this->data['continue'] = $this->url->http('common/home');
+			$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
 			
 			$this->template = $this->config->get('config_template') . 'common/success.tpl';
 
 			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 		} else {
-			$this->redirect($this->url->https('checkout/success'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/success');
 		}
 	}
 }

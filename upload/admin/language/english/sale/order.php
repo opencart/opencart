@@ -20,6 +20,7 @@ $_['text_downloads']        = 'Downloads';
 $_['text_order_history']    = 'Order History';
 $_['text_update']           = 'Update Order';
 $_['text_order']            = 'Order ID';
+$_['text_store']            = 'Store';
 $_['text_date_added']       = 'Date Added';
 $_['text_shipping_address'] = 'Shipping Address';
 $_['text_shipping_method']  = 'Shipping Method';
@@ -47,8 +48,23 @@ $_['column_remaining']      = 'Remaining';
 $_['column_action']         = 'Action';
 
 // Entry 
-$_['entry_status']          = 'Status';
-$_['entry_comment']         = 'Comments';
+$_['entry_firstname']       = 'First Name:';
+$_['entry_lastname']        = 'Last Name:';
+$_['entry_email']           = 'E-Mail:';
+$_['entry_telephone']       = 'Telephone:';
+$_['entry_fax']             = 'Fax:';
+$_['entry_company']         = 'Company:';
+$_['entry_address_1']       = 'Address 1:';
+$_['entry_address_2']       = 'Address 2:';
+$_['entry_postcode']        = 'Post Code:';
+$_['entry_city']            = 'City:';
+$_['entry_country']         = 'Country:';
+$_['entry_zone']            = 'Region / State:';
+$_['entry_shipping_method'] = 'Shipping Method:';
+$_['entry_payment_method']  = 'Payment Method:';
+$_['entry_coupon']          = 'Coupon:';
+$_['entry_status']          = 'Order Status:';
+$_['entry_comment']         = 'Comments:';
 $_['entry_notify']          = 'Notify Customer';
 
 // Error

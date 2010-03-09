@@ -4,13 +4,13 @@ $_['heading_title']        = 'Customer';
 
 // Text
 $_['text_success']         = 'Success: You have modified customers!';
-$_['text_activate']        = 'Activate';
-$_['text_activated']       = 'You have activated %s account!';
+$_['text_approved']        = 'You have approved %s account!';
 
 // Column
 $_['column_name']          = 'Customer Name';
 $_['column_email']         = 'E-Mail';
 $_['column_status']        = 'Status';
+$_['column_approved']      = 'Approved';
 $_['column_date_added']    = 'Date Added';
 $_['column_action']        = 'Action';
 

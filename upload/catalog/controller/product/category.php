@@ -6,7 +6,7 @@ class ControllerProductCategory extends Controller {
 		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-      		'href'      => $this->url->http('common/home'),
+      		'href'      => HTTP_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
        		'separator' => FALSE
    		);	
@@ -30,7 +30,7 @@ class ControllerProductCategory extends Controller {
 					}
 
 	       			$this->document->breadcrumbs[] = array(
-   	    				'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $path)),
+   	    				'href'      => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $path),
     	   				'text'      => $category_info['name'],
         				'separator' => $this->language->get('text_separator')
         			);
@@ -85,7 +85,7 @@ class ControllerProductCategory extends Controller {
 			
 			$this->load->model('catalog/product');  
 			
-			$this->load->helper('image'); 
+			$this->load->model('tool/image'); 
 			 
 			$category_total = $this->model_catalog_category->getTotalCategoriesByCategoryId($category_id);
 			$product_total = $this->model_catalog_product->getTotalProductsByCategoryId($category_id);
@@ -104,8 +104,8 @@ class ControllerProductCategory extends Controller {
 					
 					$this->data['categories'][] = array(
             			'name'  => $result['name'],
-            			'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)),
-            			'thumb' => image_resize($image, $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'))
+            			'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url),
+            			'thumb' => $this->model_tool_image->resize($image, $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'))
           			);
         		}
 		
@@ -145,10 +145,10 @@ class ControllerProductCategory extends Controller {
 						'model'   => $result['model'],
             			'rating'  => $rating,
 						'stars'   => sprintf($this->language->get('text_stars'), $rating),
-						'thumb'   => image_resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
+						'thumb'   => $this->model_tool_image->resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
             			'price'   => $price,
 						'special' => $special,
-						'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&path=' . $this->request->get['path'] . '&product_id=' . $result['product_id']))
+						'href'    => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'])
           			);
         		}
 
@@ -171,37 +171,37 @@ class ControllerProductCategory extends Controller {
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_name_asc'),
 					'value' => 'pd.name-ASC',
-					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $this->request->get['path'] . '&sort=pd.name&order=ASC'))
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=pd.name&order=ASC')
 				);  
  
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_name_desc'),
 					'value' => 'pd.name-DESC',
-					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $this->request->get['path'] . '&sort=pd.name&order=DESC'))
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=pd.name&order=DESC')
 				);  
 
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_price_asc'),
 					'value' => 'p.price-ASC',
-					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $this->request->get['path'] . '&sort=p.price&order=ASC'))
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=p.price&order=ASC')
 				); 
 
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_price_desc'),
 					'value' => 'p.price-DESC',
-					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $this->request->get['path'] . '&sort=p.price&order=DESC'))
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=p.price&order=DESC')
 				); 
 				
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_rating_desc'),
 					'value' => 'rating-DESC',
-					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $this->request->get['path'] . '&sort=rating&order=DESC'))
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=rating&order=DESC')
 				); 
 				
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_rating_asc'),
 					'value' => 'rating-ASC',
-					'href'  => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $this->request->get['path'] . '&sort=rating&order=ASC'))
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=rating&order=ASC')
 				); 			
 				
 				$url = '';
@@ -219,7 +219,7 @@ class ControllerProductCategory extends Controller {
 				$pagination->page = $page;
 				$pagination->limit = 12; 
 				$pagination->text = $this->language->get('text_pagination');
-				$pagination->url = $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $this->request->get['path'] . $url . '&page=%s'));
+				$pagination->url = $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . $url . '&page={page}');
 			
 				$this->data['pagination'] = $pagination->render();
 			
@@ -251,7 +251,7 @@ class ControllerProductCategory extends Controller {
 
         		$this->data['button_continue'] = $this->language->get('button_continue');
 
-        		$this->data['continue'] = $this->url->http('common/home');
+        		$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
 		
 				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 					$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
@@ -285,7 +285,7 @@ class ControllerProductCategory extends Controller {
 			
 			if (isset($this->request->get['path'])) {	
 	       		$this->document->breadcrumbs[] = array(
-   	    			'href'      => $this->model_tool_seo_url->rewrite($this->url->http('product/category&path=' . $this->request->get['path'] . $url)),
+   	    			'href'      => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . $url),
     	   			'text'      => $this->language->get('text_error'),
         			'separator' => $this->language->get('text_separator')
         		);
@@ -299,7 +299,7 @@ class ControllerProductCategory extends Controller {
 
       		$this->data['button_continue'] = $this->language->get('button_continue');
 
-      		$this->data['continue'] = $this->url->http('common/home');
+      		$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
 			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';

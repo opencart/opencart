@@ -5,9 +5,9 @@
       <option value=""><?php echo $text_select; ?></option>
       <?php foreach ($manufacturers as $manufacturer) { ?>
       <?php if ($manufacturer['manufacturer_id'] == $manufacturer_id) { ?>
-      <option value="<?php echo $manufacturer['href']; ?>" selected="selected"><?php echo $manufacturer['name']; ?></option>
+      <option value="<?php echo str_replace('&', '&amp;', $manufacturer['href']); ?>" selected="selected"><?php echo $manufacturer['name']; ?></option>
       <?php } else { ?>
-      <option value="<?php echo $manufacturer['href']; ?>"><?php echo $manufacturer['name']; ?></option>
+      <option value="<?php echo str_replace('&', '&amp;', $manufacturer['href']); ?>"><?php echo $manufacturer['name']; ?></option>
       <?php } ?>
       <?php } ?>
     </select>

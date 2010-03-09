@@ -35,7 +35,7 @@
               <?php if ($manufacturer) { ?>
               <tr>
                 <td><b><?php echo $text_manufacturer; ?></b></td>
-                <td><a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></td>
+                <td><a href="<?php echo str_replace('&', '&amp;', $manufacturers); ?>"><?php echo $manufacturer; ?></a></td>
               </tr>
               <?php } ?>
               <tr>
@@ -49,7 +49,7 @@
             </table>
             <br />
             <?php if ($display_price) { ?>
-            <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="product">
+            <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="product">
               <?php if ($options) { ?>
               <b><?php echo $text_options; ?></b><br />
               <div style="background: #FFFFCC; border: 1px solid #FFCC33; padding: 10px; margin-top: 2px; margin-bottom: 15px;">
@@ -90,11 +90,11 @@
               </div>
               <?php } ?>
               <?php } ?>
-              <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px;"><?php echo $text_qty; ?>
+              <div class="content"><?php echo $text_qty; ?>
                 <input type="text" name="quantity" size="3" value="1" />
                 <a onclick="$('#product').submit();" id="add_to_cart" class="button"><span><?php echo $button_add_to_cart; ?></span></a></div>
-              <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
-              <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
+              <div><input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
+              <input type="hidden" name="redirect" value="<?php echo str_replace('&', '&amp;', $redirect); ?>" /></div>
             </form>
             <?php } ?></td>
         </tr>
@@ -105,12 +105,12 @@
     <div id="tab_review" class="tab_page">
       <div id="review"></div>
       <div class="heading" id="review_title"><?php echo $text_write; ?></div>
-      <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;"><b><?php echo $entry_name; ?></b><br />
+      <div class="content"><b><?php echo $entry_name; ?></b><br />
         <input type="text" name="name" value="" />
         <br />
         <br />
         <b><?php echo $entry_review; ?></b>
-        <textarea name="text" style="width: 99%;" rows="8"></textarea>
+        <textarea name="text" style="width: 98%;" rows="8"></textarea>
         <span style="font-size: 11px;"><?php echo $text_note; ?></span><br />
         <br />
         <b><?php echo $entry_rating; ?></b> <span><?php echo $entry_bad; ?></span>&nbsp;
@@ -156,8 +156,8 @@
         <tr>
           <?php for ($j = $i; $j < ($i + 4); $j++) { ?>
           <td width="25%"><?php if (isset($products[$j])) { ?>
-            <a href="<?php echo $products[$j]['href']; ?>"><img src="<?php echo $products[$j]['thumb']; ?>" title="<?php echo $products[$j]['name']; ?>" alt="<?php echo $products[$j]['name']; ?>" /></a><br />
-            <a href="<?php echo $products[$j]['href']; ?>"><?php echo $products[$j]['name']; ?></a><br />
+            <a href="<?php echo str_replace('&', '&amp;', $products[$j]['href']); ?>"><img src="<?php echo $products[$j]['thumb']; ?>" title="<?php echo $products[$j]['name']; ?>" alt="<?php echo $products[$j]['name']; ?>" /></a><br />
+            <a href="<?php echo str_replace('&', '&amp;', $products[$j]['href']); ?>"><?php echo $products[$j]['name']; ?></a><br />
             <span style="color: #999; font-size: 11px;"><?php echo $products[$j]['model']; ?></span><br />
             <?php if ($display_price) { ?>
             <?php if (!$products[$j]['special']) { ?>
@@ -200,7 +200,7 @@ $('#review').load('index.php?route=product/product/review&product_id=<?php echo 
 
 function review() {
 	$.ajax({
-		type: 'post',
+		type: 'POST',
 		url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
 		dataType: 'json',
 		data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : '') + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()),

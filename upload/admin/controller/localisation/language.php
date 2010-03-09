@@ -38,7 +38,7 @@ class ControllerLocalisationLanguage extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/language' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/language' . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationLanguage extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 					
-			$this->redirect($this->url->https('localisation/language' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/language' . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationLanguage extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 
-			$this->redirect($this->url->https('localisation/language' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/language' . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerLocalisationLanguage extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/language' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/language' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 	
-		$this->data['insert'] = $this->url->https('localisation/language/insert' . $url);
-		$this->data['delete'] = $this->url->https('localisation/language/delete' . $url);
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/language/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/language/delete' . $url;
 	
 		$this->data['languages'] = array();
 
@@ -178,7 +178,7 @@ class ControllerLocalisationLanguage extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('localisation/language/update&language_id=' . $result['language_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=localisation/language/update&language_id=' . $result['language_id'] . $url
 			);
 					
 			$this->data['languages'][] = array(
@@ -229,9 +229,9 @@ class ControllerLocalisationLanguage extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 					
-		$this->data['sort_name'] = $this->url->https('localisation/language&sort=name' . $url);
-		$this->data['sort_code'] = $this->url->https('localisation/language&sort=code' . $url);
-		$this->data['sort_sort_order'] = $this->url->https('localisation/language&sort=sort_order' . $url);
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=localisation/language&sort=name' . $url;
+		$this->data['sort_code'] = HTTPS_SERVER . 'index.php?route=localisation/language&sort=code' . $url;
+		$this->data['sort_sort_order'] = HTTPS_SERVER . 'index.php?route=localisation/language&sort=sort_order' . $url;
 
 		$url = '';
 
@@ -248,7 +248,7 @@ class ControllerLocalisationLanguage extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('localisation/language' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/language' . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 		
@@ -343,24 +343,24 @@ class ControllerLocalisationLanguage extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/language' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/language' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
 		if (!isset($this->request->get['language_id'])) {
-			$this->data['action'] = $this->url->https('localisation/language/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/language/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('localisation/language/update&language_id=' . $this->request->get['language_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/language/update&language_id=' . $this->request->get['language_id'] . $url;
 		}
 		
-		$this->data['cancel'] = $this->url->https('localisation/language' . $url);
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/language' . $url;
 
 		if (isset($this->request->get['language_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$language_info = $this->model_localisation_language->getLanguage($this->request->get['language_id']);
@@ -480,19 +480,24 @@ class ControllerLocalisationLanguage extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		} 
 		
+		$this->load->model('setting/store');
 		$this->load->model('sale/order');
 		
 		foreach ($this->request->post['selected'] as $language_id) {
 			$language_info = $this->model_localisation_language->getLanguage($language_id);
 
-			if ($this->config->get('config_language') == @$language_info['code']) {
-				$this->error['warning'] = $this->language->get('error_default');
-			}
+			if ($language_info) {
+				if ($this->config->get('config_language') == $language_info['code']) {
+					$this->error['warning'] = $this->language->get('error_default');
+				}
+				
+				$store_total = $this->model_setting_store->getTotalStoresByLanguage($language_info['code']);
 	
-			if ($this->config->get('config_admin_language') == @$language_info['code']) {
-				$this->error['warning'] = $this->language->get('error_admin');
+				if ($store_total) {
+					$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+				}
 			}
-			
+				
 			$order_total = $this->model_sale_order->getTotalOrdersByLanguageId($language_id);
 
 			if ($order_total) {

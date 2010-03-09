@@ -80,9 +80,9 @@ class ControllerPaymentPPPro extends Controller {
 		}
 
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';
@@ -121,7 +121,7 @@ class ControllerPaymentPPPro extends Controller {
 			'SIGNATURE'      => html_entity_decode($this->config->get('pp_pro_signature'), ENT_QUOTES, 'UTF-8'),
 			'CUSTREF'        => $order_info['order_id'],
 			'PAYMENTACTION'  => $payment_type,
-			'AMT'            => $this->currency->format($order_info['total'], $order_info['currency'], 1.00000, FALSE),
+			'AMT'            => $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE),
 			'CREDITCARDTYPE' => $this->request->post['cc_type'],
 			'ACCT'           => str_replace(' ', '', $this->request->post['cc_number']),
 			'CARDSTART'      => $this->request->post['cc_start_date_month'] . $this->request->post['cc_start_date_year'],
@@ -185,7 +185,7 @@ class ControllerPaymentPPPro extends Controller {
 			
 			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('pp_pro_order_status_id'), $message, FALSE);
 		
-			$json['success'] = $this->url->https('checkout/success');
+			$json['success'] = HTTPS_SERVER . 'index.php?route=checkout/success';
 		} else {
         	$json['error'] = $response_data['L_LONGMESSAGE0'];
         }

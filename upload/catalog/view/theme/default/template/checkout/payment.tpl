@@ -11,14 +11,14 @@
     <?php if ($error_warning) { ?>
     <div class="warning"><?php echo $error_warning; ?></div>
     <?php } ?>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="payment">
+    <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="payment">
       <b style="margin-bottom: 2px; display: block;"><?php echo $text_payment_address; ?></b>
       <div class="content">
         <table width="100%">
           <tr>
             <td width="50%" valign="top"><?php echo $text_payment_to; ?><br />
               <br />
-              <div style="text-align: center;"><a onclick="location='<?php echo $change_address; ?>'" class="button"><span><?php echo $button_change_address; ?></span></a></div></td>
+              <div style="text-align: center;"><a onclick="location = '<?php echo str_replace('&', '&amp;', $change_address); ?>'" class="button"><span><?php echo $button_change_address; ?></span></a></div></td>
             <td width="50%" valign="top"><b><?php echo $text_payment_address; ?></b><br />
               <?php echo $address; ?></td>
           </tr>
@@ -50,7 +50,7 @@
       <div class="buttons">
         <table>
           <tr>
-            <td align="left"><a onclick="location='<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
+            <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
             <td align="right" style="padding-right: 5px;"><?php echo $text_agree; ?></td>
             <td width="5" style="padding-right: 10px;"><?php if ($agree) { ?>
               <input type="checkbox" name="agree" value="1" checked="checked" />
@@ -65,7 +65,7 @@
       <div class="buttons">
         <table>
           <tr>
-            <td align="left"><a onclick="location='<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
+            <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
             <td align="right"><a onclick="$('#payment').submit();" class="button"><span><?php echo $button_continue; ?></span></a></td>
           </tr>
         </table>

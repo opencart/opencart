@@ -404,6 +404,46 @@
           <td><input type="text" name="usps_girth" value="<?php echo $usps_girth; ?>" size="4" /></td>
         </tr>
         <tr>
+          <td><?php echo $entry_display_time; ?></td>
+          <td><?php if ($usps_display_time) { ?>
+            <input type="radio" name="usps_display_time" value="1" checked="checked" />
+            <?php echo $text_yes; ?>
+            <input type="radio" name="usps_display_time" value="0" />
+            <?php echo $text_no; ?>
+            <?php } else { ?>
+            <input type="radio" name="usps_display_time" value="1" />
+            <?php echo $text_yes; ?>
+            <input type="radio" name="usps_display_time" value="0" checked="checked" />
+            <?php echo $text_no; ?>
+            <?php } ?></td>
+        </tr> 
+        <tr>
+          <td><?php echo $entry_display_weight; ?></td>
+          <td><?php if ($usps_display_weight) { ?>
+            <input type="radio" name="usps_display_weight" value="1" checked="checked" />
+            <?php echo $text_yes; ?>
+            <input type="radio" name="usps_display_weight" value="0" />
+            <?php echo $text_no; ?>
+            <?php } else { ?>
+            <input type="radio" name="usps_display_weight" value="1" />
+            <?php echo $text_yes; ?>
+            <input type="radio" name="usps_display_weight" value="0" checked="checked" />
+            <?php echo $text_no; ?>
+            <?php } ?></td>
+        </tr>        
+        <tr>
+          <td><?php echo $entry_weight_class; ?></td>
+          <td><select name="usps_weight_class">
+              <?php foreach ($weight_classes as $weight_class) { ?>
+              <?php if ($weight_class['unit'] == $usps_weight_class) { ?>
+              <option value="<?php echo $weight_class['unit']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $weight_class['unit']; ?>"><?php echo $weight_class['title']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select></td>
+        </tr>        
+        <tr>
           <td><?php echo $entry_tax; ?></td>
           <td><select name="usps_tax_class_id">
               <option value="0"><?php echo $text_none; ?></option>

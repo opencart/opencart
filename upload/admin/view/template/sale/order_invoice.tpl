@@ -11,14 +11,14 @@
 <div class="div1">
   <table width="100%">
     <tr>
-      <td><?php echo $store; ?><br />
+      <td><?php echo $store_name; ?><br />
         <?php echo $address; ?><br />
         <?php echo $text_telephone; ?> <?php echo $telephone; ?><br />
         <?php if ($fax) { ?>
         <?php echo $text_fax; ?> <?php echo $fax; ?><br />
         <?php } ?>
         <?php echo $email; ?><br />
-        <?php echo $website; ?></td>
+        <?php echo $store_url; ?></td>
       <td align="right" valign="top"><table>
           <tr>
             <td><b><?php echo $text_invoice_date; ?></b></td>

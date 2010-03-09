@@ -36,5 +36,9 @@ class ModelReportViewed extends Model {
 		
 		return $product_data;
 	}	
+	
+	public function reset($start = 0, $limit = 20) {
+		$this->db->query("UPDATE " . DB_PREFIX . "product SET viewed = '0'");
+	}
 }
 ?>

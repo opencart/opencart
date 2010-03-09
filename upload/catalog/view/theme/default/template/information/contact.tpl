@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="middle">
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="contact">
+    <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="contact">
       <div class="content">
         <div style="display: inline-block; width: 100%;">
           <div style="float: left; display: inline-block; width: 50%;"><b><?php echo $text_address; ?></b><br />

@@ -14,7 +14,7 @@ class ControllerShippingUsps extends Controller {
 					
 			$this->session->data['success'] = $this->language->get('text_success');
 						
-			$this->redirect($this->url->https('extension/shipping'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/shipping');
 		}
 				
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -71,6 +71,9 @@ class ControllerShippingUsps extends Controller {
 		$this->data['entry_machinable'] = $this->language->get('entry_machinable');
 		$this->data['entry_dimension'] = $this->language->get('entry_dimension');
 		$this->data['entry_girth'] = $this->language->get('entry_girth');
+		$this->data['entry_display_time'] = $this->language->get('entry_display_time');
+		$this->data['entry_display_weight'] = $this->language->get('entry_display_weight');
+		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -102,26 +105,26 @@ class ControllerShippingUsps extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('extension/shipping'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/shipping',
        		'text'      => $this->language->get('text_shipping'),
       		'separator' => ' :: '
    		);
 		
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('shipping/usps'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=shipping/usps',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['action'] = $this->url->https('shipping/usps');
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=shipping/usps';
 		
-		$this->data['cancel'] = $this->url->https('extension/shipping');
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/shipping';
 
 		if (isset($this->request->post['usps_user_id'])) {
 			$this->data['usps_user_id'] = $this->request->post['usps_user_id'];
@@ -432,6 +435,28 @@ class ControllerShippingUsps extends Controller {
 		} else {
 			$this->data['usps_girth'] = $this->config->get('usps_girth');
 		}
+		
+		if (isset($this->request->post['usps_display_time'])) {
+			$this->data['usps_display_time'] = $this->request->post['usps_display_time'];
+		} else {
+			$this->data['usps_display_time'] = $this->config->get('usps_display_time');
+		}
+		
+		if (isset($this->request->post['usps_display_weight'])) {
+			$this->data['usps_display_weight'] = $this->request->post['usps_display_weight'];
+		} else {
+			$this->data['usps_display_weight'] = $this->config->get('usps_display_weight');
+		}
+		
+		if (isset($this->request->post['usps_weight_class'])) {
+			$this->data['usps_weight_class'] = $this->request->post['usps_weight_class'];
+		} else {
+			$this->data['usps_weight_class'] = $this->config->get('usps_weight_class');
+		}
+		
+		$this->load->model('localisation/weight_class');
+		
+		$this->data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
 		
 		if (isset($this->request->post['usps_tax_class_id'])) {
 			$this->data['usps_tax_class_id'] = $this->request->post['usps_tax_class_id'];

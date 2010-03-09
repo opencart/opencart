@@ -11,10 +11,7 @@
     <?php if ($error_warning) { ?>
     <div class="warning"><?php echo $error_warning; ?></div>
     <?php } ?>
-    <?php if ($success) { ?>
-    <div class="success"><?php echo $success; ?></div>
-    <?php } ?>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="cart">
+    <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="cart">
       <table class="cart">
         <tr>
           <th align="center"><?php echo $column_remove; ?></th>
@@ -30,8 +27,8 @@
         <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
         <tr class="<?php echo $class; ?>">
           <td align="center"><input type="checkbox" name="remove[<?php echo $product['key']; ?>]" /></td>
-          <td align="center"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" /></a></td>
-          <td align="left" valign="top"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+          <td align="center"><a href="<?php echo str_replace('&', '&amp;', $product['href']); ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" /></a></td>
+          <td align="left" valign="top"><a href="<?php echo str_replace('&', '&amp;', $product['href']); ?>"><?php echo $product['name']; ?></a>
             <?php if (!$product['stock']) { ?>
             <span style="color: #FF0000; font-weight: bold;">***</span>
             <?php } ?>
@@ -54,24 +51,12 @@
         <table>
           <tr>
             <td align="left"><a onclick="$('#cart').submit();" class="button"><span><?php echo $button_update; ?></span></a></td>
-            <td align="center"><a onclick="location='<?php echo $continue; ?>'" class="button"><span><?php echo $button_shopping; ?></span></a></td>
-            <td align="right"><a onclick="location='<?php echo $checkout; ?>'" class="button"><span><?php echo $button_checkout; ?></span></a></td>
+            <td align="center"><a onclick="location = '<?php echo str_replace('&', '&amp;', $continue); ?>'" class="button"><span><?php echo $button_shopping; ?></span></a></td>
+            <td align="right"><a onclick="location = '<?php echo str_replace('&', '&amp;', $checkout); ?>'" class="button"><span><?php echo $button_checkout; ?></span></a></td>
           </tr>
         </table>
       </div>
     </form>
-    <div style="width: 558px; display: inline-block;">
-      <div style="float: left; width: 274px;">
-        <div style="border: 1px solid #DDDDDD; min-height: 125px;">
-          <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="coupon">
-            <div style="background: #F7F7F7 url('catalog/view/theme/default/image/discount.png') 8px 8px no-repeat; border-bottom: 1px solid #DDDDDD; padding: 8px 8px 8px 29px;"><span style="text-transform: uppercase; font-size: 14px; font-weight: bold;"><?php echo $text_discount; ?></span></div>
-            <div style="padding: 8px;"><?php echo $text_coupon; ?><br />
-              <input type="text" name="coupon" value="<?php echo $coupon; ?>" />
-              <a onclick="$('#coupon').submit();" class="button"><span><?php echo $button_coupon; ?></span></a></div>
-          </form>
-        </div>
-      </div>
-    </div>
   </div>
   <div class="bottom">
     <div class="left"></div>
@@ -79,9 +64,4 @@
     <div class="center"></div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#shipping').bind('click', function (e) {
-	$('#test').slideToggle('slow');									  
-});
-//--></script>
 <?php echo $footer; ?> 

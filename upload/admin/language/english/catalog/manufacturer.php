@@ -4,6 +4,7 @@ $_['heading_title']      = 'Manufacturer';
 
 // Text
 $_['text_success']       = 'Success: You have modified manufacturers!';
+$_['text_default']       = 'Default Store';
 $_['text_image_manager'] = 'Image Manager';
 
 // Column
@@ -13,6 +14,7 @@ $_['column_action']      = 'Action';
 
 // Entry
 $_['entry_name']         = 'Manufacturer Name:';
+$_['entry_store']        = 'Stores:';
 $_['entry_keyword']      = 'SEO Keyword:';
 $_['entry_image']        = 'Image:';
 $_['entry_sort_order']   = 'Sort Order:';

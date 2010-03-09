@@ -22,7 +22,7 @@ class ControllerModuleManufacturer extends Controller {
 			$this->data['manufacturers'][] = array(
 				'manufacturer_id' => $result['manufacturer_id'],
 				'name'            => $result['name'],
-				'href'            => $this->model_tool_seo_url->rewrite($this->url->http('product/manufacturer&manufacturer_id=' . $result['manufacturer_id']))
+				'href'            => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $result['manufacturer_id'])
 			);
 		}
 		

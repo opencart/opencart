@@ -9,7 +9,6 @@ $_['decimal_point']           = '.';
 $_['thousand_point']          = ',';
 
 // Text
-$_['text_time']               = 'Page created in %s seconds';
 $_['text_yes']                = 'Yes';
 $_['text_no']                 = 'No';
 $_['text_plus']               = '+';
@@ -18,10 +17,12 @@ $_['text_enabled']            = 'Enabled';
 $_['text_disabled']           = 'Disabled';
 $_['text_none']               = ' --- None --- ';
 $_['text_select']             = ' --- Please Select --- ';
+$_['text_select_all']         = 'Select All';
+$_['text_unselect_all']       = 'Unselect All';
 $_['text_all_zones']          = 'All Zones';
 $_['text_default']            = ' <b>(Default)</b>';
 $_['text_close']              = 'Close';
-$_['text_pagination']         = 'Showing %s to %s of %s (%s Pages)';
+$_['text_pagination']         = 'Showing {start} to {end} of {total} ({pages} Pages)';
 $_['text_no_results']         = 'No results!';
 $_['text_separator']          = ' &gt; ';
 $_['text_edit']               = 'Edit';
@@ -37,6 +38,7 @@ $_['button_clear']            = 'Clear Log';
 $_['button_close']            = 'Close';
 $_['button_filter']           = 'Filter';
 $_['button_send']             = 'Send';
+$_['button_edit']             = 'Edit';
 $_['button_back']             = 'Back';
 $_['button_remove']           = 'Remove';
 $_['button_backup']           = 'Backup';
@@ -50,6 +52,8 @@ $_['button_add_special']      = 'Add Special';
 $_['button_add_image']        = 'Add Image';
 $_['button_add_geo_zone']     = 'Add Geo Zone';
 $_['button_add_rate']         = 'Add Tax Rate';
+$_['button_approve']          = 'Approve';
+$_['button_reset']            = 'Reset';
 
 // Tab
 $_['tab_admin']               = 'Admin';
@@ -60,13 +64,17 @@ $_['tab_general']             = 'General';
 $_['tab_image']               = 'Image';
 $_['tab_option']              = 'Option';
 $_['tab_server']              = 'Server';
-$_['tab_shop']                = 'Shop';
+$_['tab_store']               = 'Store';
 $_['tab_special']             = 'Special';
 $_['tab_local']               = 'Local';
 $_['tab_stats']               = 'Statistics';
 $_['tab_order']               = 'Orders';
 $_['tab_customer']            = 'Customers';
 $_['tab_mail']                = 'Mail';
+$_['tab_contact']             = 'Contact Details';
+$_['tab_product']             = 'Products';
+$_['tab_shipping']            = 'Shipping';
+$_['tab_payment']             = 'Payment';
 
 // Error
 $_['error_upload_1']          = 'Warning: The uploaded file exceeds the upload_max_filesize directive in php.ini!';

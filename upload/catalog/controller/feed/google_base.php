@@ -5,7 +5,7 @@ class ControllerFeedGoogleBase extends Controller {
 			$output  = '<?xml version="1.0" encoding="UTF-8" ?>';
 			$output .= '<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">';
             $output .= '<channel>';
-			$output .= '<title>' . $this->config->get('config_store') . '</title>'; 
+			$output .= '<title>' . $this->config->get('config_name') . '</title>'; 
 			$output .= '<description>' . $this->config->get('config_meta_description') . '</description>';
 			$output .= '<link>' . HTTP_SERVER . '</link>';
 			
@@ -13,27 +13,26 @@ class ControllerFeedGoogleBase extends Controller {
 			
 			$this->load->model('catalog/product');
 			
-			$this->load->helper('image');
+			$this->load->model('tool/image');
 			
 			$products = $this->model_catalog_product->getProducts();
 			
 			foreach ($products as $product) {
 				if ($product['description']) {
 					$output .= '<item>';
-					$output .= '<title>' . $product['name'] . '</title>';
-					$output .= '<g:brand>' . $product['manufacturer'] . '</g:brand>';
-					$output .= '<g:condition>new</g:condition>';
+					$output .= '<title>' . html_entity_decode($product['name'], ENT_QUOTES, 'UTF-8') . '</title>';
+					$output .= '<link>' . HTTP_SERVER . 'index.php?route=product/product&amp;product_id=' . $product['product_id'] . '</link>';
 					$output .= '<description>' . $product['description'] . '</description>';
-
-					$output .= '<guid>' . $product['product_id'] . '</guid>';
+					$output .= '<g:brand>' . html_entity_decode($product['manufacturer'], ENT_QUOTES, 'UTF-8') . '</g:brand>';
+					$output .= '<g:condition>new</g:condition>';
+					$output .= '<g:id>' . $product['product_id'] . '</g:id>';
 					
 					if ($product['image']) {
-						$output .= '<g:image_link>' . image_resize($product['image'], 500, 500) . '</g:image_link>';
+						$output .= '<g:image_link>' . $this->model_tool_image->resize($product['image'], 500, 500) . '</g:image_link>';
 					} else {
-						$output .= '<g:image_link>' . image_resize('no_image.jpg', 500, 500) . '</g:image_link>';
+						$output .= '<g:image_link>' . $this->model_tool_image->resize('no_image.jpg', 500, 500) . '</g:image_link>';
 					}
 					
-					$output .= '<link>' . $this->url->http('product/product&product_id=' . $product['product_id']) . '</link>';
 					$output .= '<g:mpn>' . $product['model'] . '</g:mpn>';
 					$output .= '<g:price>' . $this->tax->calculate($product['price'], $product['tax_class_id']) . '</g:price>';
 					
@@ -63,16 +62,16 @@ class ControllerFeedGoogleBase extends Controller {
 					
 					$output .= '<g:quantity>' . $product['quantity'] . '</g:quantity>';
 					$output .= '<g:upc>' . $product['model'] . '</g:upc>'; 
-					$output .= '<g:weight>' . $this->weight->format($product['weight'], $product['weight_class_id']) . '</g:weight>'; 
+					$output .= '<g:weight>' . $this->weight->format($product['weight'], $product['weight_class']) . '</g:weight>'; 
 					$output .= '</item>';
 				}
 			}
 			
-			$output .= '</channel>';
+			$output .= '</channel>'; 
 			$output .= '</rss>';	
 			
-			$this->response->addHeader('Content-Type', 'application/rss+xml');
-			$this->response->setOutput($output);
+			$this->response->addHeader('Content-Type: application/rss+xml');
+			$this->response->setOutput($output, 0);
 		}
 	}
 	

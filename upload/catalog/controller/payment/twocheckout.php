@@ -57,15 +57,15 @@ class ControllerPaymentTwoCheckout extends Controller {
 		$this->data['lang'] = $this->session->data['language'];
 
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['return_url'] = $this->url->https('checkout/confirm');
+			$this->data['return_url'] = HTTPS_SERVER . 'index.php?route=checkout/confirm';
 		} else {
-			$this->data['return_url'] = $this->url->https('checkout/guest_step_3');
+			$this->data['return_url'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_3';
 		}
 		
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';
@@ -87,7 +87,7 @@ class ControllerPaymentTwoCheckout extends Controller {
 		if (md5($this->config->get('twocheckout_secret') . $this->config->get('twocheckout_account') . $this->request->post['order_number'] . $this->request->post['total']) == $this->request->post['key']) {
 			$this->model_checkout_order->confirm($this->request->post['order_number'], $this->config->get('twocheckout_order_status_id'));
 	
-			$this->redirect($this->url->http('checkout/success'));	
+			$this->redirect(HTTP_SERVER . 'index.php?route=checkout/success');	
 		}
 	}
 }

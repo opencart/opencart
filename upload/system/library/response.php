@@ -4,14 +4,8 @@ final class Response {
 	private $output;
 	private $level = 0;
 	
-	public function addHeader($key, $value) {
-		$this->headers[$key] = $value;
-	}
-
-	public function removeHeader($key) {
-		if (isset($this->headers[$key])) {
-			unset($this->headers[$key]);
-		}
+	public function addHeader($header) {
+		$this->headers[] = $header;
 	}
 
 	public function redirect($url) {
@@ -49,7 +43,7 @@ final class Response {
 			return $data;
 		}
 		
-		$this->addHeader('Content-Encoding', $encoding);
+		$this->addHeader('Content-Encoding: ' . $encoding);
 
 		return gzencode($data, (int)$level);
 	}
@@ -62,8 +56,8 @@ final class Response {
 		}	
 			
 		if (!headers_sent()) {
-			foreach ($this->headers as $key => $value) {
-				header($key . ': ' . $value);
+			foreach ($this->headers as $header) {
+				header($header, TRUE);
 			}
 		}
 		

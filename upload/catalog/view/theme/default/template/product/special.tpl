@@ -13,9 +13,9 @@
         <select name="sort" onchange="location=this.value">
           <?php foreach ($sorts as $sorts) { ?>
           <?php if (($sort . '-' . $order) == $sorts['value']) { ?>
-          <option value="<?php echo $sorts['href']; ?>" selected="selected"><?php echo $sorts['text']; ?></option>
+          <option value="<?php echo str_replace('&', '&amp;', $sorts['href']); ?>" selected="selected"><?php echo $sorts['text']; ?></option>
           <?php } else { ?>
-          <option value="<?php echo $sorts['href']; ?>"><?php echo $sorts['text']; ?></option>
+          <option value="<?php echo str_replace('&', '&amp;', $sorts['href']); ?>"><?php echo $sorts['text']; ?></option>
           <?php } ?>
           <?php } ?>
         </select>
@@ -27,8 +27,8 @@
       <tr>
         <?php for ($j = $i; $j < ($i + 4); $j++) { ?>
         <td width="25%"><?php if (isset($products[$j])) { ?>
-          <a href="<?php echo $products[$j]['href']; ?>"><img src="<?php echo $products[$j]['thumb']; ?>" title="<?php echo $products[$j]['name']; ?>" alt="<?php echo $products[$j]['name']; ?>" /></a><br />
-          <a href="<?php echo $products[$j]['href']; ?>"><?php echo $products[$j]['name']; ?></a><br />
+          <a href="<?php echo str_replace('&', '&amp;', $products[$j]['href']); ?>"><img src="<?php echo $products[$j]['thumb']; ?>" title="<?php echo $products[$j]['name']; ?>" alt="<?php echo $products[$j]['name']; ?>" /></a><br />
+          <a href="<?php echo str_replace('&', '&amp;', $products[$j]['href']); ?>"><?php echo $products[$j]['name']; ?></a><br />
           <span style="color: #999; font-size: 11px;"><?php echo $products[$j]['model']; ?></span><br />
           <?php if ($display_price) { ?>
           <?php if (!$products[$j]['special']) { ?>

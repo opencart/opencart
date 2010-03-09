@@ -38,7 +38,7 @@ class ControllerSaleCustomerGroup extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('sale/customer_group' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer_group' . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerSaleCustomerGroup extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('sale/customer_group' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer_group' . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerSaleCustomerGroup extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('sale/customer_group' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer_group' . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerSaleCustomerGroup extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('sale/customer_group' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=sale/customer_group' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
-		$this->data['insert'] = $this->url->https('sale/customer_group/insert' . $url);
-		$this->data['delete'] = $this->url->https('sale/customer_group/delete' . $url);	
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=sale/customer_group/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=sale/customer_group/delete' . $url;	
 	
 		$this->data['customer_groups'] = array();
 
@@ -178,7 +178,7 @@ class ControllerSaleCustomerGroup extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('sale/customer_group/update&customer_group_id=' . $result['customer_group_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=sale/customer_group/update&customer_group_id=' . $result['customer_group_id'] . $url
 			);		
 		
 			$this->data['customer_groups'][] = array(
@@ -225,7 +225,7 @@ class ControllerSaleCustomerGroup extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$this->data['sort_name'] = $this->url->https('sale/customer_group&sort=name' . $url);
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=sale/customer_group&sort=name' . $url;
 		
 		$url = '';
 
@@ -242,7 +242,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('sale/customer_group' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=sale/customer_group' . $url . '&page={page}';
 		
 		$this->data['pagination'] = $pagination->render();				
 
@@ -297,24 +297,24 @@ class ControllerSaleCustomerGroup extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('sale/customer_group' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=sale/customer_group' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 			
 		if (!isset($this->request->get['customer_group_id'])) {
-			$this->data['action'] = $this->url->https('sale/customer_group/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/customer_group/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('sale/customer_group/update&customer_group_id=' . $this->request->get['customer_group_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/customer_group/update&customer_group_id=' . $this->request->get['customer_group_id'] . $url;
 		}
 		  
-    	$this->data['cancel'] = $this->url->https('sale/customer_group' . $url);
+    	$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=sale/customer_group' . $url;
 
 		if (isset($this->request->get['customer_group_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$customer_group_info = $this->model_sale_customer_group->getCustomerGroup($this->request->get['customer_group_id']);
@@ -358,14 +358,17 @@ class ControllerSaleCustomerGroup extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
+		$this->load->model('setting/store');
 		$this->load->model('sale/customer');
       	
 		foreach ($this->request->post['selected'] as $customer_group_id) {
-    		if ($this->config->get('config_customer_group_id') == $customer_group_id) {
-	  			$this->error['warning'] = $this->language->get('error_default');	
-			}  
+			$store_total = $this->model_setting_store->getTotalStoresByCustomerGroupId($customer_group_id);
+
+			if ($store_total) {
+				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+			}
 			
-			$customer_total = $this->model_sale_customer->getTotalCustomersByGroupId($customer_group_id);
+			$customer_total = $this->model_sale_customer->getTotalCustomersByCustomerGroupId($customer_group_id);
 
 			if ($customer_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_customer'), $customer_total);

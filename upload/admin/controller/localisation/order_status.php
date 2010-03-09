@@ -38,7 +38,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 						
-      		$this->redirect($this->url->https('localisation/order_status' . $url));
+      		$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/order_status' . $url);
 		}
 	
     	$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/order_status' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/order_status' . $url);
     	}
 	
     	$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/order_status' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/order_status' . $url);
    		}
 	
     	$this->getList();
@@ -146,19 +146,19 @@ class ControllerLocalisationOrderStatus extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/order_status' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/order_status' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
-		$this->data['insert'] = $this->url->https('localisation/order_status/insert' . $url);
-		$this->data['delete'] = $this->url->https('localisation/order_status/delete' . $url);	
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/order_status/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/order_status/delete' . $url;	
 
 		$this->data['order_statuses'] = array();
 
@@ -178,12 +178,12 @@ class ControllerLocalisationOrderStatus extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('localisation/order_status/update&order_status_id=' . $result['order_status_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=localisation/order_status/update&order_status_id=' . $result['order_status_id'] . $url
 			);
 						
 			$this->data['order_statuses'][] = array(
 				'order_status_id' => $result['order_status_id'],
-				'name'            => $result['name'] . (($result['order_status_id'] == $this->config->get('config_order_status_id')) ? $this->language->get('text_default') : NULL),
+				'name'            => $result['name'],
 				'selected'        => isset($this->request->post['selected']) && in_array($result['order_status_id'], $this->request->post['selected']),
 				'action'          => $action
 			);
@@ -225,7 +225,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->https('localisation/order_status&sort=name' . $url);
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=localisation/order_status&sort=name' . $url;
 		
 		$url = '';
 
@@ -242,7 +242,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('localisation/order_status' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/order_status' . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 
@@ -298,24 +298,24 @@ class ControllerLocalisationOrderStatus extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/order_status' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/order_status' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
 		if (!isset($this->request->get['order_status_id'])) {
-			$this->data['action'] = $this->url->https('localisation/order_status/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/order_status/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('localisation/order_status/update&order_status_id=' . $this->request->get['order_status_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/order_status/update&order_status_id=' . $this->request->get['order_status_id'] . $url;
 		}
 			
-		$this->data['cancel'] = $this->url->https('localisation/order_status' . $url);
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/order_status' . $url;
 		
 		$this->load->model('localisation/language');
 		
@@ -361,14 +361,17 @@ class ControllerLocalisationOrderStatus extends Controller {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
 		
-		$this->load->model('customer/order');
+		$this->load->model('setting/store');
+		$this->load->model('sale/order');
 		
 		foreach ($this->request->post['selected'] as $order_status_id) {
-    		if ($this->config->get('config_order_status_id') == $order_status_id) {
-	  			$this->error['warning'] = $this->language->get('error_default');	
-			}  
-		
-			$order_total = $this->model_customer_order->getOrderHistoryTotalByOrderStatusId($order_status_id);
+			$store_total = $this->model_setting_store->getTotalStoresByOrderStatusId($order_status_id);
+
+			if ($store_total) {
+				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+			}
+			
+			$order_total = $this->model_sale_order->getOrderHistoryTotalByOrderStatusId($order_status_id);
 		
 			if ($order_total) {
 	  			$this->error['warning'] = sprintf($this->language->get('error_order'), $order_total);	

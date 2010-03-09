@@ -8,26 +8,32 @@
     </div>
   </div>
   <div class="middle">
+    <?php if ($success) { ?>
+    <div class="success"><?php echo $success; ?></div>
+    <?php } ?>
+    <?php if ($error_warning) { ?>
+    <div class="warning"><?php echo $error_warning; ?></div>
+    <?php } ?>
     <div class="content">
       <table width="100%">
         <tr>
           <td width="33.3%" valign="top"><?php if ($shipping_method) { ?>
             <b><?php echo $text_shipping_method; ?></b><br />
             <?php echo $shipping_method; ?><br />
-            <a href="<?php echo $checkout_shipping; ?>"><?php echo $text_change; ?></a><br />
+            <a href="<?php echo str_replace('&', '&amp;', $checkout_shipping); ?>"><?php echo $text_change; ?></a><br />
             <br />
             <?php } ?>
             <b><?php echo $text_payment_method; ?></b><br />
             <?php echo $payment_method; ?><br />
-            <a href="<?php echo $checkout_payment; ?>"><?php echo $text_change; ?></a></td>
+            <a href="<?php echo str_replace('&', '&amp;', $checkout_payment); ?>"><?php echo $text_change; ?></a></td>
           <td width="33.3%" valign="top"><?php if ($shipping_address) { ?>
             <b><?php echo $text_shipping_address; ?></b><br />
             <?php echo $shipping_address; ?><br />
-            <a href="<?php echo $checkout_shipping_address; ?>"><?php echo $text_change; ?></a>
+            <a href="<?php echo str_replace('&', '&amp;', $checkout_shipping_address); ?>"><?php echo $text_change; ?></a>
             <?php } ?></td>
           <td width="33.3%" valign="top"><b><?php echo $text_payment_address; ?></b><br />
             <?php echo $payment_address; ?><br />
-            <a href="<?php echo $checkout_payment_address; ?>"><?php echo $text_change; ?></a></td>
+            <a href="<?php echo str_replace('&', '&amp;', $checkout_payment_address); ?>"><?php echo $text_change; ?></a></td>
         </tr>
       </table>
     </div>
@@ -42,7 +48,7 @@
         </tr>
         <?php foreach ($products as $product) { ?>
         <tr>
-          <td align="left" valign="top"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+          <td align="left" valign="top"><a href="<?php echo str_replace('&', '&amp;', $product['href']); ?>"><?php echo $product['name']; ?></a>
             <?php foreach ($product['option'] as $option) { ?>
             <br />
             &nbsp;<small> - <?php echo $option['name']; ?> <?php echo $option['value']; ?></small>
@@ -66,6 +72,14 @@
         </table>
         <br />
       </div>
+    </div>
+    <div class="content">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="coupon">
+        <p><?php echo $text_coupon; ?></p>
+        <div style="text-align: right;"><?php echo $entry_coupon; ?>&nbsp;
+          <input type="text" name="coupon" value="<?php echo $coupon; ?>" />
+          &nbsp;<a onclick="$('#coupon').submit();" class="button"><span><?php echo $button_coupon; ?></span></a></div>
+      </form>
     </div>
     <?php if ($comment) { ?>
     <b style="margin-bottom: 2px; display: block;"><?php echo $text_comment; ?></b>

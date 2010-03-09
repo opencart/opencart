@@ -2,10 +2,10 @@
 final class Tax {
 	private $taxes = array();
 	
-	public function __construct() {
-		$this->config = Registry::get('config');
-		$this->db = Registry::get('db');	
-		$this->session = Registry::get('session');
+	public function __construct($registry) {
+		$this->config = $registry->get('config');
+		$this->db = $registry->get('db');	
+		$this->session = $registry->get('session');
 		
 		if (isset($this->session->data['country_id']) && isset($this->session->data['zone_id'])) {
 			$country_id = $this->session->data['country_id'];

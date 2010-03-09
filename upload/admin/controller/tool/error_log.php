@@ -24,18 +24,18 @@ class ControllerToolErrorLog extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('tool/error_log'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=tool/error_log',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['clear'] = $this->url->https('tool/error_log/clear');
+		$this->data['clear'] = HTTPS_SERVER . 'index.php?route=tool/error_log/clear';
 		
 		$file = DIR_LOGS . $this->config->get('config_error_filename');
 		
@@ -65,7 +65,7 @@ class ControllerToolErrorLog extends Controller {
 		
 		$this->session->data['success'] = $this->language->get('text_success');
 		
-		$this->redirect($this->url->https('tool/error_log'));		
+		$this->redirect(HTTPS_SERVER . 'index.php?route=tool/error_log');		
 	}
 }
 ?>

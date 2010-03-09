@@ -4,17 +4,17 @@ class ControllerCheckoutGuestStep1 extends Controller {
 	      
   	public function index() {
     	if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-	  		$this->redirect($this->url->https('checkout/cart'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/cart');
     	}
 		
 		if ($this->customer->isLogged()) {
-	  		$this->redirect($this->url->https('checkout/shipping'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/shipping');
     	} 
 
 		if (!$this->config->get('config_guest_checkout') || $this->cart->hasDownload()) {
-			$this->session->data['redirect'] = $this->url->https('checkout/shipping');
+			$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
 
-	  		$this->redirect($this->url->https('account/login'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
     	} 
 		
 		$this->language->load('checkout/guest_step_1');
@@ -70,7 +70,7 @@ class ControllerCheckoutGuestStep1 extends Controller {
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['payment_method']);
 			
-	  		$this->redirect($this->url->https('checkout/guest_step_2'));
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/guest_step_2');
     	} 
 
 		$this->document->title = $this->language->get('heading_title');
@@ -78,19 +78,19 @@ class ControllerCheckoutGuestStep1 extends Controller {
 		$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/cart'),
+        	'href'      => HTTP_SERVER . 'index.php?route=checkout/cart',
         	'text'      => $this->language->get('text_cart'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->https('checkout/guest_step_1'),
+        	'href'      => HTTPS_SERVER . 'index.php?route=checkout/guest_step_1',
         	'text'      => $this->language->get('text_guest_step_1'),
         	'separator' => $this->language->get('text_separator')
       	);
@@ -165,7 +165,7 @@ class ControllerCheckoutGuestStep1 extends Controller {
 			$this->data['error_zone'] = '';
 		}
 		
-    	$this->data['action'] = $this->url->https('checkout/guest_step_1');
+    	$this->data['action'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_1';
 
 		if (isset($this->request->post['firstname'])) {
     		$this->data['firstname'] = $this->request->post['firstname'];
@@ -269,7 +269,7 @@ class ControllerCheckoutGuestStep1 extends Controller {
 		
     	$this->data['countries'] = $this->model_localisation_country->getCountries();
 		
-		$this->data['back'] = $this->url->http('checkout/cart');
+		$this->data['back'] = HTTP_SERVER . 'index.php?route=checkout/cart';
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/guest_step_1.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/checkout/guest_step_1.tpl';

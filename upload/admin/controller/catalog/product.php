@@ -54,7 +54,7 @@ class ControllerCatalogProduct extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('catalog/product' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/product' . $url);
     	}
 	
     	$this->getForm();
@@ -102,7 +102,7 @@ class ControllerCatalogProduct extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('catalog/product' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/product' . $url);
 		}
 
     	$this->getForm();
@@ -152,7 +152,7 @@ class ControllerCatalogProduct extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('catalog/product' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/product' . $url);
 		}
 
     	$this->getList();
@@ -234,19 +234,19 @@ class ControllerCatalogProduct extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('catalog/product' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/product' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 				
-		$this->data['insert'] = $this->url->https('catalog/product/insert' . $url);
-		$this->data['delete'] = $this->url->https('catalog/product/delete' . $url);
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=catalog/product/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=catalog/product/delete' . $url;
 										
     	$this->data['products'] = array();
 
@@ -261,7 +261,7 @@ class ControllerCatalogProduct extends Controller {
 			'limit'           => 10
 		);
 		
-		$this->load->helper('image');
+		$this->load->model('tool/image');
 		
 		$product_total = $this->model_catalog_product->getTotalProducts($data);
 			
@@ -272,13 +272,13 @@ class ControllerCatalogProduct extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('catalog/product/update&product_id=' . $result['product_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=catalog/product/update&product_id=' . $result['product_id'] . $url
 			);
 			
 			if ($result['image'] && file_exists(DIR_IMAGE . $result['image'])) {
-				$image = image_resize($result['image'], 40, 40);
+				$image = $this->model_tool_image->resize($result['image'], 40, 40);
 			} else {
-				$image = image_resize('no_image.jpg', 40, 40);
+				$image = $this->model_tool_image->resize('no_image.jpg', 40, 40);
 			}
 			
       		$this->data['products'][] = array(
@@ -353,11 +353,11 @@ class ControllerCatalogProduct extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 					
-		$this->data['sort_name'] = $this->url->https('catalog/product&sort=pd.name' . $url);
-		$this->data['sort_model'] = $this->url->https('catalog/product&sort=p.model' . $url);
-		$this->data['sort_quantity'] = $this->url->https('catalog/product&sort=p.quantity' . $url);
-		$this->data['sort_status'] = $this->url->https('catalog/product&sort=p.status' . $url);
-		$this->data['sort_order'] = $this->url->https('catalog/product&sort=p.sort_order' . $url);
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=catalog/product&sort=pd.name' . $url;
+		$this->data['sort_model'] = HTTPS_SERVER . 'index.php?route=catalog/product&sort=p.model' . $url;
+		$this->data['sort_quantity'] = HTTPS_SERVER . 'index.php?route=catalog/product&sort=p.quantity' . $url;
+		$this->data['sort_status'] = HTTPS_SERVER . 'index.php?route=catalog/product&sort=p.status' . $url;
+		$this->data['sort_order'] = HTTPS_SERVER . 'index.php?route=catalog/product&sort=p.sort_order' . $url;
 		
 		$url = '';
 
@@ -390,7 +390,7 @@ class ControllerCatalogProduct extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('catalog/product' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=catalog/product' . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 	
@@ -424,9 +424,10 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
 
 		$this->data['entry_name'] = $this->language->get('entry_name');
-		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
 		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$this->data['entry_description'] = $this->language->get('entry_description');
+		$this->data['entry_store'] = $this->language->get('entry_store');
+		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
     	$this->data['entry_model'] = $this->language->get('entry_model');
 		$this->data['entry_sku'] = $this->language->get('entry_sku');
 		$this->data['entry_location'] = $this->language->get('entry_location');
@@ -442,7 +443,7 @@ class ControllerCatalogProduct extends Controller {
     	$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
     	$this->data['entry_weight'] = $this->language->get('entry_weight');
 		$this->data['entry_dimension'] = $this->language->get('entry_dimension');
-		$this->data['entry_measurement'] = $this->language->get('entry_measurement');
+		$this->data['entry_length'] = $this->language->get('entry_length');
     	$this->data['entry_image'] = $this->language->get('entry_image');
     	$this->data['entry_download'] = $this->language->get('entry_download');
     	$this->data['entry_category'] = $this->language->get('entry_category');
@@ -541,24 +542,24 @@ class ControllerCatalogProduct extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
 			'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('catalog/product' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/product' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 									
 		if (!isset($this->request->get['product_id'])) {
-			$this->data['action'] = $this->url->https('catalog/product/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/product/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('catalog/product/update&product_id=' . $this->request->get['product_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/product/update&product_id=' . $this->request->get['product_id'] . $url;
 		}
 		
-		$this->data['cancel'] = $this->url->https('catalog/product' . $url);
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=catalog/product' . $url;
 
 		if (isset($this->request->get['product_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
@@ -599,6 +600,18 @@ class ControllerCatalogProduct extends Controller {
 		} else {
       		$this->data['location'] = '';
     	}
+
+		$this->load->model('setting/store');
+		
+		$this->data['stores'] = $this->model_setting_store->getStores();
+		
+		if (isset($this->request->post['product_store'])) {
+			$this->data['product_store'] = $this->request->post['product_store'];
+		} elseif (isset($product_info)) {
+			$this->data['product_store'] = $this->model_catalog_product->getProductStores($this->request->get['product_id']);
+		} else {
+			$this->data['product_store'] = array();
+		}	
 		
 		if (isset($this->request->post['keyword'])) {
 			$this->data['keyword'] = $this->request->post['keyword'];
@@ -616,12 +629,12 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['image'] = '';
 		}
 		
-		$this->load->helper('image');
+		$this->load->model('tool/image');
 		
 		if (isset($product_info) && $product_info['image'] && file_exists(DIR_IMAGE . $product_info['image'])) {
-			$this->data['preview'] = image_resize($product_info['image'], 100, 100);
+			$this->data['preview'] = $this->model_tool_image->resize($product_info['image'], 100, 100);
 		} else {
-			$this->data['preview'] = image_resize('no_image.jpg', 100, 100);
+			$this->data['preview'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 		}
 	
 		$this->load->model('catalog/manufacturer');
@@ -669,7 +682,7 @@ class ControllerCatalogProduct extends Controller {
     	} else if (isset($product_info)) {
       		$this->data['stock_status_id'] = $product_info['stock_status_id'];
     	} else {
-			$this->data['stock_status_id'] = $this->config->get('config_stock_status_id');
+			$this->data['stock_status_id'] = '';
 		}
 		
     	if (isset($this->request->post['price'])) {
@@ -744,16 +757,16 @@ class ControllerCatalogProduct extends Controller {
       		$this->data['height'] = '';
     	}
 
-		$this->load->model('localisation/measurement_class');
+		$this->load->model('localisation/length_class');
 		
-		$this->data['measurement_classes'] = $this->model_localisation_measurement_class->getMeasurementClasses();
+		$this->data['length_classes'] = $this->model_localisation_length_class->getLengthClasses();
     	
-		if (isset($this->request->post['measurement_class_id'])) {
-      		$this->data['measurement_class_id'] = $this->request->post['measurement_class_id'];
+		if (isset($this->request->post['length_class_id'])) {
+      		$this->data['length_class_id'] = $this->request->post['length_class_id'];
     	} elseif (isset($product_info)) {
-      		$this->data['measurement_class_id'] = $product_info['measurement_class_id'];
+      		$this->data['length_class_id'] = $product_info['length_class_id'];
     	} else {
-      		$this->data['measurement_class_id'] = $this->config->get('config_measurement_class_id');
+      		$this->data['length_class_id'] = $this->config->get('config_length_class_id');
     	}
 		
 		$this->data['language_id'] = $this->config->get('config_language_id');
@@ -786,7 +799,7 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['product_specials'] = array();
 		}
 		
-		$this->data['no_image'] = image_resize('no_image.jpg', 100, 100);
+		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 		
 		$this->data['product_images'] = array();
 		
@@ -796,12 +809,12 @@ class ControllerCatalogProduct extends Controller {
 			foreach ($results as $result) {
 				if ($result['image'] && file_exists(DIR_IMAGE . $result['image'])) {
 					$this->data['product_images'][] = array(
-						'preview' => image_resize($result['image'], 100, 100),
+						'preview' => $this->model_tool_image->resize($result['image'], 100, 100),
 						'file'    => $result['image']
 					);
 				} else {
 					$this->data['product_images'][] = array(
-						'preview' => image_resize('no_image.jpg', 100, 100),
+						'preview' => $this->model_tool_image->resize('no_image.jpg', 100, 100),
 						'file'    => $result['image']
 					);
 				}

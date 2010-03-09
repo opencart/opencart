@@ -8,10 +8,9 @@ class ControllerAccountInvoice extends Controller {
 				$order_id = 0;
 			}	
 			
-			$this->session->data['redirect'] = $this->url->https('account/invoice&order_id=' . $order_id);
+			$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=account/invoice&order_id=' . $order_id;
 			
-			
-			$this->redirect($this->url->https('account/login'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
     	}
 	  
     	$this->language->load('account/invoice');
@@ -21,25 +20,25 @@ class ControllerAccountInvoice extends Controller {
 		$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('account/account'),
+        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('account/history'),
+        	'href'      => HTTP_SERVER . 'index.php?route=account/history',
         	'text'      => $this->language->get('text_history'),
         	'separator' => $this->language->get('text_separator')
       	);
       	
 		$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('account/invoice&order_id=' . $this->request->get['order_id']),
+        	'href'      => HTTP_SERVER . 'index.php?route=account/invoice&order_id=' . $this->request->get['order_id'],
         	'text'      => $this->language->get('text_invoice'),
         	'separator' => $this->language->get('text_separator')
       	);
@@ -79,7 +78,7 @@ class ControllerAccountInvoice extends Controller {
 			
       		$this->data['button_continue'] = $this->language->get('button_continue');
 
-			$this->data['order_id'] = $order_info['order_id'];
+			$this->data['order_id'] = $this->request->get['order_id'];
 			$this->data['email'] = $order_info['email'];
 			$this->data['telephone'] = $order_info['telephone'];
 			$this->data['fax'] = $order_info['fax'];
@@ -99,6 +98,7 @@ class ControllerAccountInvoice extends Controller {
      			'{city}',
       			'{postcode}',
       			'{zone}',
+				'{zone_code}',
       			'{country}'
 			);
 	
@@ -111,6 +111,7 @@ class ControllerAccountInvoice extends Controller {
       			'city'      => $order_info['shipping_city'],
       			'postcode'  => $order_info['shipping_postcode'],
       			'zone'      => $order_info['shipping_zone'],
+				'zone_code' => $order_info['shipping_zone_code'],
       			'country'   => $order_info['shipping_country']  
 			);
 
@@ -133,6 +134,7 @@ class ControllerAccountInvoice extends Controller {
      			'{city}',
       			'{postcode}',
       			'{zone}',
+				'{zone_code}',
       			'{country}'
 			);
 	
@@ -145,6 +147,7 @@ class ControllerAccountInvoice extends Controller {
       			'city'      => $order_info['payment_city'],
       			'postcode'  => $order_info['payment_postcode'],
       			'zone'      => $order_info['payment_zone'],
+				'zone_code' => $order_info['payment_zone_code'],
       			'country'   => $order_info['payment_country']  
 			);
 			
@@ -194,7 +197,7 @@ class ControllerAccountInvoice extends Controller {
         		);
       		}
 
-      		$this->data['continue'] = $this->url->https('account/history');
+      		$this->data['continue'] = HTTPS_SERVER . 'index.php?route=account/history';
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/invoice.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/account/invoice.tpl';
@@ -217,7 +220,7 @@ class ControllerAccountInvoice extends Controller {
 
       		$this->data['button_continue'] = $this->language->get('button_continue');
 
-      		$this->data['continue'] = $this->url->http('account/history');
+      		$this->data['continue'] = HTTP_SERVER . 'index.php?route=account/history';
       			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';

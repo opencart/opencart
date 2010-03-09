@@ -17,7 +17,7 @@ class ControllerAccountLogout extends Controller {
 			
 			$this->tax->setZone($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 			
-      		$this->redirect($this->url->https('account/logout'));
+      		$this->redirect(HTTPS_SERVER . 'index.php?route=account/logout');
     	}
  
     	$this->language->load('account/logout');
@@ -27,19 +27,19 @@ class ControllerAccountLogout extends Controller {
 		$this->document->breadcrumbs = array();
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
         	'text'      => $this->language->get('text_home'),
         	'separator' => FALSE
       	);
       	
 		$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('account/account'),
+        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('account/logout'),
+        	'href'      => HTTP_SERVER . 'index.php?route=account/logout',
         	'text'      => $this->language->get('text_logout'),
         	'separator' => $this->language->get('text_separator')
       	);	
@@ -50,7 +50,7 @@ class ControllerAccountLogout extends Controller {
 
     	$this->data['button_continue'] = $this->language->get('button_continue');
 
-    	$this->data['continue'] = $this->url->http('common/home');
+    	$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/common/success.tpl';

@@ -38,7 +38,7 @@ class ControllerCatalogInformation extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('catalog/information' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/information' . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerCatalogInformation extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('catalog/information' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/information' . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerCatalogInformation extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('catalog/information' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/information' . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerCatalogInformation extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('catalog/information' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/information' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
-		$this->data['insert'] = $this->url->https('catalog/information/insert' . $url);
-		$this->data['delete'] = $this->url->https('catalog/information/delete' . $url);	
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=catalog/information/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=catalog/information/delete' . $url;	
 
 		$this->data['informations'] = array();
 
@@ -178,7 +178,7 @@ class ControllerCatalogInformation extends Controller {
 						
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('catalog/information/update&information_id=' . $result['information_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=catalog/information/update&information_id=' . $result['information_id'] . $url
 			);
 						
 			$this->data['informations'][] = array(
@@ -227,8 +227,8 @@ class ControllerCatalogInformation extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_title'] = $this->url->https('catalog/information&sort=id.title' . $url);
-		$this->data['sort_sort_order'] = $this->url->https('catalog/information&sort=i.sort_order' . $url);
+		$this->data['sort_title'] = HTTPS_SERVER . 'index.php?route=catalog/information&sort=id.title' . $url;
+		$this->data['sort_sort_order'] = HTTPS_SERVER . 'index.php?route=catalog/information&sort=i.sort_order' . $url;
 		
 		$url = '';
 
@@ -245,7 +245,7 @@ class ControllerCatalogInformation extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('catalog/information' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=catalog/information' . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 
@@ -265,8 +265,9 @@ class ControllerCatalogInformation extends Controller {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['entry_title'] = $this->language->get('entry_title');
-		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
 		$this->data['entry_description'] = $this->language->get('entry_description');
+		$this->data['entry_store'] = $this->language->get('entry_store');
+		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -293,13 +294,13 @@ class ControllerCatalogInformation extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('catalog/information'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/information',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
@@ -319,12 +320,12 @@ class ControllerCatalogInformation extends Controller {
 		}
 							
 		if (!isset($this->request->get['information_id'])) {
-			$this->data['action'] = $this->url->https('catalog/information/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/information/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('catalog/information/update&information_id=' . $this->request->get['information_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/information/update&information_id=' . $this->request->get['information_id'] . $url;
 		}
 		
-		$this->data['cancel'] = $this->url->https('catalog/information' . $url);
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=catalog/information' . $url;
 
 		if (isset($this->request->get['information_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);
@@ -342,6 +343,18 @@ class ControllerCatalogInformation extends Controller {
 			$this->data['information_description'] = array();
 		}
 
+		$this->load->model('setting/store');
+		
+		$this->data['stores'] = $this->model_setting_store->getStores();
+		
+		if (isset($this->request->post['information_store'])) {
+			$this->data['information_store'] = $this->request->post['information_store'];
+		} elseif (isset($information_info)) {
+			$this->data['information_store'] = $this->model_catalog_information->getInformationStores($this->request->get['information_id']);
+		} else {
+			$this->data['information_store'] = array();
+		}		
+		
 		if (isset($this->request->post['keyword'])) {
 			$this->data['keyword'] = $this->request->post['keyword'];
 		} elseif (isset($information_info)) {
@@ -392,6 +405,16 @@ class ControllerCatalogInformation extends Controller {
 	private function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'catalog/information')) {
 			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('setting/store');
+		
+		foreach ($this->request->post['selected'] as $information_id) {
+			$store_total = $this->model_setting_store->getTotalStoresByInformationId($information_id);
+
+			if ($store_total) {
+				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+			}
 		}
 
 		if (!$this->error) {

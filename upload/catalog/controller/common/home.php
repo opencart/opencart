@@ -6,15 +6,24 @@ class ControllerCommonHome extends Controller {
 		$this->document->title = $this->config->get('config_title');
 		$this->document->description = $this->config->get('config_meta_description');
 		
-		$this->data['heading_title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_store'));
-		$this->data['welcome'] = html_entity_decode($this->config->get('config_welcome_' . $this->config->get('config_language_id')));
+		$this->data['heading_title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
+		
+		$this->load->model('setting/store');
+		
+		$store_info = $this->model_setting_store->getStore($this->config->get('config_store_id'));
+		
+		if ($store_info) {
+			$this->data['welcome'] = html_entity_decode($store_info['description']);
+		} else {
+			$this->data['welcome'] = '';
+		}
 		
 		$this->data['text_latest'] = $this->language->get('text_latest');
 		
 		$this->load->model('catalog/product');
 		$this->load->model('catalog/review');
 		$this->load->model('tool/seo_url');
-		$this->load->helper('image');
+		$this->load->model('tool/image');
 		
 		$this->data['products'] = array();
 
@@ -48,10 +57,10 @@ class ControllerCommonHome extends Controller {
 				'model'   => $result['model'],
             	'rating'  => $rating,
 				'stars'   => sprintf($this->language->get('text_stars'), $rating),
-				'thumb'   => image_resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
+				'thumb'   => $this->model_tool_image->resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
             	'price'   => $price,
 				'special' => $special,
-				'href'    => $this->model_tool_seo_url->rewrite($this->url->http('product/product&product_id=' . $result['product_id']))
+				'href'    => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id'])
           	);
 		}
 

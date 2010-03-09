@@ -11,17 +11,17 @@ class ControllerPaymentMoneybookers extends Controller {
 		$this->data['action'] = 'https://www.moneybookers.com/app/payment.pl?rid=10111486';
 		
 		$this->data['pay_to_email'] = $this->config->get('moneybookers_email');
-		$this->data['description'] = $this->config->get('config_store');
+		$this->data['description'] = $this->config->get('config_name');
 		$this->data['transaction_id'] = $this->session->data['order_id'];
-        $this->data['return_url'] = $this->url->https('checkout/success');
+        $this->data['return_url'] = HTTPS_SERVER . 'index.php?route=checkout/success';
 		
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['cancel_url'] = $this->url->https('checkout/payment');
+			$this->data['cancel_url'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['cancel_url'] = $this->url->https('checkout/guest_step_2');
+			$this->data['cancel_url'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
-		$this->data['status_url'] = $this->url->https('payment/moneybookers/callback');
+		$this->data['status_url'] = HTTPS_SERVER . 'index.php?route=payment/moneybookers/callback';
 		$this->data['language'] = $this->session->data['language'];		
 		$this->data['logo'] = HTTP_IMAGE . $this->config->get('config_logo');
 		
@@ -55,9 +55,9 @@ class ControllerPaymentMoneybookers extends Controller {
 		$this->data['order_id'] = $encryption->encrypt($this->session->data['order_id']);
 
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
+			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$this->id = 'payment';

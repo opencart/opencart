@@ -4,6 +4,9 @@
 <head>
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
+<?php foreach ($links as $link) { ?>
+<link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
+<?php } ?>
 <link rel="stylesheet" type="text/css" href="view/stylesheet/stylesheet.css" />
 <link rel="stylesheet" type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/ui.all.css" />
 <?php foreach ($styles as $style) { ?>
@@ -14,12 +17,13 @@
 <script type="text/javascript" src="view/javascript/jquery/superfish/js/superfish.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/tab.js"></script>
 <?php foreach ($scripts as $script) { ?>
-<script type="text/javascript" src="view/javascript/jquery/<?php echo $script; ?>"></script>
+<script type="text/javascript" src="view/javascript/<?php echo $script; ?>"></script>
 <?php } ?>
 </head>
 <body>
+<div id="container">
 <div id="header">
-  <div class="div1"><img src="view/image/logo.png" title="<?php echo $heading_title; ?>" onclick="location='<?php echo $home; ?>'" /></div>
+  <div class="div1"><img src="view/image/logo.png" title="<?php echo $heading_title; ?>" onclick="location = '<?php echo $home; ?>'" /></div>
   <?php if ($logged) { ?>
   <div class="div2"><img src="view/image/lock.png" alt="" style="position: relative; top: 3px;" />&nbsp;<?php echo $logged; ?></div>
   <?php } ?>
@@ -45,6 +49,7 @@
         <li><a href="<?php echo $payment; ?>"><?php echo $text_payment; ?></a></li>
         <li><a href="<?php echo $total; ?>"><?php echo $text_total; ?></a></li>
         <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
+        <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
       </ul>
     </li>
     <li id="sale"><a class="top"><?php echo $text_sale; ?></a>
@@ -58,7 +63,8 @@
     </li>
     <li id="system"><a class="top"><?php echo $text_system; ?></a>
       <ul>
-        <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a>
+        <li><a href="<?php echo $store; ?>"><?php echo $text_store; ?></a></li>
+        <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
         <li><a class="parent"><?php echo $text_users; ?></a>
           <ul>
             <li><a href="<?php echo $user; ?>"><?php echo $text_user; ?></a></li>
@@ -75,7 +81,7 @@
             <li><a href="<?php echo $zone; ?>"><?php echo $text_zone; ?></a></li>
             <li><a href="<?php echo $geo_zone; ?>"><?php echo $text_geo_zone; ?></a></li>
             <li><a href="<?php echo $tax_class; ?>"><?php echo $text_tax_class; ?></a></li>
-            <li><a href="<?php echo $measurement_class; ?>"><?php echo $text_measurement_class; ?></a></li>
+            <li><a href="<?php echo $length_class; ?>"><?php echo $text_length_class; ?></a></li>
             <li><a href="<?php echo $weight_class; ?>"><?php echo $text_weight_class; ?></a></li>
           </ul>
         </li>
@@ -90,8 +96,6 @@
         <li><a href="<?php echo $report_purchased; ?>"><?php echo $text_report_purchased; ?></a></li>
       </ul>
     </li>
-  </ul>
-  <ul class="nav right">
     <li id="help"><a class="top"><?php echo $text_help; ?></a>
       <ul>
         <li><a onclick="window.open('http://www.opencart.com');"><?php echo $text_opencart; ?></a></li>
@@ -99,7 +103,15 @@
         <li><a onclick="window.open('http://forum.opencart.com');"><?php echo $text_support; ?></a></li>
       </ul>
     </li>
-    <li id="store"><a class="top" href="<?php echo $store; ?>"><?php echo $text_store; ?></a></li>
+  </ul>
+  <ul class="nav right">
+    <li id="store"><a class="top"><?php echo $text_front; ?></a>
+      <ul>
+        <?php foreach ($stores as $stores) { ?>
+        <li><a href="<?php echo $stores['href']; ?>"><?php echo $stores['name']; ?></a></li>
+        <?php } ?>
+      </ul>
+    </li>
     <li id="store"><a class="top" href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
   </ul>
   <script type="text/javascript"><!--

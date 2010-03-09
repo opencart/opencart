@@ -38,7 +38,7 @@ class ControllerLocalisationCountry extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/country' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/country' . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationCountry extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 					
-			$this->redirect($this->url->https('localisation/country' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/country' . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationCountry extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 
-			$this->redirect($this->url->https('localisation/country' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/country' . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerLocalisationCountry extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/country' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/country' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['insert'] = $this->url->https('localisation/country/insert' . $url);
-		$this->data['delete'] = $this->url->https('localisation/country/delete' . $url);
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/country/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/country/delete' . $url;
 		 
 		$this->data['countries'] = array();
 
@@ -178,12 +178,12 @@ class ControllerLocalisationCountry extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('localisation/country/update&country_id=' . $result['country_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=localisation/country/update&country_id=' . $result['country_id'] . $url
 			);
 
 			$this->data['countries'][] = array(
 				'country_id' => $result['country_id'],
-				'name'       => $result['name'] . (($result['country_id'] == $this->config->get('config_country_id')) ? $this->language->get('text_default') : NULL),
+				'name'       => $result['name'],
 				'iso_code_2' => $result['iso_code_2'],
 				'iso_code_3' => $result['iso_code_3'],
 				'selected'   => isset($this->request->post['selected']) && in_array($result['country_id'], $this->request->post['selected']),				
@@ -229,9 +229,9 @@ class ControllerLocalisationCountry extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->https('localisation/country&sort=name' . $url);
-		$this->data['sort_iso_code_2'] = $this->url->https('localisation/country&sort=iso_code_2' . $url);
-		$this->data['sort_iso_code_3'] = $this->url->https('localisation/country&sort=iso_code_3' . $url);
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=localisation/country&sort=name' . $url;
+		$this->data['sort_iso_code_2'] = HTTPS_SERVER . 'index.php?route=localisation/country&sort=iso_code_2' . $url;
+		$this->data['sort_iso_code_3'] = HTTPS_SERVER . 'index.php?route=localisation/country&sort=iso_code_3' . $url;
 		
 		$url = '';
 
@@ -248,7 +248,7 @@ class ControllerLocalisationCountry extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('localisation/country' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/country' . $url . '&page={page}';
 
 		$this->data['pagination'] = $pagination->render();
 		
@@ -306,24 +306,24 @@ class ControllerLocalisationCountry extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/country' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/country' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
 		if (!isset($this->request->get['country_id'])) { 
-			$this->data['action'] = $this->url->https('localisation/country/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/country/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('localisation/country/update&country_id=' . $this->request->get['country_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/country/update&country_id=' . $this->request->get['country_id'] . $url;
 		}
 		
-		$this->data['cancel'] = $this->url->https('localisation/country' . $url);
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/country' . $url;
 		
 		if (isset($this->request->get['country_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
@@ -391,15 +391,18 @@ class ControllerLocalisationCountry extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
+		$this->load->model('setting/store');
 		$this->load->model('sale/customer');
 		$this->load->model('localisation/zone');
 		$this->load->model('localisation/geo_zone');
 		
 		foreach ($this->request->post['selected'] as $country_id) {
-			if ($this->config->get('config_country_id') == $country_id) {
-				$this->error['warning'] = $this->language->get('error_default');
-			}
+			$store_total = $this->model_setting_store->getTotalStoresByCountryId($country_id);
 
+			if ($store_total) {
+				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+			}
+			
 			$address_total = $this->model_sale_customer->getTotalAddressesByCountryId($country_id);
 	
 			if ($address_total) {

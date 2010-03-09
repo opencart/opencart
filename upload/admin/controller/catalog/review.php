@@ -38,7 +38,7 @@ class ControllerCatalogReview extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 						
-			$this->redirect($this->url->https('catalog/review' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/review' . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerCatalogReview extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 						
-			$this->redirect($this->url->https('catalog/review' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/review' . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerCatalogReview extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 						
-			$this->redirect($this->url->https('catalog/review' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/review' . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerCatalogReview extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('catalog/review' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/review' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
-		$this->data['insert'] = $this->url->https('catalog/review/insert' . $url);
-		$this->data['delete'] = $this->url->https('catalog/review/delete' . $url);	
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=catalog/review/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=catalog/review/delete' . $url;	
 
 		$this->data['reviews'] = array();
 
@@ -178,7 +178,7 @@ class ControllerCatalogReview extends Controller {
 						
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('catalog/review/update&review_id=' . $result['review_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=catalog/review/update&review_id=' . $result['review_id'] . $url
 			);
 						
 			$this->data['reviews'][] = array(
@@ -233,11 +233,11 @@ class ControllerCatalogReview extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_product'] = $this->url->https('catalog/review&sort=pd.name' . $url);
-		$this->data['sort_author'] = $this->url->https('catalog/review&sort=r.author' . $url);
-		$this->data['sort_rating'] = $this->url->https('catalog/review&sort=r.rating' . $url);
-		$this->data['sort_status'] = $this->url->https('catalog/review&sort=r.status' . $url);
-		$this->data['sort_date_added'] = $this->url->https('catalog/review&sort=r.date_added' . $url);
+		$this->data['sort_product'] = HTTPS_SERVER . 'index.php?route=catalog/review&sort=pd.name' . $url;
+		$this->data['sort_author'] = HTTPS_SERVER . 'index.php?route=catalog/review&sort=r.author' . $url;
+		$this->data['sort_rating'] = HTTPS_SERVER . 'index.php?route=catalog/review&sort=r.rating' . $url;
+		$this->data['sort_status'] = HTTPS_SERVER . 'index.php?route=catalog/review&sort=r.status' . $url;
+		$this->data['sort_date_added'] = HTTPS_SERVER . 'index.php?route=catalog/review&sort=r.date_added' . $url;
 		
 		$url = '';
 
@@ -254,7 +254,7 @@ class ControllerCatalogReview extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = 10; 
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('catalog/review' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=catalog/review' . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 
@@ -322,13 +322,13 @@ class ControllerCatalogReview extends Controller {
    		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('catalog/review'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/review',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
@@ -348,12 +348,12 @@ class ControllerCatalogReview extends Controller {
 		}
 										
 		if (!isset($this->request->get['review_id'])) { 
-			$this->data['action'] = $this->url->https('catalog/review/insert' . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/review/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('catalog/review/update&review_id=' . $this->request->get['review_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/review/update&review_id=' . $this->request->get['review_id'] . $url;
 		}
 		
-		$this->data['cancel'] = $this->url->https('catalog/review' . $url);
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=catalog/review' . $url;
 
 		if (isset($this->request->get['review_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$review_info = $this->model_catalog_review->getReview($this->request->get['review_id']);

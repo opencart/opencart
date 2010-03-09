@@ -8,7 +8,13 @@ class ModelCatalogInformation extends Model {
 		foreach ($data['information_description'] as $language_id => $value) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "information_description SET information_id = '" . (int)$information_id . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($value['title']) . "', description = '" . $this->db->escape($value['description']) . "'");
 		}
-
+		
+		if (isset($data['information_store'])) {
+			foreach ($data['information_store'] as $store_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "information_to_store SET information_id = '" . (int)$information_id . "', store_id = '" . (int)$store_id . "'");
+			}
+		}
+		
 		if ($data['keyword']) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'information_id=" . (int)$information_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
 		}
@@ -24,6 +30,14 @@ class ModelCatalogInformation extends Model {
 		foreach ($data['information_description'] as $language_id => $value) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "information_description SET information_id = '" . (int)$information_id . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($value['title']) . "', description = '" . $this->db->escape($value['description']) . "'");
 		}
+
+		$this->db->query("DELETE FROM " . DB_PREFIX . "information_to_store WHERE information_id = '" . (int)$information_id . "'");
+		
+		if (isset($data['information_store'])) {
+			foreach ($data['information_store'] as $store_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "information_to_store SET information_id = '" . (int)$information_id . "', store_id = '" . (int)$store_id . "'");
+			}
+		}
 		
 		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'information_id=" . (int)$information_id. "'");
 		
@@ -37,6 +51,7 @@ class ModelCatalogInformation extends Model {
 	public function deleteInformation($information_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information WHERE information_id = '" . (int)$information_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_description WHERE information_id = '" . (int)$information_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "information_to_store WHERE information_id = '" . (int)$information_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'information_id=" . (int)$information_id . "'");
 
 		$this->cache->delete('information');
@@ -112,6 +127,18 @@ class ModelCatalogInformation extends Model {
 		}
 		
 		return $information_description_data;
+	}
+	
+	public function getInformationStores($information_id) {
+		$information_store_data = array();
+		
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "information_to_store WHERE information_id = '" . (int)$information_id . "'");
+
+		foreach ($query->rows as $result) {
+			$information_store_data[] = $result['store_id'];
+		}
+		
+		return $information_store_data;
 	}
 	
 	public function getTotalInformations() {

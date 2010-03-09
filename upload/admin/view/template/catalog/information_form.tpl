@@ -11,7 +11,7 @@
   </div>
   <div class="content">
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-      <div class="tabs">
+      <div class="htabs">
         <?php foreach ($languages as $language) { ?>
         <a tab="#language<?php echo $language['language_id']; ?>"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a>
         <?php } ?>
@@ -38,6 +38,24 @@
       <?php } ?>
       <table class="form">
         <tr>
+          <td><?php echo $entry_store; ?></td>
+          <td><div class="scrollbox">
+              <?php $class = 'odd'; ?>
+              <?php foreach ($stores as $store) { ?>
+              <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+              <div class="<?php echo $class; ?>">
+                <?php if (in_array($store['store_id'], $information_store)) { ?>
+                <input type="checkbox" name="information_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
+                <?php echo $store['name']; ?>
+                <?php } else { ?>
+                <input type="checkbox" name="information_store[]" value="<?php echo $store['store_id']; ?>" />
+                <?php echo $store['name']; ?>
+                <?php } ?>
+              </div>
+              <?php } ?>
+            </div></td>
+        </tr>
+        <tr>
           <td><?php echo $entry_keyword; ?></td>
           <td><input type="text" name="keyword" value="<?php echo $keyword; ?>" /></td>
         </tr>
@@ -56,6 +74,6 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>');
 <?php } ?>	  
 //--></script>
 <script type="text/javascript"><!--
-$.tabs('.tabs a'); 
+$.tabs('.htabs a'); 
 //--></script>
 <?php echo $footer; ?>

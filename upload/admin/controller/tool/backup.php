@@ -10,11 +10,17 @@ class ControllerToolBackup extends Controller {
 		$this->load->model('tool/backup');
 				
 		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validate()) {
-			$this->model_tool_backup->restore(file_get_contents(@$this->request->files['import']['tmp_name']));
-
-			$this->session->data['success'] = $this->language->get('text_success');
+			$content = file_get_contents($this->request->files['import']['tmp_name']);
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=tool/backup');
+			if ($content) {
+				$this->model_tool_backup->restore($content);
+				
+				$this->session->data['success'] = $this->language->get('text_success');
+				
+				$this->redirect(HTTPS_SERVER . 'index.php?route=tool/backup');
+			} else {
+				$this->error['warning'] = $this->language->get('error_empty');
+			}
 		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');

@@ -458,7 +458,7 @@ class ControllerLocalisationCurrency extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_order'), $order_total);
 			}					
 		}
-		return FALSE;
+		
 		if (!$this->error) {
 			return TRUE;
 		} else {

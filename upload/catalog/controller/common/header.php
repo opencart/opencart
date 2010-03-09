@@ -5,7 +5,7 @@ class ControllerCommonHeader extends Controller {
 			$this->session->data['language'] = $this->request->post['language_code'];
 		
 			if (isset($this->request->post['redirect'])) {
-				$this->redirect($this->request->post['redirect']);
+				$this->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 			} else {
 				$this->redirect(HTTP_SERVER . 'index.php?route=common/home');
 			}
@@ -15,7 +15,7 @@ class ControllerCommonHeader extends Controller {
       		$this->currency->set($this->request->post['currency_code']);
 
 			if (isset($this->request->post['redirect'])) {
-				$this->redirect($this->request->post['redirect']);
+				$this->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 			} else {
 				$this->redirect(HTTP_SERVER . 'index.php?route=common/home');
 			}

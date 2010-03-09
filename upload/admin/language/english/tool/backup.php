@@ -12,4 +12,5 @@ $_['entry_backup']     = 'Backup:';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify backups!';
+$_['error_empty']      = 'Warning: The file you uploaded was empty!';
 ?>

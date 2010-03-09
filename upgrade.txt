@@ -1,0 +1,8 @@
+1.3.4 > 1.4
+
+To Upgrade:
+1. First off backup your entire site.
+2. Goto your opencart's store admin and download a backup of your database.. Goto your opencart's store admin and download a backup of your database.
+2. Goto your opencart's store admin and download a backup of your database.. Goto your opencart's store admin and download a backup of your database.
+3. Upload and replace the files from the OpenCart 1.4 download to your OpenCart 1.3.4 installation.
+

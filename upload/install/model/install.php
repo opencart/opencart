@@ -35,7 +35,7 @@ class ModelInstall extends Model {
 				}
 			}
 			
-			mysql_query("SET CHARATER SET utf8", $connection);
+			mysql_query("SET CHARACTER SET utf8", $connection);
 	
 			mysql_query("SET @@session.sql_mode = 'MYSQL40'", $connection);
 		

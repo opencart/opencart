@@ -61,7 +61,7 @@ class ControllerSaleOrder extends Controller {
 			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/order' . $url);
     	}
     
-    	$this->getForm();
+    	$this->getInsert();
   	}
 	
   	public function update() {	
@@ -1063,9 +1063,7 @@ class ControllerSaleOrder extends Controller {
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 
-	
-	/* 
-  	private function getForm() {
+  	private function getInsert() {
     	$this->data['heading_title'] = $this->language->get('heading_title');
 		
 		$this->data['text_select'] = $this->language->get('text_select');
@@ -1528,7 +1526,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['comment'] = '';
 		}
 			
-
+/*
 			$this->data['shipping_method'] = $order_info['shipping_method'];
 	
 			$this->data['payment_method'] = $order_info['payment_method'];
@@ -1599,7 +1597,7 @@ class ControllerSaleOrder extends Controller {
 			}
 			
 
-		
+		*/
 
 			$this->template = 'sale/order_form.tpl';
 			$this->children = array(
@@ -1610,7 +1608,7 @@ class ControllerSaleOrder extends Controller {
 			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression')); 
   	}	
 
-
+/*
  	private function validateForm() {
     	if (!$this->user->hasPermission('modify', 'sale/order')) {
       		$this->error['warning'] = $this->language->get('error_permission'); 
@@ -1622,7 +1620,7 @@ class ControllerSaleOrder extends Controller {
 	  		return FALSE;
 		}
   	}
-	
+	*/
 	public function customers() {
 		$this->load->model('sale/customer');
 			
@@ -1745,6 +1743,5 @@ class ControllerSaleOrder extends Controller {
 	
 		$this->response->setOutput($output, $this->config->get('config_compression'));
   	}  	
- */
 }
 ?>

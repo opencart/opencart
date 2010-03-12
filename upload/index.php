@@ -90,24 +90,24 @@ $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
 $registry->set('response', $response); 
 
-define('HTTP_SERVER', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/');
-define('HTTP_IMAGE', HTTP_SERVER . 'image/');
-
-if ($config->get('config_ssl')) {
-	define('HTTPS_SERVER', 'https://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/');
-	define('HTTPS_IMAGE', HTTPS_SERVER . 'image/');	
-} else {
-	define('HTTPS_SERVER', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/');
-	define('HTTPS_IMAGE', HTTPS_SERVER . 'image/');	
-}
-
 // Store
-$query = $db->query("SELECT * FROM " . DB_PREFIX . "store WHERE url = '" . $db->escape(HTTP_SERVER)  . "'");
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "store WHERE url = '" . $db->escape('http://' . $request->server['HTTP_HOST'] . rtrim(dirname($request->server['PHP_SELF']), '/.\\') . '/') . "' OR url = '" . $db->escape(str_replace('www.', '', 'http://' . $request->server['HTTP_HOST'] . rtrim(dirname($request->server['PHP_SELF']), '/.\\') . '/')) . "'");
 
 if ($query->num_rows) {
 	foreach ($query->row as $key => $value) {
 		$config->set('config_' . $key, $value);
 	}
+}
+
+define('HTTP_SERVER', 'http://' . $request->server['HTTP_HOST'] . rtrim(dirname($request->server['PHP_SELF']), '/.\\') . '/');
+define('HTTP_IMAGE', HTTP_SERVER . 'image/');
+
+if ($config->get('config_ssl')) {
+	define('HTTPS_SERVER', 'https://' . $request->server['HTTP_HOST'] . rtrim(dirname($request->server['PHP_SELF']), '/.\\') . '/');
+	define('HTTPS_IMAGE', HTTPS_SERVER . 'image/');	
+} else {
+	define('HTTPS_SERVER', 'http://' . $request->server['HTTP_HOST'] . rtrim(dirname($request->server['PHP_SELF']), '/.\\') . '/');
+	define('HTTPS_IMAGE', HTTPS_SERVER . 'image/');	
 }
 
 // Cache

@@ -1,7 +1,10 @@
-1.4.1 > 1.4.2
+1.4.2 > 1.4.3
 
 To Upgrade:
 1. First off backup your entire site.
 2. Goto your opencart's store admin and download a backup of your database.. Goto your opencart's store admin and download a backup of your database.
 3. Upload and replace the files from the OpenCart 1.4.2 download to your OpenCart 1.4.1 installation.
 4. Copy & replace the config files for bolth the root directory and the admin from your old install to your new installation.
+5. Open your DB manager and run this code:
+
+ALTER TABLE `oc_store` ADD `ssl` INT( 1 ) NOT NULL DEFAULT '0' AFTER `url`

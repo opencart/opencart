@@ -50,7 +50,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_report_sale'] = $this->language->get('text_report_sale');
       	$this->data['text_report_viewed'] = $this->language->get('text_report_viewed');
 		$this->data['text_review'] = $this->language->get('text_review');
-		$this->data['text_support'] = $this->language->get('text_support');
+		$this->data['text_support'] = $this->language->get('text_support'); 
 		$this->data['text_shipping'] = $this->language->get('text_shipping');		
      	$this->data['text_setting'] = $this->language->get('text_setting');
 		$this->data['text_stock_status'] = $this->language->get('text_stock_status');

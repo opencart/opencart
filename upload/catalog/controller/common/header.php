@@ -13,7 +13,10 @@ class ControllerCommonHeader extends Controller {
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['currency_code'])) {
       		$this->currency->set($this->request->post['currency_code']);
-
+			
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['shipping_method']);
+				
 			if (isset($this->request->post['redirect'])) {
 				$this->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 			} else {

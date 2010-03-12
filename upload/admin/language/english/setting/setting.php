@@ -28,7 +28,7 @@ $_['entry_smtp_username']     = 'SMTP Username:';
 $_['entry_smtp_password']     = 'SMTP Password:';
 $_['entry_smtp_port']         = 'SMTP Port:';
 $_['entry_smtp_timeout']      = 'SMTP Timeout:';
-$_['entry_ssl']               = 'Use SSL:<br /><span class="help">To use SSL check with your host if a SSL certificate is installed and then add the SSL address in your config file.</span>';
+$_['entry_ssl']               = 'Use SSL:<br /><span class="help">To use SSL check with your host if a SSL certificate is installed.</span>';
 $_['entry_encryption']        = 'Encryption Key:<br /><span class="help">Please provide a secret key that will be used to encrypt private information when processing orders.</span>';
 $_['entry_seo_url']           = 'Use SEO URL\'s:<br /><span class="help">To use SEO URL\'s apache module mod-rewrite must be installed and you need to rename the htaccess.txt to .htaccess.</span>';
 $_['entry_compression']       = 'Output Compression Level:<br /><span class="help">GZIP for more efficient transfer to requesting clients. Compression level must be between 0 - 9</span>';

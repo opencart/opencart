@@ -205,7 +205,9 @@
               <tr>
                 <td><select id="product_id" style="width: 307px;">
                     <option value="0"><?php echo $text_none; ?></option>
-                  </select>&nbsp;<input type="button" value="Apply" onclick="addProduct();" /></td>
+                  </select>
+                  &nbsp;
+                  <input type="button" value="Apply" onclick="addProduct();" /></td>
               </tr>
             </table>
           </div>
@@ -222,6 +224,7 @@
               </tr>
             </thead>
             <?php $product_row = 0; ?>
+            <?php $option_row = 0; ?>
             <?php foreach ($products as $product) { ?>
             <tbody id="product_row<?php echo $product_row; ?>">
               <tr>
@@ -402,7 +405,6 @@ function addProduct() {
 		url: 'index.php?route=sale/order/product&product_id=' + $('#product_id').attr('value'),
 		dataType: 'json',
 		success: function(data) {
-			alert('hi');
 			if (data.product_id) {
 				html  = '<tbody id="product_row' + product_row + '">';
 				html += '  <tr>';
@@ -414,6 +416,18 @@ function addProduct() {
 				html += '    <td class="right"></td>';
 				html += '    <td class="left"><a onclick="$(\'#product_row' + product_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a><input type="hidden" name="product[' + product_row + '][product_id]" value="' + $('#product_id').attr('value') + '" /></td>';
 				html += '  </tr>';
+				html += '  <thead>';
+				html += '  <tr>';
+                html += '    <td class="left">Option Name:</td>';
+                html += '    <td class="right">Value:</td>';
+                html += '    <td class="right">Price:</td>';
+                html += '    <td colspan="3" class="left">Prefix:</td>';
+                html += '    <td></td>';
+				html += '  </tr>'; 
+				html += '  </thead>';
+				html += '  <tr id="option' + product_row + '">';
+				html += '    <td colspan="7" class="right"><a onclick="addOption(' + product_row + ');" class="button"><span>Add Options</span></a></td>';
+				html += '  </tr>';
 				html += '</tbody>';
 						
 				$('#product > tfoot').before(html);
@@ -422,6 +436,22 @@ function addProduct() {
 			}
 		}
 	});	
+}
+
+var option_row = <?php echo $option_row; ?>;
+
+function addOption(product_row) {
+	html  = '  <tr id="option_row' + option_row + '">';
+	html += '    <td class="left"><input type="text" name="product[' + product_row + '][option]['+ option_row +'][name]" value="" /></td>';
+	html += '    <td class="right"><input type="text" name="product[' + product_row + '][option]['+ option_row +'][value]" value="" /></td>';
+	html += '    <td class="right"><input type="text" name="product[' + product_row + '][option]['+ option_row +'][price]" value="1" size="3" /></td>';
+	html += '    <td colspan="3" class="left"><select name="product[' + product_row + '][option]['+ option_row +'][prefix]"></select></td>';
+	html += '    <td class="left"><a onclick="$(\'#option' + option_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a><input type="hidden" name="product[' + product_row + '][product_id]" value="' + $('#product_id').attr('value') + '" /></td>';
+	html += '  </tr>';
+			
+	$('#option' + product_row).before(html);
+
+	option_row++;
 }
 
 function getAddress(type, address_id) {

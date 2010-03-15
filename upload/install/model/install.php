@@ -6,7 +6,7 @@ class ModelInstall extends Model {
 		mysql_select_db($data['db_name'], $connection);
 		
 		mysql_query("SET NAMES 'utf8'", $connection);
-		mysql_query("SET CHARATER SET utf8", $connection);
+		mysql_query("SET CHARACTER SET utf8", $connection);
 		
 		$file = DIR_APPLICATION . 'opencart.sql';
 	

@@ -18,6 +18,18 @@
       <div id="tab_general">
         <table class="form">
           <tr>
+            <td><span class="required">*</span> <?php echo $entry_store; ?></td>
+            <td><select name="config_store_id">
+                <?php foreach ($stores as $store) { ?>
+                <?php if ($store['store_id'] == $config_store_id) { ?>
+                <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select></td>
+          </tr>
+          <tr>
             <td><span class="required">*</span> <?php echo $entry_owner; ?></td>
             <td><input type="text" name="config_owner" value="<?php echo $config_owner; ?>" />
               <?php if ($error_owner) { ?>

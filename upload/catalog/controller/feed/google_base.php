@@ -34,8 +34,15 @@ class ControllerFeedGoogleBase extends Controller {
 					}
 					
 					$output .= '<g:mpn>' . $product['model'] . '</g:mpn>';
-					$output .= '<g:price>' . $this->tax->calculate($product['price'], $product['tax_class_id']) . '</g:price>';
+
+					$special = $this->model_catalog_product->getProductSpecial($product['product_id']);
 					
+					if ($special) {
+						$output .= '<g:price>' . $this->tax->calculate($special, $product['tax_class_id']) . '</g:price>';
+					} else {
+						$output .= '<g:price>' . $this->tax->calculate($product['price'], $product['tax_class_id']) . '</g:price>';
+					}
+			   
 					$categories = $this->model_catalog_product->getCategories($product['product_id']);
 					
 					foreach ($categories as $category) {

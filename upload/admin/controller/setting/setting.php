@@ -31,6 +31,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['text_mail'] = $this->language->get('text_mail');
 		$this->data['text_smtp'] = $this->language->get('text_smtp');
 		
+		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_owner'] = $this->language->get('entry_owner');
 		$this->data['entry_address'] = $this->language->get('entry_address');
 		$this->data['entry_email'] = $this->language->get('entry_email');
@@ -129,6 +130,16 @@ class ControllerSettingSetting extends Controller {
 		$this->data['action'] = HTTPS_SERVER . 'index.php?route=setting/setting';
 		
 		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=setting/setting';
+		
+		if (isset($this->request->post['config_store_id'])) {
+			$this->data['config_store_id'] = $this->request->post['config_store_id'];
+		} else {
+			$this->data['config_store_id'] = $this->config->get('config_store_id');
+		}
+		
+		$this->load->model('setting/store');
+		
+		$this->data['stores'] = $this->model_setting_store->getStores();
 		
 		if (isset($this->request->post['config_owner'])) {
 			$this->data['config_owner'] = $this->request->post['config_owner'];

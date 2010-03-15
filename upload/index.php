@@ -91,23 +91,25 @@ $response->addHeader('Content-Type: text/html; charset=utf-8');
 $registry->set('response', $response); 
 
 // Store
-$query = $db->query("SELECT * FROM " . DB_PREFIX . "store WHERE url = '" . $db->escape('http://' . $request->server['HTTP_HOST'] . rtrim(dirname($request->server['PHP_SELF']), '/.\\') . '/') . "' OR url = '" . $db->escape(str_replace('www.', '', 'http://' . $request->server['HTTP_HOST'] . rtrim(dirname($request->server['PHP_SELF']), '/.\\') . '/')) . "'");
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "store WHERE url = '" . $db->escape('http://' . $request->server['HTTP_HOST'] . rtrim(dirname($request->server['PHP_SELF']), '/.\\') . '/') . "' OR url = '" . $db->escape('http://' . str_replace('www.', '', $request->server['HTTP_HOST']) . rtrim(dirname($request->server['PHP_SELF']), '/.\\') . '/') . "'");
 
-if ($query->num_rows) {
-	foreach ($query->row as $key => $value) {
-		$config->set('config_' . $key, $value);
-	}
+if (!$query->num_rows) {
+	$query = $db->query("SELECT * FROM " . DB_PREFIX . "store WHERE store_id = '" . (int)$config->get('config_store_id') . "'");
 }
 
-define('HTTP_SERVER', 'http://' . $request->server['HTTP_HOST'] . rtrim(dirname($request->server['PHP_SELF']), '/.\\') . '/');
+foreach ($query->row as $key => $value) {
+	$config->set('config_' . $key, $value);
+}
+	
+define('HTTP_SERVER', $config->get('config_url'));
 define('HTTP_IMAGE', HTTP_SERVER . 'image/');
 
 if ($config->get('config_ssl')) {
-	define('HTTPS_SERVER', 'https://' . $request->server['HTTP_HOST'] . rtrim(dirname($request->server['PHP_SELF']), '/.\\') . '/');
+	define('HTTPS_SERVER', 'https://' . substr($config->get('config_url'), 0, 7));
 	define('HTTPS_IMAGE', HTTPS_SERVER . 'image/');	
 } else {
-	define('HTTPS_SERVER', 'http://' . $request->server['HTTP_HOST'] . rtrim(dirname($request->server['PHP_SELF']), '/.\\') . '/');
-	define('HTTPS_IMAGE', HTTPS_SERVER . 'image/');	
+	define('HTTPS_SERVER', HTTP_SERVER);
+	define('HTTPS_IMAGE', HTTP_IMAGE);	
 }
 
 // Cache

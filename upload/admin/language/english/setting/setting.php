@@ -8,6 +8,7 @@ $_['text_mail']               = 'Mail';
 $_['text_smtp']               = 'SMTP';
 
 // Entry
+$_['entry_store']             = 'Deafult Store:<br /><span class="help">Select a default store that will be used when a unregistered domain is pointed to your hosting.</span>';
 $_['entry_owner']             = 'Store Owner:';
 $_['entry_address']           = 'Address:';
 $_['entry_email']             = 'E-Mail:';

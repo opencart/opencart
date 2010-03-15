@@ -1,13 +1,13 @@
 <?php
 class ModelLocalisationZone extends Model {
 	public function addZone($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "zone SET name = '" . $this->db->escape(htmlentities($data['name'])) . "', code = '" . $this->db->escape($data['code']) . "', country_id = '" . (int)$data['country_id'] . "'");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "zone SET name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', country_id = '" . (int)$data['country_id'] . "'");
 			
 		$this->cache->delete('zone');
 	}
 	
 	public function editZone($zone_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "zone SET name = '" . $this->db->escape(html_entity_decode($data['name'])) . "', code = '" . $this->db->escape($data['code']) . "', country_id = '" . (int)$data['country_id'] . "' WHERE zone_id = '" . (int)$zone_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "zone SET name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', country_id = '" . (int)$data['country_id'] . "' WHERE zone_id = '" . (int)$zone_id . "'");
 
 		$this->cache->delete('zone');
 	}

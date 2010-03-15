@@ -285,7 +285,7 @@ class ControllerCatalogCategory extends Controller {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
 		}
-
+		
 		if (!$this->error) {
 			return TRUE;
 		} else {

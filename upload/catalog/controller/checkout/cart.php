@@ -137,7 +137,7 @@ class ControllerCheckoutCart extends Controller {
 				$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
 			}
 			
-			$this->data['checkout'] = HTTP_SERVER . 'index.php?route=checkout/shipping';
+			$this->data['checkout'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
 			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/cart.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/checkout/cart.tpl';

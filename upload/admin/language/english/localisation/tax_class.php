@@ -23,5 +23,5 @@ $_['error_description'] = 'Description must be greater than 3 and less than 255 
 $_['error_priority']    = 'Tax Prority required!';
 $_['error_rate']        = 'Tax Rate required!';
 $_['error_description'] = 'Tax Rate Description must be greater than 3 and less than 255 characters!';
-$_['error_product']     = 'Warning: This Tax Class cannot be deleted as it is currently assigned to %s products!';
+$_['error_product']     = 'Warning: This tax class cannot be deleted as it is currently assigned to %s products!';
 ?>

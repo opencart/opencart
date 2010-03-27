@@ -362,6 +362,10 @@ class ControllerSaleCustomerGroup extends Controller {
 		$this->load->model('sale/customer');
       	
 		foreach ($this->request->post['selected'] as $customer_group_id) {
+    		if ($this->config->get('config_customer_group_id') == $customer_group_id) {
+	  			$this->error['warning'] = $this->language->get('error_default');	
+			}  
+			
 			$store_total = $this->model_setting_store->getTotalStoresByCustomerGroupId($customer_group_id);
 
 			if ($store_total) {

@@ -7,6 +7,9 @@
 <meta name="description" content="<?php echo $description; ?>" />
 <?php } ?>
 <base href="<?php echo $base; ?>" />
+<?php if ($icon) { ?>
+<link href="<?php echo $icon; ?>" rel="icon" />
+<?php } ?>
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo str_replace('&', '&amp;', $link['href']); ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
@@ -48,7 +51,11 @@ function bookmark(url, title) {
 <div id="container">
 <div id="header">
   <div class="div1">
-    <div class="div2"><a href="<?php echo str_replace('&', '&amp;', $home); ?>"><img src="<?php echo $logo; ?>" title="<?php echo $store; ?>" alt="<?php echo $store; ?>" /></a></div>
+    <div class="div2">
+      <?php if ($logo) { ?>
+      <a href="<?php echo str_replace('&', '&amp;', $home); ?>"><img src="<?php echo $logo; ?>" title="<?php echo $store; ?>" alt="<?php echo $store; ?>" /></a>
+      <?php } ?>
+    </div>
     <div class="div3"><a href="<?php echo str_replace('&', '&amp;', $special); ?>" style="background-image: url('catalog/view/theme/default/image/special.png');"><?php echo $text_special; ?></a><a onclick="bookmark(document.location, '<?php echo addslashes($title); ?>');" style="background-image: url('catalog/view/theme/default/image/bookmark.png');"><?php echo $text_bookmark; ?></a><a href="<?php echo str_replace('&', '&amp;', $contact); ?>" style="background-image: url('catalog/view/theme/default/image/contact.png');"><?php echo $text_contact; ?></a><a href="<?php echo str_replace('&', '&amp;', $sitemap); ?>" style="background-image: url('catalog/view/theme/default/image/sitemap.png');"><?php echo $text_sitemap; ?></a></div>
     <div class="div4"><a href="<?php echo str_replace('&', '&amp;', $home); ?>" id="tab_home"><?php echo $text_home; ?></a>
       <?php if (!$logged) { ?>

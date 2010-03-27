@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="middle">
-    <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
+    <div class="content">
       <table width="536">
         <tr>
           <td width="33.3%" valign="top"><b><?php echo $text_order; ?></b><br />
@@ -41,7 +41,7 @@
         </tr>
       </table>
     </div>
-    <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
+    <div class="content">
       <table width="536">
         <tr>
           <th align="left"><?php echo $text_product; ?></th>
@@ -78,10 +78,10 @@
     </div>
     <?php if ($comment) { ?>
     <b style="margin-bottom: 2px; display: block;"><?php echo $text_comment; ?></b>
-    <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;"><?php echo $comment; ?></div>
+    <div class="content"><?php echo $comment; ?></div>
     <?php } ?>
     <b style="margin-bottom: 2px; display: block;"><?php echo $text_order_history; ?></b>
-    <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
+    <div class="content">
       <table width="536">
         <tr>
           <th align="left"><?php echo $column_date_added; ?></th>

@@ -242,7 +242,7 @@ class ModelShippingUps extends Model {
 						
 						if ($this->config->get('ups_' . strtolower($this->config->get('ups_origin')) . '_' . $code)) {
 							$quote_data[$code] = array(
-								'id'           => 'ups.' . strtolower($this->config->get('ups_origin')) . '_' . $code,
+								'id'           => 'ups.' . $code,
 								'title'        => $title,
 								'cost'         => $this->currency->convert($cost, 'USD', $this->currency->getCode()),
 								'tax_class_id' => $this->config->get('ups_tax_class_id'),

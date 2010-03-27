@@ -30,8 +30,9 @@ Country = {country}</span>';
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify countries!';
 $_['error_name']             = 'Country Name must be greater than 3 and less than 128 characters!';
-$_['error_store']            = 'Warning: This Country cannot be deleted as it is currently assigned to %s stores!';
-$_['error_address']          = 'Warning: This Country cannot be deleted as it is currently assigned to %s address book entries!';
-$_['error_zone']             = 'Warning: This Country cannot be deleted as it is currently assigned to %s zones!';
-$_['error_zone_to_geo_zone'] = 'Warning: This Country cannot be deleted as it is currently assigned to %s zones to geo zones!';
+$_['error_default']          = 'Warning: This country cannot be deleted as it is currently assigned as the default store country!';
+$_['error_store']            = 'Warning: This country cannot be deleted as it is currently assigned to %s stores!';
+$_['error_address']          = 'Warning: This country cannot be deleted as it is currently assigned to %s address book entries!';
+$_['error_zone']             = 'Warning: This country cannot be deleted as it is currently assigned to %s zones!';
+$_['error_zone_to_geo_zone'] = 'Warning: This country cannot be deleted as it is currently assigned to %s zones to geo zones!';
 ?>

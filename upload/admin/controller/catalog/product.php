@@ -158,6 +158,56 @@ class ControllerCatalogProduct extends Controller {
     	$this->getList();
   	}
 
+  	public function copy() {
+    	$this->load->language('catalog/product');
+
+    	$this->document->title = $this->language->get('heading_title');
+		
+		$this->load->model('catalog/product');
+		
+		if (isset($this->request->post['selected'])) {
+			foreach ($this->request->post['selected'] as $product_id) {
+				$this->model_catalog_product->copyProduct($product_id);
+	  		}
+
+			$this->session->data['success'] = $this->language->get('text_success');
+			
+			$url = '';
+			
+			if (isset($this->request->get['filter_name'])) {
+				$url .= '&filter_name=' . $this->request->get['filter_name'];
+			}
+		
+			if (isset($this->request->get['filter_model'])) {
+				$url .= '&filter_model=' . $this->request->get['filter_model'];
+			}
+			
+			if (isset($this->request->get['filter_quantity'])) {
+				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
+			}	
+		
+			if (isset($this->request->get['filter_status'])) {
+				$url .= '&filter_status=' . $this->request->get['filter_status'];
+			}
+					
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+			
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/product' . $url);
+		}
+
+    	$this->getList();
+  	}
+	
   	private function getList() {				
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -244,11 +294,12 @@ class ControllerCatalogProduct extends Controller {
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
-				
+		
 		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=catalog/product/insert' . $url;
+		$this->data['copy'] = HTTPS_SERVER . 'index.php?route=catalog/product/copy' . $url;	
 		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=catalog/product/delete' . $url;
-										
-    	$this->data['products'] = array();
+    	
+		$this->data['products'] = array();
 
 		$data = array(
 			'filter_name'	  => $filter_name, 
@@ -306,7 +357,8 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['column_quantity'] = $this->language->get('column_quantity');
 		$this->data['column_status'] = $this->language->get('column_status');
 		$this->data['column_action'] = $this->language->get('column_action');
-
+		
+		$this->data['button_copy'] = $this->language->get('button_copy');
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_filter'] = $this->language->get('button_filter');
@@ -421,8 +473,11 @@ class ControllerCatalogProduct extends Controller {
     	$this->data['text_no'] = $this->language->get('text_no');
 		$this->data['text_plus'] = $this->language->get('text_plus');
 		$this->data['text_minus'] = $this->language->get('text_minus');
+		$this->data['text_default'] = $this->language->get('text_default');
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
-
+		$this->data['text_option'] = $this->language->get('text_option');
+		$this->data['text_option_value'] = $this->language->get('text_option_value');
+		 
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$this->data['entry_description'] = $this->language->get('entry_description');
@@ -610,7 +665,7 @@ class ControllerCatalogProduct extends Controller {
 		} elseif (isset($product_info)) {
 			$this->data['product_store'] = $this->model_catalog_product->getProductStores($this->request->get['product_id']);
 		} else {
-			$this->data['product_store'] = array();
+			$this->data['product_store'] = array(0);
 		}	
 		
 		if (isset($this->request->post['keyword'])) {
@@ -883,7 +938,19 @@ class ControllerCatalogProduct extends Controller {
       		return FALSE;
     	}
   	}
-
+	
+  	private function validateDelete() {
+    	if (!$this->user->hasPermission('modify', 'catalog/product')) {
+      		$this->error['warning'] = $this->language->get('error_permission');  
+    	}
+		
+		if (!$this->error) {
+	  		return TRUE;
+		} else {
+	  		return FALSE;
+		}
+  	}	
+	
 	public function category() {
 		$this->load->model('catalog/product');
 		
@@ -935,17 +1002,5 @@ class ControllerCatalogProduct extends Controller {
 		
 		$this->response->setOutput(Json::encode($product_data));
 	}
-	
-  	private function validateDelete() {
-    	if (!$this->user->hasPermission('modify', 'catalog/product')) {
-      		$this->error['warning'] = $this->language->get('error_permission');  
-    	}
-		
-		if (!$this->error) {
-	  		return TRUE;
-		} else {
-	  		return FALSE;
-		}
-  	}	
 }
 ?>

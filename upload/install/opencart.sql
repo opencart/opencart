@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 15, 2010 at 05:55 PM
+-- Generation Time: Mar 27, 2010 at 07:14 PM
 -- Server version: 5.0.89
 -- PHP Version: 5.2.9
 
@@ -68,20 +68,20 @@ CREATE TABLE `oc_category` (
 --
 
 INSERT INTO `oc_category` (`category_id`, `image`, `parent_id`, `sort_order`, `date_added`, `date_modified`) VALUES
-(25, '', 0, 3, '2009-01-31 01:04:25', '2010-03-06 19:10:32'),
-(27, '', 20, 2, '2009-01-31 01:55:34', '2010-03-06 19:10:20'),
-(20, '', 0, 1, '2009-01-05 21:49:43', '2010-03-13 11:50:18'),
-(24, '', 0, 5, '2009-01-20 02:36:26', '2010-03-06 19:11:18'),
-(18, '', 0, 2, '2009-01-05 21:49:15', '2010-03-06 19:10:25'),
-(17, '', 0, 4, '2009-01-03 21:08:57', '2010-03-06 19:11:14'),
-(28, '', 25, 1, '2009-02-02 13:11:12', '2010-03-06 19:10:49'),
-(26, '', 20, 1, '2009-01-31 01:55:14', '2010-03-06 19:10:10'),
-(29, '', 25, 1, '2009-02-02 13:11:37', '2010-03-06 19:10:36'),
-(30, '', 25, 1, '2009-02-02 13:11:59', '2010-03-06 19:10:54'),
-(31, '', 25, 1, '2009-02-03 14:17:24', '2010-03-06 19:11:03'),
-(32, '', 25, 1, '2009-02-03 14:17:34', '2010-03-06 19:11:08'),
-(33, '', 0, 6, '2009-02-03 14:17:55', '2010-03-06 19:11:23'),
-(34, '', 0, 7, '2009-02-03 14:18:11', '2010-03-07 22:17:58');
+(25, '', 0, 3, '2009-01-31 01:04:25', '2010-03-21 15:30:07'),
+(27, '', 20, 2, '2009-01-31 01:55:34', '2010-03-21 15:29:49'),
+(20, '', 0, 1, '2009-01-05 21:49:43', '2010-03-21 19:18:21'),
+(24, '', 0, 5, '2009-01-20 02:36:26', '2010-03-21 15:30:50'),
+(18, '', 0, 2, '2009-01-05 21:49:15', '2010-03-21 15:30:00'),
+(17, '', 0, 4, '2009-01-03 21:08:57', '2010-03-21 15:30:44'),
+(28, '', 25, 1, '2009-02-02 13:11:12', '2010-03-21 15:30:17'),
+(26, '', 20, 1, '2009-01-31 01:55:14', '2010-03-21 15:29:42'),
+(29, '', 25, 1, '2009-02-02 13:11:37', '2010-03-21 15:30:12'),
+(30, '', 25, 1, '2009-02-02 13:11:59', '2010-03-21 15:30:22'),
+(31, '', 25, 1, '2009-02-03 14:17:24', '2010-03-21 15:30:27'),
+(32, '', 25, 1, '2009-02-03 14:17:34', '2010-03-21 15:30:35'),
+(33, '', 0, 6, '2009-02-03 14:17:55', '2010-03-21 15:30:55'),
+(34, '', 0, 7, '2009-02-03 14:18:11', '2010-03-21 15:31:01');
 
 -- --------------------------------------------------------
 
@@ -138,20 +138,20 @@ CREATE TABLE `oc_category_to_store` (
 --
 
 INSERT INTO `oc_category_to_store` (`category_id`, `store_id`) VALUES
-(17, 7),
-(18, 7),
-(20, 7),
-(24, 7),
-(25, 7),
-(26, 7),
-(27, 7),
-(28, 7),
-(29, 7),
-(30, 7),
-(31, 7),
-(32, 7),
-(33, 7),
-(34, 7);
+(17, 0),
+(18, 0),
+(20, 0),
+(24, 0),
+(25, 0),
+(26, 0),
+(27, 0),
+(28, 0),
+(29, 0),
+(30, 0),
+(31, 0),
+(32, 0),
+(33, 0),
+(34, 0);
 
 -- --------------------------------------------------------
 
@@ -519,9 +519,9 @@ CREATE TABLE `oc_currency` (
 --
 
 INSERT INTO `oc_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`) VALUES
-(1, 'Pound Sterling', 'GBP', '£', '', '2', 1.00000000, 1, '2010-03-15 17:20:51'),
-(2, 'US Dollar', 'USD', '$', '', '2', 1.50380003, 1, '2010-03-15 17:20:51'),
-(3, 'Euro', 'EUR', '', '€', '2', 1.10029995, 1, '2010-03-15 17:20:51');
+(1, 'Pound Sterling', 'GBP', '£', '', '2', 1.00000000, 1, '2010-03-27 18:52:54'),
+(2, 'US Dollar', 'USD', '$', '', '2', 1.49020004, 1, '2010-03-27 18:52:54'),
+(3, 'Euro', 'EUR', '', '€', '2', 1.11129999, 1, '2010-03-27 18:52:54');
 
 -- --------------------------------------------------------
 
@@ -532,6 +532,7 @@ INSERT INTO `oc_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbo
 DROP TABLE IF EXISTS `oc_customer`;
 CREATE TABLE `oc_customer` (
   `customer_id` int(11) NOT NULL auto_increment,
+  `store_id` int(11) NOT NULL default '0',
   `firstname` varchar(32) collate utf8_bin NOT NULL default '',
   `lastname` varchar(32) collate utf8_bin NOT NULL default '',
   `email` varchar(96) collate utf8_bin NOT NULL default '',
@@ -588,12 +589,14 @@ CREATE TABLE `oc_download` (
   `remaining` int(11) NOT NULL default '0',
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`download_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `oc_download`
 --
 
+INSERT INTO `oc_download` (`download_id`, `filename`, `mask`, `remaining`, `date_added`) VALUES
+(2, 'New Text Document (2).txt.e6f47519a62872dd979a3d3ed9d9896b', 'New Text Document (2).txt', 10, '2010-03-26 15:46:56');
 
 -- --------------------------------------------------------
 
@@ -645,7 +648,7 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `key`) VALUES
 (115, 'module', 'bestseller'),
 (284, 'payment', 'nochex'),
 (128, 'total', 'coupon'),
-(279, 'shipping', 'flat');
+(293, 'shipping', 'flat');
 
 -- --------------------------------------------------------
 
@@ -735,9 +738,9 @@ CREATE TABLE `oc_information_to_store` (
 --
 
 INSERT INTO `oc_information_to_store` (`information_id`, `store_id`) VALUES
-(3, 7),
-(4, 7),
-(5, 7);
+(3, 0),
+(4, 0),
+(5, 0);
 
 -- --------------------------------------------------------
 
@@ -858,12 +861,12 @@ CREATE TABLE `oc_manufacturer_to_store` (
 --
 
 INSERT INTO `oc_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
-(5, 7),
-(6, 7),
-(7, 7),
-(8, 7),
-(9, 7),
-(10, 7);
+(5, 0),
+(6, 0),
+(7, 0),
+(8, 0),
+(9, 0),
+(10, 0);
 
 -- --------------------------------------------------------
 
@@ -874,6 +877,8 @@ INSERT INTO `oc_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
 DROP TABLE IF EXISTS `oc_order`;
 CREATE TABLE `oc_order` (
   `order_id` int(11) NOT NULL auto_increment,
+  `invoice_id` int(11) NOT NULL default '0',
+  `invoice_prefix` varchar(10) collate utf8_bin NOT NULL,
   `store_id` int(11) NOT NULL default '0',
   `store_name` varchar(64) collate utf8_bin NOT NULL,
   `store_url` varchar(255) collate utf8_bin NOT NULL,
@@ -945,7 +950,7 @@ CREATE TABLE `oc_order_download` (
   `mask` varchar(128) collate utf8_bin NOT NULL default '',
   `remaining` int(3) NOT NULL default '0',
   PRIMARY KEY  (`order_download_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `oc_order_download`
@@ -1115,24 +1120,24 @@ CREATE TABLE `oc_product` (
 --
 
 INSERT INTO `oc_product` (`product_id`, `model`, `sku`, `location`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `status`, `date_added`, `date_modified`, `viewed`) VALUES
-(28, 'Product 1', '', '', 10, 7, 'data/htc_touch_hd_1.jpg', 5, 1, 484.4400, 9, '2009-02-03', 146.40, 2, 0.00, 0.00, 0.00, 1, 1, '2009-02-03 16:06:50', '2010-03-06 19:12:03', 3),
-(29, 'Product 2', '', '', 10, 6, 'data/palm_treo_pro_1.jpg', 6, 1, 279.9900, 9, '2009-02-03', 133.00, 2, 0.00, 0.00, 0.00, 3, 1, '2009-02-03 16:42:17', '2010-03-06 19:12:44', 1),
-(30, 'Product 3', '', '', 10, 6, 'data/canon_eos_5d_1.jpg', 9, 1, 100.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 1, 1, '2009-02-03 16:59:00', '2010-03-06 19:11:48', 1),
-(31, 'Product 4', '', '', 50, 6, 'data/nikon_d300_1.jpg', 0, 1, 80.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 3, 1, '2009-02-03 17:00:10', '2010-03-06 19:12:35', 0),
-(32, 'Product 5', '', '', 10, 6, 'data/ipod_touch_1.jpg', 8, 1, 100.0000, 9, '2009-02-03', 5.00, 1, 0.00, 0.00, 0.00, 1, 1, '2009-02-03 17:07:26', '2010-03-06 19:14:00', 2),
-(33, 'Product 6', '', '', 10, 6, 'data/samsung_syncmaster_941bw.jpg', 0, 1, 200.0000, 9, '2009-02-03', 5.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-03 17:08:31', '2010-03-06 19:13:03', 2),
-(34, 'Product 7', '', '', 10, 6, 'data/ipod_shuffle_1.jpg', 8, 1, 100.0000, 9, '2009-02-03', 5.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-03 18:07:54', '2010-03-06 19:13:52', 1),
-(35, 'Product 8', '', '', 10, 5, '', 0, 0, 100.0000, 9, '2009-02-03', 5.00, 1, 0.00, 0.00, 0.00, 1, 1, '2009-02-03 18:08:31', '2010-03-06 19:12:53', 1),
-(36, 'Product 9', '', '', 8, 6, 'data/ipod_nano_1.jpg', 8, 0, 100.0000, 9, '2009-02-03', 5.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-03 18:09:19', '2010-03-06 19:13:44', 1),
-(40, 'product 11', '', '', 7, 5, 'data/iphone_1.jpg', 8, 1, 101.0000, 9, '2009-02-03', 10.00, 1, 0.00, 0.00, 0.00, 1, 1, '2009-02-03 21:07:12', '2010-03-05 10:38:11', 0),
-(41, 'Product 14', '', '', 100, 5, 'data/imac_1.jpg', 8, 0, 500.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 1, 1, '2009-02-03 21:07:26', '2010-03-06 19:13:27', 3),
-(42, 'Product 15', '', '', 100, 5, 'data/apple_cinema_30.jpg', 8, 1, 100.0000, 0, '2009-02-03', 12.50, 5, 1.00, 2.00, 3.00, 2, 1, '2009-02-03 21:07:37', '2010-03-06 19:11:42', 3),
-(43, 'Product 16', '', '', 9, 5, 'data/macbook_1.jpg', 8, 0, 500.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-03 21:07:49', '2010-03-06 19:12:11', 1),
-(44, 'Product 17', '', '', 10, 5, 'data/macbook_air_1.jpg', 8, 1, 1000.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-03 21:08:00', '2010-03-06 19:12:20', 0),
-(45, 'Product 18', '', '', 100, 5, 'data/macbook_pro_1.jpg', 8, 1, 2000.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-03 21:08:17', '2010-03-06 19:12:27', 1),
-(46, 'Product 19', '', '', 8, 5, 'data/sony_vaio_1.jpg', 10, 1, 1000.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-03 21:08:29', '2010-03-06 19:13:11', 3),
-(47, 'Product 21', '', '', 10, 5, 'data/hp_1.jpg', 7, 1, 1000.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 1, 1, '2009-02-03 21:08:40', '2010-03-06 19:11:55', 3),
-(48, 'product 20', 'test 1', 'test 2', 89, 5, 'data/ipod_classic_1.jpg', 8, 1, 100.0000, 9, '2009-02-08', 1.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-08 17:21:51', '2010-03-06 19:13:34', 31);
+(28, 'Product 1', '', '', 10, 7, 'data/htc_touch_hd_1.jpg', 5, 1, 484.4400, 9, '2009-02-03', 146.40, 2, 0.00, 0.00, 0.00, 1, 1, '2009-02-03 16:06:50', '2010-03-25 14:37:23', 0),
+(29, 'Product 2', '', '', 10, 6, 'data/palm_treo_pro_1.jpg', 6, 1, 279.9900, 9, '2009-02-03', 133.00, 2, 0.00, 0.00, 0.00, 3, 1, '2009-02-03 16:42:17', '2010-03-25 14:38:01', 0),
+(30, 'Product 3', '', '', 10, 6, 'data/canon_eos_5d_1.jpg', 9, 1, 100.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 1, 1, '2009-02-03 16:59:00', '2010-03-25 14:37:11', 0),
+(31, 'Product 4', '', '', 50, 6, 'data/nikon_d300_1.jpg', 0, 1, 80.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 3, 1, '2009-02-03 17:00:10', '2010-03-25 14:37:54', 0),
+(32, 'Product 5', '', '', 10, 6, 'data/ipod_touch_1.jpg', 8, 1, 100.0000, 9, '2009-02-03', 5.00, 1, 0.00, 0.00, 0.00, 1, 1, '2009-02-03 17:07:26', '2010-03-25 14:36:51', 0),
+(33, 'Product 6', '', '', 10, 6, 'data/samsung_syncmaster_941bw.jpg', 0, 1, 200.0000, 9, '2009-02-03', 5.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-03 17:08:31', '2010-03-25 14:35:49', 0),
+(34, 'Product 7', '', '', 10, 6, 'data/ipod_shuffle_1.jpg', 8, 1, 100.0000, 9, '2009-02-03', 5.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-03 18:07:54', '2010-03-25 14:36:38', 0),
+(35, 'Product 8', '', '', 10, 5, '', 0, 0, 100.0000, 9, '2009-02-03', 5.00, 1, 0.00, 0.00, 0.00, 1, 1, '2009-02-03 18:08:31', '2010-03-25 14:38:06', 0),
+(36, 'Product 9', '', '', 8, 6, 'data/ipod_nano_1.jpg', 8, 0, 100.0000, 9, '2009-02-03', 5.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-03 18:09:19', '2010-03-25 14:36:32', 0),
+(40, 'product 11', '', '', 7, 5, 'data/iphone_1.jpg', 8, 1, 101.0000, 9, '2009-02-03', 10.00, 1, 0.00, 0.00, 0.00, 1, 1, '2009-02-03 21:07:12', '2010-03-25 14:36:23', 0),
+(41, 'Product 14', '', '', 100, 5, 'data/imac_1.jpg', 8, 0, 500.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 1, 1, '2009-02-03 21:07:26', '2010-03-25 14:36:06', 0),
+(42, 'Product 15', '', '', 100, 5, 'data/apple_cinema_30.jpg', 8, 1, 100.0000, 0, '2009-02-03', 12.50, 5, 1.00, 2.00, 3.00, 2, 1, '2009-02-03 21:07:37', '2010-03-26 15:47:15', 0),
+(43, 'Product 16', '', '', 9, 5, 'data/macbook_1.jpg', 8, 0, 500.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-03 21:07:49', '2010-03-25 14:37:30', 0),
+(44, 'Product 17', '', '', 10, 5, 'data/macbook_air_1.jpg', 8, 1, 1000.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-03 21:08:00', '2010-03-25 14:37:36', 0),
+(45, 'Product 18', '', '', 99, 5, 'data/macbook_pro_1.jpg', 8, 1, 2000.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-03 21:08:17', '2010-03-25 14:37:40', 0),
+(46, 'Product 19', '', '', 8, 5, 'data/sony_vaio_1.jpg', 10, 1, 1000.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-03 21:08:29', '2010-03-25 14:35:59', 0),
+(47, 'Product 21', '', '', 10, 5, 'data/hp_1.jpg', 7, 1, 1000.0000, 9, '2009-02-03', 0.00, 1, 0.00, 0.00, 0.00, 1, 1, '2009-02-03 21:08:40', '2010-03-25 14:37:18', 0),
+(48, 'product 20', 'test 1', 'test 2', 89, 5, 'data/ipod_classic_1.jpg', 8, 1, 100.0000, 9, '2009-02-08', 1.00, 1, 0.00, 0.00, 0.00, 2, 1, '2009-02-08 17:21:51', '2010-03-25 18:53:27', 0);
 
 -- --------------------------------------------------------
 
@@ -1199,8 +1204,8 @@ CREATE TABLE `oc_product_discount` (
 --
 
 INSERT INTO `oc_product_discount` (`product_discount_id`, `product_id`, `customer_group_id`, `quantity`, `priority`, `price`, `date_start`, `date_end`) VALUES
-(82, 32, 6, 10, 1, 10.0000, '2010-01-01', '2010-01-31'),
-(81, 42, 6, 1, 2, 120.0000, '2010-02-10', '2010-02-12');
+(88, 32, 6, 10, 1, 10.0000, '2010-01-01', '2010-01-31'),
+(97, 42, 6, 1, 2, 120.0000, '2010-02-10', '2010-02-12');
 
 -- --------------------------------------------------------
 
@@ -1221,57 +1226,57 @@ CREATE TABLE `oc_product_image` (
 --
 
 INSERT INTO `oc_product_image` (`product_image_id`, `product_id`, `image`) VALUES
-(1137, 30, 'data/canon_eos_5d_3.jpg'),
-(1139, 47, 'data/hp_3.jpg'),
-(1141, 28, 'data/htc_touch_hd_2.jpg'),
-(1165, 41, 'data/imac_3.jpg'),
-(1112, 40, 'data/iphone_4.jpg'),
-(1172, 36, 'data/ipod_nano_3.jpg'),
-(1171, 36, 'data/ipod_nano_2.jpg'),
-(1176, 34, 'data/ipod_shuffle_3.jpg'),
-(1175, 34, 'data/ipod_shuffle_2.jpg'),
-(1182, 32, 'data/ipod_touch_7.jpg'),
-(1181, 32, 'data/ipod_touch_6.jpg'),
-(1180, 32, 'data/ipod_touch_5.jpg'),
-(1145, 43, 'data/macbook_3.jpg'),
-(1144, 43, 'data/macbook_2.jpg'),
-(1148, 44, 'data/macbook_air_3.jpg'),
-(1147, 44, 'data/macbook_air_2.jpg'),
-(1151, 45, 'data/macbook_pro_4.jpg'),
-(1150, 45, 'data/macbook_pro_3.jpg'),
-(1155, 31, 'data/nikon_d300_3.jpg'),
-(1154, 31, 'data/nikon_d300_2.jpg'),
-(1157, 29, 'data/palm_treo_pro_3.jpg'),
-(1161, 46, 'data/sony_vaio_3.jpg'),
-(1160, 46, 'data/sony_vaio_2.jpg'),
-(1168, 48, 'data/ipod_classic_2.jpg'),
-(1167, 48, 'data/ipod_classic_3.jpg'),
-(1111, 40, 'data/iphone_3.jpg'),
-(1110, 40, 'data/iphone_5.jpg'),
-(1136, 30, 'data/canon_eos_5d_2.jpg'),
-(1138, 47, 'data/hp_2.jpg'),
-(1140, 28, 'data/htc_touch_hd_3.jpg'),
-(1164, 41, 'data/imac_2.jpg'),
-(1109, 40, 'data/iphone_2.jpg'),
-(1108, 40, 'data/iphone_6.jpg'),
-(1166, 48, 'data/ipod_classic_4.jpg'),
-(1170, 36, 'data/ipod_nano_4.jpg'),
-(1169, 36, 'data/ipod_nano_5.jpg'),
-(1174, 34, 'data/ipod_shuffle_4.jpg'),
-(1173, 34, 'data/ipod_shuffle_5.jpg'),
-(1179, 32, 'data/ipod_touch_2.jpg'),
-(1178, 32, 'data/ipod_touch_3.jpg'),
-(1177, 32, 'data/ipod_touch_4.jpg'),
-(1143, 43, 'data/macbook_4.jpg'),
-(1142, 43, 'data/macbook_5.jpg'),
-(1146, 44, 'data/macbook_air_4.jpg'),
-(1149, 45, 'data/macbook_pro_2.jpg'),
-(1153, 31, 'data/nikon_d300_4.jpg'),
-(1152, 31, 'data/nikon_d300_5.jpg'),
-(1156, 29, 'data/palm_treo_pro_2.jpg'),
-(1159, 46, 'data/sony_vaio_4.jpg'),
-(1158, 46, 'data/sony_vaio_5.jpg'),
-(1135, 42, 'data/apple_logo.jpg');
+(1277, 30, 'data/canon_eos_5d_3.jpg'),
+(1279, 47, 'data/hp_3.jpg'),
+(1281, 28, 'data/htc_touch_hd_2.jpg'),
+(1255, 41, 'data/imac_3.jpg'),
+(1260, 40, 'data/iphone_6.jpg'),
+(1264, 36, 'data/ipod_nano_3.jpg'),
+(1263, 36, 'data/ipod_nano_2.jpg'),
+(1268, 34, 'data/ipod_shuffle_3.jpg'),
+(1267, 34, 'data/ipod_shuffle_2.jpg'),
+(1274, 32, 'data/ipod_touch_4.jpg'),
+(1273, 32, 'data/ipod_touch_3.jpg'),
+(1272, 32, 'data/ipod_touch_2.jpg'),
+(1285, 43, 'data/macbook_3.jpg'),
+(1284, 43, 'data/macbook_2.jpg'),
+(1288, 44, 'data/macbook_air_4.jpg'),
+(1287, 44, 'data/macbook_air_2.jpg'),
+(1291, 45, 'data/macbook_pro_2.jpg'),
+(1290, 45, 'data/macbook_pro_3.jpg'),
+(1299, 31, 'data/nikon_d300_5.jpg'),
+(1298, 31, 'data/nikon_d300_4.jpg'),
+(1301, 29, 'data/palm_treo_pro_3.jpg'),
+(1253, 46, 'data/sony_vaio_3.jpg'),
+(1252, 46, 'data/sony_vaio_2.jpg'),
+(1316, 48, 'data/ipod_classic_4.jpg'),
+(1315, 48, 'data/ipod_classic_3.jpg'),
+(1259, 40, 'data/iphone_2.jpg'),
+(1258, 40, 'data/iphone_5.jpg'),
+(1276, 30, 'data/canon_eos_5d_2.jpg'),
+(1278, 47, 'data/hp_2.jpg'),
+(1280, 28, 'data/htc_touch_hd_3.jpg'),
+(1254, 41, 'data/imac_2.jpg'),
+(1257, 40, 'data/iphone_3.jpg'),
+(1256, 40, 'data/iphone_4.jpg'),
+(1314, 48, 'data/ipod_classic_2.jpg'),
+(1262, 36, 'data/ipod_nano_4.jpg'),
+(1261, 36, 'data/ipod_nano_5.jpg'),
+(1266, 34, 'data/ipod_shuffle_4.jpg'),
+(1265, 34, 'data/ipod_shuffle_5.jpg'),
+(1271, 32, 'data/ipod_touch_5.jpg'),
+(1270, 32, 'data/ipod_touch_6.jpg'),
+(1269, 32, 'data/ipod_touch_7.jpg'),
+(1283, 43, 'data/macbook_4.jpg'),
+(1282, 43, 'data/macbook_5.jpg'),
+(1286, 44, 'data/macbook_air_3.jpg'),
+(1289, 45, 'data/macbook_pro_4.jpg'),
+(1297, 31, 'data/nikon_d300_2.jpg'),
+(1296, 31, 'data/nikon_d300_3.jpg'),
+(1300, 29, 'data/palm_treo_pro_2.jpg'),
+(1251, 46, 'data/sony_vaio_4.jpg'),
+(1250, 46, 'data/sony_vaio_5.jpg'),
+(1334, 42, 'data/apple_logo.jpg');
 
 -- --------------------------------------------------------
 
@@ -1292,8 +1297,8 @@ CREATE TABLE `oc_product_option` (
 --
 
 INSERT INTO `oc_product_option` (`product_option_id`, `product_id`, `sort_order`) VALUES
-(244, 40, 1),
-(246, 48, 1);
+(283, 40, 1),
+(296, 48, 1);
 
 -- --------------------------------------------------------
 
@@ -1315,8 +1320,8 @@ CREATE TABLE `oc_product_option_description` (
 --
 
 INSERT INTO `oc_product_option_description` (`product_option_id`, `language_id`, `product_id`, `name`) VALUES
-(244, 1, 40, 'Memory Size'),
-(246, 1, 48, 'Memory');
+(283, 1, 40, 'Memory'),
+(296, 1, 48, 'Memory');
 
 -- --------------------------------------------------------
 
@@ -1342,10 +1347,10 @@ CREATE TABLE `oc_product_option_value` (
 --
 
 INSERT INTO `oc_product_option_value` (`product_option_value_id`, `product_option_id`, `product_id`, `quantity`, `subtract`, `price`, `prefix`, `sort_order`) VALUES
-(539, 244, 40, 0, 0, 50.0000, '+', 2),
-(538, 244, 40, 0, 0, 0.0000, '+', 1),
-(543, 246, 48, 2, 0, 50.0000, '+', 2),
-(542, 246, 48, 1, 0, 0.0000, '+', 1);
+(563, 283, 40, 0, 0, 50.0000, '+', 2),
+(562, 283, 40, 0, 0, 0.0000, '+', 1),
+(587, 296, 48, 2, 0, 50.0000, '+', 2),
+(586, 296, 48, 1, 0, 0.0000, '+', 1);
 
 -- --------------------------------------------------------
 
@@ -1367,10 +1372,10 @@ CREATE TABLE `oc_product_option_value_description` (
 --
 
 INSERT INTO `oc_product_option_value_description` (`product_option_value_id`, `language_id`, `product_id`, `name`) VALUES
-(539, 1, 40, '16GB'),
-(543, 1, 48, '8GB'),
-(538, 1, 40, '8GB'),
-(542, 1, 48, '1GB');
+(563, 1, 40, '16GB'),
+(562, 1, 40, '8GB'),
+(587, 1, 48, '8GB'),
+(586, 1, 48, '1GB');
 
 -- --------------------------------------------------------
 
@@ -1432,7 +1437,11 @@ CREATE TABLE `oc_product_special` (
 --
 
 INSERT INTO `oc_product_special` (`product_special_id`, `product_id`, `customer_group_id`, `priority`, `price`, `date_start`, `date_end`) VALUES
-(237, 42, 8, 1, 50.0000, '2010-02-01', '2010-02-28');
+(248, 42, 8, 1, 50.0000, '2010-02-01', '2010-02-28'),
+(242, 49, 8, 1, 50.0000, '2010-02-01', '2010-02-28'),
+(243, 50, 8, 1, 50.0000, '2010-02-01', '2010-02-28'),
+(244, 58, 8, 1, 50.0000, '2010-02-01', '2010-02-28'),
+(246, 67, 8, 1, 50.0000, '2010-02-01', '2010-02-28');
 
 -- --------------------------------------------------------
 
@@ -1511,23 +1520,22 @@ CREATE TABLE `oc_product_to_store` (
 --
 
 INSERT INTO `oc_product_to_store` (`product_id`, `store_id`) VALUES
-(28, 7),
-(29, 7),
-(30, 7),
-(31, 7),
-(32, 7),
-(33, 7),
-(34, 7),
-(35, 7),
-(36, 7),
-(41, 7),
-(42, 7),
-(43, 7),
-(44, 7),
-(45, 7),
-(46, 7),
-(47, 7),
-(48, 7);
+(28, 0),
+(29, 0),
+(30, 0),
+(31, 0),
+(32, 0),
+(33, 0),
+(34, 0),
+(35, 0),
+(36, 0),
+(40, 0),
+(41, 0),
+(42, 0),
+(43, 0),
+(46, 0),
+(47, 0),
+(48, 0);
 
 -- --------------------------------------------------------
 
@@ -1599,48 +1607,86 @@ INSERT INTO `oc_setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (23565, 'information', 'information_position', 'left'),
 (21782, 'manufacturer', 'manufacturer_sort_order', '2'),
 (21781, 'manufacturer', 'manufacturer_status', '1'),
-(27089, 'bestseller', 'bestseller_sort_order', '3'),
-(27088, 'bestseller', 'bestseller_status', '1'),
-(27087, 'bestseller', 'bestseller_position', 'right'),
-(27086, 'bestseller', 'bestseller_limit', '10'),
+(30995, 'bestseller', 'bestseller_sort_order', '3'),
+(30994, 'bestseller', 'bestseller_status', '1'),
+(30993, 'bestseller', 'bestseller_position', 'right'),
+(30992, 'bestseller', 'bestseller_limit', '10'),
 (21769, 'cart', 'cart_status', '1'),
 (26366, 'category', 'category_position', 'left'),
 (21780, 'manufacturer', 'manufacturer_position', 'left'),
 (21768, 'cart', 'cart_position', 'right'),
 (21767, 'cart', 'cart_ajax', '1'),
 (21770, 'cart', 'cart_sort_order', '1'),
-(27294, 'config', 'config_error_log', '1'),
-(27292, 'config', 'config_compression', '4'),
-(27291, 'config', 'config_seo_url', '0'),
-(27290, 'config', 'config_encryption', ''),
-(27289, 'config', 'config_ssl', '0'),
-(27288, 'config', 'config_smtp_timeout', '5'),
-(27287, 'config', 'config_smtp_port', '25'),
-(27286, 'config', 'config_smtp_password', ''),
-(27285, 'config', 'config_smtp_username', ''),
-(27284, 'config', 'config_smtp_host', ''),
-(27283, 'config', 'config_mail_protocol', 'mail'),
-(27282, 'config', 'config_download_status', '5'),
-(27281, 'config', 'config_download', '1'),
-(27280, 'config', 'config_alert_mail', '0'),
-(27279, 'config', 'config_weight_class', 'lb'),
-(27278, 'config', 'config_length_class', 'cm'),
-(27276, 'config', 'config_currency', 'GBP'),
-(27090, 'flat', 'flat_cost', '2'),
-(27091, 'flat', 'flat_tax_class_id', '9'),
-(27092, 'flat', 'flat_geo_zone_id', '0'),
-(27093, 'flat', 'flat_status', '1'),
-(27094, 'flat', 'flat_sort_order', '1'),
-(27295, 'config', 'config_error_filename', 'error.txt'),
-(27293, 'config', 'config_error_display', '1'),
-(27277, 'config', 'config_currency_auto', '1'),
-(27275, 'config', 'config_language', 'en'),
-(27274, 'config', 'config_fax', ''),
-(27273, 'config', 'config_telephone', '123456789'),
-(27270, 'config', 'config_owner', 'Your Name'),
-(27271, 'config', 'config_address', 'Address 1'),
-(27272, 'config', 'config_email', 'webmaster@opencart.com'),
-(27269, 'config', 'config_store_id', '7');
+(31214, 'config', 'config_error_filename', 'error.txt'),
+(31213, 'config', 'config_error_log', '1'),
+(31210, 'config', 'config_seo_url', '0'),
+(31211, 'config', 'config_compression', '0'),
+(31212, 'config', 'config_error_display', '1'),
+(31208, 'config', 'config_ssl', '0'),
+(31209, 'config', 'config_encryption', '12345'),
+(31207, 'config', 'config_alert_mail', '0'),
+(31206, 'config', 'config_smtp_timeout', '5'),
+(31205, 'config', 'config_smtp_port', '25'),
+(31204, 'config', 'config_smtp_password', ''),
+(31201, 'config', 'config_mail_protocol', 'mail'),
+(31202, 'config', 'config_smtp_host', ''),
+(31203, 'config', 'config_smtp_username', ''),
+(31200, 'config', 'config_image_cart_height', '75'),
+(31199, 'config', 'config_image_cart_width', '75'),
+(31198, 'config', 'config_image_related_height', '120'),
+(31197, 'config', 'config_image_related_width', '120'),
+(31196, 'config', 'config_image_additional_height', '150'),
+(31195, 'config', 'config_image_additional_width', '150'),
+(31194, 'config', 'config_image_product_height', '120'),
+(31193, 'config', 'config_image_product_width', '120'),
+(31192, 'config', 'config_image_category_height', '120'),
+(31191, 'config', 'config_image_category_width', '120'),
+(31190, 'config', 'config_image_popup_height', '500'),
+(31189, 'config', 'config_image_popup_width', '500'),
+(31188, 'config', 'config_image_thumb_height', '250'),
+(31187, 'config', 'config_image_thumb_width', '250'),
+(31186, 'config', 'config_icon', 'data/cart.png'),
+(31185, 'config', 'config_logo', 'data/logo.png'),
+(31184, 'config', 'config_download_status', '5'),
+(31183, 'config', 'config_download', '1'),
+(31182, 'config', 'config_stock_status_id', '5'),
+(31181, 'config', 'config_order_status_id', '1'),
+(31180, 'config', 'config_stock_subtract', '0'),
+(31179, 'config', 'config_stock_checkout', '0'),
+(31178, 'config', 'config_stock_check', '1'),
+(31177, 'config', 'config_stock_display', '0'),
+(31176, 'config', 'config_checkout_id', '5'),
+(31175, 'config', 'config_account_id', '3'),
+(31174, 'config', 'config_guest_checkout', '1'),
+(31173, 'config', 'config_customer_approval', '0'),
+(31172, 'config', 'config_customer_price', '0'),
+(31171, 'config', 'config_customer_group_id', '8'),
+(31170, 'config', 'config_invoice_prefix', 'IN/'),
+(31169, 'config', 'config_invoice_id', '1'),
+(31168, 'config', 'config_tax', '1'),
+(31167, 'config', 'config_weight_class', 'kg'),
+(31166, 'config', 'config_length_class', 'cm'),
+(31163, 'config', 'config_language', 'en'),
+(31164, 'config', 'config_currency', 'GBP'),
+(31165, 'config', 'config_currency_auto', '1'),
+(31161, 'config', 'config_country_id', '222'),
+(31162, 'config', 'config_zone_id', '3563'),
+(31160, 'config', 'config_description_1', '&lt;p&gt;\r\n	Welcome to my store!&lt;/p&gt;\r\n'),
+(31159, 'config', 'config_template', 'default'),
+(31158, 'config', 'config_meta_description', 'My Store'),
+(31156, 'config', 'config_fax', ''),
+(31157, 'config', 'config_title', 'Your Store'),
+(31155, 'config', 'config_telephone', '123456789'),
+(31154, 'config', 'config_email', 'webmaster@opencart.com'),
+(31150, 'config', 'config_name', 'Your Store'),
+(31151, 'config', 'config_url', 'http://dev.opencart.com/'),
+(31152, 'config', 'config_owner', 'Your Name'),
+(31153, 'config', 'config_address', 'Address 1'),
+(31080, 'flat', 'flat_cost', '2'),
+(31081, 'flat', 'flat_tax_class_id', '9'),
+(31082, 'flat', 'flat_geo_zone_id', '0'),
+(31083, 'flat', 'flat_status', '1'),
+(31084, 'flat', 'flat_sort_order', '1');
 
 -- --------------------------------------------------------
 
@@ -1677,7 +1723,6 @@ CREATE TABLE `oc_store` (
   `store_id` int(11) NOT NULL auto_increment,
   `name` varchar(64) collate utf8_bin NOT NULL,
   `url` varchar(255) collate utf8_bin NOT NULL,
-  `ssl` int(1) NOT NULL default '0',
   `title` varchar(128) collate utf8_bin NOT NULL,
   `meta_description` varchar(255) collate utf8_bin NOT NULL,
   `template` varchar(64) collate utf8_bin NOT NULL,
@@ -1697,7 +1742,6 @@ CREATE TABLE `oc_store` (
   `stock_checkout` int(1) NOT NULL,
   `stock_subtract` int(1) NOT NULL,
   `order_status_id` int(11) NOT NULL,
-  `stock_status_id` int(11) NOT NULL,
   `logo` varchar(255) collate utf8_bin NOT NULL,
   `icon` varchar(255) collate utf8_bin NOT NULL,
   `image_thumb_width` int(5) NOT NULL,
@@ -1714,6 +1758,7 @@ CREATE TABLE `oc_store` (
   `image_related_height` int(5) NOT NULL,
   `image_cart_width` int(5) NOT NULL,
   `image_cart_height` int(5) NOT NULL,
+  `ssl` int(1) NOT NULL,
   PRIMARY KEY  (`store_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -1721,8 +1766,6 @@ CREATE TABLE `oc_store` (
 -- Dumping data for table `oc_store`
 --
 
-INSERT INTO `oc_store` (`store_id`, `name`, `url`, `ssl`, `title`, `meta_description`, `template`, `country_id`, `zone_id`, `language`, `currency`, `tax`, `customer_group_id`, `customer_price`, `customer_approval`, `guest_checkout`, `account_id`, `checkout_id`, `stock_display`, `stock_check`, `stock_checkout`, `stock_subtract`, `order_status_id`, `stock_status_id`, `logo`, `icon`, `image_thumb_width`, `image_thumb_height`, `image_popup_width`, `image_popup_height`, `image_category_width`, `image_category_height`, `image_product_width`, `image_product_height`, `image_additional_width`, `image_additional_height`, `image_related_width`, `image_related_height`, `image_cart_width`, `image_cart_height`) VALUES
-(7, 'Your Store', 'http://dev.opencart.com/', 0, 'Your Store', 'Your Store', 'default', 222, 3563, 'en', 'GBP', 1, 8, 0, 0, 1, 3, 5, 0, 1, 0, 1, 1, 6, 'data/logo.png', 'data/cart.png', 250, 250, 500, 500, 120, 120, 120, 120, 150, 150, 120, 120, 75, 75);
 
 -- --------------------------------------------------------
 
@@ -1742,8 +1785,6 @@ CREATE TABLE `oc_store_description` (
 -- Dumping data for table `oc_store_description`
 --
 
-INSERT INTO `oc_store_description` (`store_id`, `language_id`, `description`) VALUES
-(7, 1, '&lt;p&gt;\r\n	Your Store&lt;/p&gt;\r\n');
 
 -- --------------------------------------------------------
 
@@ -1813,14 +1854,14 @@ CREATE TABLE `oc_url_alias` (
 --
 
 INSERT INTO `oc_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
-(422, 'product_id=48', 'ipod_classic'),
-(431, 'category_id=20', 'desktops'),
-(418, 'category_id=26', 'pc'),
-(420, 'category_id=27', 'mac'),
-(427, 'manufacturer_id=8', 'apple'),
-(424, 'information_id=4', 'about_us'),
-(421, 'product_id=42', 'test'),
-(429, 'category_id=34', 'mp3-players');
+(464, 'product_id=48', 'ipod_classic'),
+(451, 'category_id=20', 'desktops'),
+(442, 'category_id=26', 'pc'),
+(443, 'category_id=27', 'mac'),
+(453, 'manufacturer_id=8', 'apple'),
+(455, 'information_id=4', 'about_us'),
+(482, 'product_id=42', 'test'),
+(444, 'category_id=34', 'mp3-players');
 
 -- --------------------------------------------------------
 
@@ -1866,7 +1907,7 @@ CREATE TABLE `oc_user_group` (
 --
 
 INSERT INTO `oc_user_group` (`user_group_id`, `name`, `permission`) VALUES
-(1, 'Top Administrator', 'a:2:{s:6:"access";a:83:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:19:"catalog/information";i:3;s:20:"catalog/manufacturer";i:4;s:15:"catalog/product";i:5;s:14:"catalog/review";i:6;s:18:"common/filemanager";i:7;s:19:"extension/affiliate";i:8;s:14:"extension/feed";i:9;s:16:"extension/module";i:10;s:17:"extension/payment";i:11;s:18:"extension/shipping";i:12;s:15:"extension/total";i:13;s:16:"feed/google_base";i:14;s:19:"feed/google_sitemap";i:15;s:20:"localisation/country";i:16;s:21:"localisation/currency";i:17;s:21:"localisation/geo_zone";i:18;s:21:"localisation/language";i:19;s:25:"localisation/length_class";i:20;s:25:"localisation/order_status";i:21;s:25:"localisation/stock_status";i:22;s:22:"localisation/tax_class";i:23;s:25:"localisation/weight_class";i:24;s:17:"localisation/zone";i:25;s:17:"module/bestseller";i:26;s:11:"module/cart";i:27;s:15:"module/category";i:28;s:23:"module/google_analytics";i:29;s:18:"module/google_talk";i:30;s:18:"module/information";i:31;s:19:"module/manufacturer";i:32;s:16:"payment/alertpay";i:33;s:24:"payment/authorizenet_aim";i:34;s:21:"payment/bank_transfer";i:35;s:14:"payment/cheque";i:36;s:11:"payment/cod";i:37;s:14:"payment/liqpay";i:38;s:20:"payment/moneybookers";i:39;s:15:"payment/paymate";i:40;s:16:"payment/paypoint";i:41;s:26:"payment/perpetual_payments";i:42;s:14:"payment/pp_pro";i:43;s:17:"payment/pp_pro_uk";i:44;s:19:"payment/pp_standard";i:45;s:15:"payment/sagepay";i:46;s:22:"payment/sagepay_direct";i:47;s:18:"payment/sagepay_us";i:48;s:19:"payment/twocheckout";i:49;s:16:"payment/worldpay";i:50;s:16:"report/purchased";i:51;s:11:"report/sale";i:52;s:13:"report/viewed";i:53;s:12:"sale/contact";i:54;s:11:"sale/coupon";i:55;s:13:"sale/customer";i:56;s:19:"sale/customer_group";i:57;s:10:"sale/order";i:58;s:15:"setting/setting";i:59;s:13:"setting/store";i:60;s:16:"shipping/auspost";i:61;s:17:"shipping/citylink";i:62;s:13:"shipping/flat";i:63;s:13:"shipping/free";i:64;s:13:"shipping/item";i:65;s:23:"shipping/parcelforce_48";i:66;s:15:"shipping/pickup";i:67;s:19:"shipping/royal_mail";i:68;s:12:"shipping/ups";i:69;s:13:"shipping/usps";i:70;s:15:"shipping/weight";i:71;s:11:"tool/backup";i:72;s:14:"tool/error_log";i:73;s:12:"total/coupon";i:74;s:14:"total/handling";i:75;s:19:"total/low_order_fee";i:76;s:14:"total/shipping";i:77;s:15:"total/sub_total";i:78;s:9:"total/tax";i:79;s:11:"total/total";i:80;s:9:"user/user";i:81;s:20:"user/user_permission";i:82;s:13:"shipping/usps";}s:6:"modify";a:83:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:19:"catalog/information";i:3;s:20:"catalog/manufacturer";i:4;s:15:"catalog/product";i:5;s:14:"catalog/review";i:6;s:18:"common/filemanager";i:7;s:19:"extension/affiliate";i:8;s:14:"extension/feed";i:9;s:16:"extension/module";i:10;s:17:"extension/payment";i:11;s:18:"extension/shipping";i:12;s:15:"extension/total";i:13;s:16:"feed/google_base";i:14;s:19:"feed/google_sitemap";i:15;s:20:"localisation/country";i:16;s:21:"localisation/currency";i:17;s:21:"localisation/geo_zone";i:18;s:21:"localisation/language";i:19;s:25:"localisation/length_class";i:20;s:25:"localisation/order_status";i:21;s:25:"localisation/stock_status";i:22;s:22:"localisation/tax_class";i:23;s:25:"localisation/weight_class";i:24;s:17:"localisation/zone";i:25;s:17:"module/bestseller";i:26;s:11:"module/cart";i:27;s:15:"module/category";i:28;s:23:"module/google_analytics";i:29;s:18:"module/google_talk";i:30;s:18:"module/information";i:31;s:19:"module/manufacturer";i:32;s:16:"payment/alertpay";i:33;s:24:"payment/authorizenet_aim";i:34;s:21:"payment/bank_transfer";i:35;s:14:"payment/cheque";i:36;s:11:"payment/cod";i:37;s:14:"payment/liqpay";i:38;s:20:"payment/moneybookers";i:39;s:15:"payment/paymate";i:40;s:16:"payment/paypoint";i:41;s:26:"payment/perpetual_payments";i:42;s:14:"payment/pp_pro";i:43;s:17:"payment/pp_pro_uk";i:44;s:19:"payment/pp_standard";i:45;s:15:"payment/sagepay";i:46;s:22:"payment/sagepay_direct";i:47;s:18:"payment/sagepay_us";i:48;s:19:"payment/twocheckout";i:49;s:16:"payment/worldpay";i:50;s:16:"report/purchased";i:51;s:11:"report/sale";i:52;s:13:"report/viewed";i:53;s:12:"sale/contact";i:54;s:11:"sale/coupon";i:55;s:13:"sale/customer";i:56;s:19:"sale/customer_group";i:57;s:10:"sale/order";i:58;s:15:"setting/setting";i:59;s:13:"setting/store";i:60;s:16:"shipping/auspost";i:61;s:17:"shipping/citylink";i:62;s:13:"shipping/flat";i:63;s:13:"shipping/free";i:64;s:13:"shipping/item";i:65;s:23:"shipping/parcelforce_48";i:66;s:15:"shipping/pickup";i:67;s:19:"shipping/royal_mail";i:68;s:12:"shipping/ups";i:69;s:13:"shipping/usps";i:70;s:15:"shipping/weight";i:71;s:11:"tool/backup";i:72;s:14:"tool/error_log";i:73;s:12:"total/coupon";i:74;s:14:"total/handling";i:75;s:19:"total/low_order_fee";i:76;s:14:"total/shipping";i:77;s:15:"total/sub_total";i:78;s:9:"total/tax";i:79;s:11:"total/total";i:80;s:9:"user/user";i:81;s:20:"user/user_permission";i:82;s:13:"shipping/usps";}}'),
+(1, 'Top Administrator', 'a:2:{s:6:"access";a:89:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:19:"catalog/information";i:3;s:20:"catalog/manufacturer";i:4;s:15:"catalog/product";i:5;s:14:"catalog/review";i:6;s:18:"common/filemanager";i:7;s:19:"extension/affiliate";i:8;s:14:"extension/feed";i:9;s:16:"extension/module";i:10;s:17:"extension/payment";i:11;s:18:"extension/shipping";i:12;s:15:"extension/total";i:13;s:16:"feed/google_base";i:14;s:19:"feed/google_sitemap";i:15;s:20:"localisation/country";i:16;s:21:"localisation/currency";i:17;s:21:"localisation/geo_zone";i:18;s:21:"localisation/language";i:19;s:25:"localisation/length_class";i:20;s:25:"localisation/order_status";i:21;s:25:"localisation/stock_status";i:22;s:22:"localisation/tax_class";i:23;s:25:"localisation/weight_class";i:24;s:17:"localisation/zone";i:25;s:17:"module/bestseller";i:26;s:11:"module/cart";i:27;s:15:"module/category";i:28;s:23:"module/google_analytics";i:29;s:18:"module/google_talk";i:30;s:18:"module/information";i:31;s:19:"module/manufacturer";i:32;s:16:"payment/alertpay";i:33;s:24:"payment/authorizenet_aim";i:34;s:21:"payment/bank_transfer";i:35;s:14:"payment/cheque";i:36;s:11:"payment/cod";i:37;s:14:"payment/liqpay";i:38;s:20:"payment/moneybookers";i:39;s:15:"payment/paymate";i:40;s:16:"payment/paypoint";i:41;s:26:"payment/perpetual_payments";i:42;s:14:"payment/pp_pro";i:43;s:17:"payment/pp_pro_uk";i:44;s:19:"payment/pp_standard";i:45;s:15:"payment/sagepay";i:46;s:22:"payment/sagepay_direct";i:47;s:18:"payment/sagepay_us";i:48;s:19:"payment/twocheckout";i:49;s:16:"payment/worldpay";i:50;s:16:"report/purchased";i:51;s:11:"report/sale";i:52;s:13:"report/viewed";i:53;s:12:"sale/contact";i:54;s:11:"sale/coupon";i:55;s:13:"sale/customer";i:56;s:19:"sale/customer_group";i:57;s:10:"sale/order";i:58;s:15:"setting/setting";i:59;s:13:"setting/store";i:60;s:16:"shipping/auspost";i:61;s:17:"shipping/citylink";i:62;s:13:"shipping/flat";i:63;s:13:"shipping/free";i:64;s:13:"shipping/item";i:65;s:23:"shipping/parcelforce_48";i:66;s:15:"shipping/pickup";i:67;s:19:"shipping/royal_mail";i:68;s:12:"shipping/ups";i:69;s:13:"shipping/usps";i:70;s:15:"shipping/weight";i:71;s:11:"tool/backup";i:72;s:14:"tool/error_log";i:73;s:12:"total/coupon";i:74;s:14:"total/handling";i:75;s:19:"total/low_order_fee";i:76;s:14:"total/shipping";i:77;s:15:"total/sub_total";i:78;s:9:"total/tax";i:79;s:11:"total/total";i:80;s:9:"user/user";i:81;s:20:"user/user_permission";i:82;s:13:"shipping/usps";i:83;s:19:"total/low_order_fee";i:84;s:14:"total/handling";i:85;s:20:"payment/moneybookers";i:86;s:14:"total/handling";i:87;s:19:"total/low_order_fee";i:88;s:13:"shipping/flat";}s:6:"modify";a:89:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:19:"catalog/information";i:3;s:20:"catalog/manufacturer";i:4;s:15:"catalog/product";i:5;s:14:"catalog/review";i:6;s:18:"common/filemanager";i:7;s:19:"extension/affiliate";i:8;s:14:"extension/feed";i:9;s:16:"extension/module";i:10;s:17:"extension/payment";i:11;s:18:"extension/shipping";i:12;s:15:"extension/total";i:13;s:16:"feed/google_base";i:14;s:19:"feed/google_sitemap";i:15;s:20:"localisation/country";i:16;s:21:"localisation/currency";i:17;s:21:"localisation/geo_zone";i:18;s:21:"localisation/language";i:19;s:25:"localisation/length_class";i:20;s:25:"localisation/order_status";i:21;s:25:"localisation/stock_status";i:22;s:22:"localisation/tax_class";i:23;s:25:"localisation/weight_class";i:24;s:17:"localisation/zone";i:25;s:17:"module/bestseller";i:26;s:11:"module/cart";i:27;s:15:"module/category";i:28;s:23:"module/google_analytics";i:29;s:18:"module/google_talk";i:30;s:18:"module/information";i:31;s:19:"module/manufacturer";i:32;s:16:"payment/alertpay";i:33;s:24:"payment/authorizenet_aim";i:34;s:21:"payment/bank_transfer";i:35;s:14:"payment/cheque";i:36;s:11:"payment/cod";i:37;s:14:"payment/liqpay";i:38;s:20:"payment/moneybookers";i:39;s:15:"payment/paymate";i:40;s:16:"payment/paypoint";i:41;s:26:"payment/perpetual_payments";i:42;s:14:"payment/pp_pro";i:43;s:17:"payment/pp_pro_uk";i:44;s:19:"payment/pp_standard";i:45;s:15:"payment/sagepay";i:46;s:22:"payment/sagepay_direct";i:47;s:18:"payment/sagepay_us";i:48;s:19:"payment/twocheckout";i:49;s:16:"payment/worldpay";i:50;s:16:"report/purchased";i:51;s:11:"report/sale";i:52;s:13:"report/viewed";i:53;s:12:"sale/contact";i:54;s:11:"sale/coupon";i:55;s:13:"sale/customer";i:56;s:19:"sale/customer_group";i:57;s:10:"sale/order";i:58;s:15:"setting/setting";i:59;s:13:"setting/store";i:60;s:16:"shipping/auspost";i:61;s:17:"shipping/citylink";i:62;s:13:"shipping/flat";i:63;s:13:"shipping/free";i:64;s:13:"shipping/item";i:65;s:23:"shipping/parcelforce_48";i:66;s:15:"shipping/pickup";i:67;s:19:"shipping/royal_mail";i:68;s:12:"shipping/ups";i:69;s:13:"shipping/usps";i:70;s:15:"shipping/weight";i:71;s:11:"tool/backup";i:72;s:14:"tool/error_log";i:73;s:12:"total/coupon";i:74;s:14:"total/handling";i:75;s:19:"total/low_order_fee";i:76;s:14:"total/shipping";i:77;s:15:"total/sub_total";i:78;s:9:"total/tax";i:79;s:11:"total/total";i:80;s:9:"user/user";i:81;s:20:"user/user_permission";i:82;s:13:"shipping/usps";i:83;s:19:"total/low_order_fee";i:84;s:14:"total/handling";i:85;s:20:"payment/moneybookers";i:86;s:14:"total/handling";i:87;s:19:"total/low_order_fee";i:88;s:13:"shipping/flat";}}'),
 (10, 'Demonstration', 'a:1:{s:6:"access";a:79:{i:0;s:16:"catalog/category";i:1;s:16:"catalog/download";i:2;s:19:"catalog/information";i:3;s:20:"catalog/manufacturer";i:4;s:15:"catalog/product";i:5;s:14:"catalog/review";i:6;s:18:"common/filemanager";i:7;s:19:"extension/affiliate";i:8;s:14:"extension/feed";i:9;s:16:"extension/module";i:10;s:17:"extension/payment";i:11;s:18:"extension/shipping";i:12;s:15:"extension/total";i:13;s:16:"feed/google_base";i:14;s:19:"feed/google_sitemap";i:15;s:20:"localisation/country";i:16;s:21:"localisation/currency";i:17;s:21:"localisation/geo_zone";i:18;s:21:"localisation/language";i:19;s:25:"localisation/length_class";i:20;s:25:"localisation/order_status";i:21;s:25:"localisation/stock_status";i:22;s:22:"localisation/tax_class";i:23;s:25:"localisation/weight_class";i:24;s:17:"localisation/zone";i:25;s:17:"module/bestseller";i:26;s:11:"module/cart";i:27;s:15:"module/category";i:28;s:23:"module/google_analytics";i:29;s:18:"module/google_talk";i:30;s:18:"module/information";i:31;s:19:"module/manufacturer";i:32;s:16:"payment/alertpay";i:33;s:24:"payment/authorizenet_aim";i:34;s:21:"payment/bank_transfer";i:35;s:14:"payment/cheque";i:36;s:11:"payment/cod";i:37;s:14:"payment/liqpay";i:38;s:20:"payment/moneybookers";i:39;s:15:"payment/paymate";i:40;s:16:"payment/paypoint";i:41;s:26:"payment/perpetual_payments";i:42;s:14:"payment/pp_pro";i:43;s:17:"payment/pp_pro_uk";i:44;s:19:"payment/pp_standard";i:45;s:15:"payment/sagepay";i:46;s:22:"payment/sagepay_direct";i:47;s:18:"payment/sagepay_us";i:48;s:19:"payment/twocheckout";i:49;s:16:"payment/worldpay";i:50;s:16:"report/purchased";i:51;s:11:"report/sale";i:52;s:13:"report/viewed";i:53;s:12:"sale/contact";i:54;s:11:"sale/coupon";i:55;s:13:"sale/customer";i:56;s:19:"sale/customer_group";i:57;s:10:"sale/order";i:58;s:15:"setting/setting";i:59;s:16:"shipping/auspost";i:60;s:17:"shipping/citylink";i:61;s:13:"shipping/flat";i:62;s:13:"shipping/free";i:63;s:13:"shipping/item";i:64;s:23:"shipping/parcelforce_48";i:65;s:19:"shipping/royal_mail";i:66;s:13:"shipping/usps";i:67;s:15:"shipping/weight";i:68;s:11:"tool/backup";i:69;s:14:"tool/error_log";i:70;s:12:"total/coupon";i:71;s:14:"total/handling";i:72;s:19:"total/low_order_fee";i:73;s:14:"total/shipping";i:74;s:15:"total/sub_total";i:75;s:9:"total/tax";i:76;s:11:"total/total";i:77;s:9:"user/user";i:78;s:20:"user/user_permission";}}');
 
 -- --------------------------------------------------------
@@ -2137,8 +2178,8 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (198, 13, 'WA', 'Western Australia'),
 (199, 14, 'BUR', 'Burgenland'),
 (200, 14, 'KAR', 'Kärnten'),
-(201, 14, 'NOS', 'Nieder'),
-(202, 14, 'OOS', 'Ober'),
+(201, 14, 'NOS', 'Niederösterreich'),
+(202, 14, 'OOS', 'Oberösterreich'),
 (203, 14, 'SAL', 'Salzburg'),
 (204, 14, 'STE', 'Steiermark'),
 (205, 14, 'TIR', 'Tirol'),
@@ -3640,9 +3681,9 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (1702, 107, 'YM', 'Yamaguchi'),
 (1703, 107, 'YN', 'Yamanashi'),
 (1704, 108, 'AM', '''Amman'),
-(1705, 108, 'AJ', 'Ajlun'),
-(1706, 108, 'AA', 'Al ''Aqabah');
+(1705, 108, 'AJ', 'Ajlun');
 INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
+(1706, 108, 'AA', 'Al ''Aqabah'),
 (1707, 108, 'AB', 'Al Balqa'''),
 (1708, 108, 'AK', 'Al Karak'),
 (1709, 108, 'AL', 'Al Mafraq'),
@@ -5282,9 +5323,9 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
 (3343, 215, 'ELA', 'Elazig'),
 (3344, 215, 'EZC', 'Erzincan'),
 (3345, 215, 'EZR', 'Erzurum'),
-(3346, 215, 'ESK', 'Eskisehir'),
-(3347, 215, 'GAZ', 'Gaziantep');
+(3346, 215, 'ESK', 'Eskisehir');
 INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`) VALUES
+(3347, 215, 'GAZ', 'Gaziantep'),
 (3348, 215, 'GIR', 'Giresun'),
 (3349, 215, 'GMS', 'Gumushane'),
 (3350, 215, 'HKR', 'Hakkari'),

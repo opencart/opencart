@@ -105,53 +105,53 @@ img {
 <script type="text/javascript"><!--
 $(document).ready(function () { 
 	$('#column_left').tree({
-		data : { 
-			type : 'json',
-			async : true, 
-			opts : { 
-				method : 'POST', 
-				url : 'index.php?route=common/filemanager/directory'
+		data: { 
+			type: 'json',
+			async: true, 
+			opts: { 
+				method: 'POST', 
+				url: 'index.php?route=common/filemanager/directory'
 			} 
 		},
-		selected : 'top',
-		ui : {		
-			theme_name : 'classic',
-			animation  : 700
+		selected: 'top',
+		ui: {		
+			theme_name: 'classic',
+			animation: 700
 		},	
-		types : { 
-			'default' : {
-				clickable      : true,
-				renameable     : false,
-				deletable      : false,
-				creatable      : false,
-				draggable      : false,
-				max_children   : -1,
-				max_depth	   : -1,
-				valid_children : 'all',
+		types: { 
+			'default': {
+				clickable: true,
+				creatable: false,
+				renameable: false,
+				deletable: false,
+				draggable: false,
+				max_children: -1,
+				max_depth: -1,
+				valid_children: 'all'
 			}
 		},
-		callback : {
-			beforedata : function(NODE, TREE_OBJ) { 
+		callback: {
+			beforedata: function(NODE, TREE_OBJ) { 
 				if (NODE == false) {
 					TREE_OBJ.settings.data.opts.static = [ 
 						{
-							data : 'image',
-							attributes : { 
-								'id' : 'top',
-								'directory' : ''
+							data: 'image',
+							attributes: { 
+								'id': 'top',
+								'directory': ''
 							}, 
-							state : 'closed'
+							state: 'closed'
 						}
 					];
 					
-					return { 'directory' : '' } 
+					return { 'directory': '' } 
 				} else {
 					TREE_OBJ.settings.data.opts.static = false;  
 					
-					return { 'directory' : $(NODE).attr('directory') } 
+					return { 'directory': $(NODE).attr('directory') } 
 				}
 			},		
-			onselect : function (NODE, TREE_OBJ) {
+			onselect: function (NODE, TREE_OBJ) {
 				$.ajax({
 					url: 'index.php?route=common/filemanager/files',
 					type: 'POST',
@@ -508,17 +508,17 @@ $(document).ready(function () {
 	});
 	
 	new AjaxUpload('#upload', {
-		action : 'index.php?route=common/filemanager/upload',
-		name : 'image',
-		autoSubmit : false,
+		action: 'index.php?route=common/filemanager/upload',
+		name: 'image',
+		autoSubmit: false,
 		responseType: 'json',
 		onChange: function(file, extension) {
 			var tree = $.tree.focused();
 			
 			if (tree.selected) {
-				this.setData({'directory' : $(tree.selected).attr('directory')});
+				this.setData({'directory': $(tree.selected).attr('directory')});
 			} else {
-				this.setData({'directory' : ''});
+				this.setData({'directory': ''});
 			}
 			
 			this.submit();

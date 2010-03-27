@@ -44,12 +44,12 @@ class ModelInstall extends Model {
 			mysql_query("INSERT INTO `" . $data['db_prefix'] . "user` SET user_id = '1', user_group_id = '1', username = '" . mysql_real_escape_string($data['username']) . "', password = '" . mysql_real_escape_string(md5($data['password'])) . "', status = '1', date_added = NOW()", $connection);
 
 			mysql_query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_email'", $connection);
-		
 			mysql_query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `group` = 'config', `key` = 'config_email', value = '" . mysql_real_escape_string($data['email']) . "'", $connection);
 			
-			mysql_query("UPDATE `" . $data['db_prefix'] . "product` SET `viewed` = '0'", $connection);
+			mysql_query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_url'", $connection);
+			mysql_query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `group` = 'config', `key` = 'config_url', value = '" . mysql_real_escape_string(HTTP_OPENCART) . "'", $connection);
 			
-			mysql_query("UPDATE `" . $data['db_prefix'] . "store` SET `url` = '" . mysql_real_escape_string(HTTP_OPENCART) . "'", $connection);
+			mysql_query("UPDATE `" . $data['db_prefix'] . "product` SET `viewed` = '0'", $connection);
 			
 			mysql_close($connection);	
 		}		

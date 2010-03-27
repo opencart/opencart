@@ -10,12 +10,16 @@ class ControllerCommonHome extends Controller {
 		
 		$this->load->model('setting/store');
 		
-		$store_info = $this->model_setting_store->getStore($this->config->get('config_store_id'));
-		
-		if ($store_info) {
-			$this->data['welcome'] = html_entity_decode($store_info['description']);
+		if (!$this->config->get('config_store_id')) {
+			$this->data['welcome'] = html_entity_decode($this->config->get('config_description_' . $this->config->get('config_language_id')), ENT_QUOTES, 'UTF-8');
 		} else {
-			$this->data['welcome'] = '';
+			$store_info = $this->model_setting_store->getStore($this->config->get('config_store_id'));
+			
+			if ($store_info) {
+				$this->data['welcome'] = html_entity_decode($store_info['description'], ENT_QUOTES, 'UTF-8');
+			} else {
+				$this->data['welcome'] = '';
+			}
 		}
 		
 		$this->data['text_latest'] = $this->language->get('text_latest');

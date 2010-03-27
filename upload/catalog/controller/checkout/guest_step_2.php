@@ -123,7 +123,7 @@ class ControllerCheckoutGuestStep2 extends Controller {
         	'href'      => HTTPS_SERVER . 'index.php?route=checkout/guest_step_1',
         	'text'      => $this->language->get('text_guest_step_1'),
         	'separator' => $this->language->get('text_separator')
-      	);
+      	); 
 		
       	$this->document->breadcrumbs[] = array(
         	'href'      => HTTPS_SERVER . 'index.php?route=checkout/guest_step_2',
@@ -154,6 +154,10 @@ class ControllerCheckoutGuestStep2 extends Controller {
 		} else {
 			$this->data['error_warning'] = '';
 		}
+		
+		if (isset($this->session->data['shipping_methods']) && !$this->session->data['shipping_methods']) {
+			$this->data['error_warning'] = $this->language->get('error_no_shipping');
+		}			
 		
     	$this->data['action'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 

@@ -264,6 +264,8 @@ class ControllerCatalogInformation extends Controller {
 	private function getForm() {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
+		$this->data['text_default'] = $this->language->get('text_default');
+		
 		$this->data['entry_title'] = $this->language->get('entry_title');
 		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_store'] = $this->language->get('entry_store');
@@ -352,7 +354,7 @@ class ControllerCatalogInformation extends Controller {
 		} elseif (isset($information_info)) {
 			$this->data['information_store'] = $this->model_catalog_information->getInformationStores($this->request->get['information_id']);
 		} else {
-			$this->data['information_store'] = array();
+			$this->data['information_store'] = array(0);
 		}		
 		
 		if (isset($this->request->post['keyword'])) {
@@ -410,6 +412,14 @@ class ControllerCatalogInformation extends Controller {
 		$this->load->model('setting/store');
 		
 		foreach ($this->request->post['selected'] as $information_id) {
+			if ($this->config->get('config_account_id') == $information_id) {
+				$this->error['warning'] = $this->language->get('error_account');
+			}
+			
+			if ($this->config->get('config_checkout_id') == $information_id) {
+				$this->error['warning'] = $this->language->get('error_checkout');
+			}
+			
 			$store_total = $this->model_setting_store->getTotalStoresByInformationId($information_id);
 
 			if ($store_total) {

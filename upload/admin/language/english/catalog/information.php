@@ -4,7 +4,7 @@ $_['heading_title']     = 'Information';
 
 // Text
 $_['text_success']      = 'Success: You have modified information!';
-$_['text_default']      = 'Default Store';
+$_['text_default']      = 'Default';
 
 // Column
 $_['column_title']      = 'Information Title';
@@ -22,5 +22,7 @@ $_['entry_sort_order']  = 'Sort Order:';
 $_['error_permission']  = 'Warning: You do not have permission to modify information!';
 $_['error_title']       = 'Information Title must be greater than 3 and less than 64 characters!';
 $_['error_description'] = 'Description must be greater than 3 characters!';
-$_['error_store']       = 'Warning: This Information Page cannot be deleted as its currently used by %s stores!';
+$_['error_account']     = 'Warning: This information page cannot be deleted as it is currently assigned as the default store account terms!';
+$_['error_checkout']    = 'Warning: This information page cannot be deleted as it is currently assigned as the default store checkout terms!';
+$_['error_store']       = 'Warning: This information page cannot be deleted as its currently used by %s stores!';
 ?>

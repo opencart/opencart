@@ -63,7 +63,6 @@
     </li>
     <li id="system"><a class="top"><?php echo $text_system; ?></a>
       <ul>
-        <li><a href="<?php echo $store; ?>"><?php echo $text_store; ?></a></li>
         <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
         <li><a class="parent"><?php echo $text_users; ?></a>
           <ul>
@@ -105,10 +104,10 @@
     </li>
   </ul>
   <ul class="nav right">
-    <li id="store"><a class="top"><?php echo $text_front; ?></a>
+    <li id="store"><a onclick="window.open('<?php echo $store; ?>');" class="top"><?php echo $text_front; ?></a>
       <ul>
         <?php foreach ($stores as $stores) { ?>
-        <li><a href="<?php echo $stores['href']; ?>"><?php echo $stores['name']; ?></a></li>
+        <li><a onclick="window.open('<?php echo $stores['href']; ?>');"><?php echo $stores['name']; ?></a></li>
         <?php } ?>
       </ul>
     </li>

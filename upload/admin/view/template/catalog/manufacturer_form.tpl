@@ -7,7 +7,7 @@
   <div class="right"></div>
   <div class="heading">
     <h1 style="background-image: url('view/image/shipping.png');"><?php echo $heading_title; ?></h1>
-    <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location='<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+    <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
   </div>
   <div class="content">
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -22,7 +22,16 @@
         <tr>
           <td><?php echo $entry_store; ?></td>
           <td><div class="scrollbox">
-              <?php $class = 'odd'; ?>
+              <?php $class = 'even'; ?>
+              <div class="<?php echo $class; ?>">
+                <?php if (in_array(0, $manufacturer_store)) { ?>
+                <input type="checkbox" name="manufacturer_store[]" value="0" checked="checked" />
+                <?php echo $text_default; ?>
+                <?php } else { ?>
+                <input type="checkbox" name="manufacturer_store[]" value="0" />
+                <?php echo $text_default; ?>
+                <?php } ?>
+              </div>
               <?php foreach ($stores as $store) { ?>
               <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
               <div class="<?php echo $class; ?>">

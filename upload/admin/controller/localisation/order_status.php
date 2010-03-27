@@ -183,7 +183,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 						
 			$this->data['order_statuses'][] = array(
 				'order_status_id' => $result['order_status_id'],
-				'name'            => $result['name'],
+				'name'            => $result['name'] . (($result['order_status_id'] == $this->config->get('config_order_status_id')) ? $this->language->get('text_default') : NULL),
 				'selected'        => isset($this->request->post['selected']) && in_array($result['order_status_id'], $this->request->post['selected']),
 				'action'          => $action
 			);
@@ -365,6 +365,14 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$this->load->model('sale/order');
 		
 		foreach ($this->request->post['selected'] as $order_status_id) {
+    		if ($this->config->get('config_order_status_id') == $order_status_id) {
+	  			$this->error['warning'] = $this->language->get('error_default');	
+			}  
+			
+    		if ($this->config->get('config_download_status') == $order_status_id) {
+	  			$this->error['warning'] = $this->language->get('error_download');	
+			}  
+			
 			$store_total = $this->model_setting_store->getTotalStoresByOrderStatusId($order_status_id);
 
 			if ($store_total) {

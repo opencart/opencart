@@ -13,7 +13,7 @@ class ControllerFeedGoogleSitemap extends Controller {
 			
 			foreach ($products as $product) {
 				$output .= '<url>';
-				$output .= '<loc>' . $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $product['product_id']) . '</loc>';
+				$output .= '<loc>' . str_replace('&', '&amp;', $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $product['product_id'])) . '</loc>';
 				$output .= '<changefreq>weekly</changefreq>';
 				$output .= '<priority>1.0</priority>';
 				$output .= '</url>';	
@@ -31,7 +31,7 @@ class ControllerFeedGoogleSitemap extends Controller {
 			
 			foreach ($manufacturers as $manufacturer) {
 				$output .= '<url>';
-				$output .= '<loc>' . $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $manufacturer['manufacturer_id']) . '</loc>';
+				$output .= '<loc>' . str_replace('&', '&amp;', $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $manufacturer['manufacturer_id'])) . '</loc>';
 				$output .= '<changefreq>weekly</changefreq>';
 				$output .= '<priority>0.7</priority>';
 				$output .= '</url>';	
@@ -40,7 +40,7 @@ class ControllerFeedGoogleSitemap extends Controller {
 				
 				foreach ($products as $product) {
 					$output .= '<url>';
-					$output .= '<loc>' . $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&manufacturer_id=' . $manufacturer['manufacturer_id'] . '&product_id=' . $product['product_id']) . '</loc>';
+					$output .= '<loc>' . str_replace('&', '&amp;', $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&manufacturer_id=' . $manufacturer['manufacturer_id'] . '&product_id=' . $product['product_id'])) . '</loc>';
 					$output .= '<changefreq>weekly</changefreq>';
 					$output .= '<priority>1.0</priority>';
 					$output .= '</url>';	
@@ -53,7 +53,7 @@ class ControllerFeedGoogleSitemap extends Controller {
 			
 			foreach ($informations as $information) {
 				$output .= '<url>';
-				$output .= '<loc>' . $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/information&information_id=' . $information['information_id']) . '</loc>';
+				$output .= '<loc>' . str_replace('&', '&amp;', $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/information&information_id=' . $information['information_id'])) . '</loc>';
 				$output .= '<changefreq>weekly</changefreq>';
 				$output .= '<priority>0.5</priority>';
 				$output .= '</url>';	

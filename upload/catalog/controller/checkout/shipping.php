@@ -109,7 +109,7 @@ class ControllerCheckoutShipping extends Controller {
       	);
 				
     	$this->data['heading_title'] = $this->language->get('heading_title');
-
+ 
     	$this->data['text_shipping_to'] = $this->language->get('text_shipping_to');
     	$this->data['text_shipping_address'] = $this->language->get('text_shipping_address');
     	$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
@@ -125,6 +125,10 @@ class ControllerCheckoutShipping extends Controller {
 		} else {
 			$this->data['error_warning'] = '';
 		}
+
+		if (isset($this->session->data['shipping_methods']) && !$this->session->data['shipping_methods']) {
+			$this->data['error_warning'] = $this->language->get('error_no_shipping');
+		}	
 		
 		$this->data['action'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
 		
@@ -165,10 +169,10 @@ class ControllerCheckoutShipping extends Controller {
 		$this->data['change_address'] = HTTPS_SERVER . 'index.php?route=checkout/address/shipping'; 
 
 		if (isset($this->session->data['shipping_methods'])) {
-         $this->data['shipping_methods'] = $this->session->data['shipping_methods']; 
-      } else {
-         $this->data['shipping_methods'] = array();
-      }
+			$this->data['shipping_methods'] = $this->session->data['shipping_methods']; 
+		} else {
+			$this->data['shipping_methods'] = array();
+		}
     	
 		if (isset($this->session->data['shipping_method']['id'])) {
 			$this->data['shipping'] = $this->session->data['shipping_method']['id'];

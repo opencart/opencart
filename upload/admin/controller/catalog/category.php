@@ -145,6 +145,7 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['text_none'] = $this->language->get('text_none');
+		$this->data['text_default'] = $this->language->get('text_default');
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
 		
 		$this->data['entry_name'] = $this->language->get('entry_name');
@@ -231,7 +232,7 @@ class ControllerCatalogCategory extends Controller {
 		} elseif (isset($category_info)) {
 			$this->data['category_store'] = $this->model_catalog_category->getCategoryStores($this->request->get['category_id']);
 		} else {
-			$this->data['category_store'] = array();
+			$this->data['category_store'] = array(0);
 		}			
 		
 		if (isset($this->request->post['keyword'])) {

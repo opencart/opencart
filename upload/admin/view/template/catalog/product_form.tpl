@@ -7,7 +7,7 @@
   <div class="right"></div>
   <div class="heading">
     <h1 style="background-image: url('view/image/product.png');"><?php echo $heading_title; ?></h1>
-    <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location='<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+    <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
   </div>
   <div class="content">
     <div id="tabs" class="htabs"><a tab="#tab_general"><?php echo $tab_general; ?></a><a tab="#tab_data"><?php echo $tab_data; ?></a><a tab="#tab_option"><?php echo $tab_option; ?></a><a tab="#tab_discount"><?php echo $tab_discount; ?></a><a tab="#tab_special"><?php echo $tab_special; ?></a><a tab="#tab_image"><?php echo $tab_image; ?></a></div>
@@ -17,7 +17,7 @@
           <?php foreach ($languages as $language) { ?>
           <a tab="#language<?php echo $language['language_id']; ?>"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a>
           <?php } ?>
-        </div>
+        </div> 
         <?php foreach ($languages as $language) { ?>
         <div id="language<?php echo $language['language_id']; ?>">
           <table class="form">
@@ -197,7 +197,16 @@
           <tr>
             <td><?php echo $entry_store; ?></td>
             <td><div class="scrollbox">
-                <?php $class = 'odd'; ?>
+                <?php $class = 'even'; ?>
+                <div class="<?php echo $class; ?>">
+                  <?php if (in_array(0, $product_store)) { ?>
+                  <input type="checkbox" name="product_store[]" value="0" checked="checked" />
+                  <?php echo $text_default; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="product_store[]" value="0" />
+                  <?php echo $text_default; ?>
+                  <?php } ?>
+                </div>
                 <?php foreach ($stores as $store) { ?>
                 <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
                 <div class="<?php echo $class; ?>">
@@ -259,90 +268,80 @@
         </table>
       </div>
       <div id="tab_option">
-        <table class="list">
-          <thead>
-            <tr>
-              <td class="left"><?php echo $entry_option; ?></td>
-              <td class="left"><?php echo $entry_sort_order; ?></td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="filter">
-              <td class="left"><?php foreach ($languages as $language) { ?>
-                <input type="text" id="option_name<?php echo $language['language_id']; ?>" value="" />
-                <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-                <?php } ?></td>
-              <td class="left"><input type="text" id="option_sort_order" value="" size="5" /></td>
-              <td class="left"><a onclick="addOption();" class="button"><span><?php echo $button_add_option; ?></span></a></td>
-            </tr>
-          </tbody>
-        </table>
-        <br />
-        <div id="option" style="display: inline-block; width: 100%;">
-          <div id="options" class="vtabs">
-            <?php $option_row = 0; ?>
-            <?php foreach ($product_options as $product_option) { ?>
-            <?php foreach ($languages as $language) { ?>
-            <?php if ($language['language_id'] == $language_id) { ?>
-            <a id="vtab<?php echo $option_row; ?>" tab="#tab_option<?php echo $option_row; ?>"><?php echo $product_option['language'][$language['language_id']]['name']; ?></a>
-            <?php $option_row++; ?>
-            <?php } ?>
-            <?php } ?>
-            <?php } ?>
+        <div style="width: 100%; display: inline-block; padding-bottom: 5px;">
+          <div style="width: 200px; height: 300px; float: left;">
+            <select id="option" size="20" style="width: 100%;">
+              <?php $option_row = 0; ?>
+              <?php $option_value_row = 0; ?>
+              <?php foreach ($product_options as $product_option) { ?>
+              <?php foreach ($languages as $language) { ?>
+              <?php if ($language['language_id'] == $language_id) { ?>
+              <option value="option<?php echo $option_row; ?>"><?php echo $product_option['language'][$language['language_id']]['name']; ?></option>
+              <?php } ?>
+              <?php if ($product_option['product_option_value']) { ?>
+              <?php foreach ($product_option['product_option_value'] as $product_option_value) { ?>
+              <?php foreach ($languages as $language) { ?>
+              <?php if ($language['language_id'] == $language_id) { ?>
+              <option value="option<?php echo $option_row; ?>_<?php echo $option_value_row; ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $product_option_value['language'][$language['language_id']]['name']; ?></option>
+              <?php $option_value_row++; ?>
+              <?php } ?>
+              <?php } ?>
+              <?php } ?>
+              <?php } ?>
+              <?php $option_row++; ?>
+              <?php } ?>
+              <?php } ?>
+            </select>
           </div>
-          <?php $option_row = 0; ?>
-          <?php $option_value_row = 0; ?>
-          <?php foreach ($product_options as $product_option) { ?>
-          <div id="tab_option<?php echo $option_row; ?>" class="vtabs_page">
-            <table class="list">
-              <thead>
+          <div id="options" style="margin-left: 215px;">
+            <div style="border-bottom: 1px solid #DDDDDD; text-align: right; padding-bottom: 10px; margin-bottom: 15px;"><a onclick="addOption();" class="button"><span><?php echo $button_add_option; ?></span></a></div>
+            <?php $option_row = 0; ?>
+            <?php $option_value_row = 0; ?>
+            <?php foreach ($product_options as $product_option) { ?>
+            <div id="option<?php echo $option_row; ?>" class="option">
+              <table class="form">
                 <tr>
-                  <td class="left"><?php echo $entry_option; ?></td>
-                  <td class="left"><?php echo $entry_sort_order; ?></td>
-                  <td></td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="left"><?php foreach ($languages as $language) { ?>
+                  <td><?php echo $entry_option; ?></td>
+                  <td><?php foreach ($languages as $language) { ?>
                     <?php if ($language['language_id'] == $language_id) { ?>
-                    <input type="text" name="product_option[<?php echo $option_row; ?>][language][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_option['language'][$language['language_id']]['name']; ?>" onkeyup="$('#vtab<?php echo $option_row; ?>').text(this.value);" />
-                    &nbsp;
+                    <input type="text" name="product_option[<?php echo $option_row; ?>][language][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_option['language'][$language['language_id']]['name']; ?>" onkeyup="$('#option option[value=\'option<?php echo $option_row; ?>\']').text(this.value);" />
                     <?php } else { ?>
                     <input type="text" name="product_option[<?php echo $option_row; ?>][language][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_option['language'][$language['language_id']]['name']; ?>" />
-                    &nbsp;
                     <?php } ?>
                     <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
                     <?php } ?></td>
-                  <td class="left"><input type="text" name="product_option[<?php echo $option_row; ?>][sort_order]" value="<?php echo $product_option['sort_order']; ?>" size="5" /></td>
-                  <td class="left"><a onclick="removeOption(<?php echo $option_row; ?>);" class="button"><span><?php echo $button_remove; ?></span></a></td>
                 </tr>
-              </tbody>
-            </table>
-            <br />
-            <table class="list">
-              <thead>
                 <tr>
-                  <td class="left"><?php echo $entry_option_value; ?></td>
-                  <td class="left"><?php echo $entry_quantity; ?></td>
-                  <td class="left"><?php echo $entry_subtract; ?></td>
-                  <td class="left"><?php echo $entry_price; ?></td>
-                  <td class="left"><?php echo $entry_prefix; ?></td>
-                  <td class="left"><?php echo $entry_sort_order; ?></td>
-                  <td></td>
+                  <td><?php echo $entry_sort_order; ?></td>
+                  <td><input type="text" name="product_option[<?php echo $option_row; ?>][sort_order]" value="<?php echo $product_option['sort_order']; ?>" size="2" /></td>
                 </tr>
-              </thead>
-              <?php if ($product_option['product_option_value']) { ?>
-              <?php foreach ($product_option['product_option_value'] as $product_option_value) { ?>
-              <tbody id="option_value_row<?php echo $option_value_row; ?>">
                 <tr>
-                  <td class="left"><?php foreach ($languages as $language) { ?>
+                  <td colspan="2"><a onclick="addOptionValue('<?php echo $option_row; ?>');" class="button"><span><?php echo $button_add_option_value; ?></span></a> <a onclick="removeOption('<?php echo $option_row; ?>');" class="button"><span><?php echo $button_remove; ?></span></a></td>
+                </tr>
+              </table>
+            </div>
+            <?php if ($product_option['product_option_value']) { ?>
+            <?php foreach ($product_option['product_option_value'] as $product_option_value) { ?>
+            <div id="option<?php echo $option_row; ?>_<?php echo $option_value_row; ?>" class="option">
+              <table class="form">
+                <tr>
+                  <td><?php echo $entry_option_value; ?></td>
+                  <td><?php foreach ($languages as $language) { ?>
+                  <?php if ($language['language_id'] == $language_id) { ?>
+                    <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][language][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_option_value['language'][$language['language_id']]['name']; ?>" onkeyup="$('#option option[value=\'option<?php echo $option_row; ?>_<?php echo $option_value_row; ?>\']').text('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + this.value);" />
+                    <?php } else { ?>
                     <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][language][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_option_value['language'][$language['language_id']]['name']; ?>" />
+                    <?php } ?>
                     <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
                     <?php } ?></td>
-                  <td class="left"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][quantity]" value="<?php echo $product_option_value['quantity']; ?>" size="2" /></td>
-                  <td class="left"><select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][subtract]">
+                </tr>
+                <tr>
+                  <td><?php echo $entry_quantity; ?></td>
+                  <td><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][quantity]" value="<?php echo $product_option_value['quantity']; ?>" size="2" /></td>
+                </tr>
+                <tr>
+                  <td><?php echo $entry_subtract; ?></td>
+                  <td><select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][subtract]">
                       <?php if ($product_option_value['subtract']) { ?>
                       <option value="1" selected="selected"><?php echo $text_yes; ?></option>
                       <option value="0"><?php echo $text_no; ?></option>
@@ -351,8 +350,14 @@
                       <option value="0" selected="selected"><?php echo $text_no; ?></option>
                       <?php } ?>
                     </select></td>
-                  <td class="left"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][price]" value="<?php echo $product_option_value['price']; ?>" /></td>
-                  <td class="left"><select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][prefix]">
+                </tr>
+                <tr>
+                  <td><?php echo $entry_price; ?></td>
+                  <td><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][price]" value="<?php echo $product_option_value['price']; ?>" /></td>
+                </tr>
+                <tr>
+                  <td><?php echo $entry_prefix; ?></td>
+                  <td><select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][prefix]">
                       <?php  if ($product_option_value['prefix'] != '-') { ?>
                       <option value="+" selected="selected"><?php echo $text_plus; ?></option>
                       <option value="-"><?php echo $text_minus; ?></option>
@@ -361,37 +366,22 @@
                       <option value="-" selected="selected"><?php echo $text_minus; ?></option>
                       <?php } ?>
                     </select></td>
-                  <td class="left"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][sort_order]" value="<?php echo $product_option_value['sort_order']; ?>" size="5" /></td>
-                  <td class="left"><a onclick="$('#option_value_row<?php echo $option_value_row; ?>').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>
                 </tr>
-              </tbody>
-              <?php $option_value_row++; ?>
-              <?php } ?>
-              <?php } ?>
-              <tbody id="option_row<?php echo $option_row; ?>">
-                <tr class="filter">
-                  <td class="left"><?php foreach ($languages as $language) { ?>
-                    <input type="text" id="product_option_<?php echo $option_row; ?>_product_option_value_language_<?php echo $language['language_id']; ?>_name" value="" />
-                    <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-                    <?php } ?></td>
-                  <td class="left"><input type="text" id="product_option_<?php echo $option_row; ?>_product_option_value_quantity" value="" size="2" /></td>
-                  <td class="left"><select id="product_option_<?php echo $option_row; ?>_product_option_value_subtract">
-                      <option value="1"><?php echo $text_yes; ?></option>
-                      <option value="0" selected="selected"><?php echo $text_no; ?></option>
-                    </select></td>
-                  <td class="left"><input type="text" id="product_option_<?php echo $option_row; ?>_product_option_value_price" value="" /></td>
-                  <td class="left"><select id="product_option_<?php echo $option_row; ?>_product_option_value_prefix">
-                      <option value="+" selected="selected"><?php echo $text_plus; ?></option>
-                      <option value="-"><?php echo $text_minus; ?></option>
-                    </select></td>
-                  <td class="left"><input type="text" id="product_option_<?php echo $option_row; ?>_product_option_value_sort_order" value="" size="5" /></td>
-                  <td class="left"><a onclick="addOptionValue('<?php echo $option_row; ?>');" class="button"><span><?php echo $button_add_option_value; ?></span></a></td>
+                <tr>
+                  <td><?php echo $entry_sort_order; ?></td>
+                  <td><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][sort_order]" value="<?php echo $product_option_value['sort_order']; ?>" size="2" /></td>
                 </tr>
-              </tbody>
-            </table>
+                <tr>
+                  <td colspan="2"><a onclick="removeOptionValue('<?php echo $option_row; ?>_<?php echo $option_value_row; ?>');" class="button"><span><?php echo $button_remove; ?></span></a></td>
+                </tr>
+              </table>
+            </div>
+            <?php $option_value_row++; ?>
+            <?php } ?>
+            <?php } ?>
             <?php $option_row++; ?>
+            <?php } ?>
           </div>
-          <?php } ?>
         </div>
       </div>
       <div id="tab_discount">
@@ -577,134 +567,131 @@ getProducts();
 getRelated();
 //--></script>
 <script type="text/javascript"><!--
+$('#option').bind('change', function() {
+	$('.option').hide();
+	
+	$('#' + $('#option option:selected').attr('value')).show();
+});
+
+$('#option option:first').attr('selected', 'selected');
+
+$('#option').trigger('change');
+//--></script>
+<script type="text/javascript"><!--							 
 var option_row = <?php echo $option_row; ?>;
 
 function addOption() {	
-	$('#options').append('<a id="vtab' + option_row + '" tab="#tab_option' + option_row + '">' + $('#option_name<?php echo $language_id; ?>').attr('value') + '</a>');
-
-	html  = '<div id="tab_option' + option_row + '" class="vtabs_page">';
-	html += '<table class="list">';
-	html += '<thead>';
+	html  = '<div id="option' + option_row + '" class="option">';
+	html += '<table class="form">';
 	html += '<tr>';
-	html += '<td class="left"><?php echo $entry_option; ?></td>';
-	html += '<td class="left"><?php echo $entry_sort_order; ?></td>';
-	html += '<td></td>';
-	html += '</tr>';
-	html += '</thead>';
-	html += '<tbody>';
-	html += '<tr>';
-	html += '<td class="left">';
+	html += '<td><?php echo $entry_option; ?></td>';
+	html += '<td>';
 	<?php foreach ($languages as $language) { ?>
 	<?php if ($language['language_id'] == $language_id) { ?>
-	html += '<input type="text" name="product_option[' + option_row + '][language][<?php echo $language['language_id']; ?>][name]" value="' + $('#option_name<?php echo $language['language_id']; ?>').attr('value') + '" onkeyup="$(\'#vtab' + option_row + '\').text(this.value);" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
+	html += '<input type="text" name="product_option[' + option_row + '][language][<?php echo $language['language_id']; ?>][name]" value="Option ' + option_row + '" onkeyup="$(\'#option option[value=\\\'option' + option_row + '\\\']\').text(this.value);" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
 	<?php } else { ?>
-	html += '<input type="text" name="product_option[' + option_row + '][language][<?php echo $language['language_id']; ?>][name]" value="' + $('#option_name<?php echo $language['language_id']; ?>').attr('value') + '" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
+	html += '<input type="text" name="product_option[' + option_row + '][language][<?php echo $language['language_id']; ?>][name]" value="Option ' + option_row + '" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
 	<?php } ?>
 	<?php } ?>
 	html += '</td>';
-	html += '<td class="left"><input type="text" name="product_option[' + option_row + '][sort_order]" value="' + $('#option_sort_order').attr('value') + '" size="5" /></td>';
-	html += '<td class="left"><a onclick="removeOption(' + option_row + ');" class="button"><span><?php echo $button_remove; ?></span></a></td>';
 	html += '</tr>';
-	html += '</tbody>';
+	html += '<tr>';
+	html += '<td><?php echo $entry_sort_order; ?></td>';
+	html += '<td><input type="text" name="product_option[' + option_row + '][sort_order]" value="" size="2" /></td>';
+	html += '</tr>';
+	html += '<tr>';
+	html += '<td colspan="2"><a onclick="addOptionValue(\'' + option_row + '\');" class="button"><span><?php echo $button_add_option_value; ?></span></a> <a onclick="removeOption(\'' + option_row + '\');" class="button"><span><?php echo $button_remove; ?></span></a></td>';
+	html += '</tr>';
 	html += '</table>';
-	html += '<br />';
-	html += '<table class="list">';
-    html += '<thead>';
-    html += '<tr>';
-    html += '<td class="left"><?php echo $entry_option_value; ?></td>';
-    html += '<td class="left"><?php echo $entry_quantity; ?></td>';
-    html += '<td class="left"><?php echo $entry_subtract; ?></td>';
-    html += '<td class="left"><?php echo $entry_price; ?></td>';
-    html += '<td class="left"><?php echo $entry_prefix; ?></td>';
-    html += '<td class="left"><?php echo $entry_sort_order; ?></td>';
-    html += '<td></td>';
-    html += '</tr>';
-    html += '</thead>';
-    html += '<tbody id="option_row' + option_row + '">';
-    html += '<tr class="filter">';
-    html += '<td class="left">';
-	<?php foreach ($languages as $language) { ?>
-    html += '<input type="text" id="product_option_' + option_row + '_product_option_value_language_<?php echo $language['language_id']; ?>_name" value="" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
-    <?php } ?>
-	html += '</td>';
-    html += '<td class="left"><input type="text" id="product_option_' + option_row + '_product_option_value_quantity" value="" size="2" /></td>';
-    html += '<td class="left"><select id="product_option_' + option_row + '_product_option_value_subtract">';
-    html += '<option value="1"><?php echo $text_yes; ?></option>';
-    html += '<option value="0"><?php echo $text_no; ?></option>';
-    html += '</select></td>';
-	html += '<td class="left"><input type="text" id="product_option_' + option_row + '_product_option_value_price" value="" /></td>';
-    html += '<td class="left"><select id="product_option_' + option_row + '_product_option_value_prefix">';
-    html += '<option value="+"><?php echo $text_plus; ?></option>';
-    html += '<option value="-"><?php echo $text_minus; ?></option>';
-    html += '</select></td>';
-    html += '<td class="left"><input type="text" id="product_option_' + option_row + '_product_option_value_sort_order" value="" size="5" /></td>';
-    html += '<td class="left"><a onclick="addOptionValue(' + option_row + ');" class="button"><span><?php echo $button_add_option_value; ?></span></a></td>';
-    html += '</tr>';
-    html += '</tbody>';
-    html += '</table>';
 	html += '</div>';
+		 
+	$('#options').append(html);
 	
-	<?php foreach ($languages as $language) { ?> 
-	$('#option_name<?php echo $language['language_id']; ?>').attr('value', '');
-	<?php } ?>
-	
-	$('#option_sort_order').attr('value', '');
-	 
-	$('#option').append(html);
-	
-	$.tabs('#options a', '#tab_option' + option_row); 
-	
+	$('#option').append('<option value="option' + option_row + '"><?php echo $text_option; ?> ' + option_row + '</option>');
+	$('#option option[value=\'option' + option_row + '\']').attr('selected', 'selected');
+	$('#option').trigger('change');
+
 	option_row++;
 }
 
 function removeOption(option_row) {
-	$('#vtab' + option_row).remove(); 
-	$('#tab_option' + option_row).remove();
+	$('#option option[value=\'option' + option_row + '\']').remove();
+	$('#option option[value^=\'option' + option_row + '_\']').remove();
 	
-	$.tabs('#options a'); 
+	$('#options div[id=\'option' + option_row + '\']').remove();
+	$('#options div[id^=\'option' + option_row + '_\']').remove();
 }
 
 var option_value_row = <?php echo $option_value_row; ?>;
 
 function addOptionValue(option_id) {
-	html  = '<tbody id="option_value_row' + option_value_row + '">';
+	html  = '<div id="option' + option_id + '_' + option_value_row + '" class="option">';
+	html += '<table class="form">';
 	html += '<tr>';
-	html += '<td class="left">';
+	html += '<td><?php echo $entry_option_value; ?></td>';
+	html += '<td>';
 	<?php foreach ($languages as $language) { ?>
-	html += '<input type="text" name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][language][<?php echo $language['language_id']; ?>][name]" value="' + $('#product_option_' + option_id + '_product_option_value_language_<?php echo $language['language_id']; ?>_name').attr('value') + '" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
+	<?php if ($language['language_id'] == $language_id) { ?>
+	html += '<input type="text" name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][language][<?php echo $language['language_id']; ?>][name]" value="Option Value ' + option_value_row + '" onkeyup="$(\'#option option[value=\\\'option' + option_id + '_' + option_value_row + '\\\']\').text(\'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\' + this.value);" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
+	<?php } else { ?>
+	html += '<input type="text" name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][language][<?php echo $language['language_id']; ?>][name]" value="Option Value ' + option_value_row + '" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
+	<?php } ?>	
 	<?php } ?>
 	html += '</td>';
-	html += '<td class="left"><input type="text" name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][quantity]" value="' + $('#product_option_' + option_id + '_product_option_value_quantity').attr('value') + '" size="2" /></td>';	
-	html += '<td class="left"><select name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][subtract]" id="product_option_' + option_id + '_product_option_value_' + option_value_row + '_subtract">';
+	html += '</tr>';
+	html += '<tr>';
+	html += '<td><?php echo $entry_quantity; ?></td>';
+	html += '<td><input type="text" name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][quantity]" value="' + '" size="2" /></td>';	
+	html += '</tr>';
+	html += '<tr>';
+	html += '<td><?php echo $entry_subtract; ?></td>';
+	html += '<td><select name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][subtract]">';
     html += '<option value="1"><?php echo $text_yes; ?></option>';
     html += '<option value="0"><?php echo $text_no; ?></option>';
     html += '</select></td>';
-	html += '<td class="left"><input type="text" name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][price]" value="' + $('#product_option_' + option_id + '_product_option_value_price').attr('value') + '" /></td>';
-	html += '<td class="left"><select name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][prefix]" id="product_option_' + option_id + '_product_option_value_' + option_value_row + '_prefix">';
+	html += '</tr>';
+	html += '<tr>';
+	html += '<td><?php echo $entry_price; ?></td>';
+	html += '<td><input type="text" name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][price]" value="" /></td>';
+	html += '</tr>';
+	html += '<tr>';	
+	html += '<td><?php echo $entry_prefix; ?></td>';
+	html += '<td><select name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][prefix]">';
 	html += '<option value="+"><?php echo $text_plus; ?></option>';
 	html += '<option value="-"><?php echo $text_minus; ?></option>';
 	html += '</select></td>';
-	html += '<td class="left"><input type="text" name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][sort_order]" value="' + $('#product_option_' + option_id + '_product_option_value_sort_order').attr('value') + '" size="5" /></td>';
-	html += '<td class="left"><a onclick="$(\'#option_value_row' + option_value_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
 	html += '</tr>';
-	html += '</tbody>';
+	html += '<tr>';	
+	html += '<td><?php echo $entry_sort_order; ?></td>';	
+	html += '<td><input type="text" name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][sort_order]" value="" size="2" /></td>';
+	html += '</tr>';
+	html += '<tr>';		
+	html += '<td colspan="2"><a onclick="removeOptionValue(\'' + option_id + '_' + option_value_row + '\');" class="button"><span><?php echo $button_remove; ?></span></a></td>';
+	html += '</tr>';
+	html += '</table>';
+	html += '</div>';
 	
-	$('#option_row' + option_id).before(html);
+	$('#options').append(html);
 	
-	$('#product_option_' + option_id + '_product_option_value_' + option_value_row + '_subtract').attr('value', $('#product_option_' + option_id + '_product_option_value_subtract').attr('value'));
-	$('#product_option_' + option_id + '_product_option_value_' + option_value_row + '_prefix').attr('value', $('#product_option_' + option_id + '_product_option_value_prefix').attr('value'));
+	option = $('#option option[value^=\'option' + option_id + '_\']:last');
 	
-	<?php foreach ($languages as $language) { ?> 
-	$('#product_option_' + option_id + '_product_option_value_language_<?php echo $language['language_id']; ?>_name').attr('value', '');
-	<?php } ?>
+	if (option.size()) {
+		option.after('<option value="option' + option_id + '_' + option_value_row + '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $text_option_value; ?> ' + option_value_row + '</option>');
+	} else {
+		$('#option option[value=\'option' + option_id + '\']').after('<option value="option' + option_id + '_' + option_value_row + '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $text_option_value; ?> ' + option_value_row + '</option>');
+	}
 	
-	$('#product_option_' + option_id + '_product_option_value_quantity').attr('value', '');
-	$('#product_option_' + option_id + '_product_option_value_subtract option').attr('selected', '');
-	$('#product_option_' + option_id + '_product_option_value_price').attr('value', '');
-	$('#product_option_' + option_id + '_product_option_value_prefix option').attr('selected', '');
-	$('#product_option_' + option_id + '_product_option_value_sort_order').attr('value', '');
+	$('#option option[value=\'option' + option_id + '_' + option_value_row + '\']').attr('selected', 'selected');
+	
+	$('#option').trigger('change');
 	
 	option_value_row++;
+}
+
+function removeOptionValue(option_value_row) {
+	$('#option option[value=\'option' + option_value_row + '\']').remove();
+	
+	$('#option' + option_value_row).remove();
 }
 //--></script>
 <script type="text/javascript"><!--
@@ -818,6 +805,5 @@ $(document).ready(function() {
 <script type="text/javascript"><!--
 $.tabs('#tabs a'); 
 $.tabs('#languages a'); 
-$.tabs('#options a'); 
 //--></script>
 <?php echo $footer; ?>

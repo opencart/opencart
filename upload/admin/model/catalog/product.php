@@ -18,7 +18,7 @@ class ModelCatalogProduct extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_store SET product_id = '" . (int)$product_id . "', store_id = '" . (int)$store_id . "'");
 			}
 		}
-		
+		 
 		if (isset($data['product_option'])) {
 			foreach ($data['product_option'] as $product_option) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_option SET product_id = '" . (int)$product_id . "', sort_order = '" . (int)$product_option['sort_order'] . "'");
@@ -192,7 +192,37 @@ class ModelCatalogProduct extends Model {
 		
 		$this->cache->delete('product');
 	}
-
+	
+	public function copyProduct($product_id) {
+		$query = $this->db->query("SELECT DISTINCT *, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'product_id=" . (int)$product_id . "') AS keyword FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		
+		if ($query->num_rows) {
+			$data = array();
+			
+			$data = $query->row;
+			
+			$data = array_merge($data, array('product_description' => $this->getProductDescriptions($product_id)));
+			$data = array_merge($data, array('product_option' => $this->getProductOptions($product_id)));
+			
+			$data['product_image'] = array();
+			
+			$results = $this->getProductImages($product_id);
+			
+			foreach ($results as $result) {
+				$data['product_image'][] = $result['image'];
+			}
+			
+			$data = array_merge($data, array('product_discount' => $this->getProductDiscounts($product_id)));
+			$data = array_merge($data, array('product_special' => $this->getProductSpecials($product_id)));
+			$data = array_merge($data, array('product_download' => $this->getProductDownloads($product_id)));
+			$data = array_merge($data, array('product_category' => $this->getProductCategories($product_id)));
+			$data = array_merge($data, array('product_store' => $this->getProductStores($product_id)));
+			$data = array_merge($data, array('product_related' => $this->getProductRelated($product_id)));
+			
+			$this->addProduct($data);
+		}
+	}
+	
 	public function deleteProduct($product_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_description WHERE product_id = '" . (int)$product_id . "'");
@@ -319,7 +349,7 @@ class ModelCatalogProduct extends Model {
 		
 		return $product_description_data;
 	}
-	
+
 	public function getProductOptions($product_id) {
 		$product_option_data = array();
 		

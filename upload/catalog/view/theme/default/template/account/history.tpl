@@ -12,7 +12,7 @@
     <div style="display: inline-block; margin-bottom: 10px; width: 100%;">
       <div style="width: 49%; float: left; margin-bottom: 2px;"><b><?php echo $text_order; ?></b> #<?php echo $order['order_id']; ?></div>
       <div style="width: 49%; float: right; margin-bottom: 2px; text-align: right;"><b><?php echo $text_status; ?></b> <?php echo $order['status']; ?></div>
-      <div class="content" style="clear: both;">
+      <div class="content" style="clear: both; padding: 5px;">
         <div style="padding: 5px;">
           <table width="100%">
             <tr>

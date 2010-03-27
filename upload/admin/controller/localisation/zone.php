@@ -184,7 +184,7 @@ class ControllerLocalisationZone extends Controller {
 			$this->data['zones'][] = array(
 				'zone_id'  => $result['zone_id'],
 				'country'  => $result['country'],
-				'name'     => $result['name'],
+				'name'     => $result['name'] . (($result['zone_id'] == $this->config->get('config_zone_id')) ? $this->language->get('text_default') : NULL),
 				'code'     => $result['code'],
 				'selected' => isset($this->request->post['selected']) && in_array($result['zone_id'], $this->request->post['selected']),
 				'action'   => $action			
@@ -391,6 +391,10 @@ class ControllerLocalisationZone extends Controller {
 		$this->load->model('localisation/geo_zone');
 		
 		foreach ($this->request->post['selected'] as $zone_id) {
+			if ($this->config->get('config_zone_id') == $zone_id) {
+				$this->error['warning'] = $this->language->get('error_default');
+			}
+			
 			$store_total = $this->model_setting_store->getTotalStoresByZoneId($zone_id);
 
 			if ($store_total) {

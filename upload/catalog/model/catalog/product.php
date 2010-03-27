@@ -22,9 +22,9 @@ class ModelCatalogProduct extends Model {
 		);	
 			
 		if (in_array($sort, $sort_data)) {
-			$sql .= " ORDER BY " . $sort;
+			$sql .= " ORDER BY LCASE(" . $sort . ")";
 		} else {
-			$sql .= " ORDER BY pd.name";	
+			$sql .= " ORDER BY LCASE(pd.name)";	
 		}
 			
 		if ($order == 'DESC') {
@@ -60,9 +60,9 @@ class ModelCatalogProduct extends Model {
 		);	
 			
 		if (in_array($sort, $sort_data)) {
-			$sql .= " ORDER BY " . $sort;
+			$sql .= " ORDER BY LCASE(" . $sort . ")";
 		} else {
-			$sql .= " ORDER BY pd.name";	
+			$sql .= " ORDER BY LCASE(pd.name)";	
 		}
 			
 		if ($order == 'DESC') {
@@ -121,9 +121,9 @@ class ModelCatalogProduct extends Model {
 			);	
 			
 			if (in_array($sort, $sort_data)) {
-				$sql .= " ORDER BY " . $sort;
+				$sql .= " ORDER BY LCASE(" . $sort . ")";
 			} else {
-				$sql .= " ORDER BY pd.name";	
+				$sql .= " ORDER BY LCASE(pd.name)";	
 			}
 			
 			if ($order == 'DESC') {
@@ -170,7 +170,7 @@ class ModelCatalogProduct extends Model {
 				$sql .= " AND p.product_id IN (SELECT product_id FROM " . DB_PREFIX . "product_to_category WHERE " . implode(" OR ", $data) . ")";
 			}
 			
-			$sql .= " AND p.status = '1' AND p.date_available <= NOW() GROUP BY p.product_id";
+			$sql .= " AND p.status = '1' AND p.date_available <= NOW()";
 			
 			$query = $this->db->query($sql);
 		
@@ -336,9 +336,9 @@ class ModelCatalogProduct extends Model {
 		);
 			
 		if (in_array($sort, $sort_data)) {
-			$sql .= " ORDER BY " . $sort;
+			$sql .= " ORDER BY LCASE(" . $sort . ")";
 		} else {
-			$sql .= " ORDER BY pd.name";
+			$sql .= " ORDER BY LCASE(pd.name)";	
 		}
 			
 		if ($order == 'DESC') {

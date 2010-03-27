@@ -10,7 +10,7 @@ class ModelCatalogManufacturer extends Model {
 		$manufacturer = $this->cache->get('manufacturer.' . (int)$this->config->get('config_store_id'));
 		
 		if (!$manufacturer) {
-			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_to_store m2s ON (m.manufacturer_id = m2s.manufacturer_id) WHERE m2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY m.name");
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_to_store m2s ON (m.manufacturer_id = m2s.manufacturer_id) WHERE m2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY LCASE(m.name)");
 	
 			$manufacturer = $query->rows;
 			

@@ -10,7 +10,7 @@
   <div class="right"></div>
   <div class="heading">
     <h1 style="background-image: url('view/image/shipping.png');"><?php echo $heading_title; ?></h1>
-    <div class="buttons"><a onclick="location='<?php echo $insert; ?>'" class="button"><span><?php echo $button_insert; ?></span></a><a onclick="$('form').submit();" class="button"><span><?php echo $button_delete; ?></span></a></div>
+    <div class="buttons"><a onclick="location = '<?php echo $insert; ?>'" class="button"><span><?php echo $button_insert; ?></span></a><a onclick="$('form').submit();" class="button"><span><?php echo $button_delete; ?></span></a></div>
   </div>
   <div class="content">
     <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">

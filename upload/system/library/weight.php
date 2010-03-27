@@ -29,7 +29,7 @@ final class Weight {
 			$from = $this->weights[strtolower($from)]['value'];
 			$to = $this->weights[strtolower($to)]['value'];
 		
-			return $value * ($from / $to);
+			return $value * ($to / $from);
 		}
   	}
 

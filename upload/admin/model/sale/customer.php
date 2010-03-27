@@ -24,28 +24,32 @@ class ModelSaleCustomer extends Model {
 	}
 		
 	public function getCustomers($data = array()) {
-		$sql = "SELECT *, CONCAT(firstname, ' ', lastname) AS name FROM " . DB_PREFIX . "customer";
+		$sql = "SELECT *, CONCAT(c.firstname, ' ', c.lastname) AS name, cg.name AS customer_group FROM " . DB_PREFIX . "customer c LEFT JOIN " . DB_PREFIX . "customer_group cg ON (c.customer_group_id = cg.customer_group_id) ";
 
 		$implode = array();
 		
 		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
-			$implode[] = "CONCAT(firstname, ' ', lastname) LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
+			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
 		}
 		
 		if (isset($data['filter_email']) && !is_null($data['filter_email'])) {
-			$implode[] = "email = '" . $this->db->escape($data['filter_email']) . "'";
+			$implode[] = "c.email = '" . $this->db->escape($data['filter_email']) . "'";
+		}
+		
+		if (isset($data['filter_customer_group_id']) && !is_null($data['filter_customer_group_id'])) {
+			$implode[] = "cg.customer_group_id = '" . $this->db->escape($data['filter_customer_group_id']) . "'";
 		}	
 		
 		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
-			$implode[] = "status = '" . (int)$data['filter_status'] . "'";
+			$implode[] = "c.status = '" . (int)$data['filter_status'] . "'";
 		}	
 		
 		if (isset($data['filter_approved']) && !is_null($data['filter_approved'])) {
-			$implode[] = "approved = '" . (int)$data['filter_approved'] . "'";
+			$implode[] = "c.approved = '" . (int)$data['filter_approved'] . "'";
 		}		
 		
 		if (isset($data['filter_date_added']) && !is_null($data['filter_date_added'])) {
-			$implode[] = "DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+			$implode[] = "DATE(c.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 		
 		if ($implode) {
@@ -54,9 +58,10 @@ class ModelSaleCustomer extends Model {
 		
 		$sort_data = array(
 			'name',
-			'email',
-			'status',
-			'date_added'
+			'c.email',
+			'customer_group',
+			'c.status',
+			'c.date_added'
 		);	
 			
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

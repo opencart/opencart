@@ -42,7 +42,6 @@ $_['text_sale']              = 'Sales';
 $_['text_shipping']          = 'Shipping';
 $_['text_setting']           = 'Settings';
 $_['text_stock_status']      = 'Stock Statuses';
-$_['text_store']             = 'Manage Stores';
 $_['text_support']           = 'Support Forum';
 $_['text_system']            = 'System';
 $_['text_tax_class']         = 'Tax Classes';

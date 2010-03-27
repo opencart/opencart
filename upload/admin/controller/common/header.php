@@ -54,7 +54,6 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_shipping'] = $this->language->get('text_shipping');		
      	$this->data['text_setting'] = $this->language->get('text_setting');
 		$this->data['text_stock_status'] = $this->language->get('text_stock_status');
-		$this->data['text_store'] = $this->language->get('text_store');
 		$this->data['text_system'] = $this->language->get('text_system');
 		$this->data['text_tax_class'] = $this->language->get('text_tax_class');
 		$this->data['text_total'] = $this->language->get('text_total');
@@ -116,7 +115,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['review'] = HTTPS_SERVER . 'index.php?route=catalog/review';
 		$this->data['shipping'] = HTTPS_SERVER . 'index.php?route=extension/shipping';
 		$this->data['setting'] = HTTPS_SERVER . 'index.php?route=setting/setting';
-		$this->data['store'] = HTTPS_SERVER . 'index.php?route=setting/store';
+		$this->data['store'] = HTTP_CATALOG;
 		$this->data['stock_status'] = HTTPS_SERVER . 'index.php?route=localisation/stock_status';
       	$this->data['tax_class'] = HTTPS_SERVER . 'index.php?route=localisation/tax_class';
 		$this->data['total'] = HTTPS_SERVER . 'index.php?route=extension/total';

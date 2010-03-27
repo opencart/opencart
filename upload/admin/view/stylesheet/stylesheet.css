@@ -21,7 +21,7 @@ select {
 	padding: 1px;
 }
 textarea {
-	padding: 2px;	
+	padding: 2px;
 }
 a, a:visited {
 	color: #003366;
@@ -35,7 +35,7 @@ form {
 	height: 56px;
 	padding: 0px 30px;
 	background: url('../image/header.png') repeat-x;
-	min-width: 900px;		
+	min-width: 900px;
 }
 #header .div1 {
 	color: #FFFFFF;
@@ -60,7 +60,7 @@ form {
 	height: 34px;
 	clear: both;
 	padding: 0px 30px;
-	min-width: 900px;		
+	min-width: 900px;
 }
 ul.left {
 	float: left;
@@ -134,13 +134,12 @@ ul.right {
 	padding: 10px 30px 0px 30px;
 	min-width: 900px;
 	padding-bottom: 128px;
-	clear: both;
 }
 #container {
 	height: 100%;
 }
 body > #container {
-	height: auto; 
+	height: auto;
 	min-height: 100%;
 }
 #footer {
@@ -185,7 +184,7 @@ body > #container {
 	background: #FEFBCC;
 	border: 1px solid #E6DB55;
 	font-size: 12px;
-	text-align: center;	
+	text-align: center;
 }
 .box {
 	margin-bottom: 15px;
@@ -244,6 +243,7 @@ body > #container {
 	width: 100%;
 	border-top: 1px solid #DDDDDD;
 	border-left: 1px solid #DDDDDD;
+	margin-bottom: 20px;
 }
 .list td {
 	border-right: 1px solid #DDDDDD;
@@ -266,10 +266,10 @@ body > #container {
 	padding: 0px 5px;
 }
 .list tbody tr:odd {
- background: #FFFFFF;
+	background: #FFFFFF;
 }
 .list tbody tr:even {
- background: #E4EEF7;
+	background: #E4EEF7;
 }
 .list .left {
 	text-align: left;
@@ -327,7 +327,7 @@ body > #container {
 .form {
 	width: 100%;
 	border-collapse: collapse;
-	margin-bottom: 15px;
+	margin-bottom: 20px;
 }
 table.form tr td:first-child {
 	width: 200px;

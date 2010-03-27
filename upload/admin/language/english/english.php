@@ -39,6 +39,7 @@ $_['button_close']            = 'Close';
 $_['button_filter']           = 'Filter';
 $_['button_send']             = 'Send';
 $_['button_edit']             = 'Edit';
+$_['button_copy']             = 'Copy';
 $_['button_back']             = 'Back';
 $_['button_remove']           = 'Remove';
 $_['button_backup']           = 'Backup';
@@ -52,12 +53,13 @@ $_['button_add_special']      = 'Add Special';
 $_['button_add_image']        = 'Add Image';
 $_['button_add_geo_zone']     = 'Add Geo Zone';
 $_['button_add_rate']         = 'Add Tax Rate';
+$_['button_add_history']      = 'Add Order History';
 $_['button_approve']          = 'Approve';
 $_['button_reset']            = 'Reset';
+$_['button_generate']         = 'Generate';
 
 // Tab
 $_['tab_admin']               = 'Admin';
-$_['tab_cache']               = 'Cache';
 $_['tab_data']                = 'Data';
 $_['tab_discount']            = 'Discount';
 $_['tab_general']             = 'General';
@@ -67,17 +69,14 @@ $_['tab_server']              = 'Server';
 $_['tab_store']               = 'Store';
 $_['tab_special']             = 'Special';
 $_['tab_local']               = 'Local';
-$_['tab_stats']               = 'Statistics';
-$_['tab_order']               = 'Orders';
-$_['tab_customer']            = 'Customers';
 $_['tab_mail']                = 'Mail';
-$_['tab_contact']             = 'Contact Details';
+$_['tab_order']               = 'Order Details';
+$_['tab_history']             = 'Order History';
 $_['tab_product']             = 'Products';
-$_['tab_shipping']            = 'Shipping';
-$_['tab_payment']             = 'Payment';
+$_['tab_shipping']            = 'Shipping Address';
+$_['tab_payment']             = 'Payment Address';
 
 // Error
-$_['error_upload_999']        = 'Warning: Please check the form';
 $_['error_upload_1']          = 'Warning: The uploaded file exceeds the upload_max_filesize directive in php.ini!';
 $_['error_upload_2']          = 'Warning: The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form!';
 $_['error_upload_3']          = 'Warning: The uploaded file was only partially uploaded!';

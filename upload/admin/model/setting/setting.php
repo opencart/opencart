@@ -1,9 +1,9 @@
 <?php 
 class ModelSettingSetting extends Model {
 	public function getSetting($group) {
-		$data = array();
+		$data = array(); 
 		
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE `group` = '" . $this->db->escape($group) . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE AND `group` = '" . $this->db->escape($group) . "'");
 		
 		foreach ($query->rows as $result) {
 			$data[$result['key']] = $result['value'];

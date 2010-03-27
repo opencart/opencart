@@ -49,7 +49,7 @@
     <?php if (isset($products)) { ?>
     <div class="sort">
       <div class="div1">
-        <select name="sort" onchange="location=this.value">
+        <select name="sort" onchange="location = this.value">
           <?php foreach ($sorts as $sorts) { ?>
           <?php if (($sort . '-' . $order) == $sorts['value']) { ?>
           <option value="<?php echo $sorts['href']; ?>" selected="selected"><?php echo $sorts['text']; ?></option>

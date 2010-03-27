@@ -7,7 +7,7 @@
   <div class="right"></div>
   <div class="heading">
     <h1><?php echo $heading_title; ?></h1>
-    <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location='<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+    <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
   </div>
   <div class="content">
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">

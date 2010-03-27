@@ -10,7 +10,7 @@
   <div class="right"></div>
   <div class="heading">
     <h1 style="background-image: url('view/image/customer.png');"><?php echo $heading_title; ?></h1>
-    <div class="buttons"><a onclick="$('form').attr('action', '<?php echo $approve; ?>'); $('form').submit();" class="button"><span><?php echo $button_approve; ?></span></a><a onclick="location='<?php echo $insert; ?>'" class="button"><span><?php echo $button_insert; ?></span></a><a onclick="$('form').attr('action', '<?php echo $delete; ?>'); $('form').submit();" class="button"><span><?php echo $button_delete; ?></span></a></div>
+    <div class="buttons"><a onclick="$('form').attr('action', '<?php echo $approve; ?>'); $('form').submit();" class="button"><span><?php echo $button_approve; ?></span></a><a onclick="location = '<?php echo $insert; ?>'" class="button"><span><?php echo $button_insert; ?></span></a><a onclick="$('form').attr('action', '<?php echo $delete; ?>'); $('form').submit();" class="button"><span><?php echo $button_delete; ?></span></a></div>
   </div>
   <div class="content">
     <form action="" method="post" enctype="multipart/form-data" id="form">
@@ -23,22 +23,27 @@
               <?php } else { ?>
               <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
               <?php } ?></td>
-            <td class="left"><?php if ($sort == 'email') { ?>
+            <td class="left"><?php if ($sort == 'c.email') { ?>
               <a href="<?php echo $sort_email; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_email; ?></a>
               <?php } else { ?>
               <a href="<?php echo $sort_email; ?>"><?php echo $column_email; ?></a>
               <?php } ?></td>
-            <td class="left"><?php if ($sort == 'status') { ?>
+            <td class="left"><?php if ($sort == 'customer_group') { ?>
+              <a href="<?php echo $sort_customer_group; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_customer_group; ?></a>
+              <?php } else { ?>
+              <a href="<?php echo $sort_customer_group; ?>"><?php echo $column_customer_group; ?></a>
+              <?php } ?></td>              
+            <td class="left"><?php if ($sort == 'c.status') { ?>
               <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
               <?php } else { ?>
               <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
               <?php } ?></td>
-            <td class="left"><?php if ($sort == 'approved') { ?>
+            <td class="left"><?php if ($sort == 'c.approved') { ?>
               <a href="<?php echo $sort_approved; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_approved; ?></a>
               <?php } else { ?>
               <a href="<?php echo $sort_approved; ?>"><?php echo $column_approved; ?></a>
               <?php } ?></td>              
-            <td class="left"><?php if ($sort == 'date_added') { ?>
+            <td class="left"><?php if ($sort == 'c.date_added') { ?>
               <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
               <?php } else { ?>
               <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
@@ -51,6 +56,16 @@
             <td></td>
             <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" /></td>
             <td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" /></td>
+            <td><select name="filter_customer_group_id">
+                <option value="*"></option>
+                <?php foreach ($customer_groups as $customer_group) { ?>
+                <?php if ($customer_group['customer_group_id'] == $filter_customer_group_id) { ?>
+                <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select></td>
             <td><select name="filter_status">
                 <option value="*"></option>
                 <?php if ($filter_status) { ?>
@@ -90,6 +105,7 @@
               <?php } ?></td>
             <td class="left"><?php echo $customer['name']; ?></td>
             <td class="left"><?php echo $customer['email']; ?></td>
+            <td class="left"><?php echo $customer['customer_group']; ?></td>
             <td class="left"><?php echo $customer['status']; ?></td>
             <td class="left"><?php echo $customer['approved']; ?></td>
             <td class="left"><?php echo $customer['date_added']; ?></td>
@@ -100,7 +116,7 @@
           <?php } ?>
           <?php } else { ?>
           <tr>
-            <td class="center" colspan="7"><?php echo $text_no_results; ?></td>
+            <td class="center" colspan="8"><?php echo $text_no_results; ?></td>
           </tr>
           <?php } ?>
         </tbody>
@@ -124,6 +140,12 @@ function filter() {
 	if (filter_email) {
 		url += '&filter_email=' + encodeURIComponent(filter_email);
 	}
+	
+	var filter_customer_group_id = $('select[name=\'filter_customer_group_id\']').attr('value');
+	
+	if (filter_customer_group_id != '*') {
+		url += '&filter_customer_group_id=' + encodeURIComponent(filter_customer_group_id);
+	}	
 	
 	var filter_status = $('select[name=\'filter_status\']').attr('value');
 	

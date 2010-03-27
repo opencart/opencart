@@ -10,7 +10,7 @@
   <div class="right"></div>
   <div class="heading">
     <h1 style="background-image: url('view/image/mail.png');"><?php echo $heading_title; ?></h1>
-    <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_send; ?></span></a><a onclick="location='<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+    <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_send; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
   </div>
   <div class="content">
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -18,6 +18,7 @@
         <tr>
           <td><?php echo $entry_store; ?></td>
           <td><select name="store_id">
+              <option value="0"><?php echo $text_default; ?></option>
               <?php foreach ($stores as $store) { ?>
               <?php if ($store['store_id'] == $store_id) { ?>
               <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>

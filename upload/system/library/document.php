@@ -82,8 +82,8 @@ final class Document {
 		return $this->styles;
 	}	
 	
-	public function addScript($src) {
-		$this->scripts[] = array('src' => $src);			
+	public function addScript($script) {
+		$this->scripts[] = $script;			
 	}
 	
 	public function getScripts() {

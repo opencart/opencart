@@ -183,7 +183,7 @@ class ControllerLocalisationCountry extends Controller {
 
 			$this->data['countries'][] = array(
 				'country_id' => $result['country_id'],
-				'name'       => $result['name'],
+				'name'       => $result['name'] . (($result['country_id'] == $this->config->get('config_country_id')) ? $this->language->get('text_default') : NULL),
 				'iso_code_2' => $result['iso_code_2'],
 				'iso_code_3' => $result['iso_code_3'],
 				'selected'   => isset($this->request->post['selected']) && in_array($result['country_id'], $this->request->post['selected']),				
@@ -397,6 +397,10 @@ class ControllerLocalisationCountry extends Controller {
 		$this->load->model('localisation/geo_zone');
 		
 		foreach ($this->request->post['selected'] as $country_id) {
+			if ($this->config->get('config_country_id') == $country_id) {
+				$this->error['warning'] = $this->language->get('error_default');
+			}
+			
 			$store_total = $this->model_setting_store->getTotalStoresByCountryId($country_id);
 
 			if ($store_total) {

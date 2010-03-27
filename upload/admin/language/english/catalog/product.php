@@ -6,8 +6,10 @@ $_['heading_title']          = 'Products';
 $_['text_success']           = 'Success: You have modified products!';
 $_['text_plus']              = '+';
 $_['text_minus']             = '-';
-$_['text_default']           = 'Default Store';
+$_['text_default']           = 'Default';
 $_['text_image_manager']     = 'Image Manager';
+$_['text_option']            = 'Option';
+$_['text_option_value']      = 'Option Value';
 
 // Column
 $_['column_name']            = 'Product Name';

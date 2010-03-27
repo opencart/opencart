@@ -20,5 +20,5 @@ $_['error_permission'] = 'Warning: You do not have permission to modify download
 $_['error_name']       = 'Name must be greater than 3 and less than 64 characters!';
 $_['error_filename']   = 'Filename must be greater than 3 and less than 128 characters!';
 $_['error_filetype']   = 'Invalid file type!';
-$_['error_product']    = 'Warning: This Download cannot be deleted as it is currently assigned to %s products!';
+$_['error_product']    = 'Warning: This download cannot be deleted as it is currently assigned to %s products!';
 ?>

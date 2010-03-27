@@ -42,10 +42,9 @@ class ControllerCommonHeader extends Controller {
 		}
 		
 		if ($this->config->get('config_icon') && file_exists(DIR_IMAGE . $this->config->get('config_icon'))) {
-			$this->document->links[] = array(
-				'href' => $server . $this->config->get('config_icon'),
-				'rel'  => 'icon'
-			);
+			$this->data['icon'] = $server . $this->config->get('config_icon');
+		} else {
+			$this->data['icon'] = '';
 		}
 		
 		$this->data['charset'] = $this->language->get('charset');
@@ -58,7 +57,11 @@ class ControllerCommonHeader extends Controller {
 		
 		$this->data['store'] = $this->config->get('config_name');
 		
-		$this->data['logo'] = $server . $this->config->get('config_logo');
+		if ($this->config->get('config_logo') && file_exists(DIR_IMAGE . $this->config->get('config_logo'))) {
+			$this->data['logo'] = $server . $this->config->get('config_logo');
+		} else {
+			$this->data['logo'] = '';
+		}
 		
 		$this->data['text_home'] = $this->language->get('text_home');
 		$this->data['text_special'] = $this->language->get('text_special');

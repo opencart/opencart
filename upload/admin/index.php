@@ -40,7 +40,7 @@ $registry->set('log', $log);
 // Error Handler
 function error_handler($errno, $errstr, $errfile, $errline) {
 	global $config, $log;
-	
+
 	switch ($errno) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
@@ -58,9 +58,9 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 			$error = 'Unknown';
 			break;
 	}
-		
-    if ($config->get('config_error_display')) {
-        echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
+
+	if ($config->get('config_error_display')) {
+		echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
 	}
 	
 	if ($config->get('config_error_log')) {
@@ -107,10 +107,10 @@ foreach ($query->rows as $result) {
 	);
 }
 
-$config->set('config_language_id', $languages[$config->get('config_language')]['language_id']);
+$config->set('config_language_id', $languages[$config->get('config_admin_language')]['language_id']);
 
-$language = new Language($languages[$config->get('config_language')]['directory']);
-$language->load($languages[$config->get('config_language')]['filename']);	
+$language = new Language($languages[$config->get('config_admin_language')]['directory']);
+$language->load($languages[$config->get('config_admin_language')]['filename']);	
 $registry->set('language', $language);
 
 // Currency

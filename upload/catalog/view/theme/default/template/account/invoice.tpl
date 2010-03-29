@@ -1,4 +1,5 @@
 <?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
+
 <div id="content">
   <div class="top">
     <div class="left"></div>
@@ -11,7 +12,12 @@
     <div class="content">
       <table width="536">
         <tr>
-          <td width="33.3%" valign="top"><b><?php echo $text_order; ?></b><br />
+          <td width="33.3%" valign="top"><?php if ($invoice_id) { ?>
+            <b><?php echo $text_invoice_id; ?></b><br />
+            <?php echo $invoice_id; ?><br />
+            <br />
+            <?php } ?>
+            <b><?php echo $text_order_id; ?></b><br />
             #<?php echo $order_id; ?><br />
             <br />
             <b><?php echo $text_email; ?></b><br />
@@ -80,6 +86,7 @@
     <b style="margin-bottom: 2px; display: block;"><?php echo $text_comment; ?></b>
     <div class="content"><?php echo $comment; ?></div>
     <?php } ?>
+    <?php if ($historys) { ?>
     <b style="margin-bottom: 2px; display: block;"><?php echo $text_order_history; ?></b>
     <div class="content">
       <table width="536">
@@ -97,6 +104,7 @@
         <?php } ?>
       </table>
     </div>
+    <?php } ?>
     <div class="buttons">
       <table>
         <tr>

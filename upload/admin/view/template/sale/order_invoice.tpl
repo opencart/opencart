@@ -23,11 +23,17 @@
           <?php echo $order['store_url']; ?></td>
         <td align="right" valign="top"><table>
             <tr>
-              <td><b><?php echo $text_invoice_date; ?></b></td>
+              <td><b><?php echo $text_date_added; ?></b></td>
               <td><?php echo $order['date_added']; ?></td>
             </tr>
+            <?php if ($order['invoice_id']) { ?>
             <tr>
-              <td><b><?php echo $text_invoice_no; ?></b></td>
+              <td><b><?php echo $text_invoice_id; ?></b></td>
+              <td><?php echo $order['invoice_id']; ?></td>
+            </tr>
+            <?php } ?>
+            <tr>
+              <td><b><?php echo $text_order_id; ?></b></td>
               <td><?php echo $order['order_id']; ?></td>
             </tr>
           </table></td>

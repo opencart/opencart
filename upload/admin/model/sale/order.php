@@ -1,9 +1,5 @@
 <?php  
 class ModelSaleOrder extends Model {
-	public function editOrder($order_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET invoice_id = '" . (int)$data['invoice_id'] . "', invoice_prefix = '" . $this->db->escape($data['invoice_prefix']) . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
-	}
-	
 	public function deleteOrder($order_id) {
 		if ($this->config->get('config_stock_subtract')) {
 			$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND order_id = '" . (int)$order_id . "'");
@@ -36,7 +32,7 @@ class ModelSaleOrder extends Model {
 
       	$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$data['order_status_id'] . "', notify = '" . (isset($data['notify']) ? (int)$data['notify'] : 0) . "', comment = '" . $this->db->escape(strip_tags($data['comment'])) . "', date_added = NOW()");
 
-      	if (isset($data['notify'])) {
+      	if ($data['notify']) {
         	$order_query = $this->db->query("SELECT *, os.name AS status FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id AND os.language_id = o.language_id) LEFT JOIN " . DB_PREFIX . "language l ON (o.language_id = l.language_id) WHERE o.order_id = '" . (int)$order_id . "'");
 	    	
 			if ($order_query->num_rows) {
@@ -246,14 +242,20 @@ class ModelSaleOrder extends Model {
 		return $query->rows;
 	}	
 	
-	public function getMaxInvoiceId() {
+	public function generateInvoiceId($order_id) {
 		$query = $this->db->query("SELECT MAX(invoice_id) AS invoice_id FROM `" . DB_PREFIX . "order`");
 		
 		if ($query->row['invoice_id']) {
-			return $query->row['invoice_id'];
+			$invoice_id = (int)$query->row['invoice_id'] + 1;
+		} elseif ($this->config->get('config_invoice_id')) {
+			$invoice_id = $this->config->get('config_invoice_id');
 		} else {
-			return 0;
+			$invoice_id = 1;
 		}
+		
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET invoice_id = '" . (int)$invoice_id . "', invoice_prefix = '" . $this->db->escape($this->config->get('config_invoice_prefix')) . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
+		
+		return $this->config->get('config_invoice_prefix') . $invoice_id;
 	}
 	
 	public function getOrderProducts($order_id) {

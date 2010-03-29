@@ -122,7 +122,7 @@
         <table class="form">
           <tr>
             <td><?php echo $entry_country; ?></td>
-            <td><select name="config_country_id" id="country" onchange="$('#zone').load('index.php?route=setting/store/zone&country_id=' + this.value + '&zone_id=<?php echo $config_zone_id; ?>');">
+            <td><select name="config_country_id" id="country" onchange="$('#zone').load('index.php?route=setting/setting/zone&country_id=' + this.value + '&zone_id=<?php echo $config_zone_id; ?>');">
                 <?php foreach ($countries as $country) { ?>
                 <?php if ($country['country_id'] == $config_country_id) { ?>
                 <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
@@ -149,6 +149,18 @@
                 <?php } ?>
               </select></td>
           </tr>
+          <tr>
+            <td><?php echo $entry_admin_language; ?></td>
+            <td><select name="config_admin_language">
+                <?php foreach ($languages as $language) { ?>
+                <?php if ($language['code'] == $config_admin_language) { ?>
+                <option value="<?php echo $language['code']; ?>" selected="selected"><?php echo $language['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $language['code']; ?>"><?php echo $language['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select></td>
+          </tr>          
           <tr>
             <td><?php echo $entry_currency; ?></td>
             <td><select name="config_currency">

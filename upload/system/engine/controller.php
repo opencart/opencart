@@ -24,14 +24,17 @@ abstract class Controller {
 	}
 
 	protected function redirect($url) {
-		header('Location: ' . $url);
+		header('Location: ' . str_replace('&amp;', '&', $url));
 		exit();
 	}
 	
 	protected function render($return = FALSE) {
 		foreach ($this->children as $child) {
-			$file = DIR_APPLICATION . 'controller/' . str_replace('../', '', $child) . '.php';
-			$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $child);
+			$action = new Action($child);
+			$file   = $action->getFile();
+			$class  = $action->getClass();
+			$method = $action->getMethod();
+			$args   = $action->getArgs();
 		
 			if (file_exists($file)) {
 				require_once($file);

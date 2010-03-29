@@ -31,8 +31,8 @@ final class Front {
   	}
     
 	private function execute($action) {
-		$file   = DIR_APPLICATION . 'controller/' . str_replace('../', '', $action->getClass()) . '.php';
-		$class  = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $action->getClass());
+		$file   = $action->getFile();
+		$class  = $action->getClass();
 		$method = $action->getMethod();
 		$args   = $action->getArgs();
 

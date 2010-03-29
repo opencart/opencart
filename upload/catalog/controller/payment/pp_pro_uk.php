@@ -131,8 +131,8 @@ class ControllerPaymentPPProUK extends Controller {
 			'EMAIL'     => $order_info['email'],
             'ACCT'      => str_replace(' ', '', $this->request->post['cc_number']),
             'ACCTTYPE'  => $this->request->post['cc_type'],
-            'CARDSTART' => $this->request->post['cc_start_date_month'] . substr($this->request->post['cc_start_date_year']) - 2, 2),
-            'EXPDATE'   => $this->request->post['cc_expire_date_month'] . substr($this->request->post['cc_expire_date_year']) - 2, 2),
+            'CARDSTART' => $this->request->post['cc_start_date_month'] . substr($this->request->post['cc_start_date_year'], - 2, 2),
+            'EXPDATE'   => $this->request->post['cc_expire_date_month'] . substr($this->request->post['cc_expire_date_year'], - 2, 2),
             'CVV2'      => $this->request->post['cc_cvv2'],
 			'CARDISSUE' => $this->request->post['cc_issue']
 		);

@@ -25,6 +25,7 @@ $_['entry_template']          = 'Template:';
 $_['entry_country']           = 'Country:';
 $_['entry_zone']              = 'Region / State:';
 $_['entry_language']          = 'Language:';
+$_['entry_admin_language']    = 'Administration Language:';
 $_['entry_currency']          = 'Currency:';
 $_['entry_currency_auto']     = 'Auto Update Currency:<br /><span class="help">Set your store to automatically update currencies daily.</span>';
 $_['entry_weight_class']      = 'Weight Class:';

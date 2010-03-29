@@ -55,8 +55,9 @@ class ControllerAccountInvoice extends Controller {
 		
 		if ($order_info) {
       		$this->data['heading_title'] = $this->language->get('heading_title');
-
-    		$this->data['text_order'] = $this->language->get('text_order');
+			
+			$this->data['text_invoice_id'] = $this->language->get('text_invoice_id');
+    		$this->data['text_order_id'] = $this->language->get('text_order_id');
 			$this->data['text_email'] = $this->language->get('text_email');
 			$this->data['text_telephone'] = $this->language->get('text_telephone');
 			$this->data['text_fax'] = $this->language->get('text_fax');
@@ -79,6 +80,13 @@ class ControllerAccountInvoice extends Controller {
       		$this->data['button_continue'] = $this->language->get('button_continue');
 
 			$this->data['order_id'] = $this->request->get['order_id'];
+			
+			if ($order_info['invoice_id']) {
+				$this->data['invoice_id'] = $order_info['invoice_prefix'] . $order_info['invoice_id'];
+			} else {
+				$this->data['invoice_id'] = '';
+			}
+			
 			$this->data['email'] = $order_info['email'];
 			$this->data['telephone'] = $order_info['telephone'];
 			$this->data['fax'] = $order_info['fax'];
@@ -187,7 +195,7 @@ class ControllerAccountInvoice extends Controller {
       		
 			$this->data['historys'] = array();
 
-			$results = $this->model_account_order->getOrderHistorys($this->request->get['order_id']);
+			$results = $this->model_account_order->getOrderHistories($this->request->get['order_id']);
 
       		foreach ($results as $result) {
         		$this->data['historys'][] = array(

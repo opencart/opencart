@@ -11,58 +11,6 @@ class ControllerSaleOrder extends Controller {
 		
     	$this->getList();	
   	}
-
-  	public function insert() {	
-		$this->load->language('sale/order');
-	
-		$this->document->title = $this->language->get('heading_title');
-		
-		$this->load->model('sale/order');
-		    	
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {  
-			$this->model_sale_order->addOrder($this->request->post);
-			
-			$this->session->data['success'] = $this->language->get('text_success');
-	  		
-			$url = '';
-				
-			if (isset($this->request->get['filter_order_id'])) {
-				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-			}
-		
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . $this->request->get['filter_name'];
-			}
-
-			if (isset($this->request->get['filter_order_status_id'])) {
-				$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['filter_total'])) {
-				$url .= '&filter_total=' . $this->request->get['filter_total'];
-			}
-														
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/order' . $url);
-    	}
-    
-    	$this->getInsert();
-  	}
 	
   	public function update() {	
 		$this->load->language('sale/order');
@@ -71,48 +19,6 @@ class ControllerSaleOrder extends Controller {
 		
 		$this->load->model('sale/order');
 		    	
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) {  
-			$this->model_sale_order->editOrder($this->request->get['order_id'], $this->request->post);
-			
-			$this->session->data['success'] = $this->language->get('text_success');
-	  		
-			$url = '';
-				
-			if (isset($this->request->get['filter_order_id'])) {
-				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-			}
-		
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . $this->request->get['filter_name'];
-			}
-
-			if (isset($this->request->get['filter_order_status_id'])) {
-				$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['filter_total'])) {
-				$url .= '&filter_total=' . $this->request->get['filter_total'];
-			}
-														
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/order' . $url);
-    	}
-    
     	$this->getForm();
   	}
 	  
@@ -500,7 +406,6 @@ class ControllerSaleOrder extends Controller {
 			$this->data['entry_notify'] = $this->language->get('entry_notify');
 			
 			$this->data['button_invoice'] = $this->language->get('button_invoice');
-			$this->data['button_save'] = $this->language->get('button_save');
 			$this->data['button_cancel'] = $this->language->get('button_cancel');
     		$this->data['button_generate'] = $this->language->get('button_generate');
 			$this->data['button_add_history'] = $this->language->get('button_add_history');
@@ -559,22 +464,15 @@ class ControllerSaleOrder extends Controller {
 				'separator' => ' :: '
 			);			
 			
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/order/update&order_id=' . (int)$this->request->get['order_id'] . $url;
 			$this->data['invoice'] = HTTPS_SERVER . 'index.php?route=sale/order/invoice&order_id=' . (int)$this->request->get['order_id'];
 			$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=sale/order' . $url;
 			
 			$this->data['order_id'] = $this->request->get['order_id'];
 			
 			if ($order_info['invoice_id']) {
-				$this->data['invoice_id'] = $order_info['invoice_id'];
+				$this->data['invoice_id'] = $order_info['invoice_prefix'] . $order_info['invoice_id'];
 			} else {
 				$this->data['invoice_id'] = '';
-			}
-			
-			if ($order_info['invoice_prefix']) {
-				$this->data['invoice_prefix'] = $order_info['invoice_prefix'];
-			} else {
-				$this->data['invoice_prefix'] = '';
 			}
 			
 			$this->data['firstname'] = $order_info['firstname'];	
@@ -747,17 +645,9 @@ class ControllerSaleOrder extends Controller {
 		
 		$json = array();
     	
-		$invoice_id = $this->model_sale_order->getMaxInvoiceId();
-			
-		if ($invoice_id) {
-			$json['invoice_id'] = $invoice_id + 1;
-		} elseif ($this->config->get('config_invoice_id')) {
-			$json['invoice_id'] = $this->config->get('config_invoice_id');
-		} else {
-			$json['invoice_id'] = 1;	
+		if (isset($this->request->get['order_id'])) {
+			$json['invoice_id'] = $this->model_sale_order->generateInvoiceId($this->request->get['order_id']);
 		}
-		
-		$json['invoice_prefix'] = $this->config->get('config_invoice_prefix');
 		
 		$this->load->library('json');
 		
@@ -785,12 +675,12 @@ class ControllerSaleOrder extends Controller {
 			$order_status_info = $this->model_localisation_order_status->getOrderStatus($this->request->post['order_status_id']);
 			
 			if ($order_status_info) {
-				$json['status'] = $order_status_info['name'];
+				$json['order_status'] = $order_status_info['name'];
 			} else {
-				$json['status'] = '';
+				$json['order_status'] = '';
 			}	
 			
-			if (isset($this->request->post['notify'])) {
+			if ($this->request->post['notify']) {
 				$json['notify'] = $this->language->get('text_yes');
 			} else {
 				$json['notify'] = $this->language->get('text_no');
@@ -847,8 +737,10 @@ class ControllerSaleOrder extends Controller {
 		$this->data['language'] = $this->language->get('code');	
 
 		$this->data['text_invoice'] = $this->language->get('text_invoice');
-		$this->data['text_invoice_date'] = $this->language->get('text_invoice_date');
-		$this->data['text_invoice_no'] = $this->language->get('text_invoice_no');
+		
+		$this->data['text_order_id'] = $this->language->get('text_order_id');
+		$this->data['text_invoice_id'] = $this->language->get('text_invoice_id');
+		$this->data['text_date_added'] = $this->language->get('text_date_added');
 		$this->data['text_telephone'] = $this->language->get('text_telephone');
 		$this->data['text_fax'] = $this->language->get('text_fax');		
 		$this->data['text_to'] = $this->language->get('text_to');
@@ -876,6 +768,12 @@ class ControllerSaleOrder extends Controller {
 			$order_info = $this->model_sale_order->getOrder($order_id);
 			
 			if ($order_info) {
+				if ($order_info['invoice_id']) {
+					$invoice_id = $order_info['invoice_prefix'] . $order_info['invoice_id'];
+				} else {
+					$invoice_id = '';
+				}
+			
 				if ($order_info['shipping_address_format']) {
 					$format = $order_info['shipping_address_format'];
 				} else {
@@ -974,6 +872,8 @@ class ControllerSaleOrder extends Controller {
 				
 				$this->data['orders'][] = array(
 					'order_id'	       => $order_id,
+					'invoice_id'       => $invoice_id,
+					'date_added'       => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
 					'store_name'       => $order_info['store_name'],
 					'store_url'        => rtrim($order_info['store_url'], '/'),
 					'address'          => nl2br($this->config->get('config_address')),
@@ -983,8 +883,7 @@ class ControllerSaleOrder extends Controller {
 					'shipping_address' => $shipping_address,
 					'payment_address'  => $payment_address,
 					'product'          => $product_data,
-					'total'            => $total_data,
-					'date_added'       => date($this->language->get('date_format_short'), strtotime($order_info['date_added']))
+					'total'            => $total_data
 				);
 			}
 		}

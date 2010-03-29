@@ -42,6 +42,8 @@ class ModelAccountOrder extends Model {
 			
 			$order_data = array(
 				'order_id'                => $order_query->row['order_id'],
+				'invoice_id'              => $order_query->row['invoice_id'],
+				'invoice_prefix'          => $order_query->row['invoice_prefix'],
 				'customer_id'             => $order_query->row['customer_id'],
 				'firstname'               => $order_query->row['firstname'],
 				'lastname'                => $order_query->row['lastname'],
@@ -127,7 +129,7 @@ class ModelAccountOrder extends Model {
 		return $query->rows;
 	}	
 
-	public function getOrderHistorys($order_id) {
+	public function getOrderHistories($order_id) {
 		$query = $this->db->query("SELECT date_added, os.name AS status, oh.comment, oh.notify FROM " . DB_PREFIX . "order_history oh LEFT JOIN " . DB_PREFIX . "order_status os ON oh.order_status_id = os.order_status_id WHERE oh.order_id = '" . (int)$order_id . "' AND oh.notify = '1' AND os.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY oh.date_added");
 	
 		return $query->rows;

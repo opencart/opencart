@@ -491,6 +491,10 @@ class ControllerLocalisationLanguage extends Controller {
 					$this->error['warning'] = $this->language->get('error_default');
 				}
 				
+				if ($this->config->get('config_admin_language') == $language_info['code']) {
+					$this->error['warning'] = $this->language->get('error_admin');
+				}	
+			
 				$store_total = $this->model_setting_store->getTotalStoresByLanguage($language_info['code']);
 	
 				if ($store_total) {

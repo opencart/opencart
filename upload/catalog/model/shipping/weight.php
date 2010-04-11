@@ -39,7 +39,7 @@ class ModelShippingWeight extends Model {
   						}
 					}
 					
-					if ((float)$cost) {
+					if ((string)$cost != '') { 
       					$quote_data['weight_' . $result['geo_zone_id']] = array(
         					'id'           => 'weight.weight_' . $result['geo_zone_id'],
         					'title'        => $result['name'] . '  (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class')) . ')',

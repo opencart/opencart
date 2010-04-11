@@ -113,7 +113,7 @@ class ControllerProductCategory extends Controller {
 				
 				$this->data['products'] = array();
         		
-				$results = $this->model_catalog_product->getProductsByCategoryId($category_id, $sort, $order, ($page - 1) * 12, 12);
+				$results = $this->model_catalog_product->getProductsByCategoryId($category_id, $sort, $order, ($page - 1) * $this->config->get('config_catalog_limit'), $this->config->get('config_catalog_limit'));
 				
         		foreach ($results as $result) {
 					if ($result['image']) {
@@ -217,7 +217,7 @@ class ControllerProductCategory extends Controller {
 				$pagination = new Pagination();
 				$pagination->total = $product_total;
 				$pagination->page = $page;
-				$pagination->limit = 12; 
+				$pagination->limit = $this->config->get('config_catalog_limit');
 				$pagination->text = $this->language->get('text_pagination');
 				$pagination->url = $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . $url . '&page={page}');
 			

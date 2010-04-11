@@ -165,8 +165,8 @@ class ControllerUserUser extends Controller {
 		$data = array(
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * 10,
-			'limit' => 10
+			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
+			'limit' => $this->config->get('config_admin_limit')
 		);
 		
 		$user_total = $this->model_user_user->getTotalUsers();
@@ -246,7 +246,7 @@ class ControllerUserUser extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $user_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=user/user' . $url . '&page={page}';
 			

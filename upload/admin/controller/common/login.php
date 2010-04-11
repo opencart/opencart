@@ -12,7 +12,11 @@ class ControllerCommonLogin extends Controller {
 		}
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) { 
-	  		$this->redirect(HTTPS_SERVER . 'index.php?route=common/home');
+			if (isset($_SERVER['HTTP_REFERER'])) {
+				$this->redirect($_SERVER['HTTP_REFERER']);
+			} else {
+				$this->redirect(HTTPS_SERVER . 'index.php?route=common/home');
+			}
 		}
 		
 		$this->data['title'] = $this->language->get('heading_title');

@@ -31,6 +31,18 @@
           <td><?php echo $entry_address_format; ?></td>
           <td><textarea name="address_format" cols="40" rows="5"><?php echo $address_format; ?></textarea></td>
         </tr>
+		<tr>
+          <td><?php echo $entry_status; ?></td>
+          <td><select name="status">
+              <?php if ($status) { ?>
+              <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+              <option value="0"><?php echo $text_disabled; ?></option>
+              <?php } else { ?>
+              <option value="1"><?php echo $text_enabled; ?></option>
+              <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+              <?php } ?>
+            </select></td>
+        </tr>
       </table>
     </form>
   </div>

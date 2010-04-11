@@ -9,7 +9,11 @@ class ModelAccountCustomer extends Model {
 		
 		$address_id = $this->db->getLastId();
 
-      	$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");	
+      	$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
+		
+		if (!$this->config->get('config_customer_approval')) {
+			$this->db->query("UPDATE " . DB_PREFIX . "customer SET approved = '1' WHERE customer_id = '" . (int)$customer_id . "'");
+		}		
 	}
 	
 	public function editCustomer($data) {

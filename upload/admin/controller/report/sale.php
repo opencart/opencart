@@ -80,8 +80,8 @@ class ControllerReportSale extends Controller {
 			'filter_date_end'	     => $filter_date_end, 
 			'filter_group'           => $filter_group,
 			'filter_order_status_id' => $filter_order_status_id,
-			'start'                  => ($page - 1) * 10,
-			'limit'                  => 10
+			'start'                  => ($page - 1) * $this->config->get('config_admin_limit'),
+			'limit'                  => $this->config->get('config_admin_limit')
 		);
 		
 		$order_total = $this->model_report_sale->getSaleReportTotal($data);
@@ -161,7 +161,7 @@ class ControllerReportSale extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $order_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=report/sale' . $url . '&page={page}';
 			

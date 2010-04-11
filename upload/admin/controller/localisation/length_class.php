@@ -1,26 +1,26 @@
 <?php
-class ControllerLocalisationMeasurementClass extends Controller {
+class ControllerLocalisationLengthClass extends Controller {
 	private $error = array();  
  
 	public function index() {
-		$this->load->language('localisation/measurement_class');
+		$this->load->language('localisation/length_class');
 
 		$this->document->title = $this->language->get('heading_title');
 		
-		$this->load->model('localisation/measurement_class');
+		$this->load->model('localisation/length_class');
 		
 		$this->getList();
 	}
 
 	public function insert() {
-		$this->load->language('localisation/measurement_class');
+		$this->load->language('localisation/length_class');
 
 		$this->document->title = $this->language->get('heading_title');
 		
-		$this->load->model('localisation/measurement_class');
+		$this->load->model('localisation/length_class');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_measurement_class->addMeasurementClass($this->request->post);
+			$this->model_localisation_length_class->addLengthClass($this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -38,21 +38,21 @@ class ControllerLocalisationMeasurementClass extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/measurement_class' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/length_class' . $url);
 		}
 
 		$this->getForm();
 	}
 
 	public function update() {
-		$this->load->language('localisation/measurement_class');
+		$this->load->language('localisation/length_class');
 
 		$this->document->title = $this->language->get('heading_title');
 		
-		$this->load->model('localisation/measurement_class');
+		$this->load->model('localisation/length_class');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_measurement_class->editMeasurementClass($this->request->get['measurement_class_id'], $this->request->post);
+			$this->model_localisation_length_class->editLengthClass($this->request->get['length_class_id'], $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -70,22 +70,22 @@ class ControllerLocalisationMeasurementClass extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/measurement_class' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/length_class' . $url);
 		}
 
 		$this->getForm();
 	}
 
 	public function delete() {
-		$this->load->language('localisation/measurement_class');
+		$this->load->language('localisation/length_class');
 
 		$this->document->title = $this->language->get('heading_title');
  		
-		$this->load->model('localisation/measurement_class');
+		$this->load->model('localisation/length_class');
 		
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $measurement_class_id) {
-				$this->model_localisation_measurement_class->deleteMeasurementClass($measurement_class_id);
+			foreach ($this->request->post['selected'] as $length_class_id) {
+				$this->model_localisation_length_class->deleteLengthClass($length_class_id);
 			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -104,7 +104,7 @@ class ControllerLocalisationMeasurementClass extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect($this->url->https('localisation/measurement_class' . $url));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/length_class' . $url);
 		}
 
 		$this->getList();
@@ -146,47 +146,48 @@ class ControllerLocalisationMeasurementClass extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/measurement_class' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/length_class' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['insert'] = $this->url->https('localisation/measurement_class/insert' . $url);
-		$this->data['delete'] = $this->url->https('localisation/measurement_class/delete' . $url);
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/insert' . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/delete' . $url;
 		 
-		$this->data['measurement_classes'] = array();
+		$this->data['length_classes'] = array();
 		
 		$data = array(
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * 10,
-			'limit' => 10
+			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
+			'limit' => $this->config->get('config_admin_limit')
 		);
 		
-		$measurement_class_total = $this->model_localisation_measurement_class->getTotalMeasurementClasses();
+		$length_class_total = $this->model_localisation_length_class->getTotalLengthClasses();
 		
-		$results = $this->model_localisation_measurement_class->getMeasurementClasses($data);
+		$results = $this->model_localisation_length_class->getLengthClasses($data);
 		
 		foreach ($results as $result) {
 			$action = array();
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->https('localisation/measurement_class/update&measurement_class_id=' . $result['measurement_class_id'] . $url)
+				'href' => HTTPS_SERVER . 'index.php?route=localisation/length_class/update&length_class_id=' . $result['length_class_id'] . $url
 			);
 
-			$this->data['measurement_classes'][] = array(
-				'measurement_class_id' => $result['measurement_class_id'],
-				'title'                => $result['title'] . (($result['measurement_class_id'] == $this->config->get('config_measurement_class_id')) ? $this->language->get('text_default') : NULL),
-				'unit'                 => $result['unit'],
-				'selected'             => isset($this->request->post['selected']) && in_array($result['measurement_class_id'], $this->request->post['selected']),
-				'action'               => $action
+			$this->data['length_classes'][] = array(
+				'length_class_id' => $result['length_class_id'],
+				'title'           => $result['title'] . (($result['unit'] == $this->config->get('config_length_class')) ? $this->language->get('text_default') : NULL),
+				'unit'            => $result['unit'],
+				'value'           => $result['value'],
+				'selected'        => isset($this->request->post['selected']) && in_array($result['length_class_id'], $this->request->post['selected']),
+				'action'          => $action
 			);
 		}
 
@@ -196,6 +197,7 @@ class ControllerLocalisationMeasurementClass extends Controller {
 		
 		$this->data['column_title'] = $this->language->get('column_title');
 		$this->data['column_unit'] = $this->language->get('column_unit');
+		$this->data['column_value'] = $this->language->get('column_value');
 		$this->data['column_action'] = $this->language->get('column_action');	
 
 		$this->data['button_insert'] = $this->language->get('button_insert');
@@ -218,17 +220,18 @@ class ControllerLocalisationMeasurementClass extends Controller {
 		$url = '';
 
 		if ($order == 'ASC') {
-			$url .= '&order=' .  'DESC';
+			$url .= '&order=DESC';
 		} else {
-			$url .= '&order=' .  'ASC';
+			$url .= '&order=ASC';
 		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_title'] = $this->url->https('localisation/measurement_class&sort=title' . $url);
-		$this->data['sort_unit'] = $this->url->https('localisation/measurement_class&sort=unit' . $url);
+		$this->data['sort_title'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&sort=title' . $url;
+		$this->data['sort_unit'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&sort=unit' . $url;
+		$this->data['sort_value'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&sort=value' . $url;
 		
 		$url = '';
 
@@ -241,18 +244,18 @@ class ControllerLocalisationMeasurementClass extends Controller {
 		}
 
 		$pagination = new Pagination();
-		$pagination->total = $measurement_class_total;
+		$pagination->total = $length_class_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->https('localisation/measurement_class' . $url . '&page=%s');
+		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/length_class' . $url . '&page={page}';
 
 		$this->data['pagination'] = $pagination->render();
 		
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 		
-		$this->template = 'localisation/measurement_class_list.tpl';
+		$this->template = 'localisation/length_class_list.tpl';
 		$this->children = array(
 			'common/header',	
 			'common/footer'	
@@ -266,6 +269,7 @@ class ControllerLocalisationMeasurementClass extends Controller {
 
 		$this->data['entry_title'] = $this->language->get('entry_title');
 		$this->data['entry_unit'] = $this->language->get('entry_unit');
+		$this->data['entry_value'] = $this->language->get('entry_value');
 
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -284,7 +288,7 @@ class ControllerLocalisationMeasurementClass extends Controller {
 			$this->data['error_title'] = '';
 		}
 
- 		if (isset($this->error['unitg'])) {
+ 		if (isset($this->error['unit'])) {
 			$this->data['error_unit'] = $this->error['unit'];
 		} else {
 			$this->data['error_unit'] = '';
@@ -307,52 +311,50 @@ class ControllerLocalisationMeasurementClass extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => $this->url->https('localisation/measurement_class' . $url),
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/length_class' . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		if (!isset($this->request->get['measurement_class_id'])) {
-			$this->data['action'] = $this->url->https('localisation/measurement_class/insert' . $url);
+		if (!isset($this->request->get['length_class_id'])) {
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/insert' . $url;
 		} else {
-			$this->data['action'] = $this->url->https('localisation/measurement_class/update&measurement_class_id=' . $this->request->get['measurement_class_id'] . $url);
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/update&length_class_id=' . $this->request->get['length_class_id'] . $url;
 		}
 
-		$this->data['cancel'] = $this->url->https('localisation/measurement_class' . $url);
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/length_class' . $url;
+
+		if (isset($this->request->get['length_class_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+      		$length_class_info = $this->model_localisation_length_class->getLengthClass($this->request->get['length_class_id']);
+    	}
 		
 		$this->load->model('localisation/language');
 		
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();
 		
-		if (isset($this->request->post['measurement_class'])) {
-			$this->data['measurement_class'] = $this->request->post['measurement_class'];
-		} elseif (isset($this->request->get['measurement_class_id'])) {
-			$this->data['measurement_class'] = $this->model_localisation_measurement_class->getMeasurementCLassDescriptions($this->request->get['measurement_class_id']);
+		if (isset($this->request->post['length_class_description'])) {
+			$this->data['length_class_description'] = $this->request->post['length_class_description'];
+		} elseif (isset($this->request->get['length_class_id'])) {
+			$this->data['length_class_description'] = $this->model_localisation_length_class->getLengthClassDescriptions($this->request->get['length_class_id']);
 		} else {
-			$this->data['measurement_class'] = array();
+			$this->data['length_class_description'] = array();
 		}	
 		
-		if (isset($this->request->get['measurement_class_id'])) {
-			$this->data['measurement_tos'] = $this->model_localisation_measurement_class->getMeasurementTo($this->request->get['measurement_class_id']);
+		if (isset($this->request->post['value'])) {
+			$this->data['value'] = $this->request->post['value'];
+		} elseif (isset($length_class_info)) {
+			$this->data['value'] = $length_class_info['value'];
 		} else {
-			$this->data['measurement_tos'] = $this->model_localisation_measurement_class->getMeasurementTo(0);
-		}
+			$this->data['value'] = '';
+		}			
 		
-		if (isset($this->request->post['weight_rule'])) {
-			$this->data['measurement_rule'] = $this->request->post['weight_rule'];
-		} elseif (isset($this->request->get['measurement_class_id'])) {
-			$this->data['measurement_rule'] = $this->model_localisation_measurement_class->getMeasurementRules($this->request->get['measurement_class_id']);
-		} else {
-			$this->data['measurement_rule'] = array();
-		}				
-		
-		$this->template = 'localisation/measurement_class_form.tpl';
+		$this->template = 'localisation/length_class_form.tpl';
 		$this->children = array(
 			'common/header',	
 			'common/footer'	
@@ -362,11 +364,11 @@ class ControllerLocalisationMeasurementClass extends Controller {
 	}
 
 	private function validateForm() {
-		if (!$this->user->hasPermission('modify', 'localisation/measurement_class')) {
+		if (!$this->user->hasPermission('modify', 'localisation/length_class')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['measurement_class'] as $language_id => $value) {
+		foreach ($this->request->post['length_class_description'] as $language_id => $value) {
 			if ((strlen(utf8_decode($value['title'])) < 3) || (strlen(utf8_decode($value['title'])) > 32)) {
 				$this->error['title'][$language_id] = $this->language->get('error_title');
 			}
@@ -384,18 +386,20 @@ class ControllerLocalisationMeasurementClass extends Controller {
 	}
 
 	private function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'localisation/measurement_class')) {
+		if (!$this->user->hasPermission('modify', 'localisation/length_class')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
 		$this->load->model('catalog/product');
 		
-		foreach ($this->request->post['selected'] as $measurement_class_id) {
-			if ($this->config->get('config_measurement_class_id') == $measurement_class_id) {
+		foreach ($this->request->post['selected'] as $length_class_id) {
+			$length_class_info = $this->model_localisation_length_class->getLengthClass($length_class_id);
+			
+			if ($length_class_info && ($this->config->get('config_length_class') == $length_class_info['unit'])) {
 				$this->error['warning'] = $this->language->get('error_default');
 			}
-		
-			$product_total = $this->model_catalog_product->getTotalProductsByMeasurementClassId($measurement_class_id);
+			
+			$product_total = $this->model_catalog_product->getTotalProductsByLengthClassId($length_class_id);
 
 			if ($product_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);

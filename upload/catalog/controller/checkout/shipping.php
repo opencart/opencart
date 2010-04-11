@@ -31,6 +31,16 @@ class ControllerCheckoutShipping extends Controller {
 	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/address/shipping');
 		}
 		
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$shipping = explode('.', $this->request->post['shipping_method']);
+			
+			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+			
+			$this->session->data['comment'] = strip_tags($this->request->post['comment']);
+
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/payment');
+    	}
+		
 		$this->load->model('account/address');
 		
 		$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);		
@@ -43,7 +53,7 @@ class ControllerCheckoutShipping extends Controller {
 		
 		$this->load->model('checkout/extension');
 		
-		if (!isset($this->session->data['shipping_methods'])) {
+		if (!isset($this->session->data['shipping_methods']) || !$this->config->get('config_shipping_session')) {
 			$quote_data = array();
 			
 			$results = $this->model_checkout_extension->getExtensions('shipping');
@@ -75,17 +85,7 @@ class ControllerCheckoutShipping extends Controller {
 		}
 		
 		$this->language->load('checkout/shipping');
-		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$shipping = explode('.', $this->request->post['shipping_method']);
-			
-			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-			
-			$this->session->data['comment'] = strip_tags($this->request->post['comment']);
-
-	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/payment');
-    	}
- 
+		 
 		$this->document->title = $this->language->get('heading_title');    
 		
 		$this->document->breadcrumbs = array();

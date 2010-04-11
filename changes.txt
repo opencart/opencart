@@ -1,0 +1,55 @@
+-- OpenCart v1.4.7 --
+
+FIXED:
+- Coupon discount taking more than the product total. Now matches max product total
+- "Total" order total module allowed negative totals if discounts exceeded total. Now stops at 0
+- Several language duplicates removed
+- Some city names updated in sql
+- Fixed potential filemanager while loop error with readdir (Based on php.net's recommendation)
+- Fixed sagepay array for FailureURL
+- Fixed weight based shipping not supporting 0 cost
+- Fixed document $styles and $scripts on header.tpl to properly support the correct options
+- Shifted the shipping POST check to avoid reloading rate request when going to the payment page and not using quote session check
+- Cleaned up field size inconsistencies with email length between the validation checks and the db
+- Fixed login link to correct "&" vs "&amp;";
+- Account approve not allowing logins for existing customers
+- Fixed Google Sitemap xml error to correct "&" vs "&amp";
+- catalog/model/catalog/product total functions returns num rows instead of total? (from 1.4.4 bug thread rph)
+- Sort by price converting to string issue
+- store_url duplication in customer approval email
+- Fixed typo in customers "awating" approval function names
+- Fixed typo in order model for "notifiy" in the update function
+- Fixed incorrect Customers Awaiting Approval count on admin dashboard
+
+
+ADDED:
+- Universal Upgrade Script (supports upgrades as far back as v1.3.0)
+- Category Status in admin (per-category)
+- Information Status in admin (per-item)
+- Country Status in admin
+- Zone status in admin
+- Shipping Quote Session option in admin
+- Added version constant at the top of the startup.php file to allow programmatic usage
+- Added page warning on pages with multi-tabs to show error at top instead of just the field errors so it is clear
+- Items per page for admin rows configurable via admin
+- Items per page for catalog items configurable via admin (per store)
+- Show Weight on Cart page option in admin (per store)
+- Latest Module
+- Specials Module
+- Featured Module
+- Disable coupon order total will also disable coupon entry box on front end
+- Persist original route if login required
+- Disabling language removes requirement from need for entry in admin
+- Thickbox agree terms on checkout and create
+- Added Model Search checkbox on Advanced Search
+- Added Popular Products model function (Order by Viewed) for future use.
+- Added $product_info array to the product to make echoing additional fields easier
+- Improved order data return without double processing/subset
+- Added support for common base product discount pricing
+- Added Improved language support. Fallback to English for missing entries to avoid fatal errors over missing language file
+- Added setting language from url ...route=common/home&language=de
+- Added setting currency from url ...route=common/home&currency=USD
+- Added Product Tag table and added search support in tags.
+
+
+

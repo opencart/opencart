@@ -165,8 +165,8 @@ class ControllerLocalisationGeoZone extends Controller {
 		$data = array(
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * 10,
-			'limit' => 10
+			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
+			'limit' => $this->config->get('config_admin_limit')
 		);
 		
 		$geo_zone_total = $this->model_localisation_geo_zone->getTotalGeoZones();
@@ -243,7 +243,7 @@ class ControllerLocalisationGeoZone extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $geo_zone_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/geo_zone' . $url . '&page={page}';
 

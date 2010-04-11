@@ -69,6 +69,7 @@ class ControllerCheckoutCart extends Controller {
 			$this->data['text_select'] = $this->language->get('text_select');
       		$this->data['text_sub_total'] = $this->language->get('text_sub_total');
 			$this->data['text_discount'] = $this->language->get('text_discount');
+			$this->data['text_weight'] = $this->language->get('text_weight');
 		
      		$this->data['column_remove'] = $this->language->get('column_remove');
       		$this->data['column_image'] = $this->language->get('column_image');
@@ -126,6 +127,12 @@ class ControllerCheckoutCart extends Controller {
 					'href'     => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id'])
         		);
       		}
+			
+			if ($this->config->get('config_cart_weight')) {
+				$this->data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class'));
+			} else {
+				$this->data['weight'] = FALSE;
+			}
 			
       		$this->data['sub_total'] = $this->currency->format($this->cart->getTotal());
 			

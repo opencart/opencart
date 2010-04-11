@@ -187,8 +187,8 @@ class ControllerSaleOrder extends Controller {
 			'filter_total'           => $filter_total,
 			'sort'                   => $sort,
 			'order'                  => $order,
-			'start'                  => ($page - 1) * 10,
-			'limit'                  => 10
+			'start'                  => ($page - 1) * $this->config->get('config_admin_limit'),
+			'limit'                  => $this->config->get('config_admin_limit')
 		);
 		
 		$order_total = $this->model_sale_order->getTotalOrders($data);
@@ -316,7 +316,7 @@ class ControllerSaleOrder extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $order_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=sale/order' . $url . '&page={page}';
 			

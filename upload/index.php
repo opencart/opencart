@@ -6,7 +6,7 @@ require_once('config.php');
 if (!defined('DIR_APPLICATION')) {
 	header('Location: install/index.php');
 	exit;
-} 
+}
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
@@ -150,7 +150,9 @@ if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && ($request->server['HTTP_A
 	}
 }
 
-if (isset($session->data['language']) && array_key_exists($session->data['language'], $languages)) {
+if (isset($_GET['language']) && array_key_exists($_GET['language'], $languages)) {
+	$code = $_GET['language'];
+} elseif (isset($session->data['language']) && array_key_exists($session->data['language'], $languages)) {
 	$code = $session->data['language'];
 } elseif (isset($request->cookie['language']) && array_key_exists($request->cookie['language'], $languages)) {
 	$code = $request->cookie['language'];

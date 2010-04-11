@@ -11,7 +11,7 @@ $_['text_payment_address'] = 'Payment Address';
 $_['text_payment_method']  = 'Payment Method';
 $_['text_payment_methods'] = 'Please select the preferred payment method to use on this order.';
 $_['text_comments']        = 'Add Comments About Your Order';
-$_['text_agree']           = 'I have read and agree to the <a onclick="window.open(\'%s\');"><b>%s</b></a>';
+$_['text_agree']           = 'I have read and agree to the <a class="thickbox" href="index.php?route=information/information/loadInfo&checkout=1" alt="%s"><b>%s</b></a>';
 
 // Error
 $_['error_payment']        = 'Error: Payment method required!';

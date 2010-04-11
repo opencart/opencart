@@ -165,8 +165,8 @@ class ControllerCatalogInformation extends Controller {
 		$data = array(
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * 10,
-			'limit' => 10
+			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
+			'limit' => $this->config->get('config_admin_limit')
 		);
 		
 		$information_total = $this->model_catalog_information->getTotalInformations();
@@ -243,7 +243,7 @@ class ControllerCatalogInformation extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $information_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=catalog/information' . $url . '&page={page}';
 			
@@ -265,13 +265,16 @@ class ControllerCatalogInformation extends Controller {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['text_default'] = $this->language->get('text_default');
+		$this->data['text_enabled'] = $this->language->get('text_enabled');
+    	$this->data['text_disabled'] = $this->language->get('text_disabled');
 		
 		$this->data['entry_title'] = $this->language->get('entry_title');
 		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
+		$this->data['entry_status'] = $this->language->get('entry_status');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -345,6 +348,14 @@ class ControllerCatalogInformation extends Controller {
 			$this->data['information_description'] = array();
 		}
 
+		if (isset($this->request->post['status'])) {
+			$this->data['status'] = $this->request->post['status'];
+		} elseif (isset($information_info)) {
+			$this->data['status'] = $information_info['status'];
+		} else {
+			$this->data['status'] = 1;
+		}
+		
 		$this->load->model('setting/store');
 		
 		$this->data['stores'] = $this->model_setting_store->getStores();
@@ -400,6 +411,9 @@ class ControllerCatalogInformation extends Controller {
 		if (!$this->error) {
 			return TRUE;
 		} else {
+			if (!isset($this->error['warning'])) {
+				$this->error['warning'] = $this->language->get('error_required_data');
+			}
 			return FALSE;
 		}
 	}

@@ -165,8 +165,8 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$data = array(
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * 10,
-			'limit' => 10
+			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
+			'limit' => $this->config->get('config_admin_limit')
 		);
 		
 		$order_status_total = $this->model_localisation_order_status->getTotalOrderStatuses();
@@ -240,7 +240,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $order_status_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/order_status' . $url . '&page={page}';
 			

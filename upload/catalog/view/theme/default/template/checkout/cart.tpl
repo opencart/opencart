@@ -46,6 +46,11 @@
         <tr>
           <td colspan="7" align="right"><b><?php echo $text_sub_total; ?></b> <?php echo $sub_total; ?></td>
         </tr>
+		<?php if ($weight) { ?>
+        <tr>
+          <td colspan="7" align="right"><b><?php echo $text_weight; ?></b> <?php echo $weight; ?></td>
+        </tr>
+        <?php } ?>
       </table>
       <div class="buttons">
         <table>

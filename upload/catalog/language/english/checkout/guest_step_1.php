@@ -21,8 +21,6 @@ $_['entry_postcode']    = 'Post Code:';
 $_['entry_city']        = 'City:';
 $_['entry_country']     = 'Country:';
 $_['entry_zone']        = 'Region / State:';
-$_['entry_telephone']   = 'Telephone:';
-$_['entry_fax']         = 'Fax:';
 
 // Error
 $_['error_firstname']   = 'First Name must be greater than 3 and less than 32 characters!';

@@ -67,7 +67,15 @@ final class Cart {
 					$customer_group_id = $this->config->get('config_customer_group_id');
 				}
 				
-				$product_discount_query = $this->db->query("SELECT price FROM " . DB_PREFIX . "product_discount WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . (int)$customer_group_id . "' AND quantity <= '" . (int)$quantity . "' AND ((date_start = '0000-00-00' OR date_start < NOW()) AND (date_end = '0000-00-00' OR date_end > NOW())) ORDER BY quantity DESC, priority ASC, price ASC LIMIT 1");
+				$discount_quantity = 0;
+				foreach ($this->session->data['cart'] as $k => $v) {
+					$array2 = explode(':', $k);
+					if ($array2[0] == $product_id) {
+						$discount_quantity += $v;
+					}
+				}
+				
+				$product_discount_query = $this->db->query("SELECT price FROM " . DB_PREFIX . "product_discount WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . (int)$customer_group_id . "' AND quantity <= '" . (int)$discount_quantity . "' AND ((date_start = '0000-00-00' OR date_start < NOW()) AND (date_end = '0000-00-00' OR date_end > NOW())) ORDER BY quantity DESC, priority ASC, price ASC LIMIT 1");
 				
 				if ($product_discount_query->num_rows) {
 					$price = $product_discount_query->row['price'];

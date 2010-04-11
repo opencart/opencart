@@ -312,7 +312,7 @@ class ControllerAccountCreate extends Controller {
 
 		$pattern = '/^[A-Z0-9._%-]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i';
 
-    	if (!preg_match($pattern, $this->request->post['email'])) {
+    	if ((strlen(utf8_decode($this->request->post['email'])) > 96) || (!preg_match($pattern, $this->request->post['email']))) {
       		$this->error['email'] = $this->language->get('error_email');
     	}
 

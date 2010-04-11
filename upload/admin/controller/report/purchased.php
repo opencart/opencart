@@ -37,7 +37,7 @@ class ControllerReportPurchased extends Controller {
 		
 		$this->data['products'] = array();
 
-		$results = $this->model_report_purchased->getProductPurchasedReport(($page - 1) * 10, 10);
+		$results = $this->model_report_purchased->getProductPurchasedReport(($page - 1) * $this->config->get('config_admin_limit'), $this->config->get('config_admin_limit'));
 		
 		foreach ($results as $result) {
 			$this->data['products'][] = array(
@@ -60,7 +60,7 @@ class ControllerReportPurchased extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $product_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=report/purchased&page={page}';
 			

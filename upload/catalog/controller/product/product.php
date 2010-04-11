@@ -80,7 +80,7 @@ class ControllerProductProduct extends Controller {
 		}
 		
 		$product_info = $this->model_catalog_product->getProduct($product_id);
-
+		
 		if ($product_info) {
 			$url = '';
 			
@@ -178,6 +178,8 @@ class ControllerProductProduct extends Controller {
 			$this->data['popup'] = $this->model_tool_image->resize($image, $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
 			$this->data['thumb'] = $this->model_tool_image->resize($image, $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
 
+			$this->data['product_info'] = $product_info;
+			
 			$discount = $this->model_catalog_product->getProductDiscount($this->request->get['product_id']);
 			
 			if ($discount) {

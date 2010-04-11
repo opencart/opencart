@@ -68,7 +68,7 @@ class ControllerProductSpecial extends Controller {
 				
        		$this->data['products'] = array();
 				
-			$results = $this->model_catalog_product->getProductSpecials($sort, $order, ($page - 1) * 12, 12);
+			$results = $this->model_catalog_product->getProductSpecials($sort, $order, ($page - 1) * $this->config->get('config_catalog_limit'), $this->config->get('config_catalog_limit'));
         		
 			foreach ($results as $result) {
 				if ($result['image']) {
@@ -156,7 +156,7 @@ class ControllerProductSpecial extends Controller {
 			$pagination = new Pagination();
 			$pagination->total = $product_total;
 			$pagination->page = $page;
-			$pagination->limit = 12; 
+			$pagination->limit = $this->config->get('config_catalog_limit');
 			$pagination->text = $this->language->get('text_pagination');
 			$pagination->url = HTTP_SERVER . 'index.php?route=product/special' . $url . '&page={page}';
 				

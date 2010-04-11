@@ -10,7 +10,7 @@ $_['text_your_details']    = 'Your Personal Details';
 $_['text_your_address']    = 'Your Address';
 $_['text_newsletter']      = 'Newsletter';
 $_['text_your_password']   = 'Your Password';
-$_['text_agree']           = 'I have read and agree to the <a onclick="window.open(\'%s\');"><b>%s</b></a>';
+$_['text_agree']           = 'I have read and agree to the <a class="thickbox" href="index.php?route=information/information/loadInfo&create=1" alt="%s"><b>%s</b></a>';
 
 // Entry
 $_['entry_firstname']      = 'First Name:';

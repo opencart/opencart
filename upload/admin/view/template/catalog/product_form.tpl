@@ -15,10 +15,13 @@
       <div id="tab_general">
         <div id="languages" class="htabs">
           <?php foreach ($languages as $language) { ?>
+		  <?php if ($language['status']) { ?>
           <a tab="#language<?php echo $language['language_id']; ?>"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a>
           <?php } ?>
+		  <?php } ?>
         </div> 
         <?php foreach ($languages as $language) { ?>
+		<?php if ($language['status']) { ?>
         <div id="language<?php echo $language['language_id']; ?>">
           <table class="form">
             <tr>
@@ -36,9 +39,14 @@
               <td><?php echo $entry_description; ?></td>
               <td><textarea name="product_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['description'] : ''; ?></textarea></td>
             </tr>
+			<tr>
+              <td><?php echo $entry_tags; ?></td>
+              <td><input type="text" name="product_tags[<?php echo $language['language_id']; ?>]" value="<?php echo isset($product_tags[$language['language_id']]) ? $product_tags[$language['language_id']] : ''; ?>" size="80"/></td>
+            </tr>
           </table>
         </div>
         <?php } ?>
+		<?php } ?>
       </div>
       <div id="tab_data">
         <table class="form">
@@ -275,6 +283,7 @@
               <?php $option_value_row = 0; ?>
               <?php foreach ($product_options as $product_option) { ?>
               <?php foreach ($languages as $language) { ?>
+			  <?php if ($language['status']) { ?>
               <?php if ($language['language_id'] == $language_id) { ?>
               <option value="option<?php echo $option_row; ?>"><?php echo $product_option['language'][$language['language_id']]['name']; ?></option>
               <?php } ?>
@@ -290,6 +299,7 @@
               <?php } ?>
               <?php $option_row++; ?>
               <?php } ?>
+			  <?php } ?>
               <?php } ?>
             </select>
           </div>
@@ -303,13 +313,15 @@
                 <tr>
                   <td><?php echo $entry_option; ?></td>
                   <td><?php foreach ($languages as $language) { ?>
-                    <?php if ($language['language_id'] == $language_id) { ?>
+                    <?php if ($language['status']) { ?>
+					<?php if ($language['language_id'] == $language_id) { ?>
                     <input type="text" name="product_option[<?php echo $option_row; ?>][language][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_option['language'][$language['language_id']]['name']; ?>" onkeyup="$('#option option[value=\'option<?php echo $option_row; ?>\']').text(this.value);" />
                     <?php } else { ?>
                     <input type="text" name="product_option[<?php echo $option_row; ?>][language][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_option['language'][$language['language_id']]['name']; ?>" />
                     <?php } ?>
                     <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-                    <?php } ?></td>
+                    <?php } ?>
+					<?php } ?></td>
                 </tr>
                 <tr>
                   <td><?php echo $entry_sort_order; ?></td>
@@ -327,13 +339,15 @@
                 <tr>
                   <td><?php echo $entry_option_value; ?></td>
                   <td><?php foreach ($languages as $language) { ?>
+				  <?php if ($language['status']) { ?>
                   <?php if ($language['language_id'] == $language_id) { ?>
                     <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][language][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_option_value['language'][$language['language_id']]['name']; ?>" onkeyup="$('#option option[value=\'option<?php echo $option_row; ?>_<?php echo $option_value_row; ?>\']').text('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + this.value);" />
                     <?php } else { ?>
                     <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][language][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_option_value['language'][$language['language_id']]['name']; ?>" />
                     <?php } ?>
                     <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-                    <?php } ?></td>
+                    <?php } ?>
+					<?php } ?></td>
                 </tr>
                 <tr>
                   <td><?php echo $entry_quantity; ?></td>
@@ -503,7 +517,9 @@
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
+<?php if ($language['status']) { ?>
 CKEDITOR.replace('description<?php echo $language['language_id']; ?>');
+<?php } ?>
 <?php } ?>
 //--></script>
 <script type="text/javascript"><!--

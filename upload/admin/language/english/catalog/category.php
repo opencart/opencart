@@ -16,6 +16,7 @@ $_['column_action']          = 'Action';
 $_['entry_name']             = 'Category Name:';
 $_['entry_meta_description'] = 'Meta Tag Description:';
 $_['entry_description']      = 'Description:';
+$_['entry_status']           = 'Category Status:';
 $_['entry_category']         = 'Parent Category:';
 $_['entry_store']            = 'Stores:';
 $_['entry_keyword']          = 'SEO Keyword:';
@@ -25,4 +26,5 @@ $_['entry_sort_order']       = 'Sort Order:';
 // Error 
 $_['error_permission']       = 'Warning: You do not have permission to modify categories!';
 $_['error_name']             = 'Category Name must be greater than 2 and less than 32 characters!';
+$_['error_required_data']    = 'Required Data has not been entered. Check for field errors!';
 ?>

@@ -85,5 +85,40 @@ class ControllerInformationInformation extends Controller {
 	  		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
     	}
   	}
+	
+	public function loadInfo() {
+		$this->load->model('catalog/information');
+		if (isset($this->request->get['information_id'])) {
+			$information_id = $this->request->get['information_id'];
+		} else {
+			if ($this->request->get['create']) {
+				$information_id = $this->config->get('config_account_id');
+			} else {
+				$information_id = $this->config->get('config_checkout_id');
+			}
+		}      
+		$information_info = $this->model_catalog_information->getInformation($information_id);
+
+		$output = '
+			<div id="content" style="margin: 0pt; padding: 0pt;">
+			  <div class="top">
+			    <div class="left"></div>
+			    <div class="right"></div>
+			    <div class="center">
+			      <h1>'.$information_info['title'].'</h1>
+			    </div>
+			  </div>
+			  <div class="middle">
+			    <p>'.html_entity_decode($information_info['description']).'</p>
+			  </div>
+			  <div class="bottom">
+			    <div class="left"></div>
+			    <div class="right"></div>
+			    <div class="center"></div>
+			  </div>
+			</div>';
+
+		$this->response->setOutput($output, $this->config->get('config_compression'));
+	}
 }
 ?>

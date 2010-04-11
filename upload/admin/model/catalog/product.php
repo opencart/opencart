@@ -78,10 +78,18 @@ class ModelCatalogProduct extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_related SET product_id = '" . (int)$product_id . "', related_id = '" . (int)$related_id . "'");
 			}
 		}
-
+		
 		if ($data['keyword']) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
 		}
+		
+		foreach ($data['product_tags'] as $language_id => $value) {
+			$tags = explode(',', $value);
+			foreach ($tags as $tag) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product_tags SET product_id = '" . (int)$product_id . "', language_id = '" . (int)$language_id . "', tag = '" . $this->db->escape(trim($tag)) . "'");
+			}
+		}
+		
 		
 		$this->cache->delete('product');
 	}
@@ -190,6 +198,15 @@ class ModelCatalogProduct extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
 		}
 		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_tags WHERE product_id = '" . (int)$product_id. "'");
+		
+		foreach ($data['product_tags'] as $language_id => $value) {
+			$tags = explode(',', $value);
+			foreach ($tags as $tag) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product_tags SET product_id = '" . (int)$product_id . "', language_id = '" . (int)$language_id . "', tag = '" . $this->db->escape(trim($tag)) . "'");
+			}
+		}
+		
 		$this->cache->delete('product');
 	}
 	
@@ -218,6 +235,7 @@ class ModelCatalogProduct extends Model {
 			$data = array_merge($data, array('product_category' => $this->getProductCategories($product_id)));
 			$data = array_merge($data, array('product_store' => $this->getProductStores($product_id)));
 			$data = array_merge($data, array('product_related' => $this->getProductRelated($product_id)));
+			$data = array_merge($data, array('product_tags' => $this->getProductTags($product_id)));
 			
 			$this->addProduct($data);
 		}
@@ -238,6 +256,7 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "review WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_store WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'product_id=" . (int)$product_id. "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_tags WHERE product_id='" . (int)$product_id. "'");
 		
 		$this->cache->delete('product');
 	}
@@ -318,6 +337,27 @@ class ModelCatalogProduct extends Model {
 		}
 	}
 
+	public function addFeatured($data) {
+      	$this->db->query("DELETE FROM " . DB_PREFIX . "product_featured");
+      	
+		if (isset($data['featured_product'])) {
+      		foreach ($data['featured_product'] as $product_id) {
+        		$this->db->query("INSERT INTO " . DB_PREFIX . "product_featured SET product_id = '" . (int)$product_id . "'");
+      		}			
+		}
+	}
+	
+	public function getFeaturedProducts() {
+		$query = $this->db->query("SELECT product_id FROM " . DB_PREFIX . "product_featured");
+		
+		$featured = array();
+		
+		foreach ($query->rows as $product) {
+			$featured[] = $product['product_id'];
+		}
+		return $featured;
+	}
+	
 	public function getProductsByKeyword($keyword) {
 		if ($keyword) {
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND (LCASE(pd.name) LIKE '%" . $this->db->escape(strtolower($keyword)) . "%' OR LCASE(p.model) LIKE '%" . $this->db->escape(strtolower($keyword)) . "%')");
@@ -463,6 +503,24 @@ class ModelCatalogProduct extends Model {
 		}
 		
 		return $product_related_data;
+	}
+	
+	public function getProductTags($product_id) {
+		$product_tag_data = array();
+		
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_tags WHERE product_id = '" . (int)$product_id . "'");
+		
+		$tag_data = array();
+		
+		foreach ($query->rows as $result) {
+			$tag_data[$result['language_id']][] = $result['tag'];
+		}
+		
+		foreach ($tag_data as $language => $tags) {
+			$product_tag_data[$language] = implode(',', $tags);
+		}
+		
+		return $product_tag_data;
 	}
 	
 	public function getTotalProducts($data = array()) {

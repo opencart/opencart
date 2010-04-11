@@ -31,7 +31,7 @@ class ControllerCheckoutGuestStep2 extends Controller {
 		$this->load->model('checkout/extension');
 		
 		// Shipping Methods
-		if ($this->cart->hasShipping() && !isset($this->session->data['shipping_methods'])) {
+		if ($this->cart->hasShipping() && (!isset($this->session->data['shipping_methods']) || !$this->config->get('config_shipping_session'))) {
 			$quote_data = array();
 			
 			$results = $this->model_checkout_extension->getExtensions('shipping');

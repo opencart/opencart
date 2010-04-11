@@ -58,7 +58,7 @@ class ControllerAccountHistory extends Controller {
 			
       		$this->data['orders'] = array();
 			
-			$results = $this->model_account_order->getOrders(($page - 1) * 20, 20);
+			$results = $this->model_account_order->getOrders(($page - 1) * $this->config->get('config_catalog_limit'), $this->config->get('config_catalog_limit'));
       		
 			foreach ($results as $result) {
         		$product_total = $this->model_account_order->getTotalOrderProductsByOrderId($result['order_id']);
@@ -77,7 +77,7 @@ class ControllerAccountHistory extends Controller {
 			$pagination = new Pagination();
 			$pagination->total = $order_total;
 			$pagination->page = $page;
-			$pagination->limit = 20; 
+			$pagination->limit = $this->config->get('config_catalog_limit');
 			$pagination->text = $this->language->get('text_pagination');
 			$pagination->url = HTTP_SERVER . 'index.php?route=account/history&page=%s';
 			

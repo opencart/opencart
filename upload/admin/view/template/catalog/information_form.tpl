@@ -13,10 +13,13 @@
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
       <div class="htabs">
         <?php foreach ($languages as $language) { ?>
+		<?php if ($language['status']) { ?>
         <a tab="#language<?php echo $language['language_id']; ?>"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a>
         <?php } ?>
+		<?php } ?>
       </div>
       <?php foreach ($languages as $language) { ?>
+	  <?php if ($language['status']) { ?>
       <div id="language<?php echo $language['language_id']; ?>">
         <table class="form">
           <tr>
@@ -36,6 +39,7 @@
         </table>
       </div>
       <?php } ?>
+	  <?php } ?>
       <table class="form">
         <tr>
           <td><?php echo $entry_store; ?></td>
@@ -68,6 +72,18 @@
           <td><?php echo $entry_keyword; ?></td>
           <td><input type="text" name="keyword" value="<?php echo $keyword; ?>" /></td>
         </tr>
+		<tr>
+            <td><?php echo $entry_status; ?></td>
+            <td><select name="status">
+                <?php if ($status) { ?>
+                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                <option value="0"><?php echo $text_disabled; ?></option>
+                <?php } else { ?>
+                <option value="1"><?php echo $text_enabled; ?></option>
+                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                <?php } ?>
+              </select></td>
+          </tr>
         <tr>
           <td><?php echo $entry_sort_order; ?></td>
           <td><input name="sort_order" value="<?php echo $sort_order; ?>" size="1" /></td>
@@ -79,8 +95,10 @@
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
+<?php if ($language['status']) { ?>
 CKEDITOR.replace('description<?php echo $language['language_id']; ?>');
-<?php } ?>	  
+<?php } ?>
+<?php } ?>
 //--></script>
 <script type="text/javascript"><!--
 $.tabs('.htabs a'); 

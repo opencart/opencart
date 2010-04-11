@@ -148,8 +148,8 @@ class ModelSaleCustomer extends Model {
 		return $query->row['total'];
 	}
 	
-	public function getTotalCustomersAwatingApproval() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE status = '0'");
+	public function getTotalCustomersAwaitingApproval() {
+      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE status = '0' OR approved = '0'");
 
 		return $query->row['total'];
 	}

@@ -26,6 +26,10 @@ class ControllerProductSearch extends Controller {
 		if (isset($this->request->get['description'])) {
 			$url .= '&description=' . $this->request->get['description'];
 		}
+		
+		if (isset($this->request->get['model'])) {
+			$url .= '&model=' . $this->request->get['model'];
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -56,6 +60,7 @@ class ControllerProductSearch extends Controller {
 			 
 		$this->data['entry_search'] = $this->language->get('entry_search');
     	$this->data['entry_description'] = $this->language->get('entry_description');
+		$this->data['entry_model'] = $this->language->get('entry_model');
 		  
     	$this->data['button_search'] = $this->language->get('button_search');
    
@@ -99,10 +104,16 @@ class ControllerProductSearch extends Controller {
 			$this->data['description'] = '';
 		}
 		
+		if (isset($this->request->get['model'])) {
+			$this->data['model'] = $this->request->get['model'];
+		} else {
+			$this->data['model'] = '';
+		}
+		
 		if (isset($this->request->get['keyword'])) {
 			$this->load->model('catalog/product');
 			
-			$product_total = $this->model_catalog_product->getTotalProductsByKeyword($this->request->get['keyword'], isset($this->request->get['category_id']) ? $this->request->get['category_id'] : '', isset($this->request->get['description']) ? $this->request->get['description'] : '');
+			$product_total = $this->model_catalog_product->getTotalProductsByKeyword($this->request->get['keyword'], isset($this->request->get['category_id']) ? $this->request->get['category_id'] : '', isset($this->request->get['description']) ? $this->request->get['description'] : '', isset($this->request->get['model']) ? $this->request->get['model'] : '');
 						
 			if ($product_total) {
 				$url = '';
@@ -113,7 +124,11 @@ class ControllerProductSearch extends Controller {
 		
 				if (isset($this->request->get['description'])) {
 					$url .= '&description=' . $this->request->get['description'];
-				}    
+				}
+				
+				if (isset($this->request->get['model'])) {
+					$url .= '&model=' . $this->request->get['model'];
+				}
 				
 				$this->load->model('catalog/review');
 				$this->load->model('tool/seo_url'); 
@@ -121,7 +136,7 @@ class ControllerProductSearch extends Controller {
 				
         		$this->data['products'] = array();
 				
-				$results = $this->model_catalog_product->getProductsByKeyword($this->request->get['keyword'], isset($this->request->get['category_id']) ? $this->request->get['category_id'] : '', isset($this->request->get['description']) ? $this->request->get['description'] : '', $sort, $order, ($page - 1) * 12, 12);
+				$results = $this->model_catalog_product->getProductsByKeyword($this->request->get['keyword'], isset($this->request->get['category_id']) ? $this->request->get['category_id'] : '', isset($this->request->get['description']) ? $this->request->get['description'] : '', isset($this->request->get['model']) ? $this->request->get['model'] : '', $sort, $order, ($page - 1) * $this->config->get('config_catalog_limit'), $this->config->get('config_catalog_limit'));
         		
 				foreach ($results as $result) {
 					if ($result['image']) {
@@ -181,6 +196,10 @@ class ControllerProductSearch extends Controller {
 				if (isset($this->request->get['description'])) {
 					$url .= '&description=' . $this->request->get['description'];
 				}
+				
+				if (isset($this->request->get['model'])) {
+					$url .= '&model=' . $this->request->get['model'];
+				}
 
 				if (isset($this->request->get['page'])) {
 					$url .= '&page=' . $this->request->get['page'];
@@ -238,6 +257,10 @@ class ControllerProductSearch extends Controller {
 					$url .= '&description=' . $this->request->get['description'];
 				}
 				
+				if (isset($this->request->get['model'])) {
+					$url .= '&model=' . $this->request->get['model'];
+				}
+				
 				if (isset($this->request->get['sort'])) {
 					$url .= '&sort=' . $this->request->get['sort'];
 				}	
@@ -249,7 +272,7 @@ class ControllerProductSearch extends Controller {
 				$pagination = new Pagination();
 				$pagination->total = $product_total;
 				$pagination->page = $page;
-				$pagination->limit = 12; 
+				$pagination->limit = $this->config->get('config_catalog_limit');
 				$pagination->text = $this->language->get('text_pagination');
 				$pagination->url = HTTP_SERVER . 'index.php?route=product/search' . $url . '&page={page}';
 				

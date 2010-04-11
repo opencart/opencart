@@ -147,6 +147,8 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_default'] = $this->language->get('text_default');
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
+		$this->data['text_enabled'] = $this->language->get('text_enabled');
+    	$this->data['text_disabled'] = $this->language->get('text_disabled');
 		
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
@@ -156,6 +158,7 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['entry_category'] = $this->language->get('entry_category');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_image'] = $this->language->get('entry_image');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -213,6 +216,14 @@ class ControllerCatalogCategory extends Controller {
 			$this->data['category_description'] = array();
 		}
 
+		if (isset($this->request->post['status'])) {
+			$this->data['status'] = $this->request->post['status'];
+		} elseif (isset($category_info)) {
+			$this->data['status'] = $category_info['status'];
+		} else {
+			$this->data['status'] = 1;
+		}
+		
 		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
 
 		if (isset($this->request->post['parent_id'])) {
@@ -290,6 +301,9 @@ class ControllerCatalogCategory extends Controller {
 		if (!$this->error) {
 			return TRUE;
 		} else {
+			if (!isset($this->error['warning'])) {
+				$this->error['warning'] = $this->language->get('error_required_data');
+			}
 			return FALSE;
 		}
 	}

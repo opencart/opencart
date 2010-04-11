@@ -1,37 +1,44 @@
-1.4.5 > 1.4.6
+OPENCART UPGRADE STEPS:
+====================
 
-To Upgrade:
-1. First off backup your entire site.
-2. Goto your opencart's store admin and download a backup of your database.
-3. Upload and replace the files from the OpenCart 1.4.4 download to your OpenCart 1.4.5 installation.
-4. Copy & replace the config files for bolth the root directory and the admin from your old install to your new installation.
-5. Open your DB manager and run this code:
+This version of opencart comes with a universal upgrade script that allows you to update your store from as far back as v1.3.0 to the latest version of OpenCart without having to install each version in between. The script is still in beta so there may be some quirks. 
 
+Errors received are mostly informational. There is a good chance that the error occurred because the table no longer exists or the change had already been made. In these cases, there is nothing to worry about. 
 
-INSERT INTO `opencart_dev`.`oc_setting` (
-`setting_id` ,
-`group` ,
-`key` ,
-`value` 
-)
-VALUES (
-NULL , 'config', 'config_language', 'en'
-);
+Please be sure to post any errors shown on the forums so that we may address these errors in the future.
 
 
+If using a version older than OpenCart v1.3.0, you will need to first upgrade all the in between versions until you reach 1.3.0. Then you can run this script.
+
+1. BACKUP YOUR EXISTING STORE FILES AND DATABASE!!!
+2. Upload ALL new files on top of your current install EXCEPT config.php and admin/config.php
+3. Browse to http://www.yourstore.com/shop/install/upgrade.php
+4. After about 15 seconds you should see the Upgrade Success message or a list of errors.
+5. Either way, check your website for changes. Post problems in the forums
+
+
+Additional Steps:
+====================
+If you are upgrading from 1.4.0 or earlier, you will also need to edit your config.php file in the root path of your store. You will need to remove the following lines:
+
+//HTTP
+
+define('HTTP_SERVER', 'http://localhost/v140/');
+
+define('HTTP_IMAGE', 'http://localhost/v140/image/');
 
 
 
-1.4.4 > 1.4.5
+// HTTPS
 
-To Upgrade:
-1. First off backup your entire site.
-2. Goto your opencart's store admin and download a backup of your database.
-3. Upload and replace the files from the OpenCart 1.4.4 download to your OpenCart 1.4.5 installation.
-4. Copy & replace the config files for bolth the root directory and the admin from your old install to your new installation.
-5. Open your DB manager and run this code:
+define('HTTPS_SERVER', '');
 
-ALTER TABLE `oc_store` DROP `stock_status_id`; 
-ALTER TABLE `oc_customer` ADD `store_id` INT( 11 ) NOT NULL DEFAULT '0' AFTER `customer_id`;
-ALTER TABLE `oc_order` ADD `invoice_id` INT( 11 ) NOT NULL DEFAULT '0' AFTER `order_id`;  
-ALTER TABLE `oc_order` ADD `invoice_prefix` VARCHAR( 10 ) NOT NULL AFTER `invoice_id`;
+define('HTTPS_IMAGE', '');
+
+
+NOTE:
+If you have custom mods that were made for older versions. They may show errors. You will need to disable those from the admin or get the updated versions.
+
+
+That's It!
+OpenCart Dev Team

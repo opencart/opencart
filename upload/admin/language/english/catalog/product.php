@@ -53,9 +53,11 @@ $_['entry_prefix']           = 'Prefix:';
 $_['entry_category']         = 'Categories:';
 $_['entry_download']         = 'Downloads:';
 $_['entry_related']          = 'Related Products:';
+$_['entry_tags']          	 = 'Product Tags:<br /><span class="help">comma separated</span>';
 
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify products!';
 $_['error_name']             = 'Product Name must be greater than 3 and less than 255 characters!';
 $_['error_model']            = 'Product Model must be greater than 3 and less than 24 characters!';
+$_['error_required_data']    = 'Required Data has not been entered. Check for field errors!';
 ?>

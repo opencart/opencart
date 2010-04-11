@@ -28,7 +28,7 @@ class ControllerAccountLogin extends Controller {
 				unset($this->session->data['guest']);
 				
 				if (isset($this->request->post['redirect'])) {
-					$this->redirect($this->request->post['redirect']);
+					$this->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 				} else {
 					$this->redirect(HTTPS_SERVER . 'index.php?route=account/account');
 				} 

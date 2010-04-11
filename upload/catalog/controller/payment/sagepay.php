@@ -31,9 +31,9 @@ class ControllerPaymentSagepay extends Controller {
 		$data['SuccessURL'] = HTTPS_SERVER . 'index.php?route=payment/sagepay/success&order_id=' . $this->session->data['order_id'];
 		
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['FailureURL'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
+			$data['FailureURL'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
-			$this->data['FailureURL'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
+			$data['FailureURL'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
 		
 		$data['CustomerName'] = html_entity_decode($order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');

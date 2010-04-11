@@ -37,7 +37,7 @@ class ControllerReportViewed extends Controller {
 		
 		$this->load->model('report/viewed');
 		
-		$this->data['products'] = $this->model_report_viewed->getProductViewedReport(($page - 1) * 10, 10);
+		$this->data['products'] = $this->model_report_viewed->getProductViewedReport(($page - 1) * $this->config->get('config_admin_limit'), $this->config->get('config_admin_limit'));
 		 
  		$this->data['heading_title'] = $this->language->get('heading_title');
 		 
@@ -63,7 +63,7 @@ class ControllerReportViewed extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $product_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=report/viewed&page={page}';
 			

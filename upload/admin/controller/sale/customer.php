@@ -304,8 +304,8 @@ class ControllerSaleCustomer extends Controller {
 			'filter_date_added'        => $filter_date_added,
 			'sort'                     => $sort,
 			'order'                    => $order,
-			'start'                    => ($page - 1) * 10,
-			'limit'                    => 10
+			'start'                    => ($page - 1) * $this->config->get('config_admin_limit'),
+			'limit'                    => $this->config->get('config_admin_limit')
 		);
 		
 		$customer_total = $this->model_sale_customer->getTotalCustomers($data);
@@ -452,7 +452,7 @@ class ControllerSaleCustomer extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $customer_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=sale/customer' . $url . '&page={page}';
 			
@@ -728,7 +728,7 @@ class ControllerSaleCustomer extends Controller {
 				
 						$message  = sprintf($this->language->get('text_welcome'), $store_name) . "\n\n";;
 						$message .= $this->language->get('text_login') . "\n";
-						$message .= $store_url . 'index.php?route=account/login' . "\n\n";
+						$message .= $store_url . "\n\n";
 						$message .= $this->language->get('text_services') . "\n\n";
 						$message .= $this->language->get('text_thanks') . "\n";
 						$message .= $store_name;
@@ -809,7 +809,7 @@ class ControllerSaleCustomer extends Controller {
 
 		$pattern = '/^[A-Z0-9._%-]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i';
     	
-		if ((strlen(utf8_decode($this->request->post['email'])) > 32) || (!preg_match($pattern, $this->request->post['email']))) {
+		if ((strlen(utf8_decode($this->request->post['email'])) > 96) || (!preg_match($pattern, $this->request->post['email']))) {
       		$this->error['email'] = $this->language->get('error_email');
     	}
 

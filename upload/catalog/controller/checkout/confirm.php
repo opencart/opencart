@@ -281,6 +281,8 @@ class ControllerCheckoutConfirm extends Controller {
 		}
 		
 		$this->data['action'] = HTTP_SERVER . 'index.php?route=checkout/confirm';
+		
+		$this->data['coupon_status'] = $this->config->get('coupon_status');
 
 		if (isset($this->request->post['coupon'])) {
 			$this->data['coupon'] = $this->request->post['coupon'];

@@ -1,5 +1,5 @@
 <?php
-final class Logger {
+final class Log {
 	private $filename;
 	
 	public function __construct($filename) {
@@ -14,6 +14,6 @@ final class Logger {
 		fwrite($handle, date('Y-m-d G:i:s') . ' - ' . $message . "\n");
 			
 		fclose($handle); 
-	} 	
+	}
 }
 ?>

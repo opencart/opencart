@@ -308,8 +308,8 @@ class ControllerCatalogProduct extends Controller {
 			'filter_status'   => $filter_status,
 			'sort'            => $sort,
 			'order'           => $order,
-			'start'           => ($page - 1) * 10,
-			'limit'           => 10
+			'start'           => ($page - 1) * $this->config->get('config_admin_limit'),
+			'limit'           => $this->config->get('config_admin_limit')
 		);
 		
 		$this->load->model('tool/image');
@@ -440,7 +440,7 @@ class ControllerCatalogProduct extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $product_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=catalog/product' . $url . '&page={page}';
 			
@@ -511,6 +511,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['entry_date_start'] = $this->language->get('entry_date_start');
 		$this->data['entry_date_end'] = $this->language->get('entry_date_end');
 		$this->data['entry_priority'] = $this->language->get('entry_priority');
+		$this->data['entry_tags'] = $this->language->get('entry_tags');
 		
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -674,6 +675,14 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['keyword'] = $product_info['keyword'];
 		} else {
 			$this->data['keyword'] = '';
+		}
+		
+		if (isset($this->request->post['product_tags'])) {
+			$this->data['product_tags'] = $this->request->post['product_tags'];
+		} elseif (isset($product_info)) {
+			$this->data['product_tags'] = $this->model_catalog_product->getProductTags($this->request->get['product_id']);
+		} else {
+			$this->data['product_tags'] = array();
 		}
 		
 		if (isset($this->request->post['image'])) {
@@ -933,8 +942,11 @@ class ControllerCatalogProduct extends Controller {
     	}
 		
     	if (!$this->error) {
-      		return TRUE;
+			return TRUE;
     	} else {
+			if (!isset($this->error['warning'])) {
+				$this->error['warning'] = $this->language->get('error_required_data');
+			}
       		return FALSE;
     	}
   	}

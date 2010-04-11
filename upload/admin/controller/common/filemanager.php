@@ -233,7 +233,7 @@ class ControllerCommonFileManager extends Controller {
 			return FALSE;
 		}
 		
-		while ($file = readdir($handle)) {
+		while (false !== ($file = readdir($handle))) {
 			if ($file != '.' && $file != '..') {
 				if (!is_dir($directory . '/' . $file)) {
 					unlink($directory . '/' . $file);
@@ -349,7 +349,7 @@ class ControllerCommonFileManager extends Controller {
 		
 		@mkdir($destination); 
 		
-		while (false !== ($file = readdir($directory))) { 
+		while (false !== ($file = readdir($handle))) {
 			if (($file != '.') && ($file != '..')) { 
 				if (is_dir($source . '/' . $file)) { 
 					$this->recursiveCopy($source . '/' . $file, $destination . '/' . $file); 

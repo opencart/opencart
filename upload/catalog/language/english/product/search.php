@@ -20,4 +20,5 @@ $_['text_rating_desc']  = 'Rating Highest';
 // Entry
 $_['entry_search']      = 'Search:';
 $_['entry_description'] = 'Search in product descriptions';
+$_['entry_model']       = 'Search in product model';
 ?>

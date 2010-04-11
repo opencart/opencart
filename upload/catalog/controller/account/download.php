@@ -55,7 +55,7 @@ class ControllerAccountDownload extends Controller {
 	
 			$this->data['downloads'] = array();
 			
-			$results = $this->model_account_download->getDownloads(($page - 1) * 10, 10);
+			$results = $this->model_account_download->getDownloads(($page - 1) * $this->config->get('config_catalog_limit'), $this->config->get('config_catalog_limit'));
 			
 			foreach ($results as $result) {
 				if (file_exists(DIR_DOWNLOAD . $result['filename'])) {
@@ -94,9 +94,9 @@ class ControllerAccountDownload extends Controller {
 			$pagination = new Pagination();
 			$pagination->total = $download_total;
 			$pagination->page = $page;
-			$pagination->limit = 10; 
+			$pagination->limit = $this->config->get('config_catalog_limit');
 			$pagination->text = $this->language->get('text_pagination');
-			$pagination->url = HTTP_SERVER . 'index.php?route=account/download&page=%s';
+			$pagination->url = $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=account/download&page={page}');
 			
 			$this->data['pagination'] = $pagination->render();
 			

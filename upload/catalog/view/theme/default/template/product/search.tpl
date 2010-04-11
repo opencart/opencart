@@ -36,6 +36,14 @@
             <?php } ?>
             <?php echo $entry_description; ?></td>
         </tr>
+		<tr>
+          <td colspan="2"><?php if ($model) { ?>
+            <input type="checkbox" name="model" id="model" checked="checked" />
+            <?php } else { ?>
+            <input type="checkbox" name="model" id="model" />
+            <?php } ?>
+            <?php echo $entry_model; ?></td>
+        </tr>
       </table>
     </div>
     <div class="buttons">
@@ -119,6 +127,10 @@ function contentSearch() {
 	
 	if ($('#description').attr('checked')) {
 		url += '&description=1';
+	}
+	
+	if ($('#model').attr('checked')) {
+		url += '&model=1';
 	}
 
 	location = url;

@@ -93,6 +93,11 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_error_display'] = $this->language->get('entry_error_display');
 		$this->data['entry_error_log'] = $this->language->get('entry_error_log');
 		$this->data['entry_error_filename'] = $this->language->get('entry_error_filename');
+		$this->data['entry_shipping_session'] = $this->language->get('entry_shipping_session');
+		$this->data['entry_admin_limit'] = $this->language->get('entry_admin_limit');
+		$this->data['entry_catalog_limit'] = $this->language->get('entry_catalog_limit');
+		$this->data['entry_cart_weight'] = $this->language->get('entry_cart_weight');
+		
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -201,6 +206,18 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['error_error_filename'] = '';
 		}		
+		
+		if (isset($this->error['catalog_limit'])) {
+			$this->data['error_catalog_limit'] = $this->error['catalog_limit'];
+		} else {
+			$this->data['error_catalog_limit'] = '';
+		}
+		
+		if (isset($this->error['admin_limit'])) {
+			$this->data['error_admin_limit'] = $this->error['admin_limit'];
+		} else {
+			$this->data['error_admin_limit'] = '';
+		}
 		
   		$this->document->breadcrumbs = array();
 
@@ -512,6 +529,30 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_download_status'] = $this->config->get('config_download_status');
 		}
 		
+		if (isset($this->request->post['config_shipping_session'])) {
+			$this->data['config_shipping_session'] = $this->request->post['config_shipping_session'];
+		} else {
+			$this->data['config_shipping_session'] = $this->config->get('config_shipping_session');
+		}
+		
+		if (isset($this->request->post['config_admin_limit'])) {
+			$this->data['config_admin_limit'] = $this->request->post['config_admin_limit'];
+		} else {
+			$this->data['config_admin_limit'] = $this->config->get('config_admin_limit');
+		}
+		
+		if (isset($this->request->post['config_catalog_limit'])) {
+			$this->data['config_catalog_limit'] = $this->request->post['config_catalog_limit'];
+		} else {
+			$this->data['config_catalog_limit'] = $this->config->get('config_catalog_limit');
+		}
+		
+		if (isset($this->request->post['config_cart_weight'])) {
+			$this->data['config_cart_weight'] = $this->request->post['config_cart_weight'];
+		} else {
+			$this->data['config_cart_weight'] = $this->config->get('config_cart_weight');
+		}
+		
 		$this->load->model('tool/image');
 
 		if (isset($this->request->post['config_logo'])) {
@@ -785,10 +826,21 @@ class ControllerSettingSetting extends Controller {
 		if (!$this->request->post['config_error_filename']) {
 			$this->error['error_filename'] = $this->language->get('error_error_filename');
 		}
+		
+		if (!$this->request->post['config_admin_limit']) {
+			$this->error['admin_limit'] = $this->language->get('error_limit');
+		}
+		
+		if (!$this->request->post['config_catalog_limit']) {
+			$this->error['catalog_limit'] = $this->language->get('error_limit');
+		}
 
 		if (!$this->error) {
 			return TRUE;
 		} else {
+			if (!isset($this->error['warning'])) {
+				$this->error['warning'] = $this->language->get('error_required_data');
+			}
 			return FALSE;
 		}
 	}

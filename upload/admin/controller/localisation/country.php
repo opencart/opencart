@@ -246,7 +246,7 @@ class ControllerLocalisationCountry extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $country_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/country' . $url . '&page={page}';
 
@@ -267,11 +267,15 @@ class ControllerLocalisationCountry extends Controller {
 	private function getForm() {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_iso_code_2'] = $this->language->get('entry_iso_code_2');
 		$this->data['entry_iso_code_3'] = $this->language->get('entry_iso_code_3');
 		$this->data['entry_address_format'] = $this->language->get('entry_address_format');
 
+		$this->data['text_enabled'] = $this->language->get('text_enabled');
+		$this->data['text_disabled'] = $this->language->get('text_disabled');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -329,6 +333,14 @@ class ControllerLocalisationCountry extends Controller {
 			$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
 		}
 
+		if (isset($this->request->post['status'])) {
+			$this->data['status'] = $this->request->post['status'];
+		} elseif (isset($country_info)) {
+			$this->data['status'] = $country_info['status'];
+		} else {
+			$this->data['status'] = '1';
+		}
+		
 		if (isset($this->request->post['name'])) {
 			$this->data['name'] = $this->request->post['name'];
 		} elseif (isset($country_info)) {

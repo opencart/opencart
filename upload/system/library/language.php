@@ -12,17 +12,25 @@ final class Language {
   	}
 	
 	public function load($filename) {
+		$_ = array();
+		
+		$default = DIR_LANGUAGE . 'english/' . $filename . '.php';
+		
+		if (file_exists($default)) {
+			require($default);
+		}
+		
 		$file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
 
-    	if (file_exists($file)) {
-	  		$_ = array();
-	  
+    	if (file_exists($file) && $file != $default) {
 	  		require($file);
-	  
-      		$this->data = array_merge($this->data, $_);
-    	} else {
-      		exit('Error: Could not load language ' . $filename . '!');
-    	}
+		}
+	  	
+	  	if (empty($_)) { 
+	  		echo 'Error: Could not load language ' . $filename . '!';
+	  	} else {
+		  	$this->data = array_merge($this->data, $_);
+		}
   	}
 }
 ?>

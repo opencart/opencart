@@ -15,10 +15,13 @@
       <div id="tab_general">
         <div id="languages" class="htabs">
           <?php foreach ($languages as $language) { ?>
+		  <?php if ($language['status']) { ?>
           <a tab="#language<?php echo $language['language_id']; ?>"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a>
           <?php } ?>
+		  <?php } ?>
         </div>
         <?php foreach ($languages as $language) { ?>
+		<?php if ($language['status']) { ?>
         <div id="language<?php echo $language['language_id']; ?>">
           <table class="form">
             <tr>
@@ -39,6 +42,7 @@
           </table>
         </div>
         <?php } ?>
+		<?php } ?>
       </div>
       <div id="tab_data">
         <table class="form">
@@ -91,6 +95,18 @@
             <td valign="top"><input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
               <img src="<?php echo $preview; ?>" alt="" id="preview" style="border: 1px solid #EEEEEE;" />&nbsp;<img src="view/image/image.png" alt="" style="cursor: pointer;" align="top" onclick="image_upload('image', 'preview');" /></td>
           </tr>
+		  <tr>
+            <td><?php echo $entry_status; ?></td>
+            <td><select name="status">
+                <?php if ($status) { ?>
+                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                <option value="0"><?php echo $text_disabled; ?></option>
+                <?php } else { ?>
+                <option value="1"><?php echo $text_enabled; ?></option>
+                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                <?php } ?>
+              </select></td>
+          </tr>
           <tr>
             <td><?php echo $entry_sort_order; ?></td>
             <td><input name="sort_order" value="<?php echo $sort_order; ?>" size="1" /></td>
@@ -103,7 +119,9 @@
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
+<?php if ($language['status']) { ?>
 CKEDITOR.replace('description<?php echo $language['language_id']; ?>');
+<?php } ?>
 <?php } ?>
 //--></script>
 <script type="text/javascript" src="view/javascript/jquery/ui/ui.draggable.js"></script>

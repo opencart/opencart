@@ -269,7 +269,7 @@ class ControllerCatalogDownload extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $download_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=catalog/download' . $url . '&page={page}';
 

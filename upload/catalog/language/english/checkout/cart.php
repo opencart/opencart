@@ -5,6 +5,7 @@ $_['heading_title']   = 'Shopping Cart';
 // Text
 $_['text_basket']     = 'Basket';
 $_['text_sub_total']  = 'Sub-Total:';
+$_['text_weight']  	  = 'Cart Weight:';
 $_['text_error']      = 'Your shopping cart is empty!';
 
 // Column

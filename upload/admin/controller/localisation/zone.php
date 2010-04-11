@@ -246,7 +246,7 @@ class ControllerLocalisationZone extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $zone_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/zone' . $url . '&page={page}';
 
@@ -267,10 +267,14 @@ class ControllerLocalisationZone extends Controller {
 	private function getForm() {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_code'] = $this->language->get('entry_code');
 		$this->data['entry_country'] = $this->language->get('entry_country');
 
+		$this->data['text_enabled'] = $this->language->get('text_enabled');
+		$this->data['text_disabled'] = $this->language->get('text_disabled');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 		
@@ -328,6 +332,14 @@ class ControllerLocalisationZone extends Controller {
 			$zone_info = $this->model_localisation_zone->getZone($this->request->get['zone_id']);
 		}
 
+		if (isset($this->request->post['status'])) {
+			$this->data['status'] = $this->request->post['status'];
+		} elseif (isset($zone_info)) {
+			$this->data['status'] = $zone_info['status'];
+		} else {
+			$this->data['status'] = '1';
+		}
+		
 		if (isset($this->request->post['name'])) {
 			$this->data['name'] = $this->request->post['name'];
 		} elseif (isset($zone_info)) {

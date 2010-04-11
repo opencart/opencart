@@ -32,6 +32,5 @@ $_['error_filename']    = 'Filename must be greater than 3 and less than 64 char
 $_['error_default']     = 'Warning: This language cannot be deleted as it is currently assigned as the default store language!';
 $_['error_admin']       = 'Warning: This Language cannot be deleted as it is currently assigned as the administration language!';
 $_['error_store']       = 'Warning: This language cannot be deleted as it is currently assigned to %s stores!';
-$_['error_admin']       = 'Warning: This language cannot be deleted as it is currently assigned as the administration language!';
 $_['error_order']       = 'Warning: This language cannot be deleted as it is currently assigned to %s orders!';
 ?>

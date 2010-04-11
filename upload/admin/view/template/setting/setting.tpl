@@ -423,6 +423,48 @@
                 <?php } ?>
               </select></td>
           </tr>
+		  <tr>
+            <td><span class="required">*</span> <?php echo $entry_admin_limit; ?></td>
+            <td><input type="text" name="config_admin_limit" value="<?php echo $config_admin_limit; ?>" size="3" />
+              <?php if ($error_admin_limit) { ?>
+              <span class="error"><?php echo $error_admin_limit; ?></span>
+              <?php } ?></td>
+          </tr>
+		  <tr>
+            <td><span class="required">*</span> <?php echo $entry_catalog_limit; ?></td>
+            <td><input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" size="3" />
+              <?php if ($error_catalog_limit) { ?>
+              <span class="error"><?php echo $error_catalog_limit; ?></span>
+              <?php } ?></td>
+          </tr>
+		  <tr>
+            <td><?php echo $entry_cart_weight; ?></td>
+            <td><?php if ($config_cart_weight) { ?>
+              <input type="radio" name="config_cart_weight" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="config_cart_weight" value="0" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="config_cart_weight" value="1" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="config_cart_weight" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } ?></td>
+          </tr>
+		  <tr>
+            <td><?php echo $entry_shipping_session; ?></td>
+            <td><?php if ($config_shipping_session) { ?>
+              <input type="radio" name="config_shipping_session" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="config_shipping_session" value="0" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="config_shipping_session" value="1" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="config_shipping_session" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } ?></td>
+          </tr>
         </table>
       </div>
       <div id="tab_image">

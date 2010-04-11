@@ -52,7 +52,7 @@ class ControllerCommonHome extends Controller {
 		$this->load->model('sale/customer');
 		
 		$this->data['total_customer'] = $this->model_sale_customer->getTotalCustomers();
-		$this->data['total_customer_approval'] = $this->model_sale_customer->getTotalCustomersAwatingApproval();
+		$this->data['total_customer_approval'] = $this->model_sale_customer->getTotalCustomersAwaitingApproval();
 		
 		$this->load->model('catalog/product');
 		
@@ -61,7 +61,7 @@ class ControllerCommonHome extends Controller {
 		$this->load->model('catalog/review');
 		
 		$this->data['total_review'] = $this->model_catalog_review->getTotalReviews();
-		$this->data['total_review_approval'] = $this->model_catalog_review->getTotalReviewsAwatingApproval();
+		$this->data['total_review_approval'] = $this->model_catalog_review->getTotalReviewsAwaitingApproval();
 		
 		$this->data['orders'] = array(); 
 		

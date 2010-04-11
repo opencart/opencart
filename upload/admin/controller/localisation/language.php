@@ -165,8 +165,8 @@ class ControllerLocalisationLanguage extends Controller {
 		$data = array(
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * 10,
-			'limit' => 10
+			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
+			'limit' => $this->config->get('config_admin_limit')
 		);
 		
 		$language_total = $this->model_localisation_language->getTotalLanguages();
@@ -246,7 +246,7 @@ class ControllerLocalisationLanguage extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $language_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/language' . $url . '&page={page}';
 			

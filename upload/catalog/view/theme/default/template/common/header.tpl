@@ -22,14 +22,14 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
 </script>
 <![endif]-->
 <?php foreach ($styles as $style) { ?>
-<link rel="stylesheet" type="text/css" href="<?php echo $style; ?>" />
+<link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
 <script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery/thickbox/thickbox-compressed.js"></script>
 <link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/thickbox/thickbox.css" />
 <script type="text/javascript" src="catalog/view/javascript/jquery/tab.js"></script>
 <?php foreach ($scripts as $script) { ?>
-<script type="text/javascript" src="catalog/view/javascript/<?php echo $script; ?>"></script>
+<script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
 <script type="text/javascript"><!--
 function bookmark(url, title) {

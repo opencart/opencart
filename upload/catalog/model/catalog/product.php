@@ -260,7 +260,7 @@ class ModelCatalogProduct extends Model {
 			$query = $this->db->query($sql);
 		
 			if ($query->num_rows) {
-				return $query->num_rows;
+				return $query->row['total'];
 			} else {
 				return 0;
 			}
@@ -471,7 +471,7 @@ class ModelCatalogProduct extends Model {
 		$query = $this->db->query("SELECT COUNT(DISTINCT ps.product_id) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "product_special ps ON (p.product_id = ps.product_id) WHERE p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) AND ps.product_id NOT IN (SELECT pd2.product_id FROM " . DB_PREFIX . "product_discount pd2 WHERE p.product_id = pd2.product_id AND pd2.customer_group_id = '" . (int)$customer_group_id . "' AND pd2.quantity = '1' AND ((pd2.date_start = '0000-00-00' OR pd2.date_start < NOW()) AND (pd2.date_end = '0000-00-00' OR pd2.date_end > NOW())))");
 		
 		if (isset($query->row['total'])) {
-			return $query->num_rows;
+			return $query->row['total'];
 		} else {
 			return 0;	
 		}

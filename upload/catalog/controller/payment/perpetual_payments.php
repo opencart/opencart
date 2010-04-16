@@ -81,6 +81,7 @@ class ControllerPaymentPerpetualPayments extends Controller {
 			'cust_address'   => $order_info['payment_address_1'] . ' ' . $order_info['payment_city'],
 			'cust_country'   => $order_info['payment_iso_code_2'],
 			'cust_postcode'	 => $order_info['payment_postcode'],
+			'cust_tel'	 	 => $order_info['telephone'],
 			'cust_ip'        => $this->request->server['REMOTE_ADDR'],
 			'cust_email'     => $order_info['email'],
 			'tran_ref'       => $order_info['order_id'],

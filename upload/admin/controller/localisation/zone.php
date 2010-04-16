@@ -165,8 +165,8 @@ class ControllerLocalisationZone extends Controller {
 		$data = array(
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * 10,
-			'limit' => 10
+			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
+			'limit' => $this->config->get('config_admin_limit')
 		);
 		
 		$zone_total = $this->model_localisation_zone->getTotalZones();

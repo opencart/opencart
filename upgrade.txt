@@ -12,14 +12,8 @@ If using a version older than OpenCart v1.3.0, you will need to first upgrade al
 
 1. BACKUP YOUR EXISTING STORE FILES AND DATABASE!!!
 2. Upload ALL new files on top of your current install EXCEPT config.php and admin/config.php
-3. Browse to http://www.yourstore.com/shop/install/upgrade.php
-4. After about 15 seconds you should see the Upgrade Success message or a list of errors.
-5. Either way, check your website for changes. Post problems in the forums
-
-
-Additional Steps:
-====================
-If you are upgrading from 1.4.0 or earlier, you will also need to edit your config.php file in the root path of your store. You will need to remove the following lines:
+3. If using 1.4.0 or earlier, Edit your config.php file in the root path of your store. 
+Remove the following lines:
 
 //HTTP
 
@@ -35,9 +29,14 @@ define('HTTPS_SERVER', '');
 
 define('HTTPS_IMAGE', '');
 
+4. Browse to http://www.yourstore.com/shop/install/upgrade.php
+5. After about 10 seconds you should see the Upgrade Success message or a list of errors.
+5. Post any upgrade script errors problems in the forums
+6. Goto User Groups and Edit all user groups to add access and modify to new modules and controllers
+7. Goto Admin and Edit the main System Settings. Update all fields and click save.
+8. Load the catalog site.
+ - If you see errors, you might have custom mods that were made for older versions. You will need to disable those from the admin or get the updated versions.
 
-NOTE:
-If you have custom mods that were made for older versions. They may show errors. You will need to disable those from the admin or get the updated versions.
 
 
 That's It!

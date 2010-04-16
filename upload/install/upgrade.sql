@@ -6,7 +6,9 @@
 # DO NOT RUN THIS ENTIRE FILE MANUALLY THROUGH PHPMYADMIN OR OTHER MYSQL DB TOOL
 # THIS FILE IS GENERATED FOR USE WITH THE UPGRADE.PHP SCRIPT LOCATED IN THE INSTALL FOLDER
 # THE UPGRADE.PHP SCRIPT IS DESIGNED TO VERIFY THE TABLES BEFORE EXECUTING WHICH PREVENTS ERRORS
+
 # IF YOU NEED TO MANUALLY RUN THEN YOU CAN DO IT BY INDIVIDUAL VERSIONS. EACH SECTION IS LABELED.
+# BE SURE YOU CHANGE THE PREFIX "oc_" TO YOUR PREFIX OR REMOVE IT IF NOT USING A PREFIX
 
 
 ### Start 1.3.2
@@ -16,16 +18,16 @@ SET FOREIGN_KEY_CHECKS = 0;
 # DDL START
 #
 CREATE TABLE IF NOT EXISTS oc_customer_group (
-    customer_group_id int(11) NOT NULL DEFAULT 0 COMMENT '' auto_increment,
-    name varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci,
+    customer_group_id int(11) NOT NULL COMMENT '' auto_increment,
+    name varchar(32) NOT NULL COMMENT '' COLLATE utf8_unicode_ci,
     PRIMARY KEY (customer_group_id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS oc_measurement_class (
-    measurement_class_id int(11) NOT NULL DEFAULT 0 COMMENT '' auto_increment,
+    measurement_class_id int(11) NOT NULL COMMENT '' auto_increment,
     language_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    title varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci,
-    unit varchar(4) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci,
+    title varchar(32) NOT NULL COMMENT '' COLLATE utf8_unicode_ci,
+    unit varchar(4) NOT NULL COMMENT '' COLLATE utf8_unicode_ci,
     PRIMARY KEY (measurement_class_id, language_id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -40,7 +42,7 @@ ALTER TABLE oc_customer MODIFY cart text NULL DEFAULT NULL COMMENT '' COLLATE ut
 ALTER TABLE oc_customer ALTER ip SET DEFAULT 0;
 #
 #  Fieldformat of
-#    oc_customer.cart changed from text NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci to text NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
+#    oc_customer.cart changed from text NOT NULL COMMENT '' COLLATE utf8_unicode_ci to text NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
 #  Possibly data modifications needed!
 #
 
@@ -85,14 +87,14 @@ SET FOREIGN_KEY_CHECKS = 0;
 ALTER TABLE oc_category MODIFY image varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci;
 #
 #  Fieldformat of
-#    oc_category.image changed from varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
+#    oc_category.image changed from varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
 #  Possibly data modifications needed!
 #
 
-ALTER TABLE oc_category_description MODIFY meta_description varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci;
+ALTER TABLE oc_category_description MODIFY meta_description varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci;
 #
 #  Fieldformat of
-#    oc_category_description.meta_description changed from varchar(66) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci.
+#    oc_category_description.meta_description changed from varchar(66) NOT NULL COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci.
 #  Possibly data modifications needed!
 #
 
@@ -104,7 +106,7 @@ ALTER TABLE oc_coupon ALTER date_end SET DEFAULT '0000-00-00';
 ALTER TABLE oc_manufacturer MODIFY image varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci;
 #
 #  Fieldformat of
-#    oc_manufacturer.image changed from varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
+#    oc_manufacturer.image changed from varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
 #  Possibly data modifications needed!
 #
 
@@ -116,30 +118,30 @@ ALTER TABLE oc_order ADD payment_country_id int(11) NOT NULL DEFAULT 0 COMMENT '
 
 ALTER TABLE oc_order_option ADD product_option_value_id int(11) NOT NULL DEFAULT '0' COMMENT '' AFTER order_product_id;
 
-ALTER TABLE oc_product ADD sku varchar(64) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci AFTER model;
-ALTER TABLE oc_product ADD location varchar(128) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci AFTER sku;
-ALTER TABLE oc_product MODIFY model varchar(64) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci;
+ALTER TABLE oc_product ADD sku varchar(64) NOT NULL COMMENT '' COLLATE utf8_unicode_ci AFTER model;
+ALTER TABLE oc_product ADD location varchar(128) NOT NULL COMMENT '' COLLATE utf8_unicode_ci AFTER sku;
+ALTER TABLE oc_product MODIFY model varchar(64) NOT NULL COMMENT '' COLLATE utf8_unicode_ci;
 ALTER TABLE oc_product MODIFY image varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci;
 ALTER TABLE oc_product ALTER measurement_class_id SET DEFAULT 0;
 ALTER TABLE oc_product DROP sort_order;
 #
 #  Fieldformats of
-#    oc_product.model changed from varchar(24) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci to varchar(64) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci.
-#    oc_product.image changed from varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
+#    oc_product.model changed from varchar(24) NOT NULL COMMENT '' COLLATE utf8_unicode_ci to varchar(64) NOT NULL COMMENT '' COLLATE utf8_unicode_ci.
+#    oc_product.image changed from varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
 #  Possibly data modifications needed!
 #
 
-ALTER TABLE oc_product_description MODIFY meta_description varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci;
+ALTER TABLE oc_product_description MODIFY meta_description varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci;
 #
 #  Fieldformat of
-#    oc_product_description.meta_description changed from varchar(66) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci.
+#    oc_product_description.meta_description changed from varchar(66) NOT NULL COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci.
 #  Possibly data modifications needed!
 #
 
 ALTER TABLE oc_product_image MODIFY image varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci;
 #
 #  Fieldformat of
-#    oc_product_image.image changed from varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
+#    oc_product_image.image changed from varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
 #  Possibly data modifications needed!
 #
 
@@ -176,6 +178,10 @@ SET FOREIGN_KEY_CHECKS = 0;
 #
 # DDL START
 #
+
+DELETE FROM oc_extension WHERE `type` = 'module' AND `key` = 'currency';
+DELETE FROM oc_setting WHERE `group` = 'currency';
+
 CREATE TABLE IF NOT EXISTS oc_category_to_store (
     category_id int(11) NOT NULL DEFAULT 0 COMMENT '',
     store_id int(11) NOT NULL DEFAULT 0 COMMENT '',
@@ -189,18 +195,27 @@ CREATE TABLE IF NOT EXISTS oc_information_to_store (
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE IF NOT EXISTS oc_length_class (
-    length_class_id int(11) NOT NULL DEFAULT 0 COMMENT '' auto_increment,
-    value decimal(15,8) NOT NULL DEFAULT '' COMMENT '',
+    length_class_id int(11) NOT NULL COMMENT '' auto_increment,
+    value decimal(15,8) NOT NULL COMMENT '',
     PRIMARY KEY (length_class_id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+
+INSERT INTO `oc_length_class` (`length_class_id`, `value`) VALUES (1, '1.00000000') ON DUPLICATE KEY UPDATE length_class_id=length_class_id;
+INSERT INTO `oc_length_class` (`length_class_id`, `value`) VALUES (2, '10.00000000') ON DUPLICATE KEY UPDATE length_class_id=length_class_id;
+INSERT INTO `oc_length_class` (`length_class_id`, `value`) VALUES (3, '0.39370000') ON DUPLICATE KEY UPDATE length_class_id=length_class_id;
+
 CREATE TABLE IF NOT EXISTS oc_length_class_description (
-    length_class_id int(11) NOT NULL DEFAULT 0 COMMENT '' auto_increment,
+    length_class_id int(11) NOT NULL COMMENT '' auto_increment,
     language_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    title varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
-    unit varchar(4) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    title varchar(32) NOT NULL COMMENT '' COLLATE utf8_bin,
+    unit varchar(4) NOT NULL COMMENT '' COLLATE utf8_bin,
     PRIMARY KEY (length_class_id, language_id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+INSERT INTO `oc_length_class_description` (`length_class_id`, `language_id`, `title`, `unit`) VALUES (1, 1, 'Centimeter', 'cm') ON DUPLICATE KEY UPDATE length_class_id=length_class_id;
+INSERT INTO `oc_length_class_description` (`length_class_id`, `language_id`, `title`, `unit`) VALUES (2, 1, 'Millimeter', 'mm') ON DUPLICATE KEY UPDATE length_class_id=length_class_id;
+INSERT INTO `oc_length_class_description` (`length_class_id`, `language_id`, `title`, `unit`) VALUES (3, 1, 'Inch', 'in') ON DUPLICATE KEY UPDATE length_class_id=length_class_id;
 
 CREATE TABLE IF NOT EXISTS oc_manufacturer_to_store (
     manufacturer_id int(11) NOT NULL DEFAULT 0 COMMENT '',
@@ -215,16 +230,16 @@ CREATE TABLE IF NOT EXISTS oc_product_to_store (
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE IF NOT EXISTS oc_store (
-    store_id int(11) NOT NULL DEFAULT 0 COMMENT '' auto_increment,
-    name varchar(64) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
-    url varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
-    title varchar(128) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
-    meta_description varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
-    template varchar(64) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    store_id int(11) NOT NULL COMMENT '' auto_increment,
+    name varchar(64) NOT NULL COMMENT '' COLLATE utf8_bin,
+    url varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin,
+    title varchar(128) NOT NULL COMMENT '' COLLATE utf8_bin,
+    meta_description varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin,
+    template varchar(64) NOT NULL COMMENT '' COLLATE utf8_bin,
     country_id int(11) NOT NULL DEFAULT 0 COMMENT '',
     zone_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    language varchar(5) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
-    currency varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    language varchar(5) NOT NULL COMMENT '' COLLATE utf8_bin,
+    currency varchar(3) NOT NULL COMMENT '' COLLATE utf8_bin,
     tax int(1) NOT NULL DEFAULT '0' COMMENT '',
     customer_group_id int(11) NOT NULL DEFAULT 0 COMMENT '',
     customer_price int(1) NOT NULL DEFAULT 0 COMMENT '',
@@ -238,8 +253,8 @@ CREATE TABLE IF NOT EXISTS oc_store (
     stock_subtract int(1) NOT NULL DEFAULT 0 COMMENT '',
     order_status_id int(11) NOT NULL DEFAULT 0 COMMENT '',
     stock_status_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    logo varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
-    icon varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    logo varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin,
+    icon varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin,
     image_thumb_width int(5) NOT NULL DEFAULT 0 COMMENT '',
     image_thumb_height int(5) NOT NULL DEFAULT 0 COMMENT '',
     image_popup_width int(5) NOT NULL DEFAULT 0 COMMENT '',
@@ -260,17 +275,49 @@ CREATE TABLE IF NOT EXISTS oc_store (
 CREATE TABLE IF NOT EXISTS oc_store_description (
     store_id int(11) NOT NULL DEFAULT 0 COMMENT '',
     language_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    description text NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    description text NOT NULL COMMENT '' COLLATE utf8_bin,
     PRIMARY KEY (store_id, language_id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+DROP TABLE IF EXISTS `oc_weight_class`;
+
+CREATE TABLE `oc_weight_class` (
+  `weight_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `value` decimal(15,8) NOT NULL DEFAULT '0.00000000',
+  PRIMARY KEY (`weight_class_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `oc_weight_class`
+--
+
+INSERT INTO `oc_weight_class` (`weight_class_id`, `value`) VALUES (1, '1.00000000') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
+INSERT INTO `oc_weight_class` (`weight_class_id`, `value`) VALUES (2, '1000.00000000') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
+INSERT INTO `oc_weight_class` (`weight_class_id`, `value`) VALUES (5, '2.20460000') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
+INSERT INTO `oc_weight_class` (`weight_class_id`, `value`) VALUES (6, '35.27400000') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_weight_class_description`
+--
+
+
 CREATE TABLE IF NOT EXISTS oc_weight_class_description (
-    weight_class_id int(11) NOT NULL DEFAULT 0 COMMENT '' auto_increment,
+    weight_class_id int(11) NOT NULL COMMENT '' auto_increment,
     language_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    title varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
-    unit varchar(4) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    title varchar(32) NOT NULL COMMENT '' COLLATE utf8_bin,
+    unit varchar(4) NOT NULL COMMENT '' COLLATE utf8_bin,
     PRIMARY KEY (weight_class_id, language_id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (1, 1, 'Kilogram', 'kg') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
+INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (2, 1, 'Gram', 'g') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
+INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (5, 1, 'Pound ', 'lb') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
+INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (6, 1, 'Ounce', 'oz') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
+
+UPDATE `oc_product` SET `weight_class_id` = '5' WHERE `weight_class_id` = '3';
+UPDATE `oc_product` SET `weight_class_id` = '6' WHERE `weight_class_id` = '4';
 
 ALTER TABLE oc_address DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -331,8 +378,8 @@ DROP TABLE IF EXISTS oc_measurement_class;
 DROP TABLE IF EXISTS oc_measurement_rule;
 
 ALTER TABLE oc_order ADD store_id int(11) NOT NULL DEFAULT '0' COMMENT '' AFTER order_id;
-ALTER TABLE oc_order ADD store_name varchar(64) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER store_id;
-ALTER TABLE oc_order ADD store_url varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER store_name;
+ALTER TABLE oc_order ADD store_name varchar(64) NOT NULL COMMENT '' COLLATE utf8_bin AFTER store_id;
+ALTER TABLE oc_order ADD store_url varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin AFTER store_name;
 ALTER TABLE oc_order ADD customer_group_id int(11) NOT NULL DEFAULT '0' COMMENT '' AFTER customer_id;
 ALTER TABLE oc_order ALTER customer_id SET DEFAULT 0, DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -448,7 +495,7 @@ ALTER TABLE oc_customer ADD store_id int(11) NOT NULL DEFAULT '0' COMMENT '' AFT
 
 
 ALTER TABLE oc_order ADD invoice_id int(11) NOT NULL DEFAULT '0' COMMENT '' AFTER order_id;
-ALTER TABLE oc_order ADD invoice_prefix varchar(10) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER invoice_id;
+ALTER TABLE oc_order ADD invoice_prefix varchar(10) NOT NULL COMMENT '' COLLATE utf8_bin AFTER invoice_id;
 
 
 ALTER TABLE oc_store ALTER `ssl` DROP DEFAULT;

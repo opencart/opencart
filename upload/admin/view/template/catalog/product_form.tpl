@@ -282,11 +282,7 @@
               <?php $option_row = 0; ?>
               <?php $option_value_row = 0; ?>
               <?php foreach ($product_options as $product_option) { ?>
-              <?php foreach ($languages as $language) { ?>
-			  <?php if ($language['status']) { ?>
-              <?php if ($language['language_id'] == $language_id) { ?>
-              <option value="option<?php echo $option_row; ?>"><?php echo $product_option['language'][$language['language_id']]['name']; ?></option>
-              <?php } ?>
+              <option value="option<?php echo $option_row; ?>"><?php echo $product_option['language'][$language_id]['name']; ?></option>
               <?php if ($product_option['product_option_value']) { ?>
               <?php foreach ($product_option['product_option_value'] as $product_option_value) { ?>
               <?php foreach ($languages as $language) { ?>
@@ -298,8 +294,6 @@
               <?php } ?>
               <?php } ?>
               <?php $option_row++; ?>
-              <?php } ?>
-			  <?php } ?>
               <?php } ?>
             </select>
           </div>
@@ -603,10 +597,12 @@ function addOption() {
 	html += '<td><?php echo $entry_option; ?></td>';
 	html += '<td>';
 	<?php foreach ($languages as $language) { ?>
+	<?php if ($language['status']) { ?>
 	<?php if ($language['language_id'] == $language_id) { ?>
 	html += '<input type="text" name="product_option[' + option_row + '][language][<?php echo $language['language_id']; ?>][name]" value="Option ' + option_row + '" onkeyup="$(\'#option option[value=\\\'option' + option_row + '\\\']\').text(this.value);" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
 	<?php } else { ?>
 	html += '<input type="text" name="product_option[' + option_row + '][language][<?php echo $language['language_id']; ?>][name]" value="Option ' + option_row + '" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
+	<?php } ?>
 	<?php } ?>
 	<?php } ?>
 	html += '</td>';
@@ -647,11 +643,13 @@ function addOptionValue(option_id) {
 	html += '<td><?php echo $entry_option_value; ?></td>';
 	html += '<td>';
 	<?php foreach ($languages as $language) { ?>
+	<?php if ($language['status']) { ?>
 	<?php if ($language['language_id'] == $language_id) { ?>
 	html += '<input type="text" name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][language][<?php echo $language['language_id']; ?>][name]" value="Option Value ' + option_value_row + '" onkeyup="$(\'#option option[value=\\\'option' + option_id + '_' + option_value_row + '\\\']\').text(\'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\' + this.value);" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
 	<?php } else { ?>
 	html += '<input type="text" name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][language][<?php echo $language['language_id']; ?>][name]" value="Option Value ' + option_value_row + '" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
 	<?php } ?>	
+	<?php } ?>
 	<?php } ?>
 	html += '</td>';
 	html += '</tr>';

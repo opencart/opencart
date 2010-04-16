@@ -22,7 +22,12 @@ final class Pagination {
 			$page = $this->page;
 		}
 		
-		$limit = $this->limit;
+		if (!$this->limit) {
+			$limit = 10;
+		} else {
+			$limit = $this->limit;
+		}
+		
 		$num_links = $this->num_links;
 		$num_pages = ceil($total / $limit);
 		

@@ -360,6 +360,10 @@ class ModelCheckoutOrder extends Model {
 				
 				$text .= "\n";
 				
+				if ($order_query->row['comment'] != '') {
+					$comment = ($order_query->row['comment'] .  "\n\n" . $comment);
+				}
+				
 				if ($comment) {
 					$text .= $language->get('text_comment') . "\n\n";
 					$text .= $comment . "\n\n";

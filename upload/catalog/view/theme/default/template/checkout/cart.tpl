@@ -56,8 +56,8 @@
         <table>
           <tr>
             <td align="left"><a onclick="$('#cart').submit();" class="button"><span><?php echo $button_update; ?></span></a></td>
-            <td align="center"><a onclick="location = '<?php echo str_replace('&', '&amp;', $continue); ?>'" class="button"><span><?php echo $button_shopping; ?></span></a></td>
-            <td align="right"><a onclick="location = '<?php echo str_replace('&', '&amp;', $checkout); ?>'" class="button"><span><?php echo $button_checkout; ?></span></a></td>
+            <td align="center"><a onclick="location = '<?php echo str_replace('&amp;', '&', $continue); ?>'" class="button"><span><?php echo $button_shopping; ?></span></a></td>
+            <td align="right"><a onclick="location = '<?php echo str_replace('&amp;', '&', $checkout); ?>'" class="button"><span><?php echo $button_checkout; ?></span></a></td>
           </tr>
         </table>
       </div>

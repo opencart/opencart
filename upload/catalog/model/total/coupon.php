@@ -21,7 +21,9 @@ class ModelTotalCoupon extends Model {
 					}					
 				}
 				
-				$coupon['discount'] = min($coupon['discount'], $coupon_total);
+				if ($coupon['type'] == 'F') {
+					$coupon['discount'] = min($coupon['discount'], $coupon_total);
+				}
 				
 				foreach ($this->cart->getProducts() as $product) {
 					$discount = 0;

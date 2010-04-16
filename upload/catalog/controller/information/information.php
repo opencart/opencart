@@ -91,7 +91,7 @@ class ControllerInformationInformation extends Controller {
 		if (isset($this->request->get['information_id'])) {
 			$information_id = $this->request->get['information_id'];
 		} else {
-			if ($this->request->get['create']) {
+			if (isset($this->request->get['create'])) {
 				$information_id = $this->config->get('config_account_id');
 			} else {
 				$information_id = $this->config->get('config_checkout_id');

@@ -52,8 +52,8 @@ if (!$link = @mysql_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD)) {
 					
 					// Hacks for compatibility (needs to be improved)
 					$line = str_replace("oc_", DB_PREFIX, $line);
-					$line = str_replace(" order ", " `order` ", DB_PREFIX, $line);
-					$line = str_replace(" ssl ", " `ssl` ", DB_PREFIX, $line);
+					$line = str_replace(" order ", " `order` ", $line);
+					$line = str_replace(" ssl ", " `ssl` ", $line);
 					$line = str_replace("NOT NULL DEFAULT ''", "NOT NULL", $line);
 					$line = str_replace("NOT NULL DEFAULT NULL", "NOT NULL", $line);
 					$line = str_replace("NOT NULL DEFAULT 0 COMMENT '' auto_increment", "NOT NULL COMMENT '' auto_increment", $line);
@@ -97,6 +97,82 @@ if (!$link = @mysql_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD)) {
 					}
 				}
 			}
+		}
+	}
+	
+	// Check if there are any products associated with a store (pre-1.4.1)
+	$info = mysql_fetch_assoc(mysql_query("SELECT * FROM " . DB_PREFIX . "product_to_store", $link));
+	
+	// If not, then add them all to the default
+	if (!$info) {
+		$resource = mysql_query("SELECT product_id FROM " . DB_PREFIX . "product", $link);
+		$data = array();
+		$i = 0;
+		while ($result = mysql_fetch_assoc($resource)) {
+			$data[$i] = $result;
+
+			$i++;
+		}
+		
+		foreach ($data as $product) {
+			mysql_query("INSERT INTO " . DB_PREFIX . "product_to_store SET product_id = '".$product['product_id']."', store_id = '0'", $link);
+		}
+	}
+	
+	// Check if there are any categories associated with a store (pre-1.4.1)
+	$info = mysql_fetch_assoc(mysql_query("SELECT * FROM " . DB_PREFIX . "information_to_store", $link));
+	
+	// If not, then add them all to the default
+	if (!$info) {
+		$resource = mysql_query("SELECT information_id FROM " . DB_PREFIX . "information", $link);
+		$data = array();
+		$i = 0;
+		while ($result = mysql_fetch_assoc($resource)) {
+			$data[$i] = $result;
+
+			$i++;
+		}
+		
+		foreach ($data as $information) {
+			mysql_query("INSERT INTO " . DB_PREFIX . "information_to_store SET information_id = '".$information['information_id']."', store_id = '0'", $link);
+		}
+	}
+	
+	// Check if there are any categories associated with a store (pre-1.4.1)
+	$info = mysql_fetch_assoc(mysql_query("SELECT * FROM " . DB_PREFIX . "category_to_store", $link));
+	
+	// If not, then add them all to the default
+	if (!$info) {
+		$resource = mysql_query("SELECT category_id FROM " . DB_PREFIX . "category", $link);
+		$data = array();
+		$i = 0;
+		while ($result = mysql_fetch_assoc($resource)) {
+			$data[$i] = $result;
+
+			$i++;
+		}
+		
+		foreach ($data as $category) {
+			mysql_query("INSERT INTO " . DB_PREFIX . "category_to_store SET category_id = '".$category['category_id']."', store_id = '0'", $link);
+		}
+	}
+	
+	// Check if there are any categories associated with a store (pre-1.4.1)
+	$info = mysql_fetch_assoc(mysql_query("SELECT * FROM " . DB_PREFIX . "manufacturer_to_store", $link));
+	
+	// If not, then add them all to the default
+	if (!$info) {
+		$resource = mysql_query("SELECT manufacturer_id FROM " . DB_PREFIX . "manufacturer", $link);
+		$data = array();
+		$i = 0;
+		while ($result = mysql_fetch_assoc($resource)) {
+			$data[$i] = $result;
+
+			$i++;
+		}
+		
+		foreach ($data as $manufacturer) {
+			mysql_query("INSERT INTO " . DB_PREFIX . "manufacturer_to_store SET manufacturer_id = '".$manufacturer['manufacturer_id']."', store_id = '0'", $link);
 		}
 	}
 	

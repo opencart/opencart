@@ -14,7 +14,6 @@ FIXED:
 - Fixed login link to correct "&" vs "&amp;";
 - Account approve not allowing logins for existing customers
 - Fixed Google Sitemap xml error to correct "&" vs "&amp";
-- catalog/model/catalog/product total functions returns num rows instead of total? (from 1.4.4 bug thread rph)
 - Sort by price converting to string issue
 - store_url duplication in customer approval email
 - Fixed typo in customers "awating" approval function names

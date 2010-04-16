@@ -96,7 +96,7 @@ class ControllerAccountDownload extends Controller {
 			$pagination->page = $page;
 			$pagination->limit = $this->config->get('config_catalog_limit');
 			$pagination->text = $this->language->get('text_pagination');
-			$pagination->url = $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=account/download&page={page}');
+			$pagination->url = HTTP_SERVER . 'index.php?route=account/download&page={page}';
 			
 			$this->data['pagination'] = $pagination->render();
 			

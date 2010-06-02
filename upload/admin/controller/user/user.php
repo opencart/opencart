@@ -278,6 +278,7 @@ class ControllerUserUser extends Controller {
     	$this->data['entry_email'] = $this->language->get('entry_email');
     	$this->data['entry_user_group'] = $this->language->get('entry_user_group');
 		$this->data['entry_status'] = $this->language->get('entry_status');
+		$this->data['entry_captcha'] = $this->language->get('entry_captcha');
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -318,7 +319,13 @@ class ControllerUserUser extends Controller {
 			$this->data['error_lastname'] = $this->error['lastname'];
 		} else {
 			$this->data['error_lastname'] = '';
-		}		
+		}
+		
+		if (isset($this->error['captcha'])) {
+			$this->data['error_captcha'] = $this->error['captcha'];
+		} else {
+			$this->data['error_captcha'] = '';
+		}
 		
 		$url = '';
 			
@@ -423,7 +430,7 @@ class ControllerUserUser extends Controller {
 		} else {
       		$this->data['status'] = 0;
     	}
-		
+				
 		$this->template = 'user/user_form.tpl';
 		$this->children = array(
 			'common/header',	
@@ -433,6 +440,16 @@ class ControllerUserUser extends Controller {
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));	
   	}
 
+  	public function captcha() {
+		$this->load->library('captcha');
+		
+		$captcha = new Captcha();
+		
+		$this->session->data['captcha'] = $captcha->getCode();
+		
+		$captcha->showImage();
+	}
+  	
   	private function validateForm() {
     	if (!$this->user->hasPermission('modify', 'user/user')) {
       		$this->error['warning'] = $this->language->get('error_permission');
@@ -458,6 +475,10 @@ class ControllerUserUser extends Controller {
 	  		if ($this->request->post['password'] != $this->request->post['confirm']) {
 	    		$this->error['confirm'] = $this->language->get('error_confirm');
 	  		}
+    	}
+	
+		if (!isset($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
+      		$this->error['captcha'] = $this->language->get('error_captcha');
     	}
 	
     	if (!$this->error) {

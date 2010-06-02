@@ -32,6 +32,7 @@ class ControllerModuleFeatured extends Controller {
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_left'] = $this->language->get('text_left');
 		$this->data['text_right'] = $this->language->get('text_right');
+		$this->data['text_home'] = $this->language->get('text_home');
 		
 		$this->data['entry_limit'] = $this->language->get('entry_limit');
 		$this->data['entry_position'] = $this->language->get('entry_position');
@@ -77,6 +78,23 @@ class ControllerModuleFeatured extends Controller {
 		} else {
 			$this->data['featured_limit'] = $this->config->get('featured_limit');
 		}	
+		
+		$this->data['positions'] = array();
+		
+		$this->data['positions'][] = array(
+			'position' 	=> 'left',
+			'title' 	=> $this->language->get('text_left'),
+		);
+		
+		$this->data['positions'][] = array(
+			'position' 	=> 'right',
+			'title' 	=> $this->language->get('text_right'),
+		);
+		
+		$this->data['positions'][] = array(
+			'position' 	=> 'home',
+			'title' 	=> $this->language->get('text_home'),
+		);
 		
 		if (isset($this->request->post['featured_position'])) {
 			$this->data['featured_position'] = $this->request->post['featured_position'];

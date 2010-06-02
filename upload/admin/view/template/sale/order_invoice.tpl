@@ -46,7 +46,11 @@
       <td width="50%"><b><?php echo $text_ship_to; ?></b></td>
     </tr>
     <tr>
-      <td><?php echo $order['payment_address']; ?></td>
+      <td>
+        <?php echo $order['payment_address']; ?><br/>
+        <?php echo $order['customer_email']; ?><br/>
+        <?php echo $order['customer_telephone']; ?>
+      </td>
       <td><?php echo$order['shipping_address']; ?></td>
     </tr>
   </table>
@@ -77,6 +81,14 @@
       <td align="right"><?php echo $total['text']; ?></td>
     </tr>
     <?php } ?>
+  </table>
+  <table class="product">
+    <tr class="heading">
+      <td><b><?php echo $column_comment; ?></b></td>
+    </tr>
+    <tr>
+      <td><?php echo $order['comment']; ?></td>
+    </tr>
   </table>
 </div>
 <?php } ?>

@@ -22,7 +22,7 @@ class ModelShippingWeight extends Model {
 				}
 			
 				if ($status) {
-					$cost = 0;
+					$cost = '';
 					$weight = $this->cart->getWeight();
 					
 					$rates = explode(',', $this->config->get('weight_' . $result['geo_zone_id'] . '_rate'));

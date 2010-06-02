@@ -10,7 +10,16 @@
     <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
   </div>
   <div class="content">
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+    <div style="display: inline-block; width: 100%;">
+    <div id="vtabs" class="vtabs">
+      <a tab="#tab_general"><?php echo $tab_general; ?></a>
+      <?php for ($address_row=1; $address_row<=count($addresses); $address_row++) { ?>
+      <a id="address_<?php echo $address_row; ?>" tab="#tab_address_<?php echo $address_row; ?>"><?php echo $tab_address . ' ' . $address_row; ?><span onclick="$('#address_<?php echo $address_row; ?>').remove(); $('#tab_address_<?php echo $address_row; ?>').remove();" class="remove">&nbsp;</span></a>
+      <?php } ?>
+      <span id="address_add" onclick="addAddress();" class="add" style="float:right; margin-right: 14px; font-size:13px; font-weight:bold;">Add&nbsp;</span>
+    </div>
+    <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="form">
+      <div id="tab_general" class="vtabs_page">
       <table class="form">
         <tr>
           <td><span class="required">*</span> <span class="entry"><?php echo $entry_firstname; ?></span></td>
@@ -96,7 +105,151 @@
             </select></td>
         </tr>
       </table>
+      </div>
+      <?php $address_row = 1; ?>
+      <?php foreach ($addresses as $address) { ?>
+      <div id="tab_address_<?php echo $address_row; ?>" class="vtabs_page">
+        <table class="form">
+          <tr>
+            <td><?php echo $entry_firstname; ?></td>
+            <td><input type="text" name="addresses[<?php echo $address_row; ?>][firstname]" value="<?php echo $address['firstname']; ?>" /></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_lastname; ?></td>
+            <td><input type="text" name="addresses[<?php echo $address_row; ?>][lastname]" value="<?php echo $address['lastname']; ?>" /></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_company; ?></td>
+            <td><input type="text" name="addresses[<?php echo $address_row; ?>][company]" value="<?php echo $address['company']; ?>" /></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_address_1; ?></td>
+            <td><input type="text" name="addresses[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" /></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_address_2; ?></td>
+           <td><input type="text" name="addresses[<?php echo $address_row; ?>][address_2]" value="<?php echo $address['address_2']; ?>" /></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_city; ?></td>
+            <td><input type="text" name="addresses[<?php echo $address_row; ?>][city]" value="<?php echo $address['city']; ?>" /></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_postcode; ?></td>
+            <td><input type="text" name="addresses[<?php echo $address_row; ?>][postcode]" value="<?php echo $address['postcode']; ?>" /></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_country; ?></td>
+            <td>
+              <select name="addresses[<?php echo $address_row; ?>][country_id]" id="addresses[<?php echo $address_row; ?>][country_id]" onchange="$('select[name=\'addresses[<?php echo $address_row; ?>][zone_id]\']').load('index.php?route=sale/customer/zone&country_id=' + this.value + '&zone_id=<?php echo $address['zone_id']; ?>');">
+                <option value="FALSE"><?php echo $text_select; ?></option>
+                <?php foreach ($countries as $country) { ?>
+                <?php if ($country['country_id'] == $address['country_id']) { ?>
+                <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+              <?php if ($error_country) { ?>
+              <span class="error"><?php echo $error_country; ?></span>
+              <?php } ?>
+            </td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_zone; ?></td>
+            <td>
+              <select name="addresses[<?php echo $address_row; ?>][zone_id]"></select>
+              <?php if ($error_zone) { ?>
+              <span class="error"><?php echo $error_zone; ?></span>
+              <?php } ?>  
+            </td>
+          </tr>
+          </tbody>
+          <script type="text/javascript"><!--
+		  $('select[name=\'addresses[<?php echo $address_row; ?>][zone_id]\']').load('index.php?route=sale/customer/zone&country_id=<?php echo $address['country_id']; ?>&zone_id=<?php echo $address['zone_id']; ?>');
+		  //--></script>
+        </table>
+      </div>
+      <?php $address_row++; ?>
+      <?php } ?>
     </form>
   </div>
+  </div>
 </div>
+<script type="text/javascript"><!--
+var address_row = <?php echo $address_row; ?>;
+
+function addAddress() {	
+	html  = '<div id="tab_address_' + address_row + '" class="vtabs_page">';
+	html += '<table class="form">'; 
+	html += '<tr>';
+    html += '<td><?php echo $entry_firstname; ?></td>';
+    html += '<td><input type="text" name="addresses[' + address_row + '][firstname]" value="" /></td>';
+    html += '</tr>';
+    html += '<tr>';
+    html += '<td><?php echo $entry_lastname; ?></td>';
+    html += '<td><input type="text" name="addresses[' + address_row + '][lastname]" value="" /></td>';
+    html += '</tr>';
+    html += '<tr>';
+    html += '<td><?php echo $entry_company; ?></td>';
+    html += '<td><input type="text" name="addresses[' + address_row + '][company]" value="" /></td>';
+    html += '</tr>';
+    html += '<tr>';
+    html += '<td><?php echo $entry_address_1; ?></td>';
+    html += '<td><input type="text" name="addresses[' + address_row + '][address_1]" value="" /></td>';
+    html += '</tr>';
+    html += '<tr>';
+    html += '<td><?php echo $entry_address_2; ?></td>';
+    html += '<td><input type="text" name="addresses[' + address_row + '][address_2]" value="" /></td>';
+    html += '</tr>';
+    html += '<tr>';
+    html += '<td><?php echo $entry_city; ?></td>';
+    html += '<td><input type="text" name="addresses[' + address_row + '][city]" value="" /></td>';
+    html += '</tr>';
+    html += '<tr>';
+    html += '<td><?php echo $entry_postcode; ?></td>';
+    html += '<td><input type="text" name="addresses[' + address_row + '][postcode]" value="" /></td>';
+    html += '</tr>';
+    html += '<td><?php echo $entry_country; ?></td>';
+    html += '<td>';
+    html += '<select name="addresses[' + address_row + '][country_id]" onchange="$(\'select[name=\\\'addresses[' + address_row + '][zone_id]\\\']\').load(\'index.php?route=sale/customer/zone&country_id=\' + this.value + \'&zone_id=0\');">';
+    html += '<option value="FALSE"><?php echo $text_select; ?></option>';
+    <?php foreach ($countries as $country) { ?>
+    html += '<option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
+    <?php } ?>
+    html += '</select>';
+    <?php if ($error_country) { ?>
+    html += '<span class="error"><?php echo $error_country; ?></span>';
+    <?php } ?>
+    html += '</td>';
+    html += '</tr>';
+    html += '<tr>';
+    html += '<td><?php echo $entry_zone; ?></td>';
+    html += '<td>';
+    html += '<select name="addresses[' + address_row + '][zone_id]"><option value="FALSE"><?php echo $this->language->get('text_none'); ?></option></select>';
+    <?php if ($error_zone) { ?>
+    html += '<span class="error"><?php echo $error_zone; ?></span>';
+    <?php } ?>  
+    html += '</td>';
+    html += '</tr>';
+    html += '</table>';
+    html += '</div>';
+	
+	$('#form').append(html);
+	
+	$('#address_add').before('<a id="address_' + address_row + '" tab="#tab_address_' + address_row + '"><?php echo $tab_address; ?> ' + address_row + '<span onclick="$(\'#address_' + address_row + '\').remove(); $(\'#tab_address_' + address_row + '\').remove();" class="remove">&nbsp;</span></a>');
+		
+	$.tabs('.vtabs a', address_row);
+	
+	$('#address_' + address_row).trigger('click');
+	
+	address_row++;
+}
+//--></script>
+<script type="text/javascript"><!--
+$(document).ready(function(){
+$.tabs('.vtabs a');
+});
+//--></script>
 <?php echo $footer; ?>

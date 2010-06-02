@@ -14,11 +14,12 @@ $_['column_action']    = 'Action';
 $_['entry_name']       = 'Download Name:';
 $_['entry_filename']   = 'Filename:';
 $_['entry_remaining']  = 'Total Downloads Allowed:';
+$_['entry_update']     = 'Update Previously Purchased Versions:';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify downloads!';
-$_['error_name']       = 'Name must be greater than 3 and less than 64 characters!';
-$_['error_filename']   = 'Filename must be greater than 3 and less than 128 characters!';
+$_['error_name']       = 'Name must be between 3 and 64 characters!';
+$_['error_filename']   = 'Filename must be between 3 and 128 characters!';
 $_['error_filetype']   = 'Invalid file type!';
 $_['error_product']    = 'Warning: This download cannot be deleted as it is currently assigned to %s products!';
 ?>

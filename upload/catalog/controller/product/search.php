@@ -73,7 +73,7 @@ class ControllerProductSearch extends Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'pd.name';
+			$sort = 'p.sort_order';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -134,6 +134,8 @@ class ControllerProductSearch extends Controller {
 				$this->load->model('tool/seo_url'); 
 				$this->load->model('tool/image');
 				
+				$this->data['button_add_to_cart'] = $this->language->get('button_add_to_cart');
+				
         		$this->data['products'] = array();
 				
 				$results = $this->model_catalog_product->getProductsByKeyword($this->request->get['keyword'], isset($this->request->get['category_id']) ? $this->request->get['category_id'] : '', isset($this->request->get['description']) ? $this->request->get['description'] : '', isset($this->request->get['model']) ? $this->request->get['model'] : '', $sort, $order, ($page - 1) * $this->config->get('config_catalog_limit'), $this->config->get('config_catalog_limit'));
@@ -145,7 +147,11 @@ class ControllerProductSearch extends Controller {
 						$image = 'no_image.jpg';
 					}						
 					
-					$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
+					if ($this->config->get('config_review')) {
+						$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
+					} else {
+						$rating = false;
+					}
 					
 					$special = FALSE;
 					
@@ -163,6 +169,14 @@ class ControllerProductSearch extends Controller {
 						}					
 					}
 					
+					$options = $this->model_catalog_product->getProductOptions($result['product_id']);
+					
+					if ($options) {
+						$add = $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id']);
+					} else {
+						$add = HTTPS_SERVER . 'index.php?route=checkout/cart&product_id=' . $result['product_id'];
+					}
+					
 					$this->data['products'][] = array(
             			'name'    => $result['name'],
 						'model'   => $result['model'],
@@ -170,8 +184,10 @@ class ControllerProductSearch extends Controller {
 						'stars'   => sprintf($this->language->get('text_stars'), $rating),
             			'thumb'   => $this->model_tool_image->resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
             			'price'   => $price,
+            			'options' => $options,
 						'special' => $special,
 						'href'    => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&keyword=' . $this->request->get['keyword'] . $url . '&product_id=' . $result['product_id']),
+						'add'	  => $add
           			);
         		}
 				
@@ -208,9 +224,15 @@ class ControllerProductSearch extends Controller {
 				$this->data['sorts'] = array();
 				
 				$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_default'),
+					'value' => 'p.sort_order-ASC',
+					'href'  => HTTP_SERVER . 'index.php?route=product/search' . $url . '&sort=p.sort_order&order=ASC'
+				);
+				
+				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_name_asc'),
-					'value' => 'pd.name',
-					'href'  => HTTP_SERVER . 'index.php?route=product/search' . $url . '&sort=pd.name'
+					'value' => 'pd.name-ASC',
+					'href'  => HTTP_SERVER . 'index.php?route=product/search' . $url . '&sort=pd.name&order=ASC'
 				); 
 
 				$this->data['sorts'][] = array(
@@ -290,10 +312,10 @@ class ControllerProductSearch extends Controller {
 		}
 		
 		$this->children = array(
-			'common/header',
-			'common/footer',
+			'common/column_right',
 			'common/column_left',
-			'common/column_right'
+			'common/footer',
+			'common/header'
 		);
 		
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));

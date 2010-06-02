@@ -11,6 +11,9 @@
     <?php if ($description) { ?>
     <div style="margin-bottom: 15px;"><?php echo $description; ?></div>
     <?php } ?>
+	<?php if (!$categories && !$products) { ?>
+    <div class="content"><?php echo $text_error; ?></div>
+    <?php } ?>
     <?php if ($categories) { ?>
     <table class="list">
       <?php for ($i = 0; $i < sizeof($categories); $i = $i + 4) { ?>
@@ -50,11 +53,13 @@
           <span style="color: #999; font-size: 11px;"><?php echo $products[$j]['model']; ?></span><br />
           <?php if ($display_price) { ?>
           <?php if (!$products[$j]['special']) { ?>
-          <span style="color: #900; font-weight: bold;"><?php echo $products[$j]['price']; ?></span><br />
+          <span style="color: #900; font-weight: bold;"><?php echo $products[$j]['price']; ?></span>
           <?php } else { ?>
           <span style="color: #900; font-weight: bold; text-decoration: line-through;"><?php echo $products[$j]['price']; ?></span> <span style="color: #F00;"><?php echo $products[$j]['special']; ?></span>
           <?php } ?>
           <?php } ?>
+          <a class="button_add_small" href="<?php echo $products[$j]['add']; ?>" title="<?php echo $button_add_to_cart; ?>" >&nbsp;</a>
+          <br />
           <?php if ($products[$j]['rating']) { ?>
           <img src="catalog/view/theme/default/image/stars_<?php echo $products[$j]['rating'] . '.png'; ?>" alt="<?php echo $products[$j]['stars']; ?>" />
           <?php } ?>

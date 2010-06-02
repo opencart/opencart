@@ -5,7 +5,7 @@ class ControllerCommonHeader extends Controller {
 
 		$this->data['title'] = $this->document->title;
 		
-		$this->data['base'] = HTTPS_SERVER;
+		$this->data['base'] = (HTTPS_SERVER) ? HTTPS_SERVER : HTTP_SERVER;
 		$this->data['charset'] = $this->language->get('charset');
 		$this->data['lang'] = $this->language->get('code');	
 		$this->data['direction'] = $this->language->get('direction');
@@ -16,10 +16,10 @@ class ControllerCommonHeader extends Controller {
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_affiliate'] = $this->language->get('text_affiliate');
 		$this->data['text_backup'] = $this->language->get('text_backup');
 		$this->data['text_catalog'] = $this->language->get('text_catalog');
 		$this->data['text_category'] = $this->language->get('text_category');
+		$this->data['text_confirm'] = $this->language->get('text_confirm');
 		$this->data['text_country'] = $this->language->get('text_country');
 		$this->data['text_coupon'] = $this->language->get('text_coupon');
 		$this->data['text_currency'] = $this->language->get('text_currency');			
@@ -72,7 +72,6 @@ class ControllerCommonHeader extends Controller {
 			$this->data['logged'] = '';
 		}
 		
-		$this->data['affiliate'] = HTTPS_SERVER . 'index.php?route=extension/affiliate';
 		$this->data['backup'] = HTTPS_SERVER . 'index.php?route=tool/backup';
 		$this->data['category'] = HTTPS_SERVER . 'index.php?route=catalog/category';
 		$this->data['country'] = HTTPS_SERVER . 'index.php?route=localisation/country';

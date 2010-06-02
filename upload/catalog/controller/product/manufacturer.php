@@ -49,7 +49,7 @@ class ControllerProductManufacturer extends Controller {
 				if (isset($this->request->get['sort'])) {
 					$sort = $this->request->get['sort'];
 				} else {
-					$sort = 'pd.name';
+					$sort = 'p.sort_order';
 				}
 
 				if (isset($this->request->get['order'])) {
@@ -59,6 +59,8 @@ class ControllerProductManufacturer extends Controller {
 				}
 			
 				$this->load->model('catalog/review');
+				
+				$this->data['button_add_to_cart'] = $this->language->get('button_add_to_cart');
 				
 				$this->data['products'] = array();
         		
@@ -71,7 +73,11 @@ class ControllerProductManufacturer extends Controller {
 						$image = 'no_image.jpg';
 					}
 					
-					$rating = $this->model_catalog_review->getAverageRating($result['product_id']);
+					if ($this->config->get('config_review')) {
+						$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
+					} else {
+						$rating = false;
+					}
 					
 					$special = FALSE;
 					
@@ -89,6 +95,14 @@ class ControllerProductManufacturer extends Controller {
 						}						
 					}
 					
+					$options = $this->model_catalog_product->getProductOptions($result['product_id']);
+					
+					if ($options) {
+						$add = $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id']);
+					} else {
+						$add = HTTPS_SERVER . 'index.php?route=checkout/cart&product_id=' . $result['product_id'];
+					}
+					
           			$this->data['products'][] = array(
             			'name'    => $result['name'],
 						'model'   => $result['model'],
@@ -96,8 +110,10 @@ class ControllerProductManufacturer extends Controller {
 						'stars'   => sprintf($this->language->get('text_stars'), $rating),            			
 						'thumb'   => $this->model_tool_image->resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
             			'price'   => $price,
+            			'options' => $options,
 						'special' => $special,
-						'href'    => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&product_id=' . $result['product_id'])
+						'href'    => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&product_id=' . $result['product_id']),
+						'add'	  => $add
           			);
         		}
 				
@@ -116,6 +132,12 @@ class ControllerProductManufacturer extends Controller {
 				}	
 				
 				$this->data['sorts'] = array();
+				
+				$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_default'),
+					'value' => 'p.sort_order-ASC',
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&path=' . $this->request->get['manufacturer_id'] . '&sort=p.sort_order&order=ASC')
+				);
 				
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_name_asc'),
@@ -182,10 +204,10 @@ class ControllerProductManufacturer extends Controller {
 				}	
 				
 				$this->children = array(
-					'common/header',
-					'common/footer',
+					'common/column_right',
 					'common/column_left',
-					'common/column_right'
+					'common/footer',
+					'common/header'
 				);		
 				
 				$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));										
@@ -207,10 +229,10 @@ class ControllerProductManufacturer extends Controller {
 				}
 				
 				$this->children = array(
-					'common/header',
-					'common/footer',
+					'common/column_right',
 					'common/column_left',
-					'common/column_right'
+					'common/footer',
+					'common/header'
 				);		
 				
 				$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));					
@@ -253,10 +275,10 @@ class ControllerProductManufacturer extends Controller {
 			}
 			
 			$this->children = array(
-				'common/header',
-				'common/footer',
+				'common/column_right',
 				'common/column_left',
-				'common/column_right'
+				'common/footer',
+				'common/header'
 			);		
 			
 			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));

@@ -29,6 +29,8 @@ class ControllerCommonSeoUrl extends Controller {
 					if ($url[0] == 'information_id') {
 						$this->request->get['information_id'] = $url[1];
 					}	
+				} else {
+					$this->request->get['route'] = 'error/not_found';	
 				}
 			}
 			

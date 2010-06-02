@@ -33,8 +33,11 @@ class ControllerCommonHeader extends Controller {
 		}
 			
 		$this->data['title'] = $this->document->title;
+		$this->data['keywords'] = $this->document->keywords;
 		$this->data['description'] = $this->document->description;
-
+		$this->data['template'] = $this->config->get('config_template');
+		
+		
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
 			$this->data['base'] = HTTPS_SERVER;
 		} else {

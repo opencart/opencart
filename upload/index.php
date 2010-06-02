@@ -1,4 +1,7 @@
 <?php
+// Version
+define('VERSION', '1.4.8');
+
 // Configuration
 require_once('config.php');
    
@@ -171,6 +174,7 @@ if (!isset($request->cookie['language']) || $request->cookie['language'] != $cod
 }			
 
 $config->set('config_language_id', $languages[$code]['language_id']);
+$config->set('config_language', $languages[$code]['code']);
 
 // Language		
 $language = new Language($languages[$code]['directory']);
@@ -197,6 +201,9 @@ $registry->set('cart', new Cart($registry));
 
 // Front Controller 
 $controller = new Front($registry);
+
+// Maintenance Mode
+$controller->addPreAction(new Action('common/maintenance/check'));
 
 // SEO URL's
 $controller->addPreAction(new Action('common/seo_url'));

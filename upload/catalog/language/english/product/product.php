@@ -23,6 +23,8 @@ $_['text_note']           = '<span style="color: #FF0000;">Note:</span> HTML is 
 $_['text_success']        = 'Thank you for your review. It has been submitted to the webmaster for approval.';
 $_['text_wait']           = 'Please Wait!';
 $_['text_search']         = 'Search';
+$_['text_tags']           = 'Tags:';
+$_['text_minimum']        = '(This product has a minimum quantity of %s)';
 
 // Entry
 $_['entry_name']          = 'Your Name:';
@@ -39,8 +41,8 @@ $_['tab_review']          = 'Reviews (%s)';
 $_['tab_related']         = 'Related Products'; 
 
 // Error
-$_['error_name']          = 'Error: Review Name must be greater than 3 and less than 25 characters!';
-$_['error_text']          = 'Error: Review Text must be greater than 25 and less than 1000 characters!';
+$_['error_name']          = 'Error: Review Name must be between 3 and 25 characters!';
+$_['error_text']          = 'Error: Review Text must be between 25 and 1000 characters!';
 $_['error_rating']        = 'Error: Please select a review rating!';
 $_['error_captcha']       = 'Error: Verification code does not match the image!';
 ?>

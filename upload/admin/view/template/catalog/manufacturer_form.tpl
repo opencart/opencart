@@ -14,7 +14,7 @@
       <table class="form">
         <tr>
           <td><span class="required">*</span> <?php echo $entry_name; ?></td>
-          <td><input name="name" value="<?php echo $name; ?>" />
+          <td><input name="name" value="<?php echo $name; ?>" size="100" />
             <?php if ($error_name) { ?>
             <span class="error"><?php echo $error_name; ?></span>
             <?php } ?></td>

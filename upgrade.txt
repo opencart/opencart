@@ -1,14 +1,14 @@
 OPENCART UPGRADE STEPS:
 ====================
 
-This version of opencart comes with a universal upgrade script that allows you to update your store from as far back as v1.3.0 to the latest version of OpenCart without having to install each version in between. The script is still in beta so there may be some quirks. 
+This version of opencart comes with a universal upgrade script that allows you to update your store from as far back as v1.3.2 to the latest version of OpenCart without having to install each version in between. The script is still in beta so there may be some quirks. 
 
 Errors received are mostly informational. There is a good chance that the error occurred because the table no longer exists or the change had already been made. In these cases, there is nothing to worry about. 
 
 Please be sure to post any errors shown on the forums so that we may address these errors in the future.
 
 
-If using a version older than OpenCart v1.3.0, you will need to first upgrade all the in between versions until you reach 1.3.0. Then you can run this script.
+If using a version older than OpenCart v1.3.2, you will need to first upgrade all the in between versions until you reach 1.3.2. Then you can run this script.
 
 1. BACKUP YOUR EXISTING STORE FILES AND DATABASE!!!
 2. Upload ALL new files on top of your current install EXCEPT config.php and admin/config.php
@@ -31,10 +31,10 @@ define('HTTPS_IMAGE', '');
 
 4. Browse to http://www.yourstore.com/shop/install/upgrade.php
 5. After about 10 seconds you should see the Upgrade Success message or a list of errors.
-5. Post any upgrade script errors problems in the forums
-6. Goto User Groups and Edit all user groups to add access and modify to new modules and controllers
-7. Goto Admin and Edit the main System Settings. Update all fields and click save.
-8. Load the catalog site.
+6. Post any upgrade script errors problems in the forums
+7. Goto User Groups and Edit all user groups to add access and modify to new modules and controllers
+8. Goto Admin and Edit the main System Settings. Update all fields and click save.
+9. Load the catalog site.
  - If you see errors, you might have custom mods that were made for older versions. You will need to disable those from the admin or get the updated versions.
 
 

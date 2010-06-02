@@ -19,7 +19,7 @@ $_['entry_country']          = 'Country:';
 
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify zones!';
-$_['error_name']             = 'Zone Name must be greater than 3 and less than 128 characters!';
+$_['error_name']             = 'Zone Name must be between 3 and 128 characters!';
 $_['error_default']          = 'Warning: This zone cannot be deleted as it is currently assigned as the default store zone!';
 $_['error_store']            = 'Warning: This zone cannot be deleted as it is currently assigned to %s stores!';
 $_['error_address']          = 'Warning: This zone cannot be deleted as it is currently assigned to %s address book entries!';

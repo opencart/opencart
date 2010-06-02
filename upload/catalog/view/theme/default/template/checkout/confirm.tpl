@@ -73,16 +73,6 @@
         <br />
       </div>
     </div>
-	<?php if ($coupon_status) { ?>
-    <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="coupon">
-        <p><?php echo $text_coupon; ?></p>
-        <div style="text-align: right;"><?php echo $entry_coupon; ?>&nbsp;
-          <input type="text" name="coupon" value="<?php echo $coupon; ?>" />
-          &nbsp;<a onclick="$('#coupon').submit();" class="button"><span><?php echo $button_coupon; ?></span></a></div>
-      </form>
-    </div>
-	<?php } ?>
     <?php if ($comment) { ?>
     <b style="margin-bottom: 2px; display: block;"><?php echo $text_comment; ?></b>
     <div class="content"><?php echo $comment; ?></div>

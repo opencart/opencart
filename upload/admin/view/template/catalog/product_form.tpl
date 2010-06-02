@@ -10,26 +10,27 @@
     <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
   </div>
   <div class="content">
-    <div id="tabs" class="htabs"><a tab="#tab_general"><?php echo $tab_general; ?></a><a tab="#tab_data"><?php echo $tab_data; ?></a><a tab="#tab_option"><?php echo $tab_option; ?></a><a tab="#tab_discount"><?php echo $tab_discount; ?></a><a tab="#tab_special"><?php echo $tab_special; ?></a><a tab="#tab_image"><?php echo $tab_image; ?></a></div>
+    <div id="tabs" class="htabs"><a tab="#tab_general"><?php echo $tab_general; ?></a><a tab="#tab_data"><?php echo $tab_data; ?></a><a tab="#tab_links"><?php echo $tab_links; ?></a><a tab="#tab_option"><?php echo $tab_option; ?></a><a tab="#tab_discount"><?php echo $tab_discount; ?></a><a tab="#tab_special"><?php echo $tab_special; ?></a><a tab="#tab_image"><?php echo $tab_image; ?></a></div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
       <div id="tab_general">
         <div id="languages" class="htabs">
           <?php foreach ($languages as $language) { ?>
-		  <?php if ($language['status']) { ?>
           <a tab="#language<?php echo $language['language_id']; ?>"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a>
-          <?php } ?>
 		  <?php } ?>
         </div> 
         <?php foreach ($languages as $language) { ?>
-		<?php if ($language['status']) { ?>
         <div id="language<?php echo $language['language_id']; ?>">
           <table class="form">
             <tr>
               <td><span class="required">*</span> <?php echo $entry_name; ?></td>
-              <td><input type="text" name="product_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['name'] : ''; ?>" />
+              <td><input type="text" name="product_description[<?php echo $language['language_id']; ?>][name]" size="100" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['name'] : ''; ?>" />
                 <?php if (isset($error_name[$language['language_id']])) { ?>
                 <span class="error"><?php echo $error_name[$language['language_id']]; ?></span>
                 <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_meta_keywords; ?></td>
+              <td><textarea name="product_description[<?php echo $language['language_id']; ?>][meta_keywords]" cols="40" rows="5"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_keywords'] : ''; ?></textarea></td>
             </tr>
             <tr>
               <td><?php echo $entry_meta_description; ?></td>
@@ -45,7 +46,6 @@
             </tr>
           </table>
         </div>
-        <?php } ?>
 		<?php } ?>
       </div>
       <div id="tab_data">
@@ -55,6 +55,85 @@
             <td><input type="text" name="model" value="<?php echo $model; ?>" />
               <?php if ($error_model) { ?>
               <span class="error"><?php echo $error_model; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_status; ?></td>
+            <td><select name="status">
+                <?php if ($status) { ?>
+                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                <option value="0"><?php echo $text_disabled; ?></option>
+                <?php } else { ?>
+                <option value="1"><?php echo $text_enabled; ?></option>
+                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                <?php } ?>
+              </select></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_price; ?></td>
+            <td><input type="text" name="price" value="<?php echo $price; ?>" /></td>
+          </tr>
+		  <tr>
+            <td><?php echo $entry_cost; ?></td>
+            <td><input type="text" name="cost" value="<?php echo $cost; ?>" /></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_tax_class; ?></td>
+            <td><select name="tax_class_id">
+                <option value="0"><?php echo $text_none; ?></option>
+                <?php foreach ($tax_classes as $tax_class) { ?>
+                <?php if ($tax_class['tax_class_id'] == $tax_class_id) { ?>
+                <option value="<?php echo $tax_class['tax_class_id']; ?>" selected="selected"><?php echo $tax_class['title']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $tax_class['tax_class_id']; ?>"><?php echo $tax_class['title']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_quantity; ?></td>
+            <td><input type="text" name="quantity" value="<?php echo $quantity; ?>" size="2" /></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_minimum; ?></td>
+            <td><input type="text" name="minimum" value="<?php echo $minimum; ?>" size="2" /></td>
+          </tr>
+		  <tr>
+		    <td><?php echo $entry_subtract; ?></td>
+		    <td><select name="subtract">
+			  <?php if ($subtract) { ?>
+			  <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+			  <option value="0"><?php echo $text_no; ?></option>
+			  <?php } else { ?>
+			  <option value="1"><?php echo $text_yes; ?></option>
+			  <option value="0" selected="selected"><?php echo $text_no; ?></option>
+			  <?php } ?>
+			</select></td>
+		  </tr>
+          <tr>
+            <td><?php echo $entry_stock_status; ?></td>
+            <td><select name="stock_status_id">
+                <?php foreach ($stock_statuses as $stock_status) { ?>
+                <?php if ($stock_status['stock_status_id'] == $stock_status_id) { ?>
+                <option value="<?php echo $stock_status['stock_status_id']; ?>" selected="selected"><?php echo $stock_status['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $stock_status['stock_status_id']; ?>"><?php echo $stock_status['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_shipping; ?></td>
+            <td><?php if ($shipping) { ?>
+              <input type="radio" name="shipping" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="shipping" value="0" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="shipping" value="1" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="shipping" value="0" checked="checked" />
+              <?php echo $text_no; ?>
               <?php } ?></td>
           </tr>
           <tr>
@@ -75,80 +154,12 @@
               <img src="<?php echo $preview; ?>" alt="" id="preview" style="border: 1px solid #EEEEEE;" />&nbsp;<img src="view/image/image.png" alt="" style="cursor: pointer;" align="top" onclick="image_upload('image', 'preview');" /></td>
           </tr>
           <tr>
-            <td><?php echo $entry_manufacturer; ?></td>
-            <td><select name="manufacturer_id">
-                <option value="0" selected="selected"><?php echo $text_none; ?></option>
-                <?php foreach ($manufacturers as $manufacturer) { ?>
-                <?php if ($manufacturer['manufacturer_id'] == $manufacturer_id) { ?>
-                <option value="<?php echo $manufacturer['manufacturer_id']; ?>" selected="selected"><?php echo $manufacturer['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $manufacturer['manufacturer_id']; ?>"><?php echo $manufacturer['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_shipping; ?></td>
-            <td><?php if ($shipping) { ?>
-              <input type="radio" name="shipping" value="1" checked="checked" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="shipping" value="0" />
-              <?php echo $text_no; ?>
-              <?php } else { ?>
-              <input type="radio" name="shipping" value="1" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="shipping" value="0" checked="checked" />
-              <?php echo $text_no; ?>
-              <?php } ?></td>
-          </tr>
-          <tr>
             <td><?php echo $entry_date_available; ?></td>
             <td><input type="text" name="date_available" value="<?php echo $date_available; ?>" size="12" class="date" /></td>
           </tr>
           <tr>
-            <td><?php echo $entry_quantity; ?></td>
-            <td><input type="text" name="quantity" value="<?php echo $quantity; ?>" size="2" /></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_stock_status; ?></td>
-            <td><select name="stock_status_id">
-                <?php foreach ($stock_statuses as $stock_status) { ?>
-                <?php if ($stock_status['stock_status_id'] == $stock_status_id) { ?>
-                <option value="<?php echo $stock_status['stock_status_id']; ?>" selected="selected"><?php echo $stock_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $stock_status['stock_status_id']; ?>"><?php echo $stock_status['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_status; ?></td>
-            <td><select name="status">
-                <?php if ($status) { ?>
-                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                <option value="0"><?php echo $text_disabled; ?></option>
-                <?php } else { ?>
-                <option value="1"><?php echo $text_enabled; ?></option>
-                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                <?php } ?>
-              </select></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_tax_class; ?></td>
-            <td><select name="tax_class_id">
-                <option value="0"><?php echo $text_none; ?></option>
-                <?php foreach ($tax_classes as $tax_class) { ?>
-                <?php if ($tax_class['tax_class_id'] == $tax_class_id) { ?>
-                <option value="<?php echo $tax_class['tax_class_id']; ?>" selected="selected"><?php echo $tax_class['title']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $tax_class['tax_class_id']; ?>"><?php echo $tax_class['title']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_price; ?></td>
-            <td><input type="text" name="price" value="<?php echo $price; ?>" /></td>
+            <td><?php echo $entry_sort_order; ?></td>
+            <td><input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="2" /></td>
           </tr>
           <tr>
             <td><?php echo $entry_dimension; ?></td>
@@ -184,6 +195,23 @@
                 <?php } ?>
               </select></td>
           </tr>
+        </table>
+      </div>
+      <div id="tab_links">
+        <table class="form">
+          <tr>
+            <td><?php echo $entry_manufacturer; ?></td>
+            <td><select name="manufacturer_id">
+                <option value="0" selected="selected"><?php echo $text_none; ?></option>
+                <?php foreach ($manufacturers as $manufacturer) { ?>
+                <?php if ($manufacturer['manufacturer_id'] == $manufacturer_id) { ?>
+                <option value="<?php echo $manufacturer['manufacturer_id']; ?>" selected="selected"><?php echo $manufacturer['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $manufacturer['manufacturer_id']; ?>"><?php echo $manufacturer['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select></td>
+          </tr>         
           <tr>
             <td><?php echo $entry_category; ?></td>
             <td><div class="scrollbox">
@@ -258,12 +286,12 @@
                     </select></td>
                 </tr>
                 <tr>
-                  <td style="padding: 0;"><select multiple="multiple" id="product" size="10" style="width: 200px;">
+                  <td style="padding: 0;"><select multiple="multiple" id="product" size="10" style="width: 350px;">
                     </select></td>
                   <td style="vertical-align: middle;"><input type="button" value="--&gt;" onclick="addRelated();" />
                     <br />
                     <input type="button" value="&lt;--" onclick="removeRelated();" /></td>
-                  <td style="padding: 0;"><select multiple="multiple" id="related" size="10" style="width: 200px;">
+                  <td style="padding: 0;"><select multiple="multiple" id="related" size="10" style="width: 350px;">
                     </select></td>
                 </tr>
               </table>
@@ -307,14 +335,12 @@
                 <tr>
                   <td><?php echo $entry_option; ?></td>
                   <td><?php foreach ($languages as $language) { ?>
-                    <?php if ($language['status']) { ?>
 					<?php if ($language['language_id'] == $language_id) { ?>
                     <input type="text" name="product_option[<?php echo $option_row; ?>][language][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_option['language'][$language['language_id']]['name']; ?>" onkeyup="$('#option option[value=\'option<?php echo $option_row; ?>\']').text(this.value);" />
                     <?php } else { ?>
                     <input type="text" name="product_option[<?php echo $option_row; ?>][language][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_option['language'][$language['language_id']]['name']; ?>" />
                     <?php } ?>
                     <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-                    <?php } ?>
 					<?php } ?></td>
                 </tr>
                 <tr>
@@ -333,14 +359,12 @@
                 <tr>
                   <td><?php echo $entry_option_value; ?></td>
                   <td><?php foreach ($languages as $language) { ?>
-				  <?php if ($language['status']) { ?>
                   <?php if ($language['language_id'] == $language_id) { ?>
                     <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][language][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_option_value['language'][$language['language_id']]['name']; ?>" onkeyup="$('#option option[value=\'option<?php echo $option_row; ?>_<?php echo $option_value_row; ?>\']').text('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + this.value);" />
                     <?php } else { ?>
                     <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][language][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_option_value['language'][$language['language_id']]['name']; ?>" />
                     <?php } ?>
                     <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-                    <?php } ?>
 					<?php } ?></td>
                 </tr>
                 <tr>
@@ -511,9 +535,7 @@
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
-<?php if ($language['status']) { ?>
 CKEDITOR.replace('description<?php echo $language['language_id']; ?>');
-<?php } ?>
 <?php } ?>
 //--></script>
 <script type="text/javascript"><!--
@@ -547,7 +569,7 @@ function getProducts() {
 		dataType: 'json',
 		success: function(data) {
 			for (i = 0; i < data.length; i++) {
-	 			$('#product').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + '</option>');
+	 			$('#product').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + ' (' + data[i]['model'] + ') </option>');
 			}
 		}
 	});
@@ -565,7 +587,7 @@ function getRelated() {
 			$('#product_related input').remove();
 			
 			for (i = 0; i < data.length; i++) {
-	 			$('#related').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + '</option>');
+	 			$('#related').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + ' (' + data[i]['model'] + ') </option>');
 				
 				$('#product_related').append('<input type="hidden" name="product_related[]" value="' + data[i]['product_id'] + '" />');
 			} 
@@ -597,12 +619,10 @@ function addOption() {
 	html += '<td><?php echo $entry_option; ?></td>';
 	html += '<td>';
 	<?php foreach ($languages as $language) { ?>
-	<?php if ($language['status']) { ?>
 	<?php if ($language['language_id'] == $language_id) { ?>
 	html += '<input type="text" name="product_option[' + option_row + '][language][<?php echo $language['language_id']; ?>][name]" value="Option ' + option_row + '" onkeyup="$(\'#option option[value=\\\'option' + option_row + '\\\']\').text(this.value);" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
 	<?php } else { ?>
 	html += '<input type="text" name="product_option[' + option_row + '][language][<?php echo $language['language_id']; ?>][name]" value="Option ' + option_row + '" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
-	<?php } ?>
 	<?php } ?>
 	<?php } ?>
 	html += '</td>';
@@ -643,13 +663,11 @@ function addOptionValue(option_id) {
 	html += '<td><?php echo $entry_option_value; ?></td>';
 	html += '<td>';
 	<?php foreach ($languages as $language) { ?>
-	<?php if ($language['status']) { ?>
 	<?php if ($language['language_id'] == $language_id) { ?>
 	html += '<input type="text" name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][language][<?php echo $language['language_id']; ?>][name]" value="Option Value ' + option_value_row + '" onkeyup="$(\'#option option[value=\\\'option' + option_id + '_' + option_value_row + '\\\']\').text(\'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\' + this.value);" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
 	<?php } else { ?>
 	html += '<input type="text" name="product_option[' + option_id + '][product_option_value][' + option_value_row + '][language][<?php echo $language['language_id']; ?>][name]" value="Option Value ' + option_value_row + '" />&nbsp;<img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
 	<?php } ?>	
-	<?php } ?>
 	<?php } ?>
 	html += '</td>';
 	html += '</tr>';
@@ -816,6 +834,7 @@ $(document).ready(function() {
 	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
 });
 //--></script>
+
 <script type="text/javascript"><!--
 $.tabs('#tabs a'); 
 $.tabs('#languages a'); 

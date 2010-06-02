@@ -33,14 +33,14 @@
         <table class="form">
           <tr>
             <td><span class="required">*</span> <?php echo $entry_name; ?></td>
-            <td><input type="text" name="name" value="<?php echo $name; ?>" />
+            <td><input type="text" name="name" value="<?php echo $name; ?>" size="40" />
               <?php if ($error_name) { ?>
               <span class="error"><?php echo $error_name; ?></span>
               <?php } ?></td>
           </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_url; ?></td>
-            <td><input type="text" name="url" value="<?php echo $url; ?>" />
+            <td><input type="text" name="url" value="<?php echo $url; ?>" size="40" />
               <?php if ($error_url) { ?>
               <span class="error"><?php echo $error_url; ?></span>
               <?php } ?></td>
@@ -141,6 +141,13 @@
       </div>
       <div id="tab_option">
         <table class="form">
+          <tr>
+            <td><span class="required">*</span> <?php echo $entry_catalog_limit; ?></td>
+            <td><input type="text" name="catalog_limit" value="<?php echo $catalog_limit; ?>" size="3" />
+              <?php if ($error_catalog_limit) { ?>
+              <span class="error"><?php echo $error_catalog_limit; ?></span>
+              <?php } ?></td>
+          </tr>
           <tr>
             <td><?php echo $entry_tax; ?></td>
             <td><?php if ($tax) { ?>
@@ -250,20 +257,6 @@
               <?php } ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_stock_check; ?></td>
-            <td><?php if ($stock_check) { ?>
-              <input type="radio" name="stock_check" value="1" checked="checked" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="stock_check" value="0" />
-              <?php echo $text_no; ?>
-              <?php } else { ?>
-              <input type="radio" name="stock_check" value="1" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="stock_check" value="0" checked="checked" />
-              <?php echo $text_no; ?>
-              <?php } ?></td>
-          </tr>
-          <tr>
             <td><?php echo $entry_stock_checkout; ?></td>
             <td><?php if ($stock_checkout) { ?>
               <input type="radio" name="stock_checkout" value="1" checked="checked" />
@@ -278,20 +271,6 @@
               <?php } ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_stock_subtract; ?></td>
-            <td><?php if ($stock_subtract) { ?>
-              <input type="radio" name="stock_subtract" value="1" checked="checked" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="stock_subtract" value="0" />
-              <?php echo $text_no; ?>
-              <?php } else { ?>
-              <input type="radio" name="stock_subtract" value="1" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="stock_subtract" value="0" checked="checked" />
-              <?php echo $text_no; ?>
-              <?php } ?></td>
-          </tr>
-          <tr>
             <td><?php echo $entry_order_status; ?></td>
             <td><select name="order_status_id">
                 <?php foreach ($order_statuses as $order_status) { ?>
@@ -302,13 +281,6 @@
                 <?php } ?>
                 <?php } ?>
               </select></td>
-          </tr>
-		  <tr>
-            <td><span class="required">*</span> <?php echo $entry_catalog_limit; ?></td>
-            <td><input type="text" name="catalog_limit" value="<?php echo $catalog_limit; ?>" size="3" />
-              <?php if ($error_catalog_limit) { ?>
-              <span class="error"><?php echo $error_catalog_limit; ?></span>
-              <?php } ?></td>
           </tr>
 		  <tr>
             <td><?php echo $entry_cart_weight; ?></td>

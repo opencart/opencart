@@ -2,7 +2,7 @@
 class ControllerSettingSetting extends Controller {
 	private $error = array();
  
-	public function index() { 
+	public function index() {
 		$this->load->language('setting/setting'); 
 
 		$this->document->title = $this->language->get('heading_title');
@@ -63,9 +63,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_account'] = $this->language->get('entry_account');
 		$this->data['entry_checkout'] = $this->language->get('entry_checkout');
 		$this->data['entry_stock_display'] = $this->language->get('entry_stock_display');
-		$this->data['entry_stock_check'] = $this->language->get('entry_stock_check');
 		$this->data['entry_stock_checkout'] = $this->language->get('entry_stock_checkout');
-		$this->data['entry_stock_subtract'] = $this->language->get('entry_stock_subtract');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_stock_status'] = $this->language->get('entry_stock_status');
 		$this->data['entry_download'] = $this->language->get('entry_download');
@@ -80,6 +78,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_image_related'] = $this->language->get('entry_image_related');
 		$this->data['entry_image_cart'] = $this->language->get('entry_image_cart');		
 		$this->data['entry_mail_protocol'] = $this->language->get('entry_mail_protocol');
+		$this->data['entry_mail_parameter'] = $this->language->get('entry_mail_parameter');
 		$this->data['entry_smtp_host'] = $this->language->get('entry_smtp_host');
 		$this->data['entry_smtp_username'] = $this->language->get('entry_smtp_username');
 		$this->data['entry_smtp_password'] = $this->language->get('entry_smtp_password');
@@ -97,7 +96,9 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_admin_limit'] = $this->language->get('entry_admin_limit');
 		$this->data['entry_catalog_limit'] = $this->language->get('entry_catalog_limit');
 		$this->data['entry_cart_weight'] = $this->language->get('entry_cart_weight');
-		
+		$this->data['entry_review'] = $this->language->get('entry_review');
+		$this->data['entry_alert_emails'] = $this->language->get('entry_alert_emails');
+		$this->data['entry_maintenance'] = $this->language->get('entry_maintenance');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -419,14 +420,18 @@ class ControllerSettingSetting extends Controller {
 		
 		if (isset($this->request->post['config_invoice_id'])) {
 			$this->data['config_invoice_id'] = $this->request->post['config_invoice_id'];
+		} elseif ($this->config->get('config_invoice_id')) {
+			$this->data['config_invoice_id'] = $this->config->get('config_invoice_id');
 		} else {
-			$this->data['config_invoice_id'] = $this->config->get('config_invoice_id');			
+			$this->data['config_invoice_id'] = '001';
 		}
 		
 		if (isset($this->request->post['config_invoice_prefix'])) {
 			$this->data['config_invoice_prefix'] = $this->request->post['config_invoice_prefix'];
-		} else {
+		} elseif ($this->config->get('config_invoice_prefix')) {
 			$this->data['config_invoice_prefix'] = $this->config->get('config_invoice_prefix');			
+		} else {
+			$this->data['config_invoice_prefix'] = 'INV';
 		}
 		
 		$this->load->model('sale/customer_group');
@@ -478,23 +483,11 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_stock_display'] = $this->config->get('config_stock_display');			
 		}
-		
-		if (isset($this->request->post['config_stock_check'])) {
-			$this->data['config_stock_check'] = $this->request->post['config_stock_check'];
-		} else {
-			$this->data['config_stock_check'] = $this->config->get('config_stock_check');		
-		}
 
 		if (isset($this->request->post['config_stock_checkout'])) {
 			$this->data['config_stock_checkout'] = $this->request->post['config_stock_checkout'];
 		} else {
 			$this->data['config_stock_checkout'] = $this->config->get('config_stock_checkout');		
-		}
-
-		if (isset($this->request->post['config_stock_subtract'])) {
-			$this->data['config_stock_subtract'] = $this->request->post['config_stock_subtract'];
-		} else {
-			$this->data['config_stock_subtract'] = $this->config->get('config_stock_subtract');		
 		}
 
 		if (isset($this->request->post['config_order_status_id'])) {
@@ -551,6 +544,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_cart_weight'] = $this->request->post['config_cart_weight'];
 		} else {
 			$this->data['config_cart_weight'] = $this->config->get('config_cart_weight');
+		}
+		
+		if (isset($this->request->post['config_review'])) {
+			$this->data['config_review'] = $this->request->post['config_review'];
+		} else {
+			$this->data['config_review'] = $this->config->get('config_review');
 		}
 		
 		$this->load->model('tool/image');
@@ -709,12 +708,30 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_alert_mail'] = $this->config->get('config_alert_mail');
 		}
 		
+		if (isset($this->request->post['config_alert_emails'])) {
+			$this->data['config_alert_emails'] = $this->request->post['config_alert_emails'];
+		} else {
+			$this->data['config_alert_emails'] = $this->config->get('config_alert_emails');
+		}
+		
+		if (isset($this->request->post['config_mail_parameter'])) {
+			$this->data['config_mail_parameter'] = $this->request->post['config_mail_parameter'];
+		} else {
+			$this->data['config_mail_parameter'] = $this->config->get('config_mail_parameter');
+		}
+		
 		if (isset($this->request->post['config_ssl'])) {
 			$this->data['config_ssl'] = $this->request->post['config_ssl'];
 		} else {
 			$this->data['config_ssl'] = $this->config->get('config_ssl');
 		}
 
+		if (isset($this->request->post['config_maintenance'])) {
+			$this->data['config_maintenance'] = $this->request->post['config_maintenance'];
+		} else {
+			$this->data['config_maintenance'] = $this->config->get('config_maintenance');
+		}
+		
 		if (isset($this->request->post['config_encryption'])) {
 			$this->data['config_encryption'] = $this->request->post['config_encryption'];
 		} else {
@@ -787,7 +804,7 @@ class ControllerSettingSetting extends Controller {
 		
 		$pattern = '/^[A-Z0-9._%-]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i';
 
-    	if ((strlen(utf8_decode($this->request->post['config_email'])) > 32) || (!preg_match($pattern, $this->request->post['config_email']))) {
+    	if ((strlen(utf8_decode($this->request->post['config_email'])) > 96) || (!preg_match($pattern, $this->request->post['config_email']))) {
       		$this->error['email'] = $this->language->get('error_email');
     	}
 

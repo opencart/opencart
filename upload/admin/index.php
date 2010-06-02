@@ -1,4 +1,7 @@
 <?php
+// Version
+define('VERSION', '1.4.8');
+
 // Configuration
 require_once('config.php');
 

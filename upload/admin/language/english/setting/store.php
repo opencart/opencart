@@ -31,7 +31,6 @@ $_['entry_order_status']      = 'Order Status:<br /><span class="help">Set the d
 $_['entry_stock_display']     = 'Display Stock:<br /><span class="help">Display stock quantity on the product page.</span>';
 $_['entry_stock_check']       = 'Show Out Of Stock:<br /><span class="help">Display out of stock message on the shopping cart page if a product is out of stock.</span>';
 $_['entry_stock_checkout']    = 'Stock Checkout:<br /><span class="help">Allow customers to still checkout if the products they are ordering are not in stock.</span>';
-$_['entry_stock_subtract']    = 'Stock Subtract:<br /><span class="help">Subtract product quantity when an order is processed.</span>';
 $_['entry_logo']              = 'Store Logo:';
 $_['entry_icon']              = 'Icon:<br /><span class="help">The icon should be a PNG that is 16px x 16px.</span>';
 $_['entry_image_thumb']       = 'Product Image Thumb Size:';
@@ -50,9 +49,9 @@ $_['button_delete_store']     = 'Delete Store';
 
 // Error
 $_['error_permission']        = 'Warning: You do not have permission to modify stores!';
-$_['error_name']              = 'Store Name must be greater than 3 and less than 32 characters!';
+$_['error_name']              = 'Store Name must be between 3 and 32 characters!';
 $_['error_url']               = 'Store URL required!';
-$_['error_title']             = 'Title must be greater than 3 and less than 32 characters!';
+$_['error_title']             = 'Title must be between 3 and 32 characters!';
 $_['error_image_thumb']       = 'Product Image Thumb Size dimensions required!';
 $_['error_image_popup']       = 'Product Image Popup Size dimensions required!';
 $_['error_image_category']    = 'Category List Size dimensions required!';

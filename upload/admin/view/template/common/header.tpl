@@ -10,15 +10,40 @@
 <link rel="stylesheet" type="text/css" href="view/stylesheet/stylesheet.css" />
 <link rel="stylesheet" type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/ui.all.css" />
 <?php foreach ($styles as $style) { ?>
-<link rel="stylesheet" type="text/css" href="view/stylesheet/<?php echo $style; ?>" />
+<link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
 <script type="text/javascript" src="view/javascript/jquery/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/ui/ui.core.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/superfish/js/superfish.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/tab.js"></script>
 <?php foreach ($scripts as $script) { ?>
-<script type="text/javascript" src="view/javascript/<?php echo $script; ?>"></script>
+<script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
+<script type="text/javascript">
+//-----------------------------------------
+// Confirm Actions (delete, uninstall)
+//-----------------------------------------
+$(document).ready(function(){
+	
+    // Confirm Delete
+    $('#form').submit(function(){
+        if ($(this).attr('action').indexOf('delete',1) != -1) {
+            if (!confirm ('<?php echo $text_confirm; ?>')) {
+                return false;
+            }
+        }
+    });
+    
+    // Confirm Uninstall
+    $('a').click(function(){
+        if ($(this).attr('href') != null && $(this).attr('href').indexOf('uninstall',1) != -1) {
+            if (!confirm ('<?php echo $text_confirm; ?>')) {
+                return false;
+            }
+        }
+    });   
+});
+</script>
 </head>
 <body>
 <div id="container">
@@ -49,7 +74,6 @@
         <li><a href="<?php echo $payment; ?>"><?php echo $text_payment; ?></a></li>
         <li><a href="<?php echo $total; ?>"><?php echo $text_total; ?></a></li>
         <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
-        <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
       </ul>
     </li>
     <li id="sale"><a class="top"><?php echo $text_sale; ?></a>

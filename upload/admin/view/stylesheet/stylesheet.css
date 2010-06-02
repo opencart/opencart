@@ -434,3 +434,24 @@ table.form tr td:first-child {
 .scrollbox div.odd {
 	background: #E4EEF7;
 }
+
+.add {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../image/add.png) no-repeat scroll right center;
+	color:#000000;
+	display:inline-block;
+	padding-right:20px;
+	cursor: pointer;
+}
+.remove {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../image/delete.png) no-repeat scroll right center;
+	color:#000000;
+	display:inline-block;
+	padding-right:20px;
+	cursor: pointer;
+}

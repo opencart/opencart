@@ -384,6 +384,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['entry_firstname'] = $this->language->get('entry_firstname');
 			$this->data['entry_lastname'] = $this->language->get('entry_lastname');
 			$this->data['entry_email'] = $this->language->get('entry_email');
+			$this->data['entry_ip'] = $this->language->get('entry_ip');
 			$this->data['entry_telephone'] = $this->language->get('entry_telephone');
 			$this->data['entry_fax'] = $this->language->get('entry_fax');			
 			$this->data['entry_store_name'] = $this->language->get('entry_store_name');
@@ -495,6 +496,7 @@ class ControllerSaleOrder extends Controller {
 			}
 
 			$this->data['email'] = $order_info['email'];
+			$this->data['ip'] = $order_info['ip'];
 			$this->data['telephone'] = $order_info['telephone'];
 			$this->data['fax'] = $order_info['fax'];
 			
@@ -750,8 +752,11 @@ class ControllerSaleOrder extends Controller {
 		$this->data['column_model'] = $this->language->get('column_model');
 		$this->data['column_quantity'] = $this->language->get('column_quantity');
 		$this->data['column_price'] = $this->language->get('column_price');
-		$this->data['column_total'] = $this->language->get('column_total');	
+		$this->data['column_total'] = $this->language->get('column_total');
+		$this->data['column_comment'] = $this->language->get('column_comment');
 
+		$this->data['logo'] = DIR_IMAGE . $this->config->get('config_logo');
+		
 		$this->load->model('sale/order');
 	
 		$this->data['orders'] = array();
@@ -871,19 +876,23 @@ class ControllerSaleOrder extends Controller {
 				$total_data = $this->model_sale_order->getOrderTotals($order_id);
 				
 				$this->data['orders'][] = array(
-					'order_id'	       => $order_id,
-					'invoice_id'       => $invoice_id,
-					'date_added'       => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
-					'store_name'       => $order_info['store_name'],
-					'store_url'        => rtrim($order_info['store_url'], '/'),
-					'address'          => nl2br($this->config->get('config_address')),
-					'telephone'        => $this->config->get('config_telephone'),
-					'fax'              => $this->config->get('config_fax'),
-					'email'            => $this->config->get('config_email'),
-					'shipping_address' => $shipping_address,
-					'payment_address'  => $payment_address,
-					'product'          => $product_data,
-					'total'            => $total_data
+					'order_id'	       	=> $order_id,
+					'invoice_id'       	=> $invoice_id,
+					'date_added'       	=> date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
+					'store_name'       	=> $order_info['store_name'],
+					'store_url'        	=> rtrim($order_info['store_url'], '/'),
+					'address'          	=> nl2br($this->config->get('config_address')),
+					'telephone'        	=> $this->config->get('config_telephone'),
+					'fax'              	=> $this->config->get('config_fax'),
+					'email'            	=> $this->config->get('config_email'),
+					'shipping_address' 	=> $shipping_address,
+					'payment_address'  	=> $payment_address,
+					'customer_email'   	=> $order_info['email'],
+					'ip'   				=> $order_info['ip'],
+					'customer_telephone'=> $order_info['telephone'],
+					'comment'   	  	=> $order_info['comment'],
+					'product'          	=> $product_data,
+					'total'            	=> $total_data
 				);
 			}
 		}

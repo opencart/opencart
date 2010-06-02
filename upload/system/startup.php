@@ -1,7 +1,4 @@
 <?php
-// Version
-define('VERSION', '1.4.7');
-
 // Error Reporting
 error_reporting(E_ALL);
 

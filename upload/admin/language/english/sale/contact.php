@@ -11,6 +11,7 @@ $_['text_search']      = 'Search';
 
 // Entry
 $_['entry_store']      = 'From:';
+$_['entry_product']    = 'To customers who have ordered Products:';
 $_['entry_to']         = 'To:';
 $_['entry_subject']    = 'Subject:';
 $_['entry_message']    = 'Message:';

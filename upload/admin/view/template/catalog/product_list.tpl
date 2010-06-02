@@ -97,7 +97,9 @@
       </table>
     </form>
     <div class="pagination"><?php echo $pagination; ?></div>
-    <script type="text/javascript"><!--
+  </div>
+</div>
+<script type="text/javascript"><!--
 function filter() {
 	url = 'index.php?route=catalog/product';
 	
@@ -128,6 +130,12 @@ function filter() {
 	location = url;
 }
 //--></script>
-  </div>
-</div>
+
+<script type="text/javascript"><!--
+$('#form input').keydown(function(e) {
+	if (e.keyCode == 13) {
+		filter();
+	}
+});
+//--></script>
 <?php echo $footer; ?>

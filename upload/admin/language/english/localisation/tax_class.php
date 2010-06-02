@@ -18,10 +18,10 @@ $_['entry_rate']        = 'Tax Rate:';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify tax classes!';
-$_['error_title']       = 'Tax Class Title must be greater than 3 and less than 32 characters!';
-$_['error_description'] = 'Description must be greater than 3 and less than 255 characters!';
+$_['error_title']       = 'Tax Class Title must be between 3 and 32 characters!';
+$_['error_description'] = 'Description must be between 3 and 255 characters!';
 $_['error_priority']    = 'Tax Prority required!';
 $_['error_rate']        = 'Tax Rate required!';
-$_['error_description'] = 'Tax Rate Description must be greater than 3 and less than 255 characters!';
+$_['error_description'] = 'Tax Rate Description must be between 3 and 255 characters!';
 $_['error_product']     = 'Warning: This tax class cannot be deleted as it is currently assigned to %s products!';
 ?>

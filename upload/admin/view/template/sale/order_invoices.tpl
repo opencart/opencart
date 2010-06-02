@@ -40,7 +40,7 @@
       <td width="50%"><b><?php echo $text_ship_to; ?></b></td>
     </tr>
     <tr>
-      <td><?php echo $order['payment_address']; ?></td>
+      <td><?php echo $order['payment_address']; ?><br/><?php echo $order['customer_email']; ?></td>
       <td><?php echo$order['shipping_address']; ?></td>
     </tr>
   </table>

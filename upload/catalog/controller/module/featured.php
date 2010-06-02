@@ -9,6 +9,8 @@ class ControllerModulefeatured extends Controller {
 		$this->load->model('catalog/review');
 		$this->load->model('tool/seo_url');
 		$this->load->model('tool/image');
+		
+		$this->data['button_add_to_cart'] = $this->language->get('button_add_to_cart');
 			
 		$this->data['products'] = array();
 		
@@ -21,7 +23,11 @@ class ControllerModulefeatured extends Controller {
 				$image = 'no_image.jpg';
 			}
 			
-			$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
+			if ($this->config->get('config_review')) {
+				$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
+			} else {
+				$rating = false;
+			}
 
 			$special = FALSE;
 			
@@ -38,13 +44,28 @@ class ControllerModulefeatured extends Controller {
 					$special = $this->currency->format($this->tax->calculate($special, $result['tax_class_id'], $this->config->get('config_tax')));
 				}						
 			}
+						
+			$options = $this->model_catalog_product->getProductOptions($result['product_id']);
 			
-			$this->data['products'][] = array(											  
-				'name'    => $result['name'],
-				'price'   => $price,
-				'special' => $special,
-				'image'   => $this->model_tool_image->resize($image, 38, 38),
-				'href'    => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id'])
+			if ($options) {
+				$add = $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id']);
+			} else {
+				$add = HTTPS_SERVER . 'index.php?route=checkout/cart&product_id=' . $result['product_id'];
+			}
+			
+			$this->data['products'][] = array(
+				'product_id'    => $result['product_id'],
+				'name'    		=> $result['name'],
+				'model'   		=> $result['model'],
+				'rating'  		=> $rating,
+				'stars'   		=> sprintf($this->language->get('text_stars'), $rating),
+				'price'   		=> $price,
+				'options'   	=> $options,
+				'special' 		=> $special,
+				'image'   		=> $this->model_tool_image->resize($image, 38, 38),
+				'thumb'   		=> $this->model_tool_image->resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
+				'href'    		=> $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id']),
+				'add'    		=> $add
 			);
 		}
 
@@ -58,10 +79,18 @@ class ControllerModulefeatured extends Controller {
 		
 		$this->id = 'featured';
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/featured.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/module/featured.tpl';
+		if ($this->config->get('featured_position') == 'home') {
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/featured_home.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/module/featured_home.tpl';
+			} else {
+				$this->template = 'default/template/module/featured_home.tpl';
+			}
 		} else {
-			$this->template = 'default/template/module/featured.tpl';
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/featured.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/module/featured.tpl';
+			} else {
+				$this->template = 'default/template/module/featured.tpl';
+			}
 		}
 		
 		$this->render();

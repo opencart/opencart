@@ -293,6 +293,7 @@ class ControllerCatalogDownload extends Controller {
     	$this->data['entry_name'] = $this->language->get('entry_name');
     	$this->data['entry_filename'] = $this->language->get('entry_filename');
     	$this->data['entry_remaining'] = $this->language->get('entry_remaining');
+    	$this->data['entry_update'] = $this->language->get('entry_update');
   
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -359,6 +360,18 @@ class ControllerCatalogDownload extends Controller {
 			$download_info = $this->model_catalog_download->getDownload($this->request->get['download_id']);
     	}
 
+    	if (isset($download_info['filename'])) {
+    		$this->data['filename'] = $download_info['filename'];
+		} else {
+			$this->data['filename'] = '';
+		}
+    	  
+    	if (isset($this->request->get['download_id'])) {
+    		$this->data['show_update'] = TRUE;
+		} else {
+			$this->data['show_update'] = FALSE;
+ 		}
+
 		if (isset($this->request->post['download_description'])) {
 			$this->data['download_description'] = $this->request->post['download_description'];
 		} elseif (isset($this->request->get['download_id'])) {
@@ -372,7 +385,13 @@ class ControllerCatalogDownload extends Controller {
     	} elseif (isset($download_info['remaining'])) {
       		$this->data['remaining'] = $download_info['remaining'];
     	} else {
-      		$this->data['remaining'] = 0;
+      		$this->data['remaining'] = 1;
+    	}
+    	
+    	if (isset($this->request->post['update'])) {
+      		$this->data['update'] = $this->request->post['update'];
+    	} else {
+      		$this->data['update'] = FALSE;
     	}
 		
 		$this->template = 'catalog/download_form.tpl';

@@ -19,15 +19,12 @@
         <tr>
           <td><?php echo $entry_position; ?></td>
           <td><select name="special_position">
-              <?php if ($special_position == 'left') { ?>
-              <option value="left" selected="selected"><?php echo $text_left; ?></option>
+              <?php foreach ($positions as $position) { ?>
+              <?php if ($special_position == $position['position']) { ?>
+              <option value="<?php echo $position['position']; ?>" selected="selected"><?php echo $position['title']; ?></option>
               <?php } else { ?>
-              <option value="left"><?php echo $text_left; ?></option>
+              <option value="<?php echo $position['position']; ?>"><?php echo $position['title']; ?></option>
               <?php } ?>
-              <?php if ($special_position == 'right') { ?>
-              <option value="right" selected="selected"><?php echo $text_right; ?></option>
-              <?php } else { ?>
-              <option value="right"><?php echo $text_right; ?></option>
               <?php } ?>
             </select></td>
         </tr>

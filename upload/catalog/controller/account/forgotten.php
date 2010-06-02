@@ -26,6 +26,7 @@ class ControllerAccountForgotten extends Controller {
 
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->hostname = $this->config->get('config_smtp_host');
 			$mail->username = $this->config->get('config_smtp_username');
 			$mail->password = $this->config->get('config_smtp_password');
@@ -92,10 +93,10 @@ class ControllerAccountForgotten extends Controller {
 		}
 		
 		$this->children = array(
-			'common/header',
+			'common/column_right',
 			'common/footer',
 			'common/column_left',
-			'common/column_right'
+			'common/header'
 		);
 		
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		

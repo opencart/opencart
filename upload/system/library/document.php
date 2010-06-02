@@ -2,6 +2,7 @@
 final class Document {
 	public $title;
 	public $description;
+	public $keywords;
 	public $base;	
 	public $charset = 'utf-8';		
 	public $language = 'en-gb';	
@@ -25,6 +26,14 @@ final class Document {
 	
 	public function getDescription() {
 		return $this->description;
+	}
+	
+	public function setKeywords($keywords) {
+		$this->keywords = $keywords;
+	}
+	
+	public function getKeywords() {
+		return $this->keywords;
 	}
 	
 	public function setBase($base) {

@@ -64,7 +64,7 @@ $_['entry_city']                   = 'Origin City:<span class="help">Enter the n
 $_['entry_state']                  = 'Origin State/Province:<span class="help">Enter the two-letter code for your origin state/province.</span>';
 $_['entry_country']                = 'Origin Country:<span class="help">Enter the two-letter code for your origin country.</span>';
 $_['entry_postcode']               = 'Origin Zip/Postal Code:<span class="help">Enter your origin zip/postalcode.</span>';
-$_['entry_test']                   = 'Test or Production Mode:<span class="help">Use this module in Test or Production mode?</span>';
+$_['entry_test']                   = 'Test Mode:<span class="help">Use this module in Test (YES) or Production mode (NO)?</span>';
 $_['entry_quote_type']             = 'Quote Type:<span class="help">Quote for Residential or Commercial Delivery.</span>';
 $_['entry_service']                = 'Services:<span class="help">Select the UPS services to be offered.</span>';
 $_['entry_display_weight']         = 'Display Delivery Weight:<br /><span class="help">Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 Kg\'s)</span>';

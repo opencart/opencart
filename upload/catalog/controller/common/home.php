@@ -29,6 +29,8 @@ class ControllerCommonHome extends Controller {
 		$this->load->model('tool/seo_url');
 		$this->load->model('tool/image');
 		
+		$this->data['button_add_to_cart'] = $this->language->get('button_add_to_cart');
+		
 		$this->data['products'] = array();
 
 		foreach ($this->model_catalog_product->getLatestProducts(8) as $result) {			
@@ -38,7 +40,11 @@ class ControllerCommonHome extends Controller {
 				$image = 'no_image.jpg';
 			}
 			
-			$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
+			if ($this->config->get('config_review')) {
+				$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
+			} else {
+				$rating = false;
+			}
 			
 			$special = FALSE;
 			
@@ -55,7 +61,15 @@ class ControllerCommonHome extends Controller {
 					$special = $this->currency->format($this->tax->calculate($special, $result['tax_class_id'], $this->config->get('config_tax')));
 				}						
 			}
-				
+			
+			$options = $this->model_catalog_product->getProductOptions($result['product_id']);
+					
+			if ($options) {
+				$add = $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id']);
+			} else {
+				$add = HTTPS_SERVER . 'index.php?route=checkout/cart&product_id=' . $result['product_id'];
+			}
+			
           	$this->data['products'][] = array(
             	'name'    => $result['name'],
 				'model'   => $result['model'],
@@ -63,8 +77,10 @@ class ControllerCommonHome extends Controller {
 				'stars'   => sprintf($this->language->get('text_stars'), $rating),
 				'thumb'   => $this->model_tool_image->resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
             	'price'   => $price,
+            	'options' => $options,
 				'special' => $special,
-				'href'    => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id'])
+				'href'    => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id']),
+				'add'	  => $add
           	);
 		}
 
@@ -83,11 +99,21 @@ class ControllerCommonHome extends Controller {
 		}
 		
 		$this->children = array(
-			'common/header',
-			'common/footer',
+			'common/column_right',
 			'common/column_left',
-			'common/column_right'
+			'common/footer',
+			'common/header'
 		);
+		
+		$this->load->model('checkout/extension');
+		
+		$module_data = $this->model_checkout_extension->getExtensionsByPosition('module', 'home');
+		
+		$this->data['modules'] = $module_data;
+		
+		foreach ($module_data as $result) {
+			$this->children[] = 'module/' . $result['code'];
+		}
 		
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}

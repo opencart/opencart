@@ -15,9 +15,7 @@ $_['text_payment_address']  = 'Payment Address';
 $_['text_payment_method']   = 'Payment Method';
 $_['text_change']           = 'Change';
 $_['text_comment']          = 'Your Comments';
-$_['text_success']          = 'Success: Your coupon discount has been applied!';
 $_['text_discount']         = 'Discount Coupon';
-$_['text_coupon']           = 'Enter your code, hit the "Apply Coupon" button and watch your discount instantly be applied to your order.';
 
 // Column
 $_['column_product']        = 'Product';
@@ -26,9 +24,4 @@ $_['column_quantity']       = 'Quantity';
 $_['column_price']          = 'Price';
 $_['column_total']          = 'Total';	
 
-// Entry
-$_['entry_coupon']          = 'Coupon:';
-
-// Error
-$_['error_coupon']          = 'Error: Coupon is either invalid, expired or reached it\'s usage limit!';
 ?>

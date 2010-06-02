@@ -53,7 +53,7 @@ class ControllerFeedGoogleSitemap extends Controller {
 		 
 		 foreach ($informations as $information) {
 			$output .= '<url>';
-			$output .= '<loc>' . str_replace('&', '&amp;', $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/information&information_id=' . $information['information_id'])) . '</loc>';
+			$output .= '<loc>' . str_replace('&', '&amp;', $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=information/information&information_id=' . $information['information_id'])) . '</loc>';
 			$output .= '<changefreq>weekly</changefreq>';
 			$output .= '<priority>0.5</priority>';
 			$output .= '</url>';   

@@ -101,6 +101,86 @@
           </tr>
         </table>
       </div>
+      <!-- start shipping address -->
+      <span style="clear:both;">
+      <?php if ($shipping_indicator) { ?>
+      	<input type="checkbox" value="1" checked="checked" onchange="(this.checked) ? $('#shipping_details').css('display','block') : $('#shipping_details').css('display','none');" name="shipping_indicator" id="shipping_indicator" style="margin: 15px 5px 20px 5px;" /><label for="shipping_indicator"><?php echo $text_indicator; ?></label>
+      <?php } else { ?>
+        <input type="checkbox" value="1" onclick="(this.checked) ? $('#shipping_details').css('display','block') : $('#shipping_details').css('display','none');" name="shipping_indicator" id="shipping_indicator" style="margin: 15px 5px 20px 5px;" /><label for="shipping_indicator"><?php echo $text_indicator; ?></label>
+      <?php } ?>
+      </span>
+      <div id="shipping_details" style="<?php echo ($shipping_indicator) ? 'display:block;' : 'display:none;' ?>">
+      <b style="margin-bottom: 2px; display: block;"><?php echo $text_your_address; ?></b>
+      <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
+      <table>
+          <tr>
+            <td width="150"><span class="required">*</span> <?php echo $entry_firstname; ?></td>
+            <td><input type="text" name="shipping_firstname" value="<?php echo $shipping_firstname; ?>" />
+              <?php if ($error_shipping_firstname) { ?>
+              <span class="error"><?php echo $error_shipping_firstname; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
+            <td><input type="text" name="shipping_lastname" value="<?php echo $shipping_lastname; ?>" />
+              <?php if ($error_shipping_lastname) { ?>
+              <span class="error"><?php echo $error_shipping_lastname; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td width="150"><?php echo $entry_company; ?></td>
+            <td><input type="text" name="shipping_company" value="<?php echo $shipping_company; ?>" /></td>
+          </tr>
+          <tr>
+            <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
+            <td><input type="text" name="shipping_address_1" value="<?php echo $shipping_address_1; ?>" />
+              <?php if ($error_shipping_address_1) { ?>
+              <span class="error"><?php echo $error_shipping_address_1; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_address_2; ?></td>
+            <td><input type="text" name="shipping_address_2" value="<?php echo $shipping_address_2; ?>" /></td>
+          </tr>
+          <tr>
+            <td><span class="required">*</span> <?php echo $entry_city; ?></td>
+            <td><input type="text" name="shipping_city" value="<?php echo $shipping_city; ?>" />
+              <?php if ($error_shipping_city) { ?>
+              <span class="error"><?php echo $error_shipping_city; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_postcode; ?></td>
+            <td><input type="text" name="shipping_postcode" value="<?php echo $shipping_postcode; ?>" /></td>
+          </tr>
+          <tr>
+            <td><span class="required">*</span> <?php echo $entry_country; ?></td>
+            <td><select name="shipping_country_id" id="shipping_country_id" onchange="$('select[name=\'shipping_zone_id\']').load('index.php?route=checkout/guest_step_1/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>');">
+                <option value="FALSE"><?php echo $text_select; ?></option>
+                <?php foreach ($countries as $country) { ?>
+                <?php if ($country['country_id'] == $country_id) { ?>
+                <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+              <?php if ($error_shipping_country) { ?>
+              <span class="error"><?php echo $error_shipping_country; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
+            <td><select name="shipping_zone_id">
+              </select>
+              <?php if ($error_shipping_zone) { ?>
+              <span class="error"><?php echo $error_shipping_zone; ?></span>
+              <?php } ?></td>
+          </tr>
+        </table>
+      </div>
+      </div>
+      <!-- end shipping address -->
       <div class="buttons">
         <table>
           <tr>
@@ -119,5 +199,6 @@
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'zone_id\']').load('index.php?route=checkout/guest_step_1/zone&country_id=<?php echo $country_id; ?>&zone_id=<?php echo $zone_id; ?>');
+$('select[name=\'shipping_zone_id\']').load('index.php?route=checkout/guest_step_1/zone&country_id=<?php echo $country_id; ?>&zone_id=<?php echo $zone_id; ?>');
 //--></script>
 <?php echo $footer; ?> 

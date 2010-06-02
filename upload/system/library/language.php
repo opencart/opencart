@@ -31,6 +31,8 @@ final class Language {
 	  	} else {
 		  	$this->data = array_merge($this->data, $_);
 		}
+		
+		return $this->data;
   	}
 }
 ?>

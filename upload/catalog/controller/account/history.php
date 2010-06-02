@@ -92,10 +92,10 @@ class ControllerAccountHistory extends Controller {
 			}
 			
 			$this->children = array(
-				'common/header',
+				'common/column_right',
 				'common/footer',
 				'common/column_left',
-				'common/column_right'
+				'common/header'
 			);	
 			
 			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));				
@@ -115,10 +115,10 @@ class ControllerAccountHistory extends Controller {
 			}
 			
 			$this->children = array(
-				'common/header',
+				'common/column_right',
 				'common/footer',
 				'common/column_left',
-				'common/column_right'
+				'common/header'
 			);
 					
 			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));				

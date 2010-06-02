@@ -15,21 +15,22 @@
       <div id="tab_general">
         <div id="languages" class="htabs">
           <?php foreach ($languages as $language) { ?>
-		  <?php if ($language['status']) { ?>
           <a tab="#language<?php echo $language['language_id']; ?>"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a>
-          <?php } ?>
 		  <?php } ?>
         </div>
         <?php foreach ($languages as $language) { ?>
-		<?php if ($language['status']) { ?>
         <div id="language<?php echo $language['language_id']; ?>">
           <table class="form">
             <tr>
               <td><span class="required">*</span> <?php echo $entry_name; ?></td>
-              <td><input name="category_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['name'] : ''; ?>" />
+              <td><input name="category_description[<?php echo $language['language_id']; ?>][name]" size="100" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['name'] : ''; ?>" />
                 <?php if (isset($error_name[$language['language_id']])) { ?>
                 <span class="error"><?php echo $error_name[$language['language_id']]; ?></span>
                 <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_meta_keywords; ?></td>
+              <td><textarea name="category_description[<?php echo $language['language_id']; ?>][meta_keywords]" cols="40" rows="5"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_keywords'] : ''; ?></textarea></td>
             </tr>
             <tr>
               <td><?php echo $entry_meta_description; ?></td>
@@ -41,7 +42,6 @@
             </tr>
           </table>
         </div>
-        <?php } ?>
 		<?php } ?>
       </div>
       <div id="tab_data">
@@ -119,9 +119,7 @@
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
-<?php if ($language['status']) { ?>
 CKEDITOR.replace('description<?php echo $language['language_id']; ?>');
-<?php } ?>
 <?php } ?>
 //--></script>
 <script type="text/javascript" src="view/javascript/jquery/ui/ui.draggable.js"></script>

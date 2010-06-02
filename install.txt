@@ -31,7 +31,7 @@ INSTALL
 
 5. Follow the onscreen instructions.
 
-6. Delete the install directory.
+6. Delete the install directory after install is complete.
 
 
 For any support issues please visit: http://www.opencart.com

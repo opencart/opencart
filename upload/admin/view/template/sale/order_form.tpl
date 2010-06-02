@@ -54,6 +54,10 @@
             <td><?php echo $fax; ?></td>
           </tr>
           <?php } ?>
+		  <tr>
+            <td><?php echo $entry_ip; ?></td>
+            <td><?php echo $ip; ?></td>
+          </tr>
           <tr>
             <td><?php echo $entry_store_name; ?></td>
             <td><?php echo $store_name; ?></td>

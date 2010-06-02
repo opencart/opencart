@@ -37,7 +37,8 @@
           <?php foreach ($shipping_method['quote'] as $quote) { ?>
           <tr>
             <td width="1"><label for="<?php echo $quote['id']; ?>">
-                <?php if ($quote['id'] == $shipping) { ?>
+                <?php if ($quote['id'] == $shipping || !$shipping) { ?>
+				<?php $shipping = $quote['id']; ?>
                 <input type="radio" name="shipping_method" value="<?php echo $quote['id']; ?>" id="<?php echo $quote['id']; ?>" checked="checked" style="margin: 0px;" />
                 <?php } else { ?>
                 <input type="radio" name="shipping_method" value="<?php echo $quote['id']; ?>" id="<?php echo $quote['id']; ?>" style="margin: 0px;" />

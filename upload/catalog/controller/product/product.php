@@ -112,6 +112,8 @@ class ControllerProductProduct extends Controller {
 			
 			$this->document->title = $product_info['name'];
 			
+			$this->document->keywords = $product_info['meta_keywords'];
+			
 			$this->document->description = $product_info['meta_description'];
 
 			$this->document->links = array();
@@ -140,6 +142,8 @@ class ControllerProductProduct extends Controller {
 			$this->data['text_no_images'] = $this->language->get('text_no_images');
 			$this->data['text_no_related'] = $this->language->get('text_no_related');
 			$this->data['text_wait'] = $this->language->get('text_wait');
+			$this->data['text_tags'] = $this->language->get('text_tags');
+			$this->data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
 
 			$this->data['entry_name'] = $this->language->get('entry_name');
 			$this->data['entry_review'] = $this->language->get('entry_review');
@@ -157,7 +161,13 @@ class ControllerProductProduct extends Controller {
 			$this->data['tab_review'] = sprintf($this->language->get('tab_review'), $this->model_catalog_review->getTotalReviewsByProductId($this->request->get['product_id']));
 			$this->data['tab_related'] = $this->language->get('tab_related');
 			
-			$average = $this->model_catalog_review->getAverageRating($this->request->get['product_id']);	
+			if ($this->config->get('config_review')) {
+				$average = $this->model_catalog_review->getAverageRating($this->request->get['product_id']);	
+			} else {
+				$average = false;
+			}
+			
+			$this->data['review_status'] = $this->config->get('config_review');
 			
 			$this->data['text_stars'] = sprintf($this->language->get('text_stars'), $average);
 			
@@ -219,6 +229,12 @@ class ControllerProductProduct extends Controller {
 				}
 			}
 			
+			if ($product_info['minimum']) {
+				$this->data['minimum'] = $product_info['minimum'];
+			} else {
+				$this->data['minimum'] = 1;
+			}
+			
 			$this->data['model'] = $product_info['model'];
 			$this->data['manufacturer'] = $product_info['manufacturer'];
 			$this->data['manufacturers'] = $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $product_info['manufacturer_id']);
@@ -271,7 +287,11 @@ class ControllerProductProduct extends Controller {
 					$image = 'no_image.jpg';
 				}
 			
-				$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
+				if ($this->config->get('config_review')) {
+					$rating = $this->model_catalog_review->getAverageRating($this->request->get['product_id']);	
+				} else {
+					$rating = false;
+				}
 				
 				$special = FALSE;
 				
@@ -289,15 +309,27 @@ class ControllerProductProduct extends Controller {
 					}
 				}
 			
-			$this->data['products'][] = array(
-					'name'    => $result['name'],
-					'model'   => $result['model'],
-					'rating'  => $rating,
-					'stars'   => sprintf($this->language->get('text_stars'), $rating),
-					'thumb'   => $this->model_tool_image->resize($image, $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height')),
-					'price'   => $price,
-					'special' => $special,
-					'href'    => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id'])
+				$options = $this->model_catalog_product->getProductOptions($result['product_id']);
+			
+				if ($options) {
+					$add = $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id']);
+				} else {
+					$add = HTTPS_SERVER . 'index.php?route=checkout/cart&product_id=' . $result['product_id'];
+				}
+			
+				$this->data['products'][] = array(
+					'product_id'    => $result['product_id'],
+					'name'    		=> $result['name'],
+					'model'   		=> $result['model'],
+					'rating'  		=> $rating,
+					'stars'   		=> sprintf($this->language->get('text_stars'), $rating),
+					'price'   		=> $price,
+					'options'   	=> $options,
+					'special' 		=> $special,
+					'image'   		=> $this->model_tool_image->resize($image, 38, 38),
+					'thumb'   		=> $this->model_tool_image->resize($image, $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height')),
+					'href'    		=> $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id']),
+					'add'    		=> $add
 				);
 			}
 
@@ -311,7 +343,20 @@ class ControllerProductProduct extends Controller {
 			}
 			
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
-						
+			
+			$this->data['tags'] = array();
+					
+			$results = $this->model_catalog_product->getProductTags($this->request->get['product_id']);
+			
+			foreach ($results as $result) {
+				if ($result['tag']) {
+					$this->data['tags'][] = array(
+						'tag'	=> $result['tag'],
+						'href'	=> HTTP_SERVER . 'index.php?route=product/search&keyword=' . $result['tag']
+					);
+				}
+			}
+			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/product.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/product/product.tpl';
 			} else {
@@ -319,11 +364,11 @@ class ControllerProductProduct extends Controller {
 			}
 			
 			$this->children = array(
-				'common/header',
-				'common/footer',
+				'common/column_right',
 				'common/column_left',
-				'common/column_right'
-			);		
+				'common/footer',
+				'common/header'
+			);
 			
 			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 		} else {
@@ -372,11 +417,11 @@ class ControllerProductProduct extends Controller {
 			}
 			
 			$this->children = array(
-				'common/header',
-				'common/footer',
+				'common/column_right',
 				'common/column_left',
-				'common/column_right'
-			);	
+				'common/footer',
+				'common/header'
+			);
 			
 			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
     	}
@@ -472,7 +517,7 @@ class ControllerProductProduct extends Controller {
 			$this->error['message'] = $this->language->get('error_rating');
 		}
 
-		if ($this->session->data['captcha'] != $this->request->post['captcha']) {
+		if (!isset($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
 			$this->error['message'] = $this->language->get('error_captcha');
 		}
 

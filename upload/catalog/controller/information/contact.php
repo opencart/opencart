@@ -10,6 +10,7 @@ class ControllerInformationContact extends Controller {
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->hostname = $this->config->get('config_smtp_host');
 			$mail->username = $this->config->get('config_smtp_username');
 			$mail->password = $this->config->get('config_smtp_password');
@@ -113,10 +114,10 @@ class ControllerInformationContact extends Controller {
 		}
 		
 		$this->children = array(
-			'common/header',
+			'common/column_right',
 			'common/footer',
 			'common/column_left',
-			'common/column_right'
+			'common/header'
 		);
 		
  		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		
@@ -156,10 +157,10 @@ class ControllerInformationContact extends Controller {
 		}
 		
 		$this->children = array(
-			'common/header',
+			'common/column_right',
 			'common/footer',
 			'common/column_left',
-			'common/column_right'
+			'common/header'
 		);
 		
  		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression')); 
@@ -186,7 +187,7 @@ class ControllerInformationContact extends Controller {
       		$this->error['email'] = $this->language->get('error_email');
     	}
 
-    	if ((strlen(utf8_decode($this->request->post['enquiry'])) < 10) || (strlen(utf8_decode($this->request->post['enquiry'])) > 1000)) {
+    	if ((strlen(utf8_decode($this->request->post['enquiry'])) < 10) || (strlen(utf8_decode($this->request->post['enquiry'])) > 3000)) {
       		$this->error['enquiry'] = $this->language->get('error_enquiry');
     	}
 

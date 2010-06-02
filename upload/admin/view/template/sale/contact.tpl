@@ -66,6 +66,14 @@
             </table></td>
         </tr>
         <tr>
+          <td><?php echo $entry_product; ?></td>
+          <td><select name="product[]" multiple="multiple" size="10" style="width: 50em;">
+              <?php foreach ($products as $product) { ?>
+              <option value="<?php echo $product['product_id']; ?>"><?php echo $product['name']; ?> - [<?php echo $product['model']; ?>]</option>
+              <?php } ?>
+            </select></td>
+        </tr>
+        <tr>
           <td><span class="required">*</span> <?php echo $entry_subject; ?></td>
           <td><input name="subject" value="<?php echo $subject; ?>" />
             <?php if ($error_subject) { ?>

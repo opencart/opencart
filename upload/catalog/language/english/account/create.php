@@ -31,15 +31,15 @@ $_['entry_confirm']        = 'Password Confirm:';
 
 // Error
 $_['error_exists']         = 'Error: E-Mail Address is already registered!';
-$_['error_firstname']      = 'First Name must be greater than 1 and less than 32 characters!';
-$_['error_lastname']       = 'Last Name must be greater than 1 and less than 32 characters!';
+$_['error_firstname']      = 'First Name must be between 1 and 32 characters!';
+$_['error_lastname']       = 'Last Name must be between 1 and 32 characters!';
 $_['error_email']          = 'E-Mail Address does not appear to be valid!';
-$_['error_password']       = 'Password must be greater than 3 and less than 20 characters!';
+$_['error_password']       = 'Password must be between 3 and 20 characters!';
 $_['error_confirm']        = 'Password confirmation does not match password!';
-$_['error_address_1']      = 'Address 1 must be greater than 3 and less than 128 characters!';
-$_['error_city']           = 'City must be greater than 3 and less than 128 characters!';
+$_['error_address_1']      = 'Address 1 must be between 3 and 128 characters!';
+$_['error_city']           = 'City must be between 3 and 128 characters!';
 $_['error_country']        = 'Please select a country!';
 $_['error_zone']           = 'Please select a region / state!';
-$_['error_telephone']      = 'Telephone must be greater than 3 and less than 32 characters!';
+$_['error_telephone']      = 'Telephone must be between 3 and 32 characters!';
 $_['error_agree']          = 'Error: You must agree to the %s!';
 ?>

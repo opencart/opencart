@@ -328,17 +328,12 @@ class ModelShippingUsps extends Model {
 								$classid = $postage->getAttribute('CLASSID');
 								
 								if (in_array($classid, $allowed) && $this->config->get('usps_domestic_' . $classid)) {
-									$title = $postage->getElementsByTagName('MailService')->item(0)->nodeValue;
-									
-									if ($this->config->get('usps_display_weight')) {	  
-										$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class')) . ')';
-									}									
-									
+			
 									$cost = $postage->getElementsByTagName('Rate')->item(0)->nodeValue;
 									
 									$quote_data[$classid] = array(
 										'id'           => 'usps.' . $classid,
-										'title'        => $title,
+										'title'        => $postage->getElementsByTagName('MailService')->item(0)->nodeValue,
 										'cost'         => $this->currency->convert($cost, 'USD', $this->currency->getCode()),
 										'tax_class_id' => 0,
 										'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, 'USD', $this->currency->getCode()), $this->config->get('ups_tax_class_id'), $this->config->get('config_tax')))
@@ -391,9 +386,16 @@ class ModelShippingUsps extends Model {
 			}
 			
 	  		if ($quote_data) {
+				
+				$title = $this->language->get('text_title');
+									
+				if ($this->config->get('usps_display_weight')) {	  
+					$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class')) . ')';
+				}		
+			
       			$method_data = array(
         			'id'         => 'usps',
-        			'title'      => $this->language->get('text_title'),
+        			'title'      => $title,
         			'quote'      => $quote_data,
 					'sort_order' => $this->config->get('usps_sort_order'),
         			'error'      => FALSE

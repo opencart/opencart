@@ -75,6 +75,17 @@
               <?php } ?>
             </select></td>
         </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_captcha; ?></td>
+          <td>
+            <input type="text" name="captcha" value="" autocomplete="off"/>
+            <?php if ($error_captcha) { ?>
+            <span class="error"><?php echo $error_captcha; ?></span>
+            <?php } ?>
+            <br />
+            <img src="index.php?route=user/user/captcha" />
+          </td>
+        </tr>
       </table>
     </form>
   </div>

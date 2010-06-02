@@ -63,14 +63,6 @@ class ControllerCheckoutGuestStep3 extends Controller {
 		$this->language->load('checkout/confirm');
 
     	$this->document->title = $this->language->get('heading_title'); 
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
-			$this->session->data['coupon'] = $this->request->post['coupon'];
-			
-			$this->session->data['success'] = $this->language->get('text_success');
-			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/guest_step_3');
-		}
 		
 		$data = array();
 		
@@ -86,19 +78,33 @@ class ControllerCheckoutGuestStep3 extends Controller {
 		$data['fax'] = $this->session->data['guest']['fax'];
 		
 		if ($this->cart->hasShipping()) {
-			$data['shipping_firstname'] = $this->session->data['guest']['firstname'];
-			$data['shipping_lastname'] = $this->session->data['guest']['lastname'];	
-			$data['shipping_company'] = $this->session->data['guest']['company'];	
-			$data['shipping_address_1'] = $this->session->data['guest']['address_1'];
-			$data['shipping_address_2'] = $this->session->data['guest']['address_2'];
-			$data['shipping_city'] = $this->session->data['guest']['city'];
-			$data['shipping_postcode'] = $this->session->data['guest']['postcode'];
-			$data['shipping_zone'] = $this->session->data['guest']['zone'];
-			$data['shipping_zone_id'] = $this->session->data['guest']['zone_id'];
-			$data['shipping_country'] = $this->session->data['guest']['country'];
-			$data['shipping_country_id'] = $this->session->data['guest']['country_id'];
-			$data['shipping_address_format'] = $this->session->data['guest']['address_format'];
-		
+			if (isset($this->session->data['guest']['shipping'])) {
+				$data['shipping_firstname'] = $this->session->data['guest']['shipping']['firstname'];
+				$data['shipping_lastname'] = $this->session->data['guest']['shipping']['lastname'];	
+				$data['shipping_company'] = $this->session->data['guest']['shipping']['company'];	
+				$data['shipping_address_1'] = $this->session->data['guest']['shipping']['address_1'];
+				$data['shipping_address_2'] = $this->session->data['guest']['shipping']['address_2'];
+				$data['shipping_city'] = $this->session->data['guest']['shipping']['city'];
+				$data['shipping_postcode'] = $this->session->data['guest']['shipping']['postcode'];
+				$data['shipping_zone'] = $this->session->data['guest']['shipping']['zone'];
+				$data['shipping_zone_id'] = $this->session->data['guest']['shipping']['zone_id'];
+				$data['shipping_country'] = $this->session->data['guest']['shipping']['country'];
+				$data['shipping_country_id'] = $this->session->data['guest']['shipping']['country_id'];
+				$data['shipping_address_format'] = $this->session->data['guest']['shipping']['address_format'];
+			} else {
+				$data['shipping_firstname'] = $this->session->data['guest']['firstname'];
+				$data['shipping_lastname'] = $this->session->data['guest']['lastname'];	
+				$data['shipping_company'] = $this->session->data['guest']['company'];	
+				$data['shipping_address_1'] = $this->session->data['guest']['address_1'];
+				$data['shipping_address_2'] = $this->session->data['guest']['address_2'];
+				$data['shipping_city'] = $this->session->data['guest']['city'];
+				$data['shipping_postcode'] = $this->session->data['guest']['postcode'];
+				$data['shipping_zone'] = $this->session->data['guest']['zone'];
+				$data['shipping_zone_id'] = $this->session->data['guest']['zone_id'];
+				$data['shipping_country'] = $this->session->data['guest']['country'];
+				$data['shipping_country_id'] = $this->session->data['guest']['country_id'];
+				$data['shipping_address_format'] = $this->session->data['guest']['address_format'];
+			}
 			if (isset($this->session->data['shipping_method']['title'])) {
 				$data['shipping_method'] = $this->session->data['shipping_method']['title'];
 			} else {
@@ -235,7 +241,6 @@ class ControllerCheckoutGuestStep3 extends Controller {
     	$this->data['text_payment_method'] = $this->language->get('text_payment_method');
     	$this->data['text_comment'] = $this->language->get('text_comment');
     	$this->data['text_change'] = $this->language->get('text_change');
-    	$this->data['text_coupon'] = $this->language->get('text_coupon');
 		
 		$this->data['column_product'] = $this->language->get('column_product');
     	$this->data['column_model'] = $this->language->get('column_model');
@@ -243,10 +248,6 @@ class ControllerCheckoutGuestStep3 extends Controller {
     	$this->data['column_price'] = $this->language->get('column_price');
     	$this->data['column_total'] = $this->language->get('column_total');
 		
-		$this->data['entry_coupon'] = $this->language->get('entry_coupon');
-		
-		$this->data['button_coupon'] = $this->language->get('button_coupon');
-
 		if (isset($this->error['warning'])) {
     		$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -261,20 +262,12 @@ class ControllerCheckoutGuestStep3 extends Controller {
 			$this->data['success'] = '';
 		}
 		
-		$this->data['action'] = HTTP_SERVER . 'index.php?route=checkout/guest_step_3';
-		
-		$this->data['coupon_status'] = $this->config->get('coupon_status');
-		
-		if (isset($this->request->post['coupon'])) {
-			$this->data['coupon'] = $this->request->post['coupon'];
-		} elseif (isset($this->session->data['coupon'])) {
-			$this->data['coupon'] = $this->session->data['coupon'];
-		} else {
-			$this->data['coupon'] = '';
-		}
-		
 		if ($this->cart->hasShipping()) {
-			$shipping_address = $this->session->data['guest'];
+			if (isset($this->session->data['guest']['shipping'])) {
+				$shipping_address = $this->session->data['guest']['shipping'];
+			} else {
+				$shipping_address = $this->session->data['guest'];
+			}
 			
 			if ($shipping_address['address_format']) {
       			$format = $shipping_address['address_format'];
@@ -409,31 +402,14 @@ class ControllerCheckoutGuestStep3 extends Controller {
 		}
 
 		$this->children = array(
-			'common/header',
+			'common/column_right',
 			'common/footer',
 			'common/column_left',
-			'common/column_right',
+			'common/header',
 			'payment/' . $this->session->data['payment_method']['id']
 		);
 		
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
-	
-	
-	private function validate() {
-		$this->load->model('checkout/coupon');
-			
-		$coupon = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);
-			
-		if (!$coupon) {
-			$this->error['warning'] = $this->language->get('error_coupon');
-		}
-		
-		if (!$this->error) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
-	}		
 }
 ?>

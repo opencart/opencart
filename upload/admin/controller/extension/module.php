@@ -80,12 +80,12 @@ class ControllerExtensionModule extends Controller {
 				
 				$postion = $this->config->get($extension . '_position');						
 				
-				if ($postion == 'left') {
-					$postion = $this->language->get('text_left');
-				} elseif ($postion == 'right') {
-					$postion = $this->language->get('text_right');
+				if ($postion) {
+					$postion = $this->language->get('text_' . $postion);
+				} else {
+					$postion = "";
 				}
-				
+								
 				$this->data['extensions'][] = array(
 					'name'        => $this->language->get('heading_title'),
 					'position'    => $postion,
@@ -107,7 +107,7 @@ class ControllerExtensionModule extends Controller {
 	
 	public function install() {
 		if (!$this->user->hasPermission('modify', 'extension/module')) {
-			$this->session['error'] = $this->language->get('error_permission'); 
+			$this->session->data['error'] = $this->language->get('error_permission'); 
 			
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module');
 		} else {
@@ -126,7 +126,7 @@ class ControllerExtensionModule extends Controller {
 	
 	public function uninstall() {
 		if (!$this->user->hasPermission('modify', 'extension/module')) {
-			$this->session['error'] = $this->language->get('error_permission'); 
+			$this->session->data['error'] = $this->language->get('error_permission'); 
 			
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module');
 		} else {		

@@ -97,7 +97,7 @@ class ControllerExtensionTotal extends Controller {
 	
 	public function install() {
 		if (!$this->user->hasPermission('modify', 'extension/total')) {
-			$this->session['error'] = $this->language->get('error_permission'); 
+			$this->session->data['error'] = $this->language->get('error_permission'); 
 			
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/total');
 		} else {				
@@ -116,7 +116,7 @@ class ControllerExtensionTotal extends Controller {
 	
 	public function uninstall() {
 		if (!$this->user->hasPermission('modify', 'extension/total')) {
-			$this->session['error'] = $this->language->get('error_permission'); 
+			$this->session->data['error'] = $this->language->get('error_permission'); 
 			
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/total');
 		} else {			

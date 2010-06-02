@@ -25,21 +25,21 @@
         <table class="form">
           <tr>
             <td><span class="required">*</span> <?php echo $entry_name; ?></td>
-            <td><input type="text" name="config_name" value="<?php echo $config_name; ?>" />
+            <td><input type="text" name="config_name" value="<?php echo $config_name; ?>" size="40" />
               <?php if ($error_name) { ?>
               <span class="error"><?php echo $error_name; ?></span>
               <?php } ?></td>
           </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_url; ?></td>
-            <td><input type="text" name="config_url" value="<?php echo $config_url; ?>" />
+            <td><input type="text" name="config_url" value="<?php echo $config_url; ?>" size="40" />
               <?php if ($error_url) { ?>
               <span class="error"><?php echo $error_url; ?></span>
               <?php } ?></td>
           </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_owner; ?></td>
-            <td><input type="text" name="config_owner" value="<?php echo $config_owner; ?>" />
+            <td><input type="text" name="config_owner" value="<?php echo $config_owner; ?>" size="40" />
               <?php if ($error_owner) { ?>
               <span class="error"><?php echo $error_owner; ?></span>
               <?php } ?></td>
@@ -53,7 +53,7 @@
           </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_email; ?></td>
-            <td><input type="text" name="config_email" value="<?php echo $config_email; ?>" />
+            <td><input type="text" name="config_email" value="<?php echo $config_email; ?>" size="40" />
               <?php if ($error_email) { ?>
               <span class="error"><?php echo $error_email; ?></span>
               <?php } ?></td>
@@ -216,6 +216,20 @@
       <div id="tab_option">
         <table class="form">
           <tr>
+            <td><span class="required">*</span> <?php echo $entry_admin_limit; ?></td>
+            <td><input type="text" name="config_admin_limit" value="<?php echo $config_admin_limit; ?>" size="3" />
+              <?php if ($error_admin_limit) { ?>
+              <span class="error"><?php echo $error_admin_limit; ?></span>
+              <?php } ?></td>
+          </tr>
+		  <tr>
+            <td><span class="required">*</span> <?php echo $entry_catalog_limit; ?></td>
+            <td><input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" size="3" />
+              <?php if ($error_catalog_limit) { ?>
+              <span class="error"><?php echo $error_catalog_limit; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
             <td><?php echo $entry_tax; ?></td>
             <td><?php if ($config_tax) { ?>
               <input type="radio" name="config_tax" value="1" checked="checked" />
@@ -332,20 +346,6 @@
               <?php } ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_stock_check; ?></td>
-            <td><?php if ($config_stock_check) { ?>
-              <input type="radio" name="config_stock_check" value="1" checked="checked" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="config_stock_check" value="0" />
-              <?php echo $text_no; ?>
-              <?php } else { ?>
-              <input type="radio" name="config_stock_check" value="1" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="config_stock_check" value="0" checked="checked" />
-              <?php echo $text_no; ?>
-              <?php } ?></td>
-          </tr>
-          <tr>
             <td><?php echo $entry_stock_checkout; ?></td>
             <td><?php if ($config_stock_checkout) { ?>
               <input type="radio" name="config_stock_checkout" value="1" checked="checked" />
@@ -356,20 +356,6 @@
               <input type="radio" name="config_stock_checkout" value="1" />
               <?php echo $text_yes; ?>
               <input type="radio" name="config_stock_checkout" value="0" checked="checked" />
-              <?php echo $text_no; ?>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_stock_subtract; ?></td>
-            <td><?php if ($config_stock_subtract) { ?>
-              <input type="radio" name="config_stock_subtract" value="1" checked="checked" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="config_stock_subtract" value="0" />
-              <?php echo $text_no; ?>
-              <?php } else { ?>
-              <input type="radio" name="config_stock_subtract" value="1" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="config_stock_subtract" value="0" checked="checked" />
               <?php echo $text_no; ?>
               <?php } ?></td>
           </tr>
@@ -397,6 +383,20 @@
                 <?php } ?>
               </select></td>
           </tr>
+		  <tr>
+            <td><?php echo $entry_review; ?></td>
+            <td><?php if ($config_review) { ?>
+              <input type="radio" name="config_review" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="config_review" value="0" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="config_review" value="1" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="config_review" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } ?></td>
+          </tr>
           <tr>
             <td><?php echo $entry_download; ?></td>
             <td><?php if ($config_download) { ?>
@@ -422,20 +422,6 @@
                 <?php } ?>
                 <?php } ?>
               </select></td>
-          </tr>
-		  <tr>
-            <td><span class="required">*</span> <?php echo $entry_admin_limit; ?></td>
-            <td><input type="text" name="config_admin_limit" value="<?php echo $config_admin_limit; ?>" size="3" />
-              <?php if ($error_admin_limit) { ?>
-              <span class="error"><?php echo $error_admin_limit; ?></span>
-              <?php } ?></td>
-          </tr>
-		  <tr>
-            <td><span class="required">*</span> <?php echo $entry_catalog_limit; ?></td>
-            <td><input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" size="3" />
-              <?php if ($error_catalog_limit) { ?>
-              <span class="error"><?php echo $error_catalog_limit; ?></span>
-              <?php } ?></td>
           </tr>
 		  <tr>
             <td><?php echo $entry_cart_weight; ?></td>
@@ -562,6 +548,10 @@
               </select></td>
           </tr>
           <tr>
+            <td><?php echo $entry_mail_parameter; ?></td>
+            <td><input type="text" name="config_mail_parameter" value="<?php echo $config_mail_parameter; ?>" /></td>
+          </tr>
+          <tr>
             <td><?php echo $entry_smtp_host; ?></td>
             <td><input type="text" name="config_smtp_host" value="<?php echo $config_smtp_host; ?>" /></td>
           </tr>
@@ -595,6 +585,10 @@
               <?php echo $text_no; ?>
               <?php } ?></td>
           </tr>
+          <tr>
+            <td><?php echo $entry_alert_emails; ?></td>
+            <td><textarea name="config_alert_emails" cols="40" rows="5"><?php echo $config_alert_emails; ?></textarea></td>
+          </tr>
         </table>
       </div>
       <div id="tab_server">
@@ -610,6 +604,20 @@
               <input type="radio" name="config_ssl" value="1" />
               <?php echo $text_yes; ?>
               <input type="radio" name="config_ssl" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_maintenance; ?></td>
+            <td><?php if ($config_maintenance) { ?>
+              <input type="radio" name="config_maintenance" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="config_maintenance" value="0" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="config_maintenance" value="1" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="config_maintenance" value="0" checked="checked" />
               <?php echo $text_no; ?>
               <?php } ?></td>
           </tr>

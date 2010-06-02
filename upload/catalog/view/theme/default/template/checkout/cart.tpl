@@ -4,7 +4,12 @@
     <div class="left"></div>
     <div class="right"></div>
     <div class="center">
-      <h1><?php echo $heading_title; ?></h1>
+      <h1>
+        <?php echo $heading_title; ?>
+        <?php if ($weight) { ?>
+        &nbsp;(<?php echo $weight; ?>)
+        <?php } ?>
+      </h1>
     </div>
   </div>
   <div class="middle">
@@ -43,15 +48,18 @@
           <td align="right" valign="top"><?php echo $product['total']; ?></td>
         </tr>
         <?php } ?>
-        <tr>
-          <td colspan="7" align="right"><b><?php echo $text_sub_total; ?></b> <?php echo $sub_total; ?></td>
-        </tr>
-		<?php if ($weight) { ?>
-        <tr>
-          <td colspan="7" align="right"><b><?php echo $text_weight; ?></b> <?php echo $weight; ?></td>
-        </tr>
-        <?php } ?>
       </table>
+	  <div style="width: 100%; display: inline-block;">
+        <table style="float: right; display: inline-block;">
+          <?php foreach ($totals as $total) { ?>
+          <tr>
+            <td align="right"><b><?php echo $total['title']; ?></b></td>
+            <td align="right"><?php echo $total['text']; ?></td>
+          </tr>
+          <?php } ?>
+        </table>
+        <br />
+      </div>
       <div class="buttons">
         <table>
           <tr>

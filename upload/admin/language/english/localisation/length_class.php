@@ -18,8 +18,8 @@ $_['entry_value']      = 'Value:<br /><span class="help">Set to 1.00000 if this 
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify length classes!';
-$_['error_title']      = 'Length Title must be greater than 3 and less than 32 characters!';
-$_['error_unit']       = 'Length Unit must be greater than 1 and less than 4 characters!';
+$_['error_title']      = 'Length Title must be between 3 and 32 characters!';
+$_['error_unit']       = 'Length Unit must be between 1 and 4 characters!';
 $_['error_default']    = 'Warning: This length class cannot be deleted as it is currently assigned as the default store length class!';
 $_['error_product']    = 'Warning: This length class cannot be deleted as it is currently assigned to %s products!';
 ?>

@@ -117,6 +117,7 @@ final class Cart {
         			'option'       => $option_data,
 					'download'     => $download_data,
         			'quantity'     => $quantity,
+        			'minimum'      => $product_query->row['minimum'],
 					'stock'        => $stock,
         			'price'        => ($price + $option_price),
         			'total'        => ($price + $option_price) * $quantity,
@@ -150,6 +151,7 @@ final class Cart {
       			$this->session->data['cart'][$key] += (int)$qty;
     		}
 		}
+		$this->setMinQty();
   	}
 
   	public function update($key, $qty) {
@@ -158,6 +160,7 @@ final class Cart {
     	} else {
 	  		$this->remove($key);
 		}
+		$this->setMinQty();
   	}
 
   	public function remove($key) {
@@ -182,6 +185,14 @@ final class Cart {
 		return $weight;
 	}
 
+	public function setMinQty() {
+		foreach ($this->getProducts() as $product) {
+			if ($product['quantity'] < $product['minimum']) {
+				$this->session->data['cart'][$product['key']] = $product['minimum'];
+			}
+		}
+  	}
+	
   	public function getSubTotal() {
 		$total = 0;
 		

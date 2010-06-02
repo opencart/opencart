@@ -21,6 +21,12 @@ class ModelCatalogDownload extends Model {
         	$this->db->query("UPDATE " . DB_PREFIX . "download SET filename = '" . $this->db->escape($data['download']) . "', mask = '" . $this->db->escape($data['mask']) . "' WHERE download_id = '" . (int)$download_id . "'");
       	}
 		
+		if (isset($data['update'])) {
+        	$query = $this->db->query("SELECT filename from " . DB_PREFIX . "download WHERE download_id = '" . (int)$download_id . "'");
+     		$filename = $query->row['filename'];
+      		$this->db->query("UPDATE " . DB_PREFIX . "order_download SET `filename` = '" . $this->db->escape($data['download']) . "', mask = '" . $this->db->escape(basename($data['mask'])) . "' WHERE `filename` = '" . $this->db->escape($filename) . "'");
+      	}
+		
       	$this->db->query("DELETE FROM " . DB_PREFIX . "download_description WHERE download_id = '" . (int)$download_id . "'");
 
       	foreach ($data['download_description'] as $language_id => $value) {

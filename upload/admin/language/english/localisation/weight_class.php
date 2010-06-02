@@ -18,8 +18,8 @@ $_['entry_value']      = 'Value:<br /><span class="help">Set to 1.00000 if this 
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify weight classes!';
-$_['error_title']      = 'Weight Title must be greater than 3 and less than 32 characters!';
-$_['error_unit']       = 'Weight Unit must be greater than 1 and less than 4 characters!';
+$_['error_title']      = 'Weight Title must be between 3 and 32 characters!';
+$_['error_unit']       = 'Weight Unit must be between 1 and 4 characters!';
 $_['error_default']    = 'Warning: This weight class cannot be deleted as it is currently assigned as the default store weight class!';
 $_['error_product']    = 'Warning: This weight class cannot be deleted as it is currently assigned to %s products!';
 ?>

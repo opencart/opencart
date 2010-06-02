@@ -84,7 +84,6 @@ class ControllerSettingStore extends Controller {
 		$this->data['entry_account'] = $this->language->get('entry_account');
 		$this->data['entry_checkout'] = $this->language->get('entry_checkout');
 		$this->data['entry_stock_display'] = $this->language->get('entry_stock_display');
-		$this->data['entry_stock_check'] = $this->language->get('entry_stock_check');
 		$this->data['entry_stock_checkout'] = $this->language->get('entry_stock_checkout');
 		$this->data['entry_stock_subtract'] = $this->language->get('entry_stock_subtract');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
@@ -100,6 +99,7 @@ class ControllerSettingStore extends Controller {
 		$this->data['entry_ssl'] = $this->language->get('entry_ssl');
 		$this->data['entry_catalog_limit'] = $this->language->get('entry_catalog_limit');
 		$this->data['entry_cart_weight'] = $this->language->get('entry_cart_weight');
+		$this->data['entry_review'] = $this->language->get('entry_review');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -431,14 +431,6 @@ class ControllerSettingStore extends Controller {
 			$this->data['stock_display'] = $store_info['stock_display'];			
 		} else {
 			$this->data['stock_display'] = '';
-		}
-		
-		if (isset($this->request->post['stock_check'])) {
-			$this->data['stock_check'] = $this->request->post['stock_check'];
-		} elseif (isset($store_info)) {
-			$this->data['stock_check'] = $store_info['stock_check'];		
-		} else {
-			$this->data['stock_check'] = '';
 		}
 
 		if (isset($this->request->post['stock_checkout'])) {

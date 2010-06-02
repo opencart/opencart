@@ -23,12 +23,12 @@ $_['entry_sort_order']  = 'Sort Order:';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify languages!';
-$_['error_name']        = 'Language Name must be greater than 3 and less than 32 characters!';
+$_['error_name']        = 'Language Name must be between 3 and 32 characters!';
 $_['error_code']        = 'Language Code must at least 2 characters!';
 $_['error_locale']      = 'Locale required!';
-$_['error_image']       = 'Image Filename must be greater than 3 and less than 64 characters!';
+$_['error_image']       = 'Image Filename must be between 3 and 64 characters!';
 $_['error_directory']   = 'Directory required!';
-$_['error_filename']    = 'Filename must be greater than 3 and less than 64 characters!';
+$_['error_filename']    = 'Filename must be between 3 and 64 characters!';
 $_['error_default']     = 'Warning: This language cannot be deleted as it is currently assigned as the default store language!';
 $_['error_admin']       = 'Warning: This Language cannot be deleted as it is currently assigned as the administration language!';
 $_['error_store']       = 'Warning: This language cannot be deleted as it is currently assigned to %s stores!';

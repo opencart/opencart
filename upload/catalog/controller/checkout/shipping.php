@@ -3,7 +3,17 @@ class ControllerCheckoutShipping extends Controller {
 	private $error = array();
  	
   	public function index() {
-    	if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$shipping = explode('.', $this->request->post['shipping_method']);
+			
+			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+			
+			$this->session->data['comment'] = strip_tags($this->request->post['comment']);
+
+	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/payment');
+    	}
+		
+		if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/cart');
     	}
 		
@@ -31,16 +41,8 @@ class ControllerCheckoutShipping extends Controller {
 	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/address/shipping');
 		}
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$shipping = explode('.', $this->request->post['shipping_method']);
-			
-			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-			
-			$this->session->data['comment'] = strip_tags($this->request->post['comment']);
-
-	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/payment');
-    	}
-		
+		$this->language->load('checkout/shipping');
+				
 		$this->load->model('account/address');
 		
 		$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);		
@@ -83,9 +85,7 @@ class ControllerCheckoutShipping extends Controller {
 			
 			$this->session->data['shipping_methods'] = $quote_data;
 		}
-		
-		$this->language->load('checkout/shipping');
-		 
+			 
 		$this->document->title = $this->language->get('heading_title');    
 		
 		$this->document->breadcrumbs = array();
@@ -195,10 +195,10 @@ class ControllerCheckoutShipping extends Controller {
 		}
 		
 		$this->children = array(
-			'common/header',
+			'common/column_right',
 			'common/footer',
 			'common/column_left',
-			'common/column_right'
+			'common/header'
 		);
 		
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		

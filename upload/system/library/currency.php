@@ -89,7 +89,7 @@ final class Currency {
 			$thousand_point = '';
 		}
 		
-    	$string .= number_format(round($value, $decimal_place), $decimal_place, $decimal_point, $thousand_point);
+    	$string .= number_format(round($value, (int)$decimal_place), (int)$decimal_place, $decimal_point, $thousand_point);
 
     	if (($symbol_right) && ($format)) {
       		$string .= $symbol_right;

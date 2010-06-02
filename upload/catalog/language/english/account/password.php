@@ -12,6 +12,6 @@ $_['entry_password'] = 'Password:';
 $_['entry_confirm']  = 'Password Confirm:';
 
 // Error
-$_['error_password'] = 'Password must be greater than 3 and less than 20 characters!';
+$_['error_password'] = 'Password must be between 3 and 20 characters!';
 $_['error_confirm']  = 'Password confirmation does not match password!';
 ?>

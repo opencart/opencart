@@ -3,11 +3,11 @@
 $_['heading_title']          = 'Administration';
 
 // Text
-$_['text_affiliate']         = 'Affiliates';
 $_['text_backup']            = 'Backup / Restore';
 $_['text_catalog']           = 'Catalog';
-$_['text_category']          = 'Categories'; 
-$_['text_country']           = 'Countries'; 
+$_['text_category']          = 'Categories';
+$_['text_confirm']			 = 'Confirm?';
+$_['text_country']           = 'Countries';
 $_['text_coupon']            = 'Coupons';
 $_['text_currency']          = 'Currencies';
 $_['text_customer']          = 'Customers';

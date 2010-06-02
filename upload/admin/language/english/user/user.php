@@ -20,13 +20,15 @@ $_['entry_lastname']   = 'Last Name:';
 $_['entry_email']      = 'E-Mail:';
 $_['entry_user_group'] = 'User Group:';
 $_['entry_status']     = 'Status:';
+$_['entry_captcha']    = 'Enter the code in the box below:';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify users!';
 $_['error_account']    = 'Warning: You can not delete your own account!';
-$_['error_username']   = 'Username must be greater than 3 and less than 20 characters!';
-$_['error_password']   = 'Password must be greater than 3 and less than 20 characters!';
+$_['error_username']   = 'Username must be between 3 and 20 characters!';
+$_['error_password']   = 'Password must be between 3 and 20 characters!';
 $_['error_confirm']    = 'Password and password confirmation do not match!';
-$_['error_firstname']  = 'First Name must be greater than 3 and less than 32 characters!';
-$_['error_lastname']   = 'Last Name must be greater than 3 and less than 32 characters!';
+$_['error_firstname']  = 'First Name must be between 3 and 32 characters!';
+$_['error_lastname']   = 'Last Name must be between 3 and 32 characters!';
+$_['error_captcha']    = 'Verification code does not match the image!';
 ?>

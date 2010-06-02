@@ -8,8 +8,21 @@
     </div>
   </div>
   <div class="middle">
+    <?php if ($success) { ?>
+    <div class="success"><?php echo $success; ?></div>
+    <?php } ?>
     <?php if ($error_warning) { ?>
     <div class="warning"><?php echo $error_warning; ?></div>
+    <?php } ?>
+    <?php if ($coupon_status) { ?>
+    <div class="content">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="coupon">
+        <p><?php echo $text_coupon; ?></p>
+        <div style="text-align: right;"><?php echo $entry_coupon; ?>&nbsp;
+        <input type="text" name="coupon" value="<?php echo $coupon; ?>" />
+        &nbsp;<a onclick="$('#coupon').submit();" class="button"><span><?php echo $button_coupon; ?></span></a></div>
+      </form>
+    </div>
     <?php } ?>
     <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="guest">
       <?php if ($shipping_methods) { ?>
@@ -25,7 +38,8 @@
           <?php foreach ($shipping_method['quote'] as $quote) { ?>
           <tr>
             <td width="1"><label for="<?php echo $quote['id']; ?>">
-                <?php if ($quote['id'] == $shipping) { ?>
+                <?php if ($quote['id'] == $shipping || !$shipping) { ?>
+				<?php $shipping = $quote['id']; ?>
                 <input type="radio" name="shipping_method" value="<?php echo $quote['id']; ?>" id="<?php echo $quote['id']; ?>" checked="checked" style="margin: 0px;" />
                 <?php } else { ?>
                 <input type="radio" name="shipping_method" value="<?php echo $quote['id']; ?>" id="<?php echo $quote['id']; ?>" style="margin: 0px;" />
@@ -51,7 +65,9 @@
         <table width="536" cellpadding="3">
           <?php foreach ($payment_methods as $payment_method) { ?>
           <tr>
-            <td width="1"><?php if ($payment_method['id'] == $payment) { ?>
+            <td width="1">
+              <?php if ($payment_method['id'] == $payment || !$payment) { ?>
+			  <?php $payment= $payment_method['id']; ?>
               <input type="radio" name="payment_method" value="<?php echo $payment_method['id']; ?>" id="<?php echo $payment_method['id']; ?>" checked="checked" style="margin: 0px;" />
               <?php } else { ?>
               <input type="radio" name="payment_method" value="<?php echo $payment_method['id']; ?>" id="<?php echo $payment_method['id']; ?>" style="margin: 0px;" />

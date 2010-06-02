@@ -2,6 +2,10 @@
 // Heading
 $_['heading_title']          = 'Products'; 
 
+// Tab
+$_['tab_shipping']           = 'Shipping';
+$_['tab_links']              = 'Links';
+
 // Text  
 $_['text_success']           = 'Success: You have modified products!';
 $_['text_plus']              = '+';
@@ -21,20 +25,23 @@ $_['column_action']          = 'Action';
 
 // Entry
 $_['entry_name']             = 'Product Name:';
+$_['entry_meta_keywords'] 	 = 'Meta Tag Keywords:';
 $_['entry_meta_description'] = 'Meta Tag Description:';
 $_['entry_description']      = 'Description:';
 $_['entry_store']            = 'Stores:';
 $_['entry_keyword']          = 'SEO Keyword:';
 $_['entry_model']            = 'Model:';
 $_['entry_sku']              = 'SKU:';
-$_['entry_location']         = 'Location:';
+$_['entry_location']         = 'Misc Location:';
 $_['entry_manufacturer']     = 'Manufacturer:';
 $_['entry_shipping']         = 'Requires Shipping:'; 
 $_['entry_date_available']   = 'Date Available:';
 $_['entry_quantity']         = 'Quantity:';
-$_['entry_stock_status']     = 'Out Of Stock Status:';
+$_['entry_minimum']          = 'Minimum Quantity:<br/><span class="help">Force a minimum ordered amount</span>';
+$_['entry_stock_status']     = 'Out Of Stock Status:<br/><span class="help">Status shown when a product is out of stock</span>';
 $_['entry_status']           = 'Status:';
 $_['entry_tax_class']        = 'Tax Class:';
+$_['entry_cost']             = 'Cost:<br/><span class="help">The wholesale cost used for profit reporting</span>';
 $_['entry_price']            = 'Price:';
 $_['entry_subtract']         = 'Subtract Stock:';
 $_['entry_weight_class']     = 'Weight Class:';

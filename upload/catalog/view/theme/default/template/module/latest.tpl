@@ -14,6 +14,11 @@
           <?php } else { ?>
           <span style="font-size: 11px; color: #900; text-decoration: line-through;"><?php echo $product['price']; ?></span> <span style="font-size: 11px; color: #F00;"><?php echo $product['special']; ?></span>
           <?php } ?>
+          <a class="button_add_small" href="<?php echo $product['add']; ?>" title="<?php echo $button_add_to_cart; ?>" >&nbsp;</a>
+          <?php } ?>
+          <?php if ($product['rating']) { ?>
+          <br />
+          <img src="catalog/view/theme/default/image/stars_<?php echo $product['rating'] . '.png'; ?>" alt="<?php echo $product['stars']; ?>" />
           <?php } ?></td>
       </tr>
       <?php } ?>

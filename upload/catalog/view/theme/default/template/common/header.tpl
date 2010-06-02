@@ -3,6 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>" xml:lang="<?php echo $lang; ?>">
 <head>
 <title><?php echo $title; ?></title>
+<?php if ($keywords) { ?>
+<meta name="keywords" content="<?php echo $keywords; ?>" />
+<?php } ?>
 <?php if ($description) { ?>
 <meta name="description" content="<?php echo $description; ?>" />
 <?php } ?>
@@ -13,7 +16,7 @@
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo str_replace('&', '&amp;', $link['href']); ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
-<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/stylesheet.css" />
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/<?php echo $template; ?>/stylesheet/stylesheet.css" />
 <!--[if lt IE 7]>
 <link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/ie6.css" />
 <script type="text/javascript" src="catalog/view/javascript/DD_belatedPNG_0.0.8a-min.js"></script>
@@ -96,6 +99,9 @@ function bookmark(url, title) {
     <div class="left"></div>
     <div class="right"></div>
     <div class="center">
+	  <?php if (isset($common_error)) { ?>
+	  <div class="warning"><?php echo $common_error; ?></div>
+	  <?php } ?>
       <div id="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <?php echo $breadcrumb['separator']; ?><a href="<?php echo str_replace('&', '&amp;', $breadcrumb['href']); ?>"><?php echo $breadcrumb['text']; ?></a>

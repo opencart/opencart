@@ -486,7 +486,8 @@ class ControllerSaleCustomer extends Controller {
  
     	$this->data['text_enabled'] = $this->language->get('text_enabled');
     	$this->data['text_disabled'] = $this->language->get('text_disabled');
-
+		$this->data['text_select'] = $this->language->get('text_select');
+    	
     	$this->data['entry_firstname'] = $this->language->get('entry_firstname');
     	$this->data['entry_lastname'] = $this->language->get('entry_lastname');
     	$this->data['entry_email'] = $this->language->get('entry_email');
@@ -497,11 +498,27 @@ class ControllerSaleCustomer extends Controller {
 		$this->data['entry_newsletter'] = $this->language->get('entry_newsletter');
     	$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$this->data['entry_status'] = $this->language->get('entry_status');
+		$this->data['entry_company'] = $this->language->get('entry_company');
+		$this->data['entry_address_1'] = $this->language->get('entry_address_1');
+		$this->data['entry_address_2'] = $this->language->get('entry_address_2');
+		$this->data['entry_city'] = $this->language->get('entry_city');
+		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
+		$this->data['entry_zone'] = $this->language->get('entry_zone');
+		$this->data['entry_country'] = $this->language->get('entry_country');
+		$this->data['entry_default'] = $this->language->get('entry_default');
+		$this->data['entry_name'] = $this->language->get('entry_name');
+		$this->data['entry_address'] = $this->language->get('entry_address');
+		$this->data['entry_city_postcode'] = $this->language->get('entry_city_postcode');
+		$this->data['entry_country_zone'] = $this->language->get('entry_country_zone');
+ 
     	
 		$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
+    	$this->data['button_add'] = $this->language->get('button_add');
+    	$this->data['button_remove'] = $this->language->get('button_remove');
 	
 		$this->data['tab_general'] = $this->language->get('tab_general');
+		$this->data['tab_address'] = $this->language->get('tab_address');
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -544,7 +561,50 @@ class ControllerSaleCustomer extends Controller {
 		} else {
 			$this->data['error_confirm'] = '';
 		}
-		    
+		
+		if (isset($this->error['address_firstname'])) {
+			$this->data['error_address_firstname'] = $this->error['address_firstname'];
+		} else {
+			$this->data['error_address_firstname'] = '';
+		}
+
+ 		if (isset($this->error['address_lastname'])) {
+			$this->data['error_address_lastname'] = $this->error['address_lastname'];
+		} else {
+			$this->data['error_address_lastname'] = '';
+		}
+		
+		if (isset($this->error['address_1'])) {
+			$this->data['error_address_1'] = $this->error['address_1'];
+		} else {
+			$this->data['error_address_1'] = '';
+		}
+		
+		if (isset($this->error['city'])) {
+			$this->data['error_city'] = $this->error['city'];
+		} else {
+			$this->data['error_city'] = '';
+		}
+		
+		if (isset($this->error['postcode'])) {
+			$this->data['error_postcode'] = $this->error['postcode'];
+		} else {
+			$this->data['error_postcode'] = '';
+		}
+		
+		if (isset($this->error['address_country'])) {
+			$this->data['error_country'] = $this->error['country'];
+		} else {
+			$this->data['error_country'] = '';
+		}
+		
+		if (isset($this->error['address_zone'])) {
+			$this->data['error_zone'] = $this->error['zone'];
+		} else {
+			$this->data['error_zone'] = '';
+		}
+		
+		
 		$url = '';
 		
 		if (isset($this->request->get['filter_name'])) {
@@ -689,6 +749,18 @@ class ControllerSaleCustomer extends Controller {
 			$this->data['confirm'] = '';
 		}
 		
+		$this->load->model('localisation/country');
+		
+		$this->data['countries'] = $this->model_localisation_country->getCountries();
+			
+		if (isset($this->request->post['addresses'])) { 
+      		$this->data['addresses'] = $this->request->post['addresses'];
+		} elseif (isset($this->request->get['customer_id'])) {
+			$this->data['addresses'] = $this->model_sale_customer->getAddressesByCustomerId($this->request->get['customer_id']);
+		} else {
+			$this->data['addresses'] = array();
+    	}
+		
 		$this->template = 'sale/customer_form.tpl';
 		$this->children = array(
 			'common/header',	
@@ -696,8 +768,32 @@ class ControllerSaleCustomer extends Controller {
 		);
 		
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
-	}  
-	 
+	}
+	
+	public function zone() {
+		$output = '';
+		
+		$this->load->model('localisation/zone');
+		
+		$results = $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']);
+		
+		foreach ($results as $result) {
+			$output .= '<option value="' . $result['zone_id'] . '"';
+
+			if (isset($this->request->get['zone_id']) && ($this->request->get['zone_id'] == $result['zone_id'])) {
+				$output .= ' selected="selected"';
+			}
+
+			$output .= '>' . $result['name'] . '</option>';
+		}
+
+		if (!$results) {
+			$output .= '<option value="0">' . $this->language->get('text_none') . '</option>';
+		}
+
+		$this->response->setOutput($output, $this->config->get('config_compression'));
+	}
+		 
 	public function approve() {
 		$this->load->language('sale/customer');
 		$this->load->language('mail/customer');

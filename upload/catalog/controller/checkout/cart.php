@@ -5,7 +5,31 @@ class ControllerCheckoutCart extends Controller {
 	public function index() {
 		$this->language->load('checkout/cart');
 		
-    	if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->server['REQUEST_METHOD'] == 'GET' && isset($this->request->get['product_id'])) {
+		
+			if (isset($this->request->get['option'])) {
+				$option = $this->request->get['option'];
+			} else {
+				$option = array();	
+			}
+			
+			if (isset($this->request->get['quantity'])) {
+				$quantity = $this->request->get['quantity'];
+			} else {
+				$quantity = 1;
+			}
+			
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['payment_methods']);
+			unset($this->session->data['payment_method']);
+			
+			$this->cart->add($this->request->get['product_id'], $quantity, $option);
+			
+			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/cart');
+			
+		} elseif ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		
       		if (isset($this->request->post['quantity'])) {
 				if (!is_array($this->request->post['quantity'])) {
 					if (isset($this->request->post['option'])) {
@@ -85,7 +109,7 @@ class ControllerCheckoutCart extends Controller {
 			
 			if (isset($this->error['warning'])) {
 				$this->data['error_warning'] = $this->error['warning'];			
-			} elseif (!$this->cart->hasStock() && $this->config->get('config_stock_check')) {
+			} elseif (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) {
       			$this->data['error_warning'] = $this->language->get('error_stock');
 			} else {
 				$this->data['error_warning'] = '';
@@ -134,7 +158,37 @@ class ControllerCheckoutCart extends Controller {
 				$this->data['weight'] = FALSE;
 			}
 			
-      		$this->data['sub_total'] = $this->currency->format($this->cart->getTotal());
+      		$total_data = array();
+			$total = 0;
+			$taxes = $this->cart->getTaxes();
+			 
+			$this->load->model('checkout/extension');
+			
+			$sort_order = array(); 
+			
+			$results = $this->model_checkout_extension->getExtensions('total');
+			
+			foreach ($results as $key => $value) {
+				$sort_order[$key] = $this->config->get($value['key'] . '_sort_order');
+			}
+			
+			array_multisort($sort_order, SORT_ASC, $results);
+			
+			foreach ($results as $result) {
+				$this->load->model('total/' . $result['key']);
+
+				$this->{'model_total_' . $result['key']}->getTotal($total_data, $total, $taxes);
+			}
+			
+			$sort_order = array(); 
+		  
+			foreach ($total_data as $key => $value) {
+      			$sort_order[$key] = $value['sort_order'];
+    		}
+
+    		array_multisort($sort_order, SORT_ASC, $total_data);
+
+			$this->data['totals'] = $total_data;
 			
 			if (isset($this->session->data['redirect'])) {
       			$this->data['continue'] = $this->session->data['redirect'];
@@ -153,10 +207,10 @@ class ControllerCheckoutCart extends Controller {
 			}
 			
 			$this->children = array(
-				'common/header',
-				'common/footer',
+				'common/column_right',
 				'common/column_left',
-				'common/column_right'
+				'common/footer',
+				'common/header'
 			);		
 			
 			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));					
@@ -176,10 +230,10 @@ class ControllerCheckoutCart extends Controller {
 			}
 			
 			$this->children = array(
-				'common/header',
-				'common/footer',
+				'common/column_right',
 				'common/column_left',
-				'common/column_right'
+				'common/footer',
+				'common/header'
 			);
 		
 			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));			

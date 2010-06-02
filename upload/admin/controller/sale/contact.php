@@ -22,6 +22,7 @@ class ControllerSaleContact extends Controller {
 			
 			$emails = array();
 			
+			// All customers by group
 			if (isset($this->request->post['group'])) {
 				switch ($this->request->post['group']) {
 					case 'newsletter':
@@ -41,6 +42,7 @@ class ControllerSaleContact extends Controller {
 				}
 			}
 			
+			// All customers by name/email
 			if (isset($this->request->post['to']) && $this->request->post['to']) {					
 				foreach ($this->request->post['to'] as $customer_id) {
 					$customer_info = $this->model_sale_customer->getCustomer($customer_id);
@@ -49,7 +51,21 @@ class ControllerSaleContact extends Controller {
 						$emails[] = $customer_info['email'];
 					}
 				}
-			}	
+			}
+			
+			// All customers by product
+			if (isset($this->request->post['product'])) {
+				foreach ($this->request->post['product'] as $product_id) {
+					$results = $this->model_sale_customer->getCustomersByProduct($product_id);
+					
+					foreach ($results as $result) {
+						$emails[] = $result['email'];
+					}
+				}
+			}
+			
+			// Prevent Duplicates
+			$emails = array_unique($emails);
 			
 			if ($emails) {
 				$message  = '<html dir="ltr" lang="en">' . "\n";
@@ -79,6 +95,7 @@ class ControllerSaleContact extends Controller {
 				foreach ($emails as $email) {
 					$mail = new Mail();	
 					$mail->protocol = $this->config->get('config_mail_protocol');
+					$mail->parameter = $this->config->get('config_mail_parameter');
 					$mail->hostname = $this->config->get('config_smtp_host');
 					$mail->username = $this->config->get('config_smtp_username');
 					$mail->password = $this->config->get('config_smtp_password');
@@ -110,6 +127,7 @@ class ControllerSaleContact extends Controller {
 		
 		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_to'] = $this->language->get('entry_to');
+		$this->data['entry_product'] = $this->language->get('entry_product');
 		$this->data['entry_subject'] = $this->language->get('entry_subject');
 		$this->data['entry_message'] = $this->language->get('entry_message');
 		
@@ -186,6 +204,16 @@ class ControllerSaleContact extends Controller {
 			}
 		}
 
+		$this->load->model('catalog/product');
+		
+		$this->data['products'] = $this->model_catalog_product->getProducts();
+		
+		if (isset($this->request->post['product'])) {
+			$this->data['product'] = $this->request->post['product'];
+		} else {
+			$this->data['product'] = '';
+		}
+		
 		if (isset($this->request->post['group'])) {
 			$this->data['group'] = $this->request->post['group'];
 		} else {

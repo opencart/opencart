@@ -6,8 +6,18 @@
 
 Options +FollowSymlinks
 
+# Prevent Directoy listing 
+Options -Indexes
+
+# Prevent Direct Access to files
+<FilesMatch "\.tpl">
+Order deny,allow
+Deny from all
+</FilesMatch>
+
+# SEO URL Settings
 RewriteEngine On
-RewriteBase / 
+RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)\?*$ index.php?_route_=$1 [L,QSA]

@@ -546,6 +546,13 @@ ALTER TABLE `oc_store` ADD `cart_weight` INT( 1 ) NOT NULL;
 INSERT INTO `oc_setting` (`setting_id` ,`group` ,`key` ,`value`) VALUES (NULL , 'config', 'config_compression', '0') ON DUPLICATE KEY UPDATE setting_id=setting_id;
 INSERT INTO `oc_setting` (`setting_id`, `group`, `key`, `value`) VALUES (NULL, 'config', 'config_review', '1') ON DUPLICATE KEY UPDATE setting_id=setting_id;
 
+INSERT INTO `oc_setting` (`setting_id` ,`group` ,`key` ,`value`) VALUES (NULL, 'latest', 'latest_limit', '8') ON DUPLICATE KEY UPDATE setting_id=setting_id;
+INSERT INTO `oc_setting` (`setting_id` ,`group` ,`key` ,`value`) VALUES (NULL, 'latest', 'latest_position', 'home') ON DUPLICATE KEY UPDATE setting_id=setting_id;
+INSERT INTO `oc_setting` (`setting_id` ,`group` ,`key` ,`value`) VALUES (NULL, 'latest', 'latest_status', '1') ON DUPLICATE KEY UPDATE setting_id=setting_id;
+INSERT INTO `oc_setting` (`setting_id` ,`group` ,`key` ,`value`) VALUES (NULL, 'latest', 'latest_sort_order', '0') ON DUPLICATE KEY UPDATE setting_id=setting_id;
+
+INSERT INTO `oc_extension` (`extension_id`, `type`, `key`) VALUES (NULL, 'module', 'latest') ON DUPLICATE KEY UPDATE extension_id=extension_id;
+
 ALTER TABLE `oc_category_description` MODIFY name varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin;
 ALTER TABLE `oc_category_description` ADD `meta_keywords` varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin;
 ALTER TABLE `oc_product_description` ADD `meta_keywords` varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin;

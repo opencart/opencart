@@ -638,6 +638,7 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `key`) VALUES
 (284, 'payment', 'nochex'),
 (128, 'total', 'coupon'),
 (293, 'shipping', 'flat'),
+(NULL, 'module', 'latest'),
 (NULL, 'module', 'featured');
 
 -- --------------------------------------------------------
@@ -1701,6 +1702,10 @@ INSERT INTO `oc_setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (NULL, 'config', 'config_invoice_id', '001'),
 (NULL, 'config', 'config_invoice_prefix', 'INV'),
 (NULL, 'config', 'config_review', '1'),
+(NULL, 'latest', 'latest_limit', '8'),
+(NULL, 'latest', 'latest_position', 'home'),
+(NULL, 'latest', 'latest_status', '1'),
+(NULL, 'latest', 'latest_sort_order', '0'),
 (31831, 'config', 'config_error_filename', 'error.txt');
 
 -- --------------------------------------------------------

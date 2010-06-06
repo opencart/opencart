@@ -20,13 +20,13 @@ class ControllerReportViewed extends Controller {
 		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=report/viewed' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=report/viewed&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);		
@@ -50,7 +50,7 @@ class ControllerReportViewed extends Controller {
 		
 		$this->data['button_reset'] = $this->language->get('button_reset');
 		
-		$this->data['reset'] = HTTPS_SERVER . 'index.php?route=report/viewed/reset' . $url;
+		$this->data['reset'] = HTTPS_SERVER . 'index.php?route=report/viewed/reset&token=' . $this->session->data['token'] . $url;
 
 		if (isset($this->session->data['success'])) {
 			$this->data['success'] = $this->session->data['success'];
@@ -65,7 +65,7 @@ class ControllerReportViewed extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=report/viewed&page={page}';
+		$pagination->url = HTTPS_SERVER . 'index.php?route=report/viewed&token=' . $this->session->data['token'] . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 		 
@@ -93,7 +93,7 @@ class ControllerReportViewed extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->redirect(HTTPS_SERVER . 'index.php?route=report/viewed' . $url);
+		$this->redirect(HTTPS_SERVER . 'index.php?route=report/viewed&token=' . $this->session->data['token'] . $url);
 	}
 }
 ?>

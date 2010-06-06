@@ -38,7 +38,7 @@ class ControllerLocalisationLanguage extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/language' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/language&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationLanguage extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 					
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/language' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/language&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationLanguage extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/language' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/language&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerLocalisationLanguage extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/language' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/language&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 	
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/language/insert' . $url;
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/language/delete' . $url;
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/language/insert&token=' . $this->session->data['token'] . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/language/delete&token=' . $this->session->data['token'] . $url;
 	
 		$this->data['languages'] = array();
 
@@ -178,7 +178,7 @@ class ControllerLocalisationLanguage extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=localisation/language/update&language_id=' . $result['language_id'] . $url
+				'href' => HTTPS_SERVER . 'index.php?route=localisation/language/update&token=' . $this->session->data['token'] . '&language_id=' . $result['language_id'] . $url
 			);
 					
 			$this->data['languages'][] = array(
@@ -220,18 +220,18 @@ class ControllerLocalisationLanguage extends Controller {
 		$url = '';
 		
 		if ($order == 'ASC') {
-			$url .= '&order=' .  'DESC';
+			$url .= '&order=DESC';
 		} else {
-			$url .= '&order=' .  'ASC';
+			$url .= '&order=ASC';
 		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 					
-		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=localisation/language&sort=name' . $url;
-		$this->data['sort_code'] = HTTPS_SERVER . 'index.php?route=localisation/language&sort=code' . $url;
-		$this->data['sort_sort_order'] = HTTPS_SERVER . 'index.php?route=localisation/language&sort=sort_order' . $url;
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=localisation/language&token=' . $this->session->data['token'] . '&sort=name' . $url;
+		$this->data['sort_code'] = HTTPS_SERVER . 'index.php?route=localisation/language&token=' . $this->session->data['token'] . '&sort=code' . $url;
+		$this->data['sort_sort_order'] = HTTPS_SERVER . 'index.php?route=localisation/language&token=' . $this->session->data['token'] . '&sort=sort_order' . $url;
 
 		$url = '';
 
@@ -248,7 +248,7 @@ class ControllerLocalisationLanguage extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/language' . $url . '&page={page}';
+		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/language&token=' . $this->session->data['token'] . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 		
@@ -343,24 +343,24 @@ class ControllerLocalisationLanguage extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/language' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/language&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
 		if (!isset($this->request->get['language_id'])) {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/language/insert' . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/language/insert&token=' . $this->session->data['token'] . $url;
 		} else {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/language/update&language_id=' . $this->request->get['language_id'] . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/language/update&token=' . $this->session->data['token'] . '&language_id=' . $this->request->get['language_id'] . $url;
 		}
 		
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/language' . $url;
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/language&token=' . $this->session->data['token'] . $url;
 
 		if (isset($this->request->get['language_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$language_info = $this->model_localisation_language->getLanguage($this->request->get['language_id']);

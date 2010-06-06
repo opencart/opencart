@@ -62,7 +62,7 @@ class ControllerSaleCustomer extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'] . $url);
 		}
     	
     	$this->getForm();
@@ -118,7 +118,7 @@ class ControllerSaleCustomer extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'] . $url);
 		}
     
     	$this->getForm();
@@ -176,7 +176,7 @@ class ControllerSaleCustomer extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'] . $url);
     	}
     
     	$this->getList();
@@ -278,20 +278,20 @@ class ControllerSaleCustomer extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=sale/customer' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['approve'] = HTTPS_SERVER . 'index.php?route=sale/customer/approve' . $url;
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=sale/customer/insert' . $url;
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=sale/customer/delete' . $url;
+		$this->data['approve'] = HTTPS_SERVER . 'index.php?route=sale/customer/approve&token=' . $this->session->data['token'] . $url;
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=sale/customer/insert&token=' . $this->session->data['token'] . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=sale/customer/delete&token=' . $this->session->data['token'] . $url;
 
 		$this->data['customers'] = array();
 
@@ -317,7 +317,7 @@ class ControllerSaleCustomer extends Controller {
 		
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=sale/customer/update&customer_id=' . $result['customer_id'] . $url
+				'href' => HTTPS_SERVER . 'index.php?route=sale/customer/update&token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url
 			);
 			
 			$this->data['customers'][] = array(
@@ -353,6 +353,8 @@ class ControllerSaleCustomer extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_filter'] = $this->language->get('button_filter');
+
+		$this->data['token'] = $this->session->data['token'];
 
 		if (isset($this->session->data['error'])) {
 			$this->data['error_warning'] = $this->session->data['error'];
@@ -399,21 +401,21 @@ class ControllerSaleCustomer extends Controller {
 		}
 			
 		if ($order == 'ASC') {
-			$url .= '&order=' .  'DESC';
+			$url .= '&order=DESC';
 		} else {
-			$url .= '&order=' .  'ASC';
+			$url .= '&order=ASC';
 		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=sale/customer&sort=name' . $url;
-		$this->data['sort_email'] = HTTPS_SERVER . 'index.php?route=sale/customer&sort=c.email' . $url;
-		$this->data['sort_customer_group'] = HTTPS_SERVER . 'index.php?route=sale/customer&sort=customer_group' . $url;
-		$this->data['sort_status'] = HTTPS_SERVER . 'index.php?route=sale/customer&sort=c.status' . $url;
-		$this->data['sort_approved'] = HTTPS_SERVER . 'index.php?route=sale/customer&sort=c.approved' . $url;
-		$this->data['sort_date_added'] = HTTPS_SERVER . 'index.php?route=sale/customer&sort=c.date_added' . $url;
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'] . '&sort=name' . $url;
+		$this->data['sort_email'] = HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'] . '&sort=c.email' . $url;
+		$this->data['sort_customer_group'] = HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'] . '&sort=customer_group' . $url;
+		$this->data['sort_status'] = HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'] . '&sort=c.status' . $url;
+		$this->data['sort_approved'] = HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'] . '&sort=c.approved' . $url;
+		$this->data['sort_date_added'] = HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'] . '&sort=c.date_added' . $url;
 		
 		$url = '';
 
@@ -454,7 +456,7 @@ class ControllerSaleCustomer extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=sale/customer' . $url . '&page={page}';
+		$pagination->url = HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'] . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 
@@ -511,7 +513,6 @@ class ControllerSaleCustomer extends Controller {
 		$this->data['entry_city_postcode'] = $this->language->get('entry_city_postcode');
 		$this->data['entry_country_zone'] = $this->language->get('entry_country_zone');
  
-    	
 		$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
     	$this->data['button_add'] = $this->language->get('button_add');
@@ -519,6 +520,8 @@ class ControllerSaleCustomer extends Controller {
 	
 		$this->data['tab_general'] = $this->language->get('tab_general');
 		$this->data['tab_address'] = $this->language->get('tab_address');
+
+		$this->data['token'] = $this->session->data['token'];
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -604,7 +607,6 @@ class ControllerSaleCustomer extends Controller {
 			$this->data['error_zone'] = '';
 		}
 		
-		
 		$url = '';
 		
 		if (isset($this->request->get['filter_name'])) {
@@ -646,24 +648,24 @@ class ControllerSaleCustomer extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=sale/customer' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 
 		if (!isset($this->request->get['customer_id'])) {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/customer/insert' . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/customer/insert&token=' . $this->session->data['token'] . $url;
 		} else {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/customer/update&customer_id=' . $this->request->get['customer_id'] . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/customer/update&token=' . $this->session->data['token'] . '&customer_id=' . $this->request->get['customer_id'] . $url;
 		}
 		  
-    	$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=sale/customer' . $url;
+    	$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'] . $url;
 
     	if (isset($this->request->get['customer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$customer_info = $this->model_sale_customer->getCustomer($this->request->get['customer_id']);
@@ -887,7 +889,7 @@ class ControllerSaleCustomer extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}		
 
-		$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer' . $url);
+		$this->redirect(HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'] . $url);
 	} 
 	 
   	private function validateForm() {

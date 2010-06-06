@@ -21,7 +21,7 @@ class ControllerToolBackup extends Controller {
 				
 				$this->session->data['success'] = $this->language->get('text_success');
 				
-				$this->redirect(HTTPS_SERVER . 'index.php?route=tool/backup');
+				$this->redirect(HTTPS_SERVER . 'index.php?route=tool/backup&token=' . $this->session->data['token']);
 			} else {
 				$this->error['warning'] = $this->language->get('error_empty');
 			}
@@ -57,20 +57,20 @@ class ControllerToolBackup extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=tool/backup',
+       		'href'      => HTTPS_SERVER . 'index.php?route=tool/backup&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['restore'] = HTTPS_SERVER . 'index.php?route=tool/backup';
+		$this->data['restore'] = HTTPS_SERVER . 'index.php?route=tool/backup&token=' . $this->session->data['token'];
 
-		$this->data['backup'] = HTTPS_SERVER . 'index.php?route=tool/backup/backup';
+		$this->data['backup'] = HTTPS_SERVER . 'index.php?route=tool/backup/backup&token=' . $this->session->data['token'];
 
 		$this->load->model('tool/backup');
 			
@@ -98,7 +98,7 @@ class ControllerToolBackup extends Controller {
 			
 			$this->response->setOutput($this->model_tool_backup->backup($this->request->post['backup']));
 		} else {
-			return $this->forward('error/error_404', 'index');
+			return $this->forward('error/permission');
 		}
 	}
 	

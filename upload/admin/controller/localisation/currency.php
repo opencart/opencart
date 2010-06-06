@@ -38,7 +38,7 @@ class ControllerLocalisationCurrency extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/currency' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/currency&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationCurrency extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 					
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/currency' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/currency&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationCurrency extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/currency' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/currency&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerLocalisationCurrency extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/currency' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/currency&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/currency/insert' . $url;
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/currency/delete' . $url;
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/currency/insert&token=' . $this->session->data['token'] . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/currency/delete&token=' . $this->session->data['token'] . $url;
 		
 		$this->data['currencies'] = array();
 
@@ -178,7 +178,7 @@ class ControllerLocalisationCurrency extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=localisation/currency/update&currency_id=' . $result['currency_id'] . $url
+				'href' => HTTPS_SERVER . 'index.php?route=localisation/currency/update&token=' . $this->session->data['token'] . '&currency_id=' . $result['currency_id'] . $url
 			);
 						
 			$this->data['currencies'][] = array(
@@ -222,19 +222,19 @@ class ControllerLocalisationCurrency extends Controller {
 		$url = '';
 
 		if ($order == 'ASC') {
-			$url .= '&order=' .  'DESC';
+			$url .= '&order=DESC';
 		} else {
-			$url .= '&order=' .  'ASC';
+			$url .= '&order=ASC';
 		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_title'] = HTTPS_SERVER . 'index.php?route=localisation/currency&sort=title' . $url;
-		$this->data['sort_code'] = HTTPS_SERVER . 'index.php?route=localisation/currency&sort=code' . $url;
-		$this->data['sort_value'] = HTTPS_SERVER . 'index.php?route=localisation/currency&sort=value' . $url;
-		$this->data['sort_date_modified'] = HTTPS_SERVER . 'index.php?route=localisation/currency&sort=date_modified' . $url;
+		$this->data['sort_title'] = HTTPS_SERVER . 'index.php?route=localisation/currency&token=' . $this->session->data['token'] . '&sort=title' . $url;
+		$this->data['sort_code'] = HTTPS_SERVER . 'index.php?route=localisation/currency&token=' . $this->session->data['token'] . '&sort=code' . $url;
+		$this->data['sort_value'] = HTTPS_SERVER . 'index.php?route=localisation/currency&token=' . $this->session->data['token'] . '&sort=value' . $url;
+		$this->data['sort_date_modified'] = HTTPS_SERVER . 'index.php?route=localisation/currency&token=' . $this->session->data['token'] . '&sort=date_modified' . $url;
 		
 		$url = '';
 
@@ -251,7 +251,7 @@ class ControllerLocalisationCurrency extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/currency' . $url . '&page={page}';
+		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/currency&token=' . $this->session->data['token'] . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 		
@@ -321,24 +321,24 @@ class ControllerLocalisationCurrency extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/currency' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/currency&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
 		if (!isset($this->request->get['currency_id'])) {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/currency/insert' . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/currency/insert&token=' . $this->session->data['token'] . $url;
 		} else {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/currency/update&currency_id=' . $this->request->get['currency_id'] . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/currency/update&token=' . $this->session->data['token'] . '&currency_id=' . $this->request->get['currency_id'] . $url;
 		}
 				
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/currency' . $url;
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/currency&token=' . $this->session->data['token'] . $url;
 
 		if (isset($this->request->get['currency_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$currency_info = $this->model_localisation_currency->getCurrency($this->request->get['currency_id']);

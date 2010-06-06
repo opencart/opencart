@@ -51,7 +51,7 @@ class ControllerCatalogDownload extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/download' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . $url);
 		}
 	
     	$this->getForm();
@@ -96,7 +96,7 @@ class ControllerCatalogDownload extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/download' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . $url);
 		}
 		
     	$this->getForm();
@@ -130,7 +130,7 @@ class ControllerCatalogDownload extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/download' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . $url);
     	}
 
     	$this->getList();
@@ -172,19 +172,19 @@ class ControllerCatalogDownload extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/download' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=catalog/download/insert' . $url;
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=catalog/download/delete' . $url;	
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=catalog/download/insert&token=' . $this->session->data['token'] . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=catalog/download/delete&token=' . $this->session->data['token'] . $url;	
 
 		$this->data['downloads'] = array();
 
@@ -204,7 +204,7 @@ class ControllerCatalogDownload extends Controller {
 						
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=catalog/download/update&download_id=' . $result['download_id'] . $url
+				'href' => HTTPS_SERVER . 'index.php?route=catalog/download/update&token=' . $this->session->data['token'] . '&download_id=' . $result['download_id'] . $url
 			);
 						
 			$this->data['downloads'][] = array(
@@ -244,17 +244,17 @@ class ControllerCatalogDownload extends Controller {
 		$url = '';
 
 		if ($order == 'ASC') {
-			$url .= '&order=' .  'DESC';
+			$url .= '&order=DESC';
 		} else {
-			$url .= '&order=' .  'ASC';
+			$url .= '&order=ASC';
 		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=catalog/download&sort=dd.name' . $url;
-		$this->data['sort_remaining'] = HTTPS_SERVER . 'index.php?route=catalog/download&sort=d.remaining' . $url;
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . '&sort=dd.name' . $url;
+		$this->data['sort_remaining'] = HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . '&sort=d.remaining' . $url;
 		
 		$url = '';
 
@@ -271,7 +271,7 @@ class ControllerCatalogDownload extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=catalog/download' . $url . '&page={page}';
+		$pagination->url = HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . $url . '&page={page}';
 
 		$this->data['pagination'] = $pagination->render();
 
@@ -315,20 +315,6 @@ class ControllerCatalogDownload extends Controller {
 		} else {
 			$this->data['error_download'] = '';
 		}
-
-  		$this->document->breadcrumbs = array();
-
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
-       		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
-   		);
-
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/download',
-       		'text'      => $this->language->get('heading_title'),
-      		'separator' => ' :: '
-   		);
 		
 		$url = '';
 			
@@ -343,14 +329,28 @@ class ControllerCatalogDownload extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+		
+  		$this->document->breadcrumbs = array();
+
+   		$this->document->breadcrumbs[] = array(
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+       		'text'      => $this->language->get('text_home'),
+      		'separator' => FALSE
+   		);
+
+   		$this->document->breadcrumbs[] = array(
+       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . $url,
+       		'text'      => $this->language->get('heading_title'),
+      		'separator' => ' :: '
+   		);
 							
 		if (!isset($this->request->get['download_id'])) {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/download/insert' . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/download/insert&token=' . $this->session->data['token'] . $url;
 		} else {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/download/update&download_id=' . $this->request->get['download_id'] . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/download/update&token=' . $this->session->data['token'] . '&download_id=' . $this->request->get['download_id'] . $url;
 		}
 		
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=catalog/download' . $url;
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . $url;
  		
 		$this->load->model('localisation/language');
 		

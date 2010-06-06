@@ -54,7 +54,7 @@ class ControllerCatalogProduct extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/product' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/product&token=' . $this->session->data['token'] . $url);
     	}
 	
     	$this->getForm();
@@ -102,7 +102,7 @@ class ControllerCatalogProduct extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/product' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/product&token=' . $this->session->data['token'] . $url);
 		}
 
     	$this->getForm();
@@ -152,7 +152,7 @@ class ControllerCatalogProduct extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/product' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/product&token=' . $this->session->data['token'] . $url);
 		}
 
     	$this->getList();
@@ -202,7 +202,7 @@ class ControllerCatalogProduct extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/product' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/product&token=' . $this->session->data['token'] . $url);
 		}
 
     	$this->getList();
@@ -284,20 +284,20 @@ class ControllerCatalogProduct extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/product' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/product&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=catalog/product/insert' . $url;
-		$this->data['copy'] = HTTPS_SERVER . 'index.php?route=catalog/product/copy' . $url;	
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=catalog/product/delete' . $url;
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=catalog/product/insert&token=' . $this->session->data['token'] . $url;
+		$this->data['copy'] = HTTPS_SERVER . 'index.php?route=catalog/product/copy&token=' . $this->session->data['token'] . $url;	
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=catalog/product/delete&token=' . $this->session->data['token'] . $url;
     	
 		$this->data['products'] = array();
 
@@ -323,7 +323,7 @@ class ControllerCatalogProduct extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=catalog/product/update&product_id=' . $result['product_id'] . $url
+				'href' => HTTPS_SERVER . 'index.php?route=catalog/product/update&token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url
 			);
 			
 			if ($result['image'] && file_exists(DIR_IMAGE . $result['image'])) {
@@ -363,6 +363,8 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_filter'] = $this->language->get('button_filter');
  
+ 		$this->data['token'] = $this->session->data['token'];
+		
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -396,20 +398,20 @@ class ControllerCatalogProduct extends Controller {
 		}
 								
 		if ($order == 'ASC') {
-			$url .= '&order=' .  'DESC';
+			$url .= '&order=DESC';
 		} else {
-			$url .= '&order=' .  'ASC';
+			$url .= '&order=ASC';
 		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 					
-		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=catalog/product&sort=pd.name' . $url;
-		$this->data['sort_model'] = HTTPS_SERVER . 'index.php?route=catalog/product&sort=p.model' . $url;
-		$this->data['sort_quantity'] = HTTPS_SERVER . 'index.php?route=catalog/product&sort=p.quantity' . $url;
-		$this->data['sort_status'] = HTTPS_SERVER . 'index.php?route=catalog/product&sort=p.status' . $url;
-		$this->data['sort_order'] = HTTPS_SERVER . 'index.php?route=catalog/product&sort=p.sort_order' . $url;
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=catalog/product&token=' . $this->session->data['token'] . '&sort=pd.name' . $url;
+		$this->data['sort_model'] = HTTPS_SERVER . 'index.php?route=catalog/product&token=' . $this->session->data['token'] . '&sort=p.model' . $url;
+		$this->data['sort_quantity'] = HTTPS_SERVER . 'index.php?route=catalog/product&token=' . $this->session->data['token'] . '&sort=p.quantity' . $url;
+		$this->data['sort_status'] = HTTPS_SERVER . 'index.php?route=catalog/product&token=' . $this->session->data['token'] . '&sort=p.status' . $url;
+		$this->data['sort_order'] = HTTPS_SERVER . 'index.php?route=catalog/product&token=' . $this->session->data['token'] . '&sort=p.sort_order' . $url;
 		
 		$url = '';
 
@@ -442,7 +444,7 @@ class ControllerCatalogProduct extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=catalog/product' . $url . '&page={page}';
+		$pagination->url = HTTPS_SERVER . 'index.php?route=catalog/product&token=' . $this->session->data['token'] . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 	
@@ -606,24 +608,26 @@ class ControllerCatalogProduct extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
 			'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/product' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/product&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 									
 		if (!isset($this->request->get['product_id'])) {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/product/insert' . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/product/insert&token=' . $this->session->data['token'] . $url;
 		} else {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/product/update&product_id=' . $this->request->get['product_id'] . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/product/update&token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url;
 		}
 		
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=catalog/product' . $url;
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=catalog/product&token=' . $this->session->data['token'] . $url;
+
+		$this->data['token'] = $this->session->data['token'];
 
 		if (isset($this->request->get['product_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);

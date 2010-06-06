@@ -14,7 +14,7 @@ class ControllerModuleInformation extends Controller {
 					
 			$this->session->data['success'] = $this->language->get('text_success');
 						
-			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module');
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module&token=' . $this->session->data['token']);
 		}
 				
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -40,26 +40,26 @@ class ControllerModuleInformation extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=extension/module',
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/module&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_module'),
       		'separator' => ' :: '
    		);
 		
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=module/information',
+       		'href'      => HTTPS_SERVER . 'index.php?route=module/information&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['action'] = HTTPS_SERVER . 'index.php?route=module/information';
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=module/information&token=' . $this->session->data['token'];
 		
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/module';
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/module&token=' . $this->session->data['token'];
 
 		if (isset($this->request->post['information_position'])) {
 			$this->data['information_position'] = $this->request->post['information_position'];

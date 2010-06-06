@@ -38,7 +38,8 @@
                 <td><a href="<?php echo str_replace('&', '&amp;', $manufacturers); ?>"><?php echo $manufacturer; ?></a></td>
               </tr>
               <?php } ?>
-              <tr>
+              <?php if ($review_status) { ?>
+			  <tr>
                 <td><b><?php echo $text_average; ?></b></td>
                 <td><?php if ($average) { ?>
                   <img src="catalog/view/theme/default/image/stars_<?php echo $average . '.png'; ?>" alt="<?php echo $text_stars; ?>" style="margin-top: 2px;" />
@@ -46,6 +47,7 @@
                   <?php echo $text_no_rating; ?>
                   <?php } ?></td>
               </tr>
+			  <?php } ?>
             </table>
             <br />
             <?php if ($display_price) { ?>

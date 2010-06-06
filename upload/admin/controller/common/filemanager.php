@@ -29,6 +29,8 @@ class ControllerCommonFileManager extends Controller {
 		$this->data['error_select'] = $this->language->get('error_select');
 		$this->data['error_directory'] = $this->language->get('error_directory');
 		
+		$this->data['token'] = $this->session->data['token'];
+		
 		$this->data['directory'] = HTTP_IMAGE . 'data/';
 		
 		if (isset($this->request->get['field'])) {

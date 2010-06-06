@@ -3,7 +3,7 @@ class ControllerCommonLogout extends Controller {
 	public function index() { 
     	$this->user->logout();
  
-		$this->redirect(HTTPS_SERVER . 'index.php?route=common/login');
+		$this->redirect(HTTPS_SERVER . 'index.php?route=common/login&token=' . $this->session->data['token']);
   	}
 }  
 ?>

@@ -60,13 +60,13 @@ class ControllerReportSale extends Controller {
    		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=report/sale' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=report/sale&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
@@ -113,6 +113,8 @@ class ControllerReportSale extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 
 		$this->data['button_filter'] = $this->language->get('button_filter');
+		
+		$this->data['token'] = $this->session->data['token'];
 		
 		$this->load->model('localisation/order_status');
 		
@@ -163,7 +165,7 @@ class ControllerReportSale extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=report/sale' . $url . '&page={page}';
+		$pagination->url = HTTPS_SERVER . 'index.php?route=report/sale&token=' . $this->session->data['token'] . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();		
 

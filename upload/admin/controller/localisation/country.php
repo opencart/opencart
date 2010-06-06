@@ -38,7 +38,7 @@ class ControllerLocalisationCountry extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/country' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/country&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationCountry extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 					
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/country' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/country&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationCountry extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/country' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/country&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerLocalisationCountry extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/country' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/country&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/country/insert' . $url;
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/country/delete' . $url;
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/country/insert&token=' . $this->session->data['token'] . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/country/delete&token=' . $this->session->data['token'] . $url;
 		 
 		$this->data['countries'] = array();
 
@@ -178,7 +178,7 @@ class ControllerLocalisationCountry extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=localisation/country/update&country_id=' . $result['country_id'] . $url
+				'href' => HTTPS_SERVER . 'index.php?route=localisation/country/update&token=' . $this->session->data['token'] . '&country_id=' . $result['country_id'] . $url
 			);
 
 			$this->data['countries'][] = array(
@@ -220,18 +220,18 @@ class ControllerLocalisationCountry extends Controller {
 		$url = '';
 
 		if ($order == 'ASC') {
-			$url .= '&order=' .  'DESC';
+			$url .= '&order=DESC';
 		} else {
-			$url .= '&order=' .  'ASC';
+			$url .= '&order=ASC';
 		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=localisation/country&sort=name' . $url;
-		$this->data['sort_iso_code_2'] = HTTPS_SERVER . 'index.php?route=localisation/country&sort=iso_code_2' . $url;
-		$this->data['sort_iso_code_3'] = HTTPS_SERVER . 'index.php?route=localisation/country&sort=iso_code_3' . $url;
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=localisation/country&token=' . $this->session->data['token'] . '&sort=name' . $url;
+		$this->data['sort_iso_code_2'] = HTTPS_SERVER . 'index.php?route=localisation/country&token=' . $this->session->data['token'] . '&sort=iso_code_2' . $url;
+		$this->data['sort_iso_code_3'] = HTTPS_SERVER . 'index.php?route=localisation/country&token=' . $this->session->data['token'] . '&sort=iso_code_3' . $url;
 		
 		$url = '';
 
@@ -248,7 +248,7 @@ class ControllerLocalisationCountry extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/country' . $url . '&page={page}';
+		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/country&token=' . $this->session->data['token'] . $url . '&page={page}';
 
 		$this->data['pagination'] = $pagination->render();
 		
@@ -310,24 +310,24 @@ class ControllerLocalisationCountry extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/country' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/country&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
 		if (!isset($this->request->get['country_id'])) { 
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/country/insert' . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/country/insert&token=' . $this->session->data['token'] . $url;
 		} else {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/country/update&country_id=' . $this->request->get['country_id'] . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/country/update&token=' . $this->session->data['token'] . '&country_id=' . $this->request->get['country_id'] . $url;
 		}
 		
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/country' . $url;
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/country&token=' . $this->session->data['token'] . $url;
 		
 		if (isset($this->request->get['country_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);

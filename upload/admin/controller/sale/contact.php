@@ -136,6 +136,8 @@ class ControllerSaleContact extends Controller {
 		
 		$this->data['tab_general'] = $this->language->get('tab_general');
 		
+		$this->data['token'] = $this->session->data['token'];
+		
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -157,13 +159,13 @@ class ControllerSaleContact extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=sale/contact',
+       		'href'      => HTTPS_SERVER . 'index.php?route=sale/contact&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
@@ -176,8 +178,8 @@ class ControllerSaleContact extends Controller {
 			$this->data['success'] = '';
 		}
 				
-		$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/contact';
-    	$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=sale/contact';
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/contact&token=' . $this->session->data['token'];
+    	$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=sale/contact&token=' . $this->session->data['token'];
 
 		if (isset($this->request->post['store_id'])) {
 			$this->data['store_id'] = $this->request->post['store_id'];

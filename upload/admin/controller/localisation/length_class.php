@@ -38,7 +38,7 @@ class ControllerLocalisationLengthClass extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/length_class' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationLengthClass extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/length_class' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationLengthClass extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/length_class' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerLocalisationLengthClass extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/length_class' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/insert' . $url;
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/delete' . $url;
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/insert&token=' . $this->session->data['token'] . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/delete&token=' . $this->session->data['token'] . $url;
 		 
 		$this->data['length_classes'] = array();
 		
@@ -178,7 +178,7 @@ class ControllerLocalisationLengthClass extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=localisation/length_class/update&length_class_id=' . $result['length_class_id'] . $url
+				'href' => HTTPS_SERVER . 'index.php?route=localisation/length_class/update&token=' . $this->session->data['token'] . '&length_class_id=' . $result['length_class_id'] . $url
 			);
 
 			$this->data['length_classes'][] = array(
@@ -229,9 +229,9 @@ class ControllerLocalisationLengthClass extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_title'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&sort=title' . $url;
-		$this->data['sort_unit'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&sort=unit' . $url;
-		$this->data['sort_value'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&sort=value' . $url;
+		$this->data['sort_title'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . '&sort=title' . $url;
+		$this->data['sort_unit'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . '&sort=unit' . $url;
+		$this->data['sort_value'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . '&sort=value' . $url;
 		
 		$url = '';
 
@@ -248,7 +248,7 @@ class ControllerLocalisationLengthClass extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/length_class' . $url . '&page={page}';
+		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . $url . '&page={page}';
 
 		$this->data['pagination'] = $pagination->render();
 		
@@ -311,24 +311,24 @@ class ControllerLocalisationLengthClass extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/length_class' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
 		if (!isset($this->request->get['length_class_id'])) {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/insert' . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/insert&token=' . $this->session->data['token'] . $url;
 		} else {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/update&length_class_id=' . $this->request->get['length_class_id'] . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/update&token=' . $this->session->data['token'] . '&length_class_id=' . $this->request->get['length_class_id'] . $url;
 		}
 
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/length_class' . $url;
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . $url;
 
 		if (isset($this->request->get['length_class_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$length_class_info = $this->model_localisation_length_class->getLengthClass($this->request->get['length_class_id']);

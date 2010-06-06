@@ -8,31 +8,22 @@ class ControllerCommonLogin extends Controller {
 		$this->document->title = $this->language->get('heading_title');
 
 		if ($this->user->isLogged()) {
-			$this->redirect(HTTPS_SERVER . 'index.php?route=common/home');
+			$this->redirect(HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token']);
 		}
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) { 
-			if (isset($_SERVER['HTTP_REFERER'])) {
-				$this->redirect($_SERVER['HTTP_REFERER']);
+			$this->session->data['token'] = md5(rand(0, 15));
+		
+			if (isset($this->request->post['redirect'])) {
+				$this->redirect($this->request->post['redirect'] . '&token=' . $this->session->data['token']);
 			} else {
-				$this->redirect(HTTPS_SERVER . 'index.php?route=common/home');
+				$this->redirect(HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token']);
 			}
 		}
 		
-		$this->data['title'] = $this->language->get('heading_title');
+    	$this->data['heading_title'] = $this->language->get('heading_title');
 		
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			$this->data['base'] = HTTPS_SERVER;
-		} else {
-			$this->data['base'] = HTTP_SERVER;
-		}
-		
-		$this->data['charset'] = $this->language->get('charset');
-		$this->data['direction'] = $this->language->get('direction');
-		$this->data['language'] = $this->language->get('code');				
-		
-		$this->data['text_heading'] = $this->language->get('text_heading');
-    	$this->data['text_login'] = $this->language->get('text_login');
+		$this->data['text_login'] = $this->language->get('text_login');
 		
 		$this->data['entry_username'] = $this->language->get('entry_username');
     	$this->data['entry_password'] = $this->language->get('entry_password');
@@ -47,18 +38,38 @@ class ControllerCommonLogin extends Controller {
 		
     	$this->data['action'] = HTTPS_SERVER . 'index.php?route=common/login';
 
-		if (isset($this->error['username'])) {
+		if (isset($this->request->post['username'])) {
 			$this->data['username'] = $this->request->post['username'];
 		} else {
 			$this->data['username'] = '';
 		}
 		
-		if (isset($this->error['password'])) {
+		if (isset($this->request->post['password'])) {
 			$this->data['password'] = $this->request->post['password'];
 		} else {
 			$this->data['password'] = '';
 		}
-		
+
+		if (isset($this->request->get['route'])) {
+			$route = $this->request->get['route'];
+			
+			unset($this->request->get['route']);
+			
+			if (isset($this->request->get['token'])) {
+				unset($this->request->get['token']);
+			}
+			
+			$url = '';
+			
+			if ($this->request->get) {
+				$url = '&' . http_build_query($this->request->get);
+			}
+			
+			$this->data['redirect'] = HTTPS_SERVER . 'index.php?route=' . $route . $url;
+		} else {
+			$this->data['redirect'] = '';	
+		}
+						
 		$this->template = 'common/login.tpl';
 		$this->children = array(
 			'common/header',	

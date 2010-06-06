@@ -19,7 +19,6 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_backup'] = $this->language->get('text_backup');
 		$this->data['text_catalog'] = $this->language->get('text_catalog');
 		$this->data['text_category'] = $this->language->get('text_category');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
 		$this->data['text_country'] = $this->language->get('text_country');
 		$this->data['text_coupon'] = $this->language->get('text_coupon');
 		$this->data['text_currency'] = $this->language->get('text_currency');			
@@ -66,64 +65,67 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_opencart'] = $this->language->get('text_opencart');
       	$this->data['text_zone'] = $this->language->get('text_zone');
 		
-		if ($this->user->isLogged()) {
-			$this->data['logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
-		} else {
+		if (!$this->user->isLogged() || !isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
 			$this->data['logged'] = '';
-		}
-		
-		$this->data['backup'] = HTTPS_SERVER . 'index.php?route=tool/backup';
-		$this->data['category'] = HTTPS_SERVER . 'index.php?route=catalog/category';
-		$this->data['country'] = HTTPS_SERVER . 'index.php?route=localisation/country';
-		$this->data['currency'] = HTTPS_SERVER . 'index.php?route=localisation/currency';
-		$this->data['coupon'] = HTTPS_SERVER . 'index.php?route=sale/coupon';
-		$this->data['customer'] = HTTPS_SERVER . 'index.php?route=sale/customer';
-		$this->data['customer_group'] = HTTPS_SERVER . 'index.php?route=sale/customer_group';
-		$this->data['download'] = HTTPS_SERVER . 'index.php?route=catalog/download';
-		$this->data['error_log'] = HTTPS_SERVER . 'index.php?route=tool/error_log';
-		$this->data['feed'] = HTTPS_SERVER . 'index.php?route=extension/feed';			
-		
-		$this->data['stores'] = array();
-		
-		$this->load->model('setting/store');
-		
-		$results = $this->model_setting_store->getStores();
-		
-		foreach ($results as $result) {
-			$this->data['stores'][] = array(
-				'name' => $result['name'],
-				'href' => $result['url']
-			);
-		}
-		
-		$this->data['geo_zone'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone';
-		$this->data['home'] = HTTPS_SERVER . 'index.php?route=common/home'; 
-		$this->data['information'] = HTTPS_SERVER . 'index.php?route=catalog/information';
-		$this->data['language'] = HTTPS_SERVER . 'index.php?route=localisation/language';
-		$this->data['logout'] = HTTPS_SERVER . 'index.php?route=common/logout';
-		$this->data['contact'] = HTTPS_SERVER . 'index.php?route=sale/contact';
-		$this->data['manufacturer'] = HTTPS_SERVER . 'index.php?route=catalog/manufacturer';
-		$this->data['module'] = HTTPS_SERVER . 'index.php?route=extension/module';
-		$this->data['order'] = HTTPS_SERVER . 'index.php?route=sale/order';
-		$this->data['order_status'] = HTTPS_SERVER . 'index.php?route=localisation/order_status';
-		$this->data['payment'] = HTTPS_SERVER . 'index.php?route=extension/payment';
-		$this->data['product'] = HTTPS_SERVER . 'index.php?route=catalog/product';
-		$this->data['report_purchased'] = HTTPS_SERVER . 'index.php?route=report/purchased';
-		$this->data['report_sale'] = HTTPS_SERVER . 'index.php?route=report/sale';
-      	$this->data['report_viewed'] = HTTPS_SERVER . 'index.php?route=report/viewed';
-		$this->data['review'] = HTTPS_SERVER . 'index.php?route=catalog/review';
-		$this->data['shipping'] = HTTPS_SERVER . 'index.php?route=extension/shipping';
-		$this->data['setting'] = HTTPS_SERVER . 'index.php?route=setting/setting';
-		$this->data['store'] = HTTP_CATALOG;
-		$this->data['stock_status'] = HTTPS_SERVER . 'index.php?route=localisation/stock_status';
-      	$this->data['tax_class'] = HTTPS_SERVER . 'index.php?route=localisation/tax_class';
-		$this->data['total'] = HTTPS_SERVER . 'index.php?route=extension/total';
-		$this->data['user'] = HTTPS_SERVER . 'index.php?route=user/user';
-      	$this->data['user_group'] = HTTPS_SERVER . 'index.php?route=user/user_permission';
-      	$this->data['weight_class'] = HTTPS_SERVER . 'index.php?route=localisation/weight_class';
-		$this->data['length_class'] = HTTPS_SERVER . 'index.php?route=localisation/length_class';
-      	$this->data['zone'] = HTTPS_SERVER . 'index.php?route=localisation/zone';
+			
+			$this->data['home'] = HTTPS_SERVER . 'index.php?route=common/login';
+		} else {
+			$this->data['logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
 
+			$this->data['home'] = HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token']; 
+			
+			$this->data['backup'] = HTTPS_SERVER . 'index.php?route=tool/backup&token=' . $this->session->data['token'];
+			$this->data['category'] = HTTPS_SERVER . 'index.php?route=catalog/category&token=' . $this->session->data['token'];
+			$this->data['country'] = HTTPS_SERVER . 'index.php?route=localisation/country&token=' . $this->session->data['token'];
+			$this->data['currency'] = HTTPS_SERVER . 'index.php?route=localisation/currency&token=' . $this->session->data['token'];
+			$this->data['coupon'] = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'];
+			$this->data['customer'] = HTTPS_SERVER . 'index.php?route=sale/customer&token=' . $this->session->data['token'];
+			$this->data['customer_group'] = HTTPS_SERVER . 'index.php?route=sale/customer_group&token=' . $this->session->data['token'];
+			$this->data['download'] = HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'];
+			$this->data['error_log'] = HTTPS_SERVER . 'index.php?route=tool/error_log&token=' . $this->session->data['token'];
+			$this->data['feed'] = HTTPS_SERVER . 'index.php?route=extension/feed&token=' . $this->session->data['token'];			
+			
+			$this->data['stores'] = array();
+			
+			$this->load->model('setting/store');
+			
+			$results = $this->model_setting_store->getStores();
+			
+			foreach ($results as $result) {
+				$this->data['stores'][] = array(
+					'name' => $result['name'],
+					'href' => $result['url']
+				);
+			}
+			
+			$this->data['geo_zone'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone&token=' . $this->session->data['token'];
+			$this->data['information'] = HTTPS_SERVER . 'index.php?route=catalog/information&token=' . $this->session->data['token'];
+			$this->data['language'] = HTTPS_SERVER . 'index.php?route=localisation/language&token=' . $this->session->data['token'];
+			$this->data['logout'] = HTTPS_SERVER . 'index.php?route=common/logout&token=' . $this->session->data['token'];
+			$this->data['contact'] = HTTPS_SERVER . 'index.php?route=sale/contact&token=' . $this->session->data['token'];
+			$this->data['manufacturer'] = HTTPS_SERVER . 'index.php?route=catalog/manufacturer&token=' . $this->session->data['token'];
+			$this->data['module'] = HTTPS_SERVER . 'index.php?route=extension/module&token=' . $this->session->data['token'];
+			$this->data['order'] = HTTPS_SERVER . 'index.php?route=sale/order&token=' . $this->session->data['token'];
+			$this->data['order_status'] = HTTPS_SERVER . 'index.php?route=localisation/order_status&token=' . $this->session->data['token'];
+			$this->data['payment'] = HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token'];
+			$this->data['product'] = HTTPS_SERVER . 'index.php?route=catalog/product&token=' . $this->session->data['token'];
+			$this->data['report_purchased'] = HTTPS_SERVER . 'index.php?route=report/purchased&token=' . $this->session->data['token'];
+			$this->data['report_sale'] = HTTPS_SERVER . 'index.php?route=report/sale&token=' . $this->session->data['token'];
+			$this->data['report_viewed'] = HTTPS_SERVER . 'index.php?route=report/viewed&token=' . $this->session->data['token'];
+			$this->data['review'] = HTTPS_SERVER . 'index.php?route=catalog/review&token=' . $this->session->data['token'];
+			$this->data['shipping'] = HTTPS_SERVER . 'index.php?route=extension/shipping&token=' . $this->session->data['token'];
+			$this->data['setting'] = HTTPS_SERVER . 'index.php?route=setting/setting&token=' . $this->session->data['token'];
+			$this->data['store'] = HTTP_CATALOG;
+			$this->data['stock_status'] = HTTPS_SERVER . 'index.php?route=localisation/stock_status&token=' . $this->session->data['token'];
+			$this->data['tax_class'] = HTTPS_SERVER . 'index.php?route=localisation/tax_class&token=' . $this->session->data['token'];
+			$this->data['total'] = HTTPS_SERVER . 'index.php?route=extension/total&token=' . $this->session->data['token'];
+			$this->data['user'] = HTTPS_SERVER . 'index.php?route=user/user&token=' . $this->session->data['token'];
+			$this->data['user_group'] = HTTPS_SERVER . 'index.php?route=user/user_permission&token=' . $this->session->data['token'];
+			$this->data['weight_class'] = HTTPS_SERVER . 'index.php?route=localisation/weight_class&token=' . $this->session->data['token'];
+			$this->data['length_class'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'];
+			$this->data['zone'] = HTTPS_SERVER . 'index.php?route=localisation/zone&token=' . $this->session->data['token'];
+		}
+		
 		$this->id       = 'header';
 		$this->template = 'common/header.tpl';
 		

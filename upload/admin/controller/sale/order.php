@@ -70,7 +70,7 @@ class ControllerSaleOrder extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/order' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/order&token=' . $this->session->data['token'] . $url);
     	}
     
     	$this->getList();
@@ -162,20 +162,20 @@ class ControllerSaleOrder extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=sale/order' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=sale/order&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['invoice'] = HTTPS_SERVER . 'index.php?route=sale/order/invoice';	
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=sale/order/insert' . $url;
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=sale/order/delete' . $url;	
+		$this->data['invoice'] = HTTPS_SERVER . 'index.php?route=sale/order/invoice&token=' . $this->session->data['token'];	
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=sale/order/insert&token=' . $this->session->data['token'] . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=sale/order/delete&token=' . $this->session->data['token'] . $url;	
 
 		$this->data['orders'] = array();
 
@@ -200,7 +200,7 @@ class ControllerSaleOrder extends Controller {
 
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=sale/order/update&order_id=' . $result['order_id'] . $url
+				'href' => HTTPS_SERVER . 'index.php?route=sale/order/update&token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url
 			);
 			
 			$this->data['orders'][] = array(
@@ -231,6 +231,8 @@ class ControllerSaleOrder extends Controller {
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_filter'] = $this->language->get('button_filter');
  		
+		$this->data['token'] = $this->session->data['token'];
+		
 		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -268,20 +270,20 @@ class ControllerSaleOrder extends Controller {
 		}
 		
 		if ($order == 'ASC') {
-			$url .= '&order=' .  'DESC';
+			$url .= '&order=DESC';
 		} else {
-			$url .= '&order=' .  'ASC';
+			$url .= '&order=ASC';
 		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_order'] = HTTPS_SERVER . 'index.php?route=sale/order&sort=o.order_id' . $url;
-		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=sale/order&sort=name' . $url;
-		$this->data['sort_status'] = HTTPS_SERVER . 'index.php?route=sale/order&sort=status' . $url;
-		$this->data['sort_date_added'] = HTTPS_SERVER . 'index.php?route=sale/order&sort=o.date_added' . $url;
-		$this->data['sort_total'] = HTTPS_SERVER . 'index.php?route=sale/order&sort=o.total' . $url;
+		$this->data['sort_order'] = HTTPS_SERVER . 'index.php?route=sale/order&token=' . $this->session->data['token'] . '&sort=o.order_id' . $url;
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=sale/order&token=' . $this->session->data['token'] . '&sort=name' . $url;
+		$this->data['sort_status'] = HTTPS_SERVER . 'index.php?route=sale/order&token=' . $this->session->data['token'] . '&sort=status' . $url;
+		$this->data['sort_date_added'] = HTTPS_SERVER . 'index.php?route=sale/order&token=' . $this->session->data['token'] . '&sort=o.date_added' . $url;
+		$this->data['sort_total'] = HTTPS_SERVER . 'index.php?route=sale/order&token=' . $this->session->data['token'] . '&sort=o.total' . $url;
 		
 		$url = '';
 
@@ -318,7 +320,7 @@ class ControllerSaleOrder extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=sale/order' . $url . '&page={page}';
+		$pagination->url = HTTPS_SERVER . 'index.php?route=sale/order&token=' . $this->session->data['token'] . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
 		
@@ -418,6 +420,8 @@ class ControllerSaleOrder extends Controller {
 			$this->data['tab_payment'] = $this->language->get('tab_payment');
 			$this->data['tab_shipping'] = $this->language->get('tab_shipping');
 	
+			$this->data['token'] = $this->session->data['token'];
+	
 			$url = '';
 	
 			if (isset($this->request->get['filter_order_id'])) {
@@ -455,19 +459,19 @@ class ControllerSaleOrder extends Controller {
 			$this->document->breadcrumbs = array();
 	
 			$this->document->breadcrumbs[] = array(
-				'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+				'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
 				'text'      => $this->language->get('text_home'),
 				'separator' => FALSE
 			);
 	
 			$this->document->breadcrumbs[] = array(
-				'href'      => HTTPS_SERVER . 'index.php?route=sale/order',
+				'href'      => HTTPS_SERVER . 'index.php?route=sale/order&token=' . $this->session->data['token'] . $url,
 				'text'      => $this->language->get('heading_title'),
 				'separator' => ' :: '
 			);			
 			
-			$this->data['invoice'] = HTTPS_SERVER . 'index.php?route=sale/order/invoice&order_id=' . (int)$this->request->get['order_id'];
-			$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=sale/order' . $url;
+			$this->data['invoice'] = HTTPS_SERVER . 'index.php?route=sale/order/invoice&token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'];
+			$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=sale/order&token=' . $this->session->data['token'] . $url;
 			
 			$this->data['order_id'] = $this->request->get['order_id'];
 			
@@ -481,7 +485,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['lastname'] = $order_info['lastname'];	
 			
 			if ($order_info['customer_id']) {
-				$this->data['customer'] = HTTPS_SERVER . 'index.php?route=sale/customer/update&customer_id=' . $order_info['customer_id'];
+				$this->data['customer'] = HTTPS_SERVER . 'index.php?route=sale/customer/update&token=' . $this->session->data['token'] . '&customer_id=' . $order_info['customer_id'];
 			} else {
 				$this->data['customer'] = '';
 			}
@@ -564,7 +568,7 @@ class ControllerSaleOrder extends Controller {
 					'quantity' => $product['quantity'],
 					'price'    => $this->currency->format($product['price'], $order_info['currency'], $order_info['value']),
 					'total'    => $this->currency->format($product['total'], $order_info['currency'], $order_info['value']),
-					'href'     => HTTPS_SERVER . 'index.php?route=catalog/product/update&product_id=' . $product['product_id']
+					'href'     => HTTPS_SERVER . 'index.php?route=catalog/product/update&token=' . $this->session->data['token'] . '&product_id=' . $product['product_id']
 				);
 			}
 	
@@ -622,13 +626,13 @@ class ControllerSaleOrder extends Controller {
 			$this->document->breadcrumbs = array();
 	
 			$this->document->breadcrumbs[] = array(
-				'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+				'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
 				'text'      => $this->language->get('text_home'),
 				'separator' => FALSE
 			);
 	
 			$this->document->breadcrumbs[] = array(
-				'href'      => HTTPS_SERVER . 'index.php?route=error/not_found',
+				'href'      => HTTPS_SERVER . 'index.php?route=error/not_found&token=' . $this->session->data['token'],
 				'text'      => $this->language->get('heading_title'),
 				'separator' => ' :: '
 			);

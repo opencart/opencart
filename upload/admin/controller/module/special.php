@@ -16,7 +16,7 @@ class ControllerModulespecial extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 						
-			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module');
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module&token=' . $this->session->data['token']);
 		}
 				
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -44,26 +44,26 @@ class ControllerModulespecial extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=extension/module',
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/module&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_module'),
       		'separator' => ' :: '
    		);
 		
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=module/special',
+       		'href'      => HTTPS_SERVER . 'index.php?route=module/special&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['action'] = HTTPS_SERVER . 'index.php?route=module/special';
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=module/special&token=' . $this->session->data['token'];
 		
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/module';
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/module&token=' . $this->session->data['token'];
 
 		if (isset($this->request->post['special_limit'])) {
 			$this->data['special_limit'] = $this->request->post['special_limit'];
@@ -74,18 +74,18 @@ class ControllerModulespecial extends Controller {
 		$this->data['positions'] = array();
 		
 		$this->data['positions'][] = array(
-			'position' 	=> 'left',
-			'title' 	=> $this->language->get('text_left'),
+			'position' => 'left',
+			'title'    => $this->language->get('text_left'),
 		);
 		
 		$this->data['positions'][] = array(
-			'position' 	=> 'right',
-			'title' 	=> $this->language->get('text_right'),
+			'position' => 'right',
+			'title'    => $this->language->get('text_right'),
 		);
 		
 		$this->data['positions'][] = array(
-			'position' 	=> 'home',
-			'title' 	=> $this->language->get('text_home'),
+			'position' => 'home',
+			'title'    => $this->language->get('text_home'),
 		);
 		
 		if (isset($this->request->post['special_position'])) {

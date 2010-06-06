@@ -113,7 +113,14 @@
 </div>
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
-CKEDITOR.replace('message');
+CKEDITOR.replace('message', {
+	filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+	filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+	filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+	filebrowserUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+	filebrowserImageUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+	filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
+});
 //--></script>
 <script type="text/javascript"><!--
 function addCustomer() {
@@ -140,7 +147,7 @@ function getCustomers() {
 	$('#customer option').remove();
 	
 	$.ajax({
-		url: 'index.php?route=sale/contact/customers&keyword=' + encodeURIComponent($('#search').attr('value')),
+		url: 'index.php?route=sale/contact/customers&token=<?php echo $token; ?>&keyword=' + encodeURIComponent($('#search').attr('value')),
 		dataType: 'json',
 		success: function(data) {
 			for (i = 0; i < data.length; i++) {

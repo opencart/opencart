@@ -38,7 +38,7 @@ class ControllerLocalisationZone extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/zone' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/zone&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationZone extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/zone' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/zone&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationZone extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/zone' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/zone&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerLocalisationZone extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/zone' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/zone&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/zone/insert' . $url;
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/zone/delete' . $url;
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/zone/insert&token=' . $this->session->data['token'] . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/zone/delete&token=' . $this->session->data['token'] . $url;
 	
 		$this->data['zones'] = array();
 
@@ -178,7 +178,7 @@ class ControllerLocalisationZone extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=localisation/zone/update&zone_id=' . $result['zone_id'] . $url
+				'href' => HTTPS_SERVER . 'index.php?route=localisation/zone/update&token=' . $this->session->data['token'] . '&zone_id=' . $result['zone_id'] . $url
 			);
 					
 			$this->data['zones'][] = array(
@@ -220,18 +220,18 @@ class ControllerLocalisationZone extends Controller {
 		$url = '';
 
 		if ($order == 'ASC') {
-			$url .= '&order=' .  'DESC';
+			$url .= '&order=DESC';
 		} else {
-			$url .= '&order=' .  'ASC';
+			$url .= '&order=ASC';
 		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		 
-		$this->data['sort_country'] = HTTPS_SERVER . 'index.php?route=localisation/zone&sort=c.name' . $url;
-		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=localisation/zone&sort=z.name' . $url;
-		$this->data['sort_code'] = HTTPS_SERVER . 'index.php?route=localisation/zone&sort=z.code' . $url;
+		$this->data['sort_country'] = HTTPS_SERVER . 'index.php?route=localisation/zone&token=' . $this->session->data['token'] . '&sort=c.name' . $url;
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=localisation/zone&token=' . $this->session->data['token'] . '&sort=z.name' . $url;
+		$this->data['sort_code'] = HTTPS_SERVER . 'index.php?route=localisation/zone&token=' . $this->session->data['token'] . '&sort=z.code' . $url;
 		
 		$url = '';
 
@@ -248,7 +248,7 @@ class ControllerLocalisationZone extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/zone' . $url . '&page={page}';
+		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/zone&token=' . $this->session->data['token'] . $url . '&page={page}';
 
 		$this->data['pagination'] = $pagination->render();
 		
@@ -309,24 +309,24 @@ class ControllerLocalisationZone extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/zone' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/zone&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 							
 		if (!isset($this->request->get['zone_id'])) {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/zone/insert' . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/zone/insert&token=' . $this->session->data['token'] . $url;
 		} else {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/zone/update&zone_id=' . $this->request->get['zone_id'] . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/zone/update&token=' . $this->session->data['token'] . '&zone_id=' . $this->request->get['zone_id'] . $url;
 		}
 		 
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/zone' . $url;
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/zone&token=' . $this->session->data['token'] . $url;
 
 		if (isset($this->request->get['zone_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$zone_info = $this->model_localisation_zone->getZone($this->request->get['zone_id']);

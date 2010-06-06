@@ -38,10 +38,12 @@ class ControllerCommonHome extends Controller {
 		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
+		
+		$this->data['token'] = $this->session->data['token'];
 		
 		$this->load->model('sale/order');
 
@@ -79,7 +81,7 @@ class ControllerCommonHome extends Controller {
 			 
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=sale/order/update&order_id=' . $result['order_id']
+				'href' => HTTPS_SERVER . 'index.php?route=sale/order/update&token=' . $this->session->data['token'] . '&order_id=' . $result['order_id']
 			);
 					
 			$this->data['orders'][] = array(
@@ -218,36 +220,48 @@ class ControllerCommonHome extends Controller {
 					$data['xaxis'][] = array($i, date('M', mktime(0, 0, 0, $i, 1, date('Y'))));
 				}			
 				break;	
-		}
+		} 
 		
 		$this->load->library('json');
 		
 		$this->response->setOutput(Json::encode($data));
 	}
 	
-	public function login() {
+	public function login() { 
 		if (!$this->user->isLogged()) {
 			return $this->forward('common/login');
+		}
+		
+		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
+			return $this->forward('error/token');
 		}
 	}
 	
 	public function permission() {
 		if (isset($this->request->get['route'])) {
-			$route = $this->request->get['route'];
-		  
-			$part = explode('/', $route);
+			$route = '';
+			
+			$part = explode('/', $this->request->get['route']);
+			
+			if (isset($part[0])) {
+				$route .= $part[0];
+			}
+			
+			if (isset($part[1])) {
+				$route .= '/' . $part[1];
+			}
 			
 			$ignore = array(
 				'common/home',
 				'common/login',
 				'common/logout',
-				'common/permission',
-				'error/error_403',
-				'error/error_404'		
-			);
-			
-			if (!in_array(@$part[0] . '/' . @$part[1], $ignore)) {
-				if (!$this->user->hasPermission('access', @$part[0] . '/' . @$part[1])) {
+				'error/not_found',
+				'error/permission',	
+				'error/token'		
+			);			
+						
+			if (!in_array($route, $ignore)) {
+				if (!$this->user->hasPermission('access', $route)) {
 					return $this->forward('error/permission');
 				}
 			}

@@ -16,7 +16,7 @@ class ControllerPaymentWorldPay extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/payment');
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token']);
 		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -65,26 +65,26 @@ class ControllerPaymentWorldPay extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=extension/payment',
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_payment'),
       		'separator' => ' :: '
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=payment/worldpay',
+       		'href'      => HTTPS_SERVER . 'index.php?route=payment/worldpay&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 				
-		$this->data['action'] = HTTPS_SERVER . 'index.php?route=payment/worldpay';
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=payment/worldpay&token=' . $this->session->data['token'];
 		
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/payment';
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token'];
 		
 		if (isset($this->request->post['worldpay_merchant'])) {
 			$this->data['worldpay_merchant'] = $this->request->post['worldpay_merchant'];

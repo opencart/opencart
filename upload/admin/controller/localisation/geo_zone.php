@@ -38,7 +38,7 @@ class ControllerLocalisationGeoZone extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/geo_zone' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/geo_zone&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationGeoZone extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/geo_zone' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/geo_zone&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationGeoZone extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/geo_zone' . $url);
+			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/geo_zone&token=' . $this->session->data['token'] . $url);
 		}
 
 		$this->getList();
@@ -146,19 +146,19 @@ class ControllerLocalisationGeoZone extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/geo_zone' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/geo_zone&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone/insert' . $url;
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone/delete' . $url;
+		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone/insert&token=' . $this->session->data['token'] . $url;
+		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone/delete&token=' . $this->session->data['token'] . $url;
 		
 		$this->data['geo_zones'] = array();
 
@@ -178,7 +178,7 @@ class ControllerLocalisationGeoZone extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=localisation/geo_zone/update&geo_zone_id=' . $result['geo_zone_id'] . $url
+				'href' => HTTPS_SERVER . 'index.php?route=localisation/geo_zone/update&token=' . $this->session->data['token'] . '&geo_zone_id=' . $result['geo_zone_id'] . $url
 			);
 					
 			$this->data['geo_zones'][] = array(
@@ -218,17 +218,17 @@ class ControllerLocalisationGeoZone extends Controller {
 		$url = '';
 
 		if ($order == 'ASC') {
-			$url .= '&order=' .  'DESC';
+			$url .= '&order=DESC';
 		} else {
-			$url .= '&order=' .  'ASC';
+			$url .= '&order=ASC';
 		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		 
-		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone&sort=name' . $url;
-		$this->data['sort_description'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone&sort=description' . $url;
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone&token=' . $this->session->data['token'] . '&sort=name' . $url;
+		$this->data['sort_description'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone&token=' . $this->session->data['token'] . '&sort=description' . $url;
 		
 		$url = '';
 
@@ -245,7 +245,7 @@ class ControllerLocalisationGeoZone extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/geo_zone' . $url . '&page={page}';
+		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/geo_zone&token=' . $this->session->data['token'] . $url . '&page={page}';
 
 		$this->data['pagination'] = $pagination->render();
 
@@ -275,6 +275,8 @@ class ControllerLocalisationGeoZone extends Controller {
 		$this->data['button_remove'] = $this->language->get('button_remove');
 				
 		$this->data['tab_general'] = $this->language->get('tab_general');
+
+		$this->data['token'] = $this->session->data['token'];
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -311,24 +313,24 @@ class ControllerLocalisationGeoZone extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/geo_zone' . $url,
+       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/geo_zone&token=' . $this->session->data['token'] . $url,
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 				
 		if (!isset($this->request->get['geo_zone_id'])) {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone/insert' . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone/insert&token=' . $this->session->data['token'] . $url;
 		} else {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone/update&geo_zone_id=' . $this->request->get['geo_zone_id'] . $url;
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone/update&token=' . $this->session->data['token'] . '&geo_zone_id=' . $this->request->get['geo_zone_id'] . $url;
 		}
 
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone' . $url;
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/geo_zone&token=' . $this->session->data['token'] . $url;
 
 		if (isset($this->request->get['geo_zone_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($this->request->get['geo_zone_id']);

@@ -141,6 +141,8 @@ class ModelCheckoutOrder extends Model {
 			$template->data['text_invoice'] = $language->get('text_invoice');
 			$template->data['text_date_added'] = $language->get('text_date_added');
 			$template->data['text_telephone'] = $language->get('text_telephone');
+			$template->data['text_email'] = $language->get('text_email');
+			$template->data['text_ip'] = $language->get('text_ip');
 			$template->data['text_fax'] = $language->get('text_fax');		
 			$template->data['text_shipping_address'] = $language->get('text_shipping_address');
 			$template->data['text_payment_address'] = $language->get('text_payment_address');
@@ -170,6 +172,9 @@ class ModelCheckoutOrder extends Model {
 			$template->data['lastname'] = $order_query->row['lastname'];
 			$template->data['shipping_method'] = $order_query->row['shipping_method'];
 			$template->data['payment_method'] = $order_query->row['payment_method'];
+			$template->data['customer_email'] = $order_query->row['email'];
+			$template->data['customer_telephone'] = $order_query->row['telephone'];
+			$template->data['customer_ip'] = $order_query->row['ip'];
 			$template->data['comment'] = $order_query->row['comment'];
 
 			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE zone_id = '" . (int)$order_query->row['shipping_zone_id'] . "'");
@@ -311,6 +316,8 @@ class ModelCheckoutOrder extends Model {
 				$text .= $result['title'] . ' ' . html_entity_decode($result['text'], ENT_NOQUOTES, 'UTF-8') . "\n";
 			}			
 			
+			$order_total = $result['text'];
+			
 			$text .= "\n";
 			
 			if ($order_query->row['customer_id']) {
@@ -364,7 +371,7 @@ class ModelCheckoutOrder extends Model {
 					$html = $template->fetch('default/template/mail/order_confirm.tpl');
 				}
 				
-				$subject = sprintf($language->get('text_subject'), html_entity_decode((($this->config->get('config_name')) ? $this->config->get('config_name') : $this->config->get('config_store')), ENT_QUOTES, 'UTF-8'), $order_id . ' (' . $order_total . ')');
+				$subject = sprintf($language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'), $order_id . ' (' . $order_total . ')');
 				
 				$mail->setSubject($subject);
 				$mail->setTo($this->config->get('config_email'));
@@ -372,7 +379,7 @@ class ModelCheckoutOrder extends Model {
 				$mail->send();
 				
 				// Send to additional alert emails
-				$emails = explode(',', $this->config->get('config_emails'));
+				$emails = explode(',', $this->config->get('config_alert_emails'));
 				foreach ($emails as $email) {
 					$mail->setTo($email);
 					$mail->send();

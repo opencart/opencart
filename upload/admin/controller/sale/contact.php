@@ -231,6 +231,10 @@ class ControllerSaleContact extends Controller {
 		} else {
 			$this->data['message'] = '';
 		}
+		
+		$this->load->model('catalog/category');
+				
+		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
 
 		$this->template = 'sale/contact.tpl';
 		$this->children = array(
@@ -280,6 +284,32 @@ class ControllerSaleContact extends Controller {
 		} else {
 			return FALSE;
 		}
-	}	
+	}
+	
+	public function category() {
+		$this->load->model('catalog/product');
+		
+		if (isset($this->request->get['category_id'])) {
+			$category_id = $this->request->get['category_id'];
+		} else {
+			$category_id = 0;
+		}
+		
+		$product_data = array();
+		
+		$results = $this->model_catalog_product->getProductsByCategoryId($category_id);
+		
+		foreach ($results as $result) {
+			$product_data[] = array(
+				'product_id' => $result['product_id'],
+				'name'       => $result['name'],
+				'model'      => $result['model']
+			);
+		}
+		
+		$this->load->library('json');
+		
+		$this->response->setOutput(Json::encode($product_data));
+	}
 }
 ?>

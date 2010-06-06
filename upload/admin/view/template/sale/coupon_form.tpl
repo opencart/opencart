@@ -184,7 +184,7 @@ function getProducts() {
 		dataType: 'json',
 		success: function(data) {
 			for (i = 0; i < data.length; i++) {
-	 			$('#product').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + '</option>');
+	 			$('#product').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + ' (' + data[i]['model'] + ')</option>');
 			}
 		}
 	});
@@ -202,7 +202,7 @@ function getProduct() {
 			$('#coupon_product input').remove();
 			
 			for (i = 0; i < data.length; i++) {
-	 			$('#coupon').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + '</option>');
+	 			$('#coupon').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + ' (' + data[i]['model'] + ')</option>');
 				
 				$('#coupon_product').append('<input type="hidden" name="coupon_product[]" value="' + data[i]['product_id'] + '" />');
 			} 

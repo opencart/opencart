@@ -85,7 +85,6 @@ class ControllerSettingStore extends Controller {
 		$this->data['entry_checkout'] = $this->language->get('entry_checkout');
 		$this->data['entry_stock_display'] = $this->language->get('entry_stock_display');
 		$this->data['entry_stock_checkout'] = $this->language->get('entry_stock_checkout');
-		$this->data['entry_stock_subtract'] = $this->language->get('entry_stock_subtract');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_logo'] = $this->language->get('entry_logo');
 		$this->data['entry_icon'] = $this->language->get('entry_icon');
@@ -439,14 +438,6 @@ class ControllerSettingStore extends Controller {
 			$this->data['stock_checkout'] = $store_info['stock_checkout'];		
 		} else {
 			$this->data['stock_checkout'] = '';
-		}
-
-		if (isset($this->request->post['stock_subtract'])) {
-			$this->data['stock_subtract'] = $this->request->post['stock_subtract'];
-		} elseif (isset($store_info)) {
-			$this->data['stock_subtract'] = $store_info['stock_subtract'];		
-		} else {
-			$this->data['stock_subtract'] = '';
 		}
 		
 		if (isset($this->request->post['catalog_limit'])) {

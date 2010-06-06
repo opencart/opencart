@@ -17,9 +17,9 @@ Remove the following lines:
 
 //HTTP
 
-define('HTTP_SERVER', 'http://localhost/v140/');
+define('HTTP_SERVER', 'http://www.mysite.com/');
 
-define('HTTP_IMAGE', 'http://localhost/v140/image/');
+define('HTTP_IMAGE', 'http://www.mysite.com/image/');
 
 
 
@@ -29,12 +29,22 @@ define('HTTPS_SERVER', '');
 
 define('HTTPS_IMAGE', '');
 
-4. Browse to http://www.yourstore.com/shop/install/upgrade.php
-5. After about 10 seconds you should see the Upgrade Success message or a list of errors.
-6. Post any upgrade script errors problems in the forums
-7. Goto User Groups and Edit all user groups to add access and modify to new modules and controllers
-8. Goto Admin and Edit the main System Settings. Update all fields and click save.
-9. Load the catalog site.
+4. For all versions, be sure that the admin/config.php file has the HTTPS section filled in.
+If not using HTTPS, then fill this in with the corresponding HTTP data for your site:
+Example:
+
+// HTTPS
+
+define('HTTPS_SERVER', 'http://www.mysite.com/admin/');
+
+define('HTTPS_IMAGE', 'http://www.mysite.com/image/');
+
+5. Browse to http://www.yourstore.com/shop/install/upgrade.php
+6. After about 10 seconds you should see the Upgrade Success message or a list of errors.
+7. Post any upgrade script errors problems in the forums
+8. Goto User Groups and Edit all user groups to add access and modify to new modules and controllers
+9. Goto Admin and Edit the main System Settings. Update all fields and click save.
+10. Load the store front.
  - If you see errors, you might have custom mods that were made for older versions. You will need to disable those from the admin or get the updated versions.
 
 

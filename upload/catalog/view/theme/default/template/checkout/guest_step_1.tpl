@@ -110,7 +110,7 @@
       <?php } ?>
       </span>
       <div id="shipping_details" style="<?php echo ($shipping_indicator) ? 'display:block;' : 'display:none;' ?>">
-      <b style="margin-bottom: 2px; display: block;"><?php echo $text_your_address; ?></b>
+      <b style="margin-bottom: 2px; display: block;"><?php echo $text_shipping_address; ?></b>
       <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
       <table>
           <tr>

@@ -65,14 +65,29 @@
               </tr>
             </table></td>
         </tr>
-        <tr>
-          <td><?php echo $entry_product; ?></td>
-          <td><select name="product[]" multiple="multiple" size="10" style="width: 50em;">
-              <?php foreach ($products as $product) { ?>
-              <option value="<?php echo $product['product_id']; ?>"><?php echo $product['name']; ?> - [<?php echo $product['model']; ?>]</option>
-              <?php } ?>
-            </select></td>
-        </tr>
+		<tr>
+		  <td><?php echo $entry_product; ?></td>
+		  <td><table>
+			  <tr>
+			    <td style="padding: 0;" colspan="3"><select id="category" style="margin-bottom: 5px;" onchange="getProducts();">
+			      <?php foreach ($categories as $category) { ?>
+			      <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
+			      <?php } ?>
+			      </select></td>
+			  </tr>
+			  <tr>
+			    <td style="padding: 0;"><select multiple="multiple" id="product" size="10" style="width: 350px;">
+			      </select></td>
+			    <td style="vertical-align: middle;"><input type="button" value="--&gt;" onclick="addItem();" />
+			      <br />
+			      <input type="button" value="&lt;--" onclick="removeItem();" /></td>
+			    <td style="padding: 0;"><select multiple="multiple" id="item" size="10" style="width: 350px;">
+			      </select></td>
+			  </tr>
+		    </table>
+		    <div id="product_item">
+		    </div></td>
+		</tr>
         <tr>
           <td><span class="required">*</span> <?php echo $entry_subject; ?></td>
           <td><input name="subject" value="<?php echo $subject; ?>" />
@@ -134,5 +149,44 @@ function getCustomers() {
 		}
 	});
 }
+//--></script>
+<script type="text/javascript"><!--
+function addItem() {
+	$('#product :selected').each(function() {
+		$(this).remove();
+		
+		$('#item option[value=\'' + $(this).attr('value') + '\']').remove();
+		
+		$('#item').append('<option value="' + $(this).attr('value') + '">' + $(this).text() + '</option>');
+		
+		$('#product_item input[value=\'' + $(this).attr('value') + '\']').remove();
+		
+		$('#product_item').append('<input type="hidden" name="product[]" value="' + $(this).attr('value') + '" />');
+	});
+}
+
+function removeItem() {
+	$('#item :selected').each(function() {
+		$(this).remove();
+		
+		$('#product_item input[value=\'' + $(this).attr('value') + '\']').remove();
+	});
+}
+
+function getProducts() {
+	$('#product option').remove();
+	
+	$.ajax({
+		url: 'index.php?route=sale/contact/category&category_id=' + $('#category').attr('value'),
+		dataType: 'json',
+		success: function(data) {
+			for (i = 0; i < data.length; i++) {
+	 			$('#product').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + ' (' + data[i]['model'] + ') </option>');
+			}
+		}
+	});
+}
+
+getProducts();
 //--></script>
 <?php echo $footer; ?>

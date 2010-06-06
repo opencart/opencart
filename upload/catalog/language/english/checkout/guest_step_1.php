@@ -7,6 +7,7 @@ $_['text_cart']         	= 'Cart';
 $_['text_guest_step_1'] 	= 'Guest Checkout - Step 1';
 $_['text_your_details'] 	= 'Your Personal Details';
 $_['text_your_address'] 	= 'Your Address';
+$_['text_shipping_address'] = 'Shipping Address';
 $_['text_indicator'] 		= 'Check here if you have a separate shipping address.';
 
 // Entry

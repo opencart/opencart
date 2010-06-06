@@ -541,7 +541,8 @@ class ControllerSaleCoupon extends Controller {
 		foreach ($results as $result) {
 			$product_data[] = array(
 				'product_id' => $result['product_id'],
-				'name'       => $result['name']
+				'name'       => $result['name'],
+				'model'      => $result['model']
 			);
 		}
 		
@@ -567,7 +568,8 @@ class ControllerSaleCoupon extends Controller {
 			if ($product_info) {
 				$product_data[] = array(
 					'product_id' => $product_info['product_id'],
-					'name'       => $product_info['name']
+					'name'       => $product_info['name'],
+					'model'      => $product_info['model']
 				);
 			}
 		}

@@ -14,7 +14,7 @@ class ControllerPaymentFreeCheckout extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect((((HTTPS_SERVER) ? HTTPS_SERVER : HTTP_SERVER) . 'index.php?route=extension/payment'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/payment');
 		}
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -38,26 +38,26 @@ class ControllerPaymentFreeCheckout extends Controller {
   		$this->document->breadcrumbs = array();
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => (((HTTPS_SERVER) ? HTTPS_SERVER : HTTP_SERVER) . 'index.php?route=common/home'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=common/home',
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
 
    		$this->document->breadcrumbs[] = array(
-       		'href'      => (((HTTPS_SERVER) ? HTTPS_SERVER : HTTP_SERVER) . 'index.php?route=extension/payment'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=extension/payment',
        		'text'      => $this->language->get('text_payment'),
       		'separator' => ' :: '
    		);
 		
    		$this->document->breadcrumbs[] = array(
-       		'href'      => (((HTTPS_SERVER) ? HTTPS_SERVER : HTTP_SERVER) . 'index.php?route=payment/free_checkout'),
+       		'href'      => HTTPS_SERVER . 'index.php?route=payment/free_checkout',
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['action'] = (((HTTPS_SERVER) ? HTTPS_SERVER : HTTP_SERVER) . 'index.php?route=payment/free_checkout');
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=payment/free_checkout';
 
-		$this->data['cancel'] = (((HTTPS_SERVER) ? HTTPS_SERVER : HTTP_SERVER) . 'index.php?route=extension/payment');	
+		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/payment';	
 		
 		if (isset($this->request->post['free_checkout_order_status_id'])) {
 			$this->data['free_checkout_order_status_id'] = $this->request->post['free_checkout_order_status_id'];

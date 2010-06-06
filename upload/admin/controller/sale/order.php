@@ -363,6 +363,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['heading_title'] = $this->language->get('heading_title');
 			
 			$this->data['text_wait'] = $this->language->get('text_wait');
+			$this->data['text_none'] = $this->language->get('text_none');
 			
 			$this->data['column_product'] = $this->language->get('column_product');
 			$this->data['column_model'] = $this->language->get('column_model');

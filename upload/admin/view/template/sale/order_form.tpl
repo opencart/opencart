@@ -283,7 +283,8 @@
           <tr>
             <td><?php echo $entry_status; ?></td>
             <td><select name="order_status_id">
-                <?php foreach ($order_statuses as $order_statuses) { ?>
+                <option value="0"><?php echo $text_none; ?></option>
+				<?php foreach ($order_statuses as $order_statuses) { ?>
                 <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
                 <option value="<?php echo $order_statuses['order_status_id']; ?>" selected="selected"><?php echo $order_statuses['name']; ?></option>
                 <?php } else { ?>

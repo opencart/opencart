@@ -28,7 +28,12 @@
     <td align="left"><?php echo $text_order_id; ?> <span style="color: #069; font-weight: bold;"><?php echo $order_id; ?></span><br />
       <?php echo $text_date_added; ?> <?php echo $date_added; ?><br >
       <?php echo $text_payment_method; ?> <strong><?php echo $payment_method; ?></strong><br />
-      <?php echo $text_shipping_method; ?> <strong><?php echo $shipping_method; ?></strong></td>
+      <?php echo $text_shipping_method; ?> <strong><?php echo $shipping_method; ?></strong><br />
+	  <br />
+	  <?php echo $text_email; ?> <strong><?php echo $customer_email; ?></strong><br />
+	  <?php echo $text_telephone; ?> <strong><?php echo $customer_telephone; ?></strong><br />
+	  <?php echo $text_ip; ?> <strong><?php echo $customer_ip; ?></strong>
+	</td>
   </tr>
   <tr>
     <td>&nbsp;</td>

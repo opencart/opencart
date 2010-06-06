@@ -180,7 +180,9 @@ class ControllerCheckoutShipping extends Controller {
 			$this->data['shipping'] = '';
 		}
 		
-		if (isset($this->session->data['comment'])) {
+		if (isset($this->request->post['comment'])) {
+			$this->data['comment'] = $this->request->post['comment'];
+		} elseif (isset($this->session->data['comment'])) {
     		$this->data['comment'] = $this->session->data['comment'];
 		} else {
 			$this->data['comment'] = '';

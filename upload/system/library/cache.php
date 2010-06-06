@@ -10,7 +10,9 @@ final class Cache {
 				$time = substr(strrchr($file, '.'), 1);
 
       			if ($time < time()) {
-					unlink($file);
+					if (file_exists(DIR_CACHE . $file)) {
+						unlink($file);
+					}
       			}
     		}
 		}

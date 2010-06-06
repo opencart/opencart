@@ -138,6 +138,7 @@ class ControllerCheckoutGuestStep1 extends Controller {
 		
     	$this->data['text_your_details'] = $this->language->get('text_your_details');
 		$this->data['text_your_address'] = $this->language->get('text_your_address');
+		$this->data['text_shipping_address'] = $this->language->get('text_shipping_address');
 		$this->data['text_indicator'] = $this->language->get('text_indicator');
 		$this->data['text_select'] = $this->language->get('text_select');
 		

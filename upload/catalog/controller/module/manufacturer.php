@@ -13,6 +13,7 @@ class ControllerModuleManufacturer extends Controller {
 		}
 		
 		$this->load->model('catalog/manufacturer');
+		$this->load->model('tool/seo_url'); 
 		 
 		$this->data['manufacturers'] = array();
 		

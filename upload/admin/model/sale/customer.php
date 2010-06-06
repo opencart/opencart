@@ -184,7 +184,7 @@ class ModelSaleCustomer extends Model {
 	
 	public function getCustomersByProduct($product_id) {
 		if ($product_id) {
-			$query = $this->db->query("SELECT DISTINCT `email` FROM " . DB_PREFIX . "order o LEFT JOIN " . DB_PREFIX . "order_product op ON (o.order_id = op.order_id) WHERE op.product_id = '" . (int)$product_id . "' AND o.order_status_id <> '0'");
+			$query = $this->db->query("SELECT DISTINCT `email` FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_product op ON (o.order_id = op.order_id) WHERE op.product_id = '" . (int)$product_id . "' AND o.order_status_id <> '0'");
 	
 			return $query->rows;
 		} else {

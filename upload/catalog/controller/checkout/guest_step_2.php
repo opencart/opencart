@@ -60,10 +60,10 @@ class ControllerCheckoutGuestStep2 extends Controller {
 
     	array_multisort($sort_order, SORT_ASC, $total_data);
 
-		$this->language->load('checkout/confirm');
-
     	$this->document->title = $this->language->get('heading_title'); 
 
+		$this->data['heading_title'] = $this->language->get('heading_title');
+		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['coupon']) && $this->validateCoupon()) {
 			$this->session->data['coupon'] = $this->request->post['coupon'];
 			
@@ -149,7 +149,7 @@ class ControllerCheckoutGuestStep2 extends Controller {
 		
 		$this->session->data['payment_methods'] = $method_data;
 
-		$this->document->title = $this->language->get('heading_title');
+		//$this->document->title = $this->language->get('heading_title');
       	
 		$this->document->breadcrumbs = array();
 
@@ -177,8 +177,6 @@ class ControllerCheckoutGuestStep2 extends Controller {
         	'separator' => $this->language->get('text_separator')
       	);
 		
-    	$this->data['heading_title'] = $this->language->get('heading_title');
-
 		$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
     	$this->data['text_shipping_methods'] = $this->language->get('text_shipping_methods');
 		$this->data['text_payment_method'] = $this->language->get('text_payment_method');

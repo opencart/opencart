@@ -42,9 +42,10 @@ define('HTTPS_IMAGE', 'http://www.mysite.com/image/');
 5. Browse to http://www.yourstore.com/shop/install/upgrade.php
 6. After about 10 seconds you should see the Upgrade Success message or a list of errors.
 7. Post any upgrade script errors problems in the forums
-8. Goto User Groups and Edit all user groups to add access and modify to new modules and controllers
-9. Goto Admin and Edit the main System Settings. Update all fields and click save.
-10. Load the store front.
+8. Clear any cookies in your browser to avoid getting token errors.
+9. Goto Admin User Groups and Edit all user groups to add access and modify to new modules and controllers
+10. Goto Admin and Edit the main System Settings. Update all fields and click save.
+11. Load the store front.
  - If you see errors, you might have custom mods that were made for older versions. You will need to disable those from the admin or get the updated versions.
 
 

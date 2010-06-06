@@ -230,14 +230,8 @@ final class Cart {
   	}
   	
   	public function countProducts() {
-		$total = 0;
-		
-		foreach ($this->session->data['cart'] as $value) {
-			$total += $value;
-		}
-		
-    	return $total;
-  	}
+		return array_sum($this->session->data['cart']);
+	}
 	  
   	public function hasProducts() {
     	return count($this->session->data['cart']);

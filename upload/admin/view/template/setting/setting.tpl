@@ -682,15 +682,15 @@
           <td><?php echo $entry_token_ignore; ?></td>
           <td><div class="scrollbox">
               <?php $class = 'odd'; ?>
-              <?php foreach ($tokens as $token) { ?>
+              <?php foreach ($tokens as $ignore_token) { ?>
               <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
               <div class="<?php echo $class; ?>">
-                <?php if (in_array($token, $config_token_ignore)) { ?>
-                <input type="checkbox" name="config_token_ignore[]" value="<?php echo $token; ?>" checked="checked" />
-                <?php echo $token; ?>
+                <?php if (in_array($ignore_token, $config_token_ignore)) { ?>
+                <input type="checkbox" name="config_token_ignore[]" value="<?php echo $ignore_token; ?>" checked="checked" />
+                <?php echo $ignore_token; ?>
                 <?php } else { ?>
-                <input type="checkbox" name="config_token_ignore[]" value="<?php echo $token; ?>" />
-                <?php echo $token; ?>
+                <input type="checkbox" name="config_token_ignore[]" value="<?php echo $ignore_token; ?>" />
+                <?php echo $ignore_token; ?>
                 <?php } ?>
               </div>
               <?php } ?>

@@ -27,7 +27,7 @@ class ModelShippingRoyalMail extends Model {
 				$cost = 0;
 				$compensation = 0;
 				
-				$rates = explode(',', '.1:1.28,.25:1.62,.5:2.14,.75:2.65,1:3.25,1.25:4.45,1.5:5.15,1.75:5.85,2:6.55,4:8.22,6:11.02,8:13.82,10:16.62');
+				$rates = explode(',', '.1:1.39,.25:1.72,.5:2.24,.75:2.75,1:3.35,1.25:4.50,1.5:5.20,1.75:5.90,2:6.60,4:8.22,6:11.02,8:13.82,10:16.62');
 				
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -84,7 +84,7 @@ class ModelShippingRoyalMail extends Model {
 				$cost = 0;
 				$compensation = 0;
 				
-				$rates = explode(',', '.1:2.03,.25:2.37,.5:2.89,.75:3.4,1:4,1.25:5.2,1.5:5.9,1.75:6.6,2:7.3,4:8.97,6:11.77,8:14.57,10:17.37');
+				$rates = explode(',', '.1:2.13,.25:2.46,.5:2.98,.75:3.49,1:4.09,1.25:5.24,1.5:5.94,1.75:6.64,2:7.34,4:8.96,6:12.50,8:15.30,10:18.10');
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -140,7 +140,7 @@ class ModelShippingRoyalMail extends Model {
 			if ($this->config->get('royal_mail_2nd_class_standard') && $address['iso_code_2'] == 'GB') {
 				$cost = 0;
 				
-				$rates = explode(',', '.1:1.08,.25:1.41,.5:1.85,.75:2.24,1:2.7');
+				$rates = explode(',', '.1:1.17,.25:1.51,.5:1.95,.75:2.36,1:2.84');
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -179,7 +179,7 @@ class ModelShippingRoyalMail extends Model {
 				$cost = 0;
 				$compensation = 0;
 				
-				$rates = explode(',', '.1:1.83,.25:2.16,.5:2.6,.75:2.99,1:3.45');
+				$rates = explode(',', '.1:1.91,.25:2.25,.5:2.69,.75:3.10,1:3.58');
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -295,9 +295,9 @@ class ModelShippingRoyalMail extends Model {
 				$countries = explode(',', 'AL,AD,AM,AT,AZ,BY,BE,BA,BG,HR,CY,CZ,DK,EE,FO,FI,FR,GE,DE,GI,GR,GL,HU,IS,IE,IT,KZ,KG,LV,LI,LT,LU,MK,MT,MD,MC,NL,NO,PL,PT,RO,RU,SM,SK,SI,ES,SE,CH,TJ,TR,TM,UA,UZ,VA');
 				
 				if (in_array($address['iso_code_2'], $countries)) {
-					$rates = explode(',', '.1:1.21,.12:1.31,.14:1.45,.16:1.57,.18:1.7,.2:1.82,.22:1.95,.24:2.06,.26:2.18,.28:2.31,.3:2.44,.34:2.66,.38:2.88,.42:3.1,.46:3.32,.5:3.54,.56:3.87,.62:4.2,.68:4.53,.74:4.86,.8:5.19,.9:5.74,1:6.29,1.2:7.29,1.4:8.29,1.6:9.29,1.8:10.29,2:11.29');
+					$rates = explode(',', '0.01:1.31,0.02:1.31,0.04:1.31,0.06:1.31,0.08:1.31,0.1:1.31,0.12:1.42,0.14:1.57,0.16:1.7,0.18:1.85,0.2:1.98,0.22');
 				} else {
-					$rates = explode(',', '.1:1.68,.12:1.93,.14:2.19,.16:2.44,.18:2.7,.2:2.94,.22:3.18,.24:3.41,.26:3.64,.28:3.88,.3:4.11,.34:4.59,.38:5.07,.42:5.55,.46:6.03,.5:6.51,.56:7.2,.62:7.89,.68:8.58,.74:9.27,.8:9.96,.9:11.11,1:12.26,1.2:14.46,1.4:16.66,1.6:18.86,1.8:21.06,2:23.26');
+					$rates = explode(',', '0.02:1.82,0.02:1.82,0.04:1.82,0.06:1.82,0.08:1.82,0.1:1.82,0.12:2.1,0.14:2.38,0.16:2.65,0.18:2.93,0.2:3.2,0.22');
 				}
 
 				foreach ($rates as $rate) {

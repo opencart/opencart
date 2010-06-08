@@ -7,7 +7,7 @@ class ControllerCommonLogin extends Controller {
 
 		$this->document->title = $this->language->get('heading_title');
 
-		if ($this->user->isLogged()) {
+		if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
 			$this->redirect(HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token']);
 		}
 
@@ -29,6 +29,10 @@ class ControllerCommonLogin extends Controller {
     	$this->data['entry_password'] = $this->language->get('entry_password');
 
     	$this->data['button_login'] = $this->language->get('button_login');
+		
+		if ((isset($this->session->data['token']) && !isset($this->request->get['token'])) || ((isset($this->request->get['token']) && (isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token']))))) {
+			$this->error['warning'] = $this->language->get('error_token');
+		}
 		
 		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];

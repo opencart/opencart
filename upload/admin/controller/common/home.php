@@ -232,8 +232,9 @@ class ControllerCommonHome extends Controller {
 			return $this->forward('common/login');
 		}
 		
+		// If bad token, redirect to login page
 		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
-			return $this->forward('error/token');
+			return $this->forward('common/login');
 		}
 	}
 	
@@ -256,8 +257,7 @@ class ControllerCommonHome extends Controller {
 				'common/login',
 				'common/logout',
 				'error/not_found',
-				'error/permission',	
-				'error/token'		
+				'error/permission'	
 			);			
 						
 			if (!in_array($route, $ignore)) {

@@ -337,7 +337,6 @@ class ControllerUserUserPermission extends Controller {
 			'common/logout',
 			'error/not_found',
 			'error/permission',
-			'error/token',
 			'common/footer',
 			'common/header',
 			'common/menu'

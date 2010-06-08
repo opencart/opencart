@@ -101,7 +101,7 @@
 </div>
 <script type="text/javascript"><!--
 function filter() {
-	url = 'index.php?route=sale/order';
+	url = 'index.php?route=sale/order&token=<?php echo $token; ?>';
 	
 	var filter_order_id = $('input[name=\'filter_order_id\']').attr('value');
 	

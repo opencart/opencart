@@ -69,7 +69,7 @@
 </div>
 <script type="text/javascript"><!--
 function filter() {
-	url = 'index.php?route=report/sale';
+	url = 'index.php?route=report/sale&token=<?php echo $token; ?>';
 	
 	var filter_date_start = $('input[name=\'filter_date_start\']').attr('value');
 	

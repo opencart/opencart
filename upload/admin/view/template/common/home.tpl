@@ -111,7 +111,7 @@
 function getSalesChart(range) {
 	$.ajax({
 		type: 'GET',
-		url: 'index.php?route=common/home/chart&range=' + range,
+		url: 'index.php?route=common/home/chart&token=<?php echo $token; ?>&range=' + range,
 		dataType: 'json',
 		async: false,
 		success: function(json) {

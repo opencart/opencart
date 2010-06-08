@@ -29,6 +29,9 @@
           <td style="text-align: right;"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_login; ?></span></a></td>
         </tr>
       </table>
+      <?php if ($redirect) { ?>
+      <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
+      <?php } ?>
     </form>
     <script type="text/javascript"><!--
 	$('#form input').keydown(function(e) {
@@ -36,7 +39,7 @@
 			$('#form').submit();
 		}
 	});
-	//--></script>
+	//--></script> 
   </div>
 </div>
 <?php echo $footer; ?> 

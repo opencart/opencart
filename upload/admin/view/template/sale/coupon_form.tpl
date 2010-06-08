@@ -180,11 +180,11 @@ function getProducts() {
 	$('#product option').remove();
 	
 	$.ajax({
-		url: 'index.php?route=sale/coupon/category&category_id=' + $('#category').attr('value'),
+		url: 'index.php?route=sale/coupon/category&token=<?php echo $token; ?>&category_id=' + $('#category').attr('value'),
 		dataType: 'json',
 		success: function(data) {
 			for (i = 0; i < data.length; i++) {
-	 			$('#product').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + ' (' + data[i]['model'] + ')</option>');
+	 			$('#product').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + '</option>');
 			}
 		}
 	});
@@ -194,7 +194,7 @@ function getProduct() {
 	$('#coupon option').remove();
 	
 	$.ajax({
-		url: 'index.php?route=sale/coupon/product',
+		url: 'index.php?route=sale/coupon/product&token=<?php echo $token; ?>',
 		type: 'POST',
 		dataType: 'json',
 		data: $('#coupon_product input'),
@@ -202,7 +202,7 @@ function getProduct() {
 			$('#coupon_product input').remove();
 			
 			for (i = 0; i < data.length; i++) {
-	 			$('#coupon').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + ' (' + data[i]['model'] + ')</option>');
+	 			$('#coupon').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + '</option>');
 				
 				$('#coupon_product').append('<input type="hidden" name="coupon_product[]" value="' + data[i]['product_id'] + '" />');
 			} 

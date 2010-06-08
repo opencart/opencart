@@ -86,7 +86,7 @@
           </tr>
           <tr>
             <td><?php echo $entry_template; ?></td>
-            <td><select name="config_template" onchange="$('#template').load('index.php?route=setting/setting/template&template=' + encodeURIComponent(this.value));">
+            <td><select name="config_template" onchange="$('#template').load('index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value));">
                 <?php foreach ($templates as $template) { ?>
                 <?php if ($template == $config_template) { ?>
                 <option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
@@ -122,7 +122,7 @@
         <table class="form">
           <tr>
             <td><?php echo $entry_country; ?></td>
-            <td><select name="config_country_id" id="country" onchange="$('#zone').load('index.php?route=setting/setting/zone&country_id=' + this.value + '&zone_id=<?php echo $config_zone_id; ?>');">
+            <td><select name="config_country_id" id="country" onchange="$('#zone').load('index.php?route=setting/setting/zone&token=<?php echo $token; ?>&country_id=' + this.value + '&zone_id=<?php echo $config_zone_id; ?>');">
                 <?php foreach ($countries as $country) { ?>
                 <?php if ($country['country_id'] == $config_country_id) { ?>
                 <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
@@ -458,12 +458,12 @@
           <tr>
             <td><?php echo $entry_logo; ?></td>
             <td><input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="logo" />
-              <img src="<?php echo $preview_logo; ?>" alt="" id="preview_logo" style="border: 1px solid #EEEEEE;" />&nbsp;<img src="view/image/image.png" alt="" style="cursor: pointer;" align="top" onclick="image_upload('logo', 'preview_logo');" /></td>
+              <img src="<?php echo $preview_logo; ?>" alt="" id="preview_logo" class="image" onclick="image_upload('logo', 'preview_logo');" /></td>
           </tr>
           <tr>
             <td><?php echo $entry_icon; ?></td>
             <td><input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="icon" />
-              <img src="<?php echo $preview_icon; ?>" alt="" id="preview_icon" style="margin: 4px 0px; border: 1px solid #EEEEEE;" />&nbsp;<img src="view/image/image.png" alt="" style="cursor: pointer;" align="top" onclick="image_upload('icon', 'preview_icon');" /></td>
+              <img src="<?php echo $preview_icon; ?>" alt="" id="preview_icon" class="image" onclick="image_upload('icon', 'preview_icon');" /></td>
           </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_image_thumb; ?></td>
@@ -686,7 +686,13 @@
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
-CKEDITOR.replace('description<?php echo $language['language_id']; ?>');
+CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
+	filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+	filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+	filebrowserUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+	filebrowserImageUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+	filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
+});
 <?php } ?>	
 //--></script>
 <script type="text/javascript" src="view/javascript/jquery/ui/ui.draggable.js"></script>
@@ -697,19 +703,19 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>');
 function image_upload(field, preview) {
 	$('#dialog').remove();
 	
-	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
+	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
 	
 	$('#dialog').dialog({
 		title: '<?php echo $text_image_manager; ?>',
 		close: function (event, ui) {
 			if ($('#' + field).attr('value')) {
 				$.ajax({
-					url: 'index.php?route=common/filemanager/image',
+					url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>',
 					type: 'POST',
 					data: 'image=' + encodeURIComponent($('#' + field).val()),
 					dataType: 'text',
 					success: function(data) {
-						$('#' + preview).replaceWith('<img src="' + data + '" alt="" id="' + preview + '" style="border: 1px solid #EEEEEE;" />');
+						$('#' + preview).replaceWith('<img src="' + data + '" alt="" id="' + preview + '" class="image" onclick="image_upload(\'' + field + '\', \'' + preview + '\');" />');
 					}
 				});
 			}
@@ -723,9 +729,9 @@ function image_upload(field, preview) {
 };
 //--></script>
 <script type="text/javascript"><!--
-$('#template').load('index.php?route=setting/setting/template&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
+$('#template').load('index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
 
-$('#zone').load('index.php?route=setting/setting/zone&country_id=<?php echo $config_country_id; ?>&zone_id=<?php echo $config_zone_id; ?>');
+$('#zone').load('index.php?route=setting/setting/zone&token=<?php echo $token; ?>&country_id=<?php echo $config_country_id; ?>&zone_id=<?php echo $config_zone_id; ?>');
 //--></script>
 <script type="text/javascript"><!--
 $.tabs('#tabs a');

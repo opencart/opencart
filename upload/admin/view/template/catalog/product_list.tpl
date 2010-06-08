@@ -101,7 +101,7 @@
 </div>
 <script type="text/javascript"><!--
 function filter() {
-	url = 'index.php?route=catalog/product';
+	url = 'index.php?route=catalog/product&token=<?php echo $token; ?>';
 	
 	var filter_name = $('input[name=\'filter_name\']').attr('value');
 	

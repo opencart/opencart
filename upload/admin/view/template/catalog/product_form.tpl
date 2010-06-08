@@ -151,7 +151,7 @@
           <tr>
             <td><?php echo $entry_image; ?></td>
             <td><input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
-              <img src="<?php echo $preview; ?>" alt="" id="preview" style="border: 1px solid #EEEEEE;" />&nbsp;<img src="view/image/image.png" alt="" style="cursor: pointer;" align="top" onclick="image_upload('image', 'preview');" /></td>
+              <img src="<?php echo $preview; ?>" alt="" id="preview" class="image" onclick="image_upload('image', 'preview');" /></td>
           </tr>
           <tr>
             <td><?php echo $entry_date_available; ?></td>
@@ -515,7 +515,7 @@
           <tbody id="image_row<?php echo $image_row; ?>">
             <tr>
               <td class="left"><input type="hidden" name="product_image[<?php echo $image_row; ?>]" value="<?php echo $product_image['file']; ?>" id="image<?php echo $image_row; ?>"  />
-                <img src="<?php echo $product_image['preview']; ?>" alt="" id="preview<?php echo $image_row; ?>" />&nbsp;<img src="view/image/image.png" alt="" style="cursor: pointer;" align="top" onclick="image_upload('image<?php echo $image_row; ?>', 'preview<?php echo $image_row; ?>');" /></td>
+                <img src="<?php echo $product_image['preview']; ?>" alt="" id="preview<?php echo $image_row; ?>" class="image" onclick="image_upload('image<?php echo $image_row; ?>', 'preview<?php echo $image_row; ?>');" /></td>
               <td class="left"><a onclick="$('#image_row<?php echo $image_row; ?>').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>
             </tr>
           </tbody>
@@ -535,7 +535,14 @@
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
-CKEDITOR.replace('description<?php echo $language['language_id']; ?>');
+CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
+	filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+	filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+	filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+	filebrowserUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+	filebrowserImageUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+	filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
+});
 <?php } ?>
 //--></script>
 <script type="text/javascript"><!--
@@ -565,7 +572,7 @@ function getProducts() {
 	$('#product option').remove();
 	
 	$.ajax({
-		url: 'index.php?route=catalog/product/category&category_id=' + $('#category').attr('value'),
+		url: 'index.php?route=catalog/product/category&token=<?php echo $token; ?>&category_id=' + $('#category').attr('value'),
 		dataType: 'json',
 		success: function(data) {
 			for (i = 0; i < data.length; i++) {
@@ -579,7 +586,7 @@ function getRelated() {
 	$('#related option').remove();
 	
 	$.ajax({
-		url: 'index.php?route=catalog/product/related',
+		url: 'index.php?route=catalog/product/related&token=<?php echo $token; ?>',
 		type: 'POST',
 		dataType: 'json',
 		data: $('#product_related input'),
@@ -787,19 +794,19 @@ function addSpecial() {
 function image_upload(field, preview) {
 	$('#dialog').remove();
 	
-	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
+	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
 	
 	$('#dialog').dialog({
 		title: '<?php echo $text_image_manager; ?>',
 		close: function (event, ui) {
 			if ($('#' + field).attr('value')) {
 				$.ajax({
-					url: 'index.php?route=common/filemanager/image',
+					url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>',
 					type: 'POST',
 					data: 'image=' + encodeURIComponent($('#' + field).attr('value')),
 					dataType: 'text',
 					success: function(data) {
-						$('#' + preview).replaceWith('<img src="' + data + '" alt="" id="' + preview + '" style="border: 1px solid #EEEEEE;" />');
+						$('#' + preview).replaceWith('<img src="' + data + '" alt="" id="' + preview + '" class="image" onclick="image_upload(\'' + field + '\', \'' + preview + '\');" />');
 					}
 				});
 			}
@@ -818,7 +825,7 @@ var image_row = <?php echo $image_row; ?>;
 function addImage() {
     html  = '<tbody id="image_row' + image_row + '">';
 	html += '<tr>';
-	html += '<td class="left"><input type="hidden" name="product_image[' + image_row + ']" value="" id="image' + image_row + '" /><img src="<?php echo $no_image; ?>" alt="" id="preview' + image_row + '" style="margin: 4px 0px; border: 1px solid #EEEEEE;" />&nbsp;<img src="view/image/image.png" alt="" style="cursor: pointer;" align="top" onclick="image_upload(\'image' + image_row + '\', \'preview' + image_row + '\');" /></td>';
+	html += '<td class="left"><input type="hidden" name="product_image[' + image_row + ']" value="" id="image' + image_row + '" /><img src="<?php echo $no_image; ?>" alt="" id="preview' + image_row + '" class="image" onclick="image_upload(\'image' + image_row + '\', \'preview' + image_row + '\');" /></td>';
 	html += '<td class="left"><a onclick="$(\'#image_row' + image_row  + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
 	html += '</tr>';
 	html += '</tbody>';
@@ -834,7 +841,6 @@ $(document).ready(function() {
 	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
 });
 //--></script>
-
 <script type="text/javascript"><!--
 $.tabs('#tabs a'); 
 $.tabs('#languages a'); 

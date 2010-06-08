@@ -64,6 +64,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_length_class'] = $this->language->get('text_length_class');
 		$this->data['text_opencart'] = $this->language->get('text_opencart');
       	$this->data['text_zone'] = $this->language->get('text_zone');
+		$this->data['text_confirm'] = $this->language->get('text_confirm');
 		
 		if (!$this->user->isLogged() || !isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
 			$this->data['logged'] = '';

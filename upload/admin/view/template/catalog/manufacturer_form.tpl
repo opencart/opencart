@@ -53,7 +53,7 @@
         <tr>
           <td><?php echo $entry_image; ?></td>
           <td><input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
-            <img src="<?php echo $preview; ?>" alt="" id="preview" style="border: 1px solid #EEEEEE;" />&nbsp;<img src="view/image/image.png" alt="" style="cursor: pointer;" align="top" onclick="image_upload('image', 'preview');" /></td>
+            <img src="<?php echo $preview; ?>" alt="" id="preview" class="image" onclick="image_upload('image', 'preview');" /></td>
         </tr>
         <tr>
           <td><?php echo $entry_sort_order; ?></td>
@@ -71,19 +71,19 @@
 function image_upload(field, preview) {
 	$('#dialog').remove();
 	
-	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
+	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
 	
 	$('#dialog').dialog({
 		title: '<?php echo $text_image_manager; ?>',
 		close: function (event, ui) {
 			if ($('#' + field).attr('value')) {
 				$.ajax({
-					url: 'index.php?route=common/filemanager/image',
+					url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>',
 					type: 'POST',
 					data: 'image=' + encodeURIComponent($('#' + field).val()),
 					dataType: 'text',
 					success: function(data) {
-						$('#' + preview).replaceWith('<img src="' + data + '" alt="" id="' + preview + '" style="border: 1px solid #EEEEEE;" />');
+						$('#' + preview).replaceWith('<img src="' + data + '" alt="" id="' + preview + '" class="image" onclick="image_upload(\'' + field + '\', \'' + preview + '\');" />');
 					}
 				});
 			}

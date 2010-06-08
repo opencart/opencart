@@ -257,7 +257,7 @@ p {
 	font-size: 14px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: bold;
-	text-transform: capitalize;
+	text-transform: uppercase;
 	margin: 0px;
 }
 .heading {
@@ -299,7 +299,7 @@ p {
 	font-size: 14px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: bold;
-	text-transform: capitalize;
+	text-transform: uppercase;
 }
 .box .top img {
 	float: left;

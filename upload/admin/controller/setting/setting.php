@@ -10,6 +10,10 @@ class ControllerSettingSetting extends Controller {
 		$this->load->model('setting/setting');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			if (isset($this->request->post['config_token_ignore'])) {
+				$this->request->post['config_token_ignore'] = serialize($this->request->post['config_token_ignore']);
+			}
+			
 			$this->model_setting_setting->editSetting('config', $this->request->post);
 
 			if ($this->config->get('config_currency_auto')) {
@@ -99,6 +103,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_review'] = $this->language->get('entry_review');
 		$this->data['entry_alert_emails'] = $this->language->get('entry_alert_emails');
 		$this->data['entry_maintenance'] = $this->language->get('entry_maintenance');
+		$this->data['entry_token_ignore'] = $this->language->get('entry_token_ignore');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -769,7 +774,36 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_error_filename'] = $this->config->get('config_error_filename');
 		}
-		 
+		
+		$ignore = array(
+			'common/login',
+			'common/logout',
+			'error/not_found',
+			'error/permission'
+		);
+		
+		$this->data['tokens'] = array();
+		
+		$files = glob(DIR_APPLICATION . 'controller/*/*.php');
+		
+		foreach ($files as $file) {
+			$data = explode('/', dirname($file));
+			
+			$token = end($data) . '/' . basename($file, '.php');
+			
+			if (!in_array($token, $ignore)) {
+				$this->data['tokens'][] = $token;
+			}
+		}
+		
+		if (isset($this->request->post['config_token_ignore'])) {
+			$this->data['config_token_ignore'] = $this->request->post['config_token_ignore']; 
+		} elseif ($this->config->get('config_token_ignore')) {
+			$this->data['config_token_ignore'] = unserialize($this->config->get('config_token_ignore'));
+		} else {
+			$this->data['config_token_ignore'] = array();
+		}
+				
 		$this->template = 'setting/setting.tpl';
 		$this->children = array(
 			'common/header',	

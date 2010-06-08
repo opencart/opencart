@@ -232,9 +232,39 @@ class ControllerCommonHome extends Controller {
 			return $this->forward('common/login');
 		}
 		
-		// If bad token, redirect to login page
-		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
-			return $this->forward('common/login');
+		if (isset($this->request->get['route']) && !isset($this->request->get['token'])) {
+			$route = '';
+						
+			$part = explode('/', $this->request->get['route']);
+			
+			if (isset($part[0])) {
+				$route .= $part[0];
+			}
+			
+			if (isset($part[1])) {
+				$route .= '/' . $part[1];
+			}
+			
+			$ignore = array(
+				'common/login',
+				'common/logout',
+				'error/not_found',
+				'error/permission'
+			);
+			
+			$config_ignore = unserialize($this->config->get('config_token_ignore'));
+				
+			$ignore = array_merge($ignore, $config_ignore);
+						
+			if (!in_array($route, $ignore)) {
+				if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
+					return $this->forward('common/login');
+				}
+			}
+		} else {
+			if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
+				return $this->forward('common/login');
+			}
 		}
 	}
 	
@@ -257,7 +287,8 @@ class ControllerCommonHome extends Controller {
 				'common/login',
 				'common/logout',
 				'error/not_found',
-				'error/permission'	
+				'error/permission',	
+				'error/token'		
 			);			
 						
 			if (!in_array($route, $ignore)) {

@@ -678,6 +678,24 @@
               <span class="error"><?php echo $error_error_filename; ?></span>
               <?php } ?></td>
           </tr>
+          <tr>
+          <td><?php echo $entry_token_ignore; ?></td>
+          <td><div class="scrollbox">
+              <?php $class = 'odd'; ?>
+              <?php foreach ($tokens as $token) { ?>
+              <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+              <div class="<?php echo $class; ?>">
+                <?php if (in_array($token, $config_token_ignore)) { ?>
+                <input type="checkbox" name="config_token_ignore[]" value="<?php echo $token; ?>" checked="checked" />
+                <?php echo $token; ?>
+                <?php } else { ?>
+                <input type="checkbox" name="config_token_ignore[]" value="<?php echo $token; ?>" />
+                <?php echo $token; ?>
+                <?php } ?>
+              </div>
+              <?php } ?>
+            </div></td>
+          </tr>
         </table>
       </div>
     </form>

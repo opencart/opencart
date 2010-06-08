@@ -76,7 +76,7 @@ $_['entry_admin_limit']   	  = 'Default Items per Page (Admin):<br /><span class
 $_['entry_cart_weight']       = 'Display Weight on Cart Page:<br /><span class="help">Show the cart weight on the cart page</span>';
 $_['entry_review']       	  = 'Allow Reviews:<br /><span class="help">Enable/Disable new review entry and display of existing reviews</span>';
 $_['entry_maintenance']       = 'Maintenance Mode:<br /><span class="help">Prevents customers from browsing your store. They will instead see a maintenance message. If logged in as admin, you will see the store as normal.</span>';
-
+$_['entry_token_ignore']      = 'Ignore Tokens on these pages:<br /><span class="help">This version of OpenCart has a token system for admin security. Modules that have not been updated for token support yet can be checked to ignore the token check and allow them to work as normal.</span>';
 // Button
 $_['button_add_store']        = 'Create A New Store';
 

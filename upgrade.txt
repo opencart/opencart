@@ -1,5 +1,6 @@
-OPENCART UPGRADE STEPS:
-====================
+OPENCART UPGRADE
+(turn wordwrap on to read this easier)
+=============================
 
 This version of opencart comes with a universal upgrade script that allows you to update your store from as far back as v1.3.2 to the latest version of OpenCart without having to install each version in between. The script is still in beta so there may be some quirks. 
 
@@ -10,43 +11,70 @@ Please be sure to post any errors shown on the forums so that we may address the
 
 If using a version older than OpenCart v1.3.2, you will need to first upgrade all the in between versions until you reach 1.3.2. Then you can run this script.
 
-1. BACKUP YOUR EXISTING STORE FILES AND DATABASE!!!
-2. Upload ALL new files on top of your current install EXCEPT config.php and admin/config.php
-3. If using 1.4.0 or earlier, Edit your config.php file in the root path of your store. 
+
+
+Upgrade Steps
+------------------------------
+
+STEP 1. BACKUP YOUR EXISTING STORE FILES AND DATABASE!!!
+
+STEP 2. Upload ALL new files on top of your current install EXCEPT config.php and admin/config.php
+
+STEP 3. If using 1.4.0 or earlier, Edit your config.php file in the root path of your store. 
 Remove the following lines:
 
-//HTTP
+	//HTTP
 
-define('HTTP_SERVER', 'http://www.mysite.com/');
+	define('HTTP_SERVER', 'http://www.mysite.com/');
 
-define('HTTP_IMAGE', 'http://www.mysite.com/image/');
+	define('HTTP_IMAGE', 'http://www.mysite.com/image/');
 
 
 
-// HTTPS
+	// HTTPS
 
-define('HTTPS_SERVER', '');
+	define('HTTPS_SERVER', '');
 
-define('HTTPS_IMAGE', '');
+	define('HTTPS_IMAGE', '');
 
-4. For all versions, be sure that the admin/config.php file has the HTTPS section filled in.
-If not using HTTPS, then fill this in with the corresponding HTTP data for your site:
-Example:
+STEP 4. For all versions, be sure that the admin/config.php file has the HTTPS section filled in.
+Even if not using SSL, fill this in with the corresponding HTTP data for your site so that both HTTP and HTTPS entries have the same data:
 
-// HTTPS
+	// HTTPS
 
-define('HTTPS_SERVER', 'http://www.mysite.com/admin/');
+	define('HTTPS_SERVER', 'http://www.mysite.com/admin/');
 
-define('HTTPS_IMAGE', 'http://www.mysite.com/image/');
+	define('HTTPS_IMAGE', 'http://www.mysite.com/image/');
 
-5. Browse to http://www.yourstore.com/shop/install/upgrade.php
-6. After about 10 seconds you should see the Upgrade Success message or a list of errors.
-7. Post any upgrade script errors problems in the forums
-8. Clear any cookies in your browser to avoid getting token errors.
-9. Goto Admin User Groups and Edit all user groups to add access and modify to new modules and controllers
-10. Goto Admin and Edit the main System Settings. Update all fields and click save.
-11. Load the store front.
- - If you see errors, you might have custom mods that were made for older versions. You will need to disable those from the admin or get the updated versions.
+STEP 5. Browse to http://www.yourstore.com/shop/install/upgrade.php
+
+STEP 6. After about 10 seconds you should see the Upgrade Success message or a list of errors.
+
+STEP 7. Post any upgrade script errors problems in the forums
+
+STEP 8. Clear any cookies in your browser to avoid getting token errors.
+
+STEP 9. Load the admin page & press Ctrl+F5 to force the browser to update the css changes.
+
+STEP 10. Admin User Groups and Edit all user groups to add access and modify to new modules and controllers
+
+STEP 11. Goto Admin and Edit the main System Settings. Update all fields and click save. Be sure to choose any custom mods from the Ignore Token list to avoid any token warnings.
+
+STEP 12. Load the store front & press Ctrl+F5 to force the browser to update the css changes.
+
+
+
+Possible Errors and Solutions:
+------------------------------
+
+ERROR: You see an error like "Undefined method https..."
+SOLUTION: Your custom modules need to be updated to 1.4.1 or later to remove the use of the url class
+
+ERROR: You are redirected to the admin login page with "Invalid Token Session".
+SOLUTION: Your custom modules need to be updated to 1.4.8 to use the new token security.  You can also bypass this token check by adding the custom mods to the ignore list on the "Server" tab of the System Settings area in admin
+
+
+Please post any other errors in the forum threads regarding this version
 
 
 

@@ -14,7 +14,7 @@ $_['column_action']    = 'Action';
 $_['entry_name']       = 'Download Name:';
 $_['entry_filename']   = 'Filename:';
 $_['entry_remaining']  = 'Total Downloads Allowed:';
-$_['entry_update']     = 'Update Previously Purchased Versions:';
+$_['entry_update']     = 'Push to Previous Customers:<br /><span class="help">Check this to update previously purchased versions as well.</span>';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify downloads!';

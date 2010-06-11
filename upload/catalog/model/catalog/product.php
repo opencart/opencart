@@ -231,18 +231,10 @@ class ModelCatalogProduct extends Model {
 			$sql .= " LIMIT " . (int)$start . "," . (int)$limit;
 
 			$query = $this->db->query($sql);
-			
-			$products = $this->getProductsByTag($keyword, $category_id, $sort, $order, $start, $limit);
 						
-			foreach ($query->rows as $key => $value) {
-				$products[$value['product_id']] = $query->rows[$key];
-			}
-			
-			return $products;
-
-		} else {
-			return 0;	
+			return $query->rows;
 		}
+		return 0;	
 	}
 	
 	public function getTotalProductsByKeyword($keyword, $category_id = 0, $description = FALSE, $model = FALSE) {
@@ -279,16 +271,13 @@ class ModelCatalogProduct extends Model {
 			
 			$query = $this->db->query($sql);
 		
-			$tag_count = $this->getTotalProductsByTag($keyword, $category_id);
-								
 			if ($query->num_rows) {
-				return ($query->row['total'] + $tag_count);
+				return $query->row['total'];
 			} else {
-				return (0 + $tag_count);
+				return 0;
 			}
-		} else {
-			return 0;	
-		}		
+		}
+		return 0;
 	}
 	
 	public function getTotalProductsByTag($tag, $category_id = 0) {
@@ -328,6 +317,7 @@ class ModelCatalogProduct extends Model {
 				return 0;
 			}
 		}
+		return 0;
 	}
 	
 	public function getPath($category_id) {

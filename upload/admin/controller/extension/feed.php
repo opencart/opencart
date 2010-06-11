@@ -39,7 +39,7 @@ class ControllerExtensionFeed extends Controller {
 		if (isset($this->session->data['error'])) {
 			$this->data['error'] = $this->session->data['error'];
 		
-			unset($this->session->data['success']);
+			unset($this->session->data['error']);
 		} else {
 			$this->data['error'] = '';
 		}

@@ -114,7 +114,11 @@ class ControllerProductSearch extends Controller {
 			$this->load->model('catalog/product');
 			
 			$product_total = $this->model_catalog_product->getTotalProductsByKeyword($this->request->get['keyword'], isset($this->request->get['category_id']) ? $this->request->get['category_id'] : '', isset($this->request->get['description']) ? $this->request->get['description'] : '', isset($this->request->get['model']) ? $this->request->get['model'] : '');
-						
+			
+			$product_tag_total = $this->model_catalog_product->getTotalProductsByTag($this->request->get['keyword'], isset($this->request->get['category_id']) ? $this->request->get['category_id'] : '');
+			
+			$product_total = max($product_total, $product_tag_total);
+			
 			if ($product_total) {
 				$url = '';
 
@@ -139,9 +143,17 @@ class ControllerProductSearch extends Controller {
         		$this->data['products'] = array();
 				
 				$results = $this->model_catalog_product->getProductsByKeyword($this->request->get['keyword'], isset($this->request->get['category_id']) ? $this->request->get['category_id'] : '', isset($this->request->get['description']) ? $this->request->get['description'] : '', isset($this->request->get['model']) ? $this->request->get['model'] : '', $sort, $order, ($page - 1) * $this->config->get('config_catalog_limit'), $this->config->get('config_catalog_limit'));
-        		
-				foreach ($results as $result) {
-					if ($result['image']) {
+
+        		$tag_results = $this->model_catalog_product->getProductsByTag($this->request->get['keyword'], isset($this->request->get['category_id']) ? $this->request->get['category_id'] : '', $sort, $order, ($page - 1) * $this->config->get('config_catalog_limit'), $this->config->get('config_catalog_limit'));
+        		        		
+				foreach ($results as $key => $value) {
+					$tag_results[$value['product_id']] = $results[$key];
+				}
+				
+				$product_total = count($tag_results);
+				
+				foreach ($tag_results as $result) {
+        			if ($result['image']) {
 						$image = $result['image'];
 					} else {
 						$image = 'no_image.jpg';

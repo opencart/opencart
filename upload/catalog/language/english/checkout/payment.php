@@ -21,5 +21,5 @@ $_['entry_coupon']         = 'Coupon:';
 // Error
 $_['error_payment']        = 'Error: Payment method required!';
 $_['error_agree']          = 'Error: You must agree to the %s!';
-$_['error_coupon']         = 'Error: Coupon is either invalid, expired or reached it\'s usage limit!';
+$_['error_coupon']         = 'Error: Coupon is either invalid, expired or reached its usage limit!';
 ?>

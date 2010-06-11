@@ -118,6 +118,7 @@ final class Cart {
 					'download'     => $download_data,
         			'quantity'     => $quantity,
         			'minimum'      => $product_query->row['minimum'],
+					'subtract'     => $product_query->row['subtract'],
 					'stock'        => $stock,
         			'price'        => ($price + $option_price),
         			'total'        => ($price + $option_price) * $quantity,

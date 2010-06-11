@@ -25,7 +25,7 @@ $_['entry_discount']      = 'Discount:';
 $_['entry_logged']        = 'Customer Login:<br /><span class="help">Customer must be logged in to use the coupon.</span>';
 $_['entry_shipping']      = 'Free Shipping:';
 $_['entry_total']         = 'Total Amount:<br /><span class="help">The total amount that must reached before the coupon is valid.</span>';
-$_['entry_product']       = 'Products:';
+$_['entry_product']       = 'Products:<br /><span class="help">Choose specific products the coupon will apply to. Select no products to apply coupon to entire cart.</span>';
 $_['entry_date_start']    = 'Date Start:';
 $_['entry_date_end']      = 'Date End:';
 $_['entry_uses_total']    = 'Uses Per Coupon:<br /><span class="help">The maximum number of times the coupon can be used by any customer. Leave blank for unlimited</span>';

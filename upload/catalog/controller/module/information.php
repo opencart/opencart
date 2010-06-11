@@ -9,6 +9,7 @@ class ControllerModuleInformation extends Controller {
     	$this->data['text_sitemap'] = $this->language->get('text_sitemap');
 		
 		$this->load->model('catalog/information');
+		$this->load->model('tool/seo_url');
 		
 		$this->data['informations'] = array();
 

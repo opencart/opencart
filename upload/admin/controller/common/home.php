@@ -232,7 +232,7 @@ class ControllerCommonHome extends Controller {
 			return $this->forward('common/login');
 		}
 		
-		if (isset($this->request->get['route']) && !isset($this->request->get['token'])) {
+		if (isset($this->request->get['route'])) {
 			$route = '';
 						
 			$part = explode('/', $this->request->get['route']);

@@ -168,7 +168,8 @@ class ControllerCheckoutConfirm extends Controller {
         		'model'      => $product['model'],
         		'option'     => $option_data,
 				'download'   => $product['download'],
-				'quantity'   => $product['quantity'], 
+				'quantity'   => $product['quantity'],
+				'subtract'   => $product['subtract'],
 				'price'      => $product['price'],
         		'total'      => $product['total'],
 				'tax'        => $this->tax->getRate($product['tax_class_id'])

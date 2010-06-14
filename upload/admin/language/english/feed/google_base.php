@@ -11,5 +11,5 @@ $_['entry_status']     = 'Status:';
 $_['entry_data_feed']  = 'Data Feed Url:';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify payment Google Base feed!';
+$_['error_permission'] = 'Warning: You do not have permission to modify Google Base feed!';
 ?>

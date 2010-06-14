@@ -15,18 +15,23 @@ class ModelCatalogDownload extends Model {
 	}
 	
 	public function editDownload($download_id, $data) {
+        $query = $this->db->query("SELECT filename from " . DB_PREFIX . "download WHERE download_id = '" . (int)$download_id . "'");
+        
+        $old_filename = $query->row['filename'];
+        
         $this->db->query("UPDATE " . DB_PREFIX . "download SET remaining = '" . (int)$data['remaining'] . "' WHERE download_id = '" . (int)$download_id . "'");
       	
 		if (isset($data['download'])) {
         	$this->db->query("UPDATE " . DB_PREFIX . "download SET filename = '" . $this->db->escape($data['download']) . "', mask = '" . $this->db->escape($data['mask']) . "' WHERE download_id = '" . (int)$download_id . "'");
+        	
+        	if (isset($data['update'])) {
+      			$query = $this->db->query("SELECT * from " . DB_PREFIX . "download WHERE download_id = '" . (int)$download_id . "'");
+	                
+      			$this->db->query("UPDATE " . DB_PREFIX . "order_download SET remaining = '" . (int)$query->row['remaining'] . "', `filename` = '" . $this->db->escape($query->row['filename']) . "', mask = '" . $this->db->escape($query->row['mask']) . "' WHERE `filename` = '" . $this->db->escape($old_filename) . "'");
+      		}
+      	
       	}
-		
-		if (isset($data['update'])) {
-        	$query = $this->db->query("SELECT filename from " . DB_PREFIX . "download WHERE download_id = '" . (int)$download_id . "'");
-     		$filename = $query->row['filename'];
-      		$this->db->query("UPDATE " . DB_PREFIX . "order_download SET `filename` = '" . $this->db->escape($data['download']) . "', mask = '" . $this->db->escape(basename($data['mask'])) . "' WHERE `filename` = '" . $this->db->escape($filename) . "'");
-      	}
-		
+
       	$this->db->query("DELETE FROM " . DB_PREFIX . "download_description WHERE download_id = '" . (int)$download_id . "'");
 
       	foreach ($data['download_description'] as $language_id => $value) {

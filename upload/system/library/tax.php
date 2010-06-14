@@ -11,8 +11,13 @@ final class Tax {
 			$country_id = $this->session->data['country_id'];
 			$zone_id = $this->session->data['zone_id'];
 		} else {
-			$country_id = $this->config->get('config_country_id');
-			$zone_id = $this->config->get('config_zone_id');
+			if ($this->config->get('config_tax')) {
+				$country_id = $this->config->get('config_country_id');
+				$zone_id = $this->config->get('config_zone_id');
+			} else {
+				$country_id = 0;
+				$zone_id = 0;
+			}
 		}		
 		
 		$this->setZone($country_id, $zone_id);

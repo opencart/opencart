@@ -509,7 +509,6 @@ ALTER TABLE oc_store DROP stock_status_id;
 
 ### Start 1.4.6
 
-INSERT INTO `oc_setting` (`setting_id` ,`group` ,`key` ,`value`) VALUES (NULL , 'config', 'config_admin_language', 'en') ON DUPLICATE KEY UPDATE setting_id=setting_id;
 
 ### Start 1.4.7
 

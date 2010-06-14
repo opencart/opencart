@@ -316,8 +316,8 @@ CREATE TABLE IF NOT EXISTS oc_weight_class_description (
 
 INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (1, 1, 'Kilogram', 'kg') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
 INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (2, 1, 'Gram', 'g') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
-INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (3, 1, 'Pound ', 'lb') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
-INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (4, 1, 'Ounce', 'oz') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
+INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (3, 1, 'Pounds ', 'lbs') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
+INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (4, 1, 'Ounces', 'ozs') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
 INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (5, 1, 'Pound ', 'lb') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
 INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (6, 1, 'Ounce', 'oz') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
 

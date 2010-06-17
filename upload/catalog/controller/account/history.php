@@ -79,7 +79,7 @@ class ControllerAccountHistory extends Controller {
 			$pagination->page = $page;
 			$pagination->limit = $this->config->get('config_catalog_limit');
 			$pagination->text = $this->language->get('text_pagination');
-			$pagination->url = HTTP_SERVER . 'index.php?route=account/history&page=%s';
+			$pagination->url = HTTP_SERVER . 'index.php?route=account/history&page={page}';
 			
 			$this->data['pagination'] = $pagination->render();
 

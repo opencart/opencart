@@ -76,6 +76,10 @@ class ControllerCheckoutGuestStep1 extends Controller {
 				$this->session->data['guest']['shipping']['country_id'] = $this->request->post['shipping_country_id'];
 				$this->session->data['guest']['shipping']['zone_id'] = $this->request->post['shipping_zone_id'];
 			
+				if ($this->cart->hasShipping()) {
+					$this->tax->setZone($this->request->post['shipping_country_id'], $this->request->post['shipping_zone_id']);
+				}
+			
 				$shipping_country_info = $this->model_localisation_country->getCountry($this->request->post['shipping_country_id']);
 				
 				if ($shipping_country_info) {
@@ -99,7 +103,7 @@ class ControllerCheckoutGuestStep1 extends Controller {
 					$this->session->data['guest']['shipping']['zone'] = '';
 					$this->session->data['guest']['shipping']['zone_code'] = '';
 				}
-			
+				
 			} else {
 				unset($this->session->data['guest']['shipping']);
 			}

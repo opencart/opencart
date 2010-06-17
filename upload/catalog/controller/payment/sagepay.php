@@ -90,7 +90,7 @@ class ControllerPaymentSagepay extends Controller {
         	$data['DeliveryPostCode'] = $order_info['payment_postcode'];
         	$data['DeliveryCountry'] = $order_info['payment_iso_code_2'];
 		
-			if ($order_info['$payment_iso_code_2'] == 'US') {
+			if ($order_info['payment_iso_code_2'] == 'US') {
 				$data['DeliveryState'] = $order_info['payment_zone_code'];
 			}
 		
@@ -145,7 +145,7 @@ class ControllerPaymentSagepay extends Controller {
 			if ($data) {
 				$this->load->model('checkout/order');
 		
-				$this->model_checkout_order->confirm($this->request->get['order_id'], $this->config->get('sagepay_order_status_id'));
+				$this->model_checkout_order->confirm($data['VendorTxCode'], $this->config->get('sagepay_order_status_id'));
 
 				$message = '';
 		

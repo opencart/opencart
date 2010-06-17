@@ -80,6 +80,7 @@ class ControllerModuleSpecial extends Controller {
 		$this->id = 'special';
 
 		if ($this->config->get('special_position') == 'home') {
+			$this->data['heading_title'] .= (' ' . $this->language->get('text_products'));
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/special_home.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/module/special_home.tpl';
 			} else {

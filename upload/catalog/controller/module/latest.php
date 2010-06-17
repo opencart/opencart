@@ -80,6 +80,7 @@ class ControllerModuleLatest extends Controller {
 		$this->id = 'latest';
 		
 		if ($this->config->get('latest_position') == 'home') {
+			$this->data['heading_title'] .= (' ' . $this->language->get('text_products'));
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/latest_home.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/module/latest_home.tpl';
 			} else {

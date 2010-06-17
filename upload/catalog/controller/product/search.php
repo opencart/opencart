@@ -150,7 +150,7 @@ class ControllerProductSearch extends Controller {
 					$tag_results[$value['product_id']] = $results[$key];
 				}
 				
-				$product_total = count($tag_results);
+				//$product_total = count($tag_results);
 				
 				foreach ($tag_results as $result) {
         			if ($result['image']) {

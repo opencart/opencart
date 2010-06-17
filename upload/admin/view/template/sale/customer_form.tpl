@@ -17,7 +17,7 @@
         <a id="address_<?php echo $address_row; ?>" tab="#tab_address_<?php echo $address_row; ?>"><?php echo $tab_address . ' ' . $address_row; ?><span onclick="$('#vtabs a:first').trigger('click'); $('#address_<?php echo $address_row; ?>').remove(); $('#tab_address_<?php echo $address_row; ?>').remove();" class="remove">&nbsp;</span></a>
         <?php $address_row++; ?>
         <?php } ?>
-        <span id="address_add" onclick="addAddress();" class="add" style="float: right; margin-right: 14px; font-size: 13px; font-weight: bold;">Add&nbsp;</span></div>
+        <span id="address_add" onclick="addAddress();" class="add" style="float: right; margin-right: 14px; font-size: 13px; font-weight: bold;"><?php echo $button_add; ?></span></div>
       <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="form">
         <div id="tab_general" class="vtabs_page">
           <table class="form">

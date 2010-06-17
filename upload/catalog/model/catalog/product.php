@@ -19,7 +19,8 @@ class ModelCatalogProduct extends Model {
 			'pd.name',
 			'p.sort_order',
 			'special',
-			'rating'
+			'rating',
+			'p.price'
 		);
 			
 		if (in_array($sort, $sort_data)) {
@@ -62,7 +63,8 @@ class ModelCatalogProduct extends Model {
 			'pd.name',
 			'p.sort_order',
 			'special',
-			'rating'
+			'rating',
+			'p.price'
 		);
 			
 		if (in_array($sort, $sort_data)) {
@@ -131,7 +133,8 @@ class ModelCatalogProduct extends Model {
 				'pd.name',
 				'p.sort_order',
 				'special',
-				'rating'
+				'rating',
+				'p.price'
 			);
 				
 			if (in_array($sort, $sort_data)) {
@@ -205,7 +208,8 @@ class ModelCatalogProduct extends Model {
 				'pd.name',
 				'p.sort_order',
 				'special',
-				'rating'
+				'rating',
+				'p.price'
 			);
 				
 			if (in_array($sort, $sort_data)) {
@@ -487,7 +491,8 @@ class ModelCatalogProduct extends Model {
 			'pd.name',
 			'p.sort_order',
 			'special',
-			'rating'
+			'rating',
+			'p.price'
 		);
 			
 		if (in_array($sort, $sort_data)) {

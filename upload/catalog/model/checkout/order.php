@@ -174,7 +174,11 @@ class ModelCheckoutOrder extends Model {
 			$template->data['customer_telephone'] = $order_query->row['telephone'];
 			$template->data['customer_ip'] = $order_query->row['ip'];
 			$template->data['comment'] = $order_query->row['comment'];
-
+			
+			if ($comment) {
+				$template->data['comment'] .= ('<br /><br />' . nl2br($comment)); 
+			}
+			
 			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE zone_id = '" . (int)$order_query->row['shipping_zone_id'] . "'");
 			
 			if ($zone_query->num_rows) {

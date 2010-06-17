@@ -1,3 +1,123 @@
+-- OpenCart v1.4.8b --
+
+- Removed old latest code from home.php
+- Improved the token ignore
+- currency has check before format
+- tag search count fix
+- added load seo for the info module
+- Stock subtract bug fixed
+- fixed success/error message clear on admin extension page
+- fixed unlimited coupon setting fixed
+- fixed extra field requirement in store edit
+- Fixed download push feature
+- Added if statement around welcome box to not show if empty
+- Fixed some typos
+- Fixed category name validation to match db length (255)
+- Fixed default address option on edit address
+- Fixed tax from defaulting to store tax when display prices with tax is off
+
+
+-- OpenCart v1.4.8 --
+
+FIXED:
+- Coupon discount check only for flat value coupons
+- Pagination in search & specials
+- Worldpay not updating order
+- Admin Country, Zone, & Download pagination
+- Thickbox agree to terms fix on checkout payment page
+- Continue button with ajax add to cart off goes to not found
+- Division by zero if catalog/admin item limit set to 0 (tho it should not be possible)
+- UPS error scenarios weren't showing properly
+- UPS weight display at the title instead of redundantly per-rate
+- UPS Test mode confusion cleared up
+- USPS weight display at the title instead of redundantly per-rate
+- removed "source" for ckeditor to cut down filesize
+- Add $config->set('config_language', $languages[$code]['code']); to index.php
+- Changed new tables for product_tags and stuff to utf8_bin
+- Order Comments not included in email
+- Added default invoice id & prefix to install/upgrade.sql
+- Added conditional check for the admin header base path: (HTTPS_SERVER) ? HTTPS_SERVER : HTTP_SERVER;
+- restore all languages in backend even if disabled
+- replaced add to cart javascript: $('#add_to_cart').removeAttr('onclick'); to allow handling by other scripts.
+- sort arrow images were reversed
+- Perpetual Payments Test mode confusion cleared up
+- Featured limit default - add (int) to limit in model to prevent error
+- Specials fix for limit in sidebox
+- Going to wrong page while using SEO now shows error page
+- Fixed Combined Tax rate issue
+- Fixed Low Order Fee order total typo for tax setting
+- Fixed Sales tax issue for non-shipped products to use payment address
+- Install admin email not populating the user table
+- Update royal mail rates or make them editable from admin
+- Fix pp standard to use the update statuses and so that curl and fsock both use the proper "else" options.
+- Changed default success message "2-5 working days" to be more vague
+- Reordered the children for "common/header" to appear last so that document class methods can be called from within modules.
+- Fix default weight/length to default to what the setting has.
+- Bestsellers wasn't updating immediately after purchase because the cache wasn't cleared on purchase
+
+
+
+ADDED:
+- Category Description Name to be longer than 32 (255)
+- SEO proper "not found" redirect
+- mail parameters field to mail tab (useful for adding authentication "-f" options and more)
+- Full Customer Details in admin
+- Manual Order Edit
+- Additional checkbox for order update (Notify = send email, Update = add history)
+- confirm delete added to admin delete/uninstall actions
+- Longer email fields (96)
+- Added product tags to bottom of product page for easy cross-referencing.
+- Auto-select first radio button for shipping or payment
+- increased contact form character count from 1000 to 3000
+- Fixed bug in thickbox js to allow use of rel tag for prev/next additional images with main image in popup
+- Show category description info even where there are no products
+- add customer email to invoice under the payment address
+- added order comments on invoice
+- moved some inline javascript to external files (ajax add to cart now in ajax_add.js)
+- moved coupon box to the payment page to allow coupons to change the possible payment options (i.e. freecheckout for 100% discount coupons)
+- Comments to order invoice
+- Counts for all tabs on product page
+- Optional checkbox to push updated downloads to all previous customers upon new version save
+- Added current download filename under the input box on admin download form
+- Options -Indexes and tpl file disallow to default .htaccess file to prevent showing directory listings
+- CSRF Fix for new admin user insert (captcha on user edit form)
+- Additional Images & Related products count added to tab on product page by default
+- Fixed LIQPAY confirm button
+- Disable Reviews option
+- Enhanced Order Email (HTML Admin emails)
+- Guest Checkout separate addresses
+- Enter key for Product filter in admin
+- Telephone number on invoice
+- Validation check to Product Copy (Daniels request)
+- Add model to the related products in product edit
+- Automatic Copyright in admin footer
+- Added MetaKeywords to products and categories
+- Added return on language load to allow simple array merge for language files
+- Added Send Newsletter By Products Purchased
+- Lots of improvements to cart sidebox (ajax delete item, all totals, view/checkout links)
+- GET method for add to cart
+- Add to cart button in all modules? small + button?
+- Stock decrease option moved to product level
+- Minimum Order Qty (per-product)
+- Product "cost" field
+- Add back default sort order
+- Individual zone/country/postcode for products
+- Cross-linked related products (relationship goes both ways now). Relating product A to B also relates B to A
+- Maintenance Mode
+- Multiple Email address for store email
+- remove/combine the Show Out of stock. Just show it when Stock checkout is no and product is out of stock
+- Add IP Address to order view
+- Freecheckout integrated into core.
+- Low Order Fee only applies if there is a subtotal, allowing free products to remain free
+- Homepage is now modular and new "home" position for modules configurable in admin
+- Additional ability to use "modularized" sideboxes on main page (3 across) by adding the module to the $this->children list.
+- Free Checkout as part of the core
+- Comments saved if payment checkbox not checked
+- Added customer email, telephone, ip to order email to make it more complete
+- Admin Token system for CSRF security
+- Royal Mail rates update
+
+
 -- OpenCart v1.4.7 --
 
 FIXED:

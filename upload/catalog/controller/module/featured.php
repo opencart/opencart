@@ -80,6 +80,7 @@ class ControllerModulefeatured extends Controller {
 		$this->id = 'featured';
 
 		if ($this->config->get('featured_position') == 'home') {
+			$this->data['heading_title'] .= (' ' . $this->language->get('text_products'));
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/featured_home.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/module/featured_home.tpl';
 			} else {

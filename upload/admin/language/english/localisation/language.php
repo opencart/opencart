@@ -14,11 +14,11 @@ $_['column_action']     = 'Action';
 // Entry
 $_['entry_name']        = 'Language Name:';
 $_['entry_code']        = 'Code:<br /><span class="help">Do not change if this is your default language.</span>';
-$_['entry_locale']      = 'Locale:';
-$_['entry_image']       = 'Image:';
-$_['entry_directory']   = 'Directory:';
-$_['entry_filename']    = 'Filename:';
-$_['entry_status']      = 'Status:';
+$_['entry_locale']      = 'Locale:<br /><span class="help">eg: en_US.UTF-8,en_US,en-gb,english</span>';
+$_['entry_image']       = 'Image:<br /><span class="help">eg: gb.png</span>';
+$_['entry_directory']   = 'Directory:<br /><span class="help">name of the language directory (case-sensitive)</span>';
+$_['entry_filename']    = 'Filename:<br /><span class="help">main language filename without extension</span>';
+$_['entry_status']      = 'Status:<br /><span class="help">Hide/Show it in language dropdown</span>';
 $_['entry_sort_order']  = 'Sort Order:';
 
 // Error

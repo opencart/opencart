@@ -383,8 +383,10 @@ class ModelCheckoutOrder extends Model {
 				// Send to additional alert emails
 				$emails = explode(',', $this->config->get('config_alert_emails'));
 				foreach ($emails as $email) {
-					$mail->setTo($email);
-					$mail->send();
+					if ($email) {
+						$mail->setTo($email);
+						$mail->send();
+					}
 				}
 				
 				/*

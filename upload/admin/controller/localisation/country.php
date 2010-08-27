@@ -272,9 +272,12 @@ class ControllerLocalisationCountry extends Controller {
 		$this->data['entry_iso_code_2'] = $this->language->get('entry_iso_code_2');
 		$this->data['entry_iso_code_3'] = $this->language->get('entry_iso_code_3');
 		$this->data['entry_address_format'] = $this->language->get('entry_address_format');
+		$this->data['entry_postcode_required'] = $this->language->get('entry_postcode_required');
 
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
+		$this->data['text_yes'] = $this->language->get('text_yes');
+		$this->data['text_no'] = $this->language->get('text_no');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -373,6 +376,14 @@ class ControllerLocalisationCountry extends Controller {
 			$this->data['address_format'] = '';
 		}
 
+		if (isset($this->request->post['postcode_required'])) {
+			$this->data['postcode_required'] = $this->request->post['postcode_required'];
+		} elseif (isset($country_info)) {
+			$this->data['postcode_required'] = $country_info['postcode_required'];
+		} else {
+			$this->data['postcode_required'] = '0';
+		}
+		
 		$this->template = 'localisation/country_form.tpl';
 		$this->children = array(
 			'common/header',	

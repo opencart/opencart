@@ -38,6 +38,7 @@ $_['error_password']       = 'Password must be between 3 and 20 characters!';
 $_['error_confirm']        = 'Password confirmation does not match password!';
 $_['error_address_1']      = 'Address 1 must be between 3 and 128 characters!';
 $_['error_city']           = 'City must be between 3 and 128 characters!';
+$_['error_postcode']       = 'Postcode must be between 2 and 10 characters for this country!';
 $_['error_country']        = 'Please select a country!';
 $_['error_zone']           = 'Please select a region / state!';
 $_['error_telephone']      = 'Telephone must be between 3 and 32 characters!';

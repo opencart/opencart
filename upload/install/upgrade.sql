@@ -512,6 +512,13 @@ ALTER TABLE oc_store DROP stock_status_id;
 
 ### Start 1.4.7
 
+SET @id=NULL;
+SET @dat='';
+SELECT @dat:=`value` FROM oc_setting WHERE `group` = 'config' and `key` = 'config_description_1';
+SELECT @id:=`setting_id` FROM oc_setting WHERE `group` = 'config' and `key` = 'config_description_1';
+SELECT @dat:=`value` FROM oc_setting WHERE `group` = 'config' and `key` = 'config_welcome_1';
+INSERT INTO `oc_setting` (`setting_id`, `group`, `key`, `value`) VALUES (@id, 'config', 'config_description_1', @dat) ON DUPLICATE KEY UPDATE setting_id=setting_id;
+
 ALTER TABLE `oc_country` ADD `status` INT( 1 ) NOT NULL DEFAULT '1';
 
 ALTER TABLE `oc_zone` ADD `status` INT( 1 ) NOT NULL DEFAULT '1';
@@ -570,3 +577,31 @@ ALTER TABLE `oc_order_product` ADD `subtract` int(1) NOT NULL DEFAULT '0' COMMEN
 # Stock subtract is at product level now so no need at store level.
 ALTER TABLE `oc_store` DROP stock_subtract;
 
+### Start 1.4.9
+ALTER TABLE oc_order_product DROP subtract;
+
+UPDATE `oc_setting` SET `value` = '0' WHERE `key` = 'pp_standard_status';
+
+DELETE FROM `oc_zone` WHERE `code` = 'ANT';
+DELETE FROM `oc_zone` WHERE `code` = 'ARM';
+DELETE FROM `oc_zone` WHERE `code` = 'DOW';
+DELETE FROM `oc_zone` WHERE `code` = 'FER';
+DELETE FROM `oc_zone` WHERE `code` = 'LDY';
+DELETE FROM `oc_zone` WHERE `code` = 'TYR';
+
+INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'ANT', 'County Antrim', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
+INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'ARM', 'County Armagh', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
+INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'DOW', 'County Down', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
+INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'FER', 'County Fermanagh', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
+INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'LDY', 'County Londonderry', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
+INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'TYR', 'County Tyrone', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
+
+ALTER TABLE `oc_product_special` ADD INDEX ( `product_id` ) ;
+ALTER TABLE `oc_product_discount` ADD INDEX ( `product_id` ) ;
+ALTER TABLE `oc_product_related` ADD INDEX ( `product_id` ) ;
+ALTER TABLE `oc_review` ADD INDEX ( `product_id` ) ;
+
+ALTER TABLE `oc_country` ADD `postcode_required` int(1) NOT NULL DEFAULT '1' ;
+UPDATE `oc_country` SET `postcode_required` = 0 WHERE iso_code_3 = 'IRL';
+UPDATE `oc_country` SET `postcode_required` = 0 WHERE iso_code_3 = 'HKG';
+UPDATE `oc_country` SET `postcode_required` = 0 WHERE iso_code_3 = 'PAN';

@@ -109,13 +109,13 @@ class ControllerCheckoutCart extends Controller {
 			
 			if (isset($this->error['warning'])) {
 				$this->data['error_warning'] = $this->error['warning'];			
-			} elseif (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) {
+			} elseif (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
       			$this->data['error_warning'] = $this->language->get('error_stock');
 			} else {
 				$this->data['error_warning'] = '';
 			}
 		
-			$this->data['action'] = HTTP_SERVER . 'index.php?route=checkout/cart';
+			$this->data['action'] = HTTPS_SERVER . 'index.php?route=checkout/cart';
 			
 			$this->load->model('tool/seo_url'); 
 			$this->load->model('tool/image');
@@ -151,6 +151,14 @@ class ControllerCheckoutCart extends Controller {
 					'href'     => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/product&product_id=' . $result['product_id'])
         		);
       		}
+			
+			if (!$this->config->get('config_customer_price')) {
+				$this->data['display_price'] = TRUE;
+			} elseif ($this->customer->isLogged()) {
+				$this->data['display_price'] = TRUE;
+			} else {
+				$this->data['display_price'] = FALSE;
+			}
 			
 			if ($this->config->get('config_cart_weight')) {
 				$this->data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class'));

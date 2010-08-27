@@ -45,25 +45,95 @@
           <td><input type="text" name="featured_sort_order" value="<?php echo $featured_sort_order; ?>" size="1" /></td>
         </tr>
 		<tr>
-        <td><?php echo $entry_product; ?></td>
-        <td><div class="scrollbox">
-            <?php $class = 'odd'; ?>
-            <?php foreach ($products as $product) { ?>
-            <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-            <div class="<?php echo $class; ?>">
-              <?php if (in_array($product['product_id'], $featured_product)) { ?>
-              <input type="checkbox" name="featured_product[]" value="<?php echo $product['product_id']; ?>" checked="checked" />
-              <?php echo $product['name']; ?>
-              <?php } else { ?>
-              <input type="checkbox" name="featured_product[]" value="<?php echo $product['product_id']; ?>" />
-              <?php echo $product['name']; ?>
+      	  <td><?php echo $entry_product; ?></td>
+          <td>
+            <table>
+              <tr>
+                <td style="padding: 0;" colspan="3"><select id="category" style="margin-bottom: 5px;" onchange="getProducts();">
+                  <?php foreach ($categories as $category) { ?>
+                  <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
+                  <?php } ?>
+                </select></td>
+              </tr>
+              <tr>
+                <td style="padding: 0;"><select multiple="multiple" id="product" size="10" style="width: 350px;">
+                  </select></td>
+                  <td style="vertical-align: middle;"><input type="button" value="--&gt;" onclick="addFeatured();" />
+                  <br />
+                  <input type="button" value="&lt;--" onclick="removeFeatured();" /></td>
+                  <td style="padding: 0;"><select multiple="multiple" id="featured" size="10" style="width: 350px;">
+                </select></td>
+              </tr>
+            </table>
+            <div id="product_featured">
+              <?php foreach ($product_featured as $featured_id) { ?>
+              <input type="hidden" name="product_featured[]" value="<?php echo $featured_id; ?>" />
               <?php } ?>
             </div>
-            <?php } ?>
-          </div></td>
-      </tr>
+          </td>
+        </tr>      
       </table>
     </form>
   </div>
 </div>
+<script type="text/javascript"><!--
+function addFeatured() {
+	$('#product :selected').each(function() {
+		$(this).remove();
+		
+		$('#featured option[value=\'' + $(this).attr('value') + '\']').remove();
+		
+		$('#featured').append('<option value="' + $(this).attr('value') + '">' + $(this).text() + '</option>');
+		
+		$('#product_featured input[value=\'' + $(this).attr('value') + '\']').remove();
+		
+		$('#product_featured').append('<input type="hidden" name="product_featured[]" value="' + $(this).attr('value') + '" />');
+	});
+}
+
+function removeFeatured() {
+	$('#featured :selected').each(function() {
+		$(this).remove();
+		
+		$('#product_featured input[value=\'' + $(this).attr('value') + '\']').remove();
+	});
+}
+
+function getProducts() {
+	$('#product option').remove();
+	
+	$.ajax({
+		url: 'index.php?route=module/featured/category&token=<?php echo $token; ?>&category_id=' + $('#category').attr('value'),
+		dataType: 'json',
+		success: function(data) {
+			for (i = 0; i < data.length; i++) {
+	 			$('#product').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + ' (' + data[i]['model'] + ') </option>');
+			}
+		}
+	});
+}
+
+function getFeatured() {
+	$('#featured option').remove();
+	
+	$.ajax({
+		url: 'index.php?route=module/featured/featured&token=<?php echo $token; ?>',
+		type: 'POST',
+		dataType: 'json',
+		data: $('#product_featured input'),
+		success: function(data) {
+			$('#product_featured input').remove();
+			
+			for (i = 0; i < data.length; i++) {
+	 			$('#featured').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + ' (' + data[i]['model'] + ') </option>');
+				
+				$('#product_featured').append('<input type="hidden" name="product_featured[]" value="' + data[i]['product_id'] + '" />');
+			} 
+		}
+	});
+}
+
+getProducts();
+getFeatured();
+//--></script>
 <?php echo $footer; ?>

@@ -57,6 +57,16 @@ class ControllerProductCategory extends Controller {
 			
 			$this->data['text_sort'] = $this->language->get('text_sort');
 			
+			$this->load->model('tool/image'); 
+			
+			if ($category_info['image']) {
+				$image = $category_info['image'];
+			} else {
+				$image = '';
+			}
+
+			$this->data['thumb'] = $this->model_tool_image->resize($image, $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
+			
 			if (isset($this->request->get['page'])) {
 				$page = $this->request->get['page'];
 			} else { 
@@ -86,9 +96,7 @@ class ControllerProductCategory extends Controller {
 			}
 			
 			$this->load->model('catalog/product');  
-			
-			$this->load->model('tool/image'); 
-			 
+						 
 			$category_total = $this->model_catalog_category->getTotalCategoriesByCategoryId($category_id);
 			$product_total = $this->model_catalog_product->getTotalProductsByCategoryId($category_id);
 			
@@ -202,7 +210,7 @@ class ControllerProductCategory extends Controller {
 					'text'  => $this->language->get('text_name_desc'),
 					'value' => 'pd.name-DESC',
 					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=pd.name&order=DESC')
-				);  
+				);
 
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_price_asc'),
@@ -226,7 +234,19 @@ class ControllerProductCategory extends Controller {
 					'text'  => $this->language->get('text_rating_asc'),
 					'value' => 'rating-ASC',
 					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=rating&order=ASC')
-				); 			
+				);
+				
+				$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_model_asc'),
+					'value' => 'p.model-ASC',
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=p.model&order=ASC')
+				);
+ 
+				$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_model_desc'),
+					'value' => 'p.model-DESC',
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=p.model&order=DESC')
+				);
 				
 				$url = '';
 		

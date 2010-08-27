@@ -20,6 +20,12 @@ class ControllerAccountCreate extends Controller {
 
 			$this->customer->login($this->request->post['email'], $this->request->post['password']);
 			
+			$this->load->model('account/address');
+
+            $address = $this->model_account_address->getAddress($this->customer->getAddressId());
+
+			$this->tax->setZone($address['country_id'], $address['zone_id']);
+			
 			$this->language->load('mail/account_create');
 			
 			$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
@@ -156,6 +162,12 @@ class ControllerAccountCreate extends Controller {
 			$this->data['error_city'] = $this->error['city'];
 		} else {
 			$this->data['error_city'] = '';
+		}
+		
+		if (isset($this->error['postcode'])) {
+			$this->data['error_postcode'] = $this->error['postcode'];
+		} else {
+			$this->data['error_postcode'] = '';
 		}
 
 		if (isset($this->error['country'])) {
@@ -332,7 +344,17 @@ class ControllerAccountCreate extends Controller {
     	if ((strlen(utf8_decode($this->request->post['city'])) < 3) || (strlen(utf8_decode($this->request->post['city'])) > 128)) {
       		$this->error['city'] = $this->language->get('error_city');
     	}
-
+		
+		$this->load->model('localisation/country');
+		
+		$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+		
+		if ($country_info && $country_info['postcode_required']) {
+			if ((strlen(utf8_decode($this->request->post['postcode'])) < 2) || (strlen(utf8_decode($this->request->post['postcode'])) > 10)) {
+				$this->error['postcode'] = $this->language->get('error_postcode');
+			}
+		}
+			
     	if ($this->request->post['country_id'] == 'FALSE') {
       		$this->error['country'] = $this->language->get('error_country');
     	}
@@ -394,6 +416,25 @@ class ControllerAccountCreate extends Controller {
 		}
 	
 		$this->response->setOutput($output, $this->config->get('config_compression'));
-  	}  
+  	}
+	
+	public function postcode() {
+
+  		$this->language->load('account/create');
+
+  		$this->load->model('localisation/country');
+
+    	$result = $this->model_localisation_country->getCountry($this->request->get['country_id']);
+
+		$output = '';
+
+      	if ($result['postcode_required']) {
+        	$output = '<span class="required">*</span> ' . $this->language->get('entry_postcode');
+		} else {
+			$output = $this->language->get('entry_postcode');
+		}
+
+		$this->response->setOutput($output, $this->config->get('config_compression'));
+	}
 }
 ?>

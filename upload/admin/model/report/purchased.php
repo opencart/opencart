@@ -15,7 +15,7 @@ class ModelReportPurchased extends Model {
 	}
 	
 	public function getTotalOrderedProducts() {
-      	$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` GROUP BY model");
+      	$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_product` op ON (o.order_id = op.order_id) WHERE o.order_status_id > '0' GROUP BY model");
 		
 		return $query->num_rows;
 	}

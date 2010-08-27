@@ -15,7 +15,7 @@ class ControllerModuleFeatured extends Controller {
 			
 			$this->model_catalog_product->addFeatured($this->request->post);
 						
-			unset($this->request->post['featured_product']);
+			unset($this->request->post['product_featured']);
 			
 			$this->model_setting_setting->editSetting('featured', $this->request->post);		
 			
@@ -73,6 +73,8 @@ class ControllerModuleFeatured extends Controller {
 		
 		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/module&token=' . $this->session->data['token'];
 
+		$this->data['token'] = $this->session->data['token'];
+		
 		if (isset($this->request->post['featured_limit'])) {
 			$this->data['featured_limit'] = $this->request->post['featured_limit'];
 		} else {
@@ -114,14 +116,16 @@ class ControllerModuleFeatured extends Controller {
 			$this->data['featured_sort_order'] = $this->config->get('featured_sort_order');
 		}				
 		
+		$this->load->model('catalog/category');
+				
+		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
+		
 		$this->load->model('catalog/product'); 
-		
-		$this->data['products'] = $this->model_catalog_product->getProducts();
-		
-		if (isset($this->request->post['featured_product'])) {
-      		$this->data['featured_product'] = $this->request->post['featured_product'];
+				
+		if (isset($this->request->post['product_featured'])) {
+      		$this->data['product_featured'] = $this->request->post['product_featured'];
     	} else {
-      		$this->data['featured_product'] = $this->model_catalog_product->getFeaturedProducts();
+      		$this->data['product_featured'] = $this->model_catalog_product->getFeaturedProducts();
 		}
 			
 		$this->template = 'module/featured.tpl';
@@ -143,6 +147,60 @@ class ControllerModuleFeatured extends Controller {
 		} else {
 			return FALSE;
 		}	
+	}
+	
+	public function category() {
+		$this->load->model('catalog/product');
+		
+		if (isset($this->request->get['category_id'])) {
+			$category_id = $this->request->get['category_id'];
+		} else {
+			$category_id = 0;
+		}
+		
+		$product_data = array();
+		
+		$results = $this->model_catalog_product->getProductsByCategoryId($category_id);
+		
+		foreach ($results as $result) {
+			$product_data[] = array(
+				'product_id' => $result['product_id'],
+				'name'       => $result['name'],
+				'model'      => $result['model']
+			);
+		}
+		
+		$this->load->library('json');
+		
+		$this->response->setOutput(Json::encode($product_data));
+	}
+	
+	public function featured() {
+		$this->load->model('catalog/product');
+		
+		if (isset($this->request->post['product_featured'])) {
+			$products = $this->request->post['product_featured'];
+		} else {
+			$products = array();
+		}
+	
+		$product_data = array();
+		
+		foreach ($products as $product_id) {
+			$product_info = $this->model_catalog_product->getProduct($product_id);
+			
+			if ($product_info) {
+				$product_data[] = array(
+					'product_id' => $product_info['product_id'],
+					'name'       => $product_info['name'],
+					'model'      => $product_info['model']
+				);
+			}
+		}
+		
+		$this->load->library('json');
+		
+		$this->response->setOutput(Json::encode($product_data));
 	}
 }
 ?>

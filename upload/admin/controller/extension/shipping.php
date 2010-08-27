@@ -49,6 +49,14 @@ class ControllerExtensionShipping extends Controller {
 
 		$extensions = $this->model_setting_extension->getInstalled('shipping');
 		
+		foreach ($extensions as $key => $value) {
+			if (!file_exists(DIR_APPLICATION . 'controller/shipping/' . $value . '.php')) {
+				$this->model_setting_extension->uninstall('shipping', $value);
+				
+				unset($extensions[$key]);
+			}
+		}
+		
 		$this->data['extensions'] = array();
 		
 		$files = glob(DIR_APPLICATION . 'controller/shipping/*.php');
@@ -111,6 +119,14 @@ class ControllerExtensionShipping extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'shipping/' . $this->request->get['extension']);
 			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'shipping/' . $this->request->get['extension']);
 
+			require_once(DIR_APPLICATION . 'controller/shipping/' . $this->request->get['extension'] . '.php');
+			$class = 'ControllerShipping' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+			
+			if (method_exists($class, 'install')) {
+				$class->install();
+			}
+			
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/shipping&token=' . $this->session->data['token']);
 		}
 	}
@@ -123,10 +139,18 @@ class ControllerExtensionShipping extends Controller {
 		} else {		
 			$this->load->model('setting/extension');
 			$this->load->model('setting/setting');
-		
+				
 			$this->model_setting_extension->uninstall('shipping', $this->request->get['extension']);
 		
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
+		
+			require_once(DIR_APPLICATION . 'controller/shipping/' . $this->request->get['extension'] . '.php');
+			$class = 'ControllerShipping' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+			
+			if (method_exists($class, 'uninstall')) {
+				$class->uninstall();
+			}
 		
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/shipping&token=' . $this->session->data['token']);
 		}

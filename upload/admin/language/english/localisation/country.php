@@ -27,6 +27,7 @@ Postcode = {postcode}<br />
 Zone = {zone}<br />
 Zone Code = {zone_code}<br />
 Country = {country}</span>';
+$_['entry_postcode_required']= 'Postcode Required:';
 
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify countries!';

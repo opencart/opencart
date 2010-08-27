@@ -24,8 +24,10 @@
           <th align="left"><?php echo $column_name; ?></th>
           <th align="left"><?php echo $column_model; ?></th>
           <th align="right"><?php echo $column_quantity; ?></th>
-          <th align="right"><?php echo $column_price; ?></th>
+          <?php if ($display_price) { ?>
+		  <th align="right"><?php echo $column_price; ?></th>
           <th align="right"><?php echo $column_total; ?></th>
+		  <?php } ?>
         </tr>
         <?php $class = 'odd'; ?>
         <?php foreach ($products as $product) { ?>
@@ -44,11 +46,14 @@
             </div></td>
           <td align="left" valign="top"><?php echo $product['model']; ?></td>
           <td align="right" valign="top"><input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="3" /></td>
-          <td align="right" valign="top"><?php echo $product['price']; ?></td>
+          <?php if ($display_price) { ?>
+		  <td align="right" valign="top"><?php echo $product['price']; ?></td>
           <td align="right" valign="top"><?php echo $product['total']; ?></td>
+		  <?php } ?>
         </tr>
         <?php } ?>
       </table>
+	  <?php if ($display_price) { ?>
 	  <div style="width: 100%; display: inline-block;">
         <table style="float: right; display: inline-block;">
           <?php foreach ($totals as $total) { ?>
@@ -60,6 +65,7 @@
         </table>
         <br />
       </div>
+	  <?php } ?>
       <div class="buttons">
         <table>
           <tr>

@@ -73,7 +73,10 @@ final class Image {
         $this->image = imagecreatetruecolor($width, $height);
 			
 		$background = imagecolorallocate($this->image, 255, 255, 255);
-    	imagefilledrectangle($this->image, 0, 0, $width, $height, $background);
+    	if (isset($this->info['mime']) && $this->info['mime'] == 'image/png') {
+			imagecolortransparent($this->image, $background);
+		}
+		imagefilledrectangle($this->image, 0, 0, $width, $height, $background);
 	
         imagecopyresampled($this->image, $image_old, $xpos, $ypos, 0, 0, $new_width, $new_height, $this->info['width'], $this->info['height']);
         imagedestroy($image_old);

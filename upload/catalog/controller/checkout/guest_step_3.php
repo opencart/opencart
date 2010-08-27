@@ -3,6 +3,14 @@ class ControllerCheckoutGuestStep3 extends Controller {
 	private $error = array();
 	
 	public function index() {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['coupon']) && $this->validateCoupon()) {
+			$this->session->data['coupon'] = $this->request->post['coupon'];
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/guest_step_3');
+		}
+		
 		if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 	  		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/cart');
     	}
@@ -241,7 +249,12 @@ class ControllerCheckoutGuestStep3 extends Controller {
     	$this->data['text_payment_address'] = $this->language->get('text_payment_address');
     	$this->data['text_payment_method'] = $this->language->get('text_payment_method');
     	$this->data['text_comment'] = $this->language->get('text_comment');
+		$this->data['text_coupon'] = $this->language->get('text_coupon');
     	$this->data['text_change'] = $this->language->get('text_change');
+		
+		$this->data['button_coupon'] = $this->language->get('button_coupon');
+
+		$this->data['entry_coupon'] = $this->language->get('entry_coupon');
 		
 		$this->data['column_product'] = $this->language->get('column_product');
     	$this->data['column_model'] = $this->language->get('column_model');
@@ -397,6 +410,18 @@ class ControllerCheckoutGuestStep3 extends Controller {
 	
 		$this->data['comment'] = nl2br($this->session->data['comment']);
     
+		$this->data['coupon_status'] = $this->config->get('coupon_status');
+		
+		$this->data['action'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_3';
+		
+		if (isset($this->request->post['coupon'])) {
+			$this->data['coupon'] = $this->request->post['coupon'];
+		} elseif (isset($this->session->data['coupon'])) {
+			$this->data['coupon'] = $this->session->data['coupon'];
+		} else {
+			$this->data['coupon'] = '';
+		}
+		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/confirm.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/checkout/confirm.tpl';
 		} else {
@@ -413,5 +438,24 @@ class ControllerCheckoutGuestStep3 extends Controller {
 		
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
+	
+	private function validateCoupon() {
+
+  		$this->load->model('checkout/coupon');
+
+		$this->language->load('checkout/confirm');
+
+		$coupon = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);
+
+		if (!$coupon) {
+			$this->error['warning'] = $this->language->get('error_coupon');
+		}
+
+  		if (!$this->error) {
+	  		return TRUE;
+		} else {
+	  		return FALSE;
+		}
+  	}
 }
 ?>

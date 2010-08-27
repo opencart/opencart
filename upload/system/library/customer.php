@@ -87,6 +87,8 @@ final class Customer {
 		$this->newsletter = '';
 		$this->customer_group_id = '';
 		$this->address_id = '';
+		
+		session_destroy();
   	}
   
   	public function isLogged() {

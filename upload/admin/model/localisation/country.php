@@ -1,13 +1,13 @@
 <?php
 class ModelLocalisationCountry extends Model {
 	public function addCountry($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "country SET status = '" . (int)$data['status'] . "', name = '" . $this->db->escape($data['name']) . "', iso_code_2 = '" . $this->db->escape($data['iso_code_2']) . "', iso_code_3 = '" . $this->db->escape($data['iso_code_3']) . "', address_format = '" . $this->db->escape($data['address_format']) . "'");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "country SET status = '" . (int)$data['status'] . "', name = '" . $this->db->escape($data['name']) . "', iso_code_2 = '" . $this->db->escape($data['iso_code_2']) . "', iso_code_3 = '" . $this->db->escape($data['iso_code_3']) . "', address_format = '" . $this->db->escape($data['address_format']) . "', postcode_required = '" . (int)$data['postcode_required'] . "'");
 	
 		$this->cache->delete('country');
 	}
 	
 	public function editCountry($country_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "country SET status = '" . (int)$data['status'] . "', name = '" . $this->db->escape($data['name']) . "', iso_code_2 = '" . $this->db->escape($data['iso_code_2']) . "', iso_code_3 = '" . $this->db->escape($data['iso_code_3']) . "', address_format = '" . $this->db->escape($data['address_format']) . "' WHERE country_id = '" . (int)$country_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "country SET status = '" . (int)$data['status'] . "', name = '" . $this->db->escape($data['name']) . "', iso_code_2 = '" . $this->db->escape($data['iso_code_2']) . "', iso_code_3 = '" . $this->db->escape($data['iso_code_3']) . "', address_format = '" . $this->db->escape($data['address_format']) . "' , postcode_required = '" . (int)$data['postcode_required'] . "' WHERE country_id = '" . (int)$country_id . "'");
 	
 		$this->cache->delete('country');
 	}

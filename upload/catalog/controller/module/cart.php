@@ -40,6 +40,14 @@ class ControllerModuleCart extends Controller {
       		);
     	}
 	
+		if (!$this->config->get('config_customer_price')) {
+			$this->data['display_price'] = TRUE;
+		} elseif ($this->customer->isLogged()) {
+			$this->data['display_price'] = TRUE;
+		} else {
+			$this->data['display_price'] = FALSE;
+		}
+	
 		$total_data = array();
 		$total = 0;
 		$taxes = $this->cart->getTaxes();

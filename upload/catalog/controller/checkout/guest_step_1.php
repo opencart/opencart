@@ -198,6 +198,12 @@ class ControllerCheckoutGuestStep1 extends Controller {
 			$this->data['error_city'] = '';
 		}
 		
+		if (isset($this->error['postcode'])) {
+			$this->data['error_postcode'] = $this->error['postcode'];
+		} else {
+			$this->data['error_postcode'] = '';
+		}
+		
 		if (isset($this->error['country'])) {
 			$this->data['error_country'] = $this->error['country'];
 		} else {
@@ -232,6 +238,12 @@ class ControllerCheckoutGuestStep1 extends Controller {
 			$this->data['error_shipping_city'] = $this->error['shipping_city'];
 		} else {
 			$this->data['error_shipping_city'] = '';
+		}
+		
+		if (isset($this->error['shipping_postcode'])) {
+			$this->data['error_shipping_postcode'] = $this->error['shipping_postcode'];
+		} else {
+			$this->data['error_shipping_postcode'] = '';
 		}
 		
 		if (isset($this->error['shipping_country'])) {
@@ -449,11 +461,11 @@ class ControllerCheckoutGuestStep1 extends Controller {
   	}
 	
   	private function validate() {
-    	if ((strlen(utf8_decode($this->request->post['firstname'])) < 3) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['firstname'])) < 1) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
       		$this->error['firstname'] = $this->language->get('error_firstname');
     	}
 
-    	if ((strlen(utf8_decode($this->request->post['lastname'])) < 3) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
+    	if ((strlen(utf8_decode($this->request->post['lastname'])) < 1) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
       		$this->error['lastname'] = $this->language->get('error_lastname');
     	}
 
@@ -474,6 +486,16 @@ class ControllerCheckoutGuestStep1 extends Controller {
     	if ((strlen(utf8_decode($this->request->post['city'])) < 3) || (strlen(utf8_decode($this->request->post['city'])) > 128)) {
       		$this->error['city'] = $this->language->get('error_city');
     	}
+		
+		$this->load->model('localisation/country');
+		
+		$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+		
+		if ($country_info && $country_info['postcode_required']) {
+			if ((strlen(utf8_decode($this->request->post['postcode'])) < 2) || (strlen(utf8_decode($this->request->post['postcode'])) > 10)) {
+				$this->error['postcode'] = $this->language->get('error_postcode');
+			}
+		}
 
     	if ($this->request->post['country_id'] == 'FALSE') {
       		$this->error['country'] = $this->language->get('error_country');
@@ -500,7 +522,15 @@ class ControllerCheckoutGuestStep1 extends Controller {
     		if ((strlen(utf8_decode($this->request->post['shipping_city'])) < 3) || (strlen(utf8_decode($this->request->post['shipping_city'])) > 128)) {
       			$this->error['shipping_city'] = $this->language->get('error_city');
     		}
-
+			
+			$country_info = $this->model_localisation_country->getCountry($this->request->post['shipping_country_id']);
+		
+			if ($country_info && $country_info['postcode_required']) {
+				if ((strlen(utf8_decode($this->request->post['shipping_postcode'])) < 2) || (strlen(utf8_decode($this->request->post['shipping_postcode'])) > 10)) {
+					$this->error['shipping_postcode'] = $this->language->get('error_postcode');
+				}
+			}
+			
     		if ($this->request->post['shipping_country_id'] == 'FALSE') {
       			$this->error['shipping_country'] = $this->language->get('error_country');
     		}
@@ -544,6 +574,25 @@ class ControllerCheckoutGuestStep1 extends Controller {
 		}
 	
 		$this->response->setOutput($output, $this->config->get('config_compression'));
-  	} 	
+  	}
+	
+	public function postcode() {
+
+  		$this->language->load('checkout/guest_step_1');
+
+  		$this->load->model('localisation/country');
+
+    	$result = $this->model_localisation_country->getCountry($this->request->get['country_id']);
+
+		$output = '';
+
+      	if ($result['postcode_required']) {
+        	$output = '<span class="required">*</span> ' . $this->language->get('entry_postcode');
+		} else {
+			$output = $this->language->get('entry_postcode');
+		}
+
+		$this->response->setOutput($output, $this->config->get('config_compression'));
+	}
 }
 ?>

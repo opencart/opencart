@@ -477,14 +477,10 @@ class ControllerCatalogReview extends Controller {
 			$this->error['author'] = $this->language->get('error_author');
 		}
 
-		if ((strlen(utf8_decode($this->request->post['text'])) < 25) || (strlen(utf8_decode($this->request->post['text'])) > 1000)) {
+		if (strlen(utf8_decode($this->request->post['text'])) < 1) {
 			$this->error['text'] = $this->language->get('error_text');
 		}
-		
-		if ((strlen(utf8_decode($this->request->post['text'])) < 25) || (strlen(utf8_decode($this->request->post['text'])) > 1000)) {
-			$this->error['text'] = $this->language->get('error_text');
-		}
-		
+				
 		if (!isset($this->request->post['rating'])) {
 			$this->error['rating'] = $this->language->get('error_rating');
 		}

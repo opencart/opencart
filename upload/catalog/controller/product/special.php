@@ -163,7 +163,19 @@ class ControllerProductSpecial extends Controller {
 				'text'  => $this->language->get('text_rating_asc'),
 				'value' => 'rating-ASC',
 				'href'  => HTTP_SERVER . 'index.php?route=product/special' . $url . '&sort=rating&order=ASC'
+			);
+			
+			$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_model_asc'),
+					'value' => 'p.model-ASC',
+					'href'  => HTTP_SERVER . 'index.php?route=product/special' . $url . '&sort=p.model&order=ASC'
 			); 
+
+			$this->data['sorts'][] = array(
+				'text'  => $this->language->get('text_model_desc'),
+				'value' => 'p.model-DESC',
+				'href'  => HTTP_SERVER . 'index.php?route=product/special' . $url . '&sort=p.model&order=DESC'
+			);
 				
 			$url = '';
 

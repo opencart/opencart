@@ -18,7 +18,7 @@ final class Tax {
 				$country_id = 0;
 				$zone_id = 0;
 			}
-		}		
+		}
 		
 		$this->setZone($country_id, $zone_id);
   	}

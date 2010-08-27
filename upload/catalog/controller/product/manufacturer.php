@@ -136,7 +136,7 @@ class ControllerProductManufacturer extends Controller {
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_default'),
 					'value' => 'p.sort_order-ASC',
-					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&path=' . $this->request->get['manufacturer_id'] . '&sort=p.sort_order&order=ASC')
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.sort_order&order=ASC')
 				);
 				
 				$this->data['sorts'][] = array(
@@ -173,7 +173,19 @@ class ControllerProductManufacturer extends Controller {
 					'text'  => $this->language->get('text_rating_asc'),
 					'value' => 'rating-ASC',
 					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=rating&order=ASC')
+				);
+				
+				$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_model_asc'),
+					'value' => 'p.model-ASC',
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.model&order=ASC')
 				); 
+
+				$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_model_desc'),
+					'value' => 'p.model-DESC',
+					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/manufacturer&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.model&order=DESC')
+				);
 
 				$url = '';
 		

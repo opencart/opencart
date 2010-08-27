@@ -111,7 +111,11 @@ class ControllerPaymentPaymate extends Controller {
 			$this->data['button_continue'] = $this->language->get('button_continue');
 			$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
 			
-			$this->template = $this->config->get('config_template') . 'common/success.tpl';
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/common/success.tpl';
+			} else {
+				$this->template = 'default/template/common/success.tpl';
+			}
 
 			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 		} else {

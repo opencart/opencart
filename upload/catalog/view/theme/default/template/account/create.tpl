@@ -76,12 +76,15 @@
               <?php } ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_postcode; ?></td>
-            <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
+            <td id="postcode"><?php echo $entry_postcode; ?></td>
+            <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" />
+			  <?php if ($error_postcode) { ?>
+              <span class="error"><?php echo $error_postcode; ?></span>
+              <?php } ?></td>
           </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-            <td><select name="country_id" id="country_id" onchange="$('select[name=\'zone_id\']').load('index.php?route=account/create/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>');">
+            <td><select name="country_id" id="country_id" onchange="$('select[name=\'zone_id\']').load('index.php?route=account/create/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>'); $('#postcode').load('index.php?route=account/create/postcode&country_id=' + this.value);">
                 <option value="FALSE"><?php echo $text_select; ?></option>
                 <?php foreach ($countries as $country) { ?>
                 <?php if ($country['country_id'] == $country_id) { ?>
@@ -176,5 +179,6 @@
 </div>
   <script type="text/javascript"><!--
 $('select[name=\'zone_id\']').load('index.php?route=account/create/zone&country_id=<?php echo $country_id; ?>&zone_id=<?php echo $zone_id; ?>');
+$('#postcode').load('index.php?route=account/create/postcode&country_id=<?php echo $country_id; ?>');
 //--></script>
 <?php echo $footer; ?> 

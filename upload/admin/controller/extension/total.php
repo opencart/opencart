@@ -49,6 +49,14 @@ class ControllerExtensionTotal extends Controller {
 
 		$extensions = $this->model_setting_extension->getInstalled('total');
 		
+		foreach ($extensions as $key => $value) {
+			if (!file_exists(DIR_APPLICATION . 'controller/total/' . $value . '.php')) {
+				$this->model_setting_extension->uninstall('total', $value);
+				
+				unset($extensions[$key]);
+			}
+		}
+		
 		$this->data['extensions'] = array();
 				
 		$files = glob(DIR_APPLICATION . 'controller/total/*.php');
@@ -111,6 +119,14 @@ class ControllerExtensionTotal extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'total/' . $this->request->get['extension']);
 			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'total/' . $this->request->get['extension']);
 
+			require_once(DIR_APPLICATION . 'controller/total/' . $this->request->get['extension'] . '.php');
+			$class = 'ControllerTotal' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+			
+			if (method_exists($class, 'install')) {
+				$class->install();
+			}
+			
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/total&token=' . $this->session->data['token']);
 		}
 	}
@@ -127,6 +143,14 @@ class ControllerExtensionTotal extends Controller {
 			$this->model_setting_extension->uninstall('total', $this->request->get['extension']);
 		
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
+		
+			require_once(DIR_APPLICATION . 'controller/total/' . $this->request->get['extension'] . '.php');
+			$class = 'ControllerTotal' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+			
+			if (method_exists($class, 'uninstall')) {
+				$class->uninstall();
+			}
 		
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/total&token=' . $this->session->data['token']);
 		}

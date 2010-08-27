@@ -10,9 +10,9 @@ Options +FollowSymlinks
 Options -Indexes
 
 # Prevent Direct Access to files
-<FilesMatch "\.tpl">
-Order deny,allow
-Deny from all
+<FilesMatch "\.(tpl|ini)">
+ Order deny,allow
+ Deny from all
 </FilesMatch>
 
 # SEO URL Settings

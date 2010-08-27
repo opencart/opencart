@@ -1,4 +1,36 @@
--- OpenCart v1.4.8b --
+== OpenCart v1.4.9 ==
+
+FIXES:
+- Fixed additional email for loop issue causing "Please Wait" and "Error Send To Required"
+- Improved featured products query to make all status checks and return all pertinent data to match latest and bestseller queries.
+- If no shipping, tax zone set to buyer's payment zone instead of default store zone
+- Session uses full path for session to prevent session sharing
+- Removed unneeded products variable from admin order.php
+- Removed error on empty language file
+- admin/controller/catalog/review.php double text validation cleaned up
+- Admin Order Edit now supports product options & updated grand total
+
+ADDED:
+- Feature Module uses category-style selector for products
+- Extension install/uninstall hook. Now when you install/uninstall extensions, if they have their own install/uninstall functions, they will be triggered.
+- Logout destroys session completely. 
+- sort by model
+- Cache for featured products
+- Cache for categories
+- Image class supports proper extension name on resize and transparency for png and gif.
+- Extensions will "self-clean" if the files are deleted without uninstalling the extension first.
+- Restored "Show Out Of Stock warning" option in setting
+- Parent Category pages show image next to description
+- Select All / Unselect All to all checkbox lists
+- Postcode required option added to countries. Now postcode can be required on a per-country basis.
+- Coupon code can be entered on Payment AND Confirm page, for those payments that skip the payment page
+- New Paypal Improved. Itemized products, PDT support, debug messaging and more.
+- Added Northern Ireland zones to UK
+- FilesMatch check in htaccess to prevent viewing of tpl and ini files
+
+
+
+== OpenCart v1.4.8b ==
 
 - Removed old latest code from home.php
 - Improved the token ignore
@@ -17,7 +49,7 @@
 - Fixed tax from defaulting to store tax when display prices with tax is off
 
 
--- OpenCart v1.4.8 --
+== OpenCart v1.4.8 ==
 
 FIXED:
 - Coupon discount check only for flat value coupons
@@ -118,7 +150,7 @@ ADDED:
 - Royal Mail rates update
 
 
--- OpenCart v1.4.7 --
+== OpenCart v1.4.7 ==
 
 FIXED:
 - Coupon discount taking more than the product total. Now matches max product total

@@ -25,7 +25,7 @@
               <?php } else { ?>
               <input type="radio" name="account" value="register" id="register" />
               <?php } ?>
-              <b><?php echo $text_account; ?></b></label>
+              <b><?php echo $text_register; ?></b></label>
             <br />
             <?php if ($guest_checkout) { ?>
             <label for="guest" style="cursor: pointer;">

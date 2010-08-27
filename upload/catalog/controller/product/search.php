@@ -3,7 +3,11 @@ class ControllerProductSearch extends Controller {
 	public function index() { 
     	$this->language->load('product/search');
 	  	  
-    	$this->document->title = $this->language->get('heading_title');
+    	if (isset($this->request->get['keyword'])) {
+    		$this->document->title = $this->language->get('heading_title') .  ' - "' . $this->request->get['keyword'] . '"';
+		} else {
+			$this->document->title = $this->language->get('heading_title');
+		}
 
 		$this->document->breadcrumbs = array();
 
@@ -12,7 +16,7 @@ class ControllerProductSearch extends Controller {
        		'text'      => $this->language->get('text_home'),
       		'separator' => FALSE
    		);
-
+				
 		$url = '';
 		
 		if (isset($this->request->get['keyword'])) {
@@ -251,7 +255,7 @@ class ControllerProductSearch extends Controller {
 					'text'  => $this->language->get('text_name_desc'),
 					'value' => 'pd.name-DESC',
 					'href'  => HTTP_SERVER . 'index.php?route=product/search' . $url . '&sort=pd.name&order=DESC'
-				);  
+				);
 
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_price_asc'),
@@ -275,7 +279,19 @@ class ControllerProductSearch extends Controller {
 					'text'  => $this->language->get('text_rating_asc'),
 					'value' => 'rating-ASC',
 					'href'  => HTTP_SERVER . 'index.php?route=product/search' . $url . '&sort=rating&order=ASC'
+				);
+				
+				$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_model_asc'),
+					'value' => 'p.model-ASC',
+					'href'  => HTTP_SERVER . 'index.php?route=product/search' . $url . '&sort=p.model&order=ASC'
 				); 
+
+				$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_model_desc'),
+					'value' => 'p.model-DESC',
+					'href'  => HTTP_SERVER . 'index.php?route=product/search' . $url . '&sort=p.model&order=DESC'
+				);
 				
 				$url = '';
 

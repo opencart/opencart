@@ -72,7 +72,7 @@ class ModelCheckoutOrder extends Model {
 		$order_id = $this->db->getLastId();
 
 		foreach ($data['products'] as $product) { 
-			$this->db->query("INSERT INTO " . DB_PREFIX . "order_product SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', name = '" . $this->db->escape($product['name']) . "', model = '" . $this->db->escape($product['model']) . "', price = '" . (float)$product['price'] . "', total = '" . (float)$product['total'] . "', tax = '" . (float)$product['tax'] . "', quantity = '" . (int)$product['quantity'] . "', subtract = '" . (int)$product['subtract'] . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "order_product SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', name = '" . $this->db->escape($product['name']) . "', model = '" . $this->db->escape($product['model']) . "', price = '" . (float)$product['price'] . "', total = '" . (float)$product['total'] . "', tax = '" . (float)$product['tax'] . "', quantity = '" . (int)$product['quantity'] . "'");
  
 			$order_product_id = $this->db->getLastId();
 
@@ -173,7 +173,7 @@ class ModelCheckoutOrder extends Model {
 			$template->data['customer_email'] = $order_query->row['email'];
 			$template->data['customer_telephone'] = $order_query->row['telephone'];
 			$template->data['customer_ip'] = $order_query->row['ip'];
-			$template->data['comment'] = $order_query->row['comment'];
+			$template->data['comment'] = nl2br($order_query->row['comment']);
 			
 			if ($comment) {
 				$template->data['comment'] .= ('<br /><br />' . nl2br($comment)); 
@@ -381,9 +381,10 @@ class ModelCheckoutOrder extends Model {
 				$mail->send();
 				
 				// Send to additional alert emails
+				$pattern = '/^[A-Z0-9._%-]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i';
 				$emails = explode(',', $this->config->get('config_alert_emails'));
 				foreach ($emails as $email) {
-					if ($email) {
+					if (strlen($email) > 0 && preg_match($pattern, $email)) {
 						$mail->setTo($email);
 						$mail->send();
 					}

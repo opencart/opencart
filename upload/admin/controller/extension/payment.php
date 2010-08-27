@@ -49,6 +49,14 @@ class ControllerExtensionPayment extends Controller {
 
 		$extensions = $this->model_setting_extension->getInstalled('payment');
 		
+		foreach ($extensions as $key => $value) {
+			if (!file_exists(DIR_APPLICATION . 'controller/payment/' . $value . '.php')) {
+				$this->model_setting_extension->uninstall('payment', $value);
+				
+				unset($extensions[$key]);
+			}
+		}
+		
 		$this->data['extensions'] = array();
 						
 		$files = glob(DIR_APPLICATION . 'controller/payment/*.php');
@@ -120,6 +128,14 @@ class ControllerExtensionPayment extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'payment/' . $this->request->get['extension']);
 			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'payment/' . $this->request->get['extension']);
 
+			require_once(DIR_APPLICATION . 'controller/payment/' . $this->request->get['extension'] . '.php');
+			$class = 'ControllerPayment' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+			
+			if (method_exists($class, 'install')) {
+				$class->install();
+			}
+			
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token']);
 		}
 	}
@@ -132,10 +148,18 @@ class ControllerExtensionPayment extends Controller {
 		} else {		
 			$this->load->model('setting/extension');
 			$this->load->model('setting/setting');
-		
+				
 			$this->model_setting_extension->uninstall('payment', $this->request->get['extension']);
 		
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
+		
+			require_once(DIR_APPLICATION . 'controller/payment/' . $this->request->get['extension'] . '.php');
+			$class = 'ControllerPayment' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+			
+			if (method_exists($class, 'uninstall')) {
+				$class->uninstall();
+			}
 		
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token']);	
 		}			

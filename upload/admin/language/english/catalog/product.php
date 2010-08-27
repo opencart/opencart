@@ -41,7 +41,7 @@ $_['entry_minimum']          = 'Minimum Quantity:<br/><span class="help">Force a
 $_['entry_stock_status']     = 'Out Of Stock Status:<br/><span class="help">Status shown when a product is out of stock</span>';
 $_['entry_status']           = 'Status:';
 $_['entry_tax_class']        = 'Tax Class:';
-$_['entry_cost']             = 'Cost:<br/><span class="help">The wholesale cost used for profit reporting</span>';
+$_['entry_cost']             = 'Cost:<br/><span class="help">The product cost used for profit reporting</span>';
 $_['entry_price']            = 'Price:';
 $_['entry_subtract']         = 'Subtract Stock:';
 $_['entry_weight_class']     = 'Weight Class:';
@@ -65,6 +65,6 @@ $_['entry_tags']          	 = 'Product Tags:<br /><span class="help">comma separ
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify products!';
 $_['error_name']             = 'Product Name must be greater than 3 and less than 255 characters!';
-$_['error_model']            = 'Product Model must be greater than 3 and less than 24 characters!';
+$_['error_model']            = 'Product Model must be greater than 3 and less than 64 characters!';
 $_['error_required_data']    = 'Required Data has not been entered. Check for field errors!';
 ?>

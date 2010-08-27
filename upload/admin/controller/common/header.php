@@ -19,6 +19,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_backup'] = $this->language->get('text_backup');
 		$this->data['text_catalog'] = $this->language->get('text_catalog');
 		$this->data['text_category'] = $this->language->get('text_category');
+		$this->data['text_confirm'] = $this->language->get('text_confirm');
 		$this->data['text_country'] = $this->language->get('text_country');
 		$this->data['text_coupon'] = $this->language->get('text_coupon');
 		$this->data['text_currency'] = $this->language->get('text_currency');			
@@ -49,6 +50,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_report_sale'] = $this->language->get('text_report_sale');
       	$this->data['text_report_viewed'] = $this->language->get('text_report_viewed');
 		$this->data['text_review'] = $this->language->get('text_review');
+		$this->data['text_select_all'] = $this->language->get('text_select_all');
 		$this->data['text_support'] = $this->language->get('text_support'); 
 		$this->data['text_shipping'] = $this->language->get('text_shipping');		
      	$this->data['text_setting'] = $this->language->get('text_setting');
@@ -56,6 +58,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_system'] = $this->language->get('text_system');
 		$this->data['text_tax_class'] = $this->language->get('text_tax_class');
 		$this->data['text_total'] = $this->language->get('text_total');
+		$this->data['text_unselect_all'] = $this->language->get('text_unselect_all');
 		$this->data['text_user'] = $this->language->get('text_user');
 		$this->data['text_user_group'] = $this->language->get('text_user_group');
 		$this->data['text_users'] = $this->language->get('text_users');
@@ -64,13 +67,17 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_length_class'] = $this->language->get('text_length_class');
 		$this->data['text_opencart'] = $this->language->get('text_opencart');
       	$this->data['text_zone'] = $this->language->get('text_zone');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		
+		$this->data['error_install'] = $this->language->get('error_install');
 		
 		if (!$this->user->isLogged() || !isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
 			$this->data['logged'] = '';
 			
 			$this->data['home'] = HTTPS_SERVER . 'index.php?route=common/login';
 		} else {
+			
+			$this->data['install'] = is_dir(dirname(DIR_APPLICATION) . '/install');
+		
 			$this->data['logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
 
 			$this->data['home'] = HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token']; 

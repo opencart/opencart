@@ -8,6 +8,8 @@ class ModelToolBackup extends Model {
       			$this->db->query($sql);
     		}
   		}
+		
+		$this->cache->delete('*');
 	}
 	
 	public function getTables() {

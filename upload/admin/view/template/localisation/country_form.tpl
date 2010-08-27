@@ -32,6 +32,20 @@
           <td><textarea name="address_format" cols="40" rows="5"><?php echo $address_format; ?></textarea></td>
         </tr>
 		<tr>
+          <td><?php echo $entry_postcode_required; ?></td>
+          <td><?php if ($postcode_required) { ?>
+            <input type="radio" name="postcode_required" value="1" checked="checked" />
+            <?php echo $text_yes; ?>
+            <input type="radio" name="postcode_required" value="0" />
+            <?php echo $text_no; ?>
+            <?php } else { ?>
+            <input type="radio" name="postcode_required" value="1" />
+            <?php echo $text_yes; ?>
+            <input type="radio" name="postcode_required" value="0" checked="checked" />
+            <?php echo $text_no; ?>
+            <?php } ?></td>
+        </tr>
+		<tr>
           <td><?php echo $entry_status; ?></td>
           <td><select name="status">
               <?php if ($status) { ?>

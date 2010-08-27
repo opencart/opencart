@@ -50,6 +50,14 @@ class ControllerExtensionModule extends Controller {
 
 		$extensions = $this->model_setting_extension->getInstalled('module');
 		
+		foreach ($extensions as $key => $value) {
+			if (!file_exists(DIR_APPLICATION . 'controller/module/' . $value . '.php')) {
+				$this->model_setting_extension->uninstall('module', $value);
+				
+				unset($extensions[$key]);
+			}
+		}
+		
 		$this->data['extensions'] = array();
 						
 		$files = glob(DIR_APPLICATION . 'controller/module/*.php');
@@ -113,14 +121,22 @@ class ControllerExtensionModule extends Controller {
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module&token=' . $this->session->data['token']);
 		} else {
 			$this->load->model('setting/extension');
-		
+			
 			$this->model_setting_extension->install('module', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 		
 			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'module/' . $this->request->get['extension']);
 			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'module/' . $this->request->get['extension']);
-
+			
+			require_once(DIR_APPLICATION . 'controller/module/' . $this->request->get['extension'] . '.php');
+			$class = 'ControllerModule' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+			
+			if (method_exists($class, 'install')) {
+				$class->install();
+			}
+			
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module&token=' . $this->session->data['token']);
 		}
 	}
@@ -133,10 +149,18 @@ class ControllerExtensionModule extends Controller {
 		} else {		
 			$this->load->model('setting/extension');
 			$this->load->model('setting/setting');
-		
+					
 			$this->model_setting_extension->uninstall('module', $this->request->get['extension']);
 		
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
+		
+			require_once(DIR_APPLICATION . 'controller/module/' . $this->request->get['extension'] . '.php');
+			$class = 'ControllerModule' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+			
+			if (method_exists($class, 'uninstall')) {
+				$class->uninstall();
+			}
 		
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/module&token=' . $this->session->data['token']);	
 		}

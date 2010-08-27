@@ -249,7 +249,7 @@ p {
 	margin-left: 5px;
 	margin-right: 5px;
 }
-#content .top h1 {
+#content .top h1, .heading {
 	padding: 8px 0px 8px 7px;
 }
 #content h1, .heading {
@@ -259,11 +259,6 @@ p {
 	font-weight: bold;
 	text-transform: uppercase;
 	margin: 0px;
-}
-.heading {
-	border-bottom: 1px solid #DDDDDD;
-	padding-bottom: 3px;
-	margin-bottom: 10px;
 }
 #content .middle {
 	border-left: 1px solid #DDDDDD;

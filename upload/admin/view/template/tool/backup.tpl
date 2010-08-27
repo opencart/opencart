@@ -34,7 +34,7 @@
                 <?php echo $table; ?> </div>
               <?php } ?>
             </div>
-            <a onclick="$('input[name*=\'backup\']').attr('checked', 'checked');"><u><?php echo $text_select_all; ?></u></a> / <a onclick="$('input[name*=\'backup\']').attr('checked', '');"><u><?php echo $text_unselect_all; ?></u></a></td>
+          </td>
         </tr>
       </table>
     </form>

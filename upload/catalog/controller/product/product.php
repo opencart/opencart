@@ -288,7 +288,7 @@ class ControllerProductProduct extends Controller {
 				}
 			
 				if ($this->config->get('config_review')) {
-					$rating = $this->model_catalog_review->getAverageRating($this->request->get['product_id']);	
+					$rating = $this->model_catalog_review->getAverageRating($result['product_id']);	
 				} else {
 					$rating = false;
 				}

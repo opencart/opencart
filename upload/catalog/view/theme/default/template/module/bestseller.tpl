@@ -5,7 +5,7 @@
     <table cellpadding="2" cellspacing="0" style="width: 100%;">
       <?php foreach ($products as $product) { ?>
       <tr>
-        <td valign="top" width="1"><a href="<?php echo str_replace('&', '&amp;', $product['href']); ?>"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" /></a></td>
+        <td valign="top" style="width:1px"><a href="<?php echo str_replace('&', '&amp;', $product['href']); ?>"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" /></a></td>
         <td valign="top"><a href="<?php echo str_replace('&', '&amp;', $product['href']); ?>"><?php echo $product['name']; ?></a>
           <?php if ($display_price) { ?>
           <br />

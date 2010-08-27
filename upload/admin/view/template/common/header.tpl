@@ -33,7 +33,7 @@ $(document).ready(function(){
             }
         }
     });
-    
+    	
     // Confirm Uninstall
     $('a').click(function(){
         if ($(this).attr('href') != null && $(this).attr('href').indexOf('uninstall',1) != -1) {
@@ -41,7 +41,16 @@ $(document).ready(function(){
                 return false;
             }
         }
-    });   
+    });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".scrollbox").each(function(i) {
+    	$(this).attr('id', 'scrollbox_' + i);
+		sbox = '#' + $(this).attr('id');
+    	$(this).after('<span><a onclick="$(\'' + sbox + ' :checkbox\').attr(\'checked\', \'checked\');"><u><?php echo $text_select_all; ?></u></a> / <a onclick="$(\'' + sbox + ' :checkbox\').attr(\'checked\', \'\');"><u><?php echo $text_unselect_all; ?></u></a></span>');
+	});
 });
 </script>
 </head>
@@ -206,4 +215,7 @@ $(document).ready(function() {
   <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
   <?php } ?>
 </div>
+<?php } ?>
+<?php if (isset($install) && $install) { ?>
+<div class="warning"><?php echo $error_install; ?></div>
 <?php } ?>

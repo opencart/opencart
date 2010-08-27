@@ -12,7 +12,7 @@ if (ini_get('register_globals')) {
 	ini_set('session.use_cookies', 'On');
 	ini_set('session.use_trans_sid', 'Off');
 		
-	session_set_cookie_params(0, '/');
+	session_set_cookie_params(0, rtrim(dirname($_SERVER['PHP_SELF'])));
 	session_start();
 	
 	$globals = array($_REQUEST, $_SESSION, $_SERVER, $_FILES);

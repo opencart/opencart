@@ -27,6 +27,12 @@ class ControllerAccountLogin extends Controller {
 			if (isset($this->request->post['email']) && isset($this->request->post['password']) && $this->validate()) {
 				unset($this->session->data['guest']);
 				
+				$this->load->model('account/address');
+
+	            $address = $this->model_account_address->getAddress($this->customer->getAddressId());
+
+				$this->tax->setZone($address['country_id'], $address['zone_id']);
+				
 				if (isset($this->request->post['redirect'])) {
 					$this->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 				} else {
@@ -60,7 +66,7 @@ class ControllerAccountLogin extends Controller {
 		$this->data['text_new_customer'] = $this->language->get('text_new_customer');
     	$this->data['text_i_am_new_customer'] = $this->language->get('text_i_am_new_customer');
 		$this->data['text_checkout'] = $this->language->get('text_checkout');
-    	$this->data['text_account'] = $this->language->get('text_account');
+    	$this->data['text_register'] = $this->language->get('text_register');
     	$this->data['text_guest'] = $this->language->get('text_guest');   	
     	$this->data['text_create_account'] = $this->language->get('text_create_account');
 		$this->data['text_returning_customer'] = $this->language->get('text_returning_customer');

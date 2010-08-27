@@ -72,12 +72,15 @@
               <?php } ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_postcode; ?></td>
-            <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
+            <td id="postcode"><?php echo $entry_postcode; ?></td>
+            <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" />
+			  <?php if ($error_postcode) { ?>
+              <span class="error"><?php echo $error_postcode; ?></span>
+              <?php } ?></td>
           </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-            <td><select name="country_id" id="country_id" onchange="$('select[name=\'zone_id\']').load('index.php?route=checkout/guest_step_1/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>');">
+            <td><select name="country_id" id="country_id" onchange="$('select[name=\'zone_id\']').load('index.php?route=checkout/guest_step_1/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>'); $('#postcode').load('index.php?route=checkout/guest_step_1/postcode&country_id=' + this.value);">
                 <option value="FALSE"><?php echo $text_select; ?></option>
                 <?php foreach ($countries as $country) { ?>
                 <?php if ($country['country_id'] == $country_id) { ?>
@@ -150,15 +153,18 @@
               <?php } ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_postcode; ?></td>
-            <td><input type="text" name="shipping_postcode" value="<?php echo $shipping_postcode; ?>" /></td>
+            <td id="shipping_postcode"><?php echo $entry_postcode; ?></td>
+            <td><input type="text" name="shipping_postcode" value="<?php echo $shipping_postcode; ?>" />
+			  <?php if ($error_shipping_postcode) { ?>
+              <span class="error"><?php echo $error_shipping_postcode; ?></span>
+              <?php } ?></td>
           </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-            <td><select name="shipping_country_id" id="shipping_country_id" onchange="$('select[name=\'shipping_zone_id\']').load('index.php?route=checkout/guest_step_1/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>');">
+            <td><select name="shipping_country_id" id="shipping_country_id" onchange="$('select[name=\'shipping_zone_id\']').load('index.php?route=checkout/guest_step_1/zone&country_id=' + this.value + '&zone_id=<?php echo $shipping_zone_id; ?>'); $('#shipping_postcode').load('index.php?route=checkout/guest_step_1/postcode&country_id=' + this.value);">
                 <option value="FALSE"><?php echo $text_select; ?></option>
                 <?php foreach ($countries as $country) { ?>
-                <?php if ($country['country_id'] == $country_id) { ?>
+                <?php if ($country['country_id'] == $shipping_country_id) { ?>
                 <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
                 <?php } else { ?>
                 <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
@@ -199,6 +205,8 @@
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'zone_id\']').load('index.php?route=checkout/guest_step_1/zone&country_id=<?php echo $country_id; ?>&zone_id=<?php echo $zone_id; ?>');
-$('select[name=\'shipping_zone_id\']').load('index.php?route=checkout/guest_step_1/zone&country_id=<?php echo $country_id; ?>&zone_id=<?php echo $zone_id; ?>');
+$('select[name=\'shipping_zone_id\']').load('index.php?route=checkout/guest_step_1/zone&country_id=<?php echo $shipping_country_id; ?>&zone_id=<?php echo $shipping_zone_id; ?>');
+$('#postcode').load('index.php?route=checkout/guest_step_1/postcode&country_id=<?php echo $country_id; ?>');
+$('#shipping_postcode').load('index.php?route=checkout/guest_step_1/postcode&country_id=<?php echo $shipping_country_id; ?>');
 //--></script>
 <?php echo $footer; ?> 

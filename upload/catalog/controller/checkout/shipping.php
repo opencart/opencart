@@ -18,6 +18,11 @@ class ControllerCheckoutShipping extends Controller {
     	}
 		
 		if (!$this->customer->isLogged()) {
+			
+			if (isset($this->session->data['guest'])) {
+				$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/guest_step_1');
+			}
+			
 			$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
 
 	  		$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');

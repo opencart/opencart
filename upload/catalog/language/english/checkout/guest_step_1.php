@@ -31,6 +31,7 @@ $_['error_email']       	= 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']   	= 'Telephone must be greater than 3 and less than 32 characters!';
 $_['error_address_1']   	= 'Address 1 must be greater than 3 and less than 128 characters!';
 $_['error_city']       		= 'City must be greater than 3 and less than 128 characters!';
+$_['error_postcode']        = 'Postcode must be between 2 and 10 characters for this country!';
 $_['error_country']     	= 'Please select a country!'; 
 $_['error_zone']       		= 'Please select a region / state!';
 ?>

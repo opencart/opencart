@@ -345,22 +345,22 @@ class ModelCatalogProduct extends Model {
 	public function addFeatured($data) {
       	$this->db->query("DELETE FROM " . DB_PREFIX . "product_featured");
       	
-		if (isset($data['featured_product'])) {
-      		foreach ($data['featured_product'] as $product_id) {
+		if (isset($data['product_featured'])) {
+      		foreach ($data['product_featured'] as $product_id) {
         		$this->db->query("INSERT INTO " . DB_PREFIX . "product_featured SET product_id = '" . (int)$product_id . "'");
       		}			
 		}
 	}
 	
 	public function getFeaturedProducts() {
-		$query = $this->db->query("SELECT product_id FROM " . DB_PREFIX . "product_featured");
+		$product_featured_data = array();
 		
-		$featured = array();
+		$query = $this->db->query("SELECT product_id FROM " . DB_PREFIX . "product_featured");		
 		
-		foreach ($query->rows as $product) {
-			$featured[] = $product['product_id'];
+		foreach ($query->rows as $result) {
+			$product_featured_data[] = $result['product_id'];
 		}
-		return $featured;
+		return $product_featured_data;
 	}
 	
 	public function getProductsByKeyword($keyword) {

@@ -24,9 +24,13 @@ class ControllerCheckoutGuestStep2 extends Controller {
     	if (!$this->cart->hasShipping()) {
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
-
-			$this->tax->setZone($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
-    	}		
+    	}
+		
+		if (isset($this->session->data['guest']['shipping']['country_id'])) {
+			$this->tax->setZone($this->session->data['guest']['shipping']['country_id'], $this->session->data['guest']['shipping']['zone_id']);
+		} else {
+			$this->tax->setZone($this->session->data['guest']['country_id'], $this->session->data['guest']['zone_id']);
+		}
 		
 		$this->language->load('checkout/guest_step_2');
 		
@@ -69,7 +73,7 @@ class ControllerCheckoutGuestStep2 extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/guest_step_3');
+			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/guest_step_2');
 		}
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !isset($this->request->post['coupon']) && $this->validate()) {

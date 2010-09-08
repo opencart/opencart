@@ -4,6 +4,7 @@ upload/admin/controller/catalog/download.php
 upload/admin/controller/payment/authorizenet_aim.php
 upload/admin/controller/sale/customer.php
 upload/admin/controller/setting/setting.php
+upload/admin/index.php
 upload/admin/language/english/catalog/information.php
 upload/admin/language/english/common/header.php
 upload/admin/language/english/payment/authorizenet_aim.php
@@ -34,6 +35,7 @@ upload/catalog/controller/product/search.php
 upload/catalog/model/checkout/order.php
 upload/catalog/view/javascript/jquery/ajax_add.js
 upload/catalog/view/theme/default/template/payment/liqpay.tpl
+upload/index.php
 upload/system/library/customer.php
 upload/system/library/image.php
 upload/system/library/mail.php

@@ -21,6 +21,7 @@ FIXES:
 - Admin user and Customer email logins were case-sensitive
 - Fixed account/invoice error when no order id is supplied
 - Fixed HTTP to HTTPS in breadcrumb for account related pages
+- Partial fix for & in storename and contact form
 
 == OpenCart v1.4.9 ==
 

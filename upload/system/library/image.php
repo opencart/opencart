@@ -39,7 +39,7 @@ final class Image {
         $info = pathinfo($file);
         $extension = $info['extension'];
    
-        if ($extension == ('jpeg' || 'jpg')) {
+        if ($extension == 'jpeg' || $extension == 'jpg') {
             imagejpeg($this->image, $file, $quality);
         } elseif($extension == 'png') {
             imagepng($this->image, $file, 0);

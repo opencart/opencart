@@ -20,9 +20,13 @@ final class User {
 
       			$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
 				
-	  			foreach (unserialize($user_group_query->row['permission']) as $key => $value) {
-	    			$this->permission[$key] = $value;
-	  			}
+	  			$permissions = unserialize($user_group_query->row['permission']);
+
+				if (is_array($permissions)) {
+	  				foreach ($permissions as $key => $value) {
+	    				$this->permission[$key] = $value;
+	  				}
+				}
 			} else {
 				$this->logout();
 			}
@@ -30,7 +34,7 @@ final class User {
   	}
 		
   	public function login($username, $password) {
-    	$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE username = '" . $this->db->escape($username) . "' AND password = '" . $this->db->escape(md5($password)) . "'");
+    	$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE LOWER(username) = '" . $this->db->escape(strtolower($username)) . "' AND password = '" . $this->db->escape(md5($password)) . "'");
 
     	if ($user_query->num_rows) {
 			$this->session->data['user_id'] = $user_query->row['user_id'];
@@ -40,9 +44,13 @@ final class User {
 
       		$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
 
-	  		foreach (unserialize($user_group_query->row['permission']) as $key => $value) {
-	    		$this->permissions[$key] = $value;
-	  		}
+	  		$permissions = unserialize($user_group_query->row['permission']);
+
+			if (is_array($permissions)) {
+				foreach ($permissions as $key => $value) {
+					$this->permission[$key] = $value;
+				}
+			}
 		
       		return TRUE;
     	} else {

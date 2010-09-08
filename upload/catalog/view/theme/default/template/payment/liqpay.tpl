@@ -1,5 +1,5 @@
 <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" id="checkout">
-  <input type="hidden" name="xml" value="<?php echo $xml; ?>">
+  <input type="hidden" name="operation_xml" value="<?php echo $xml; ?>">
   <input type="hidden" name="signature" value="<?php echo $signature; ?>">
 </form>
 <div class="buttons">

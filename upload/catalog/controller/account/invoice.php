@@ -16,6 +16,12 @@ class ControllerAccountInvoice extends Controller {
     	$this->language->load('account/invoice');
 
     	$this->document->title = $this->language->get('heading_title');
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = $this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
       	
 		$this->document->breadcrumbs = array();
 
@@ -26,30 +32,24 @@ class ControllerAccountInvoice extends Controller {
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/history',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/history',
         	'text'      => $this->language->get('text_history'),
         	'separator' => $this->language->get('text_separator')
       	);
       	
 		$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/invoice&order_id=' . $this->request->get['order_id'],
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/invoice&order_id=' . $order_id,
         	'text'      => $this->language->get('text_invoice'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
 		$this->load->model('account/order');
-
-		if (isset($this->request->get['order_id'])) {
-			$order_id = $this->request->get['order_id'];
-		} else {
-			$order_id = 0;
-		}
 			
 		$order_info = $this->model_account_order->getOrder($order_id);
 		

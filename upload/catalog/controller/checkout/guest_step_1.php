@@ -469,7 +469,7 @@ class ControllerCheckoutGuestStep1 extends Controller {
       		$this->error['lastname'] = $this->language->get('error_lastname');
     	}
 
-		$pattern = '/^[A-Z0-9._%-]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i';
+		$pattern = '/^[A-Z0-9._%-+]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i';
 		
     	if (!preg_match($pattern, $this->request->post['email'])) {
       		$this->error['email'] = $this->language->get('error_email');

@@ -32,13 +32,13 @@ class ControllerAccountEdit extends Controller {
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/edit',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/edit',
         	'text'      => $this->language->get('text_edit'),
         	'separator' => $this->language->get('text_separator')
       	);
@@ -159,7 +159,7 @@ class ControllerAccountEdit extends Controller {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		$pattern = '/^[A-Z0-9._%-]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i';
+		$pattern = '/^[A-Z0-9._%-+]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i';
 
 		if ((strlen(utf8_decode($this->request->post['email'])) > 96) || (!preg_match($pattern, $this->request->post['email']))) {
 			$this->error['email'] = $this->language->get('error_email');

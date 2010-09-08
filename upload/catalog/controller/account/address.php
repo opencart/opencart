@@ -122,13 +122,13 @@ class ControllerAccountAddress extends Controller {
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/address',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/address',
         	'text'      => $this->language->get('heading_title'),
         	'separator' => $this->language->get('text_separator')
       	);

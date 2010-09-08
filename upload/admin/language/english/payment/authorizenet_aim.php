@@ -7,6 +7,7 @@ $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified Authorize.Net (AIM) account details!';
 $_['text_test']          = 'Test';
 $_['text_live']          = 'Live';
+$_['text_dev']           = 'Dev';
 $_['text_authorization'] = 'Authorization';
 $_['text_capture']       = 'Capture';
 

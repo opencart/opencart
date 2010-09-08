@@ -15,7 +15,7 @@ class ControllerModuleCart extends Controller {
 		$this->data['text_checkout'] = $this->language->get('text_checkout');
 		
 		$this->data['view'] = HTTP_SERVER . 'index.php?route=checkout/cart';
-		$this->data['checkout'] = HTTP_SERVER . 'index.php?route=checkout/shipping';
+		$this->data['checkout'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
 		
 		$this->data['products'] = array();
 		
@@ -148,7 +148,7 @@ class ControllerModuleCart extends Controller {
 			$sort_order = array(); 
 			
 			$view = HTTP_SERVER . 'index.php?route=checkout/cart';
-			$checkout = HTTP_SERVER . 'index.php?route=checkout/shipping';
+			$checkout = HTTPS_SERVER . 'index.php?route=checkout/shipping';
 			
 			$results = $this->model_checkout_extension->getExtensions('total');
 			

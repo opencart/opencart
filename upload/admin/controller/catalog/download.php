@@ -111,6 +111,15 @@ class ControllerCatalogDownload extends Controller {
 			
     	if (isset($this->request->post['selected']) && $this->validateDelete()) {	  
 			foreach ($this->request->post['selected'] as $download_id) {
+				
+				$results = $this->model_catalog_download->getDownload($download_id) ;
+               
+				$filename = $results['filename'];
+
+				if (file_exists(DIR_DOWNLOAD . $filename)) {
+					unlink(DIR_DOWNLOAD . $filename);
+				}
+				
 				$this->model_catalog_download->deleteDownload($download_id);
 			}
 			

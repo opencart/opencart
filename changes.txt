@@ -1,3 +1,27 @@
+== OpenCart v1.4.9.1 ==
+
+FIXES:
+- Frontend not viewable in Maintenance Mode, even when logged in as admin.
+- Adding items to cart shows no products in cart
+- Deleting Downloads from Admin does not remove file
+- Paypal warning about Receiver Email doesn't match
+- Cart sidebox checkout button is HTTP instead of HTTPS
+- Paypal Standard not passing Handling and other order fees.
+- Paypal Standard not setting state for Authorization mode.
+- Transparent PNG Images not always working.
+- Unchecking all user group options gives foreach error when logging in with a user in that group
+- Product report grouped by product_id instead of model since that is a not a unique field
+- Maintenance mode bypass for payment callback updates
+- Product stock restore on order delete
+- Restored the default --None-- option in the order status list (added in 1.4.8 and lost in 1.4.9)
+- Improved default confirm message to be clear about the action
+- Fixed Search page bookmark
+- Added support for + in email addresses
+- Fixed page total for filter by customer group on admin customer list
+- Admin user and Customer email logins were case-sensitive
+- Fixed account/invoice error when no order id is supplied
+- Fixed HTTP to HTTPS in breadcrumb for account related pages
+
 == OpenCart v1.4.9 ==
 
 FIXES:

@@ -32,13 +32,13 @@ class ControllerAccountPassword extends Controller {
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/password',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/password',
         	'text'      => $this->language->get('heading_title'),
         	'separator' => $this->language->get('text_separator')
       	);

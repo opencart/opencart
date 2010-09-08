@@ -14,7 +14,7 @@ $_['column_action']     	= 'Action';
 // Entry
 $_['entry_title']       	= 'Information Title:';
 $_['entry_description'] 	= 'Description:';
-$_['entry_status']          = 'Category Status:';
+$_['entry_status']          = 'Information Status:';
 $_['entry_store']       	= 'Stores:';
 $_['entry_keyword']     	= 'SEO Keyword:';
 $_['entry_sort_order']  	= 'Sort Order:';

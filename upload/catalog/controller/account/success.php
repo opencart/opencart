@@ -14,7 +14,7 @@ class ControllerAccountSuccess extends Controller {
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);

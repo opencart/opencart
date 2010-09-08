@@ -19,7 +19,7 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		// Check for supported currency, otherwise convert to USD.
-		$currencies = array('AUD','CAD','EUR','GBP','JPY','USD','NZD','CHF','HKD','SGD','SEK','DKK','PLN','NOK','HUF','CZK','ILS','MXN');
+		$currencies = array('AUD','CAD','EUR','GBP','JPY','USD','NZD','CHF','HKD','SGD','SEK','DKK','PLN','NOK','HUF','CZK','ILS','MXN','MYR','BRL','PHP','PLN','TWD','THB');
 		if (in_array($this->order_info['currency'], $currencies)) {
 			$currency = $this->order_info['currency'];
 		} else {
@@ -95,7 +95,7 @@ class ControllerPaymentPPStandard extends Controller {
 		$remaining_total = $total - $product_total - $tax_total - $shipping_total + $discount_total;
 
 		if ($remaining_total > 0) {
-			$this->data['fields']['shipping_2'] = number_format(abs($remaining_total), 2, '.', '');
+			$this->data['fields']['handling_cart'] = number_format(abs($remaining_total), 2, '.', '');
 		}
 
 		$this->data['fields']['business'] = $this->config->get('pp_standard_email');
@@ -321,7 +321,7 @@ class ControllerPaymentPPStandard extends Controller {
 			if (!$this->config->get('pp_standard_test')) {
 				$ch = curl_init('https://www.paypal.com/cgi-bin/webscr');
 			} else {
-				$ch = curl_init('http://www.sandbox.paypal.com/cgi-bin/webscr');
+				$ch = curl_init('https://www.sandbox.paypal.com/cgi-bin/webscr');
 			}
 
 			curl_setopt($ch, CURLOPT_POST, 1);
@@ -418,12 +418,10 @@ class ControllerPaymentPPStandard extends Controller {
 				}
 				break;
 			case 'Pending':
-				if (!isset($data['payment_type']) || (isset($data['payment_type']) && $data['payment_type'] == 'echeck')) {
-					if ($this->order_info['order_status_id'] == '0') {
-						$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_pending'), $data['pending_reason']);
-					} else {
-						$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_pending'), $data['pending_reason'], TRUE);
-					}
+				if ($this->order_info['order_status_id'] == '0') {
+					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_pending'), $data['pending_reason']);
+				} else {
+					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_pending'), $data['pending_reason'], TRUE);
 				}
 				break;
 			case 'Refunded':
@@ -463,6 +461,7 @@ class ControllerPaymentPPStandard extends Controller {
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Set curl to return the data instead of printing it to the browser.
 		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
 		
 		$data = curl_exec($ch);
 		
@@ -499,8 +498,10 @@ class ControllerPaymentPPStandard extends Controller {
 		}
 
 		// verify paypal email matches
-        if (isset($data['receiver_email']) && $data['receiver_email'] != $this->config->get('pp_standard_email')) {
-			$this->error = $this->language->get('error_email_mismatch');
+		if (isset($data['receiver_email']) && strtolower($data['receiver_email']) != strtolower($this->config->get('pp_standard_email'))) {
+			if (isset($data['business']) && strtolower($data['business']) != strtolower($this->config->get('pp_standard_email'))) {
+				$this->error = $this->language->get('error_email_mismatch');
+			}
 		}
 
     	if (!$this->error) {

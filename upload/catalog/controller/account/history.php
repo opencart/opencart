@@ -20,13 +20,13 @@ class ControllerAccountHistory extends Controller {
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/history',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/history',
         	'text'      => $this->language->get('text_history'),
         	'separator' => $this->language->get('text_separator')
       	);

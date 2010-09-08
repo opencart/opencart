@@ -203,17 +203,21 @@ class ModelSaleCustomer extends Model {
 		
 		$implode = array();
 		
+		if (isset($data['filter_customer_group_id']) && !is_null($data['filter_customer_group_id'])) {
+			$implode[] = "customer_group_id = '" . (int)$data['filter_customer_group_id'] . "'";
+		}
+		
 		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
 			$implode[] = "CONCAT(firstname, ' ', lastname) LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
 		}
 		
 		if (isset($data['filter_email']) && !is_null($data['filter_email'])) {
 			$implode[] = "email = '" . $this->db->escape($data['filter_email']) . "'";
-		}	
+		}
 		
 		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
 			$implode[] = "status = '" . (int)$data['filter_status'] . "'";
-		}			
+		}
 		
 		if (isset($data['filter_date_added']) && !is_null($data['filter_date_added'])) {
 			$implode[] = "DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";

@@ -56,9 +56,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
     		$url = 'https://secure.authorize.net/gateway/transact.dll';
 		} elseif ($this->config->get('authorizenet_aim_server') == 'test') {
 			$url = 'https://test.authorize.net/gateway/transact.dll';		
-		}	
-		
-		//$url = 'https://secure.networkmerchants.com/gateway/transact.dll';	
+		}
 		
 		$this->load->model('checkout/order');
 		
@@ -127,7 +125,14 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		$json = array();
 		
 		if ($response_data[1] == '1') {
-			if (strtoupper($response_data[38]) != strtoupper(md5($this->config->get('authorizenet_aim_hash') . $this->config->get('authorizenet_aim_login') . $response_data[6] . $this->currency->format($order_info['total'], $order_info['currency'], 1.00000, FALSE)))) {
+			
+			if ($this->config->get('authorizenet_aim_hash')) {
+				$checksum = strtoupper(md5($this->config->get('authorizenet_aim_hash') . $this->config->get('authorizenet_aim_login') . $response_data[6] . $this->currency->format($order_info['total'], $order_info['currency'], 1.00000, FALSE)));
+			} else {
+				$checksum = strtoupper(md5($this->config->get('authorizenet_aim_login') . $response_data[6] . $this->currency->format($order_info['total'], $order_info['currency'], 1.00000, FALSE)));
+			}
+			
+			if (strtoupper($response_data[38]) != $checksum) {
 				$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
 				
 				$message = '';

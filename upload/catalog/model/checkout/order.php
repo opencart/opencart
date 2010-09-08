@@ -381,7 +381,7 @@ class ModelCheckoutOrder extends Model {
 				$mail->send();
 				
 				// Send to additional alert emails
-				$pattern = '/^[A-Z0-9._%-]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i';
+				$pattern = '/^[A-Z0-9._%-+]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i';
 				$emails = explode(',', $this->config->get('config_alert_emails'));
 				foreach ($emails as $email) {
 					if (strlen($email) > 0 && preg_match($pattern, $email)) {

@@ -5,8 +5,11 @@ class ModelToolImage extends Model {
 			return;
 		} 
 		
+		$info = pathinfo($filename);
+		$extension = $info['extension'];
+		
 		$old_image = $filename;
-		$new_image = 'cache/' . substr($filename, 0, strrpos($filename, '.')) . '-' . $width . 'x' . $height . '.jpg';
+		$new_image = 'cache/' . substr($filename, 0, strrpos($filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;
 		
 		if (!file_exists(DIR_IMAGE . $new_image) || (filemtime(DIR_IMAGE . $old_image) > filemtime(DIR_IMAGE . $new_image))) {
 			$path = '';

@@ -4,7 +4,7 @@ class ControllerProductSearch extends Controller {
     	$this->language->load('product/search');
 	  	  
     	if (isset($this->request->get['keyword'])) {
-    		$this->document->title = $this->language->get('heading_title') .  ' - "' . $this->request->get['keyword'] . '"';
+    		$this->document->title = $this->language->get('heading_title') .  ' - ' . $this->request->get['keyword'];
 		} else {
 			$this->document->title = $this->language->get('heading_title');
 		}

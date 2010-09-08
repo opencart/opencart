@@ -27,11 +27,8 @@
             <?php } ?></td>
         </tr>
         <tr>
-          <td><span class="required">*</span> <?php echo $entry_hash; ?></td>
-          <td><input type="text" name="authorizenet_aim_hash" value="<?php echo $authorizenet_aim_hash; ?>" />
-            <?php if ($error_hash) { ?>
-            <span class="error"><?php echo $error_hash; ?></span>
-            <?php } ?></td>
+          <td><?php echo $entry_hash; ?></td>
+          <td><input type="text" name="authorizenet_aim_hash" value="<?php echo $authorizenet_aim_hash; ?>" /></td>
         </tr>
         <tr>
           <td><?php echo $entry_server; ?></td>
@@ -42,9 +39,9 @@
               <option value="live"><?php echo $text_live; ?></option>
               <?php } ?>
               <?php if ($authorizenet_aim_server == 'test') { ?>
-              <option value="test" selected="selected"><?php echo $text_test; ?></option>
+              <option value="test" selected="selected"><?php echo $text_dev; ?></option>
               <?php } else { ?>
-              <option value="test"><?php echo $text_test; ?></option>
+              <option value="test"><?php echo $text_dev; ?></option>
               <?php } ?>
             </select></td>
         </tr>

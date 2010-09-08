@@ -21,7 +21,7 @@ $(document).ready(function () {
 					left : cart.left + 'px',
 					opacity : 0.0,
 					width : $('#module_cart').width(),  
-					heigth : $('#module_cart').height()
+					height : $('#module_cart').height()
 				};		
 	
 				$('#temp').animate(params, 'slow', false, function () {

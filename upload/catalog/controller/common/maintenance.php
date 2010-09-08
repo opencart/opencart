@@ -40,12 +40,27 @@ class ControllerCommonMaintenance extends Controller {
     
     public function check() {
         if ($this->config->get('config_maintenance')) {
-            
+
+			// Require to be logged in unless it is a payment callback
+			$ignore = array(
+				'payment',
+			);
+
+			$match = false;
+			if (isset($this->request->get['route'])) {
+				foreach ($ignore as $i) {
+					if (strpos($this->request->get['route'], $i) !== false) {
+						$match = true;
+						break;
+					}
+				}
+			}
+
             // Show site if logged in as admin
-			require_once(DIR_SYSTEM . 'library/user.php');
+			$this->load->library('user');
 			$this->registry->set('user', new User($this->registry));
-            
-            if (!$this->user->isLogged()) {
+
+            if (!$this->user->isLogged() && !$match) {
                 return $this->forward('common/maintenance');
             }
         }

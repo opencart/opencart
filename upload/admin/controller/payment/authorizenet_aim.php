@@ -26,6 +26,7 @@ class ControllerPaymentAuthorizenetAim extends Controller {
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_test'] = $this->language->get('text_test');
 		$this->data['text_live'] = $this->language->get('text_live');
+		$this->data['text_dev'] = $this->language->get('text_dev');
 		$this->data['text_authorization'] = $this->language->get('text_authorization');
 		$this->data['text_capture'] = $this->language->get('text_capture');		
 		
@@ -61,12 +62,6 @@ class ControllerPaymentAuthorizenetAim extends Controller {
 			$this->data['error_key'] = $this->error['key'];
 		} else {
 			$this->data['error_key'] = '';
-		}
-
- 		if (isset($this->error['hash'])) {
-			$this->data['error_hash'] = $this->error['hash'];
-		} else {
-			$this->data['error_hash'] = '';
 		}
 		
   		$this->document->breadcrumbs = array();
@@ -181,10 +176,6 @@ class ControllerPaymentAuthorizenetAim extends Controller {
 
 		if (!$this->request->post['authorizenet_aim_key']) {
 			$this->error['key'] = $this->language->get('error_key');
-		}
-
-		if (!$this->request->post['authorizenet_aim_hash']) {
-			$this->error['hash'] = $this->language->get('error_hash');
 		}
 		
 		if (!$this->error) {

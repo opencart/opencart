@@ -145,7 +145,7 @@ class ControllerPaymentSagepay extends Controller {
 			if ($data) {
 				$this->load->model('checkout/order');
 		
-				$this->model_checkout_order->confirm($data['VendorTxCode'], $this->config->get('sagepay_order_status_id'));
+				$this->model_checkout_order->confirm($this->request->get['order_id'], $this->config->get('sagepay_order_status_id'));
 
 				$message = '';
 		

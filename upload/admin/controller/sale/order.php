@@ -413,6 +413,8 @@ class ControllerSaleOrder extends Controller {
 			$this->data['entry_option'] = $this->language->get('entry_option');
 			$this->data['entry_quantity'] = $this->language->get('entry_quantity');
 			$this->data['entry_tax'] = $this->language->get('entry_tax');
+			
+			$this->data['text_none'] = $this->language->get('text_none');
 
 			$this->data['button_invoice'] = $this->language->get('button_invoice');
 			$this->data['button_cancel'] = $this->language->get('button_cancel');

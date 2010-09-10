@@ -111,6 +111,7 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->data['fields']['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($this->order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($this->order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
 		$this->data['fields']['lc'] = $this->session->data['language'];
 		$this->data['fields']['rm'] = '2';
+		$this->data['fields']['address_override'] = '1';
 
 		if (!$this->config->get('pp_standard_transaction')) {
 			$this->data['fields']['paymentaction'] = 'authorization';

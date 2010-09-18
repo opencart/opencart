@@ -55,13 +55,13 @@ class ControllerAccountForgotten extends Controller {
       	); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/forgotten',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/forgotten',
         	'text'      => $this->language->get('text_forgotten'),
         	'separator' => $this->language->get('text_separator')
       	);

@@ -50,13 +50,13 @@ class ControllerAccountLogin extends Controller {
       	);
  
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/account',
         	'text'      => $this->language->get('text_account'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/login',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/login',
         	'text'      => $this->language->get('text_login'),
         	'separator' => $this->language->get('text_separator')
       	);

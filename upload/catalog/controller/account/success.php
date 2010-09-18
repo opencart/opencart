@@ -20,7 +20,7 @@ class ControllerAccountSuccess extends Controller {
       	);
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/success',
+        	'href'      => HTTPS_SERVER . 'index.php?route=account/success',
         	'text'      => $this->language->get('text_success'),
         	'separator' => $this->language->get('text_separator')
       	);
@@ -36,9 +36,9 @@ class ControllerAccountSuccess extends Controller {
     	$this->data['button_continue'] = $this->language->get('button_continue');
 		
 		if ($this->cart->hasProducts()) {
-			$this->data['continue'] = HTTP_SERVER . 'index.php?route=checkout/cart';
+			$this->data['continue'] = HTTPS_SERVER . 'index.php?route=checkout/cart';
 		} else {
-			$this->data['continue'] = HTTP_SERVER . 'index.php?route=account/account';
+			$this->data['continue'] = HTTPS_SERVER . 'index.php?route=account/account';
 		}
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {

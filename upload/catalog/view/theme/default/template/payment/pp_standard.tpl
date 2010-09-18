@@ -1,9 +1,3 @@
-<!--
-//-----------------------------------------
-// Author: Qphoria@gmail.com
-// Web: http://www.unbannable.com/ocstore
-//-----------------------------------------
--->
 <?php if (isset($error)) { ?>
 <div class="warning"><?php echo $error; ?></div>
 <?php } ?>

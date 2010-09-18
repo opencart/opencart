@@ -12,6 +12,9 @@ define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
 
+// RegEx
+$define('EMAIL_PATTERN', '/^[A-Z0-9._%\-+]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i');
+
 // Startup 
 require_once(DIR_SYSTEM . 'startup.php');
 

@@ -203,7 +203,7 @@ class ControllerStep3 extends Controller {
 
 		$pattern = '/^([a-z0-9])(([-a-z0-9._])*([a-z0-9]))*\@([a-z0-9])(([a-z0-9-])*([a-z0-9]))+(\.([a-z0-9])([-a-z0-9_-])?([a-z0-9])+)+$/i';
 
-		if (!preg_match($pattern, $this->request->post['email'])) {
+		if (!preg_match(EMAIL_PATTERN, $this->request->post['email'])) {
 			$this->error['email'] = 'Invalid E-Mail!';
 		}
 

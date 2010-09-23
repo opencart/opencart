@@ -6,7 +6,7 @@ define('VERSION', '1.4.9.1');
 require_once('config.php');
 
 // RegEx
-$define('EMAIL_PATTERN', '/^[A-Z0-9._%\-+]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i');
+define('EMAIL_PATTERN', '/^[A-Z0-9._%\-+]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i');
 
 // Install 
 if (!defined('DIR_APPLICATION')) {

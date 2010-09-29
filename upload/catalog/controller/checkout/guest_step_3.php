@@ -30,8 +30,6 @@ class ControllerCheckoutGuestStep3 extends Controller {
 		} else {
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
-			
-			$this->tax->setZone($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}
 		
 		if (!isset($this->session->data['payment_method'])) {

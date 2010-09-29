@@ -56,8 +56,8 @@
   <tr>
     <td align="left"><table style="width: 100%; font-family: Verdana,sans-serif; font-size: 11px; color: #000000;">
         <tr style="background-color: #CCCCCC;">
-          <th align="left" style="width: 15%; padding: 0.3em; color: #FFFFFF;"><?php echo $column_product; ?></th>
-          <th align="left" style="color: #FFFFFF;"><?php echo $column_model; ?></th>
+          <th align="left" style="padding: 0.3em; color: #FFFFFF;"><?php echo $column_product; ?></th>
+          <th align="left" style="width: 15%; padding: 0.3em; color: #FFFFFF;"><?php echo $column_model; ?></th>
           <th align="right" style="width: 15%; padding: 0.3em; color: #FFFFFF;"><?php echo $column_price; ?></th>
           <th align="right" style="width: 15%; padding: 0.3em; color: #FFFFFF;"><?php echo $column_quantity; ?></th>
           <th align="right" style="width: 20%; padding: 0.3em; color: #FFFFFF;"><?php echo $column_total; ?></th>

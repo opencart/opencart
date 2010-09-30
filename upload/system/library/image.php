@@ -37,7 +37,7 @@ final class Image {
 	
     public function save($file, $quality = 100) {
         $info = pathinfo($file);
-        $extension = $info['extension'];
+        $extension = strtolower($info['extension']);
    
         if ($extension == 'jpeg' || $extension == 'jpg') {
             imagejpeg($this->image, $file, $quality);

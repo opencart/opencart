@@ -30,7 +30,7 @@ class ModelLocalisationGeoZone extends Model {
 	
 	public function deleteGeoZone($geo_zone_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "geo_zone WHERE geo_zone_id = '" . (int)$geo_zone_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "zone_to_geo_zone WHERE zone_id = '" . (int)$geo_zone_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$geo_zone_id . "'");
 
 		$this->cache->delete('geo_zone');
 	}

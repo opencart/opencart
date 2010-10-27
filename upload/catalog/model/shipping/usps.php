@@ -335,8 +335,9 @@ class ModelShippingUsps extends Model {
 										'id'           => 'usps.' . $classid,
 										'title'        => $postage->getElementsByTagName('MailService')->item(0)->nodeValue,
 										'cost'         => $this->currency->convert($cost, 'USD', $this->currency->getCode()),
-										'tax_class_id' => 0,
-										'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, 'USD', $this->currency->getCode()), $this->config->get('ups_tax_class_id'), $this->config->get('config_tax')))
+										//'tax_class_id' => 0,
+										'tax_class_id' => $this->config->get('usps_tax_class_id'),
+										'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, 'USD', $this->currency->getCode()), $this->config->get('usps_tax_class_id'), $this->config->get('config_tax')))
 									);							
 								}
 							} 
@@ -368,7 +369,7 @@ class ModelShippingUsps extends Model {
 										'title'        => $title,
 										'cost'         => $this->currency->convert($cost, 'USD', $this->currency->getCode()),
 										'tax_class_id' => $this->config->get('usps_tax_class_id'),
-										'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, 'USD', $this->currency->getCode()), $this->config->get('ups_tax_class_id'), $this->config->get('config_tax')))
+										'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, 'USD', $this->currency->getCode()), $this->config->get('usps_tax_class_id'), $this->config->get('config_tax')))
 									);							
 								}
 							}

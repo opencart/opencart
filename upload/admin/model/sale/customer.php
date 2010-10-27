@@ -8,6 +8,11 @@ class ModelSaleCustomer extends Model {
       	if (isset($data['addresses'])) {		
       		foreach ($data['addresses'] as $address) {	
       			$this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '" . (int)$customer_id . "', firstname = '" . $this->db->escape($address['firstname']) . "', lastname = '" . $this->db->escape($address['lastname']) . "', company = '" . $this->db->escape($address['company']) . "', address_1 = '" . $this->db->escape($address['address_1']) . "', address_2 = '" . $this->db->escape($address['address_2']) . "', city = '" . $this->db->escape($address['city']) . "', postcode = '" . $this->db->escape($address['postcode']) . "', country_id = '" . (int)$address['country_id'] . "', zone_id = '" . (int)$address['zone_id'] . "'");
+				if (isset($address['default'])) {
+					$address_id = $this->db->getLastId();
+					
+					$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . $address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
+				}
 			}
 		}
 	}
@@ -24,12 +29,21 @@ class ModelSaleCustomer extends Model {
       	if (isset($data['addresses'])) {
       		foreach ($data['addresses'] as $address) {	
 				$this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '" . (int)$customer_id . "', firstname = '" . $this->db->escape($address['firstname']) . "', lastname = '" . $this->db->escape($address['lastname']) . "', company = '" . $this->db->escape($address['company']) . "', address_1 = '" . $this->db->escape($address['address_1']) . "', address_2 = '" . $this->db->escape($address['address_2']) . "', city = '" . $this->db->escape($address['city']) . "', postcode = '" . $this->db->escape($address['postcode']) . "', country_id = '" . (int)$address['country_id'] . "', zone_id = '" . (int)$address['zone_id'] . "'");
+				if (isset($address['default'])) {
+					$address_id = $this->db->getLastId();
+					
+					$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . $address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
+				}
 			}
 		}
 	}
 	
 	public function getAddressesByCustomerId($customer_id) {
 		$address_data = array();
+		
+		$query = $this->db->query("SELECT address_id FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$customer_id . "'");
+		
+		$default_address_id = $query->row['address_id'];
 		
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "address WHERE customer_id = '" . (int)$customer_id . "'");
 	
@@ -74,7 +88,8 @@ class ModelSaleCustomer extends Model {
 				'country'        => $country,	
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
-				'address_format' => $address_format
+				'address_format' => $address_format,
+				'default'		 => ($default_address_id == $result['address_id']) ? true : false
 			);
 		}		
 		

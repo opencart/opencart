@@ -512,6 +512,7 @@ class ControllerSaleCustomer extends Controller {
 		$this->data['entry_address'] = $this->language->get('entry_address');
 		$this->data['entry_city_postcode'] = $this->language->get('entry_city_postcode');
 		$this->data['entry_country_zone'] = $this->language->get('entry_country_zone');
+		$this->data['entry_default'] = $this->language->get('entry_default');
  
 		$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');

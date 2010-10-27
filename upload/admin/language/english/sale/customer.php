@@ -39,6 +39,7 @@ $_['entry_city']              = 'City:';
 $_['entry_postcode']          = 'Postcode:';
 $_['entry_country']           = 'Country:';
 $_['entry_zone']              = 'Region / State:';
+$_['entry_default']           = 'Default Address:';
 
 // Error
 $_['error_permission']        = 'Warning: You do not have permission to modify customers!';

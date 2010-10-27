@@ -114,16 +114,54 @@ final class Currency {
 		return $value * ($to / $from);
   	}
 	
-  	public function getId() {
-		return $this->currencies[$this->code]['currency_id'];
+  	public function getId($currency = '') {
+		if (!$currency) {
+			return $this->currencies[$this->code]['currency_id'];
+		} elseif ($currency && isset($this->currencies[$currency])) {
+			return $this->currencies[$currency]['currency_id'];
+		} else {
+			return 0;
+		}
+  	}
+	
+	public function getSymbolLeft($currency = '') {
+		if (!$currency) {
+			return $this->currencies[$this->code]['symbol_left'];
+		} elseif ($currency && isset($this->currencies[$currency])) {
+			return $this->currencies[$currency]['symbol_left'];
+		} else {
+			return 0;
+		}
+  	}
+	
+	public function getSymbolRight($currency = '') {
+		if (!$currency) {
+			return $this->currencies[$this->code]['symbol_right'];
+		} elseif ($currency && isset($this->currencies[$currency])) {
+			return $this->currencies[$currency]['symbol_right'];
+		} else {
+			return 0;
+		}
+  	}
+	
+	public function getDecimalPlace($currency = '') {
+		if (!$currency) {
+			return $this->currencies[$this->code]['decimal_place'];
+		} elseif ($currency && isset($this->currencies[$currency])) {
+			return $this->currencies[$currency]['decimal_place'];
+		} else {
+			return 0;
+		}
   	}
 	
   	public function getCode() {
     	return $this->code;
   	}
   
-  	public function getValue($currency) {
-		if (isset($this->currencies[$currency])) {
+  	public function getValue($currency = '') {
+		if (!$currency) {
+			return $this->currencies[$this->code]['value'];
+		} elseif ($currency && isset($this->currencies[$currency])) {
 			return $this->currencies[$currency]['value'];
 		} else {
 			return 0;

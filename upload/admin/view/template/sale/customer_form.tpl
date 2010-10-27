@@ -162,6 +162,15 @@
                 <span class="error"><?php echo $error_zone; ?></span>
                 <?php } ?></td>
             </tr>
+            <tr>
+              <td><?php echo $entry_default; ?></td>
+              <td>
+              <?php if ($address['default'] || count($addresses) == 1) { ?>
+              <input type="radio" name="addresses[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" checked="checked" /></td>
+              <?php } else { ?>
+              <input type="radio" name="addresses[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" /></td>
+              <?php } ?>
+            </tr>
           </table>
           <script type="text/javascript"><!--
 		  $('select[name=\'addresses[<?php echo $address_row; ?>][zone_id]\']').load('index.php?route=sale/customer/zone&token=<?php echo $token; ?>&country_id=<?php echo $address['country_id']; ?>&zone_id=<?php echo $address['zone_id']; ?>');
@@ -229,6 +238,10 @@ function addAddress() {
     <?php } ?>  
     html += '</td>';
     html += '</tr>';
+    html += '<tr>';
+    html += '<td><?php echo $entry_default; ?></td>';
+    html += '<td><input type="radio" name="addresses[' + address_row + '][default]" value="1" /></td>';
+    html += '</tr>';
     html += '</table>';
     html += '</div>';
 	
@@ -245,5 +258,9 @@ function addAddress() {
 //--></script> 
 <script type="text/javascript"><!--
 $.tabs('.vtabs a');
+$('form input[type=radio]').live('click', function () {
+	$('form input[type=radio]').attr('checked', false);
+	$(this).attr('checked', true);
+});
 //--></script> 
 <?php echo $footer; ?>

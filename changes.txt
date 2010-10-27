@@ -1,3 +1,22 @@
+== OpenCart v1.4.9.2 ==
+
+FIXES:
+- Deleting orders throws error "Notice: Undefined index: subtract"
+- Email address fields do not support "-" dash characters.
+- Guest Checkout adds store tax even when from a non-taxable address
+- Images with uppercase extensions don't resize properly
+- CSRF vulnerability in 1.4.8, 1.4.9, and 1.4.9.1
+- Geo Zones not deleting properly
+- Search parameters not correctly encoded such as # character
+- USPS has some typos and incorrect tax class
+- Editing customer removes default shipping address designation
+- Sales report not calculating tax
+
+Added:
+- new "default" radio button in customer edit (as part of fix above)
+- email regex pattern is now defined one time as a constant instead of being redefined in 8 places as a variable. Now it can be edited in the system/startup.php file
+- Added Cumbria to the UK zone list
+
 == OpenCart v1.4.9.1 ==
 
 FIXES:

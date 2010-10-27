@@ -5930,7 +5930,8 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (NULL, 222, 'DOW', 'County Down', 1),
 (NULL, 222, 'FER', 'County Fermanagh', 1),
 (NULL, 222, 'LDY', 'County Londonderry', 1),
-(NULL, 222, 'TYR', 'County Tyrone', 1);
+(NULL, 222, 'TYR', 'County Tyrone', 1),
+(NULL, 222, 'CMA', 'Cumbria', 1);
 
 -- --------------------------------------------------------
 

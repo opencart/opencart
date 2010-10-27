@@ -2,6 +2,9 @@
 // Error Reporting
 error_reporting(E_ALL);
 
+// RegEx
+define('EMAIL_PATTERN', '/^[A-Z0-9._%\-+]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i');
+
 // Check Version
 if (version_compare(phpversion(), '5.1.0', '<') == TRUE) {
 	exit('PHP5.1+ Required');

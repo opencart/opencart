@@ -1194,7 +1194,8 @@ INSERT INTO `oc_product_discount` (`product_discount_id`, `product_id`, `custome
 --
 
 CREATE TABLE `oc_product_featured` (
-  `product_id` int(11) NOT NULL DEFAULT '0'
+  `product_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --

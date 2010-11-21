@@ -526,7 +526,7 @@ class ControllerAccountAddress extends Controller {
 
 		$output = '';
 
-      	if ($result['postcode_required']) {
+      	if (isset($result['postcode_required']) && $result['postcode_required']) {
         	$output = '<span class="required">*</span> ' . $this->language->get('entry_postcode');
 		} else {
 			$output = $this->language->get('entry_postcode');

@@ -16,6 +16,8 @@ class ControllerPaymentPPStandard extends Controller {
 
 		$this->load->model('checkout/order');
 
+		$this->language->load('payment/pp_standard');
+		
 		$this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		// Check for supported currency, otherwise convert to USD.
@@ -28,6 +30,7 @@ class ControllerPaymentPPStandard extends Controller {
 
 		// Get all totals
 		$total = 0;
+        $total_data = array();
 		$taxes = $this->cart->getTaxes();
 
 		$this->load->model('checkout/extension');
@@ -55,7 +58,7 @@ class ControllerPaymentPPStandard extends Controller {
 		$total = $this->currency->format($total, $currency, FALSE, FALSE);
 		$shipping_total = 0;
 		// Create form fields
-		$this->fields = array();
+		$this->data['fields'] = array();
 		$this->data['fields']['cmd'] = '_cart';
 		$this->data['fields']['upload'] = '1';
 		if ($this->cart->hasShipping()) {
@@ -90,7 +93,34 @@ class ControllerPaymentPPStandard extends Controller {
             $i++;
         }
 
-		$this->data['fields']['discount_amount_cart'] = number_format($discount_total, 2, '.', '');
+        // Hack to bypass paypal's discount limitation: https://www.x.com/thread/47330
+        if ($discount_total < $this->cart->getSubTotal()) {
+			$this->data['fields']['discount_amount_cart'] = $this->currency->format($discount_total, $currency, FALSE, FALSE);
+		} elseif ($discount_total) {
+			// Set Shipping as a line item
+			$this->data['fields']['item_number_' . $i . ''] = $this->session->data['shipping_method']['id'];
+            $this->data['fields']['item_name_' . $i . ''] = $this->session->data['shipping_method']['title'];
+            $this->data['fields']['amount_' . $i . ''] = $shipping_total;
+            $this->data['fields']['quantity_' . $i . ''] = 1;
+	        $this->data['fields']['weight_' . $i . ''] = $this->cart->getWeight();
+	        $product_total += $shipping_total;
+	        $i++;
+
+			// Set Tax as a line item
+	        $this->data['fields']['item_number_' . $i . ''] = $this->language->get('text_tax');
+            $this->data['fields']['item_name_' . $i . ''] = $this->language->get('text_tax');
+            $this->data['fields']['amount_' . $i . ''] = $tax_total;
+            $this->data['fields']['quantity_' . $i . ''] = 1;
+	        $this->data['fields']['weight_' . $i . ''] = 0;
+	        $product_total += $tax_total;
+			$i++;
+
+			// Since shipping & tax are now line items, remove the actual shipping & tax value
+			$this->data['fields']['shipping_1'] = '0.00';
+			$this->data['fields']['tax_cart'] = '0.00';
+			$this->data['fields']['discount_amount_cart'] = $this->currency->format($discount_total, $currency, FALSE, FALSE);
+		}
+
 
 		$remaining_total = $total - $product_total - $tax_total - $shipping_total + $discount_total;
 
@@ -111,7 +141,6 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->data['fields']['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($this->order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($this->order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
 		$this->data['fields']['lc'] = $this->session->data['language'];
 		$this->data['fields']['rm'] = '2';
-		$this->data['fields']['address_override'] = '0';
 
 		if (!$this->config->get('pp_standard_transaction')) {
 			$this->data['fields']['paymentaction'] = 'authorization';
@@ -219,21 +248,21 @@ class ControllerPaymentPPStandard extends Controller {
 
 		if (ini_get('allow_url_fopen')) {
 			$response = file_get_contents($url . '?' . $request);
-		} else {		
+		} else {
 			$response = file_get_contents_curl($url . '?' . $request);
 		}
-		
+
 		if ($this->config->get('pp_standard_debug')) {
 			$this->log->write("PP_STANDARD :: PDT REQ  --> $request");
 			$this->log->write("PP_STANDARD :: PDT RESP <-- " . str_replace("\n", "&", $response));
 		}
-		
+
 		$resp_array = array();
-		
+
 		$verified = false;
-		
+
 		if ($response) {
-				
+
 			$lines = explode("\n", $response);
 			if ($lines[0] == 'SUCCESS') {
 				for ($i=1; $i<(count($lines)-1); $i++){
@@ -242,13 +271,13 @@ class ControllerPaymentPPStandard extends Controller {
 				}
 			}
 		}
-		
+
 		if (isset($resp_array['memo'])) {
 			$memo = $resp_array['memo'];
 		} else {
 			$memo = '';
 		}
-		
+
 		if (!$this->validate($resp_array)) {
 			if ($this->order_info['order_status_id'] == '0') {
 				$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_pending'), $memo . "\r\n\r\n" . $this->error);
@@ -261,9 +290,9 @@ class ControllerPaymentPPStandard extends Controller {
 		if (strcmp($lines[0], 'SUCCESS') == 0) {
 			$verified = true;
 		}
-		
-		$this->checkPaymentStatus($resp_array, $verified);	
-		
+
+		$this->checkPaymentStatus($resp_array, $verified);
+
 	}
 
 	public function callback() {
@@ -375,7 +404,7 @@ class ControllerPaymentPPStandard extends Controller {
 		} else {
 			$order_id = 0;
 		}
-				
+
 		switch($data['payment_status']){
 			case 'Completed':
 				if ($verified) {
@@ -456,29 +485,29 @@ class ControllerPaymentPPStandard extends Controller {
 
 		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/success');
 	}
-	
+
 	function file_get_contents_curl($url) {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Set curl to return the data instead of printing it to the browser.
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-		
+
 		$data = curl_exec($ch);
-		
+
 		curl_close($ch);
-		
+
 		return $data;
 	}
-	  
+
 	private function validate($data = array()) {
 		$this->load->language('payment/pp_standard');
-		
+
 		// verify there was some response
 		if (empty($data)) {
 			$this->error = $this->language->get('error_no_data');
 		}
-		
+
 		// verify totals match
 		if (isset($data['cc'])) { // PDT
 			$currency = $data['cc'];
@@ -487,13 +516,13 @@ class ControllerPaymentPPStandard extends Controller {
 		} else { // Default
 			$currency = $this->order_info['currency'];
 		}
-		
+
 		if (isset($data['payment_gross']) && $data['payment_gross']) {
 			$amount = $data['payment_gross'];
 		} elseif (isset($data['mc_gross']) && $data['mc_gross']) {
 			$amount = $data['mc_gross'];
 		}
-		
+
         if (isset($data['payment_status']) && $data['payment_status'] != 'Refunded' && ((float)floor($amount) != (float)floor($this->currency->format($this->order_info['total'], $currency, False, False)))) {
 			$this->error = sprintf($this->language->get('error_amount_mismatch'), $amount, $this->order_info['total']);
 		}

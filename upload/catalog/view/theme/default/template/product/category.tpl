@@ -8,16 +8,9 @@
     </div>
   </div>
   <div class="middle">
-    <table style="padding-bottom:10px;">
-	  <tr>
-	    <?php if ($thumb) { ?>
-        <td><img src="<?php echo $thumb; ?>" alt="<?php echo $heading_title; ?>" /></td>	  
-        <?php } ?>
-        <?php if ($description) { ?>
-	    <td><?php echo $description; ?></td>
-	    <?php } ?>
-	  </tr>
-	</table>
+    <?php if ($description) { ?>
+	<div><?php echo $description; ?></div>
+	<?php } ?>
 	<?php if (!$categories && !$products) { ?>
     <div class="content"><?php echo $text_error; ?></div>
     <?php } ?>

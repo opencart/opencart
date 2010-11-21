@@ -127,6 +127,6 @@
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'zone_id\']').load('index.php?route=checkout/address/zone&country_id=<?php echo $country_id; ?>&zone_id=<?php echo $zone_id; ?>');
-$('#postcode').load('index.php?route=checkout/create/postcode&country_id=<?php echo $country_id; ?>');
+$('#postcode').load('index.php?route=checkout/address/postcode&country_id=<?php echo $country_id; ?>');
 //--></script>
 <?php echo $footer; ?> 

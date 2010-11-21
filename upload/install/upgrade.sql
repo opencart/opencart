@@ -609,3 +609,6 @@ UPDATE `oc_country` SET `postcode_required` = 0 WHERE iso_code_3 = 'PAN';
 ### Start 1.4.9.2
 DELETE FROM `oc_zone` WHERE `code` = 'CMA';
 INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'CMA', 'Cumbria', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
+
+### Start 1.5.0
+ALTER TABLE `oc_product_featured` ADD PRIMARY KEY(`product_id`);

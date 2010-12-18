@@ -37,7 +37,7 @@ class ModelSaleOrder extends Model {
 	}
 
 	public function addProduct($order_id, $data) {
-   		$this->db->query("INSERT INTO " . DB_PREFIX . "order_product SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$data['product_id'] . "', name = '" . $this->db->escape($data['name']) . "', model = '" . $this->db->escape($data['model']) . "', price = '" . (float)$data['price'] . "', total = '" . (float)$data['total'] . "', tax = '" . (float)$data['tax'] . "', quantity = '" . (int)$data['quantity'] . "'");
+   		$this->db->query("INSERT INTO " . DB_PREFIX . "order_product SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$data['product_id'] . "', name = '" . $this->db->escape($data['name']) . "', model = '" . $this->db->escape($data['model']) . "', price = '" . (float)$data['price'] . "', total = '" . (float)$data['total'] . "', tax = '" . (float)$data['tax']['rate'] . "', quantity = '" . (int)$data['quantity'] . "'");
 
 		$order_product_id = $this->db->getLastId();
 
@@ -57,10 +57,36 @@ class ModelSaleOrder extends Model {
 
 		$this->db->query("UPDATE " . DB_PREFIX . "order_total SET text = '" . $this->db->escape($data['formatted_grand_total']) . "', value = '" . (float)$data['new_grand_total'] . "' WHERE order_id = '" . (int)$order_id . "' AND order_total_id = '" . $total['order_total_id'] . "'");
 
+		// TU START
+		$query = $this->db->query("SELECT order_total_id, value FROM " . DB_PREFIX . "order_total WHERE sort_order = '" . (int)$data['tax']['sort_order'] . "' AND order_id = '" . (int)$order_id . "' LIMIT 1");
+		$tax_value = $query->row;
+
+		if($tax_value) {
+			$new_value = $tax_value['value'] + ($data['tax']['rate'] / 100) * $data['price'] * $data['quantity'];
+			$this->db->query("UPDATE " . DB_PREFIX . "order_total SET text = '" . $this->db->escape($this->currency->format($new_value, $data['currency'], $data['currency_value'], true)) . "', value = '" . (float)$this->currency->format($new_value, $data['currency'], $data['currency_value'], false) . "' WHERE order_total_id = '" . $tax_value['order_total_id'] . "'");
+		} else {
+			$new_value = ($data['tax']['rate'] / 100) * $data['price'] * $data['quantity'];
+			$this->db->query("INSERT INTO " . DB_PREFIX . "order_total (order_id, title, text, value, sort_order) VALUES ('" . (int)$order_id . "', '" . $this->db->escape($data['tax']['description'] . ':') . "', '" . $this->db->escape($this->currency->format($new_value, $data['currency'], $data['currency_value'], true)) . "', '" . (float)$this->currency->format($new_value, $data['currency'], $data['currency_value'], false) . "', '" . (int)$data['tax']['sort_order'] . "')");
+		} // TU END
+
 		return $order_product_id;
 	}
 
 	public function removeProduct($order_id, $data) {
+		// TU START
+		$query = $this->db->query("SELECT product_id, price, quantity FROM " . DB_PREFIX . "order_product WHERE order_product_id = '" . (int)$data['order_product_id'] . "'");
+		$order_info = $query->row;
+
+		$tax = $this->getOrderTax($order_info['product_id'], $order_id);
+
+		$query = $this->db->query("SELECT order_total_id, value FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "' AND sort_order = '" . (int)$tax['sort_order'] . "'");
+		$info = $query->row;
+
+		$new_value = $info['value'] - ($order_info['price'] * $order_info['quantity'] * $tax['rate'] / 100);
+		$this->db->query("UPDATE " . DB_PREFIX . "order_total SET text = '" . $this->db->escape($this->currency->format($new_value, $data['currency'], $data['currency_value'], true)) . "', value = '" . (float)$this->currency->format($new_value, $data['currency'], $data['currency_value'], false) . "' WHERE order_total_id = '" . $info['order_total_id'] . "'");
+
+		$this->db->query("DELETE FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "' AND value = 0");
+		// TU END
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET total = '" . (float)$data['new_grand_total'] . "' WHERE order_id = '" . (int)$order_id . "'");
 
@@ -348,6 +374,22 @@ class ModelSaleOrder extends Model {
 		return $query->rows;
 	}
 
+	public function getOrderTax($product_id, $order_id) { // TU
+		$query = $this->db->query("SELECT tr.rate AS rate, tr.description, tr.priority FROM " . DB_PREFIX . "tax_rate tr LEFT JOIN " . DB_PREFIX . "zone_to_geo_zone z2gz ON (tr.geo_zone_id = z2gz.geo_zone_id) LEFT JOIN " . DB_PREFIX . "geo_zone gz ON (tr.geo_zone_id = gz.geo_zone_id) WHERE (z2gz.country_id = '0' OR z2gz.country_id = (SELECT payment_country_id FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "')) AND (z2gz.zone_id = '0' OR z2gz.zone_id = (SELECT payment_zone_id FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "')) AND tr.tax_class_id = (SELECT tax_class_id FROM " . DB_PREFIX . "product WHERE product_id = '" . (int)$product_id . "')");
+
+		$tax = array();
+
+      	$tax = $query->row;
+
+		if(!isset($tax['rate'])) {
+			$tax['rate'] = 0;
+		}
+
+		$tax['sort_order'] = $this->config->get('tax_sort_order');
+
+		return $tax;
+	}
+
 	public function getTotalOrders($data = array()) {
       	$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order`";
 
@@ -418,6 +460,25 @@ class ModelSaleOrder extends Model {
       	$query = $this->db->query("SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND YEAR(date_added) = '" . (int)$year . "'");
 
 		return $query->row['total'];
+	}
+	// TU START
+	public function getProductPrice($order_id, $product_id, $quantity, $default_price) {
+		$query = $this->db->query("SELECT customer_group_id FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "'");
+		$group = $query->row['customer_group_id'];
+
+		$date = date('Y-m-d');
+
+		$query = $this->db->query("SELECT price FROM `" . DB_PREFIX . "product_discount` WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . (int)$group . "' AND quantity <= '" . (int)$quantity . "' AND '" . $date . "' BETWEEN date_start AND date_end ORDER BY priority ASC LIMIT 1");
+		if(!empty($query->row)) {
+			return $query->row['price'];
+		}
+
+		$query = $this->db->query("SELECT price FROM `" . DB_PREFIX . "product_special` WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . (int)$group . "' AND '" . $date . "' BETWEEN date_start AND date_end ORDER BY priority ASC LIMIT 1");
+		if(!empty($query->row)) {
+			return $query->row['price'];
+		}
+
+		return $default_price;
 	}
 }
 ?>

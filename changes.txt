@@ -1,3 +1,41 @@
+== OpenCart v1.4.9.3 ==
+
+FIXES:
+- BUG: Notice: Undefined index: postcode_required if country set to please select
+- BUG: customer checks out and wants to change either the Shipping or Payment address, a "The page you requested cannot be found" error appears
+- BUG: Homepage modules cannot use document library class methods because the "header" module was loading before the homepage modules.
+- BUG: Disabling Bestseller items causes the limit to be (limit-1)
+- BUG: setting controller had copy/paste bug for icon/logo check
+- BUG: php.ini setting "max_upload_filesize" should be "upload_max_filesize" which explains why it didn't work
+- BUG: Paypal standard sandbox mode shows "text_testmode" instead of the correct testmode message
+- BUG: Postcode callback for address page was wrong
+- BUG: When reviews disabled, sort by still shows reviews in list
+- BUG: undefined index: default on customer edit screen for multiple addresses
+- BUG: mail subject and sender were not decoding html for ", &, ', ø, etc causing mail not to send
+
+
+Added:
+- Copied products are disabled by default and marked with [*]
+- Product Price Column on Product List page including special price
+- Google Base Feed support for currency (USD, EUR, GBP)
+- Removed "self" from related products and category parents
+- Improved document class loading in header.php
+- Enhanced currency library functions
+- Added Trim to address details to avoid spaces
+- Added UCWords to address details to auto capitalize
+- Alternating color rows for admin lists
+- Added x_invoice_num to authorize.net
+- Added slight improvement to category caching for empty categories
+- Added support for discounts greater than product total for paypal standard
+- Added Hawkey's improved version of Admin Order Edit. This version comes with the following improvements and limitations:
+---- It will allow you to add or delete products and it will update the Subtotal, TAX and Total.
+---- It will also recognize if a product is a Special even-tough it will not show the special price in the list
+---- It will recognize Quality discount with date, customer group, and quantity.
+---- It will NOT let you change the payment nor the shipment method.
+---- It will NOT let you change the Shipping costs.
+---- Be aware that if you change the sort order of the "Extension->Order Total" area, it will not map correctly to the values in previously edited orders.
+
+
 == OpenCart v1.4.9.2 ==
 
 FIXES:

@@ -224,17 +224,19 @@ class ControllerProductCategory extends Controller {
 					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=p.price&order=DESC')
 				); 
 				
-				$this->data['sorts'][] = array(
-					'text'  => $this->language->get('text_rating_desc'),
-					'value' => 'rating-DESC',
-					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=rating&order=DESC')
-				); 
-				
-				$this->data['sorts'][] = array(
-					'text'  => $this->language->get('text_rating_asc'),
-					'value' => 'rating-ASC',
-					'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=rating&order=ASC')
-				);
+				if ($this->config->get('config_review')) {
+					$this->data['sorts'][] = array(
+						'text'  => $this->language->get('text_rating_desc'),
+						'value' => 'rating-DESC',
+						'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=rating&order=DESC')
+					); 
+					
+					$this->data['sorts'][] = array(
+						'text'  => $this->language->get('text_rating_asc'),
+						'value' => 'rating-ASC',
+						'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $this->request->get['path'] . '&sort=rating&order=ASC')
+					);
+				}
 				
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_model_asc'),

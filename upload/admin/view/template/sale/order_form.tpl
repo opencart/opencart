@@ -122,7 +122,7 @@
           <?php } ?>
           <tbody id="totals">
             <?php foreach ($totals as $key => $tot) { ?>
-            <tr>
+            <tr<?php if($key != (count($totals)-1) && $key != 0) echo ' class="taxes"'; // TU ?>>
               <td></td>
               <td colspan="4" class="right"><?php echo $tot['title']; ?></td>
 			  <?php if ($key == (count($totals)-1)) { ?>
@@ -182,10 +182,10 @@
 			  <td class="left"><select multiple="multiple" id="option" size="5" style="width: 450px;"></select></td>
 			  <td style="vertical-align: middle;"><span class="add" onclick="addProduct();">&nbsp;</span></td>
 			</tr>
-			<tr>
+			<!--<tr> // TU
 		      <td class="left"><?php echo $entry_tax; ?></td>
 			  <td class="left" colspan="2"><input id="add_tax" name="add_tax" type="text" value="0" size="5"/>%</td>
-			</tr>
+			</tr>-->
 			<tr>
 		      <td class="left"><?php echo $entry_quantity; ?></td>
 			  <td class="left" colspan="2"><input id="add_quantity" name="add_quantity" type="text" value="1" size="5"/></td>
@@ -413,6 +413,12 @@ function removeProduct(id) {
 			$('#tab_product #product').before('<div class="success">' + data.success + '</div>');
 			$('.grand_total').html(data.product_data['formatted_grand_total']);
 			$('.subtotal').html(data.product_data['formatted_order_total']);
+
+			// TU START
+			$('.taxes').remove();
+			for(var i in data.taxes_data) {
+				$('#totals .grand_total').parent().before('<tr class="taxes"><td></td><td colspan="4" class="right">' + data.taxes_data[i]['title'] + '</td><td class="right">' + data.taxes_data[i]['text'] + '</td></tr>');
+			} // TU END
 		}
 	});
 }
@@ -428,7 +434,7 @@ function addProduct() {
 		type: 'POST',
 		url: 'index.php?route=sale/order/addProduct&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		dataType: 'json',
-		data: 'product_id=' + encodeURIComponent($('#products').val()) + '&option=' + options + '&quantity=' + encodeURIComponent($('input[name=\'add_quantity\']').val()) + '&tax=' + encodeURIComponent($('input[name=\'add_tax\']').val()),
+		data: 'product_id=' + encodeURIComponent($('#products').val()) + '&option=' + options + '&quantity=' + encodeURIComponent($('input[name=\'add_quantity\']').val()) /*+ '&tax=' + encodeURIComponent($('input[name=\'add_tax\']').val()) // TU */,
 		beforeSend: function() {
 			$('.success, .warning').remove();
 			$('#product').before('<div class="attention"><img src="view/image/loading_1.gif" alt="" /> <?php echo $text_wait; ?></div>');
@@ -465,6 +471,12 @@ function addProduct() {
 
 				$('.grand_total').html(data.product_data['formatted_grand_total']);
 				$('.subtotal').html(data.product_data['formatted_order_total']);
+
+				// TU START
+				$('.taxes').remove();
+				for(var i in data.taxes_data) {
+					$('#totals .grand_total').parent().before('<tr class="taxes"><td></td><td colspan="4" class="right">' + data.taxes_data[i]['title'] + '</td><td class="right">' + data.taxes_data[i]['text'] + '</td></tr>');
+				} // TU END
 
 				$('#totals').before(html);
 

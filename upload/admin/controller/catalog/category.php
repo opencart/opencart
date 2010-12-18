@@ -227,7 +227,18 @@ class ControllerCatalogCategory extends Controller {
 			$this->data['status'] = 1;
 		}
 		
-		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
+		$categories = $this->model_catalog_category->getCategories(0);
+
+		// Remove own id from list
+		if (isset($category_info)) {
+			foreach ($categories as $key => $category) {
+				if ($category['category_id'] == $category_info['category_id']) {
+					unset($categories[$key]);
+				}
+			}
+		}
+
+		$this->data['categories'] = $categories;
 
 		if (isset($this->request->post['parent_id'])) {
 			$this->data['parent_id'] = $this->request->post['parent_id'];

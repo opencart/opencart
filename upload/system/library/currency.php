@@ -130,7 +130,7 @@ final class Currency {
 		} elseif ($currency && isset($this->currencies[$currency])) {
 			return $this->currencies[$currency]['symbol_left'];
 		} else {
-			return 0;
+			return '';
 		}
   	}
 	
@@ -140,7 +140,7 @@ final class Currency {
 		} elseif ($currency && isset($this->currencies[$currency])) {
 			return $this->currencies[$currency]['symbol_right'];
 		} else {
-			return 0;
+			return '';
 		}
   	}
 	

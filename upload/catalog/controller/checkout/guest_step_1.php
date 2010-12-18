@@ -20,9 +20,9 @@ class ControllerCheckoutGuestStep1 extends Controller {
 		$this->language->load('checkout/guest_step_1');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->session->data['guest']['firstname'] = $this->request->post['firstname'];
-			$this->session->data['guest']['lastname'] = $this->request->post['lastname'];
-			$this->session->data['guest']['email'] = $this->request->post['email'];
+			$this->session->data['guest']['firstname'] = trim($this->request->post['firstname']);
+			$this->session->data['guest']['lastname'] = trim($this->request->post['lastname']);
+			$this->session->data['guest']['email'] = trim($this->request->post['email']);
 			$this->session->data['guest']['telephone'] = $this->request->post['telephone'];
 			$this->session->data['guest']['fax'] = $this->request->post['fax'];
 			$this->session->data['guest']['company'] = $this->request->post['company'];
@@ -66,9 +66,9 @@ class ControllerCheckoutGuestStep1 extends Controller {
 			}
 			
 			if (isset($this->request->post['shipping_indicator'])) {
-				$this->session->data['guest']['shipping']['firstname'] = $this->request->post['shipping_firstname'];
-				$this->session->data['guest']['shipping']['lastname'] = $this->request->post['shipping_lastname'];
-				$this->session->data['guest']['shipping']['company'] = $this->request->post['shipping_company'];
+				$this->session->data['guest']['shipping']['firstname'] = trim($this->request->post['shipping_firstname']);
+				$this->session->data['guest']['shipping']['lastname'] = trim($this->request->post['shipping_lastname']);
+				$this->session->data['guest']['shipping']['company'] = trim($this->request->post['shipping_company']);
 				$this->session->data['guest']['shipping']['address_1'] = $this->request->post['shipping_address_1'];
 				$this->session->data['guest']['shipping']['address_2'] = $this->request->post['shipping_address_2'];
 				$this->session->data['guest']['shipping']['postcode'] = $this->request->post['shipping_postcode'];

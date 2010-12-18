@@ -18,6 +18,10 @@ class ControllerPaymentPPStandard extends Controller {
 
 		$this->language->load('payment/pp_standard');
 		
+		$this->data['testmode'] = $this->config->get('pp_standard_test');
+
+		$this->data['text_testmode'] = $this->language->get('text_testmode');
+		
 		$this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		// Check for supported currency, otherwise convert to USD.
@@ -135,6 +139,15 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->data['fields']['address1'] = html_entity_decode($this->order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');
 		$this->data['fields']['address2'] = html_entity_decode($this->order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');
 		$this->data['fields']['city'] = html_entity_decode($this->order_info['payment_city'], ENT_QUOTES, 'UTF-8');
+		if ($this->order_info['payment_iso_code_2'] == 'US') {
+			$this->load->model('localisation/zone');
+			$zone = $this->model_localisation_zone->getZone($order_info['payment_zone_id']);
+			$this->data['fields']['state'] = html_entity_decode($zone['code'], ENT_QUOTES, 'UTF-8');
+			$phone = preg_replace("/[^0-9.]/", "", html_entity_decode($order_info['telephone'], ENT_QUOTES, 'UTF-8'));
+			$this->data['fields']['night_phone_a'] = html_entity_decode(substr($phone,0,3), ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['night_phone_b'] = html_entity_decode(substr($phone,3,3), ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['night_phone_c'] = html_entity_decode(substr($phone,6), ENT_QUOTES, 'UTF-8');
+		}
 		$this->data['fields']['zip'] = html_entity_decode($this->order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
 		$this->data['fields']['country'] = $this->order_info['payment_iso_code_2'];
 		$this->data['fields']['email'] = $this->order_info['email'];
@@ -168,10 +181,6 @@ class ControllerPaymentPPStandard extends Controller {
 		} else {
 			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
 		}
-
-		$this->data['testmode'] = $this->config->get('pp_standard_test');
-
-		$this->data['text_testmode'] = $this->language->get('text_testmode');
 
 		$this->id = 'payment';
 

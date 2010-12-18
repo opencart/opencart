@@ -570,12 +570,19 @@ function removeRelated() {
 
 function getProducts() {
 	$('#product option').remove();
-	
+
+	<?php if (isset($this->request->get['product_id'])) {?>
+	var product_id = '<?php echo $this->request->get['product_id'] ?>';
+	<?php } else { ?>
+	var product_id = 0;
+	<?php } ?>
+
 	$.ajax({
 		url: 'index.php?route=catalog/product/category&token=<?php echo $token; ?>&category_id=' + $('#category').attr('value'),
 		dataType: 'json',
 		success: function(data) {
 			for (i = 0; i < data.length; i++) {
+				if (data[i]['product_id'] == product_id) { continue; }
 	 			$('#product').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + ' (' + data[i]['model'] + ') </option>');
 			}
 		}

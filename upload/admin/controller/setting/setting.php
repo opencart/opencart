@@ -586,7 +586,7 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_icon'] = $this->config->get('config_icon');			
 		}
 		
-		if ($this->config->get('config_logo') && file_exists(DIR_IMAGE . $this->config->get('config_icon'))) {
+		if ($this->config->get('config_icon') && file_exists(DIR_IMAGE . $this->config->get('config_icon'))) {
 			$this->data['preview_icon'] = HTTPS_IMAGE . $this->config->get('config_icon');		
 		} else {
 			$this->data['preview_icon'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);

@@ -2,7 +2,7 @@
 <div class="warning"><?php echo $error; ?></div>
 <?php } ?>
 <?php if ($testmode) { ?>
-  <div class="warning"><?php echo $this->language->get('text_testmode'); ?></div>
+  <div class="warning"><?php echo $text_testmode; ?></div>
 <?php } ?>
 <form action="<?php echo $action; ?>" method="post" id="checkout">
   <?php foreach ($fields as $key => $value) { ?>

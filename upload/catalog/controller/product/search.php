@@ -270,17 +270,19 @@ class ControllerProductSearch extends Controller {
 					'href'  => HTTP_SERVER . 'index.php?route=product/search' . $url . '&sort=p.price&order=DESC'
 				); 
 				
-				$this->data['sorts'][] = array(
-					'text'  => $this->language->get('text_rating_desc'),
-					'value' => 'rating-DESC',
-					'href'  => HTTP_SERVER . 'index.php?route=product/search' . $url . '&sort=rating&order=DESC'
-				); 
-				
-				$this->data['sorts'][] = array(
-					'text'  => $this->language->get('text_rating_asc'),
-					'value' => 'rating-ASC',
-					'href'  => HTTP_SERVER . 'index.php?route=product/search' . $url . '&sort=rating&order=ASC'
-				);
+				if ($this->config->get('config_review')) {
+					$this->data['sorts'][] = array(
+						'text'  => $this->language->get('text_rating_desc'),
+						'value' => 'rating-DESC',
+						'href'  => HTTP_SERVER . 'index.php?route=product/search' . $url . '&sort=rating&order=DESC'
+					); 
+					
+					$this->data['sorts'][] = array(
+						'text'  => $this->language->get('text_rating_asc'),
+						'value' => 'rating-ASC',
+						'href'  => HTTP_SERVER . 'index.php?route=product/search' . $url . '&sort=rating&order=ASC'
+					);
+				}
 				
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_model_asc'),

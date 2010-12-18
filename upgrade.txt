@@ -73,7 +73,8 @@ SOLUTION: Your custom modules need to be updated to 1.4.1 or later to remove the
 ERROR: You are redirected to the admin login page with "Invalid Token Session".
 SOLUTION: Your custom modules need to be updated to 1.4.8 to use the new token security.  You can also bypass this token check by adding the custom mods to the ignore list on the "Server" tab of the System Settings area in admin
 
-ERROR: Items won't add to cart. Animation shows but cart remains empty. This is due to the products not having a legitimate weight class or length class. Or it is missing for some languages. Verify that there is a weight class and length class for each language you have on your site. Also be sure that the product have actual product ids set. Edit and resave them and see if the add to cart works correctly.
+ERROR: Items won't add to cart. Animation shows but cart remains empty. 
+SOLUTION: This is due to the products not having a legitimate weight class or length class. The upgrade can cause this, or it was missing for some languages. Verify that there is a weight class and length class for each language you have on your site. Also be sure that the product have actual product ids set. Edit and resave them and see if the add to cart works correctly.
 
 
 

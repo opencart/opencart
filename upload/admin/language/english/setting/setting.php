@@ -27,7 +27,7 @@ $_['entry_country']           = 'Country:';
 $_['entry_zone']              = 'Region / State:';
 $_['entry_language']          = 'Language:';
 $_['entry_admin_language']    = 'Administration Language:';
-$_['entry_currency']          = 'Currency:';
+$_['entry_currency']          = 'Currency:<br /><span class="help">Change the default currency. Clear your browser cache to see the change and reset your existing cookie.</span>';
 $_['entry_currency_auto']     = 'Auto Update Currency:<br /><span class="help">Set your store to automatically update currencies daily.</span>';
 $_['entry_weight_class']      = 'Weight Class:';
 $_['entry_length_class']      = 'Length Class:';

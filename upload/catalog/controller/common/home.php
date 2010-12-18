@@ -28,12 +28,7 @@ class ControllerCommonHome extends Controller {
 			$this->template = 'default/template/common/home.tpl';
 		}
 		
-		$this->children = array(
-			'common/column_right',
-			'common/column_left',
-			'common/footer',
-			'common/header'
-		);
+		$this->children = array();
 		
 		$this->load->model('checkout/extension');
 		
@@ -44,6 +39,11 @@ class ControllerCommonHome extends Controller {
 		foreach ($module_data as $result) {
 			$this->children[] = 'module/' . $result['code'];
 		}
+		
+		$this->children[] = 'common/column_right';
+		$this->children[] =	'common/column_left';
+		$this->children[] =	'common/footer';
+		$this->children[] =	'common/header';
 		
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}

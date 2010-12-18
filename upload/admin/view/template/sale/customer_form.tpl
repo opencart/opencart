@@ -165,7 +165,7 @@
             <tr>
               <td><?php echo $entry_default; ?></td>
               <td>
-              <?php if ($address['default'] || count($addresses) == 1) { ?>
+              <?php if ((isset($address['default']) && $address['default']) || count($addresses) == 1) { ?>
               <input type="radio" name="addresses[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" checked="checked" /></td>
               <?php } else { ?>
               <input type="radio" name="addresses[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" /></td>

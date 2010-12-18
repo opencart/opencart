@@ -28,6 +28,18 @@
           <td><?php echo $entry_data_feed; ?></td>
           <td><textarea cols="40" rows="5"><?php echo $data_feed; ?></textarea></td>
         </tr>
+		<tr>
+          <td><?php echo $entry_currency; ?></td>
+          <td><select name="google_base_currency">
+              <?php foreach($currencies as $currency) { ?>
+              <?php if ($google_base_currency == $currency) { ?>
+              <option value="<?php echo $currency; ?>" selected="selected"><?php echo $currency; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $currency; ?>"><?php echo $currency; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select></td>
+        </tr>
       </table>
     </form>
   </div>

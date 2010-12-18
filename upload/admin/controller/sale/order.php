@@ -1067,25 +1067,27 @@ class ControllerSaleOrder extends Controller {
 				$quantity = 1;
 			}
 
-			if (isset($this->request->post['tax']) && $this->request->post['tax']) {
+			/*if (isset($this->request->post['tax']) && $this->request->post['tax']) { // TU
 				$tax = (float)$this->request->post['tax'];
 			} else {
 				$tax = 0;
-			}
+			}*/
 
             $result = $this->model_catalog_product->getProduct($product_id);
 
 			if ($result) {
+				$tax = $this->model_sale_order->getOrderTax($product_id, $order_id); // TU
 
-				$price = ((float)$result['price'] + (float)$option_price);
+				$price = $this->model_sale_order->getProductPrice($order_id, $product_id, $quantity, $result['price']); // TU
+				$price = ((float)$price + (float)$option_price); // TU
 
 		        $subtotal = $price * $quantity;
 
-				if ($tax) {
-					$total = (($tax/100) * $subtotal) + $subtotal;
-				} else {
-					$total = $subtotal;
-				}
+				//if ($taxes) { // TU
+					$total = (($tax['rate']/100) * $subtotal) + $subtotal; // TU
+				//} else { // TU
+					//$total = $subtotal; // TU
+				//} // TU
 
 				$order_info = $this->model_sale_order->getOrder($order_id);
 
@@ -1094,7 +1096,8 @@ class ControllerSaleOrder extends Controller {
 				$order_total = 0;
 
 				foreach ($order_products as $order_product) {
-					$order_total += $order_product['total'];
+					//$order_total += $order_product['total'] * $order_product['tax'] / 100; // TU
+					$order_total += $order_product['price'] * $order_product['quantity']; // TU
 				}
 
 				$product_data = array(
@@ -1105,14 +1108,16 @@ class ControllerSaleOrder extends Controller {
 					'stock'					=> $result['quantity'],
 					'minimum'				=> $result['minimum'],
 					'tax_class_id'			=> $result['tax_class_id'],
-					'price'					=> $subtotal,
-					'formatted_price'		=> $this->currency->format($subtotal, $order_info['currency'], $order_info['value'], True),
+					'price'					=> $price, //$subtotal, // TU
+					'formatted_price'		=> $this->currency->format($price/*$subtotal // TU */, $order_info['currency'], $order_info['value'], True),
 					'quantity'				=> $quantity,
-					'tax'					=> $tax,
-					'total'					=> $total,
-					'order_total'			=> $this->currency->format($order_total + $total, $order_info['currency'], $order_info['value'], False),
-					'formatted_order_total'	=> $this->currency->format($order_total + $total, $order_info['currency'], $order_info['value'], True),
-					'formatted_total'		=> $this->currency->format($total, $order_info['currency'], $order_info['value'], True),
+					'tax'					=> $tax, // TU
+					'currency'              => $order_info['currency'], // TU
+					'currency_value'        => $order_info['value'], // TU
+					'total'					=> $price * $quantity, // $total, // TU
+					'order_total'			=> $this->currency->format($order_total + $price * $quantity/*$total // TU */, $order_info['currency'], $order_info['value'], False),
+					'formatted_order_total'	=> $this->currency->format($order_total + $price * $quantity/*$total // TU */, $order_info['currency'], $order_info['value'], True),
+					'formatted_total'		=> $this->currency->format($price * $quantity/*$total // TU */, $order_info['currency'], $order_info['value'], True),
 					'new_grand_total'		=> $this->currency->format($order_info['total'] + $total, $order_info['currency'], $order_info['value'], False),
 					'formatted_grand_total'	=> $this->currency->format($order_info['total'] + $total, $order_info['currency'], $order_info['value'], True),
 					'options'				=> $option_data,
@@ -1122,6 +1127,8 @@ class ControllerSaleOrder extends Controller {
 				$product_data['order_product_id'] = $this->model_sale_order->addProduct($this->request->get['order_id'], $product_data);
 
 				$json['product_data'] = $product_data;
+
+				$json['taxes_data'] = array_slice($this->model_sale_order->getOrderTotals($order_id), 1, -1); // TU
 
 				$json['success'] = $this->language->get('text_success');
 
@@ -1170,6 +1177,7 @@ class ControllerSaleOrder extends Controller {
 			foreach ($order_products as $order_product) {
 				if ($order_product['order_product_id'] == $order_product_id) {
 					$total = $order_product['total'];
+					$tax   = $order_product['tax']; // TU
 				}
 				$order_total += $order_product['total'];
 			}
@@ -1178,8 +1186,10 @@ class ControllerSaleOrder extends Controller {
 				'order_product_id'		=> $order_product_id,
 				'order_total'			=> $this->currency->format($order_total - $total, $order_info['currency'], $order_info['value'], False),
 				'formatted_order_total' => $this->currency->format($order_total - $total, $order_info['currency'], $order_info['value'], True),
-				'new_grand_total'		=> $this->currency->format($order_info['total'] - $total, $order_info['currency'], $order_info['value'], False),
-				'formatted_grand_total'	=> $this->currency->format($order_info['total'] - $total, $order_info['currency'], $order_info['value'], True),
+				'new_grand_total'		=> $this->currency->format($order_info['total'] - $total * (1 + $tax / 100), $order_info['currency'], $order_info['value'], False), // TU
+				'formatted_grand_total'	=> $this->currency->format($order_info['total'] - $total * (1 + $tax / 100), $order_info['currency'], $order_info['value'], True), // TU
+				'currency'              => $order_info['currency'], // TU
+				'currency_value'        => $order_info['value'] // TU
 			);
 
 			$this->model_sale_order->removeProduct($this->request->get['order_id'], $product_data);
@@ -1188,6 +1198,7 @@ class ControllerSaleOrder extends Controller {
 
 			$json['product_data'] = $product_data;
 
+			$json['taxes_data'] = array_slice($this->model_sale_order->getOrderTotals($order_id), 1, -1); // TU
 		}
 
 		$this->load->library('json');

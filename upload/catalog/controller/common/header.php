@@ -31,12 +31,10 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$server = HTTP_IMAGE;
 		}
-			
-		$this->data['title'] = $this->document->title;
-		$this->data['keywords'] = $this->document->keywords;
-		$this->data['description'] = $this->document->description;
-		$this->data['template'] = $this->config->get('config_template');
 		
+		foreach(get_object_vars($this->document) as $key => $value) {
+			$this->data[$key] = $value;
+		}
 		
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
 			$this->data['base'] = HTTPS_SERVER;
@@ -49,22 +47,18 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$this->data['icon'] = '';
 		}
-		
-		$this->data['charset'] = $this->language->get('charset');
-		$this->data['lang'] = $this->language->get('code');
-		$this->data['direction'] = $this->language->get('direction');
-		$this->data['links'] = $this->document->links;	
-		$this->data['styles'] = $this->document->styles;
-		$this->data['scripts'] = $this->document->scripts;		
-		$this->data['breadcrumbs'] = $this->document->breadcrumbs;
-		
-		$this->data['store'] = $this->config->get('config_name');
-		
+				
 		if ($this->config->get('config_logo') && file_exists(DIR_IMAGE . $this->config->get('config_logo'))) {
 			$this->data['logo'] = $server . $this->config->get('config_logo');
 		} else {
 			$this->data['logo'] = '';
 		}
+		
+		$this->data['charset'] = $this->language->get('charset');
+		$this->data['lang'] = $this->language->get('code');
+		$this->data['direction'] = $this->language->get('direction');
+		$this->data['template'] = $this->config->get('config_template');
+		$this->data['store'] = $this->config->get('config_name');
 		
 		$this->data['text_home'] = $this->language->get('text_home');
 		$this->data['text_special'] = $this->language->get('text_special');

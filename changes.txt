@@ -15,6 +15,8 @@ FIXES:
 
 
 Added:
+- Additional attempts to get rid of the cache unlink error messages
+- Paypal passing of state and phone for credit card address
 - Copied products are disabled by default and marked with [*]
 - Product Price Column on Product List page including special price
 - Google Base Feed support for currency (USD, EUR, GBP)

@@ -141,9 +141,9 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->data['fields']['city'] = html_entity_decode($this->order_info['payment_city'], ENT_QUOTES, 'UTF-8');
 		if ($this->order_info['payment_iso_code_2'] == 'US') {
 			$this->load->model('localisation/zone');
-			$zone = $this->model_localisation_zone->getZone($order_info['payment_zone_id']);
+			$zone = $this->model_localisation_zone->getZone($this->order_info['payment_zone_id']);
 			$this->data['fields']['state'] = html_entity_decode($zone['code'], ENT_QUOTES, 'UTF-8');
-			$phone = preg_replace("/[^0-9.]/", "", html_entity_decode($order_info['telephone'], ENT_QUOTES, 'UTF-8'));
+			$phone = preg_replace("/[^0-9.]/", "", html_entity_decode($this->order_info['telephone'], ENT_QUOTES, 'UTF-8'));
 			$this->data['fields']['night_phone_a'] = html_entity_decode(substr($phone,0,3), ENT_QUOTES, 'UTF-8');
 			$this->data['fields']['night_phone_b'] = html_entity_decode(substr($phone,3,3), ENT_QUOTES, 'UTF-8');
 			$this->data['fields']['night_phone_c'] = html_entity_decode(substr($phone,6), ENT_QUOTES, 'UTF-8');

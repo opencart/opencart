@@ -45,6 +45,7 @@ upload/catalog/view/theme/default/template/payment/twocheckout.tpl
 upload/catalog/view/theme/default/template/product/category.tpl
 upload/install/opencart.sql
 upload/install/upgrade.sql
+upload/system/library/cache.php
 upload/system/library/currency.php
 upload/system/library/mail.php
 upload/.htaccess.txt

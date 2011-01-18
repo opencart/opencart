@@ -20,23 +20,14 @@ final class Cache {
 
 	public function get($key) {
 		$files = glob(DIR_CACHE . 'cache.' . $key . '.*');
-		
-		if ($files) {
-    		foreach ($files as $file) {
-      			$cache = '';
-				
-				$handle = fopen($file, 'r');
-      			
-				if ($handle) {
-					$cache = fread($handle, filesize($file));
-	  
-					fclose($handle);
-				}
 
-	      		return unserialize($cache);
-   		 	}
+		if ($files) {
+			foreach ($files as $file) {
+				$cache = file_get_contents($file);
+				return unserialize($cache);
+			}
 		}
-  	}
+	}
 
   	public function set($key, $value) {
     	$this->delete($key);

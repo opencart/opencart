@@ -306,7 +306,11 @@ class ModelShippingUsps extends Model {
 		
 				$result = curl_exec($ch);
 				
-				curl_close($ch);  
+				curl_close($ch);
+
+				// strip reg and trade out 01-02-2011
+				$result = str_replace('&amp;lt;sup&amp;gt;&amp;amp;reg;&amp;lt;/sup&amp;gt;', '', $result);
+				$result = str_replace('&amp;lt;sup&amp;gt;&amp;amp;trade;&amp;lt;/sup&amp;gt;', '', $result);				
 				
 				if ($result) {
 					$dom = new DOMDocument('1.0', 'UTF-8');

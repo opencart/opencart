@@ -329,7 +329,7 @@ class ModelSaleOrder extends Model {
 	}
 
 	public function generateInvoiceId($order_id) {
-		$query = $this->db->query("SELECT MAX(invoice_id) AS invoice_id FROM `" . DB_PREFIX . "order`");
+		$query = $this->db->query("SELECT MAX(invoice_id) AS invoice_id FROM `" . DB_PREFIX . "order` WHERE YEAR(date_modified) = YEAR(now())");
 
 		if ($query->row['invoice_id']) {
 			$invoice_id = (int)$query->row['invoice_id'] + 1;

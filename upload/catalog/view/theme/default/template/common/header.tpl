@@ -208,7 +208,7 @@ $('#search input').keydown(function(e) {
 function moduleSearch() {	
 	pathArray = location.pathname.split( '/' );
 	
-	url = location.protocol + "//" + location.host + "/" + pathArray[1] + '/';
+	url = '<?php echo HTTP_SERVER; ?>';
 		
 	url += 'index.php?route=product/search';
 		

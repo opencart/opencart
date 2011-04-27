@@ -4,10 +4,12 @@ class ModelDesignLayout extends Model {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = '" . $this->db->escape($data['name']) . "'");
 	
 		$layout_id = $this->db->getLastId();
-	
-		foreach ($data['layout_route'] as $layout_route) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', store_id = '" . (int)$layout_route['store_id'] . "', route = '" . $this->db->escape($layout_route['route']) . "'");
-		}	
+		
+		if (isset($data['layout_route'])) {
+			foreach ($data['layout_route'] as $layout_route) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', store_id = '" . (int)$layout_route['store_id'] . "', route = '" . $this->db->escape($layout_route['route']) . "'");
+			}	
+		}
 	}
 	
 	public function editLayout($layout_id, $data) {
@@ -15,9 +17,11 @@ class ModelDesignLayout extends Model {
 		
 		$this->db->query("DELETE FROM " . DB_PREFIX . "layout_route WHERE layout_id = '" . (int)$layout_id . "'");
 		
-		foreach ($data['layout_route'] as $layout_route) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', store_id = '" . (int)$layout_route['store_id'] . "', route = '" . $this->db->escape($layout_route['route']) . "'");
-		}		
+		if (isset($data['layout_route'])) {
+			foreach ($data['layout_route'] as $layout_route) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', store_id = '" . (int)$layout_route['store_id'] . "', route = '" . $this->db->escape($layout_route['route']) . "'");
+			}
+		}
 	}
 	
 	public function deleteLayout($layout_id) {

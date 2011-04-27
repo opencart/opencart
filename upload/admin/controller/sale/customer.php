@@ -939,43 +939,45 @@ class ControllerSaleCustomer extends Controller {
 	  		}
     	}
 
-    	foreach ($this->request->post['address'] as $key => $value) {
-      		if ((strlen(utf8_decode($value['firstname'])) < 1) || (strlen(utf8_decode($value['firstname'])) > 32)) {
-        		$this->error['address_firstname'][$key] = $this->language->get('error_firstname');
-      		}
+		if (isset($this->request->post['address'])) {
+			foreach ($this->request->post['address'] as $key => $value) {
+				if ((strlen(utf8_decode($value['firstname'])) < 1) || (strlen(utf8_decode($value['firstname'])) > 32)) {
+					$this->error['address_firstname'][$key] = $this->language->get('error_firstname');
+				}
+				
+				if ((strlen(utf8_decode($value['lastname'])) < 1) || (strlen(utf8_decode($value['lastname'])) > 32)) {
+					$this->error['address_lastname'][$key] = $this->language->get('error_lastname');
+				}	
+				
+				if ((strlen(utf8_decode($value['lastname'])) < 1) || (strlen(utf8_decode($value['lastname'])) > 32)) {
+					$this->error['address_lastname'][$key] = $this->language->get('error_lastname');
+				}
+				
+				if ((strlen(utf8_decode($value['address_1'])) < 3) || (strlen(utf8_decode($value['address_1'])) > 128)) {
+					$this->error['address_address_1'][$key] = $this->language->get('error_address_1');
+				}
 			
-      		if ((strlen(utf8_decode($value['lastname'])) < 1) || (strlen(utf8_decode($value['lastname'])) > 32)) {
-        		$this->error['address_lastname'][$key] = $this->language->get('error_lastname');
-      		}	
+				if ((strlen(utf8_decode($value['city'])) < 3) || (strlen(utf8_decode($value['city'])) > 128)) {
+					$this->error['address_city'][$key] = $this->language->get('error_city');
+				} 
+	
+				$this->load->model('localisation/country');
+				
+				$country_info = $this->model_localisation_country->getCountry($value['country_id']);
+						
+				if ($country_info && $country_info['postcode_required'] && (strlen(utf8_decode($value['postcode'])) < 2) || (strlen(utf8_decode($value['postcode'])) > 10)) {
+					$this->error['address_postcode'][$key] = $this->language->get('error_postcode');
+				}
 			
-      		if ((strlen(utf8_decode($value['lastname'])) < 1) || (strlen(utf8_decode($value['lastname'])) > 32)) {
-        		$this->error['address_lastname'][$key] = $this->language->get('error_lastname');
-      		}
-			
-			if ((strlen(utf8_decode($value['address_1'])) < 3) || (strlen(utf8_decode($value['address_1'])) > 128)) {
-				$this->error['address_address_1'][$key] = $this->language->get('error_address_1');
+				if ($value['country_id'] == '') {
+					$this->error['address_country'][$key] = $this->language->get('error_country');
+				}
+				
+				if ($value['zone_id'] == '') {
+					$this->error['address_zone'][$key] = $this->language->get('error_zone');
+				}	
 			}
-		
-			if ((strlen(utf8_decode($value['city'])) < 3) || (strlen(utf8_decode($value['city'])) > 128)) {
-				$this->error['address_city'][$key] = $this->language->get('error_city');
-			} 
-
-			$this->load->model('localisation/country');
-			
-			$country_info = $this->model_localisation_country->getCountry($value['country_id']);
-					
-			if ($country_info && $country_info['postcode_required'] && (strlen(utf8_decode($value['postcode'])) < 2) || (strlen(utf8_decode($value['postcode'])) > 10)) {
-				$this->error['address_postcode'][$key] = $this->language->get('error_postcode');
-			}
-		
-			if ($value['country_id'] == '') {
-				$this->error['address_country'][$key] = $this->language->get('error_country');
-			}
-			
-			if ($value['zone_id'] == '') {
-				$this->error['address_zone'][$key] = $this->language->get('error_zone');
-			}	
-    	}
+		}
 		
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->language->get('error_warning');

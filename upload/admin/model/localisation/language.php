@@ -29,7 +29,7 @@ class ModelLocalisationLanguage extends Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner_image_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		foreach ($query->rows as $banner_image) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "banner_image_description SET banner_image_id = '" . (int)$banner_image['banner_image_id'] . "', banner_id = '" . (int)$banner_image['banner_id'] . "', language_id = '" . (int)$language_id . "', text = '" . $this->db->escape($attribute['text']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "banner_image_description SET banner_image_id = '" . (int)$banner_image['banner_image_id'] . "', banner_id = '" . (int)$banner_image['banner_id'] . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($attribute['title']) . "'");
 		}
 
 		$this->cache->delete('attribute');
@@ -144,15 +144,6 @@ class ModelLocalisationLanguage extends Model {
 		
 		$this->cache->delete('stock_status');
 		
-		// Store
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
-
-		foreach ($query->rows as $store) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "store_description SET store_id = '" . (int)$store['store_id'] . "', language_id = '" . (int)$language_id . "', description = '" . $this->db->escape($store['description']) . "'");
-		}
-		
-		$this->cache->delete('store');		
-		
 		// Weight Class
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "weight_class_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -216,11 +207,7 @@ class ModelLocalisationLanguage extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "return_status WHERE language_id = '" . (int)$language_id . "'");
 		
 		$this->cache->delete('return_status');
-				
-		$this->db->query("DELETE FROM " . DB_PREFIX . "store_description WHERE language_id = '" . (int)$language_id . "'");
-		
-		$this->cache->delete('store');
-				
+								
 		$this->db->query("DELETE FROM " . DB_PREFIX . "stock_status WHERE language_id = '" . (int)$language_id . "'");
 		
 		$this->cache->delete('stock_status');

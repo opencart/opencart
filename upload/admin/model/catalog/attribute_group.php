@@ -22,7 +22,7 @@ class ModelCatalogAttributeGroup extends Model {
 	
 	public function deleteAttributeGroup($attribute_group_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_group WHERE attribute_group_id = '" . (int)$attribute_group_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_description WHERE attribute_group_id = '" . (int)$attribute_group_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_group_description WHERE attribute_group_id = '" . (int)$attribute_group_id . "'");
 	}
 		
 	public function getAttributeGroup($attribute_group_id) {

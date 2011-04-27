@@ -113,7 +113,7 @@ class ModelCheckoutOrder extends Model {
 			$template->data['fax'] = $this->config->get('config_fax');
 			$template->data['email'] = $this->config->get('config_email');
 			$template->data['store_url'] = $order_query->row['store_url'];
-			$template->data['invoice'] = $order_query->row['store_url'] . 'index.php?route=account/invoice&order_id=' . $order_id;
+			$template->data['invoice'] = $order_query->row['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id;
 			$template->data['firstname'] = $order_query->row['firstname'];
 			$template->data['lastname'] = $order_query->row['lastname'];
 			$template->data['shipping_method'] = $order_query->row['shipping_method'];

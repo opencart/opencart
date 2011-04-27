@@ -102,5 +102,5 @@ $_['error_upload_4']          = 'Warning: No file was uploaded!';
 $_['error_upload_6']          = 'Warning: Missing a temporary folder!';
 $_['error_upload_7']          = 'Warning: Failed to write file to disk!';
 $_['error_upload_8']          = 'Warning: File upload stopped by extension!';
-$_['error_upload_999']        = 'Warning: No error code avaiable!';
+$_['error_upload_999']        = 'Warning: No error code available!';
 ?>

@@ -5,7 +5,7 @@ class ModelSettingStore extends Model {
 		
 		$this->cache->delete('store');
 		
-		return $this->db->query->getLastId();
+		return $this->db->getLastId();
 	}
 	
 	public function editStore($store_id, $data) {

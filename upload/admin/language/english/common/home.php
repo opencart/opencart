@@ -33,4 +33,7 @@ $_['column_action']                 = 'Action';
 
 // Entry
 $_['entry_range']                   = 'Select Range:';
+
+// Error
+$_['error_warning']                 = 'Warning: Install folder still exists!';
 ?>

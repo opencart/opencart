@@ -65,7 +65,4 @@ $_['text_voucher']          = 'Gift Vouchers';
 $_['text_weight_class']     = 'Weight Classes';
 $_['text_length_class']     = 'Length Classes';
 $_['text_zone']             = 'Zones';
-
-// Error
-$_['error_install']          = 'WARNING: INSTALL FOLDER STILL EXISTS!';
 ?>

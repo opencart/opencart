@@ -135,6 +135,7 @@ class ModelCatalogProduct extends Model {
 		}
 	
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "'");
+print_r($data['product_attribute']);
 
 		if (isset($data['product_attribute'])) {
 			foreach ($data['product_attribute'] as $product_attribute) {

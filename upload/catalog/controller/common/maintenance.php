@@ -45,8 +45,13 @@ class ControllerCommonMaintenance extends Controller {
         } else {
             $this->template = 'default/template/common/maintenance.tpl';
         }
-        
-        $this->response->setOutput($this->render());
+		
+		$this->children = array(
+			'common/footer',
+			'common/header'
+		);
+		
+		$this->response->setOutput($this->render());
     }
 }
 ?>

@@ -245,6 +245,3 @@ $(document).ready(function() {
   </div>
   <?php } ?>
 </div>
-<?php if ($install) { ?>
-<div class="warning"><?php echo $error_install; ?></div>
-<?php } ?>

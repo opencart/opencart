@@ -1,7 +1,7 @@
 <?php
 class ModelSaleReturn extends Model {
 	public function addReturn($data) {
-      	$this->db->query("INSERT INTO `" . DB_PREFIX . "return`SET order_id = '" . (int)$data['order_id'] . "', date_ordered = '" . $this->db->escape($data['date_ordered']) . "', customer_id = '" . (int)$data['customer_id'] . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', return_status_id = '" . (int)$data['return_status_id'] . "', comment = '" . $this->db->escape($data['comment']) . "', date_added = NOW(), date_modified = NOW()");
+      	$this->db->query("INSERT INTO `" . DB_PREFIX . "return` SET order_id = '" . (int)$data['order_id'] . "', date_ordered = '" . $this->db->escape($data['date_ordered']) . "', customer_id = '" . (int)$data['customer_id'] . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', return_status_id = '" . (int)$data['return_status_id'] . "', comment = '" . $this->db->escape($data['comment']) . "', date_added = NOW(), date_modified = NOW()");
       	
       	$return_id = $this->db->getLastId();
       	
@@ -25,7 +25,7 @@ class ModelSaleReturn extends Model {
 	}
 	
 	public function deleteReturn($return_id) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "return`WHERE return_id = '" . (int)$return_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "return` WHERE return_id = '" . (int)$return_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "return_product WHERE return_id = '" . (int)$return_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "return_history WHERE return_id = '" . (int)$return_id . "'");
 	}

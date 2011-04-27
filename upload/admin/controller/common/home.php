@@ -35,6 +35,12 @@ class ControllerCommonHome extends Controller {
 		
 		$this->data['entry_range'] = $this->language->get('entry_range');
 
+ 		if (is_dir(dirname(DIR_APPLICATION) . '/install')) {
+			$this->data['error_warning'] = $this->language->get('error_warning');
+		} else {
+			$this->data['error_warning'] = '';
+		}
+		
 		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
@@ -42,7 +48,7 @@ class ControllerCommonHome extends Controller {
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => false
    		);
-		
+
 		$this->data['token'] = $this->session->data['token'];
 		
 		$this->load->model('sale/order');

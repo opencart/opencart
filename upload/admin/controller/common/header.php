@@ -9,13 +9,13 @@ class ControllerCommonHeader extends Controller {
 			$this->data['base'] = HTTP_SERVER;
 		}
 		
-		$this->data['description'] 	= $this->document->getDescription();
-		$this->data['keywords'] 	= $this->document->getKeywords();
-		$this->data['links'] 		= $this->document->getLinks();	
-		$this->data['styles'] 		= $this->document->getStyles();
-		$this->data['scripts'] 		= $this->document->getScripts();
-		$this->data['lang'] 		= $this->language->get('code');
-		$this->data['direction'] 	= $this->language->get('direction');
+		$this->data['description'] = $this->document->getDescription();
+		$this->data['keywords'] = $this->document->getKeywords();
+		$this->data['links'] = $this->document->getLinks();	
+		$this->data['styles'] = $this->document->getStyles();
+		$this->data['scripts'] = $this->document->getScripts();
+		$this->data['lang'] = $this->language->get('code');
+		$this->data['direction'] = $this->language->get('direction');
 				
 		$this->load->language('common/header');
 
@@ -84,18 +84,12 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_length_class'] = $this->language->get('text_length_class');
 		$this->data['text_opencart'] = $this->language->get('text_opencart');
       	$this->data['text_zone'] = $this->language->get('text_zone');
-
-		$this->data['error_install'] = $this->language->get('error_install');
-		
-		$this->data['install'] = false;
 		
 		if (!$this->user->isLogged() || !isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
 			$this->data['logged'] = '';
 			
 			$this->data['home'] = $this->url->link('common/login', '', 'SSL');
-		} else {
-			$this->data['install'] = is_dir(dirname(DIR_APPLICATION) . '/install');
-			
+		} else {			
 			$this->data['logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
 
 			$this->data['home'] = $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL');

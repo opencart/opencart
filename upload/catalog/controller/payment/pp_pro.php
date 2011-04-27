@@ -121,7 +121,7 @@ class ControllerPaymentPPPro extends Controller {
 			'SIGNATURE'      => html_entity_decode($this->config->get('pp_pro_signature'), ENT_QUOTES, 'UTF-8'),
 			'CUSTREF'        => $order_info['order_id'],
 			'PAYMENTACTION'  => $payment_type,
-			'AMT'            => $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE),
+			'AMT'            => $this->currency->format($order_info['total'], $order_info['currency'], FALSE, FALSE),
 			'CREDITCARDTYPE' => $this->request->post['cc_type'],
 			'ACCT'           => str_replace(' ', '', $this->request->post['cc_number']),
 			'CARDSTART'      => $this->request->post['cc_start_date_month'] . $this->request->post['cc_start_date_year'],

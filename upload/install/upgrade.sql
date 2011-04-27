@@ -610,5 +610,25 @@ UPDATE `oc_country` SET `postcode_required` = 0 WHERE iso_code_3 = 'PAN';
 DELETE FROM `oc_zone` WHERE `code` = 'CMA';
 INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'CMA', 'Cumbria', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
 
+### Start 1.4.9.3
+# None
+
+### Start 1.4.9.4
+ALTER TABLE `oc_order` ADD `invoice_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER invoice_prefix;
+
+ALTER TABLE `oc_order` MODIFY `invoice_prefix` varchar(24) COLLATE utf8_bin NOT NULL;
+
+INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `address_format`, `postcode_required`, `status`) VALUES (NULL, 'Channel Islands', 'CI', 'CHI', '', 0, 1) ON DUPLICATE KEY UPDATE country_id=country_id;
+
+SET @cid='';
+SELECT @cid:=`country_id` FROM oc_country WHERE `iso_code_2` = 'CI' and `name` = 'Channel Islands';
+INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, @cid, 'JER', 'Jersey', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
+INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, @cid, 'GUE', 'Guernsey', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
+INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, @cid, 'ALD', 'Alderney', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
+INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, @cid, 'SRK', 'Sark', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
+INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, @cid, 'HRM', 'Herm', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
+
+
+
 ### Start 1.5.0
-ALTER TABLE `oc_product_featured` ADD PRIMARY KEY(`product_id`);
+#DROP TABLE `oc_product_featured`

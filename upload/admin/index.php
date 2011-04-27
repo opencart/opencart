@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '1.4.9.3');
+define('VERSION', '1.4.9.4');
 
 // Configuration
 require_once('config.php');
@@ -106,14 +106,7 @@ $languages = array();
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "language"); 
 
 foreach ($query->rows as $result) {
-	$languages[$result['code']] = array(
-		'language_id' => $result['language_id'],
-		'name'        => $result['name'],
-		'code'        => $result['code'],
-		'locale'      => $result['locale'],
-		'directory'   => $result['directory'],
-		'filename'    => $result['filename']
-	);
+	$languages[$result['code']] = $result;
 }
 
 $config->set('config_language_id', $languages[$config->get('config_admin_language')]['language_id']);

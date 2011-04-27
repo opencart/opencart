@@ -201,64 +201,13 @@ class ModelSaleOrder extends Model {
 				$payment_zone_code = '';
 			}
 
-			$order_data = array(
-				'order_id'                => $order_query->row['order_id'],
-				'invoice_id'              => $order_query->row['invoice_id'],
-				'invoice_prefix'          => $order_query->row['invoice_prefix'],
-				'store_id'                => $order_query->row['store_id'],
-				'store_name'              => $order_query->row['store_name'],
-				'store_url'               => $order_query->row['store_url'],
-				'customer_id'             => $order_query->row['customer_id'],
-				'customer_group_id'       => $order_query->row['customer_group_id'],
-				'firstname'               => $order_query->row['firstname'],
-				'lastname'                => $order_query->row['lastname'],
-				'telephone'               => $order_query->row['telephone'],
-				'fax'                     => $order_query->row['fax'],
-				'email'                   => $order_query->row['email'],
-				'shipping_firstname'      => $order_query->row['shipping_firstname'],
-				'shipping_lastname'       => $order_query->row['shipping_lastname'],
-				'shipping_company'        => $order_query->row['shipping_company'],
-				'shipping_address_1'      => $order_query->row['shipping_address_1'],
-				'shipping_address_2'      => $order_query->row['shipping_address_2'],
-				'shipping_postcode'       => $order_query->row['shipping_postcode'],
-				'shipping_city'           => $order_query->row['shipping_city'],
-				'shipping_zone_id'        => $order_query->row['shipping_zone_id'],
-				'shipping_zone'           => $order_query->row['shipping_zone'],
-				'shipping_zone_code'      => $shipping_zone_code,
-				'shipping_country_id'     => $order_query->row['shipping_country_id'],
-				'shipping_country'        => $order_query->row['shipping_country'],
-				'shipping_iso_code_2'     => $shipping_iso_code_2,
-				'shipping_iso_code_3'     => $shipping_iso_code_3,
-				'shipping_address_format' => $order_query->row['shipping_address_format'],
-				'shipping_method'         => $order_query->row['shipping_method'],
-				'payment_firstname'       => $order_query->row['payment_firstname'],
-				'payment_lastname'        => $order_query->row['payment_lastname'],
-				'payment_company'         => $order_query->row['payment_company'],
-				'payment_address_1'       => $order_query->row['payment_address_1'],
-				'payment_address_2'       => $order_query->row['payment_address_2'],
-				'payment_postcode'        => $order_query->row['payment_postcode'],
-				'payment_city'            => $order_query->row['payment_city'],
-				'payment_zone_id'         => $order_query->row['payment_zone_id'],
-				'payment_zone'            => $order_query->row['payment_zone'],
-				'payment_zone_code'       => $payment_zone_code,
-				'payment_country_id'      => $order_query->row['payment_country_id'],
-				'payment_country'         => $order_query->row['payment_country'],
-				'payment_iso_code_2'      => $payment_iso_code_2,
-				'payment_iso_code_3'      => $payment_iso_code_3,
-				'payment_address_format'  => $order_query->row['payment_address_format'],
-				'payment_method'          => $order_query->row['payment_method'],
-				'comment'                 => $order_query->row['comment'],
-				'total'                   => $order_query->row['total'],
-				'order_status_id'         => $order_query->row['order_status_id'],
-				'language_id'             => $order_query->row['language_id'],
-				'currency_id'             => $order_query->row['currency_id'],
-				'currency'                => $order_query->row['currency'],
-				'value'                   => $order_query->row['value'],
-				'coupon_id'               => $order_query->row['coupon_id'],
-				'date_modified'           => $order_query->row['date_modified'],
-				'date_added'              => $order_query->row['date_added'],
-				'ip'                      => $order_query->row['ip']
-			);
+			$order_data = $order_query->row;
+			$order_data['shipping_zone_code']  = $shipping_zone_code;
+			$order_data['shipping_iso_code_2'] = $shipping_iso_code_2;
+			$order_data['shipping_iso_code_3'] = $shipping_iso_code_3;
+			$order_data['payment_zone_code']   = $payment_zone_code;
+			$order_data['payment_iso_code_2']  = $payment_iso_code_2;
+			$order_data['payment_iso_code_3' ] = $payment_iso_code_3;
 
 			return $order_data;
 		} else {
@@ -280,7 +229,7 @@ class ModelSaleOrder extends Model {
 		}
 
 		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
-			$sql .= " AND CONCAT(o.firstname, ' ', o.lastname) LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
+			$sql .= " AND LCASE(CONCAT(o.firstname, ' ', o.lastname)) LIKE '%" . $this->db->escape(strtolower($data['filter_name'])) . "%'";
 		}
 
 		if (isset($data['filter_date_added']) && !is_null($data['filter_date_added'])) {
@@ -329,7 +278,7 @@ class ModelSaleOrder extends Model {
 	}
 
 	public function generateInvoiceId($order_id) {
-		$query = $this->db->query("SELECT MAX(invoice_id) AS invoice_id FROM `" . DB_PREFIX . "order` WHERE YEAR(date_modified) = YEAR(now())");
+		$query = $this->db->query("SELECT MAX(invoice_id) AS invoice_id FROM `" . DB_PREFIX . "order` WHERE invoice_prefix = '" . $this->db->escape($this->config->get('config_invoice_prefix')) . "'");
 
 		if ($query->row['invoice_id']) {
 			$invoice_id = (int)$query->row['invoice_id'] + 1;
@@ -339,7 +288,7 @@ class ModelSaleOrder extends Model {
 			$invoice_id = 1;
 		}
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET invoice_id = '" . (int)$invoice_id . "', invoice_prefix = '" . $this->db->escape($this->config->get('config_invoice_prefix')) . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET invoice_id = '" . (int)$invoice_id . "', invoice_prefix = '" . $this->db->escape($this->config->get('config_invoice_prefix')) . "', invoice_date = NOW(), date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
 
 		return $this->config->get('config_invoice_prefix') . $invoice_id;
 	}

@@ -17,14 +17,17 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->load->model('checkout/order');
 
 		$this->language->load('payment/pp_standard');
-		
+
 		$this->data['testmode'] = $this->config->get('pp_standard_test');
 
 		$this->data['text_testmode'] = $this->language->get('text_testmode');
-		
+
+		$this->data['continue'] = HTTPS_SERVER . 'index.php?route=checkout/success';
+
 		$this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		// Check for supported currency, otherwise convert to USD.
+
+		# Check for supported currency, otherwise convert to USD.
 		$currencies = array('AUD','CAD','EUR','GBP','JPY','USD','NZD','CHF','HKD','SGD','SEK','DKK','PLN','NOK','HUF','CZK','ILS','MXN','MYR','BRL','PHP','PLN','TWD','THB');
 		if (in_array($this->order_info['currency'], $currencies)) {
 			$currency = $this->order_info['currency'];
@@ -32,7 +35,8 @@ class ControllerPaymentPPStandard extends Controller {
 			$currency = 'USD';
 		}
 
-		// Get all totals
+
+		# Get all totals and discount total
 		$total = 0;
         $total_data = array();
 		$taxes = $this->cart->getTaxes();
@@ -59,30 +63,38 @@ class ControllerPaymentPPStandard extends Controller {
 				$discount_total += $old_total - $total;
 			}
 		}
-		$total = $this->currency->format($total, $currency, FALSE, FALSE);
+
+		$this->data['total'] = $total;
+
+
+		# Get Shipping Total
 		$shipping_total = 0;
-		// Create form fields
+		if ($this->cart->hasShipping()) {
+			$shipping_total = $this->session->data['shipping_method']['cost'];
+		}
+
+
+		# Get Tax Total
+		$tax_total = 0;
+		foreach ($taxes as $key => $value) {
+			$tax_total += $value;
+		}
+
+
+		# Create form fields
 		$this->data['fields'] = array();
 		$this->data['fields']['cmd'] = '_cart';
 		$this->data['fields']['upload'] = '1';
-		if ($this->cart->hasShipping()) {
-			$shipping_total = $this->currency->format($this->session->data['shipping_method']['cost'], $currency, FALSE, FALSE);
-			$this->data['fields']['shipping_1'] = $shipping_total;
-		}
-		$tax_total = 0;
-		foreach ($taxes as $key => $value) {
-				$tax_total += $this->currency->format($value, $currency, FALSE, FALSE);
-		}
-		//$this->data['fields']['tax'] = $tax_total;
-		$this->data['fields']['tax_cart'] = $tax_total;
 
+
+		# Get itemized product total
 		$product_total = 0;
 		$i = 1;
 		foreach ($this->cart->getProducts() as $product) {
-			$price = $this->currency->format($product['price'], $currency, FALSE, FALSE);
+			$price = $product['price'];
 	        $this->data['fields']['item_number_' . $i . ''] = $product['model'];
             $this->data['fields']['item_name_' . $i . ''] = $product['name'];
-            $this->data['fields']['amount_' . $i . ''] = $price;
+            $this->data['fields']['amount_' . $i . ''] = $this->currency->format($price, $currency, FALSE, FALSE);
             $this->data['fields']['quantity_' . $i . ''] = $product['quantity'];
 	        $this->data['fields']['weight_' . $i . ''] = $product['weight'];
 	        $product_total += ($price * $product['quantity']);
@@ -97,63 +109,106 @@ class ControllerPaymentPPStandard extends Controller {
             $i++;
         }
 
-        // Hack to bypass paypal's discount limitation: https://www.x.com/thread/47330
-        if ($discount_total < $this->cart->getSubTotal()) {
-			$this->data['fields']['discount_amount_cart'] = $this->currency->format($discount_total, $currency, FALSE, FALSE);
-		} elseif ($discount_total) {
-			// Set Shipping as a line item
-			$this->data['fields']['item_number_' . $i . ''] = $this->session->data['shipping_method']['id'];
-            $this->data['fields']['item_name_' . $i . ''] = $this->session->data['shipping_method']['title'];
-            $this->data['fields']['amount_' . $i . ''] = $shipping_total;
-            $this->data['fields']['quantity_' . $i . ''] = 1;
-	        $this->data['fields']['weight_' . $i . ''] = $this->cart->getWeight();
-	        $product_total += $shipping_total;
-	        $i++;
 
-			// Set Tax as a line item
-	        $this->data['fields']['item_number_' . $i . ''] = $this->language->get('text_tax');
-            $this->data['fields']['item_name_' . $i . ''] = $this->language->get('text_tax');
-            $this->data['fields']['amount_' . $i . ''] = $tax_total;
-            $this->data['fields']['quantity_' . $i . ''] = 1;
-	        $this->data['fields']['weight_' . $i . ''] = 0;
-	        $product_total += $tax_total;
-			$i++;
+        # Hack to bypass paypal's discount limitation: https://www.x.com/thread/47330
+        $this->data['fields']['discount_amount_cart'] = $this->currency->format($discount_total, $currency, FALSE, FALSE);
+		if ($discount_total < $product_total) {
+			$this->data['fields']['shipping_1'] = $this->currency->format($shipping_total, $currency, FALSE, FALSE);
+			$this->data['fields']['tax_cart'] = $this->currency->format($tax_total, $currency, FALSE, FALSE);
+		} elseif ($discount_total) {
+
+			if ($shipping_total) {
+				// Set Shipping as a line item to fool paypal in thinking that the subtotal is higher
+				$this->data['fields']['item_number_' . $i . ''] = $this->session->data['shipping_method']['id'];
+				$this->data['fields']['item_name_' . $i . ''] = $this->session->data['shipping_method']['title'];
+				$this->data['fields']['amount_' . $i . ''] = $this->currency->format($shipping_total, $currency, FALSE, FALSE);
+				$this->data['fields']['quantity_' . $i . ''] = 1;
+				$this->data['fields']['weight_' . $i . ''] = 0;
+				//$product_total += $shipping_total;
+				$i++;
+			}
+
+			if ($tax_total) {
+				// Set Tax as a line item to fool paypal in thinking that the subtotal is higher
+				$this->data['fields']['item_number_' . $i . ''] = $this->language->get('text_tax');
+				$this->data['fields']['item_name_' . $i . ''] = $this->language->get('text_tax');
+				$this->data['fields']['amount_' . $i . ''] = $this->currency->format($tax_total, $currency, FALSE, FALSE);
+				$this->data['fields']['quantity_' . $i . ''] = 1;
+				$this->data['fields']['weight_' . $i . ''] = 0;
+				//$product_total += $tax_total;
+				$i++;
+			}
 
 			// Since shipping & tax are now line items, remove the actual shipping & tax value
 			$this->data['fields']['shipping_1'] = '0.00';
 			$this->data['fields']['tax_cart'] = '0.00';
-			$this->data['fields']['discount_amount_cart'] = $this->currency->format($discount_total, $currency, FALSE, FALSE);
 		}
 
 
+		# Get any remaining balance as a handling fee
 		$remaining_total = $total - $product_total - $tax_total - $shipping_total + $discount_total;
-
 		if ($remaining_total > 0) {
-			$this->data['fields']['handling_cart'] = number_format(abs($remaining_total), 2, '.', '');
+			$this->data['fields']['handling_cart'] = number_format(abs($this->currency->format($remaining_total, $currency, FALSE, FALSE)), 2, '.', '');
 		}
 
+
+		# Finish the rest of the form
 		$this->data['fields']['business'] = $this->config->get('pp_standard_email');
 		$this->data['fields']['currency_code'] = $currency;
-		$this->data['fields']['first_name'] = html_entity_decode($this->order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
-		$this->data['fields']['last_name'] = html_entity_decode($this->order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
-		$this->data['fields']['address1'] = html_entity_decode($this->order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');
-		$this->data['fields']['address2'] = html_entity_decode($this->order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');
-		$this->data['fields']['city'] = html_entity_decode($this->order_info['payment_city'], ENT_QUOTES, 'UTF-8');
-		if ($this->order_info['payment_iso_code_2'] == 'US') {
-			$this->load->model('localisation/zone');
-			$zone = $this->model_localisation_zone->getZone($this->order_info['payment_zone_id']);
-			$this->data['fields']['state'] = html_entity_decode($zone['code'], ENT_QUOTES, 'UTF-8');
-			$phone = preg_replace("/[^0-9.]/", "", html_entity_decode($this->order_info['telephone'], ENT_QUOTES, 'UTF-8'));
-			$this->data['fields']['night_phone_a'] = html_entity_decode(substr($phone,0,3), ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['night_phone_b'] = html_entity_decode(substr($phone,3,3), ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['night_phone_c'] = html_entity_decode(substr($phone,6), ENT_QUOTES, 'UTF-8');
+		
+		
+		# If no shipping address, just use the billing address for both
+		if (!isset($this->session->data['shipping_address_id']) && !isset($this->session->data['guest']['shipping'])) {
+
+			// Shipping Address uses payment address
+			$this->data['fields']['first_name'] = html_entity_decode($this->order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['last_name'] = html_entity_decode($this->order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['address1'] = html_entity_decode($this->order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['address2'] = html_entity_decode($this->order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['city'] = html_entity_decode($this->order_info['payment_city'], ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['zip'] = html_entity_decode($this->order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['country'] = $this->order_info['payment_iso_code_2'];
+			if ($this->order_info['payment_iso_code_2'] == 'US') {
+				$this->load->model('localisation/zone');
+				$zone = $this->model_localisation_zone->getZone($this->order_info['payment_zone_id']);
+				if (isset($zone['code'])) {
+					$this->data['fields']['state'] = html_entity_decode($zone['code'], ENT_QUOTES, 'UTF-8');
+				}
+				$phone = preg_replace("/[^0-9.]/", "", html_entity_decode($this->order_info['telephone'], ENT_QUOTES, 'UTF-8'));
+				$this->data['fields']['night_phone_a'] = html_entity_decode(substr($phone,0,3), ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['night_phone_b'] = html_entity_decode(substr($phone,3,3), ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['night_phone_c'] = html_entity_decode(substr($phone,6), ENT_QUOTES, 'UTF-8');
+			}
+
+		} else { // if there is a shipping address
+
+			// Shipping Address uses shipping address
+			$this->data['fields']['first_name'] = html_entity_decode($this->order_info['shipping_firstname'], ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['last_name'] = html_entity_decode($this->order_info['shipping_lastname'], ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['address1'] = html_entity_decode($this->order_info['shipping_address_1'], ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['address2'] = html_entity_decode($this->order_info['shipping_address_2'], ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['city'] = html_entity_decode($this->order_info['shipping_city'], ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['zip'] = html_entity_decode($this->order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['country'] = $this->order_info['payment_iso_code_2'];
+			if ($this->order_info['shipping_iso_code_2'] == 'US') {
+				$this->load->model('localisation/zone');
+				$zone = $this->model_localisation_zone->getZone($this->order_info['shipping_zone_id']);
+				if (isset($zone['code'])) {
+					$this->data['fields']['state'] = html_entity_decode($zone['code'], ENT_QUOTES, 'UTF-8');
+				}
+				$phone = preg_replace("/[^0-9.]/", "", html_entity_decode($this->order_info['telephone'], ENT_QUOTES, 'UTF-8'));
+				$this->data['fields']['night_phone_a'] = html_entity_decode(substr($phone,0,3), ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['night_phone_b'] = html_entity_decode(substr($phone,3,3), ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['night_phone_c'] = html_entity_decode(substr($phone,6), ENT_QUOTES, 'UTF-8');
+			}
+
 		}
-		$this->data['fields']['zip'] = html_entity_decode($this->order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
-		$this->data['fields']['country'] = $this->order_info['payment_iso_code_2'];
+		
 		$this->data['fields']['email'] = $this->order_info['email'];
 		$this->data['fields']['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($this->order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($this->order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
 		$this->data['fields']['lc'] = $this->session->data['language'];
 		$this->data['fields']['rm'] = '2';
+		$this->data['fields']['charset'] = 'utf-8';
 
 		if (!$this->config->get('pp_standard_transaction')) {
 			$this->data['fields']['paymentaction'] = 'authorization';
@@ -161,9 +216,9 @@ class ControllerPaymentPPStandard extends Controller {
 			$this->data['fields']['paymentaction'] = 'sale';
 		}
 
-		//$this->data['fields']['return'] = HTTPS_SERVER . 'index.php?route=checkout/success';
 		$this->data['fields']['return'] = HTTPS_SERVER . 'index.php?route=payment/pp_standard/pdt';
 		$this->data['fields']['notify_url'] = HTTP_SERVER . 'index.php?route=payment/pp_standard/callback';
+
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
 			$this->data['fields']['cancel_return'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		} else {
@@ -194,6 +249,19 @@ class ControllerPaymentPPStandard extends Controller {
 	}
 
 	public function confirm() {
+
+		# If total is 0.00, bypass paypal and force completed checkout
+		$this->load->model('checkout/order');
+		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+		if (!(float)$order_info['total']) {
+			$this->load->model('checkout/order');
+			$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('pp_standard_order_status_id'));
+			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/success');
+		}
+
+		# If using ajax pre-confirm, set the order to "pending" before payment is made.
+		# Only use when IPN and PDT are both failing.
+		# Not meant to be a solution, but a temporary workaround
 		if ($this->config->get('pp_standard_ajax')) {
 			$this->load->model('checkout/order');
 			$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
@@ -258,7 +326,7 @@ class ControllerPaymentPPStandard extends Controller {
 		if (ini_get('allow_url_fopen')) {
 			$response = file_get_contents($url . '?' . $request);
 		} else {
-			$response = file_get_contents_curl($url . '?' . $request);
+			$response = $this->file_get_contents_curl($url . '?' . $request);
 		}
 
 		if ($this->config->get('pp_standard_debug')) {
@@ -346,14 +414,12 @@ class ControllerPaymentPPStandard extends Controller {
 	        if (function_exists('get_magic_quotes_gpc')) {
 	            $get_magic_quotes_exists = true;
 	        }
-
+			
 			foreach ($this->request->post as $key => $value) {
 				if ($get_magic_quotes_exists && get_magic_quotes_gpc() == 1) {
-					//$request .= '&' . $key . '=' . urlencode(stripslashes($value));
-					$request .= '&' . $key . '=' . urlencode($value);
+					$request .= '&' . $key . '=' . urlencode(stripslashes(html_entity_decode($value, ENT_COMPAT, 'utf-8')));
 				} else {
-					$request .= '&' . $key . '=' . urlencode($value);
-					//$request .= '&' . $key . '=' . urlencode(stripslashes($value));
+					$request .= '&' . $key . '=' . urlencode(html_entity_decode($value, ENT_COMPAT, 'utf-8'));
 				}
 			}
 
@@ -401,19 +467,31 @@ class ControllerPaymentPPStandard extends Controller {
 
 	private function checkPaymentStatus($data, $verified) {
 
+		
 		if (isset($this->request->post)) {
         	$p_msg = "DEBUG POST VARS::"; foreach($this->request->post as $k=>$v) { $p_msg .= $k."=".$v."&"; }
 		}
 		if (isset($this->request->get)) {
         	$g_msg = "DEBUG GET VARS::"; foreach($this->request->get as $k=>$v) { $g_msg .= $k."=".$v."&"; }
 		}
+		
 
 		if (isset($this->order_info['order_id'])) {
 			$order_id = $this->order_info['order_id'];
 		} else {
 			$order_id = 0;
 		}
-
+		
+		$comment = '';
+		
+		if ($this->config->get('pp_standard_debug')) {
+			if (isset($data['pending_reason'])) {
+				$comment = $data['pending_reason'];
+			} elseif (isset($data['reason_code'])) {
+				$comment = $data['reason_code'];
+			}
+		}
+		
 		switch($data['payment_status']){
 			case 'Completed':
 				if ($verified) {
@@ -437,51 +515,51 @@ class ControllerPaymentPPStandard extends Controller {
 				break;
 			case 'Canceled_Reversal':
 				if ($this->order_info['order_status_id'] == '0') {
-					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_canceled_reversal'), $data['reason_code']);
+					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_canceled_reversal'), $comment);
 				} else {
-					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_canceled_reversal'), $data['reason_code'], FALSE);
+					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_canceled_reversal'), $comment, FALSE);
 				}
 				break;
 			case 'Denied':
 				if ($this->order_info['order_status_id'] == '0') {
-					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_denied'), $data['reason_code']);
+					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_denied'), $comment);
 				} else {
-					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_denied'), $data['reason_code'], FALSE);
+					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_denied'), $comment, FALSE);
 				}
 				break;
 			case 'Failed':
 				if ($this->order_info['order_status_id'] == '0') {
-					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_failed'), $data['reason_code']);
+					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_failed'), $comment);
 				} else {
-					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_failed'), $data['reason_code'], FALSE);
+					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_failed'), $comment, FALSE);
 				}
 				break;
 			case 'Pending':
 				if ($this->order_info['order_status_id'] == '0') {
-					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_pending'), $data['pending_reason']);
+					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_pending'), $comment);
 				} else {
-					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_pending'), $data['pending_reason'], TRUE);
+					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_pending'), $comment, TRUE);
 				}
 				break;
 			case 'Refunded':
 				if ($this->order_info['order_status_id'] == '0') {
-					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_refunded'), $data['reason_code']);
+					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_refunded'), $comment);
 				} else {
-					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_refunded'), $data['reason_code'], FALSE);
+					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_refunded'), $comment, FALSE);
 				}
 				break;
 			case 'Reversed':
 				if ($this->order_info['order_status_id'] == '0') {
-					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_reversed'), $data['reason_code']);
+					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_reversed'), $comment);
 				} else {
-					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_reversed'), $data['reason_code'], FALSE);
+					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_reversed'), $comment, FALSE);
 				}
 				break;
 			default:
 				if ($this->order_info['order_status_id'] == '0') {
-					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_unspecified'), $data['reason_code']);
+					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_unspecified'), $comment);
 				} else {
-					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_unspecified'), $data['reason_code'], FALSE);
+					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_unspecified'), $comment, FALSE);
 				}
 				break;
 		}
@@ -495,7 +573,7 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/success');
 	}
 
-	function file_get_contents_curl($url) {
+	private function file_get_contents_curl($url) {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Set curl to return the data instead of printing it to the browser.
@@ -530,6 +608,8 @@ class ControllerPaymentPPStandard extends Controller {
 			$amount = $data['payment_gross'];
 		} elseif (isset($data['mc_gross']) && $data['mc_gross']) {
 			$amount = $data['mc_gross'];
+		} else {
+			$amount = 0;
 		}
 
         if (isset($data['payment_status']) && $data['payment_status'] != 'Refunded' && ((float)floor($amount) != (float)floor($this->currency->format($this->order_info['total'], $currency, False, False)))) {

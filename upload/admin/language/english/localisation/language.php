@@ -25,6 +25,7 @@ $_['entry_sort_order']  = 'Sort Order:';
 $_['error_permission']  = 'Warning: You do not have permission to modify languages!';
 $_['error_name']        = 'Language Name must be between 3 and 32 characters!';
 $_['error_code']        = 'Language Code must at least 2 characters!';
+$_['error_only']        = 'Cannot delete last remaining language!';
 $_['error_locale']      = 'Locale required!';
 $_['error_image']       = 'Image Filename must be between 3 and 64 characters!';
 $_['error_directory']   = 'Directory required!';

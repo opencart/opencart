@@ -20,6 +20,13 @@
             <?php } ?></td>
         </tr>
         <tr>
+          <td><?php echo $entry_secret; ?></td>
+          <td><input type="text" name="moneybookers_secret" value="<?php echo $moneybookers_secret; ?>" />
+            <?php if ($error_secret) { ?>
+            <span class="error"><?php echo $error_secret; ?></span>
+            <?php } ?></td>
+        </tr>
+        <tr>
           <td><?php echo $entry_order_status; ?></td>
           <td><select name="moneybookers_order_status_id">
               <?php foreach ($order_statuses as $order_status) { ?>

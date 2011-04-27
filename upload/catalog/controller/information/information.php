@@ -25,7 +25,7 @@ class ControllerInformationInformation extends Controller {
 	  		$this->document->title = $information_info['title']; 
 
       		$this->document->breadcrumbs[] = array(
-        		'href'      => HTTP_SERVER . 'index.php?route=information/information&information_id=' . $this->request->get['information_id'],
+        		'href'      => HTTP_SERVER . 'index.php?route=information/information&information_id=' . $information_id,
         		'text'      => $information_info['title'],
         		'separator' => $this->language->get('text_separator')
       		);		
@@ -54,7 +54,7 @@ class ControllerInformationInformation extends Controller {
 	  		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
     	} else {
       		$this->document->breadcrumbs[] = array(
-        		'href'      => HTTP_SERVER . 'index.php?route=information/information&information_id=' . $this->request->get['information_id'],
+        		'href'      => HTTP_SERVER . 'index.php?route=information/information&information_id=' . $information_id,
         		'text'      => $this->language->get('text_error'),
         		'separator' => $this->language->get('text_separator')
       		);

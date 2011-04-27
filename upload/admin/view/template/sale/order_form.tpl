@@ -18,7 +18,7 @@
           <tr>
             <td><?php echo $entry_invoice_id; ?></td>
             <td id="invoice"><?php if ($invoice_id) { ?>
-              <?php echo $invoice_id; ?>
+              <?php echo $invoice_id; ?> <span class="help"><?php echo $invoice_date; ?></span>
               <?php } else { ?>
               <a id="generate_button" class="button"><span><?php echo $button_generate; ?></span></a>
               <?php } ?></td>
@@ -54,6 +54,10 @@
             <td><?php echo $fax; ?></td>
           </tr>
           <?php } ?>
+		  <tr>
+            <td><?php echo $entry_ip; ?></td>
+            <td><?php echo $ip; ?></td>
+          </tr>
           <tr>
             <td><?php echo $entry_store_name; ?></td>
             <td><?php echo $store_name; ?></td>
@@ -101,7 +105,7 @@
               <td class="left"><?php echo $column_model; ?></td>
               <td class="right"><?php echo $column_quantity; ?></td>
               <td class="right"><?php echo $column_price; ?></td>
-              <td class="right" width="1"><?php echo $column_total; ?></td>
+              <td class="right"><?php echo $column_total; ?></td>
             </tr>
           </thead>
           <?php foreach ($products as $product) { ?>

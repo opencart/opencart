@@ -31,11 +31,11 @@ final class Mail {
 	}
 
 	public function setSender($sender) {
-		$this->sender = html_entity_decode($sender, ENT_COMPAT, 'UTF-8');
+		$this->sender = html_entity_decode($sender);
 	}
 
 	public function setSubject($subject) {
-		$this->subject = html_entity_decode($subject, ENT_COMPAT, 'UTF-8');
+		$this->subject = html_entity_decode($subject);
 	}
 
 	public function setText($text) {
@@ -92,9 +92,11 @@ final class Mail {
 			$header .= 'To: ' . $to . $this->newline;
 			$header .= 'Subject: ' . $this->subject . $this->newline;
 		}
-
-		$header .= 'From: ' . $this->sender . '<' . $this->from . '>' . $this->newline;
+		
+		$header .= 'Date: ' . date("D, d M Y H:i:s O") . $this->newline;
 		//$header .= 'From: "' . $this->sender . '" <' . $this->from . '>' . $this->newline;
+		//$header .= 'From: ' . $this->sender . '<' . $this->from . '>' . $this->newline;
+		$header .= 'From: ' . '=?UTF-8?B?'.base64_encode($this->sender).'?=' . '<' . $this->from . '>' . $this->newline;
 		$header .= 'Reply-To: ' . $this->sender . '<' . $this->from . '>' . $this->newline;
 		$header .= 'Return-Path: ' . $this->from . $this->newline;
 		$header .= 'X-Mailer: PHP/' . phpversion() . $this->newline;
@@ -148,9 +150,9 @@ final class Mail {
 			ini_set('sendmail_from', $this->from);
 
 			if ($this->parameter) {
-				mail($to, $this->subject, $message, $header, $this->parameter);
+				mail($to, '=?UTF-8?B?'.base64_encode($this->subject).'?=', $message, $header, $this->parameter);
 			} else {
-				mail($to, $this->subject, $message, $header);
+				mail($to, '=?UTF-8?B?'.base64_encode($this->subject).'?=', $message, $header);
 			}
 
 		} elseif ($this->protocol == 'smtp') {

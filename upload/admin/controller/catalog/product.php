@@ -363,7 +363,7 @@ class ControllerCatalogProduct extends Controller {
 
 			 if ($product_specials) {
                 $special = reset($product_specials);
-                if($special['date_start'] > date('Y-m-d') || $special['date_end'] < date('Y-m-d')) {
+                if(($special['date_start'] != '0000-00-00' && $special['date_start'] > date('Y-m-d')) || ($special['date_end'] != '0000-00-00' && $special['date_end'] < date('Y-m-d'))) {
                     $special = FALSE;
                 }
             } else {

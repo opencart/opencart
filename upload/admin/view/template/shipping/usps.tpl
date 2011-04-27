@@ -20,10 +20,6 @@
             <?php } ?></td>
         </tr>
         <tr>
-          <td><span class="required">*</span> <?php echo $entry_password; ?></td>
-          <td><input type="text" name="usps_password" value="<?php echo $usps_password; ?>" /></td>
-        </tr>
-        <tr>
           <td><span class="required">*</span> <?php echo $entry_postcode; ?></td>
           <td><input type="text" name="usps_postcode" value="<?php echo $usps_postcode; ?>" />
             <?php if ($error_postcode) { ?>
@@ -484,6 +480,18 @@
         <tr>
           <td><?php echo $entry_sort_order; ?></td>
           <td><input type="text" name="usps_sort_order" value="<?php echo $usps_sort_order; ?>" size="1" /></td>
+        </tr>
+		<tr>
+          <td><?php echo $entry_debug; ?></td>
+          <td><select name="usps_debug">
+              <?php if ($usps_debug) { ?>
+              <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+              <option value="0"><?php echo $text_disabled; ?></option>
+              <?php } else { ?>
+              <option value="1"><?php echo $text_enabled; ?></option>
+              <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+              <?php } ?>
+            </select></td>
         </tr>
       </table>
     </form>

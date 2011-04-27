@@ -23,7 +23,11 @@ function confirmSubmit() {
 		type: 'GET',
 		url: 'index.php?route=payment/pp_standard/confirm',
 		success: function() {
-			$('#checkout').submit();
+			if (<?php echo (float)$total; ?>) {
+				$('#checkout').submit();
+			} else {
+				location = '<?php echo $continue; ?>';
+			}
 		}
 	});
 }

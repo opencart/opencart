@@ -36,7 +36,7 @@ class ControllerAccountSuccess extends Controller {
     	$this->data['button_continue'] = $this->language->get('button_continue');
 		
 		if ($this->cart->hasProducts()) {
-			$this->data['continue'] = HTTPS_SERVER . 'index.php?route=checkout/cart';
+			$this->data['continue'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
 		} else {
 			$this->data['continue'] = HTTPS_SERVER . 'index.php?route=account/account';
 		}

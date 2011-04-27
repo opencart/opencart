@@ -1,3 +1,41 @@
+== OpenCart v1.4.9.4 ==
+
+FIXES:
+- Colspan fixed for admin product list when no products found
+- Search not working on all pages fixed
+- Removed Foreach in Cache::get function since it returns after the first file anyway
+- Added touch() to cache file before unlink to avoid the file race condition
+- Add IP back to order edit page (accidentally removed in 1.4.9)
+- Removed language status check for download edit
+- Fixed language autodetect to check if language is enabled
+- Fixed php error when loading information controller with no information_id
+- Possible additional fixes for mail to use base64 encoding in subject
+- Fixed column width issue fpr product totals in admin order edit
+- Updated Paypal Standard to latest patch + auto-bypass for 0.00 totals
+- Fixed text_error in category page
+- Email validation simplified to check for *@*.*
+- Fixed security issue with Moneybookers payment gateway
+- Fixed USPS issues do to 2011 change
+- Fixed flat rate wording on description (broke in 1.4.9)
+- Fixed Paypal Pro currency conversion issue
+
+ADDED:
+- Specials listed in the admin product list also show when start or end is 0000-00-00
+- Allow resetting invoice id to 1 by changing invoice prefix
+- Added invoice_date field to order to store the date the invoice was generated
+- Added invoice date to actual invoice print
+- Added additional help text for some features to explain their function better
+- New Account Create alert mail option
+- Added email to db insert for admin on new install
+- Converted setting.php controller to use the new proposed optimization standard methods (cut filesize in half)
+- Added additional security params in htaccess
+- Additional minor code optimizations
+- Updated USPS to use RateV4 API
+- New Account Success continues to checkout/shipping instead of checkout/cart since it is more intuitive
+- Removed fedex placeholder files since they reference a deprecated api
+- Added date header to mail class to help prevent spam filtering
+
+
 == OpenCart v1.4.9.3 ==
 
 FIXES:

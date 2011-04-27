@@ -244,12 +244,8 @@
               <?php } ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_invoice; ?></td>
-            <td><input type="text" name="config_invoice_id" value="<?php echo $config_invoice_id; ?>" size="3" /></td>
-          </tr>
-          <tr>
             <td><?php echo $entry_invoice_prefix; ?></td>
-            <td><input type="text" name="config_invoice_prefix" value="<?php echo $config_invoice_prefix; ?>" size="3" /></td>
+            <td><input type="text" name="config_invoice_prefix" value="<?php echo $config_invoice_prefix; ?>" /></td>
           </tr>
           <tr>
             <td><?php echo $entry_customer_group; ?></td>
@@ -596,6 +592,20 @@
               <input type="radio" name="config_alert_mail" value="1" />
               <?php echo $text_yes; ?>
               <input type="radio" name="config_alert_mail" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } ?></td>
+          </tr>
+		  <tr>
+            <td><?php echo $entry_account_mail; ?></td>
+            <td><?php if ($config_account_mail) { ?>
+              <input type="radio" name="config_account_mail" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="config_account_mail" value="0" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="config_account_mail" value="1" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="config_account_mail" value="0" checked="checked" />
               <?php echo $text_no; ?>
               <?php } ?></td>
           </tr>

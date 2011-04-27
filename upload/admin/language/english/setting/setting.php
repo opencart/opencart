@@ -32,8 +32,7 @@ $_['entry_currency_auto']     = 'Auto Update Currency:<br /><span class="help">S
 $_['entry_weight_class']      = 'Weight Class:';
 $_['entry_length_class']      = 'Length Class:';
 $_['entry_tax']               = 'Display Prices With Tax:';
-$_['entry_invoice']           = 'Invoice Start No.:<br /><span class="help">Set the starting number the invoices will begin from.</span>';
-$_['entry_invoice_prefix']    = 'Invoice Prefix:<br /><span class="help">Set the invoice prefix e.g. IN/001</span>';
+$_['entry_invoice_prefix']    = 'Invoice Prefix:<br /><span class="help">Set the invoice prefix (e.g. INV-2011-00). Invoice ID\'s will start at 1 for each unique prefix</span>';
 $_['entry_customer_group']    = 'Customer Group:<br /><span class="help">Default customer group.</span>';
 $_['entry_customer_price']    = 'Login Display Prices:<br /><span class="help">Only show prices when a customer is logged in.</span>';
 $_['entry_customer_approval'] = 'Approve New Customers:<br /><span class="help">Don\'t allow new customer to login until their account has been approved.</span>';
@@ -54,7 +53,8 @@ $_['entry_image_product']     = 'Product List Size:';
 $_['entry_image_additional']  = 'Additional Product Image Size:';
 $_['entry_image_related']     = 'Related Product Image Size:';
 $_['entry_image_cart']        = 'Cart Image Size:';
-$_['entry_alert_mail']        = 'Alert Mail:<br /><span class="help">Send a email to the store owner when a new order is created.</span>';
+$_['entry_account_mail']      = 'New Account Alert Mail:<br /><span class="help">Send a email to the store owner when a new account is registered.</span>';
+$_['entry_alert_mail']        = 'New Order Alert Mail:<br /><span class="help">Send a email to the store owner when a new order is created.</span>';
 $_['entry_download']          = 'Allow Downloads:';
 $_['entry_download_status']   = 'Download Order Status:<br /><span class="help">Set the order status the customers order must reach before they are allowed to access their downloadable products.</span>';
 $_['entry_mail_protocol']     = 'Mail Protocol:<span class="help">Only choose \'Mail\' unless your host has disabled the php mail function.';
@@ -78,6 +78,7 @@ $_['entry_cart_weight']       = 'Display Weight on Cart Page:<br /><span class="
 $_['entry_review']       	  = 'Allow Reviews:<br /><span class="help">Enable/Disable new review entry and display of existing reviews</span>';
 $_['entry_maintenance']       = 'Maintenance Mode:<br /><span class="help">Prevents customers from browsing your store. They will instead see a maintenance message. If logged in as admin, you will see the store as normal.</span>';
 $_['entry_token_ignore']      = 'Ignore Tokens on these pages:<br /><span class="help">This version of OpenCart has a token system for admin security. Modules that have not been updated for token support yet can be checked to ignore the token check and allow them to work as normal.</span>';
+
 // Button
 $_['button_add_store']        = 'Create A New Store';
 

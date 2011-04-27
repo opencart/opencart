@@ -22,7 +22,7 @@ $_['entry_category']         = 'Parent Category:';
 $_['entry_store']            = 'Stores:';
 $_['entry_keyword']          = 'SEO Keyword:';
 $_['entry_image']            = 'Image:';
-$_['entry_sort_order']       = 'Sort Order:';
+$_['entry_sort_order']       = 'Sort Order:<br/><span class="help">Set to -1 to hide from listing</span>';
 
 // Error 
 $_['error_permission']       = 'Warning: You do not have permission to modify categories!';

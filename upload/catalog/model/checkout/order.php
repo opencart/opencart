@@ -381,65 +381,13 @@ class ModelCheckoutOrder extends Model {
 				$mail->send();
 				
 				// Send to additional alert emails
-				$pattern = '/^[A-Z0-9._%-+]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z]{2,6}$/i';
 				$emails = explode(',', $this->config->get('config_alert_emails'));
 				foreach ($emails as $email) {
-					if (strlen($email) > 0 && preg_match($pattern, $email)) {
+					if (strlen($email) > 0 && preg_match(EMAIL_PATTERN, $email)) {
 						$mail->setTo($email);
 						$mail->send();
 					}
 				}
-				
-				/*
-				// Text
-				$text  = $language->get('text_received') . "\n\n";
-				$text .= $language->get('text_order_id') . ' ' . $order_id . "\n";
-				$text .= $language->get('text_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_query->row['date_added'])) . "\n";
-				$text .= $language->get('text_order_status') . ' ' . $order_status_query->row['name'] . "\n\n";
-				$text .= $language->get('text_product') . "\n";
-				
-				foreach ($order_product_query->rows as $result) {
-					$text .= $result['quantity'] . 'x ' . $result['name'] . ' (' . $result['model'] . ') ' . html_entity_decode($this->currency->format($result['total'], $order_query->row['currency'], $order_query->row['value']), ENT_NOQUOTES, 'UTF-8') . "\n";
-					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . $result['order_product_id'] . "'");
-					foreach ($order_option_query->rows as $option) {
-						$text .= chr(9) . '-' . $option['name'] . ' ' . $option['value'] . "\n";
-					}
-				}
-				
-				$text .= "\n";
-
-				$text.= $language->get('text_total') . "\n";
-				
-				foreach ($order_total_query->rows as $result) {
-					$text .= $result['title'] . ' ' . html_entity_decode($result['text'], ENT_NOQUOTES, 'UTF-8') . "\n";
-				}			
-				
-				$text .= "\n";
-				
-				if ($order_query->row['comment'] != '') {
-					$comment = ($order_query->row['comment'] .  "\n\n" . $comment);
-				}
-				
-				if ($comment) {
-					$text .= $language->get('text_comment') . "\n\n";
-					$text .= $comment . "\n\n";
-				}
-			
-				$mail = new Mail(); 
-				$mail->protocol = $this->config->get('config_mail_protocol');
-				$mail->parameter = $this->config->get('config_mail_parameter');
-				$mail->hostname = $this->config->get('config_smtp_host');
-				$mail->username = $this->config->get('config_smtp_username');
-				$mail->password = $this->config->get('config_smtp_password');
-				$mail->port = $this->config->get('config_smtp_port');
-				$mail->timeout = $this->config->get('config_smtp_timeout');
-				$mail->setTo($this->config->get('config_email'));
-				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender($order_query->row['store_name']);
-				$mail->setSubject($subject);
-				$mail->setText($text);
-				$mail->send();
-				*/
 			}		
 		}
 	}

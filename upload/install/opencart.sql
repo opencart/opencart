@@ -216,6 +216,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (40, 'Cayman Islands', 'KY', 'CYM', '', 0, 1),
 (41, 'Central African Republic', 'CF', 'CAF', '', 0, 1),
 (42, 'Chad', 'TD', 'TCD', '', 0, 1),
+(240, 'Channel Islands', 'CI', 'CHI', '', 0, 1),
 (43, 'Chile', 'CL', 'CHL', '', 0, 1),
 (44, 'China', 'CN', 'CHN', '', 1, 1),
 (45, 'Christmas Island', 'CX', 'CXR', '', 1, 1),
@@ -861,7 +862,8 @@ INSERT INTO `oc_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
 CREATE TABLE `oc_order` (
   `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `invoice_id` int(11) NOT NULL DEFAULT '0',
-  `invoice_prefix` varchar(10) COLLATE utf8_bin NOT NULL,
+  `invoice_prefix` varchar(24) COLLATE utf8_bin NOT NULL,
+  `invoice_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `store_id` int(11) NOT NULL DEFAULT '0',
   `store_name` varchar(64) COLLATE utf8_bin NOT NULL,
   `store_url` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -1575,8 +1577,8 @@ CREATE TABLE `oc_review` (
 
 INSERT INTO `oc_review` (`review_id`, `product_id`, `customer_id`, `author`, `text`, `rating`, `status`, `date_added`, `date_modified`) VALUES
 (58, 42, 0, 'Daniel', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ', 3, 1, '2010-01-02 03:14:24', '0000-00-00 00:00:00'),
-(59, 42, 0, 'Danel', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ', 2, 1, '2010-02-26 22:06:32', '0000-00-00 00:00:00'),
-(60, 47, 0, 'Daniel ', ' test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test', 3, 1, '2010-03-05 21:10:52', '0000-00-00 00:00:00');
+(59, 42, 0, 'Daniel', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ', 2, 1, '2010-02-26 22:06:32', '0000-00-00 00:00:00'),
+(60, 47, 0, 'Daniel', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test', 3, 1, '2010-03-05 21:10:52', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1670,8 +1672,6 @@ INSERT INTO `oc_setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (NULL, 'config', 'config_customer_approval', '0'),
 (NULL, 'config', 'config_customer_price', '0'),
 (NULL, 'config', 'config_customer_group_id', '8'),
-(NULL, 'config', 'config_invoice_prefix', 'IN/'),
-(NULL, 'config', 'config_invoice_id', ''),
 (NULL, 'config', 'config_tax', '1'),
 (NULL, 'config', 'config_weight_class', 'kg'),
 (NULL, 'flat', 'flat_cost', '2'),
@@ -1695,19 +1695,20 @@ INSERT INTO `oc_setting` (`setting_id`, `group`, `key`, `value`) VALUES
 (NULL, 'config', 'config_owner', 'Your Name'),
 (NULL, 'config', 'config_address', 'Address 1'),
 (NULL, 'config', 'config_email', 'webmaster@opencart.com'),
-(NULL, 'config', 'config_url', 'http://localhost/v147rc1/'),
+(NULL, 'config', 'config_url', 'http://localhost/v1494/'),
 (NULL, 'config', 'config_name', 'Your Store'),
 (NULL, 'config', 'config_smtp_port', '25'),
 (NULL, 'config', 'config_smtp_timeout', '5'),
-(NULL, 'config', 'config_alert_mail', '0'),
+(NULL, 'config', 'config_account_mail', '0'),
+(NULL, 'config', 'config_alert_mail', '1'),
 (NULL, 'config', 'config_ssl', '0'),
 (NULL, 'config', 'config_encryption', '12345'),
 (NULL, 'config', 'config_seo_url', '0'),
 (NULL, 'config', 'config_compression', '0'),
 (NULL, 'config', 'config_error_display', '1'),
 (NULL, 'config', 'config_error_log', '1'),
-(NULL, 'config', 'config_invoice_id', '001'),
-(NULL, 'config', 'config_invoice_prefix', 'INV'),
+(NULL, 'config', 'config_invoice_id', '1'),
+(NULL, 'config', 'config_invoice_prefix', 'INV-2011-00'),
 (NULL, 'config', 'config_review', '1'),
 (NULL, 'latest', 'latest_limit', '8'),
 (NULL, 'latest', 'latest_position', 'home'),
@@ -5932,8 +5933,12 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (NULL, 222, 'FER', 'County Fermanagh', 1),
 (NULL, 222, 'LDY', 'County Londonderry', 1),
 (NULL, 222, 'TYR', 'County Tyrone', 1),
-(NULL, 222, 'CMA', 'Cumbria', 1);
-
+(NULL, 222, 'CMA', 'Cumbria', 1),
+(NULL, 240, 'ALD', 'Alderney', 1),
+(NULL, 240, 'GUE', 'Guernsey', 1),
+(NULL, 240, 'HRM', 'Herm', 1),
+(NULL, 240, 'JER', 'Jersey', 1),
+(NULL, 240, 'SRK', 'Sark', 1);
 -- --------------------------------------------------------
 
 --

@@ -33,25 +33,21 @@ $_['text_international_7']  = 'Global Express Guaranteed Non-Document Non-Rectan
 $_['text_international_8']  = 'Priority Mail Flat Rate Envelope';
 $_['text_international_9']  = 'Priority Mail Flat Rate Box';
 $_['text_international_10'] = 'Express Mail International Flat Rate Envelope';
-//$_['text_international_11'] = 'Priority Mail Large Flat Rate Box';
 $_['text_international_11'] = 'Priority Mail Flat Rate Large Box';
 $_['text_international_12'] = 'Global Express Guaranteed Envelope';
 $_['text_international_13'] = 'First Class Mail International Letters';
 $_['text_international_14'] = 'First Class Mail International Flats';
 $_['text_international_15'] = 'First Class Mail International Parcels';
-//$_['text_international_16'] = 'Priority Mail Small Flat Rate Box';
 $_['text_international_16'] = 'Priority Mail Flat Rate Small Box';
 $_['text_international_21'] = 'Postcards';
 $_['text_regular']          = 'Regular';
 $_['text_large']            = 'Large';
-$_['text_oversize']         = 'Oversize';
 $_['text_rectangular']      = 'Rectangular';
 $_['text_non_rectangular']  = 'Non Rectangular';
 $_['text_variable']         = 'Variable';
 
 // Entry
 $_['entry_user_id']         = 'User ID:';
-$_['entry_password']        = 'Password:';
 $_['entry_postcode']        = 'Zip Code:';
 $_['entry_domestic']        = 'Domestic Services:';
 $_['entry_international']   = 'International Services:';
@@ -67,6 +63,7 @@ $_['entry_tax']             = 'Tax Class:';
 $_['entry_geo_zone']        = 'Geo Zone:';
 $_['entry_status']          = 'Status:';
 $_['entry_sort_order']      = 'Sort Order:';
+$_['entry_debug']      		= 'Debug Mode:<br /><span class="help">Saves send/recv data to the system log</span>';
 
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify United States Postal Service!';

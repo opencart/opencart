@@ -392,7 +392,7 @@ class ModelShippingUsps extends Model {
 									$cost = $service->getElementsByTagName('Postage')->item(0)->nodeValue;
 
 									$quote_data[$id] = array(
-										'id'           => 'usps.' . $id,
+										'code'         => 'usps.' . $id,
 										'title'        => $title,
 										'cost'         => $this->currency->convert($cost, 'USD', $this->config->get('config_currency')),
 										'tax_class_id' => $this->config->get('usps_tax_class_id'),

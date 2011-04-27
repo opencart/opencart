@@ -269,6 +269,8 @@ label {
 	float: right;
 	width: 298px;
 	margin-bottom: 4px;
+	position: relative;
+	z-index: 2000;
 }
 #header #search input {
 	background: #FFF;

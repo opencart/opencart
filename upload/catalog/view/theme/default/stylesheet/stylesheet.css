@@ -943,7 +943,7 @@ a.button:hover span {
 	float: left;
 	margin-right: 15px;
 }
-.product-info > .right {
+.product-info > .left + .right {
 	margin-left: 265px;
 }
 .product-info .image {

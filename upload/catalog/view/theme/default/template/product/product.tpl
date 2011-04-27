@@ -7,8 +7,11 @@
   </div>
   <h1><?php echo $heading_title; ?></h1>
   <div class="product-info">
+    <?php if ($thumb || $images) { ?>
     <div class="left">
+      <?php if ($thumb) { ?>
       <div class="image"><a href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>" class="thickbox" rel="gallery"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" id="image" /></a></div>
+      <?php } ?>
       <?php if ($images) { ?>
       <div class="image-additional">
         <?php foreach ($images as $image) { ?>
@@ -17,6 +20,7 @@
       </div>
       <?php } ?>
     </div>
+    <?php } ?>
     <div class="right">
       <div class="description">
         <?php if ($manufacturer) { ?>

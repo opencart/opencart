@@ -26,10 +26,10 @@
               <td><b><?php echo $text_date_added; ?></b></td>
               <td><?php echo $order['date_added']; ?></td>
             </tr>
-            <?php if ($order['invoice_id']) { ?>
+            <?php if ($order['invoice_no']) { ?>
             <tr>
-              <td><b><?php echo $text_invoice_id; ?></b></td>
-              <td><?php echo $order['invoice_id']; ?></td>
+              <td><b><?php echo $text_invoice_no; ?></b></td>
+              <td><?php echo $order['invoice_no']; ?></td>
             </tr>
 			<?php if ($order['invoice_date']) { ?>
 			<tr>
@@ -52,11 +52,9 @@
       <td width="50%"><b><?php echo $text_ship_to; ?></b></td>
     </tr>
     <tr>
-      <td>
-        <?php echo $order['payment_address']; ?><br/>
-        <?php echo $order['customer_email']; ?><br/>
-        <?php echo $order['customer_telephone']; ?>
-      </td>
+      <td><?php echo $order['payment_address']; ?><br/>
+        <?php echo $order['email']; ?><br/>
+        <?php echo $order['telephone']; ?></td>
       <td><?php echo$order['shipping_address']; ?></td>
     </tr>
   </table>
@@ -73,7 +71,7 @@
       <td><?php echo $product['name']; ?>
         <?php foreach ($product['option'] as $option) { ?>
         <br />
-        &nbsp;<small> - <?php echo $option['name']; ?> <?php echo $option['value']; ?></small>
+        &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
         <?php } ?></td>
       <td><?php echo $product['model']; ?></td>
       <td align="right"><?php echo $product['quantity']; ?></td>
@@ -88,6 +86,7 @@
     </tr>
     <?php } ?>
   </table>
+  <?php if ($order['comment']) { ?>
   <table class="product">
     <tr class="heading">
       <td><b><?php echo $column_comment; ?></b></td>
@@ -96,6 +95,7 @@
       <td><?php echo $order['comment']; ?></td>
     </tr>
   </table>
+  <?php } ?>
 </div>
 <?php } ?>
 </body>

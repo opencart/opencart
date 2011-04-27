@@ -1,6 +1,6 @@
-<b style="margin-bottom: 3px; display: block;"><?php echo $text_credit_card; ?></b>
-<div id="authorizenet" style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
-  <table width="100%">
+<h2><?php echo $text_credit_card; ?></h2>
+<div id="payment">
+  <table class="form">
     <tr>
       <td><?php echo $entry_cc_owner; ?></td>
       <td><input type="text" name="cc_owner" value="" /></td>
@@ -26,42 +26,37 @@
     <tr>
       <td><?php echo $entry_cc_cvv2; ?></td>
       <td><input type="text" name="cc_cvv2" value="" size="3" /></td>
-    </tr> 
-  </table>
-</div>
-<div class="buttons">
-  <table>
-    <tr>
-      <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
-      <td align="right"><a onclick="confirmSubmit();" id="authorizenet_button" class="button"><span><?php echo $button_confirm; ?></span></a></td>
     </tr>
   </table>
 </div>
+<div class="buttons">
+  <div class="right"><a id="button-confirm" class="button"><span><?php echo $button_confirm; ?></span></a></div>
+</div>
 <script type="text/javascript"><!--
-function confirmSubmit() {
+$('#button-confirm').bind('click', function() {
 	$.ajax({
 		type: 'POST',
 		url: 'index.php?route=payment/authorizenet_aim/send',
 		data: $('#authorizenet :input'),
 		dataType: 'json',		
 		beforeSend: function() {
-			$('#authorizenet_button').attr('disabled', 'disabled');
+			$('#button-confirm').attr('disabled', 'disabled');
 			
-			$('#authorizenet').before('<div class="wait"><img src="catalog/view/theme/default/image/loading_1.gif" alt="" /> <?php echo $text_wait; ?></div>');
+			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		success: function(data) {
 			if (data.error) {
 				alert(data.error);
 				
-				$('#authorizenet_button').attr('disabled', '');
+				$('#button-confirm').attr('disabled', '');
 			}
 			
-			$('.wait').remove();
+			$('.attention').remove();
 			
 			if (data.success) {
 				location = data.success;
 			}
 		}
 	});
-}
+});
 //--></script>

@@ -3,7 +3,7 @@ class ControllerCommonHome extends Controller {
 	public function index() {
     	$this->load->language('common/home');
 	 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
 		
@@ -15,9 +15,9 @@ class ControllerCommonHome extends Controller {
 		$this->data['text_total_order'] = $this->language->get('text_total_order');
 		$this->data['text_total_customer'] = $this->language->get('text_total_customer');
 		$this->data['text_total_customer_approval'] = $this->language->get('text_total_customer_approval');
-		$this->data['text_total_product'] = $this->language->get('text_total_product');
-		$this->data['text_total_review'] = $this->language->get('text_total_review');
 		$this->data['text_total_review_approval'] = $this->language->get('text_total_review_approval');
+		$this->data['text_total_affiliate'] = $this->language->get('text_total_affiliate');
+		$this->data['text_total_affiliate_approval'] = $this->language->get('text_total_affiliate_approval');
 		$this->data['text_day'] = $this->language->get('text_day');
 		$this->data['text_week'] = $this->language->get('text_week');
 		$this->data['text_month'] = $this->language->get('text_month');
@@ -25,7 +25,7 @@ class ControllerCommonHome extends Controller {
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 
 		$this->data['column_order'] = $this->language->get('column_order');
-		$this->data['column_name'] = $this->language->get('column_name');
+		$this->data['column_customer'] = $this->language->get('column_customer');
 		$this->data['column_status'] = $this->language->get('column_status');
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
 		$this->data['column_total'] = $this->language->get('column_total');
@@ -35,12 +35,12 @@ class ControllerCommonHome extends Controller {
 		
 		$this->data['entry_range'] = $this->language->get('entry_range');
 
-		$this->document->breadcrumbs = array();
+		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
    		);
 		
 		$this->data['token'] = $this->session->data['token'];
@@ -56,15 +56,16 @@ class ControllerCommonHome extends Controller {
 		$this->data['total_customer'] = $this->model_sale_customer->getTotalCustomers();
 		$this->data['total_customer_approval'] = $this->model_sale_customer->getTotalCustomersAwaitingApproval();
 		
-		$this->load->model('catalog/product');
-		
-		$this->data['total_product'] = $this->model_catalog_product->getTotalProducts();
-		
 		$this->load->model('catalog/review');
 		
 		$this->data['total_review'] = $this->model_catalog_review->getTotalReviews();
 		$this->data['total_review_approval'] = $this->model_catalog_review->getTotalReviewsAwaitingApproval();
 		
+		$this->load->model('sale/affiliate');
+		
+		$this->data['total_affiliate'] = $this->model_sale_affiliate->getTotalAffiliates();
+		$this->data['total_affiliate_approval'] = $this->model_sale_affiliate->getTotalAffiliatesAwaitingApproval();
+				
 		$this->data['orders'] = array(); 
 		
 		$data = array(
@@ -80,16 +81,16 @@ class ControllerCommonHome extends Controller {
 			$action = array();
 			 
 			$action[] = array(
-				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=sale/order/update&token=' . $this->session->data['token'] . '&order_id=' . $result['order_id']
+				'text' => $this->language->get('text_view'),
+				'href' => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'], 'SSL')
 			);
 					
 			$this->data['orders'][] = array(
 				'order_id'   => $result['order_id'],
-				'name'       => $result['name'],
+				'customer'   => $result['customer'],
 				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'total'      => $this->currency->format($result['total'], $result['currency'], $result['value']),
+				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'action'     => $action
 			);
 		}
@@ -102,11 +103,11 @@ class ControllerCommonHome extends Controller {
 		
 		$this->template = 'common/home.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				
+		$this->response->setOutput($this->render());
   	}
 	
 	public function chart() {
@@ -260,10 +261,8 @@ class ControllerCommonHome extends Controller {
 				
 			$ignore = array_merge($ignore, $config_ignore);
 						
-			if (!in_array($route, $ignore)) {
-				if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
-					return $this->forward('common/login');
-				}
+			if (!in_array($route, $ignore) && (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token']))) {
+				return $this->forward('common/login');
 			}
 		} else {
 			if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
@@ -295,12 +294,10 @@ class ControllerCommonHome extends Controller {
 				'error/token'		
 			);			
 						
-			if (!in_array($route, $ignore)) {
-				if (!$this->user->hasPermission('access', $route)) {
-					return $this->forward('error/permission');
-				}
+			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
+				return $this->forward('error/permission');
 			}
 		}
-	}
+	}	
 }
 ?>

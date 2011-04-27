@@ -5,7 +5,7 @@ class ControllerCommonLogout extends Controller {
  
  		unset($this->session->data['token']);
 
-		$this->redirect(HTTPS_SERVER . 'index.php?route=common/login');
+		$this->redirect($this->url->link('common/login'));
   	}
 }  
 ?>

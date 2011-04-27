@@ -1,6 +1,6 @@
-<b style="margin-bottom: 3px; display: block;"><?php echo $text_credit_card; ?></b>
-<div id="perpetual" style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;">
-  <table width="100%">
+<h2><?php echo $text_credit_card; ?></h2>
+<div id="payment">
+  <table class="form">
     <tr>
       <td><?php echo $entry_cc_number; ?></td>
       <td><input type="text" name="cc_number" value="" /></td>
@@ -19,7 +19,7 @@
           <?php } ?>
         </select>
         <?php echo $text_start_date; ?></td>
-    </tr>    
+    </tr>
     <tr>
       <td><?php echo $entry_cc_expire_date; ?></td>
       <td><select name="cc_expire_date_month">
@@ -46,38 +46,33 @@
   </table>
 </div>
 <div class="buttons">
-  <table>
-    <tr>
-      <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
-      <td align="right"><a onclick="confirmSubmit();" id="perpetual_button" class="button"><span><?php echo $button_confirm; ?></span></a></td>
-    </tr>
-  </table>
+  <div class="right"><a id="button-confirm" class="button"><span><?php echo $button_confirm; ?></span></a></div>
 </div>
 <script type="text/javascript"><!--
-function confirmSubmit() {
+$('#button-confirm').bind('click', function() {
 	$.ajax({
 		type: 'POST',
 		url: 'index.php?route=payment/perpetual_payments/send',
-		data: $('#perpetual :input'),
+		data: $('#payment :input'),
 		dataType: 'json',		
 		beforeSend: function() {
-			$('#perpetual_button').attr('disabled', 'disabled');
+			$('#button-confirm').attr('disabled', 'disabled');
 			
-			$('#perpetual').before('<div class="wait"><img src="catalog/view/theme/default/image/loading_1.gif" alt="" /> <?php echo $text_wait; ?></div>');
+			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		success: function(data) {
 			if (data.error) {
 				alert(data.error);
 				
-				$('#perpetual_button').attr('disabled', '');
+				$('#button-confirm').attr('disabled', '');
 			}
 			
-			$('.wait').remove();
+			$('.attention').remove();
 			
 			if (data.success) {
 				location = data.success;
 			}
 		}
 	});
-}
-//--></script>
+});
+//--></script> 

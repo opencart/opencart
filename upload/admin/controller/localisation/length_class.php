@@ -5,7 +5,7 @@ class ControllerLocalisationLengthClass extends Controller {
 	public function index() {
 		$this->load->language('localisation/length_class');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('localisation/length_class');
 		
@@ -15,7 +15,7 @@ class ControllerLocalisationLengthClass extends Controller {
 	public function insert() {
 		$this->load->language('localisation/length_class');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('localisation/length_class');
 		
@@ -26,10 +26,6 @@ class ControllerLocalisationLengthClass extends Controller {
 
 			$url = '';
 			
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -37,8 +33,12 @@ class ControllerLocalisationLengthClass extends Controller {
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . $url);
+			$this->redirect($this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
 		$this->getForm();
@@ -47,7 +47,7 @@ class ControllerLocalisationLengthClass extends Controller {
 	public function update() {
 		$this->load->language('localisation/length_class');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('localisation/length_class');
 		
@@ -58,10 +58,6 @@ class ControllerLocalisationLengthClass extends Controller {
 
 			$url = '';
 			
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -69,8 +65,12 @@ class ControllerLocalisationLengthClass extends Controller {
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . $url);
+			$this->redirect($this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
 		$this->getForm();
@@ -79,7 +79,7 @@ class ControllerLocalisationLengthClass extends Controller {
 	public function delete() {
 		$this->load->language('localisation/length_class');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
  		
 		$this->load->model('localisation/length_class');
 		
@@ -92,10 +92,6 @@ class ControllerLocalisationLengthClass extends Controller {
 			
 			$url = '';
 			
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -103,20 +99,18 @@ class ControllerLocalisationLengthClass extends Controller {
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . $url);
+			$this->redirect($this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
 		$this->getList();
 	}
 
 	private function getList() {
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-		
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -128,13 +122,15 @@ class ControllerLocalisationLengthClass extends Controller {
 		} else {
 			$order = 'ASC';
 		}
-	
+		
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+			
 		$url = '';
 			
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -142,23 +138,27 @@ class ControllerLocalisationLengthClass extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+		
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
-  		$this->document->breadcrumbs = array();
+  		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),       		
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . $url,
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url, 'SSL'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/insert&token=' . $this->session->data['token'] . $url;
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/delete&token=' . $this->session->data['token'] . $url;
+		$this->data['insert'] = $this->url->link('localisation/length_class/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$this->data['delete'] = $this->url->link('localisation/length_class/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		 
 		$this->data['length_classes'] = array();
 		
@@ -178,12 +178,12 @@ class ControllerLocalisationLengthClass extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=localisation/length_class/update&token=' . $this->session->data['token'] . '&length_class_id=' . $result['length_class_id'] . $url
+				'href' => $this->url->link('localisation/length_class/update', 'token=' . $this->session->data['token'] . '&length_class_id=' . $result['length_class_id'] . $url, 'SSL')
 			);
 
 			$this->data['length_classes'][] = array(
 				'length_class_id' => $result['length_class_id'],
-				'title'           => $result['title'] . (($result['unit'] == $this->config->get('config_length_class')) ? $this->language->get('text_default') : NULL),
+				'title'           => $result['title'] . (($result['unit'] == $this->config->get('config_length_class')) ? $this->language->get('text_default') : null),
 				'unit'            => $result['unit'],
 				'value'           => $result['value'],
 				'selected'        => isset($this->request->post['selected']) && in_array($result['length_class_id'], $this->request->post['selected']),
@@ -229,9 +229,9 @@ class ControllerLocalisationLengthClass extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_title'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . '&sort=title' . $url;
-		$this->data['sort_unit'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . '&sort=unit' . $url;
-		$this->data['sort_value'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . '&sort=value' . $url;
+		$this->data['sort_title'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . '&sort=title' . $url, 'SSL');
+		$this->data['sort_unit'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . '&sort=unit' . $url, 'SSL');
+		$this->data['sort_value'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . '&sort=value' . $url, 'SSL');
 		
 		$url = '';
 
@@ -248,20 +248,20 @@ class ControllerLocalisationLengthClass extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . $url . '&page={page}';
+		$pagination->url = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
 		$this->data['pagination'] = $pagination->render();
 		
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-		
+
 		$this->template = 'localisation/length_class_list.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				
+		$this->response->setOutput($this->render());
 	}
 
 	private function getForm() {
@@ -285,20 +285,16 @@ class ControllerLocalisationLengthClass extends Controller {
  		if (isset($this->error['title'])) {
 			$this->data['error_title'] = $this->error['title'];
 		} else {
-			$this->data['error_title'] = '';
+			$this->data['error_title'] = array();
 		}
 
  		if (isset($this->error['unit'])) {
 			$this->data['error_unit'] = $this->error['unit'];
 		} else {
-			$this->data['error_unit'] = '';
+			$this->data['error_unit'] = array();
 		}
 		
 		$url = '';
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -307,28 +303,32 @@ class ControllerLocalisationLengthClass extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+		
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
-  		$this->document->breadcrumbs = array();
+  		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . $url,
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url, 'SSL'),      		
       		'separator' => ' :: '
    		);
 		
 		if (!isset($this->request->get['length_class_id'])) {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/insert&token=' . $this->session->data['token'] . $url;
+			$this->data['action'] = $this->url->link('localisation/length_class/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/length_class/update&token=' . $this->session->data['token'] . '&length_class_id=' . $this->request->get['length_class_id'] . $url;
+			$this->data['action'] = $this->url->link('localisation/length_class/update', 'token=' . $this->session->data['token'] . '&length_class_id=' . $this->request->get['length_class_id'] . $url, 'SSL');
 		}
 
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/length_class&token=' . $this->session->data['token'] . $url;
+		$this->data['cancel'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		if (isset($this->request->get['length_class_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$length_class_info = $this->model_localisation_length_class->getLengthClass($this->request->get['length_class_id']);
@@ -353,14 +353,14 @@ class ControllerLocalisationLengthClass extends Controller {
 		} else {
 			$this->data['value'] = '';
 		}			
-		
+
 		$this->template = 'localisation/length_class_form.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				
+		$this->response->setOutput($this->render());
 	}
 
 	private function validateForm() {
@@ -379,9 +379,9 @@ class ControllerLocalisationLengthClass extends Controller {
 		}
 
 		if (!$this->error) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -407,9 +407,9 @@ class ControllerLocalisationLengthClass extends Controller {
 		}
 
 		if (!$this->error) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 	}	
 }

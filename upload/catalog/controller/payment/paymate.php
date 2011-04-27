@@ -1,8 +1,7 @@
-<?php
+<?php 
 class ControllerPaymentPaymate extends Controller {
 	protected function index() {
     	$this->data['button_confirm'] = $this->language->get('button_confirm');
-		$this->data['button_back'] = $this->language->get('button_back');
 
 		$this->load->model('checkout/order');
 		
@@ -14,7 +13,7 @@ class ControllerPaymentPaymate extends Controller {
 		
 		$encryption = new Encryption($this->config->get('config_encryption'));
 		
-		$this->data['return'] = HTTPS_SERVER . 'index.php?route=payment/paymate/callback&oid=' . base64_encode($encryption->encrypt($order_info['order_id'])) . '&conf=' . base64_encode($encryption->encrypt($order_info['payment_firstname'] . $order_info['payment_lastname']));
+		$this->data['return'] = $this->url->link('payment/paymate/callback', 'oid=' . base64_encode($encryption->encrypt($order_info['order_id'])) . '&conf=' . base64_encode($encryption->encrypt($order_info['payment_firstname'] . $order_info['payment_lastname'])));
 
 		if ($this->config->get('paymate_include_order')) {
 			$this->data['ref'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8') . " (#" . $order_info['order_id'] . ")";
@@ -30,14 +29,14 @@ class ControllerPaymentPaymate extends Controller {
 			'GBP'
 		);
 
-		if (in_array(strtoupper($order_info['currency']), $currency)) {
-			$this->data['currency'] = $order_info['currency'];
-			$this->data['amt'] = $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE); 
+		if (in_array(strtoupper($order_info['currency_code']), $currency)) {
+			$this->data['currency'] = $order_info['currency_code'];
+			$this->data['amt'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false); 
 		} else {
 			for ($findcur = 0; $findcur < sizeof($currency); $findcur++) {
 				if ($this->currency->getValue($currency[$findcur])) {
 					$this->data['currency'] = $currency[$findcur];
-					$this->data['amt'] = $this->currency->format($order_info['total'], $currency[$findcur], '',FALSE);
+					$this->data['amt'] = $this->currency->format($order_info['total'], $currency[$findcur], '',false);
 					break;
 				} elseif ($findcur == (sizeof($currency) - 1)){
 					$this->data['currency'] = 'AUD';
@@ -55,14 +54,10 @@ class ControllerPaymentPaymate extends Controller {
 		$this->data['regindi_sub'] = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');
 		$this->data['regindi_state'] = html_entity_decode($order_info['payment_zone'], ENT_QUOTES, 'UTF-8');
 		$this->data['regindi_pcode'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
-		$this->data['pmt_country'] = $order_info['iso_code_2'];
+		$this->data['pmt_country'] = $order_info['payment_iso_code_2'];
 
 		$this->data['action'] = 'https://www.paymate.com/PayMate/ExpressPayment';
-
-		$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		
-		$this->id = 'payment';
-
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paymate.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/paymate.tpl';
 		} else {
@@ -107,19 +102,28 @@ class ControllerPaymentPaymate extends Controller {
 
 		if ($error != '') {
 			$this->data['heading_title'] = $this->language->get('text_failed');
-			$this->data['text_message'] = sprintf($this->language->get('text_failed_message'), $error, HTTP_SERVER . 'index.php?route=information/contact');
+			$this->data['text_message'] = sprintf($this->language->get('text_failed_message'), $error, $this->url->link('information/contact'));
 			$this->data['button_continue'] = $this->language->get('button_continue');
-			$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
+			$this->data['continue'] = $this->url->link('common/home');
 			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/common/success.tpl';
 			} else {
 				$this->template = 'default/template/common/success.tpl';
 			}
-
-			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+			
+			$this->children = array(
+				'common/column_left',
+				'common/column_right',
+				'common/content_top',
+				'common/content_bottom',
+				'common/footer',
+				'common/header'
+			);
+			
+			$this->response->setOutput($this->render());
 		} else {
-			$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/success');
+			$this->redirect($this->url->link('checkout/success'));
 		}
 	}
 }

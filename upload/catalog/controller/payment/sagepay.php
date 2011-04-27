@@ -4,7 +4,6 @@ class ControllerPaymentSagepay extends Controller {
 		$this->language->load('payment/sagepay');
 		
 		$this->data['button_confirm'] = $this->language->get('button_confirm');
-		$this->data['button_back'] = $this->language->get('button_back');
 		
 		if ($this->config->get('sagepay_test') == 'live') {
     		$this->data['action'] = 'https://live.sagepay.com/gateway/service/vspform-register.vsp';
@@ -25,16 +24,11 @@ class ControllerPaymentSagepay extends Controller {
 		
 		$data['VendorTxCode'] = $this->session->data['order_id'];
 		$data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
-		$data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
-		$data['Currency'] = $order_info['currency'];
+		$data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
+		$data['Currency'] = $order_info['currency_code'];
 		$data['Description'] = sprintf($this->language->get('text_description'), date($this->language->get('date_format_short')), $this->session->data['order_id']);
-		$data['SuccessURL'] = HTTPS_SERVER . 'index.php?route=payment/sagepay/success&order_id=' . $this->session->data['order_id'];
-		
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$data['FailureURL'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
-		} else {
-			$data['FailureURL'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
-		}
+		$data['SuccessURL'] = $this->url->link('payment/sagepay/success', 'order_id=' . $this->session->data['order_id']);
+		$data['FailureURL'] = $this->url->link('checkout/checkout', '', 'SSL');
 		
 		$data['CustomerName'] = html_entity_decode($order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
 		$data['SendEMail'] = '1';
@@ -116,14 +110,6 @@ class ControllerPaymentSagepay extends Controller {
 
 		$this->data['crypt'] = base64_encode($this->simpleXor(implode('&', $crypt_data), $password));
 		
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
-		} else {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
-		}
-		
-		$this->id = 'payment';
-
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/sagepay.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/sagepay.tpl';
 		} else {
@@ -142,10 +128,10 @@ class ControllerPaymentSagepay extends Controller {
 			
 			$data = $this->getToken($output);
 		
-			if ($data) {
+			if ($data && is_array($data)) {
 				$this->load->model('checkout/order');
 		
-				$this->model_checkout_order->confirm($this->request->get['order_id'], $this->config->get('sagepay_order_status_id'));
+				$this->model_checkout_order->confirm($this->request->get['order_id'], $this->config->get('config_order_status_id'));
 
 				$message = '';
 		
@@ -189,9 +175,13 @@ class ControllerPaymentSagepay extends Controller {
 					$message .= 'Last4Digits: ' . $data['Last4Digits'] . "\n";
 				}
 				
-				$this->model_checkout_order->update($this->request->get['order_id'], $this->config->get('sagepay_order_status_id'), $message, FALSE);
-
-				$this->redirect(HTTP_SERVER . 'index.php?route=checkout/success');
+				if ($data['Status'] == 'OK') {
+					$this->model_checkout_order->update($this->request->get['order_id'], $this->config->get('sagepay_order_status_id'), $message, false);
+				} else {
+					$this->model_checkout_order->update($this->request->get['order_id'], $this->config->get('config_order_status_id'), $message, false);
+				}
+				
+				$this->redirect($this->url->link('checkout/success'));
 			}
 		}
 	}	 

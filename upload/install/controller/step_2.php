@@ -24,14 +24,13 @@ class ControllerStep2 extends Controller {
 		$this->data['image_cache'] = DIR_OPENCART . 'image/cache';
 		$this->data['image_data'] = DIR_OPENCART . 'image/data';
 		$this->data['download'] = DIR_OPENCART . 'download';
+		
+		$this->template = 'step_2.tpl';
 
 		$this->children = array(
 			'header',
 			'footer'
-		);
-		
-		$this->template = 'step_2.tpl';
-		
+		);		
 		$this->response->setOutput($this->render(TRUE));
 	}
 	

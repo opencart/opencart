@@ -9,12 +9,14 @@ final class Request {
   	public function __construct() {
 		$_GET = $this->clean($_GET);
 		$_POST = $this->clean($_POST);
+		$_REQUEST = $this->clean($_REQUEST);
 		$_COOKIE = $this->clean($_COOKIE);
 		$_FILES = $this->clean($_FILES);
 		$_SERVER = $this->clean($_SERVER);
 		
 		$this->get = $_GET;
 		$this->post = $_POST;
+		$this->request = $_REQUEST;
 		$this->cookie = $_COOKIE;
 		$this->files = $_FILES;
 		$this->server = $_SERVER;
@@ -28,7 +30,7 @@ final class Request {
 	    		$data[$this->clean($key)] = $this->clean($value);
 	  		}
 		} else { 
-	  		$data = htmlspecialchars($data, ENT_COMPAT, 'UTF-8');
+	  		$data = htmlspecialchars($data, ENT_COMPAT);
 		}
 
 		return $data;

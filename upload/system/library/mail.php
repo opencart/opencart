@@ -94,8 +94,6 @@ final class Mail {
 		}
 		
 		$header .= 'Date: ' . date("D, d M Y H:i:s O") . $this->newline;
-		//$header .= 'From: "' . $this->sender . '" <' . $this->from . '>' . $this->newline;
-		//$header .= 'From: ' . $this->sender . '<' . $this->from . '>' . $this->newline;
 		$header .= 'From: ' . '=?UTF-8?B?'.base64_encode($this->sender).'?=' . '<' . $this->from . '>' . $this->newline;
 		$header .= 'Reply-To: ' . $this->sender . '<' . $this->from . '>' . $this->newline;
 		$header .= 'Return-Path: ' . $this->from . $this->newline;
@@ -150,9 +148,9 @@ final class Mail {
 			ini_set('sendmail_from', $this->from);
 
 			if ($this->parameter) {
-				mail($to, '=?UTF-8?B?'.base64_encode($this->subject).'?=', $message, $header, $this->parameter);
+				mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header, $this->parameter);
 			} else {
-				mail($to, '=?UTF-8?B?'.base64_encode($this->subject).'?=', $message, $header);
+				mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header);
 			}
 
 		} elseif ($this->protocol == 'smtp') {
@@ -340,8 +338,25 @@ final class Mail {
 				if (substr($reply, 0, 3) != 354) {
 					error_log('Error: DATA not accepted from server!');
 				}
-
-				fputs($handle, $header . $message . $this->crlf);
+            	
+				// According to rfc 821 we should not send more than 1000 including the CRLF
+				$message = str_replace("\r\n", "\n",  $header . $message);
+				$message = str_replace("\r", "\n", $message);
+				
+				$lines = explode("\n", $message);
+				
+				foreach ($lines as $line) {
+					$results = str_split($line, 998);
+					
+					foreach ($results as $result) {
+						if (substr(PHP_OS, 0, 3) != 'WIN') {
+							fputs($handle, $result . $this->crlf);
+						} else {
+							fputs($handle, str_replace("\n", "\r\n", $result) . $this->crlf);
+						}							
+					}
+				}
+				
 				fputs($handle, '.' . $this->crlf);
 
 				$reply = '';
@@ -357,7 +372,7 @@ final class Mail {
 				if (substr($reply, 0, 3) != 250) {
 					error_log('Error: DATA not accepted from server!');
 				}
-
+				
 				fputs($handle, 'QUIT' . $this->crlf);
 
 				$reply = '';

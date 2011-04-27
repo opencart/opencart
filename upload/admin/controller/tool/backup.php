@@ -5,7 +5,7 @@ class ControllerToolBackup extends Controller {
 	public function index() {		
 		$this->load->language('tool/backup');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('tool/backup');
 				
@@ -21,7 +21,7 @@ class ControllerToolBackup extends Controller {
 				
 				$this->session->data['success'] = $this->language->get('text_success');
 				
-				$this->redirect(HTTPS_SERVER . 'index.php?route=tool/backup&token=' . $this->session->data['token']);
+				$this->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL'));
 			} else {
 				$this->error['warning'] = $this->language->get('error_empty');
 			}
@@ -54,35 +54,35 @@ class ControllerToolBackup extends Controller {
 			$this->data['success'] = '';
 		}
 		
-  		$this->document->breadcrumbs = array();
+  		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),     		
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=tool/backup&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['restore'] = HTTPS_SERVER . 'index.php?route=tool/backup&token=' . $this->session->data['token'];
+		$this->data['restore'] = $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL');
 
-		$this->data['backup'] = HTTPS_SERVER . 'index.php?route=tool/backup/backup&token=' . $this->session->data['token'];
+		$this->data['backup'] = $this->url->link('tool/backup/backup', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->load->model('tool/backup');
 			
 		$this->data['tables'] = $this->model_tool_backup->getTables();
-		
+
 		$this->template = 'tool/backup.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				
+		$this->response->setOutput($this->render());
 	}
 	
 	public function backup() {
@@ -108,9 +108,9 @@ class ControllerToolBackup extends Controller {
 		}
 		
 		if (!$this->error) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}		
 	}
 }

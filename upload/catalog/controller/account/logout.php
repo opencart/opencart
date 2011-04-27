@@ -17,30 +17,30 @@ class ControllerAccountLogout extends Controller {
 			
 			$this->tax->setZone($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 			
-      		$this->redirect(HTTPS_SERVER . 'index.php?route=account/logout');
+      		$this->redirect($this->url->link('account/logout', '', 'SSL'));
     	}
  
     	$this->language->load('account/logout');
 		
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
       	
-		$this->document->breadcrumbs = array();
+		$this->data['breadcrumbs'] = array();
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_home'),
-        	'separator' => FALSE
+			'href'      => $this->url->link('common/home'),        	
+        	'separator' => false
       	);
       	
-		$this->document->breadcrumbs[] = array(
-        	'href'      => HTTPS_SERVER . 'index.php?route=account/account',
+		$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_account'),
+			'href'      => $this->url->link('account/account', '', 'SSL'),       	
         	'separator' => $this->language->get('text_separator')
       	);
 		
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTPS_SERVER . 'index.php?route=account/logout',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_logout'),
+			'href'      => $this->url->link('account/logout', '', 'SSL'),
         	'separator' => $this->language->get('text_separator')
       	);	
 		
@@ -50,8 +50,8 @@ class ControllerAccountLogout extends Controller {
 
     	$this->data['button_continue'] = $this->language->get('button_continue');
 
-    	$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
-
+    	$this->data['continue'] = $this->url->link('common/home');
+		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/common/success.tpl';
 		} else {
@@ -59,13 +59,15 @@ class ControllerAccountLogout extends Controller {
 		}
 		
 		$this->children = array(
-			'common/column_right',
-			'common/footer',
 			'common/column_left',
-			'common/header'
+			'common/column_right',
+			'common/content_top',
+			'common/content_bottom',
+			'common/footer',
+			'common/header'	
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));	
+						
+		$this->response->setOutput($this->render());	
   	}
 }
 ?>

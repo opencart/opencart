@@ -1,4 +1,4 @@
-<form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="get" id="checkout">
+<form action="<?php echo $action; ?>" method="get" id="payment">
   <input type="hidden" name="mid" value="<?php echo $mid; ?>" />
   <input type="hidden" name="amt" value="<?php echo $amt; ?>" />
   <input type="hidden" name="amt_editable" value="N" />
@@ -16,12 +16,7 @@
   <input type="hidden" name="regindi_state" value="<?php echo $regindi_state; ?>" />
   <input type="hidden" name="regindi_pcode" value="<?php echo $regindi_pcode; ?>" />
   <input type="hidden" name="return" value="<?php echo $return; ?>" />
+  <div class="buttons">
+    <div class="right"><a onclick="$('#payment').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></div>
+  </div>
 </form>
-<div class="buttons">
-  <table>
-    <tr>
-      <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
-      <td align="right"><a onclick="$('#checkout').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></td>
-    </tr>
-  </table>
-</div>

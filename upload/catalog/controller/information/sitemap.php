@@ -3,19 +3,19 @@ class ControllerInformationSitemap extends Controller {
 	public function index() {
     	$this->language->load('information/sitemap');
  
-		$this->document->title = $this->language->get('heading_title'); 
+		$this->document->setTitle($this->language->get('heading_title')); 
 
-      	$this->document->breadcrumbs = array();
+      	$this->data['breadcrumbs'] = array();
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_home'),
-        	'separator' => FALSE
+			'href'      => $this->url->link('common/home'),
+        	'separator' => false
       	);
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=information/sitemap',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('information/sitemap'),      	
         	'separator' => $this->language->get('text_separator')
       	);	
 		
@@ -33,24 +33,56 @@ class ControllerInformationSitemap extends Controller {
     	$this->data['text_search'] = $this->language->get('text_search');
     	$this->data['text_information'] = $this->language->get('text_information');
     	$this->data['text_contact'] = $this->language->get('text_contact');
-		
+			
 		$this->load->model('catalog/category');
+		$this->load->model('catalog/product');
 		
-		$this->load->model('tool/seo_url');
+		$this->data['categories'] = array();
+					
+		$categories_1 = $this->model_catalog_category->getCategories(0);
 		
-		$this->data['category'] = $this->getCategories(0);
+		foreach ($categories_1 as $category_1) {
+			$level_2_data = array();
+			
+			$categories_2 = $this->model_catalog_category->getCategories($category_1['category_id']);
+			
+			foreach ($categories_2 as $category_2) {
+				$level_3_data = array();
+				
+				$categories_3 = $this->model_catalog_category->getCategories($category_2['category_id']);
+				
+				foreach ($categories_3 as $category_3) {
+					$level_3_data[] = array(
+						'name' => $category_3['name'],
+						'href' => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'] . '_' . $category_3['category_id'])
+					);
+				}
+				
+				$level_2_data[] = array(
+					'name'     => $category_2['name'],
+					'children' => $level_3_data,
+					'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'])	
+				);					
+			}
+			
+			$this->data['categories'][] = array(
+				'name'     => $category_1['name'],
+				'children' => $level_2_data,
+				'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'])
+			);
+		}
 		
-		$this->data['special'] = HTTPS_SERVER . 'index.php?route=product/special';
-		$this->data['account'] = HTTPS_SERVER . 'index.php?route=account/account';
-    	$this->data['edit'] = HTTPS_SERVER . 'index.php?route=account/edit';
-    	$this->data['password'] = HTTPS_SERVER . 'index.php?route=account/password';
-    	$this->data['address'] = HTTPS_SERVER . 'index.php?route=account/address';
-    	$this->data['history'] = HTTPS_SERVER . 'index.php?route=account/history';
-    	$this->data['download'] = HTTPS_SERVER . 'index.php?route=account/download';
-    	$this->data['cart'] = HTTP_SERVER . 'index.php?route=checkout/cart';
-    	$this->data['checkout'] = HTTPS_SERVER . 'index.php?route=checkout/shipping';
-    	$this->data['search'] = HTTP_SERVER . 'index.php?route=product/search';
-    	$this->data['contact'] = HTTP_SERVER . 'index.php?route=information/contact';
+		$this->data['special'] = $this->url->link('product/special');
+		$this->data['account'] = $this->url->link('account/account', '', 'SSL');
+    	$this->data['edit'] = $this->url->link('account/edit', '', 'SSL');
+    	$this->data['password'] = $this->url->link('account/password', '', 'SSL');
+    	$this->data['address'] = $this->url->link('account/address', '', 'SSL');
+    	$this->data['history'] = $this->url->link('account/history', '', 'SSL');
+    	$this->data['download'] = $this->url->link('account/download', '', 'SSL');
+    	$this->data['cart'] = $this->url->link('checkout/cart');
+    	$this->data['checkout'] = $this->url->link('checkout/shipping', '', 'SSL');
+    	$this->data['search'] = $this->url->link('product/search');
+    	$this->data['contact'] = $this->url->link('information/contact');
 		
 		$this->load->model('catalog/information');
 		
@@ -59,10 +91,10 @@ class ControllerInformationSitemap extends Controller {
 		foreach ($this->model_catalog_information->getInformations() as $result) {
       		$this->data['informations'][] = array(
         		'title' => $result['title'],
-        		'href'  => $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=information/information&information_id=' . $result['information_id'])
+        		'href'  => $this->url->link('information/information', 'information_id=' . $result['information_id']) 
       		);
     	}
-		
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/information/sitemap.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/information/sitemap.tpl';
 		} else {
@@ -70,45 +102,15 @@ class ControllerInformationSitemap extends Controller {
 		}
 		
 		$this->children = array(
-			'common/column_right',
-			'common/footer',
 			'common/column_left',
+			'common/column_right',
+			'common/content_top',
+			'common/content_bottom',
+			'common/footer',
 			'common/header'
 		);
-		
- 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		
+				
+ 		$this->response->setOutput($this->render());		
 	}
-	
-	protected function getCategories($parent_id, $current_path = '') {
-		$output = '';
-		
-		$results = $this->model_catalog_category->getCategories($parent_id);
-		
-		if ($results) {
-			$output .= '<ul>';
-    	}
-		
-		foreach ($results as $result) {	
-			if (!$current_path) {
-				$new_path = $result['category_id'];
-			} else {
-				$new_path = $current_path . '_' . $result['category_id'];
-			}
-			
-			$output .= '<li>';
-			
-			$output .= '<a href="' . $this->model_tool_seo_url->rewrite(HTTP_SERVER . 'index.php?route=product/category&path=' . $new_path)  . '">' . $result['name'] . '</a>';
-			
-        	$output .= $this->getCategories($result['category_id'], $new_path);
-        
-        	$output .= '</li>'; 
-		}
- 
-		if ($results) {
-			$output .= '</ul>';
-		}
-		
-		return $output;
-	}	
 }
 ?>

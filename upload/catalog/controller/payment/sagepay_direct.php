@@ -17,7 +17,6 @@ class ControllerPaymentSagepayDirect extends Controller {
 		$this->data['entry_cc_issue'] = $this->language->get('entry_cc_issue');
 		
 		$this->data['button_confirm'] = $this->language->get('button_confirm');
-		$this->data['button_back'] = $this->language->get('button_back');
 		
 		$this->data['cards'] = array();
 
@@ -95,14 +94,6 @@ class ControllerPaymentSagepayDirect extends Controller {
 			);
 		}
 		
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
-		} else {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
-		}
-		
-		$this->id = 'payment';
-
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/sagepay_direct.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/sagepay_direct.tpl';
 		} else {
@@ -131,7 +122,7 @@ class ControllerPaymentSagepayDirect extends Controller {
         $data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
         $data['Vendor'] = $this->config->get('sagepay_direct_vendor');
 		$data['VendorTxCode'] = $this->session->data['order_id'];
-		$data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency'], 1.00000, FALSE);
+		$data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false);
 		$data['Currency'] = $this->currency->getCode();
 		$data['Description'] = substr($this->config->get('config_name'), 0, 100);
 		$data['CardHolder'] = $this->request->post['cc_owner'];
@@ -237,7 +228,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 			$json['ACSURL'] = $data['ACSURL'];
 			$json['MD'] = $data['MD'];
 			$json['PaReq'] = $data['PAReq'];
-			$json['TermUrl'] = HTTPS_SERVER . 'index.php?route=payment/sagepay_direct/callback';
+			$json['TermUrl'] = $this->url->link('payment/sagepay_direct/callback');
 		} elseif ($data['Status'] == 'OK' || $data['Status'] == 'AUTHENTICATED' || $data['Status'] == 'REGISTERED') {
 			$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
 			
@@ -271,9 +262,9 @@ class ControllerPaymentSagepayDirect extends Controller {
 				$message .= 'CAVV: ' . $data['CAVV'] . "\n";
 			}
 			
-			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('sagepay_direct_order_status_id'), $message, FALSE);
+			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('sagepay_direct_order_status_id'), $message, false);
 
-			$json['success'] = HTTPS_SERVER . 'index.php?route=checkout/success'; 			
+			$json['success'] = $this->url->link('checkout/success'); 			
 		} else {
 			$json['error'] = $data['StatusDetail'];
 		}
@@ -355,20 +346,16 @@ class ControllerPaymentSagepayDirect extends Controller {
 					$message .= 'CAVV: ' . $data['CAVV'] . "\n";
 				}
 				
-				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('sagepay_direct_order_status_id'), $message, FALSE);	
+				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('sagepay_direct_order_status_id'), $message, false);	
 				
-				$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/success');
+				$this->redirect($this->url->link('checkout/success'));
 			} else {
 				$this->session->data['error'] = $data['StatusDetail'];
 
-				if ($this->request->get['route'] != 'checkout/guest_step_3') {
-					$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/payment');
-				} else {
-					$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/guest_step_2');
-				}
+				$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 			}
 		} else {
-			$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
+			$this->redirect($this->url->link('account/login', '', 'SSL'));
 		}
 	}
 }

@@ -52,9 +52,9 @@ final class User {
 				}
 			}
 		
-      		return TRUE;
+      		return true;
     	} else {
-      		return FALSE;
+      		return false;
     	}
   	}
 
@@ -69,7 +69,7 @@ final class User {
     	if (isset($this->permission[$key])) {
 	  		return in_array($value, $this->permission[$key]);
 		} else {
-	  		return FALSE;
+	  		return false;
 		}
   	}
   

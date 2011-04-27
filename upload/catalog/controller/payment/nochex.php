@@ -4,7 +4,6 @@
 class ControllerPaymentNochex extends Controller {
 	protected function index() {
     	$this->data['button_confirm']      = $this->language->get('button_confirm');
-		$this->data['button_back']          = $this->language->get('button_back');
 
         $this->data['action']               = 'https://secure.nochex.com/'; // This is a constant for both test and live
 
@@ -19,7 +18,7 @@ class ControllerPaymentNochex extends Controller {
 	   if ($this->config->get('nochex_email') != $this->config->get('nochex_merchant')){ // This MUST be changed on your Nochex account!!!!
             $this->data['merchant_id']      = $this->config->get('nochex_merchant');
         }
-        $this->data['amount']               = $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
+        $this->data['amount']               = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
         // End minimum requirements
 
         $this->data['order_id']             = $this->session->data['order_id'];
@@ -67,19 +66,11 @@ class ControllerPaymentNochex extends Controller {
         //$this->data['footer_html']        = $this->config->get('nochex_footer'); // Send your footer
         // There are more options available if you wish to implement them
 
-        $this->data['success_url']        = HTTPS_SERVER . 'index.php?route=checkout/success';
-        $this->data['cancel_url']         = HTTPS_SERVER . 'index.php?route=checkout/payment';
-        $this->data['declined_url']       = HTTPS_SERVER . 'index.php?route=checkout/failure';
-        //$this->data['callback_url']       = HTTPS_SERVER . 'index.php?route=checkout/payment'; // ???Not sure about this
-
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
-		} else {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
-		}
+        $this->data['success_url']        = $this->url->link('checkout/success');
+        $this->data['cancel_url']         = $this->url->link('checkout/payment', '', 'SSL');
+        $this->data['declined_url']       = $this->url->link('checkout/failure');
+        //$this->data['callback_url']     = $this->url->link('checkout/payment'; // ???Not sure about this
 		
-		$this->id = 'payment';
-
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/nochex.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/nochex.tpl';
 		} else {

@@ -5,7 +5,7 @@ class ControllerLocalisationOrderStatus extends Controller {
   	public function index() {
 		$this->load->language('localisation/order_status');
 	
-    	$this->document->title = $this->language->get('heading_title');
+    	$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('localisation/order_status');
 		
@@ -15,7 +15,7 @@ class ControllerLocalisationOrderStatus extends Controller {
   	public function insert() {
 		$this->load->language('localisation/order_status');
 	
-    	$this->document->title = $this->language->get('heading_title');
+    	$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('localisation/order_status');
 			
@@ -26,10 +26,6 @@ class ControllerLocalisationOrderStatus extends Controller {
 
 			$url = '';
 			
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -37,8 +33,12 @@ class ControllerLocalisationOrderStatus extends Controller {
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
 						
-      		$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/order_status&token=' . $this->session->data['token'] . $url);
+      		$this->redirect($this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 	
     	$this->getForm();
@@ -47,7 +47,7 @@ class ControllerLocalisationOrderStatus extends Controller {
   	public function update() {
 		$this->load->language('localisation/order_status');
 	
-    	$this->document->title = $this->language->get('heading_title');
+    	$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('localisation/order_status');
 		
@@ -58,10 +58,6 @@ class ControllerLocalisationOrderStatus extends Controller {
 
 			$url = '';
 			
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -69,8 +65,12 @@ class ControllerLocalisationOrderStatus extends Controller {
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/order_status&token=' . $this->session->data['token'] . $url);
+			$this->redirect($this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL'));
     	}
 	
     	$this->getForm();
@@ -79,7 +79,7 @@ class ControllerLocalisationOrderStatus extends Controller {
   	public function delete() {
 		$this->load->language('localisation/order_status');
 	
-    	$this->document->title = $this->language->get('heading_title');
+    	$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('localisation/order_status');
 		
@@ -92,10 +92,6 @@ class ControllerLocalisationOrderStatus extends Controller {
 
 			$url = '';
 			
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -103,20 +99,18 @@ class ControllerLocalisationOrderStatus extends Controller {
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=localisation/order_status&token=' . $this->session->data['token'] . $url);
+			$this->redirect($this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL'));
    		}
 	
     	$this->getList();
   	}
     
   	private function getList() {
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-		
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -129,12 +123,14 @@ class ControllerLocalisationOrderStatus extends Controller {
 			$order = 'ASC';
 		}
 		
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+				
 		$url = '';
 			
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -142,23 +138,27 @@ class ControllerLocalisationOrderStatus extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+		
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
-  		$this->document->breadcrumbs = array();
+  		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/order_status&token=' . $this->session->data['token'] . $url,
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL'),
       		'separator' => ' :: '
    		);
 							
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=localisation/order_status/insert&token=' . $this->session->data['token'] . $url;
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=localisation/order_status/delete&token=' . $this->session->data['token'] . $url;	
+		$this->data['insert'] = $this->url->link('localisation/order_status/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$this->data['delete'] = $this->url->link('localisation/order_status/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
 
 		$this->data['order_statuses'] = array();
 
@@ -178,12 +178,12 @@ class ControllerLocalisationOrderStatus extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=localisation/order_status/update&token=' . $this->session->data['token'] . '&order_status_id=' . $result['order_status_id'] . $url
+				'href' => $this->url->link('localisation/order_status/update', 'token=' . $this->session->data['token'] . '&order_status_id=' . $result['order_status_id'] . $url, 'SSL')
 			);
 						
 			$this->data['order_statuses'][] = array(
 				'order_status_id' => $result['order_status_id'],
-				'name'            => $result['name'] . (($result['order_status_id'] == $this->config->get('config_order_status_id')) ? $this->language->get('text_default') : NULL),
+				'name'            => $result['name'] . (($result['order_status_id'] == $this->config->get('config_order_status_id')) ? $this->language->get('text_default') : null),
 				'selected'        => isset($this->request->post['selected']) && in_array($result['order_status_id'], $this->request->post['selected']),
 				'action'          => $action
 			);
@@ -225,7 +225,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=localisation/order_status&token=' . $this->session->data['token'] . '&sort=name' . $url;
+		$this->data['sort_name'] = $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
 		
 		$url = '';
 
@@ -242,32 +242,29 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=localisation/order_status&token=' . $this->session->data['token'] . $url . '&page={page}';
+		$pagination->url = $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
 
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-		
+
 		$this->template = 'localisation/order_status_list.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				
+		$this->response->setOutput($this->render());
   	}
   
   	private function getForm() {
      	$this->data['heading_title'] = $this->language->get('heading_title');
 
     	$this->data['entry_name'] = $this->language->get('entry_name');
-		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
-
-    	$this->data['tab_general'] = $this->language->get('tab_general');
     
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -278,15 +275,11 @@ class ControllerLocalisationOrderStatus extends Controller {
  		if (isset($this->error['name'])) {
 			$this->data['error_name'] = $this->error['name'];
 		} else {
-			$this->data['error_name'] = '';
+			$this->data['error_name'] = array();
 		}
 		
 		$url = '';
 			
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -294,28 +287,32 @@ class ControllerLocalisationOrderStatus extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+		
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
-  		$this->document->breadcrumbs = array();
+  		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
-       		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+   		$this->data['breadcrumbs'][] = array(
+      	 	'text'      => $this->language->get('text_home'),	
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=localisation/order_status&token=' . $this->session->data['token'] . $url,
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL'),
       		'separator' => ' :: '
    		);
 		
 		if (!isset($this->request->get['order_status_id'])) {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/order_status/insert&token=' . $this->session->data['token'] . $url;
+			$this->data['action'] = $this->url->link('localisation/order_status/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=localisation/order_status/update&token=' . $this->session->data['token'] . '&order_status_id=' . $this->request->get['order_status_id'] . $url;
+			$this->data['action'] = $this->url->link('localisation/order_status/update', 'token=' . $this->session->data['token'] . '&order_status_id=' . $this->request->get['order_status_id'] . $url, 'SSL');
 		}
 			
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=localisation/order_status&token=' . $this->session->data['token'] . $url;
+		$this->data['cancel'] = $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		
 		$this->load->model('localisation/language');
 		
@@ -328,14 +325,14 @@ class ControllerLocalisationOrderStatus extends Controller {
 		} else {
 			$this->data['order_status'] = array();
 		}
-		
+
 		$this->template = 'localisation/order_status_form.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));	
+				
+		$this->response->setOutput($this->render());	
   	}
   	
 	private function validateForm() {
@@ -350,9 +347,9 @@ class ControllerLocalisationOrderStatus extends Controller {
     	}
 		
 		if (!$this->error) {
-	  		return TRUE;
+	  		return true;
 		} else {
-	  		return FALSE;
+	  		return false;
 		}
   	}
 
@@ -369,7 +366,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 	  			$this->error['warning'] = $this->language->get('error_default');	
 			}  
 			
-    		if ($this->config->get('config_download_status') == $order_status_id) {
+    		if ($this->config->get('config_download_status_id') == $order_status_id) {
 	  			$this->error['warning'] = $this->language->get('error_download');	
 			}  
 			
@@ -379,7 +376,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 			
-			$order_total = $this->model_sale_order->getOrderHistoryTotalByOrderStatusId($order_status_id);
+			$order_total = $this->model_sale_order->getTotalOrderHistoriesByOrderStatusId($order_status_id);
 		
 			if ($order_total) {
 	  			$this->error['warning'] = sprintf($this->language->get('error_order'), $order_total);	
@@ -387,9 +384,9 @@ class ControllerLocalisationOrderStatus extends Controller {
 	  	}
 		
 		if (!$this->error) { 
-	  		return TRUE;
+	  		return true;
 		} else {
-	  		return FALSE;
+	  		return false;
 		}
   	}	  
 }

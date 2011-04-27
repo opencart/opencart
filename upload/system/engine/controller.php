@@ -2,6 +2,7 @@
 abstract class Controller {
 	protected $registry;	
 	protected $id;
+	protected $layout;
 	protected $template;
 	protected $children = array();
 	protected $data = array();
@@ -23,56 +24,51 @@ abstract class Controller {
 		return new Action($route, $args);
 	}
 
-	protected function redirect($url) {
+	protected function redirect($url, $status = 302) {
+		header('Status: ' . $status);
 		header('Location: ' . str_replace('&amp;', '&', $url));
 		exit();
 	}
 	
-	protected function render($return = FALSE) {
-		foreach ($this->children as $child) {
-			$action = new Action($child);
-			$file   = $action->getFile();
-			$class  = $action->getClass();
-			$method = $action->getMethod();
-			$args   = $action->getArgs();
-		
-			if (file_exists($file)) {
-				require_once($file);
+	protected function getChild($child, $args = array()) {
+		$action = new Action($child, $args);
+		$file = $action->getFile();
+		$class = $action->getClass();
+		$method = $action->getMethod();
+		//$args = $action->getArgs();
+	
+		if (file_exists($file)) {
+			require_once($file);
 
-				$controller = new $class($this->registry);
-				
-				$controller->index();
-				
-				$this->data[$controller->id] = $controller->output;
-			} else {
-				exit('Error: Could not load controller ' . $child . '!');
-			}
-		}
-		
-		if ($return) {
-			return $this->fetch($this->template);
+			$controller = new $class($this->registry);
+			
+			$controller->$method($args);
+			
+			return $controller->output;
 		} else {
-			$this->output = $this->fetch($this->template);
-		}
+			exit('Error: Could not load controller ' . $child . '!');
+		}		
 	}
 	
-	protected function fetch($filename) {
-		$file = DIR_TEMPLATE . $filename;
-    
-		if (file_exists($file)) {
+	protected function render() {
+		foreach ($this->children as $child) {
+			$this->data[basename($child)] = $this->getChild($child);
+		}
+		
+		if (file_exists(DIR_TEMPLATE . $this->template)) {
 			extract($this->data);
 			
       		ob_start();
       
-	  		require($file);
+	  		require(DIR_TEMPLATE . $this->template);
       
-	  		$content = ob_get_contents();
+	  		$this->output = ob_get_contents();
 
       		ob_end_clean();
-
-      		return $content;
+      		
+			return $this->output;
     	} else {
-      		exit('Error: Could not load template ' . $file . '!');
+      		exit('Error: Could not load template ' . DIR_TEMPLATE . $this->template . '!');
     	}
 	}
 }

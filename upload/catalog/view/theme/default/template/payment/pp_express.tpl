@@ -1,4 +1,4 @@
-<form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" id="checkout">
+<form action="<?php echo $action; ?>" method="post" id="payment">
   <input type="hidden" name="cmd" value="_xclick" />
   <input type="hidden" name="business" value="<?php echo $business; ?>" />
   <input type="hidden" name="item_name" value="<?php echo $item_name; ?>" />
@@ -23,21 +23,16 @@
   <input type="hidden" name="paymentaction" value="authorization" />
 </form>
 <div class="buttons">
-  <table>
-    <tr>
-      <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
-      <td align="right"><a onclick="confirmSubmit();" class="button"><span><?php echo $button_confirm; ?></span></a></td>
-    </tr>
-  </table>
+  <div class="right"><a id="button-confirm" class="button"><span><?php echo $button_confirm; ?></span></a></div>   
 </div>
 <script type="text/javascript"><!--
-function confirmSubmit() {
+$('#button-confirm').bind('click', function() {
 	$.ajax({
 		type: 'GET',
 		url: 'index.php?route=payment/pp_express/confirm',
 		success: function() {
-			$('#checkout').submit();
+			$('#payment').submit();
 		}
-	});
-}
+	});	
+});	
 //--></script>

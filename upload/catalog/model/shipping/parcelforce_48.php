@@ -3,18 +3,14 @@ class ModelShippingParcelforce48 extends Model {
 	function getQuote($address) {
 		$this->load->language('shipping/parcelforce_48');
 		
-		if ($this->config->get('parcelforce_48_status')) {
-      		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('parcelforce_48_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
-		
-      		if (!$this->config->get('parcelforce_48_geo_zone_id')) {
-        		$status = TRUE;
-      		} elseif ($query->num_rows) {
-        		$status = TRUE;
-      		} else {
-        		$status = FALSE;
-      		}
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('parcelforce_48_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+	
+		if (!$this->config->get('parcelforce_48_geo_zone_id')) {
+			$status = true;
+		} elseif ($query->num_rows) {
+			$status = true;
 		} else {
-			$status = FALSE;
+			$status = false;
 		}
 		
 		$method_data = array();
@@ -70,7 +66,7 @@ class ModelShippingParcelforce48 extends Model {
 				}	
 				
       			$quote_data['parcelforce_48'] = array(
-        			'id'           => 'parcelforce_48.parcelforce_48',
+        			'code'         => 'parcelforce_48.parcelforce_48',
         			'title'        => $text,
         			'cost'         => $cost,
         			'tax_class_id' => $this->config->get('parcelforce_48_tax_class_id'),
@@ -78,11 +74,11 @@ class ModelShippingParcelforce48 extends Model {
       			);
 
       			$method_data = array(
-        			'id'         => 'parcelforce_48',
+        			'code'       => 'parcelforce_48',
         			'title'      => $this->language->get('text_title'),
         			'quote'      => $quote_data,
 					'sort_order' => $this->config->get('parcelforce_48_sort_order'),
-        			'error'      => FALSE
+        			'error'      => false
       			);
 			}
 		}

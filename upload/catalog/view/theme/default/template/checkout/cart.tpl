@@ -1,86 +1,85 @@
-<?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content">
-  <div class="top">
-    <div class="left"></div>
-    <div class="right"></div>
-    <div class="center">
-      <h1>
-        <?php echo $heading_title; ?>
-        <?php if ($weight) { ?>
-        &nbsp;(<?php echo $weight; ?>)
-        <?php } ?>
-      </h1>
+<?php echo $header; ?>
+<div class="container"><?php echo $column_left; ?><?php echo $column_right; ?>
+  <div id="content"><?php echo $content_top; ?>
+    <div class="breadcrumb">
+      <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+      <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+      <?php } ?>
     </div>
-  </div>
-  <div class="middle">
+    <h1><?php echo $heading_title; ?>
+      <?php if ($weight) { ?>
+      &nbsp;(<?php echo $weight; ?>)
+      <?php } ?>
+    </h1>
+    <?php if ($success) { ?>
+    <div class="success"><?php echo $success; ?></div>
+    <?php } ?>
     <?php if ($error_warning) { ?>
     <div class="warning"><?php echo $error_warning; ?></div>
     <?php } ?>
-    <form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" enctype="multipart/form-data" id="cart">
-      <table class="cart">
-        <tr>
-          <th align="center"><?php echo $column_remove; ?></th>
-          <th align="center"><?php echo $column_image; ?></th>
-          <th align="left"><?php echo $column_name; ?></th>
-          <th align="left"><?php echo $column_model; ?></th>
-          <th align="right"><?php echo $column_quantity; ?></th>
-          <?php if ($display_price) { ?>
-		  <th align="right"><?php echo $column_price; ?></th>
-          <th align="right"><?php echo $column_total; ?></th>
-		  <?php } ?>
-        </tr>
-        <?php $class = 'odd'; ?>
-        <?php foreach ($products as $product) { ?>
-        <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-        <tr class="<?php echo $class; ?>">
-          <td align="center"><input type="checkbox" name="remove[<?php echo $product['key']; ?>]" /></td>
-          <td align="center"><a href="<?php echo str_replace('&', '&amp;', $product['href']); ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" /></a></td>
-          <td align="left" valign="top"><a href="<?php echo str_replace('&', '&amp;', $product['href']); ?>"><?php echo $product['name']; ?></a>
-            <?php if (!$product['stock']) { ?>
-            <span style="color: #FF0000; font-weight: bold;">***</span>
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="basket">
+      <div class="cart-info">
+        <table>
+          <thead>
+            <tr>
+              <td class="remove"><?php echo $column_remove; ?></td>
+              <td class="image"><?php echo $column_image; ?></td>
+              <td class="name"><?php echo $column_name; ?></td>
+              <td class="model"><?php echo $column_model; ?></td>
+              <td class="quantity"><?php echo $column_quantity; ?></td>
+              <td class="price"><?php echo $column_price; ?></td>
+              <td class="total"><?php echo $column_total; ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($products as $product) { ?>
+            <tr>
+              <td class="remove"><input type="checkbox" name="remove[]" value="<?php echo $product['key']; ?>" /></td>
+              <td class="image"><?php if ($product['thumb']) { ?>
+                <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
+                <?php } ?></td>
+              <td class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+                <?php if (!$product['stock']) { ?>
+                <span class="stock">***</span>
+                <?php } ?>
+                <div>
+                  <?php foreach ($product['option'] as $option) { ?>
+                  - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
+                  <?php } ?>
+                </div>
+                <?php if ($product['points']) { ?>
+                <small><?php echo $product['points']; ?></small>
+                <?php } ?></td>
+              <td class="model"><?php echo $product['model']; ?></td>
+              <td class="quantity"><input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="3" /></td>
+              <td class="price"><?php echo $product['price']; ?></td>
+              <td class="total"><?php echo $product['total']; ?></td>
+            </tr>
             <?php } ?>
-            <div>
-              <?php foreach ($product['option'] as $option) { ?>
-              - <small><?php echo $option['name']; ?> <?php echo $option['value']; ?></small><br />
-              <?php } ?>
-            </div></td>
-          <td align="left" valign="top"><?php echo $product['model']; ?></td>
-          <td align="right" valign="top"><input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="3" /></td>
-          <?php if ($display_price) { ?>
-		  <td align="right" valign="top"><?php echo $product['price']; ?></td>
-          <td align="right" valign="top"><?php echo $product['total']; ?></td>
-		  <?php } ?>
-        </tr>
-        <?php } ?>
-      </table>
-	  <?php if ($display_price) { ?>
-	  <div style="width: 100%; display: inline-block;">
-        <table style="float: right; display: inline-block;">
+          </tbody>
+        </table>
+      </div>
+      <div class="cart-module">
+        <div class="left"><?php echo $shipping; ?></div>
+        <div class="right"><?php echo $coupon; ?><?php echo $reward; ?></div>
+      </div>
+      <div class="cart-total">
+        <table>
           <?php foreach ($totals as $total) { ?>
           <tr>
-            <td align="right"><b><?php echo $total['title']; ?></b></td>
-            <td align="right"><?php echo $total['text']; ?></td>
+            <td colspan="5"></td>
+            <td class="right"><b><?php echo $total['title']; ?></b></td>
+            <td class="right"><?php echo $total['text']; ?></td>
           </tr>
           <?php } ?>
         </table>
-        <br />
-      </div>
-	  <?php } ?>
-      <div class="buttons">
-        <table>
-          <tr>
-            <td align="left"><a onclick="$('#cart').submit();" class="button"><span><?php echo $button_update; ?></span></a></td>
-            <td align="center"><a onclick="location = '<?php echo str_replace('&amp;', '&', $continue); ?>'" class="button"><span><?php echo $button_shopping; ?></span></a></td>
-            <td align="right"><a onclick="location = '<?php echo str_replace('&amp;', '&', $checkout); ?>'" class="button"><span><?php echo $button_checkout; ?></span></a></td>
-          </tr>
-        </table>
       </div>
     </form>
-  </div>
-  <div class="bottom">
-    <div class="left"></div>
-    <div class="right"></div>
-    <div class="center"></div>
-  </div>
+    <div class="buttons">
+      <div class="left"><a onclick="$('#basket').submit();" class="button"><span><?php echo $button_update; ?></span></a></div>
+      <div class="right"><a href="<?php echo $checkout; ?>" class="button"><span><?php echo $button_checkout; ?></span></a></div>
+      <div class="center"><a href="<?php echo $continue; ?>" class="button"><span><?php echo $button_shopping; ?></span></a></div>
+    </div>
+    <?php echo $content_bottom; ?></div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

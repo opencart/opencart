@@ -5,7 +5,7 @@ $_['heading_title']      = 'NOCHEX';
 // Text 
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified NOCHEX account details!';
-$_['text_nochex']	     = '<a onclick="window.open(\'https://secure.nochex.com/apply/merchant_info.aspx?partner_id=172198798\');"><img src="view/image/payment/nochex.png" alt="NOCHEX" title="NOCHEX" style="border: 1px solid #EEEEEE;" /><br /><small>Signup</small></a>';
+$_['text_nochex']	     = '<a onclick="window.open(\'https://secure.nochex.com/apply/merchant_info.aspx?partner_id=172198798\');"><img src="view/image/payment/nochex.png" alt="NOCHEX" title="NOCHEX" style="border: 1px solid #EEEEEE;" /><br /></a>';
 $_['text_seller']        = 'Seller / Personal Account';
 $_['text_merchant']      = 'Merchant Account';
       

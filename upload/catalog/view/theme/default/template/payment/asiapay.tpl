@@ -1,4 +1,4 @@
-<form action="<?php echo $action; ?>" method="post" id="checkout">
+<form action="<?php echo $action; ?>" method="post" id="payment">
   <input type="hidden" name="receiver" value="<?php echo $email; ?>" />
   <input type="hidden" name="receiverid" value="<?php echo $receiverid; ?>" />
   <input type="hidden" name="account_id" value="<?php echo $account_id; ?>" />
@@ -15,23 +15,7 @@
   <input type="hidden" name="successurl" value="<?php echo $success; ?>" />
   <input type="hidden" name="cancelurl" value="<?php echo $cancel; ?>" />
   <?php } ?>
+  <div class="buttons">
+    <div class="right"><a onclick="$('#payment').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></div>
+  </div>
 </form>
-<div class="buttons">
-  <table>
-    <tr>
-      <td align="left"><a onclick="location = '<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
-      <td align="right"><a onclick="confirmSubmit();" class="button"><span><?php echo $button_confirm; ?></span></a></td>
-    </tr>
-  </table>
-</div>
-<script type="text/javascript"><!--
-function confirmSubmit() {
-	$.ajax({
-		type: 'GET',
-		url: 'index.php?route=payment/asiapay/confirm',
-		success: function() {
-			$('#checkout').submit();
-		}
-	});
-}
-//--></script>

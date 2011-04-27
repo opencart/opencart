@@ -5,7 +5,7 @@ class ControllerInformationContact extends Controller {
   	public function index() {
 		$this->language->load('information/contact');
 
-    	$this->document->title = $this->language->get('heading_title');  
+    	$this->document->setTitle($this->language->get('heading_title'));  
 	 
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$mail = new Mail();
@@ -23,26 +23,28 @@ class ControllerInformationContact extends Controller {
 	  		$mail->setText(strip_tags(html_entity_decode($this->request->post['enquiry'], ENT_QUOTES, 'UTF-8')));
       		$mail->send();
 
-	  		$this->redirect(HTTPS_SERVER . 'index.php?route=information/contact/success');
+	  		$this->redirect($this->url->link('information/contact/success'));
     	}
 
-      	$this->document->breadcrumbs = array();
+      	$this->data['breadcrumbs'] = array();
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_home'),
-        	'separator' => FALSE
+			'href'      => $this->url->link('common/home'),        	
+        	'separator' => false
       	);
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=information/contact',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('information/contact'),
         	'separator' => $this->language->get('text_separator')
       	);	
 			
     	$this->data['heading_title'] = $this->language->get('heading_title');
 
-    	$this->data['text_address'] = $this->language->get('text_address');
+    	$this->data['text_location'] = $this->language->get('text_location');
+		$this->data['text_contact'] = $this->language->get('text_contact');
+		$this->data['text_address'] = $this->language->get('text_address');
     	$this->data['text_telephone'] = $this->language->get('text_telephone');
     	$this->data['text_fax'] = $this->language->get('text_fax');
 
@@ -77,7 +79,7 @@ class ControllerInformationContact extends Controller {
 
     	$this->data['button_continue'] = $this->language->get('button_continue');
     
-		$this->data['action'] = HTTP_SERVER . 'index.php?route=information/contact';
+		$this->data['action'] = $this->url->link('information/contact');
 		$this->data['store'] = $this->config->get('config_name');
     	$this->data['address'] = nl2br($this->config->get('config_address'));
     	$this->data['telephone'] = $this->config->get('config_telephone');
@@ -106,7 +108,7 @@ class ControllerInformationContact extends Controller {
 		} else {
 			$this->data['captcha'] = '';
 		}		
-	
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/information/contact.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/information/contact.tpl';
 		} else {
@@ -114,31 +116,33 @@ class ControllerInformationContact extends Controller {
 		}
 		
 		$this->children = array(
-			'common/column_right',
-			'common/footer',
 			'common/column_left',
+			'common/column_right',
+			'common/content_top',
+			'common/content_bottom',
+			'common/footer',
 			'common/header'
 		);
-		
- 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		
+				
+ 		$this->response->setOutput($this->render());		
   	}
 
   	public function success() {
 		$this->language->load('information/contact');
 
-		$this->document->title = $this->language->get('heading_title'); 
+		$this->document->setTitle($this->language->get('heading_title')); 
 
-      	$this->document->breadcrumbs = array();
+      	$this->data['breadcrumbs'] = array();
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_home'),
-        	'separator' => FALSE
+			'href'      => $this->url->link('common/home'),
+        	'separator' => false
       	);
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=information/contact',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('information/contact'),
         	'separator' => $this->language->get('text_separator')
       	);	
 		
@@ -148,7 +152,7 @@ class ControllerInformationContact extends Controller {
 
     	$this->data['button_continue'] = $this->language->get('button_continue');
 
-    	$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
+    	$this->data['continue'] = $this->url->link('common/home');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/common/success.tpl';
@@ -157,13 +161,15 @@ class ControllerInformationContact extends Controller {
 		}
 		
 		$this->children = array(
-			'common/column_right',
-			'common/footer',
 			'common/column_left',
+			'common/column_right',
+			'common/content_top',
+			'common/content_bottom',
+			'common/footer',
 			'common/header'
 		);
-		
- 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression')); 
+				
+ 		$this->response->setOutput($this->render()); 
 	}
 
 	public function captcha() {
@@ -181,7 +187,7 @@ class ControllerInformationContact extends Controller {
       		$this->error['name'] = $this->language->get('error_name');
     	}
 
-    	if (!preg_match(EMAIL_PATTERN, $this->request->post['email'])) {
+    	if (!filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
       		$this->error['email'] = $this->language->get('error_email');
     	}
 
@@ -194,9 +200,9 @@ class ControllerInformationContact extends Controller {
     	}
 		
 		if (!$this->error) {
-	  		return TRUE;
+	  		return true;
 		} else {
-	  		return FALSE;
+	  		return false;
 		}  	  
   	}
 }

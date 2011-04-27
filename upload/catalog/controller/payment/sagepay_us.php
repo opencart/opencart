@@ -12,7 +12,6 @@ class ControllerPaymentSagepayUS extends Controller {
 		$this->data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
 		
 		$this->data['button_confirm'] = $this->language->get('button_confirm');
-		$this->data['button_back'] = $this->language->get('button_back');
 		
 		$this->data['months'] = array();
 		
@@ -34,14 +33,6 @@ class ControllerPaymentSagepayUS extends Controller {
 			);
 		}
 		
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
-		} else {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
-		}
-		
-		$this->id = 'payment';
-
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/sagepay_us.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/sagepay_us.tpl';
 		} else {
@@ -60,7 +51,7 @@ class ControllerPaymentSagepayUS extends Controller {
 		
 		$data  = 'm_id=' . $this->config->get('sagepay_us_merchant_id');
 		$data .= '&m_key=' . $this->config->get('sagepay_us_merchant_key');
-		$data .= '&T_amt=' . urlencode($this->currency->format($order_info['total'], $order_info['currency'], 1.00000, FALSE));
+		$data .= '&T_amt=' . urlencode($this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false));
 		$data .= '&T_ordernum=' . $this->session->data['order_id'];
 		$data .= '&C_name=' . urlencode($this->request->post['cc_owner']);
 		$data .= '&C_address=' . urlencode($order_info['payment_address_1']);
@@ -99,9 +90,9 @@ class ControllerPaymentSagepayUS extends Controller {
 			$message .= 'Reference: ' . substr($response, 46, 10) . "\n";
 			$message .= 'Order Number: ' . substr($response, strpos($response, chr(28)) + 1, strrpos($response, chr(28) - 1)) . "\n";
 			
-			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('sagepay_us_order_status_id'), $message, FALSE);
+			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('sagepay_us_order_status_id'), $message, false);
 
-			$json['success'] = HTTPS_SERVER . 'index.php?route=checkout/success';
+			$json['success'] = $this->url->link('checkout/success');
 		} else {
 			$json['error'] = substr($response, 8, 32);
 		}

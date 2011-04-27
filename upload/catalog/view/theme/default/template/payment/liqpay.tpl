@@ -1,23 +1,7 @@
-<form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" id="checkout">
+<form action="<?php echo $action; ?>" method="post" id="payment">
   <input type="hidden" name="operation_xml" value="<?php echo $xml; ?>">
   <input type="hidden" name="signature" value="<?php echo $signature; ?>">
+  <div class="buttons">
+    <div class="right"><a onclick="$('#payment').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></div>
+  </div>
 </form>
-<div class="buttons">
-  <table>
-    <tr>
-      <td align="left"><a onclick="location = '<?php echo $back; ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
-      <td align="right"><a onclick="confirmSubmit();" class="button"><span><?php echo $button_confirm; ?></span></a></td>
-    </tr>
-  </table>
-</div>
-<script type="text/javascript"><!--
-function confirmSubmit() {
-	$.ajax({
-		type: 'GET',
-		url: 'index.php?route=payment/liqpay/confirm',
-		success: function() {
-			$('#checkout').submit();
-		}
-	});
-}
-//--></script>

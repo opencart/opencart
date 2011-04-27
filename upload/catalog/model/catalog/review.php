@@ -14,7 +14,7 @@ class ModelCatalogReview extends Model {
 		$query = $this->db->query("SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review WHERE status = '1' AND product_id = '" . (int)$product_id . "' GROUP BY product_id");
 		
 		if (isset($query->row['total'])) {
-			return round($query->row['total']);
+			return (int)$query->row['total'];
 		} else {
 			return 0;
 		}

@@ -5,7 +5,7 @@ class ControllerSaleCoupon extends Controller {
   	public function index() {
 		$this->load->language('sale/coupon');
     	
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('sale/coupon');
 		
@@ -15,7 +15,7 @@ class ControllerSaleCoupon extends Controller {
   	public function insert() {
     	$this->load->language('sale/coupon');
 
-    	$this->document->title = $this->language->get('heading_title');
+    	$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('sale/coupon');
 		
@@ -25,10 +25,6 @@ class ControllerSaleCoupon extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
-			
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
@@ -38,7 +34,11 @@ class ControllerSaleCoupon extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . $url);
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+						
+			$this->redirect($this->url->link('sale/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL'));
     	}
     
     	$this->getForm();
@@ -47,7 +47,7 @@ class ControllerSaleCoupon extends Controller {
   	public function update() {
     	$this->load->language('sale/coupon');
 
-    	$this->document->title = $this->language->get('heading_title');
+    	$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('sale/coupon');
 				
@@ -57,10 +57,6 @@ class ControllerSaleCoupon extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 	  
 			$url = '';
-			
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
@@ -70,7 +66,11 @@ class ControllerSaleCoupon extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . $url);
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+						
+			$this->redirect($this->url->link('sale/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
     
     	$this->getForm();
@@ -79,7 +79,7 @@ class ControllerSaleCoupon extends Controller {
   	public function delete() {
     	$this->load->language('sale/coupon');
 
-    	$this->document->title = $this->language->get('heading_title');
+    	$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('sale/coupon');
 		
@@ -91,10 +91,6 @@ class ControllerSaleCoupon extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 	  
 			$url = '';
-			
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
@@ -104,23 +100,21 @@ class ControllerSaleCoupon extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . $url);
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+						
+			$this->redirect($this->url->link('sale/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL'));
     	}
 	
     	$this->getList();
   	}
 
   	private function getList() {
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-		
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'cd.name';
+			$sort = 'name';
 		}
 		
 		if (isset($this->request->get['order'])) {
@@ -129,11 +123,13 @@ class ControllerSaleCoupon extends Controller {
 			$order = 'ASC';
 		}
 		
-		$url = '';
-			
 		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
 		}
+				
+		$url = '';
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -142,23 +138,28 @@ class ControllerSaleCoupon extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+			
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+		
+  		$this->data['breadcrumbs'] = array();
 
-  		$this->document->breadcrumbs = array();
-
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . $url,
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('sale/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL'),
       		'separator' => ' :: '
    		);
 							
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=sale/coupon/insert&token=' . $this->session->data['token'] . $url;
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=sale/coupon/delete&token=' . $this->session->data['token'] . $url;
+		$this->data['insert'] = $this->url->link('sale/coupon/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$this->data['delete'] = $this->url->link('sale/coupon/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		
 		$this->data['coupons'] = array();
 
 		$data = array(
@@ -177,7 +178,7 @@ class ControllerSaleCoupon extends Controller {
 						
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=sale/coupon/update&token=' . $this->session->data['token'] . '&coupon_id=' . $result['coupon_id'] . $url
+				'href' => $this->url->link('sale/coupon/update', 'token=' . $this->session->data['token'] . '&coupon_id=' . $result['coupon_id'] . $url)
 			);
 						
 			$this->data['coupons'][] = array(
@@ -234,12 +235,12 @@ class ControllerSaleCoupon extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . '&sort=cd.name' . $url;
-		$this->data['sort_code'] = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . '&sort=c.code' . $url;
-		$this->data['sort_discount'] = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . '&sort=c.discount' . $url;
-		$this->data['sort_date_start'] = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . '&sort=c.date_start' . $url;
-		$this->data['sort_date_end'] = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . '&sort=c.date_end' . $url;
-		$this->data['sort_status'] = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . '&sort=c.status' . $url;
+		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . '&sort=name' . $url;
+		$this->data['sort_code'] = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . '&sort=code' . $url;
+		$this->data['sort_discount'] = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . '&sort=discount' . $url;
+		$this->data['sort_date_start'] = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . '&sort=date_start' . $url;
+		$this->data['sort_date_end'] = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . '&sort=date_end' . $url;
+		$this->data['sort_status'] = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . '&sort=status' . $url;
 				
 		$url = '';
 
@@ -269,7 +270,7 @@ class ControllerSaleCoupon extends Controller {
 			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render());
   	}
 
   	private function getForm() {
@@ -300,10 +301,17 @@ class ControllerSaleCoupon extends Controller {
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
 
-    	$this->data['tab_general'] = $this->language->get('tab_general');
+		$this->data['tab_general'] = $this->language->get('tab_general');
+		$this->data['tab_coupon_history'] = $this->language->get('tab_coupon_history');
 
 		$this->data['token'] = $this->session->data['token'];
-		
+	
+		if (isset($this->request->get['coupon_id'])) {
+			$this->data['coupon_id'] = $this->request->get['coupon_id'];
+		} else {
+			$this->data['coupon_id'] = 0;
+		}
+				
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -314,12 +322,6 @@ class ControllerSaleCoupon extends Controller {
 			$this->data['error_name'] = $this->error['name'];
 		} else {
 			$this->data['error_name'] = '';
-		}
-		
-		if (isset($this->error['description'])) {
-			$this->data['error_description'] = $this->error['description'];
-		} else {
-			$this->data['error_description'] = '';
 		}
 		
 		if (isset($this->error['code'])) {
@@ -354,44 +356,40 @@ class ControllerSaleCoupon extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-  		$this->document->breadcrumbs = array();
+  		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . $url,
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('sale/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL'),
       		'separator' => ' :: '
    		);
 									
 		if (!isset($this->request->get['coupon_id'])) {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/coupon/insert&token=' . $this->session->data['token'] . $url;
+			$this->data['action'] = $this->url->link('sale/coupon/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=sale/coupon/update&token=' . $this->session->data['token'] . '&coupon_id=' . $this->request->get['coupon_id'] . $url;
+			$this->data['action'] = $this->url->link('sale/coupon/update', 'token=' . $this->session->data['token'] . '&coupon_id=' . $this->request->get['coupon_id'] . $url, 'SSL');
 		}
 		
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . $url;
+		$this->data['cancel'] = $this->url->link('sale/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL');
   		
 		if (isset($this->request->get['coupon_id']) && (!$this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$coupon_info = $this->model_sale_coupon->getCoupon($this->request->get['coupon_id']);
     	}
 		
-		$this->load->model('localisation/language'); 
-		
-    	$this->data['languages'] = $this->model_localisation_language->getLanguages();
-    
-		if (isset($this->request->post['coupon_description'])) {
-			$this->data['coupon_description'] = $this->request->post['coupon_description'];
-		} elseif (isset($this->request->get['coupon_id'])) {
-			$this->data['coupon_description'] = $this->model_sale_coupon->getCouponDescriptions($this->request->get['coupon_id']);
+    	if (isset($this->request->post['name'])) {
+      		$this->data['name'] = $this->request->post['name'];
+    	} elseif (isset($coupon_info)) {
+			$this->data['name'] = $coupon_info['name'];
 		} else {
-			$this->data['coupon_description'] = array();
-		}
-
+      		$this->data['name'] = '';
+    	}
+		
     	if (isset($this->request->post['code'])) {
       		$this->data['code'] = $this->request->post['code'];
     	} elseif (isset($coupon_info)) {
@@ -440,18 +438,29 @@ class ControllerSaleCoupon extends Controller {
       		$this->data['total'] = '';
     	}
 		
-    	if (isset($this->request->post['product'])) {
-      		$this->data['coupon_product'] = $this->request->post['product'];
-    	} elseif (isset($coupon_info)) {
-      		$this->data['coupon_product'] = $this->model_sale_coupon->getCouponProducts($this->request->get['coupon_id']);
-    	} else {
-			$this->data['coupon_product'] = array();
+		if (isset($this->request->post['coupon_product'])) {
+			$products = $this->request->post['coupon_product'];
+		} elseif (isset($coupon_info)) {		
+			$products = $this->model_sale_coupon->getCouponProducts($this->request->get['coupon_id']);
+		} else {
+			$products = array();
 		}
-
-		$this->load->model('catalog/category');
-				
-		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
 		
+		$this->load->model('catalog/product');
+		
+		$this->data['coupon_product'] = array();
+		
+		foreach ($products as $product_id) {
+			$product_info = $this->model_catalog_product->getProduct($product_id);
+			
+			if ($product_info) {
+				$this->data['coupon_product'][] = array(
+					'product_id' => $product_info['product_id'],
+					'name'       => $product_info['name']
+				);
+			}
+		}
+			
 		if (isset($this->request->post['date_start'])) {
        		$this->data['date_start'] = $this->request->post['date_start'];
 		} elseif (isset($coupon_info)) {
@@ -498,88 +507,28 @@ class ControllerSaleCoupon extends Controller {
 			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		
+		$this->response->setOutput($this->render());		
   	}
 	
   	private function validateForm() {
     	if (!$this->user->hasPermission('modify', 'sale/coupon')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
-	      
-    	foreach ($this->request->post['coupon_description'] as $language_id => $value) {
-      		if ((strlen(utf8_decode($value['name'])) < 3) || (strlen(utf8_decode($value['name'])) > 64)) {
-        		$this->error['name'][$language_id] = $this->language->get('error_name');
-      		}
-
-      		if (strlen(utf8_decode($value['description'])) < 3) {
-        		$this->error['description'][$language_id] = $this->language->get('error_description');
-      		}
-    	}
-
+      	
+		if ((strlen(utf8_decode($this->request->post['name'])) < 3) || (strlen(utf8_decode($this->request->post['name'])) > 128)) {
+        	$this->error['name'] = $this->language->get('error_name');
+      	}
+			
     	if ((strlen(utf8_decode($this->request->post['code'])) < 3) || (strlen(utf8_decode($this->request->post['code'])) > 10)) {
       		$this->error['code'] = $this->language->get('error_code');
     	}
 		
     	if (!$this->error) {
-      		return TRUE;
+      		return true;
     	} else {
-      		return FALSE;
+      		return false;
     	}
   	}
-
-	public function category() {
-		$this->load->model('catalog/product');
-		
-		if (isset($this->request->get['category_id'])) {
-			$category_id = $this->request->get['category_id'];
-		} else {
-			$category_id = 0;
-		}
-		
-		$product_data = array();
-		
-		$results = $this->model_catalog_product->getProductsByCategoryId($category_id);
-		
-		foreach ($results as $result) {
-			$product_data[] = array(
-				'product_id' => $result['product_id'],
-				'name'       => $result['name'],
-				'model'      => $result['model']
-			);
-		}
-		
-		$this->load->library('json');
-		
-		$this->response->setOutput(Json::encode($product_data));
-	}
-	
-	public function product() {
-		$this->load->model('catalog/product');
-		
-		if (isset($this->request->post['coupon_product'])) {
-			$products = $this->request->post['coupon_product'];
-		} else {
-			$products = array();
-		}
-	
-		$product_data = array();
-		
-		foreach ($products as $product_id) {
-			$product_info = $this->model_catalog_product->getProduct($product_id);
-			
-			if ($product_info) {
-				$product_data[] = array(
-					'product_id' => $product_info['product_id'],
-					'name'       => $product_info['name'],
-					'model'      => $product_info['model']
-				);
-			}
-		}
-		
-		$this->load->library('json');
-		
-		$this->response->setOutput(Json::encode($product_data));
-	}
 
   	private function validateDelete() {
     	if (!$this->user->hasPermission('modify', 'sale/coupon')) {
@@ -587,10 +536,56 @@ class ControllerSaleCoupon extends Controller {
     	}
 	  	
 		if (!$this->error) {
-	  		return TRUE;
+	  		return true;
 		} else {
-	  		return FALSE;
+	  		return false;
 		}
+  	}	
+	
+	public function history() {
+    	$this->language->load('sale/coupon');
+		
+		$this->load->model('sale/coupon');
+				
+		$this->data['text_no_results'] = $this->language->get('text_no_results');
+		
+		$this->data['column_order_id'] = $this->language->get('column_order_id');
+		$this->data['column_customer'] = $this->language->get('column_customer');
+		$this->data['column_amount'] = $this->language->get('column_amount');
+		$this->data['column_date_added'] = $this->language->get('column_date_added');
+
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}  
+		
+		$this->data['histories'] = array();
+			
+		$results = $this->model_sale_coupon->getCouponHistories($this->request->get['coupon_id'], ($page - 1) * 10, 10);
+      		
+		foreach ($results as $result) {
+        	$this->data['histories'][] = array(
+				'order_id'   => $result['order_id'],
+				'customer'   => $result['customer'],
+				'amount'     => $result['amount'],
+        		'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+        	);
+      	}			
+		
+		$history_total = $this->model_sale_coupon->getTotalCouponHistories($this->request->get['coupon_id']);
+			
+		$pagination = new Pagination();
+		$pagination->total = $history_total;
+		$pagination->page = $page;
+		$pagination->limit = 10; 
+		$pagination->url = $this->url->link('sale/coupon/history', 'token=' . $this->session->data['token'] . '&coupon_id=' . $this->request->get['coupon_id'] . '&page={page}', 'SSL');
+			
+		$this->data['pagination'] = $pagination->render();
+		
+		$this->template = 'sale/coupon_history.tpl';		
+		
+		$this->response->setOutput($this->render());
   	}		
 }
 ?>

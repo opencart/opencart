@@ -24,6 +24,12 @@ class ModelLocalisationCurrency extends Model {
 		return $query->row;
 	}
 	
+	public function getCurrencyByCode($currency) {
+		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "currency WHERE code = '" . $this->db->escape($currency) . "'");
+	
+		return $query->row;
+	}
+		
 	public function getCurrencies($data = array()) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "currency";
@@ -66,6 +72,8 @@ class ModelLocalisationCurrency extends Model {
 			$currency_data = $this->cache->get('currency');
 
 			if (!$currency_data) {
+				$currency_data = array();
+				
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency ORDER BY title ASC");
 	
 				foreach ($query->rows as $result) {

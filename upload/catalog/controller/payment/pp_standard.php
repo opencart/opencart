@@ -1,12 +1,10 @@
 <?php
 class ControllerPaymentPPStandard extends Controller {
-
 	private $error;
 	private $order_info;
 
 	protected function index() {
     	$this->data['button_confirm'] = $this->language->get('button_confirm');
-		$this->data['button_back'] = $this->language->get('button_back');
 
 		if (!$this->config->get('pp_standard_test')) {
     		$this->data['action'] = 'https://www.paypal.com/cgi-bin/webscr';
@@ -16,54 +14,49 @@ class ControllerPaymentPPStandard extends Controller {
 
 		$this->load->model('checkout/order');
 
-		$this->language->load('payment/pp_standard');
-
-		$this->data['testmode'] = $this->config->get('pp_standard_test');
-
-		$this->data['text_testmode'] = $this->language->get('text_testmode');
-
-		$this->data['continue'] = HTTPS_SERVER . 'index.php?route=checkout/success';
-
 		$this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-
-		# Check for supported currency, otherwise convert to USD.
-		$currencies = array('AUD','CAD','EUR','GBP','JPY','USD','NZD','CHF','HKD','SGD','SEK','DKK','PLN','NOK','HUF','CZK','ILS','MXN','MYR','BRL','PHP','PLN','TWD','THB');
-		if (in_array($this->order_info['currency'], $currencies)) {
-			$currency = $this->order_info['currency'];
+		// Check for supported currency, otherwise convert to USD.
+		$currencies = array('AUD','CAD','EUR','GBP','JPY','USD','NZD','CHF','HKD','SGD','SEK','DKK','PLN','NOK','HUF','CZK','ILS','MXN','MYR','BRL','PHP','TWD','THB','TRY');
+		
+		if (in_array($this->order_info['currency_code'], $currencies)) {
+			$currency = $this->order_info['currency_code'];
 		} else {
 			$currency = 'USD';
 		}
 
-
-		# Get all totals and discount total
+		// Get all totals
 		$total = 0;
-        $total_data = array();
 		$taxes = $this->cart->getTaxes();
 
-		$this->load->model('checkout/extension');
+		$this->load->model('setting/extension');
 
 		$sort_order = array();
 
-		$results = $this->model_checkout_extension->getExtensions('total');
+		$results = $this->model_setting_extension->getExtensions('total');
 
 		foreach ($results as $key => $value) {
-			$sort_order[$key] = $this->config->get($value['key'] . '_sort_order');
+			$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
 		}
 
 		array_multisort($sort_order, SORT_ASC, $results);
 
 		$discount_total = 0;
+		
 		foreach ($results as $result) {
-			$this->load->model('total/' . $result['key']);
-			$old_total = $total;
-			$this->{'model_total_' . $result['key']}->getTotal($total_data, $total, $taxes);
-
-			if ($total < $old_total) {
-				$discount_total += $old_total - $total;
+			if ($this->config->get($result['code'] . '_status')) {
+				$this->load->model('total/' . $result['code']);
+				
+				$old_total = $total;
+				
+				$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
+	
+				if ($total < $old_total) {
+					$discount_total += $old_total - $total;
+				}
 			}
 		}
-
+		
 		$this->data['total'] = $total;
 
 
@@ -188,8 +181,8 @@ class ControllerPaymentPPStandard extends Controller {
 			$this->data['fields']['address1'] = html_entity_decode($this->order_info['shipping_address_1'], ENT_QUOTES, 'UTF-8');
 			$this->data['fields']['address2'] = html_entity_decode($this->order_info['shipping_address_2'], ENT_QUOTES, 'UTF-8');
 			$this->data['fields']['city'] = html_entity_decode($this->order_info['shipping_city'], ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['zip'] = html_entity_decode($this->order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['country'] = $this->order_info['payment_iso_code_2'];
+			$this->data['fields']['zip'] = html_entity_decode($this->order_info['shipping_postcode'], ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['country'] = $this->order_info['shipping_iso_code_2'];
 			if ($this->order_info['shipping_iso_code_2'] == 'US') {
 				$this->load->model('localisation/zone');
 				$zone = $this->model_localisation_zone->getZone($this->order_info['shipping_zone_id']);
@@ -216,13 +209,13 @@ class ControllerPaymentPPStandard extends Controller {
 			$this->data['fields']['paymentaction'] = 'sale';
 		}
 
-		$this->data['fields']['return'] = HTTPS_SERVER . 'index.php?route=payment/pp_standard/pdt';
-		$this->data['fields']['notify_url'] = HTTP_SERVER . 'index.php?route=payment/pp_standard/callback';
-
+		$this->data['fields']['return'] = $this->url->link('payment/pp_standard/pdt');
+		$this->data['fields']['notify_url'] = $this->url->link('payment/pp_standard/callback');
+		
 		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['fields']['cancel_return'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
+			$this->data['fields']['cancel_return'] = $this->url->link('checkout/payment', '', 'SSL');
 		} else {
-			$this->data['fields']['cancel_return'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
+			$this->data['fields']['cancel_return'] = $this->url->link('checkout/guest_step_2', '', 'SSL');
 		}
 
 		$this->load->library('encryption');
@@ -231,13 +224,9 @@ class ControllerPaymentPPStandard extends Controller {
 
 		$this->data['fields']['custom'] = $encryption->encrypt($this->session->data['order_id']);
 
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
-		} else {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
-		}
+		$this->data['testmode'] = $this->config->get('pp_standard_test');
 
-		$this->id = 'payment';
+		$this->data['text_testmode'] = $this->language->get('text_testmode');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_standard.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/pp_standard.tpl';
@@ -304,7 +293,7 @@ class ControllerPaymentPPStandard extends Controller {
 		if ($this->order_info) {
 			if ($this->order_info['order_status_id'] != 0) {
 			//if ($this->order_info['order_status_id'] == $this->config->get('pp_standard_order_status_id')) {
-				$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/success');
+				$this->redirect($this->url->link('checkout/success'));
 			}
 		}
 
@@ -354,12 +343,12 @@ class ControllerPaymentPPStandard extends Controller {
 		} else {
 			$memo = '';
 		}
-
+		
 		if (!$this->validate($resp_array)) {
 			if ($this->order_info['order_status_id'] == '0') {
 				$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_pending'), $memo . "\r\n\r\n" . $this->error);
 			} elseif ($this->order_info['order_status_id'] != $this->config->get('pp_standard_order_status_id')) {
-				$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_pending'),  $this->error, FALSE);
+				$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_pending'),  $this->error, false);
 			}
 			mail($this->config->get('config_email'), sprintf($this->language->get('text_attn_email'), $order_id), $this->error . "\r\n\r\n" . str_replace("&", "\n", $g_msg));
 		}
@@ -367,9 +356,9 @@ class ControllerPaymentPPStandard extends Controller {
 		if (strcmp($lines[0], 'SUCCESS') == 0) {
 			$verified = true;
 		}
-
-		$this->checkPaymentStatus($resp_array, $verified);
-
+		
+		$this->checkPaymentStatus($resp_array, $verified);	
+		
 	}
 
 	public function callback() {
@@ -491,22 +480,22 @@ class ControllerPaymentPPStandard extends Controller {
 				$comment = $data['reason_code'];
 			}
 		}
-		
+				
 		switch($data['payment_status']){
 			case 'Completed':
 				if ($verified) {
 					if ($this->order_info['order_status_id'] == '0') {
 						$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id'), $data['payment_status']);
 					} elseif (isset($data['payment_type']) && $data['payment_type'] == 'echeck') {
-						$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id'), $data['payment_status'], TRUE);
+						$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id'), $data['payment_status'], true);
 					} elseif ($this->order_info['order_status_id'] != $this->config->get('pp_standard_order_status_id')) {
-						$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id'), $data['payment_status'], FALSE);
+						$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id'), $data['payment_status'], false);
 					}
 				} else {
 					if ($this->order_info['order_status_id'] == '0') {
 						$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_pending'), $data['payment_status']);
 					} elseif ($this->order_info['order_status_id'] != $this->config->get('pp_standard_order_status_id')) {
-						$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_pending'), $data['payment_status'], FALSE);
+						$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_pending'), $data['payment_status'], false);
 					}
 					if (!isset($data['payment_type']) || (isset($data['payment_type']) && $data['payment_type'] != 'echeck')) {
 						mail($this->config->get('config_email'), sprintf($this->language->get('text_attn_email'), $order_id), ($this->language->get('error_verify') . "\r\n\r\n" . $p_msg . "\r\n\r\n" . $g_msg));
@@ -517,49 +506,51 @@ class ControllerPaymentPPStandard extends Controller {
 				if ($this->order_info['order_status_id'] == '0') {
 					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_canceled_reversal'), $comment);
 				} else {
-					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_canceled_reversal'), $comment, FALSE);
+					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_canceled_reversal'), $comment, false);
 				}
 				break;
 			case 'Denied':
 				if ($this->order_info['order_status_id'] == '0') {
 					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_denied'), $comment);
 				} else {
-					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_denied'), $comment, FALSE);
+					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_denied'), $comment, false);
 				}
 				break;
 			case 'Failed':
 				if ($this->order_info['order_status_id'] == '0') {
 					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_failed'), $comment);
 				} else {
-					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_failed'), $comment, FALSE);
+					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_failed'), $comment, false);
 				}
 				break;
 			case 'Pending':
-				if ($this->order_info['order_status_id'] == '0') {
-					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_pending'), $comment);
-				} else {
-					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_pending'), $comment, TRUE);
+				if (!isset($data['payment_type']) || (isset($data['payment_type']) && $data['payment_type'] == 'echeck')) {
+					if ($this->order_info['order_status_id'] == '0') {
+						$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_pending'), $comment);
+					} else {
+						$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_pending'), $comment, true);
+					}
 				}
 				break;
 			case 'Refunded':
 				if ($this->order_info['order_status_id'] == '0') {
 					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_refunded'), $comment);
 				} else {
-					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_refunded'), $comment, FALSE);
+					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_refunded'), $comment, false);
 				}
 				break;
 			case 'Reversed':
 				if ($this->order_info['order_status_id'] == '0') {
 					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_reversed'), $comment);
 				} else {
-					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_reversed'), $comment, FALSE);
+					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_reversed'), $comment, false);
 				}
 				break;
 			default:
 				if ($this->order_info['order_status_id'] == '0') {
 					$this->model_checkout_order->confirm($order_id, $this->config->get('pp_standard_order_status_id_unspecified'), $comment);
 				} else {
-					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_unspecified'), $comment, FALSE);
+					$this->model_checkout_order->update($order_id, $this->config->get('pp_standard_order_status_id_unspecified'), $comment, false);
 				}
 				break;
 		}
@@ -570,8 +561,9 @@ class ControllerPaymentPPStandard extends Controller {
 			}
 		}
 
-		$this->redirect(HTTPS_SERVER . 'index.php?route=checkout/success');
+		$this->redirect($this->url->link('checkout/success'));
 	}
+
 
 	private function file_get_contents_curl($url) {
 		$ch = curl_init();
@@ -601,7 +593,7 @@ class ControllerPaymentPPStandard extends Controller {
 		} elseif (isset($data['mc_currency'])) { // IPN
 			$currency = $data['mc_currency'];
 		} else { // Default
-			$currency = $this->order_info['currency'];
+			$currency = $this->order_info['currency_code'];
 		}
 
 		if (isset($data['payment_gross']) && $data['payment_gross']) {

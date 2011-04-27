@@ -4,14 +4,14 @@ class ControllerAccountPassword extends Controller {
 	     
   	public function index() {	
     	if (!$this->customer->isLogged()) {
-      		$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=account/password';
+      		$this->session->data['redirect'] = $this->url->link('account/password', '', 'SSL');
 
-      		$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
+      		$this->redirect($this->url->link('account/login', '', 'SSL'));
     	}
 
 		$this->language->load('account/password');
 
-    	$this->document->title = $this->language->get('heading_title');
+    	$this->document->setTitle($this->language->get('heading_title'));
 			  
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('account/customer');
@@ -20,26 +20,26 @@ class ControllerAccountPassword extends Controller {
  
       		$this->session->data['success'] = $this->language->get('text_success');
 	  
-	  		$this->redirect(HTTPS_SERVER . 'index.php?route=account/account');
+	  		$this->redirect($this->url->link('account/account', '', 'SSL'));
     	}
 
-      	$this->document->breadcrumbs = array();
+      	$this->data['breadcrumbs'] = array();
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_home'),
-        	'separator' => FALSE
+			'href'      => $this->url->link('common/home'),       	
+        	'separator' => false
       	); 
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTPS_SERVER . 'index.php?route=account/account',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_account'),
+			'href'      => $this->url->link('account/account', '', 'SSL'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTPS_SERVER . 'index.php?route=account/password',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('account/password', '', 'SSL'),
         	'separator' => $this->language->get('text_separator')
       	);
 			
@@ -65,7 +65,7 @@ class ControllerAccountPassword extends Controller {
 			$this->data['error_confirm'] = '';
 		}
 	
-    	$this->data['action'] = HTTPS_SERVER . 'index.php?route=account/password';
+    	$this->data['action'] = $this->url->link('account/password', '', 'SSL');
 		
 		if (isset($this->request->post['password'])) {
     		$this->data['password'] = $this->request->post['password'];
@@ -79,7 +79,7 @@ class ControllerAccountPassword extends Controller {
 			$this->data['confirm'] = '';
 		}
 
-    	$this->data['back'] = HTTPS_SERVER . 'index.php?route=account/account';
+    	$this->data['back'] = $this->url->link('account/account', '', 'SSL');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/password.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/account/password.tpl';
@@ -88,13 +88,15 @@ class ControllerAccountPassword extends Controller {
 		}
 		
 		$this->children = array(
-			'common/column_right',
-			'common/footer',
 			'common/column_left',
-			'common/header'
+			'common/column_right',
+			'common/content_top',
+			'common/content_bottom',
+			'common/footer',
+			'common/header'	
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));				
+						
+		$this->response->setOutput($this->render());			
   	}
   
   	private function validate() {
@@ -107,9 +109,9 @@ class ControllerAccountPassword extends Controller {
     	}  
 	
 		if (!$this->error) {
-	  		return TRUE;
+	  		return true;
 		} else {
-	  		return FALSE;
+	  		return false;
 		}
   	}
 }

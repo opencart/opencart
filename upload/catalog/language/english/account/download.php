@@ -11,5 +11,5 @@ $_['text_name']       = 'Name:';
 $_['text_remaining']  = 'Remaining:';
 $_['text_size']       = 'Size:';
 $_['text_download']   = 'Download';
-$_['text_error']      = 'You have not made any previous downloadable orders!';
+$_['text_empty']      = 'You have not made any previous downloadable orders!';
 ?>

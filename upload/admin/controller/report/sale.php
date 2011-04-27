@@ -3,7 +3,7 @@ class ControllerReportSale extends Controller {
 	public function index() {  
 		$this->load->language('report/sale');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
@@ -57,17 +57,17 @@ class ControllerReportSale extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-   		$this->document->breadcrumbs = array();
+   		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),       		
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=report/sale&token=' . $this->session->data['token'] . $url,
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('report/sale', 'token=' . $this->session->data['token'] . $url, 'SSL'),
       		'separator' => ' :: '
    		);
 		
@@ -165,7 +165,7 @@ class ControllerReportSale extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=report/sale&token=' . $this->session->data['token'] . $url . '&page={page}';
+		$pagination->url = $this->url->link('report/sale', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();		
 
@@ -174,13 +174,14 @@ class ControllerReportSale extends Controller {
 		$this->data['filter_group'] = $filter_group;
 		$this->data['filter_order_status_id'] = $filter_order_status_id;
 		 
+		$this->layout = 'common/layout';
 		$this->template = 'report/sale.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				
+		$this->response->setOutput($this->render());
 	}
 }
 ?>

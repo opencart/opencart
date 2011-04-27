@@ -2,14 +2,14 @@
 class ControllerAccountNewsletter extends Controller {  
 	public function index() {
 		if (!$this->customer->isLogged()) {
-	  		$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=account/newsletter';
+	  		$this->session->data['redirect'] = $this->url->link('account/newsletter', '', 'SSL');
 	  
-	  		$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
+	  		$this->redirect($this->url->link('account/login', '', 'SSL'));
     	} 
 		
 		$this->language->load('account/newsletter');
     	
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 				
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			$this->load->model('account/customer');
@@ -18,26 +18,26 @@ class ControllerAccountNewsletter extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect(HTTP_SERVER . 'index.php?route=account/account');
+			$this->redirect($this->url->link('account/account', '', 'SSL'));
 		}
 
-      	$this->document->breadcrumbs = array();
+      	$this->data['breadcrumbs'] = array();
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_home'),
-        	'separator' => FALSE
+			'href'      => $this->url->link('common/home'),       	
+        	'separator' => false
       	); 
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTPS_SERVER . 'index.php?route=account/account',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_account'),
+			'href'      => $this->url->link('account/account', '', 'SSL'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTPS_SERVER . 'index.php?route=account/newsletter',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_newsletter'),
+			'href'      => $this->url->link('account/newsletter', '', 'SSL'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
@@ -51,12 +51,12 @@ class ControllerAccountNewsletter extends Controller {
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		$this->data['button_back'] = $this->language->get('button_back');
 
-    	$this->data['action'] = HTTPS_SERVER . 'index.php?route=account/newsletter';
+    	$this->data['action'] = $this->url->link('account/newsletter', '', 'SSL');
 		
 		$this->data['newsletter'] = $this->customer->getNewsletter();
 		
-		$this->data['back'] = HTTPS_SERVER . 'index.php?route=account/account';
-		
+		$this->data['back'] = $this->url->link('account/account', '', 'SSL');
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/newsletter.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/account/newsletter.tpl';
 		} else {
@@ -64,13 +64,15 @@ class ControllerAccountNewsletter extends Controller {
 		}
 		
 		$this->children = array(
-			'common/column_right',
-			'common/footer',
 			'common/column_left',
-			'common/header'
+			'common/column_right',
+			'common/content_top',
+			'common/content_bottom',
+			'common/footer',
+			'common/header'	
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));			
+						
+		$this->response->setOutput($this->render());			
   	}
 }
 ?>

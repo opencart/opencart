@@ -5,18 +5,16 @@ class ControllerPaymentAuthorizenetAim extends Controller {
 	public function index() {
 		$this->load->language('payment/authorizenet_aim');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/setting');
 			
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
-			$this->load->model('setting/setting');
-			
 			$this->model_setting_setting->editSetting('authorizenet_aim', $this->request->post);				
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token']);
+			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -26,7 +24,6 @@ class ControllerPaymentAuthorizenetAim extends Controller {
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_test'] = $this->language->get('text_test');
 		$this->data['text_live'] = $this->language->get('text_live');
-		$this->data['text_dev'] = $this->language->get('text_dev');
 		$this->data['text_authorization'] = $this->language->get('text_authorization');
 		$this->data['text_capture'] = $this->language->get('text_capture');		
 		
@@ -63,30 +60,36 @@ class ControllerPaymentAuthorizenetAim extends Controller {
 		} else {
 			$this->data['error_key'] = '';
 		}
-		
-  		$this->document->breadcrumbs = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+ 		if (isset($this->error['hash'])) {
+			$this->data['error_hash'] = $this->error['hash'];
+		} else {
+			$this->data['error_hash'] = '';
+		}
+		
+  		$this->data['breadcrumbs'] = array();
+
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_payment'),
+			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => ' :: '
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=payment/authorizenet_aim&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('payment/authorizenet_aim', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => ' :: '
    		);
 				
-		$this->data['action'] = HTTPS_SERVER . 'index.php?route=payment/authorizenet_aim&token=' . $this->session->data['token'];
+		$this->data['action'] = $this->url->link('payment/authorizenet_aim', 'token=' . $this->session->data['token'], 'SSL');
 		
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token'];
+		$this->data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 		
 		if (isset($this->request->post['authorizenet_aim_login'])) {
 			$this->data['authorizenet_aim_login'] = $this->request->post['authorizenet_aim_login'];
@@ -158,11 +161,11 @@ class ControllerPaymentAuthorizenetAim extends Controller {
 
 		$this->template = 'payment/authorizenet_aim.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				
+		$this->response->setOutput($this->render());
 	}
 
 	private function validate() {
@@ -177,11 +180,15 @@ class ControllerPaymentAuthorizenetAim extends Controller {
 		if (!$this->request->post['authorizenet_aim_key']) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
+
+		if (!$this->request->post['authorizenet_aim_hash']) {
+			$this->error['hash'] = $this->language->get('error_hash');
+		}
 		
 		if (!$this->error) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}	
 	}
 }

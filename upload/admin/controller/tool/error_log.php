@@ -5,7 +5,7 @@ class ControllerToolErrorLog extends Controller {
 	public function index() {		
 		$this->load->language('tool/error_log');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		 
@@ -21,37 +21,37 @@ class ControllerToolErrorLog extends Controller {
 			$this->data['success'] = '';
 		}
 		
-  		$this->document->breadcrumbs = array();
+  		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),       		
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=tool/error_log&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => ' :: '
    		);
 		
-		$this->data['clear'] = HTTPS_SERVER . 'index.php?route=tool/error_log/clear&token=' . $this->session->data['token'];
+		$this->data['clear'] = $this->url->link('tool/error_log/clear', 'token=' . $this->session->data['token'], 'SSL');
 		
 		$file = DIR_LOGS . $this->config->get('config_error_filename');
 		
 		if (file_exists($file)) {
-			$this->data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, NULL);
+			$this->data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
 		} else {
 			$this->data['log'] = '';
 		}
-		 
+
 		$this->template = 'tool/error_log.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				
+		$this->response->setOutput($this->render());
 	}
 	
 	public function clear() {
@@ -65,7 +65,7 @@ class ControllerToolErrorLog extends Controller {
 		
 		$this->session->data['success'] = $this->language->get('text_success');
 		
-		$this->redirect(HTTPS_SERVER . 'index.php?route=tool/error_log&token=' . $this->session->data['token']);		
+		$this->redirect($this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL'));		
 	}
 }
 ?>

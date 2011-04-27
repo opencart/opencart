@@ -31,10 +31,10 @@ final class Front {
   	}
     
 	private function execute($action) {
-		$file   = $action->getFile();
-		$class  = $action->getClass();
+		$file = $action->getFile();
+		$class = $action->getClass();
 		$method = $action->getMethod();
-		$args   = $action->getArgs();
+		$args = $action->getArgs();
 
 		$action = '';
 

@@ -40,14 +40,14 @@ class ControllerCommonFileManager extends Controller {
 		}
 		
 		if (isset($this->request->get['CKEditorFuncNum'])) {
-			$this->data['fckeditor'] = TRUE;
+			$this->data['fckeditor'] = true;
 		} else {
-			$this->data['fckeditor'] = FALSE;
+			$this->data['fckeditor'] = false;
 		}
 		
 		$this->template = 'common/filemanager.tpl';
 		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render());
 	}	
 	
 	public function image() {
@@ -232,7 +232,7 @@ class ControllerCommonFileManager extends Controller {
 		}
 		
 		if (!$handle) {
-			return FALSE;
+			return false;
 		}
 		
 		while (false !== ($file = readdir($handle))) {
@@ -249,7 +249,7 @@ class ControllerCommonFileManager extends Controller {
 		
 		rmdir($directory);
 		
-		return TRUE;
+		return true;
 	}
 
 	public function move() {

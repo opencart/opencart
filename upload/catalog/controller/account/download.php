@@ -2,32 +2,32 @@
 class ControllerAccountDownload extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=account/download';
+			$this->session->data['redirect'] = $this->url->link('account/download', '', 'SSL');
 
-			$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
+			$this->redirect($this->url->link('account/login', '', 'SSL'));
 		}
          		
 		$this->language->load('account/download');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 
-      	$this->document->breadcrumbs = array();
+      	$this->data['breadcrumbs'] = array();
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_home'),
-        	'separator' => FALSE
+			'href'      => $this->url->link('common/home'),        	
+        	'separator' => false
       	); 
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/account',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_account'),
+			'href'      => $this->url->link('account/account', '', 'SSL'),       	
         	'separator' => $this->language->get('text_separator')
       	);
 		
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=account/download',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_downloads'),
+			'href'      => $this->url->link('account/download', '', 'SSL'),       	
         	'separator' => $this->language->get('text_separator')
       	);
 				
@@ -86,7 +86,7 @@ class ControllerAccountDownload extends Controller {
 						'name'       => $result['name'],
 						'remaining'  => $result['remaining'],
 						'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
-						'href'       => HTTPS_SERVER . 'index.php?route=account/download/download&order_download_id=' . $result['order_download_id']
+						'href'       => $this->url->link('account/download/download', 'order_download_id=' . $result['order_download_id'], 'SSL')
 					);
 				}
 			}
@@ -96,11 +96,11 @@ class ControllerAccountDownload extends Controller {
 			$pagination->page = $page;
 			$pagination->limit = $this->config->get('config_catalog_limit');
 			$pagination->text = $this->language->get('text_pagination');
-			$pagination->url = HTTP_SERVER . 'index.php?route=account/download&page={page}';
+			$pagination->url = $this->url->link('account/download', 'page={page}', 'SSL');
 			
 			$this->data['pagination'] = $pagination->render();
 			
-			$this->data['continue'] = HTTPS_SERVER . 'index.php?route=account/account';
+			$this->data['continue'] = $this->url->link('account/account', '', 'SSL');
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/download.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/account/download.tpl';
@@ -109,21 +109,23 @@ class ControllerAccountDownload extends Controller {
 			}
 			
 			$this->children = array(
-				'common/column_right',
-				'common/footer',
 				'common/column_left',
-				'common/header'
+				'common/column_right',
+				'common/content_top',
+				'common/content_bottom',
+				'common/footer',
+				'common/header'		
 			);
-		
-			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));				
+							
+			$this->response->setOutput($this->render());				
 		} else {
 			$this->data['heading_title'] = $this->language->get('heading_title');
 
-			$this->data['text_error'] = $this->language->get('text_error');
+			$this->data['text_error'] = $this->language->get('text_empty');
 
 			$this->data['button_continue'] = $this->language->get('button_continue');
 
-			$this->data['continue'] = HTTPS_SERVER . 'index.php?route=account/account';
+			$this->data['continue'] = $this->url->link('account/account', '', 'SSL');
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
@@ -132,21 +134,23 @@ class ControllerAccountDownload extends Controller {
 			}
 			
 			$this->children = array(
-				'common/column_right',
-				'common/footer',
 				'common/column_left',
-				'common/header'
+				'common/column_right',
+				'common/content_top',
+				'common/content_bottom',
+				'common/footer',
+				'common/header'		
 			);
-		
-			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+										
+			$this->response->setOutput($this->render());
 		}
 	}
 
 	public function download() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = HTTPS_SERVER . 'index.php?route=account/download';
+			$this->session->data['redirect'] = $this->url->link('account/download', '', 'SSL');
 
-			$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
+			$this->redirect($this->url->link('account/login', '', 'SSL'));
 		}
 
 		$this->load->model('account/download');
@@ -187,7 +191,7 @@ class ControllerAccountDownload extends Controller {
 		
 			$this->model_account_download->updateRemaining($this->request->get['order_download_id']);
 		} else {
-			$this->redirect(HTTPS_SERVER . 'index.php?route=account/download');
+			$this->redirect($this->url->link('account/download', '', 'SSL'));
 		}
 	}
 }

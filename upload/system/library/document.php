@@ -1,16 +1,11 @@
 <?php
 final class Document {
-	public $title;
-	public $description;
-	public $keywords;
-	public $base;	
-	public $charset = 'utf-8';		
-	public $language = 'en-gb';	
-	public $direction = 'ltr';		
-	public $links = array();		
-	public $styles = array();
-	public $scripts = array();
-	public $breadcrumbs = array();
+	private $title;
+	private $description;
+	private $keywords;	
+	private $links = array();		
+	private $styles = array();
+	private $scripts = array();
 	
 	public function setTitle($title) {
 		$this->title = $title;
@@ -35,38 +30,6 @@ final class Document {
 	public function getKeywords() {
 		return $this->keywords;
 	}
-	
-	public function setBase($base) {
-		$this->base = $base;
-	}
-	
-	public function getBase() {
-		return $this->base;
-	}		
-	
-	public function setCharset($charset) {
-		$this->charset = $charset;
-	}
-	
-	public function getCharset() {
-		return $this->charset;
-	}	
-	
-	public function setLanguage($language) {
-		$this->language = $language;
-	}
-	
-	public function getLanguage() {
-		return $this->language;
-	}	
-	
-	public function setDirection($direction) {
-		$this->direction = $direction;
-	}
-	
-	public function getDirection() {
-		return $this->direction;
-	}	
 	
 	public function addLink($href, $rel) {
 		$this->links[] = array(
@@ -98,17 +61,5 @@ final class Document {
 	public function getScripts() {
 		return $this->scripts;
 	}
-	
-	public function addBreadcrumb($text, $href, $separator = ' &gt; ') {
-		$this->breadcrumbs[] = array(
-			'text'      => $text,
-			'href'      => $href,
-			'separator' => $separator
-		);			
-	}
-	
-	public function getBreadcrumbs() {
-		return $this->breadcrumbs;
-	}	
 }
 ?>

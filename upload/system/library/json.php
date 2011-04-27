@@ -37,9 +37,9 @@ final class Json {
 		}
 	}
 	
-	static public function decode($json, $assoc = FALSE) {
+	static public function decode($json, $assoc = false) {
 		if (function_exists('json_decode')) {
-			return json_decode($json);
+			return json_decode($json, true);
 		} else {
 			$match = '/".*?(?<!\\\\)"/';
 
@@ -47,7 +47,7 @@ final class Json {
 			$string = preg_replace('/[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]/', '', $string);
 
 			if ($string != '') {
-				return NULL;
+				return null;
 			}
 
 			$s2m = array();
@@ -80,7 +80,7 @@ final class Json {
  			$json = strtr($json, $m2s);
 
   			$function = @create_function('', "return {$json};");
-  			$return = ($function) ? $function() : NULL;
+  			$return = ($function) ? $function() : null;
 
   			unset($s2m); 
 			unset($m2s); 

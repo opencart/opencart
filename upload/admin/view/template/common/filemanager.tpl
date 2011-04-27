@@ -4,15 +4,12 @@
 <head>
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
-<link rel="stylesheet" type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/ui.all.css" />
-<script type="text/javascript" src="view/javascript/jquery/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="view/javascript/jquery/ui/ui.core.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.9.custom.min.js"></script>
+<link rel="stylesheet" type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.9.custom.css" />
+<script type="text/javascript" src="view/javascript/jquery/ui/external/jquery.bgiframe-2.1.2.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/jstree/jquery.tree.min.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/ajaxupload.js"></script>
-<script type="text/javascript" src="view/javascript/jquery/ui/ui.draggable.js"></script>
-<script type="text/javascript" src="view/javascript/jquery/ui/ui.resizable.js"></script>
-<script type="text/javascript" src="view/javascript/jquery/ui/ui.dialog.js"></script>
-<script type="text/javascript" src="view/javascript/jquery/ui/external/bgiframe/jquery.bgiframe.js"></script>
 <style type="text/css">
 body {
 	padding: 0;
@@ -33,7 +30,7 @@ img {
 	height: 29px;
 	margin-bottom: 3px;
 }
-#column_left {
+#column-left {
 	background: #FFF;
 	border: 1px solid #CCC;
 	float: left;
@@ -41,7 +38,7 @@ img {
 	height: 320px;
 	overflow: auto;
 }
-#column_right {
+#column-right {
 	background: #FFF;
 	border: 1px solid #CCC;
 	float: right;
@@ -50,11 +47,11 @@ img {
 	overflow: auto;
 	text-align: center;
 }
-#column_right div {
+#column-right div {
 	text-align: left;
 	padding: 5px;
 }
-#column_right a {
+#column-right a {
 	display: inline-block;
 	text-align: center;
 	border: 1px solid #EEEEEE;
@@ -62,11 +59,11 @@ img {
 	margin: 5px;
 	padding: 5px;
 }
-#column_right a.selected {
+#column-right a.selected {
 	border: 1px solid #7DA2CE;
 	background: #EBF4FD;
 }
-#column_right input {
+#column-right input {
 	display: none;
 }
 #dialog {
@@ -99,12 +96,12 @@ img {
 <body>
 <div id="container">
   <div id="menu"><a id="create" class="button" style="background-image: url('view/image/filemanager/folder.png');"><?php echo $button_folder; ?></a><a id="delete" class="button" style="background-image: url('view/image/filemanager/edit-delete.png');"><?php echo $button_delete; ?></a><a id="move" class="button" style="background-image: url('view/image/filemanager/edit-cut.png');"><?php echo $button_move; ?></a><a id="copy" class="button" style="background-image: url('view/image/filemanager/edit-copy.png');"><?php echo $button_copy; ?></a><a id="rename" class="button" style="background-image: url('view/image/filemanager/edit-rename.png');"><?php echo $button_rename; ?></a><a id="upload" class="button" style="background-image: url('view/image/filemanager/upload.png');"><?php echo $button_upload; ?></a><a id="refresh" class="button" style="background-image: url('view/image/filemanager/refresh.png');"><?php echo $button_refresh; ?></a></div>
-  <div id="column_left"></div>
-  <div id="column_right"></div>
+  <div id="column-left"></div>
+  <div id="column-right"></div>
 </div>
 <script type="text/javascript"><!--
 $(document).ready(function () { 
-	$('#column_left').tree({
+	$('#column-left').tree({
 		data: { 
 			type: 'json',
 			async: true, 
@@ -179,24 +176,24 @@ $(document).ready(function () {
 						
 						html += '</div>';
 						
-						$('#column_right').html(html);
+						$('#column-right').html(html);
 					}
 				});
 			}
 		}
 	});	
 	
-	$('#column_right a').live('click', function () {
+	$('#column-right a').live('click', function () {
 		if ($(this).attr('class') == 'selected') {
 			$(this).removeAttr('class');
 		} else {
-			$('#column_right a').removeAttr('class');
+			$('#column-right a').removeAttr('class');
 			
 			$(this).attr('class', 'selected');
 		}
 	});
 	
-	$('#column_right a').live('dblclick', function () {
+	$('#column-right a').live('dblclick', function () {
 		<?php if ($fckeditor) { ?>
 		window.opener.CKEDITOR.tools.callFunction(1, '<?php echo $directory; ?>' + $(this).attr('file'));
 		
@@ -219,7 +216,7 @@ $(document).ready(function () {
 			html += '<?php echo $entry_folder; ?> <input type="text" name="name" value="" /> <input type="button" value="Submit" />';
 			html += '</div>';
 			
-			$('#column_right').prepend(html);
+			$('#column-right').prepend(html);
 			
 			$('#dialog').dialog({
 				title: '<?php echo $button_folder; ?>',
@@ -251,7 +248,7 @@ $(document).ready(function () {
 	});
 	
 	$('#delete').bind('click', function () {
-		path = $('#column_right a.selected').attr('file');
+		path = $('#column-right a.selected').attr('file');
 							 
 		if (path) {
 			$.ajax({
@@ -309,7 +306,7 @@ $(document).ready(function () {
 		html += '<?php echo $entry_move; ?> <select name="to"></select> <input type="button" value="Submit" />';
 		html += '</div>';
 
-		$('#column_right').prepend(html);
+		$('#column-right').prepend(html);
 		
 		$('#dialog').dialog({
 			title: '<?php echo $button_move; ?>',
@@ -319,7 +316,7 @@ $(document).ready(function () {
 		$('#dialog select[name=\'to\']').load('index.php?route=common/filemanager/folders&token=<?php echo $token; ?>');
 		
 		$('#dialog input[type=\'button\']').bind('click', function () {
-			path = $('#column_right a.selected').attr('file');
+			path = $('#column-right a.selected').attr('file');
 							 
 			if (path) {																
 				$.ajax({
@@ -378,7 +375,7 @@ $(document).ready(function () {
 		html += '<?php echo $entry_copy; ?> <input type="text" name="name" value="" /> <input type="button" value="Submit" />';
 		html += '</div>';
 
-		$('#column_right').prepend(html);
+		$('#column-right').prepend(html);
 		
 		$('#dialog').dialog({
 			title: '<?php echo $button_copy; ?>',
@@ -388,7 +385,7 @@ $(document).ready(function () {
 		$('#dialog select[name=\'to\']').load('index.php?route=common/filemanager/folders&token=<?php echo $token; ?>');
 		
 		$('#dialog input[type=\'button\']').bind('click', function () {
-			path = $('#column_right a.selected').attr('file');
+			path = $('#column-right a.selected').attr('file');
 							 
 			if (path) {																
 				$.ajax({
@@ -447,7 +444,7 @@ $(document).ready(function () {
 		html += '<?php echo $entry_rename; ?> <input type="text" name="name" value="" /> <input type="button" value="Submit" />';
 		html += '</div>';
 
-		$('#column_right').prepend(html);
+		$('#column-right').prepend(html);
 		
 		$('#dialog').dialog({
 			title: '<?php echo $button_rename; ?>',
@@ -455,7 +452,7 @@ $(document).ready(function () {
 		});
 		
 		$('#dialog input[type=\'button\']').bind('click', function () {
-			path = $('#column_right a.selected').attr('file');
+			path = $('#column-right a.selected').attr('file');
 							 
 			if (path) {		
 				$.ajax({

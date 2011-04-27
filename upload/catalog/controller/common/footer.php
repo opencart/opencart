@@ -3,20 +3,53 @@ class ControllerCommonFooter extends Controller {
 	protected function index() {
 		$this->language->load('common/footer');
 		
-		$this->data['text_powered_by'] = sprintf($this->language->get('text_powered_by'), $this->config->get('config_name'), date('Y', time()));
+		$this->data['text_information'] = $this->language->get('text_information');
+		$this->data['text_service'] = $this->language->get('text_service');
+		$this->data['text_extra'] = $this->language->get('text_extra');
+		$this->data['text_account'] = $this->language->get('text_account');
+		$this->data['text_contact'] = $this->language->get('text_contact');
+		$this->data['text_return'] = $this->language->get('text_return');
+    	$this->data['text_sitemap'] = $this->language->get('text_sitemap');
+		$this->data['text_manufacturer'] = $this->language->get('text_manufacturer');
+		$this->data['text_voucher'] = $this->language->get('text_voucher');
+		$this->data['text_affiliate'] = $this->language->get('text_affiliate');
+		$this->data['text_special'] = $this->language->get('text_special');
+		$this->data['text_login'] = $this->language->get('text_login');
+		$this->data['text_order'] = $this->language->get('text_order');
+		$this->data['text_wishlist'] = $this->language->get('text_wishlist');
+		$this->data['text_newsletter'] = $this->language->get('text_newsletter');
 		
-		$this->id = 'footer';
+		$this->load->model('catalog/information');
+		
+		$this->data['informations'] = array();
 
+		foreach ($this->model_catalog_information->getInformations() as $result) {
+      		$this->data['informations'][] = array(
+        		'title' => $result['title'],
+	    		'href'  => $this->url->link('information/information', 'information_id=' . $result['information_id'])
+      		);
+    	}
+
+		$this->data['contact'] = $this->url->link('information/contact');
+		$this->data['return'] = $this->url->link('account/return/insert', '', 'SSL');
+    	$this->data['sitemap'] = $this->url->link('information/sitemap');
+		$this->data['manufacturer'] = $this->url->link('product/manufacturer', '', 'SSL');
+		$this->data['voucher'] = $this->url->link('account/voucher', '', 'SSL');
+		$this->data['affiliate'] = $this->url->link('affiliate/account', '', 'SSL');
+		$this->data['special'] = $this->url->link('product/special');
+		$this->data['login'] = $this->url->link('account/login', '', 'SSL');
+		$this->data['order'] = $this->url->link('account/order', '', 'SSL');
+		$this->data['wishlist'] = $this->url->link('account/wishlist', '', 'SSL');
+		$this->data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');		
+
+		$this->data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
+		
+		$this->data['google_analytics'] = html_entity_decode($this->config->get('config_google_analytics'), ENT_QUOTES, 'UTF-8');
+		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/footer.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/common/footer.tpl';
 		} else {
 			$this->template = 'default/template/common/footer.tpl';
-		}
-		
-		if ($this->config->get('google_analytics_status')) {
-			$this->data['google_analytics'] = html_entity_decode($this->config->get('google_analytics_code'), ENT_QUOTES, 'UTF-8');
-		} else {
-			$this->data['google_analytics'] = '';
 		}
 		
 		$this->render();

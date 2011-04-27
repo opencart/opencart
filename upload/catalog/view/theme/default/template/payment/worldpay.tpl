@@ -1,4 +1,4 @@
-<form action="<?php echo str_replace('&', '&amp;', $action); ?>" method="post" id="checkout">
+<form action="<?php echo $action; ?>" method="post" id="payment">
   <input type="hidden" name="instId" value="<?php echo $merchant; ?>" />
   <input type="hidden" name="cartId" value="<?php echo $order_id; ?>" />
   <input type="hidden" name="amount" value="<?php echo $amount; ?>" />
@@ -11,12 +11,7 @@
   <input type="hidden" name="tel" value="<?php echo $telephone; ?>" />
   <input type="hidden" name="email" value="<?php echo $email; ?>" />
   <input type="hidden" name="testMode" value="<?php echo $test; ?>" />
+  <div class="buttons">
+    <div class="right"><a onclick="$('#payment').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></div>
+  </div>
 </form>
-<div class="buttons">
-  <table>
-    <tr>
-      <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
-      <td align="right"><a onclick="$('#checkout').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></td>
-    </tr>
-  </table>
-</div>

@@ -46,7 +46,7 @@ final class MySQL {
 				return TRUE;
 			}
 		} else {
-      		exit('Error: ' . mysql_error($this->connection) . '<br />Error No: ' . mysql_errno($this->connection) . '<br />' . $sql);
+			exit('Error: ' . mysql_error($this->connection) . '<br />Error No: ' . mysql_errno($this->connection) . '<br />' . $sql);
     	}
   	}
 	

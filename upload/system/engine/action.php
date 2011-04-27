@@ -8,7 +8,7 @@ final class Action {
 	public function __construct($route, $args = array()) {
 		$path = '';
 		
-		$parts = explode('/', str_replace('../', '', $route));
+		$parts = explode('/', str_replace('../', '', (string)$route));
 		
 		foreach ($parts as $part) { 
 			$path .= $part;
@@ -30,12 +30,12 @@ final class Action {
 				
 				break;
 			}
-			
-			if ($args) {
-				$this->args = $args;
-			}
 		}
-
+		
+		if ($args) {
+			$this->args = $args;
+		}
+			
 		$method = array_shift($parts);
 				
 		if ($method) {

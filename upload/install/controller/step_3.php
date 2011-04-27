@@ -9,6 +9,15 @@ class ControllerStep3 extends Controller {
 			$this->model_install->mysql($this->request->post);
 			
 			$output  = '<?php' . "\n";
+			$output .= '// HTTP' . "\n";
+			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n";
+			$output .= 'define(\'HTTP_IMAGE\', \'' . HTTP_OPENCART . 'image/\');' . "\n";			
+			$output .= 'define(\'HTTP_ADMIN\', \'' . HTTP_OPENCART . 'admin/\');' . "\n\n";
+
+			$output .= '// HTTPS' . "\n";
+			$output .= 'define(\'HTTPS_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n";
+			$output .= 'define(\'HTTPS_IMAGE\', \'' . HTTP_OPENCART . 'image/\');' . "\n\n";
+						
 			$output .= '// DIR' . "\n";
 			$output .= 'define(\'DIR_APPLICATION\', \'' . DIR_OPENCART . 'catalog/\');' . "\n";
 			$output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART. 'system/\');' . "\n";
@@ -170,13 +179,12 @@ class ControllerStep3 extends Controller {
 			$this->data['email'] = '';
 		}
 		
+		$this->template = 'step_3.tpl';
 		$this->children = array(
 			'header',
 			'footer'
 		);
 		
-		$this->template = 'step_3.tpl';
-
 		$this->response->setOutput($this->render(TRUE));		
 	}
 	
@@ -201,9 +209,7 @@ class ControllerStep3 extends Controller {
 			$this->error['password'] = 'Password required!';
 		}
 
-		$pattern = '/^([a-z0-9])(([-a-z0-9._])*([a-z0-9]))*\@([a-z0-9])(([a-z0-9-])*([a-z0-9]))+(\.([a-z0-9])([-a-z0-9_-])?([a-z0-9])+)+$/i';
-
-		if (!preg_match(EMAIL_PATTERN, $this->request->post['email'])) {
+		if (!filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 			$this->error['email'] = 'Invalid E-Mail!';
 		}
 

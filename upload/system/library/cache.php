@@ -11,8 +11,7 @@ final class Cache {
 
       			if ($time < time()) {
 					if (file_exists($file)) {
-						@touch($file);
-						@unlink($file);
+						unlink($file);
 					}
       			}
     		}
@@ -46,7 +45,7 @@ final class Cache {
 		if ($files) {
     		foreach ($files as $file) {
       			if (file_exists($file)) {
-					@unlink($file);
+					unlink($file);
 					clearstatcache();
 				}
     		}

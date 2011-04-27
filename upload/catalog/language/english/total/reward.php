@@ -1,0 +1,17 @@
+<?php
+// Heading 
+$_['heading_title'] = 'Reward Points (Available %s)';
+
+// Text
+$_['text_reward']   = 'Reward Points(%s):';
+$_['text_order_id'] = 'Order ID: #%s';
+$_['text_success']  = 'Success: Your reward points discount has been applied!';
+
+// Entry
+$_['entry_reward']  = 'Points to use (Max %s):';
+
+// Error
+$_['error_empty']   = 'Error: Please enter the amount of points you wish to use!';
+$_['error_points']  = 'Error: You don\'t have %s reward points!';
+$_['error_maximum'] = 'Error: The maximum number of points that can be applied is %s!';
+?>

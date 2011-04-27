@@ -16,7 +16,6 @@ class ControllerPaymentPPPro extends Controller {
 		$this->data['entry_cc_issue'] = $this->language->get('entry_cc_issue');
 		
 		$this->data['button_confirm'] = $this->language->get('button_confirm');
-		$this->data['button_back'] = $this->language->get('button_back');
 		
 		$this->data['cards'] = array();
 
@@ -78,15 +77,7 @@ class ControllerPaymentPPPro extends Controller {
 				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)) 
 			);
 		}
-
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
-		} else {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
-		}
 		
-		$this->id = 'payment';
-
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_pro.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/pp_pro.tpl';
 		} else {
@@ -138,7 +129,7 @@ class ControllerPaymentPPPro extends Controller {
 			'STATE'          => ($order_info['payment_iso_code_2'] != 'US') ? $order_info['payment_zone'] : $order_info['payment_zone_code'],
 			'ZIP'            => $order_info['payment_postcode'],
 			'COUNTRYCODE'    => $order_info['payment_iso_code_2'],
-			'CURRENCYCODE'   => $order_info['currency']
+			'CURRENCYCODE'   => $order_info['currency_code']
 		);
 		
 		$curl = curl_init($api_endpoint);
@@ -183,9 +174,9 @@ class ControllerPaymentPPPro extends Controller {
 				$message .= 'TRANSACTIONID: ' . $response_data['TRANSACTIONID'] . "\n";
 			}
 			
-			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('pp_pro_order_status_id'), $message, FALSE);
+			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('pp_pro_order_status_id'), $message, false);
 		
-			$json['success'] = HTTPS_SERVER . 'index.php?route=checkout/success';
+			$json['success'] = $this->url->link('checkout/success');
 		} else {
         	$json['error'] = $response_data['L_LONGMESSAGE0'];
         }

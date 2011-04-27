@@ -4,24 +4,24 @@ class ControllerAccountForgotten extends Controller {
 
 	public function index() {
 		if ($this->customer->isLogged()) {
-			$this->redirect(HTTPS_SERVER . 'index.php?route=account/account');
+			$this->redirect($this->url->link('account/account', '', 'SSL'));
 		}
 
 		$this->language->load('account/forgotten');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('account/customer');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->language->load('mail/account_forgotten');
+			$this->language->load('account/forgotten');
 			
 			$password = substr(md5(rand()), 0, 7);
 			
-			$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
+			$subject = sprintf($this->language->get('mail_subject'), $this->config->get('config_name'));
 			
-			$message  = sprintf($this->language->get('text_greeting'), $this->config->get('config_name')) . "\n\n";
-			$message .= $this->language->get('text_password') . "\n\n";
+			$message  = sprintf($this->language->get('mail_greeting'), $this->config->get('config_name')) . "\n\n";
+			$message .= $this->language->get('mail_password') . "\n\n";
 			$message .= $password;
 
 			$mail = new Mail();
@@ -43,26 +43,26 @@ class ControllerAccountForgotten extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect(HTTPS_SERVER . 'index.php?route=account/login');
+			$this->redirect($this->url->link('account/login', '', 'SSL'));
 		}
 
-      	$this->document->breadcrumbs = array();
+      	$this->data['breadcrumbs'] = array();
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_home'),
-        	'separator' => FALSE
+			'href'      => $this->url->link('common/home'),        	
+        	'separator' => false
       	); 
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTPS_SERVER . 'index.php?route=account/account',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_account'),
+			'href'      => $this->url->link('account/account', '', 'SSL'),     	
         	'separator' => $this->language->get('text_separator')
       	);
 		
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTPS_SERVER . 'index.php?route=account/forgotten',
+      	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_forgotten'),
+			'href'      => $this->url->link('account/forgotten', '', 'SSL'),       	
         	'separator' => $this->language->get('text_separator')
       	);
 		
@@ -82,9 +82,9 @@ class ControllerAccountForgotten extends Controller {
 			$this->data['error'] = '';
 		}
 		
-		$this->data['action'] = HTTPS_SERVER . 'index.php?route=account/forgotten';
+		$this->data['action'] = $this->url->link('account/forgotten', '', 'SSL');
  
-		$this->data['back'] = HTTPS_SERVER . 'index.php?route=account/account';
+		$this->data['back'] = $this->url->link('account/login', '', 'SSL');
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/forgotten.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/account/forgotten.tpl';
@@ -93,13 +93,15 @@ class ControllerAccountForgotten extends Controller {
 		}
 		
 		$this->children = array(
-			'common/column_right',
-			'common/footer',
 			'common/column_left',
-			'common/header'
+			'common/column_right',
+			'common/content_top',
+			'common/content_bottom',
+			'common/footer',
+			'common/header'	
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		
+								
+		$this->response->setOutput($this->render());		
 	}
 
 	private function validate() {
@@ -110,9 +112,9 @@ class ControllerAccountForgotten extends Controller {
 		}
 
 		if (!$this->error) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 }

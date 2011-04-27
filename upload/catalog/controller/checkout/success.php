@@ -16,69 +16,42 @@ class ControllerCheckoutSuccess extends Controller {
 									   
 		$this->language->load('checkout/success');
 		
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
-		$this->document->breadcrumbs = array(); 
+		$this->data['breadcrumbs'] = array(); 
 
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=common/home',
+      	$this->data['breadcrumbs'][] = array(
+        	'href'      => $this->url->link('common/home'),
         	'text'      => $this->language->get('text_home'),
-        	'separator' => FALSE
+        	'separator' => false
       	); 
-
 		
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=checkout/cart',
+      	$this->data['breadcrumbs'][] = array(
+        	'href'      => $this->url->link('checkout/cart'),
         	'text'      => $this->language->get('text_basket'),
         	'separator' => $this->language->get('text_separator')
       	);
-		
-		if ($this->customer->isLogged()) {
-			$this->document->breadcrumbs[] = array(
-				'href'      => HTTP_SERVER . 'index.php?route=checkout/shipping',
-				'text'      => $this->language->get('text_shipping'),
-				'separator' => $this->language->get('text_separator')
-			);
-	
-			$this->document->breadcrumbs[] = array(
-				'href'      => HTTP_SERVER . 'index.php?route=checkout/payment',
-				'text'      => $this->language->get('text_payment'),
-				'separator' => $this->language->get('text_separator')
-			);
-	
-			$this->document->breadcrumbs[] = array(
-				'href'      => HTTP_SERVER . 'index.php?route=checkout/confirm',
-				'text'      => $this->language->get('text_confirm'),
-				'separator' => $this->language->get('text_separator')
-			);
-		} else {
-			$this->document->breadcrumbs[] = array(
-				'href'      => HTTP_SERVER . 'index.php?route=checkout/guest',
-				'text'      => $this->language->get('text_guest'),
-				'separator' => $this->language->get('text_separator')
-			);
-	
-			$this->document->breadcrumbs[] = array(
-				'href'      => HTTP_SERVER . 'index.php?route=checkout/guest/confirm',
-				'text'      => $this->language->get('text_confirm'),
-				'separator' => $this->language->get('text_separator')
-			);			
-		}
-		
-      	$this->document->breadcrumbs[] = array(
-        	'href'      => HTTP_SERVER . 'index.php?route=checkout/success',
+				
+		$this->data['breadcrumbs'][] = array(
+			'href'      => $this->url->link('checkout/checkout', '', 'SSL'),
+			'text'      => $this->language->get('text_checkout'),
+			'separator' => $this->language->get('text_separator')
+		);	
+					
+      	$this->data['breadcrumbs'][] = array(
+        	'href'      => $this->url->link('checkout/success'),
         	'text'      => $this->language->get('text_success'),
         	'separator' => $this->language->get('text_separator')
       	);
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
 
-    	$this->data['text_message'] = sprintf($this->language->get('text_message'), HTTPS_SERVER . 'index.php?route=account/account', HTTPS_SERVER . 'index.php?route=account/history', HTTP_SERVER . 'index.php?route=information/contact');
+    	$this->data['text_message'] = sprintf($this->language->get('text_message'), $this->url->link('account/account', '', 'SSL'), $this->url->link('account/history', '', 'SSL'), $this->url->link('account/download', '', 'SSL'), $this->url->link('information/contact'));
 
     	$this->data['button_continue'] = $this->language->get('button_continue');
 
-    	$this->data['continue'] = HTTP_SERVER . 'index.php?route=common/home';
-		
+    	$this->data['continue'] = $this->url->link('common/home');
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/common/success.tpl';
 		} else {
@@ -86,13 +59,15 @@ class ControllerCheckoutSuccess extends Controller {
 		}
 		
 		$this->children = array(
-			'common/column_right',
-			'common/footer',
 			'common/column_left',
-			'common/header'
+			'common/column_right',
+			'common/content_top',
+			'common/content_bottom',
+			'common/footer',
+			'common/header'			
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				
+		$this->response->setOutput($this->render());
   	}
 }
 ?>

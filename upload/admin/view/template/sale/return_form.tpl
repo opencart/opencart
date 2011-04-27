@@ -1,0 +1,281 @@
+<?php echo $header; ?>
+<div id="content">
+  <div class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <?php } ?>
+  </div>
+  <?php if ($error_warning) { ?>
+  <div class="warning"><?php echo $error_warning; ?></div>
+  <?php } ?>
+  <div class="box">
+    <div class="heading">
+      <h1><img src="view/image/customer.png" alt="" /> <?php echo $heading_title; ?></h1>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+    </div>
+    <div class="content">
+      <div class="vtabs"><a href="#tab-return"><?php echo $tab_return; ?></a><a href="#tab-product"><?php echo $tab_product; ?></a></div>
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+        <div id="tab-return" class="vtabs-content">
+          <table class="form">
+            <tr>
+              <td><span class="required">*</span> <?php echo $entry_order_id; ?></td>
+              <td><input type="text" name="order_id" value="<?php echo $order_id; ?>" />
+                <?php if ($error_order_id) { ?>
+                <span class="error"><?php echo $error_order_id; ?></span>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_date_ordered; ?></td>
+              <td><input type="text" name="date_ordered" value="<?php echo $date_ordered; ?>" class="date" /></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_customer; ?></td>
+              <td><input type="text" name="customer" value="<?php echo $customer; ?>" />
+                <input type="hidden" name="customer_id" value="<?php echo $customer_id; ?>" /></td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
+              <td><input type="text" name="firstname" value="<?php echo $firstname; ?>" />
+                <?php if ($error_firstname) { ?>
+                <span class="error"><?php echo $error_firstname; ?></span>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
+              <td><input type="text" name="lastname" value="<?php echo $lastname; ?>" />
+                <?php if ($error_lastname) { ?>
+                <span class="error"><?php echo $error_lastname; ?></span>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> <?php echo $entry_email; ?></td>
+              <td><input type="text" name="email" value="<?php echo $email; ?>" />
+                <?php if ($error_email) { ?>
+                <span class="error"><?php echo $error_email; ?></span>
+                <?php  } ?></td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> <?php echo $entry_telephone; ?></td>
+              <td><input type="text" name="telephone" value="<?php echo $telephone; ?>" />
+                <?php if ($error_telephone) { ?>
+                <span class="error"><?php echo $error_telephone; ?></span>
+                <?php  } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_return_status; ?></td>
+              <td><select name="return_status_id">
+                  <?php foreach ($return_statuses as $return_status) { ?>
+                  <?php if ($return_status['return_status_id'] == $return_status_id) { ?>
+                  <option value="<?php echo $return_status['return_status_id']; ?>" selected="selected"><?php echo $return_status['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $return_status['return_status_id']; ?>"><?php echo $return_status['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_comment; ?></td>
+              <td><textarea name="comment" cols="40" rows="5"><?php echo $comment; ?></textarea></td>
+            </tr>
+          </table>
+        </div>
+        <div id="tab-product" class="vtabs-content">
+          <table id="product" class="list">
+            <thead>
+              <tr>
+                <td class="left"><?php echo $entry_product; ?></td>
+                <td class="left"><?php echo $entry_model; ?></td>
+                <td class="right"><?php echo $entry_quantity; ?></td>
+                <td class="left"><?php echo $entry_reason; ?></td>
+                <td class="left"><?php echo $entry_opened; ?></td>
+                <td class="left"><?php echo $entry_comment; ?></td>
+                <td class="left"><?php echo $entry_action; ?></td>
+                <td></td>
+              </tr>
+            </thead>
+            <?php $product_row = 0; ?>
+            <?php foreach ($return_products as $return_product) { ?>
+            <tbody id="product-row<?php echo $product_row; ?>">
+              <tr>
+                <td class="left"><input type="text" name="return_product[<?php echo $product_row; ?>][name]" value="<?php echo $return_product['name']; ?>" />
+                  <input type="hidden" name="return_product[<?php echo $product_row; ?>][product_id]" value="<?php echo $return_product['product_id']; ?>" /></td>
+                <td class="left"><input type="text" name="return_product[<?php echo $product_row; ?>][model]" value="<?php echo $return_product['model']; ?>" /></td>
+                <td class="right"><input type="text" name="return_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $return_product['quantity']; ?>" size="3" /></td>
+                <td class="left"><select name="return_product[<?php echo $product_row; ?>][return_reason_id]">
+                    <?php foreach ($return_reasons as $return_reason) { ?>
+                    <?php if ($return_reason['return_reason_id'] == $return_product['return_reason_id']) { ?>
+                    <option value="<?php echo $return_reason['return_reason_id']; ?>" selected="selected"><?php echo $return_reason['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $return_reason['return_reason_id']; ?>"><?php echo $return_reason['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select></td>
+                <td class="left"><select name="return_product[<?php echo $product_row; ?>][opened]">
+                    <?php if ($return_product['opened']) { ?>
+                    <option value="1" selected="selected"><?php echo $text_opened; ?></option>
+                    <option value="0"><?php echo $text_unopened; ?></option>
+                    <?php } else { ?>
+                    <option value="1"><?php echo $text_opened; ?></option>
+                    <option value="0" selected="selected"><?php echo $text_unopened; ?></option>
+                    <?php } ?>
+                  </select></td>
+                <td class="left"><textarea name="return_product[<?php echo $product_row; ?>][comment]" cols="40" rows="5"><?php echo $return_product['comment']; ?></textarea></td>
+                <td class="left"><select name="return_product[<?php echo $product_row; ?>][return_action_id]">
+                    <option value="0"></option>
+                    <?php foreach ($return_actions as $return_action) { ?>
+                    <?php if ($return_action['return_action_id'] == $return_product['return_action_id']) { ?>
+                    <option value="<?php echo $return_action['return_action_id']; ?>" selected="selected"> <?php echo $return_action['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $return_action['return_action_id']; ?>"><?php echo $return_action['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select></td>
+                <td class="left"><a onclick="$('#product-row<?php echo $product_row; ?>').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>
+              </tr>
+            </tbody>
+            <?php $product_row++; ?>
+            <?php } ?>
+            <tfoot>
+              <tr>
+                <td colspan="7"></td>
+                <td class="left"><a onclick="addProduct();" class="button"><span><?php echo $button_add_product; ?></span></a></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$.widget('custom.catcomplete', $.ui.autocomplete, {
+	_renderMenu: function(ul, items) {
+		var self = this, currentCategory = '';
+		
+		$.each(items, function(index, item) {
+			if (item.category != currentCategory) {
+				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
+				
+				currentCategory = item.category;
+			}
+			
+			self._renderItem(ul, item);
+		});
+	}
+});
+
+$('input[name=\'customer\']').catcomplete({
+	delay: 0,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>',
+			type: 'POST',
+			dataType: 'json',
+			data: 'filter_name=' +  encodeURIComponent(request.term),
+			success: function(data) {	
+				response($.map(data, function(item) {
+					return {
+						category: item.customer_group,
+						label: item.name,
+						value: item.customer_id,
+						firstname: item.firstname,
+						lastname: item.lastname,
+						email: item.email,
+						telephone: item.telephone
+					}
+				}));
+			}
+		});
+		
+	}, 
+	select: function(event, ui) {
+		$('input[name=\'customer\']').attr('value', ui.item.label);
+		$('input[name=\'customer_id\']').attr('value', ui.item.value);
+		$('input[name=\'firstname\']').attr('value', ui.item.firstname);
+		$('input[name=\'lastname\']').attr('value', ui.item.lastname);
+		$('input[name=\'email\']').attr('value', ui.item.email);
+		$('input[name=\'telephone\']').attr('value', ui.item.telephone);
+
+		return false;
+	}
+});
+//--></script> 
+<script type="text/javascript"><!--
+var product_row = <?php echo $product_row; ?>;
+
+function addProduct() {
+    html  = '<tbody id="product-row' + product_row + '">';
+    html += '  <tr>';
+    html += '    <td class="left"><input type="text" name="return_product[' + product_row + '][name]" value="" /><input type="hidden" name="return_product[' + product_row + '][product_id]" value="" /></td>';
+    html += '    <td class="left"><input type="text" name="return_product[' + product_row + '][model]" value="" /></td>';
+	html += '    <td class="right"><input type="text" name="return_product[' + product_row + '][quantity]" value="1" size="3" /></td>';
+    html += '    <td class="left"><select name="return_product[' + product_row + '][return_reason_id]">';
+    <?php foreach ($return_reasons as $return_reason) { ?>
+    html += '		<option value="<?php echo $return_reason['return_reason_id']; ?>"><?php echo $return_reason['name']; ?></option>';
+    <?php } ?>
+    html += '    </select></td>';
+    html += '    <td class="left"><select name="return_product[' + product_row + '][opened]">';
+    html += '      <option value="1"><?php echo $text_opened; ?></option>';
+	html += '      <option value="0"><?php echo $text_unopened; ?></option>';
+    html += '    </select></td>';	
+	html += '    <td class="left"><textarea name="return_product[' + product_row + '][comment]" cols="40" rows="5"></textarea></td>';
+	html += '    <td class="left"><select name="return_product[' + product_row + '][return_action_id]">';
+    <?php foreach ($return_actions as $return_action) { ?>
+    html += '      <option value="<?php echo $return_action['return_action_id']; ?>"><?php echo $return_action['name']; ?></option>';
+    <?php } ?>
+    html += '    </select></td>';	
+    html += '    <td class="left"><a onclick="$(\'#product-row' + product_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
+    html += '  </tr>';
+	html += '</tbody>';
+	
+	$('#product tfoot').before(html);
+
+	productautocomplete(product_row)
+
+	product_row++;
+}
+
+function productautocomplete(product_row) {
+	$('input[name=\'return_product[' + product_row + '][name]\']').autocomplete({
+		delay: 0,
+		source: function(request, response) {
+			$.ajax({
+				url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>',
+				type: 'POST',
+				dataType: 'json',
+				data: 'filter_name=' +  encodeURIComponent(request.term),
+				success: function(data) {	
+					response($.map(data, function(item) {
+						return {
+							label: item.name,
+							value: item.product_id,
+							model: item.model
+						}
+					}));
+				}
+			});
+		}, 
+		select: function(event, ui) {
+			$('input[name=\'return_product[' + product_row + '][product_id]\']').attr('value', ui.item.value);
+			$('input[name=\'return_product[' + product_row + '][name]\']').attr('value', ui.item.label);
+			$('input[name=\'return_product[' + product_row + '][model]\']').attr('value', ui.item.model);
+			
+			return false;
+		}
+	});
+}
+
+$('#product tbody').each(function(index, element) {
+	productautocomplete(index);
+});		
+//--></script> 
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+});
+//--></script> 
+<script type="text/javascript"><!--
+$('.vtabs a').tabs(); 
+//--></script> 
+<?php echo $footer; ?>

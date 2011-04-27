@@ -36,8 +36,9 @@ final class Image {
     }	
 	
     public function save($file, $quality = 100) {
-        $info = pathinfo($file);
-        $extension = strtolower($info['extension']);
+       $info = pathinfo($file);
+       
+	   $extension = strtolower($info['extension']);
    
         if ($extension == 'jpeg' || $extension == 'jpg') {
             imagejpeg($this->image, $file, $quality);
@@ -71,7 +72,7 @@ final class Image {
         		        
        	$image_old = $this->image;
         $this->image = imagecreatetruecolor($width, $height);
-		
+			
 		if (isset($this->info['mime']) && $this->info['mime'] == 'image/png') {		
 			imagealphablending($this->image, false);
 			imagesavealpha($this->image, true);
@@ -169,7 +170,7 @@ final class Image {
 		} elseif (strlen($color) == 3) {
 			list($r, $g, $b) = array($color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2]);    
 		} else {
-			return FALSE;
+			return false;
 		}
 		
 		$r = hexdec($r); 

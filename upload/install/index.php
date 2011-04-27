@@ -33,7 +33,6 @@ $registry->set('response', $response);
 
 // Document
 $document = new Document();
-$document->base = HTTP_SERVER;
 $registry->set('document', $document);
 
 // Front Controller 

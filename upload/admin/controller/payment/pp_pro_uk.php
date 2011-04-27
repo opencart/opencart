@@ -5,18 +5,16 @@ class ControllerPaymentPPProUK extends Controller {
 	public function index() {
 		$this->load->language('payment/pp_pro_uk');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/setting');
 			
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
-			$this->load->model('setting/setting');
-			
 			$this->model_setting_setting->editSetting('pp_pro_uk', $this->request->post);				
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token']);
+			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -75,29 +73,29 @@ class ControllerPaymentPPProUK extends Controller {
 			$this->data['error_partner'] = '';
 		}
 
-		$this->document->breadcrumbs = array();
+		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),       		
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_payment'),
+			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => ' :: '
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=payment/pp_pro_uk&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('payment/pp_pro_uk', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => ' :: '
    		);
 				
-		$this->data['action'] = HTTPS_SERVER . 'index.php?route=payment/pp_pro_uk&token=' . $this->session->data['token'];
+		$this->data['action'] = $this->url->link('payment/pp_pro_uk', 'token=' . $this->session->data['token'], 'SSL');
 		
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token'];
+		$this->data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
 		if (isset($this->request->post['pp_pro_uk_vendor'])) {
 			$this->data['pp_pro_uk_vendor'] = $this->request->post['pp_pro_uk_vendor'];
@@ -166,14 +164,14 @@ class ControllerPaymentPPProUK extends Controller {
 		} else {
 			$this->data['pp_pro_uk_sort_order'] = $this->config->get('pp_pro_uk_sort_order');
 		}
-		
+
 		$this->template = 'payment/pp_pro_uk.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				
+		$this->response->setOutput($this->render());
 	}
 
 	private function validate() {
@@ -198,9 +196,9 @@ class ControllerPaymentPPProUK extends Controller {
 		}
 		
 		if (!$this->error) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}	
 	}
 }

@@ -41,7 +41,7 @@ class ControllerPaymentGoogleCheckout extends Controller {
 		$xml .= '	<checkout-flow-support>';  
 		$xml .= '		<merchant-checkout-flow-support>';
 		$xml .= '			<merchant-calculations>'; 
-		$xml .= '				<merchant-calculations-url>' . HTTPS_SERVER . 'index.php?route=payment/google_checkout/shipping' . '</merchant-calculations-url>';
+		$xml .= '				<merchant-calculations-url>' . $this->url->link('payment/google_checkout/shipping', '', 'SSL') . '</merchant-calculations-url>';
 		$xml .= '			</merchant-calculations>';
 		$xml .= '			<shipping-methods>';
 		$xml .= '				<merchant-calculated-shipping name="SuperShip International">';
@@ -81,8 +81,6 @@ class ControllerPaymentGoogleCheckout extends Controller {
 		} else {
 			$this->data['button'] = 'http://sandbox.google.com/checkout/buttons/checkout.gif?merchant_id=' . $this->config->get('google_checkout_merchant_id') . '&w=180&h=46&style=white&variant=text&loc=en_US';
 		}
-		
-		$this->id = 'google_checkout';
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/google_checkout.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/google_checkout.tpl';
@@ -124,19 +122,19 @@ class ControllerPaymentGoogleCheckout extends Controller {
 
 
 
-		$this->load->model('checkout/extension');
+		$this->load->model('setting/extension');
 		
 		$quote_data = array();
 		
-		$results = $this->model_checkout_extension->getExtensions('shipping');
+		$results = $this->model_setting_extension->getExtensions('shipping');
 		
 		foreach ($results as $result) {
-			$this->load->model('shipping/' . $result['key']);
+			$this->load->model('shipping/' . $result['code']);
 			
-			$quote = $this->{'model_shipping_' . $result['key']}->getQuote(); 
+			$quote = $this->{'model_shipping_' . $result['code']}->getQuote(); 
 
 			if ($quote) {
-				$quote_data[$result['key']] = array(
+				$quote_data[$result['code']] = array(
 					'title'      => $quote['title'],
 					'quote'      => $quote['quote'], 
 					'sort_order' => $quote['sort_order'],

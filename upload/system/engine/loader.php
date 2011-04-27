@@ -50,16 +50,6 @@ final class Loader {
 		}
 	}
 	
-	public function helper($helper) {
-		$file = DIR_SYSTEM . 'helper/' . $helper . '.php';
-	
-		if (file_exists($file)) {
-			include_once($file);
-		} else {
-			exit('Error: Could not load helper ' . $helper . '!');
-		}
-	}
-	
 	public function config($config) {
 		$this->config->load($config);
 	}

@@ -1,29 +1,28 @@
 <div class="box">
-  <div class="top"><img src="catalog/view/theme/default/image/bestsellers.png" alt="" /><?php echo $heading_title; ?></div>
-  <div class="middle">
-    <?php if ($products) { ?>
-    <table cellpadding="2" cellspacing="0" style="width: 100%;">
+  <div class="box-heading"><?php echo $heading_title; ?></div>
+  <div class="box-content">
+    <div class="box-product">
       <?php foreach ($products as $product) { ?>
-      <tr>
-        <td valign="top" style="width:1px"><a href="<?php echo str_replace('&', '&amp;', $product['href']); ?>"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" /></a></td>
-        <td valign="top"><a href="<?php echo str_replace('&', '&amp;', $product['href']); ?>"><?php echo $product['name']; ?></a>
-          <?php if ($display_price) { ?>
-          <br />
+      <div>
+        <?php if ($product['thumb']) { ?>
+        <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" /></a></div>
+        <?php } ?>
+        <div class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></div>
+        <?php if ($product['price']) { ?>
+        <div class="price">
           <?php if (!$product['special']) { ?>
-          <span style="font-size: 11px; color: #900;"><?php echo $product['price']; ?></span>
+          <?php echo $product['price']; ?>
           <?php } else { ?>
-          <span style="font-size: 11px; color: #900; text-decoration: line-through;"><?php echo $product['price']; ?></span> <span style="font-size: 11px; color: #F00;"><?php echo $product['special']; ?></span>
+          <s><?php echo $product['price']; ?></s> <?php echo $product['special']; ?>
           <?php } ?>
-          <a class="button_add_small" href="<?php echo $product['add']; ?>" title="<?php echo $button_add_to_cart; ?>" >&nbsp;</a>
-          <?php } ?>
-		  <?php if ($product['rating']) { ?>
-          <br />
-          <img src="catalog/view/theme/default/image/stars_<?php echo $product['rating'] . '.png'; ?>" alt="<?php echo $product['stars']; ?>" />
-          <?php } ?></td>
-      </tr>
+        </div>
+        <?php } ?>
+        <?php if ($product['rating']) { ?>
+        <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+        <?php } ?>
+        <div class="cart"><a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><span><?php echo $button_cart; ?></span></a></div>
+      </div>
       <?php } ?>
-    </table>
-    <?php } ?>
+    </div>
   </div>
-  <div class="bottom">&nbsp;</div>
 </div>

@@ -67,7 +67,11 @@ $_['entry_postcode']               = 'Origin Zip/Postal Code:<span class="help">
 $_['entry_test']                   = 'Test Mode:<span class="help">Use this module in Test (YES) or Production mode (NO)?</span>';
 $_['entry_quote_type']             = 'Quote Type:<span class="help">Quote for Residential or Commercial Delivery.</span>';
 $_['entry_service']                = 'Services:<span class="help">Select the UPS services to be offered.</span>';
+$_['entry_insurance']              = 'Enable Insurance:<span class="help">Enables insurance with product total as the value</span>';
 $_['entry_display_weight']         = 'Display Delivery Weight:<br /><span class="help">Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 Kg\'s)</span>';
+$_['entry_measurement_code']       = 'Measurement Code:<br /><span class="help">Make sure you match the measurement class with the measurement code.</span>';
+$_['entry_measurement_class']      = 'Measurement Class:<span class="help">Set to centimeters or inches.</span>';
+$_['entry_dimension']			   = 'Dimensions (L x W x H):';
 $_['entry_weight_code']            = 'Weight Code:<br /><span class="help">Allowed kgs or lbs. Make sure you match the weight class with the UPS accepted weight code.</span>';
 $_['entry_weight_class']           = 'Weight Class:<span class="help">Set to kilograms or pounds.</span>';
 $_['entry_tax']                    = 'Tax Class:';

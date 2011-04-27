@@ -17,7 +17,6 @@ class ControllerPaymentPPProUK extends Controller {
 		$this->data['entry_cc_issue'] = $this->language->get('entry_cc_issue');
 		
 		$this->data['button_confirm'] = $this->language->get('button_confirm');
-		$this->data['button_back'] = $this->language->get('button_back');
 
 		$this->load->model('checkout/order');
 		
@@ -76,14 +75,6 @@ class ControllerPaymentPPProUK extends Controller {
 			);
 		}
 		
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
-		} else {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
-		}
-		
-		$this->id = 'payment';
-
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_pro_uk.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/pp_pro_uk.tpl';
 		} else {
@@ -119,8 +110,8 @@ class ControllerPaymentPPProUK extends Controller {
 			'PWD'       => html_entity_decode($this->config->get('pp_pro_uk_password'), ENT_QUOTES, 'UTF-8'),
 			'TENDER'    => 'C',
 			'TRXTYPE'   => $payment_type,
-			'AMT'       => $this->currency->format($order_info['total'], $order_info['currency'], 1.00000, FALSE),
-			'CURRENCY'  => $order_info['currency'],
+			'AMT'       => $this->currency->format($order_info['total'], $order_info['currency'], FALSE, FALSE),
+			'CURRENCY'  => $order_info['currency_code'],
 			'NAME'      => $this->request->post['cc_owner'],
 			'STREET'    => $order_info['payment_address_1'],
 			'CITY'      => $order_info['payment_city'],
@@ -176,9 +167,9 @@ class ControllerPaymentPPProUK extends Controller {
 				$message .= 'TRANSACTIONID: ' . $response_data['TRANSACTIONID'] . "\n";
 			}
 			
-			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('pp_pro_uk_order_status_id'), $message, FALSE);
+			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('pp_pro_uk_order_status_id'), $message, false);
 		
-			$json['success'] = HTTPS_SERVER . 'index.php?route=checkout/success'; 
+			$json['success'] = $this->url->link('checkout/success'); 
 		} else {
 			switch ($response_data['RESULT']) {
 				case '1':

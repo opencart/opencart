@@ -2,7 +2,6 @@
 class ControllerPaymentWorldPay extends Controller {
 	protected function index() {
     	$this->data['button_confirm'] = $this->language->get('button_confirm');
-		$this->data['button_back'] = $this->language->get('button_back');
 
 		$this->load->model('checkout/order');
 		
@@ -14,8 +13,8 @@ class ControllerPaymentWorldPay extends Controller {
 
 		$this->data['merchant'] = $this->config->get('worldpay_merchant');
 		$this->data['order_id'] = $order_info['order_id'];
-		$this->data['amount'] = $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
-		$this->data['currency'] = $order_info['currency'];
+		$this->data['amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
+		$this->data['currency'] = $order_info['currency_code'];
 		$this->data['description'] = $this->config->get('config_name') . ' - #' . $order_info['order_id'];
 		$this->data['name'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
 		
@@ -31,14 +30,6 @@ class ControllerPaymentWorldPay extends Controller {
 		$this->data['email'] = $order_info['email'];
 		$this->data['test'] = $this->config->get('worldpay_test');
 		
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
-		} else {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
-		}
-		
-		$this->id = 'payment';
-
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/worldpay.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/worldpay.tpl';
 		} else {
@@ -68,14 +59,9 @@ class ControllerPaymentWorldPay extends Controller {
 			
 			$this->data['text_response'] = $this->language->get('text_response');
 			$this->data['text_success'] = $this->language->get('text_success');
-			$this->data['text_success_wait'] = sprintf($this->language->get('text_success_wait'), HTTPS_SERVER . 'index.php?route=checkout/success');
+			$this->data['text_success_wait'] = sprintf($this->language->get('text_success_wait'), $this->url->link('checkout/success'));
 			$this->data['text_failure'] = $this->language->get('text_failure');
-			
-			if ($this->request->get['route'] != 'checkout/guest_step_3') {
-				$this->data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), HTTPS_SERVER . 'index.php?route=checkout/payment');
-			} else {
-				$this->data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), HTTPS_SERVER . 'index.php?route=checkout/guest_step_2');
-			}
+			$this->data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->link('checkout/checkout', '', 'SSL'));
 		
 			if (isset($this->request->post['transStatus']) && $this->request->post['transStatus'] == 'Y') { 
 				$this->load->model('checkout/order');
@@ -116,9 +102,9 @@ class ControllerPaymentWorldPay extends Controller {
 					$message .= 'wafMerchMessage: ' . $this->request->post['wafMerchMessage'] . "\n";
 				}				
 
-				$this->model_checkout_order->update($this->request->post['cartId'], $this->config->get('worldpay_order_status_id'), $message, FALSE);
+				$this->model_checkout_order->update($this->request->post['cartId'], $this->config->get('worldpay_order_status_id'), $message, false);
 		
-				$this->data['continue'] = HTTPS_SERVER . 'index.php?route=checkout/success';
+				$this->data['continue'] = $this->url->link('checkout/success');
 				
 				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/worldpay_success.tpl')) {
 					$this->template = $this->config->get('config_template') . '/template/payment/worldpay_success.tpl';
@@ -126,9 +112,9 @@ class ControllerPaymentWorldPay extends Controller {
 					$this->template = 'default/template/payment/worldpay_success.tpl';
 				}	
 		
-	  			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));				
+	  			$this->response->setOutput($this->render());				
 			} else {
-    			$this->data['continue'] = HTTPS_SERVER . 'index.php?route=checkout/cart';
+    			$this->data['continue'] = $this->url->link('checkout/cart');
 		
 				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/worldpay_failure.tpl')) {
 					$this->template = $this->config->get('config_template') . '/template/payment/worldpay_failure.tpl';
@@ -136,7 +122,7 @@ class ControllerPaymentWorldPay extends Controller {
 					$this->template = 'default/template/payment/worldpay_failure.tpl';
 				}
 				
-	  			$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));					
+	  			$this->response->setOutput($this->render());					
 			}
 		}
 	}

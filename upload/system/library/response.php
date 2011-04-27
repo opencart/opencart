@@ -1,8 +1,8 @@
 <?php
 final class Response {
 	private $headers = array(); 
-	private $output;
 	private $level = 0;
+	private $output;
 	
 	public function addHeader($header) {
 		$this->headers[] = $header;
@@ -12,18 +12,21 @@ final class Response {
 		header('Location: ' . $url);
 		exit;
 	}
-
-	public function setOutput($output, $level = 0) {
-		$this->output = $output;
+	
+	public function setCompression($level) {
 		$this->level = $level;
+	}
+		
+	public function setOutput($output) {
+		$this->output = $output;
 	}
 
 	private function compress($data, $level = 0) {
-		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== FALSE)) {
+		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false)) {
 			$encoding = 'gzip';
 		} 
 
-		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== FALSE)) {
+		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== false)) {
 			$encoding = 'x-gzip';
 		}
 
@@ -57,7 +60,7 @@ final class Response {
 			
 		if (!headers_sent()) {
 			foreach ($this->headers as $header) {
-				header($header, TRUE);
+				header($header, true);
 			}
 		}
 		

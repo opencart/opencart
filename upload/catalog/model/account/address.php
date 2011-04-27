@@ -25,7 +25,7 @@ class ModelAccountAddress extends Model {
 	}	
 	
 	public function getAddress($address_id) {
-		$address_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "address WHERE address_id = '" . (int)$address_id . "' and customer_id = '" . (int)$this->customer->getId() . "'");
+		$address_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "address WHERE address_id = '" . (int)$address_id . "' AND customer_id = '" . (int)$this->customer->getId() . "'");
 		
 		if ($address_query->num_rows) {
 			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$address_query->row['country_id'] . "'");
@@ -72,7 +72,7 @@ class ModelAccountAddress extends Model {
 			
 			return $address_data;
 		} else {
-			return FALSE;	
+			return false;	
 		}
 	}
 	

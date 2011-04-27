@@ -5,7 +5,7 @@ class ControllerCatalogDownload extends Controller {
   	public function index() {
 		$this->load->language('catalog/download');
 
-    	$this->document->title = $this->language->get('heading_title');
+    	$this->document->setTitle($this->language->get('heading_title'));
 	
 		$this->load->model('catalog/download');
 		
@@ -15,7 +15,7 @@ class ControllerCatalogDownload extends Controller {
   	public function insert() {
 		$this->load->language('catalog/download');
     
-    	$this->document->title = $this->language->get('heading_title');
+    	$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('catalog/download');
 			
@@ -39,10 +39,6 @@ class ControllerCatalogDownload extends Controller {
 	  
 			$url = '';
 			
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -50,8 +46,12 @@ class ControllerCatalogDownload extends Controller {
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . $url);
+			$this->redirect($this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 	
     	$this->getForm();
@@ -60,7 +60,7 @@ class ControllerCatalogDownload extends Controller {
   	public function update() {
 		$this->load->language('catalog/download');
 
-    	$this->document->title = $this->language->get('heading_title');
+    	$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('catalog/download');
 			
@@ -84,10 +84,6 @@ class ControllerCatalogDownload extends Controller {
 	      
 			$url = '';
 			
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -95,8 +91,12 @@ class ControllerCatalogDownload extends Controller {
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . $url);
+			$this->redirect($this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 		
     	$this->getForm();
@@ -105,21 +105,21 @@ class ControllerCatalogDownload extends Controller {
   	public function delete() {
 		$this->load->language('catalog/download');
  
-    	$this->document->title = $this->language->get('heading_title');
+    	$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('catalog/download');
 			
     	if (isset($this->request->post['selected']) && $this->validateDelete()) {	  
 			foreach ($this->request->post['selected'] as $download_id) {
-				
+			
 				$results = $this->model_catalog_download->getDownload($download_id) ;
                
 				$filename = $results['filename'];
 
 				if (file_exists(DIR_DOWNLOAD . $filename)) {
-					unlink(DIR_DOWNLOAD . $filename);
+					@unlink(DIR_DOWNLOAD . $filename);
 				}
-				
+			
 				$this->model_catalog_download->deleteDownload($download_id);
 			}
 			
@@ -127,10 +127,6 @@ class ControllerCatalogDownload extends Controller {
 
 			$url = '';
 			
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -138,20 +134,18 @@ class ControllerCatalogDownload extends Controller {
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . $url);
+			$this->redirect($this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL'));
     	}
 
     	$this->getList();
   	}
     
   	private function getList() {
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-		
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -164,12 +158,14 @@ class ControllerCatalogDownload extends Controller {
 			$order = 'ASC';
 		}
 		
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+				
 		$url = '';
 			
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -177,23 +173,27 @@ class ControllerCatalogDownload extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+		
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
-  		$this->document->breadcrumbs = array();
+  		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),       		
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . $url,
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL'),
       		'separator' => ' :: '
    		);
 							
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=catalog/download/insert&token=' . $this->session->data['token'] . $url;
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=catalog/download/delete&token=' . $this->session->data['token'] . $url;	
+		$this->data['insert'] = $this->url->link('catalog/download/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$this->data['delete'] = $this->url->link('catalog/download/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
 
 		$this->data['downloads'] = array();
 
@@ -213,7 +213,7 @@ class ControllerCatalogDownload extends Controller {
 						
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=catalog/download/update&token=' . $this->session->data['token'] . '&download_id=' . $result['download_id'] . $url
+				'href' => $this->url->link('catalog/download/update', 'token=' . $this->session->data['token'] . '&download_id=' . $result['download_id'] . $url, 'SSL')
 			);
 						
 			$this->data['downloads'][] = array(
@@ -262,8 +262,8 @@ class ControllerCatalogDownload extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . '&sort=dd.name' . $url;
-		$this->data['sort_remaining'] = HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . '&sort=d.remaining' . $url;
+		$this->data['sort_name'] = $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . '&sort=dd.name' . $url, 'SSL');
+		$this->data['sort_remaining'] = $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . '&sort=d.remaining' . $url, 'SSL');
 		
 		$url = '';
 
@@ -280,20 +280,20 @@ class ControllerCatalogDownload extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . $url . '&page={page}';
+		$pagination->url = $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
 		$this->data['pagination'] = $pagination->render();
 
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
-		
+
 		$this->template = 'catalog/download_list.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				
+		$this->response->setOutput($this->render());
   	}
   
   	private function getForm() {
@@ -316,7 +316,7 @@ class ControllerCatalogDownload extends Controller {
  		if (isset($this->error['name'])) {
 			$this->data['error_name'] = $this->error['name'];
 		} else {
-			$this->data['error_name'] = '';
+			$this->data['error_name'] = array();
 		}
 		
   		if (isset($this->error['download'])) {
@@ -327,10 +327,6 @@ class ControllerCatalogDownload extends Controller {
 		
 		$url = '';
 			
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -339,27 +335,31 @@ class ControllerCatalogDownload extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 		
-  		$this->document->breadcrumbs = array();
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+		
+  		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . $url,
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL'),      		
       		'separator' => ' :: '
    		);
 							
 		if (!isset($this->request->get['download_id'])) {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/download/insert&token=' . $this->session->data['token'] . $url;
+			$this->data['action'] = $this->url->link('catalog/download/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/download/update&token=' . $this->session->data['token'] . '&download_id=' . $this->request->get['download_id'] . $url;
+			$this->data['action'] = $this->url->link('catalog/download/update', 'token=' . $this->session->data['token'] . '&download_id=' . $this->request->get['download_id'] . $url, 'SSL');
 		}
 		
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=catalog/download&token=' . $this->session->data['token'] . $url;
+		$this->data['cancel'] = $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL');
  		
 		$this->load->model('localisation/language');
 		
@@ -376,9 +376,9 @@ class ControllerCatalogDownload extends Controller {
 		}
     	  
     	if (isset($this->request->get['download_id'])) {
-    		$this->data['show_update'] = TRUE;
+    		$this->data['show_update'] = true;
 		} else {
-			$this->data['show_update'] = FALSE;
+			$this->data['show_update'] = false;
  		}
 
 		if (isset($this->request->post['download_description'])) {
@@ -400,16 +400,16 @@ class ControllerCatalogDownload extends Controller {
     	if (isset($this->request->post['update'])) {
       		$this->data['update'] = $this->request->post['update'];
     	} else {
-      		$this->data['update'] = FALSE;
+      		$this->data['update'] = false;
     	}
-		
+
 		$this->template = 'catalog/download_form.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));	
+				
+		$this->response->setOutput($this->render());	
   	}
 
   	private function validateForm() { 
@@ -438,9 +438,9 @@ class ControllerCatalogDownload extends Controller {
 		}
 		
 		if (!$this->error) {
-	  		return TRUE;
+	  		return true;
 		} else {
-	  		return FALSE;
+	  		return false;
 		}
   	}
 
@@ -460,9 +460,9 @@ class ControllerCatalogDownload extends Controller {
 		}	
 			  	  	 
 		if (!$this->error) {
-	  		return TRUE;
+	  		return true;
 		} else {
-	  		return FALSE;
+	  		return false;
 		} 
   	}
 }

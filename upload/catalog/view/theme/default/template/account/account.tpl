@@ -1,36 +1,38 @@
 <?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content">
-  <div class="top">
-    <div class="left"></div>
-    <div class="right"></div>
-    <div class="center">
-      <h1><?php echo $heading_title; ?></h1>
-    </div>
-  </div>
-  <div class="middle">
-    <?php if ($success) { ?>
-    <div class="success"><?php echo $success; ?></div>
+<div id="content"><?php echo $content_top; ?>
+  <div class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
     <?php } ?>
-    <p><b><?php echo $text_my_account; ?></b></p>
+  </div>
+  <h1><?php echo $heading_title; ?></h1>
+  <?php if ($success) { ?>
+  <div class="success"><?php echo $success; ?></div>
+  <?php } ?>
+  <h2><?php echo $text_my_account; ?></h2>
+  <div class="content">
     <ul>
-      <li><a href="<?php echo str_replace('&', '&amp;', $information); ?>"><?php echo $text_information; ?></a></li>
-      <li><a href="<?php echo str_replace('&', '&amp;', $password); ?>"><?php echo $text_password; ?></a></li>
-      <li><a href="<?php echo str_replace('&', '&amp;', $address); ?>"><?php echo $text_address; ?></a></li>
-    </ul>
-    <p><b><?php echo $text_my_orders; ?></b></p>
-    <ul>
-      <li><a href="<?php echo str_replace('&', '&amp;', $history); ?>"><?php echo $text_history; ?></a></li>
-      <li><a href="<?php echo str_replace('&', '&amp;', $download); ?>"><?php echo $text_download; ?></a></li>
-    </ul>
-    <p><b><?php echo $text_my_newsletter; ?></b></p>
-    <ul>
-      <li><a href="<?php echo str_replace('&', '&amp;', $newsletter); ?>"><?php echo $text_newsletter; ?></a></li>
+      <li><a href="<?php echo $edit; ?>"><?php echo $text_edit; ?></a></li>
+      <li><a href="<?php echo $password; ?>"><?php echo $text_password; ?></a></li>
+      <li><a href="<?php echo $address; ?>"><?php echo $text_address; ?></a></li>
+      <li><a href="<?php echo $wishlist; ?>"><?php echo $text_wishlist; ?></a></li>
     </ul>
   </div>
-  <div class="bottom">
-    <div class="left"></div>
-    <div class="right"></div>
-    <div class="center"></div>
+  <h2><?php echo $text_my_orders; ?></h2>
+  <div class="content">
+    <ul>
+      <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
+      <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>
+      <li><a href="<?php echo $reward; ?>"><?php echo $text_reward; ?></a></li>
+      <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li>
+      <li><a href="<?php echo $transaction; ?>"><?php echo $text_transaction; ?></a></li>
+    </ul>
   </div>
-</div>
+  <h2><?php echo $text_my_newsletter; ?></h2>
+  <div class="content">
+    <ul>
+      <li><a href="<?php echo $newsletter; ?>"><?php echo $text_newsletter; ?></a></li>
+    </ul>
+  </div>
+  <?php echo $content_bottom; ?></div>
 <?php echo $footer; ?> 

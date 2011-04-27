@@ -2,7 +2,6 @@
 class ControllerPaymentAuthorizeNetSim extends Controller {
 	protected function index() {
     	$this->data['button_confirm'] = $this->language->get('button_confirm');
-		$this->data['button_back'] = $this->language->get('button_back');
 		
 		$this->data['action'] = $this->config->get('authorizenet_sim_url');
 		
@@ -50,7 +49,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		 * 
 		 * @var Positive number
 		 */
-		$data['x_amount'] = $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);	
+		$data['x_amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);	
 
 		/** 
 		 * 
@@ -80,9 +79,9 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		/* 6.2 Transaction and Display Fields */
 		$mode = $this->config->get('authorizenet_sim_mode');
 		if ($mode == 'live') {
-			$data['x_test_request'] = 'FALSE';
+			$data['x_test_request'] = 'false';
 		} else {
-			$data['x_test_request'] = 'TRUE';
+			$data['x_test_request'] = 'true';
 		}
 		$data['x_type'] = 'AUTH_CAPTURE';
 		$data['x_currency_code'] = $this->currency->getCode();
@@ -119,19 +118,11 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		$data['x_email'] = $order_info['email'];
 		
 		/* 7 Relay Response Mode */
-		$data['x_relay_response'] = 'TRUE';
-		
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = $this->url->https('checkout/payment');
-		} else {
-			$this->data['back'] = $this->url->https('checkout/guest_step_2');
-		}
-		
+		$data['x_relay_response'] = 'true';
+				
 		// calculate this after all our fields are generated
 		$data['x_fp_hash'] = $this->calculateFpHash();
 		
-		$this->id = 'payment';
-
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_sim_index.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/authorizenet_sim_index.tpl';
 		} else {
@@ -203,9 +194,6 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		
 		$data['button_confirm'] = $this->language->get('button_continue');
 		$data['confirm'] = $this->url->https('checkout/success');
-    	
-		$data['button_back'] = $this->language->get('button_back');
-		$data['back'] = $this->url->https('checkout/guest_step_3');
 		
 		if ($data['hash_match'] ) {
 			$order_id = $data['order_id'];
@@ -220,15 +208,13 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 				}
 			}
 		}
-
-		$this->id = 'payment';
-				
+		
 		$this->document->breadcrumbs = array(); 
 
       	$this->document->breadcrumbs[] = array(
         	'href'      => $this->url->http('common/home'),
         	'text'      => $this->language->get('text_home'),
-        	'separator' => FALSE
+        	'separator' => false
       	); 
 
 		
@@ -236,14 +222,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
         	'href'      => $this->url->http('checkout/cart'),
         	'text'      => $this->language->get('text_basket'),
         	'separator' => $this->language->get('text_separator')
-      	);
-		
-		$this->children = array(
-			'common/column_right',
-			'common/footer',
-			'common/column_left',
-			'common/header'
-		);   	
+      	);	
       	
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_sim_callback.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/authorizenet_sim_callback.tpl';
@@ -251,7 +230,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 			$this->template = 'default/template/payment/authorizenet_sim_callback.tpl';
 		}	
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->render();
 	}
 }
 ?>

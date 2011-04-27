@@ -15,7 +15,6 @@ class ControllerPaymentPerpetualPayments extends Controller {
 		$this->data['entry_cc_issue'] = $this->language->get('entry_cc_issue');
 		
 		$this->data['button_confirm'] = $this->language->get('button_confirm');
-		$this->data['button_back'] = $this->language->get('button_back');
 	
 		$this->data['months'] = array();
 		
@@ -45,15 +44,7 @@ class ControllerPaymentPerpetualPayments extends Controller {
 				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)) 
 			);
 		}
-
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
-		} else {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
-		}
 		
-		$this->id = 'payment';
-
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/perpetual_payments.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/perpetual_payments.tpl';
 		} else {
@@ -85,8 +76,8 @@ class ControllerPaymentPerpetualPayments extends Controller {
 			'cust_ip'        => $this->request->server['REMOTE_ADDR'],
 			'cust_email'     => $order_info['email'],
 			'tran_ref'       => $order_info['order_id'],
-			'tran_amount'    => $this->currency->format($order_info['total'], $order_info['currency'], 1.00000, FALSE),
-			'tran_currency' => $order_info['currency'],
+			'tran_amount'    => $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false),
+			'tran_currency' => $order_info['currency_code'],
 			'tran_testmode' => $this->config->get('perpetual_payments_test'),
 			'tran_type'     => 'Sale',
 			'tran_class'    => 'MoTo',
@@ -131,9 +122,9 @@ class ControllerPaymentPerpetualPayments extends Controller {
 					$message .= $this->language->get('text_authorisation') . ' ' . $data[3] . "\n";
 				}
 				
-				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('perpetual_payments_order_status_id'), $message, FALSE);
+				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('perpetual_payments_order_status_id'), $message, false);
 					
-				$json['success'] = HTTPS_SERVER . 'index.php?route=checkout/success';
+				$json['success'] = $this->url->link('checkout/success');
 			} else {
 				$json['error'] = end($data);
 			}

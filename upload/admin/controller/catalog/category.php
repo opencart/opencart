@@ -5,7 +5,7 @@ class ControllerCatalogCategory extends Controller {
 	public function index() {
 		$this->load->language('catalog/category');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('catalog/category');
 		 
@@ -15,7 +15,7 @@ class ControllerCatalogCategory extends Controller {
 	public function insert() {
 		$this->load->language('catalog/category');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('catalog/category');
 		
@@ -24,7 +24,7 @@ class ControllerCatalogCategory extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/category&token=' . $this->session->data['token']); 
+			$this->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL')); 
 		}
 
 		$this->getForm();
@@ -33,7 +33,7 @@ class ControllerCatalogCategory extends Controller {
 	public function update() {
 		$this->load->language('catalog/category');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('catalog/category');
 		
@@ -42,7 +42,7 @@ class ControllerCatalogCategory extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/category&token=' . $this->session->data['token']);
+			$this->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$this->getForm();
@@ -51,7 +51,7 @@ class ControllerCatalogCategory extends Controller {
 	public function delete() {
 		$this->load->language('catalog/category');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('catalog/category');
 		
@@ -62,29 +62,29 @@ class ControllerCatalogCategory extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect(HTTPS_SERVER . 'index.php?route=catalog/category&token=' . $this->session->data['token']);
+			$this->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$this->getList();
 	}
 
 	private function getList() {
-   		$this->document->breadcrumbs = array();
+   		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/category&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => ' :: '
    		);
 									
-		$this->data['insert'] = HTTPS_SERVER . 'index.php?route=catalog/category/insert&token=' . $this->session->data['token'];
-		$this->data['delete'] = HTTPS_SERVER . 'index.php?route=catalog/category/delete&token=' . $this->session->data['token'];
+		$this->data['insert'] = $this->url->link('catalog/category/insert', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['delete'] = $this->url->link('catalog/category/delete', 'token=' . $this->session->data['token'], 'SSL');
 		
 		$this->data['categories'] = array();
 		
@@ -95,7 +95,7 @@ class ControllerCatalogCategory extends Controller {
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => HTTPS_SERVER . 'index.php?route=catalog/category/update&token=' . $this->session->data['token'] . '&category_id=' . $result['category_id']
+				'href' => $this->url->link('catalog/category/update', 'token=' . $this->session->data['token'] . '&category_id=' . $result['category_id'])
 			);
 					
 			$this->data['categories'][] = array(
@@ -134,11 +134,11 @@ class ControllerCatalogCategory extends Controller {
 		
 		$this->template = 'catalog/category_list.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				
+		$this->response->setOutput($this->render());
 	}
 
 	private function getForm() {
@@ -149,9 +149,11 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
     	$this->data['text_disabled'] = $this->language->get('text_disabled');
-		
+		$this->data['text_percent'] = $this->language->get('text_percent');
+		$this->data['text_amount'] = $this->language->get('text_amount');
+				
 		$this->data['entry_name'] = $this->language->get('entry_name');
-		$this->data['entry_meta_keywords'] = $this->language->get('entry_meta_keywords');
+		$this->data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
 		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_store'] = $this->language->get('entry_store');
@@ -160,12 +162,14 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_image'] = $this->language->get('entry_image');
 		$this->data['entry_status'] = $this->language->get('entry_status');
-
+		$this->data['entry_layout'] = $this->language->get('entry_layout');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
     	$this->data['tab_general'] = $this->language->get('tab_general');
     	$this->data['tab_data'] = $this->language->get('tab_data');
+		$this->data['tab_design'] = $this->language->get('tab_design');
 		
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -176,30 +180,30 @@ class ControllerCatalogCategory extends Controller {
  		if (isset($this->error['name'])) {
 			$this->data['error_name'] = $this->error['name'];
 		} else {
-			$this->data['error_name'] = '';
+			$this->data['error_name'] = array();
 		}
 
-  		$this->document->breadcrumbs = array();
+  		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=catalog/category&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => ' :: '
    		);
 		
 		if (!isset($this->request->get['category_id'])) {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/category/insert&token=' . $this->session->data['token'];
+			$this->data['action'] = $this->url->link('catalog/category/insert', 'token=' . $this->session->data['token'], 'SSL');
 		} else {
-			$this->data['action'] = HTTPS_SERVER . 'index.php?route=catalog/category/update&token=' . $this->session->data['token'] . '&category_id=' . $this->request->get['category_id'];
+			$this->data['action'] = $this->url->link('catalog/category/update', 'token=' . $this->session->data['token'] . '&category_id=' . $this->request->get['category_id']);
 		}
 		
-		$this->data['cancel'] = HTTPS_SERVER . 'index.php?route=catalog/category&token=' . $this->session->data['token'];
+		$this->data['cancel'] = $this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->data['token'] = $this->session->data['token'];
 
@@ -292,13 +296,25 @@ class ControllerCatalogCategory extends Controller {
 			$this->data['sort_order'] = 0;
 		}
 		
+		if (isset($this->request->post['category_layout'])) {
+			$this->data['category_layout'] = $this->request->post['category_layout'];
+		} elseif (isset($category_info)) {
+			$this->data['category_layout'] = $this->model_catalog_category->getCategoryLayouts($this->request->get['category_id']);
+		} else {
+			$this->data['category_layout'] = array();
+		}
+
+		$this->load->model('design/layout');
+		
+		$this->data['layouts'] = $this->model_design_layout->getLayouts();
+						
 		$this->template = 'catalog/category_form.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				
+		$this->response->setOutput($this->render());
 	}
 
 	private function validateForm() {
@@ -312,14 +328,14 @@ class ControllerCatalogCategory extends Controller {
 			}
 		}
 		
+		if ($this->error && !isset($this->error['warning'])) {
+			$this->error['warning'] = $this->language->get('error_warning');
+		}
+					
 		if (!$this->error) {
-			return TRUE;
+			return true;
 		} else {
-			if (!isset($this->error['warning'])) {
-				$this->error['warning'] = $this->language->get('error_required_data');
-			}
-			
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -329,9 +345,9 @@ class ControllerCatalogCategory extends Controller {
 		}
  
 		if (!$this->error) {
-			return TRUE; 
+			return true; 
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 }

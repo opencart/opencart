@@ -1,20 +1,14 @@
-<div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px;"><?php echo $text_payable; ?><br />
-  <?php echo $payable; ?><br />
-  <br />
-  <?php echo $text_address; ?><br />
-  <?php echo $address; ?><br />
-  <br />
-  <?php echo $text_payment; ?></div>
+<h2><?php echo $text_instruction; ?></h2>
+<p><b><?php echo $text_payable; ?></b></p>
+<p><?php echo $payable; ?></p>
+<b><?php echo $text_address; ?></b><br />
+<p><?php echo $address; ?></p>
+<p><?php echo $text_payment; ?></p>
 <div class="buttons">
-  <table>
-    <tr>
-      <td align="left"><a onclick="location = '<?php echo str_replace('&', '&amp;', $back); ?>'" class="button"><span><?php echo $button_back; ?></span></a></td>
-      <td align="right"><a id="checkout" class="button"><span><?php echo $button_confirm; ?></span></a></td>
-    </tr>
-  </table>
+  <div class="right"><a id="button-confirm" class="button"><span><?php echo $button_confirm; ?></span></a></div>
 </div>
 <script type="text/javascript"><!--
-$('#checkout').click(function() {
+$('#button-confirm').bind('click', function() {
 	$.ajax({ 
 		type: 'GET',
 		url: 'index.php?route=payment/cheque/confirm',
@@ -23,4 +17,4 @@ $('#checkout').click(function() {
 		}		
 	});
 });
-//--></script>
+//--></script> 

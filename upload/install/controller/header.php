@@ -1,17 +1,14 @@
 <?php
 class ControllerHeader extends Controller {
 	public function index() {
-		$this->data['title'] = $this->document->title;
-		$this->data['description'] = $this->document->description;
-		$this->data['base'] = $this->document->base;
-		$this->data['charset'] = $this->document->charset;
-		$this->data['language'] = $this->document->language;
-		$this->data['direction'] = $this->document->direction;
-		$this->data['links'] = $this->document->links;	
-		$this->data['styles'] = $this->document->styles;
-		$this->data['scripts'] = $this->document->scripts;		
-		$this->data['breadcrumbs'] = $this->document->breadcrumbs;
+		$this->data['title'] = $this->document->getTitle();
+		$this->data['description'] = $this->document->getDescription();
+		$this->data['links'] = $this->document->getLinks();
+		$this->data['styles'] = $this->document->getStyles();
+		$this->data['scripts'] = $this->document->getScripts();		
 		
+		$this->data['base'] = HTTP_SERVER;
+				
 		$this->id       = 'header';
 		$this->template = 'header.tpl';
 

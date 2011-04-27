@@ -1,0 +1,185 @@
+<?php 
+class ControllerAccountVoucher extends Controller { 
+	private $error = array();
+	
+	public function index() {
+		$this->language->load('account/voucher');
+		
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('account/voucher');
+		
+		if (!isset($this->session->data['voucher'])) {
+			$this->session->data['voucher'] = array();
+		}
+					
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+
+			$this->session->data['voucher'][] = $this->request->post;
+	  	  
+	  		$this->redirect($this->url->link('account/voucher/success'));
+    	} 		
+
+      	$this->data['breadcrumbs'] = array();
+
+      	$this->data['breadcrumbs'][] = array(
+        	'text'      => $this->language->get('text_home'),
+			'href'      => $this->url->link('common/home'),
+        	'separator' => false
+      	); 
+
+      	$this->data['breadcrumbs'][] = array(       	
+        	'text'      => $this->language->get('text_voucher'),
+			'href'      => $this->url->link('account/voucher', '', 'SSL'),
+        	'separator' => $this->language->get('text_separator')
+      	);
+
+    	$this->data['heading_title'] = $this->language->get('heading_title');
+		
+		$this->data['text_description'] = $this->language->get('text_description');
+		$this->data['text_agree'] = $this->language->get('text_agree');
+		
+		$this->data['entry_to_name'] = $this->language->get('entry_to_name');
+		$this->data['entry_to_email'] = $this->language->get('entry_to_email');
+		$this->data['entry_from_name'] = $this->language->get('entry_from_name');
+		$this->data['entry_from_email'] = $this->language->get('entry_from_email');
+		$this->data['entry_message'] = $this->language->get('entry_message');
+		$this->data['entry_amount'] = $this->language->get('entry_amount');
+		
+		$this->data['button_continue'] = $this->language->get('button_continue');
+		
+		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+		
+		if (isset($this->error['to_name'])) {
+			$this->data['error_to_name'] = $this->error['to_name'];
+		} else {
+			$this->data['error_to_name'] = '';
+		}
+		
+		if (isset($this->request->post['to_email'])) {
+			$this->data['error_to_email'] = $this->error['to_email'];
+		} else {
+			$this->data['error_to_email'] = '';
+		}
+				
+		if (isset($this->error['from_name'])) {
+			$this->data['error_from_name'] = $this->error['from_name'];
+		} else {
+			$this->data['error_from_name'] = '';
+		}
+		
+		if (isset($this->error['from_email'])) {
+			$this->data['error_from_email'] = $this->error['from_email'];
+		} else {
+			$this->data['error_from_email'] = '';
+		}
+				
+		if (isset($this->error['amount'])) {
+			$this->data['error_amount'] = $this->error['amount'];
+		} else {
+			$this->data['error_amount'] = '';
+		}
+			
+		$this->data['action'] = $this->url->link('account/voucher', '', 'SSL');
+								
+		if (isset($this->request->post['to_name'])) {
+			$this->data['to_name'] = $this->request->post['to_name'];
+		} else {
+			$this->data['to_name'] = '';
+		}
+		
+		if (isset($this->request->post['to_email'])) {
+			$this->data['to_email'] = $this->request->post['to_email'];
+		} else {
+			$this->data['to_email'] = '';
+		}
+				
+		if (isset($this->request->post['from_name'])) {
+			$this->data['from_name'] = $this->request->post['from_name'];
+		} elseif ($this->customer->isLogged()) {
+			$this->data['from_name'] = $this->customer->getFirstName() . ' '  . $this->customer->getLastName();
+		} else {
+			$this->data['from_name'] = '';
+		}
+		
+		if (isset($this->request->post['from_email'])) {
+			$this->data['from_email'] = $this->request->post['from_email'];
+		} elseif ($this->customer->isLogged()) {
+			$this->data['from_email'] = $this->customer->getEmail();		
+		} else {
+			$this->data['from_email'] = '';
+		}
+			
+		if (isset($this->request->post['message'])) {
+			$this->data['message'] = $this->request->post['message'];
+		} else {
+			$this->data['message'] = '';
+		}	
+				
+		if (isset($this->request->post['amount'])) {
+			$this->data['amount'] = $this->request->post['amount'];
+		} else {
+			$this->data['amount'] = '25.00';
+		}	
+		
+		if (isset($this->request->post['agree'])) {
+			$this->data['agree'] = $this->request->post['agree'];
+		} else {
+			$this->data['agree'] = false;
+		}	
+				
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/voucher.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/account/voucher.tpl';
+		} else {
+			$this->template = 'default/template/account/voucher.tpl';
+		}
+		
+		$this->children = array(
+			'common/column_left',
+			'common/column_right',
+			'common/content_top',
+			'common/content_bottom',
+			'common/footer',
+			'common/header'	
+		);
+				
+		$this->response->setOutput($this->render());		
+  	}
+	
+	private function validate() {
+    	if ((strlen(utf8_decode($this->request->post['to_name'])) < 1) || (strlen(utf8_decode($this->request->post['to_name'])) > 64)) {
+      		$this->error['to_name'] = $this->language->get('error_to_name');
+    	}    	
+		
+		if ((strlen(utf8_decode($this->request->post['to_email'])) > 96) || !filter_var($this->request->post['to_email'], FILTER_VALIDATE_EMAIL)) {
+      		$this->error['to_email'] = $this->language->get('error_email');
+    	}
+		
+    	if ((strlen(utf8_decode($this->request->post['from_name'])) < 1) || (strlen(utf8_decode($this->request->post['from_name'])) > 64)) {
+      		$this->error['from_name'] = $this->language->get('error_from_name');
+    	}  
+		
+		if ((strlen(utf8_decode($this->request->post['from_email'])) > 96) || !filter_var($this->request->post['from_email'], FILTER_VALIDATE_EMAIL)) {
+      		$this->error['from_email'] = $this->language->get('error_email');
+    	}
+		
+		if (($this->request->post['amount'] < 1) || ($this->request->post['amount'] > 1000)) {
+      		$this->error['amount'] = sprintf($this->language->get('error_amount'), $this->currency->format(1, $this->currency->getCode(), 1), $this->currency->format(1000, $this->currency->getCode(), 1) . ' ' . $this->currency->getCode());
+    	}
+		
+		if (!isset($this->request->post['agree'])) {
+      		$this->error['warning'] = $this->language->get('error_agree');
+		}
+									
+    	if (!$this->error) {
+      		return true;
+    	} else {
+      		return false;
+    	}				
+	}
+}
+?>

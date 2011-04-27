@@ -3,18 +3,14 @@ class ModelShippingRoyalMail extends Model {
 	function getQuote($address) {
 		$this->load->language('shipping/royal_mail');
 		
-		if ($this->config->get('royal_mail_status')) {
-      		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('royal_mail_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
-		
-      		if (!$this->config->get('royal_mail_geo_zone_id')) {
-        		$status = TRUE;
-      		} elseif ($query->num_rows) {
-        		$status = TRUE;
-      		} else {
-        		$status = FALSE;
-      		}
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('royal_mail_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+	
+		if (!$this->config->get('royal_mail_geo_zone_id')) {
+			$status = true;
+		} elseif ($query->num_rows) {
+			$status = true;
 		} else {
-			$status = FALSE;
+			$status = false;
 		}
 
 		$quote_data = array();
@@ -71,7 +67,7 @@ class ModelShippingRoyalMail extends Model {
 					}	
 					
 					$quote_data['1st_class_standard'] = array(
-						'id'           => 'royal_mail.1st_class_standard',
+						'code'         => 'royal_mail.1st_class_standard',
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
@@ -128,7 +124,7 @@ class ModelShippingRoyalMail extends Model {
 					}	
 						
 					$quote_data['1st_class_recorded'] = array(
-						'id'           => 'royal_mail.1st_class_recorded',
+						'code'         => 'royal_mail.1st_class_recorded',
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
@@ -166,7 +162,7 @@ class ModelShippingRoyalMail extends Model {
 					}					
 					
 					$quote_data['2nd_class_standard'] = array(
-						'id'           => 'royal_mail.2nd_class_standard',
+						'code'         => 'royal_mail.2nd_class_standard',
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
@@ -223,7 +219,7 @@ class ModelShippingRoyalMail extends Model {
 					}						
 					
 					$quote_data['2nd_class_recorded'] = array(
-						'id'           => 'royal_mail.2nd_class_recorded',
+						'code'         => 'royal_mail.2nd_class_recorded',
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
@@ -280,7 +276,7 @@ class ModelShippingRoyalMail extends Model {
 					}						
 									
 					$quote_data['standard_parcels'] = array(
-						'id'           => 'royal_mail.standard_parcels',
+						'code'         => 'royal_mail.standard_parcels',
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
@@ -324,7 +320,7 @@ class ModelShippingRoyalMail extends Model {
 					}
 					
 					$quote_data['airmail'] = array(
-						'id'           => 'royal_mail.airmail',
+						'code'         => 'royal_mail.airmail',
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
@@ -391,7 +387,7 @@ class ModelShippingRoyalMail extends Model {
 					}	
 					
 					$quote_data['international_signed'] = array(
-						'id'           => 'royal_mail.international_signed',
+						'code'         => 'royal_mail.international_signed',
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
@@ -473,7 +469,7 @@ class ModelShippingRoyalMail extends Model {
 					}	
 					
 					$quote_data['airsure'] = array(
-						'id'           => 'royal_mail.airsure',
+						'code'         => 'royal_mail.airsure',
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
@@ -516,7 +512,7 @@ class ModelShippingRoyalMail extends Model {
 					}	
 					
 					$quote_data['airsure'] = array(
-						'id'           => 'royal_mail.surface',
+						'code'         => 'royal_mail.surface',
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
@@ -530,11 +526,11 @@ class ModelShippingRoyalMail extends Model {
 		
 		if ($quote_data) {
 			$method_data = array(
-				'id'         => 'royal_mail',
+				'code'       => 'royal_mail',
 				'title'      => $this->language->get('text_title'),
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('royal_mail_sort_order'),
-				'error'      => FALSE
+				'error'      => false
 			);
 		}
 			

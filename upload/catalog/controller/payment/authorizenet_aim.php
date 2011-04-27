@@ -12,7 +12,6 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		$this->data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
 		
 		$this->data['button_confirm'] = $this->language->get('button_confirm');
-		$this->data['button_back'] = $this->language->get('button_back');
 		
 		$this->data['months'] = array();
 		
@@ -34,14 +33,6 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 			);
 		}
 		
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
-		} else {
-			$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/guest_step_2';
-		}
-		
-		$this->id = 'payment';
-
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_aim.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/authorizenet_aim.tpl';
 		} else {
@@ -56,7 +47,9 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
     		$url = 'https://secure.authorize.net/gateway/transact.dll';
 		} elseif ($this->config->get('authorizenet_aim_server') == 'test') {
 			$url = 'https://test.authorize.net/gateway/transact.dll';		
-		}
+		}	
+		
+		//$url = 'https://secure.networkmerchants.com/gateway/transact.dll';	
 		
 		$this->load->model('checkout/order');
 		
@@ -67,10 +60,10 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		$data['x_login'] = $this->config->get('authorizenet_aim_login');
 		$data['x_tran_key'] = $this->config->get('authorizenet_aim_key');
 		$data['x_version'] = '3.1';
-		$data['x_delim_data'] = 'TRUE';
+		$data['x_delim_data'] = 'true';
 		$data['x_delim_char'] = ',';
 		$data['x_encap_char'] = '"';
-		$data['x_relay_response'] = 'FALSE';
+		$data['x_relay_response'] = 'false';
 		$data['x_first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
 		$data['x_last_name'] = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
 		$data['x_company'] = html_entity_decode($order_info['payment_company'], ENT_QUOTES, 'UTF-8');
@@ -83,7 +76,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		$data['x_customer_ip'] = $this->request->server['REMOTE_ADDR'];
 		$data['x_email'] = $order_info['email'];
 		$data['x_description'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
-		$data['x_amount'] = $this->currency->format($order_info['total'], $order_info['currency'], 1.00000, FALSE);
+		$data['x_amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false);
 		$data['x_currency_code'] = $this->currency->getCode();
 		$data['x_method'] = 'CC';
 		$data['x_type'] = ($this->config->get('authorizenet_aim_method') == 'capture') ? 'AUTH_CAPTURE' : 'AUTH_ONLY';
@@ -93,7 +86,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		$data['x_invoice_num'] = $this->session->data['order_id'];
 	
 		if ($this->config->get('authorizenet_aim_mode') == 'test') {
-			$data['x_test_request'] = 'TRUE';
+			$data['x_test_request'] = 'true';
 		}	
 				
 		$curl = curl_init($url);
@@ -126,14 +119,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		$json = array();
 		
 		if ($response_data[1] == '1') {
-			
-			if ($this->config->get('authorizenet_aim_hash')) {
-				$checksum = strtoupper(md5($this->config->get('authorizenet_aim_hash') . $this->config->get('authorizenet_aim_login') . $response_data[6] . $this->currency->format($order_info['total'], $order_info['currency'], 1.00000, FALSE)));
-			} else {
-				$checksum = strtoupper(md5($this->config->get('authorizenet_aim_login') . $response_data[6] . $this->currency->format($order_info['total'], $order_info['currency'], 1.00000, FALSE)));
-			}
-			
-			if (strtoupper($response_data[38]) != $checksum) {
+			if (strtoupper($response_data[38]) != strtoupper(md5($this->config->get('authorizenet_aim_hash') . $this->config->get('authorizenet_aim_login') . $response_data[6] . $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false)))) {
 				$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
 				
 				$message = '';
@@ -158,10 +144,10 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 					$message .= 'Cardholder Authentication Verification Response: ' . $response_data['40'] . "\n";
 				}				
 
-				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('authorizenet_aim_order_status_id'), $message, FALSE);				
+				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('authorizenet_aim_order_status_id'), $message, false);				
 			}
 			
-			$json['success'] = HTTPS_SERVER . 'index.php?route=checkout/success';
+			$json['success'] = $this->url->link('checkout/success', '', 'SSL');
 		} else {
 			$json['error'] = $response_data[4];
 		}

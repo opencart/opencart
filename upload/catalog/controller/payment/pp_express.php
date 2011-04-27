@@ -2,7 +2,6 @@
 class ControllerPaymentPPExpress extends Controller {
 	protected function index() {
     	$this->data['button_confirm'] = $this->language->get('button_confirm');
-		$this->data['button_back'] = $this->language->get('button_back');
 
 		if (!$this->config->get('pp_express_test')) {
     		$this->data['action'] = 'https://www.pp_express.com/cgi-bin/webscr';
@@ -59,20 +58,14 @@ class ControllerPaymentPPExpress extends Controller {
 		if (($response_array['ACK'] != 'Success') && ($response_array['ACK'] != 'SuccessWithWarning')) {
 			tep_redirect(tep_href_link(FILENAME_SHOPPING_CART, 'error_message=' . stripslashes($response_array['L_LONGMESSAGE0']), 'SSL'));
 		}		
-
-
-
-		$this->data['back'] = HTTPS_SERVER . 'index.php?route=checkout/payment';
 		
-		$this->id = 'payment';
-
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_express.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/pp_express.tpl';
 		} else {
 			$this->template = 'default/template/payment/pp_express.tpl';
 		}	
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));		
+		$this->render();		
 	}
 }
 ?>

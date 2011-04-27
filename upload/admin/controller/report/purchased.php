@@ -3,7 +3,7 @@ class ControllerReportPurchased extends Controller {
 	public function index() {   
 		$this->load->language('report/purchased');
 
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -17,17 +17,17 @@ class ControllerReportPurchased extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-   		$this->document->breadcrumbs = array();
+   		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=report/purchased&token=' . $this->session->data['token'] . $url,
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('report/purchased', 'token=' . $this->session->data['token'] . $url, 'SSL'),
       		'separator' => ' :: '
    		);		
 		
@@ -62,17 +62,17 @@ class ControllerReportPurchased extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = HTTPS_SERVER . 'index.php?route=report/purchased&token=' . $this->session->data['token'] . '&page={page}';
+		$pagination->url = $this->url->link('report/purchased', 'token=' . $this->session->data['token'] . '&page={page}');
 			
 		$this->data['pagination'] = $pagination->render();		
-		
+
 		$this->template = 'report/purchased.tpl';
 		$this->children = array(
-			'common/header',	
-			'common/footer'	
+			'common/header',
+			'common/footer',
 		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				
+		$this->response->setOutput($this->render());
 	}	
 }
 ?>

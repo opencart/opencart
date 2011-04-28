@@ -22,7 +22,7 @@
   <?php } ?>
   <div class="pagination"><?php echo $pagination; ?></div>
   <?php } else { ?>
-  <div class="content"><?php echo $text_no_results; ?></div>
+  <div class="content"><?php echo $text_empty; ?></div>
   <?php } ?>
   <div class="buttons">
     <div class="right"><a href="<?php echo $continue; ?>" class="button"><span><?php echo $button_continue; ?></span></a></div>

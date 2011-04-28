@@ -16,7 +16,7 @@
   <div class="content">
     <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a>
       <?php if ($voucher_id) { ?>
-      <a href="#tab-voucher"><?php echo $tab_voucher_history; ?></a>
+      <a href="#tab-history"><?php echo $tab_voucher_history; ?></a>
       <?php } ?>
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">

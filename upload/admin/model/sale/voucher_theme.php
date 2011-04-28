@@ -6,17 +6,19 @@ class ModelSaleVoucherTheme extends Model {
 		$voucher_theme_id = $this->db->getLastId();
 		
 		foreach ($data['voucher_theme_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_theme SET language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_theme_description SET voucher_theme_id = '" . (int)$voucher_theme_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
 		
 		$this->cache->delete('voucher_theme');
 	}
 
 	public function editVoucherTheme($voucher_theme_id, $data) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_theme WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "', image = '" . $this->db->escape($data['image']) . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "voucher_theme SET image = '" . $this->db->escape($data['image']) . "' WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
+		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_theme_description WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
 
 		foreach ($data['voucher_theme_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_theme SET voucher_theme_id = '" . (int)$voucher_theme_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_theme_description SET voucher_theme_id = '" . (int)$voucher_theme_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
 				
 		$this->cache->delete('voucher_theme');
@@ -30,7 +32,7 @@ class ModelSaleVoucherTheme extends Model {
 	}
 		
 	public function getVoucherTheme($voucher_theme_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_theme WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_theme WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
 		
 		return $query->row;
 	}

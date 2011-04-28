@@ -322,7 +322,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		}
 		
 		if (isset($this->request->get['voucher_theme_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-      		$voucher_theme_info = $this->model_sale_category->getVoucherTheme($this->request->get['voucher_theme_id']);
+      		$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($this->request->get['voucher_theme_id']);
     	}
 					
 		$this->data['cancel'] = $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -334,11 +334,11 @@ class ControllerSaleVoucherTheme extends Controller {
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();
 		
 		if (isset($this->request->post['voucher_theme'])) {
-			$this->data['voucher_theme_descriptions'] = $this->request->post['voucher_theme_description'];
+			$this->data['voucher_theme_description'] = $this->request->post['voucher_theme_description'];
 		} elseif (isset($this->request->get['voucher_theme_id'])) {
-			$this->data['voucher_theme_descriptions'] = $this->model_sale_voucher_theme->getVoucherThemeDescriptions($this->request->get['voucher_theme_id']);
+			$this->data['voucher_theme_description'] = $this->model_sale_voucher_theme->getVoucherThemeDescriptions($this->request->get['voucher_theme_id']);
 		} else {
-			$this->data['voucher_theme_descriptions'] = array();
+			$this->data['voucher_theme_description'] = array();
 		}
 		
 		if (isset($this->request->post['image'])) {

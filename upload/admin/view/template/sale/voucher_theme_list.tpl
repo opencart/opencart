@@ -40,7 +40,7 @@
                 <input type="checkbox" name="selected[]" value="<?php echo $voucher_theme['voucher_theme_id']; ?>" />
                 <?php } ?></td>
               <td class="left"><?php echo $voucher_theme['name']; ?></td>
-              <td class="right"><?php foreach ($return_status['action'] as $action) { ?>
+              <td class="right"><?php foreach ($voucher_theme['action'] as $action) { ?>
                 [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
                 <?php } ?></td>
             </tr>

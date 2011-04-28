@@ -541,7 +541,7 @@ class ControllerSaleVoucher extends Controller {
 		
 		$this->data['histories'] = array();
 			
-		$results = $this->model_sale_voucher->getVoucher-Histories($this->request->get['voucher_id'], ($page - 1) * 10, 10);
+		$results = $this->model_sale_voucher->getVoucherHistories($this->request->get['voucher_id'], ($page - 1) * 10, 10);
       		
 		foreach ($results as $result) {
         	$this->data['histories'][] = array(

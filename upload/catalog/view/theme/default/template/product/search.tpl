@@ -96,7 +96,7 @@
         <?php if (!$product['special']) { ?>
         <?php echo $product['price']; ?>
         <?php } else { ?>
-        <s><?php echo $product['price']; ?></s> <?php echo $product['special']; ?>
+        <s><?php echo $product['price']; ?></s> <b><?php echo $product['special']; ?></b>
         <?php } ?>
         <?php if ($product['tax']) { ?>
         <br />

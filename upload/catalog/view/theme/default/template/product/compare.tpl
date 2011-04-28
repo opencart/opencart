@@ -34,7 +34,7 @@
         <td><?php if (!$products[$product['product_id']]['special']) { ?>
           <?php echo $products[$product['product_id']]['price']; ?>
           <?php } else { ?>
-          <s><?php echo $products[$product['product_id']]['price']; ?></s> <?php echo $products[$product['product_id']]['special']; ?>
+          <s><?php echo $products[$product['product_id']]['price']; ?></s> <b><?php echo $products[$product['product_id']]['special']; ?></b>
           <?php } ?></td>
         <?php } ?>
       </tr>

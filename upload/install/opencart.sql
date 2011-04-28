@@ -305,8 +305,8 @@ CREATE TABLE `oc_banner_image` (
 --
 
 INSERT INTO `oc_banner_image` (`banner_image_id`, `banner_id`, `link`, `image`) VALUES
-(51, 7, 'http://dev.opencart.com/index.php?route=product/product&amp;path=57&amp;product_id=49', 'data/samsung_banner.jpg'),
-(49, 6, 'http://dev.opencart.com/index.php?route=product/manufacturer/product&amp;manufacturer_id=7', 'data/hp_banner.jpg');
+(51, 7, 'index.php?route=product/product&amp;path=57&amp;product_id=49', 'data/samsung_banner.jpg'),
+(49, 6, 'index.php?route=product/manufacturer/product&amp;manufacturer_id=7', 'data/hp_banner.jpg');
 
 -- --------------------------------------------------------
 

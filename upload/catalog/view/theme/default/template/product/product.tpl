@@ -34,7 +34,7 @@
         <?php if (!$special) { ?>
         <?php echo $price; ?>
         <?php } else { ?>
-        <s><?php echo $price; ?></s> <?php echo $special; ?>
+        <s><?php echo $price; ?></s> <b><?php echo $special; ?></b>
         <?php } ?>
         <br />
         <?php if ($tax) { ?>

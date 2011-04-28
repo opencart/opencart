@@ -62,6 +62,7 @@ $_['text_documentation']    = 'Documentation';
 $_['text_users']            = 'Users';
 $_['text_user_group']       = 'User Groups';
 $_['text_voucher']          = 'Gift Vouchers';
+$_['text_voucher_type']     = 'Voucher Types';
 $_['text_weight_class']     = 'Weight Classes';
 $_['text_length_class']     = 'Length Classes';
 $_['text_zone']             = 'Zones';

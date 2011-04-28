@@ -144,6 +144,13 @@ class ModelLocalisationLanguage extends Model {
 		
 		$this->cache->delete('stock_status');
 		
+		// Voucher Type
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_type_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+		foreach ($query->rows as $voucher_type) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_type_description SET voucher_type_id = '" . (int)$voucher_type['voucher_type_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($voucher_type['name']) . "'");
+		}	
+				
 		// Weight Class
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "weight_class_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 

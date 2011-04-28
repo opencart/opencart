@@ -114,7 +114,12 @@ $(document).ready(function(){
           </li>
           <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
           <li><a href="<?php echo $coupon; ?>"><?php echo $text_coupon; ?></a></li>
-          <li><a href="<?php echo $voucher; ?>"><?php echo $text_voucher; ?></a></li>
+          <li><a class="parent"><?php echo $text_voucher; ?></a>
+            <ul>
+              <li><a href="<?php echo $voucher; ?>"><?php echo $text_voucher; ?></a></li>
+              <li><a href="<?php echo $voucher_type; ?>"><?php echo $text_voucher_type; ?></a></li>
+            </ul>
+          </li>
           <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
         </ul>
       </li>

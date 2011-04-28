@@ -378,7 +378,7 @@ class ControllerSaleVoucherTheme extends Controller {
     	}
 		
 		if (!$this->request->post['image']) {
-			
+			$this->error['image'] = $this->language->get('error_image');
 		}
 		
 		if (!$this->error) {

@@ -63,6 +63,19 @@
             <?php } ?></td>
         </tr>
         <tr>
+          <td><?php echo $entry_type; ?></td>
+          <td><select name="voucher_type_id">
+              <option value="0"><?php echo $text_none; ?></option>
+              <?php foreach ($voucher_types as $voucher_type) { ?>
+              <?php if ($voucher_type['voucher_type_id'] == $voucher_type_id) { ?>
+              <option value="<?php echo $voucher_type['voucher_type_id']; ?>" selected="selected"><?php echo $voucher_type['name']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $voucher_type['voucher_type_id']; ?>"><?php echo $voucher_type['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select></td>
+        </tr>
+        <tr>
           <td><?php echo $entry_status; ?></td>
           <td><select name="status">
               <?php if ($status) { ?>

@@ -1,37 +1,20 @@
 <?php 
-
 class ControllerPaymentNOCHEX extends Controller {
-
 	private $error = array(); 
 
-
-
 	public function index() {
-
 		$this->load->language('payment/nochex');
-
-
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		
-
 		$this->load->model('setting/setting');
 
-			
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
-
 			$this->model_setting_setting->editSetting('nochex', $this->request->post);				
-
-			
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-
-
 			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
-
 		}
 
 
@@ -307,20 +290,11 @@ class ControllerPaymentNOCHEX extends Controller {
 
 		}
 
-		
-
 		if (!$this->error) {
-
 			return true;
-
 		} else {
-
 			return false;
-
 		}	
-
 	}
-
 }
-
 ?>

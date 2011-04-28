@@ -13,7 +13,7 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><img src="view/image/order.png" alt="" /> <?php echo $heading_title; ?></h1>
+      <h1><img src="view/image/payment.png" alt="" /> <?php echo $heading_title; ?></h1>
       <div class="buttons"><a onclick="location = '<?php echo $insert; ?>'" class="button"><span><?php echo $button_insert; ?></span></a><a onclick="$('form').submit();" class="button"><span><?php echo $button_delete; ?></span></a></div>
     </div>
     <div class="content">
@@ -31,15 +31,15 @@
             </tr>
           </thead>
           <tbody>
-            <?php if ($voucher_types) { ?>
-            <?php foreach ($voucher_types as $voucher_type) { ?>
+            <?php if ($voucher_themes) { ?>
+            <?php foreach ($voucher_themes as $voucher_theme) { ?>
             <tr>
-              <td style="text-align: center;"><?php if ($voucher_type['selected']) { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $voucher_type['voucher_type_id']; ?>" checked="checked" />
+              <td style="text-align: center;"><?php if ($voucher_theme['selected']) { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $voucher_theme['voucher_theme_id']; ?>" checked="checked" />
                 <?php } else { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $voucher_type['voucher_type_id']; ?>" />
+                <input type="checkbox" name="selected[]" value="<?php echo $voucher_theme['voucher_theme_id']; ?>" />
                 <?php } ?></td>
-              <td class="left"><?php echo $voucher_type['name']; ?></td>
+              <td class="left"><?php echo $voucher_theme['name']; ?></td>
               <td class="right"><?php foreach ($return_status['action'] as $action) { ?>
                 [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
                 <?php } ?></td>

@@ -93,8 +93,8 @@ class ModelSaleVoucher extends Model {
 		return $query->row['total'];
 	}	
 	
-	public function getTotalVouchersByVoucherTypeId($voucher_type_id) {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "voucher WHERE voucher_type_id = '" . (int)$voucher_type_id . "'");
+	public function getTotalVouchersByVoucherThemeId($voucher_theme_id) {
+      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "voucher WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
 		
 		return $query->row['total'];
 	}		

@@ -260,8 +260,10 @@ class ControllerSaleVoucherTheme extends Controller {
   
   	private function getForm() {
      	$this->data['heading_title'] = $this->language->get('heading_title');
-
-    	$this->data['entry_name'] = $this->language->get('entry_name');
+		
+		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
+    	
+		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_image'] = $this->language->get('entry_image');
 
     	$this->data['button_save'] = $this->language->get('button_save');
@@ -374,6 +376,10 @@ class ControllerSaleVoucherTheme extends Controller {
         		$this->error['name'][$language_id] = $this->language->get('error_name');
       		}
     	}
+		
+		if (!$this->request->post['image']) {
+			
+		}
 		
 		if (!$this->error) {
 	  		return true;

@@ -170,28 +170,25 @@ body > #container {
 	margin-bottom: 15px;
 }
 .success {
-	padding: 15px 0px;
+	padding: 10px 10px 10px 33px;
 	margin-bottom: 15px;
-	background: #E4F1C9;
-	border: 1px solid #A5BD71;
-	font-size: 12px;
-	text-align: center;
+	background: #EAF7D9 url('../image/success.png') 10px center no-repeat;
+	border: 1px solid #BBDF8D;
+	color: #555555;
 }
 .warning {
-	padding: 15px 0px;
+	padding: 10px 10px 10px 33px;
 	margin-bottom: 15px;
-	background: #FFDFE0;
-	border: 1px solid #FF9999;
-	font-size: 12px;
-	text-align: center;
+	background: #FFD1D1 url('../image/warning.png') 10px center no-repeat;
+	border: 1px solid #F8ACAC;
+	color: #555555;
 }
 .attention {
-	padding: 15px 0px;
+	padding: 10px 10px 10px 33px;
 	margin-bottom: 15px;
-	background: #FEFBCC;
-	border: 1px solid #E6DB55;
-	font-size: 12px;
-	text-align: center;
+	background: #FFF5CC url('../image/attention.png') 10px center no-repeat;
+	border: 1px solid #F2DD8C;
+	color: #555555;
 }
 .required {
 	color: #FF0000;

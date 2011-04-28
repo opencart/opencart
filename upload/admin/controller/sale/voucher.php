@@ -189,7 +189,6 @@ class ControllerSaleVoucher extends Controller {
 				'amount'        => $result['amount'],
 				'status'        => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'date_redeemed' => date($this->language->get('date_format_short'), strtotime($result['date_redeemed'])),
 				'selected'      => isset($this->request->post['selected']) && in_array($result['voucher_id'], $this->request->post['selected']),
 				'action'        => $action
 			);
@@ -205,7 +204,6 @@ class ControllerSaleVoucher extends Controller {
 		$this->data['column_amount'] = $this->language->get('column_amount');
 		$this->data['column_status'] = $this->language->get('column_status');
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
-		$this->data['column_date_redeemed'] = $this->language->get('column_date_redeemed');
 		$this->data['column_action'] = $this->language->get('column_action');		
 		
 		$this->data['button_insert'] = $this->language->get('button_insert');
@@ -243,7 +241,6 @@ class ControllerSaleVoucher extends Controller {
 		$this->data['sort_amount'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=v.amount' . $url, 'SSL');
 		$this->data['sort_status'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=v.date_end' . $url, 'SSL');
 		$this->data['sort_date_added'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=v.date_added' . $url, 'SSL');
-		$this->data['sort_date_redeemed'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=v.date_redeemed' . $url, 'SSL');
 				
 		$url = '';
 
@@ -289,6 +286,7 @@ class ControllerSaleVoucher extends Controller {
 		$this->data['entry_to_email'] = $this->language->get('entry_to_email');
 		$this->data['entry_message'] = $this->language->get('entry_message');
 		$this->data['entry_amount'] = $this->language->get('entry_amount');
+		$this->data['entry_theme'] = $this->language->get('entry_theme');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 
     	$this->data['button_save'] = $this->language->get('button_save');
@@ -431,6 +429,18 @@ class ControllerSaleVoucher extends Controller {
 		} else {
       		$this->data['amount'] = '';
     	}
+ 
+ 		$this->load->model('sale/voucher_theme');
+			
+		$this->data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
+
+    	if (isset($this->request->post['voucher_theme_id'])) {
+      		$this->data['voucher_theme_id'] = $this->request->post['voucher_theme_id'];
+    	} elseif (isset($voucher_info)) { 
+			$this->data['voucher_theme_id'] = $voucher_info['voucher_theme_id'];
+		} else {
+      		$this->data['voucher_theme_id'] = '';
+    	}		
  
     	if (isset($this->request->post['status'])) { 
       		$this->data['status'] = $this->request->post['status'];

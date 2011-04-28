@@ -64,7 +64,7 @@ class ModelSaleVoucherTheme extends Model {
 			$voucher_theme_data = $this->cache->get('voucher_theme.' . $this->config->get('config_language_id'));
 		
 			if (!$voucher_theme_data) {
-				$query = $this->db->query("SELECT voucher_theme_id, name FROM " . DB_PREFIX . "voucher_theme WHERE language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY name");
+				$query = $this->db->query("SELECT voucher_theme_id, name FROM " . DB_PREFIX . "voucher_theme_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY name");
 	
 				$voucher_theme_data = $query->rows;
 			

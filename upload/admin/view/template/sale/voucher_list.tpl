@@ -42,6 +42,11 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_amount; ?>"><?php echo $column_amount; ?></a>
                 <?php } ?></td>
+              <td class="left"><?php if ($sort == 'theme') { ?>
+                <a href="<?php echo $sort_theme; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_theme; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_theme; ?>"><?php echo $column_theme; ?></a>
+                <?php } ?></td>
               <td class="left"><?php if ($sort == 'v.status') { ?>
                 <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                 <?php } else { ?>
@@ -52,11 +57,6 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
                 <?php } ?></td>
-              <td class="left"><?php if ($sort == 'v.date_redeemed') { ?>
-                <a href="<?php echo $sort_date_redeemed; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_redeemed; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_date_redeemed; ?>"><?php echo $column_date_redeemed; ?></a>
-                <?php } ?></td>                                
               <td class="right"><?php echo $column_action; ?></td>
             </tr>
           </thead>
@@ -73,9 +73,9 @@
               <td class="left"><?php echo $voucher['from']; ?></td>
               <td class="left"><?php echo $voucher['to']; ?></td>
               <td class="right"><?php echo $voucher['amount']; ?></td>
+              <td class="left"><?php echo $voucher['theme']; ?></td>
               <td class="left"><?php echo $voucher['status']; ?></td>
               <td class="left"><?php echo $voucher['date_added']; ?></td>
-              <td class="left"><?php echo $voucher['date_redeemed']; ?></td>
               <td class="right"><?php foreach ($voucher['action'] as $action) { ?>
                 [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
                 <?php } ?></td>
@@ -83,7 +83,7 @@
             <?php } ?>
             <?php } else { ?>
             <tr>
-              <td class="center" colspan="8"><?php echo $text_no_results; ?></td>
+              <td class="center" colspan="9"><?php echo $text_no_results; ?></td>
             </tr>
             <?php } ?>
           </tbody>

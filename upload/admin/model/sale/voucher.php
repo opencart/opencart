@@ -10,6 +10,7 @@ class ModelSaleVoucher extends Model {
 	
 	public function deleteVoucher($voucher_id) {
       	$this->db->query("DELETE FROM " . DB_PREFIX . "voucher WHERE voucher_id = '" . (int)$voucher_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_history WHERE voucher_id = '" . (int)$voucher_id . "'");
 	}
 	
 	public function getVoucher($voucher_id) {
@@ -19,7 +20,7 @@ class ModelSaleVoucher extends Model {
 	}
 	
 	public function getVouchers($data = array()) {
-		$sql = "SELECT v.voucher_id, v.code, v.from_name, v.from_email, v.to_name, v.to_email, v.amount, v.status, v.date_added FROM " . DB_PREFIX . "voucher v";
+		$sql = "SELECT v.voucher_id, v.code, v.from_name, v.from_email, v.to_name, v.to_email, v.amount, vtd.name AS theme, v.status, v.date_added FROM " . DB_PREFIX . "voucher v LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (v.voucher_theme_id = vtd.voucher_theme_id) WHERE vtd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 		
 		$sort_data = array(
 			'v.code',
@@ -27,6 +28,8 @@ class ModelSaleVoucher extends Model {
 			'v.from_email',
 			'v.to_name',
 			'v.to_email',
+			'v.amount',
+			'v.theme',
 			'v.status',
 			'v.date_added'
 		);	
@@ -70,6 +73,18 @@ class ModelSaleVoucher extends Model {
       	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "voucher WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
 		
 		return $query->row['total'];
-	}		
+	}	
+	
+	public function getVoucherHistories($voucher_id, $start = 0, $limit = 10) {
+		$query = $this->db->query("SELECT vh.order_id, CONCAT(c.firstname, ' ', c.lastname) AS customer, vh.amount, vh.date_added FROM " . DB_PREFIX . "voucher_history vh LEFT JOIN " . DB_PREFIX . "customer c ON (vh.customer_id = c.customer_id) WHERE vh.voucher_id = '" . (int)$voucher_id . "' ORDER BY vh.date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
+
+		return $query->rows;
+	}
+	
+	public function getTotalVoucherHistories($voucher_id) {
+	  	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "voucher_history WHERE voucher_id = '" . (int)$voucher_id . "'");
+
+		return $query->row['total'];
+	}			
 }
 ?>

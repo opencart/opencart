@@ -187,6 +187,7 @@ class ControllerSaleVoucher extends Controller {
 				'from'          => $result['from_name'],
 				'to'            => $result['to_name'],
 				'amount'        => $result['amount'],
+				'theme'         => $result['theme'],
 				'status'        => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'selected'      => isset($this->request->post['selected']) && in_array($result['voucher_id'], $this->request->post['selected']),
@@ -202,6 +203,7 @@ class ControllerSaleVoucher extends Controller {
 		$this->data['column_from'] = $this->language->get('column_from');
 		$this->data['column_to'] = $this->language->get('column_to');
 		$this->data['column_amount'] = $this->language->get('column_amount');
+		$this->data['column_theme'] = $this->language->get('column_theme');
 		$this->data['column_status'] = $this->language->get('column_status');
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
 		$this->data['column_action'] = $this->language->get('column_action');		
@@ -239,6 +241,7 @@ class ControllerSaleVoucher extends Controller {
 		$this->data['sort_from'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=v.from_name' . $url, 'SSL');
 		$this->data['sort_to'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=v.to_name' . $url, 'SSL');
 		$this->data['sort_amount'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=v.amount' . $url, 'SSL');
+		$this->data['sort_theme'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=theme' . $url, 'SSL');
 		$this->data['sort_status'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=v.date_end' . $url, 'SSL');
 		$this->data['sort_date_added'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=v.date_added' . $url, 'SSL');
 				
@@ -292,7 +295,18 @@ class ControllerSaleVoucher extends Controller {
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
 		
- 		if (isset($this->error['warning'])) {
+		$this->data['tab_general'] = $this->language->get('tab_general');
+		$this->data['tab_voucher_history'] = $this->language->get('tab_voucher_history');
+		
+		$this->data['token'] = $this->session->data['token'];
+		
+		if (isset($this->request->get['voucher_id'])) {
+			$this->data['voucher_id'] = $this->request->get['voucher_id'];
+		} else {
+			$this->data['voucher_id'] = 0;
+		}
+		 		
+		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
 			$this->data['error_warning'] = '';
@@ -505,6 +519,53 @@ class ControllerSaleVoucher extends Controller {
 		} else {
 	  		return false;
 		}
+  	}	
+	
+	public function history() {
+    	$this->language->load('sale/voucher');
+		
+		$this->load->model('sale/voucher');
+				
+		$this->data['text_no_results'] = $this->language->get('text_no_results');
+		
+		$this->data['column_order_id'] = $this->language->get('column_order_id');
+		$this->data['column_customer'] = $this->language->get('column_customer');
+		$this->data['column_amount'] = $this->language->get('column_amount');
+		$this->data['column_date_added'] = $this->language->get('column_date_added');
+
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}  
+		
+		$this->data['histories'] = array();
+			
+		$results = $this->model_sale_voucher->getVoucher-Histories($this->request->get['voucher_id'], ($page - 1) * 10, 10);
+      		
+		foreach ($results as $result) {
+        	$this->data['histories'][] = array(
+				'order_id'   => $result['order_id'],
+				'customer'   => $result['customer'],
+				'amount'     => $result['amount'],
+        		'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+        	);
+      	}			
+		
+		$history_total = $this->model_sale_voucher->getTotalVoucherHistories($this->request->get['voucher_id']);
+			
+		$pagination = new Pagination();
+		$pagination->total = $history_total;
+		$pagination->page = $page;
+		$pagination->limit = 10; 
+		$pagination->url = $this->url->link('sale/voucher/history', 'token=' . $this->session->data['token'] . '&voucher_id=' . $this->request->get['voucher_id'] . '&page={page}', 'SSL');
+			
+		$this->data['pagination'] = $pagination->render();
+		
+		$this->template = 'sale/voucher_history.tpl';		
+		
+		$this->response->setOutput($this->render());
   	}		
+		
 }
 ?>

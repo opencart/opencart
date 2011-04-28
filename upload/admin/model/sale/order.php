@@ -12,7 +12,9 @@ class ModelSaleOrder extends Model {
 		} else {
 			$invoice_no = 0;
 		}
+		
 		exit($invoice_no);
+		
 		$this->load->model('setting/store');
 		
 		$store_info = $this->model_setting_store->getStore($data['store_id']);

@@ -102,8 +102,16 @@ class ControllerInformationInformation extends Controller {
 		$information_info = $this->model_catalog_information->getInformation($information_id);
 
 		if ($information_info) {
-			$output  = '<h1>' . $information_info['title'] . '</h1>';
-			$output .= '<p>' . html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8') . '</p>';
+			$output  = '<html dir="ltr" lang="en">' . "\n";
+			$output .= '<head>' . "\n";
+			$output .= '  <title>' . $information_info['title'] . '</title>' . "\n";
+			$output .= '  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . "\n";
+			$output .= '</head>' . "\n";
+			$output .= '<body>' . "\n";
+			$output .= '  <br /><br /><h1>' . $information_info['title'] . '</h1>' . "\n";
+			$output .= html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8') . "\n";
+			$output .= '  </body>' . "\n";
+			$output .= '</html>' . "\n";			
 
 			$this->response->setOutput($output);
 		}

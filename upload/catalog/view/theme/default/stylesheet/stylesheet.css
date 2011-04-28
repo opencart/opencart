@@ -142,7 +142,7 @@ label {
 }
 #header #cart {
 	position: absolute;
-	z-index: 1004;
+	z-index: 4;
 	right: 153px;
 	float: right;
 	min-width: 300px;
@@ -158,7 +158,7 @@ label {
 	border-right: 1px solid #EEEEEE;
 	background: #FFF;
 	position: relative;
-	z-index: 1006;
+	z-index: 6;
 }
 #header #cart .heading h4 {
 	color: #333333;
@@ -192,11 +192,11 @@ label {
 	background: #FFF;
 	position: relative;
 	top: -1px;
-	z-index: 1005;
+	z-index: 5;
 }
 #header #cart.active {
 	position: absolute;
-	z-index: 1004;
+	z-index: 4;
 }
 #header #cart.active .heading {
 	margin-top: 5px;
@@ -270,7 +270,7 @@ label {
 	width: 298px;
 	margin-bottom: 4px;
 	position: relative;
-	z-index: 2000;
+	z-index: 7;
 }
 #header #search input {
 	background: #FFF;

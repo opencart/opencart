@@ -139,7 +139,7 @@ function addModule() {
     html += '      <option value="0"><?php echo $text_disabled; ?></option>';
     html += '    </select></td>';
 	html += '    <td class="right"><input type="text" name="manufacturer_' + module_row + '_sort_order" value="" size="3" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#module-row\'' + module_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
+	html += '    <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
 	html += '  </tr>';
 	html += '</tbody>';
 	

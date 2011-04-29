@@ -43,7 +43,19 @@ class ControllerModuleBanner extends Controller {
 		} else {
 			$this->data['error_warning'] = '';
 		}
-
+		
+		if (isset($this->request->post['banner_module'])) {
+			$modules = explode(',', $this->request->post['banner_module']);
+		} else {
+			$modules = array();
+		}	
+		
+		foreach ($modules as $module) {
+			if (isset($this->error['banner_' . $module . '_dimension'])) {
+				$this->data['error_banner_' . $module . '_dimension'] = $this->error['banner_' . $module . '_dimension'];
+			}
+		}
+				
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
@@ -148,6 +160,18 @@ class ControllerModuleBanner extends Controller {
 	private function validate() {
 		if (!$this->user->hasPermission('modify', 'module/banner')) {
 			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (isset($this->request->post['banner_module'])) {
+			$modules = explode(',', $this->request->post['banner_module']);
+		} else {
+			$modules = array();
+		}	
+		
+		foreach ($modules as $module) {
+			if (!$this->request->post['banner_' . $module . '_width'] || !$this->request->post['banner_' . $module . '_height']) {
+				$this->error['banner_' . $module . '_dimension'] = $this->language->get('error_dimension');
+			}			
 		}
 		
 		if (!$this->error) {

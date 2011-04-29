@@ -19,7 +19,7 @@
         <thead>
           <tr>
             <td class="left"><?php echo $entry_banner; ?></td>
-            <td class="left"><?php echo $entry_dimension; ?></td>
+            <td class="left"><span class="required">*</span> <?php echo $entry_dimension; ?></td>
             <td class="left"><?php echo $entry_layout; ?></td>
             <td class="left"><?php echo $entry_position; ?></td>
             <td class="left"><?php echo $entry_status; ?></td>
@@ -41,7 +41,10 @@
                 <?php } ?>
               </select></td>
             <td class="left"><input type="text" name="banner_<?php echo $module_row; ?>_width" value="<?php echo ${'banner_' . $module . '_width'}; ?>" size="3" />
-              <input type="text" name="banner_<?php echo $module_row; ?>_height" value="<?php echo ${'banner_' . $module . '_height'}; ?>" size="3" /></td>
+              <input type="text" name="banner_<?php echo $module_row; ?>_height" value="<?php echo ${'banner_' . $module . '_height'}; ?>" size="3" />
+              <?php if (isset(${'error_' . $module . '_dimension'})) { ?>
+              <span class="error"><?php echo ${'error_' . $module . '_dimension'}; ?></span>
+              <?php } ?></td>
             <td class="left"><select name="banner_<?php echo $module_row; ?>_layout_id">
                 <?php foreach ($layouts as $layout) { ?>
                 <?php if ($layout['layout_id'] == ${'banner_' . $module . '_layout_id'}) { ?>

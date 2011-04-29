@@ -110,3 +110,16 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
     <?php } ?>
     <a id="tab-account" href="<?php echo $account; ?>"><?php echo $text_account; ?></a> <a id="tab-cart" href="<?php echo $cart; ?>"><span><?php echo $text_basket; ?></span></a> <a id="tab-checkout" href="<?php echo $checkout; ?>"><span><?php echo $text_checkout; ?></span></a></div>
 </div>
+<script type="text/javascript"><!--
+	$('#form input').keydown(function(e) {
+		if (e.keyCode == 13) {
+			$('#form').submit();
+		}
+	});
+	
+	$('.ui-button').button({
+		icons: {
+			primary: 'ui-icon-cart'
+		}
+	});	
+//--></script> 

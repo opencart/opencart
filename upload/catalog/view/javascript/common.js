@@ -12,6 +12,26 @@ $(document).ready(function() {
 		location = url;
 	});
 	
+	$('input[name=\'filter_name\']').keydown(function(e) {
+		if (e.keyCode == 13) {
+			url = 'index.php?route=product/search';
+			 
+			var filter_name = $('input[name=\'filter_name\']').attr('value')
+			
+			if (filter_name) {
+				url += '&filter_name=' + encodeURIComponent(filter_name);
+			}
+			
+			location = url;
+		}
+	});
+	
+	$('.ui-button').button({
+		icons: {
+			primary: 'ui-icon-cart'
+		}
+	});	
+		
 	/* Ajax Cart */
 	$('#cart > .heading a').bind('click', function() {
 		$('#cart').addClass('active');

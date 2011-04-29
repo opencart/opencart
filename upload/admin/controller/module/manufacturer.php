@@ -48,7 +48,19 @@ class ControllerModuleManufacturer extends Controller {
 		} else {
 			$this->data['error_warning'] = '';
 		}
-
+		
+		if (isset($this->request->post['manufacturer_module'])) {
+			$modules = explode(',', $this->request->post['manufacturer_module']);
+		} else {
+			$modules = array();
+		}	
+		
+		foreach ($modules as $module) {
+			if (isset($this->error['image_' . $module])) {
+				$this->data['error_image_' . $module] = $this->error['image_' . $module];
+			}
+		}
+		
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
@@ -179,6 +191,18 @@ class ControllerModuleManufacturer extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
+		if (isset($this->request->post['manufacturer_module'])) {
+			$modules = explode(',', $this->request->post['manufacturer_module']);
+		} else {
+			$modules = array();
+		}	
+		
+		foreach ($modules as $module) {
+			if (!$this->request->post['manufacturer_' . $module . '_width'] || !$this->request->post['manufacturer_' . $module . '_height']) {
+				$this->error['image_' . $module] = $this->language->get('error_image');
+			}			
+		}
+				
 		if (!$this->error) {
 			return true;
 		} else {

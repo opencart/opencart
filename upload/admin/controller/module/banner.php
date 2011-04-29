@@ -51,8 +51,8 @@ class ControllerModuleBanner extends Controller {
 		}	
 		
 		foreach ($modules as $module) {
-			if (isset($this->error['banner_' . $module . '_dimension'])) {
-				$this->data['error_banner_' . $module . '_dimension'] = $this->error['banner_' . $module . '_dimension'];
+			if (isset($this->error['dimension_' . $module])) {
+				$this->data['error_dimension_' . $module] = $this->error['dimension_' . $module];
 			}
 		}
 				
@@ -170,7 +170,7 @@ class ControllerModuleBanner extends Controller {
 		
 		foreach ($modules as $module) {
 			if (!$this->request->post['banner_' . $module . '_width'] || !$this->request->post['banner_' . $module . '_height']) {
-				$this->error['banner_' . $module . '_dimension'] = $this->language->get('error_dimension');
+				$this->error['dimension_' . $module] = $this->language->get('error_dimension');
 			}			
 		}
 		

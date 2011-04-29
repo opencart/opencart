@@ -41,7 +41,10 @@
                 <?php } ?>
               </select></td>
             <td class="left"><input type="text" name="slideshow_<?php echo $module_row; ?>_width" value="<?php echo ${'slideshow_' . $module . '_width'}; ?>" size="3" />
-              <input type="text" name="slideshow_<?php echo $module_row; ?>_height" value="<?php echo ${'slideshow_' . $module . '_height'}; ?>"  size="3"/></td>
+              <input type="text" name="slideshow_<?php echo $module_row; ?>_height" value="<?php echo ${'slideshow_' . $module . '_height'}; ?>"  size="3"/>
+              <?php if (isset(${'error_dimension_' . $module})) { ?>
+              <span class="error"><?php echo ${'error_dimension_' . $module}; ?></span>
+              <?php } ?></td>
             <td class="left"><select name="slideshow_<?php echo $module_row; ?>_layout_id">
                 <?php foreach ($layouts as $layout) { ?>
                 <?php if ($layout['layout_id'] == ${'slideshow_' . $module . '_layout_id'}) { ?>

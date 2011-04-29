@@ -43,7 +43,19 @@ class ControllerModuleSlideshow extends Controller {
 		} else {
 			$this->data['error_warning'] = '';
 		}
-
+		
+		if (isset($this->request->post['slideshow_module'])) {
+			$modules = explode(',', $this->request->post['slideshow_module']);
+		} else {
+			$modules = array();
+		}	
+		
+		foreach ($modules as $module) {
+			if (isset($this->error['dimension_' . $module])) {
+				$this->data['error_dimension_' . $module] = $this->error['dimension_' . $module];
+			}
+		}
+		
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
@@ -150,6 +162,18 @@ class ControllerModuleSlideshow extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
+		if (isset($this->request->post['slideshow_module'])) {
+			$modules = explode(',', $this->request->post['slideshow_module']);
+		} else {
+			$modules = array();
+		}	
+		
+		foreach ($modules as $module) {
+			if (!$this->request->post['slideshow_' . $module . '_width'] || !$this->request->post['slideshow_' . $module . '_height']) {
+				$this->error['dimension_' . $module] = $this->language->get('error_dimension');
+			}			
+		}
+				
 		if (!$this->error) {
 			return true;
 		} else {

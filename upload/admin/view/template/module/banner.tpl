@@ -42,8 +42,8 @@
               </select></td>
             <td class="left"><input type="text" name="banner_<?php echo $module_row; ?>_width" value="<?php echo ${'banner_' . $module . '_width'}; ?>" size="3" />
               <input type="text" name="banner_<?php echo $module_row; ?>_height" value="<?php echo ${'banner_' . $module . '_height'}; ?>" size="3" />
-              <?php if (isset(${'error_' . $module . '_dimension'})) { ?>
-              <span class="error"><?php echo ${'error_' . $module . '_dimension'}; ?></span>
+              <?php if (isset(${'error_dimension_' . $module})) { ?>
+              <span class="error"><?php echo ${'error_dimension_' . $module}; ?></span>
               <?php } ?></td>
             <td class="left"><select name="banner_<?php echo $module_row; ?>_layout_id">
                 <?php foreach ($layouts as $layout) { ?>

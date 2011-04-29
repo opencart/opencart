@@ -39,7 +39,10 @@
             <td class="left"><input type="text" name="manufacturer_<?php echo $module_row; ?>_width" value="<?php echo ${'manufacturer_' . $module . '_width'}; ?>" size="3" />
               <input type="text" name="manufacturer_<?php echo $module_row; ?>_height" value="<?php echo ${'manufacturer_' . $module . '_height'}; ?>" size="3" /></td>
             <td class="left"><input type="text" name="manufacturer_<?php echo $module_row; ?>_image_width" value="<?php echo ${'manufacturer_' . $module . '_image_width'}; ?>" size="3" />
-              <input type="text" name="manufacturer_<?php echo $module_row; ?>_image_height" value="<?php echo ${'manufacturer_' . $module . '_image_height'}; ?>" size="3" /></td>              
+              <input type="text" name="manufacturer_<?php echo $module_row; ?>_image_height" value="<?php echo ${'manufacturer_' . $module . '_image_height'}; ?>" size="3" />
+              <?php if (isset(${'error_image_' . $module})) { ?>
+              <span class="error"><?php echo ${'error_image_' . $module}; ?></span>
+              <?php } ?></td>
             <td class="left"><select name="manufacturer_<?php echo $module_row; ?>_axis">
                 <?php if (${'manufacturer_' . $module . '_axis'} == 'horizontal') { ?>
                 <option value="horizontal" selected="selected"><?php echo $text_horizontal; ?></option>

@@ -8,7 +8,7 @@
   <?php if ($error_warning) { ?>
   <div class="warning"><?php echo $error_warning; ?></div>
   <?php } ?>
-    <div class="box">
+  <div class="box">
     <div class="heading">
       <h1><img src="view/image/payment.png" alt="" /> <?php echo $heading_title; ?></h1>
       <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
@@ -26,11 +26,14 @@
               <?php } ?>
               <?php } ?></td>
           </tr>
-            <tr>
-              <td><?php echo $entry_image; ?></td>
-              <td valign="top"><input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
-                <img src="<?php echo $preview; ?>" alt="" id="preview" class="image" onclick="image_upload('image', 'preview');" /></td>
-            </tr>       
+          <tr>
+            <td><?php echo $entry_image; ?></td>
+            <td valign="top"><input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
+              <img src="<?php echo $preview; ?>" alt="" id="preview" class="image" onclick="image_upload('image', 'preview');" />
+              <?php if ($error_image) { ?>
+              <span class="error"><?php echo $error_image; ?></span>
+              <?php } ?></td>
+          </tr>
         </table>
       </form>
     </div>
@@ -65,5 +68,4 @@ function image_upload(field, preview) {
 	});
 };
 //--></script> 
-
 <?php echo $footer; ?>

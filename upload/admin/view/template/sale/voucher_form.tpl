@@ -72,7 +72,7 @@
             <td><?php echo $entry_theme; ?></td>
             <td><select name="voucher_theme_id">
                 <?php foreach ($voucher_themes as $voucher_theme) { ?>
-                <?php if ($voucher_type['voucher_theme_id'] == $voucher_theme_id) { ?>
+                <?php if ($voucher_theme['voucher_theme_id'] == $voucher_theme_id) { ?>
                 <option value="<?php echo $voucher_theme['voucher_theme_id']; ?>" selected="selected"><?php echo $voucher_theme['name']; ?></option>
                 <?php } else { ?>
                 <option value="<?php echo $voucher_theme['voucher_theme_id']; ?>"><?php echo $voucher_theme['name']; ?></option>

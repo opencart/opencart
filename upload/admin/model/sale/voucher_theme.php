@@ -32,14 +32,14 @@ class ModelSaleVoucherTheme extends Model {
 	}
 		
 	public function getVoucherTheme($voucher_theme_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_theme WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_theme vt LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) WHERE vt.voucher_theme_id = '" . (int)$voucher_theme_id . "' AND vtd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 		
 		return $query->row;
 	}
 		
 	public function getVoucherThemes($data = array()) {
       	if ($data) {
-			$sql = "SELECT * FROM " . DB_PREFIX . "voucher_theme_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY name";	
+			$sql = "SELECT * FROM " . DB_PREFIX . "voucher_theme vt LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) WHERE vtd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY vtd.name";	
 			
 			if (isset($data['order']) && ($data['order'] == 'DESC')) {
 				$sql .= " DESC";
@@ -66,7 +66,7 @@ class ModelSaleVoucherTheme extends Model {
 			$voucher_theme_data = $this->cache->get('voucher_theme.' . $this->config->get('config_language_id'));
 		
 			if (!$voucher_theme_data) {
-				$query = $this->db->query("SELECT voucher_theme_id, name FROM " . DB_PREFIX . "voucher_theme_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY name");
+				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_theme vt LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) WHERE vtd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY vtd.name");
 	
 				$voucher_theme_data = $query->rows;
 			

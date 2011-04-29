@@ -45,6 +45,7 @@ class ControllerAccountVoucher extends Controller {
 		$this->data['entry_from_email'] = $this->language->get('entry_from_email');
 		$this->data['entry_message'] = $this->language->get('entry_message');
 		$this->data['entry_amount'] = $this->language->get('entry_amount');
+		$this->data['entry_theme'] = $this->language->get('entry_theme');
 		
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		
@@ -124,8 +125,18 @@ class ControllerAccountVoucher extends Controller {
 			$this->data['amount'] = $this->request->post['amount'];
 		} else {
 			$this->data['amount'] = '25.00';
-		}	
-		
+		}
+			
+ 		$this->load->model('account/voucher_theme');
+			
+		$this->data['voucher_themes'] = $this->model_account_voucher_theme->getVoucherThemes();
+
+    	if (isset($this->request->post['voucher_theme_id'])) {
+      		$this->data['voucher_theme_id'] = $this->request->post['voucher_theme_id'];
+		} else {
+      		$this->data['voucher_theme_id'] = '';
+    	}	
+				
 		if (isset($this->request->post['agree'])) {
 			$this->data['agree'] = $this->request->post['agree'];
 		} else {

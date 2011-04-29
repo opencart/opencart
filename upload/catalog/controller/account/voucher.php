@@ -10,12 +10,11 @@ class ControllerAccountVoucher extends Controller {
 		$this->load->model('account/voucher');
 		
 		if (!isset($this->session->data['voucher'])) {
-			$this->session->data['voucher'] = array();
+			$this->session->data['gift_voucher'] = array();
 		}
 					
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-
-			$this->session->data['voucher'][] = $this->request->post;
+			$this->session->data['gift_voucher'][] = $this->request->post;
 	  	  
 	  		$this->redirect($this->url->link('account/voucher/success'));
     	} 		

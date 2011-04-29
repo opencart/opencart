@@ -48,7 +48,7 @@ $_['entry_order_status']        = 'Order Status:<br /><span class="help">Set the
 $_['entry_return_status']       = 'Return Status:<br /><span class="help">Set the default return status when an returns request is submitted.</span>';
 $_['entry_review']       	    = 'Allow Reviews:<br /><span class="help">Enable/Disable new review entry and display of existing reviews</span>';
 $_['entry_download']            = 'Allow Downloads:';
-$_['entry_download_status']     = 'Download Order Status:<br /><span class="help">Set the order status the customers order must reach before they are allowed to access their downloadable products.</span>';
+$_['entry_complete_status']     = 'Complete Order Status:<br /><span class="help">Set the order status the customers order must reach before they are allowed to access their downloadable products and gift vouchers.</span>';
 $_['entry_upload_allowed']      = 'Allowed Upload File Extensions:<br /><span class="help">Add which file extensions are allowed to be uploaded. Use comma separated values.</span>';
 $_['entry_cart_weight']         = 'Display Weight on Cart Page:<br /><span class="help">Show the cart weight on the cart page</span>';
 $_['entry_logo']                = 'Store Logo:';

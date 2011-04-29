@@ -249,7 +249,15 @@ class ControllerCheckoutConfirm extends Controller {
 			$this->load->model('checkout/order');
 			
 			$this->session->data['order_id'] = $this->model_checkout_order->create($data);
+			
+			if (isset($this->session->data['gift_voucher']) && is_array($this->session->data['gift_voucher'])) {
+				$this->load->model('account/voucher');
 
+				foreach ($this->session->data['gift_voucher'] as $voucher) {
+					$this->model_account_voucher->addVoucher($this->session->data['order_id'], $voucher);
+				}
+			}
+			
 			$this->data['column_name'] = $this->language->get('column_name');
 			$this->data['column_model'] = $this->language->get('column_model');
 			$this->data['column_quantity'] = $this->language->get('column_quantity');

@@ -71,7 +71,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_stock_status'] = $this->language->get('entry_stock_status');
 		$this->data['entry_review'] = $this->language->get('entry_review');
 		$this->data['entry_download'] = $this->language->get('entry_download');
-		$this->data['entry_download_status'] = $this->language->get('entry_download_status');	
+		$this->data['entry_complete_status'] = $this->language->get('entry_complete_status');	
 		$this->data['entry_upload_allowed'] = $this->language->get('entry_upload_allowed');
 		$this->data['entry_cart_weight'] = $this->language->get('entry_cart_weight');
 		$this->data['entry_logo'] = $this->language->get('entry_logo');
@@ -549,10 +549,10 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_download'] = $this->config->get('config_download');
 		}
 
-		if (isset($this->request->post['config_download_status_id'])) {
-			$this->data['config_download_status_id'] = $this->request->post['config_download_status_id'];
+		if (isset($this->request->post['config_complete_status_id'])) {
+			$this->data['config_complete_status_id'] = $this->request->post['config_complete_status_id'];
 		} else {
-			$this->data['config_download_status_id'] = $this->config->get('config_download_status_id');
+			$this->data['config_complete_status_id'] = $this->config->get('config_complete_status_id');
 		}
 		
 		if (isset($this->request->post['config_upload_allowed'])) {

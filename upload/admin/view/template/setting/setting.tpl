@@ -438,10 +438,10 @@
                 <?php } ?></td>
             </tr>
             <tr>
-              <td><?php echo $entry_download_status; ?></td>
-              <td><select name="config_download_status_id">
+              <td><?php echo $entry_complete_status; ?></td>
+              <td><select name="config_complete_status_id">
                   <?php foreach ($order_statuses as $order_status) { ?>
-                  <?php if ($order_status['order_status_id'] == $config_download_status_id) { ?>
+                  <?php if ($order_status['order_status_id'] == $config_complete_status_id) { ?>
                   <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                   <?php } else { ?>
                   <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>

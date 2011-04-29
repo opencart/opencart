@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.9.2
+-- version 3.2.0.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 26, 2011 at 12:34 PM
--- Server version: 5.0.92
--- PHP Version: 5.2.6
+-- Generation Time: Apr 29, 2011 at 04:30 PM
+-- Server version: 5.1.36
+-- PHP Version: 5.3.0
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -16,7 +16,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `opencart_dev`
+-- Database: `opencart`
 --
 
 -- --------------------------------------------------------
@@ -27,18 +27,18 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 DROP TABLE IF EXISTS `oc_address`;
 CREATE TABLE `oc_address` (
-  `address_id` int(11) NOT NULL auto_increment,
+  `address_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
-  `firstname` varchar(32) collate utf8_bin NOT NULL default '',
-  `lastname` varchar(32) collate utf8_bin NOT NULL default '',
-  `company` varchar(32) collate utf8_bin NOT NULL,
-  `address_1` varchar(128) collate utf8_bin NOT NULL,
-  `address_2` varchar(128) collate utf8_bin NOT NULL,
-  `city` varchar(128) collate utf8_bin NOT NULL,
-  `postcode` varchar(10) collate utf8_bin NOT NULL,
-  `country_id` int(11) NOT NULL default '0',
-  `zone_id` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`address_id`),
+  `firstname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `lastname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `company` varchar(32) COLLATE utf8_bin NOT NULL,
+  `address_1` varchar(128) COLLATE utf8_bin NOT NULL,
+  `address_2` varchar(128) COLLATE utf8_bin NOT NULL,
+  `city` varchar(128) COLLATE utf8_bin NOT NULL,
+  `postcode` varchar(10) COLLATE utf8_bin NOT NULL,
+  `country_id` int(11) NOT NULL DEFAULT '0',
+  `zone_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`address_id`),
   KEY `customer_id` (`customer_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -55,38 +55,38 @@ CREATE TABLE `oc_address` (
 
 DROP TABLE IF EXISTS `oc_affiliate`;
 CREATE TABLE `oc_affiliate` (
-  `affiliate_id` int(11) NOT NULL auto_increment,
-  `firstname` varchar(32) collate utf8_bin NOT NULL default '',
-  `lastname` varchar(32) collate utf8_bin NOT NULL default '',
-  `email` varchar(96) collate utf8_bin NOT NULL default '',
-  `telephone` varchar(32) collate utf8_bin NOT NULL default '',
-  `fax` varchar(32) collate utf8_bin NOT NULL default '',
-  `password` varchar(40) collate utf8_bin NOT NULL default '',
-  `company` varchar(32) collate utf8_bin NOT NULL,
-  `website` varchar(255) collate utf8_bin NOT NULL,
-  `address_1` varchar(128) collate utf8_bin NOT NULL default '',
-  `address_2` varchar(128) collate utf8_bin NOT NULL,
-  `city` varchar(128) collate utf8_bin NOT NULL default '',
-  `postcode` varchar(10) collate utf8_bin NOT NULL default '',
+  `affiliate_id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `lastname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `email` varchar(96) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `telephone` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `fax` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `password` varchar(40) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `company` varchar(32) COLLATE utf8_bin NOT NULL,
+  `website` varchar(255) COLLATE utf8_bin NOT NULL,
+  `address_1` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `address_2` varchar(128) COLLATE utf8_bin NOT NULL,
+  `city` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `postcode` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '',
   `country_id` int(11) NOT NULL,
   `zone_id` int(11) NOT NULL,
-  `code` varchar(64) collate utf8_bin NOT NULL,
-  `commission` decimal(4,2) NOT NULL default '0.00',
-  `tax` varchar(64) collate utf8_bin NOT NULL,
-  `payment` varchar(6) collate utf8_bin NOT NULL,
-  `cheque` varchar(100) collate utf8_bin NOT NULL default '',
-  `paypal` varchar(64) collate utf8_bin NOT NULL default '',
-  `bank_name` varchar(64) collate utf8_bin NOT NULL default '',
-  `bank_branch_number` varchar(64) collate utf8_bin NOT NULL default '',
-  `bank_swift_code` varchar(64) collate utf8_bin NOT NULL default '',
-  `bank_account_name` varchar(64) collate utf8_bin NOT NULL default '',
-  `bank_account_number` varchar(64) collate utf8_bin NOT NULL default '',
-  `ip` varchar(15) collate utf8_bin NOT NULL,
+  `code` varchar(64) COLLATE utf8_bin NOT NULL,
+  `commission` decimal(4,2) NOT NULL DEFAULT '0.00',
+  `tax` varchar(64) COLLATE utf8_bin NOT NULL,
+  `payment` varchar(6) COLLATE utf8_bin NOT NULL,
+  `cheque` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `paypal` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `bank_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `bank_branch_number` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `bank_swift_code` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `bank_account_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `bank_account_number` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ip` varchar(15) COLLATE utf8_bin NOT NULL,
   `status` int(1) NOT NULL,
   `approved` int(1) NOT NULL,
   `date_added` datetime NOT NULL,
-  PRIMARY KEY  (`affiliate_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  PRIMARY KEY (`affiliate_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `oc_affiliate`
@@ -101,42 +101,19 @@ CREATE TABLE `oc_affiliate` (
 
 DROP TABLE IF EXISTS `oc_affiliate_transaction`;
 CREATE TABLE `oc_affiliate_transaction` (
-  `affiliate_transaction_id` int(11) NOT NULL auto_increment,
+  `affiliate_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
   `affiliate_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
-  `description` text collate utf8_bin NOT NULL,
+  `description` text COLLATE utf8_bin NOT NULL,
   `amount` decimal(15,4) NOT NULL,
   `date_added` datetime NOT NULL,
-  PRIMARY KEY  (`affiliate_transaction_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  PRIMARY KEY (`affiliate_transaction_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `oc_affiliate_transaction`
 --
 
-INSERT INTO `oc_affiliate_transaction` (`affiliate_transaction_id`, `affiliate_id`, `order_id`, `description`, `amount`, `date_added`) VALUES
-(1, 1, 0, '', '100.0000', '2010-09-26 16:58:50'),
-(2, 1, 0, '', '100.0000', '2010-09-26 17:00:39'),
-(3, 1, 0, '', '100.0000', '2010-09-26 17:02:32'),
-(4, 1, 0, '', '189.0000', '2010-09-26 17:02:57'),
-(5, 4, 0, 'test', '122.0000', '2010-11-24 16:50:26'),
-(6, 4, 0, 'testramount=12', '0.0000', '2010-12-15 15:33:58'),
-(7, 4, 0, 'testramount=12', '0.0000', '2010-12-15 15:34:00'),
-(8, 4, 0, 'tewere', '45.0000', '2010-12-15 15:35:48'),
-(9, 4, 0, 'yiu', '8.0000', '2010-12-15 15:35:56'),
-(10, 4, 0, 'yuyu', '77.0000', '2010-12-15 15:57:53'),
-(11, 4, 0, '', '0.0000', '2011-02-22 03:25:47'),
-(12, 4, 0, 'test', '1232.0000', '2011-02-22 03:32:57'),
-(13, 4, 0, '', '0.0000', '2011-02-22 03:33:04'),
-(14, 4, 0, '', '0.0000', '2011-02-22 03:33:07'),
-(15, 4, 0, 'ffg', '565.0000', '2011-02-22 03:33:16'),
-(16, 4, 0, 'test', '123.0000', '2011-02-22 04:05:16'),
-(17, 4, 0, 'resrt', '112.0000', '2011-02-22 04:08:58'),
-(18, 4, 0, 'test', '123.0000', '2011-02-22 04:34:38'),
-(19, 4, 0, 'test', '100.0000', '2011-03-20 00:27:14'),
-(20, 4, 0, 'test', '100.0000', '2011-03-20 00:32:08'),
-(21, 4, 0, 'oui', '123.0000', '2011-03-20 00:33:08'),
-(22, 4, 0, 'test', '122.0000', '2011-03-20 09:26:16');
 
 -- --------------------------------------------------------
 
@@ -146,10 +123,10 @@ INSERT INTO `oc_affiliate_transaction` (`affiliate_transaction_id`, `affiliate_i
 
 DROP TABLE IF EXISTS `oc_attribute`;
 CREATE TABLE `oc_attribute` (
-  `attribute_id` int(11) NOT NULL auto_increment,
+  `attribute_id` int(11) NOT NULL AUTO_INCREMENT,
   `attribute_group_id` int(11) NOT NULL,
   `sort_order` int(3) NOT NULL,
-  PRIMARY KEY  (`attribute_id`)
+  PRIMARY KEY (`attribute_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -179,8 +156,8 @@ DROP TABLE IF EXISTS `oc_attribute_description`;
 CREATE TABLE `oc_attribute_description` (
   `attribute_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(64) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`attribute_id`,`language_id`)
+  `name` varchar(64) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`attribute_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -218,9 +195,9 @@ INSERT INTO `oc_attribute_description` (`attribute_id`, `language_id`, `name`) V
 
 DROP TABLE IF EXISTS `oc_attribute_group`;
 CREATE TABLE `oc_attribute_group` (
-  `attribute_group_id` int(11) NOT NULL auto_increment,
+  `attribute_group_id` int(11) NOT NULL AUTO_INCREMENT,
   `sort_order` int(3) NOT NULL,
-  PRIMARY KEY  (`attribute_group_id`)
+  PRIMARY KEY (`attribute_group_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -245,8 +222,8 @@ DROP TABLE IF EXISTS `oc_attribute_group_description`;
 CREATE TABLE `oc_attribute_group_description` (
   `attribute_group_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(64) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`attribute_group_id`,`language_id`)
+  `name` varchar(64) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`attribute_group_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -271,10 +248,10 @@ INSERT INTO `oc_attribute_group_description` (`attribute_group_id`, `language_id
 
 DROP TABLE IF EXISTS `oc_banner`;
 CREATE TABLE `oc_banner` (
-  `banner_id` int(11) NOT NULL auto_increment,
-  `name` varchar(64) collate utf8_bin NOT NULL,
+  `banner_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) COLLATE utf8_bin NOT NULL,
   `status` int(1) NOT NULL,
-  PRIMARY KEY  (`banner_id`)
+  PRIMARY KEY (`banner_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -293,11 +270,11 @@ INSERT INTO `oc_banner` (`banner_id`, `name`, `status`) VALUES
 
 DROP TABLE IF EXISTS `oc_banner_image`;
 CREATE TABLE `oc_banner_image` (
-  `banner_image_id` int(11) NOT NULL auto_increment,
+  `banner_image_id` int(11) NOT NULL AUTO_INCREMENT,
   `banner_id` int(11) NOT NULL,
-  `link` varchar(255) collate utf8_bin NOT NULL,
-  `image` varchar(255) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`banner_image_id`)
+  `link` varchar(255) COLLATE utf8_bin NOT NULL,
+  `image` varchar(255) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`banner_image_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -305,8 +282,8 @@ CREATE TABLE `oc_banner_image` (
 --
 
 INSERT INTO `oc_banner_image` (`banner_image_id`, `banner_id`, `link`, `image`) VALUES
-(51, 7, 'index.php?route=product/product&amp;path=57&amp;product_id=49', 'data/samsung_banner.jpg'),
-(49, 6, 'index.php?route=product/manufacturer/product&amp;manufacturer_id=7', 'data/hp_banner.jpg');
+(53, 7, '/index.php?route=product/product&amp;path=57&amp;product_id=49', 'data/samsung_banner.jpg'),
+(52, 6, '/index.php?route=product/manufacturer/product&amp;manufacturer_id=7', 'data/hp_banner.jpg');
 
 -- --------------------------------------------------------
 
@@ -319,8 +296,8 @@ CREATE TABLE `oc_banner_image_description` (
   `banner_image_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `banner_id` int(11) NOT NULL,
-  `title` varchar(64) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`banner_image_id`,`language_id`)
+  `title` varchar(64) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`banner_image_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -328,10 +305,10 @@ CREATE TABLE `oc_banner_image_description` (
 --
 
 INSERT INTO `oc_banner_image_description` (`banner_image_id`, `language_id`, `banner_id`, `title`) VALUES
-(51, 2, 7, 'Samsung Tab 10.1'),
-(51, 1, 7, 'Samsung Tab 10.1'),
-(49, 2, 6, 'HP Banner'),
-(49, 1, 6, 'HP Banner');
+(53, 2, 7, 'Samsung Tab 10.1'),
+(53, 1, 7, 'Samsung Tab 10.1'),
+(52, 2, 6, 'HP Banner'),
+(52, 1, 6, 'HP Banner');
 
 -- --------------------------------------------------------
 
@@ -341,14 +318,14 @@ INSERT INTO `oc_banner_image_description` (`banner_image_id`, `language_id`, `ba
 
 DROP TABLE IF EXISTS `oc_category`;
 CREATE TABLE `oc_category` (
-  `category_id` int(11) NOT NULL auto_increment,
-  `image` varchar(255) collate utf8_bin default NULL,
-  `parent_id` int(11) NOT NULL default '0',
-  `sort_order` int(3) NOT NULL default '0',
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
+  `image` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `sort_order` int(3) NOT NULL DEFAULT '0',
   `status` int(1) NOT NULL,
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`category_id`)
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`category_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -358,7 +335,7 @@ CREATE TABLE `oc_category` (
 INSERT INTO `oc_category` (`category_id`, `image`, `parent_id`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES
 (25, '', 0, 3, 1, '2009-01-31 01:04:25', '2010-08-22 06:32:32'),
 (27, '', 20, 2, 1, '2009-01-31 01:55:34', '2010-08-22 06:32:15'),
-(20, 'data/compaq_presario.jpg', 0, 1, 1, '2009-01-05 21:49:43', '2011-04-26 03:06:22'),
+(20, 'data/compaq_presario.jpg', 0, 1, 1, '2009-01-05 21:49:43', '2011-04-29 00:58:59'),
 (24, '', 0, 5, 1, '2009-01-20 02:36:26', '2010-08-22 06:33:25'),
 (18, 'data/hp_2.jpg', 0, 2, 1, '2009-01-05 21:49:15', '2010-09-21 06:46:12'),
 (17, '', 0, 4, 1, '2009-01-03 21:08:57', '2010-08-22 06:33:18'),
@@ -404,11 +381,11 @@ DROP TABLE IF EXISTS `oc_category_description`;
 CREATE TABLE `oc_category_description` (
   `category_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(255) collate utf8_bin NOT NULL default '',
-  `description` text collate utf8_bin NOT NULL,
-  `meta_description` varchar(255) collate utf8_bin NOT NULL,
-  `meta_keyword` varchar(255) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`category_id`,`language_id`),
+  `name` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `description` text COLLATE utf8_bin NOT NULL,
+  `meta_description` varchar(255) COLLATE utf8_bin NOT NULL,
+  `meta_keyword` varchar(255) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`category_id`,`language_id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -418,7 +395,7 @@ CREATE TABLE `oc_category_description` (
 
 INSERT INTO `oc_category_description` (`category_id`, `language_id`, `name`, `description`, `meta_description`, `meta_keyword`) VALUES
 (28, 1, 'Monitors', '', '', ''),
-(20, 2, 'Desktops', '&lt;p&gt;\r\n	Example of category description text&lt;/p&gt;\r\n', 'Example of category description', ''),
+(20, 1, 'Desktops', '&lt;p&gt;\r\n	Example of category description text&lt;/p&gt;\r\n', 'Example of category description', ''),
 (33, 1, 'Cameras', '', '', ''),
 (32, 1, 'Web Cameras', '', '', ''),
 (31, 1, 'Scanners', '', '', ''),
@@ -430,7 +407,7 @@ INSERT INTO `oc_category_description` (`category_id`, `language_id`, `name`, `de
 (25, 1, 'Components', '', '', ''),
 (24, 1, 'Phones &amp; PDAs', '', '', ''),
 (28, 2, 'Monitors', '', '', ''),
-(20, 1, 'Desktops', '&lt;p&gt;\r\n	Example of category description text&lt;/p&gt;\r\n', 'Example of category description', ''),
+(20, 2, 'Desktops', '&lt;p&gt;\r\n	Example of category description text&lt;/p&gt;\r\n', 'Example of category description', ''),
 (34, 1, 'MP3 Players', '&lt;p&gt;\r\n	Shop Laptop feature only the best laptop deals on the market. By comparing laptop deals from the likes of PC World, Comet, Dixons, The Link and Carphone Warehouse, Shop Laptop has the most comprehensive selection of laptops on the internet. At Shop Laptop, we pride ourselves on offering customers the very best laptop deals. From refurbished laptops to netbooks, Shop Laptop ensures that every laptop - in every colour, style, size and technical spec - is featured on the site at the lowest possible price.&lt;/p&gt;\r\n', '', ''),
 (33, 2, 'Cameras', '', '', ''),
 (32, 2, 'Web Cameras', '', '', ''),
@@ -503,7 +480,7 @@ CREATE TABLE `oc_category_to_layout` (
   `category_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   `layout_id` int(11) NOT NULL,
-  PRIMARY KEY  (`category_id`,`store_id`)
+  PRIMARY KEY (`category_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -521,7 +498,7 @@ DROP TABLE IF EXISTS `oc_category_to_store`;
 CREATE TABLE `oc_category_to_store` (
   `category_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
-  PRIMARY KEY  (`category_id`,`store_id`)
+  PRIMARY KEY (`category_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -532,7 +509,6 @@ INSERT INTO `oc_category_to_store` (`category_id`, `store_id`) VALUES
 (17, 0),
 (18, 0),
 (20, 0),
-(20, 3),
 (24, 0),
 (25, 0),
 (26, 0),
@@ -576,14 +552,14 @@ INSERT INTO `oc_category_to_store` (`category_id`, `store_id`) VALUES
 
 DROP TABLE IF EXISTS `oc_country`;
 CREATE TABLE `oc_country` (
-  `country_id` int(11) NOT NULL auto_increment,
-  `name` varchar(128) collate utf8_bin NOT NULL,
-  `iso_code_2` varchar(2) collate utf8_bin NOT NULL default '',
-  `iso_code_3` varchar(3) collate utf8_bin NOT NULL default '',
-  `address_format` text collate utf8_bin NOT NULL,
+  `country_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) COLLATE utf8_bin NOT NULL,
+  `iso_code_2` varchar(2) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `iso_code_3` varchar(3) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `address_format` text COLLATE utf8_bin NOT NULL,
   `postcode_required` int(1) NOT NULL,
-  `status` int(1) NOT NULL default '1',
-  PRIMARY KEY  (`country_id`)
+  `status` int(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`country_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -839,21 +815,21 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 
 DROP TABLE IF EXISTS `oc_coupon`;
 CREATE TABLE `oc_coupon` (
-  `coupon_id` int(11) NOT NULL auto_increment,
-  `name` varchar(128) collate utf8_bin NOT NULL,
-  `code` varchar(10) collate utf8_bin NOT NULL,
-  `type` char(1) collate utf8_bin NOT NULL,
+  `coupon_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) COLLATE utf8_bin NOT NULL,
+  `code` varchar(10) COLLATE utf8_bin NOT NULL,
+  `type` char(1) COLLATE utf8_bin NOT NULL,
   `discount` decimal(15,4) NOT NULL,
   `logged` int(1) NOT NULL,
   `shipping` int(1) NOT NULL,
   `total` decimal(15,4) NOT NULL,
-  `date_start` date NOT NULL default '0000-00-00',
-  `date_end` date NOT NULL default '0000-00-00',
+  `date_start` date NOT NULL DEFAULT '0000-00-00',
+  `date_end` date NOT NULL DEFAULT '0000-00-00',
   `uses_total` int(11) NOT NULL,
-  `uses_customer` varchar(11) collate utf8_bin NOT NULL,
+  `uses_customer` varchar(11) COLLATE utf8_bin NOT NULL,
   `status` int(1) NOT NULL,
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`coupon_id`)
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`coupon_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -873,13 +849,13 @@ INSERT INTO `oc_coupon` (`coupon_id`, `name`, `code`, `type`, `discount`, `logge
 
 DROP TABLE IF EXISTS `oc_coupon_history`;
 CREATE TABLE `oc_coupon_history` (
-  `coupon_history_id` int(11) NOT NULL auto_increment,
+  `coupon_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `coupon_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `amount` decimal(15,4) NOT NULL,
   `date_added` datetime NOT NULL,
-  PRIMARY KEY  (`coupon_history_id`)
+  PRIMARY KEY (`coupon_history_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -895,10 +871,10 @@ CREATE TABLE `oc_coupon_history` (
 
 DROP TABLE IF EXISTS `oc_coupon_product`;
 CREATE TABLE `oc_coupon_product` (
-  `coupon_product_id` int(11) NOT NULL auto_increment,
+  `coupon_product_id` int(11) NOT NULL AUTO_INCREMENT,
   `coupon_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  PRIMARY KEY  (`coupon_product_id`)
+  PRIMARY KEY (`coupon_product_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -917,16 +893,16 @@ INSERT INTO `oc_coupon_product` (`coupon_product_id`, `coupon_id`, `product_id`)
 
 DROP TABLE IF EXISTS `oc_currency`;
 CREATE TABLE `oc_currency` (
-  `currency_id` int(11) NOT NULL auto_increment,
-  `title` varchar(32) collate utf8_bin NOT NULL default '',
-  `code` varchar(3) collate utf8_bin NOT NULL default '',
-  `symbol_left` varchar(12) collate utf8_bin NOT NULL,
-  `symbol_right` varchar(12) collate utf8_bin NOT NULL,
-  `decimal_place` char(1) collate utf8_bin NOT NULL,
+  `currency_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `code` varchar(3) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `symbol_left` varchar(12) COLLATE utf8_bin NOT NULL,
+  `symbol_right` varchar(12) COLLATE utf8_bin NOT NULL,
+  `decimal_place` char(1) COLLATE utf8_bin NOT NULL,
   `value` float(15,8) NOT NULL,
   `status` int(1) NOT NULL,
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`currency_id`)
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`currency_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -934,9 +910,9 @@ CREATE TABLE `oc_currency` (
 --
 
 INSERT INTO `oc_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`) VALUES
-(1, 'Pound Sterling', 'GBP', '£', '', '2', 1.00000000, 1, '2011-04-26 11:15:43'),
-(2, 'US Dollar', 'USD', '$', '', '2', 1.64810002, 1, '2011-04-26 11:15:43'),
-(3, 'Euro', 'EUR', '', '€', '2', 1.12600005, 1, '2011-04-26 11:15:43');
+(1, 'Pound Sterling', 'GBP', '£', '', '2', 0.59850001, 1, '2011-04-30 00:28:23'),
+(2, 'US Dollar', 'USD', '$', '', '2', 1.00000000, 1, '2011-04-30 00:28:23'),
+(3, 'Euro', 'EUR', '', '€', '2', 0.67449999, 1, '2011-04-30 00:28:23');
 
 -- --------------------------------------------------------
 
@@ -946,24 +922,24 @@ INSERT INTO `oc_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbo
 
 DROP TABLE IF EXISTS `oc_customer`;
 CREATE TABLE `oc_customer` (
-  `customer_id` int(11) NOT NULL auto_increment,
-  `store_id` int(11) NOT NULL default '0',
-  `firstname` varchar(32) collate utf8_bin NOT NULL default '',
-  `lastname` varchar(32) collate utf8_bin NOT NULL default '',
-  `email` varchar(96) collate utf8_bin NOT NULL default '',
-  `telephone` varchar(32) collate utf8_bin NOT NULL default '',
-  `fax` varchar(32) collate utf8_bin NOT NULL default '',
-  `password` varchar(40) collate utf8_bin NOT NULL default '',
-  `cart` text collate utf8_bin,
-  `wishlist` text collate utf8_bin,
-  `newsletter` int(1) NOT NULL default '0',
-  `address_id` int(11) NOT NULL default '0',
+  `customer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `store_id` int(11) NOT NULL DEFAULT '0',
+  `firstname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `lastname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `email` varchar(96) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `telephone` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `fax` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `password` varchar(40) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `cart` text COLLATE utf8_bin,
+  `wishlist` text COLLATE utf8_bin,
+  `newsletter` int(1) NOT NULL DEFAULT '0',
+  `address_id` int(11) NOT NULL DEFAULT '0',
   `customer_group_id` int(11) NOT NULL,
-  `ip` varchar(15) collate utf8_bin NOT NULL default '0',
+  `ip` varchar(15) COLLATE utf8_bin NOT NULL DEFAULT '0',
   `status` int(1) NOT NULL,
   `approved` int(1) NOT NULL,
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`customer_id`)
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`customer_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -979,9 +955,9 @@ CREATE TABLE `oc_customer` (
 
 DROP TABLE IF EXISTS `oc_customer_group`;
 CREATE TABLE `oc_customer_group` (
-  `customer_group_id` int(11) NOT NULL auto_increment,
-  `name` varchar(32) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`customer_group_id`)
+  `customer_group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`customer_group_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1000,11 +976,11 @@ INSERT INTO `oc_customer_group` (`customer_group_id`, `name`) VALUES
 
 DROP TABLE IF EXISTS `oc_customer_ip`;
 CREATE TABLE `oc_customer_ip` (
-  `customer_ip_id` int(11) NOT NULL auto_increment,
+  `customer_ip_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
-  `ip` varchar(15) collate utf8_bin NOT NULL,
+  `ip` varchar(15) COLLATE utf8_bin NOT NULL,
   `date_added` datetime NOT NULL,
-  PRIMARY KEY  (`customer_ip_id`),
+  PRIMARY KEY (`customer_ip_id`),
   KEY `ip` (`ip`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -1037,7 +1013,8 @@ INSERT INTO `oc_customer_ip` (`customer_ip_id`, `customer_id`, `ip`, `date_added
 (22, 50, '113.162.163.167', '2011-04-26 02:26:02'),
 (23, 49, '125.161.193.17', '2011-04-26 04:33:35'),
 (24, 51, '74.201.4.10', '2011-04-26 09:37:51'),
-(25, 52, '85.105.127.120', '2011-04-26 11:22:01');
+(25, 52, '85.105.127.120', '2011-04-26 11:22:01'),
+(26, 1, '127.0.0.1', '2011-04-28 01:41:55');
 
 -- --------------------------------------------------------
 
@@ -1047,13 +1024,13 @@ INSERT INTO `oc_customer_ip` (`customer_ip_id`, `customer_id`, `ip`, `date_added
 
 DROP TABLE IF EXISTS `oc_customer_reward`;
 CREATE TABLE `oc_customer_reward` (
-  `customer_reward_id` int(11) NOT NULL auto_increment,
-  `customer_id` int(11) NOT NULL default '0',
-  `order_id` int(11) NOT NULL default '0',
-  `description` text collate utf8_bin NOT NULL,
-  `points` int(8) NOT NULL default '0',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`customer_reward_id`)
+  `customer_reward_id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` int(11) NOT NULL DEFAULT '0',
+  `order_id` int(11) NOT NULL DEFAULT '0',
+  `description` text COLLATE utf8_bin NOT NULL,
+  `points` int(8) NOT NULL DEFAULT '0',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`customer_reward_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1069,13 +1046,13 @@ CREATE TABLE `oc_customer_reward` (
 
 DROP TABLE IF EXISTS `oc_customer_transaction`;
 CREATE TABLE `oc_customer_transaction` (
-  `customer_transaction_id` int(11) NOT NULL auto_increment,
+  `customer_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
-  `description` text collate utf8_bin NOT NULL,
+  `description` text COLLATE utf8_bin NOT NULL,
   `amount` decimal(15,4) NOT NULL,
   `date_added` datetime NOT NULL,
-  PRIMARY KEY  (`customer_transaction_id`)
+  PRIMARY KEY (`customer_transaction_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1091,13 +1068,13 @@ CREATE TABLE `oc_customer_transaction` (
 
 DROP TABLE IF EXISTS `oc_download`;
 CREATE TABLE `oc_download` (
-  `download_id` int(11) NOT NULL auto_increment,
-  `filename` varchar(128) collate utf8_bin NOT NULL default '',
-  `mask` varchar(128) collate utf8_bin NOT NULL default '',
-  `remaining` int(11) NOT NULL default '0',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`download_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `download_id` int(11) NOT NULL AUTO_INCREMENT,
+  `filename` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `mask` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `remaining` int(11) NOT NULL DEFAULT '0',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`download_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `oc_download`
@@ -1114,8 +1091,8 @@ DROP TABLE IF EXISTS `oc_download_description`;
 CREATE TABLE `oc_download_description` (
   `download_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(64) collate utf8_bin NOT NULL default '',
-  PRIMARY KEY  (`download_id`,`language_id`)
+  `name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`download_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1131,10 +1108,10 @@ CREATE TABLE `oc_download_description` (
 
 DROP TABLE IF EXISTS `oc_extension`;
 CREATE TABLE `oc_extension` (
-  `extension_id` int(11) NOT NULL auto_increment,
-  `type` varchar(32) collate utf8_bin NOT NULL,
-  `code` varchar(32) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`extension_id`)
+  `extension_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(32) COLLATE utf8_bin NOT NULL,
+  `code` varchar(32) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`extension_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1169,7 +1146,8 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
 (384, 'module', 'slideshow'),
 (393, 'total', 'reward'),
 (396, 'module', 'store'),
-(395, 'shipping', 'free');
+(395, 'shipping', 'free'),
+(397, 'payment', 'nochex');
 
 -- --------------------------------------------------------
 
@@ -1179,12 +1157,12 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
 
 DROP TABLE IF EXISTS `oc_geo_zone`;
 CREATE TABLE `oc_geo_zone` (
-  `geo_zone_id` int(11) NOT NULL auto_increment,
-  `name` varchar(32) collate utf8_bin NOT NULL default '',
-  `description` varchar(255) collate utf8_bin NOT NULL default '',
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`geo_zone_id`)
+  `geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `description` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`geo_zone_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1203,10 +1181,10 @@ INSERT INTO `oc_geo_zone` (`geo_zone_id`, `name`, `description`, `date_modified`
 
 DROP TABLE IF EXISTS `oc_information`;
 CREATE TABLE `oc_information` (
-  `information_id` int(11) NOT NULL auto_increment,
-  `sort_order` int(3) NOT NULL default '0',
-  `status` int(1) NOT NULL default '1',
-  PRIMARY KEY  (`information_id`)
+  `information_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sort_order` int(3) NOT NULL DEFAULT '0',
+  `status` int(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`information_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1229,9 +1207,9 @@ DROP TABLE IF EXISTS `oc_information_description`;
 CREATE TABLE `oc_information_description` (
   `information_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `title` varchar(64) collate utf8_bin NOT NULL default '',
-  `description` text collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`information_id`,`language_id`)
+  `title` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `description` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`information_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1241,10 +1219,10 @@ CREATE TABLE `oc_information_description` (
 INSERT INTO `oc_information_description` (`information_id`, `language_id`, `title`, `description`) VALUES
 (5, 2, 'Terms &amp; Conditions', '&lt;p&gt;\r\n	Terms &amp;amp; Conditions&lt;/p&gt;\r\n'),
 (3, 2, 'Privacy Policy', '&lt;p&gt;\r\n	Privacy Policy&lt;/p&gt;\r\n'),
-(4, 2, 'About Us', '&lt;p&gt;\r\n	About Us&lt;/p&gt;\r\n'),
+(4, 1, 'About Us', '&lt;p&gt;\r\n	About Us&lt;/p&gt;\r\n'),
 (5, 1, 'Terms &amp; Conditions', '&lt;p&gt;\r\n	Terms &amp;amp; Conditions&lt;/p&gt;\r\n'),
 (3, 1, 'Privacy Policy', '&lt;p&gt;\r\n	Privacy Policy&lt;/p&gt;\r\n'),
-(4, 1, 'About Us', '&lt;p&gt;\r\n	About Us&lt;/p&gt;\r\n'),
+(4, 2, 'About Us', '&lt;p&gt;\r\n	About Us&lt;/p&gt;\r\n'),
 (6, 1, 'Delivery Charges', '&lt;p&gt;\r\n	Delivery Charges&lt;/p&gt;\r\n'),
 (6, 2, 'Delivery Charges', '&lt;p&gt;\r\n	Delivery Charges&lt;/p&gt;\r\n');
 
@@ -1259,7 +1237,7 @@ CREATE TABLE `oc_information_to_layout` (
   `information_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   `layout_id` int(11) NOT NULL,
-  PRIMARY KEY  (`information_id`,`store_id`)
+  PRIMARY KEY (`information_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1277,7 +1255,7 @@ DROP TABLE IF EXISTS `oc_information_to_store`;
 CREATE TABLE `oc_information_to_store` (
   `information_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
-  PRIMARY KEY  (`information_id`,`store_id`)
+  PRIMARY KEY (`information_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1298,16 +1276,16 @@ INSERT INTO `oc_information_to_store` (`information_id`, `store_id`) VALUES
 
 DROP TABLE IF EXISTS `oc_language`;
 CREATE TABLE `oc_language` (
-  `language_id` int(11) NOT NULL auto_increment,
-  `name` varchar(32) collate utf8_bin NOT NULL default '',
-  `code` varchar(5) collate utf8_bin NOT NULL,
-  `locale` varchar(255) collate utf8_bin NOT NULL,
-  `image` varchar(64) collate utf8_bin NOT NULL,
-  `directory` varchar(32) collate utf8_bin NOT NULL default '',
-  `filename` varchar(64) collate utf8_bin NOT NULL default '',
-  `sort_order` int(3) NOT NULL default '0',
+  `language_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `code` varchar(5) COLLATE utf8_bin NOT NULL,
+  `locale` varchar(255) COLLATE utf8_bin NOT NULL,
+  `image` varchar(64) COLLATE utf8_bin NOT NULL,
+  `directory` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `filename` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `sort_order` int(3) NOT NULL DEFAULT '0',
   `status` int(1) NOT NULL,
-  PRIMARY KEY  (`language_id`),
+  PRIMARY KEY (`language_id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -1327,9 +1305,9 @@ INSERT INTO `oc_language` (`language_id`, `name`, `code`, `locale`, `image`, `di
 
 DROP TABLE IF EXISTS `oc_layout`;
 CREATE TABLE `oc_layout` (
-  `layout_id` int(11) NOT NULL auto_increment,
-  `name` varchar(64) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`layout_id`)
+  `layout_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`layout_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1357,11 +1335,11 @@ INSERT INTO `oc_layout` (`layout_id`, `name`) VALUES
 
 DROP TABLE IF EXISTS `oc_layout_route`;
 CREATE TABLE `oc_layout_route` (
-  `layout_route_id` int(11) NOT NULL auto_increment,
+  `layout_route_id` int(11) NOT NULL AUTO_INCREMENT,
   `layout_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
-  `route` varchar(255) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`layout_route_id`)
+  `route` varchar(255) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`layout_route_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1387,9 +1365,9 @@ INSERT INTO `oc_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `rout
 
 DROP TABLE IF EXISTS `oc_length_class`;
 CREATE TABLE `oc_length_class` (
-  `length_class_id` int(11) NOT NULL auto_increment,
+  `length_class_id` int(11) NOT NULL AUTO_INCREMENT,
   `value` decimal(15,8) NOT NULL,
-  PRIMARY KEY  (`length_class_id`)
+  PRIMARY KEY (`length_class_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1409,11 +1387,11 @@ INSERT INTO `oc_length_class` (`length_class_id`, `value`) VALUES
 
 DROP TABLE IF EXISTS `oc_length_class_description`;
 CREATE TABLE `oc_length_class_description` (
-  `length_class_id` int(11) NOT NULL auto_increment,
+  `length_class_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL,
-  `title` varchar(32) collate utf8_bin NOT NULL,
-  `unit` varchar(4) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`length_class_id`,`language_id`)
+  `title` varchar(32) COLLATE utf8_bin NOT NULL,
+  `unit` varchar(4) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`length_class_id`,`language_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1436,11 +1414,11 @@ INSERT INTO `oc_length_class_description` (`length_class_id`, `language_id`, `ti
 
 DROP TABLE IF EXISTS `oc_manufacturer`;
 CREATE TABLE `oc_manufacturer` (
-  `manufacturer_id` int(11) NOT NULL auto_increment,
-  `name` varchar(64) collate utf8_bin NOT NULL default '',
-  `image` varchar(255) collate utf8_bin default NULL,
+  `manufacturer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `image` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `sort_order` int(3) NOT NULL,
-  PRIMARY KEY  (`manufacturer_id`)
+  PRIMARY KEY (`manufacturer_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1453,26 +1431,7 @@ INSERT INTO `oc_manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`)
 (7, 'Hewlett-Packard', 'data/hp_logo.jpg', 0),
 (8, 'Apple', 'data/apple_logo.jpg', 0),
 (9, 'Canon', 'data/canon_logo.jpg', 0),
-(10, 'Sony', 'data/sony_logo.jpg', 0),
-(11, 'test 1', 'data/apple_cinema_30.jpg', 0),
-(12, 'test 2', 'data/canon_eos_5d_1.jpg', 0),
-(13, 'test 3', 'data/canon_eos_5d_3.jpg', 0),
-(14, 'test 4', 'data/compaq_presario.jpg', 0),
-(15, 'test 5', 'data/htc_touch_hd_3.jpg', 0),
-(16, 'test 6', 'data/iphone_1.jpg', 0),
-(17, 'test 9', '', 0),
-(18, 'test 7', '', 0),
-(19, 'test 8', '', 0),
-(20, 'test 10', '', 0),
-(21, 'test 11', '', 0),
-(22, 'test 12', '', 0),
-(23, 'test 13', '', 0),
-(24, 'test 14', '', 0),
-(25, 'test 15', '', 0),
-(26, 'test 16', '', 0),
-(27, 'test 17', '', 0),
-(28, 'test 18', '', 0),
-(29, 'test 19', '', 0);
+(10, 'Sony', 'data/sony_logo.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -1484,7 +1443,7 @@ DROP TABLE IF EXISTS `oc_manufacturer_to_store`;
 CREATE TABLE `oc_manufacturer_to_store` (
   `manufacturer_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
-  PRIMARY KEY  (`manufacturer_id`,`store_id`)
+  PRIMARY KEY (`manufacturer_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1497,26 +1456,7 @@ INSERT INTO `oc_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
 (7, 0),
 (8, 0),
 (9, 0),
-(10, 0),
-(11, 0),
-(12, 0),
-(13, 0),
-(14, 0),
-(15, 0),
-(16, 0),
-(17, 0),
-(18, 0),
-(19, 0),
-(20, 0),
-(21, 0),
-(22, 0),
-(23, 0),
-(24, 0),
-(25, 0),
-(26, 0),
-(27, 0),
-(28, 0),
-(29, 0);
+(10, 0);
 
 -- --------------------------------------------------------
 
@@ -1526,10 +1466,10 @@ INSERT INTO `oc_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
 
 DROP TABLE IF EXISTS `oc_option`;
 CREATE TABLE `oc_option` (
-  `option_id` int(11) NOT NULL auto_increment,
-  `type` varchar(32) collate utf8_bin NOT NULL,
+  `option_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(32) COLLATE utf8_bin NOT NULL,
   `sort_order` int(3) NOT NULL,
-  PRIMARY KEY  (`option_id`)
+  PRIMARY KEY (`option_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1545,7 +1485,9 @@ INSERT INTO `oc_option` (`option_id`, `type`, `sort_order`) VALUES
 (7, 'file', 6),
 (8, 'date', 7),
 (9, 'time', 8),
-(10, 'datetime', 9);
+(10, 'datetime', 9),
+(11, 'select', 1),
+(12, 'date', 1);
 
 -- --------------------------------------------------------
 
@@ -1557,8 +1499,8 @@ DROP TABLE IF EXISTS `oc_option_description`;
 CREATE TABLE `oc_option_description` (
   `option_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(128) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`option_id`,`language_id`)
+  `name` varchar(128) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`option_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1583,7 +1525,11 @@ INSERT INTO `oc_option_description` (`option_id`, `language_id`, `name`) VALUES
 (9, 1, 'Time'),
 (9, 2, 'Time'),
 (10, 1, 'Date &amp; Time'),
-(10, 2, 'Date &amp; Time');
+(10, 2, 'Date &amp; Time'),
+(12, 2, 'Delivery Date'),
+(12, 1, 'Delivery Date'),
+(11, 2, 'Size'),
+(11, 1, 'Size');
 
 -- --------------------------------------------------------
 
@@ -1593,10 +1539,10 @@ INSERT INTO `oc_option_description` (`option_id`, `language_id`, `name`) VALUES
 
 DROP TABLE IF EXISTS `oc_option_value`;
 CREATE TABLE `oc_option_value` (
-  `option_value_id` int(11) NOT NULL auto_increment,
+  `option_value_id` int(11) NOT NULL AUTO_INCREMENT,
   `option_id` int(11) NOT NULL,
   `sort_order` int(3) NOT NULL,
-  PRIMARY KEY  (`option_value_id`)
+  PRIMARY KEY (`option_value_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1614,7 +1560,10 @@ INSERT INTO `oc_option_value` (`option_value_id`, `option_id`, `sort_order`) VAL
 (40, 5, 2),
 (31, 1, 2),
 (23, 2, 1),
-(24, 2, 2);
+(24, 2, 2),
+(46, 11, 1),
+(47, 11, 2),
+(48, 11, 3);
 
 -- --------------------------------------------------------
 
@@ -1627,8 +1576,8 @@ CREATE TABLE `oc_option_value_description` (
   `option_value_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `option_id` int(11) NOT NULL,
-  `name` varchar(128) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`option_value_id`,`language_id`)
+  `name` varchar(128) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`option_value_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1657,7 +1606,13 @@ INSERT INTO `oc_option_value_description` (`option_value_id`, `language_id`, `op
 (40, 1, 5, 'Blue'),
 (23, 1, 2, 'Checkbox 1'),
 (24, 1, 2, 'Checkbox 2'),
-(45, 2, 2, 'Checkbox 4');
+(45, 2, 2, 'Checkbox 4'),
+(48, 2, 11, 'Large'),
+(48, 1, 11, 'Large'),
+(47, 2, 11, 'Medium'),
+(47, 1, 11, 'Medium'),
+(46, 2, 11, 'Small'),
+(46, 1, 11, 'Small');
 
 -- --------------------------------------------------------
 
@@ -1667,64 +1622,65 @@ INSERT INTO `oc_option_value_description` (`option_value_id`, `language_id`, `op
 
 DROP TABLE IF EXISTS `oc_order`;
 CREATE TABLE `oc_order` (
-  `order_id` int(11) NOT NULL auto_increment,
-  `invoice_no` int(11) NOT NULL default '0',
-  `invoice_prefix` varchar(10) collate utf8_bin NOT NULL,
-  `store_id` int(11) NOT NULL default '0',
-  `store_name` varchar(64) collate utf8_bin NOT NULL,
-  `store_url` varchar(255) collate utf8_bin NOT NULL,
-  `customer_id` int(11) NOT NULL default '0',
-  `customer_group_id` int(11) NOT NULL default '0',
-  `firstname` varchar(32) collate utf8_bin NOT NULL default '',
-  `lastname` varchar(32) collate utf8_bin NOT NULL,
-  `email` varchar(96) collate utf8_bin NOT NULL,
-  `telephone` varchar(32) collate utf8_bin NOT NULL default '',
-  `fax` varchar(32) collate utf8_bin NOT NULL default '',
-  `shipping_firstname` varchar(32) collate utf8_bin NOT NULL,
-  `shipping_lastname` varchar(32) collate utf8_bin NOT NULL default '',
-  `shipping_company` varchar(32) collate utf8_bin NOT NULL,
-  `shipping_address_1` varchar(128) collate utf8_bin NOT NULL,
-  `shipping_address_2` varchar(128) collate utf8_bin NOT NULL,
-  `shipping_city` varchar(128) collate utf8_bin NOT NULL,
-  `shipping_postcode` varchar(10) collate utf8_bin NOT NULL default '',
-  `shipping_country` varchar(128) collate utf8_bin NOT NULL,
+  `order_id` int(11) NOT NULL AUTO_INCREMENT,
+  `invoice_no` int(11) NOT NULL DEFAULT '0',
+  `invoice_prefix` varchar(10) COLLATE utf8_bin NOT NULL,
+  `store_id` int(11) NOT NULL DEFAULT '0',
+  `store_name` varchar(64) COLLATE utf8_bin NOT NULL,
+  `store_url` varchar(255) COLLATE utf8_bin NOT NULL,
+  `customer_id` int(11) NOT NULL DEFAULT '0',
+  `customer_group_id` int(11) NOT NULL DEFAULT '0',
+  `firstname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `lastname` varchar(32) COLLATE utf8_bin NOT NULL,
+  `email` varchar(96) COLLATE utf8_bin NOT NULL,
+  `telephone` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `fax` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `shipping_firstname` varchar(32) COLLATE utf8_bin NOT NULL,
+  `shipping_lastname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `shipping_company` varchar(32) COLLATE utf8_bin NOT NULL,
+  `shipping_address_1` varchar(128) COLLATE utf8_bin NOT NULL,
+  `shipping_address_2` varchar(128) COLLATE utf8_bin NOT NULL,
+  `shipping_city` varchar(128) COLLATE utf8_bin NOT NULL,
+  `shipping_postcode` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `shipping_country` varchar(128) COLLATE utf8_bin NOT NULL,
   `shipping_country_id` int(11) NOT NULL,
-  `shipping_zone` varchar(128) collate utf8_bin NOT NULL,
+  `shipping_zone` varchar(128) COLLATE utf8_bin NOT NULL,
   `shipping_zone_id` int(11) NOT NULL,
-  `shipping_address_format` text collate utf8_bin NOT NULL,
-  `shipping_method` varchar(128) collate utf8_bin NOT NULL default '',
-  `payment_firstname` varchar(32) collate utf8_bin NOT NULL default '',
-  `payment_lastname` varchar(32) collate utf8_bin NOT NULL default '',
-  `payment_company` varchar(32) collate utf8_bin NOT NULL,
-  `payment_address_1` varchar(128) collate utf8_bin NOT NULL,
-  `payment_address_2` varchar(128) collate utf8_bin NOT NULL,
-  `payment_city` varchar(128) collate utf8_bin NOT NULL,
-  `payment_postcode` varchar(10) collate utf8_bin NOT NULL default '',
-  `payment_country` varchar(128) collate utf8_bin NOT NULL,
+  `shipping_address_format` text COLLATE utf8_bin NOT NULL,
+  `shipping_method` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `payment_firstname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `payment_lastname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `payment_company` varchar(32) COLLATE utf8_bin NOT NULL,
+  `payment_address_1` varchar(128) COLLATE utf8_bin NOT NULL,
+  `payment_address_2` varchar(128) COLLATE utf8_bin NOT NULL,
+  `payment_city` varchar(128) COLLATE utf8_bin NOT NULL,
+  `payment_postcode` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `payment_country` varchar(128) COLLATE utf8_bin NOT NULL,
   `payment_country_id` int(11) NOT NULL,
-  `payment_zone` varchar(128) collate utf8_bin NOT NULL,
+  `payment_zone` varchar(128) COLLATE utf8_bin NOT NULL,
   `payment_zone_id` int(11) NOT NULL,
-  `payment_address_format` text collate utf8_bin NOT NULL,
-  `payment_method` varchar(128) collate utf8_bin NOT NULL default '',
-  `comment` text collate utf8_bin NOT NULL,
-  `total` decimal(15,4) NOT NULL default '0.0000',
+  `payment_address_format` text COLLATE utf8_bin NOT NULL,
+  `payment_method` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `comment` text COLLATE utf8_bin NOT NULL,
+  `total` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `reward` int(8) NOT NULL,
-  `order_status_id` int(11) NOT NULL default '0',
+  `order_status_id` int(11) NOT NULL DEFAULT '0',
   `affiliate_id` int(11) NOT NULL,
   `commission` decimal(15,4) NOT NULL,
   `language_id` int(11) NOT NULL,
   `currency_id` int(11) NOT NULL,
-  `currency_code` varchar(3) collate utf8_bin NOT NULL,
+  `currency_code` varchar(3) COLLATE utf8_bin NOT NULL,
   `currency_value` decimal(15,8) NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
-  `ip` varchar(15) collate utf8_bin NOT NULL default '',
-  PRIMARY KEY  (`order_id`)
+  `ip` varchar(15) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`order_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `oc_order`
 --
+
 
 -- --------------------------------------------------------
 
@@ -1734,15 +1690,15 @@ CREATE TABLE `oc_order` (
 
 DROP TABLE IF EXISTS `oc_order_download`;
 CREATE TABLE `oc_order_download` (
-  `order_download_id` int(11) NOT NULL auto_increment,
+  `order_download_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `order_product_id` int(11) NOT NULL,
-  `name` varchar(64) collate utf8_bin NOT NULL default '',
-  `filename` varchar(128) collate utf8_bin NOT NULL default '',
-  `mask` varchar(128) collate utf8_bin NOT NULL default '',
-  `remaining` int(3) NOT NULL default '0',
-  PRIMARY KEY  (`order_download_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `filename` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `mask` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `remaining` int(3) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`order_download_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `oc_order_download`
@@ -1757,14 +1713,14 @@ CREATE TABLE `oc_order_download` (
 
 DROP TABLE IF EXISTS `oc_order_history`;
 CREATE TABLE `oc_order_history` (
-  `order_history_id` int(11) NOT NULL auto_increment,
+  `order_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `order_status_id` int(5) NOT NULL,
-  `notify` int(1) NOT NULL default '0',
-  `comment` text collate utf8_bin NOT NULL,
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`order_history_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `notify` int(1) NOT NULL DEFAULT '0',
+  `comment` text COLLATE utf8_bin NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`order_history_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `oc_order_history`
@@ -1779,15 +1735,15 @@ CREATE TABLE `oc_order_history` (
 
 DROP TABLE IF EXISTS `oc_order_option`;
 CREATE TABLE `oc_order_option` (
-  `order_option_id` int(11) NOT NULL auto_increment,
+  `order_option_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `order_product_id` int(11) NOT NULL,
   `product_option_id` int(11) NOT NULL,
-  `product_option_value_id` int(11) NOT NULL default '0',
-  `name` varchar(255) collate utf8_bin NOT NULL,
-  `value` text collate utf8_bin NOT NULL,
-  `type` varchar(32) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`order_option_id`)
+  `product_option_value_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `value` text COLLATE utf8_bin NOT NULL,
+  `type` varchar(32) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`order_option_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1803,16 +1759,16 @@ CREATE TABLE `oc_order_option` (
 
 DROP TABLE IF EXISTS `oc_order_product`;
 CREATE TABLE `oc_order_product` (
-  `order_product_id` int(11) NOT NULL auto_increment,
+  `order_product_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `name` varchar(255) collate utf8_bin NOT NULL,
-  `model` varchar(24) collate utf8_bin NOT NULL,
+  `name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `model` varchar(24) COLLATE utf8_bin NOT NULL,
   `quantity` int(4) NOT NULL,
-  `price` decimal(15,4) NOT NULL default '0.0000',
-  `total` decimal(15,4) NOT NULL default '0.0000',
-  `tax` decimal(15,4) NOT NULL default '0.0000',
-  PRIMARY KEY  (`order_product_id`)
+  `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `total` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `tax` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  PRIMARY KEY (`order_product_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1830,10 +1786,10 @@ INSERT INTO `oc_order_product` (`order_product_id`, `order_id`, `product_id`, `n
 
 DROP TABLE IF EXISTS `oc_order_status`;
 CREATE TABLE `oc_order_status` (
-  `order_status_id` int(11) NOT NULL auto_increment,
+  `order_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL,
-  `name` varchar(32) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`order_status_id`,`language_id`)
+  `name` varchar(32) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`order_status_id`,`language_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1872,14 +1828,14 @@ INSERT INTO `oc_order_status` (`order_status_id`, `language_id`, `name`) VALUES
 
 DROP TABLE IF EXISTS `oc_order_total`;
 CREATE TABLE `oc_order_total` (
-  `order_total_id` int(10) NOT NULL auto_increment,
+  `order_total_id` int(10) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
-  `code` varchar(32) collate utf8_bin NOT NULL,
-  `title` varchar(255) collate utf8_bin NOT NULL default '',
-  `text` varchar(255) collate utf8_bin NOT NULL default '',
-  `value` decimal(15,4) NOT NULL default '0.0000',
+  `code` varchar(32) COLLATE utf8_bin NOT NULL,
+  `title` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `text` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `value` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `sort_order` int(3) NOT NULL,
-  PRIMARY KEY  (`order_total_id`),
+  PRIMARY KEY (`order_total_id`),
   KEY `idx_orders_total_orders_id` (`order_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -1901,33 +1857,33 @@ INSERT INTO `oc_order_total` (`order_total_id`, `order_id`, `code`, `title`, `te
 
 DROP TABLE IF EXISTS `oc_product`;
 CREATE TABLE `oc_product` (
-  `product_id` int(11) NOT NULL auto_increment,
-  `model` varchar(64) collate utf8_bin NOT NULL,
-  `sku` varchar(64) collate utf8_bin NOT NULL,
-  `location` varchar(128) collate utf8_bin NOT NULL,
-  `quantity` int(4) NOT NULL default '0',
+  `product_id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(64) COLLATE utf8_bin NOT NULL,
+  `sku` varchar(64) COLLATE utf8_bin NOT NULL,
+  `location` varchar(128) COLLATE utf8_bin NOT NULL,
+  `quantity` int(4) NOT NULL DEFAULT '0',
   `stock_status_id` int(11) NOT NULL,
-  `image` varchar(255) collate utf8_bin default NULL,
+  `image` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `manufacturer_id` int(11) NOT NULL,
-  `shipping` int(1) NOT NULL default '1',
-  `price` decimal(15,4) NOT NULL default '0.0000',
-  `points` int(8) NOT NULL default '0',
+  `shipping` int(1) NOT NULL DEFAULT '1',
+  `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `points` int(8) NOT NULL DEFAULT '0',
   `tax_class_id` int(11) NOT NULL,
   `date_available` date NOT NULL,
-  `weight` decimal(5,2) NOT NULL default '0.00',
-  `weight_class_id` int(11) NOT NULL default '0',
-  `length` decimal(5,2) NOT NULL default '0.00',
-  `width` decimal(5,2) NOT NULL default '0.00',
-  `height` decimal(5,2) NOT NULL default '0.00',
-  `length_class_id` int(11) NOT NULL default '0',
-  `subtract` int(1) NOT NULL default '1',
-  `minimum` int(11) NOT NULL default '1',
-  `sort_order` int(11) NOT NULL default '0',
-  `status` int(1) NOT NULL default '0',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  `viewed` int(5) NOT NULL default '0',
-  PRIMARY KEY  (`product_id`)
+  `weight` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `weight_class_id` int(11) NOT NULL DEFAULT '0',
+  `length` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `width` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `height` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `length_class_id` int(11) NOT NULL DEFAULT '0',
+  `subtract` int(1) NOT NULL DEFAULT '1',
+  `minimum` int(11) NOT NULL DEFAULT '1',
+  `sort_order` int(11) NOT NULL DEFAULT '0',
+  `status` int(1) NOT NULL DEFAULT '0',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `viewed` int(5) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1935,25 +1891,25 @@ CREATE TABLE `oc_product` (
 --
 
 INSERT INTO `oc_product` (`product_id`, `model`, `sku`, `location`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `points`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `subtract`, `minimum`, `sort_order`, `status`, `date_added`, `date_modified`, `viewed`) VALUES
-(28, 'Product 1', '', '', 960, 7, 'data/htc_touch_hd_1.jpg', 5, 1, '500.0000', 200, 9, '2009-02-03', '146.40', 2, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 16:06:50', '2011-03-28 08:31:42', 899),
-(29, 'Product 2', '', '', 1000, 6, 'data/palm_treo_pro_1.jpg', 6, 1, '279.9900', 0, 9, '2009-02-03', '133.00', 2, '0.00', '0.00', '0.00', 3, 1, 1, 0, 1, '2009-02-03 16:42:17', '2011-03-19 03:55:24', 210),
-(30, 'Product 3', '', '', 995, 6, 'data/canon_eos_5d_1.jpg', 9, 1, '100.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 16:59:00', '2011-03-19 03:54:10', 232),
-(31, 'Product 4', '', '', 1000, 6, 'data/nikon_d300_1.jpg', 0, 1, '80.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 3, 1, 1, 0, 1, '2009-02-03 17:00:10', '2011-03-19 03:55:17', 64),
-(32, 'Product 5', '', '', 1000, 6, 'data/ipod_touch_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 17:07:26', '2011-03-19 03:56:43', 75),
-(33, 'Product 6', '', '', 1000, 6, 'data/samsung_syncmaster_941bw.jpg', 0, 1, '200.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 17:08:31', '2011-03-19 03:55:46', 121),
-(34, 'Product 7', '', '', 1000, 6, 'data/ipod_shuffle_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 18:07:54', '2011-03-19 03:56:35', 70),
-(35, 'Product 8', '', '', 1000, 5, '', 0, 0, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 18:08:31', '2011-03-19 03:55:31', 59),
-(36, 'Product 9', '', '', 1000, 6, 'data/ipod_nano_1.jpg', 8, 0, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 18:09:19', '2011-03-19 03:56:26', 75),
-(40, 'product 11', '', '', 1000, 5, 'data/iphone_1.jpg', 8, 1, '101.0000', 0, 9, '2009-02-03', '10.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 21:07:12', '2011-03-19 03:55:09', 235),
-(41, 'Product 14', '', '', 1000, 5, 'data/imac_1.jpg', 8, 0, '500.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 21:07:26', '2011-03-19 03:56:14', 228),
-(42, 'Product 15', '', '', 994, 5, 'data/apple_cinema_30.jpg', 8, 1, '100.0000', 10, 9, '2009-02-04', '12.50', 5, '1.00', '2.00', '3.00', 2, 1, 2, 0, 1, '2009-02-03 21:07:37', '2011-04-26 11:34:59', 1280),
-(43, 'Product 16', '', '', 969, 5, 'data/macbook_1.jpg', 8, 0, '500.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:07:49', '2011-03-19 03:54:41', 348),
-(44, 'Product 17', '', '', 1000, 5, 'data/macbook_air_1.jpg', 8, 1, '1000.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:08:00', '2011-03-19 03:54:51', 143),
-(45, 'Product 18', '', '', 998, 5, 'data/macbook_pro_1.jpg', 8, 1, '2000.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:08:17', '2011-03-19 03:55:00', 89),
-(46, 'Product 19', '', '', 1000, 5, 'data/sony_vaio_1.jpg', 10, 1, '1000.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:08:29', '2011-03-19 03:55:55', 188),
-(47, 'Product 21', '', '', 1000, 5, 'data/hp_1.jpg', 7, 1, '100.0000', 50, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 1, 0, 1, 0, 1, '2009-02-03 21:08:40', '2011-04-26 11:35:23', 734),
-(48, 'product 20', 'test 1', 'test 2', 998, 5, 'data/ipod_classic_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-08', '1.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-08 17:21:51', '2011-03-19 03:55:39', 444),
-(49, 'SAM1', '', '', 0, 8, 'data/samsung_tab_1.jpg', 0, 1, '199.9900', 0, 9, '2011-04-25', '0.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 1, 1, '2011-04-26 08:57:34', '2011-04-26 09:21:13', 21);
+(28, 'Product 1', '', '', 960, 7, 'data/htc_touch_hd_1.jpg', 5, 1, '500.0000', 200, 9, '2009-02-03', '146.40', 2, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 16:06:50', '2011-03-28 08:31:42', 6),
+(29, 'Product 2', '', '', 1000, 6, 'data/palm_treo_pro_1.jpg', 6, 1, '279.9900', 0, 9, '2009-02-03', '133.00', 2, '0.00', '0.00', '0.00', 3, 1, 1, 0, 1, '2009-02-03 16:42:17', '2011-03-19 03:55:24', 0),
+(30, 'Product 3', '', '', 995, 6, 'data/canon_eos_5d_1.jpg', 9, 1, '100.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 16:59:00', '2011-03-19 03:54:10', 0),
+(31, 'Product 4', '', '', 1000, 6, 'data/nikon_d300_1.jpg', 0, 1, '80.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 3, 1, 1, 0, 1, '2009-02-03 17:00:10', '2011-03-19 03:55:17', 0),
+(32, 'Product 5', '', '', 1000, 6, 'data/ipod_touch_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 17:07:26', '2011-03-19 03:56:43', 0),
+(33, 'Product 6', '', '', 1000, 6, 'data/samsung_syncmaster_941bw.jpg', 0, 1, '200.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 17:08:31', '2011-03-19 03:55:46', 0),
+(34, 'Product 7', '', '', 1000, 6, 'data/ipod_shuffle_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 18:07:54', '2011-03-19 03:56:35', 0),
+(35, 'Product 8', '', '', 1000, 5, '', 0, 0, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 18:08:31', '2011-04-28 01:47:48', 4),
+(36, 'Product 9', '', '', 1000, 6, 'data/ipod_nano_1.jpg', 8, 0, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 18:09:19', '2011-03-19 03:56:26', 0),
+(40, 'product 11', '', '', 1000, 5, 'data/iphone_1.jpg', 8, 1, '101.0000', 0, 9, '2009-02-03', '10.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 21:07:12', '2011-03-19 03:55:09', 0),
+(41, 'Product 14', '', '', 1000, 5, 'data/imac_1.jpg', 8, 0, '500.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 21:07:26', '2011-03-19 03:56:14', 1),
+(42, 'Product 15', '', '', 994, 5, 'data/apple_cinema_30.jpg', 8, 1, '100.0000', 10, 9, '2009-02-04', '12.50', 5, '1.00', '2.00', '3.00', 2, 1, 2, 0, 1, '2009-02-03 21:07:37', '2011-04-28 00:13:44', 1),
+(43, 'Product 16', '', '', 966, 5, 'data/macbook_1.jpg', 8, 0, '500.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:07:49', '2011-03-19 03:54:41', 4),
+(44, 'Product 17', '', '', 1000, 5, 'data/macbook_air_1.jpg', 8, 1, '1000.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:08:00', '2011-03-19 03:54:51', 0),
+(45, 'Product 18', '', '', 998, 5, 'data/macbook_pro_1.jpg', 8, 1, '2000.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:08:17', '2011-03-19 03:55:00', 0),
+(46, 'Product 19', '', '', 1000, 5, 'data/sony_vaio_1.jpg', 10, 1, '1000.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:08:29', '2011-03-19 03:55:55', 0),
+(47, 'Product 21', '', '', 1000, 5, 'data/hp_1.jpg', 7, 1, '100.0000', 50, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 1, 0, 1, 0, 1, '2009-02-03 21:08:40', '2011-04-29 21:47:01', 14),
+(48, 'product 20', 'test 1', 'test 2', 998, 5, 'data/ipod_classic_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-08', '1.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-08 17:21:51', '2011-03-19 03:55:39', 0),
+(49, 'SAM1', '', '', 0, 8, 'data/samsung_tab_1.jpg', 0, 1, '199.9900', 0, 9, '2011-04-25', '0.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 1, 1, '2011-04-26 08:57:34', '2011-04-26 09:21:13', 8);
 
 -- --------------------------------------------------------
 
@@ -1966,8 +1922,8 @@ CREATE TABLE `oc_product_attribute` (
   `product_id` int(11) NOT NULL,
   `attribute_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `text` text collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`product_id`,`attribute_id`,`language_id`)
+  `text` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`product_id`,`attribute_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1976,17 +1932,19 @@ CREATE TABLE `oc_product_attribute` (
 
 INSERT INTO `oc_product_attribute` (`product_id`, `attribute_id`, `language_id`, `text`) VALUES
 (43, 2, 1, '1'),
-(47, 4, 2, '16GB'),
 (47, 4, 1, '16GB'),
-(47, 2, 2, '4'),
-(47, 2, 1, '4'),
+(47, 4, 2, '16GB'),
 (43, 4, 2, '8gb'),
 (43, 4, 1, '8gb'),
+(42, 3, 1, 'rt'),
 (42, 5, 2, 'test2'),
+(43, 2, 2, '1'),
 (42, 5, 1, 'test1'),
 (42, 4, 2, 'test2'),
 (42, 4, 1, 'test1'),
-(43, 2, 2, '1');
+(42, 3, 2, 'tryer'),
+(47, 2, 1, '4'),
+(47, 2, 2, '4');
 
 -- --------------------------------------------------------
 
@@ -1996,13 +1954,13 @@ INSERT INTO `oc_product_attribute` (`product_id`, `attribute_id`, `language_id`,
 
 DROP TABLE IF EXISTS `oc_product_description`;
 CREATE TABLE `oc_product_description` (
-  `product_id` int(11) NOT NULL auto_increment,
+  `product_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL,
-  `name` varchar(255) collate utf8_bin NOT NULL,
-  `description` text collate utf8_bin NOT NULL,
-  `meta_description` varchar(255) collate utf8_bin NOT NULL,
-  `meta_keyword` varchar(255) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`product_id`,`language_id`),
+  `name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `description` text COLLATE utf8_bin NOT NULL,
+  `meta_description` varchar(255) COLLATE utf8_bin NOT NULL,
+  `meta_keyword` varchar(255) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`product_id`,`language_id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -2011,12 +1969,12 @@ CREATE TABLE `oc_product_description` (
 --
 
 INSERT INTO `oc_product_description` (`product_id`, `language_id`, `name`, `description`, `meta_description`, `meta_keyword`) VALUES
-(35, 2, 'Product 8', '&lt;p&gt;\r\n	Product 8&lt;/p&gt;\r\n', '', ''),
+(35, 1, 'Product 8', '&lt;p&gt;\r\n	Product 8&lt;/p&gt;\r\n', '', ''),
 (36, 2, 'iPod Nano', '&lt;div&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Video in your pocket.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Its the small iPod with one very big idea: video. The worlds most popular music player now lets you enjoy movies, TV shows, and more on a two-inch display thats 65% brighter than before.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Browse through your music collection by flipping through album art. Select an album to turn it over and see the track list.&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Enhanced interface.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Experience a whole new way to browse and view your music and video.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Sleek and colorful.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		With an anodized aluminum and polished stainless steel enclosure and a choice of five colors, iPod nano is dressed to impress.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;iTunes.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Available as a free download, iTunes makes it easy to browse and buy millions of songs, movies, TV shows, audiobooks, and games and download free podcasts all at the iTunes Store. And you can import your own music, manage your whole media library, and sync your iPod or iPhone with ease.&lt;/p&gt;\r\n&lt;/div&gt;\r\n', '', ''),
 (48, 1, 'iPod Classic', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;More room to move.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			With 80GB or 160GB of storage and up to 40 hours of battery life, the new iPod classic lets you enjoy up to 40,000 songs or up to 200 hours of video or any combination wherever you go.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Browse through your music collection by flipping through album art. Select an album to turn it over and see the track list.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Enhanced interface.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Experience a whole new way to browse and view your music and video.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Sleeker design.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Beautiful, durable, and sleeker than ever, iPod classic now features an anodized aluminum and polished stainless steel enclosure with rounded edges.&lt;/p&gt;\r\n	&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;', '', ''),
 (40, 1, 'iPhone', '&lt;p class=&quot;intro&quot;&gt;\r\n	iPhone is a revolutionary new mobile phone that allows you to make a call by simply tapping a name or number in your address book, a favorites list, or a call log. It also automatically syncs all your contacts from a PC, Mac, or Internet service. And it lets you select and listen to voicemail messages in whatever order you want just like email.&lt;/p&gt;\r\n', '', ''),
 (46, 2, 'Sony VAIO', '&lt;div&gt;\r\n	Unprecedented power. The next generation of processing technology has arrived. Built into the newest VAIO notebooks lies Intel&amp;#39;s latest, most powerful innovation yet: Intel&amp;reg; Centrino&amp;reg; 2 processor technology. Boasting incredible speed, expanded wireless connectivity, enhanced multimedia support and greater energy efficiency, all the high-performance essentials are seamlessly combined into a single chip.&lt;/div&gt;\r\n', '', ''),
-(47, 2, 'HP LP3065', '&lt;p&gt;\r\n	Stop your co-workers in their tracks with the stunning new 30-inch diagonal HP LP3065 Flat Panel Monitor. This flagship monitor features best-in-class performance and presentation features on a huge wide-aspect screen while letting you work as comfortably as possible - you might even forget you&amp;#39;re at the office&lt;/p&gt;\r\n', '', ''),
+(47, 1, 'HP LP3065', '&lt;p&gt;\r\n	Stop your co-workers in their tracks with the stunning new 30-inch diagonal HP LP3065 Flat Panel Monitor. This flagship monitor features best-in-class performance and presentation features on a huge wide-aspect screen while letting you work as comfortably as possible - you might even forget you&amp;#39;re at the office&lt;/p&gt;\r\n', '', ''),
 (28, 1, 'HTC Touch HD', '&lt;p&gt;\r\n	HTC Touch - in High Definition. Watch music videos and streaming content in awe-inspiring high definition clarity for a mobile experience you never thought possible. Seductively sleek, the HTC Touch HD provides the next generation of mobile functionality, all at a simple touch. Fully integrated with Windows Mobile Professional 6.1, ultrafast 3.5G, GPS, 5MP camera, plus lots more - all delivered on a breathtakingly crisp 3.8&amp;quot; WVGA touchscreen - you can take control of your mobile world with the HTC Touch HD.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Processor Qualcomm&amp;reg; MSM 7201A&amp;trade; 528 MHz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Windows Mobile&amp;reg; 6.1 Professional Operating System&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Memory: 512 MB ROM, 288 MB RAM&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Dimensions: 115 mm x 62.8 mm x 12 mm / 146.4 grams&lt;/li&gt;\r\n	&lt;li&gt;\r\n		3.8-inch TFT-LCD flat touch-sensitive screen with 480 x 800 WVGA resolution&lt;/li&gt;\r\n	&lt;li&gt;\r\n		HSDPA/WCDMA: Europe/Asia: 900/2100 MHz; Up to 2 Mbps up-link and 7.2 Mbps down-link speeds&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Quad-band GSM/GPRS/EDGE: Europe/Asia: 850/900/1800/1900 MHz (Band frequency, HSUPA availability, and data speed are operator dependent.)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Device Control via HTC TouchFLO&amp;trade; 3D &amp;amp; Touch-sensitive front panel buttons&lt;/li&gt;\r\n	&lt;li&gt;\r\n		GPS and A-GPS ready&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Bluetooth&amp;reg; 2.0 with Enhanced Data Rate and A2DP for wireless stereo headsets&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Wi-Fi&amp;reg;: IEEE 802.11 b/g&lt;/li&gt;\r\n	&lt;li&gt;\r\n		HTC ExtUSB&amp;trade; (11-pin mini-USB 2.0)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		5 megapixel color camera with auto focus&lt;/li&gt;\r\n	&lt;li&gt;\r\n		VGA CMOS color camera&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Built-in 3.5 mm audio jack, microphone, speaker, and FM radio&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Ring tone formats: AAC, AAC+, eAAC+, AMR-NB, AMR-WB, QCP, MP3, WMA, WAV&lt;/li&gt;\r\n	&lt;li&gt;\r\n		40 polyphonic and standard MIDI format 0 and 1 (SMF)/SP MIDI&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Rechargeable Lithium-ion or Lithium-ion polymer 1350 mAh battery&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Expansion Slot: microSD&amp;trade; memory card (SD 2.0 compatible)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		AC Adapter Voltage range/frequency: 100 ~ 240V AC, 50/60 Hz DC output: 5V and 1A&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Special Features: FM Radio, G-Sensor&lt;/li&gt;\r\n&lt;/ul&gt;\r\n', '', ''),
 (32, 2, 'iPod Touch', '&lt;p&gt;\r\n	&lt;strong&gt;Revolutionary multi-touch interface.&lt;/strong&gt;&lt;br /&gt;\r\n	iPod touch features the same multi-touch screen technology as iPhone. Pinch to zoom in on a photo. Scroll through your songs and videos with a flick. Flip through your library by album artwork with Cover Flow.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Gorgeous 3.5-inch widescreen display.&lt;/strong&gt;&lt;br /&gt;\r\n	Watch your movies, TV shows, and photos come alive with bright, vivid color on the 320-by-480-pixel display.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Music downloads straight from iTunes.&lt;/strong&gt;&lt;br /&gt;\r\n	Shop the iTunes Wi-Fi Music Store from anywhere with Wi-Fi.1 Browse or search to find the music youre looking for, preview it, and buy it with just a tap.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Surf the web with Wi-Fi.&lt;/strong&gt;&lt;br /&gt;\r\n	Browse the web using Safari and watch YouTube videos on the first iPod with Wi-Fi built in&lt;br /&gt;\r\n	&amp;nbsp;&lt;/p&gt;\r\n', '', ''),
 (30, 2, 'Canon EOS 5D', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		Canon&amp;#39;s press material for the EOS 5D states that it &amp;#39;defines (a) new D-SLR category&amp;#39;, while we&amp;#39;re not typically too concerned with marketing talk this particular statement is clearly pretty accurate. The EOS 5D is unlike any previous digital SLR in that it combines a full-frame (35 mm sized) high resolution sensor (12.8 megapixels) with a relatively compact body (slightly larger than the EOS 20D, although in your hand it feels noticeably &amp;#39;chunkier&amp;#39;). The EOS 5D is aimed to slot in between the EOS 20D and the EOS-1D professional digital SLR&amp;#39;s, an important difference when compared to the latter is that the EOS 5D doesn&amp;#39;t have any environmental seals. While Canon don&amp;#39;t specifically refer to the EOS 5D as a &amp;#39;professional&amp;#39; digital SLR it will have obvious appeal to professionals who want a high quality digital SLR in a body lighter than the EOS-1D. It will also no doubt appeal to current EOS 20D owners (although lets hope they&amp;#39;ve not bought too many EF-S lenses...)&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;', '', ''),
@@ -2028,12 +1986,12 @@ INSERT INTO `oc_product_description` (`product_id`, `language_id`, `name`, `desc
 (45, 1, 'MacBook Pro', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Latest Intel mobile architecture&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Powered by the most advanced mobile processors from Intel, the new Core 2 Duo MacBook Pro is over 50% faster than the original Core Duo MacBook Pro and now supports up to 4GB of RAM.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Leading-edge graphics&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			The NVIDIA GeForce 8600M GT delivers exceptional graphics processing power. For the ultimate creative canvas, you can even configure the 17-inch model with a 1920-by-1200 resolution display.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Designed for life on the road&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Innovations such as a magnetic power connection and an illuminated keyboard with ambient light sensor put the MacBook Pro in a class by itself.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Connect. Create. Communicate.&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Quickly set up a video conference with the built-in iSight camera. Control presentations and media from up to 30 feet away with the included Apple Remote. Connect to high-bandwidth peripherals with FireWire 800 and DVI.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Next-generation wireless&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Featuring 802.11n wireless technology, the MacBook Pro delivers up to five times the performance and up to twice the range of previous-generation technologies.&lt;/p&gt;\r\n	&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;', '', ''),
 (31, 2, 'Nikon D300', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		Engineered with pro-level features and performance, the 12.3-effective-megapixel D300 combines brand new technologies with advanced features inherited from Nikon&amp;#39;s newly announced D3 professional digital SLR camera to offer serious photographers remarkable performance combined with agility.&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		Similar to the D3, the D300 features Nikon&amp;#39;s exclusive EXPEED Image Processing System that is central to driving the speed and processing power needed for many of the camera&amp;#39;s new features. The D300 features a new 51-point autofocus system with Nikon&amp;#39;s 3D Focus Tracking feature and two new LiveView shooting modes that allow users to frame a photograph using the camera&amp;#39;s high-resolution LCD monitor. The D300 shares a similar Scene Recognition System as is found in the D3; it promises to greatly enhance the accuracy of autofocus, autoexposure, and auto white balance by recognizing the subject or scene being photographed and applying this information to the calculations for the three functions.&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		The D300 reacts with lightning speed, powering up in a mere 0.13 seconds and shooting with an imperceptible 45-millisecond shutter release lag time. The D300 is capable of shooting at a rapid six frames per second and can go as fast as eight frames per second when using the optional MB-D10 multi-power battery pack. In continuous bursts, the D300 can shoot up to 100 shots at full 12.3-megapixel resolution. (NORMAL-LARGE image setting, using a SanDisk Extreme IV 1GB CompactFlash card.)&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		The D300 incorporates a range of innovative technologies and features that will significantly improve the accuracy, control, and performance photographers can get from their equipment. Its new Scene Recognition System advances the use of Nikon&amp;#39;s acclaimed 1,005-segment sensor to recognize colors and light patterns that help the camera determine the subject and the type of scene being photographed before a picture is taken. This information is used to improve the accuracy of autofocus, autoexposure, and auto white balance functions in the D300. For example, the camera can track moving subjects better and by identifying them, it can also automatically select focus points faster and with greater accuracy. It can also analyze highlights and more accurately determine exposure, as well as infer light sources to deliver more accurate white balance detection.&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;', '', ''),
 (29, 1, 'Palm Treo Pro', '&lt;p&gt;\r\n	Redefine your workday with the Palm Treo Pro smartphone. Perfectly balanced, you can respond to business and personal email, stay on top of appointments and contacts, and use Wi-Fi or GPS when you&amp;rsquo;re out and about. Then watch a video on YouTube, catch up with news and sports on the web, or listen to a few songs. Balance your work and play the way you like it, with the Palm Treo Pro.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Windows Mobile&amp;reg; 6.1 Professional Edition&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Qualcomm&amp;reg; MSM7201 400MHz Processor&lt;/li&gt;\r\n	&lt;li&gt;\r\n		320x320 transflective colour TFT touchscreen&lt;/li&gt;\r\n	&lt;li&gt;\r\n		HSDPA/UMTS/EDGE/GPRS/GSM radio&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Tri-band UMTS &amp;mdash; 850MHz, 1900MHz, 2100MHz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Quad-band GSM &amp;mdash; 850/900/1800/1900&lt;/li&gt;\r\n	&lt;li&gt;\r\n		802.11b/g with WPA, WPA2, and 801.1x authentication&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Built-in GPS&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Bluetooth Version: 2.0 + Enhanced Data Rate&lt;/li&gt;\r\n	&lt;li&gt;\r\n		256MB storage (100MB user available), 128MB RAM&lt;/li&gt;\r\n	&lt;li&gt;\r\n		2.0 megapixel camera, up to 8x digital zoom and video capture&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Removable, rechargeable 1500mAh lithium-ion battery&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Up to 5.0 hours talk time and up to 250 hours standby&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MicroSDHC card expansion (up to 32GB supported)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MicroUSB 2.0 for synchronization and charging&lt;/li&gt;\r\n	&lt;li&gt;\r\n		3.5mm stereo headset jack&lt;/li&gt;\r\n	&lt;li&gt;\r\n		60mm (W) x 114mm (L) x 13.5mm (D) / 133g&lt;/li&gt;\r\n&lt;/ul&gt;\r\n', '', ''),
-(35, 1, 'Product 8', '&lt;p&gt;\r\n	Product 8&lt;/p&gt;\r\n', '', ''),
+(35, 2, 'Product 8', '&lt;p&gt;\r\n	Product 8&lt;/p&gt;\r\n', '', ''),
 (36, 1, 'iPod Nano', '&lt;div&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Video in your pocket.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Its the small iPod with one very big idea: video. The worlds most popular music player now lets you enjoy movies, TV shows, and more on a two-inch display thats 65% brighter than before.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Browse through your music collection by flipping through album art. Select an album to turn it over and see the track list.&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Enhanced interface.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Experience a whole new way to browse and view your music and video.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Sleek and colorful.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		With an anodized aluminum and polished stainless steel enclosure and a choice of five colors, iPod nano is dressed to impress.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;iTunes.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Available as a free download, iTunes makes it easy to browse and buy millions of songs, movies, TV shows, audiobooks, and games and download free podcasts all at the iTunes Store. And you can import your own music, manage your whole media library, and sync your iPod or iPhone with ease.&lt;/p&gt;\r\n&lt;/div&gt;\r\n', '', ''),
 (48, 2, 'iPod Classic', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;More room to move.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			With 80GB or 160GB of storage and up to 40 hours of battery life, the new iPod classic lets you enjoy up to 40,000 songs or up to 200 hours of video or any combination wherever you go.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Browse through your music collection by flipping through album art. Select an album to turn it over and see the track list.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Enhanced interface.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Experience a whole new way to browse and view your music and video.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Sleeker design.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Beautiful, durable, and sleeker than ever, iPod classic now features an anodized aluminum and polished stainless steel enclosure with rounded edges.&lt;/p&gt;\r\n	&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;', '', ''),
 (40, 2, 'iPhone', '&lt;p class=&quot;intro&quot;&gt;\r\n	iPhone is a revolutionary new mobile phone that allows you to make a call by simply tapping a name or number in your address book, a favorites list, or a call log. It also automatically syncs all your contacts from a PC, Mac, or Internet service. And it lets you select and listen to voicemail messages in whatever order you want just like email.&lt;/p&gt;\r\n', '', ''),
 (46, 1, 'Sony VAIO', '&lt;div&gt;\r\n	Unprecedented power. The next generation of processing technology has arrived. Built into the newest VAIO notebooks lies Intel&amp;#39;s latest, most powerful innovation yet: Intel&amp;reg; Centrino&amp;reg; 2 processor technology. Boasting incredible speed, expanded wireless connectivity, enhanced multimedia support and greater energy efficiency, all the high-performance essentials are seamlessly combined into a single chip.&lt;/div&gt;\r\n', '', ''),
-(47, 1, 'HP LP3065', '&lt;p&gt;\r\n	Stop your co-workers in their tracks with the stunning new 30-inch diagonal HP LP3065 Flat Panel Monitor. This flagship monitor features best-in-class performance and presentation features on a huge wide-aspect screen while letting you work as comfortably as possible - you might even forget you&amp;#39;re at the office&lt;/p&gt;\r\n', '', ''),
+(47, 2, 'HP LP3065', '&lt;p&gt;\r\n	Stop your co-workers in their tracks with the stunning new 30-inch diagonal HP LP3065 Flat Panel Monitor. This flagship monitor features best-in-class performance and presentation features on a huge wide-aspect screen while letting you work as comfortably as possible - you might even forget you&amp;#39;re at the office&lt;/p&gt;\r\n', '', ''),
 (28, 2, 'HTC Touch HD', '&lt;p&gt;\r\n	HTC Touch - in High Definition. Watch music videos and streaming content in awe-inspiring high definition clarity for a mobile experience you never thought possible. Seductively sleek, the HTC Touch HD provides the next generation of mobile functionality, all at a simple touch. Fully integrated with Windows Mobile Professional 6.1, ultrafast 3.5G, GPS, 5MP camera, plus lots more - all delivered on a breathtakingly crisp 3.8&amp;quot; WVGA touchscreen - you can take control of your mobile world with the HTC Touch HD.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Processor Qualcomm&amp;reg; MSM 7201A&amp;trade; 528 MHz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Windows Mobile&amp;reg; 6.1 Professional Operating System&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Memory: 512 MB ROM, 288 MB RAM&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Dimensions: 115 mm x 62.8 mm x 12 mm / 146.4 grams&lt;/li&gt;\r\n	&lt;li&gt;\r\n		3.8-inch TFT-LCD flat touch-sensitive screen with 480 x 800 WVGA resolution&lt;/li&gt;\r\n	&lt;li&gt;\r\n		HSDPA/WCDMA: Europe/Asia: 900/2100 MHz; Up to 2 Mbps up-link and 7.2 Mbps down-link speeds&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Quad-band GSM/GPRS/EDGE: Europe/Asia: 850/900/1800/1900 MHz (Band frequency, HSUPA availability, and data speed are operator dependent.)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Device Control via HTC TouchFLO&amp;trade; 3D &amp;amp; Touch-sensitive front panel buttons&lt;/li&gt;\r\n	&lt;li&gt;\r\n		GPS and A-GPS ready&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Bluetooth&amp;reg; 2.0 with Enhanced Data Rate and A2DP for wireless stereo headsets&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Wi-Fi&amp;reg;: IEEE 802.11 b/g&lt;/li&gt;\r\n	&lt;li&gt;\r\n		HTC ExtUSB&amp;trade; (11-pin mini-USB 2.0)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		5 megapixel color camera with auto focus&lt;/li&gt;\r\n	&lt;li&gt;\r\n		VGA CMOS color camera&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Built-in 3.5 mm audio jack, microphone, speaker, and FM radio&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Ring tone formats: AAC, AAC+, eAAC+, AMR-NB, AMR-WB, QCP, MP3, WMA, WAV&lt;/li&gt;\r\n	&lt;li&gt;\r\n		40 polyphonic and standard MIDI format 0 and 1 (SMF)/SP MIDI&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Rechargeable Lithium-ion or Lithium-ion polymer 1350 mAh battery&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Expansion Slot: microSD&amp;trade; memory card (SD 2.0 compatible)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		AC Adapter Voltage range/frequency: 100 ~ 240V AC, 50/60 Hz DC output: 5V and 1A&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Special Features: FM Radio, G-Sensor&lt;/li&gt;\r\n&lt;/ul&gt;\r\n', '', ''),
 (32, 1, 'iPod Touch', '&lt;p&gt;\r\n	&lt;strong&gt;Revolutionary multi-touch interface.&lt;/strong&gt;&lt;br /&gt;\r\n	iPod touch features the same multi-touch screen technology as iPhone. Pinch to zoom in on a photo. Scroll through your songs and videos with a flick. Flip through your library by album artwork with Cover Flow.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Gorgeous 3.5-inch widescreen display.&lt;/strong&gt;&lt;br /&gt;\r\n	Watch your movies, TV shows, and photos come alive with bright, vivid color on the 320-by-480-pixel display.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Music downloads straight from iTunes.&lt;/strong&gt;&lt;br /&gt;\r\n	Shop the iTunes Wi-Fi Music Store from anywhere with Wi-Fi.1 Browse or search to find the music youre looking for, preview it, and buy it with just a tap.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Surf the web with Wi-Fi.&lt;/strong&gt;&lt;br /&gt;\r\n	Browse the web using Safari and watch YouTube videos on the first iPod with Wi-Fi built in&lt;br /&gt;\r\n	&amp;nbsp;&lt;/p&gt;\r\n', '', ''),
 (30, 1, 'Canon EOS 5D', '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		Canon&amp;#39;s press material for the EOS 5D states that it &amp;#39;defines (a) new D-SLR category&amp;#39;, while we&amp;#39;re not typically too concerned with marketing talk this particular statement is clearly pretty accurate. The EOS 5D is unlike any previous digital SLR in that it combines a full-frame (35 mm sized) high resolution sensor (12.8 megapixels) with a relatively compact body (slightly larger than the EOS 20D, although in your hand it feels noticeably &amp;#39;chunkier&amp;#39;). The EOS 5D is aimed to slot in between the EOS 20D and the EOS-1D professional digital SLR&amp;#39;s, an important difference when compared to the latter is that the EOS 5D doesn&amp;#39;t have any environmental seals. While Canon don&amp;#39;t specifically refer to the EOS 5D as a &amp;#39;professional&amp;#39; digital SLR it will have obvious appeal to professionals who want a high quality digital SLR in a body lighter than the EOS-1D. It will also no doubt appeal to current EOS 20D owners (although lets hope they&amp;#39;ve not bought too many EF-S lenses...)&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;', '', ''),
@@ -2059,15 +2017,15 @@ INSERT INTO `oc_product_description` (`product_id`, `language_id`, `name`, `desc
 
 DROP TABLE IF EXISTS `oc_product_discount`;
 CREATE TABLE `oc_product_discount` (
-  `product_discount_id` int(11) NOT NULL auto_increment,
+  `product_discount_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `customer_group_id` int(11) NOT NULL,
-  `quantity` int(4) NOT NULL default '0',
-  `priority` int(5) NOT NULL default '1',
-  `price` decimal(15,4) NOT NULL default '0.0000',
-  `date_start` date NOT NULL default '0000-00-00',
-  `date_end` date NOT NULL default '0000-00-00',
-  PRIMARY KEY  (`product_discount_id`),
+  `quantity` int(4) NOT NULL DEFAULT '0',
+  `priority` int(5) NOT NULL DEFAULT '1',
+  `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `date_start` date NOT NULL DEFAULT '0000-00-00',
+  `date_end` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`product_discount_id`),
   KEY `product_id` (`product_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -2077,9 +2035,9 @@ CREATE TABLE `oc_product_discount` (
 
 INSERT INTO `oc_product_discount` (`product_discount_id`, `product_id`, `customer_group_id`, `quantity`, `priority`, `price`, `date_start`, `date_end`) VALUES
 (296, 32, 6, 10, 1, '10.0000', '2010-01-01', '2010-01-31'),
-(323, 42, 8, 30, 1, '66.0000', '0000-00-00', '0000-00-00'),
-(322, 42, 8, 20, 1, '77.0000', '0000-00-00', '0000-00-00'),
-(321, 42, 8, 10, 1, '88.0000', '0000-00-00', '0000-00-00');
+(329, 42, 8, 30, 1, '66.0000', '0000-00-00', '0000-00-00'),
+(328, 42, 8, 20, 1, '77.0000', '0000-00-00', '0000-00-00'),
+(327, 42, 8, 10, 1, '88.0000', '0000-00-00', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -2089,10 +2047,10 @@ INSERT INTO `oc_product_discount` (`product_discount_id`, `product_id`, `custome
 
 DROP TABLE IF EXISTS `oc_product_image`;
 CREATE TABLE `oc_product_image` (
-  `product_image_id` int(11) NOT NULL auto_increment,
+  `product_image_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
-  `image` varchar(255) collate utf8_bin default NULL,
-  PRIMARY KEY  (`product_image_id`)
+  `image` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`product_image_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2101,7 +2059,7 @@ CREATE TABLE `oc_product_image` (
 
 INSERT INTO `oc_product_image` (`product_image_id`, `product_id`, `image`) VALUES
 (1960, 30, 'data/canon_eos_5d_2.jpg'),
-(2106, 47, 'data/hp_2.jpg'),
+(2122, 47, 'data/hp_3.jpg'),
 (2035, 28, 'data/htc_touch_hd_2.jpg'),
 (1997, 41, 'data/imac_2.jpg'),
 (1982, 40, 'data/iphone_6.jpg'),
@@ -2128,7 +2086,7 @@ INSERT INTO `oc_product_image` (`product_image_id`, `product_id`, `image`) VALUE
 (1981, 40, 'data/iphone_2.jpg'),
 (1980, 40, 'data/iphone_5.jpg'),
 (1959, 30, 'data/canon_eos_5d_3.jpg'),
-(2105, 47, 'data/hp_3.jpg'),
+(2121, 47, 'data/hp_2.jpg'),
 (2034, 28, 'data/htc_touch_hd_3.jpg'),
 (1996, 41, 'data/imac_3.jpg'),
 (1979, 40, 'data/iphone_3.jpg'),
@@ -2150,17 +2108,17 @@ INSERT INTO `oc_product_image` (`product_image_id`, `product_id`, `image`) VALUE
 (1987, 29, 'data/palm_treo_pro_2.jpg'),
 (1993, 46, 'data/sony_vaio_2.jpg'),
 (1992, 46, 'data/sony_vaio_3.jpg'),
-(2104, 42, 'data/hp_1.jpg'),
-(2103, 42, 'data/canon_eos_5d_2.jpg'),
-(2102, 42, 'data/canon_logo.jpg'),
-(2101, 42, 'data/compaq_presario.jpg'),
-(2100, 42, 'data/canon_eos_5d_1.jpg'),
+(2115, 42, 'data/canon_eos_5d_2.jpg'),
+(2114, 42, 'data/canon_logo.jpg'),
+(2113, 42, 'data/compaq_presario.jpg'),
+(2112, 42, 'data/canon_eos_5d_1.jpg'),
 (2099, 49, 'data/samsung_tab_2.jpg'),
 (2098, 49, 'data/samsung_tab_3.jpg'),
 (2097, 49, 'data/samsung_tab_4.jpg'),
 (2096, 49, 'data/samsung_tab_5.jpg'),
 (2095, 49, 'data/samsung_tab_6.jpg'),
-(2094, 49, 'data/samsung_tab_7.jpg');
+(2094, 49, 'data/samsung_tab_7.jpg'),
+(2116, 42, 'data/hp_1.jpg');
 
 -- --------------------------------------------------------
 
@@ -2170,12 +2128,12 @@ INSERT INTO `oc_product_image` (`product_image_id`, `product_id`, `image`) VALUE
 
 DROP TABLE IF EXISTS `oc_product_option`;
 CREATE TABLE `oc_product_option` (
-  `product_option_id` int(11) NOT NULL auto_increment,
+  `product_option_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `option_id` int(11) NOT NULL,
-  `option_value` text collate utf8_bin NOT NULL,
+  `option_value` text COLLATE utf8_bin NOT NULL,
   `required` int(1) NOT NULL,
-  PRIMARY KEY  (`product_option_id`)
+  PRIMARY KEY (`product_option_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2191,7 +2149,9 @@ INSERT INTO `oc_product_option` (`product_option_id`, `product_id`, `option_id`,
 (208, 42, 4, 'test', 1),
 (209, 42, 6, '', 1),
 (217, 42, 5, '', 1),
-(218, 42, 1, '', 1);
+(218, 42, 1, '', 1),
+(224, 35, 11, '', 1),
+(225, 47, 12, '2011-04-22', 1);
 
 -- --------------------------------------------------------
 
@@ -2201,7 +2161,7 @@ INSERT INTO `oc_product_option` (`product_option_id`, `product_id`, `option_id`,
 
 DROP TABLE IF EXISTS `oc_product_option_value`;
 CREATE TABLE `oc_product_option_value` (
-  `product_option_value_id` int(11) NOT NULL auto_increment,
+  `product_option_value_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_option_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `option_id` int(11) NOT NULL,
@@ -2209,12 +2169,12 @@ CREATE TABLE `oc_product_option_value` (
   `quantity` int(3) NOT NULL,
   `subtract` int(1) NOT NULL,
   `price` decimal(15,4) NOT NULL,
-  `price_prefix` varchar(1) collate utf8_bin NOT NULL,
+  `price_prefix` varchar(1) COLLATE utf8_bin NOT NULL,
   `points` int(8) NOT NULL,
-  `points_prefix` varchar(1) collate utf8_bin NOT NULL,
+  `points_prefix` varchar(1) COLLATE utf8_bin NOT NULL,
   `weight` decimal(15,8) NOT NULL,
-  `weight_prefix` varchar(1) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`product_option_value_id`)
+  `weight_prefix` varchar(1) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`product_option_value_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2222,17 +2182,20 @@ CREATE TABLE `oc_product_option_value` (
 --
 
 INSERT INTO `oc_product_option_value` (`product_option_value_id`, `product_option_id`, `product_id`, `option_id`, `option_value_id`, `quantity`, `subtract`, `price`, `price_prefix`, `points`, `points_prefix`, `weight`, `weight_prefix`) VALUES
+(7, 218, 42, 1, 43, 300, 1, '30.0000', '+', 3, '+', '30.00000000', '+'),
+(6, 218, 42, 1, 31, 148, 1, '20.0000', '+', 2, '-', '20.00000000', '+'),
+(1, 217, 42, 5, 41, 100, 0, '1.0000', '+', 0, '+', '1.00000000', '+'),
+(2, 217, 42, 5, 42, 200, 1, '2.0000', '+', 0, '+', '2.00000000', '+'),
+(4, 217, 42, 5, 39, 94, 1, '4.0000', '+', 0, '+', '4.00000000', '+'),
 (8, 223, 42, 2, 23, 48, 1, '10.0000', '+', 0, '+', '10.00000000', '+'),
+(3, 217, 42, 5, 40, 300, 0, '3.0000', '+', 0, '+', '3.00000000', '+'),
 (9, 223, 42, 2, 24, 196, 1, '20.0000', '+', 0, '+', '20.00000000', '+'),
 (10, 223, 42, 2, 44, 2696, 1, '30.0000', '+', 0, '+', '30.00000000', '+'),
 (11, 223, 42, 2, 45, 4000, 1, '40.0000', '+', 0, '+', '40.00000000', '+'),
-(2, 217, 42, 5, 42, 200, 1, '2.0000', '+', 0, '+', '2.00000000', '+'),
-(1, 217, 42, 5, 41, 100, 0, '1.0000', '+', 0, '+', '1.00000000', '+'),
-(4, 217, 42, 5, 39, 94, 1, '4.0000', '+', 0, '+', '4.00000000', '+'),
-(6, 218, 42, 1, 31, 148, 1, '20.0000', '+', 2, '-', '20.00000000', '+'),
-(7, 218, 42, 1, 43, 300, 1, '30.0000', '+', 3, '+', '30.00000000', '+'),
-(3, 217, 42, 5, 40, 300, 0, '3.0000', '+', 0, '+', '3.00000000', '+'),
-(5, 218, 42, 1, 32, 96, 1, '10.0000', '+', 1, '+', '10.00000000', '+');
+(5, 218, 42, 1, 32, 96, 1, '10.0000', '+', 1, '+', '10.00000000', '+'),
+(12, 224, 35, 11, 46, 0, 1, '5.0000', '+', 0, '+', '0.00000000', '+'),
+(13, 224, 35, 11, 47, 10, 1, '10.0000', '+', 0, '+', '0.00000000', '+'),
+(14, 224, 35, 11, 48, 15, 1, '15.0000', '+', 0, '+', '0.00000000', '+');
 
 -- --------------------------------------------------------
 
@@ -2244,7 +2207,7 @@ DROP TABLE IF EXISTS `oc_product_related`;
 CREATE TABLE `oc_product_related` (
   `product_id` int(11) NOT NULL,
   `related_id` int(11) NOT NULL,
-  PRIMARY KEY  (`product_id`,`related_id`),
+  PRIMARY KEY (`product_id`,`related_id`),
   KEY `product_id` (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -2303,11 +2266,11 @@ INSERT INTO `oc_product_related` (`product_id`, `related_id`) VALUES
 
 DROP TABLE IF EXISTS `oc_product_reward`;
 CREATE TABLE `oc_product_reward` (
-  `product_reward_id` int(11) NOT NULL auto_increment,
-  `product_id` int(11) NOT NULL default '0',
-  `customer_group_id` int(11) NOT NULL default '0',
-  `points` int(8) NOT NULL default '0',
-  PRIMARY KEY  (`product_reward_id`)
+  `product_reward_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL DEFAULT '0',
+  `customer_group_id` int(11) NOT NULL DEFAULT '0',
+  `points` int(8) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_reward_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2315,10 +2278,10 @@ CREATE TABLE `oc_product_reward` (
 --
 
 INSERT INTO `oc_product_reward` (`product_reward_id`, `product_id`, `customer_group_id`, `points`) VALUES
-(418, 42, 6, 10),
-(417, 42, 8, 100),
-(420, 47, 6, 30),
-(419, 47, 8, 300),
+(424, 42, 6, 10),
+(423, 42, 8, 100),
+(432, 47, 6, 30),
+(431, 47, 8, 300),
 (380, 28, 6, 400),
 (379, 28, 8, 400),
 (330, 43, 6, 60),
@@ -2337,8 +2300,8 @@ INSERT INTO `oc_product_reward` (`product_reward_id`, `product_id`, `customer_gr
 (333, 45, 8, 800),
 (337, 31, 8, 0),
 (338, 31, 6, 0),
-(341, 35, 8, 0),
-(342, 35, 6, 0),
+(426, 35, 6, 0),
+(425, 35, 8, 0),
 (345, 33, 8, 0),
 (346, 33, 6, 0),
 (347, 46, 8, 0),
@@ -2362,14 +2325,14 @@ INSERT INTO `oc_product_reward` (`product_reward_id`, `product_id`, `customer_gr
 
 DROP TABLE IF EXISTS `oc_product_special`;
 CREATE TABLE `oc_product_special` (
-  `product_special_id` int(11) NOT NULL auto_increment,
+  `product_special_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `customer_group_id` int(11) NOT NULL,
-  `priority` int(5) NOT NULL default '1',
-  `price` decimal(15,4) NOT NULL default '0.0000',
-  `date_start` date NOT NULL default '0000-00-00',
-  `date_end` date NOT NULL default '0000-00-00',
-  PRIMARY KEY  (`product_special_id`),
+  `priority` int(5) NOT NULL DEFAULT '1',
+  `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `date_start` date NOT NULL DEFAULT '0000-00-00',
+  `date_end` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`product_special_id`),
   KEY `product_id` (`product_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -2378,7 +2341,7 @@ CREATE TABLE `oc_product_special` (
 --
 
 INSERT INTO `oc_product_special` (`product_special_id`, `product_id`, `customer_group_id`, `priority`, `price`, `date_start`, `date_end`) VALUES
-(370, 42, 8, 1, '90.0000', '0000-00-00', '0000-00-00'),
+(372, 42, 8, 1, '90.0000', '0000-00-00', '0000-00-00'),
 (243, 50, 8, 1, '50.0000', '2010-02-01', '2010-02-28'),
 (244, 58, 8, 1, '50.0000', '2010-02-01', '2010-02-28'),
 (246, 67, 8, 1, '50.0000', '2010-02-01', '2010-02-28'),
@@ -2394,11 +2357,11 @@ INSERT INTO `oc_product_special` (`product_special_id`, `product_id`, `customer_
 
 DROP TABLE IF EXISTS `oc_product_tag`;
 CREATE TABLE `oc_product_tag` (
-  `product_tag_id` int(11) NOT NULL auto_increment,
+  `product_tag_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `tag` varchar(32) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`product_tag_id`)
+  `tag` varchar(32) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`product_tag_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2406,10 +2369,10 @@ CREATE TABLE `oc_product_tag` (
 --
 
 INSERT INTO `oc_product_tag` (`product_tag_id`, `product_id`, `language_id`, `tag`) VALUES
-(192, 42, 2, 'test 1'),
-(191, 42, 2, 'test 2'),
-(190, 42, 1, 'test 1'),
-(189, 42, 1, 'test 2');
+(200, 42, 2, 'test 1'),
+(199, 42, 2, 'test 2'),
+(198, 42, 1, 'test 1'),
+(197, 42, 1, 'test 2');
 
 -- --------------------------------------------------------
 
@@ -2421,7 +2384,7 @@ DROP TABLE IF EXISTS `oc_product_to_category`;
 CREATE TABLE `oc_product_to_category` (
   `product_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
-  PRIMARY KEY  (`product_id`,`category_id`)
+  PRIMARY KEY (`product_id`,`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2470,7 +2433,7 @@ DROP TABLE IF EXISTS `oc_product_to_download`;
 CREATE TABLE `oc_product_to_download` (
   `product_id` int(11) NOT NULL,
   `download_id` int(11) NOT NULL,
-  PRIMARY KEY  (`product_id`,`download_id`)
+  PRIMARY KEY (`product_id`,`download_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2489,7 +2452,7 @@ CREATE TABLE `oc_product_to_layout` (
   `product_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   `layout_id` int(11) NOT NULL,
-  PRIMARY KEY  (`product_id`,`store_id`)
+  PRIMARY KEY (`product_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2506,8 +2469,8 @@ CREATE TABLE `oc_product_to_layout` (
 DROP TABLE IF EXISTS `oc_product_to_store`;
 CREATE TABLE `oc_product_to_store` (
   `product_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`product_id`,`store_id`)
+  `store_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`product_id`,`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2543,19 +2506,19 @@ INSERT INTO `oc_product_to_store` (`product_id`, `store_id`) VALUES
 
 DROP TABLE IF EXISTS `oc_return`;
 CREATE TABLE `oc_return` (
-  `return_id` int(11) NOT NULL auto_increment,
+  `return_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `date_ordered` date NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `firstname` varchar(32) collate utf8_bin NOT NULL,
-  `lastname` varchar(32) collate utf8_bin NOT NULL,
-  `email` varchar(96) collate utf8_bin NOT NULL,
-  `telephone` varchar(32) collate utf8_bin NOT NULL,
+  `firstname` varchar(32) COLLATE utf8_bin NOT NULL,
+  `lastname` varchar(32) COLLATE utf8_bin NOT NULL,
+  `email` varchar(96) COLLATE utf8_bin NOT NULL,
+  `telephone` varchar(32) COLLATE utf8_bin NOT NULL,
   `return_status_id` int(11) NOT NULL,
-  `comment` text collate utf8_bin,
+  `comment` text COLLATE utf8_bin,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
-  PRIMARY KEY  (`return_id`)
+  PRIMARY KEY (`return_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2571,10 +2534,10 @@ CREATE TABLE `oc_return` (
 
 DROP TABLE IF EXISTS `oc_return_action`;
 CREATE TABLE `oc_return_action` (
-  `return_action_id` int(11) NOT NULL auto_increment,
-  `language_id` int(11) NOT NULL default '0',
-  `name` varchar(64) collate utf8_bin NOT NULL default '',
-  PRIMARY KEY  (`return_action_id`,`language_id`)
+  `return_action_id` int(11) NOT NULL AUTO_INCREMENT,
+  `language_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`return_action_id`,`language_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2597,13 +2560,13 @@ INSERT INTO `oc_return_action` (`return_action_id`, `language_id`, `name`) VALUE
 
 DROP TABLE IF EXISTS `oc_return_history`;
 CREATE TABLE `oc_return_history` (
-  `return_history_id` int(11) NOT NULL auto_increment,
+  `return_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `return_id` int(11) NOT NULL,
   `return_status_id` int(11) NOT NULL,
   `notify` int(1) NOT NULL,
-  `comment` text collate utf8_bin NOT NULL,
+  `comment` text COLLATE utf8_bin NOT NULL,
   `date_added` datetime NOT NULL,
-  PRIMARY KEY  (`return_history_id`)
+  PRIMARY KEY (`return_history_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2619,17 +2582,17 @@ CREATE TABLE `oc_return_history` (
 
 DROP TABLE IF EXISTS `oc_return_product`;
 CREATE TABLE `oc_return_product` (
-  `return_product_id` int(11) NOT NULL auto_increment,
+  `return_product_id` int(11) NOT NULL AUTO_INCREMENT,
   `return_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `name` varchar(255) collate utf8_bin NOT NULL,
-  `model` varchar(64) collate utf8_bin NOT NULL,
+  `name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `model` varchar(64) COLLATE utf8_bin NOT NULL,
   `quantity` int(4) NOT NULL,
   `return_reason_id` int(11) NOT NULL,
   `opened` int(1) NOT NULL,
-  `comment` text collate utf8_bin NOT NULL,
+  `comment` text COLLATE utf8_bin NOT NULL,
   `return_action_id` int(11) NOT NULL,
-  PRIMARY KEY  (`return_product_id`)
+  PRIMARY KEY (`return_product_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2645,10 +2608,10 @@ CREATE TABLE `oc_return_product` (
 
 DROP TABLE IF EXISTS `oc_return_reason`;
 CREATE TABLE `oc_return_reason` (
-  `return_reason_id` int(11) NOT NULL auto_increment,
-  `language_id` int(11) NOT NULL default '0',
-  `name` varchar(128) collate utf8_bin NOT NULL default '',
-  PRIMARY KEY  (`return_reason_id`,`language_id`)
+  `return_reason_id` int(11) NOT NULL AUTO_INCREMENT,
+  `language_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`return_reason_id`,`language_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2675,10 +2638,10 @@ INSERT INTO `oc_return_reason` (`return_reason_id`, `language_id`, `name`) VALUE
 
 DROP TABLE IF EXISTS `oc_return_status`;
 CREATE TABLE `oc_return_status` (
-  `return_status_id` int(11) NOT NULL auto_increment,
-  `language_id` int(11) NOT NULL default '0',
-  `name` varchar(32) collate utf8_bin NOT NULL default '',
-  PRIMARY KEY  (`return_status_id`,`language_id`)
+  `return_status_id` int(11) NOT NULL AUTO_INCREMENT,
+  `language_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`return_status_id`,`language_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2699,16 +2662,16 @@ INSERT INTO `oc_return_status` (`return_status_id`, `language_id`, `name`) VALUE
 
 DROP TABLE IF EXISTS `oc_review`;
 CREATE TABLE `oc_review` (
-  `review_id` int(11) NOT NULL auto_increment,
+  `review_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `author` varchar(64) collate utf8_bin NOT NULL default '',
-  `text` text collate utf8_bin NOT NULL,
+  `author` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `text` text COLLATE utf8_bin NOT NULL,
   `rating` int(1) NOT NULL,
-  `status` int(1) NOT NULL default '0',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`review_id`),
+  `status` int(1) NOT NULL DEFAULT '0',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`review_id`),
   KEY `product_id` (`product_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -2730,12 +2693,12 @@ INSERT INTO `oc_review` (`review_id`, `product_id`, `customer_id`, `author`, `te
 
 DROP TABLE IF EXISTS `oc_setting`;
 CREATE TABLE `oc_setting` (
-  `setting_id` int(11) NOT NULL auto_increment,
-  `store_id` int(11) NOT NULL default '0',
-  `group` varchar(32) collate utf8_bin NOT NULL,
-  `key` varchar(64) collate utf8_bin NOT NULL default '',
-  `value` text collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`setting_id`)
+  `setting_id` int(11) NOT NULL AUTO_INCREMENT,
+  `store_id` int(11) NOT NULL DEFAULT '0',
+  `group` varchar(32) COLLATE utf8_bin NOT NULL,
+  `key` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `value` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`setting_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2753,86 +2716,72 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`) VAL
 (272, 0, 'tax', 'tax_status', '1'),
 (9446, 0, 'total', 'total_sort_order', '8'),
 (9445, 0, 'total', 'total_status', '1'),
-(14700, 0, 'banner', 'banner_1_status', '1'),
-(14701, 0, 'banner', 'banner_1_sort_order', '1'),
-(14702, 0, 'banner', 'banner_module', '0,1'),
+(15742, 0, 'banner', 'banner_1_status', '1'),
+(15741, 0, 'banner', 'banner_1_position', 'content_top'),
 (273, 0, 'tax', 'tax_sort_order', '5'),
-(15137, 0, 'config', 'config_compression', '0'),
-(15136, 0, 'config', 'config_encryption', '12345'),
-(15135, 0, 'config', 'config_maintenance', '0'),
-(15134, 0, 'config', 'config_seo_url', '0'),
-(15133, 0, 'config', 'config_use_ssl', '0'),
-(15132, 0, 'config', 'config_alert_emails', ''),
-(15131, 0, 'config', 'config_account_mail', '1'),
-(15130, 0, 'config', 'config_alert_mail', '1'),
-(15129, 0, 'config', 'config_smtp_timeout', '5'),
-(15128, 0, 'config', 'config_smtp_port', '25'),
-(15127, 0, 'config', 'config_smtp_password', ''),
-(15126, 0, 'config', 'config_smtp_username', ''),
+(15756, 0, 'slideshow', 'slideshow_0_layout_id', '6'),
+(15744, 0, 'banner', 'banner_module', '0,1'),
+(15743, 0, 'banner', 'banner_1_sort_order', '1'),
+(15729, 0, 'manufacturer', 'manufacturer_module', '0'),
+(15728, 0, 'manufacturer', 'manufacturer_0_sort_order', '4'),
+(15845, 0, 'config', 'config_error_log', '1'),
 (3709, 0, 'citylink', 'citylink_geo_zone_id', '0'),
 (3708, 0, 'citylink', 'citylink_tax_class_id', '0'),
-(15125, 0, 'config', 'config_smtp_host', ''),
-(15124, 0, 'config', 'config_mail_parameter', ''),
-(15123, 0, 'config', 'config_mail_protocol', 'mail'),
-(15122, 0, 'config', 'config_image_cart_height', '80'),
-(15121, 0, 'config', 'config_image_cart_width', '80'),
-(15120, 0, 'config', 'config_image_wishlist_height', '50'),
-(15119, 0, 'config', 'config_image_wishlist_width', '50'),
-(15118, 0, 'config', 'config_image_compare_height', '90'),
-(15117, 0, 'config', 'config_image_compare_width', '90'),
-(15116, 0, 'config', 'config_image_related_height', '80'),
-(15115, 0, 'config', 'config_image_related_width', '80'),
+(15846, 0, 'config', 'config_error_filename', 'error.txt'),
+(15844, 0, 'config', 'config_error_display', '1'),
+(15843, 0, 'config', 'config_compression', '0'),
+(15842, 0, 'config', 'config_encryption', '12345'),
+(15841, 0, 'config', 'config_maintenance', '0'),
+(15840, 0, 'config', 'config_seo_url', '0'),
+(15839, 0, 'config', 'config_use_ssl', '0'),
+(15838, 0, 'config', 'config_alert_emails', ''),
+(15837, 0, 'config', 'config_account_mail', '1'),
+(15836, 0, 'config', 'config_alert_mail', '1'),
 (9456, 0, 'shipping', 'shipping_status', '1'),
 (9455, 0, 'shipping', 'shipping_estimator', '1'),
-(15114, 0, 'config', 'config_image_additional_height', '74'),
-(15113, 0, 'config', 'config_image_additional_width', '74'),
-(15112, 0, 'config', 'config_image_manufacturer_height', '80'),
+(15835, 0, 'config', 'config_smtp_timeout', '5'),
+(15834, 0, 'config', 'config_smtp_port', '25'),
+(15833, 0, 'config', 'config_smtp_password', ''),
 (9648, 0, 'affiliate', 'affiliate_0_sort_order', '1'),
-(15111, 0, 'config', 'config_image_manufacturer_width', '80'),
+(15832, 0, 'config', 'config_smtp_username', ''),
 (9647, 0, 'affiliate', 'affiliate_0_status', '1'),
 (3593, 0, 'google_base', 'google_base_status', '0'),
-(13543, 0, 'manufacturer', 'manufacturer_0_sort_order', '4'),
-(13544, 0, 'manufacturer', 'manufacturer_module', '0'),
+(15727, 0, 'manufacturer', 'manufacturer_0_status', '0'),
 (4976, 0, 'information', 'information_module', '1'),
-(15110, 0, 'config', 'config_image_category_height', '80'),
-(15105, 0, 'config', 'config_image_popup_width', '500'),
-(15106, 0, 'config', 'config_image_popup_height', '500'),
-(15107, 0, 'config', 'config_image_product_width', '80'),
-(15108, 0, 'config', 'config_image_product_height', '80'),
-(15109, 0, 'config', 'config_image_category_width', '80'),
-(13540, 0, 'manufacturer', 'manufacturer_0_layout_id', '1'),
-(13541, 0, 'manufacturer', 'manufacturer_0_position', 'content_top'),
-(13542, 0, 'manufacturer', 'manufacturer_0_status', '0'),
-(13539, 0, 'manufacturer', 'manufacturer_0_axis', 'horizontal'),
-(13538, 0, 'manufacturer', 'manufacturer_0_image_height', '80'),
-(13537, 0, 'manufacturer', 'manufacturer_0_image_width', '80'),
+(15831, 0, 'config', 'config_smtp_host', ''),
+(15830, 0, 'config', 'config_mail_parameter', ''),
+(15829, 0, 'config', 'config_mail_protocol', 'mail'),
+(15828, 0, 'config', 'config_image_cart_height', '80'),
+(15827, 0, 'config', 'config_image_cart_width', '80'),
+(15726, 0, 'manufacturer', 'manufacturer_0_position', 'content_top'),
+(15725, 0, 'manufacturer', 'manufacturer_0_layout_id', '1'),
+(15724, 0, 'manufacturer', 'manufacturer_0_axis', 'horizontal'),
+(15723, 0, 'manufacturer', 'manufacturer_0_image_height', ''),
+(15722, 0, 'manufacturer', 'manufacturer_0_image_width', ''),
 (4975, 0, 'information', 'information_0_sort_order', ''),
 (4974, 0, 'information', 'information_0_status', '0'),
 (4973, 0, 'information', 'information_0_position', 'column_left'),
 (4972, 0, 'information', 'information_0_layout_id', '1'),
 (4516, 0, 'google_talk', 'google_talk_code', 'ty'),
 (4517, 0, 'google_talk', 'google_talk_module', ''),
-(13535, 0, 'manufacturer', 'manufacturer_0_width', '500'),
-(13536, 0, 'manufacturer', 'manufacturer_0_height', '100'),
+(15721, 0, 'manufacturer', 'manufacturer_0_height', ''),
+(15720, 0, 'manufacturer', 'manufacturer_0_width', ''),
 (13531, 0, 'special', 'special_module', ''),
 (9646, 0, 'affiliate', 'affiliate_0_position', 'column_right'),
 (9645, 0, 'affiliate', 'affiliate_0_layout_id', '10'),
-(14699, 0, 'banner', 'banner_1_position', 'content_top'),
-(13534, 0, 'manufacturer', 'manufacturer_0_scroll', '3'),
-(13533, 0, 'manufacturer', 'manufacturer_0_limit', '5'),
-(14703, 0, 'slideshow', 'slideshow_module', ''),
-(15104, 0, 'config', 'config_image_thumb_height', '228'),
+(15740, 0, 'banner', 'banner_1_layout_id', '1'),
+(15719, 0, 'manufacturer', 'manufacturer_0_scroll', '3'),
+(15718, 0, 'manufacturer', 'manufacturer_0_limit', '5'),
+(15757, 0, 'slideshow', 'slideshow_0_position', 'content_top'),
+(15826, 0, 'config', 'config_image_wishlist_height', '50'),
 (13801, 0, 'coupon', 'coupon_sort_order', '4'),
 (13800, 0, 'coupon', 'coupon_status', '1'),
-(15103, 0, 'config', 'config_image_thumb_width', '228'),
-(15102, 0, 'config', 'config_icon', 'data/cart.png'),
-(15101, 0, 'config', 'config_logo', 'data/logo.png'),
-(15099, 0, 'config', 'config_upload_allowed', 'jpg, JPG, jpeg, gif, png, txt'),
-(15100, 0, 'config', 'config_cart_weight', '1'),
-(15098, 0, 'config', 'config_download_status_id', '5'),
-(15097, 0, 'config', 'config_download', '1'),
-(15096, 0, 'config', 'config_review', '1'),
-(15095, 0, 'config', 'config_return_status_id', '2'),
+(15825, 0, 'config', 'config_image_wishlist_width', '50'),
+(15820, 0, 'config', 'config_image_additional_height', '74'),
+(15824, 0, 'config', 'config_image_compare_height', '90'),
+(15823, 0, 'config', 'config_image_compare_width', '90'),
+(15822, 0, 'config', 'config_image_related_height', '80'),
+(15821, 0, 'config', 'config_image_related_width', '80'),
 (13034, 0, 'flat', 'flat_sort_order', '1'),
 (13033, 0, 'flat', 'flat_status', '1'),
 (13032, 0, 'flat', 'flat_geo_zone_id', '0'),
@@ -2864,25 +2813,17 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`) VAL
 (9444, 0, 'credit', 'credit_sort_order', '7'),
 (9443, 0, 'credit', 'credit_status', '1'),
 (13532, 0, 'welcome', 'welcome_module', ''),
-(15094, 0, 'config', 'config_order_status_id', '1'),
-(15093, 0, 'config', 'config_stock_status_id', '5'),
-(15092, 0, 'config', 'config_stock_checkout', '0'),
-(15091, 0, 'config', 'config_stock_warning', '0'),
-(15090, 0, 'config', 'config_stock_display', '0'),
-(15089, 0, 'config', 'config_commission', '5'),
-(15088, 0, 'config', 'config_affiliate_id', '4'),
-(15087, 0, 'config', 'config_checkout_id', '5'),
-(15086, 0, 'config', 'config_account_id', '3'),
-(15085, 0, 'config', 'config_guest_checkout', '1'),
-(15083, 0, 'config', 'config_customer_price', '0'),
-(15084, 0, 'config', 'config_customer_approval', '0'),
-(15082, 0, 'config', 'config_customer_group_id', '8'),
-(15081, 0, 'config', 'config_invoice_prefix', 'INV-2011-00'),
-(15080, 0, 'config', 'config_tax', '1'),
-(15079, 0, 'config', 'config_admin_limit', '20'),
-(15078, 0, 'config', 'config_catalog_limit', '15'),
-(15077, 0, 'config', 'config_weight_class', 'kg'),
-(15076, 0, 'config', 'config_length_class', 'cm'),
+(15816, 0, 'config', 'config_image_category_height', '80'),
+(15819, 0, 'config', 'config_image_additional_width', '74'),
+(15818, 0, 'config', 'config_image_manufacturer_height', '80'),
+(15817, 0, 'config', 'config_image_manufacturer_width', '80'),
+(15815, 0, 'config', 'config_image_category_width', '80'),
+(15814, 0, 'config', 'config_image_product_height', '80'),
+(15813, 0, 'config', 'config_image_product_width', '80'),
+(15812, 0, 'config', 'config_image_popup_height', '500'),
+(15811, 0, 'config', 'config_image_popup_width', '500'),
+(15810, 0, 'config', 'config_image_thumb_height', '228'),
+(15809, 0, 'config', 'config_image_thumb_width', '228'),
 (9461, 0, 'reward', 'reward_sort_order', '2'),
 (9460, 0, 'reward', 'reward_status', '1'),
 (14637, 0, 'category', 'category_1_status', '1'),
@@ -2891,8 +2832,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`) VAL
 (14633, 0, 'category', 'category_0_status', '1'),
 (14632, 0, 'category', 'category_0_position', 'column_left'),
 (14631, 0, 'category', 'category_0_layout_id', '1'),
-(15074, 0, 'config', 'config_currency', 'GBP'),
-(15075, 0, 'config', 'config_currency_auto', '1'),
+(15808, 0, 'config', 'config_icon', 'data/cart.png'),
 (9649, 0, 'affiliate', 'affiliate_module', '0'),
 (13035, 0, 'free', 'free_total', '0'),
 (13036, 0, 'free', 'free_geo_zone_id', '0'),
@@ -2914,47 +2854,77 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`) VAL
 (14732, 0, 'featured', 'featured_1_status', '1'),
 (14733, 0, 'featured', 'featured_1_sort_order', '1'),
 (14734, 0, 'featured', 'featured_module', '0,1'),
-(14698, 0, 'banner', 'banner_1_layout_id', '1'),
-(14664, 0, 'account', 'account_0_sort_order', '1'),
-(14665, 0, 'account', 'account_module', '0'),
-(14695, 0, 'banner', 'banner_1_banner_id', '7'),
-(14696, 0, 'banner', 'banner_1_width', '786'),
-(14697, 0, 'banner', 'banner_1_height', '282'),
+(15739, 0, 'banner', 'banner_1_height', '282'),
+(15764, 0, 'account', 'account_0_sort_order', '1'),
+(15738, 0, 'banner', 'banner_1_width', '786'),
+(15737, 0, 'banner', 'banner_1_banner_id', '7'),
 (14660, 0, 'latest', 'latest_module', ''),
-(15073, 0, 'config', 'config_admin_language', 'en'),
-(15072, 0, 'config', 'config_language', 'en'),
-(14663, 0, 'account', 'account_0_status', '1'),
-(14662, 0, 'account', 'account_0_position', 'column_right'),
-(14661, 0, 'account', 'account_0_layout_id', '6'),
-(15071, 0, 'config', 'config_zone_id', '3563'),
-(15070, 0, 'config', 'config_country_id', '222'),
-(15068, 0, 'config', 'template', 'default'),
-(15069, 0, 'config', 'config_layout_id', '4'),
-(15067, 0, 'config', 'config_meta_description', 'My Store'),
-(15066, 0, 'config', 'config_title', 'Your Store'),
-(15065, 0, 'config', 'config_fax', ''),
-(15064, 0, 'config', 'config_telephone', '123456789'),
-(15063, 0, 'config', 'config_email', 'webmaster@opencart'),
-(15062, 0, 'config', 'config_address', 'Address 1'),
-(15061, 0, 'config', 'config_owner', 'Your Name'),
-(15060, 0, 'config', 'config_name', 'Your Store'),
-(14694, 0, 'banner', 'banner_0_sort_order', '2'),
+(15807, 0, 'config', 'config_logo', 'data/logo.png'),
+(15763, 0, 'account', 'account_0_status', '1'),
+(15762, 0, 'account', 'account_0_position', 'column_right'),
+(15761, 0, 'account', 'account_0_layout_id', '6'),
+(15806, 0, 'config', 'config_cart_weight', '1'),
+(15804, 0, 'config', 'config_download_status_id', '5'),
+(15805, 0, 'config', 'config_upload_allowed', 'jpg, JPG, jpeg, gif, png, txt'),
+(15803, 0, 'config', 'config_download', '1'),
+(15802, 0, 'config', 'config_review', '1'),
+(15801, 0, 'config', 'config_return_status_id', '2'),
+(15800, 0, 'config', 'config_order_status_id', '1'),
+(15799, 0, 'config', 'config_stock_status_id', '5'),
+(15736, 0, 'banner', 'banner_0_sort_order', '2'),
 (14671, 0, 'store', 'store_module', '0'),
 (14670, 0, 'store', 'store_0_sort_order', '2'),
 (14669, 0, 'store', 'store_0_status', '0'),
 (14668, 0, 'store', 'store_0_position', 'column_left'),
 (14666, 0, 'store', 'store_admin', '0'),
 (14667, 0, 'store', 'store_0_layout_id', '1'),
-(14693, 0, 'banner', 'banner_0_status', '1'),
-(14692, 0, 'banner', 'banner_0_position', 'column_left'),
-(14691, 0, 'banner', 'banner_0_layout_id', '1'),
-(14690, 0, 'banner', 'banner_0_height', '202'),
-(14689, 0, 'banner', 'banner_0_width', '182'),
-(14688, 0, 'banner', 'banner_0_banner_id', '6'),
-(15141, 0, 'config', 'config_google_analytics', ''),
-(15139, 0, 'config', 'config_error_log', '1'),
-(15140, 0, 'config', 'config_error_filename', 'error.txt'),
-(15138, 0, 'config', 'config_error_display', '1');
+(15735, 0, 'banner', 'banner_0_status', '1'),
+(15734, 0, 'banner', 'banner_0_position', 'column_left'),
+(15733, 0, 'banner', 'banner_0_layout_id', '1'),
+(15732, 0, 'banner', 'banner_0_height', '202'),
+(15731, 0, 'banner', 'banner_0_width', '182'),
+(15730, 0, 'banner', 'banner_0_banner_id', '6'),
+(15798, 0, 'config', 'config_stock_checkout', '0'),
+(15797, 0, 'config', 'config_stock_warning', '0'),
+(15796, 0, 'config', 'config_stock_display', '0'),
+(15795, 0, 'config', 'config_commission', '5'),
+(15794, 0, 'config', 'config_affiliate_id', '4'),
+(15792, 0, 'config', 'config_account_id', '3'),
+(15793, 0, 'config', 'config_checkout_id', '5'),
+(15786, 0, 'config', 'config_tax', '1'),
+(15787, 0, 'config', 'config_invoice_prefix', 'INV-2011-00'),
+(15788, 0, 'config', 'config_customer_group_id', '8'),
+(15789, 0, 'config', 'config_customer_price', '0'),
+(15790, 0, 'config', 'config_customer_approval', '0'),
+(15791, 0, 'config', 'config_guest_checkout', '1'),
+(15785, 0, 'config', 'config_admin_limit', '20'),
+(15784, 0, 'config', 'config_catalog_limit', '15'),
+(15783, 0, 'config', 'config_weight_class', 'kg'),
+(15782, 0, 'config', 'config_length_class', 'cm'),
+(15781, 0, 'config', 'config_currency_auto', '1'),
+(15780, 0, 'config', 'config_currency', 'USD'),
+(15779, 0, 'config', 'config_admin_language', 'en'),
+(15778, 0, 'config', 'config_language', 'en'),
+(15777, 0, 'config', 'config_zone_id', '3563'),
+(15776, 0, 'config', 'config_country_id', '222'),
+(15775, 0, 'config', 'config_layout_id', '4'),
+(15774, 0, 'config', 'config_template', 'default'),
+(15773, 0, 'config', 'config_meta_description', 'My Store'),
+(15772, 0, 'config', 'config_title', 'Your Store'),
+(15771, 0, 'config', 'config_fax', ''),
+(15770, 0, 'config', 'config_telephone', '123456789'),
+(15769, 0, 'config', 'config_email', 'your@store.com'),
+(15768, 0, 'config', 'config_address', 'Address 1'),
+(15767, 0, 'config', 'config_owner', 'Your Name'),
+(15766, 0, 'config', 'config_name', 'Your Store'),
+(15755, 0, 'slideshow', 'slideshow_0_height', '5656'),
+(15754, 0, 'slideshow', 'slideshow_0_width', '665'),
+(15753, 0, 'slideshow', 'slideshow_0_banner_id', '6'),
+(15758, 0, 'slideshow', 'slideshow_0_status', '0'),
+(15759, 0, 'slideshow', 'slideshow_0_sort_order', ''),
+(15760, 0, 'slideshow', 'slideshow_module', '0'),
+(15765, 0, 'account', 'account_module', '0'),
+(15847, 0, 'config', 'config_google_analytics', '');
 
 -- --------------------------------------------------------
 
@@ -2964,10 +2934,10 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`) VAL
 
 DROP TABLE IF EXISTS `oc_stock_status`;
 CREATE TABLE `oc_stock_status` (
-  `stock_status_id` int(11) NOT NULL auto_increment,
+  `stock_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL,
-  `name` varchar(32) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`stock_status_id`,`language_id`)
+  `name` varchar(32) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`stock_status_id`,`language_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -2992,12 +2962,12 @@ INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 
 DROP TABLE IF EXISTS `oc_store`;
 CREATE TABLE `oc_store` (
-  `store_id` int(11) NOT NULL auto_increment,
-  `name` varchar(64) collate utf8_bin NOT NULL,
-  `url` varchar(255) collate utf8_bin NOT NULL,
-  `ssl` varchar(255) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`store_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `store_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) COLLATE utf8_bin NOT NULL,
+  `url` varchar(255) COLLATE utf8_bin NOT NULL,
+  `ssl` varchar(255) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`store_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `oc_store`
@@ -3012,12 +2982,12 @@ CREATE TABLE `oc_store` (
 
 DROP TABLE IF EXISTS `oc_tax_class`;
 CREATE TABLE `oc_tax_class` (
-  `tax_class_id` int(11) NOT NULL auto_increment,
-  `title` varchar(32) collate utf8_bin NOT NULL default '',
-  `description` varchar(255) collate utf8_bin NOT NULL default '',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`tax_class_id`)
+  `tax_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `description` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`tax_class_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -3035,15 +3005,15 @@ INSERT INTO `oc_tax_class` (`tax_class_id`, `title`, `description`, `date_added`
 
 DROP TABLE IF EXISTS `oc_tax_rate`;
 CREATE TABLE `oc_tax_rate` (
-  `tax_rate_id` int(11) NOT NULL auto_increment,
-  `geo_zone_id` int(11) NOT NULL default '0',
+  `tax_rate_id` int(11) NOT NULL AUTO_INCREMENT,
+  `geo_zone_id` int(11) NOT NULL DEFAULT '0',
   `tax_class_id` int(11) NOT NULL,
-  `priority` int(5) NOT NULL default '1',
-  `rate` decimal(7,4) NOT NULL default '0.0000',
-  `description` varchar(255) collate utf8_bin NOT NULL default '',
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`tax_rate_id`)
+  `priority` int(5) NOT NULL DEFAULT '1',
+  `rate` decimal(7,4) NOT NULL DEFAULT '0.0000',
+  `description` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`tax_rate_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -3061,10 +3031,10 @@ INSERT INTO `oc_tax_rate` (`tax_rate_id`, `geo_zone_id`, `tax_class_id`, `priori
 
 DROP TABLE IF EXISTS `oc_url_alias`;
 CREATE TABLE `oc_url_alias` (
-  `url_alias_id` int(11) NOT NULL auto_increment,
-  `query` varchar(255) collate utf8_bin NOT NULL,
-  `keyword` varchar(255) collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`url_alias_id`)
+  `url_alias_id` int(11) NOT NULL AUTO_INCREMENT,
+  `query` varchar(255) COLLATE utf8_bin NOT NULL,
+  `keyword` varchar(255) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`url_alias_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -3073,12 +3043,12 @@ CREATE TABLE `oc_url_alias` (
 
 INSERT INTO `oc_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
 (704, 'product_id=48', 'ipod_classic'),
-(725, 'category_id=20', 'desktops'),
+(731, 'category_id=20', 'desktops'),
 (503, 'category_id=26', 'pc'),
 (505, 'category_id=27', 'mac'),
-(706, 'manufacturer_id=8', 'apple'),
-(705, 'information_id=4', 'about_us'),
-(726, 'product_id=42', 'test'),
+(730, 'manufacturer_id=8', 'apple'),
+(732, 'information_id=4', 'about_us'),
+(728, 'product_id=42', 'test'),
 (538, 'category_id=34', 'mp3-players'),
 (536, 'category_id=36', 'Normal');
 
@@ -3090,23 +3060,22 @@ INSERT INTO `oc_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
 
 DROP TABLE IF EXISTS `oc_user`;
 CREATE TABLE `oc_user` (
-  `user_id` int(11) NOT NULL auto_increment,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_group_id` int(11) NOT NULL,
-  `username` varchar(20) collate utf8_bin NOT NULL default '',
-  `password` varchar(32) collate utf8_bin NOT NULL default '',
-  `firstname` varchar(32) collate utf8_bin NOT NULL default '',
-  `lastname` varchar(32) collate utf8_bin NOT NULL default '',
-  `email` varchar(96) collate utf8_bin NOT NULL default '',
-  `ip` varchar(15) collate utf8_bin NOT NULL default '',
+  `username` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `password` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `firstname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `lastname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `email` varchar(96) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ip` varchar(15) COLLATE utf8_bin NOT NULL DEFAULT '',
   `status` int(1) NOT NULL,
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`user_id`)
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `oc_user`
 --
-
 
 -- --------------------------------------------------------
 
@@ -3116,10 +3085,10 @@ CREATE TABLE `oc_user` (
 
 DROP TABLE IF EXISTS `oc_user_group`;
 CREATE TABLE `oc_user_group` (
-  `user_group_id` int(11) NOT NULL auto_increment,
-  `name` varchar(64) collate utf8_bin NOT NULL,
-  `permission` text collate utf8_bin NOT NULL,
-  PRIMARY KEY  (`user_group_id`)
+  `user_group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) COLLATE utf8_bin NOT NULL,
+  `permission` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`user_group_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -3127,7 +3096,7 @@ CREATE TABLE `oc_user_group` (
 --
 
 INSERT INTO `oc_user_group` (`user_group_id`, `name`, `permission`) VALUES
-(1, 'Top Administrator', 'a:2:{s:6:"access";a:111:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:19:"catalog/information";i:5;s:20:"catalog/manufacturer";i:6;s:14:"catalog/option";i:7;s:15:"catalog/product";i:8;s:14:"catalog/review";i:9;s:18:"common/filemanager";i:10;s:13:"design/banner";i:11;s:13:"design/layout";i:12;s:14:"extension/feed";i:13;s:16:"extension/module";i:14;s:17:"extension/payment";i:15;s:18:"extension/shipping";i:16;s:15:"extension/total";i:17;s:16:"feed/google_base";i:18;s:19:"feed/google_sitemap";i:19;s:20:"localisation/country";i:20;s:21:"localisation/currency";i:21;s:21:"localisation/geo_zone";i:22;s:21:"localisation/language";i:23;s:25:"localisation/length_class";i:24;s:25:"localisation/order_status";i:25;s:26:"localisation/return_action";i:26;s:26:"localisation/return_reason";i:27;s:26:"localisation/return_status";i:28;s:25:"localisation/stock_status";i:29;s:22:"localisation/tax_class";i:30;s:25:"localisation/weight_class";i:31;s:17:"localisation/zone";i:32;s:14:"module/account";i:33;s:16:"module/affiliate";i:34;s:13:"module/banner";i:35;s:17:"module/bestseller";i:36;s:11:"module/cart";i:37;s:15:"module/category";i:38;s:15:"module/featured";i:39;s:18:"module/google_talk";i:40;s:18:"module/information";i:41;s:13:"module/latest";i:42;s:19:"module/manufacturer";i:43;s:16:"module/slideshow";i:44;s:14:"module/special";i:45;s:14:"module/welcome";i:46;s:16:"payment/alertpay";i:47;s:24:"payment/authorizenet_aim";i:48;s:21:"payment/bank_transfer";i:49;s:14:"payment/cheque";i:50;s:11:"payment/cod";i:51;s:21:"payment/free_checkout";i:52;s:14:"payment/liqpay";i:53;s:20:"payment/moneybookers";i:54;s:14:"payment/nochex";i:55;s:15:"payment/paymate";i:56;s:16:"payment/paypoint";i:57;s:26:"payment/perpetual_payments";i:58;s:14:"payment/pp_pro";i:59;s:17:"payment/pp_pro_uk";i:60;s:19:"payment/pp_standard";i:61;s:15:"payment/sagepay";i:62;s:22:"payment/sagepay_direct";i:63;s:18:"payment/sagepay_us";i:64;s:19:"payment/twocheckout";i:65;s:16:"payment/worldpay";i:66;s:16:"report/purchased";i:67;s:11:"report/sale";i:68;s:13:"report/viewed";i:69;s:14:"sale/affiliate";i:70;s:12:"sale/contact";i:71;s:11:"sale/coupon";i:72;s:13:"sale/customer";i:73;s:19:"sale/customer_group";i:74;s:10:"sale/order";i:75;s:11:"sale/return";i:76;s:12:"sale/voucher";i:77;s:15:"setting/setting";i:78;s:13:"setting/store";i:79;s:17:"shipping/citylink";i:80;s:13:"shipping/flat";i:81;s:13:"shipping/free";i:82;s:13:"shipping/item";i:83;s:23:"shipping/parcelforce_48";i:84;s:15:"shipping/pickup";i:85;s:19:"shipping/royal_mail";i:86;s:12:"shipping/ups";i:87;s:13:"shipping/usps";i:88;s:15:"shipping/weight";i:89;s:11:"tool/backup";i:90;s:14:"tool/error_log";i:91;s:12:"total/credit";i:92;s:14:"total/handling";i:93;s:19:"total/low_order_fee";i:94;s:14:"total/shipping";i:95;s:15:"total/sub_total";i:96;s:9:"total/tax";i:97;s:11:"total/total";i:98;s:13:"total/voucher";i:99;s:9:"user/user";i:100;s:20:"user/user_permission";i:101;s:13:"shipping/flat";i:102;s:15:"module/wishlist";i:103;s:12:"total/coupon";i:104;s:12:"total/credit";i:105;s:12:"total/reward";i:106;s:12:"total/reward";i:107;s:12:"total/reward";i:108;s:21:"module/administration";i:109;s:13:"shipping/free";i:110;s:12:"module/store";}s:6:"modify";a:111:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:19:"catalog/information";i:5;s:20:"catalog/manufacturer";i:6;s:14:"catalog/option";i:7;s:15:"catalog/product";i:8;s:14:"catalog/review";i:9;s:18:"common/filemanager";i:10;s:13:"design/banner";i:11;s:13:"design/layout";i:12;s:14:"extension/feed";i:13;s:16:"extension/module";i:14;s:17:"extension/payment";i:15;s:18:"extension/shipping";i:16;s:15:"extension/total";i:17;s:16:"feed/google_base";i:18;s:19:"feed/google_sitemap";i:19;s:20:"localisation/country";i:20;s:21:"localisation/currency";i:21;s:21:"localisation/geo_zone";i:22;s:21:"localisation/language";i:23;s:25:"localisation/length_class";i:24;s:25:"localisation/order_status";i:25;s:26:"localisation/return_action";i:26;s:26:"localisation/return_reason";i:27;s:26:"localisation/return_status";i:28;s:25:"localisation/stock_status";i:29;s:22:"localisation/tax_class";i:30;s:25:"localisation/weight_class";i:31;s:17:"localisation/zone";i:32;s:14:"module/account";i:33;s:16:"module/affiliate";i:34;s:13:"module/banner";i:35;s:17:"module/bestseller";i:36;s:11:"module/cart";i:37;s:15:"module/category";i:38;s:15:"module/featured";i:39;s:18:"module/google_talk";i:40;s:18:"module/information";i:41;s:13:"module/latest";i:42;s:19:"module/manufacturer";i:43;s:16:"module/slideshow";i:44;s:14:"module/special";i:45;s:14:"module/welcome";i:46;s:16:"payment/alertpay";i:47;s:24:"payment/authorizenet_aim";i:48;s:21:"payment/bank_transfer";i:49;s:14:"payment/cheque";i:50;s:11:"payment/cod";i:51;s:21:"payment/free_checkout";i:52;s:14:"payment/liqpay";i:53;s:20:"payment/moneybookers";i:54;s:14:"payment/nochex";i:55;s:15:"payment/paymate";i:56;s:16:"payment/paypoint";i:57;s:26:"payment/perpetual_payments";i:58;s:14:"payment/pp_pro";i:59;s:17:"payment/pp_pro_uk";i:60;s:19:"payment/pp_standard";i:61;s:15:"payment/sagepay";i:62;s:22:"payment/sagepay_direct";i:63;s:18:"payment/sagepay_us";i:64;s:19:"payment/twocheckout";i:65;s:16:"payment/worldpay";i:66;s:16:"report/purchased";i:67;s:11:"report/sale";i:68;s:13:"report/viewed";i:69;s:14:"sale/affiliate";i:70;s:12:"sale/contact";i:71;s:11:"sale/coupon";i:72;s:13:"sale/customer";i:73;s:19:"sale/customer_group";i:74;s:10:"sale/order";i:75;s:11:"sale/return";i:76;s:12:"sale/voucher";i:77;s:15:"setting/setting";i:78;s:13:"setting/store";i:79;s:17:"shipping/citylink";i:80;s:13:"shipping/flat";i:81;s:13:"shipping/free";i:82;s:13:"shipping/item";i:83;s:23:"shipping/parcelforce_48";i:84;s:15:"shipping/pickup";i:85;s:19:"shipping/royal_mail";i:86;s:12:"shipping/ups";i:87;s:13:"shipping/usps";i:88;s:15:"shipping/weight";i:89;s:11:"tool/backup";i:90;s:14:"tool/error_log";i:91;s:12:"total/credit";i:92;s:14:"total/handling";i:93;s:19:"total/low_order_fee";i:94;s:14:"total/shipping";i:95;s:15:"total/sub_total";i:96;s:9:"total/tax";i:97;s:11:"total/total";i:98;s:13:"total/voucher";i:99;s:9:"user/user";i:100;s:20:"user/user_permission";i:101;s:13:"shipping/flat";i:102;s:15:"module/wishlist";i:103;s:12:"total/coupon";i:104;s:12:"total/credit";i:105;s:12:"total/reward";i:106;s:12:"total/reward";i:107;s:12:"total/reward";i:108;s:21:"module/administration";i:109;s:13:"shipping/free";i:110;s:12:"module/store";}}'),
+(1, 'Top Administrator', 'a:2:{s:6:"access";a:103:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:19:"catalog/information";i:5;s:20:"catalog/manufacturer";i:6;s:14:"catalog/option";i:7;s:15:"catalog/product";i:8;s:14:"catalog/review";i:9;s:18:"common/filemanager";i:10;s:13:"design/banner";i:11;s:13:"design/layout";i:12;s:14:"extension/feed";i:13;s:16:"extension/module";i:14;s:17:"extension/payment";i:15;s:18:"extension/shipping";i:16;s:15:"extension/total";i:17;s:16:"feed/google_base";i:18;s:19:"feed/google_sitemap";i:19;s:20:"localisation/country";i:20;s:21:"localisation/currency";i:21;s:21:"localisation/geo_zone";i:22;s:21:"localisation/language";i:23;s:25:"localisation/length_class";i:24;s:25:"localisation/order_status";i:25;s:26:"localisation/return_action";i:26;s:26:"localisation/return_reason";i:27;s:26:"localisation/return_status";i:28;s:25:"localisation/stock_status";i:29;s:22:"localisation/tax_class";i:30;s:25:"localisation/weight_class";i:31;s:17:"localisation/zone";i:32;s:14:"module/account";i:33;s:16:"module/affiliate";i:34;s:13:"module/banner";i:35;s:17:"module/bestseller";i:36;s:15:"module/category";i:37;s:15:"module/featured";i:38;s:18:"module/google_talk";i:39;s:18:"module/information";i:40;s:13:"module/latest";i:41;s:19:"module/manufacturer";i:42;s:16:"module/slideshow";i:43;s:14:"module/special";i:44;s:12:"module/store";i:45;s:14:"module/welcome";i:46;s:16:"payment/alertpay";i:47;s:24:"payment/authorizenet_aim";i:48;s:21:"payment/bank_transfer";i:49;s:14:"payment/cheque";i:50;s:11:"payment/cod";i:51;s:21:"payment/free_checkout";i:52;s:14:"payment/liqpay";i:53;s:20:"payment/moneybookers";i:54;s:14:"payment/nochex";i:55;s:15:"payment/paymate";i:56;s:16:"payment/paypoint";i:57;s:26:"payment/perpetual_payments";i:58;s:14:"payment/pp_pro";i:59;s:17:"payment/pp_pro_uk";i:60;s:19:"payment/pp_standard";i:61;s:15:"payment/sagepay";i:62;s:22:"payment/sagepay_direct";i:63;s:18:"payment/sagepay_us";i:64;s:19:"payment/twocheckout";i:65;s:16:"payment/worldpay";i:66;s:16:"report/purchased";i:67;s:11:"report/sale";i:68;s:13:"report/viewed";i:69;s:14:"sale/affiliate";i:70;s:12:"sale/contact";i:71;s:11:"sale/coupon";i:72;s:13:"sale/customer";i:73;s:19:"sale/customer_group";i:74;s:10:"sale/order";i:75;s:11:"sale/return";i:76;s:12:"sale/voucher";i:77;s:18:"sale/voucher_theme";i:78;s:15:"setting/setting";i:79;s:13:"setting/store";i:80;s:17:"shipping/citylink";i:81;s:13:"shipping/flat";i:82;s:13:"shipping/free";i:83;s:13:"shipping/item";i:84;s:23:"shipping/parcelforce_48";i:85;s:15:"shipping/pickup";i:86;s:19:"shipping/royal_mail";i:87;s:12:"shipping/ups";i:88;s:13:"shipping/usps";i:89;s:15:"shipping/weight";i:90;s:11:"tool/backup";i:91;s:14:"tool/error_log";i:92;s:12:"total/coupon";i:93;s:12:"total/credit";i:94;s:14:"total/handling";i:95;s:19:"total/low_order_fee";i:96;s:12:"total/reward";i:97;s:14:"total/shipping";i:98;s:15:"total/sub_total";i:99;s:9:"total/tax";i:100;s:11:"total/total";i:101;s:9:"user/user";i:102;s:20:"user/user_permission";}s:6:"modify";a:103:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:19:"catalog/information";i:5;s:20:"catalog/manufacturer";i:6;s:14:"catalog/option";i:7;s:15:"catalog/product";i:8;s:14:"catalog/review";i:9;s:18:"common/filemanager";i:10;s:13:"design/banner";i:11;s:13:"design/layout";i:12;s:14:"extension/feed";i:13;s:16:"extension/module";i:14;s:17:"extension/payment";i:15;s:18:"extension/shipping";i:16;s:15:"extension/total";i:17;s:16:"feed/google_base";i:18;s:19:"feed/google_sitemap";i:19;s:20:"localisation/country";i:20;s:21:"localisation/currency";i:21;s:21:"localisation/geo_zone";i:22;s:21:"localisation/language";i:23;s:25:"localisation/length_class";i:24;s:25:"localisation/order_status";i:25;s:26:"localisation/return_action";i:26;s:26:"localisation/return_reason";i:27;s:26:"localisation/return_status";i:28;s:25:"localisation/stock_status";i:29;s:22:"localisation/tax_class";i:30;s:25:"localisation/weight_class";i:31;s:17:"localisation/zone";i:32;s:14:"module/account";i:33;s:16:"module/affiliate";i:34;s:13:"module/banner";i:35;s:17:"module/bestseller";i:36;s:15:"module/category";i:37;s:15:"module/featured";i:38;s:18:"module/google_talk";i:39;s:18:"module/information";i:40;s:13:"module/latest";i:41;s:19:"module/manufacturer";i:42;s:16:"module/slideshow";i:43;s:14:"module/special";i:44;s:12:"module/store";i:45;s:14:"module/welcome";i:46;s:16:"payment/alertpay";i:47;s:24:"payment/authorizenet_aim";i:48;s:21:"payment/bank_transfer";i:49;s:14:"payment/cheque";i:50;s:11:"payment/cod";i:51;s:21:"payment/free_checkout";i:52;s:14:"payment/liqpay";i:53;s:20:"payment/moneybookers";i:54;s:14:"payment/nochex";i:55;s:15:"payment/paymate";i:56;s:16:"payment/paypoint";i:57;s:26:"payment/perpetual_payments";i:58;s:14:"payment/pp_pro";i:59;s:17:"payment/pp_pro_uk";i:60;s:19:"payment/pp_standard";i:61;s:15:"payment/sagepay";i:62;s:22:"payment/sagepay_direct";i:63;s:18:"payment/sagepay_us";i:64;s:19:"payment/twocheckout";i:65;s:16:"payment/worldpay";i:66;s:16:"report/purchased";i:67;s:11:"report/sale";i:68;s:13:"report/viewed";i:69;s:14:"sale/affiliate";i:70;s:12:"sale/contact";i:71;s:11:"sale/coupon";i:72;s:13:"sale/customer";i:73;s:19:"sale/customer_group";i:74;s:10:"sale/order";i:75;s:11:"sale/return";i:76;s:12:"sale/voucher";i:77;s:18:"sale/voucher_theme";i:78;s:15:"setting/setting";i:79;s:13:"setting/store";i:80;s:17:"shipping/citylink";i:81;s:13:"shipping/flat";i:82;s:13:"shipping/free";i:83;s:13:"shipping/item";i:84;s:23:"shipping/parcelforce_48";i:85;s:15:"shipping/pickup";i:86;s:19:"shipping/royal_mail";i:87;s:12:"shipping/ups";i:88;s:13:"shipping/usps";i:89;s:15:"shipping/weight";i:90;s:11:"tool/backup";i:91;s:14:"tool/error_log";i:92;s:12:"total/coupon";i:93;s:12:"total/credit";i:94;s:14:"total/handling";i:95;s:19:"total/low_order_fee";i:96;s:12:"total/reward";i:97;s:14:"total/shipping";i:98;s:15:"total/sub_total";i:99;s:9:"total/tax";i:100;s:11:"total/total";i:101;s:9:"user/user";i:102;s:20:"user/user_permission";}}'),
 (10, 'Demonstration', '');
 
 -- --------------------------------------------------------
@@ -3138,29 +3107,95 @@ INSERT INTO `oc_user_group` (`user_group_id`, `name`, `permission`) VALUES
 
 DROP TABLE IF EXISTS `oc_voucher`;
 CREATE TABLE `oc_voucher` (
-  `voucher_id` int(11) NOT NULL auto_increment,
+  `voucher_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
-  `code` varchar(10) collate utf8_bin NOT NULL,
-  `from_name` varchar(64) collate utf8_bin NOT NULL,
-  `from_email` varchar(96) collate utf8_bin NOT NULL,
-  `to_name` varchar(64) collate utf8_bin NOT NULL,
-  `to_email` varchar(96) collate utf8_bin NOT NULL,
-  `message` text collate utf8_bin NOT NULL,
+  `code` varchar(10) COLLATE utf8_bin NOT NULL,
+  `from_name` varchar(64) COLLATE utf8_bin NOT NULL,
+  `from_email` varchar(96) COLLATE utf8_bin NOT NULL,
+  `to_name` varchar(64) COLLATE utf8_bin NOT NULL,
+  `to_email` varchar(96) COLLATE utf8_bin NOT NULL,
+  `message` text COLLATE utf8_bin NOT NULL,
   `amount` decimal(15,4) NOT NULL,
+  `voucher_theme_id` int(11) NOT NULL,
   `status` int(1) NOT NULL,
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_redeemed` datetime NOT NULL,
-  PRIMARY KEY  (`voucher_id`)
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`voucher_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `oc_voucher`
 --
 
-INSERT INTO `oc_voucher` (`voucher_id`, `customer_id`, `code`, `from_name`, `from_email`, `to_name`, `to_email`, `message`, `amount`, `status`, `date_added`, `date_redeemed`) VALUES
-(4, 0, '2222', '', '', '', '', '', '0.0000', 1, '2009-01-27 13:55:03', '0000-00-00 00:00:00'),
-(5, 0, '3333', '', '', '', '', '', '0.0000', 1, '2009-03-14 21:13:53', '0000-00-00 00:00:00'),
-(6, 0, '1111', '', '', '', '', '', '0.0000', 1, '2009-03-14 21:15:18', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_voucher_history`
+--
+
+DROP TABLE IF EXISTS `oc_voucher_history`;
+CREATE TABLE `oc_voucher_history` (
+  `voucher_history_id` int(11) NOT NULL AUTO_INCREMENT,
+  `voucher_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `amount` decimal(15,4) NOT NULL,
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`voucher_history_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `oc_voucher_history`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_voucher_theme`
+--
+
+DROP TABLE IF EXISTS `oc_voucher_theme`;
+CREATE TABLE `oc_voucher_theme` (
+  `voucher_theme_id` int(11) NOT NULL AUTO_INCREMENT,
+  `image` varchar(255) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`voucher_theme_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_voucher_theme`
+--
+
+INSERT INTO `oc_voucher_theme` (`voucher_theme_id`, `image`) VALUES
+(8, 'data/canon_eos_5d_2.jpg'),
+(7, 'data/canon_eos_5d_1.jpg'),
+(6, 'data/apple_logo.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_voucher_theme_description`
+--
+
+DROP TABLE IF EXISTS `oc_voucher_theme_description`;
+CREATE TABLE `oc_voucher_theme_description` (
+  `voucher_theme_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(32) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`voucher_theme_id`,`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_voucher_theme_description`
+--
+
+INSERT INTO `oc_voucher_theme_description` (`voucher_theme_id`, `language_id`, `name`) VALUES
+(6, 1, 'Christmas'),
+(7, 1, 'Birthday'),
+(7, 2, 'Birthday'),
+(6, 2, 'Christmas'),
+(8, 1, 'General'),
+(8, 2, 'General');
 
 -- --------------------------------------------------------
 
@@ -3170,9 +3205,9 @@ INSERT INTO `oc_voucher` (`voucher_id`, `customer_id`, `code`, `from_name`, `fro
 
 DROP TABLE IF EXISTS `oc_weight_class`;
 CREATE TABLE `oc_weight_class` (
-  `weight_class_id` int(11) NOT NULL auto_increment,
-  `value` decimal(15,8) NOT NULL default '0.00000000',
-  PRIMARY KEY  (`weight_class_id`)
+  `weight_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `value` decimal(15,8) NOT NULL DEFAULT '0.00000000',
+  PRIMARY KEY (`weight_class_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -3193,11 +3228,11 @@ INSERT INTO `oc_weight_class` (`weight_class_id`, `value`) VALUES
 
 DROP TABLE IF EXISTS `oc_weight_class_description`;
 CREATE TABLE `oc_weight_class_description` (
-  `weight_class_id` int(11) NOT NULL auto_increment,
+  `weight_class_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL,
-  `title` varchar(32) collate utf8_bin NOT NULL,
-  `unit` varchar(4) collate utf8_bin NOT NULL default '',
-  PRIMARY KEY  (`weight_class_id`,`language_id`)
+  `title` varchar(32) COLLATE utf8_bin NOT NULL,
+  `unit` varchar(4) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`weight_class_id`,`language_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -3222,12 +3257,12 @@ INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `ti
 
 DROP TABLE IF EXISTS `oc_zone`;
 CREATE TABLE `oc_zone` (
-  `zone_id` int(11) NOT NULL auto_increment,
+  `zone_id` int(11) NOT NULL AUTO_INCREMENT,
   `country_id` int(11) NOT NULL,
-  `code` varchar(32) collate utf8_bin NOT NULL default '',
-  `name` varchar(128) collate utf8_bin NOT NULL,
-  `status` int(1) NOT NULL default '1',
-  PRIMARY KEY  (`zone_id`)
+  `code` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `name` varchar(128) COLLATE utf8_bin NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`zone_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -7181,13 +7216,13 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 
 DROP TABLE IF EXISTS `oc_zone_to_geo_zone`;
 CREATE TABLE `oc_zone_to_geo_zone` (
-  `zone_to_geo_zone_id` int(11) NOT NULL auto_increment,
+  `zone_to_geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
   `country_id` int(11) NOT NULL,
-  `zone_id` int(11) NOT NULL default '0',
+  `zone_id` int(11) NOT NULL DEFAULT '0',
   `geo_zone_id` int(11) NOT NULL,
-  `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
-  `date_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`zone_to_geo_zone_id`)
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`zone_to_geo_zone_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --

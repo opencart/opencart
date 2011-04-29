@@ -182,16 +182,16 @@ class ControllerSaleVoucher extends Controller {
 			);
 						
 			$this->data['vouchers'][] = array(
-				'voucher_id'    => $result['voucher_id'],
-				'code'          => $result['code'],
-				'from'          => $result['from_name'],
-				'to'            => $result['to_name'],
-				'amount'        => $this->currency->format($result['amount']),
-				'theme'         => $result['theme'],
-				'status'        => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'selected'      => isset($this->request->post['selected']) && in_array($result['voucher_id'], $this->request->post['selected']),
-				'action'        => $action
+				'voucher_id' => $result['voucher_id'],
+				'code'       => $result['code'],
+				'from'       => $result['from_name'],
+				'to'         => $result['to_name'],
+				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
+				'theme'      => $result['theme'],
+				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'selected'   => isset($this->request->post['selected']) && in_array($result['voucher_id'], $this->request->post['selected']),
+				'action'     => $action
 			);
 		}
 									
@@ -566,6 +566,5 @@ class ControllerSaleVoucher extends Controller {
 		
 		$this->response->setOutput($this->render());
   	}		
-		
 }
 ?>

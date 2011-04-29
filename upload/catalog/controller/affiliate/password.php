@@ -100,7 +100,7 @@ class ControllerAffiliatePassword extends Controller {
   	}
   
   	private function validate() {
-    	if ((strlen(utf8_decode($this->request->post['password'])) < 4) || (strlen(utf8_decode($this->request->post['password'])) > 20)) {
+    	if ((strlen(utf8_decode($this->request->post['password'])) <= 4) || (strlen(utf8_decode($this->request->post['password'])) >= 20)) {
       		$this->error['password'] = $this->language->get('error_password');
     	}
 

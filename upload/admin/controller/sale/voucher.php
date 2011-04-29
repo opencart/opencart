@@ -186,7 +186,7 @@ class ControllerSaleVoucher extends Controller {
 				'code'          => $result['code'],
 				'from'          => $result['from_name'],
 				'to'            => $result['to_name'],
-				'amount'        => $result['amount'],
+				'amount'        => $this->currency->format($result['amount']),
 				'theme'         => $result['theme'],
 				'status'        => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),

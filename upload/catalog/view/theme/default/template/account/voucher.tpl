@@ -62,6 +62,9 @@
           <label for="voucher-<?php echo $voucher_theme['voucher_theme_id']; ?>"><?php echo $voucher_theme['name']; ?></label>
           <?php } ?>
           <br />
+          <?php } ?>
+          <?php if ($error_theme) { ?>
+          <span class="error"><?php echo $error_theme; ?></span>
           <?php } ?></td>
       </tr>
     </table>

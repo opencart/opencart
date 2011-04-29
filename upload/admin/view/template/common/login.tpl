@@ -36,16 +36,10 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-	$('#form input').keydown(function(e) {
-		if (e.keyCode == 13) {
-			$('#form').submit();
-		}
-	});
-	
-	$('.ui-button').button({
-		icons: {
-			primary: 'ui-icon-cart'
-		}
-	});	
+$('#form input').keydown(function(e) {
+	if (e.keyCode == 13) {
+		$('#form').submit();
+	}
+});
 //--></script> 
 <?php echo $footer; ?>

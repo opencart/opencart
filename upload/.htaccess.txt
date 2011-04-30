@@ -20,7 +20,7 @@ RewriteEngine On
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)\?*$ index.php?_route_=$1 [L,QSA]
+RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
 
 ### Additional Settings that may need to be enabled for some servers 
 ### Uncomment the commands by removing the # sign in front of it.

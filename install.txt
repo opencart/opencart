@@ -1,6 +1,6 @@
 /////////////////////////////////
-///       OpenCart V1.4       ///
-///    Install Instruction    ///
+///       OpenCart V1.5.x     ///
+///    Install Instructions   ///
 ///  http://www.opencart.com  ///
 /////////////////////////////////
 

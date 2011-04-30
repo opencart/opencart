@@ -881,6 +881,9 @@ $('#button-shipping').live('click', function() {
 							
 							$('#shipping-method .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
 						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError);
 					}
 				});					
 			}

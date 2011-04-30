@@ -77,7 +77,7 @@
       </div>
       <div class="cart-module">
         <div class="left"><?php echo $shipping; ?></div>
-        <div class="right"><?php echo $coupon; ?><?php echo $reward; ?></div>
+        <div class="right"><?php echo $coupon; ?><?php echo $voucher; ?><?php echo $reward; ?></div>
       </div>
     </form>
     <?php echo $content_bottom; ?></div>

@@ -44,6 +44,7 @@ $_['button_search']         = 'Search';
 $_['button_shipping']       = 'Apply Shipping';
 $_['button_guest']          = 'Guest Checkout';
 $_['button_view']           = 'View';
+$_['button_voucher']        = 'Apply Voucher';
 $_['button_upload']         = 'Upload File';
 $_['button_reward']         = 'Apply Points';
 $_['button_quote']          = 'Get Quotes';

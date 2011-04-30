@@ -193,6 +193,7 @@ class ControllerCheckoutCart extends Controller {
 			$this->children = array(
 				'total/shipping',
 				'total/coupon',
+				'total/voucher',
 				'total/reward',
 				'common/column_left',
 				'common/column_right',

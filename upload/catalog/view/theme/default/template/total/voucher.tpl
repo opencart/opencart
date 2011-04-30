@@ -8,7 +8,7 @@ $('#button-voucher').bind('click', function() {
 		type: 'POST',
 		url: 'index.php?route=total/voucher/calculate',
 		data: $('#voucher :input'),
-		dataType: 'json',		
+		dataType: 'html',		
 		beforeSend: function() {
 			$('.success, .warning').remove();
 			$('#button-voucher').attr('disabled', 'disabled');
@@ -19,6 +19,8 @@ $('#button-voucher').bind('click', function() {
 			$('.wait').remove();
 		},		
 		success: function(json) {
+			alert(json);
+			
 			if (json['error']) {
 				$('#basket').before('<div class="warning">' + json['error'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 			}

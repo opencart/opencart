@@ -1,5 +1,5 @@
 <?php 
-class ControllerTotalCoupon extends Controller {
+class ControllerTotalVoucher extends Controller {
 	public function index() {
 		$this->language->load('total/voucher');
 		
@@ -36,7 +36,7 @@ class ControllerTotalCoupon extends Controller {
 		if (isset($this->request->post['voucher'])) {
 			$this->load->model('checkout/voucher');
 	
-			$voucher_info = $this->model_checkout_voucher->getCoupon($this->request->post['voucher']);			
+			$voucher_info = $this->model_checkout_voucher->getVoucher($this->request->post['voucher']);			
 			
 			if ($voucher_info) {			
 				$this->session->data['voucher'] = $this->request->post['voucher'];

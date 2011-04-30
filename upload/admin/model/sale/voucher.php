@@ -76,7 +76,7 @@ class ModelSaleVoucher extends Model {
 	}	
 	
 	public function getVoucherHistories($voucher_id, $start = 0, $limit = 10) {
-		$query = $this->db->query("SELECT vh.order_id, CONCAT(c.firstname, ' ', c.lastname) AS customer, vh.amount, vh.date_added FROM " . DB_PREFIX . "voucher_history vh LEFT JOIN " . DB_PREFIX . "customer c ON (vh.customer_id = c.customer_id) WHERE vh.voucher_id = '" . (int)$voucher_id . "' ORDER BY vh.date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT vh.order_id, CONCAT(o.firstname, ' ', o.lastname) AS customer, vh.amount, vh.date_added FROM " . DB_PREFIX . "voucher_history vh LEFT JOIN " . DB_PREFIX . "order o ON (vh.order_id = o.order_id) WHERE vh.voucher_id = '" . (int)$voucher_id . "' ORDER BY vh.date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}

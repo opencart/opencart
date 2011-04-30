@@ -1,13 +1,13 @@
 <?php 
-class ControllerAccountVoucher extends Controller { 
+class ControllerCheckoutVoucher extends Controller { 
 	private $error = array();
 	
 	public function index() {
-		$this->language->load('account/voucher');
+		$this->language->load('checkout/voucher');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('account/voucher');
+		$this->load->model('checkout/voucher');
 		
 		if (!isset($this->session->data['voucher'])) {
 			$this->session->data['gift_voucher'] = array();
@@ -16,7 +16,7 @@ class ControllerAccountVoucher extends Controller {
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->session->data['gift_voucher'][] = $this->request->post;
 	  	  
-	  		$this->redirect($this->url->link('account/voucher/success'));
+	  		$this->redirect($this->url->link('checkout/voucher/success'));
     	} 		
 
       	$this->data['breadcrumbs'] = array();
@@ -29,7 +29,7 @@ class ControllerAccountVoucher extends Controller {
 
       	$this->data['breadcrumbs'][] = array(       	
         	'text'      => $this->language->get('text_voucher'),
-			'href'      => $this->url->link('account/voucher', '', 'SSL'),
+			'href'      => $this->url->link('checkout/voucher', '', 'SSL'),
         	'separator' => $this->language->get('text_separator')
       	);
 
@@ -90,7 +90,7 @@ class ControllerAccountVoucher extends Controller {
 			$this->data['error_theme'] = '';
 		}
 					
-		$this->data['action'] = $this->url->link('account/voucher', '', 'SSL');
+		$this->data['action'] = $this->url->link('checkout/voucher', '', 'SSL');
 								
 		if (isset($this->request->post['to_name'])) {
 			$this->data['to_name'] = $this->request->post['to_name'];
@@ -132,9 +132,9 @@ class ControllerAccountVoucher extends Controller {
 			$this->data['amount'] = '25.00';
 		}
 			
- 		$this->load->model('account/voucher_theme');
+ 		$this->load->model('checkout/voucher_theme');
 			
-		$this->data['voucher_themes'] = $this->model_account_voucher_theme->getVoucherThemes();
+		$this->data['voucher_themes'] = $this->model_checkout_voucher_theme->getVoucherThemes();
 
     	if (isset($this->request->post['voucher_theme_id'])) {
       		$this->data['voucher_theme_id'] = $this->request->post['voucher_theme_id'];
@@ -148,10 +148,10 @@ class ControllerAccountVoucher extends Controller {
 			$this->data['agree'] = false;
 		}	
 				
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/voucher.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/account/voucher.tpl';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/voucher.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/checkout/voucher.tpl';
 		} else {
-			$this->template = 'default/template/account/voucher.tpl';
+			$this->template = 'default/template/checkout/voucher.tpl';
 		}
 		
 		$this->children = array(
@@ -167,7 +167,7 @@ class ControllerAccountVoucher extends Controller {
   	}
 	
   	public function success() {
-		$this->language->load('account/voucher');
+		$this->language->load('checkout/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title')); 
 
@@ -181,7 +181,7 @@ class ControllerAccountVoucher extends Controller {
 
       	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('account/voucher'),
+			'href'      => $this->url->link('checkout/voucher'),
         	'separator' => $this->language->get('text_separator')
       	);	
 		

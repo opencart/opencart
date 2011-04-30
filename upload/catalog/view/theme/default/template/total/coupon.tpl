@@ -1,4 +1,3 @@
-<?php if ($coupon_status) { ?>
 <h2><?php echo $heading_title; ?></h2>
 <div id="coupon" class="content"><?php echo $entry_coupon; ?>&nbsp;
   <input type="text" name="coupon" value="<?php echo $coupon; ?>" />
@@ -31,4 +30,3 @@ $('#button-coupon').bind('click', function() {
 	});
 });
 //--></script> 
-<?php } ?>

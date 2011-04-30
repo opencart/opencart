@@ -9,13 +9,13 @@ class ControllerCommonHeader extends Controller {
 			$this->data['base'] = $this->config->get('config_url');
 		}
 		
-		$this->data['description'] 	= $this->document->getDescription();
-		$this->data['keywords'] 	= $this->document->getKeywords();
-		$this->data['links'] 		= $this->document->getLinks();	 
-		$this->data['styles'] 		= $this->document->getStyles();
-		$this->data['scripts'] 		= $this->document->getScripts();
-		$this->data['lang'] 		= $this->language->get('code');
-		$this->data['direction'] 	= $this->language->get('direction');
+		$this->data['description'] = $this->document->getDescription();
+		$this->data['keywords'] = $this->document->getKeywords();
+		$this->data['links'] = $this->document->getLinks();	 
+		$this->data['styles'] = $this->document->getStyles();
+		$this->data['scripts'] = $this->document->getScripts();
+		$this->data['lang'] = $this->language->get('code');
+		$this->data['direction'] = $this->language->get('direction');
 
 		$this->language->load('common/header');
 		
@@ -62,7 +62,7 @@ class ControllerCommonHeader extends Controller {
 
 		$this->data['home'] = $this->url->link('common/home');
 		$this->data['special'] = $this->url->link('product/special');
-		$this->data['voucher'] = $this->url->link('account/voucher');
+		$this->data['voucher'] = $this->url->link('checkout/voucher');
 		$this->data['wishlist'] = $this->url->link('account/wishlist');
 		$this->data['contact'] = $this->url->link('information/contact');
     	$this->data['sitemap'] = $this->url->link('information/sitemap');

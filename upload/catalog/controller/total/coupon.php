@@ -15,8 +15,6 @@ class ControllerTotalCoupon extends Controller {
 			$this->data['coupon'] = '';
 		}
 
-		$this->data['coupon_status'] = $this->config->get('coupon_status');
-		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/total/coupon.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/total/coupon.tpl';
 		} else {

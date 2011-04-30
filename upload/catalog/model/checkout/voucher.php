@@ -21,12 +21,12 @@ class ModelCheckoutVoucher extends Model {
 			$voucher_history_query = $this->db->query("SELECT SUM(amount) AS total FROM `" . DB_PREFIX . "voucher_history` vh WHERE vh.voucher_id = '" . (int)$voucher_query->row['voucher_id'] . "' GROUP BY vh.voucher_id");
 	
 			if ($voucher_history_query->num_rows) {
-				$total = $voucher_query->row['amount'] - $voucher_history_query->row['total'];
+				$amount = $voucher_query->row['amount'] - $voucher_history_query->row['total'];
 			} else {
-				$total = $voucher_query->row['amount'];
+				$amount = $voucher_query->row['amount'];
 			}
 			
-			if ($total <= 0) {
+			if ($amount <= 0) {
 				$status = false;
 			}		
 		} else {
@@ -45,7 +45,7 @@ class ModelCheckoutVoucher extends Model {
 				'voucher_theme_id' => $voucher_query->row['voucher_theme_id'],
 				'theme'            => $voucher_query->row['theme'],
 				'image'            => $voucher_query->row['image'],
-				'total'            => $total,
+				'amount'           => $amount,
 				'status'           => $voucher_query->row['status'],
 				'date_added'       => $voucher_query->row['date_added']
 			);

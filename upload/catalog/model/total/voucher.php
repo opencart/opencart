@@ -6,22 +6,9 @@ class ModelCheckoutVoucher extends Model {
 			
 			$this->load->model('checkout/voucher');
 			 
-			$voucher_info = $this->model_checkout_voucher->getCoupon($this->session->data['voucher']);
+			$voucher_info = $this->model_checkout_voucher->getVoucher($this->session->data['voucher']);
 			
 			if ($voucher_info) {
-				$discount_total = 0;
-				
-				if (!$voucher_info['product']) {
-					$sub_total = $this->cart->getSubTotal();
-				} else {
-					$sub_total = 0;
-				
-					foreach ($this->cart->getProducts() as $product) {
-						if (in_array($product['product_id'], $voucher_info['product'])) {
-							$sub_total += $product['total'];
-						}
-					}					
-				}
 				
 				if ($voucher_info['type'] == 'F') {
 					$voucher_info['discount'] = min($voucher_info['discount'], $sub_total);
@@ -86,8 +73,12 @@ class ModelCheckoutVoucher extends Model {
 			$code = substr($order_total['title'], $start, $end - $start);
 		}	
 		
-		if ($code) {
-			$this->model_checkout_voucher->redeem($code, $order_info['order_id'], $order_total['value']);	
+		$this->load->model('checkout/voucher');
+		
+		$voucher_info = $this->model_checkout_voucher->getVoucher($code);
+		
+		if ($voucher_info) {
+			$this->model_checkout_voucher->redeem($voucher_info['voucher_id'], $order_info['order_id'], $order_total['value']);	
 		}						
 	}	
 }

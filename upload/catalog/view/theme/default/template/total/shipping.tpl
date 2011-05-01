@@ -1,4 +1,4 @@
-<h2><?php echo $heading_title; ?></h2>
+<?php echo $heading_title; ?> <input type="radio" name="checkout" value="shipping" /><br />
 <div class="content">
   <p><?php echo $text_shipping; ?></p>
   <table id="shipping">

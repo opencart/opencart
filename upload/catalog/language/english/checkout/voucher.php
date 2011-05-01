@@ -24,4 +24,18 @@ $_['error_email']      = 'E-Mail Address does not appear to be valid!';
 $_['error_amount']     = 'Amount must be between %s and %s!';
 $_['error_theme']      = 'You must select a theme!';
 $_['error_agree']      = 'Error: You must agree that the gift certificates are non-refundable!';
+
+// Mail
+$_['mail_subject']     = 'A gift from %s';
+$_['mail_greeting']    = 'Congratulations, You have received a Gift Certificate worth %s';
+$_['mail_greeting']    = 'This Gift Certificate has been sent to you by %s';
+$_['mail_greeting']    = 'With a message saying ';
+To redeem this Gift Certificate, please click on the link below. Please also write down the redemption code which is %s. In case you have problems.
+To redeem please click 
+ or visit 
+  and enter the code 
+  If you are have problems redeeming the Gift Certificate using the automated link above, ' . "\n" . 
+                                'you can also enter the Gift Certificate code during the checkout process at our store.' . "\n\n"
+  
+$_['mail_footer']      = 'Please reply to this email if you have any questions.';
 ?>

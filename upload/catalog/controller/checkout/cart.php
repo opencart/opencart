@@ -173,6 +173,13 @@ class ControllerCheckoutCart extends Controller {
     		array_multisort($sort_order, SORT_ASC, $total_data);
 
 			$this->data['totals'] = $total_data;
+			
+			// Calcuate Totals 
+			$results = $this->model_setting_extension->getExtensions('total');
+			
+			
+			
+			
 			 
 			if (isset($this->session->data['redirect'])) {
       			$this->data['continue'] = $this->session->data['redirect'];

@@ -60,7 +60,7 @@ class ControllerCheckoutVoucher extends Controller {
 			$this->data['error_to_name'] = '';
 		}
 		
-		if (isset($this->request->post['to_email'])) {
+		if (isset($this->error['to_email'])) {
 			$this->data['error_to_email'] = $this->error['to_email'];
 		} else {
 			$this->data['error_to_email'] = '';

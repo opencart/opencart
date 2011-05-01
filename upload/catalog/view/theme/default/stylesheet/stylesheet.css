@@ -178,21 +178,23 @@ label {
 #header #cart .content {
 	clear: both;
 	display: none;
- 	overflow: auto;	
-	-webkit-border-radius: 0px 7px 7px 7px;
-	-moz-border-radius: 0px 7px 7px 7px;
-	-khtml-border-radius: 0px 7px 7px 7px;
-	border-radius: 0px 7px 7px 7px;
+	position: relative;
+	top: -1px;
+	z-index: 5;
+	padding: 8px;
+	min-height: 150px;
 	border-top: 1px solid #EEEEEE;
 	border-left: 1px solid #EEEEEE;
 	border-right: 1px solid #EEEEEE;
 	border-bottom: 1px solid #EEEEEE;
-	padding: 8px;
-	min-height: 150px;
+	-webkit-border-radius: 0px 7px 7px 7px;
+	-moz-border-radius: 0px 7px 7px 7px;
+	-khtml-border-radius: 0px 7px 7px 7px;
+	border-radius: 0px 7px 7px 7px;
+	-webkit-box-shadow: 2px 2px 3px #CCCCCC;
+	-moz-box-shadow: 2px 2px 3px #CCCCCC;
+	box-shadow: 2px 2px 3px #CCCCCC;
 	background: #FFF;
-	position: relative;
-	top: -1px;
-	z-index: 5;
 }
 #header #cart.active {
 	position: absolute;
@@ -1373,15 +1375,16 @@ a.button:hover span {
 	font-weight: bold;
 }
 .cart-module {
+	text-align: right;
 	overflow: auto;
+	margin-bottom: 20px;
 }
-.cart-module .left {
-	float: left;
-	width: 49%;
+.cart-module h2 {
+	text-align: right;
 }
-.cart-module .right {
-	float: right;
-	width: 49%;
+.cart-module .content {
+	text-align: left;
+	display: none;
 }
 .cart-total {
 	border-top: 1px solid #DDDDDD;

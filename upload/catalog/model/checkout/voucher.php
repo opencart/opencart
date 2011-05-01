@@ -52,6 +52,10 @@ class ModelCheckoutVoucher extends Model {
 		}
 	}
 	
+	public function confirm($voucher_id) {
+		$this->load->language('checkout/voucher');
+	}
+	
 	public function redeem($voucher_id, $order_id, $amount) {
 		$this->data->query("INSERT INTO voucher_history SET voucher_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', amount = '" . (float)$amount . "', date_added = NOW()");
 	}

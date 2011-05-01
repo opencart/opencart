@@ -28,6 +28,13 @@ class ModelCheckoutCoupon extends Model {
 				}
 			}
 			
+			// 
+			$coupon_history_query = $this->db->query("SELECT SUM(amount) AS total FROM `" . DB_PREFIX . "coupon_history` ch WHERE ch.coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "' AND ch.customer_id = '" . (int)$this->customer->getId() . "'");
+			
+			if ($coupon_query->row['uses_customer'] > 0 && ($coupon_history_query->row['total'] >= $coupon_query->row['uses_customer'])) {
+				$status = false;
+			}
+				
 			$coupon_product_data = array();
 				
 			$coupon_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "coupon_product WHERE coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "'");

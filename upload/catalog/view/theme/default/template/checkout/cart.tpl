@@ -59,6 +59,9 @@
           </tbody>
         </table>
       </div>
+      <div class="cart-module">
+        <h2>Before you checkout would you like to:</h2>
+        <?php echo $shipping; ?> <?php echo $coupon; ?><?php echo $voucher; ?><?php echo $reward; ?> </div>
       <div class="cart-total">
         <table>
           <?php foreach ($totals as $total) { ?>
@@ -74,10 +77,6 @@
         <div class="left"><a onclick="$('#basket').submit();" class="button"><span><?php echo $button_update; ?></span></a></div>
         <div class="right"><a href="<?php echo $checkout; ?>" class="button"><span><?php echo $button_checkout; ?></span></a></div>
         <div class="center"><a href="<?php echo $continue; ?>" class="button"><span><?php echo $button_shopping; ?></span></a></div>
-      </div>
-      <div class="cart-module">
-        <div class="left"><?php echo $shipping; ?></div>
-        <div class="right"><?php echo $coupon; ?><?php echo $voucher; ?><?php echo $reward; ?></div>
       </div>
     </form>
     <?php echo $content_bottom; ?></div>

@@ -1,4 +1,4 @@
-<h2><?php echo $heading_title; ?></h2>
+<?php echo $heading_title; ?> <input type="radio" name="checkout" value="reward" /><br />
 <div id="reward" class="content"><?php echo $entry_reward; ?>&nbsp;
   <input type="text" name="reward" value="<?php echo $reward; ?>" />
   &nbsp;<a id="button-reward" class="button"><span><?php echo $button_reward; ?></a></div>

@@ -159,25 +159,62 @@ class ControllerCommonHeader extends Controller {
 			}
 		}
 		
-		// Set the same session accross multiple domains.
-		$this->data['domains'] = array();
+		// Menu
+		$this->load->model('catalog/category');
+		$this->load->model('catalog/product');
 		
-		$this->data['domains'][] = HTTP_SERVER . 'setcookie.php?' . session_name() . '=' . session_id();
+		$this->data['categories'] = array();
+					
+		$categories_1 = $this->model_catalog_category->getCategories(0);
 		
-		if (HTTPS_SERVER) {
-			$this->data['domains'][] = HTTPS_SERVER. 'setcookie.php?' . session_name() . '=' . session_id();	
-		}
-		
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store");
-		
-		foreach ($query->rows as $result) {
-			$this->data['domains'][] = $result['url']. 'setcookie.php?' . session_name() . '=' . session_id();
+		foreach ($categories_1 as $category_1) {
+			$level_2_data = array();
 			
-			if ($result['ssl']) {
-				$this->data['domains'][] = $result['ssl']. 'setcookie.php?' . session_name() . '=' . session_id();
+			$categories_2 = $this->model_catalog_category->getCategories($category_1['category_id']);
+			
+			foreach ($categories_2 as $category_2) {
+				// Level 3
+				$level_3_data = array();
+				
+				$categories_3 = $this->model_catalog_category->getCategories($category_2['category_id']);
+								
+				foreach ($categories_3 as $category_3) {
+					$data = array(
+						'filter_category_id'  => $category_3['category_id'],
+						'filter_sub_category' => true	
+					);		
+						
+					$product_total = $this->model_catalog_product->getTotalProducts($data);					
+					
+					$level_3_data[] = array(
+						'name' => $category_3['name'] . ' (' . $product_total . ')',
+						'href' => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'] . '_' . $category_3['category_id'])
+					);
+				}
+				
+				// Level 2
+				$data = array(
+					'filter_category_id'  => $category_2['category_id'],
+					'filter_sub_category' => true	
+				);		
+					
+				$product_total = $this->model_catalog_product->getTotalProducts($data);
+								
+				$level_2_data[] = array(
+					'name'     => $category_2['name'] . ' (' . $product_total . ')',
+					'children' => $level_3_data,
+					'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'])	
+				);					
 			}
+			
+			// Level 1
+			$this->data['categories'][] = array(
+				'name'     => $category_1['name'],
+				'children' => $level_2_data,
+				'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'])
+			);
 		}
-		
+				
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/common/header.tpl';
 		} else {

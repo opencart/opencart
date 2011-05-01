@@ -40,12 +40,9 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
 <![endif]-->
 </head>
 <body>
-<?php foreach ($domains as $domain) { ?>
-<img src="<?php echo $domain; ?>" style="display: none;" />
-<?php } ?>
 <div id="top">
   <div>
-    <div id="links"><a href="<?php echo $home; ?>"><?php echo $text_home; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="bookmark(document.location, '<?php echo addslashes($title); ?>');"><?php echo $text_bookmark; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $special; ?>"><?php echo $text_special; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $voucher; ?>"><?php echo $text_voucher; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $wishlist; ?>" id="wishlist_total"><?php echo $text_wishlist; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $sitemap; ?>"><?php echo $text_sitemap; ?></a></div>
+    <div class="links"><a href="<?php echo $home; ?>"><?php echo $text_home; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="bookmark(document.location, '<?php echo addslashes($title); ?>');"><?php echo $text_bookmark; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $special; ?>"><?php echo $text_special; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $voucher; ?>"><?php echo $text_voucher; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $wishlist; ?>" id="wishlist_total"><?php echo $text_wishlist; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $sitemap; ?>"><?php echo $text_sitemap; ?></a></div>
     <div id="currency">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
         <?php echo $entry_currency; ?>
@@ -102,11 +99,12 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
     <?php echo $text_logged; ?>
     <?php } ?>
   </div>
-  <div id="menu"><a id="tab-home" href="<?php echo $home; ?>"><?php echo $text_home; ?></a>
+  <div class="links"><a id="tab-home" href="<?php echo $home; ?>"><?php echo $text_home; ?></a>
     <?php if (!$logged) { ?>
     <a id="tab-login" href="<?php echo $login; ?>"><?php echo $text_login; ?></a>
     <?php } else { ?>
     <a id="tab-login" href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a>
     <?php } ?>
     <a id="tab-account" href="<?php echo $account; ?>"><?php echo $text_account; ?></a> <a id="tab-cart" href="<?php echo $cart; ?>"><span><?php echo $text_basket; ?></span></a> <a id="tab-checkout" href="<?php echo $checkout; ?>"><span><?php echo $text_checkout; ?></span></a></div>
+  <div id="menu"></div>
 </div>

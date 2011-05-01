@@ -75,12 +75,12 @@ label {
 	margin-right: auto;
 	text-align: left;
 }
-#top #links {
+#top .links {
 	float: left;
 	padding-top: 8px;
 	color: #999999;
 }
-#top #links a {
+#top .links a {
 	color: #999999;
 }
 #top #currency {
@@ -311,40 +311,25 @@ label {
 	margin-bottom: 15px;
 }
 /* menu */
-#menu {
+#header .links {
 	position: absolute;
 	right: 0px;
 	bottom: 4px;
-	padding-right: 10px;
 }
-#menu a {
+#header .links a {
 	float: left;
 	display: block;
 	margin-left: 5px;
-	padding: 10px 28px 8px 28px; 
-	-webkit-border-radius: 7px 7px 0px 0px;
-	-moz-border-radius: 7px 7px 0px 0px;
-	-khtml-border-radius: 7px 7px 0px 0px;
-	border-radius: 7px 7px 0px 0px;
-	border-top: 1px solid #DBDEE1;
-	border-left: 1px solid #DBDEE1;
-	border-right: 1px solid #DBDEE1;
-	background: #F8F8F8;
-	cursor: pointer;
-	color: #333333;
-	font-size: 15px;
-	line-height: 15px;
+	padding: 0px 0px 0px 10px; 
+	color: #000000;
+	font-size: 14px;
+	line-height: 14px;
 	font-weight: bold;
 	text-decoration: none;
 }
-#menu a.active {
-	color: #FFFFFF;
-	border-top: 1px solid #00559A;
-	border-left: 1px solid #00559A;
-	border-right: 1px solid #00559A;
-	padding: 10px 28px 9px 28px;
-	margin-bottom: -1px;
-	background: url('../image/tab-active.png') repeat-x;
+#header .links a + a {
+	margin-left: 11px;
+	border-left: 1px solid #EEEEEE;	
 }
 .breadcrumb {
 	color: #CCCCCC;
@@ -576,14 +561,13 @@ a.button:hover span {
 	-khtml-border-radius: 7px 7px 0px 0px;
 	border-radius: 7px 7px 0px 0px;
 	border: 1px solid #DBDEE1;
-	background: #F8F8F8;
-	padding: 10px 10px 0px 10px;
-	height: 23px;
+	background: url('../image/background.png') repeat-x;
+	padding: 9px 10px 8px 10px;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 15px;
+	font-size: 13px;
 	font-weight: bold;
 	text-transform: uppercase;
-	line-height: 15px;
+	line-height: 13px;
 	color: #333333;
 }
 .box .box-content {

@@ -26,12 +26,6 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('.ui-button').button({
-		icons: {
-			primary: 'ui-icon-cart'
-		}
-	});	
-		
 	/* Ajax Cart */
 	$('#cart > .heading a').bind('click', function() {
 		$('#cart').addClass('active');
@@ -50,28 +44,22 @@ $(document).ready(function() {
 			$(this).removeClass('active');
 		});
 	});
-
-	route = getURLVar('route');
 	
-	if (!route) {
-		$('#tab-home').addClass('active');
-	} else {
-		part = route.split('/');
+	/* Mega Menu */
+	$('#menu ul > li > a + div').each(function(index, element) {
+		var menu = $('#menu').offset();
+		var dropdown = $(this).parent().offset();
 		
-		if (route == 'common/home') {
-			$('#tab-home').addClass('active');
-		} else if (route == 'account/login') {
-			$('#tab-login').addClass('active');	
-		} else if (part[0] == 'account') {
-			$('#tab-account').addClass('active');
-		} else if (route == 'checkout/cart') {
-			$('#tab-cart').addClass('active');
-		} else if (part[0] == 'checkout') {
-			$('#tab-checkout').addClass('active');
-		} else {
-			$('#tab-home').addClass('active');
+		columns = $(this).size();
+		
+		//$(this).css('width', (columns * 160));
+			
+		i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('#menu').outerWidth());
+		
+		if (i > 0) {
+			$(this).css('margin-left', '-' + i + 'px');
 		}
-	}
+	});
 });
 
 function getURLVar(urlVarName) {

@@ -388,6 +388,9 @@ label {
 #menu > ul > li ul + ul {
 	padding-left: 20px;
 }
+#menu > ul > li ul > li {
+	
+}
 #menu > ul > li ul > li > a {
 	text-decoration: none;
 	padding: 4px;
@@ -691,55 +694,28 @@ a.button:hover span {
 }
 /* category */
 .box-category {
-	margin-top: -11px;
+	margin-top: -2px;
 }
 .box-category ul {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
-.box-category > ul > li {
-	position: relative;
-	border-top: 1px solid #DDDDDD;
-	border-bottom: 1px solid #DDDDDD;
-	margin-bottom: -1px;
-}
+
 .box-category > ul > li + li {
 	border-top: 1px solid #EEEEEE;
-	border-bottom: 1px solid #FFFFFF;
 }
-.box-category > ul > li:hover {
-	width: 168px;
-	border-bottom: 1px solid #EEEEEE;
-}
+
 .box-category > ul > li > a {
+	font-weight: bold;
+	text-decoration: none;
+	color: #333;
 	display: block;
 	padding: 8px 8px 8px 0px;
-	color: #333;
-	text-decoration: none;
-	background: #FFFFFF url('../image/category.png') 150px center no-repeat;
-	z-index: 4;
-	position: relative;
 }
-.box-category > ul > li:hover > a {
-	width: 161px;
-}
-.box-category > ul > li > div {
-	display: none;
-	background: #FFFFFF;
-	position: absolute;
-	left: 168px;
-	top: -1px;
-	z-index: 3;
-	padding: 5px;
-	border: 1px solid #DDDDDD;
-	white-space: nowrap;
-}
-.box-category > ul > li:hover > div {
-	display: table;
-}
+
 .box-category > ul > li ul {
-	display: table-cell;
+	padding-left: 10px;
 }
 .box-category > ul > li ul + ul {
 	padding-left: 20px;
@@ -749,9 +725,7 @@ a.button:hover span {
 	padding: 4px;
 	color: #333;
 	display: block;
-}
-.box-category > ul > li ul > li > a:hover {
-	background: #DDE5F4;
+	padding: 8px 8px 8px 0px;
 }
 /* content */
 #content .content {

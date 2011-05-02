@@ -8,9 +8,17 @@ class ControllerModuleCategory extends Controller {
 		$this->load->model('catalog/category');
 		$this->load->model('catalog/product');
 		
+		if (isset($this->request->get['path'])) {
+			$parts = explode('_', (string)$this->request->get['path']);
+			
+			$category_id = end($parts);
+		} else {
+			$category_id = 0;
+		}
+		
 		$this->data['categories'] = array();
 					
-		$categories_1 = $this->model_catalog_category->getCategories(0);
+		$categories_1 = $this->model_catalog_category->getCategories($category_id);
 		
 		foreach ($categories_1 as $category_1) {
 			$level_2_data = array();
@@ -20,7 +28,6 @@ class ControllerModuleCategory extends Controller {
 			foreach ($categories_2 as $category_2) {
 				$data = array(
 					'filter_category_id'  => $category_2['category_id'],
-					'filter_sub_category' => true	
 				);		
 					
 				$product_total = $this->model_catalog_product->getTotalProducts($data);

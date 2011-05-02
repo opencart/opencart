@@ -134,7 +134,7 @@ class ModelSaleOrder extends Model {
 				'ip'                      => $order_query->row['ip']
 			);
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 

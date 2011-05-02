@@ -60,9 +60,19 @@ class ModelCheckoutVoucher extends Model {
 		if ($order_info) {
 			$this->load->model('localisation/language');
 			
-			$language = new Language($order_info['directory']);
-			$language->load($order_info['filename']);	
-			$language->load('checkout/voucher');
+			$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
+			
+			if ($language_info) {
+				$language = new Language($language_info['directory']);
+				$language->load($language_info['filename']);	
+				$language->load('checkout/voucher');
+			} else {
+				$language_info = $this->model_localisation_language->getLanguage($this->config->get('config_language_id'));
+				
+				$language = new Language($language_info['directory']);
+				$language->load($language_info['filename']);	
+				$language->load('checkout/voucher');				
+			}
 			
 			$query = $this->db->query("SELECT * FROM voucher WHERE order_id = '" . (int)$order_id . "'");
 			

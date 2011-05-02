@@ -129,21 +129,21 @@ label {
 }
 /* header */
 #header {
-	height: 115px;
-	margin-bottom: 15px;
+	height: 90px;
+	margin-bottom: 7px;
 	padding-bottom: 4px;
 	position: relative;
 	background:  url('../image/header.png') bottom repeat-x;
 }
 #header #logo {
 	float: left;
-	margin-top: 15px;
+	margin-top: 12px;
 	padding-left: 25px;
 }
 #header #cart {
 	position: absolute;
-	z-index: 4;
-	right: 153px;
+	z-index: 9;
+	right: 145px;
 	float: right;
 	min-width: 300px;
 }
@@ -158,7 +158,7 @@ label {
 	border-right: 1px solid #EEEEEE;
 	background: #FFF;
 	position: relative;
-	z-index: 6;
+	z-index: 1;
 }
 #header #cart .heading h4 {
 	color: #333333;
@@ -180,7 +180,6 @@ label {
 	display: none;
 	position: relative;
 	top: -1px;
-	z-index: 5;
 	padding: 8px;
 	min-height: 150px;
 	border-top: 1px solid #EEEEEE;
@@ -191,14 +190,13 @@ label {
 	-moz-border-radius: 0px 7px 7px 7px;
 	-khtml-border-radius: 0px 7px 7px 7px;
 	border-radius: 0px 7px 7px 7px;
-	-webkit-box-shadow: 2px 2px 3px #CCCCCC;
-	-moz-box-shadow: 2px 2px 3px #CCCCCC;
-	box-shadow: 2px 2px 3px #CCCCCC;
+	-webkit-box-shadow: 1px 1px 1px #CCCCCC;
+	-moz-box-shadow: 1px 1px 1px #CCCCCC;
+	box-shadow: 1px 1px 1px #CCCCCC;
 	background: #FFF;
 }
 #header #cart.active {
 	position: absolute;
-	z-index: 4;
 }
 #header #cart.active .heading {
 	margin-top: 5px;
@@ -310,7 +308,6 @@ label {
 	color: #999999;
 	margin-bottom: 15px;
 }
-/* menu */
 #header .links {
 	position: absolute;
 	right: 0px;
@@ -331,6 +328,76 @@ label {
 	margin-left: 11px;
 	border-left: 1px solid #EEEEEE;	
 }
+/* menu */
+#menu {
+	height: 33px;
+	border-top: 3px solid #006699;
+	background: #EAF7D9 url('../image/background.png') repeat-x;
+	border-bottom: 1px solid #CCC;
+	margin-bottom: 15px;
+	-webkit-box-shadow: 0px 2px 2px #EEEEEE;
+	-moz-box-shadow: 0px 2px 2px #EEEEEE;
+	box-shadow: 0px 2px 2px #EEEEEE;	
+}
+#menu ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+#menu > ul > li {
+	position: relative;
+	float: left;
+	padding-right: 15px;
+	height: 33px;
+}
+#menu > ul > li + li {
+	background: url('../image/split.png') left center no-repeat;
+}
+#menu > ul > li:hover {
+	
+}
+#menu > ul > li > a {
+	display: block;
+	padding: 10px 15px 12px 15px;
+	color: #333;
+	height: 12px;
+	text-decoration: none;
+	z-index: 6;
+	position: relative;
+	background: url('../image/arrow-down.png') 100% 52% no-repeat;
+}
+#menu > ul > li:hover > a {
+	
+}
+#menu > ul > li > div {
+	display: none;
+	background: #FFFFFF;
+	position: absolute;
+	margin-top: -1px;
+	z-index: 5;
+	padding: 5px;
+	border: 1px solid #DDDDDD;
+	white-space: nowrap;
+}
+#menu > ul > li:hover > div {
+	display: table;
+}
+#menu > ul > li ul {
+	display: table-cell;
+}
+#menu > ul > li ul + ul {
+	padding-left: 20px;
+}
+#menu > ul > li ul > li > a {
+	text-decoration: none;
+	padding: 4px;
+	color: #333;
+	display: block;
+}
+#menu > ul > li ul > li > a:hover {
+	background: #DDE5F4;
+}
+
 .breadcrumb {
 	color: #CCCCCC;
 	margin-bottom: 10px;

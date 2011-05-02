@@ -27,7 +27,7 @@ class ModelCheckoutOrder extends Model {
 	}
 
 	public function confirm($order_id, $order_status_id, $comment = '') {
-		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "language l ON (o.language_id = l.language_id) WHERE o.order_id = '" . (int)$order_id . "' AND o.order_status_id = '0'");
+		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` o WHERE o.order_id = '" . (int)$order_id . "' AND o.order_status_id = '0'");
 		 
 		if ($order_query->num_rows) {
 			$query = $this->db->query("SELECT MAX(invoice_no) AS invoice_no FROM `" . DB_PREFIX . "order` WHERE invoice_prefix = '" . $this->db->escape($this->config->get('config_invoice_prefix')) . "'");
@@ -66,10 +66,22 @@ class ModelCheckoutOrder extends Model {
 				}
 			}
 
-			$language = new Language($order_query->row['directory']);
-			$language->load($order_query->row['filename']);
-			$language->load('checkout/checkout');
-		
+			$this->load->model('localisation/language');
+			
+			$language_info = $this->model_localisation_language->getLanguage($query->row['language_id']);
+			
+			if ($language_info) {
+				$language = new Language($language_info['directory']);
+				$language->load($language_info['filename']);
+				$language->load('checkout/checkout');
+			} else {
+				$language_info = $this->model_localisation_language->getLanguage($this->config->get('config_language_id'));
+				
+				$language = new Language($language_info['directory']);
+				$language->load($language_info['filename']);	
+				$language->load('checkout/checkout');				
+			}
+		 
 			$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_query->row['language_id'] . "'");
 			$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
 			$order_total_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");

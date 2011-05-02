@@ -353,10 +353,8 @@ label {
 #menu > ul > li + li {
 	background: url('../image/split.png') left center no-repeat;
 }
-#menu > ul > li:hover {
-	
-}
 #menu > ul > li > a {
+	font-weight: bold;
 	display: block;
 	padding: 10px 15px 12px 15px;
 	color: #333;
@@ -365,9 +363,6 @@ label {
 	z-index: 6;
 	position: relative;
 	background: url('../image/arrow-down.png') 100% 52% no-repeat;
-}
-#menu > ul > li:hover > a {
-	
 }
 #menu > ul > li > div {
 	display: none;
@@ -378,6 +373,7 @@ label {
 	padding: 5px;
 	border: 1px solid #DDDDDD;
 	white-space: nowrap;
+	background: url('../image/menu.png') bottom repeat-x;
 }
 #menu > ul > li:hover > div {
 	display: table;

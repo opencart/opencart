@@ -193,7 +193,7 @@ label {
 	-webkit-box-shadow: 1px 1px 1px #CCCCCC;
 	-moz-box-shadow: 1px 1px 1px #CCCCCC;
 	box-shadow: 1px 1px 1px #CCCCCC;
-	background: #FFF;
+	background: #FFF;	
 }
 #header #cart.active {
 	position: absolute;
@@ -256,9 +256,9 @@ label {
 #header #cart table.total td {
 	color: #000;
 }
-#header #cart .button {
-	float: right;
-	clear: right;
+#header #cart .content .checkout {
+	text-align: right;
+	clear: both;
 }
 #header #cart .empty {
 	padding-top: 50px;

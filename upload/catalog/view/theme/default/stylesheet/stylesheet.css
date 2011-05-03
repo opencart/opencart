@@ -330,7 +330,7 @@ label {
 }
 /* menu */
 #menu {
-	height: 40px;
+	height: 38px; 
 	border-bottom: 3px solid #006699;
 	margin-bottom: 15px;
 }
@@ -343,9 +343,10 @@ label {
 	position: relative;
 	float: left;
 	padding-right: 15px;
+	
 }
-#menu > ul > li + li {
-	background: url('../image/split.png') left center no-repeat;
+#menu > ul > li + li > a {
+	border-left: 1px solid #EEEEEE;
 }
 #menu > ul > li > a {
 	font-size: 13px;
@@ -369,7 +370,7 @@ label {
 	padding: 5px;
 	border: 1px solid #92A19B;
 	white-space: nowrap;
-	background: url('../image/menu.png') bottom repeat-x;
+	background: #FFFFFF url('../image/menu.png') bottom repeat-x;
 }
 #menu > ul > li:hover > div {
 	display: table;
@@ -740,7 +741,6 @@ a.button:hover span {
 	float: left;
 	padding: 5px;
 	margin-right: 15px;
-	margin-bottom: 20px;
 	border: 1px solid #E7E7E7;
 }
 .category-list {

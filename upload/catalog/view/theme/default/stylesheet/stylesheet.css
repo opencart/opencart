@@ -330,14 +330,9 @@ label {
 }
 /* menu */
 #menu {
-	height: 33px;
-	border-top: 3px solid #006699;
-	background: #EAF7D9 url('../image/background.png') repeat-x;
-	border-bottom: 1px solid #CCC;
+	height: 40px;
+	border-bottom: 3px solid #006699;
 	margin-bottom: 15px;
-	-webkit-box-shadow: 0px 2px 2px #EEEEEE;
-	-moz-box-shadow: 0px 2px 2px #EEEEEE;
-	box-shadow: 0px 2px 2px #EEEEEE;	
 }
 #menu ul {
 	list-style: none;
@@ -348,15 +343,15 @@ label {
 	position: relative;
 	float: left;
 	padding-right: 15px;
-	height: 33px;
 }
 #menu > ul > li + li {
 	background: url('../image/split.png') left center no-repeat;
 }
 #menu > ul > li > a {
+	font-size: 13px;
 	font-weight: bold;
 	display: block;
-	padding: 10px 15px 12px 15px;
+	padding: 12px 15px 15px 15px;
 	color: #333;
 	height: 12px;
 	text-decoration: none;
@@ -366,12 +361,13 @@ label {
 }
 #menu > ul > li > div {
 	display: none;
+	min-height: 246px;
 	background: #FFFFFF;
 	position: absolute;
 	margin-top: -1px;
 	z-index: 5;
 	padding: 5px;
-	border: 1px solid #DDDDDD;
+	border: 1px solid #92A19B;
 	white-space: nowrap;
 	background: url('../image/menu.png') bottom repeat-x;
 }
@@ -384,9 +380,6 @@ label {
 #menu > ul > li ul + ul {
 	padding-left: 20px;
 }
-#menu > ul > li ul > li {
-	
-}
 #menu > ul > li ul > li > a {
 	text-decoration: none;
 	padding: 4px;
@@ -394,7 +387,7 @@ label {
 	display: block;
 }
 #menu > ul > li ul > li > a:hover {
-	background: #DDE5F4;
+	text-decoration: underline;
 }
 
 .breadcrumb {

@@ -34,7 +34,7 @@ class ControllerCommonFooter extends Controller {
 		$this->data['return'] = $this->url->link('account/return/insert', '', 'SSL');
     	$this->data['sitemap'] = $this->url->link('information/sitemap');
 		$this->data['manufacturer'] = $this->url->link('product/manufacturer', '', 'SSL');
-		$this->data['voucher'] = $this->url->link('account/voucher', '', 'SSL');
+		$this->data['voucher'] = $this->url->link('checkout/voucher', '', 'SSL');
 		$this->data['affiliate'] = $this->url->link('affiliate/account', '', 'SSL');
 		$this->data['special'] = $this->url->link('product/special');
 		$this->data['login'] = $this->url->link('account/login', '', 'SSL');

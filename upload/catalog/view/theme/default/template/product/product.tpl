@@ -313,7 +313,7 @@ $('#button-cart').bind('click', function() {
 			
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#header').after('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+					$('#menu').after('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 				
 					$('.warning').fadeIn('slow');
 				}
@@ -340,7 +340,7 @@ $('#button-cart').bind('click', function() {
 				$('#temp').animate(params, 'slow', false, function () {
 					$('#temp').remove();
 					
-					$('#header').after('<div class="attention" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+					$('#menu').after('<div class="attention" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 					
 					$('.attention').fadeIn('slow');
 					

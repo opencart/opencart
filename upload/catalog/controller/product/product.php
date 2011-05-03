@@ -242,13 +242,15 @@ class ControllerProductProduct extends Controller {
 					$option_value_data = array();
 					
 					foreach ($option['option_value'] as $option_value) {
-						$option_value_data[] = array(
-							'product_option_value_id' => $option_value['product_option_value_id'],
-							'option_value_id'         => $option_value['option_value_id'],
-							'name'                    => $option_value['name'],
-							'price'                   => (float)$option_value['price'] ? $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax'))) : false,
-							'price_prefix'            => $option_value['price_prefix']
-						);
+						if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
+							$option_value_data[] = array(
+								'product_option_value_id' => $option_value['product_option_value_id'],
+								'option_value_id'         => $option_value['option_value_id'],
+								'name'                    => $option_value['name'],
+								'price'                   => (float)$option_value['price'] ? $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax'))) : false,
+								'price_prefix'            => $option_value['price_prefix']
+							);
+						}
 					}
 					
 					$this->data['options'][] = array(
@@ -259,7 +261,7 @@ class ControllerProductProduct extends Controller {
 						'option_value'      => $option_value_data,
 						'required'          => $option['required']
 					);					
-				} elseif ($option['type'] == 'input' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
+				} elseif ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
 					$this->data['options'][] = array(
 						'product_option_id' => $option['product_option_id'],
 						'option_id'         => $option['option_id'],

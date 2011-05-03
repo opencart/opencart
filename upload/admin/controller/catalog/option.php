@@ -270,6 +270,7 @@ class ControllerCatalogOption extends Controller {
 		$this->data['text_radio'] = $this->language->get('text_radio');
 		$this->data['text_checkbox'] = $this->language->get('text_checkbox');
 		$this->data['text_input'] = $this->language->get('text_input');
+		$this->data['text_text'] = $this->language->get('text_text');
 		$this->data['text_textarea'] = $this->language->get('text_textarea');
 		$this->data['text_file'] = $this->language->get('text_file');
 		$this->data['text_date'] = $this->language->get('text_date');
@@ -483,10 +484,28 @@ class ControllerCatalogOption extends Controller {
 					array_multisort($sort_order, SORT_ASC, $option_value_data);					
 				}
 				
+				$type = '';
+				
+				if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'checkbox') {
+					$type = $this->language->get('text_choose');
+				}
+				
+				if ($option['type'] == 'text' || $option['type'] == 'textarea') {
+					$type = $this->language->get('text_input');
+				}
+				
+				if ($option['type'] == 'file') {
+					$type = $this->language->get('text_file');
+				}
+				
+				if ($option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
+					$type = $this->language->get('text_date');
+				}
+												
 				$json[] = array(
 					'option_id'    => $option['option_id'],
 					'name'         => html_entity_decode($option['name'], ENT_QUOTES, 'UTF-8'),
-					'category'     => html_entity_decode($this->language->get('text_' . $option['type']), ENT_QUOTES, 'UTF-8'),
+					'category'     => $type,
 					'type'         => $option['type'],
 					'option_value' => $option_value_data
 				);

@@ -113,7 +113,7 @@
         </div>
         <br />
         <?php } ?>
-        <?php if ($option['type'] == 'input') { ?>
+        <?php if ($option['type'] == 'text') { ?>
         <div id="option-<?php echo $option['product_option_id']; ?>" class="option">
           <?php if ($option['required']) { ?>
           <span class="required">*</span>

@@ -9,6 +9,7 @@ $_['text_select']         = 'Select';
 $_['text_radio']          = 'Radio';
 $_['text_checkbox']       = 'Checkbox';
 $_['text_input']          = 'Input';
+$_['text_text']           = 'Text';
 $_['text_textarea']       = 'Textarea';
 $_['text_file']           = 'File';
 $_['text_date']           = 'Date';

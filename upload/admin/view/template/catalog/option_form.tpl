@@ -47,10 +47,10 @@
                 <?php } ?>
                 </optgroup>
                 <optgroup label="<?php echo $text_input; ?>">
-                <?php if ($type == 'input') { ?>
-                <option value="input" selected><?php echo $text_input; ?></option>
+                <?php if ($type == 'text') { ?>
+                <option value="text" selected><?php echo $text_text; ?></option>
                 <?php } else { ?>
-                <option value="input"><?php echo $text_input; ?></option>
+                <option value="text"><?php echo $text_text; ?></option>
                 <?php } ?>
                 <?php if ($type == 'textarea') { ?>
                 <option value="textarea" selected><?php echo $text_textarea; ?></option>

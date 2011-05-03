@@ -355,7 +355,7 @@
                     <?php } ?>
                   </select></td>
               </tr>
-              <?php if ($product_option['type'] == 'input') { ?>
+              <?php if ($product_option['type'] == 'text') { ?>
               <tr>
                 <td><?php echo $entry_option_value; ?></td>
                 <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" /></td>
@@ -835,7 +835,7 @@ $('input[name=\'option\']').catcomplete({
 		html += '	    </select></td>';
 		html += '     </tr>';
 		
-		if (ui.item.type == 'input') {
+		if (ui.item.type == 'text') {
 			html += '     <tr>';
 			html += '       <td><?php echo $entry_option_value; ?></td>';
 			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" /></td>';

@@ -15,7 +15,7 @@ $.fn.tabs = function() {
 			
 			$(this).addClass('selected');
 			
-			$($(this).attr('href')).show();
+			$($(this).attr('href')).fadeIn();
 			
 			return false;
 		});

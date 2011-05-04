@@ -65,7 +65,15 @@ class ModelCheckoutOrder extends Model {
 					$this->{'model_total_' . $order_total['code']}->confirm($order_query->row, $order_total);
 				}
 			}
+			
+			// Send out any gift voucher mails
+			if ($this->config->get('config_complete_status_id') == $order_status_id) {
+				$this->load->model('checkout/voucher');
 
+				$this->model_checkout_voucher->confirm($order_id);
+			}
+			
+			// Send out order confirmation mail
 			$this->load->model('localisation/language');
 			
 			$language_info = $this->model_localisation_language->getLanguage($query->row['language_id']);
@@ -414,11 +422,18 @@ class ModelCheckoutOrder extends Model {
 	
 	public function update($order_id, $order_status_id, $comment = '', $notify = false) {
 		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "language l ON (o.language_id = l.language_id) WHERE o.order_id = '" . (int)$order_id . "' AND o.order_status_id > '0'");
-		
+
 		if ($order_query->num_rows) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
 		
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
+	
+			// Send out any gift voucher mails
+			if ($this->config->get('config_complete_status_id') == $order_status_id) {
+				$this->load->model('checkout/voucher');
+	
+				$this->model_checkout_voucher->confirm($order_id);
+			}	
 	
 			if ($notify) {
 				$language = new Language($order_query->row['directory']);

@@ -26,7 +26,7 @@ $_['error_theme']      = 'You must select a theme!';
 $_['error_agree']      = 'Error: You must agree that the gift certificates are non-refundable!';
 
 // Mail
-$_['mail_subject']     = 'A gift from %s';
+$_['mail_subject']     = 'You have been sent a gift voucher from %s';
 $_['mail_greeting']    = 'Congratulations, You have received a Gift Certificate worth %s';
 $_['mail_from']        = 'This Gift Certificate has been sent to you by %s';
 $_['mail_message']     = 'With a message saying ';

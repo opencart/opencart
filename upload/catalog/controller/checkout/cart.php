@@ -177,8 +177,9 @@ class ControllerCheckoutCart extends Controller {
 			// Calcuate Totals 
 			$results = $this->model_setting_extension->getExtensions('total');
 			
-			
-			
+			foreach ($results as $result) {
+				
+			}
 			
 			 
 			if (isset($this->session->data['redirect'])) {

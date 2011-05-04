@@ -5,11 +5,11 @@ $_['heading_title']      = 'Product Returns';
 // Text
 $_['text_account']       = 'Account';
 $_['text_return']        = 'Return Information';
-$_['text_description']   = '<p>If you have a problem with a product that has not been resolved by our Technical Support or Sales Staff, you may be able to return the product to us. The first step is to complete this Returns form.</p><p>This form must be completed in full, and we will reply by email within 3 working days, with return instructions.</p><p>Products must be returned in original packaging or equivalent. We will not credit products that are damaged due to insufficient packaging. Please use an outer protective box to prevent damage during transit. Food and drink products are non returnable.</p>';
+$_['text_description']   = '<p>Please complete the form below to request an RMA number.</p>';
 $_['text_order']         = 'Order Information';
 $_['text_product']       = 'Product Information &amp; Reason for Return';
 $_['text_additional']    = 'Additional Information';
-$_['text_message']       = '<p>Your return request has been successfully sent to the store owner!</p><p>You will be contacted in the next 24 hours with instructions on what to do next.';
+$_['text_message']       = '<p>Thank you for submitting your return request. Your request has been sent to the relevant department for processing.</p><p> You will be notified via e-mail as to the status of your request.</p>';
 $_['text_return_id']     = 'Return ID:';
 $_['text_order_id']      = 'Order ID:';
 $_['text_date_ordered']  = 'Order Date:';

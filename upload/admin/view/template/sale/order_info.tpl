@@ -312,10 +312,6 @@
           <td><input type="checkbox" name="notify" value="1" /></td>
         </tr>
         <tr>
-          <td><?php echo $entry_append; ?></td>
-          <td><input type="checkbox" name="append" value="1" checked="checked" /></td>
-        </tr>
-        <tr>
           <td><?php echo $entry_comment; ?></td>
           <td><textarea name="comment" cols="40" rows="8" style="width: 99%"></textarea>
             <div style="margin-top: 10px; text-align: right;"><a onclick="history();" id="button-history" class="button"><span><?php echo $button_add_history; ?></span></a></div></td>

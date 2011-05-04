@@ -431,7 +431,6 @@ class ControllerSaleOrder extends Controller {
 						
 			$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 			$this->data['entry_notify'] = $this->language->get('entry_notify');
-			$this->data['entry_append'] = $this->language->get('entry_append');
 			$this->data['entry_comment'] = $this->language->get('entry_comment');
 			
 			$this->data['button_invoice'] = $this->language->get('button_invoice');

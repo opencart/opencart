@@ -76,7 +76,6 @@ $_['column_action']           = 'Action';
 // Entry
 $_['entry_order_status']      = 'Order Status:';
 $_['entry_notify']            = 'Notify Customer:';
-$_['entry_append']            = 'Append Comments:';
 $_['entry_comment']           = 'Comment:';
 
 // Error

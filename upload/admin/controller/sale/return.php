@@ -804,7 +804,6 @@ class ControllerSaleReturn extends Controller {
 			
 			$this->data['entry_return_status'] = $this->language->get('entry_return_status');
 			$this->data['entry_notify'] = $this->language->get('entry_notify');
-			$this->data['entry_append'] = $this->language->get('entry_append');
 			$this->data['entry_comment'] = $this->language->get('entry_comment');
 			
 			$this->data['button_save'] = $this->language->get('button_save');

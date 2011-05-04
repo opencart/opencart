@@ -74,7 +74,7 @@ class ModelCheckoutVoucher extends Model {
 				$language->load('checkout/voucher');				
 			}
 			
-			$query = $this->db->query("SELECT * FROM voucher WHERE order_id = '" . (int)$order_id . "'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "voucher` WHERE order_id = '" . (int)$order_id . "'");
 			
 			foreach ($query->rows as $voucher) {
 				// HTML Mail
@@ -91,7 +91,13 @@ class ModelCheckoutVoucher extends Model {
 				$template->data['mail_greeting'] = $language->get('mail_footer');
 		
 				$template->data['message'] = $voucher['message'];
-		
+			
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/mail_voucher.tpl')) {
+					$html = $template->fetch($this->config->get('config_template') . '/template/checkout/mail_voucher.tpl');
+				} else {
+					$html = $template->fetch('default/template/checkout/mail_voucher.tpl');
+				}
+					
 				$mail = new Mail(); 
 				$mail->protocol = $this->config->get('config_mail_protocol');
 				$mail->parameter = $this->config->get('config_mail_parameter');

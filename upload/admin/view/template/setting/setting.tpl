@@ -398,6 +398,18 @@
                 </select></td>
             </tr>
             <tr>
+              <td><?php echo $entry_complete_status; ?></td>
+              <td><select name="config_complete_status_id">
+                  <?php foreach ($order_statuses as $order_status) { ?>
+                  <?php if ($order_status['order_status_id'] == $config_complete_status_id) { ?>
+                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select></td>
+            </tr>            
+            <tr>
               <td><?php echo $entry_return_status; ?></td>
               <td><select name="config_return_status_id">
                   <?php foreach ($return_statuses as $return_status) { ?>
@@ -436,18 +448,6 @@
                 <input type="radio" name="config_download" value="0" checked="checked" />
                 <?php echo $text_no; ?>
                 <?php } ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_complete_status; ?></td>
-              <td><select name="config_complete_status_id">
-                  <?php foreach ($order_statuses as $order_status) { ?>
-                  <?php if ($order_status['order_status_id'] == $config_complete_status_id) { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select></td>
             </tr>
             <tr>
               <td><?php echo $entry_upload_allowed; ?></td>

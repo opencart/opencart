@@ -26,10 +26,125 @@ class ModelCheckoutOrder extends Model {
 		return $order_id;
 	}
 
-	public function confirm($order_id, $order_status_id, $comment = '') {
-		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` o WHERE o.order_id = '" . (int)$order_id . "' AND o.order_status_id = '0'");
-		 
+	public function getOrder($order_id) {
+		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "'");
+			
 		if ($order_query->num_rows) {
+			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$order_query->row['shipping_country_id'] . "'");
+			
+			if ($country_query->num_rows) {
+				$shipping_iso_code_2 = $country_query->row['iso_code_2'];
+				$shipping_iso_code_3 = $country_query->row['iso_code_3'];
+			} else {
+				$shipping_iso_code_2 = '';
+				$shipping_iso_code_3 = '';				
+			}
+			
+			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE zone_id = '" . (int)$order_query->row['shipping_zone_id'] . "'");
+			
+			if ($zone_query->num_rows) {
+				$shipping_zone_code = $zone_query->row['code'];
+			} else {
+				$shipping_zone_code = '';
+			}
+			
+			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$order_query->row['payment_country_id'] . "'");
+			
+			if ($country_query->num_rows) {
+				$payment_iso_code_2 = $country_query->row['iso_code_2'];
+				$payment_iso_code_3 = $country_query->row['iso_code_3'];
+			} else {
+				$payment_iso_code_2 = '';
+				$payment_iso_code_3 = '';				
+			}
+			
+			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE zone_id = '" . (int)$order_query->row['payment_zone_id'] . "'");
+			
+			if ($zone_query->num_rows) {
+				$payment_zone_code = $zone_query->row['code'];
+			} else {
+				$payment_zone_code = '';
+			}
+
+			$this->load->model('localisation/language');
+			
+			$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
+			
+			if ($language_info) {
+				$language_code = $language_info['code'];
+				$language_filename = $language_info['filename'];
+				$language_directory = $language_info['directory'];
+			} else {
+				$language_code = '';
+				$language_filename = '';
+				$language_directory = '';
+			}
+		 			
+			return array(
+				'order_id'                => $order_query->row['order_id'],
+				'invoice_no'              => $order_query->row['invoice_no'],
+				'invoice_prefix'          => $order_query->row['invoice_prefix'],
+				'customer_id'             => $order_query->row['customer_id'],
+				'firstname'               => $order_query->row['firstname'],
+				'lastname'                => $order_query->row['lastname'],
+				'telephone'               => $order_query->row['telephone'],
+				'fax'                     => $order_query->row['fax'],
+				'email'                   => $order_query->row['email'],
+				'shipping_firstname'      => $order_query->row['shipping_firstname'],
+				'shipping_lastname'       => $order_query->row['shipping_lastname'],				
+				'shipping_company'        => $order_query->row['shipping_company'],
+				'shipping_address_1'      => $order_query->row['shipping_address_1'],
+				'shipping_address_2'      => $order_query->row['shipping_address_2'],
+				'shipping_postcode'       => $order_query->row['shipping_postcode'],
+				'shipping_city'           => $order_query->row['shipping_city'],
+				'shipping_zone_id'        => $order_query->row['shipping_zone_id'],
+				'shipping_zone'           => $order_query->row['shipping_zone'],
+				'shipping_zone_code'      => $shipping_zone_code,
+				'shipping_country_id'     => $order_query->row['shipping_country_id'],
+				'shipping_country'        => $order_query->row['shipping_country'],	
+				'shipping_iso_code_2'     => $shipping_iso_code_2,
+				'shipping_iso_code_3'     => $shipping_iso_code_3,
+				'shipping_address_format' => $order_query->row['shipping_address_format'],
+				'shipping_method'         => $order_query->row['shipping_method'],
+				'payment_firstname'       => $order_query->row['payment_firstname'],
+				'payment_lastname'        => $order_query->row['payment_lastname'],				
+				'payment_company'         => $order_query->row['payment_company'],
+				'payment_address_1'       => $order_query->row['payment_address_1'],
+				'payment_address_2'       => $order_query->row['payment_address_2'],
+				'payment_postcode'        => $order_query->row['payment_postcode'],
+				'payment_city'            => $order_query->row['payment_city'],
+				'payment_zone_id'         => $order_query->row['payment_zone_id'],
+				'payment_zone'            => $order_query->row['payment_zone'],
+				'payment_zone_code'       => $payment_zone_code,
+				'payment_country_id'      => $order_query->row['payment_country_id'],
+				'payment_country'         => $order_query->row['payment_country'],	
+				'payment_iso_code_2'      => $payment_iso_code_2,
+				'payment_iso_code_3'      => $payment_iso_code_3,
+				'payment_address_format'  => $order_query->row['payment_address_format'],
+				'payment_method'          => $order_query->row['payment_method'],
+				'comment'                 => $order_query->row['comment'],
+				'total'                   => $order_query->row['total'],
+				'order_status_id'         => $order_query->row['order_status_id'],
+				'language_id'             => $order_query->row['language_id'],
+				'language_code'           => $language_code,
+				'language_filename'       => $language_filename,
+				'language_directory'      => $language_directory,
+				'currency_id'             => $order_query->row['currency_id'],
+				'currency_code'           => $order_query->row['currency_code'],
+				'currency_value'          => $order_query->row['currency_value'],
+				'date_modified'           => $order_query->row['date_modified'],
+				'date_added'              => $order_query->row['date_added'],
+				'ip'                      => $order_query->row['ip']
+			);
+		} else {
+			return false;	
+		}
+	}	
+
+	public function confirm($order_id, $order_status_id, $comment = '') {
+		$order_info = $this->getOrder($order_id);
+		 
+		if ($order_info && !$order_info['order_status_id']) {
 			$query = $this->db->query("SELECT MAX(invoice_no) AS invoice_no FROM `" . DB_PREFIX . "order` WHERE invoice_prefix = '" . $this->db->escape($this->config->get('config_invoice_prefix')) . "'");
 	
 			if ($query->row['invoice_no']) {
@@ -62,7 +177,7 @@ class ModelCheckoutOrder extends Model {
 				$this->load->model('total/' . $order_total['code']);
 				
 				if (method_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
-					$this->{'model_total_' . $order_total['code']}->confirm($order_query->row, $order_total);
+					$this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
 				}
 			}
 			
@@ -74,35 +189,23 @@ class ModelCheckoutOrder extends Model {
 			}
 			
 			// Send out order confirmation mail
-			$this->load->model('localisation/language');
-			
-			$language_info = $this->model_localisation_language->getLanguage($order_query->row['language_id']);
-			
-			if ($language_info) {
-				$language = new Language($language_info['directory']);
-				$language->load($language_info['filename']);
-				$language->load('checkout/checkout');
-			} else {
-				$language_info = $this->model_localisation_language->getLanguage($this->config->get('config_language_id'));
-				
-				$language = new Language($language_info['directory']);
-				$language->load($language_info['filename']);	
-				$language->load('checkout/checkout');				
-			}
+			$language = new Language($order_info['directory']);
+			$language->load($order_info['filename']);
+			$language->load('checkout/checkout');
 		 
-			$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_query->row['language_id'] . "'");
+			$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_info['language_id'] . "'");
 			$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
 			$order_total_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
 			$order_download_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_download WHERE order_id = '" . (int)$order_id . "'");
 			
-			$subject = sprintf($language->get('mail_new_subject'), $order_query->row['store_name'], $order_id);
+			$subject = sprintf($language->get('mail_new_subject'), $order_info['store_name'], $order_id);
 		
 			// HTML Mail
 			$template = new Template();
 			
-			$template->data['title'] = sprintf($language->get('mail_new_subject'), html_entity_decode($order_query->row['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
+			$template->data['title'] = sprintf($language->get('mail_new_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
 			
-			$template->data['mail_greeting'] = sprintf($language->get('mail_new_greeting'), html_entity_decode($order_query->row['store_name'], ENT_QUOTES, 'UTF-8'));
+			$template->data['mail_greeting'] = sprintf($language->get('mail_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 			$template->data['mail_order_detail'] = $language->get('mail_new_order_detail');
 			$template->data['mail_order_id'] = $language->get('mail_new_order_id');
 			$template->data['mail_invoice'] = $language->get('mail_new_invoice');
@@ -124,39 +227,31 @@ class ModelCheckoutOrder extends Model {
 			$template->data['mail_total'] = $language->get('mail_new_total');
 					
 			$template->data['order_id'] = $order_id;
-			$template->data['customer_id'] = $order_query->row['customer_id'];	
-			$template->data['date_added'] = date($language->get('date_format_short'), strtotime($order_query->row['date_added']));    	
+			$template->data['customer_id'] = $order_info['customer_id'];	
+			$template->data['date_added'] = date($language->get('date_format_short'), strtotime($order_info['date_added']));    	
 			$template->data['logo'] = 'cid:' . basename($this->config->get('config_logo'));
-			$template->data['store_name'] = $order_query->row['store_name'];
+			$template->data['store_name'] = $order_info['store_name'];
 			$template->data['address'] = nl2br($this->config->get('config_address'));
 			$template->data['telephone'] = $this->config->get('config_telephone');
 			$template->data['fax'] = $this->config->get('config_fax');
 			$template->data['email'] = $this->config->get('config_email');
-			$template->data['store_url'] = $order_query->row['store_url'];
-			$template->data['invoice'] = $order_query->row['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id;
-			$template->data['firstname'] = $order_query->row['firstname'];
-			$template->data['lastname'] = $order_query->row['lastname'];
-			$template->data['shipping_method'] = $order_query->row['shipping_method'];
-			$template->data['payment_method'] = $order_query->row['payment_method'];
-			$template->data['email'] = $order_query->row['email'];
-			$template->data['telephone'] = $order_query->row['telephone'];
-			$template->data['ip'] = $order_query->row['ip'];
-			$template->data['comment'] = nl2br($order_query->row['comment']);
+			$template->data['store_url'] = $order_info['store_url'];
+			$template->data['invoice'] = $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id;
+			$template->data['firstname'] = $order_info['firstname'];
+			$template->data['lastname'] = $order_info['lastname'];
+			$template->data['shipping_method'] = $order_info['shipping_method'];
+			$template->data['payment_method'] = $order_info['payment_method'];
+			$template->data['email'] = $order_info['email'];
+			$template->data['telephone'] = $order_info['telephone'];
+			$template->data['ip'] = $order_info['ip'];
+			$template->data['comment'] = nl2br($order_info['comment']);
 			
 			if ($comment) {
 				$template->data['comment'] .= ('<br /><br />' . nl2br($comment)); 
 			}
 			
-			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE zone_id = '" . (int)$order_query->row['shipping_zone_id'] . "'");
-			
-			if ($zone_query->num_rows) {
-				$zone_code = $zone_query->row['code'];
-			} else {
-				$zone_code = '';
-			}
-			
-			if ($order_query->row['shipping_address_format']) {
-				$format = $order_query->row['shipping_address_format'];
+			if ($order_info['shipping_address_format']) {
+				$format = $order_info['shipping_address_format'];
 			} else {
 				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 			}
@@ -175,30 +270,22 @@ class ModelCheckoutOrder extends Model {
 			);
 		
 			$replace = array(
-				'firstname' => $order_query->row['shipping_firstname'],
-				'lastname'  => $order_query->row['shipping_lastname'],
-				'company'   => $order_query->row['shipping_company'],
-				'address_1' => $order_query->row['shipping_address_1'],
-				'address_2' => $order_query->row['shipping_address_2'],
-				'city'      => $order_query->row['shipping_city'],
-				'postcode'  => $order_query->row['shipping_postcode'],
-				'zone'      => $order_query->row['shipping_zone'],
-				'zone_code' => $zone_code,
-				'country'   => $order_query->row['shipping_country']  
+				'firstname' => $order_info['shipping_firstname'],
+				'lastname'  => $order_info['shipping_lastname'],
+				'company'   => $order_info['shipping_company'],
+				'address_1' => $order_info['shipping_address_1'],
+				'address_2' => $order_info['shipping_address_2'],
+				'city'      => $order_info['shipping_city'],
+				'postcode'  => $order_info['shipping_postcode'],
+				'zone'      => $order_info['shipping_zone'],
+				'zone_code' => $order_info['shipping_zone_code'],
+				'country'   => $order_info['shipping_country']  
 			);
 		
 			$template->data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
-			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE zone_id = '" . (int)$order_query->row['payment_zone_id'] . "'");
-			
-			if ($zone_query->num_rows) {
-				$zone_code = $zone_query->row['code'];
-			} else {
-				$zone_code = '';
-			}
-			
-			if ($order_query->row['payment_address_format']) {
-				$format = $order_query->row['payment_address_format'];
+			if ($order_info['payment_address_format']) {
+				$format = $order_info['payment_address_format'];
 			} else {
 				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 			}
@@ -217,16 +304,16 @@ class ModelCheckoutOrder extends Model {
 			);
 		
 			$replace = array(
-				'firstname' => $order_query->row['payment_firstname'],
-				'lastname'  => $order_query->row['payment_lastname'],
-				'company'   => $order_query->row['payment_company'],
-				'address_1' => $order_query->row['payment_address_1'],
-				'address_2' => $order_query->row['payment_address_2'],
-				'city'      => $order_query->row['payment_city'],
-				'postcode'  => $order_query->row['payment_postcode'],
-				'zone'      => $order_query->row['payment_zone'],
-				'zone_code' => $zone_code,
-				'country'   => $order_query->row['payment_country']  
+				'firstname' => $order_info['payment_firstname'],
+				'lastname'  => $order_info['payment_lastname'],
+				'company'   => $order_info['payment_company'],
+				'address_1' => $order_info['payment_address_1'],
+				'address_2' => $order_info['payment_address_2'],
+				'city'      => $order_info['payment_city'],
+				'postcode'  => $order_info['payment_postcode'],
+				'zone'      => $order_info['payment_zone'],
+				'zone_code' => $order_info['payment_zone_code'],
+				'country'   => $order_info['payment_country']  
 			);
 		
 			$template->data['payment_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
@@ -259,8 +346,8 @@ class ModelCheckoutOrder extends Model {
 					'model'    => $product['model'],
 					'option'   => $option_data,
 					'quantity' => $product['quantity'],
-					'price'    => $this->currency->format($product['price'], $order_query->row['currency_code'], $order_query->row['currency_value']),
-					'total'    => $this->currency->format($product['total'], $order_query->row['currency_code'], $order_query->row['currency_value'])
+					'price'    => $this->currency->format($product['price'], $order_info['currency_code'], $order_info['currency_value']),
+					'total'    => $this->currency->format($product['total'], $order_info['currency_code'], $order_info['currency_value'])
 				);
 			}
 	
@@ -273,10 +360,10 @@ class ModelCheckoutOrder extends Model {
 			}
 			
 			// Text Mail
-			$text  = sprintf($language->get('mail_new_greeting'), html_entity_decode($order_query->row['store_name'], ENT_QUOTES, 'UTF-8')) . "\n\n";
+			$text  = sprintf($language->get('mail_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8')) . "\n\n";
 			$text .= $language->get('mail_new_order_id') . ' ' . $order_id . "\n";
-			$text .= $language->get('mail_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_query->row['date_added'])) . "\n";
-			$text .= $language->get('mail_new_order_status') . ' ' . $order_status_query->row['name'] . "\n\n";
+			$text .= $language->get('mail_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
+			$text .= $language->get('mail_new_order_status') . ' ' . $order_info['order_status'] . "\n\n";
 			$text .= $language->get('mail_new_products') . "\n";
 			
 			foreach ($order_product_query->rows as $result) {
@@ -357,7 +444,7 @@ class ModelCheckoutOrder extends Model {
 				// Text 
 				$text  = $language->get('mail_new_received') . "\n\n";
 				$text .= $language->get('mail_new_order_id') . ' ' . $order_id . "\n";
-				$text .= $language->get('mail_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_query->row['date_added'])) . "\n";
+				$text .= $language->get('mail_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
 				$text .= $language->get('mail_new_order_status') . ' ' . $order_status_query->row['name'] . "\n\n";
 				$text .= $language->get('mail_new_products') . "\n";
 				
@@ -400,7 +487,7 @@ class ModelCheckoutOrder extends Model {
 				$mail->timeout = $this->config->get('config_smtp_timeout');
 				$mail->setTo($this->config->get('config_email'));
 				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender($order_query->row['store_name']);
+				$mail->setSender($order_info['store_name']);
 				$mail->setSubject($subject);
 				$mail->setHtml($html);
 				$mail->setText($text);
@@ -421,9 +508,9 @@ class ModelCheckoutOrder extends Model {
 	}
 	
 	public function update($order_id, $order_status_id, $comment = '', $notify = false) {
-		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "language l ON (o.language_id = l.language_id) WHERE o.order_id = '" . (int)$order_id . "' AND o.order_status_id > '0'");
+		$order_info = $this->getOrder($order_id);
 
-		if ($order_query->num_rows) {
+		if ($order_info && $order_info['order_status_id']) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
 		
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
@@ -440,20 +527,20 @@ class ModelCheckoutOrder extends Model {
 				$language->load($order_query->row['filename']);
 				$language->load('checkout/checkout');
 			
-				$subject = sprintf($language->get('mail_update_subject'), html_entity_decode($order_query->row['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
+				$subject = sprintf($language->get('mail_update_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
 	
 				$message  = $language->get('mail_update_order') . ' ' . $order_id . "\n";
-				$message .= $language->get('mail_update_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_query->row['date_added'])) . "\n\n";
+				$message .= $language->get('mail_update_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n\n";
 				
-				$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_query->row['language_id'] . "'");
+				$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_info['language_id'] . "'");
 				
 				if ($order_status_query->num_rows) {
 					$message .= $language->get('mail_update_order_status') . "\n\n";
-					$message .= $order_status_query->row['name'] . "\n\n";
+					$message .= $order_info['name'] . "\n\n";
 				}
 				
 				$message .= $language->get('mail_update_invoice') . "\n";
-				$message .= $order_query->row['store_url'] . 'index.php?route=account/invoice&order_id=' . $order_id . "\n\n";
+				$message .= $order_info['store_url'] . 'index.php?route=account/invoice&order_id=' . $order_id . "\n\n";
 					
 				if ($comment) { 
 					$message .= $language->get('mail_update_comment') . "\n\n";
@@ -470,112 +557,14 @@ class ModelCheckoutOrder extends Model {
 				$mail->password = $this->config->get('config_smtp_password');
 				$mail->port = $this->config->get('config_smtp_port');
 				$mail->timeout = $this->config->get('config_smtp_timeout');				
-				$mail->setTo($order_query->row['email']);
+				$mail->setTo($order_info['email']);
 				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender($order_query->row['store_name']);
+				$mail->setSender($order_info['store_name']);
 				$mail->setSubject($subject);
 				$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 				$mail->send();
 			}
 		}
 	}
-	
-	public function getOrder($order_id) {
-		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "'");
-			
-		if ($order_query->num_rows) {
-			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$order_query->row['shipping_country_id'] . "'");
-			
-			if ($country_query->num_rows) {
-				$shipping_iso_code_2 = $country_query->row['iso_code_2'];
-				$shipping_iso_code_3 = $country_query->row['iso_code_3'];
-			} else {
-				$shipping_iso_code_2 = '';
-				$shipping_iso_code_3 = '';				
-			}
-			
-			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE zone_id = '" . (int)$order_query->row['shipping_zone_id'] . "'");
-			
-			if ($zone_query->num_rows) {
-				$shipping_zone_code = $zone_query->row['code'];
-			} else {
-				$shipping_zone_code = '';
-			}
-			
-			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$order_query->row['payment_country_id'] . "'");
-			
-			if ($country_query->num_rows) {
-				$payment_iso_code_2 = $country_query->row['iso_code_2'];
-				$payment_iso_code_3 = $country_query->row['iso_code_3'];
-			} else {
-				$payment_iso_code_2 = '';
-				$payment_iso_code_3 = '';				
-			}
-			
-			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE zone_id = '" . (int)$order_query->row['payment_zone_id'] . "'");
-			
-			if ($zone_query->num_rows) {
-				$payment_zone_code = $zone_query->row['code'];
-			} else {
-				$payment_zone_code = '';
-			}
-			
-			return array(
-				'order_id'                => $order_query->row['order_id'],
-				'invoice_no'              => $order_query->row['invoice_no'],
-				'invoice_prefix'          => $order_query->row['invoice_prefix'],
-				'customer_id'             => $order_query->row['customer_id'],
-				'firstname'               => $order_query->row['firstname'],
-				'lastname'                => $order_query->row['lastname'],
-				'telephone'               => $order_query->row['telephone'],
-				'fax'                     => $order_query->row['fax'],
-				'email'                   => $order_query->row['email'],
-				'shipping_firstname'      => $order_query->row['shipping_firstname'],
-				'shipping_lastname'       => $order_query->row['shipping_lastname'],				
-				'shipping_company'        => $order_query->row['shipping_company'],
-				'shipping_address_1'      => $order_query->row['shipping_address_1'],
-				'shipping_address_2'      => $order_query->row['shipping_address_2'],
-				'shipping_postcode'       => $order_query->row['shipping_postcode'],
-				'shipping_city'           => $order_query->row['shipping_city'],
-				'shipping_zone_id'        => $order_query->row['shipping_zone_id'],
-				'shipping_zone'           => $order_query->row['shipping_zone'],
-				'shipping_zone_code'      => $shipping_zone_code,
-				'shipping_country_id'     => $order_query->row['shipping_country_id'],
-				'shipping_country'        => $order_query->row['shipping_country'],	
-				'shipping_iso_code_2'     => $shipping_iso_code_2,
-				'shipping_iso_code_3'     => $shipping_iso_code_3,
-				'shipping_address_format' => $order_query->row['shipping_address_format'],
-				'shipping_method'         => $order_query->row['shipping_method'],
-				'payment_firstname'       => $order_query->row['payment_firstname'],
-				'payment_lastname'        => $order_query->row['payment_lastname'],				
-				'payment_company'         => $order_query->row['payment_company'],
-				'payment_address_1'       => $order_query->row['payment_address_1'],
-				'payment_address_2'       => $order_query->row['payment_address_2'],
-				'payment_postcode'        => $order_query->row['payment_postcode'],
-				'payment_city'            => $order_query->row['payment_city'],
-				'payment_zone_id'         => $order_query->row['payment_zone_id'],
-				'payment_zone'            => $order_query->row['payment_zone'],
-				'payment_zone_code'       => $payment_zone_code,
-				'payment_country_id'      => $order_query->row['payment_country_id'],
-				'payment_country'         => $order_query->row['payment_country'],	
-				'payment_iso_code_2'      => $payment_iso_code_2,
-				'payment_iso_code_3'      => $payment_iso_code_3,
-				'payment_address_format'  => $order_query->row['payment_address_format'],
-				'payment_method'          => $order_query->row['payment_method'],
-				'comment'                 => $order_query->row['comment'],
-				'total'                   => $order_query->row['total'],
-				'order_status_id'         => $order_query->row['order_status_id'],
-				'language_id'             => $order_query->row['language_id'],
-				'currency_id'             => $order_query->row['currency_id'],
-				'currency_code'           => $order_query->row['currency_code'],
-				'currency_value'          => $order_query->row['currency_value'],
-				'date_modified'           => $order_query->row['date_modified'],
-				'date_added'              => $order_query->row['date_added'],
-				'ip'                      => $order_query->row['ip']
-			);
-		} else {
-			return false;	
-		}
-	}	
 }
 ?>

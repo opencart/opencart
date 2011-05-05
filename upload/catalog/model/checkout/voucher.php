@@ -60,23 +60,13 @@ class ModelCheckoutVoucher extends Model {
 		if ($order_info) {
 			$this->load->model('localisation/language');
 			
-			$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
+			$language = new Language($order_info['language_directory']);
+			$language->load($order_info['language_filename']);	
+			$language->load('checkout/voucher');
 			
-			if ($language_info) {
-				$language = new Language($language_info['directory']);
-				$language->load($language_info['filename']);	
-				$language->load('checkout/voucher');
-			} else {
-				$language_info = $this->model_localisation_language->getLanguage($this->config->get('config_language_id'));
-				
-				$language = new Language($language_info['directory']);
-				$language->load($language_info['filename']);	
-				$language->load('checkout/voucher');				
-			}
+			$voucher_query = $this->db->query("SELECT *, vtd.name AS theme FROM `" . DB_PREFIX . "voucher` v LEFT JOIN " . DB_PREFIX . "voucher_theme vt ON (v.voucher_theme_id = vt.voucher_theme_id) LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) AND vtd.language_id = '" . (int)$order_info['language_id'] . "' WHERE order_id = '" . (int)$order_id . "'");
 			
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "voucher` WHERE order_id = '" . (int)$order_id . "'");
-			
-			foreach ($query->rows as $voucher) {
+			foreach ($voucher_query->rows as $voucher) {
 				// HTML Mail
 				$template = new Template();
 				
@@ -108,7 +98,7 @@ class ModelCheckoutVoucher extends Model {
 				$mail->timeout = $this->config->get('config_smtp_timeout');			
 				$mail->setTo($voucher['to_email']);
 				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender($order_query->row['store_name']);
+				$mail->setSender($order_info['store_name']);
 				$mail->setSubject(sprintf($this->language->get('mail_subject'), $voucher['from_name']));
 				$mail->setHtml($html);
 				$mail->addAttachment(DIR_IMAGE . $voucher['image']);

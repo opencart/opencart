@@ -54,37 +54,6 @@
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td align="left"><table style="width: 100%; font-family: Verdana,sans-serif; font-size: 11px; color: #000000;">
-        <tr style="background-color: #CCCCCC;">
-          <th align="left" style="width: 15%; padding: 0.3em; color: #FFFFFF;"><?php echo $mail_product; ?></th>
-          <th align="left" style="color: #FFFFFF;"><?php echo $mail_model; ?></th>
-          <th align="right" style="width: 15%; padding: 0.3em; color: #FFFFFF;"><?php echo $mail_price; ?></th>
-          <th align="right" style="width: 15%; padding: 0.3em; color: #FFFFFF;"><?php echo $mail_quantity; ?></th>
-          <th align="right" style="width: 20%; padding: 0.3em; color: #FFFFFF;"><?php echo $mail_total; ?></th>
-        </tr>
-        <?php foreach ($products as $product) { ?>
-        <tr style="background-color: #EEEEEE; text-align: center;">
-          <td align="left"><?php echo $product['name']; ?>
-            <?php foreach ($product['option'] as $option) { ?>
-            <br />
-            &nbsp;&nbsp;- <?php echo $option['name']; ?>: <?php echo $option['value']; ?>
-            <?php } ?></td>
-          <td align="left"><?php echo $product['model']; ?></td>
-          <td align="right"><?php echo $product['price']; ?></td>
-          <td align="right"><?php echo $product['quantity']; ?></td>
-          <td align="right"><?php echo $product['total']; ?></td>
-        </tr>
-        <?php } ?>
-        <?php foreach ($totals as $total) { ?>
-        <tr style="text-align: right;">
-          <td colspan="3">&nbsp;</td>
-          <td style="background-color: #EEEEEE; font-weight: bold; padding: 0.3em;"><?php echo $total['title']; ?></td>
-          <td style="background-color: #EEEEEE; padding: 0.3em;"><?php echo $total['text']; ?></td>
-        </tr>
-        <?php } ?>
-      </table></td>
-  </tr>
-  <tr>
     <td>&nbsp;</td>
   </tr>
   <tr>

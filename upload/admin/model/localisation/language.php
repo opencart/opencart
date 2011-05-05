@@ -144,11 +144,11 @@ class ModelLocalisationLanguage extends Model {
 		
 		$this->cache->delete('stock_status');
 		
-		// Voucher Type
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_type_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		// Voucher Theme
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_theme_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		foreach ($query->rows as $voucher_type) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_type_description SET voucher_type_id = '" . (int)$voucher_type['voucher_type_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($voucher_type['name']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_theme_description SET voucher_theme_id = '" . (int)$voucher_type['voucher_type_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($voucher_type['name']) . "'");
 		}	
 				
 		// Weight Class
@@ -219,6 +219,10 @@ class ModelLocalisationLanguage extends Model {
 		
 		$this->cache->delete('stock_status');
 		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_theme_description WHERE language_id = '" . (int)$language_id . "'");
+		
+		$this->cache->delete('voucher_theme');
+				
 		$this->db->query("DELETE FROM " . DB_PREFIX . "weight_class_description WHERE language_id = '" . (int)$language_id . "'");
 		
 		$this->cache->delete('weight_class');

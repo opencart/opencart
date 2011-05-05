@@ -53,7 +53,7 @@ $(document).ready(function() {
 		i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('#menu').outerWidth());
 		
 		if (i > 0) {
-			$(this).css('margin-left', '-' + i + 'px');
+			$(this).css('margin-left', '-' + (i + 5) + 'px');
 		}
 	});
 });

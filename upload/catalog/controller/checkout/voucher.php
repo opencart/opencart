@@ -9,12 +9,12 @@ class ControllerCheckoutVoucher extends Controller {
 
 		$this->load->model('checkout/voucher');
 		
-		if (!isset($this->session->data['voucher'])) {
-			$this->session->data['gift_voucher'] = array();
+		if (!isset($this->session->data['vouchers'])) {
+			$this->session->data['vouchers'] = array();
 		}
 					
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->session->data['gift_voucher'][] = $this->request->post;
+			$this->session->data['vouchers'][] = $this->request->post;
 	  	  
 	  		$this->redirect($this->url->link('checkout/voucher/success'));
     	} 		

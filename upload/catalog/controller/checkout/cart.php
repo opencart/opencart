@@ -56,7 +56,7 @@ class ControllerCheckoutCart extends Controller {
         	'separator' => $this->language->get('text_separator')
       	);
 			
-    	if ($this->cart->hasProducts()) {
+    	if ($this->cart->hasProducts() || (isset($this->session->data['gift_voucher']) && $this->session->data['gift_voucher'])) {
       		$this->data['heading_title'] = $this->language->get('heading_title');
 			
 			$this->data['text_select'] = $this->language->get('text_select');
@@ -90,12 +90,26 @@ class ControllerCheckoutCart extends Controller {
 				
 			$this->data['action'] = $this->url->link('checkout/cart');
 			 
+			$this->data['vouchers'] = array();
+			 
+			if (isset($this->session->data['gift_voucher']) && $this->session->data['gift_voucher']) {
+				foreach ($this->session->data['voucher'] as $gift_voucher) {
+					$this->data['vouchers'][] = array();
+				}
+			} 
+			 
 			$this->load->model('tool/image');
 			
       		$this->data['products'] = array();
 
       		foreach ($this->cart->getProducts() as $result) {
-        		$option_data = array();
+				if ($result['image']) {
+					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
+				} else {
+					$image = '';
+				}
+				        		
+				$option_data = array();
 
         		foreach ($result['option'] as $option) {
 					if ($option['type'] != 'file') {
@@ -112,12 +126,6 @@ class ControllerCheckoutCart extends Controller {
 						);						
 					}
         		}
-
-				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
-				} else {
-					$image = '';
-				}
 
         		$this->data['products'][] = array(
           			'key'      => $result['key'],
@@ -143,7 +151,7 @@ class ControllerCheckoutCart extends Controller {
 			$total_data = array();
 			$total = 0;
 			$taxes = $this->cart->getTaxes();
-			 
+									 
 			$this->load->model('setting/extension');
 			
 			$sort_order = array(); 
@@ -308,6 +316,12 @@ class ControllerCheckoutCart extends Controller {
 		$this->data['products'] = array();
 
 		foreach ($this->cart->getProducts() as $result) {
+			if ($result['image']) {
+				$image = $this->model_tool_image->resize($result['image'], 40, 40);
+			} else {
+				$image = '';
+			}			
+			
 			$option_data = array();
 
 			foreach ($result['option'] as $option) {
@@ -317,17 +331,11 @@ class ControllerCheckoutCart extends Controller {
 				);
 			}
 
-			if ($result['image']) {
-				$image = $this->model_tool_image->resize($result['image'], 40, 40);
-			} else {
-				$image = '';
-			}
-
 			$this->data['products'][] = array(
 				'key'      => $result['key'],
+				'thumb'    => $image,
 				'name'     => $result['name'],
 				'model'    => $result['model'],
-				'thumb'    => $image,
 				'option'   => $option_data,
 				'quantity' => $result['quantity'],
 				'stock'    => $result['stock'],

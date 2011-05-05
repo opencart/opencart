@@ -76,9 +76,9 @@ class ModelCheckoutVoucher extends Model {
 				$template->data['mail_from'] = sprintf($language->get('mail_from'), $voucher['from_name']);
 				$template->data['mail_message'] = $language->get('mail_message');
 				$template->data['mail_redeem'] = sprintf($language->get('mail_redeem'), $voucher['code']);
-				$template->data['mail_greeting'] = $language->get('mail_message');
-				$template->data['mail_greeting'] = $language->get('mail_problem');
-				$template->data['mail_greeting'] = $language->get('mail_footer');
+				$template->data['mail_message'] = $language->get('mail_message');
+				$template->data['mail_problem'] = $language->get('mail_problem');
+				$template->data['mail_footer'] = $language->get('mail_footer');
 		
 				$template->data['message'] = $voucher['message'];
 			

@@ -129,7 +129,7 @@ label {
 }
 /* header */
 #header {
-	height: 90px;
+	height: 85px;
 	margin-bottom: 7px;
 	padding-bottom: 4px;
 	position: relative;
@@ -265,12 +265,12 @@ label {
 	text-align: center;
 }
 #header #search {
-	padding-top: 15px;
+	padding-top: 10px;
 	float: right;
 	width: 298px;
 	margin-bottom: 4px;
 	position: relative;
-	z-index: 7;
+	z-index: 15;
 }
 #header #search input {
 	background: #FFF;
@@ -306,7 +306,6 @@ label {
 	clear: right;
 	text-align: right;
 	color: #999999;
-	margin-bottom: 15px;
 }
 #header .links {
 	position: absolute;
@@ -318,15 +317,11 @@ label {
 	display: block;
 	margin-left: 5px;
 	padding: 0px 0px 0px 10px; 
-	color: #000000;
-	font-size: 14px;
-	line-height: 14px;
-	font-weight: bold;
 	text-decoration: none;
 }
 #header .links a + a {
 	margin-left: 11px;
-	border-left: 1px solid #EEEEEE;	
+	border-left: 1px solid #DDDDDD;	
 }
 /* menu */
 #menu {
@@ -340,7 +335,8 @@ label {
 	border-radius: 5px 5px 5px 5px;	
 	-webkit-box-shadow: 0px 2px 2px #DDDDDD;
 	-moz-box-shadow: 0px 2px 2px #DDDDDD;
-	box-shadow: 0px 2px 2px #DDDDDD;	
+	box-shadow: 0px 2px 2px #DDDDDD;
+	padding: 0px 5px;		
 }
 #menu ul {
 	list-style: none;
@@ -350,20 +346,14 @@ label {
 #menu > ul > li {
 	position: relative;
 	float: left;
-	padding-left: 15px;
-	padding-right: 15px;
-}
-#menu > ul > li + li > a {
 }
 #menu > ul > li > a {
-	font-size: 14px;
+	font-size: 13px;
 	color: #FFF;
-	text-shadow: 1px 1px 1px #000000;
-	filter: Shadow(Color=#000000, Direction=135, Strength=1);	
 	line-height: 14px;
 	text-decoration: none;	
 	display: block;
-	padding: 12px 0px 10px 0px;
+	padding: 12px 15px 11px 15px;
 	z-index: 6;
 	position: relative;
 }
@@ -372,12 +362,15 @@ label {
 	min-height: 246px;
 	background: #FFFFFF;
 	position: absolute;
-	margin-top: -1px;
 	z-index: 5;
 	padding: 5px;
-	border: 1px solid #92A19B;
+	border: 1px solid #000000;
+	-webkit-border-radius: 0px 0px 5px 5px;
+	-moz-border-radius: 0px 0px 5px 5px;
+	-khtml-border-radius: 0px 0px 5px 5px;
+	border-radius: 0px 0px 5px 5px;
 	white-space: nowrap;
-	background: #FFFFFF url('../image/menu.png') bottom repeat-x;
+	background: url('../image/menu.png');
 }
 #menu > ul > li:hover > div {
 	display: table;
@@ -391,11 +384,11 @@ label {
 #menu > ul > li ul > li > a {
 	text-decoration: none;
 	padding: 4px;
-	color: #333;
+	color: #FFFFFF;
 	display: block;
 }
 #menu > ul > li ul > li > a:hover {
-	text-decoration: underline;
+	background: #000000;
 }
 
 .breadcrumb {
@@ -646,6 +639,9 @@ a.button:hover span {
 	border-left: 1px solid #DBDEE1;
 	border-right: 1px solid #DBDEE1;
 	border-bottom: 1px solid #DBDEE1;
+	-webkit-box-shadow: 0px 2px 2px #EEEEEE;
+	-moz-box-shadow: 0px 2px 2px #EEEEEE;
+	box-shadow: 0px 2px 2px #EEEEEE;	
 	padding: 10px;
 }
 /* box products */

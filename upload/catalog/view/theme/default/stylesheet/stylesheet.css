@@ -32,7 +32,7 @@ p {
 	margin-bottom: 20px;
 }
 a, a:visited, a b {
-	color: #3A9FD4;
+	color: #378DC1;
 	text-decoration: underline;
 	cursor: pointer;
 }
@@ -63,46 +63,6 @@ label {
 	cursor: pointer;
 }
 /* layout */
-#top {
-	height: 30px;
-	margin-bottom: 5px;
-	background: #F8F8F8;
-	border-bottom: 1px solid #DBDEE1;
-}
-#top > div {
-	width: 980px;
-	margin-left: auto;
-	margin-right: auto;
-	text-align: left;
-}
-#top .links {
-	float: left;
-	padding-top: 8px;
-	color: #999999;
-}
-#top .links a {
-	color: #999999;
-}
-#top #currency {
-	float: right;
-	padding-top: 4px;
-	margin-left: 25px;
-	color: #999999;
-}
-#top #currency select {
-	padding: 0px;
-	background: #FFFFFF;
-}
-#top #language {
-	float: right;
-	padding-top: 7px;
-	color: #999999;
-}
-#top #language img {
-	cursor: pointer;
-	position: relative;
-	top: 2px;
-}
 #container {
 	width: 980px;
 	margin-left: auto;
@@ -136,14 +96,46 @@ label {
 	background:  url('../image/header.png') bottom repeat-x;
 }
 #header #logo {
-	float: left;
-	margin-top: 12px;
-	padding-left: 25px;
+	position: absolute;
+	top: 12px;
+	left: 25px;
+}
+#language {
+	position: absolute;
+	top: 25px;
+	left: 325px;
+	width: 75px;
+	text-align: center;
+}
+#language img {
+	cursor: pointer;
+}
+#currency {
+	width: 75px;
+	position: absolute;
+	top: 20px;
+	left: 420px;
+	float: right;
+}
+#currency a {
+	display: inline-block;
+	padding: 2px 5px;
+	border: 1px solid #CCC;
+	color: #000;
+	text-decoration: none;
+}
+#currency a b {
+	color: #000;	
+	text-decoration: none;	
+}
+#currency a + a {
+	margin-left: 5px;	
 }
 #header #cart {
 	position: absolute;
-	z-index: 9;
+	top: 0px;
 	right: 145px;
+	z-index: 9;
 	float: right;
 	min-width: 300px;
 }
@@ -168,7 +160,7 @@ label {
 	margin-bottom: 3px;
 }
 #header #cart .heading a {
-	color: #3A9FD4;
+	color: #378DC1;
 	text-decoration: none;
 }
 #header #cart .heading a span {
@@ -265,11 +257,11 @@ label {
 	text-align: center;
 }
 #header #search {
-	padding-top: 10px;
-	float: right;
+	position: absolute;
+	top: 20px;
+	right: 0px;
 	width: 298px;
 	margin-bottom: 4px;
-	position: relative;
 	z-index: 15;
 }
 #header #search input {
@@ -301,27 +293,24 @@ label {
 	margin-left: 28px;
 	margin-right: 2px;
 }
-#header #welcome {
-	float: right;
-	clear: right;
-	text-align: right;
-	color: #999999;
-}
 #header .links {
 	position: absolute;
 	right: 0px;
-	bottom: 4px;
+	bottom: 8px;
+	font-size: 10px;
+	line-height: 10px;
+	padding-right: 10px;
 }
 #header .links a {
 	float: left;
 	display: block;
-	margin-left: 5px;
-	padding: 0px 0px 0px 10px; 
+	padding: 0px 0px 0px 7px; 
 	text-decoration: none;
+	font-size: 12px;
 }
 #header .links a + a {
-	margin-left: 11px;
-	border-left: 1px solid #DDDDDD;	
+	margin-left: 8px;
+	border-left: 1px solid #666666;
 }
 /* menu */
 #menu {
@@ -622,12 +611,12 @@ a.button:hover span {
 	border-radius: 7px 7px 0px 0px;
 	border: 1px solid #DBDEE1;
 	background: url('../image/background.png') repeat-x;
-	padding: 9px 10px 8px 10px;
+	padding: 8px 10px 7px 10px;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: bold;
 	text-transform: uppercase;
-	line-height: 13px;
+	line-height: 14px;
 	color: #333;
 }
 .box .box-content {
@@ -666,7 +655,7 @@ a.button:hover span {
 	border: 1px solid #E7E7E7;
 }
 .box-product .name a {
-	color: #3A9FD4;
+	color: #378DC1;
 	font-weight: bold;
 	text-decoration: none;
 	display: block;
@@ -687,7 +676,7 @@ a.button:hover span {
 }
 /* category */
 .box-category {
-	margin-top: -2px;
+	margin-top: -5px;
 }
 .box-category ul {
 	list-style: none;
@@ -700,7 +689,6 @@ a.button:hover span {
 }
 
 .box-category > ul > li > a {
-	font-weight: bold;
 	text-decoration: none;
 	color: #333;
 	display: block;
@@ -840,7 +828,7 @@ a.button:hover span {
 	margin-bottom: 3px;
 }
 .product-list .name a {
-	color: #3A9FD4;
+	color: #378DC1;
 	font-weight: bold;
 	text-decoration: none;
 }
@@ -908,7 +896,7 @@ a.button:hover span {
 	border: 1px solid #E7E7E7;
 }
 .product-grid .name a {
-	color: #3A9FD4;
+	color: #378DC1;
 	font-weight: bold;
 	text-decoration: none;
 	display: block;
@@ -996,7 +984,7 @@ a.button:hover span {
 	color: #4D4D4D;
 }
 .product-info .description span {
-	color: #3A9FD4;
+	color: #378DC1;
 }
 .product-info .description a {
 	color: #4D4D4D;
@@ -1068,7 +1056,7 @@ a.button:hover span {
 	text-decoration: none;
 }
 .product-info .review > div > span {
-	color: #3A9FD4;
+	color: #378DC1;
 }
 .product-info .review .share {
 	overflow: auto;

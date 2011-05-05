@@ -40,32 +40,17 @@ class ControllerCommonHeader extends Controller {
 		}
 		
 		$this->data['text_home'] = $this->language->get('text_home');
-		$this->data['text_bookmark'] = $this->language->get('text_bookmark');
-		$this->data['text_special'] = $this->language->get('text_special');
-		$this->data['text_voucher'] = $this->language->get('text_voucher');
 		$this->data['text_wishlist'] =  sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
-		$this->data['text_contact'] = $this->language->get('text_contact');
-		$this->data['text_sitemap'] = $this->language->get('text_sitemap');
     	$this->data['text_search'] = $this->language->get('text_search');
-		$this->data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
-		$this->data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', 'SSL'), $this->customer->getFirstName(), $this->url->link('account/logout', '', 'SSL'));
 		$this->data['text_cart'] = $this->language->get('text_cart');
 		$this->data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), $this->currency->format($this->cart->getTotal()));
 		$this->data['text_login'] = $this->language->get('text_login');
     	$this->data['text_logout'] = $this->language->get('text_logout');
 		$this->data['text_account'] = $this->language->get('text_account');
-		$this->data['text_basket'] = $this->language->get('text_basket');
     	$this->data['text_checkout'] = $this->language->get('text_checkout');
 
-		$this->data['entry_language'] = $this->language->get('entry_language');
-		$this->data['entry_currency'] = $this->language->get('entry_currency');
-
 		$this->data['home'] = $this->url->link('common/home');
-		$this->data['special'] = $this->url->link('product/special');
-		$this->data['voucher'] = $this->url->link('checkout/voucher');
 		$this->data['wishlist'] = $this->url->link('account/wishlist');
-		$this->data['contact'] = $this->url->link('information/contact');
-    	$this->data['sitemap'] = $this->url->link('information/sitemap');
 		$this->data['logged'] = $this->customer->isLogged();
 		$this->data['login'] = $this->url->link('account/login', '', 'SSL');
 		$this->data['logout'] = $this->url->link('account/logout');
@@ -110,36 +95,6 @@ class ControllerCommonHeader extends Controller {
 				$this->redirect($this->url->link('common/home'));
 			}
     	}		
-		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['currency_code'])) {
-      		$this->currency->set($this->request->post['currency_code']);
-			
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['shipping_method']);
-				
-			if (isset($this->request->post['redirect'])) {
-				$this->redirect($this->request->post['redirect']);
-			} else {
-				$this->redirect($this->url->link('common/home'));
-			}
-   		}
-		
-		$this->data['currency_code'] = $this->currency->getCode(); 
-		
-		$this->load->model('localisation/currency');
-		 
-		 $this->data['currencies'] = array();
-		 
-		$results = $this->model_localisation_currency->getCurrencies();	
-		
-		foreach ($results as $result) {
-			if ($result['status']) {
-   				$this->data['currencies'][] = array(
-					'title' => $result['title'],
-					'code'  => $result['code']
-				);
-			}
-		}
 						
 		$this->data['language_code'] = $this->session->data['language'];
 		
@@ -156,6 +111,38 @@ class ControllerCommonHeader extends Controller {
 					'code'  => $result['code'],
 					'image' => $result['image']
 				);	
+			}
+		}
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['currency_code'])) {
+      		$this->currency->set($this->request->post['currency_code']);
+			
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['shipping_method']);
+				
+			if (isset($this->request->post['redirect'])) {
+				$this->redirect($this->request->post['redirect']);
+			} else {
+				$this->redirect($this->url->link('common/home'));
+			}
+   		}
+						
+		$this->data['currency_code'] = $this->currency->getCode(); 
+		
+		$this->load->model('localisation/currency');
+		 
+		 $this->data['currencies'] = array();
+		 
+		$results = $this->model_localisation_currency->getCurrencies();	
+		
+		foreach ($results as $result) {
+			if ($result['status']) {
+   				$this->data['currencies'][] = array(
+					'title'        => $result['title'],
+					'code'         => $result['code'],
+					'symbol_left'  => $result['symbol_left'],
+					'symbol_right' => $result['symbol_right']				
+				);
 			}
 		}
 		

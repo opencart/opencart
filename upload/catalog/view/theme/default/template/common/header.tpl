@@ -40,41 +40,41 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
 <![endif]-->
 </head>
 <body>
-<div id="top">
-  <div>
-    <div class="links"><a href="<?php echo $home; ?>"><?php echo $text_home; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="bookmark(document.location, '<?php echo addslashes($title); ?>');"><?php echo $text_bookmark; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $special; ?>"><?php echo $text_special; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $voucher; ?>"><?php echo $text_voucher; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $wishlist; ?>" id="wishlist_total"><?php echo $text_wishlist; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $sitemap; ?>"><?php echo $text_sitemap; ?></a></div>
-    <div id="currency">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-        <?php echo $entry_currency; ?>
-        <select name="currency_code" onchange="$(this).parent().submit();">
-          <?php foreach ($currencies as $currency) { ?>
-          <?php if ($currency['code'] == $currency_code) { ?>
-          <option value="<?php echo $currency['code']; ?>" selected="selected"><?php echo $currency['title']; ?></option>
-          <?php } else { ?>
-          <option value="<?php echo $currency['code']; ?>"><?php echo $currency['title']; ?></option>
-          <?php } ?>
-          <?php } ?>
-        </select>
-        <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
-      </form>
-    </div>
-    <div id="language">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-        <?php echo $entry_language; ?>
-        <?php foreach ($languages as $language) { ?>
-        &nbsp;<img src="image/flags/<?php echo $language['image']; ?>" alt="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>" onclick="$('input[name=\'language_code\']').attr('value', '<?php echo $language['code']; ?>').submit(); $(this).parent().submit();"/>
-        <?php } ?>
-        <input type="hidden" name="language_code" value="" />
-        <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
-      </form>
-    </div>
-  </div>
-</div>
 <div id="container">
 <div id="header">
   <?php if ($logo) { ?>
   <div id="logo"><a href="<?php echo $home; ?>"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
   <?php } ?>
+  <div id="language">
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+      <?php foreach ($languages as $language) { ?>
+      &nbsp;<img src="image/flags/<?php echo $language['image']; ?>" alt="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>" onclick="$('input[name=\'language_code\']').attr('value', '<?php echo $language['code']; ?>').submit(); $(this).parent().submit();" />
+      <?php } ?>
+      <input type="hidden" name="language_code" value="" />
+      <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
+    </form>
+  </div>
+  <div id="currency">
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+      <?php foreach ($currencies as $currency) { ?>
+      <?php if ($currency['code'] == $currency_code) { ?>
+      <?php if ($currency['symbol_left']) { ?>
+      <a title="<?php echo $currency['title']; ?>"><b><?php echo $currency['symbol_left']; ?></b></a>
+      <?php } else { ?>
+      <a title="<?php echo $currency['title']; ?>"><b><?php echo $currency['symbol_right']; ?></b></a>
+      <?php } ?>
+      <?php } else { ?>
+      <?php if ($currency['symbol_left']) { ?>
+      <a title="<?php echo $currency['title']; ?>" onclick="$('input[name=\'currency_code\']').attr('value', '<?php echo $currency['code']; ?>').submit(); $(this).parent().submit();"><?php echo $currency['symbol_left']; ?></a>
+      <?php } else { ?>
+      <a title="<?php echo $currency['title']; ?>" onclick="$('input[name=\'currency_code\']').attr('value', '<?php echo $currency['code']; ?>').submit(); $(this).parent().submit();"><?php echo $currency['symbol_right']; ?></a>
+      <?php } ?>
+      <?php } ?>
+      <?php } ?>
+      <input type="hidden" name="currency_code" value="" />
+      <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
+    </form>
+  </div>
   <div id="cart">
     <div class="heading">
       <h4><?php echo $text_cart; ?></h4>
@@ -92,20 +92,13 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
       <?php } ?>
     </div>
   </div>
-  <div id="welcome">
-    <?php if (!$logged) { ?>
-    <?php echo $text_welcome; ?>
-    <?php } else { ?>
-    <?php echo $text_logged; ?>
-    <?php } ?>
-  </div>
-  <div class="links"><a id="tab-home" href="<?php echo $home; ?>"><?php echo $text_home; ?></a>
+  <div class="links"><a id="tab-home" href="<?php echo $home; ?>"><?php echo $text_home; ?></a><a href="<?php echo $wishlist; ?>" id="wishlist_total"><?php echo $text_wishlist; ?></a>
     <?php if (!$logged) { ?>
     <a id="tab-login" href="<?php echo $login; ?>"><?php echo $text_login; ?></a>
     <?php } else { ?>
     <a id="tab-login" href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a>
     <?php } ?>
-    <a id="tab-account" href="<?php echo $account; ?>"><?php echo $text_account; ?></a> <a id="tab-cart" href="<?php echo $cart; ?>"><span><?php echo $text_basket; ?></span></a> <a id="tab-checkout" href="<?php echo $checkout; ?>"><span><?php echo $text_checkout; ?></span></a></div>
+    <a id="tab-account" href="<?php echo $account; ?>"><?php echo $text_account; ?></a> <a id="tab-cart" href="<?php echo $cart; ?>"><span><?php echo $text_cart; ?></span></a> <a id="tab-checkout" href="<?php echo $checkout; ?>"><span><?php echo $text_checkout; ?></span></a></div>
 </div>
 <div id="menu">
   <ul>

@@ -97,7 +97,7 @@ label {
 }
 #header #logo {
 	position: absolute;
-	top: 12px;
+	top: 14px;
 	left: 25px;
 }
 #language {
@@ -133,7 +133,7 @@ label {
 }
 #header #cart {
 	position: absolute;
-	top: 0px;
+	top: 2px;
 	right: 145px;
 	z-index: 9;
 	float: right;
@@ -258,7 +258,7 @@ label {
 }
 #header #search {
 	position: absolute;
-	top: 20px;
+	top: 22px;
 	right: 0px;
 	width: 298px;
 	margin-bottom: 4px;

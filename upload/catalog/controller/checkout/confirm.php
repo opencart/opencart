@@ -217,6 +217,24 @@ class ControllerCheckoutConfirm extends Controller {
 				); 
 			}
 			
+			// Gift Voucher
+			if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
+				foreach ($this->session->data['vouchers'] as $voucher) {
+					$product_data[] = array(
+						'product_id' => 0,
+						'name'       => sprintf($this->language->get('text_voucher'), $this->currency->format($voucher['amount']), $voucher['to_name']),
+						'model'      => '',
+						'option'     => array(),
+						'download'   => array(),
+						'quantity'   => 1,
+						'subtract'   => false,
+						'price'      => $voucher['amount'],
+						'total'      => $voucher['amount'],
+						'tax'        => 0
+					);
+				}
+			} 
+						
 			$data['products'] = $product_data;
 			$data['totals'] = $total_data;
 			$data['comment'] = $this->session->data['comment'];
@@ -299,7 +317,8 @@ class ControllerCheckoutConfirm extends Controller {
 					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id'])
 				); 
 			} 
-
+			
+			// Gift Voucher
 			$this->data['vouchers'] = array();
 				
 			if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {

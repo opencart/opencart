@@ -47,7 +47,7 @@
           <td><?php echo $customer_group; ?></td>
         </tr>
         <?php } ?>
-		<tr>
+        <tr>
           <td><?php echo $text_ip; ?></td>
           <td><?php echo $ip; ?></td>
         </tr>
@@ -67,7 +67,8 @@
         <?php } ?>
         <tr>
           <td><?php echo $text_total; ?></td>
-          <td><?php echo $total; ?><?php if ($credit && $customer) { ?>
+          <td><?php echo $total; ?>
+            <?php if ($credit && $customer) { ?>
             <?php if (!$credit_total) { ?>
             <img src="view/image/add.png" alt="<?php echo $text_credit_add; ?>" title="<?php echo $text_credit_add; ?>" id="credit_add" class="icon" />
             <?php } else { ?>
@@ -78,7 +79,8 @@
         <?php if ($reward && $customer) { ?>
         <tr>
           <td><?php echo $text_reward; ?></td>
-          <td><?php echo $reward; ?><?php if (!$reward_total) { ?>
+          <td><?php echo $reward; ?>
+            <?php if (!$reward_total) { ?>
             <img src="view/image/add.png" alt="<?php echo $text_reward_add; ?>" title="<?php echo $text_reward_add; ?>" id="reward_add" class="icon" />
             <?php } else { ?>
             <img src="view/image/delete.png" alt="<?php echo $text_reward_remove; ?>" title="<?php echo $text_reward_remove; ?>" id="reward_remove" class="icon" />
@@ -104,7 +106,8 @@
         </tr>
         <tr>
           <td><?php echo $text_commission; ?></td>
-          <td><?php echo $commission; ?><?php if (!$commission_total) { ?>
+          <td><?php echo $commission; ?>
+            <?php if (!$commission_total) { ?>
             <img src="view/image/add.png" alt="<?php echo $text_commission_add; ?>" title="<?php echo $text_commission_add; ?>" id="commission_add" class="icon" />
             <?php } else { ?>
             <img src="view/image/delete.png" alt="<?php echo $text_commission_remove; ?>" title="<?php echo $text_commission_remove; ?>" id="commission_remove" class="icon" />
@@ -245,7 +248,11 @@
         <?php foreach ($products as $product) { ?>
         <tbody id="product-row<?php echo $product['order_product_id']; ?>">
           <tr>
-            <td class="left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+            <td class="left"><?php if ($product['product_id']) { ?>
+              <a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+              <?php } else { ?>
+              <?php echo $product['name']; ?>
+              <?php } ?>
               <?php foreach ($product['option'] as $option) { ?>
               <br />
               <?php if ($option['type'] != 'file') { ?>

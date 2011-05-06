@@ -12,9 +12,17 @@ class ControllerCheckoutVoucher extends Controller {
 		if (!isset($this->session->data['vouchers'])) {
 			$this->session->data['vouchers'] = array();
 		}
-					
+	
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->session->data['vouchers'][] = $this->request->post;
+			$this->session->data['vouchers'][] = array(
+				'to_name'          => $this->request->post['to_name'],
+				'to_email'         => $this->request->post['to_email'],
+				'from_name'        => $this->request->post['from_name'],
+				'from_email'       => $this->request->post['from_email'],
+				'message'          => $this->request->post['message'],
+				'amount'           => $this->currency->convert($this->request->post['amount'], $this->currency->getCode(), $this->config->get('config_currency')),
+				'voucher_theme_id' => $this->request->post['voucher_theme_id']
+			);
 	  	  
 	  		$this->redirect($this->url->link('checkout/voucher/success'));
     	} 		
@@ -191,7 +199,7 @@ class ControllerCheckoutVoucher extends Controller {
 
     	$this->data['button_continue'] = $this->language->get('button_continue');
 
-    	$this->data['continue'] = $this->url->link('common/home');
+    	$this->data['continue'] = $this->url->link('checkout/cart');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/common/success.tpl';

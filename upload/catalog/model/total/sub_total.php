@@ -5,8 +5,8 @@ class ModelTotalSubTotal extends Model {
 		
 		$sub_total = $this->cart->getSubTotal();
 		
-		if (isset($this->session->data['voucher']) && $this->session->data['voucher']) {
-			foreach ($this->session->data['voucher'] as $voucher) {
+		if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
+			foreach ($this->session->data['vouchers'] as $voucher) {
 				$sub_total += $voucher['amount'];
 			}
 		} 

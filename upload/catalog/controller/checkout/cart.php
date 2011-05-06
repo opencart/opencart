@@ -4,6 +4,14 @@ class ControllerCheckoutCart extends Controller {
 		$this->language->load('checkout/cart');
 		
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+      		if (isset($this->request->post['voucher'])) {
+	    		foreach ($this->request->post['voucher'] as $key) {
+					if (isset($this->session->data['vouchers'][$key])) {
+          				unset($this->session->data['vouchers'][$key]);
+					}
+				}
+      		}
+			
       		if (isset($this->request->post['quantity'])) {
 				if (!is_array($this->request->post['quantity'])) {
 					if (isset($this->request->post['option'])) {
@@ -30,7 +38,7 @@ class ControllerCheckoutCart extends Controller {
 				$this->session->data['redirect'] = $this->request->post['redirect'];
 			}	
 			
-			if (isset($this->request->post['quantity']) || isset($this->request->post['remove'])) {
+			if (isset($this->request->post['quantity']) || isset($this->request->post['remove']) || isset($this->request->post['voucher'])) {
 				unset($this->session->data['shipping_methods']);
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['payment_methods']);
@@ -91,10 +99,13 @@ class ControllerCheckoutCart extends Controller {
 			$this->data['action'] = $this->url->link('checkout/cart');
 			 
 			$this->data['vouchers'] = array();
-			 
-			if (isset($this->session->data['gift_voucher']) && $this->session->data['gift_voucher']) {
-				foreach ($this->session->data['voucher'] as $gift_voucher) {
-					$this->data['vouchers'][] = array();
+			
+			if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
+				foreach ($this->session->data['vouchers'] as $voucher) {
+					$this->data['vouchers'][] = array(
+						'name'   => sprintf($this->language->get('text_voucher'), $this->currency->format($voucher['amount']), $voucher['to_name']),
+						'amount' => $this->currency->format($voucher['amount'])
+					);
 				}
 			} 
 			 

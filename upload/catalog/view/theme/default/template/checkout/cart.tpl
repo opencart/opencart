@@ -32,15 +32,15 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($vouchers as $voucher) { ?>
+            <?php foreach ($vouchers as $key => $voucher) { ?>
             <tr>
-              <td class="remove"><input type="checkbox" name="remove[]" value="<?php echo $voucher['key']; ?>" /></td>
+              <td class="remove"><input type="checkbox" name="voucher[]" value="<?php echo $key; ?>" /></td>
               <td class="image"></td>
               <td class="name"><?php echo $voucher['name']; ?></td>
-              <td class="model"><?php echo $voucher['model']; ?></td>
+              <td class="model"></td>
               <td class="quantity">1</td>
-              <td class="price"><?php echo $voucher['price']; ?></td>
-              <td class="total"><?php echo $voucher['total']; ?></td>
+              <td class="price"><?php echo $voucher['amount']; ?></td>
+              <td class="total"><?php echo $voucher['amount']; ?></td>
             </tr>
             <?php } ?>
             <?php foreach ($products as $product) { ?>

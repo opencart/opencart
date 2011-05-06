@@ -28,7 +28,7 @@ class ControllerCheckoutCart extends Controller {
 
       		if (isset($this->request->post['voucher'])) {
 	    		foreach ($this->request->post['voucher'] as $key) {
-          			unset($this->session->data['vouchers'][$key]);
+					unset($this->session->data['vouchers'][$key]);
 				}
       		}
 						
@@ -42,7 +42,7 @@ class ControllerCheckoutCart extends Controller {
 				unset($this->session->data['payment_methods']);
 				unset($this->session->data['payment_method']);	
 				
-				//$this->redirect($this->url->link('checkout/cart'));
+				$this->redirect($this->url->link('checkout/cart'));
 			}
     	}
 
@@ -96,17 +96,6 @@ class ControllerCheckoutCart extends Controller {
 				
 			$this->data['action'] = $this->url->link('checkout/cart');
 			 
-			$this->data['vouchers'] = array();
-			
-			if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
-				foreach ($this->session->data['vouchers'] as $voucher) {
-					$this->data['vouchers'][] = array(
-						'name'   => sprintf($this->language->get('text_voucher'), $this->currency->format($voucher['amount']), $voucher['to_name']),
-						'amount' => $this->currency->format($voucher['amount'])
-					);
-				}
-			} 
-			 
 			$this->load->model('tool/image');
 			
       		$this->data['products'] = array();
@@ -156,7 +145,19 @@ class ControllerCheckoutCart extends Controller {
 			} else {
 				$this->data['weight'] = false;
 			}
+
+			 
+			$this->data['vouchers'] = array();
 			
+			if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
+				foreach ($this->session->data['vouchers'] as $key => $voucher) {
+					$this->data['vouchers'][$key] = array(
+						'name'   => sprintf($this->language->get('text_voucher'), $this->currency->format($voucher['amount']), $voucher['to_name']),
+						'amount' => $this->currency->format($voucher['amount'])
+					);
+				}
+			} 
+						
 			$total_data = array();
 			$total = 0;
 			$taxes = $this->cart->getTaxes();

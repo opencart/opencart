@@ -261,7 +261,6 @@ final class Cart {
       			$this->session->data['cart'][$key] += (int)$qty;
     		}
 		}
-		$this->setMinQty();
   	}
 
   	public function update($key, $qty) {
@@ -270,7 +269,6 @@ final class Cart {
     	} else {
 	  		$this->remove($key);
 		}
-		$this->setMinQty();
   	}
 
   	public function remove($key) {
@@ -278,14 +276,6 @@ final class Cart {
      		unset($this->session->data['cart'][$key]);
   		}
 	}
-
-	public function setMinQty() {
-		foreach ($this->getProducts() as $product) {
-			if ($product['quantity'] < $product['minimum']) {
-				$this->session->data['cart'][$product['key']] = $product['minimum'];
-			}
-		}
-  	}
 	
   	public function clear() {
 		$this->session->data['cart'] = array();

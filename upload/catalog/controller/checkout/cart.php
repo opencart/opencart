@@ -28,9 +28,7 @@ class ControllerCheckoutCart extends Controller {
 
       		if (isset($this->request->post['voucher'])) {
 	    		foreach ($this->request->post['voucher'] as $key) {
-					if (isset($this->session->data['vouchers'][$key])) {
-          				unset($this->session->data['vouchers'][$key]);
-					}
+          			unset($this->session->data['vouchers'][$key]);
 				}
       		}
 						
@@ -44,7 +42,7 @@ class ControllerCheckoutCart extends Controller {
 				unset($this->session->data['payment_methods']);
 				unset($this->session->data['payment_method']);	
 				
-				$this->redirect($this->url->link('checkout/cart'));
+				//$this->redirect($this->url->link('checkout/cart'));
 			}
     	}
 

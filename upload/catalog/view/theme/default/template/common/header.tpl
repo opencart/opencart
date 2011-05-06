@@ -45,7 +45,7 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
   <?php if ($logo) { ?>
   <div id="logo"><a href="<?php echo $home; ?>"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
   <?php } ?>
-  <div id="language">
+  <div id="language"><?php echo $text_language; ?><br />
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
       <?php foreach ($languages as $language) { ?>
       &nbsp;<img src="image/flags/<?php echo $language['image']; ?>" alt="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>" onclick="$('input[name=\'language_code\']').attr('value', '<?php echo $language['code']; ?>').submit(); $(this).parent().submit();" />
@@ -54,7 +54,7 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
       <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
     </form>
   </div>
-  <div id="currency">
+  <div id="currency"> <?php echo $text_currency; ?><br />
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
       <?php foreach ($currencies as $currency) { ?>
       <?php if ($currency['code'] == $currency_code) { ?>
@@ -91,6 +91,13 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
       <input type="text" name="filter_name" value="<?php echo $text_search; ?>" onclick="this.value = '';" onkeydown="this.style.color = '#000000';" />
       <?php } ?>
     </div>
+  </div>
+  <div id="welcome">
+    <?php if (!$logged) { ?>
+    <?php echo $text_welcome; ?>
+    <?php } else { ?>
+    <?php echo $text_logged; ?>
+    <?php } ?>
   </div>
   <div class="links"><a id="tab-home" href="<?php echo $home; ?>"><?php echo $text_home; ?></a><a href="<?php echo $wishlist; ?>" id="wishlist_total"><?php echo $text_wishlist; ?></a>
     <?php if (!$logged) { ?>

@@ -251,10 +251,10 @@ class ControllerCheckoutConfirm extends Controller {
 			$this->session->data['order_id'] = $this->model_checkout_order->create($data);
 			
 			// Gift Voucher
-			if (isset($this->session->data['gift_voucher']) && is_array($this->session->data['gift_voucher'])) {
+			if (isset($this->session->data['vouchers']) && is_array($this->session->data['vouchers'])) {
 				$this->load->model('checkout/voucher');
 
-				foreach ($this->session->data['gift_voucher'] as $voucher) {
+				foreach ($this->session->data['vouchers'] as $voucher) {
 					$this->model_checkout_voucher->addVoucher($this->session->data['order_id'], $voucher);
 				}
 			}

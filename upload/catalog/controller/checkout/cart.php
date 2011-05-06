@@ -312,7 +312,11 @@ class ControllerCheckoutCart extends Controller {
       	if (isset($this->request->post['remove'])) {
         	$this->cart->remove($this->request->post['remove']);
       	}
-		
+
+      	if (isset($this->request->post['voucher'])) {
+			unset($this->session->data['vouchers'][$key]);
+      	}
+					
 		$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), $this->currency->format($this->cart->getTotal()));
 			
 		$this->load->model('tool/image');
@@ -357,8 +361,8 @@ class ControllerCheckoutCart extends Controller {
 		$this->data['vouchers'] = array();
 			
 		if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
-			foreach ($this->session->data['vouchers'] as $voucher) {
-				$this->data['vouchers'][] = array(
+			foreach ($this->session->data['vouchers'] as $key => $voucher) {
+				$this->data['vouchers'][$key] = array(
 					'name'   => sprintf($this->language->get('text_voucher'), $this->currency->format($voucher['amount']), $voucher['to_name']),
 					'amount' => $this->currency->format($voucher['amount'])
 				);

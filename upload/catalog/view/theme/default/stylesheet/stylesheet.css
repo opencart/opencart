@@ -89,7 +89,7 @@ label {
 }
 /* header */
 #header {
-	height: 85px;
+	height: 95px;
 	margin-bottom: 7px;
 	padding-bottom: 4px;
 	position: relative;
@@ -97,15 +97,16 @@ label {
 }
 #header #logo {
 	position: absolute;
-	top: 14px;
+	top: 17px;
 	left: 25px;
 }
 #language {
 	position: absolute;
-	top: 25px;
-	left: 325px;
+	top: 18px;
+	left: 335px;
 	width: 75px;
-	text-align: center;
+	color: #999;
+	line-height: 17px;
 }
 #language img {
 	cursor: pointer;
@@ -113,24 +114,24 @@ label {
 #currency {
 	width: 75px;
 	position: absolute;
-	top: 20px;
-	left: 420px;
-	float: right;
+	top: 18px;
+	left: 425px;
+	color: #999;
+	line-height: 17px;	
 }
 #currency a {
 	display: inline-block;
-	padding: 2px 5px;
+	padding: 2px 4px;
 	border: 1px solid #CCC;
 	color: #999;
 	text-decoration: none;
+	margin-right: 2px;	
 }
 #currency a b {
 	color: #000;	
 	text-decoration: none;	
 }
-#currency a + a {
-	margin-left: 5px;	
-}
+
 #header #cart {
 	position: absolute;
 	top: 2px;
@@ -258,10 +259,9 @@ label {
 }
 #header #search {
 	position: absolute;
-	top: 22px;
+	top: 17px;
 	right: 0px;
 	width: 298px;
-	margin-bottom: 4px;
 	z-index: 15;
 }
 #header #search input {
@@ -292,6 +292,15 @@ label {
 	padding-left: 5px;
 	margin-left: 28px;
 	margin-right: 2px;
+}
+#header #welcome {
+	position: absolute;
+	top: 50px;
+	right: 0px;
+	z-index: 15;
+	width: 298px;
+	text-align: right;
+	color: #999999;
 }
 #header .links {
 	position: absolute;

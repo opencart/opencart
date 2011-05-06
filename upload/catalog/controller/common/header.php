@@ -40,15 +40,19 @@ class ControllerCommonHeader extends Controller {
 		}
 		
 		$this->data['text_home'] = $this->language->get('text_home');
-		$this->data['text_wishlist'] =  sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
-    	$this->data['text_search'] = $this->language->get('text_search');
+		$this->data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
 		$this->data['text_cart'] = $this->language->get('text_cart');
 		$this->data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), $this->currency->format($this->cart->getTotal()));
+    	$this->data['text_search'] = $this->language->get('text_search');
+		$this->data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
+		$this->data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', 'SSL'), $this->customer->getFirstName(), $this->url->link('account/logout', '', 'SSL'));
 		$this->data['text_login'] = $this->language->get('text_login');
     	$this->data['text_logout'] = $this->language->get('text_logout');
 		$this->data['text_account'] = $this->language->get('text_account');
     	$this->data['text_checkout'] = $this->language->get('text_checkout');
-
+		$this->data['text_language'] = $this->language->get('text_language');
+    	$this->data['text_currency'] = $this->language->get('text_currency');
+				
 		$this->data['home'] = $this->url->link('common/home');
 		$this->data['wishlist'] = $this->url->link('account/wishlist');
 		$this->data['logged'] = $this->customer->isLogged();

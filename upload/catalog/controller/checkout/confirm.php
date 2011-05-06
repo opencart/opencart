@@ -299,7 +299,18 @@ class ControllerCheckoutConfirm extends Controller {
 					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id'])
 				); 
 			} 
-			
+
+			$this->data['vouchers'] = array();
+				
+			if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
+				foreach ($this->session->data['vouchers'] as $voucher) {
+					$this->data['vouchers'][] = array(
+						'name'   => sprintf($this->language->get('text_voucher'), $this->currency->format($voucher['amount']), $voucher['to_name']),
+						'amount' => $this->currency->format($voucher['amount'])
+					);
+				}
+			} 
+					
 			$this->data['totals'] = $total_data;
 	
 			$this->data['payment'] = $this->getChild('payment/' . $this->session->data['payment_method']['code']);

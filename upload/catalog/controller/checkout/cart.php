@@ -4,14 +4,6 @@ class ControllerCheckoutCart extends Controller {
 		$this->language->load('checkout/cart');
 		
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-      		if (isset($this->request->post['voucher'])) {
-	    		foreach ($this->request->post['voucher'] as $key) {
-					if (isset($this->session->data['vouchers'][$key])) {
-          				unset($this->session->data['vouchers'][$key]);
-					}
-				}
-      		}
-			
       		if (isset($this->request->post['quantity'])) {
 				if (!is_array($this->request->post['quantity'])) {
 					if (isset($this->request->post['option'])) {
@@ -33,7 +25,15 @@ class ControllerCheckoutCart extends Controller {
           			$this->cart->remove($key);
 				}
       		}
-			
+
+      		if (isset($this->request->post['voucher'])) {
+	    		foreach ($this->request->post['voucher'] as $key) {
+					if (isset($this->session->data['vouchers'][$key])) {
+          				unset($this->session->data['vouchers'][$key]);
+					}
+				}
+      		}
+						
 			if (isset($this->request->post['redirect'])) {
 				$this->session->data['redirect'] = $this->request->post['redirect'];
 			}	
@@ -64,7 +64,7 @@ class ControllerCheckoutCart extends Controller {
         	'separator' => $this->language->get('text_separator')
       	);
 			
-    	if ($this->cart->hasProducts() || (isset($this->session->data['gift_voucher']) && $this->session->data['gift_voucher'])) {
+    	if ($this->cart->hasProducts() || (isset($this->session->data['voucher']) && $this->session->data['voucher'])) {
       		$this->data['heading_title'] = $this->language->get('heading_title');
 			
 			$this->data['text_select'] = $this->language->get('text_select');
@@ -200,7 +200,6 @@ class ControllerCheckoutCart extends Controller {
 				
 			}
 			
-			 
 			if (isset($this->session->data['redirect'])) {
       			$this->data['continue'] = $this->session->data['redirect'];
 				
@@ -323,7 +322,7 @@ class ControllerCheckoutCart extends Controller {
 		
 		$this->data['button_checkout'] = $this->language->get('button_checkout');
 		$this->data['button_remove'] = $this->language->get('button_remove');
-		
+
 		$this->data['products'] = array();
 
 		foreach ($this->cart->getProducts() as $result) {
@@ -356,6 +355,17 @@ class ControllerCheckoutCart extends Controller {
 			);
 		}
 		
+		$this->data['vouchers'] = array();
+			
+		if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
+			foreach ($this->session->data['vouchers'] as $voucher) {
+				$this->data['vouchers'][] = array(
+					'name'   => sprintf($this->language->get('text_voucher'), $this->currency->format($voucher['amount']), $voucher['to_name']),
+					'amount' => $this->currency->format($voucher['amount'])
+				);
+			}
+		} 
+				
 		$total = 0;
 		$taxes = $this->cart->getTaxes();
 		 

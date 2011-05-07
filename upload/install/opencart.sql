@@ -1878,6 +1878,7 @@ CREATE TABLE `oc_product` (
   `length_class_id` int(11) NOT NULL DEFAULT '0',
   `subtract` int(1) NOT NULL DEFAULT '1',
   `minimum` int(11) NOT NULL DEFAULT '1',
+  `maximum` int(11) NOT NULL DEFAULT '0',
   `sort_order` int(11) NOT NULL DEFAULT '0',
   `status` int(1) NOT NULL DEFAULT '0',
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',

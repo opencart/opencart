@@ -12,6 +12,7 @@ $_['text_discount']     = '%s or more %s';
 $_['text_option']       = 'Available Options';
 $_['text_qty']          = 'Qty:';
 $_['text_minimum']      = 'This product has a minimum quantity of %s';
+$_['text_maximum']      = 'This product has a maximum quantity of %s';
 $_['text_or']           = '- OR -';
 $_['text_write']        = 'Write Review';
 $_['text_read']         = 'Read Reviews';

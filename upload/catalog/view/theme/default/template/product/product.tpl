@@ -188,6 +188,9 @@
         <?php if ($minimum > 1) { ?>
         <div class="minimum"><?php echo $text_minimum; ?></div>
         <?php } ?>
+		<?php if ($maximum) { ?>
+		<div class="maximum"><?php echo $text_maximum; ?></div>
+		<?php } ?>
       </div>
       <div class="review">
         <div><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" /> &nbsp;&nbsp;<?php echo $reviews; ?><br />

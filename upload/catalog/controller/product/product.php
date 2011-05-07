@@ -138,6 +138,7 @@ class ControllerProductProduct extends Controller {
 			$this->data['text_option'] = $this->language->get('text_option');
 			$this->data['text_qty'] = $this->language->get('text_qty');
 			$this->data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
+			$this->data['text_maximum'] = sprintf($this->language->get('text_maximum'), $product_info['maximum']);
 			$this->data['text_or'] = $this->language->get('text_or');
 			$this->data['text_write'] = $this->language->get('text_write');
 			$this->data['text_read'] = $this->language->get('text_read');
@@ -277,6 +278,12 @@ class ControllerProductProduct extends Controller {
 				$this->data['minimum'] = $product_info['minimum'];
 			} else {
 				$this->data['minimum'] = 1;
+			}
+			
+			if ($product_info['maximum']) {
+				$this->data['maximum'] = $product_info['maximum'];
+			} else {
+				$this->data['maximum'] = false;
 			}
 			
 			$this->data['review_status'] = $this->config->get('config_review');

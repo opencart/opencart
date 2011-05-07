@@ -310,7 +310,7 @@ class ControllerProductManufacturer extends Controller {
 			$this->data['limits'][] = array(
 				'text'  => $this->config->get('config_catalog_limit'),
 				'value' => $this->config->get('config_catalog_limit'),
-				'href'  => $this->url->link('product/manufacturer/product', $url . '&limit=' . $this->config->get('config_catalog_limit'))
+				'href'  => $this->url->link('product/manufacturer/product', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&limit=' . $this->config->get('config_catalog_limit'))
 			);
 						
 			$this->data['limits'][] = array(

@@ -89,7 +89,7 @@ label {
 }
 /* header */
 #header {
-	height: 95px;
+	height: 90px;
 	margin-bottom: 7px;
 	padding-bottom: 4px;
 	position: relative;
@@ -97,12 +97,12 @@ label {
 }
 #header #logo {
 	position: absolute;
-	top: 17px;
-	left: 25px;
+	top: 25px;
+	left: 15px;
 }
 #language {
 	position: absolute;
-	top: 18px;
+	top: 15px;
 	left: 335px;
 	width: 75px;
 	color: #999;
@@ -114,7 +114,7 @@ label {
 #currency {
 	width: 75px;
 	position: absolute;
-	top: 18px;
+	top: 15px;
 	left: 425px;
 	color: #999;
 	line-height: 17px;	
@@ -134,7 +134,7 @@ label {
 
 #header #cart {
 	position: absolute;
-	top: 2px;
+	top: 0px;
 	right: 145px;
 	z-index: 9;
 	float: right;
@@ -259,7 +259,7 @@ label {
 }
 #header #search {
 	position: absolute;
-	top: 17px;
+	top: 15px;
 	right: 0px;
 	width: 298px;
 	z-index: 15;
@@ -295,9 +295,9 @@ label {
 }
 #header #welcome {
 	position: absolute;
-	top: 50px;
+	top: 48px;
 	right: 0px;
-	z-index: 15;
+	z-index: 5;
 	width: 298px;
 	text-align: right;
 	color: #999999;

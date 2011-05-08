@@ -58,11 +58,11 @@ class ControllerCheckoutCart extends Controller {
 
       	$this->data['breadcrumbs'][] = array(
         	'href'      => $this->url->link('checkout/cart'),
-        	'text'      => $this->language->get('text_basket'),
+        	'text'      => $this->language->get('heading_title'),
         	'separator' => $this->language->get('text_separator')
       	);
 			
-    	if ($this->cart->hasProducts() || (isset($this->session->data['voucher']) && $this->session->data['voucher'])) {
+    	if ($this->cart->hasProducts()) {
       		$this->data['heading_title'] = $this->language->get('heading_title');
 			
 			$this->data['text_select'] = $this->language->get('text_select');
@@ -145,18 +145,6 @@ class ControllerCheckoutCart extends Controller {
 			} else {
 				$this->data['weight'] = false;
 			}
-
-			 
-			$this->data['vouchers'] = array();
-			
-			if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
-				foreach ($this->session->data['vouchers'] as $key => $voucher) {
-					$this->data['vouchers'][$key] = array(
-						'name'   => sprintf($this->language->get('text_voucher'), $this->currency->format($voucher['amount']), $voucher['to_name']),
-						'amount' => $this->currency->format($voucher['amount'])
-					);
-				}
-			} 
 						
 			$total_data = array();
 			$total = 0;
@@ -191,13 +179,6 @@ class ControllerCheckoutCart extends Controller {
     		array_multisort($sort_order, SORT_ASC, $total_data);
 
 			$this->data['totals'] = $total_data;
-			
-			// Calcuate Totals 
-			$results = $this->model_setting_extension->getExtensions('total');
-			
-			foreach ($results as $result) {
-				
-			}
 			
 			if (isset($this->session->data['redirect'])) {
       			$this->data['continue'] = $this->session->data['redirect'];

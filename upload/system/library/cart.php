@@ -11,6 +11,10 @@ final class Cart {
 		if (!isset($this->session->data['cart']) || !is_array($this->session->data['cart'])) {
       		$this->session->data['cart'] = array();
     	}
+		
+		if (!isset($this->session->data['voucher']) || !is_array($this->session->data['voucher'])) {
+      		$this->session->data['voucher'] = array();
+    	}		
 	}
 	      
   	public function getProducts() {
@@ -245,8 +249,41 @@ final class Cart {
 			}
     	}
 		
+		// Vouchers
+		foreach ($this->session->data['voucher'] as $key => $voucher) {
+			$product_data[$key] = array(
+				'key'          => $key,
+				'product_id'   => 0,
+				'name'         => $voucher['name'],
+				'model'        => '',
+				'shipping'     => false,
+				'image'        => '',
+				'option'       => array(),
+				'download'     => array(),
+				'quantity'     => 1,
+				'minimum'      => 1,
+				'subtract'     => false,
+				'stock'        => true,
+				'price'        => $voucher['amount'],
+				'total'        => $voucher['amount'],
+				'reward'       => 0,
+				'points'       => 0,
+				'tax_class_id' => 0,
+				'weight'       => 0,
+				'weight_class' => 0,
+				'length'       => 0,
+				'width'        => 0,
+				'height'       => 0,
+				'length_class' => 0					
+			);				
+		}
+						
 		return $product_data;
   	}
+	
+	public function getVoucher() {
+		
+	}
 		  
   	public function add($product_id, $qty = 1, $options = array()) {
     	if (!$options) {
@@ -286,6 +323,20 @@ final class Cart {
 		$this->session->data['cart'] = array();
   	}
   	
+<<<<<<< .mine
+	public function addVoucher($name, $amount) {	
+		$this->session->data['voucher'][rand()] = array(
+			'to_name'          => $this->request->post['to_name'],
+			'to_email'         => $this->request->post['to_email'],
+			'from_name'        => $this->request->post['from_name'],
+			'from_email'       => $this->request->post['from_email'],
+			'message'          => $this->request->post['message'],
+			'amount'           => $this->request->post['amount'],
+			'voucher_theme_id' => $this->request->post['voucher_theme_id']
+		); 
+	}
+	
+=======
 	public function setMinQty() {
 		foreach ($this->getProducts() as $product) {
 			if ($product['quantity'] < $product['minimum']) {
@@ -302,6 +353,7 @@ final class Cart {
 		}
   	}
 	
+>>>>>>> .r226
   	public function getWeight() {
 		$weight = 0;
 	

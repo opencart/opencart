@@ -3,7 +3,6 @@
 $_['heading_title']   = 'Shopping Cart';
 
 // Text
-$_['text_basket']     = 'Basket';
 $_['text_weight']  	  = 'Cart Weight:';
 $_['text_points']     = 'Reward Points: %s';
 $_['text_items']      = '%s item(s) - %s';

@@ -280,6 +280,9 @@ class ControllerProductProduct extends Controller {
 				$this->data['minimum'] = 1;
 			}
 			
+<<<<<<< .mine
+			$this->data['review_status'] = $this->config->get('config_review_status');
+=======
 			if ($product_info['maximum']) {
 				$this->data['maximum'] = $product_info['maximum'];
 			} else {
@@ -287,6 +290,7 @@ class ControllerProductProduct extends Controller {
 			}
 			
 			$this->data['review_status'] = $this->config->get('config_review');
+>>>>>>> .r226
 			$this->data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
 			$this->data['rating'] = (int)$product_info['rating'];
 			$this->data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');

@@ -112,6 +112,24 @@ function removeCart(key) {
 	});
 }
 
+function removeVoucher(key) {
+	$.ajax({
+		url: 'index.php?route=checkout/cart/update',
+		type: 'post',
+		data: 'voucher=' + key,
+		dataType: 'json',
+		success: function(json) {
+			$('.success, .warning, .attention, .information').remove();
+			
+			if (json['output']) {
+				$('#cart_total').html(json['total']);
+				
+				$('#cart .content').html(json['output']);
+			}			
+		}
+	});
+}
+
 function addToWishList(product_id) {
 	$.ajax({
 		url: 'index.php?route=account/wishlist/update',

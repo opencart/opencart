@@ -68,7 +68,6 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_return_action'] = $this->language->get('text_return_action');
 		$this->data['text_return_reason'] = $this->language->get('text_return_reason');
 		$this->data['text_return_status'] = $this->language->get('text_return_status');
-		$this->data['text_select_all'] = $this->language->get('text_select_all');
 		$this->data['text_support'] = $this->language->get('text_support'); 
 		$this->data['text_shipping'] = $this->language->get('text_shipping');		
      	$this->data['text_setting'] = $this->language->get('text_setting');
@@ -76,7 +75,6 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_system'] = $this->language->get('text_system');
 		$this->data['text_tax_class'] = $this->language->get('text_tax_class');
 		$this->data['text_total'] = $this->language->get('text_total');
-		$this->data['text_unselect_all'] = $this->language->get('text_unselect_all');
 		$this->data['text_user'] = $this->language->get('text_user');
 		$this->data['text_user_group'] = $this->language->get('text_user_group');
 		$this->data['text_users'] = $this->language->get('text_users');

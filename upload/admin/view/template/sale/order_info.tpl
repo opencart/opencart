@@ -158,10 +158,12 @@
             <td><?php echo $text_city; ?></td>
             <td><?php echo $payment_city; ?></td>
           </tr>
+          <?php if ($payment_postcode) { ?>
           <tr>
             <td><?php echo $text_postcode; ?></td>
             <td><?php echo $payment_postcode; ?></td>
           </tr>
+          <?php } ?>
           <tr>
             <td><?php echo $text_zone; ?></td>
             <td><?php echo $payment_zone; ?></td>
@@ -213,10 +215,12 @@
             <td><?php echo $text_city; ?></td>
             <td><?php echo $shipping_city; ?></td>
           </tr>
+          <?php if ($shipping_postcode) { ?>
           <tr>
             <td><?php echo $text_postcode; ?></td>
             <td><?php echo $shipping_postcode; ?></td>
           </tr>
+          <?php } ?>
           <tr>
             <td><?php echo $text_zone; ?></td>
             <td><?php echo $shipping_zone; ?></td>

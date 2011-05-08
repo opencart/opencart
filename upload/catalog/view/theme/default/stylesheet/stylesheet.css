@@ -82,14 +82,14 @@ label {
 	margin-bottom: 25px;
 }
 #column-left + #column-right + #content, #column-left + #content {
-	margin-left: 195px;
+	margin-left: 195px; 
 }
 #column-right + #content {
 	margin-right: 195px;
 }
 /* header */
 #header {
-	height: 90px;
+	height: 95px;
 	margin-bottom: 7px;
 	padding-bottom: 4px;
 	position: relative;
@@ -345,6 +345,9 @@ label {
 	position: relative;
 	float: left;
 }
+#menu > ul > li:hover {
+	background: #000;
+}
 #menu > ul > li > a {
 	font-size: 13px;
 	color: #FFF;
@@ -357,6 +360,7 @@ label {
 }
 #menu > ul > li > div {
 	display: none;
+	width: 300px;
 	min-height: 246px;
 	background: #FFFFFF;
 	position: absolute;
@@ -367,14 +371,13 @@ label {
 	-moz-border-radius: 0px 0px 5px 5px;
 	-khtml-border-radius: 0px 0px 5px 5px;
 	border-radius: 0px 0px 5px 5px;
-	white-space: nowrap;
 	background: url('../image/menu.png');
 }
 #menu > ul > li:hover > div {
-	display: table;
+	display: block;
 }
-#menu > ul > li ul {
-	display: table-cell;
+#menu > ul > li > div > ul {
+	float: left;
 }
 #menu > ul > li ul + ul {
 	padding-left: 20px;
@@ -388,7 +391,12 @@ label {
 #menu > ul > li ul > li > a:hover {
 	background: #000000;
 }
-
+#menu > ul > li > div > ul > li > a {
+	font-weight: bold;
+}
+#menu > ul > li > div > ul > li > ul > li > a {
+	padding-left: 15px;
+}
 .breadcrumb {
 	color: #CCCCCC;
 	margin-bottom: 10px;

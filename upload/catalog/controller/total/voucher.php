@@ -9,8 +9,8 @@ class ControllerTotalVoucher extends Controller {
 		
 		$this->data['button_voucher'] = $this->language->get('button_voucher');
 				
-		if (isset($this->session->data['voucher'])) {
-			$this->data['voucher'] = $this->session->data['voucher'];
+		if (isset($this->session->data['voucher_code'])) {
+			$this->data['voucher'] = $this->session->data['voucher_code'];
 		} else {
 			$this->data['voucher'] = '';
 		}
@@ -39,7 +39,7 @@ class ControllerTotalVoucher extends Controller {
 			$voucher_info = $this->model_checkout_voucher->getVoucher($this->request->post['voucher']);			
 			
 			if ($voucher_info) {			
-				$this->session->data['voucher'] = $this->request->post['voucher'];
+				$this->session->data['voucher_code'] = $this->request->post['voucher'];
 				
 				$this->session->data['success'] = $this->language->get('text_success');
 				

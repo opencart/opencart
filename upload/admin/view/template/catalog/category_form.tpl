@@ -51,7 +51,7 @@
         <div id="tab-data">
           <table class="form">
             <tr>
-              <td><?php echo $entry_category; ?></td>
+              <td><?php echo $entry_parent; ?></td>
               <td><select name="parent_id">
                   <option value="0"><?php echo $text_none; ?></option>
                   <?php foreach ($categories as $category) { ?>
@@ -62,6 +62,10 @@
                   <?php } ?>
                   <?php } ?>
                 </select></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_column; ?></td>
+              <td><input type="text" name="column" value="<?php echo $column; ?>" size="1" /></td>
             </tr>
             <tr>
               <td><?php echo $entry_store; ?></td>
@@ -100,6 +104,10 @@
                 <img src="<?php echo $preview; ?>" alt="" id="preview" class="image" onclick="image_upload('image', 'preview');" /></td>
             </tr>
             <tr>
+              <td><?php echo $entry_sort_order; ?></td>
+              <td><input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" /></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_status; ?></td>
               <td><select name="status">
                   <?php if ($status) { ?>
@@ -110,10 +118,6 @@
                   <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } ?>
                 </select></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_sort_order; ?></td>
-              <td><input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" /></td>
             </tr>
           </table>
         </div>

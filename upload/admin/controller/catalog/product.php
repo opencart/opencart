@@ -723,14 +723,6 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['minimum'] = 1;
 		}
 		
-		if (isset($this->request->post['maximum'])) {
-      		$this->data['maximum'] = $this->request->post['maximum'];
-    	} elseif (isset($product_info)) {
-      		$this->data['maximum'] = $product_info['maximum'];
-    	} else {
-			$this->data['maximum'] = 0;
-		}
-		
 		if (isset($this->request->post['subtract'])) {
       		$this->data['subtract'] = $this->request->post['subtract'];
     	} elseif (isset($product_info)) {

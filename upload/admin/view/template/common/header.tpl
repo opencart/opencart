@@ -51,17 +51,6 @@ $(document).ready(function(){
     });
 });
 </script>
-<script type="text/javascript">
-$(document).ready(function(){
-    $(".scrollbox").each(function(i) {
-		if (!$(this).attr('id')) {
-			$(this).attr('id', 'scrollbox_' + i);
-			sbox = '#' + $(this).attr('id');
-			$(this).after('<span><a onclick="$(\'' + sbox + ' :checkbox\').attr(\'checked\', \'checked\');"><u><?php echo $text_select_all; ?></u></a> / <a onclick="$(\'' + sbox + ' :checkbox\').attr(\'checked\', \'\');"><u><?php echo $text_unselect_all; ?></u></a></span>');
-		}
-	});
-});
-</script>
 </head>
 <body>
 <div id="container">

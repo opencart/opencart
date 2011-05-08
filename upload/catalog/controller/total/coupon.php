@@ -9,8 +9,8 @@ class ControllerTotalCoupon extends Controller {
 		
 		$this->data['button_coupon'] = $this->language->get('button_coupon');
 				
-		if (isset($this->session->data['coupon'])) {
-			$this->data['coupon'] = $this->session->data['coupon'];
+		if (isset($this->session->data['coupon_code'])) {
+			$this->data['coupon'] = $this->session->data['coupon_code'];
 		} else {
 			$this->data['coupon'] = '';
 		}
@@ -39,7 +39,7 @@ class ControllerTotalCoupon extends Controller {
 			$coupon_info = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);			
 			
 			if ($coupon_info) {			
-				$this->session->data['coupon'] = $this->request->post['coupon'];
+				$this->session->data['coupon_code'] = $this->request->post['coupon'];
 				
 				$this->session->data['success'] = $this->language->get('text_success');
 				

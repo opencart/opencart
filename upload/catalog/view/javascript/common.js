@@ -47,6 +47,26 @@ $(document).ready(function() {
 	
 	/* Mega Menu */
 	$('#menu ul > li > a + div').each(function(index, element) {
+	/*
+		li = $(element).find('li');
+		
+		for (i = 0; i < li.length;) {
+			alert(li[i].find('a').text());
+			
+			html += '<ul>';
+			
+			j = i + ceil(count($category_1['children']) / 4)
+			
+			for (; i < j; i++) {
+				if ($categories[i]) {
+					html += '<li><a href="<?php echo $categories[$i]['href']; ?>"><?php echo $categories[$i]['name']; ?></a></li>';
+				}
+			}
+			
+			html += '</ul>';
+		}
+		*/
+		
 		var menu = $('#menu').offset();
 		var dropdown = $(this).parent().offset();
 		

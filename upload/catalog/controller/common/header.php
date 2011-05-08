@@ -202,6 +202,7 @@ class ControllerCommonHeader extends Controller {
 			$this->data['categories'][] = array(
 				'name'     => $category_1['name'],
 				'children' => $level_2_data,
+				'column'   => $category_1['column'],
 				'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'])
 			);
 		}

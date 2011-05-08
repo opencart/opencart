@@ -25,18 +25,12 @@ class ControllerCheckoutCart extends Controller {
           			$this->cart->remove($key);
 				}
       		}
-
-      		if (isset($this->request->post['voucher'])) {
-	    		foreach ($this->request->post['voucher'] as $key) {
-					unset($this->session->data['vouchers'][$key]);
-				}
-      		}
 						
 			if (isset($this->request->post['redirect'])) {
 				$this->session->data['redirect'] = $this->request->post['redirect'];
 			}	
 			
-			if (isset($this->request->post['quantity']) || isset($this->request->post['remove']) || isset($this->request->post['voucher'])) {
+			if (isset($this->request->post['quantity']) || isset($this->request->post['remove'])) {
 				unset($this->session->data['shipping_methods']);
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['payment_methods']);

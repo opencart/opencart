@@ -79,7 +79,9 @@ class ModelCheckoutVoucher extends Model {
 				$template->data['mail_message'] = $language->get('mail_message');
 				$template->data['mail_problem'] = $language->get('mail_problem');
 				$template->data['mail_footer'] = $language->get('mail_footer');
-		
+				
+				$template->data['logo'] = 'cid:' . basename($voucher['image']);
+				
 				$template->data['message'] = $voucher['message'];
 			
 				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/mail_voucher.tpl')) {

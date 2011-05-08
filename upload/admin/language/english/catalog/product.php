@@ -37,7 +37,6 @@ $_['entry_shipping']         = 'Requires Shipping:';
 $_['entry_date_available']   = 'Date Available:';
 $_['entry_quantity']         = 'Quantity:';
 $_['entry_minimum']          = 'Minimum Quantity:<br/><span class="help">Force a minimum ordered amount</span>';
-$_['entry_maximum']          = 'Maximum Quantity:<br/><span class="help">Limit the maximum ordered amount (set to 0 for no limit)</span>';
 $_['entry_stock_status']     = 'Out Of Stock Status:<br/><span class="help">Status shown when a product is out of stock</span>';
 $_['entry_tax_class']        = 'Tax Class:';
 $_['entry_price']            = 'Price:';

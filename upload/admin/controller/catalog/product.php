@@ -3,7 +3,7 @@ class ControllerCatalogProduct extends Controller {
 	private $error = array(); 
      
   	public function index() {
-		$this->data = array_merge($this->data, $this->load->language('catalog/product'));
+		$this->load->language('catalog/product');
     	
 		$this->document->setTitle($this->language->get('heading_title')); 
 		
@@ -383,6 +383,26 @@ class ControllerCatalogProduct extends Controller {
 				'action'     => $action
 			);
     	}
+		
+		$this->data['heading_title'] = $this->language->get('heading_title');		
+				
+		$this->data['text_enabled'] = $this->language->get('text_enabled');		
+		$this->data['text_disabled'] = $this->language->get('text_disabled');		
+		$this->data['text_no_results'] = $this->language->get('text_no_results');		
+		$this->data['text_image_manager'] = $this->language->get('text_image_manager');		
+			
+		$this->data['column_image'] = $this->language->get('column_image');		
+		$this->data['column_name'] = $this->language->get('column_name');		
+		$this->data['column_model'] = $this->language->get('column_model');		
+		$this->data['column_price'] = $this->language->get('column_price');		
+		$this->data['column_quantity'] = $this->language->get('column_quantity');		
+		$this->data['column_status'] = $this->language->get('column_status');		
+		$this->data['column_action'] = $this->language->get('column_action');		
+				
+		$this->data['button_copy'] = $this->language->get('button_copy');		
+		$this->data['button_insert'] = $this->language->get('button_insert');		
+		$this->data['button_delete'] = $this->language->get('button_delete');		
+		$this->data['button_filter'] = $this->language->get('button_filter');
 		 
  		$this->data['token'] = $this->session->data['token'];
 		

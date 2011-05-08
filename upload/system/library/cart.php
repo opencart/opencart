@@ -229,7 +229,6 @@ final class Cart {
 					'download'     => $download_data,
         			'quantity'     => $quantity,
         			'minimum'      => $product_query->row['minimum'],
-					'maximum'      => $product_query->row['maximum'],
 					'subtract'     => $product_query->row['subtract'],
 					'stock'        => $stock,
         			'price'        => ($price + $option_price),
@@ -299,8 +298,6 @@ final class Cart {
       			$this->session->data['cart'][$key] += (int)$qty;
     		}
 		}
-		$this->setMinQty();
-		$this->setMaxQty();
   	}
 
   	public function update($key, $qty) {
@@ -309,8 +306,6 @@ final class Cart {
     	} else {
 	  		$this->remove($key);
 		}
-		$this->setMinQty();
-		$this->setMaxQty();
   	}
 
   	public function remove($key) {
@@ -323,7 +318,6 @@ final class Cart {
 		$this->session->data['cart'] = array();
   	}
   	
-<<<<<<< .mine
 	public function addVoucher($name, $amount) {	
 		$this->session->data['voucher'][rand()] = array(
 			'to_name'          => $this->request->post['to_name'],
@@ -336,24 +330,6 @@ final class Cart {
 		); 
 	}
 	
-=======
-	public function setMinQty() {
-		foreach ($this->getProducts() as $product) {
-			if ($product['quantity'] < $product['minimum']) {
-				$this->session->data['cart'][$product['key']] = $product['minimum'];
-			}
-		}
-  	}
-	
-	public function setMaxQty() {
-		foreach ($this->getProducts() as $product) {
-			if ($product['quantity'] > $product['maximum']) {
-				$this->session->data['cart'][$product['key']] = $product['maximum'];
-			}
-		}
-  	}
-	
->>>>>>> .r226
   	public function getWeight() {
 		$weight = 0;
 	

@@ -138,7 +138,6 @@ class ControllerProductProduct extends Controller {
 			$this->data['text_option'] = $this->language->get('text_option');
 			$this->data['text_qty'] = $this->language->get('text_qty');
 			$this->data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
-			$this->data['text_maximum'] = sprintf($this->language->get('text_maximum'), $product_info['maximum']);
 			$this->data['text_or'] = $this->language->get('text_or');
 			$this->data['text_write'] = $this->language->get('text_write');
 			$this->data['text_read'] = $this->language->get('text_read');
@@ -280,17 +279,7 @@ class ControllerProductProduct extends Controller {
 				$this->data['minimum'] = 1;
 			}
 			
-<<<<<<< .mine
 			$this->data['review_status'] = $this->config->get('config_review_status');
-=======
-			if ($product_info['maximum']) {
-				$this->data['maximum'] = $product_info['maximum'];
-			} else {
-				$this->data['maximum'] = false;
-			}
-			
-			$this->data['review_status'] = $this->config->get('config_review');
->>>>>>> .r226
 			$this->data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
 			$this->data['rating'] = (int)$product_info['rating'];
 			$this->data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');

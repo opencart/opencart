@@ -1043,7 +1043,7 @@ a.button:hover span {
 	display: block;
 	color: #999;
 }
-.product-info .cart .minimum .maximum{
+.product-info .cart .minimum {
 	padding-top: 5px;
 	font-size: 11px;
 	color: #999;

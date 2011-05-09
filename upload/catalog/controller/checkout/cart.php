@@ -332,17 +332,6 @@ class ControllerCheckoutCart extends Controller {
 				'href'     => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 			);
 		}
-		
-		$this->data['vouchers'] = array();
-			
-		if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
-			foreach ($this->session->data['vouchers'] as $key => $voucher) {
-				$this->data['vouchers'][$key] = array(
-					'name'   => sprintf($this->language->get('text_voucher'), $this->currency->format($voucher['amount']), $voucher['to_name']),
-					'amount' => $this->currency->format($voucher['amount'])
-				);
-			}
-		} 
 				
 		$total = 0;
 		$taxes = $this->cart->getTaxes();

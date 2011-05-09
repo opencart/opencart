@@ -89,7 +89,7 @@ label {
 }
 /* header */
 #header {
-	height: 94px;
+	height: 90px;
 	margin-bottom: 7px;
 	padding-bottom: 4px;
 	position: relative;
@@ -305,7 +305,7 @@ label {
 #header .links {
 	position: absolute;
 	right: 0px;
-	bottom: 8px;
+	bottom: 6px;
 	font-size: 10px;
 	line-height: 10px;
 	padding-right: 10px;
@@ -386,7 +386,7 @@ label {
 	padding: 4px;
 	color: #FFFFFF;
 	display: block;
-	min-width: 150px;
+	min-width: 120px;
 }
 #menu > ul > li ul > li > a:hover {
 	background: #000000;
@@ -395,7 +395,7 @@ label {
 	
 }
 #menu > ul > li > div > ul > li > ul > li > a {
-	
+	font-size: 10px;
 }
 .breadcrumb {
 	color: #CCCCCC;

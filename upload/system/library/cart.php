@@ -316,6 +316,7 @@ final class Cart {
 	
   	public function clear() {
 		$this->session->data['cart'] = array();
+		$this->session->data['voucher'] = array();
   	}
   	
 	public function addVoucher($name, $amount) {	

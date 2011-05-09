@@ -105,24 +105,27 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
     <?php } else { ?>
     <a id="tab-login" href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a>
     <?php } ?>
-    <a id="tab-account" href="<?php echo $account; ?>"><?php echo $text_account; ?></a> <a id="tab-cart" href="<?php echo $cart; ?>"><span><?php echo $text_cart; ?></span></a> <a id="tab-checkout" href="<?php echo $checkout; ?>"><span><?php echo $text_checkout; ?></span></a></div>
+    <a id="tab-account" href="<?php echo $account; ?>"><?php echo $text_account; ?></a><a id="tab-cart" href="<?php echo $cart; ?>"><span><?php echo $text_cart; ?></span></a> <a id="tab-checkout" href="<?php echo $checkout; ?>"><span><?php echo $text_checkout; ?></span></a></div>
 </div>
 <div id="menu">
   <ul>
-    <?php foreach ($categories as $category) { ?>
-    <li> <a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
-      <?php if ($category['children']) { ?>
+    <?php foreach ($categories as $category_1) { ?>
+    <li><a href="<?php echo $category_1['href']; ?>"><?php echo $category_1['name']; ?></a>
+      <?php if ($category_1['children']) { ?>
+      <?php $links = array(); ?>
+      <?php foreach ($category_1['children'] as $category_2) { ?>
+      <?php $links[] = array('name' => $category_2['name'], 'href' => $category_2['href']); ?>
+      <?php foreach ($category_2['children'] as $category_3) { ?>
+      <?php $links[] = array('name' => '&nbsp;&nbsp;&nbsp;' . $category_3['name'], 'href' => $category_3['href']); ?>
+      <?php } ?>
+      <?php } ?>
       <div>
-        <?php for ($i = 0; $i < count($category['children']);) { ?>
+        <?php for ($i = 0; $i < count($links);) { ?>
         <ul>
-          <?php $j = $i + ceil(count($category['children']) / 4); ?>
+          <?php $j = $i + ceil(count($links) / $category_1['column']); ?>
           <?php for (; $i < $j; $i++) { ?>
-          <?php if (isset($category['children'][$i])) { ?>
-          <?php if ($category['children'][$i]['children']) { ?>
-          <li><a href="<?php echo $category['children'][$i]['href']; ?>"><b><?php echo $category['children'][$i]['name']; ?></b></a></li>
-          <?php } else { ?>
-          <li><a href="<?php echo $category['children'][$i]['href']; ?>"><?php echo $category['children'][$i]['name']; ?></a></li>
-          <?php } ?>
+          <?php if (isset($links[$i])) { ?>
+          <li><a href="<?php echo $links[$i]['href']; ?>"><?php echo $links[$i]['name']; ?></a></li>
           <?php } ?>
           <?php } ?>
         </ul>

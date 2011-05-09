@@ -159,8 +159,10 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
 		$this->data['entry_parent'] = $this->language->get('entry_parent');
-		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_image'] = $this->language->get('entry_image');
+		$this->data['entry_top'] = $this->language->get('entry_top');
+		$this->data['entry_column'] = $this->language->get('entry_column');		
+		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
 		
@@ -243,7 +245,7 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$this->data['parent_id'] = 0;
 		}
-		
+						
 		$this->load->model('setting/store');
 		
 		$this->data['stores'] = $this->model_setting_store->getStores();
@@ -280,6 +282,22 @@ class ControllerCatalogCategory extends Controller {
 			$this->data['preview'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 		}
 		
+		if (isset($this->request->post['top'])) {
+			$this->data['top'] = $this->request->post['top'];
+		} elseif (isset($category_info)) {
+			$this->data['top'] = $category_info['top'];
+		} else {
+			$this->data['top'] = 0;
+		}
+		
+		if (isset($this->request->post['column'])) {
+			$this->data['column'] = $this->request->post['column'];
+		} elseif (isset($category_info)) {
+			$this->data['column'] = $category_info['column'];
+		} else {
+			$this->data['column'] = 1;
+		}
+				
 		if (isset($this->request->post['sort_order'])) {
 			$this->data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (isset($category_info)) {

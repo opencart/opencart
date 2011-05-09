@@ -100,6 +100,18 @@
                 <img src="<?php echo $preview; ?>" alt="" id="preview" class="image" onclick="image_upload('image', 'preview');" /></td>
             </tr>
             <tr>
+              <td><?php echo $entry_top; ?></td>
+              <td><?php if ($top) { ?>
+                <input type="checkbox" name="top" value="1" checked="checked" />
+                <?php } else { ?>
+                <input type="checkbox" name="top" value="1" />
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_column; ?></td>
+              <td><input type="text" name="column" value="<?php echo $column; ?>" size="1" /></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_sort_order; ?></td>
               <td><input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" /></td>
             </tr>

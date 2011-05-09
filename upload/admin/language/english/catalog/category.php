@@ -21,6 +21,8 @@ $_['entry_parent']           = 'Parent Category:';
 $_['entry_store']            = 'Stores:';
 $_['entry_keyword']          = 'SEO Keyword:<br/><span class="help">This must be globally unique.</span>';
 $_['entry_image']            = 'Image:';
+$_['entry_top']              = 'Top:<br/><span class="help">Display in the top menu bar. Only works for the top parent categories.</span>';
+$_['entry_column']           = 'Columns:<br/><span class="help">Number of columns to use for the bottom 3 categories. Only works for the top parent categories.</span>';
 $_['entry_sort_order']       = 'Sort Order:';
 $_['entry_status']           = 'Status:';
 $_['entry_layout']           = 'Layout Override:';

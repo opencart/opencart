@@ -96,7 +96,8 @@ function addImage() {
 	
 	image_row++;
 }
-//--></script> <script type="text/javascript"><!--
+//--></script>
+<script type="text/javascript"><!--
 function image_upload(field, preview) {
 	$('#dialog').remove();
 	

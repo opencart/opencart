@@ -12,7 +12,7 @@ class ModelDesignBanner extends Model {
 				$banner_image_id = $this->db->getLastId();
 				
 				foreach ($banner_image['banner_image_description'] as $language_id => $banner_image_description) {				
-					$this->db->query("INSERT INTO " . DB_PREFIX . "banner_image_description SET banner_image_id = '" . (int)$banner_image_id . "', banner_id = '" . (int)$banner_id . "', language_id = '" . (int)$language_id . "', title = '" .  $this->db->escape($banner_image_description['title']) . "'");
+					$this->db->query("INSERT INTO " . DB_PREFIX . "banner_image_description SET banner_image_id = '" . (int)$banner_image_id . "', language_id = '" . (int)$language_id . "', banner_id = '" . (int)$banner_id . "', title = '" .  $this->db->escape($banner_image_description['title']) . "'");
 				}
 			}
 		}		
@@ -31,7 +31,7 @@ class ModelDesignBanner extends Model {
 				$banner_image_id = $this->db->getLastId();
 				
 				foreach ($banner_image['banner_image_description'] as $language_id => $banner_image_description) {				
-					$this->db->query("INSERT INTO " . DB_PREFIX . "banner_image_description SET banner_image_id = '" . (int)$banner_image_id . "', banner_id = '" . (int)$banner_id . "', language_id = '" . (int)$language_id . "', title = '" .  $this->db->escape($banner_image_description['title']) . "'");
+					$this->db->query("INSERT INTO " . DB_PREFIX . "banner_image_description SET banner_image_id = '" . (int)$banner_image_id . "', language_id = '" . (int)$language_id . "', banner_id = '" . (int)$banner_id . "', title = '" .  $this->db->escape($banner_image_description['title']) . "'");
 				}
 			}
 		}			

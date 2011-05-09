@@ -151,62 +151,10 @@ class ControllerCommonHeader extends Controller {
 		}
 		
 		// Menu
-		$this->load->model('catalog/category');
-		$this->load->model('catalog/product');
-		
-		$this->data['categories'] = array();
+		$this->load->model('design/menu');
 					
-		$categories_1 = $this->model_catalog_category->getCategories(0);
-		
-		foreach ($categories_1 as $category_1) {
-			$level_2_data = array();
-			
-			$categories_2 = $this->model_catalog_category->getCategories($category_1['category_id']);
-			
-			foreach ($categories_2 as $category_2) {
-				// Level 3
-				$level_3_data = array();
-				
-				$categories_3 = $this->model_catalog_category->getCategories($category_2['category_id']);
-								
-				foreach ($categories_3 as $category_3) {
-					$data = array(
-						'filter_category_id'  => $category_3['category_id'],
-						'filter_sub_category' => true	
-					);		
+		$this->data['menus'] = $this->model_design_menu->getMenus();
 						
-					$product_total = $this->model_catalog_product->getTotalProducts($data);					
-					
-					$level_3_data[] = array(
-						'name' => $category_3['name'] . ' (' . $product_total . ')',
-						'href' => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'] . '_' . $category_3['category_id'])
-					);
-				}
-				
-				// Level 2
-				$data = array(
-					'filter_category_id'  => $category_2['category_id'],
-					'filter_sub_category' => true	
-				);		
-					
-				$product_total = $this->model_catalog_product->getTotalProducts($data);
-								
-				$level_2_data[] = array(
-					'name'     => $category_2['name'] . ' (' . $product_total . ')',
-					'children' => $level_3_data,
-					'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'])	
-				);					
-			}
-			
-			// Level 1
-			$this->data['categories'][] = array(
-				'name'     => $category_1['name'],
-				'children' => $level_2_data,
-				'column'   => $category_1['column'],
-				'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'])
-			);
-		}
-				
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/common/header.tpl';
 		} else {

@@ -58,9 +58,9 @@ $_['button_add_total']        = 'Add Total';
 $_['button_add_reward']       = 'Add Reward Points';
 $_['button_add_route']        = 'Add Route';
 $_['button_add_module']       = 'Add Module';
+$_['button_add_link']         = 'Add Link';
 $_['button_approve']          = 'Approve';
 $_['button_reset']            = 'Reset';
-$_['button_generate']         = 'Generate';
 
 // Tab
 $_['tab_address']             = 'Address';

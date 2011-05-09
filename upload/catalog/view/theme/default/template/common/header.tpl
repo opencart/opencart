@@ -109,21 +109,24 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
 </div>
 <div id="menu">
   <ul>
-    <?php foreach ($categories as $category_1) { ?>
-    <li><a href="<?php echo $category_1['href']; ?>"><?php echo $category_1['name']; ?></a>
-      <?php if ($category_1['children']) { ?>
+    <?php foreach ($menus as $menu) { ?>
+    <li> <a href="<?php echo $menu['link']; ?>"><?php echo $menu['name']; ?></a>
+      <?php if ($menu['menu_link']) { ?>
       <div>
         <ul>
-          <?php foreach ($category_1['children'] as $category_2) { ?>
-          <li><a href="<?php echo $category_2['href']; ?>"><?php echo $category_2['name']; ?></a>
-            <?php if ($category_2['children']) { ?>
-            <ul>
-              <?php foreach ($category_2['children'] as $category_3) { ?>
-              <li><a href="<?php echo $category_3['href']; ?>"><?php echo $category_3['name']; ?></a></li>
-              <?php } ?>
-            </ul>
+          <?php for ($i = 0; $i < count($menu['menu_link']);) { ?>
+          <ul>
+            <?php $j = $i + ceil(count($menu['menu_link']) / $menu['column']); ?>
+            <?php for (; $i < $j; $i++) { ?>
+            <?php if (isset($menu['menu_link'][$i])) { ?>
+            <?php if ($menu['menu_link'][$i]['heading']) { ?>
+            <li><a href="<?php echo $menu['menu_link'][$i]['link']; ?>"><b><?php echo $menu['menu_link'][$i]['name']; ?></b></a></li>
+            <?php } else { ?>
+            <li><a href="<?php echo $menu['menu_link'][$i]['link']; ?>"><?php echo $menu['menu_link'][$i]['name']; ?></a></li>
             <?php } ?>
-          </li>
+            <?php } ?>
+            <?php } ?>
+          </ul>
           <?php } ?>
         </ul>
       </div>

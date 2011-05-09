@@ -360,8 +360,7 @@ label {
 }
 #menu > ul > li > div {
 	display: none;
-	width: 300px;
-	min-height: 246px;
+	min-width: 150px;
 	background: #FFFFFF;
 	position: absolute;
 	z-index: 5;

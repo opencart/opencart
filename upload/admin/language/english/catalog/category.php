@@ -18,7 +18,6 @@ $_['entry_meta_keyword'] 	 = 'Meta Tag Keywords:';
 $_['entry_meta_description'] = 'Meta Tag Description:';
 $_['entry_description']      = 'Description:';
 $_['entry_parent']           = 'Parent Category:';
-$_['entry_column']           = 'Columns:<br/><span class="help">The number of columns to be displayed in the in the mega menu. Only for the top parent categories.</span>';
 $_['entry_store']            = 'Stores:';
 $_['entry_keyword']          = 'SEO Keyword:<br/><span class="help">This must be globally unique.</span>';
 $_['entry_image']            = 'Image:';

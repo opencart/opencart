@@ -118,6 +118,7 @@ $(document).ready(function(){
           <li><a class="parent"><?php echo $text_design; ?></a>
             <ul>
               <li><a href="<?php echo $layout; ?>"><?php echo $text_layout; ?></a></li>
+              <li><a href="<?php echo $menu; ?>"><?php echo $text_menu; ?></a></li>
               <li><a href="<?php echo $banner; ?>"><?php echo $text_banner; ?></a></li>
             </ul>
           </li>

@@ -159,7 +159,6 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
 		$this->data['entry_parent'] = $this->language->get('entry_parent');
-		$this->data['entry_column'] = $this->language->get('entry_column');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_image'] = $this->language->get('entry_image');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -245,14 +244,6 @@ class ControllerCatalogCategory extends Controller {
 			$this->data['parent_id'] = 0;
 		}
 		
-		if (isset($this->request->post['column'])) {
-			$this->data['column'] = $this->request->post['column'];
-		} elseif (isset($category_info)) {
-			$this->data['column'] = $category_info['column'];
-		} else {
-			$this->data['column'] = 1;
-		}
-				
 		$this->load->model('setting/store');
 		
 		$this->data['stores'] = $this->model_setting_store->getStores();

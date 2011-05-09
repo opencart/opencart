@@ -64,10 +64,6 @@
                 </select></td>
             </tr>
             <tr>
-              <td><?php echo $entry_column; ?></td>
-              <td><input type="text" name="column" value="<?php echo $column; ?>" size="1" /></td>
-            </tr>
-            <tr>
               <td><?php echo $entry_store; ?></td>
               <td><div class="scrollbox">
                   <?php $class = 'even'; ?>

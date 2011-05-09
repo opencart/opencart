@@ -373,10 +373,10 @@ label {
 	background: url('../image/menu.png');
 }
 #menu > ul > li:hover > div {
-	display: block;
+	display: table;
 }
 #menu > ul > li > div > ul {
-	float: left;
+	display: table-cell;
 }
 #menu > ul > li ul + ul {
 	padding-left: 20px;

@@ -33,7 +33,6 @@ $_['text_logged']           = 'You are logged in as <span>%s</span>';
 $_['text_logout']           = 'Logout';
 $_['text_contact']          = 'Mail';
 $_['text_manufacturer']     = 'Manufacturers';
-$_['text_menu']             = 'Menu';
 $_['text_module']           = 'Modules';
 $_['text_option']           = 'Options';
 $_['text_order']            = 'Orders';

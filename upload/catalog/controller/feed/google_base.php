@@ -43,8 +43,8 @@ class ControllerFeedGoogleBase extends Controller {
                         $currency = ($this->config->get('google_base_status')) ? $this->config->get('google_base_status') : 'USD';
                     }
 									
-					if ((float)$result['special']) {
-                        $output .= '<g:price>' .  $this->currency->format($this->tax->calculate($result['special'], $product['tax_class_id']), $currency, FALSE, FALSE) . '</g:price>';
+					if ((float)$product['special']) {
+                        $output .= '<g:price>' .  $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id']), $currency, FALSE, FALSE) . '</g:price>';
                     } else {
                         $output .= '<g:price>' . $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id']), $currency, FALSE, FALSE) . '</g:price>';
                     }

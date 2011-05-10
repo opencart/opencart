@@ -1065,9 +1065,7 @@ a.button:hover span {
 	border-bottom: 1px solid #E7E7E7;
 	line-height: 20px;
 }
-.product-info .review > div > a {
-	text-decoration: none;
-}
+
 .product-info .review > div > span {
 	color: #378DC1;
 }
@@ -1075,9 +1073,7 @@ a.button:hover span {
 	overflow: auto;
 	line-height: normal;
 }
-.product-info .review a {
-	text-decoration: none;
-}
+
 .attribute {
 	border-collapse: collapse;
 	width: 100%;
@@ -1559,4 +1555,3 @@ a.button:hover span {
 .banner div img {
 	margin-bottom: 20px;
 }
-/* slideshow */

@@ -190,8 +190,7 @@
         <?php } ?>
       </div>
       <div class="review">
-        <div><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" /> &nbsp;&nbsp;<?php echo $reviews; ?><br />
-          <a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $text_write; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $text_read; ?></a></div>
+        <div><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" />&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $reviews; ?></a>&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $text_write; ?></a></div>
         <div class="share"><!-- AddThis Button BEGIN -->
           <div class="addthis_default_style"><a class="addthis_button_compact"><?php echo $text_share; ?></a> <a class="addthis_button_email"></a><a class="addthis_button_print"></a> <a class="addthis_button_facebook"></a> <a class="addthis_button_twitter"></a></div>
           <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js"></script> 

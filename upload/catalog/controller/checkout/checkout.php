@@ -5,6 +5,21 @@ class ControllerCheckoutCheckout extends Controller {
 	  		$this->redirect($this->url->link('checkout/cart'));
     	}				
 		
+				$product_total = $quantity;
+				
+				$products = $this->cart->getProducts();
+				
+				foreach ($products as $product) {
+					if ($product['product_id'] == $this->request->post['product_id']) {
+						$product_total += $product['quantity'];
+					}
+				}
+				
+				if ($product_info['minimum'] > ($product_total)) {
+					$json['error']['warning'] = sprintf($this->language->get('error_minimum'), $product_info['minimum']);
+				}		
+		
+		
 		$this->language->load('checkout/checkout');
 
     	$this->document->setTitle($this->language->get('heading_title')); 	

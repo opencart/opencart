@@ -76,6 +76,10 @@ class ControllerCheckoutCart extends Controller {
 			
 			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
       			$this->data['error_warning'] = $this->language->get('error_stock');
+			} elseif (isset($this->session->data['error'])) {
+				$this->data['error_warning'] = $this->session->data['error'];
+			
+				unset($this->session->data['error']);			
 			} else {
 				$this->data['error_warning'] = '';
 			}
@@ -250,7 +254,7 @@ class ControllerCheckoutCart extends Controller {
 					$quantity = 1;
 				}
 				
-				$product_total = $quantity;
+				$product_total = 0;
 				
 				$products = $this->cart->getProducts();
 				
@@ -260,8 +264,8 @@ class ControllerCheckoutCart extends Controller {
 					}
 				}
 				
-				if ($product_info['minimum'] > ($product_total)) {
-					$json['error']['warning'] = sprintf($this->language->get('error_minimum'), $product_info['minimum']);
+				if ($product_info['minimum'] > ($product_total + $quantity)) {
+					$json['error']['warning'] = sprintf($this->language->get('error_minimum'), $product_info['name'], $product_info['minimum']);
 				}
 				
 				// Option validation

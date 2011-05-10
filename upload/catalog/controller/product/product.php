@@ -140,7 +140,6 @@ class ControllerProductProduct extends Controller {
 			$this->data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
 			$this->data['text_or'] = $this->language->get('text_or');
 			$this->data['text_write'] = $this->language->get('text_write');
-			$this->data['text_read'] = $this->language->get('text_read');
 			$this->data['text_note'] = $this->language->get('text_note');
 			$this->data['text_share'] = $this->language->get('text_share');
 			$this->data['text_wait'] = $this->language->get('text_wait');

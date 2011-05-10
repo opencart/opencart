@@ -106,7 +106,6 @@ $_['mail_new_download']              = 'Once your payment has been confirmed you
 $_['mail_new_comment']               = 'The comments for your order are:';
 $_['mail_new_footer']                = 'Please reply to this email if you have any questions.';
 $_['mail_new_powered']               = 'Powered By <a href="http://www.opencart.com">OpenCart</a>.';
-
 $_['mail_update_subject']            = '%s - Order Update %s';
 $_['mail_update_order']              = 'Order ID:';
 $_['mail_update_date_added']         = 'Date Ordered:';

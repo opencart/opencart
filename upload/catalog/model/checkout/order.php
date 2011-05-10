@@ -243,7 +243,13 @@ class ModelCheckoutOrder extends Model {
 			$template->data['store_url'] = $order_info['store_url'];
 			$template->data['customer_id'] = $order_info['customer_id'];
 			$template->data['link'] = $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id;
-			$template->data['download'] = $order_info['store_url'] . 'index.php?route=account/download';
+			
+			if ($order_download_query->num_rows) {
+				$template->data['download'] = $order_info['store_url'] . 'index.php?route=account/download';
+			} else {
+				$template->data['download'] = '';
+			}
+			
 			$template->data['invoice_no'] = $invoice_no;
 			$template->data['order_id'] = $order_id;
 			$template->data['date_added'] = date($language->get('date_format_short'), strtotime($order_info['date_added']));    	

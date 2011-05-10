@@ -394,22 +394,16 @@ final class Cart {
 		return $total;
   	}
 	  	
-  	public function countProducts($product_id = false) {
-		if (!$product_id) {
-			return array_sum($this->session->data['cart']);
-		} else {
-			$product_total = 0;
+  	public function countProducts() {
+		$product_total = 0;
 			
-			$products = $this->getProducts();
+		$products = $this->getProducts();
 			
-			foreach ($products as $product) {
-				if ($product['product_id'] == $product_id) {
-					$product_total += $product['quantity'];
-				}
-			}		
+		foreach ($products as $product) {
+			$product_total += $product['quantity'];
+		}		
 					
-			return $product_total;
-		}
+		return $product_total;
 	}
 	  
   	public function hasProducts() {

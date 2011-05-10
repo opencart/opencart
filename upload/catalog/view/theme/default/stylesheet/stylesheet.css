@@ -82,7 +82,7 @@ label {
 	margin-bottom: 25px;
 }
 #column-left + #column-right + #content, #column-left + #content {
-	margin-left: 195px; 
+	margin-left: 195px;
 }
 #column-right + #content {
 	margin-right: 195px;
@@ -117,7 +117,7 @@ label {
 	top: 15px;
 	left: 425px;
 	color: #999;
-	line-height: 17px;	
+	line-height: 17px;
 }
 #currency a {
 	display: inline-block;
@@ -125,13 +125,12 @@ label {
 	border: 1px solid #CCC;
 	color: #999;
 	text-decoration: none;
-	margin-right: 2px;	
+	margin-right: 2px;
 }
 #currency a b {
-	color: #000;	
-	text-decoration: none;	
+	color: #000;
+	text-decoration: none;
 }
-
 #header #cart {
 	position: absolute;
 	top: 0px;
@@ -186,7 +185,7 @@ label {
 	-webkit-box-shadow: 1px 1px 1px #CCCCCC;
 	-moz-box-shadow: 1px 1px 1px #CCCCCC;
 	box-shadow: 1px 1px 1px #CCCCCC;
-	background: #FFF;	
+	background: #FFF;
 }
 #header #cart.active {
 	position: absolute;
@@ -281,7 +280,7 @@ label {
 #header #search .right {
 	float: right;
 	background: url('../image/search-right.png') no-repeat;
-	width: 2px; 
+	width: 2px;
 	height: 27px;
 }
 #header #search .center {
@@ -313,7 +312,7 @@ label {
 #header .links a {
 	float: left;
 	display: block;
-	padding: 0px 0px 0px 7px; 
+	padding: 0px 0px 0px 7px;
 	text-decoration: none;
 	font-size: 12px;
 }
@@ -325,16 +324,16 @@ label {
 #menu {
 	background: #585858;
 	border-bottom: 1px solid #000000;
-	height: 37px; 
+	height: 37px;
 	margin-bottom: 15px;
 	-webkit-border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
 	-khtml-border-radius: 5px 5px 5px 5px;
-	border-radius: 5px 5px 5px 5px;	
+	border-radius: 5px 5px 5px 5px;
 	-webkit-box-shadow: 0px 2px 2px #DDDDDD;
 	-moz-box-shadow: 0px 2px 2px #DDDDDD;
 	box-shadow: 0px 2px 2px #DDDDDD;
-	padding: 0px 5px;		
+	padding: 0px 5px;
 }
 #menu ul {
 	list-style: none;
@@ -352,7 +351,7 @@ label {
 	font-size: 13px;
 	color: #FFF;
 	line-height: 14px;
-	text-decoration: none;	
+	text-decoration: none;
 	display: block;
 	padding: 12px 15px 11px 15px;
 	z-index: 6;
@@ -392,7 +391,6 @@ label {
 	background: #000000;
 }
 #menu > ul > li > div > ul > li > a {
-	
 }
 #menu > ul > li > div > ul > li > ul > li > a {
 	font-size: 10px;
@@ -491,7 +489,7 @@ table.list tbody td a {
 	text-decoration: underline;
 }
 table.list tbody td {
-	vertical-align: middle;
+	vertical-align: top;	
 	padding: 0px 5px;
 }
 table.list .left {
@@ -614,7 +612,7 @@ a.button:hover span {
 	border: 1px solid #DDDDDD;
 	padding: 10px;
 	margin-bottom: 20px;
-	z-index: 2;	
+	z-index: 2;
 	overflow: auto;
 }
 /* box */
@@ -638,7 +636,7 @@ a.button:hover span {
 }
 .box .box-content {
 	background: #FFFFFF;
-	-webkit-border-radius: 0px 0px 7px 7px;	
+	-webkit-border-radius: 0px 0px 7px 7px;
 	-moz-border-radius: 0px 0px 7px 7px;
 	-khtml-border-radius: 0px 0px 7px 7px;
 	border-radius: 0px 0px 7px 7px;
@@ -647,7 +645,7 @@ a.button:hover span {
 	border-bottom: 1px solid #DBDEE1;
 	-webkit-box-shadow: 0px 2px 2px #EEEEEE;
 	-moz-box-shadow: 0px 2px 2px #EEEEEE;
-	box-shadow: 0px 2px 2px #EEEEEE;	
+	box-shadow: 0px 2px 2px #EEEEEE;
 	padding: 10px;
 }
 /* box products */
@@ -662,6 +660,7 @@ a.button:hover span {
 	float: left;
 	margin-right: 20px;
 	margin-bottom: 20px;
+	text-align: center;
 }
 .box-product .image {
 	display: block;
@@ -700,18 +699,15 @@ a.button:hover span {
 	margin: 0;
 	padding: 0;
 }
-
 .box-category > ul > li + li {
 	border-top: 1px solid #EEEEEE;
 }
-
 .box-category > ul > li > a {
 	text-decoration: none;
 	color: #333;
 	display: block;
 	padding: 8px 8px 8px 0px;
 }
-
 .box-category > ul > li ul {
 	padding-left: 10px;
 }

@@ -249,8 +249,18 @@ class ControllerCheckoutCart extends Controller {
 				} else {
 					$quantity = 1;
 				}
-						
-				if ($product_info['minimum'] > ($quantity + $this->cart->countProducts($this->request->post['product_id']))) {
+				
+				$product_total = $quantity;
+				
+				$products = $this->cart->getProducts();
+				
+				foreach ($products as $product) {
+					if ($product['product_id'] == $this->request->post['product_id']) {
+						$product_total += $product['quantity'];
+					}
+				}
+				
+				if ($product_info['minimum'] > ($product_total)) {
 					$json['error']['warning'] = sprintf($this->language->get('error_minimum'), $product_info['minimum']);
 				}
 				

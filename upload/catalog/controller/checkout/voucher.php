@@ -15,7 +15,7 @@ class ControllerCheckoutVoucher extends Controller {
 	
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$voucher_data = array(
-				'name'             => sprintf($this->language->get('text_voucher'), $this->currency->convert($this->request->post['amount'], $this->currency->getCode(), $this->config->get('config_currency')), $this->request->post['to_name']),
+				'name'             => sprintf($this->language->get('text_for'), $this->currency->convert($this->request->post['amount'], $this->currency->getCode(), $this->config->get('config_currency')), $this->request->post['to_name']),
 				'to_name'          => $this->request->post['to_name'],
 				'to_email'         => $this->request->post['to_email'],
 				'from_name'        => $this->request->post['from_name'],

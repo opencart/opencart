@@ -1,8 +1,5 @@
 <?php
 class ControllerPaymentPPStandard extends Controller {
-	private $error;
-	private $order_info;
-
 	protected function index() {
     	$this->data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -14,227 +11,254 @@ class ControllerPaymentPPStandard extends Controller {
 
 		$this->load->model('checkout/order');
 
-		$this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		// Check for supported currency, otherwise convert to USD.
-		$currencies = array('AUD','CAD','EUR','GBP','JPY','USD','NZD','CHF','HKD','SGD','SEK','DKK','PLN','NOK','HUF','CZK','ILS','MXN','MYR','BRL','PHP','TWD','THB','TRY');
-		
-		if (in_array($this->order_info['currency_code'], $currencies)) {
-			$currency = $this->order_info['currency_code'];
-		} else {
-			$currency = 'USD';
-		}
-
-		// Get all totals
-		$total = 0;
-		$taxes = $this->cart->getTaxes();
-
-		$this->load->model('setting/extension');
-
-		$sort_order = array();
-
-		$results = $this->model_setting_extension->getExtensions('total');
-
-		foreach ($results as $key => $value) {
-			$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
-		}
-
-		array_multisort($sort_order, SORT_ASC, $results);
-
-		$discount_total = 0;
-		
-		foreach ($results as $result) {
-			if ($this->config->get($result['code'] . '_status')) {
-				$this->load->model('total/' . $result['code']);
-				
-				$old_total = $total;
-				
-				$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
+		if ($order_info) {
+			// Check for supported currency, otherwise convert to USD.
+			$currencies = array(
+				'AUD',
+				'CAD',
+				'EUR',
+				'GBP',
+				'JPY',
+				'USD',
+				'NZD',
+				'CHF',
+				'HKD',
+				'SGD',
+				'SEK',
+				'DKK',
+				'PLN',
+				'NOK',
+				'HUF',
+				'CZK',
+				'ILS',
+				'MXN',
+				'MYR',
+				'BRL',
+				'PHP',
+				'TWD',
+				'THB',
+				'TRY'
+			);
+			
+			if (in_array($order_info['currency_code'], $currencies)) {
+				$currency = $order_info['currency_code'];
+			} else {
+				$currency = 'USD';
+			}
 	
-				if ($total < $old_total) {
-					$discount_total += $old_total - $total;
+			// Get all totals
+			$total = 0;
+			$taxes = $this->cart->getTaxes();
+	
+			$this->load->model('setting/extension');
+	
+			$sort_order = array();
+	
+			$results = $this->model_setting_extension->getExtensions('total');
+	
+			foreach ($results as $key => $value) {
+				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+			}
+	
+			array_multisort($sort_order, SORT_ASC, $results);
+	
+			$discount_total = 0;
+			
+			foreach ($results as $result) {
+				if ($this->config->get($result['code'] . '_status')) {
+					$this->load->model('total/' . $result['code']);
+					
+					$old_total = $total;
+					
+					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
+		
+					if ($total < $old_total) {
+						$discount_total += $old_total - $total;
+					}
 				}
 			}
-		}
-		
-		$this->data['total'] = $total;
-
-
-		# Get Shipping Total
-		$shipping_total = 0;
-		if ($this->cart->hasShipping()) {
-			$shipping_total = $this->session->data['shipping_method']['cost'];
-		}
-
-
-		# Get Tax Total
-		$tax_total = 0;
-		foreach ($taxes as $key => $value) {
-			$tax_total += $value;
-		}
-
-
-		# Create form fields
-		$this->data['fields'] = array();
-		$this->data['fields']['cmd'] = '_cart';
-		$this->data['fields']['upload'] = '1';
-
-
-		# Get itemized product total
-		$product_total = 0;
-		$i = 1;
-		foreach ($this->cart->getProducts() as $product) {
-			$price = $product['price'];
-	        $this->data['fields']['item_number_' . $i . ''] = $product['model'];
-            $this->data['fields']['item_name_' . $i . ''] = $product['name'];
-            $this->data['fields']['amount_' . $i . ''] = $this->currency->format($price, $currency, FALSE, FALSE);
-            $this->data['fields']['quantity_' . $i . ''] = $product['quantity'];
-	        $this->data['fields']['weight_' . $i . ''] = $product['weight'];
-	        $product_total += ($price * $product['quantity']);
-            if (!empty($product['option'])) {
-                $x=0;
-                foreach ($product['option'] as $res) {
-                    $this->data['fields']['on' . $x . '_' . $i . '']=$res['name'];
-                    $this->data['fields']['os' . $x . '_' . $i . '']=$res['value'];
-                    $x++;
-                }
-            }
-            $i++;
-        }
-
-
-        # Hack to bypass paypal's discount limitation: https://www.x.com/thread/47330
-        $this->data['fields']['discount_amount_cart'] = $this->currency->format($discount_total, $currency, FALSE, FALSE);
-		if ($discount_total < $product_total) {
-			$this->data['fields']['shipping_1'] = $this->currency->format($shipping_total, $currency, FALSE, FALSE);
-			$this->data['fields']['tax_cart'] = $this->currency->format($tax_total, $currency, FALSE, FALSE);
-		} elseif ($discount_total) {
-
-			if ($shipping_total) {
-				// Set Shipping as a line item to fool paypal in thinking that the subtotal is higher
-				$this->data['fields']['item_number_' . $i . ''] = $this->session->data['shipping_method']['id'];
-				$this->data['fields']['item_name_' . $i . ''] = $this->session->data['shipping_method']['title'];
-				$this->data['fields']['amount_' . $i . ''] = $this->currency->format($shipping_total, $currency, FALSE, FALSE);
-				$this->data['fields']['quantity_' . $i . ''] = 1;
-				$this->data['fields']['weight_' . $i . ''] = 0;
-				//$product_total += $shipping_total;
+			
+			$this->data['total'] = $total;
+	
+	
+			# Get Shipping Total
+			$shipping_total = 0;
+			if ($this->cart->hasShipping()) {
+				$shipping_total = $this->session->data['shipping_method']['cost'];
+			}
+	
+	
+			# Get Tax Total
+			$tax_total = 0;
+			foreach ($taxes as $key => $value) {
+				$tax_total += $value;
+			}
+	
+	
+			# Create form fields
+			$this->data['fields'] = array();
+			$this->data['fields']['cmd'] = '_cart';
+			$this->data['fields']['upload'] = '1';
+	
+	
+			# Get itemized product total
+			$product_total = 0;
+			$i = 1;
+			foreach ($this->cart->getProducts() as $product) {
+				$price = $product['price'];
+				$this->data['fields']['item_number_' . $i . ''] = $product['model'];
+				$this->data['fields']['item_name_' . $i . ''] = $product['name'];
+				$this->data['fields']['amount_' . $i . ''] = $this->currency->format($price, $currency, FALSE, FALSE);
+				$this->data['fields']['quantity_' . $i . ''] = $product['quantity'];
+				$this->data['fields']['weight_' . $i . ''] = $product['weight'];
+				$product_total += ($price * $product['quantity']);
+				if (!empty($product['option'])) {
+					$x=0;
+					foreach ($product['option'] as $res) {
+						$this->data['fields']['on' . $x . '_' . $i . '']=$res['name'];
+						$this->data['fields']['os' . $x . '_' . $i . '']=$res['value'];
+						$x++;
+					}
+				}
 				$i++;
 			}
-
-			if ($tax_total) {
-				// Set Tax as a line item to fool paypal in thinking that the subtotal is higher
-				$this->data['fields']['item_number_' . $i . ''] = $this->language->get('text_tax');
-				$this->data['fields']['item_name_' . $i . ''] = $this->language->get('text_tax');
-				$this->data['fields']['amount_' . $i . ''] = $this->currency->format($tax_total, $currency, FALSE, FALSE);
-				$this->data['fields']['quantity_' . $i . ''] = 1;
-				$this->data['fields']['weight_' . $i . ''] = 0;
-				//$product_total += $tax_total;
-				$i++;
-			}
-
-			// Since shipping & tax are now line items, remove the actual shipping & tax value
-			$this->data['fields']['shipping_1'] = '0.00';
-			$this->data['fields']['tax_cart'] = '0.00';
-		}
-
-
-		# Get any remaining balance as a handling fee
-		$remaining_total = $total - $product_total - $tax_total - $shipping_total + $discount_total;
-		if ($remaining_total > 0) {
-			$this->data['fields']['handling_cart'] = number_format(abs($this->currency->format($remaining_total, $currency, FALSE, FALSE)), 2, '.', '');
-		}
-
-
-		# Finish the rest of the form
-		$this->data['fields']['business'] = $this->config->get('pp_standard_email');
-		$this->data['fields']['currency_code'] = $currency;
-		
-		
-		# If no shipping address, just use the billing address for both
-		if (!isset($this->session->data['shipping_address_id']) && !isset($this->session->data['guest']['shipping'])) {
-
-			// Shipping Address uses payment address
-			$this->data['fields']['first_name'] = html_entity_decode($this->order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['last_name'] = html_entity_decode($this->order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['address1'] = html_entity_decode($this->order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['address2'] = html_entity_decode($this->order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['city'] = html_entity_decode($this->order_info['payment_city'], ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['zip'] = html_entity_decode($this->order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['country'] = $this->order_info['payment_iso_code_2'];
-			if ($this->order_info['payment_iso_code_2'] == 'US') {
-				$this->load->model('localisation/zone');
-				$zone = $this->model_localisation_zone->getZone($this->order_info['payment_zone_id']);
-				if (isset($zone['code'])) {
-					$this->data['fields']['state'] = html_entity_decode($zone['code'], ENT_QUOTES, 'UTF-8');
+	
+	
+			# Hack to bypass paypal's discount limitation: https://www.x.com/thread/47330
+			$this->data['fields']['discount_amount_cart'] = $this->currency->format($discount_total, $currency, FALSE, FALSE);
+			if ($discount_total < $product_total) {
+				$this->data['fields']['shipping_1'] = $this->currency->format($shipping_total, $currency, FALSE, FALSE);
+				$this->data['fields']['tax_cart'] = $this->currency->format($tax_total, $currency, FALSE, FALSE);
+			} elseif ($discount_total) {
+	
+				if ($shipping_total) {
+					// Set Shipping as a line item to fool paypal in thinking that the subtotal is higher
+					$this->data['fields']['item_number_' . $i . ''] = $this->session->data['shipping_method']['id'];
+					$this->data['fields']['item_name_' . $i . ''] = $this->session->data['shipping_method']['title'];
+					$this->data['fields']['amount_' . $i . ''] = $this->currency->format($shipping_total, $currency, FALSE, FALSE);
+					$this->data['fields']['quantity_' . $i . ''] = 1;
+					$this->data['fields']['weight_' . $i . ''] = 0;
+					//$product_total += $shipping_total;
+					$i++;
 				}
-				$phone = preg_replace("/[^0-9.]/", "", html_entity_decode($this->order_info['telephone'], ENT_QUOTES, 'UTF-8'));
-				$this->data['fields']['night_phone_a'] = html_entity_decode(substr($phone,0,3), ENT_QUOTES, 'UTF-8');
-				$this->data['fields']['night_phone_b'] = html_entity_decode(substr($phone,3,3), ENT_QUOTES, 'UTF-8');
-				$this->data['fields']['night_phone_c'] = html_entity_decode(substr($phone,6), ENT_QUOTES, 'UTF-8');
-			}
-
-		} else { // if there is a shipping address
-
-			// Shipping Address uses shipping address
-			$this->data['fields']['first_name'] = html_entity_decode($this->order_info['shipping_firstname'], ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['last_name'] = html_entity_decode($this->order_info['shipping_lastname'], ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['address1'] = html_entity_decode($this->order_info['shipping_address_1'], ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['address2'] = html_entity_decode($this->order_info['shipping_address_2'], ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['city'] = html_entity_decode($this->order_info['shipping_city'], ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['zip'] = html_entity_decode($this->order_info['shipping_postcode'], ENT_QUOTES, 'UTF-8');
-			$this->data['fields']['country'] = $this->order_info['shipping_iso_code_2'];
-			if ($this->order_info['shipping_iso_code_2'] == 'US') {
-				$this->load->model('localisation/zone');
-				$zone = $this->model_localisation_zone->getZone($this->order_info['shipping_zone_id']);
-				if (isset($zone['code'])) {
-					$this->data['fields']['state'] = html_entity_decode($zone['code'], ENT_QUOTES, 'UTF-8');
+	
+				if ($tax_total) {
+					// Set Tax as a line item to fool paypal in thinking that the subtotal is higher
+					$this->data['fields']['item_number_' . $i . ''] = $this->language->get('text_tax');
+					$this->data['fields']['item_name_' . $i . ''] = $this->language->get('text_tax');
+					$this->data['fields']['amount_' . $i . ''] = $this->currency->format($tax_total, $currency, FALSE, FALSE);
+					$this->data['fields']['quantity_' . $i . ''] = 1;
+					$this->data['fields']['weight_' . $i . ''] = 0;
+					//$product_total += $tax_total;
+					$i++;
 				}
-				$phone = preg_replace("/[^0-9.]/", "", html_entity_decode($this->order_info['telephone'], ENT_QUOTES, 'UTF-8'));
-				$this->data['fields']['night_phone_a'] = html_entity_decode(substr($phone,0,3), ENT_QUOTES, 'UTF-8');
-				$this->data['fields']['night_phone_b'] = html_entity_decode(substr($phone,3,3), ENT_QUOTES, 'UTF-8');
-				$this->data['fields']['night_phone_c'] = html_entity_decode(substr($phone,6), ENT_QUOTES, 'UTF-8');
+	
+				// Since shipping & tax are now line items, remove the actual shipping & tax value
+				$this->data['fields']['shipping_1'] = '0.00';
+				$this->data['fields']['tax_cart'] = '0.00';
 			}
-
+	
+	
+			# Get any remaining balance as a handling fee
+			$remaining_total = $total - $product_total - $tax_total - $shipping_total + $discount_total;
+			if ($remaining_total > 0) {
+				$this->data['fields']['handling_cart'] = number_format(abs($this->currency->format($remaining_total, $currency, FALSE, FALSE)), 2, '.', '');
+			}
+	
+	
+			# Finish the rest of the form
+			$this->data['fields']['business'] = $this->config->get('pp_standard_email');
+			$this->data['fields']['currency_code'] = $currency;
+			
+			
+			# If no shipping address, just use the billing address for both
+			if (!isset($this->session->data['shipping_address_id']) && !isset($this->session->data['guest']['shipping'])) {
+	
+				// Shipping Address uses payment address
+				$this->data['fields']['first_name'] = html_entity_decode($this->order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['last_name'] = html_entity_decode($this->order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['address1'] = html_entity_decode($this->order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['address2'] = html_entity_decode($this->order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['city'] = html_entity_decode($this->order_info['payment_city'], ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['zip'] = html_entity_decode($this->order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['country'] = $this->order_info['payment_iso_code_2'];
+				if ($this->order_info['payment_iso_code_2'] == 'US') {
+					$this->load->model('localisation/zone');
+					$zone = $this->model_localisation_zone->getZone($this->order_info['payment_zone_id']);
+					if (isset($zone['code'])) {
+						$this->data['fields']['state'] = html_entity_decode($zone['code'], ENT_QUOTES, 'UTF-8');
+					}
+					$phone = preg_replace("/[^0-9.]/", "", html_entity_decode($this->order_info['telephone'], ENT_QUOTES, 'UTF-8'));
+					$this->data['fields']['night_phone_a'] = html_entity_decode(substr($phone,0,3), ENT_QUOTES, 'UTF-8');
+					$this->data['fields']['night_phone_b'] = html_entity_decode(substr($phone,3,3), ENT_QUOTES, 'UTF-8');
+					$this->data['fields']['night_phone_c'] = html_entity_decode(substr($phone,6), ENT_QUOTES, 'UTF-8');
+				}
+	
+			} else { // if there is a shipping address
+	
+				// Shipping Address uses shipping address
+				$this->data['fields']['first_name'] = html_entity_decode($this->order_info['shipping_firstname'], ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['last_name'] = html_entity_decode($this->order_info['shipping_lastname'], ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['address1'] = html_entity_decode($this->order_info['shipping_address_1'], ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['address2'] = html_entity_decode($this->order_info['shipping_address_2'], ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['city'] = html_entity_decode($this->order_info['shipping_city'], ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['zip'] = html_entity_decode($this->order_info['shipping_postcode'], ENT_QUOTES, 'UTF-8');
+				$this->data['fields']['country'] = $this->order_info['shipping_iso_code_2'];
+				if ($this->order_info['shipping_iso_code_2'] == 'US') {
+					$this->load->model('localisation/zone');
+					$zone = $this->model_localisation_zone->getZone($this->order_info['shipping_zone_id']);
+					if (isset($zone['code'])) {
+						$this->data['fields']['state'] = html_entity_decode($zone['code'], ENT_QUOTES, 'UTF-8');
+					}
+					$phone = preg_replace("/[^0-9.]/", "", html_entity_decode($this->order_info['telephone'], ENT_QUOTES, 'UTF-8'));
+					$this->data['fields']['night_phone_a'] = html_entity_decode(substr($phone,0,3), ENT_QUOTES, 'UTF-8');
+					$this->data['fields']['night_phone_b'] = html_entity_decode(substr($phone,3,3), ENT_QUOTES, 'UTF-8');
+					$this->data['fields']['night_phone_c'] = html_entity_decode(substr($phone,6), ENT_QUOTES, 'UTF-8');
+				}
+	
+			}
+			
+			$this->data['fields']['email'] = $this->order_info['email'];
+			$this->data['fields']['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($this->order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($this->order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
+			$this->data['fields']['lc'] = $this->session->data['language'];
+			$this->data['fields']['rm'] = '2';
+			$this->data['fields']['charset'] = 'utf-8';
+	
+			if (!$this->config->get('pp_standard_transaction')) {
+				$this->data['fields']['paymentaction'] = 'authorization';
+			} else {
+				$this->data['fields']['paymentaction'] = 'sale';
+			}
+	
+			$this->data['fields']['return'] = $this->url->link('payment/pp_standard/pdt');
+			$this->data['fields']['notify_url'] = $this->url->link('payment/pp_standard/callback');
+			
+			if ($this->request->get['route'] != 'checkout/guest_step_3') {
+				$this->data['fields']['cancel_return'] = $this->url->link('checkout/payment', '', 'SSL');
+			} else {
+				$this->data['fields']['cancel_return'] = $this->url->link('checkout/guest_step_2', '', 'SSL');
+			}
+	
+			$this->load->library('encryption');
+	
+			$encryption = new Encryption($this->config->get('config_encryption'));
+	
+			$this->data['fields']['custom'] = $encryption->encrypt($this->session->data['order_id']);
+	
+			$this->data['testmode'] = $this->config->get('pp_standard_test');
+	
+			$this->data['text_testmode'] = $this->language->get('text_testmode');
+	
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_standard.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/payment/pp_standard.tpl';
+			} else {
+				$this->template = 'default/template/payment/pp_standard.tpl';
+			}
+	
+			$this->render();
 		}
-		
-		$this->data['fields']['email'] = $this->order_info['email'];
-		$this->data['fields']['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($this->order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($this->order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
-		$this->data['fields']['lc'] = $this->session->data['language'];
-		$this->data['fields']['rm'] = '2';
-		$this->data['fields']['charset'] = 'utf-8';
-
-		if (!$this->config->get('pp_standard_transaction')) {
-			$this->data['fields']['paymentaction'] = 'authorization';
-		} else {
-			$this->data['fields']['paymentaction'] = 'sale';
-		}
-
-		$this->data['fields']['return'] = $this->url->link('payment/pp_standard/pdt');
-		$this->data['fields']['notify_url'] = $this->url->link('payment/pp_standard/callback');
-		
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['fields']['cancel_return'] = $this->url->link('checkout/payment', '', 'SSL');
-		} else {
-			$this->data['fields']['cancel_return'] = $this->url->link('checkout/guest_step_2', '', 'SSL');
-		}
-
-		$this->load->library('encryption');
-
-		$encryption = new Encryption($this->config->get('config_encryption'));
-
-		$this->data['fields']['custom'] = $encryption->encrypt($this->session->data['order_id']);
-
-		$this->data['testmode'] = $this->config->get('pp_standard_test');
-
-		$this->data['text_testmode'] = $this->language->get('text_testmode');
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_standard.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/pp_standard.tpl';
-		} else {
-			$this->template = 'default/template/payment/pp_standard.tpl';
-		}
-
-		$this->render();
 	}
 
 	public function confirm() {

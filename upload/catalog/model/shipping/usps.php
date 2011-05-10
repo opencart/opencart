@@ -369,7 +369,6 @@ class ModelShippingUsps extends Model {
 									}
 								}
 							} else {
-							
 								$error = $package->getElementsByTagName('Error')->item(0);
 								
 								$method_data = array(

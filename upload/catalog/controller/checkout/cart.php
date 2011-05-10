@@ -379,6 +379,10 @@ class ControllerCheckoutCart extends Controller {
 		$this->load->library('json');
 		
 		$this->response->setOutput(Json::encode($json));
-	}	
+	}
+	
+	public function validate() {
+		
+	}
 }
 ?>

@@ -20,9 +20,9 @@ class ModelShippingUps extends Model {
 			
 			$weight = ($weight < 0.1 ? 0.1 : $weight);
 			
-			$length = $this->length->convert($this->config->get('ups_length'), $this->config->get('config_length_class'), $this->config->get('ups_measurement_class'));
-			$width  = $this->length->convert($this->config->get('ups_width'), $this->config->get('config_length_class'), $this->config->get('ups_measurement_class'));
-			$height = $this->length->convert($this->config->get('ups_height'), $this->config->get('config_length_class'), $this->config->get('ups_measurement_class'));
+			$length = $this->length->convert($this->config->get('ups_length'), $this->config->get('config_length_class'), $this->config->get('ups_length_class'));
+			$width = $this->length->convert($this->config->get('ups_width'), $this->config->get('config_length_class'), $this->config->get('ups_length_class'));
+			$height = $this->length->convert($this->config->get('ups_height'), $this->config->get('config_length_class'), $this->config->get('ups_length_class'));
 			
 			$service_code = array(
 				// US Origin
@@ -161,7 +161,7 @@ class ModelShippingUps extends Model {
 
 			$xml .= '		    <Dimensions>';
     		$xml .= '				<UnitOfMeasurement>';
-    		$xml .= '					<Code>' . $this->config->get('ups_measurement_code') . '</Code>';
+    		$xml .= '					<Code>' . $this->config->get('ups_length_code') . '</Code>';
     		$xml .= '				</UnitOfMeasurement>';
     		$xml .= '				<Length>' . $length . '</Length>';
     		$xml .= '				<Width>' . $width . '</Width>';

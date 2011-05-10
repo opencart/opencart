@@ -14,7 +14,7 @@ class ControllerCheckoutVoucher extends Controller {
 		}
 	
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->session->data['vouchers'][] = array(
+			$voucher_data = array(
 				'to_name'          => $this->request->post['to_name'],
 				'to_email'         => $this->request->post['to_email'],
 				'from_name'        => $this->request->post['from_name'],
@@ -23,7 +23,9 @@ class ControllerCheckoutVoucher extends Controller {
 				'amount'           => $this->currency->convert($this->request->post['amount'], $this->currency->getCode(), $this->config->get('config_currency')),
 				'voucher_theme_id' => $this->request->post['voucher_theme_id']
 			);
-	  	  
+	  	  	
+			$this->cart->addVoucher($voucher_data);
+		  
 	  		$this->redirect($this->url->link('checkout/voucher/success'));
     	} 		
 

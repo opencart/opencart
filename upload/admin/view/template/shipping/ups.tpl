@@ -650,9 +650,9 @@
               </select></td>
           </tr>
 		  <tr>
-            <td><?php echo $entry_measurement_code; ?></td>
-            <td><select name="ups_measurement_code">
-		    <?php if (!$ups_measurement_code || $ups_measurement_code == 'CM') { ?>
+            <td><?php echo $entry_length_code; ?></td>
+            <td><select name="ups_length_code">
+		    <?php if ($ups_length_code == 'CM') { ?>
             <option value="CM" selected="selected">CM</option>
 			<option value="IN">IN</option>
             <?php } else { ?>
@@ -662,10 +662,10 @@
 		    </select></td>
           </tr>
           <tr>
-            <td><?php echo $entry_measurement_class; ?></td>
-            <td><select name="ups_measurement_class">
+            <td><?php echo $entry_length_class; ?></td>
+            <td><select name="ups_length_class">
               <?php foreach ($length_classes as $length_class) { ?>
-              <?php if ($length_class['unit'] == $ups_measurement_class) { ?>
+              <?php if ($length_class['unit'] == $ups_length_class) { ?>
               <option value="<?php echo $length_class['unit']; ?>" selected="selected"><?php echo $length_class['title']; ?></option>
               <?php } else { ?>
               <option value="<?php echo $length_class['unit']; ?>"><?php echo $length_class['title']; ?></option>

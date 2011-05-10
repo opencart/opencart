@@ -218,6 +218,7 @@ class ModelCheckoutOrder extends Model {
 			
 			$template->data['mail_greeting'] = sprintf($language->get('mail_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 			$template->data['mail_link'] = $language->get('mail_new_link');
+			$template->data['mail_download'] = $language->get('mail_new_download');
 			$template->data['mail_order_detail'] = $language->get('mail_new_order_detail');
 			$template->data['mail_invoice_no'] = $language->get('mail_new_invoice_no');
 			$template->data['mail_order_id'] = $language->get('mail_new_order_id');
@@ -242,6 +243,7 @@ class ModelCheckoutOrder extends Model {
 			$template->data['store_url'] = $order_info['store_url'];
 			$template->data['customer_id'] = $order_info['customer_id'];
 			$template->data['link'] = $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id;
+			$template->data['download'] = $order_info['store_url'] . 'index.php?route=account/download';
 			$template->data['invoice_no'] = $invoice_no;
 			$template->data['order_id'] = $order_id;
 			$template->data['date_added'] = date($language->get('date_format_short'), strtotime($order_info['date_added']));    	
@@ -399,13 +401,9 @@ class ModelCheckoutOrder extends Model {
 				$text .= $order_info['store_url'] . 'index.php?route=account/download' . "\n\n";
 			}
 			
-			if ($order_info['comment'] != '') {
-				$comment = ($order_info['comment'] .  "\n\n" . $comment);
-			}
-			
-			if ($comment) {
+			if ($order_info['comment']) {
 				$text .= $language->get('mail_new_comment') . "\n\n";
-				$text .= $comment . "\n\n";
+				$text .= $order_info['comment'] . "\n\n";
 			}
 			
 			$text .= $language->get('mail_new_footer') . "\n\n";
@@ -430,17 +428,6 @@ class ModelCheckoutOrder extends Model {
 			// Admin Alert Mail
 			if ($this->config->get('config_alert_mail')) {
 				$subject = sprintf($language->get('mail_new_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'), $order_id);
-				
-				// HTML
-				$template->data['mail_greeting'] = $language->get('mail_new_received') . "\n\n";
-				$template->data['invoice'] = '';
-				$template->data['mail_invoice'] = '';
-				
-				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/mail_confirm.tpl')) {
-					$html = $template->fetch($this->config->get('config_template') . '/template/checkout/mail_confirm.tpl');
-				} else {
-					$html = $template->fetch('default/template/checkout/mail_confirm.tpl');
-				}
 				
 				// Text 
 				$text  = $language->get('mail_new_received') . "\n\n";
@@ -490,9 +477,7 @@ class ModelCheckoutOrder extends Model {
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($order_info['store_name']);
 				$mail->setSubject($subject);
-				$mail->setHtml($html);
 				$mail->setText($text);
-				$mail->addAttachment(DIR_IMAGE . $this->config->get('config_logo'));
 				$mail->send();
 				
 				// Send to additional alert emails

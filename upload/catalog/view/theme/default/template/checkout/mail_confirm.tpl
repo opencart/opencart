@@ -80,6 +80,10 @@ table.list .center {
   <p><?php echo $mail_link; ?></p>
   <p><a href="<?php echo $link; ?>"><?php echo $link; ?></a></p>
   <?php } ?>
+  <?php if ($download) { ?>
+  <p><?php echo $mail_download; ?></p>
+  <p><a href="<?php echo $download; ?>"><?php echo $download; ?></a></p>
+  <?php } ?>
   <table class="list">
     <thead>
       <tr>

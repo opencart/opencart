@@ -202,7 +202,7 @@ class ModelSaleReturn extends Model {
 
 				$message  = $this->language->get('mail_return_id') . ' ' . $return_id . "\n";
 				$message .= $this->language->get('mail_date_added') . ' ' . date($this->language->get('date_format_short'), strtotime($return_query->row['date_added'])) . "\n\n";
-				$message .= $this->language->get('mail_return_status') . "\n\n";
+				$message .= $this->language->get('mail_return_status') . "\n";
 				$message .= $return_query->row['status'] . "\n\n";
 
 				if ($data['comment']) {

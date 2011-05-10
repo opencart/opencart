@@ -280,8 +280,8 @@ final class Cart {
 		return $product_data;
   	}
 	
-	public function getVoucher() {
-		
+	public function getVouchers() {
+		return $this->session->data['voucher'];
 	}
 		  
   	public function add($product_id, $qty = 1, $options = array()) {
@@ -312,6 +312,10 @@ final class Cart {
 		if (isset($this->session->data['cart'][$key])) {
      		unset($this->session->data['cart'][$key]);
   		}
+		
+		if (isset($this->session->data['voucher'][$key])) {
+     		unset($this->session->data['voucher'][$key]);
+  		}		
 	}
 	
   	public function clear() {
@@ -319,8 +323,9 @@ final class Cart {
 		$this->session->data['voucher'] = array();
   	}
   	
-	public function addVoucher($name, $amount) {	
+	public function addVoucher($name, $to_name, $to_email, $amount) {	
 		$this->session->data['voucher'][rand()] = array(
+			'name'             => $name,
 			'to_name'          => $this->request->post['to_name'],
 			'to_email'         => $this->request->post['to_email'],
 			'from_name'        => $this->request->post['from_name'],

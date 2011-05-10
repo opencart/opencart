@@ -9,28 +9,20 @@
   <table class="list">
     <thead>
       <tr>
-        <?php if ($invoice_no) { ?>
-        <td class="left"><?php echo $text_invoice_no; ?></td>
-        <?php } ?>
-        <td class="left"><?php echo $text_order_id; ?></td>
-        <td class="left"><?php echo $text_date_added; ?></td>
-        <td class="left"><?php echo $text_payment_method; ?></td>
-        <?php if ($shipping_method) { ?>
-        <td class="left"><?php echo $text_shipping_method; ?></td>
-        <?php } ?>
+        <td class="left" colspan="2"><?php echo $text_order_detail; ?></td>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <?php if ($invoice_no) { ?>
-        <td class="left"><?php echo $invoice_no; ?></td>
-        <?php } ?>
-        <td class="left">#<?php echo $order_id; ?></td>
-        <td class="left"><?php echo $date_added; ?></td>
-        <td class="left"><?php echo $payment_method; ?></td>
-        <?php if ($shipping_method) { ?>
-        <td class="left"><?php echo $shipping_method; ?></td>
-        <?php } ?>
+        <td class="left"><?php if ($invoice_no) { ?>
+          <b><?php echo $text_invoice_no; ?></b> <?php echo $invoice_no; ?><br />
+          <?php } ?>
+          <b><?php echo $text_order_id; ?></b> #<?php echo $order_id; ?><br />
+          <b><?php echo $text_date_added; ?></b> <?php echo $date_added; ?></td>
+        <td class="left"><b><?php echo $text_payment_method; ?></b> <?php echo $payment_method; ?><br />
+          <?php if ($shipping_method) { ?>
+          <b><?php echo $text_shipping_method; ?></b> <?php echo $shipping_method; ?>
+          <?php } ?></td>
       </tr>
     </tbody>
   </table>
@@ -136,5 +128,5 @@
   <div class="buttons">
     <div class="right"><a href="<?php echo $continue; ?>" class="button"><span><?php echo $button_continue; ?></span></a></div>
   </div>
-  <?php echo $content_bottom; ?> </div>
+  <?php echo $content_bottom; ?></div>
 <?php echo $footer; ?> 

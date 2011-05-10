@@ -331,7 +331,7 @@ class ModelSaleOrder extends Model {
 				$message .= $language->get('mail_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_query->row['date_added'])) . "\n\n";
 				$message .= $language->get('mail_order_status') . "\n\n";
 				$message .= $order_query->row['status'] . "\n\n";
-				$message .= $language->get('mail_invoice') . "\n";
+				$message .= $language->get('mail_link') . "\n";
 				$message .= html_entity_decode($order_query->row['store_url'] . 'index.php?route=account/invoice&order_id=' . $order_id, ENT_QUOTES, 'UTF-8') . "\n\n";
 
 				if ($data['comment']) {

@@ -87,6 +87,6 @@ $_['mail_order']              = 'Order ID:';
 $_['mail_date_added']         = 'Date Ordered:';
 $_['mail_order_status']       = 'Your order has been updated to the following status:';
 $_['mail_comment']            = 'The comments for your order are:';
-$_['mail_invoice']            = 'To view your order click on the link below:';
+$_['mail_link']               = 'To view your order click on the link below:';
 $_['mail_footer']             = 'Please reply to this email if you have any questions.';
 ?>

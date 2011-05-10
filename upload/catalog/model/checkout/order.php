@@ -149,7 +149,7 @@ class ModelCheckoutOrder extends Model {
 		$order_info = $this->getOrder($order_id);
 		 
 		if ($order_info && !$order_info['order_status_id']) {
-			$query = $this->db->query("SELECT MAX(invoice_no) AS invoice_no FROM `" . DB_PREFIX . "order` WHERE invoice_prefix = '" . $this->db->escape($this->config->get('config_invoice_prefix')) . "'");
+			$query = $this->db->query("SELECT MAX(invoice_no) AS invoice_no FROM `" . DB_PREFIX . "order`");
 	
 			if ($query->row['invoice_no']) {
 				$invoice_no = (int)$query->row['invoice_no'] + 1;
@@ -217,50 +217,40 @@ class ModelCheckoutOrder extends Model {
 			$template->data['title'] = sprintf($language->get('mail_new_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
 			
 			$template->data['mail_greeting'] = sprintf($language->get('mail_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+			$template->data['mail_link'] = $language->get('mail_new_link');
 			$template->data['mail_order_detail'] = $language->get('mail_new_order_detail');
+			$template->data['mail_invoice_no'] = $language->get('mail_new_invoice_no');
 			$template->data['mail_order_id'] = $language->get('mail_new_order_id');
-			$template->data['mail_invoice'] = $language->get('mail_new_invoice');
 			$template->data['mail_date_added'] = $language->get('mail_new_date_added');
-			$template->data['mail_telephone'] = $language->get('mail_new_telephone');
-			$template->data['mail_email'] = $language->get('mail_new_email');
-			$template->data['mail_ip'] = $language->get('mail_new_ip');
-			$template->data['mail_fax'] = $language->get('mail_new_fax');		
-			$template->data['mail_shipping_address'] = $language->get('mail_new_shipping_address');
-			$template->data['mail_payment_address'] = $language->get('mail_new_payment_address');
+			$template->data['mail_payment_method'] = $language->get('mail_new_payment_method');	
 			$template->data['mail_shipping_method'] = $language->get('mail_new_shipping_method');
-			$template->data['mail_payment_method'] = $language->get('mail_new_payment_method');
-			$template->data['mail_comment'] = $language->get('mail_new_comment');
-			$template->data['mail_powered_by'] = $language->get('mail_new_powered_by');
+			$template->data['mail_email'] = $language->get('mail_new_email');
+			$template->data['mail_telephone'] = $language->get('mail_new_telephone');
+			$template->data['mail_ip'] = $language->get('mail_new_ip');
+			$template->data['mail_payment_address'] = $language->get('mail_new_payment_address');
+			$template->data['mail_shipping_address'] = $language->get('mail_new_shipping_address');
 			$template->data['mail_product'] = $language->get('mail_new_product');
 			$template->data['mail_model'] = $language->get('mail_new_model');
 			$template->data['mail_quantity'] = $language->get('mail_new_quantity');
 			$template->data['mail_price'] = $language->get('mail_new_price');
 			$template->data['mail_total'] = $language->get('mail_new_total');
-					
-			$template->data['order_id'] = $order_id;
-			$template->data['customer_id'] = $order_info['customer_id'];	
-			$template->data['date_added'] = date($language->get('date_format_short'), strtotime($order_info['date_added']));    	
-			$template->data['logo'] = 'cid:' . basename($this->config->get('config_logo'));
+			$template->data['mail_footer'] = $language->get('mail_new_footer');
+			$template->data['mail_powered'] = $language->get('mail_new_powered');
+			
+			$template->data['logo'] = 'cid:' . basename($this->config->get('config_logo'));		
 			$template->data['store_name'] = $order_info['store_name'];
-			$template->data['address'] = nl2br($this->config->get('config_address'));
-			$template->data['telephone'] = $this->config->get('config_telephone');
-			$template->data['fax'] = $this->config->get('config_fax');
-			$template->data['email'] = $this->config->get('config_email');
 			$template->data['store_url'] = $order_info['store_url'];
-			$template->data['invoice'] = $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id;
-			$template->data['firstname'] = $order_info['firstname'];
-			$template->data['lastname'] = $order_info['lastname'];
-			$template->data['shipping_method'] = $order_info['shipping_method'];
+			$template->data['customer_id'] = $order_info['customer_id'];
+			$template->data['link'] = $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id;
+			$template->data['invoice_no'] = $invoice_no;
+			$template->data['order_id'] = $order_id;
+			$template->data['date_added'] = date($language->get('date_format_short'), strtotime($order_info['date_added']));    	
 			$template->data['payment_method'] = $order_info['payment_method'];
+			$template->data['shipping_method'] = $order_info['shipping_method'];
 			$template->data['email'] = $order_info['email'];
 			$template->data['telephone'] = $order_info['telephone'];
 			$template->data['ip'] = $order_info['ip'];
-			$template->data['comment'] = nl2br($order_info['comment']);
-			
-			if ($comment) {
-				$template->data['comment'] .= ('<br /><br />' . nl2br($comment)); 
-			}
-			
+									
 			if ($order_info['shipping_address_format']) {
 				$format = $order_info['shipping_address_format'];
 			} else {
@@ -374,7 +364,7 @@ class ModelCheckoutOrder extends Model {
 			$text  = sprintf($language->get('mail_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8')) . "\n\n";
 			$text .= $language->get('mail_new_order_id') . ' ' . $order_id . "\n";
 			$text .= $language->get('mail_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
-			$text .= $language->get('mail_new_order_status') . ' ' . $order_info['order_status'] . "\n\n";
+			$text .= $language->get('mail_new_order_status') . ' ' . $order_status . "\n\n";
 			$text .= $language->get('mail_new_products') . "\n";
 			
 			foreach ($order_product_query->rows as $result) {
@@ -400,7 +390,7 @@ class ModelCheckoutOrder extends Model {
 			$text .= "\n";
 			
 			if ($order_info['customer_id']) {
-				$text .= $language->get('mail_new_invoice') . "\n";
+				$text .= $language->get('mail_new_link') . "\n";
 				$text .= $order_info['store_url'] . 'index.php?route=account/invoice&order_id=' . $order_id . "\n\n";
 			}
 		
@@ -556,8 +546,8 @@ class ModelCheckoutOrder extends Model {
 					$message .= $order_status . "\n\n";
 				}
 				
-				$message .= $language->get('mail_update_invoice') . "\n";
-				$message .= $order_info['store_url'] . 'index.php?route=account/invoice&order_id=' . $order_id . "\n\n";
+				$message .= $language->get('mail_update_link') . "\n";
+				$message .= $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id . "\n\n";
 					
 				if ($comment) { 
 					$message .= $language->get('mail_update_comment') . "\n\n";

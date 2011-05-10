@@ -267,8 +267,8 @@ class ControllerCheckoutConfirm extends Controller {
 			$this->load->model('checkout/order');
 			
 			$this->session->data['order_id'] = $this->model_checkout_order->create($data);
-			
 			// Gift Voucher
+			/*
 			if (isset($this->session->data['vouchers']) && is_array($this->session->data['vouchers'])) {
 				$this->load->model('checkout/voucher');
 
@@ -276,7 +276,7 @@ class ControllerCheckoutConfirm extends Controller {
 					$this->model_checkout_voucher->addVoucher($this->session->data['order_id'], $voucher);
 				}
 			}
-			
+			*/
 			$this->data['column_name'] = $this->language->get('column_name');
 			$this->data['column_model'] = $this->language->get('column_model');
 			$this->data['column_quantity'] = $this->language->get('column_quantity');

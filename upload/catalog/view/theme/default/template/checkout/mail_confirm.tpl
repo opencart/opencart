@@ -3,127 +3,161 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><?php echo $title; ?></title>
+<style type="text/css">
+body {
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+}
+body, td, th, input, textarea, select, a {
+	font-size: 12px;
+}
+p {
+	margin-top: 0px;
+	margin-bottom: 20px;
+}
+a, a:visited, a b {
+	color: #378DC1;
+	text-decoration: underline;
+	cursor: pointer;
+}
+a:hover {
+	text-decoration: none;
+}
+a img {
+	border: none;
+}
+#container {
+	width: 680px;
+}
+#logo {
+	margin-bottom: 20px;
+}
+table.list {
+	border-collapse: collapse;
+	width: 100%;
+	border-top: 1px solid #DDDDDD;
+	border-left: 1px solid #DDDDDD;
+	margin-bottom: 20px;
+}
+table.list td {
+	border-right: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD;
+}
+table.list thead td {
+	background-color: #EFEFEF;
+	padding: 0px 5px;
+}
+table.list thead td a, .list thead td {
+	text-decoration: none;
+	color: #222222;
+	font-weight: bold;
+}
+table.list tbody td a {
+	text-decoration: underline;
+}
+table.list tbody td {
+	vertical-align: top;
+	padding: 0px 5px;
+}
+table.list .left {
+	text-align: left;
+	padding: 7px;
+}
+table.list .right {
+	text-align: right;
+	padding: 7px;
+}
+table.list .center {
+	text-align: center;
+	padding: 7px;
+}
+</style>
 </head>
 <body>
-<table style="font-family: Verdana,sans-serif; font-size: 11px; color: #374953; width: 600px;">
-  <tr>
-    <td align="left"><a href="<?php echo $store_url; ?>" title="<?php echo $store_name; ?>"><img src="<?php echo $logo; ?>" alt="<?php echo $store_name; ?>" style="border: none;" ></a></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="left"><?php echo $mail_greeting; ?></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="left" style="background-color: #069; color: #FFF; font-size: 12px; font-weight: bold; padding: 0.5em 1em;"><?php echo $mail_order_detail; ?></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="left"><?php echo $mail_order_id; ?> <span style="color: #069; font-weight: bold;"><?php echo $order_id; ?></span><br />
-      <?php echo $mail_date_added; ?> <?php echo $date_added; ?><br >
-      <?php echo $mail_payment_method; ?> <strong><?php echo $payment_method; ?></strong><br />
-      <?php echo $mail_shipping_method; ?> <strong><?php echo $shipping_method; ?></strong><br />
-	  <br />
-	  <?php echo $mail_email; ?> <strong><?php echo $email; ?></strong><br />
-	  <?php echo $mail_telephone; ?> <strong><?php echo $telephone; ?></strong><br />
-	  <?php echo $mail_ip; ?> <strong><?php echo $ip; ?></strong>
-	</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td><table style="width: 100%; font-family: Verdana,sans-serif; font-size: 11px; color: #FFFFFF;">
-        <tr style="background-color: #CCCCCC; text-transform: uppercase;">
-          <th style="text-align: left; padding: 0.3em;"><?php echo $mail_shipping_address; ?></th>
-          <th style="text-align: left; padding: 0.3em;"><?php echo $mail_payment_address; ?></th>
-        </tr>
-        <tr>
-          <td style="padding: 0.3em; background-color: #EEEEEE; color: #000;"><?php echo $shipping_address; ?></td>
-          <td style="padding: 0.3em; background-color: #EEEEEE; color: #000;"><?php echo $payment_address; ?></td>
-        </tr>
-      </table></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="left"><table style="width: 100%; font-family: Verdana,sans-serif; font-size: 11px; color: #000000;">
-        <tr style="background-color: #CCCCCC;">
-          <th align="left" style="width: 15%; padding: 0.3em; color: #FFFFFF;"><?php echo $mail_product; ?></th>
-          <th align="left" style="color: #FFFFFF;"><?php echo $mail_model; ?></th>
-          <th align="right" style="width: 15%; padding: 0.3em; color: #FFFFFF;"><?php echo $mail_price; ?></th>
-          <th align="right" style="width: 15%; padding: 0.3em; color: #FFFFFF;"><?php echo $mail_quantity; ?></th>
-          <th align="right" style="width: 20%; padding: 0.3em; color: #FFFFFF;"><?php echo $mail_total; ?></th>
-        </tr>
-        <?php foreach ($products as $product) { ?>
-        <tr style="background-color: #EEEEEE; text-align: center;">
-          <td align="left"><?php echo $product['name']; ?>
-            <?php foreach ($product['option'] as $option) { ?>
-            <br />
-            &nbsp;&nbsp;- <?php echo $option['name']; ?>: <?php echo $option['value']; ?>
-            <?php } ?></td>
-          <td align="left"><?php echo $product['model']; ?></td>
-          <td align="right"><?php echo $product['price']; ?></td>
-          <td align="right"><?php echo $product['quantity']; ?></td>
-          <td align="right"><?php echo $product['total']; ?></td>
-        </tr>
-        <?php } ?>
-        <?php foreach ($totals as $total) { ?>
-        <tr style="text-align: right;">
-          <td colspan="3">&nbsp;</td>
-          <td style="background-color: #EEEEEE; font-weight: bold; padding: 0.3em;"><?php echo $total['title']; ?></td>
-          <td style="background-color: #EEEEEE; padding: 0.3em;"><?php echo $total['text']; ?></td>
-        </tr>
-        <?php } ?>
-      </table></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="left" style="background-color: #069; color: #FFF; font-size: 12px; font-weight: bold; padding: 0.5em 1em;"></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <?php if ($comment) { ?>
-  <tr>
-    <td align="left" style="background-color: #069; color: #FFF; font-size: 12px; font-weight: bold; padding: 0.5em 1em;"><?php echo $mail_comment; ?></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="left"><?php echo $comment; ?></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <?php } ?>
+<div id="container"><a href="<?php echo $store_url; ?>" title="<?php echo $store_name; ?>"><img src="<?php echo $logo; ?>" alt="<?php echo $store_name; ?>" id="logo" /></a>
+  <p><?php echo $mail_greeting; ?></p>
   <?php if ($customer_id) { ?>
-  <tr>
-    <td align="left" style="background-color: #069; color: #FFF; font-size: 12px; font-weight: bold; padding: 0.5em 1em;"><?php echo $mail_invoice; ?></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="left"><a href="<?php echo $invoice; ?>"><?php echo $invoice; ?></a></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
+  <p><?php echo $mail_link; ?></p>
+  <p><a href="<?php echo $link; ?>"><?php echo $link; ?></a></p>
   <?php } ?>
-  <tr>
-    <td align="center" style="font-size: 10px; border-top: 1px solid #069;"><a href="<?php echo $store_url; ?>" style="color: #069; font-weight: bold; text-decoration: none;"><?php echo $store_name; ?></a> <?php echo $mail_powered_by; ?> <a href="http://www.opencart.com" style="text-decoration: none; color: #374953;">OpenCart</a></td>
-  </tr>
-</table>
+  <table class="list">
+    <thead>
+      <tr>
+        <td class="left" colspan="2"><?php echo $mail_order_detail; ?></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="left"><?php if ($invoice_no) { ?>
+          <b><?php echo $mail_invoice_no; ?></b> <?php echo $invoice_no; ?><br />
+          <?php } ?>
+          <b><?php echo $mail_order_id; ?></b> <?php echo $order_id; ?><br />
+          <b><?php echo $mail_date_added; ?></b> <?php echo $date_added; ?><br />
+          <b><?php echo $mail_payment_method; ?></b> <?php echo $payment_method; ?><br />
+          <?php if ($shipping_method) { ?>
+          <b><?php echo $mail_shipping_method; ?></b> <?php echo $shipping_method; ?>
+          <?php } ?></td>
+        <td class="left"><b><?php echo $mail_email; ?></b> <?php echo $email; ?><br />
+          <b><?php echo $mail_telephone; ?></b> <?php echo $telephone; ?><br />
+          <b><?php echo $mail_ip; ?></b> <?php echo $ip; ?><br /></td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="list">
+    <thead>
+      <tr>
+        <td class="left"><?php echo $mail_payment_address; ?></td>
+        <?php if ($shipping_address) { ?>
+        <td class="left"><?php echo $mail_shipping_address; ?></td>
+        <?php } ?>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="left"><?php echo $payment_address; ?></td>
+        <?php if ($shipping_address) { ?>
+        <td class="left"><?php echo $shipping_address; ?></td>
+        <?php } ?>
+      </tr>
+    </tbody>
+  </table>
+  <table class="list">
+    <thead>
+      <tr>
+        <td class="left"><?php echo $mail_product; ?></td>
+        <td class="left"><?php echo $mail_model; ?></td>
+        <td class="right"><?php echo $mail_quantity; ?></td>
+        <td class="right"><?php echo $mail_price; ?></td>
+        <td class="right"><?php echo $mail_total; ?></td>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($products as $product) { ?>
+      <tr>
+        <td class="left"><?php echo $product['name']; ?>
+          <?php foreach ($product['option'] as $option) { ?>
+          <br />
+          &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
+          <?php } ?></td>
+        <td class="left"><?php echo $product['model']; ?></td>
+        <td class="right"><?php echo $product['quantity']; ?></td>
+        <td class="right"><?php echo $product['price']; ?></td>
+        <td class="right"><?php echo $product['total']; ?></td>
+      </tr>
+      <?php } ?>
+    </tbody>
+    <tfoot>
+      <?php foreach ($totals as $total) { ?>
+      <tr>
+        <td colspan="3"></td>
+        <td class="right"><b><?php echo $total['title']; ?></b></td>
+        <td class="right"><?php echo $total['text']; ?></td>
+      </tr>
+      <?php } ?>
+    </tfoot>
+  </table>
+  <p><?php echo $mail_footer; ?></p>
+  <p><?php echo $mail_powered; ?></p>
+</div>
 </body>
 </html>

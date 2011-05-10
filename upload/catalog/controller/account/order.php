@@ -153,13 +153,14 @@ class ControllerAccountOrder extends Controller {
 		
       		$this->data['heading_title'] = $this->language->get('text_order');
 			
+			$this->data['text_order_detail'] = $this->language->get('text_order_detail');
 			$this->data['text_invoice_no'] = $this->language->get('text_invoice_no');
     		$this->data['text_order_id'] = $this->language->get('text_order_id');
 			$this->data['text_date_added'] = $this->language->get('text_date_added');
-      		$this->data['text_shipping_address'] = $this->language->get('text_shipping_address');
       		$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
-      		$this->data['text_payment_address'] = $this->language->get('text_payment_address');
+			$this->data['text_shipping_address'] = $this->language->get('text_shipping_address');
       		$this->data['text_payment_method'] = $this->language->get('text_payment_method');
+      		$this->data['text_payment_address'] = $this->language->get('text_payment_address');
       		$this->data['text_history'] = $this->language->get('text_history');
 			$this->data['text_comment'] = $this->language->get('text_comment');
 

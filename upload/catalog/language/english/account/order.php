@@ -5,6 +5,7 @@ $_['heading_title']         = 'Order History';
 // Text
 $_['text_account']          = 'Account';
 $_['text_order']            = 'Order Information';
+$_['text_order_detail']     = 'Order Detail';
 $_['text_invoice_no']       = 'Invoice No.:';
 $_['text_order_id']         = 'Order ID:';
 $_['text_status']           = 'Status:';

@@ -58,6 +58,7 @@ $_['entry_shipping'] 	             = 'My delivery and billing addresses are the 
 
 // Error
 $_['error_warning']                  = 'There was a problem while trying to process your order! If the problem persists please try selecting a different payment method or you can contact the store owner by <a href="%s">clicking here</a>.';
+$_['error_minimum']                  = 'Minimum order amount for %s is %s!';	
 $_['error_login']                    = 'Error: No match for E-Mail Address and/or Password.';
 $_['error_exists']                   = 'Error: E-Mail Address is already registered!';
 $_['error_firstname']                = 'First Name must be between 1 and 32 characters!';

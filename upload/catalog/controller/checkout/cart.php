@@ -247,7 +247,8 @@ class ControllerCheckoutCart extends Controller {
 			$product_info = $this->model_catalog_product->getProduct($this->request->post['product_id']);
 			
 			if ($product_info) {						
-				// Minimum Quantity Validation
+				
+				// Minimum quantity validation
 				if (isset($this->request->post['quantity'])) {
 					$quantity = $this->request->post['quantity'];
 				} else {
@@ -256,11 +257,11 @@ class ControllerCheckoutCart extends Controller {
 				
 				$product_total = 0;
 				
-				$products = $this->cart->getProducts();
-				
-				foreach ($products as $product) {
-					if ($product['product_id'] == $this->request->post['product_id']) {
-						$product_total += $product['quantity'];
+				foreach ($this->session->data['cart'] as $k => $v) {
+					$array2 = explode(':', $k);
+					
+					if ($array2[0] == $this->request->post['product_id']) {
+						$product_total += $v;
 					}
 				}
 				

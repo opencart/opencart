@@ -5,24 +5,30 @@ class ControllerCheckoutCheckout extends Controller {
 	  		$this->redirect($this->url->link('checkout/cart'));
     	}				
 		
-				$product_total = $quantity;
-				
-				$products = $this->cart->getProducts();
-				
-				foreach ($products as $product) {
-					if ($product['product_id'] == $this->request->post['product_id']) {
-						$product_total += $product['quantity'];
-					}
-				}
-				
-				if ($product_info['minimum'] > ($product_total)) {
-					$json['error']['warning'] = sprintf($this->language->get('error_minimum'), $product_info['minimum']);
-				}		
-		
-		
 		$this->language->load('checkout/checkout');
-
-    	$this->document->setTitle($this->language->get('heading_title')); 	
+		
+		$this->document->setTitle($this->language->get('heading_title')); 
+		
+		// Minimum quantity validation
+		$products = $this->cart->getProducts();
+				
+		foreach ($products as $product) {
+			$product_total = 0;
+				
+			foreach ($this->session->data['cart'] as $key => $value) {
+				$array = explode(':', $key);
+					
+				if ($array[0] == $product['product_id']) {
+					$product_total += $value;
+				}
+			}			
+			
+			if ($product['minimum'] > $product_total) {
+				$this->session->data['error'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+				
+				$this->redirect($this->url->link('checkout/cart'));
+			}				
+		}
       	
 		$this->data['breadcrumbs'] = array();
 

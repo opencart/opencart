@@ -81,7 +81,7 @@ class ControllerPaymentMoneybookers extends Controller {
 			$hash .= $this->request->post['mb_amount'];
 			$hash .= $this->request->post['mb_currency'];
 			$hash .= $this->request->post['status'];
-			$md5hash = md5($hash);
+			$md5hash = strtoupper(md5($hash));
 			$md5sig = $this->request->post['md5sig'];
 
 			if ($md5hash == $md5sig) {

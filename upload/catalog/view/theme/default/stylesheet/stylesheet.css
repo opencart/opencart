@@ -391,9 +391,10 @@ label {
 	background: #000000;
 }
 #menu > ul > li > div > ul > li > a {
+	color: #EEEEEE;	
 }
 #menu > ul > li > div > ul > li > ul > li > a {
-	font-size: 10px;
+	color: #FFFFFF;	
 }
 .breadcrumb {
 	color: #CCCCCC;
@@ -656,7 +657,6 @@ a.button:hover span {
 }
 .box-product > div {
 	width: 120px;
-	height: 190px;
 	float: left;
 	margin-right: 20px;
 	margin-bottom: 20px;

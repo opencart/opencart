@@ -55,7 +55,18 @@
               <td class="price"><?php echo $product['price']; ?></td>
               <td class="total"><?php echo $product['total']; ?></td>
             </tr>
-            <?php } ?>           
+            <?php } ?>   
+            <?php foreach ($vouchers as $key => $voucher) { ?>
+            <tr>
+              <td class="remove"><input type="checkbox" name="voucher[]" value="<?php echo $voucher['key']; ?>" /></td>
+              <td class="image"></td>
+              <td class="name"><?php echo $voucher['description']; ?></td>
+              <td class="model"></td>
+              <td class="quantity">1</td>
+              <td class="price"><?php echo $voucher['amount']; ?></td>
+              <td class="total"><?php echo $voucher['amount']; ?></td>
+            </tr>
+            <?php } ?>                      
           </tbody>
         </table>
       </div>

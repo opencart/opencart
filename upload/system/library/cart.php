@@ -11,10 +11,6 @@ final class Cart {
 		if (!isset($this->session->data['cart']) || !is_array($this->session->data['cart'])) {
       		$this->session->data['cart'] = array();
     	}
-		
-		if (!isset($this->session->data['voucher']) || !is_array($this->session->data['voucher'])) {
-      		$this->session->data['voucher'] = array();
-    	}		
 	}
 	      
   	public function getProducts() {
@@ -168,11 +164,11 @@ final class Cart {
 				// Product Discounts
 				$discount_quantity = 0;
 				
-				foreach ($this->session->data['cart'] as $k => $v) {
-					$array2 = explode(':', $k);
+				foreach ($this->session->data['cart'] as $key_2 => $quantity_2) {
+					$product_2 = explode(':', $key_2);
 					
-					if ($array2[0] == $product_id) {
-						$discount_quantity += $v;
+					if ($product_2[0] == $product_id) {
+						$discount_quantity += $quantity_2;
 					}
 				}
 				
@@ -247,42 +243,9 @@ final class Cart {
 				$this->remove($key);
 			}
     	}
-		
-		// Vouchers
-		foreach ($this->session->data['voucher'] as $key => $voucher) {
-			$product_data[$key] = array(
-				'key'          => $key,
-				'product_id'   => 0,
-				'name'         => $voucher['name'],
-				'model'        => '',
-				'shipping'     => false,
-				'image'        => '',
-				'option'       => array(),
-				'download'     => array(),
-				'quantity'     => 1,
-				'minimum'      => 1,
-				'subtract'     => false,
-				'stock'        => true,
-				'price'        => $voucher['amount'],
-				'total'        => $voucher['amount'],
-				'reward'       => 0,
-				'points'       => 0,
-				'tax_class_id' => 0,
-				'weight'       => 0,
-				'weight_class' => 0,
-				'length'       => 0,
-				'width'        => 0,
-				'height'       => 0,
-				'length_class' => 0					
-			);				
-		}
 						
 		return $product_data;
   	}
-	
-	public function getVouchers() {
-		return $this->session->data['voucher'];
-	}
 		  
   	public function add($product_id, $qty = 1, $options = array()) {
     	if (!$options) {
@@ -312,29 +275,11 @@ final class Cart {
 		if (isset($this->session->data['cart'][$key])) {
      		unset($this->session->data['cart'][$key]);
   		}
-		
-		if (isset($this->session->data['voucher'][$key])) {
-     		unset($this->session->data['voucher'][$key]);
-  		}		
 	}
 	
   	public function clear() {
 		$this->session->data['cart'] = array();
-		$this->session->data['voucher'] = array();
   	}
-  	
-	public function addVoucher($name, $to_name, $to_email, $amount) {	
-		$this->session->data['voucher'][rand()] = array(
-			'name'             => $name,
-			'to_name'          => $this->request->post['to_name'],
-			'to_email'         => $this->request->post['to_email'],
-			'from_name'        => $this->request->post['from_name'],
-			'from_email'       => $this->request->post['from_email'],
-			'message'          => $this->request->post['message'],
-			'amount'           => $this->request->post['amount'],
-			'voucher_theme_id' => $this->request->post['voucher_theme_id']
-		); 
-	}
 	
   	public function getWeight() {
 		$weight = 0;

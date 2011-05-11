@@ -25,12 +25,20 @@ class ControllerCheckoutCart extends Controller {
           			$this->cart->remove($key);
 				}
       		}
-						
+			
+      		if (isset($this->request->post['voucher'])) {
+	    		foreach ($this->request->post['voucher'] as $key) {
+          			if (isset($this->session->data['vouchers'][$key])) {
+						unset($this->session->data['vouchers'][$key]);
+					}
+				}
+      		}
+									
 			if (isset($this->request->post['redirect'])) {
 				$this->session->data['redirect'] = $this->request->post['redirect'];
 			}	
 			
-			if (isset($this->request->post['quantity']) || isset($this->request->post['remove'])) {
+			if (isset($this->request->post['quantity']) || isset($this->request->post['remove']) || isset($this->request->post['voucher'])) {
 				unset($this->session->data['shipping_methods']);
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['payment_methods']);
@@ -56,7 +64,7 @@ class ControllerCheckoutCart extends Controller {
         	'separator' => $this->language->get('text_separator')
       	);
 			
-    	if ($this->cart->hasProducts()) {
+    	if ($this->cart->hasProducts() || (isset($this->session->data['vouchers']) && $this->session->data['vouchers'])) {
       		$this->data['heading_title'] = $this->language->get('heading_title');
 			
 			$this->data['text_select'] = $this->language->get('text_select');
@@ -93,7 +101,13 @@ class ControllerCheckoutCart extends Controller {
 			}
 				
 			$this->data['action'] = $this->url->link('checkout/cart');
-			 
+						
+			if ($this->config->get('config_cart_weight')) {
+				$this->data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class'));
+			} else {
+				$this->data['weight'] = false;
+			}
+						 
 			$this->load->model('tool/image');
 			
       		$this->data['products'] = array();
@@ -138,11 +152,15 @@ class ControllerCheckoutCart extends Controller {
         		);
       		}
 			
-			if ($this->config->get('config_cart_weight')) {
-				$this->data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class'));
-			} else {
-				$this->data['weight'] = false;
-			}
+			// Gift Voucher
+			if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
+				foreach ($this->session->data['vouchers'] as $voucher) {
+					$this->data['vouchers'][] = array(
+						'description' => $voucher['description'],
+						'amount'      => $this->currency->format($voucher['amount'])
+					);
+				}
+			} 
 						
 			$total_data = array();
 			$total = 0;
@@ -257,11 +275,11 @@ class ControllerCheckoutCart extends Controller {
 				
 				$product_total = 0;
 				
-				foreach ($this->session->data['cart'] as $k => $v) {
-					$array2 = explode(':', $k);
+				foreach ($this->session->data['cart'] as $key => $quantity) {
+					$product = explode(':', $key);
 					
-					if ($array2[0] == $this->request->post['product_id']) {
-						$product_total += $v;
+					if ($product[0] == $this->request->post['product_id']) {
+						$product_total += $quantity;
 					}
 				}
 				

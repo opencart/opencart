@@ -15,11 +15,11 @@ class ControllerCheckoutCheckout extends Controller {
 		foreach ($products as $product) {
 			$product_total = 0;
 				
-			foreach ($this->session->data['cart'] as $key => $value) {
-				$array = explode(':', $key);
+			foreach ($this->session->data['cart'] as $key => $quantity) {
+				$product_2 = explode(':', $key);
 					
-				if ($array[0] == $product['product_id']) {
-					$product_total += $value;
+				if ($product_2[0] == $product['product_id']) {
+					$product_total += $quantity;
 				}
 			}			
 			

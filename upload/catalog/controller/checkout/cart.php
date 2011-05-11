@@ -153,9 +153,12 @@ class ControllerCheckoutCart extends Controller {
       		}
 			
 			// Gift Voucher
+			$this->data['vouchers'] = array();
+			
 			if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
-				foreach ($this->session->data['vouchers'] as $voucher) {
+				foreach ($this->session->data['vouchers'] as $key => $voucher) {
 					$this->data['vouchers'][] = array(
+						'key'         => $key,
 						'description' => $voucher['description'],
 						'amount'      => $this->currency->format($voucher['amount'])
 					);
@@ -365,7 +368,20 @@ class ControllerCheckoutCart extends Controller {
 				'href'     => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 			);
 		}
-				
+		
+		// Gift Voucher
+		$this->data['vouchers'] = array();
+		
+		if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
+			foreach ($this->session->data['vouchers'] as $key => $voucher) {
+				$this->data['vouchers'][] = array(
+					'key'         => $key,
+					'description' => $voucher['description'],
+					'amount'      => $this->currency->format($voucher['amount'])
+				);
+			}
+		} 
+							
 		$total = 0;
 		$taxes = $this->cart->getTaxes();
 		 
@@ -412,10 +428,6 @@ class ControllerCheckoutCart extends Controller {
 		$this->load->library('json');
 		
 		$this->response->setOutput(Json::encode($json));
-	}
-	
-	public function validate() {
-		
 	}
 }
 ?>

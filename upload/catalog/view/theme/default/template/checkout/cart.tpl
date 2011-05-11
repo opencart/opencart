@@ -56,7 +56,7 @@
               <td class="total"><?php echo $product['total']; ?></td>
             </tr>
             <?php } ?>   
-            <?php foreach ($vouchers as $key => $voucher) { ?>
+            <?php foreach ($vouchers as $voucher) { ?>
             <tr>
               <td class="remove"><input type="checkbox" name="voucher[]" value="<?php echo $voucher['key']; ?>" /></td>
               <td class="image"></td>

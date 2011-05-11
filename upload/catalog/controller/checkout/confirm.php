@@ -222,7 +222,7 @@ class ControllerCheckoutConfirm extends Controller {
 				foreach ($this->session->data['vouchers'] as $voucher) {
 					$product_data[] = array(
 						'product_id' => 0,
-						'name'       => sprintf($this->language->get('text_voucher'), $this->currency->format($voucher['amount']), $voucher['to_name']),
+						'name'       => $voucher['description'],
 						'model'      => '',
 						'option'     => array(),
 						'download'   => array(),
@@ -319,22 +319,17 @@ class ControllerCheckoutConfirm extends Controller {
 			} 
 			
 			// Gift Voucher
+			$this->data['vouchers'] = array();
+			
 			if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
-				foreach ($this->session->data['vouchers'] as $voucher) {
-					$this->data['products'][] = array(
-						'product_id' => 0,
-						'name'       => $voucher['name'],
-						'model'      => '',
-						'option'     => array(),
-						'download'   => array(),
-						'quantity'   => 1,
-						'subtract'   => false,
-						'price'      => $voucher['amount'],
-						'total'      => $voucher['amount'],
-						'tax'        => 0
+				foreach ($this->session->data['vouchers'] as $key => $voucher) {
+					$this->data['vouchers'][] = array(
+						'key'         => $key,
+						'description' => $voucher['description'],
+						'amount'      => $this->currency->format($voucher['amount'])
 					);
 				}
-			} 
+			}  
 						
 			$this->data['totals'] = $total_data;
 	

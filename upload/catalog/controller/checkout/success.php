@@ -13,6 +13,7 @@ class ControllerCheckoutSuccess extends Controller {
 			unset($this->session->data['order_id']);	
 			unset($this->session->data['coupon_code']);
 			unset($this->session->data['voucher_code']);
+			unset($this->session->data['vouchers']);
 		}	
 									   
 		$this->language->load('checkout/success');

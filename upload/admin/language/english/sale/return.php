@@ -68,12 +68,4 @@ $_['error_city']          = 'City must be between 3 and 128 characters!';
 $_['error_postcode']      = 'Postcode must be between 2 and 10 characters!';
 $_['error_country']       = 'Please select a country!';
 $_['error_zone']          = 'Please select a region / state!';
-
-// Mail
-$_['mail_subject']       = '%s - Return Update %s';
-$_['mail_return_id']     = 'Return ID:';
-$_['mail_date_added']    = 'Return Date:';
-$_['mail_return_status'] = 'Your return has been updated to the following status:';
-$_['mail_comment']       = 'The comments for your return are:';
-$_['mail_footer']        = 'Please reply to this email if you have any questions.';
 ?>

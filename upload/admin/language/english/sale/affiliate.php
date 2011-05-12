@@ -66,14 +66,4 @@ $_['error_city']                = 'City must be between 3 and 128 characters!';
 $_['error_country']             = 'Please select a country!';
 $_['error_zone']                = 'Please select a region / state!';
 $_['error_code']                = 'Tracking Code required!';
-
-// Mail
-$_['mail_approve_subject']      = '%s - Your Affiliate Account has been activated!';
-$_['mail_approve_welcome']      = 'Welcome and thank you for registering at %s!';
-$_['mail_approve_login']        = 'Your account has now been created and you can log in by using your email address and password by visiting our website or at the following URL:';
-$_['mail_approve_services']     = 'Upon logging in, you will be able to generate tracking codes, track commission payments and edit your account information.';
-$_['mail_approve_thanks']       = 'Thanks,';
-$_['mail_transaction_subject']  = '%s - Affiliate Commission';
-$_['mail_transaction_received'] = 'You have received %s commission!';
-$_['mail_transaction_total']    = 'Your total amount of commission is now %s.';
 ?>

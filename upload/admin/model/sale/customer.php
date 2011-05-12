@@ -141,7 +141,7 @@ class ModelSaleCustomer extends Model {
 		if ($customer_info) {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET approved = '1' WHERE customer_id = '" . (int)$customer_id . "'");
 
-			$this->load->language('sale/affiliate');
+			$this->load->language('mail/customer');
 			
 			$this->load->model('setting/store');
 						
@@ -155,15 +155,16 @@ class ModelSaleCustomer extends Model {
 				$store_url = HTTP_CATALOG . 'index.php?route=account/login';
 			}
 	
-			$message  = sprintf($this->language->get('mail_approve_welcome'), $store_name) . "\n\n";;
-			$message .= $this->language->get('mail_approve_login') . "\n";
+			$message  = sprintf($this->language->get('text_approve_welcome'), $store_name) . "\n\n";;
+			$message .= $this->language->get('text_approve_login') . "\n";
 			$message .= $store_url . "\n\n";
-			$message .= $this->language->get('mail_approve_services') . "\n\n";
-			$message .= $this->language->get('mail_approve_thanks') . "\n";
+			$message .= $this->language->get('text_approve_services') . "\n\n";
+			$message .= $this->language->get('text_approve_thanks') . "\n";
 			$message .= $store_name;
 	
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->hostname = $this->config->get('config_smtp_host');
 			$mail->username = $this->config->get('config_smtp_username');
 			$mail->password = $this->config->get('config_smtp_password');
@@ -172,7 +173,7 @@ class ModelSaleCustomer extends Model {
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($store_name);
-			$mail->setSubject(sprintf($this->language->get('mail_approve_subject'), $store_name));
+			$mail->setSubject(sprintf($this->language->get('text_approve_subject'), $store_name));
 			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
 		}		
@@ -343,7 +344,7 @@ class ModelSaleCustomer extends Model {
 		if ($customer_info) { 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "customer_transaction SET customer_id = '" . (int)$customer_id . "', order_id = '" . (int)$order_id . "', description = '" . $this->db->escape($description) . "', amount = '" . (float)$amount . "', date_added = NOW()");
 
-			$this->language->load('sale/customer');
+			$this->language->load('mail/customer');
 			
 			if ($customer_info['store_id']) {
 				$this->load->model('setting/store');
@@ -359,8 +360,8 @@ class ModelSaleCustomer extends Model {
 				$store_name = $this->config->get('config_name');
 			}	
 						
-			$message  = sprintf($this->language->get('mail_transaction_received'), $this->currency->format($amount, $this->config->get('config_currency'))) . "\n\n";
-			$message .= sprintf($this->language->get('mail_transaction_total'), $this->currency->format($this->getTransactionTotal($customer_id)));
+			$message  = sprintf($this->language->get('text_transaction_received'), $this->currency->format($amount, $this->config->get('config_currency'))) . "\n\n";
+			$message .= sprintf($this->language->get('text_transaction_total'), $this->currency->format($this->getTransactionTotal($customer_id)));
 								
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
@@ -373,7 +374,7 @@ class ModelSaleCustomer extends Model {
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($store_name);
-			$mail->setSubject(sprintf($this->language->get('mail_transaction_subject'), $this->config->get('config_name')));
+			$mail->setSubject(sprintf($this->language->get('text_transaction_subject'), $this->config->get('config_name')));
 			$mail->setText($message);
 			$mail->send();
 		}
@@ -413,7 +414,7 @@ class ModelSaleCustomer extends Model {
 		if ($customer_info) { 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "customer_reward SET customer_id = '" . (int)$customer_id . "', order_id = '" . (int)$order_id . "', points = '" . (int)$points . "', description = '" . $this->db->escape($description) . "', date_added = NOW()");
 
-			$this->language->load('sale/customer');
+			$this->language->load('mail/customer');
 			
 			if ($order_id) {
 				$this->load->model('sale/order');
@@ -429,8 +430,8 @@ class ModelSaleCustomer extends Model {
 				$store_name = $this->config->get('config_name');
 			}		
 				
-			$message  = sprintf($this->language->get('mail_reward_received'), $points) . "\n\n";
-			$message .= sprintf($this->language->get('mail_reward_total'), $this->getRewardTotal($customer_id));
+			$message  = sprintf($this->language->get('text_reward_received'), $points) . "\n\n";
+			$message .= sprintf($this->language->get('text_reward_total'), $this->getRewardTotal($customer_id));
 				
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
@@ -443,7 +444,7 @@ class ModelSaleCustomer extends Model {
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($store_name);
-			$mail->setSubject(sprintf($this->language->get('mail_reward_subject'), $store_name));
+			$mail->setSubject(sprintf($this->language->get('text_reward_subject'), $store_name));
 			$mail->setText($message);
 			$mail->send();
 		}

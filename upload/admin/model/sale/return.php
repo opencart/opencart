@@ -196,24 +196,25 @@ class ModelSaleReturn extends Model {
         	$return_query = $this->db->query("SELECT *, rs.name AS status FROM `" . DB_PREFIX . "return` r LEFT JOIN " . DB_PREFIX . "return_status rs ON (r.return_status_id = rs.return_status_id) WHERE r.return_id = '" . (int)$return_id . "' AND rs.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 		
 			if ($return_query->num_rows) {
-				$this->language->load('sale/return');
+				$this->language->load('mail/return');
 
-				$subject = sprintf($this->language->get('mail_subject'), $this->config->get('config_name'), $return_id);
+				$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'), $return_id);
 
-				$message  = $this->language->get('mail_return_id') . ' ' . $return_id . "\n";
-				$message .= $this->language->get('mail_date_added') . ' ' . date($this->language->get('date_format_short'), strtotime($return_query->row['date_added'])) . "\n\n";
-				$message .= $this->language->get('mail_return_status') . "\n";
+				$message  = $this->language->get('text_return_id') . ' ' . $return_id . "\n";
+				$message .= $this->language->get('text_date_added') . ' ' . date($this->language->get('date_format_short'), strtotime($return_query->row['date_added'])) . "\n\n";
+				$message .= $this->language->get('text_return_status') . "\n";
 				$message .= $return_query->row['status'] . "\n\n";
 
 				if ($data['comment']) {
-					$message .= $this->language->get('mail_comment') . "\n\n";
+					$message .= $this->language->get('text_comment') . "\n\n";
 					$message .= strip_tags(html_entity_decode($data['comment'], ENT_QUOTES, 'UTF-8')) . "\n\n";
 				}
 
-				$message .= $this->language->get('mail_footer');
+				$message .= $this->language->get('text_footer');
 
 				$mail = new Mail();
 				$mail->protocol = $this->config->get('config_mail_protocol');
+				$mail->parameter = $this->config->get('config_mail_parameter');
 				$mail->hostname = $this->config->get('config_smtp_host');
 				$mail->username = $this->config->get('config_smtp_username');
 				$mail->password = $this->config->get('config_smtp_password');

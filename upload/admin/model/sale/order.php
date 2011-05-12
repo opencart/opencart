@@ -325,21 +325,21 @@ class ModelSaleOrder extends Model {
 				$language->load($order_query->row['filename']);
 				$language->load('sale/order');
 
-				$subject = sprintf($language->get('mail_subject'), $order_query->row['store_name'], $order_id);
+				$subject = sprintf($language->get('text_subject'), $order_query->row['store_name'], $order_id);
 
-				$message  = $language->get('mail_order') . ' ' . $order_id . "\n";
-				$message .= $language->get('mail_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_query->row['date_added'])) . "\n\n";
-				$message .= $language->get('mail_order_status') . "\n";
+				$message  = $language->get('text_order') . ' ' . $order_id . "\n";
+				$message .= $language->get('text_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_query->row['date_added'])) . "\n\n";
+				$message .= $language->get('text_order_status') . "\n";
 				$message .= $order_query->row['status'] . "\n\n";
-				$message .= $language->get('mail_link') . "\n";
+				$message .= $language->get('text_link') . "\n";
 				$message .= html_entity_decode($order_query->row['store_url'] . 'index.php?route=account/invoice&order_id=' . $order_id, ENT_QUOTES, 'UTF-8') . "\n\n";
 
 				if ($data['comment']) {
-					$message .= $language->get('mail_comment') . "\n\n";
+					$message .= $language->get('text_comment') . "\n\n";
 					$message .= strip_tags(html_entity_decode($data['comment'], ENT_QUOTES, 'UTF-8')) . "\n\n";
 				}
 
-				$message .= $language->get('mail_footer');
+				$message .= $language->get('text_footer');
 
 				$mail = new Mail();
 				$mail->protocol = $this->config->get('config_mail_protocol');

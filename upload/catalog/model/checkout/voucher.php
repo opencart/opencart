@@ -70,24 +70,25 @@ class ModelCheckoutVoucher extends Model {
 				// HTML Mail
 				$template = new Template();
 				
-				$template->data['title'] = sprintf($this->language->get('mail_subject'), $voucher['from_name']);
+				$template->data['title'] = sprintf($this->language->get('text_subject'), $voucher['from_name']);
 				
-				$template->data['mail_greeting'] = sprintf($language->get('mail_greeting'), $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']));
-				$template->data['mail_from'] = sprintf($language->get('mail_from'), $voucher['from_name']);
-				$template->data['mail_message'] = $language->get('mail_message');
-				$template->data['mail_redeem'] = sprintf($language->get('mail_redeem'), $voucher['code']);
-				$template->data['mail_message'] = $language->get('mail_message');
-				$template->data['mail_problem'] = $language->get('mail_problem');
-				$template->data['mail_footer'] = $language->get('mail_footer');
+				$template->data['text_greeting'] = sprintf($language->get('text_greeting'), $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']));
+				$template->data['text_from'] = sprintf($language->get('text_from'), $voucher['from_name']);
+				$template->data['text_message'] = $language->get('text_message');
+				$template->data['text_redeem'] = sprintf($language->get('text_redeem'), $voucher['code']);
+				$template->data['text_message'] = $language->get('text_message');
+				$template->data['text_problem'] = $language->get('text_problem');
+				$template->data['text_footer'] = $language->get('text_footer');
 				
-				$template->data['logo'] = 'cid:' . basename($voucher['image']);
-				
-				$template->data['message'] = $voucher['message'];
+				$template->data['image'] = 'cid:' . basename($voucher['image']);
+				$template->data['store_name'] = $voucher['store_name'];
+				$template->data['store_url'] = $voucher['store_url'];
+				$template->data['message'] = nl2br($voucher['message']);
 			
-				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/mail_voucher.tpl')) {
-					$html = $template->fetch($this->config->get('config_template') . '/template/checkout/mail_voucher.tpl');
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/voucher.tpl')) {
+					$html = $template->fetch($this->config->get('config_template') . '/template/mail/voucher.tpl');
 				} else {
-					$html = $template->fetch('default/template/checkout/mail_voucher.tpl');
+					$html = $template->fetch('default/template/mail/voucher.tpl');
 				}
 					
 				$mail = new Mail(); 
@@ -101,7 +102,7 @@ class ModelCheckoutVoucher extends Model {
 				$mail->setTo($voucher['to_email']);
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($order_info['store_name']);
-				$mail->setSubject(sprintf($this->language->get('mail_subject'), $voucher['from_name']));
+				$mail->setSubject(sprintf($language->get('text_subject'), $voucher['from_name']));
 				$mail->setHtml($html);
 				$mail->addAttachment(DIR_IMAGE . $voucher['image']);
 				$mail->send();		

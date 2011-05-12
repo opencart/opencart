@@ -324,7 +324,6 @@ class ControllerCheckoutConfirm extends Controller {
 			if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
 				foreach ($this->session->data['vouchers'] as $key => $voucher) {
 					$this->data['vouchers'][] = array(
-						'key'         => $key,
 						'description' => $voucher['description'],
 						'amount'      => $this->currency->format($voucher['amount'])
 					);

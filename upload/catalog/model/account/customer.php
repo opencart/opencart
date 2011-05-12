@@ -1,18 +1,6 @@
 <?php
 class ModelAccountCustomer extends Model {
 	public function addCustomer($data) {
-		
-		// Properly format customer details with Title case
-		if (function_exists('mb_convert_case')) {
-			$data['company'] 	= trim($data['company']);
-			$data['firstname'] 	= mb_convert_case(trim($data['firstname']), MB_CASE_TITLE, 'UTF-8');
-			$data['lastname'] 	= mb_convert_case(trim($data['lastname']), MB_CASE_TITLE, 'UTF-8');
-			$data['address_1'] 	= mb_convert_case(trim($data['address_1']), MB_CASE_TITLE,'UTF-8');
-			$data['address_2'] 	= mb_convert_case(trim($data['address_2']), MB_CASE_TITLE,'UTF-8');
-			$data['city'] 		= mb_convert_case(trim($data['city']), MB_CASE_TITLE, 'UTF-8');
-			$data['postcode'] 	= mb_convert_case(trim($data['postcode']), MB_CASE_TITLE, 'UTF-8');
-		}
-	
       	$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET store_id = '" . (int)$this->config->get('config_store_id') . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', password = '" . $this->db->escape(md5($data['password'])) . "', newsletter = '" . (isset($data['newsletter']) ? (int)$data['newsletter'] : 0) . "', customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "', status = '1', date_added = NOW()");
       	
 		$customer_id = $this->db->getLastId();
@@ -27,21 +15,21 @@ class ModelAccountCustomer extends Model {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET approved = '1' WHERE customer_id = '" . (int)$customer_id . "'");
 		}	
 		
-		$this->language->load('account/register');
+		$this->language->load('mail/customer');
 		
-		$subject = sprintf($this->language->get('mail_subject'), $this->config->get('config_name'));
+		$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
 		
-		$message = sprintf($this->language->get('mail_welcome'), $this->config->get('config_name')) . "\n\n";
+		$message = sprintf($this->language->get('text_welcome'), $this->config->get('config_name')) . "\n\n";
 		
 		if (!$this->config->get('config_customer_approval')) {
-			$message .= $this->language->get('mail_login') . "\n";
+			$message .= $this->language->get('text_login') . "\n";
 		} else {
-			$message .= $this->language->get('mail_approval') . "\n";
+			$message .= $this->language->get('text_approval') . "\n";
 		}
 		
 		$message .= $this->url->link('account/login', '', 'SSL') . "\n\n";
-		$message .= $this->language->get('mail_services') . "\n\n";
-		$message .= $this->language->get('mail_thanks') . "\n";
+		$message .= $this->language->get('text_services') . "\n\n";
+		$message .= $this->language->get('text_thanks') . "\n";
 		$message .= $this->config->get('config_name');
 		
 		$mail = new Mail();

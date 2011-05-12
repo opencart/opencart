@@ -195,7 +195,7 @@ class ModelCheckoutOrder extends Model {
 			// Send out order confirmation mail
 			$language = new Language($order_info['language_directory']);
 			$language->load($order_info['language_filename']);
-			$language->load('checkout/checkout');
+			$language->load('mail/order');
 		 
 			$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_info['language_id'] . "'");
 			
@@ -209,34 +209,34 @@ class ModelCheckoutOrder extends Model {
 			$order_total_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
 			$order_download_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_download WHERE order_id = '" . (int)$order_id . "'");
 			
-			$subject = sprintf($language->get('mail_new_subject'), $order_info['store_name'], $order_id);
+			$subject = sprintf($language->get('text_new_subject'), $order_info['store_name'], $order_id);
 		
 			// HTML Mail
 			$template = new Template();
 			
-			$template->data['title'] = sprintf($language->get('mail_new_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
+			$template->data['title'] = sprintf($language->get('text_new_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
 			
-			$template->data['mail_greeting'] = sprintf($language->get('mail_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
-			$template->data['mail_link'] = $language->get('mail_new_link');
-			$template->data['mail_download'] = $language->get('mail_new_download');
-			$template->data['mail_order_detail'] = $language->get('mail_new_order_detail');
-			$template->data['mail_invoice_no'] = $language->get('mail_new_invoice_no');
-			$template->data['mail_order_id'] = $language->get('mail_new_order_id');
-			$template->data['mail_date_added'] = $language->get('mail_new_date_added');
-			$template->data['mail_payment_method'] = $language->get('mail_new_payment_method');	
-			$template->data['mail_shipping_method'] = $language->get('mail_new_shipping_method');
-			$template->data['mail_email'] = $language->get('mail_new_email');
-			$template->data['mail_telephone'] = $language->get('mail_new_telephone');
-			$template->data['mail_ip'] = $language->get('mail_new_ip');
-			$template->data['mail_payment_address'] = $language->get('mail_new_payment_address');
-			$template->data['mail_shipping_address'] = $language->get('mail_new_shipping_address');
-			$template->data['mail_product'] = $language->get('mail_new_product');
-			$template->data['mail_model'] = $language->get('mail_new_model');
-			$template->data['mail_quantity'] = $language->get('mail_new_quantity');
-			$template->data['mail_price'] = $language->get('mail_new_price');
-			$template->data['mail_total'] = $language->get('mail_new_total');
-			$template->data['mail_footer'] = $language->get('mail_new_footer');
-			$template->data['mail_powered'] = $language->get('mail_new_powered');
+			$template->data['text_greeting'] = sprintf($language->get('text_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+			$template->data['text_link'] = $language->get('text_new_link');
+			$template->data['text_download'] = $language->get('text_new_download');
+			$template->data['text_order_detail'] = $language->get('text_new_order_detail');
+			$template->data['text_invoice_no'] = $language->get('text_new_invoice_no');
+			$template->data['text_order_id'] = $language->get('text_new_order_id');
+			$template->data['text_date_added'] = $language->get('text_new_date_added');
+			$template->data['text_payment_method'] = $language->get('text_new_payment_method');	
+			$template->data['text_shipping_method'] = $language->get('text_new_shipping_method');
+			$template->data['text_email'] = $language->get('text_new_email');
+			$template->data['text_telephone'] = $language->get('text_new_telephone');
+			$template->data['text_ip'] = $language->get('text_new_ip');
+			$template->data['text_payment_address'] = $language->get('text_new_payment_address');
+			$template->data['text_shipping_address'] = $language->get('text_new_shipping_address');
+			$template->data['text_product'] = $language->get('text_new_product');
+			$template->data['text_model'] = $language->get('text_new_model');
+			$template->data['text_quantity'] = $language->get('text_new_quantity');
+			$template->data['text_price'] = $language->get('text_new_price');
+			$template->data['text_total'] = $language->get('text_new_total');
+			$template->data['text_footer'] = $language->get('text_new_footer');
+			$template->data['text_powered'] = $language->get('text_new_powered');
 			
 			$template->data['logo'] = 'cid:' . basename($this->config->get('config_logo'));		
 			$template->data['store_name'] = $order_info['store_name'];
@@ -362,18 +362,18 @@ class ModelCheckoutOrder extends Model {
 	
 			$template->data['totals'] = $order_total_query->rows;
 			
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/mail_confirm.tpl')) {
-				$html = $template->fetch($this->config->get('config_template') . '/template/checkout/mail_confirm.tpl');
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/order.tpl')) {
+				$html = $template->fetch($this->config->get('config_template') . '/template/mail/order.tpl');
 			} else {
-				$html = $template->fetch('default/template/checkout/mail_confirm.tpl');
+				$html = $template->fetch('default/template/checkout/mail/order.tpl');
 			}
 			
 			// Text Mail
-			$text  = sprintf($language->get('mail_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8')) . "\n\n";
-			$text .= $language->get('mail_new_order_id') . ' ' . $order_id . "\n";
-			$text .= $language->get('mail_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
-			$text .= $language->get('mail_new_order_status') . ' ' . $order_status . "\n\n";
-			$text .= $language->get('mail_new_products') . "\n";
+			$text  = sprintf($language->get('text_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8')) . "\n\n";
+			$text .= $language->get('text_new_order_id') . ' ' . $order_id . "\n";
+			$text .= $language->get('text_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
+			$text .= $language->get('text_new_order_status') . ' ' . $order_status . "\n\n";
+			$text .= $language->get('text_new_products') . "\n";
 			
 			foreach ($order_product_query->rows as $result) {
 				$text .= $result['quantity'] . 'x ' . $result['name'] . ' (' . $result['model'] . ') ' . html_entity_decode($this->currency->format($result['total'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
@@ -387,7 +387,7 @@ class ModelCheckoutOrder extends Model {
 			
 			$text .= "\n";
 			
-			$text .= $language->get('mail_new_order_total') . "\n";
+			$text .= $language->get('text_new_order_total') . "\n";
 			
 			foreach ($order_total_query->rows as $result) {
 				$text .= $result['title'] . ' ' . html_entity_decode($result['text'], ENT_NOQUOTES, 'UTF-8') . "\n";
@@ -398,21 +398,21 @@ class ModelCheckoutOrder extends Model {
 			$text .= "\n";
 			
 			if ($order_info['customer_id']) {
-				$text .= $language->get('mail_new_link') . "\n";
+				$text .= $language->get('text_new_link') . "\n";
 				$text .= $order_info['store_url'] . 'index.php?route=account/invoice&order_id=' . $order_id . "\n\n";
 			}
 		
 			if ($order_download_query->num_rows) {
-				$text .= $language->get('mail_new_download') . "\n";
+				$text .= $language->get('text_new_download') . "\n";
 				$text .= $order_info['store_url'] . 'index.php?route=account/download' . "\n\n";
 			}
 			
 			if ($order_info['comment']) {
-				$text .= $language->get('mail_new_comment') . "\n\n";
+				$text .= $language->get('text_new_comment') . "\n\n";
 				$text .= $order_info['comment'] . "\n\n";
 			}
 			
-			$text .= $language->get('mail_new_footer') . "\n\n";
+			$text .= $language->get('text_new_footer') . "\n\n";
 		
 			$mail = new Mail(); 
 			$mail->protocol = $this->config->get('config_mail_protocol');
@@ -433,14 +433,14 @@ class ModelCheckoutOrder extends Model {
 
 			// Admin Alert Mail
 			if ($this->config->get('config_alert_mail')) {
-				$subject = sprintf($language->get('mail_new_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'), $order_id);
+				$subject = sprintf($language->get('text_new_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'), $order_id);
 				
 				// Text 
-				$text  = $language->get('mail_new_received') . "\n\n";
-				$text .= $language->get('mail_new_order_id') . ' ' . $order_id . "\n";
-				$text .= $language->get('mail_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
-				$text .= $language->get('mail_new_order_status') . ' ' . $order_status . "\n\n";
-				$text .= $language->get('mail_new_products') . "\n";
+				$text  = $language->get('text_new_received') . "\n\n";
+				$text .= $language->get('text_new_order_id') . ' ' . $order_id . "\n";
+				$text .= $language->get('text_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
+				$text .= $language->get('text_new_order_status') . ' ' . $order_status . "\n\n";
+				$text .= $language->get('text_new_products') . "\n";
 				
 				foreach ($order_product_query->rows as $result) {
 					$text .= $result['quantity'] . 'x ' . $result['name'] . ' (' . $result['model'] . ') ' . html_entity_decode($this->currency->format($result['total'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
@@ -454,7 +454,7 @@ class ModelCheckoutOrder extends Model {
 				
 				$text .= "\n";
 
-				$text.= $language->get('mail_new_order_total') . "\n";
+				$text.= $language->get('text_new_order_total') . "\n";
 				
 				foreach ($order_total_query->rows as $result) {
 					$text .= $result['title'] . ' ' . html_entity_decode($result['text'], ENT_NOQUOTES, 'UTF-8') . "\n";
@@ -467,7 +467,7 @@ class ModelCheckoutOrder extends Model {
 				}
 				
 				if ($comment) {
-					$text .= $language->get('mail_new_comment') . "\n\n";
+					$text .= $language->get('text_new_comment') . "\n\n";
 					$text .= $comment . "\n\n";
 				}
 			
@@ -517,12 +517,12 @@ class ModelCheckoutOrder extends Model {
 			if ($notify) {
 				$language = new Language($order_info['language_directory']);
 				$language->load($order_info['language_filename']);
-				$language->load('checkout/checkout');
+				$language->load('mail/order');
 			
-				$subject = sprintf($language->get('mail_update_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
+				$subject = sprintf($language->get('text_update_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
 	
-				$message  = $language->get('mail_update_order') . ' ' . $order_id . "\n";
-				$message .= $language->get('mail_update_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n\n";
+				$message  = $language->get('text_update_order') . ' ' . $order_id . "\n";
+				$message .= $language->get('text_update_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n\n";
 				
 				$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_info['language_id'] . "'");
 				
@@ -533,19 +533,19 @@ class ModelCheckoutOrder extends Model {
 				}
 				
 				if ($order_status_query->num_rows) {
-					$message .= $language->get('mail_update_order_status') . "\n\n";
+					$message .= $language->get('text_update_order_status') . "\n\n";
 					$message .= $order_status . "\n\n";
 				}
 				
-				$message .= $language->get('mail_update_link') . "\n";
+				$message .= $language->get('text_update_link') . "\n";
 				$message .= $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id . "\n\n";
 					
 				if ($comment) { 
-					$message .= $language->get('mail_update_comment') . "\n\n";
+					$message .= $language->get('text_update_comment') . "\n\n";
 					$message .= $comment . "\n\n";
 				}
 					
-				$message .= $language->get('mail_update_footer');
+				$message .= $language->get('text_update_footer');
 
 				$mail = new Mail();
 				$mail->protocol = $this->config->get('config_mail_protocol');

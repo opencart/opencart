@@ -14,9 +14,4 @@ $_['entry_email']     = 'E-Mail Address:';
 
 // Error
 $_['error_email']     = 'Error: The E-Mail Address was not found in our records, please try again!';
-
-// Mail
-$_['mail_subject']    = '%s - New Password';
-$_['mail_greeting']   = 'A new password was requested from %s.';
-$_['mail_password']   = 'Your new password to is:';
 ?>

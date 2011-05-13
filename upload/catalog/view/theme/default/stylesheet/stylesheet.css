@@ -706,16 +706,20 @@ a.button:hover span {
 	margin: 0;
 	padding: 0;
 }
+.box-category > ul > li {
+	padding: 8px 8px 8px 0px;
+}
 .box-category > ul > li + li {
 	border-top: 1px solid #EEEEEE;
 }
 .box-category > ul > li > a {
 	text-decoration: none;
+	font-weight: bold;
 	color: #333;
-	display: block;
-	padding: 8px 8px 8px 0px;
+
 }
-.box-category > ul > li ul {
+.box-category > ul > li > ul {
+	
 	padding-left: 10px;
 }
 .box-category > ul > li ul + ul {
@@ -723,10 +727,9 @@ a.button:hover span {
 }
 .box-category > ul > li ul > li > a {
 	text-decoration: none;
-	padding: 4px;
-	color: #333;
+	color: #999;
 	display: block;
-	padding: 8px 8px 8px 0px;
+	padding: 8px 8px 8px 5px;
 }
 /* content */
 #content .content {

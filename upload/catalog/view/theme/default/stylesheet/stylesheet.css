@@ -394,12 +394,16 @@ label {
 	color: #FFFFFF;	
 }
 #menu > ul > li > div > ul > li > a.parent {
+	font-size: 13px;
 	font-weight: bold;
 }
-#menu > ul > li > div > ul > li > ul > li > a {
-	
+#menu > ul > li > div > ul > li > a.child {
+	padding-left: 17px;
+	background: url('../image/bullet-1.png') 5% 55% no-repeat;
 }
-
+#menu > ul > li > div > ul > li > a.child:hover {
+	background: #000000 url('../image/bullet-1.png') 5% 55% no-repeat;
+}
 .breadcrumb {
 	color: #CCCCCC;
 	margin-bottom: 10px;

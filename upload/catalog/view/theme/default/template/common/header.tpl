@@ -119,7 +119,7 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
           <li><a href="<?php echo $category_2['href']; ?>" class="parent"><?php echo $category_2['name']; ?></a>
             <ul>
               <?php foreach ($category_2['children'] as $category_3) { ?>
-              <li><a href="<?php echo $category_3['href']; ?>"><?php echo $category_3['name']; ?></a></li>
+              <li><a href="<?php echo $category_3['href']; ?>" class="child"><?php echo $category_3['name']; ?></a></li>
               <?php } ?>
             </ul>
           </li>

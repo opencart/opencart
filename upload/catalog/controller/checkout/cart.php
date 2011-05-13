@@ -325,8 +325,10 @@ class ControllerCheckoutCart extends Controller {
       	}
 
       	if (isset($this->request->post['voucher'])) {
-			unset($this->session->data['vouchers'][$key]);
-      	}
+			if ($this->session->data['vouchers'][$this->request->post['voucher']]) {
+				unset($this->session->data['vouchers'][$this->request->post['voucher']]);
+			}
+		}
 					
 		$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), $this->currency->format($this->cart->getTotal()));
 			

@@ -16,6 +16,15 @@
     <td class="remove"><img src="catalog/view/theme/default/image/close.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" onclick="removeCart('<?php echo $product['key']; ?>');" /></td>
   </tr>
   <?php } ?>
+  <?php foreach ($vouchers as $voucher) { ?>
+  <tr>
+    <td class="image"></td>
+    <td class="name"><?php echo $voucher['description']; ?></td>
+    <td class="quantity">x&nbsp;1</td>
+    <td class="total"><?php echo $voucher['amount']; ?></td>
+    <td class="remove"><img src="catalog/view/theme/default/image/close.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" onclick="removeVoucher('<?php echo $voucher['key']; ?>');" /></td>
+  </tr>
+  <?php } ?>  
 </table>
 <table class="total">
   <?php foreach ($totals as $total) { ?>

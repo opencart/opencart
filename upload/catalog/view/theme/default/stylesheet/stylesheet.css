@@ -359,7 +359,6 @@ label {
 }
 #menu > ul > li > div {
 	display: none;
-	min-width: 150px;
 	background: #FFFFFF;
 	position: absolute;
 	z-index: 5;
@@ -385,17 +384,22 @@ label {
 	padding: 4px;
 	color: #FFFFFF;
 	display: block;
+	white-space: nowrap;
 	min-width: 120px;
 }
 #menu > ul > li ul > li > a:hover {
 	background: #000000;
 }
 #menu > ul > li > div > ul > li > a {
-	color: #EEEEEE;	
-}
-#menu > ul > li > div > ul > li > ul > li > a {
 	color: #FFFFFF;	
 }
+#menu > ul > li > div > ul > li > a.parent {
+	font-weight: bold;
+}
+#menu > ul > li > div > ul > li > ul > li > a {
+	
+}
+
 .breadcrumb {
 	color: #CCCCCC;
 	margin-bottom: 10px;

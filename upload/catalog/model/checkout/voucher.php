@@ -80,7 +80,12 @@ class ModelCheckoutVoucher extends Model {
 				$template->data['text_problem'] = $language->get('text_problem');
 				$template->data['text_footer'] = $language->get('text_footer');
 				
-				$template->data['image'] = 'cid:' . basename($voucher['image']);
+				if (file_exists(DIR_IMAGE . $voucher['image'])) {
+					$template->data['image'] = 'cid:' . basename($voucher['image']);
+				} else {
+					$template->data['image'] = '';
+				}
+				
 				$template->data['store_name'] = $voucher['store_name'];
 				$template->data['store_url'] = $voucher['store_url'];
 				$template->data['message'] = nl2br($voucher['message']);
@@ -104,7 +109,11 @@ class ModelCheckoutVoucher extends Model {
 				$mail->setSender($order_info['store_name']);
 				$mail->setSubject(sprintf($language->get('text_subject'), $voucher['from_name']));
 				$mail->setHtml($html);
-				$mail->addAttachment(DIR_IMAGE . $voucher['image']);
+				
+				if (file_exists(DIR_IMAGE . $voucher['image'])) {
+					$mail->addAttachment(DIR_IMAGE . $voucher['image']);
+				}
+				
 				$mail->send();		
 			}
 		}

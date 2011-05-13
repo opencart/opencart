@@ -112,24 +112,22 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
     <?php foreach ($categories as $category_1) { ?>
     <li><a href="<?php echo $category_1['href']; ?>"><?php echo $category_1['name']; ?></a>
       <?php if ($category_1['children']) { ?>
-      <?php $links = array(); ?>
-      <?php foreach ($category_1['children'] as $category_2) { ?>
-      <?php $links[] = array('name' => $category_2['name'], 'href' => $category_2['href']); ?>
-      <?php foreach ($category_2['children'] as $category_3) { ?>
-      <?php $links[] = array('name' => $category_3['name'], 'href' => $category_3['href']); ?>
-      <?php } ?>
-      <?php } ?>
-      <div>
-        <?php for ($i = 0; $i < count($links);) { ?>
+      <div class="num-cols-<?php echo $category_1['column']; ?>">
         <ul>
-          <?php $j = $i + ceil(count($links) / $category_1['column']); ?>
-          <?php for (; $i < $j; $i++) { ?>
-          <?php if (isset($links[$i])) { ?>
-          <li><a href="<?php echo $links[$i]['href']; ?>"><?php echo $links[$i]['name']; ?></a></li>
+          <?php foreach ($category_1['children'] as $category_2) { ?>
+          <?php if ($category_2['children']) { ?>
+          <li><a href="<?php echo $category_2['href']; ?>" class="parent"><?php echo $category_2['name']; ?></a>
+            <ul>
+              <?php foreach ($category_2['children'] as $category_3) { ?>
+              <li><a href="<?php echo $category_3['href']; ?>"><?php echo $category_3['name']; ?></a></li>
+              <?php } ?>
+            </ul>
+          </li>
+          <?php } else { ?>
+          <li><a href="<?php echo $category_2['href']; ?>"><?php echo $category_2['name']; ?></a></li>
           <?php } ?>
           <?php } ?>
         </ul>
-        <?php } ?>
       </div>
       <?php } ?>
     </li>

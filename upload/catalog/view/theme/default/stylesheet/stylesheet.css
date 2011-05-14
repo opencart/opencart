@@ -724,9 +724,6 @@ a.button:hover span {
 	display: none;
 	padding-left: 10px;
 }
-.box-category > ul > li ul + ul {
-	padding-left: 20px;
-}
 .box-category > ul > li ul > li {
 	padding: 5px 5px 5px 5px;
 }

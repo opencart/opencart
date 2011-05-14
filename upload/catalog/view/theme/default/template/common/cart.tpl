@@ -1,4 +1,4 @@
-<?php if ($products) { ?>
+<?php if ($products || $vouchers) { ?>
 <table class="cart">
   <?php foreach ($products as $product) { ?>
   <tr>

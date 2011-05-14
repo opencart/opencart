@@ -1,7 +1,7 @@
 <?php 
 class ControllerCheckoutConfirm extends Controller { 
 	public function index() {
-		if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if ((!$this->cart->hasProducts() && (!isset($this->session->data['vouchers']) || !$this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 	  		$json['redirect'] = $this->url->link('checkout/cart');
     	}			
 		

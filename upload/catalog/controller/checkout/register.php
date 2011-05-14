@@ -25,7 +25,7 @@ class ControllerCheckoutRegister extends Controller {
 					$json['error']['lastname'] = $this->language->get('error_lastname');
 				}
 		
-				if ((strlen(utf8_decode($this->request->post['email'])) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+				if ((strlen(utf8_decode($this->request->post['email'])) > 96) || !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i', $this->request->post['email'])) {
 					$json['error']['email'] = $this->language->get('error_email');
 				}
 		

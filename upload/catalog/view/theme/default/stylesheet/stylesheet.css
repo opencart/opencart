@@ -721,17 +721,19 @@ a.button:hover span {
 
 }
 .box-category > ul > li > ul {
-	
+	display: none;
 	padding-left: 10px;
 }
 .box-category > ul > li ul + ul {
 	padding-left: 20px;
 }
+.box-category > ul > li ul > li {
+	padding: 5px 5px 5px 5px;
+}
 .box-category > ul > li ul > li > a {
 	text-decoration: none;
 	color: #999;
 	display: block;
-	padding: 8px 8px 8px 5px;
 }
 /* content */
 #content .content {

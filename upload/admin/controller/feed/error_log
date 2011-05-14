@@ -1,2 +1,0 @@
-[01-Jan-2010 12:12:11] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/feed/google_base.php on line 2
-[01-Jan-2010 12:12:11] PHP Fatal error:  Class 'Controller' not found in /home/opencart/public_html/dev/admin/controller/feed/google_sitemap.php on line 2

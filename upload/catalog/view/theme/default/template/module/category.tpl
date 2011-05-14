@@ -4,7 +4,11 @@
     <div class="box-category">
       <ul>
         <?php foreach ($categories as $category_1) { ?>
-        <li><img src="catalog/view/theme/default/image/arrow-right.png" />&nbsp;&nbsp;&nbsp;<a href="<?php echo $category_1['href']; ?>"><?php echo $category_1['name']; ?></a>
+        <li>
+          <?php if ($category_1['children']) { ?>
+          <img src="catalog/view/theme/default/image/arrow-right.png" alt="" />
+          <?php } ?>
+          &nbsp;&nbsp;&nbsp;<a href="<?php echo $category_1['href']; ?>"><?php echo $category_1['name']; ?></a>
           <?php if ($category_1['children']) { ?>
           <ul>
             <?php foreach ($category_1['children'] as $category_2) { ?>
@@ -18,3 +22,16 @@
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('.box-category ul img').bind('click', function() {
+	if ($(this).css('display') == 'block') {
+		$(this).parent().find('img').attr('src', 'catalog/view/theme/default/image/arrow-down.png');
+	} else {
+		$(this).parent().find('img').attr('src', 'catalog/view/theme/default/image/arrow-right.png');
+	}
+		
+	$(this).parent().find('ul').slideToggle('fast', function() {
+
+	});
+});
+//--></script>

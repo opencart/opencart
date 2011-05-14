@@ -187,7 +187,7 @@ class ControllerInformationContact extends Controller {
       		$this->error['name'] = $this->language->get('error_name');
     	}
 
-    	if (!filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+    	if (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i', $this->request->post['email'])) {
       		$this->error['email'] = $this->language->get('error_email');
     	}
 

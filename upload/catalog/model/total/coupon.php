@@ -1,12 +1,12 @@
 <?php
 class ModelTotalCoupon extends Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
-		if (isset($this->session->data['coupon_code'])) {
+		if (isset($this->session->data['coupon'])) {
 			$this->load->language('total/coupon');
 			
 			$this->load->model('checkout/coupon');
 			 
-			$coupon_info = $this->model_checkout_coupon->getCoupon($this->session->data['coupon_code']);
+			$coupon_info = $this->model_checkout_coupon->getCoupon($this->session->data['coupon']);
 			
 			if ($coupon_info) {
 				$discount_total = 0;
@@ -65,7 +65,7 @@ class ModelTotalCoupon extends Model {
       			
 				$total_data[] = array(
 					'code'       => 'coupon',
-        			'title'      => sprintf($this->language->get('text_coupon'), $this->session->data['coupon_code']),
+        			'title'      => sprintf($this->language->get('text_coupon'), $this->session->data['coupon']),
 	    			'text'       => $this->currency->format(-$discount_total),
         			'value'      => -$discount_total,
 					'sort_order' => $this->config->get('coupon_sort_order')

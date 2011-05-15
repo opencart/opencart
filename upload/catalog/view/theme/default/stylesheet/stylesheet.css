@@ -639,7 +639,6 @@ a.button:hover span {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	font-weight: bold;
-	text-transform: uppercase;
 	line-height: 14px;
 	color: #333;
 }
@@ -1400,16 +1399,26 @@ a.button:hover span {
 	font-weight: bold;
 }
 .cart-module {
-	text-align: right;
-	overflow: auto;
+	
+}
+
+.cart-module .cart-heading {
+	border: 1px solid #DBDEE1;
+	padding: 8px 8px 8px 22px;
+	font-weight: bold;
+	font-size: 13px;
+	color: #555555;
 	margin-bottom: 20px;
+	cursor: pointer;
+	background: #F8F8F8 url('../image/arrow-right.png') 10px 50% no-repeat;	
 }
-.cart-module h2 {
-	text-align: right;
+.cart-module .active {
+	background: #F8F8F8 url('../image/arrow-down.png') 10px 50% no-repeat;	
 }
-.cart-module .content {
-	text-align: left;
+.cart-module .cart-content {
+	padding: 0px 0px 15px 0px;
 	display: none;
+	overflow: auto;	
 }
 .cart-total {
 	border-top: 1px solid #DDDDDD;

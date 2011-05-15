@@ -49,7 +49,7 @@
     </tr>
     <tr>
       <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-      <td><select name="country_id" class="large-field" onclick="$('#<?php echo $type; ?>-address select[name=\'zone_id\']').load('index.php?route=checkout/address/zone&country_id=' + this.value);">
+      <td><select name="country_id" class="large-field" onchange="$('#<?php echo $type; ?>-address select[name=\'zone_id\']').load('index.php?route=checkout/address/zone&country_id=' + this.value);">
           <option value=""><?php echo $text_select; ?></option>
           <?php foreach ($countries as $country) { ?>
           <?php if ($country['country_id'] == $country_id) { ?>

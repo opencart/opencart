@@ -1,7 +1,9 @@
-<?php echo $heading_title; ?> <input type="radio" name="checkout" value="reward" /><br />
-<div id="reward" class="content"><?php echo $entry_reward; ?>&nbsp;
+<div>
+  <div class="cart-heading"><?php echo $heading_title; ?></div>
+  <div class="cart-content" id="reward"><?php echo $entry_reward; ?>&nbsp;
   <input type="text" name="reward" value="<?php echo $reward; ?>" />
   &nbsp;<a id="button-reward" class="button"><span><?php echo $button_reward; ?></a></div>
+</div>
 <script type="text/javascript"><!--
 $('#button-reward').bind('click', function() {
 	$.ajax({

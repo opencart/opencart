@@ -1,33 +1,35 @@
-<?php echo $heading_title; ?> <input type="radio" name="checkout" value="shipping" /><br />
-<div class="content">
-  <p><?php echo $text_shipping; ?></p>
-  <table id="shipping">
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-      <td><select name="country_id" onchange="$('select[name=\'zone_id\']').load('index.php?route=total/shipping/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>');">
-          <option value=""><?php echo $text_select; ?></option>
-          <?php foreach ($countries as $country) { ?>
-          <?php if ($country['country_id'] == $country_id) { ?>
-          <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-          <?php } else { ?>
-          <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-          <?php } ?>
-          <?php } ?>
-        </select></td>
-    </tr>
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
-      <td><select name="zone_id">
-        </select></td>
-    </tr>
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_postcode; ?></td>
-      <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
-    </tr>
-  </table>
-  <a id="button-quote" class="button"><span><?php echo $button_quote; ?></span></a>
-  <div id="quote" style="display: none;"></div>
-  <input type="hidden" name="shipping_method" value="<?php echo $code; ?>" />
+<div>
+  <div class="cart-heading"><?php echo $heading_title; ?></div>
+  <div class="cart-content">
+    <p><?php echo $text_shipping; ?></p>
+    <table id="shipping">
+      <tr>
+        <td><span class="required">*</span> <?php echo $entry_country; ?></td>
+        <td><select name="country_id" onchange="$('select[name=\'zone_id\']').load('index.php?route=total/shipping/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>');">
+            <option value=""><?php echo $text_select; ?></option>
+            <?php foreach ($countries as $country) { ?>
+            <?php if ($country['country_id'] == $country_id) { ?>
+            <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+            <?php } else { ?>
+            <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+            <?php } ?>
+            <?php } ?>
+          </select></td>
+      </tr>
+      <tr>
+        <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
+        <td><select name="zone_id">
+          </select></td>
+      </tr>
+      <tr>
+        <td><span class="required">*</span> <?php echo $entry_postcode; ?></td>
+        <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
+      </tr>
+    </table>
+    <a id="button-quote" class="button"><span><?php echo $button_quote; ?></span></a>
+    <div id="quote" style="display: none;"></div>
+    <input type="hidden" name="shipping_method" value="<?php echo $code; ?>" />
+  </div>
 </div>
 <script type="text/javascript"><!--
 $('#button-quote').bind('click', function() {

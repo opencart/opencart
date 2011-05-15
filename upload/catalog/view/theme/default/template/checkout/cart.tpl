@@ -55,7 +55,7 @@
               <td class="price"><?php echo $product['price']; ?></td>
               <td class="total"><?php echo $product['total']; ?></td>
             </tr>
-            <?php } ?>   
+            <?php } ?>
             <?php foreach ($vouchers as $voucher) { ?>
             <tr>
               <td class="remove"><input type="checkbox" name="voucher[]" value="<?php echo $voucher['key']; ?>" /></td>
@@ -66,13 +66,11 @@
               <td class="price"><?php echo $voucher['amount']; ?></td>
               <td class="total"><?php echo $voucher['amount']; ?></td>
             </tr>
-            <?php } ?>                      
+            <?php } ?>
           </tbody>
         </table>
       </div>
-      <div class="cart-module">
-        <h2>Before you checkout would you like to:</h2>
-        <?php echo $shipping; ?> <?php echo $coupon; ?><?php echo $voucher; ?><?php echo $reward; ?> </div>
+      <div class="cart-module"><?php echo $shipping; ?><?php echo $coupon; ?><?php echo $voucher; ?><?php echo $reward; ?></div>
       <div class="cart-total">
         <table>
           <?php foreach ($totals as $total) { ?>
@@ -92,4 +90,16 @@
     </form>
     <?php echo $content_bottom; ?></div>
 </div>
+<script type="text/javascript"><!--
+$('.cart-module .cart-heading').bind('click', function(showOrHide) {
+	alert(showOrHide);
+		if ($(this).css('display') == 'block') {
+			$(this).addClass('active');
+		} else {
+			$(this).removeClass('active');
+		}
+		
+		$(this).parent().find('.cart-content').slideToggle('slow');
+});
+//--></script>
 <?php echo $footer; ?>

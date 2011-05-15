@@ -1413,7 +1413,7 @@ a.button:hover span {
 	background: #F8F8F8 url('../image/arrow-right.png') 10px 50% no-repeat;	
 }
 .cart-module .active {
-	background: #F8F8F8 url('../image/arrow-down.png') 10px 50% no-repeat;	
+	background: #F8F8F8 url('../image/arrow-down.png') 7px 50% no-repeat;	
 }
 .cart-module .cart-content {
 	padding: 0px 0px 15px 0px;

@@ -91,15 +91,14 @@
     <?php echo $content_bottom; ?></div>
 </div>
 <script type="text/javascript"><!--
-$('.cart-module .cart-heading').bind('click', function(showOrHide) {
-	alert(showOrHide);
-		if ($(this).css('display') == 'block') {
-			$(this).addClass('active');
-		} else {
-			$(this).removeClass('active');
-		}
+$('.cart-module .cart-heading').bind('click', function() {
+	if ($(this).hasClass('active')) {
+		$(this).removeClass('active');
+	} else {
+		$(this).addClass('active');
+	}
 		
-		$(this).parent().find('.cart-content').slideToggle('slow');
+	$(this).parent().find('.cart-content').slideToggle('slow');
 });
 //--></script>
 <?php echo $footer; ?>

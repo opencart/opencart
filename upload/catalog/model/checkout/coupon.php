@@ -10,7 +10,7 @@ class ModelCheckoutCoupon extends Model {
 				$status = false;
 			}
 		
-			$coupon_history_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "coupon_history` ch WHERE AND ch.coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "'");
+			$coupon_history_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "coupon_history` ch WHERE ch.coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "'");
 
 			if ($coupon_query->row['uses_total'] > 0 && ($coupon_history_query->row['total'] >= $coupon_query->row['uses_total'])) {
 				$status = false;
@@ -26,13 +26,6 @@ class ModelCheckoutCoupon extends Model {
 				if ($coupon_query->row['uses_customer'] > 0 && ($coupon_history_query->row['total'] >= $coupon_query->row['uses_customer'])) {
 					$status = false;
 				}
-			}
-			
-			// 
-			$coupon_history_query = $this->db->query("SELECT SUM(amount) AS total FROM `" . DB_PREFIX . "coupon_history` ch WHERE ch.coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "' AND ch.customer_id = '" . (int)$this->customer->getId() . "'");
-			
-			if ($coupon_query->row['uses_customer'] > 0 && ($coupon_history_query->row['total'] >= $coupon_query->row['uses_customer'])) {
-				$status = false;
 			}
 				
 			$coupon_product_data = array();

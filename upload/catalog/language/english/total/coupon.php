@@ -1,6 +1,6 @@
 <?php
 // Heading 
-$_['heading_title'] = 'Discount Code';
+$_['heading_title'] = 'Apply Discount Code';
 
 // Text
 $_['text_coupon']   = 'Coupon(%s):';

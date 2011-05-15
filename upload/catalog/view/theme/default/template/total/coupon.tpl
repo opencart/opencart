@@ -10,7 +10,7 @@ $('#button-coupon').bind('click', function() {
 		type: 'POST',
 		url: 'index.php?route=total/coupon/calculate',
 		data: $('#coupon :input'),
-		dataType: 'html',		
+		dataType: 'json',		
 		beforeSend: function() {
 			$('.success, .warning').remove();
 			$('#button-coupon').attr('disabled', 'disabled');
@@ -21,7 +21,6 @@ $('#button-coupon').bind('click', function() {
 			$('.wait').remove();
 		},		
 		success: function(json) {
-			alert(json);
 			if (json['error']) {
 				$('#basket').before('<div class="warning">' + json['error'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 			}

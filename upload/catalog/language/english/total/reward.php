@@ -1,6 +1,6 @@
 <?php
 // Heading 
-$_['heading_title'] = 'Reward Points (Available %s)';
+$_['heading_title'] = 'Use Reward Points (Available %s)';
 
 // Text
 $_['text_reward']   = 'Reward Points(%s):';

@@ -391,7 +391,7 @@ label {
 	background: #000000;
 }
 #menu > ul > li > div > ul > li > a {
-	color: #FFFFFF;	
+	color: #FFFFFF;
 }
 #menu > ul > li > div > ul > li > a.parent {
 	font-size: 13px;
@@ -498,7 +498,7 @@ table.list tbody td a {
 	text-decoration: underline;
 }
 table.list tbody td {
-	vertical-align: top;	
+	vertical-align: top;
 	padding: 0px 5px;
 }
 table.list .left {
@@ -717,7 +717,6 @@ a.button:hover span {
 .box-category > ul > li > a {
 	text-decoration: none;
 	color: #333;
-
 }
 .box-category > ul > li > ul {
 	display: none;
@@ -1075,7 +1074,6 @@ a.button:hover span {
 	border-bottom: 1px solid #E7E7E7;
 	line-height: 20px;
 }
-
 .product-info .review > div > span {
 	color: #378DC1;
 }
@@ -1083,7 +1081,6 @@ a.button:hover span {
 	overflow: auto;
 	line-height: normal;
 }
-
 .attribute {
 	border-collapse: collapse;
 	width: 100%;
@@ -1398,10 +1395,6 @@ a.button:hover span {
 	color: #F00;
 	font-weight: bold;
 }
-.cart-module {
-	
-}
-
 .cart-module .cart-heading {
 	border: 1px solid #DBDEE1;
 	padding: 8px 8px 8px 22px;
@@ -1410,15 +1403,15 @@ a.button:hover span {
 	color: #555555;
 	margin-bottom: 20px;
 	cursor: pointer;
-	background: #F8F8F8 url('../image/arrow-right.png') 10px 50% no-repeat;	
+	background: #F8F8F8 url('../image/arrow-right.png') 10px 50% no-repeat;
 }
 .cart-module .active {
-	background: #F8F8F8 url('../image/arrow-down.png') 7px 50% no-repeat;	
+	background: #F8F8F8 url('../image/arrow-down.png') 7px 50% no-repeat;
 }
 .cart-module .cart-content {
 	padding: 0px 0px 15px 0px;
 	display: none;
-	overflow: auto;	
+	overflow: auto;
 }
 .cart-total {
 	border-top: 1px solid #DDDDDD;

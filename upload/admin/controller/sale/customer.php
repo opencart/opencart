@@ -957,7 +957,7 @@ class ControllerSaleCustomer extends Controller {
 					$this->error['address_address_1'][$key] = $this->language->get('error_address_1');
 				}
 			
-				if ((strlen(utf8_decode($value['city'])) < 3) || (strlen(utf8_decode($value['city'])) > 128)) {
+				if ((strlen(utf8_decode($value['city'])) < 2) || (strlen(utf8_decode($value['city'])) > 128)) {
 					$this->error['address_city'][$key] = $this->language->get('error_city');
 				} 
 	

@@ -26,7 +26,7 @@ class ControllerCheckoutCart extends Controller {
 				}
       		}
 			
-      		if (isset($this->request->post['voucher'])) {
+      		if (isset($this->request->post['voucher']) && $this->request->post['voucher']) {
 	    		foreach ($this->request->post['voucher'] as $key) {
           			if (isset($this->session->data['vouchers'][$key])) {
 						unset($this->session->data['vouchers'][$key]);

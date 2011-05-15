@@ -70,24 +70,24 @@
           </tbody>
         </table>
       </div>
-      <div class="cart-module"><?php echo $shipping; ?><?php echo $coupon; ?><?php echo $voucher; ?><?php echo $reward; ?></div>
-      <div class="cart-total">
-        <table>
-          <?php foreach ($totals as $total) { ?>
-          <tr>
-            <td colspan="5"></td>
-            <td class="right"><b><?php echo $total['title']; ?></b></td>
-            <td class="right"><?php echo $total['text']; ?></td>
-          </tr>
-          <?php } ?>
-        </table>
-      </div>
-      <div class="buttons">
-        <div class="left"><a onclick="$('#basket').submit();" class="button"><span><?php echo $button_update; ?></span></a></div>
-        <div class="right"><a href="<?php echo $checkout; ?>" class="button"><span><?php echo $button_checkout; ?></span></a></div>
-        <div class="center"><a href="<?php echo $continue; ?>" class="button"><span><?php echo $button_shopping; ?></span></a></div>
-      </div>
     </form>
+    <div class="cart-module"><?php echo $shipping; ?><?php echo $coupon; ?><?php echo $voucher; ?><?php echo $reward; ?></div>
+    <div class="cart-total">
+      <table>
+        <?php foreach ($totals as $total) { ?>
+        <tr>
+          <td colspan="5"></td>
+          <td class="right"><b><?php echo $total['title']; ?></b></td>
+          <td class="right"><?php echo $total['text']; ?></td>
+        </tr>
+        <?php } ?>
+      </table>
+    </div>
+    <div class="buttons">
+      <div class="left"><a onclick="$('#basket').submit();" class="button"><span><?php echo $button_update; ?></span></a></div>
+      <div class="right"><a href="<?php echo $checkout; ?>" class="button"><span><?php echo $button_checkout; ?></span></a></div>
+      <div class="center"><a href="<?php echo $continue; ?>" class="button"><span><?php echo $button_shopping; ?></span></a></div>
+    </div>
     <?php echo $content_bottom; ?></div>
 </div>
 <script type="text/javascript"><!--
@@ -100,5 +100,5 @@ $('.cart-module .cart-heading').bind('click', function() {
 		
 	$(this).parent().find('.cart-content').slideToggle('slow');
 });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

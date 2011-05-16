@@ -182,9 +182,6 @@ label {
 	-moz-border-radius: 0px 7px 7px 7px;
 	-khtml-border-radius: 0px 7px 7px 7px;
 	border-radius: 0px 7px 7px 7px;
-	-webkit-box-shadow: 1px 1px 1px #CCCCCC;
-	-moz-box-shadow: 1px 1px 1px #CCCCCC;
-	box-shadow: 1px 1px 1px #CCCCCC;
 	background: #FFF;
 }
 #header #cart.active {
@@ -651,9 +648,6 @@ a.button:hover span {
 	border-left: 1px solid #DBDEE1;
 	border-right: 1px solid #DBDEE1;
 	border-bottom: 1px solid #DBDEE1;
-	-webkit-box-shadow: 0px 2px 2px #EEEEEE;
-	-moz-box-shadow: 0px 2px 2px #EEEEEE;
-	box-shadow: 0px 2px 2px #EEEEEE;
 	padding: 10px;
 }
 /* box products */
@@ -1080,6 +1074,9 @@ a.button:hover span {
 .product-info .review .share {
 	overflow: auto;
 	line-height: normal;
+}
+.product-info .review .share a {
+	text-decoration: none;
 }
 .attribute {
 	border-collapse: collapse;

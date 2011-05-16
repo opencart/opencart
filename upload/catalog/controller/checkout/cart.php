@@ -199,6 +199,15 @@ class ControllerCheckoutCart extends Controller {
 
 			$this->data['totals'] = $total_data;
 			
+			// Modules
+			$this->data['modules'] = array();
+			
+			foreach ($results as $result) {
+				if ($this->config->get($result['code'] . '_status') && file_exists(DIR_APPLICATION . 'controller/total/' . $result['code'] . '.php')) {
+					$this->data['modules'][] = $this->getChild('total/' . $result['code']);
+				}
+			}
+			
 			if (isset($this->session->data['redirect'])) {
       			$this->data['continue'] = $this->session->data['redirect'];
 				
@@ -216,10 +225,6 @@ class ControllerCheckoutCart extends Controller {
 			}
 			
 			$this->children = array(
-				'total/shipping',
-				'total/coupon',
-				'total/voucher',
-				'total/reward',
 				'common/column_left',
 				'common/column_right',
 				'common/content_top',

@@ -71,7 +71,11 @@
         </table>
       </div>
     </form>
-    <div class="cart-module"><?php echo $shipping; ?><?php echo $coupon; ?><?php echo $voucher; ?><?php echo $reward; ?></div>
+    <div class="cart-module">
+      <?php foreach ($modules as $module) { ?>
+      <?php echo $module; ?>
+      <?php } ?>
+    </div>
     <div class="cart-total">
       <table>
         <?php foreach ($totals as $total) { ?>

@@ -1401,7 +1401,7 @@ a.button:hover span {
 	font-weight: bold;
 	font-size: 13px;
 	color: #555555;
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 	cursor: pointer;
 	background: #F8F8F8 url('../image/arrow-right.png') 10px 50% no-repeat;
 }
@@ -1434,7 +1434,7 @@ a.button:hover span {
 	font-weight: bold;
 	font-size: 13px;
 	color: #555555;
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 }
 .checkout-heading a {
 	float: right;

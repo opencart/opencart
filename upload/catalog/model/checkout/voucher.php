@@ -75,9 +75,8 @@ class ModelCheckoutVoucher extends Model {
 				$template->data['text_greeting'] = sprintf($language->get('text_greeting'), $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']));
 				$template->data['text_from'] = sprintf($language->get('text_from'), $voucher['from_name']);
 				$template->data['text_message'] = $language->get('text_message');
-				$template->data['text_redeem'] = sprintf($language->get('text_redeem'), $voucher['code']);
 				$template->data['text_message'] = $language->get('text_message');
-				$template->data['text_problem'] = $language->get('text_problem');
+				$template->data['text_redeem'] = sprintf($language->get('text_redeem'), $voucher['code']);
 				$template->data['text_footer'] = $language->get('text_footer');
 				
 				if (file_exists(DIR_IMAGE . $voucher['image'])) {

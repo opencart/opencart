@@ -68,17 +68,17 @@ $('#button-confirm').bind('click', function() {
 			
 			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
-		success: function(data) {
-			if (data.error) {
-				alert(data.error);
+		success: function(json) {
+			if (json['error']) {
+				alert(json['error']);
 				
 				$('#button-confirm').attr('disabled', '');
 			}
 			
 			$('.attention').remove();
 			
-			if (data.success) {
-				location = data.success;
+			if (json['success']) {
+				location = json['success'];
 			}
 		}
 	});

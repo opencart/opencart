@@ -72,14 +72,14 @@ $('#button-confirm').bind('click', function() {
 			
 			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
-		success: function(data) {
-			if (data.ACSURL) {
+		success: function(json) {
+			if (json['ACSURL']) {
 				$('#3dauth').remove();
 				
-				html  = '<form action="' + data.ACSURL + '" method="post" id="3dauth">';
-				html += '<input type="hidden" name="MD" value="' + data.MD + '" />';
-				html += '<input type="hidden" name="PaReq" value="' + data.PaReq + '" />';
-				html += '<input type="hidden" name="TermUrl" value="' + data.TermUrl + '" />';
+				html  = '<form action="' + json['ACSURL'] + '" method="post" id="3dauth">';
+				html += '<input type="hidden" name="MD" value="' + json['MD'] + '" />';
+				html += '<input type="hidden" name="PaReq" value="' + json['PaReq'] + '" />';
+				html += '<input type="hidden" name="TermUrl" value="' + json['TermUrl'] + '" />';
 				html += '</form>';
 				
 				$('#payment').after(html);
@@ -87,16 +87,16 @@ $('#button-confirm').bind('click', function() {
 				$('#3dauth').submit();
 			}
 			
-			if (data.error) {
-				alert(data.error);
+			if (json['error']) {
+				alert(json['error']);
 				
 				$('#button-confirm').attr('disabled', '');
 			}
 			
 			$('.attention').remove();
 			
-			if (data.success) {
-				location = data.success;
+			if (json['success']) {
+				location = json['success'];
 			}
 		}
 	});

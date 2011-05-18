@@ -88,12 +88,6 @@ class ControllerPaymentPPPro extends Controller {
 	}
 
 	public function send() {
-		if (!$this->config->get('pp_pro_test')) {
-			$api_endpoint = 'https://api-3t.paypal.com/nvp';
-		} else {
-			$api_endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
-		}
-		
 		if (!$this->config->get('pp_pro_transaction')) {
 			$payment_type = 'Authorization';	
 		} else {
@@ -104,35 +98,37 @@ class ControllerPaymentPPPro extends Controller {
 		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		
-		$payment_data = array(
-			'METHOD'         => 'DoDirectPayment', 
-			'VERSION'        => '51.0', 
-			'USER'           => html_entity_decode($this->config->get('pp_pro_username'), ENT_QUOTES, 'UTF-8'),
-			'PWD'            => html_entity_decode($this->config->get('pp_pro_password'), ENT_QUOTES, 'UTF-8'),
-			'SIGNATURE'      => html_entity_decode($this->config->get('pp_pro_signature'), ENT_QUOTES, 'UTF-8'),
-			'CUSTREF'        => $order_info['order_id'],
-			'PAYMENTACTION'  => $payment_type,
-			'AMT'            => $this->currency->format($order_info['total'], $order_info['currency'], FALSE, FALSE),
-			'CREDITCARDTYPE' => $this->request->post['cc_type'],
-			'ACCT'           => str_replace(' ', '', $this->request->post['cc_number']),
-			'CARDSTART'      => $this->request->post['cc_start_date_month'] . $this->request->post['cc_start_date_year'],
-			'EXPDATE'        => $this->request->post['cc_expire_date_month'] . $this->request->post['cc_expire_date_year'],
-			'CVV2'           => $this->request->post['cc_cvv2'],
-			'CARDISSUE'      => $this->request->post['cc_issue'],
-			'FIRSTNAME'      => $order_info['payment_firstname'],
-			'LASTNAME'       => $order_info['payment_lastname'],
-			'EMAIL'          => $order_info['email'],
-			'PHONENUM'       => $order_info['telephone'],
-			'IPADDRESS'      => $this->request->server['REMOTE_ADDR'],
-			'STREET'         => $order_info['payment_address_1'],
-			'CITY'           => $order_info['payment_city'],
-			'STATE'          => ($order_info['payment_iso_code_2'] != 'US') ? $order_info['payment_zone'] : $order_info['payment_zone_code'],
-			'ZIP'            => $order_info['payment_postcode'],
-			'COUNTRYCODE'    => $order_info['payment_iso_code_2'],
-			'CURRENCYCODE'   => $order_info['currency_code']
-		);
+		$request  = 'METHOD=DoDirectPayment';
+		$request .= '&VERSION=51.0';
+		$request .= '&USER=' . urlencode($this->config->get('pp_pro_username'));
+		$request .= '&PWD=' . urlencode($this->config->get('pp_pro_password'));
+		$request .= '&SIGNATURE=' . urlencode($this->config->get('pp_pro_signature'));
+		$request .= '&CUSTREF=' . (int)$order_info['order_id'];
+		$request .= '&PAYMENTACTION=' . $payment_type;
+		$request .= '&AMT=' . $this->currency->format($order_info['total'], $order_info['currency'], false, false);
+		$request .= '&CREDITCARDTYPE=' . $this->request->post['cc_type'];
+		$request .= '&ACCT=' . urlencode(str_replace(' ', '', $this->request->post['cc_number']));
+		$request .= '&CARDSTART=' . urlencode($this->request->post['cc_start_date_month'] . $this->request->post['cc_start_date_year']);
+		$request .= '&EXPDATE=' . urlencode($this->request->post['cc_expire_date_month'] . $this->request->post['cc_expire_date_year']);
+		$request .= '&CVV2=' . urlencode($this->request->post['cc_cvv2']);
+		$request .= '&CARDISSUE=' . urlencode($this->request->post['cc_issue']);
+		$request .= '&FIRSTNAME=' . urlencode($order_info['payment_firstname']);
+		$request .= '&LASTNAME=' . urlencode($order_info['payment_lastname']);
+		$request .= '&EMAIL=' . urlencode($order_info['email']);
+		$request .= '&PHONENUM=' . urlencode($order_info['telephone']);
+		$request .= '&IPADDRESS=' . urlencode($this->request->server['REMOTE_ADDR']);
+		$request .= '&STREET=' . urlencode($order_info['payment_address_1']);
+		$request .= '&CITY=' . urlencode($order_info['payment_city']);
+		$request .= '&STATE=' . urlencode(($order_info['payment_iso_code_2'] != 'US') ? $order_info['payment_zone'] : $order_info['payment_zone_code']);
+		$request .= '&ZIP=' . urlencode($order_info['payment_postcode']);
+		$request .= '&COUNTRYCODE=' . urlencode($order_info['payment_iso_code_2']);
+		$request .= '&CURRENCYCODE=' . urlencode($order_info['currency_code']);
 		
-		$curl = curl_init($api_endpoint);
+		if (!$this->config->get('pp_pro_test')) {
+			$curl = curl_init('https://api-3t.paypal.com/nvp');
+		} else {
+			$curl = curl_init('https://api-3t.sandbox.paypal.com/nvp');
+		}
 		
 		curl_setopt($curl, CURLOPT_PORT, 443);
 		curl_setopt($curl, CURLOPT_HEADER, 0);
@@ -141,14 +137,14 @@ class ControllerPaymentPPPro extends Controller {
         curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
         curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
         curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($payment_data));
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
 
 		$response = curl_exec($curl);
  		
 		curl_close($curl);
  
 		if (!$response) {
-			exit('DoDirectPayment failed: ' . curl_error($curl) . '(' . curl_errno($curl) . ')');
+			$this->log->write('DoDirectPayment failed: ' . curl_error($curl) . '(' . curl_errno($curl) . ')');
 		}
  
  		$response_data = array();

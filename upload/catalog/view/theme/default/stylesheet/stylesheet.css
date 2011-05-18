@@ -391,8 +391,8 @@ label {
 	color: #FFFFFF;
 }
 #menu > ul > li > div > ul > li > a.parent {
-	font-size: 13px;
-	font-weight: bold;
+	color: #000;
+	background: #999;
 }
 #menu > ul > li > div > ul > li > a.child {
 	padding-left: 17px;

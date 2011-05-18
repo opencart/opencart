@@ -3,7 +3,7 @@
 $_['text_title'] 			= 'PayPal';
 $_['text_reason'] 			= 'REASON';
 $_['text_attn_email']		= 'ATTN: Paypal Order %s needs manual verification';
-$_['text_testmode']	   	 	= 'ATTENTION!!! The Payment Gateway is in \'Sandbox Mode\'. Your account will not be charged.';
+$_['text_testmode']	   	 	= 'Warning: The Payment Gateway is in \'Sandbox Mode\'. Your account will not be charged.';
 
 // Error
 $_['error_referer'] 		= 'PP_Standard - Possible Scam: IPN/PDT Referrer URL "%s" was not Paypal.com. Order needs manual verification';

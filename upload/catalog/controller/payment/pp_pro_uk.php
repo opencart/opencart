@@ -87,49 +87,45 @@ class ControllerPaymentPPProUK extends Controller {
 	public function send() {
 		$this->language->load('payment/pp_pro_uk');
 		
-		if (!$this->config->get('pp_pro_uk_test')) {
-			$api_url = 'https://payflowpro.verisign.com/transaction';
-		} else {
-			$api_url = 'https://pilot-payflowpro.verisign.com/transaction';
-		}
+		$this->load->model('checkout/order');
 		
+		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+				
 		if (!$this->config->get('pp_pro_uk_transaction')) {
 			$payment_type = 'A';	
 		} else {
 			$payment_type = 'S';
 		}
 		
-		$this->load->model('checkout/order');
-		
-		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-		
-		$payment_data = array(
-			'USER'      => html_entity_decode($this->config->get('pp_pro_uk_user'), ENT_QUOTES, 'UTF-8'),
-			'VENDOR'    => html_entity_decode($this->config->get('pp_pro_uk_vendor'), ENT_QUOTES, 'UTF-8'),
-			'PARTNER'   => html_entity_decode($this->config->get('pp_pro_uk_partner'), ENT_QUOTES, 'UTF-8'),
-			'PWD'       => html_entity_decode($this->config->get('pp_pro_uk_password'), ENT_QUOTES, 'UTF-8'),
-			'TENDER'    => 'C',
-			'TRXTYPE'   => $payment_type,
-			'AMT'       => $this->currency->format($order_info['total'], $order_info['currency'], FALSE, FALSE),
-			'CURRENCY'  => $order_info['currency_code'],
-			'NAME'      => $this->request->post['cc_owner'],
-			'STREET'    => $order_info['payment_address_1'],
-			'CITY'      => $order_info['payment_city'],
-            'STATE'     => ($order_info['payment_iso_code_2'] != 'US') ? $order_info['payment_zone'] : $order_info['payment_zone_code'],
-			'COUNTRY'   => $order_info['payment_iso_code_2'],
-			'ZIP'       => str_replace(' ', '', $order_info['payment_postcode']),
-			'CLIENTIP'  => $this->request->server['REMOTE_ADDR'],
-			'EMAIL'     => $order_info['email'],
-            'ACCT'      => str_replace(' ', '', $this->request->post['cc_number']),
-            'ACCTTYPE'  => $this->request->post['cc_type'],
-            'CARDSTART' => $this->request->post['cc_start_date_month'] . substr($this->request->post['cc_start_date_year'], - 2, 2),
-            'EXPDATE'   => $this->request->post['cc_expire_date_month'] . substr($this->request->post['cc_expire_date_year'], - 2, 2),
-            'CVV2'      => $this->request->post['cc_cvv2'],
-			'CARDISSUE' => $this->request->post['cc_issue']
-		);
+		$request  = 'USER=' .urlencode($this->config->get('pp_pro_uk_user'));
+		$request .= '&VENDOR=' . urlencode($this->config->get('pp_pro_uk_vendor'));
+		$request .= '&PARTNER=' . urlencode($this->config->get('pp_pro_uk_partner'));
+		$request .= '&PWD=' . urlencode($this->config->get('pp_pro_uk_password'));
+		$request .= '&TENDER=C';
+		$request .= '&TRXTYPE=' . $payment_type;
+		$request .= '&AMT=' . $this->currency->format($order_info['total'], $order_info['currency'], false, false);
+		$request .= '&CURRENCY=' . urlencode($order_info['currency_code']);
+		$request .= '&NAME=' . urlencode($this->request->post['cc_owner']);
+		$request .= '&STREET=' . urlencode($order_info['payment_address_1']);
+		$request .= '&CITY=' . urlencode($order_info['payment_city']);
+		$request .= '&STATE=' . urlencode(($order_info['payment_iso_code_2'] != 'US') ? $order_info['payment_zone'] : $order_info['payment_zone_code']);
+		$request .= '&COUNTRY=' . urlencode($order_info['payment_iso_code_2']);
+		$request .= '&ZIP=' . urlencode(str_replace(' ', '', $order_info['payment_postcode']));
+		$request .= '&CLIENTIP=' . urlencode($this->request->server['REMOTE_ADDR']);
+		$request .= '&EMAIL=' . urlencode($order_info['email']);
+		$request .= '&ACCT=' . urlencode(str_replace(' ', '', $this->request->post['cc_number']));
+		$request .= '&ACCTTYPE=' . urlencode($this->request->post['cc_type']);
+		$request .= '&CARDSTART=' . urlencode($this->request->post['cc_start_date_month'] . substr($this->request->post['cc_start_date_year'], - 2, 2));
+		$request .= '&EXPDATE=' . urlencode($this->request->post['cc_expire_date_month'] . substr($this->request->post['cc_expire_date_year'], - 2, 2));
+		$request .= '&CVV2=' . urlencode($this->request->post['cc_cvv2']);
+		$request .= '&CARDISSUE=' . urlencode($this->request->post['cc_issue']);
 		 
-		$curl = curl_init($api_url);
-
+		if (!$this->config->get('pp_pro_uk_test')) {
+			$curl = curl_init('https://payflowpro.verisign.com/transaction');
+		} else {
+			$curl = curl_init('https://pilot-payflowpro.verisign.com/transaction');
+		}
+		
 		curl_setopt($curl, CURLOPT_PORT, 443);
 		curl_setopt($curl, CURLOPT_HEADER, 0);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -137,13 +133,17 @@ class ControllerPaymentPPProUK extends Controller {
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($payment_data));
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-VPS-REQUEST-ID: ' . md5($this->session->data['order_id'] . rand())));
 
 		$response = curl_exec($curl);
   		
 		curl_close($curl);
- 
+		
+		if (!$response) {
+			$this->log->write('DoDirectPayment failed: ' . curl_error($curl) . '(' . curl_errno($curl) . ')');
+		}
+		 
  		$response_data = array();
  
 		parse_str($response, $response_data);

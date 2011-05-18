@@ -14,8 +14,8 @@
   <input type="hidden" name="weight_<?php echo $i; ?>" value="<?php echo $product['weight']; ?>" />
   <?php $j = 0; ?>
   <?php foreach ($product['option'] as $option) { ?>
-  <input type="hidden" name="on<?php echo $i; ?>_<?php echo $j; ?>" value="<?php echo $option['name']; ?>" />
-  <input type="hidden" name="os<?php echo $i; ?>_<?php echo $j; ?>" value="<?php echo $option['value']; ?>" />
+  <input type="hidden" name="on<?php echo $j; ?>_<?php echo $i; ?>" value="<?php echo $option['name']; ?>" />
+  <input type="hidden" name="os<?php echo $j; ?>_<?php echo $i; ?>" value="<?php echo $option['value']; ?>" />
   <?php $j++; ?>
   <?php } ?>
   <?php $i++; ?>

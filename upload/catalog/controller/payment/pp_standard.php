@@ -209,7 +209,11 @@ class ControllerPaymentPPStandard extends Controller {
 						break;								
 				}
 				
-				$this->model_checkout_order->confirm($order_id, $order_status_id);
+				if (!$order_info['order_status_id']) {
+					$this->model_checkout_order->confirm($order_id, $order_status_id);
+				} else {
+					$this->model_checkout_order->update($order_id, $order_status_id);
+				}
 			} else {
 				$this->model_checkout_order->confirm($order_id, $this->config->get('config_order_status_id'));
 			}

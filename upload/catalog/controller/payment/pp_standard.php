@@ -172,8 +172,6 @@ class ControllerPaymentPPStandard extends Controller {
 			}
 						
 			if ((strcmp($response, 'VERIFIED') == 0 || strcmp($response, 'UNVERIFIED') == 0) && isset($this->request->post['payment_status'])) {
-				$this->log->write('PP_STANDARD :: VERIFIED');
-				
 				$order_status_id = $this->config->get('config_order_status_id');
 				
 				switch($this->request->post['payment_status']) {
@@ -212,7 +210,6 @@ class ControllerPaymentPPStandard extends Controller {
 				}
 				
 				if (!$order_info['order_status_id']) {
-					$this->log->write('PP_STANDARD :: CONRIFRM');
 					$this->model_checkout_order->confirm($order_id, $order_status_id);
 				} else {
 					$this->model_checkout_order->update($order_id, $order_status_id);

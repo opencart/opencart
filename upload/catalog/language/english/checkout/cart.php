@@ -8,6 +8,7 @@ $_['text_points']     = 'Reward Points: %s';
 $_['text_items']      = '%s item(s) - %s';
 $_['text_success']    = 'Success: You have added <a href="%s">%s</a> to your <a href="%s">shopping cart</a>!';
 $_['text_empty']      = 'Your shopping cart is empty!';
+$_['text_login']      = 'Attention: You must <a href="%s">login</a> or <a href="%s">create an account</a> to view prices!';
 
 // Column
 $_['column_remove']   = 'Remove';

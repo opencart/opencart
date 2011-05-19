@@ -39,18 +39,21 @@ class ControllerCommonHeader extends Controller {
 			$this->data['logo'] = '';
 		}
 		
+		$voucher = 0;
+		
 		$voucher_total = 0;
 		
 		if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
 			foreach ($this->session->data['vouchers'] as $key => $voucher) {
 				$voucher_total =+ $voucher['amount'];
+				$voucher++;
 			}
 		}
 		
 		$this->data['text_home'] = $this->language->get('text_home');
 		$this->data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
 		$this->data['text_cart'] = $this->language->get('text_cart');
-		$this->data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($this->cart->getTotal() + $voucher_total));
+		$this->data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), $this->currency->format($this->cart->getTotal() + $voucher_total));
     	$this->data['text_search'] = $this->language->get('text_search');
 		$this->data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
 		$this->data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', 'SSL'), $this->customer->getFirstName(), $this->url->link('account/logout', '', 'SSL'));

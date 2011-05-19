@@ -88,7 +88,12 @@ function display(view) {
 				html += '<div class="image">' + image + '</div>';
 			}
 			
-			html += '  <div class="price">' + $(element).find('.price').html() + '</div>';			
+			var price = $(element).find('.price').html();
+			
+			if (price != null) {
+				html += '<div class="price">' + price  + '</div>';
+			}
+					
 			html += '  <div class="name">' + $(element).find('.name').html() + '</div>';
 			html += '  <div class="description">' + $(element).find('.description').html() + '</div>';
 			
@@ -121,7 +126,12 @@ function display(view) {
 			
 			html += '<div class="name">' + $(element).find('.name').html() + '</div>';
 			html += '<div class="description">' + $(element).find('.description').html() + '</div>';
-			html += '<div class="price">' + $(element).find('.price').html() + '</div>';
+			
+			var price = $(element).find('.price').html();
+			
+			if (price != null) {
+				html += '<div class="price">' + price  + '</div>';
+			}
 						
 			var rating = $(element).find('.rating').html();
 			

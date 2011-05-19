@@ -11,6 +11,9 @@
       &nbsp;(<?php echo $weight; ?>)
       <?php } ?>
     </h1>
+    <?php if ($attention) { ?>
+    <div class="attention"><?php echo $attention; ?></div>
+    <?php } ?>    
     <?php if ($success) { ?>
     <div class="success"><?php echo $success; ?></div>
     <?php } ?>

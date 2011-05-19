@@ -172,44 +172,47 @@ class ControllerPaymentPPStandard extends Controller {
 			}
 						
 			if ((strcmp($response, 'VERIFIED') == 0 || strcmp($response, 'UNVERIFIED') == 0) && isset($this->request->post['payment_status'])) {
+				$this->log->write('PP_STANDARD :: VERIFIED');
+				
 				$order_status_id = $this->config->get('config_order_status_id');
 				
 				switch($this->request->post['payment_status']) {
 					case 'Canceled_Reversal':
-						$order_status_id = $this->config->get('config_canceled_reversal_status_id');
+						$order_status_id = $this->config->get('pp_standard_canceled_reversal_status_id');
 						break;
 					case 'Completed':
 						if ((float)$this->request->post['mc_gross'] == $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)) {
-							$order_status_id = $this->config->get('config_completed_status_id');
+							$order_status_id = $this->config->get('pp_standard_completed_status_id');
 						}
 						break;
 					case 'Denied':
-						$order_status_id = $this->config->get('config_denied_status_id');
+						$order_status_id = $this->config->get('pp_standard_denied_status_id');
 						break;
 					case 'Expired':
-						$order_status_id = $this->config->get('config_expired_status_id');
+						$order_status_id = $this->config->get('pp_standard_expired_status_id');
 						break;
 					case 'Failed':
-						$order_status_id = $this->config->get('config_failed_status_id');
+						$order_status_id = $this->config->get('pp_standard_failed_status_id');
 						break;
 					case 'Pending':
-						$order_status_id = $this->config->get('config_pending_status_id');
+						$order_status_id = $this->config->get('pp_standard_pending_status_id');
 						break;
 					case 'Processed':
-						$order_status_id = $this->config->get('config_processed_status_id');
+						$order_status_id = $this->config->get('pp_standard_processed_status_id');
 						break;
 					case 'Refunded':
-						$order_status_id = $this->config->get('config_refunded_status_id');
+						$order_status_id = $this->config->get('pp_standard_refunded_status_id');
 						break;
 					case 'Reversed':
-						$order_status_id = $this->config->get('config_reversed_status_id');
-						break;	
+						$order_status_id = $this->config->get('pp_standard_reversed_status_id');
+						break;	 
 					case 'Voided':
-						$order_status_id = $this->config->get('config_voided_status_id');
+						$order_status_id = $this->config->get('pp_standard_voided_status_id');
 						break;								
 				}
 				
 				if (!$order_info['order_status_id']) {
+					$this->log->write('PP_STANDARD :: CONRIFRM');
 					$this->model_checkout_order->confirm($order_id, $order_status_id);
 				} else {
 					$this->model_checkout_order->update($order_id, $order_status_id);

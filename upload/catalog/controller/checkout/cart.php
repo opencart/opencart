@@ -355,44 +355,7 @@ class ControllerCheckoutCart extends Controller {
 				unset($this->session->data['vouchers'][$this->request->post['voucher']]);
 			}
 		}
-		
-		// Calculate Totals
-		$total_data = array();					
-		$total = 0;
-		$taxes = $this->cart->getTaxes();
-		
-		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {						 
-			$this->load->model('setting/extension');
-			
-			$sort_order = array(); 
-			
-			$results = $this->model_setting_extension->getExtensions('total');
-			
-			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
-			}
-			
-			array_multisort($sort_order, SORT_ASC, $results);
-			
-			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
-					$this->load->model('total/' . $result['code']);
-		
-					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
-				}
-			}
-			
-			$sort_order = array(); 
-		  
-			foreach ($total_data as $key => $value) {
-				$sort_order[$key] = $value['sort_order'];
-			}
-	
-			array_multisort($sort_order, SORT_ASC, $total_data);
-		}
 					
-		$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['voucher']) ? count($this->session->data['voucher']) : 0), $this->currency->format($total));
-			
 		$this->load->model('tool/image');
 		
 		$this->data['text_empty'] = $this->language->get('text_empty');
@@ -456,6 +419,43 @@ class ControllerCheckoutCart extends Controller {
 				);
 			}
 		} 
+		
+		// Calculate Totals
+		$total_data = array();					
+		$total = 0;
+		$taxes = $this->cart->getTaxes();
+		
+		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {						 
+			$this->load->model('setting/extension');
+			
+			$sort_order = array(); 
+			
+			$results = $this->model_setting_extension->getExtensions('total');
+			
+			foreach ($results as $key => $value) {
+				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+			}
+			
+			array_multisort($sort_order, SORT_ASC, $results);
+			
+			foreach ($results as $result) {
+				if ($this->config->get($result['code'] . '_status')) {
+					$this->load->model('total/' . $result['code']);
+		
+					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
+				}
+			}
+			
+			$sort_order = array(); 
+		  
+			foreach ($total_data as $key => $value) {
+				$sort_order[$key] = $value['sort_order'];
+			}
+	
+			array_multisort($sort_order, SORT_ASC, $total_data);
+		}
+					
+		$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['voucher']) ? count($this->session->data['voucher']) : 0), $this->currency->format($total));
 		
 		$this->data['totals'] = $total_data;
 		

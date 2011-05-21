@@ -28,6 +28,7 @@ class ControllerPaymentPerpetualPayments extends Controller {
 		$this->data['entry_auth_id'] = $this->language->get('entry_auth_id');
 		$this->data['entry_auth_pass'] = $this->language->get('entry_auth_pass');
 		$this->data['entry_test'] = $this->language->get('entry_test');
+		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -98,6 +99,12 @@ class ControllerPaymentPerpetualPayments extends Controller {
 			$this->data['perpetual_payments_test'] = $this->config->get('perpetual_payments_test');
 		}
 		
+		if (isset($this->request->post['perpetual_payments_total'])) {
+			$this->data['perpetual_payments_total'] = $this->request->post['perpetual_payments_total'];
+		} else {
+			$this->data['perpetual_payments_total'] = $this->config->get('perpetual_payments_total'); 
+		} 
+				
 		if (isset($this->request->post['perpetual_payments_order_status_id'])) {
 			$this->data['perpetual_payments_order_status_id'] = $this->request->post['perpetual_payments_order_status_id'];
 		} else {

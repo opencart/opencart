@@ -76,10 +76,10 @@ class ControllerAffiliateForgotten extends Controller {
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		$this->data['button_back'] = $this->language->get('button_back');
 
-		if (isset($this->error['message'])) {
-			$this->data['error'] = $this->error['message'];
+		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error'] = '';
+			$this->data['error_warning'] = '';
 		}
 		
 		$this->data['action'] = $this->url->link('affiliate/forgotten', '', 'SSL');
@@ -106,9 +106,9 @@ class ControllerAffiliateForgotten extends Controller {
 
 	private function validate() {
 		if (!isset($this->request->post['email'])) {
-			$this->error['message'] = $this->language->get('error_email');
+			$this->error['warning'] = $this->language->get('error_email');
 		} elseif (!$this->model_affiliate_affiliate->getTotalAffiliatesByEmail($this->request->post['email'])) {
-			$this->error['message'] = $this->language->get('error_email');
+			$this->error['warning'] = $this->language->get('error_email');
 		}
 
 		if (!$this->error) {

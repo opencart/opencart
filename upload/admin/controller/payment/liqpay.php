@@ -28,6 +28,7 @@ class ControllerPaymentLiqPay extends Controller {
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
 		$this->data['entry_signature'] = $this->language->get('entry_signature');
 		$this->data['entry_type'] = $this->language->get('entry_type');				
+		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -104,6 +105,12 @@ class ControllerPaymentLiqPay extends Controller {
 			$this->data['liqpay_type'] = $this->config->get('liqpay_type');
 		}
 		
+		if (isset($this->request->post['liqpay_total'])) {
+			$this->data['liqpay_total'] = $this->request->post['liqpay_total'];
+		} else {
+			$this->data['liqpay_total'] = $this->config->get('liqpay_total'); 
+		} 
+				
 		if (isset($this->request->post['liqpay_order_status_id'])) {
 			$this->data['liqpay_order_status_id'] = $this->request->post['liqpay_order_status_id'];
 		} else {

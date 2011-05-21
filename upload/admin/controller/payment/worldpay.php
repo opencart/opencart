@@ -32,6 +32,7 @@ class ControllerPaymentWorldPay extends Controller {
 		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_callback'] = $this->language->get('entry_callback');
 		$this->data['entry_test'] = $this->language->get('entry_test');
+		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -104,6 +105,12 @@ class ControllerPaymentWorldPay extends Controller {
 			$this->data['worldpay_test'] = $this->config->get('worldpay_test');
 		}
 		
+		if (isset($this->request->post['worldpay_total'])) {
+			$this->data['worldpay_total'] = $this->request->post['worldpay_total'];
+		} else {
+			$this->data['worldpay_total'] = $this->config->get('worldpay_total'); 
+		} 
+				
 		if (isset($this->request->post['worldpay_order_status_id'])) {
 			$this->data['worldpay_order_status_id'] = $this->request->post['worldpay_order_status_id'];
 		} else {

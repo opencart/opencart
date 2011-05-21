@@ -69,6 +69,10 @@
               </select></td>
           </tr>
           <tr>
+            <td><?php echo $entry_total; ?></td>
+            <td><input type="text" name="pp_standard_total" value="<?php echo $pp_standard_total; ?>" /></td>
+          </tr>          
+          <tr>
             <td><?php echo $entry_canceled_reversal_status; ?></td>
             <td><select name="pp_standard_canceled_reversal_status_id">
                 <?php foreach ($order_statuses as $order_status) { ?>

@@ -1,6 +1,6 @@
 <?php 
 class ModelPaymentGoogleCheckout extends Model {
-  	public function getMethod($address) {
+  	public function getMethod($address, $total) {
     	return array();
   	}
 }

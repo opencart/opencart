@@ -6,8 +6,8 @@
     <?php } ?>
   </div>
   <h1><?php echo $heading_title; ?></h1>
-  <?php if ($error) { ?>
-  <div class="warning"><?php echo $error; ?></div>
+  <?php if ($error_warning) { ?>
+  <div class="warning"><?php echo $error_warning; ?></div>
   <?php } ?>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="forgotten">
     <p><?php echo $text_email; ?></p>

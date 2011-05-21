@@ -29,6 +29,7 @@ class ControllerPaymentAuthorizeNet extends Controller {
 		$this->data['entry_key'] = $this->language->get('entry_key');
 		$this->data['entry_callback'] = $this->language->get('entry_callback');
 		$this->data['entry_test'] = $this->language->get('entry_test');
+		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -92,8 +93,14 @@ class ControllerPaymentAuthorizeNet extends Controller {
 			$this->data['authorizenet_test'] = $this->config->get('authorizenet_test');
 		}
 		
-		$this->data['callback'] = HTTP_CATALOG . 'index.php?route=payment/authorizenet/callback', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['callback'] = HTTP_CATALOG . 'index.php?route=payment/authorizenet/callback';
 		
+		if (isset($this->request->post['authorizenet_total'])) {
+			$this->data['authorizenet_total'] = $this->request->post['authorizenet_total'];
+		} else {
+			$this->data['authorizenet_total'] = $this->config->get('authorizenet_total'); 
+		} 
+				
 		if (isset($this->request->post['authorizenet_order_status_id'])) {
 			$this->data['authorizenet_order_status_id'] = $this->request->post['authorizenet_order_status_id'];
 		} else {

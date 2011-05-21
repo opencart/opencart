@@ -30,6 +30,7 @@ class ControllerPaymentPayPoint extends Controller {
 				
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
 		$this->data['entry_test'] = $this->language->get('entry_test');
+		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -88,6 +89,12 @@ class ControllerPaymentPayPoint extends Controller {
 			$this->data['paypoint_test'] = $this->config->get('paypoint_test');
 		}
 		
+		if (isset($this->request->post['paypoint_total'])) {
+			$this->data['paypoint_total'] = $this->request->post['paypoint_total'];
+		} else {
+			$this->data['paypoint_total'] = $this->config->get('paypoint_total'); 
+		} 
+				
 		if (isset($this->request->post['paypoint_order_status_id'])) {
 			$this->data['paypoint_order_status_id'] = $this->request->post['paypoint_order_status_id'];
 		} else {

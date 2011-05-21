@@ -24,6 +24,7 @@ class ControllerPaymentCod extends Controller {
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 				
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
@@ -63,6 +64,12 @@ class ControllerPaymentCod extends Controller {
 
 		$this->data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');	
 		
+		if (isset($this->request->post['cod_total'])) {
+			$this->data['cod_total'] = $this->request->post['cod_total'];
+		} else {
+			$this->data['cod_total'] = $this->config->get('cod_total'); 
+		}
+				
 		if (isset($this->request->post['cod_order_status_id'])) {
 			$this->data['cod_order_status_id'] = $this->request->post['cod_order_status_id'];
 		} else {

@@ -32,6 +32,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->data['entry_signature'] = $this->language->get('entry_signature');
 		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_method'] = $this->language->get('entry_method');
+		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -103,6 +104,12 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->data['pp_express_method'] = $this->config->get('pp_express_method');
 		}
 		
+		if (isset($this->request->post['pp_express_total'])) {
+			$this->data['pp_express_total'] = $this->request->post['pp_express_total'];
+		} else {
+			$this->data['pp_express_total'] = $this->config->get('pp_express_total'); 
+		} 
+				
 		if (isset($this->request->post['pp_express_order_status_id'])) {
 			$this->data['pp_express_order_status_id'] = $this->request->post['pp_express_order_status_id'];
 		} else {

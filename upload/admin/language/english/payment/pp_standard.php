@@ -15,6 +15,7 @@ $_['entry_test']					 = 'Sandbox Mode:';
 $_['entry_transaction']				 = 'Transaction Method:';
 $_['entry_pdt_token']				 = 'PDT Token:<br/><span class="help">Payment Data Transfer Token is used for additional security and reliability. Find out how to enable PDT <a href="https://cms.paypal.com/us/cgi-bin/?&cmd=_render-content&content_ID=developer/howto_html_paymentdatatransfer" alt="">here</a></span>';
 $_['entry_debug']					 = 'Debug Mode:<br/><span class="help">Logs additional information to the system log.</span>';
+$_['entry_total']                    = 'Total:<br /><span class="help">The checkout total the order must reach before this payment method becomes active.</span>';
 $_['entry_canceled_reversal_status'] = 'Canceled Reversal Status:';
 $_['entry_completed_status']         = 'Completed Status:';
 $_['entry_denied_status']			 = 'Denied Status:';

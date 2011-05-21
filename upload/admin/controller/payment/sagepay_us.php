@@ -25,6 +25,7 @@ class ControllerPaymentSagepayUS extends Controller {
 		
 		$this->data['entry_merchant_id'] = $this->language->get('entry_merchant_id');
 		$this->data['entry_merchant_key'] = $this->language->get('entry_merchant_key');
+		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -88,7 +89,13 @@ class ControllerPaymentSagepayUS extends Controller {
 		} else {
 			$this->data['sagepay_us_merchant_key'] = $this->config->get('sagepay_us_merchant_key');
 		}
-
+		
+		if (isset($this->request->post['sagepay_us_total'])) {
+			$this->data['sagepay_us_total'] = $this->request->post['sagepay_us_total'];
+		} else {
+			$this->data['sagepay_us_total'] = $this->config->get('sagepay_us_total'); 
+		} 
+		
 		if (isset($this->request->post['sagepay_us_order_status_id'])) {
 			$this->data['sagepay_us_order_status_id'] = $this->request->post['sagepay_us_order_status_id'];
 		} else {

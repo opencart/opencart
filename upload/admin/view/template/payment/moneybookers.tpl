@@ -23,13 +23,17 @@
               <span class="error"><?php echo $error_email; ?></span>
               <?php } ?></td>
           </tr>
-		  <tr>
-          <td><?php echo $entry_secret; ?></td>
-          <td><input type="text" name="moneybookers_secret" value="<?php echo $moneybookers_secret; ?>" />
-            <?php if ($error_secret) { ?>
-            <span class="error"><?php echo $error_secret; ?></span>
-            <?php } ?></td>
-        </tr>
+          <tr>
+            <td><?php echo $entry_secret; ?></td>
+            <td><input type="text" name="moneybookers_secret" value="<?php echo $moneybookers_secret; ?>" />
+              <?php if ($error_secret) { ?>
+              <span class="error"><?php echo $error_secret; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_total; ?></td>
+            <td><input type="text" name="moneybookers_total" value="<?php echo $moneybookers_total; ?>" /></td>
+          </tr>
           <tr>
             <td><?php echo $entry_order_status; ?></td>
             <td><select name="moneybookers_order_status_id">
@@ -43,10 +47,10 @@
               </select></td>
           </tr>
           <tr>
-            <td><?php echo $entry_order_status_pending; ?></td>
-            <td><select name="moneybookers_order_status_pending_id">
+            <td><?php echo $entry_pending_status; ?></td>
+            <td><select name="moneybookers_pending_status_id">
                 <?php foreach ($order_statuses as $order_status) { ?>
-                <?php if ($order_status['order_status_id'] == $moneybookers_order_status_pending_id) { ?>
+                <?php if ($order_status['order_status_id'] == $moneybookers_pending_status_id) { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                 <?php } else { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -55,10 +59,10 @@
               </select></td>
           </tr>
           <tr>
-            <td><?php echo $entry_order_status_canceled; ?></td>
-            <td><select name="moneybookers_order_status_canceled_id">
+            <td><?php echo $entry_canceled_status; ?></td>
+            <td><select name="moneybookers_canceled_status_id">
                 <?php foreach ($order_statuses as $order_status) { ?>
-                <?php if ($order_status['order_status_id'] == $moneybookers_order_status_canceled_id) { ?>
+                <?php if ($order_status['order_status_id'] == $moneybookers_canceled_status_id) { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                 <?php } else { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -67,10 +71,10 @@
               </select></td>
           </tr>
           <tr>
-            <td><?php echo $entry_order_status_failed; ?></td>
-            <td><select name="moneybookers_order_status_failed_id">
+            <td><?php echo $entry_failed_status; ?></td>
+            <td><select name="moneybookers_failed_status_id">
                 <?php foreach ($order_statuses as $order_status) { ?>
-                <?php if ($order_status['order_status_id'] == $moneybookers_order_status_failed_id) { ?>
+                <?php if ($order_status['order_status_id'] == $moneybookers_failed_status_id) { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                 <?php } else { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -79,10 +83,10 @@
               </select></td>
           </tr>
           <tr>
-            <td><?php echo $entry_order_status_chargeback; ?></td>
-            <td><select name="moneybookers_order_status_chargeback_id">
+            <td><?php echo $entry_chargeback_status; ?></td>
+            <td><select name="moneybookers_chargeback_status_id">
                 <?php foreach ($order_statuses as $order_status) { ?>
-                <?php if ($order_status['order_status_id'] == $moneybookers_order_status_chargeback_id) { ?>
+                <?php if ($order_status['order_status_id'] == $moneybookers_chargeback_status_id) { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                 <?php } else { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>

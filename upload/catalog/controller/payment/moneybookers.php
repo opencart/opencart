@@ -91,16 +91,16 @@ class ControllerPaymentMoneybookers extends Controller {
 						$this->model_checkout_order->update($order_id, $this->config->get('moneybookers_order_status_id'), '', TRUE);
 						break;
 					case '0':
-						$this->model_checkout_order->update($order_id, $this->config->get('moneybookers_order_status_pending_id'), '', TRUE);
+						$this->model_checkout_order->update($order_id, $this->config->get('moneybookers_pending_status_id'), '', TRUE);
 						break;
 					case '-1':
-						$this->model_checkout_order->update($order_id, $this->config->get('moneybookers_order_status_canceled_id'), '', TRUE);
+						$this->model_checkout_order->update($order_id, $this->config->get('moneybookers_canceled_status_id'), '', TRUE);
 						break;
 					case '-2':
-						$this->model_checkout_order->update($order_id, $this->config->get('moneybookers_order_status_failed_id'), '', TRUE);
+						$this->model_checkout_order->update($order_id, $this->config->get('moneybookers_failed_status_id'), '', TRUE);
 						break;
 					case '-3':
-						$this->model_checkout_order->update($order_id, $this->config->get('moneybookers_order_status_chargeback_id'), '', TRUE);
+						$this->model_checkout_order->update($order_id, $this->config->get('moneybookers_chargeback_status_id'), '', TRUE);
 						break;
 				}
 			} else {

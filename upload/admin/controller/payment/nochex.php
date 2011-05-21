@@ -32,6 +32,7 @@ class ControllerPaymentNOCHEX extends Controller {
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
 		$this->data['entry_template'] = $this->language->get('entry_template');
 		$this->data['entry_test'] = $this->language->get('entry_test');
+		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -114,6 +115,12 @@ class ControllerPaymentNOCHEX extends Controller {
 			$this->data['nochex_test'] = $this->config->get('nochex_test');
 		}
 		
+		if (isset($this->request->post['nochex_total'])) {
+			$this->data['nochex_total'] = $this->request->post['nochex_total'];
+		} else {
+			$this->data['nochex_total'] = $this->config->get('nochex_total'); 
+		} 
+				
 		if (isset($this->request->post['nochex_order_status_id'])) {
 			$this->data['nochex_order_status_id'] = $this->request->post['nochex_order_status_id'];
 		} else {

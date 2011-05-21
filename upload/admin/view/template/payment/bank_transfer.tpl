@@ -27,6 +27,10 @@
           </tr>
           <?php } ?>
           <tr>
+            <td><?php echo $entry_total; ?></td>
+            <td><input type="text" name="bank_transfer_total" value="<?php echo $bank_transfer_total; ?>" /></td>
+          </tr>
+          <tr>
             <td><?php echo $entry_order_status; ?></td>
             <td><select name="bank_transfer_order_status_id">
                 <?php foreach ($order_statuses as $order_status) { ?>

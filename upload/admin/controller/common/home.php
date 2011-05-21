@@ -341,6 +341,7 @@ class ControllerCommonHome extends Controller {
 			$ignore = array(
 				'common/login',
 				'common/logout',
+				'common/forgotten',
 				'error/not_found',
 				'error/permission'
 			);
@@ -381,6 +382,7 @@ class ControllerCommonHome extends Controller {
 				'common/home',
 				'common/login',
 				'common/logout',
+				'common/forgotten',
 				'error/not_found',
 				'error/permission',	
 				'error/token'		

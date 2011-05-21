@@ -24,6 +24,7 @@ class ControllerPaymentPayMate extends Controller {
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 				
 		$this->data['entry_username'] = $this->language->get('entry_username');
+		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');			
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -76,6 +77,12 @@ class ControllerPaymentPayMate extends Controller {
 			$this->data['paymate_username'] = $this->config->get('paymate_username');
 		}
 		
+		if (isset($this->request->post['paymate_total'])) {
+			$this->data['paymate_total'] = $this->request->post['paymate_total'];
+		} else {
+			$this->data['paymate_total'] = $this->config->get('paymate_total'); 
+		} 
+				
 		if (isset($this->request->post['paymate_order_status_id'])) {
 			$this->data['paymate_order_status_id'] = $this->request->post['paymate_order_status_id'];
 		} else {

@@ -33,6 +33,7 @@ class ControllerPaymentAuthorizenetAim extends Controller {
 		$this->data['entry_server'] = $this->language->get('entry_server');
 		$this->data['entry_mode'] = $this->language->get('entry_mode');
 		$this->data['entry_method'] = $this->language->get('entry_method');
+		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -127,6 +128,12 @@ class ControllerPaymentAuthorizenetAim extends Controller {
 			$this->data['authorizenet_aim_method'] = $this->config->get('authorizenet_aim_method');
 		}
 		
+		if (isset($this->request->post['authorizenet_aim_total'])) {
+			$this->data['authorizenet_aim_total'] = $this->request->post['authorizenet_aim_total'];
+		} else {
+			$this->data['authorizenet_aim_total'] = $this->config->get('authorizenet_aim_total'); 
+		} 
+				
 		if (isset($this->request->post['authorizenet_aim_order_status_id'])) {
 			$this->data['authorizenet_aim_order_status_id'] = $this->request->post['authorizenet_aim_order_status_id'];
 		} else {

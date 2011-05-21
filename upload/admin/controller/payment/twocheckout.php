@@ -28,6 +28,7 @@ class ControllerPaymentTwoCheckout extends Controller {
 		$this->data['entry_account'] = $this->language->get('entry_account');
 		$this->data['entry_secret'] = $this->language->get('entry_secret');
 		$this->data['entry_test'] = $this->language->get('entry_test');
+		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -98,6 +99,12 @@ class ControllerPaymentTwoCheckout extends Controller {
 			$this->data['twocheckout_test'] = $this->config->get('twocheckout_test');
 		}
 		
+		if (isset($this->request->post['twocheckout_total'])) {
+			$this->data['twocheckout_total'] = $this->request->post['twocheckout_total'];
+		} else {
+			$this->data['twocheckout_total'] = $this->config->get('twocheckout_total'); 
+		} 
+				
 		if (isset($this->request->post['twocheckout_order_status_id'])) {
 			$this->data['twocheckout_order_status_id'] = $this->request->post['twocheckout_order_status_id'];
 		} else {

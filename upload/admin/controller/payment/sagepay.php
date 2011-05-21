@@ -33,6 +33,7 @@ class ControllerPaymentSagepay extends Controller {
 		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_transaction'] = $this->language->get('entry_transaction');
+		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -109,6 +110,12 @@ class ControllerPaymentSagepay extends Controller {
 			$this->data['sagepay_transaction'] = $this->config->get('sagepay_transaction');
 		}
 		
+		if (isset($this->request->post['sagepay_total'])) {
+			$this->data['sagepay_total'] = $this->request->post['sagepay_total'];
+		} else {
+			$this->data['sagepay_total'] = $this->config->get('sagepay_total'); 
+		} 
+				
 		if (isset($this->request->post['sagepay_order_status_id'])) {
 			$this->data['sagepay_order_status_id'] = $this->request->post['sagepay_order_status_id'];
 		} else {

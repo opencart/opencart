@@ -11,6 +11,7 @@ $_['entry_merchant']     = 'Merchant ID:';
 $_['entry_key']          = 'Transaction Key:';
 $_['entry_callback']     = 'Relay Response URL:<br /><span class="help">Please login and set this at <a href="https://secure.authorize.net" target="_blank" class="txtLink">https://secure.authorize.net</a>.</span>';
 $_['entry_test']         = 'Test Mode:';
+$_['entry_total']        = 'Total:<br /><span class="help">The checkout total the order must reach before this payment method becomes active.</span>';
 $_['entry_order_status'] = 'Order Status:';
 $_['entry_geo_zone']     = 'Geo Zone:';
 $_['entry_status']       = 'Status:'; 

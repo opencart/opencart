@@ -23,7 +23,7 @@ class ControllerPaymentFreeCheckout extends Controller {
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
-				
+		
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
@@ -62,7 +62,7 @@ class ControllerPaymentFreeCheckout extends Controller {
 		$this->data['action'] = $this->url->link('payment/free_checkout', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');	
-		
+				
 		if (isset($this->request->post['free_checkout_order_status_id'])) {
 			$this->data['free_checkout_order_status_id'] = $this->request->post['free_checkout_order_status_id'];
 		} else {

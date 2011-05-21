@@ -24,6 +24,10 @@
               <?php } ?></td>
           </tr>
           <tr>
+            <td><?php echo $entry_total; ?></td>
+            <td><input type="text" name="paymate_total" value="<?php echo $paymate_total; ?>" /></td>
+          </tr>          
+          <tr>
             <td><?php echo $entry_order_status; ?></td>
             <td><select name="paymate_order_status_id">
                 <?php foreach ($order_statuses as $order_status) { ?>

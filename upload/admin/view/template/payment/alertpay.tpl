@@ -35,6 +35,10 @@
             <td><textarea cols="40" rows="5"><?php echo $callback; ?></textarea></td>
           </tr>
           <tr>
+            <td><?php echo $entry_total; ?></td>
+            <td><input type="text" name="alertpay_total" value="<?php echo $alertpay_total; ?>" /></td>
+          </tr>
+          <tr>
             <td><?php echo $entry_order_status; ?></td>
             <td><select name="alertpay_order_status_id">
                 <?php foreach ($order_statuses as $order_status) { ?>

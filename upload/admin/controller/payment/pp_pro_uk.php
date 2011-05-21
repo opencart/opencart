@@ -33,6 +33,7 @@ class ControllerPaymentPPProUK extends Controller {
 		$this->data['entry_partner'] = $this->language->get('entry_partner');
 		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_transaction'] = $this->language->get('entry_transaction');
+		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -133,6 +134,12 @@ class ControllerPaymentPPProUK extends Controller {
 			$this->data['pp_pro_uk_transaction'] = $this->config->get('pp_pro_uk_transaction');
 		}
 		
+		if (isset($this->request->post['pp_pro_uk_total'])) {
+			$this->data['pp_pro_uk_total'] = $this->request->post['pp_pro_uk_total'];
+		} else {
+			$this->data['pp_pro_uk_total'] = $this->config->get('pp_pro_uk_total'); 
+		} 
+				
 		if (isset($this->request->post['pp_pro_uk_order_status_id'])) {
 			$this->data['pp_pro_uk_order_status_id'] = $this->request->post['pp_pro_uk_order_status_id'];
 		} else {

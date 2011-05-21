@@ -17,6 +17,7 @@ $_['entry_hash']         = 'MD5 Hash:';
 $_['entry_server']       = 'Transaction Server:';
 $_['entry_mode']         = 'Transaction Mode:';
 $_['entry_method']       = 'Transaction Method:';
+$_['entry_total']        = 'Total:<br /><span class="help">The checkout total the order must reach before this payment method becomes active.</span>';
 $_['entry_order_status'] = 'Order Status:';
 $_['entry_geo_zone']     = 'Geo Zone:'; 
 $_['entry_status']       = 'Status:';

@@ -41,6 +41,14 @@ class ControllerCommonLogin extends Controller {
 			$this->data['error_warning'] = '';
 		}
 		
+		if (isset($this->session->data['success'])) {
+    		$this->data['success'] = $this->session->data['success'];
+    
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
+				
     	$this->data['action'] = $this->url->link('common/login', '', 'SSL');
 
 		if (isset($this->request->post['username'])) {

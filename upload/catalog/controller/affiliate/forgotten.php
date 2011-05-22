@@ -18,6 +18,8 @@ class ControllerAffiliateForgotten extends Controller {
 			
 			$password = substr(md5(rand()), 0, 7);
 			
+			$this->model_affiliate_affiliate->editPassword($this->request->post['email'], $password);
+			
 			$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
 			
 			$message  = sprintf($this->language->get('text_greeting'), $this->config->get('config_name')) . "\n\n";
@@ -38,8 +40,6 @@ class ControllerAffiliateForgotten extends Controller {
 			$mail->setSubject($subject);
 			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
-			
-			$this->model_affiliate_affiliate->editPassword($this->request->post['email'], $password);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 

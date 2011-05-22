@@ -320,14 +320,11 @@ class ControllerCommonHome extends Controller {
 		$this->response->setOutput(Json::encode($data));
 	}
 	
-	public function login() { 
-		if (!$this->user->isLogged()) {
-			return $this->forward('common/login');
-		}
+	public function login() {
+		$route = '';
+		$ignore = array();
 		
 		if (isset($this->request->get['route'])) {
-			$route = '';
-						
 			$part = explode('/', $this->request->get['route']);
 			
 			if (isset($part[0])) {
@@ -340,12 +337,23 @@ class ControllerCommonHome extends Controller {
 			
 			$ignore = array(
 				'common/login',
+				'common/forgotten'
+			);		
+		}
+		
+		if (!$this->user->isLogged() && !in_array($route, $ignore)) {
+			return $this->forward('common/login');
+		}
+		
+		if (isset($this->request->get['route'])) {
+			$ignore = array(
+				'common/login',
 				'common/logout',
 				'common/forgotten',
 				'error/not_found',
 				'error/permission'
 			);
-			
+						
 			$config_ignore = array();
 			
 			if ($this->config->get('config_token_ignore')) {

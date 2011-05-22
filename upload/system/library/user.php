@@ -63,6 +63,8 @@ final class User {
 	
 		$this->user_id = '';
 		$this->username = '';
+		
+		session_destroy();
   	}
 
   	public function hasPermission($key, $value) {

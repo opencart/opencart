@@ -3,26 +3,28 @@ class ControllerCommonForgotten extends Controller {
 	private $error = array();
 
 	public function index() {
-		//if ($this->customer->isLogged()) {
-		//	$this->redirect($this->url->link('account/account', '', 'SSL'));
-		//}
+		if ($this->user->isLogged()) {
+			$this->redirect($this->url->link('common/home', '', 'SSL'));
+		}
 
-		$this->language->load('account/forgotten');
+		$this->language->load('common/forgotten');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
-		$this->load->model('account/customer');
+		$this->load->model('user/user');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->language->load('mail/forgotten');
 			
-			$password = substr(md5(rand()), 0, 7);
+			$code = substr(md5(rand()), 0, 7);
+			
+			$this->model_user_user->editCode($this->request->post['email'], $code);
 			
 			$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
 			
 			$message  = sprintf($this->language->get('text_greeting'), $this->config->get('config_name')) . "\n\n";
-			$message .= $this->language->get('text_password') . "\n\n";
-			$message .= $password;
+			$message .= sprintf($this->language->get('text_change'), $this->config->get('config_name')) . "\n\n";
+			$message .= $this->url->link('common/user', 'code=' . $code, 'SSL') . "\n\n";
 
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
@@ -39,11 +41,9 @@ class ControllerCommonForgotten extends Controller {
 			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
 			
-			$this->model_account_customer->editPassword($this->request->post['email'], $password);
-			
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->redirect($this->url->link('common/login', '', 'SSL'));
 		}
 
       	$this->data['breadcrumbs'] = array();
@@ -53,16 +53,10 @@ class ControllerCommonForgotten extends Controller {
 			'href'      => $this->url->link('common/home'),        	
         	'separator' => false
       	); 
-
-      	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),     	
-        	'separator' => $this->language->get('text_separator')
-      	);
 		
       	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_forgotten'),
-			'href'      => $this->url->link('account/forgotten', '', 'SSL'),       	
+			'href'      => $this->url->link('common/forgotten', '', 'SSL'),       	
         	'separator' => $this->language->get('text_separator')
       	);
 		
@@ -73,8 +67,8 @@ class ControllerCommonForgotten extends Controller {
 
 		$this->data['entry_email'] = $this->language->get('entry_email');
 
-		$this->data['button_continue'] = $this->language->get('button_continue');
-		$this->data['button_back'] = $this->language->get('button_back');
+		$this->data['button_reset'] = $this->language->get('button_reset');
+		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -82,36 +76,29 @@ class ControllerCommonForgotten extends Controller {
 			$this->data['error_warning'] = '';
 		}
 		
-		$this->data['action'] = $this->url->link('account/forgotten', '', 'SSL');
+		$this->data['action'] = $this->url->link('common/forgotten', '', 'SSL');
  
-		$this->data['back'] = $this->url->link('common/login', '', 'SSL');
-		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/forgotten.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/account/forgotten.tpl';
+		$this->data['cancel'] = $this->url->link('common/login', '', 'SSL');
+    	
+		if (isset($this->request->post['email'])) {
+      		$this->data['email'] = $this->request->post['email'];
 		} else {
-			$this->template = 'default/template/account/forgotten.tpl';
-		}
-		
+      		$this->data['email'] = '';
+    	}
+				
+		$this->template = 'common/forgotten.tpl';
 		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
+			'common/header',
 			'common/footer',
-			'common/header'	
 		);
 								
 		$this->response->setOutput($this->render());		
 	}
 
-	public function reset() {
-		
-	}
-
 	private function validate() {
 		if (!isset($this->request->post['email'])) {
 			$this->error['warning'] = $this->language->get('error_email');
-		} elseif (!$this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+		} elseif (!$this->model_user_user->getTotalUsersByEmail($this->request->post['email'])) {
 			$this->error['warning'] = $this->language->get('error_email');
 		}
 

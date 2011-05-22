@@ -11,7 +11,15 @@ class ModelUserUser extends Model {
 			$this->db->query("UPDATE `" . DB_PREFIX . "user` SET password = '" . $this->db->escape(md5($data['password'])) . "' WHERE user_id = '" . (int)$user_id . "'");
 		}
 	}
-	
+
+	public function editPassword($user_id, $password) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET password = '" . $this->db->escape(md5($password)) . "' WHERE user_id = '" . (int)$user_id . "'");
+	}
+
+	public function editCode($email, $code) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET code = '" . $this->db->escape($code) . "' WHERE user_id = '" . (int)$user_id . "'");
+	}
+			
 	public function deleteUser($user_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE user_id = '" . (int)$user_id . "'");
 	}
@@ -22,6 +30,12 @@ class ModelUserUser extends Model {
 		return $query->row;
 	}
 	
+	public function getUserByCode($code) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE code = '" . (int)$code . "'");
+	
+		return $query->row;
+	}
+		
 	public function getUsers($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "user`";
 			
@@ -71,5 +85,11 @@ class ModelUserUser extends Model {
 		
 		return $query->row['total'];
 	}
+	
+	public function getTotalUsersByEmail($email) {
+      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE email = '" . (int)$this->db->escape($email) . "'");
+		
+		return $query->row['total'];
+	}	
 }
 ?>

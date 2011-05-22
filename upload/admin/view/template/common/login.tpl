@@ -3,11 +3,14 @@
   <?php if ($error_warning) { ?>
   <div class="warning"><?php echo $error_warning; ?></div>
   <?php } ?>
-  <div class="box" style="width: 325px; min-height: 300px; margin-top: 40px; margin-left: auto; margin-right: auto;">
+  <div class="box" style="width: 400px; min-height: 300px; margin-top: 40px; margin-left: auto; margin-right: auto;">
     <div class="heading">
       <h1><img src="view/image/lockscreen.png" alt="" /> <?php echo $text_login; ?></h1>
     </div>
     <div class="content" style="min-height: 150px; overflow: hidden;">
+      <?php if ($success) { ?>
+  <div class="success"><?php echo $success; ?></div>
+  <?php } ?>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <table style="width: 100%;">
           <tr>

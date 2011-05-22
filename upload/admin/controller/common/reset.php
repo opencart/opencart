@@ -15,7 +15,7 @@ class ControllerCommonReset extends Controller {
 		
 		$this->load->model('user/user');
 		
-		$user_info = $this->user_user->getUserByCode($code);
+		$user_info = $this->model_user_user->getUserByCode($code);
 		
 		if ($user_info) {
 			$this->load->language('common/reset');
@@ -37,7 +37,7 @@ class ControllerCommonReset extends Controller {
 			); 
 			
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_forgotten'),
+				'text'      => $this->language->get('text_reset'),
 				'href'      => $this->url->link('common/reset', '', 'SSL'),       	
 				'separator' => $this->language->get('text_separator')
 			);
@@ -62,7 +62,7 @@ class ControllerCommonReset extends Controller {
 				$this->data['error_confirm'] = '';
 			}
 			
-			$this->data['action'] = $this->url->link('common/forgotten', '', 'SSL');
+			$this->data['action'] = $this->url->link('common/reset', '', 'SSL');
 	 
 			$this->data['cancel'] = $this->url->link('common/login', '', 'SSL');
 			
@@ -78,7 +78,7 @@ class ControllerCommonReset extends Controller {
 				$this->data['confirm'] = '';
 			}
 			
-			$his->template = 'common/reset.tpl';
+			$this->template = 'common/reset.tpl';
 			$this->children = array(
 				'common/header',
 				'common/footer',
@@ -86,16 +86,18 @@ class ControllerCommonReset extends Controller {
 									
 			$this->response->setOutput($this->render());						
 		} else {
-			return $this->forward('error/not_found');
+			return $this->forward('common/login');
 		}
 	}
 
 	private function validate() {
-		if (!isset($this->request->post['email'])) {
-			$this->error['warning'] = $this->language->get('error_email');
-		} elseif (!$this->model_user_user->getTotalUsersByEmail($this->request->post['email'])) {
-			$this->error['warning'] = $this->language->get('error_email');
-		}
+    	if ((strlen(utf8_decode($this->request->post['password'])) <= 4) || (strlen(utf8_decode($this->request->post['password'])) >= 20)) {
+      		$this->error['password'] = $this->language->get('error_password');
+    	}
+
+    	if ($this->request->post['confirm'] != $this->request->post['password']) {
+      		$this->error['confirm'] = $this->language->get('error_confirm');
+    	}  
 
 		if (!$this->error) {
 			return true;

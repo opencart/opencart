@@ -54,8 +54,9 @@ class ModelAccountCustomer extends Model {
 			
 			// Send to additional alert emails if new account email is enabled
 			$emails = explode(',', $this->config->get('config_alert_emails'));
+			
 			foreach ($emails as $email) {
-				if (strlen($email) > 0 && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+				if (strlen($email) > 0 && preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i', $email)) {
 					$mail->setTo($email);
 					$mail->send();
 				}

@@ -31,7 +31,7 @@ class ModelUserUser extends Model {
 	}
 	
 	public function getUserByCode($code) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE code = '" . (int)$code . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE code = '" . $this->db->escape($code) . "' AND code != ''");
 	
 		return $query->row;
 	}
@@ -87,7 +87,7 @@ class ModelUserUser extends Model {
 	}
 	
 	public function getTotalUsersByEmail($email) {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE email = '" . (int)$this->db->escape($email) . "'");
+      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE email = '" . $this->db->escape($email) . "'");
 		
 		return $query->row['total'];
 	}	

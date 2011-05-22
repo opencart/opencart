@@ -16,7 +16,7 @@ class ControllerCommonForgotten extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->language->load('mail/forgotten');
 			
-			$code = substr(md5(rand()), 0, 7);
+			$code = md5(rand());
 			
 			$this->model_user_user->editCode($this->request->post['email'], $code);
 			
@@ -25,6 +25,7 @@ class ControllerCommonForgotten extends Controller {
 			$message  = sprintf($this->language->get('text_greeting'), $this->config->get('config_name')) . "\n\n";
 			$message .= sprintf($this->language->get('text_change'), $this->config->get('config_name')) . "\n\n";
 			$message .= $this->url->link('common/user', 'code=' . $code, 'SSL') . "\n\n";
+			$message .= sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']) . "\n\n";
 
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');

@@ -490,7 +490,7 @@ class ModelCheckoutOrder extends Model {
 				$emails = explode(',', $this->config->get('config_alert_emails'));
 				
 				foreach ($emails as $email) {
-					if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+					if ($email && preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i', $email)) {
 						$mail->setTo($email);
 						$mail->send();
 					}

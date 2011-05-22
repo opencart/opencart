@@ -44,6 +44,8 @@ class ControllerCommonReset extends Controller {
 			
 			$this->data['heading_title'] = $this->language->get('heading_title');
 	
+			$this->data['text_password'] = $this->language->get('text_password');
+	
 			$this->data['entry_password'] = $this->language->get('entry_password');
 			$this->data['entry_confirm'] = $this->language->get('entry_confirm');
 	
@@ -62,7 +64,7 @@ class ControllerCommonReset extends Controller {
 				$this->data['error_confirm'] = '';
 			}
 			
-			$this->data['action'] = $this->url->link('common/reset', '', 'SSL');
+			$this->data['action'] = $this->url->link('common/reset', 'code=' . $code, 'SSL');
 	 
 			$this->data['cancel'] = $this->url->link('common/login', '', 'SSL');
 			
@@ -91,7 +93,7 @@ class ControllerCommonReset extends Controller {
 	}
 
 	private function validate() {
-    	if ((strlen(utf8_decode($this->request->post['password'])) <= 4) || (strlen(utf8_decode($this->request->post['password'])) >= 20)) {
+    	if ((strlen(utf8_decode($this->request->post['password'])) < 4) || (strlen(utf8_decode($this->request->post['password'])) > 20)) {
       		$this->error['password'] = $this->language->get('error_password');
     	}
 

@@ -322,7 +322,6 @@ class ControllerCommonHome extends Controller {
 	
 	public function login() {
 		$route = '';
-		$ignore = array();
 		
 		if (isset($this->request->get['route'])) {
 			$part = explode('/', $this->request->get['route']);
@@ -334,14 +333,14 @@ class ControllerCommonHome extends Controller {
 			if (isset($part[1])) {
 				$route .= '/' . $part[1];
 			}
-			
-			$ignore = array(
-				'common/login',
-				'common/forgotten',
-				'common/reset'
-			);		
 		}
 		
+		$ignore = array(
+			'common/login',
+			'common/forgotten',
+			'common/reset'
+		);	
+					
 		if (!$this->user->isLogged() && !in_array($route, $ignore)) {
 			return $this->forward('common/login');
 		}

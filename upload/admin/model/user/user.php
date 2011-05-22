@@ -17,7 +17,7 @@ class ModelUserUser extends Model {
 	}
 
 	public function editCode($email, $code) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET code = '" . $this->db->escape($code) . "' WHERE user_id = '" . (int)$user_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET code = '" . $this->db->escape($code) . "' WHERE email = '" . $this->db->escape($email) . "'");
 	}
 			
 	public function deleteUser($user_id) {

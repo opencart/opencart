@@ -16,12 +16,18 @@
         <table class="form">
           <tr>
             <td><?php echo $entry_password; ?></td>
-            <td><input type="text" name="password" value="<?php echo $password; ?>" /></td>
+            <td><input type="text" name="password" value="<?php echo $password; ?>" />
+              <?php if ($error_password) { ?>
+              <span class="error"><?php echo $error_password; ?></span>
+              <?php } ?></td>
           </tr>
           <tr>
             <td><?php echo $entry_confirm; ?></td>
-            <td><input type="text" name="confirm" value="<?php echo $confirm; ?>" /></td>
-          </tr>          
+            <td><input type="text" name="confirm" value="<?php echo $confirm; ?>" />
+              <?php if ($error_confirm) { ?>
+              <span class="error"><?php echo $error_confirm; ?></span>
+              <?php } ?></td>
+          </tr>
         </table>
       </form>
     </div>

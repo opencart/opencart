@@ -44,7 +44,7 @@ class ModelCatalogProduct extends Model {
 				}
 			}
 		}
-
+		
 		if (isset($data['product_discount'])) {
 			foreach ($data['product_discount'] as $value) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_discount SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)$value['customer_group_id'] . "', quantity = '" . (int)$value['quantity'] . "', priority = '" . (int)$value['priority'] . "', price = '" . (float)$value['price'] . "', date_start = '" . $this->db->escape($value['date_start']) . "', date_end = '" . $this->db->escape($value['date_end']) . "'");
@@ -285,6 +285,15 @@ class ModelCatalogProduct extends Model {
 			}
 						
 			$data = array_merge($data, array('product_option' => $this->getProductOptions($product_id)));
+			
+			$data['product_option'] = array();
+			
+			$results = $this->getProductImages($product_id);
+			
+			foreach ($results as $result) {
+				$data['product_option'][] = $result['image'];
+			}			
+			
 			$data = array_merge($data, array('product_related' => $this->getProductRelated($product_id)));
 			$data = array_merge($data, array('product_reward' => $this->getProductRewards($product_id)));
 			$data = array_merge($data, array('product_special' => $this->getProductSpecials($product_id)));

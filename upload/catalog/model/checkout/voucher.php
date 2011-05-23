@@ -1,7 +1,7 @@
 <?php
 class ModelCheckoutVoucher extends Model {
 	public function addVoucher($order_id, $data) {
-      	$this->db->query("INSERT INTO " . DB_PREFIX . "voucher SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape(rand()) . "', from_name = '" . $this->db->escape($data['from_name']) . "', from_email = '" . $this->db->escape($data['from_email']) . "', to_name = '" . $this->db->escape($data['to_name']) . "', to_email = '" . $this->db->escape($data['to_email']) . "', message = '" . $this->db->escape($data['message']) . "', amount = '" . (float)$data['amount'] . "', voucher_theme_id = '" . (int)$data['voucher_theme_id'] . "', status = '1', date_added = NOW()");
+      	$this->db->query("INSERT INTO " . DB_PREFIX . "voucher SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape(substr(md5(rand()), 0, 7)) . "', from_name = '" . $this->db->escape($data['from_name']) . "', from_email = '" . $this->db->escape($data['from_email']) . "', to_name = '" . $this->db->escape($data['to_name']) . "', to_email = '" . $this->db->escape($data['to_email']) . "', message = '" . $this->db->escape($data['message']) . "', amount = '" . (float)$data['amount'] . "', voucher_theme_id = '" . (int)$data['voucher_theme_id'] . "', status = '1', date_added = NOW()");
 	}
 	
 	public function getVoucher($code) {
@@ -28,9 +28,14 @@ class ModelCheckoutVoucher extends Model {
 			
 			if ($amount <= 0) {
 				$status = false;
-			}		
+			}	
+					
+			$this->log->write('works');
+	
 		} else {
 			$status = false;
+			
+			$this->log->write('false');
 		}
 		
 		if ($status) {

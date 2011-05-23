@@ -361,7 +361,7 @@ class ControllerLocalisationReturnAction extends Controller {
 		$this->load->model('sale/return');
 		
 		foreach ($this->request->post['selected'] as $return_action_id) {
-			$return_total = $this->model_sale_return->getTotalReturnProductsByActionId($return_action_id);
+			$return_total = $this->model_sale_return->getTotalReturnProductsByReturnActionId($return_action_id);
 		
 			if ($return_total) {
 	  			$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);	

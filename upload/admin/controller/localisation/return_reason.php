@@ -361,7 +361,7 @@ class ControllerLocalisationReturnReason extends Controller {
 		$this->load->model('sale/return');
 		
 		foreach ($this->request->post['selected'] as $return_reason_id) {
-			$return_total = $this->model_sale_return->getTotalReturnProductsByReasonId($return_reason_id);
+			$return_total = $this->model_sale_return->getTotalReturnProductsByReturnReasonId($return_reason_id);
 		
 			if ($return_total) {
 	  			$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);	

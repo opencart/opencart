@@ -38,8 +38,6 @@ class ModelTotalVoucher extends Model {
 			$code = substr($order_total['title'], $start, $end - $start);
 		}	
 		
-		$this->log->write($code);
-		
 		$this->load->model('checkout/voucher');
 		
 		$voucher_info = $this->model_checkout_voucher->getVoucher($code);

@@ -547,7 +547,7 @@ class ControllerSaleVoucher extends Controller {
         	$this->data['histories'][] = array(
 				'order_id'   => $result['order_id'],
 				'customer'   => $result['customer'],
-				'amount'     => $result['amount'],
+				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
         		'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
         	);
       	}			

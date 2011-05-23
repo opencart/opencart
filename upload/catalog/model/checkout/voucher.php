@@ -29,13 +29,8 @@ class ModelCheckoutVoucher extends Model {
 			if ($amount <= 0) {
 				$status = false;
 			}	
-					
-			$this->log->write('works');
-	
 		} else {
 			$status = false;
-			
-			$this->log->write('false');
 		}
 		
 		if ($status) {
@@ -124,7 +119,7 @@ class ModelCheckoutVoucher extends Model {
 	}
 	
 	public function redeem($voucher_id, $order_id, $amount) {
-		$this->data->query("INSERT INTO voucher_history SET voucher_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', amount = '" . (float)$amount . "', date_added = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_history` SET voucher_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', amount = '" . (float)$amount . "', date_added = NOW()");
 	}
 }
 ?>

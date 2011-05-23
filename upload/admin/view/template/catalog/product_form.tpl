@@ -129,6 +129,10 @@
               <td><input type="text" name="sku" value="<?php echo $sku; ?>" /></td>
             </tr>
             <tr>
+              <td><?php echo $entry_upc; ?></td>
+              <td><input type="text" name="upc" value="<?php echo $upc; ?>" /></td>
+            </tr>            
+            <tr>
               <td><?php echo $entry_location; ?></td>
               <td><input type="text" name="location" value="<?php echo $location; ?>" /></td>
             </tr>

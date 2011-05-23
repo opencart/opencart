@@ -607,7 +607,7 @@ class ControllerSaleOrder extends Controller {
 							'name'  => $option['name'],
 							'value' => substr($option['value'], 0, strrpos($option['value'], '.')),
 							'type'  => $option['type'],
-							'href'  => $this->url->link('sale/order/download', 'token=' . $this->session->data['token'] . '&order_option_id=' . $option['order_option_id'], 'SSL')
+							'href'  => $this->url->link('sale/order/download', 'token=' . $this->session->data['token'] . '&order_id=' . $this->request->get['order_id'] . '&order_option_id=' . $option['order_option_id'], 'SSL')
 						);						
 					}
 				}
@@ -946,7 +946,7 @@ class ControllerSaleOrder extends Controller {
 			$order_option_id = 0;
 		}
 		
-		$option_info = $this->model_sale_order->getOrderOption($order_option_id);
+		$option_info = $this->model_sale_order->getOrderOption($this->request->get['order_id'], $order_option_id);
 		
 		if ($option_info && $option_info['type'] == 'file') {
 			$file = DIR_DOWNLOAD . $option_info['value'];

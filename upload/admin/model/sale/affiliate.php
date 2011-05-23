@@ -105,7 +105,7 @@ class ModelSaleAffiliate extends Model {
 	
 			$message  = sprintf($this->language->get('text_approve_welcome'), $this->config->get('config_name')) . "\n\n";;
 			$message .= $this->language->get('text_approve_login') . "\n";
-			$message .= HTTP_CATALOG . 'index.php?route=account/login' . "\n\n";
+			$message .= HTTP_CATALOG . 'index.php?route=affiliate/login' . "\n\n";
 			$message .= $this->language->get('text_approve_services') . "\n\n";
 			$message .= $this->language->get('text_approve_thanks') . "\n";
 			$message .= $this->config->get('config_name');

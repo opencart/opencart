@@ -31,6 +31,7 @@ $_['entry_store']            = 'Stores:';
 $_['entry_keyword']          = 'SEO Keyword:';
 $_['entry_model']            = 'Model:';
 $_['entry_sku']              = 'SKU:';
+$_['entry_upc']              = 'UPC:';
 $_['entry_location']         = 'Location:';
 $_['entry_manufacturer']     = 'Manufacturer:';
 $_['entry_shipping']         = 'Requires Shipping:'; 

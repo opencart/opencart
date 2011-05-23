@@ -47,27 +47,6 @@ $(document).ready(function() {
 	
 	/* Mega Menu */
 	$('#menu ul > li > a + div').each(function(index, element) {
-		html = '';
-		
-		links = $(element).find('a');
-		columns = $(element).attr('class').substr(9);
-		
-		for (i = 0; i < links.length;) {
-			html += '<ul>';
-			
-			j = i + Math.ceil(links.length / columns);
-			
-			for (; i < j; i++) {
-				if (links[i] != undefined) {
-					html += '<li><a href="' + $(links[i]).attr('href') + '" class="' + $(links[i]).attr('class') + '">' + $(links[i]).html() + '</a></li>';
-				}
-			}
-			
-			html += '</ul>';
-		}
-		
-		$(element).html(html);
-		
 		var menu = $('#menu').offset();
 		var dropdown = $(this).parent().offset();
 		

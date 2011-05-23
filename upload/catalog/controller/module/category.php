@@ -5,50 +5,63 @@ class ControllerModuleCategory extends Controller {
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
 		
+		if (isset($this->request->get['path'])) {
+			$parts = explode('_', (string)$this->request->get['path']);
+		} else {
+			$parts = array();
+		}
+		
+		if (isset($parts[0])) {
+			$this->data['category_id'] = $parts[0];
+		} else {
+			$this->data['category_id'] = 0;
+		}
+		
+		if (isset($parts[1])) {
+			$this->data['child_id'] = $parts[1];
+		} else {
+			$this->data['child_id'] = 0;
+		}
+							
 		$this->load->model('catalog/category');
 		$this->load->model('catalog/product');
 		
-		if (isset($this->request->get['path'])) {
-			$parts = explode('_', (string)$this->request->get['path']);
-			
-			$category_id = end($parts);
-		} else {
-			$category_id = 0;
-		}
-		
 		$this->data['categories'] = array();
 					
-		$categories_1 = $this->model_catalog_category->getCategories($category_id);
+		$categories = $this->model_catalog_category->getCategories(0);
 		
-		foreach ($categories_1 as $category_1) {
-			$level_2_data = array();
+		foreach ($categories as $category) {
+			$children_data = array();
 			
-			$categories_2 = $this->model_catalog_category->getCategories($category_1['category_id']);
+			$children = $this->model_catalog_category->getCategories($category['category_id']);
 			
-			foreach ($categories_2 as $category_2) {
+			foreach ($children as $child) {
 				$data = array(
-					'filter_category_id'  => $category_2['category_id'],
+					'filter_category_id'  => $child['category_id'],
+					'filter_sub_category' => true
 				);		
 					
 				$product_total = $this->model_catalog_product->getTotalProducts($data);
 							
-				$level_2_data[] = array(
-					'name'     => $category_2['name'] . ' (' . $product_total . ')',
-					'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'])	
+				$children_data[] = array(
+					'category_id' => $child['category_id'],
+					'name'        => $child['name'] . ' (' . $product_total . ')',
+					'href'        => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])	
 				);					
 			}
 			
 			$data = array(
-				'filter_category_id'  => $category_1['category_id'],
+				'filter_category_id'  => $category['category_id'],
 				'filter_sub_category' => true	
 			);		
 				
 			$product_total = $this->model_catalog_product->getTotalProducts($data);
 						
 			$this->data['categories'][] = array(
-				'name'     => $category_1['name'] . ' (' . $product_total . ')',
-				'children' => $level_2_data,
-				'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'])
+				'category_id' => $category['category_id'],
+				'name'        => $category['name'] . ' (' . $product_total . ')',
+				'children'    => $children_data,
+				'href'        => $this->url->link('product/category', 'path=' . $category['category_id'])
 			);
 		}
 		

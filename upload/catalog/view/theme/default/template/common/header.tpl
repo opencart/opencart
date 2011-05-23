@@ -107,30 +107,29 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
     <?php } ?>
     <a id="tab-account" href="<?php echo $account; ?>"><?php echo $text_account; ?></a><a id="tab-cart" href="<?php echo $cart; ?>"><span><?php echo $text_cart; ?></span></a> <a id="tab-checkout" href="<?php echo $checkout; ?>"><span><?php echo $text_checkout; ?></span></a></div>
 </div>
+<?php if ($categories) { ?>
 <div id="menu">
   <ul>
-    <?php foreach ($categories as $category_1) { ?>
-    <li><a href="<?php echo $category_1['href']; ?>"><?php echo $category_1['name']; ?></a>
-      <?php if ($category_1['children']) { ?>
-      <div class="num-cols-<?php echo $category_1['column']; ?>">
+    <?php foreach ($categories as $category) { ?>
+    <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
+      <?php if ($category['children']) { ?>
+      <div>
+        <?php for ($i = 0; $i < count($category['children']);) { ?>
         <ul>
-          <?php foreach ($category_1['children'] as $category_2) { ?>
-          <?php if ($category_2['children']) { ?>
-          <li><a href="<?php echo $category_2['href']; ?>" class="parent"><?php echo $category_2['name']; ?></a>
-            <ul>
-              <?php foreach ($category_2['children'] as $category_3) { ?>
-              <li><a href="<?php echo $category_3['href']; ?>" class="child"><?php echo $category_3['name']; ?></a></li>
-              <?php } ?>
-            </ul>
-          </li>
-          <?php } else { ?>
-          <li><a href="<?php echo $category_2['href']; ?>"><?php echo $category_2['name']; ?></a></li>
+          <?php $j = $i + ceil(count($category['children']) / $category['column']); ?>
+          <?php for (; $i < $j; $i++) { ?>
+          <?php if (isset($category['children'][$i])) { ?>
+          <li><a href="<?php echo $category['children'][$i]['href']; ?>"><?php echo $category['children'][$i]['name']; ?></a></li>
           <?php } ?>
           <?php } ?>
         </ul>
+        <?php } ?>
       </div>
       <?php } ?>
     </li>
     <?php } ?>
   </ul>
 </div>
+<?php } else { ?>
+<div id="top"></div>
+<?php } ?>

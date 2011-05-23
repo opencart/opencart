@@ -184,7 +184,7 @@ label {
 	border-radius: 0px 7px 7px 7px;
 	-webkit-box-shadow: 0px 2px 2px #DDDDDD;
 	-moz-box-shadow: 0px 2px 2px #DDDDDD;
-	box-shadow: 0px 2px 2px #DDDDDD;	
+	box-shadow: 0px 2px 2px #DDDDDD;
 	background: #FFF;
 }
 #header #cart.active {
@@ -319,6 +319,11 @@ label {
 #header .links a + a {
 	margin-left: 8px;
 	border-left: 1px solid #666666;
+}
+#top {
+	background: #585858;
+	height: 4px;
+	margin-bottom: 15px;
 }
 /* menu */
 #menu {
@@ -714,17 +719,25 @@ a.button:hover span {
 	text-decoration: none;
 	color: #333;
 }
-.box-category > ul > li > ul {
+.box-category > ul > li ul {
 	display: none;
-	padding-left: 10px;
+}
+.box-category > ul > li a.active {
+	font-weight: bold;
+}
+.box-category > ul > li a.active + ul {
+	display: block;
 }
 .box-category > ul > li ul > li {
-	padding: 5px 5px 5px 5px;
+	padding: 5px 5px 0px 10px;
 }
 .box-category > ul > li ul > li > a {
 	text-decoration: none;
 	color: #999;
 	display: block;
+}
+.box-category > ul > li ul > li > a.active {
+	font-weight: bold;
 }
 /* content */
 #content .content {

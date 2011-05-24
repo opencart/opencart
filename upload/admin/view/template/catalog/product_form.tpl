@@ -409,7 +409,7 @@
                   <td></td>
                 </tr>
               </thead>
-              <?php foreach ($product_option['option_value'] as $product_option_value) { ?>
+              <?php foreach ($product_option['product_option_value'] as $product_option_value) { ?>
               <tbody id="option-value-row<?php echo $option_value_row; ?>">
                 <tr>
                   <td class="left"><select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][option_value_id]">
@@ -485,7 +485,7 @@
           <?php $option_value_row = 0; ?>		  
 		  <?php foreach ($product_options as $product_option) { ?>
           <?php if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox') { ?>
-		  <?php foreach ($product_option['option_value'] as $product_option_value) { ?>
+		  <?php foreach ($product_option['product_option_value'] as $product_option_value) { ?>
 		  $('select[name=\'product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][option_value_id]\']').load('index.php?route=catalog/product/option&token=<?php echo $token; ?>&option_id=<?php echo $product_option['option_id']; ?>&option_value_id=<?php echo $product_option_value['option_value_id']; ?>');
 		  <?php $option_value_row++; ?>
 		  <?php } ?>

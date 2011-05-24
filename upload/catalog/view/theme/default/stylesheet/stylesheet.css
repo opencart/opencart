@@ -32,7 +32,7 @@ p {
 	margin-bottom: 20px;
 }
 a, a:visited, a b {
-	color: #378DC1;
+	color: #0071A5;
 	text-decoration: underline;
 	cursor: pointer;
 }
@@ -160,7 +160,7 @@ label {
 	margin-bottom: 3px;
 }
 #header #cart .heading a {
-	color: #378DC1;
+	color: #0071A5;
 	text-decoration: none;
 }
 #header #cart .heading a span {
@@ -313,16 +313,17 @@ label {
 	float: left;
 	display: block;
 	padding: 0px 0px 0px 7px;
+	color: #0071A5;
 	text-decoration: none;
 	font-size: 12px;
 }
 #header .links a + a {
 	margin-left: 8px;
-	border-left: 1px solid #666666;
+	border-left: 1px solid #CCC;
 }
 #top {
-	background: #585858;
-	height: 4px;
+	background: #0071A5;
+	height: 2px;
 	margin-bottom: 15px;
 }
 /* menu */
@@ -397,16 +398,6 @@ label {
 }
 #menu > ul > li > div > ul > li > a {
 	color: #FFFFFF;
-}
-#menu > ul > li > div > ul > li > a.parent {
-	font-weight: bold;
-}
-#menu > ul > li > div > ul > li > a.child {
-	padding-left: 17px;
-	background: url('../image/bullet-1.png') 5% 55% no-repeat;
-}
-#menu > ul > li > div > ul > li > a.child:hover {
-	background: #000000 url('../image/bullet-1.png') 5% 55% no-repeat;
 }
 .breadcrumb {
 	color: #CCCCCC;
@@ -678,7 +669,7 @@ a.button:hover span {
 	border: 1px solid #E7E7E7;
 }
 .box-product .name a {
-	color: #378DC1;
+	color: #0071A5;
 	font-weight: bold;
 	text-decoration: none;
 	display: block;
@@ -733,7 +724,6 @@ a.button:hover span {
 }
 .box-category > ul > li ul > li > a {
 	text-decoration: none;
-	color: #999;
 	display: block;
 }
 .box-category > ul > li ul > li > a.active {
@@ -859,7 +849,7 @@ a.button:hover span {
 	margin-bottom: 3px;
 }
 .product-list .name a {
-	color: #378DC1;
+	color: #0071A5;
 	font-weight: bold;
 	text-decoration: none;
 }
@@ -927,7 +917,7 @@ a.button:hover span {
 	border: 1px solid #E7E7E7;
 }
 .product-grid .name a {
-	color: #378DC1;
+	color: #0071A5;
 	font-weight: bold;
 	text-decoration: none;
 	display: block;
@@ -1015,7 +1005,7 @@ a.button:hover span {
 	color: #4D4D4D;
 }
 .product-info .description span {
-	color: #378DC1;
+	color: #0071A5;
 }
 .product-info .description a {
 	color: #4D4D4D;
@@ -1084,7 +1074,7 @@ a.button:hover span {
 	line-height: 20px;
 }
 .product-info .review > div > span {
-	color: #378DC1;
+	color: #0071A5;
 }
 .product-info .review .share {
 	overflow: auto;

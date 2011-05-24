@@ -974,7 +974,7 @@ class ControllerCatalogProduct extends Controller {
 			if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox') {
 				$product_option_value_data = array();
 				
-				foreach ($product_option['option_value'] as $product_option_value) {
+				foreach ($product_option['product_option_value'] as $product_option_value) {
 					$product_option_value_data[] = array(
 						'product_option_value_id' => $product_option_value['product_option_value_id'],
 						'option_value_id'         => $product_option_value['option_value_id'],
@@ -990,12 +990,12 @@ class ControllerCatalogProduct extends Controller {
 				}
 				
 				$this->data['product_options'][] = array(
-					'product_option_id' => $product_option['product_option_id'],
-					'option_id'         => $product_option['option_id'],
-					'name'              => $product_option['name'],
-					'type'              => $product_option['type'],
-					'option_value'      => $product_option_value_data,
-					'required'          => $product_option['required']
+					'product_option_id'    => $product_option['product_option_id'],
+					'option_id'            => $product_option['option_id'],
+					'name'                 => $product_option['name'],
+					'type'                 => $product_option['type'],
+					'product_option_value' => $product_option_value_data,
+					'required'             => $product_option['required']
 				);				
 			} else {
 				$this->data['product_options'][] = array(

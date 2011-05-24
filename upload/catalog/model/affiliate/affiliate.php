@@ -49,7 +49,7 @@ class ModelAffiliateAffiliate extends Model {
 	}
 	
 	public function getAffiliateByCode($code) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "affiliate WHERE code = '" . (int)$code . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "affiliate WHERE code = '" . $this->db->escape($code) . "'");
 		
 		return $query->row;
 	}

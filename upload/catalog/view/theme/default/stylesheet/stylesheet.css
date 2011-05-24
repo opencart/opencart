@@ -32,7 +32,7 @@ p {
 	margin-bottom: 20px;
 }
 a, a:visited, a b {
-	color: #0071A5;
+	color: #38B0E3;
 	text-decoration: underline;
 	cursor: pointer;
 }
@@ -160,7 +160,7 @@ label {
 	margin-bottom: 3px;
 }
 #header #cart .heading a {
-	color: #0071A5;
+	color: #38B0E3;
 	text-decoration: none;
 }
 #header #cart .heading a span {
@@ -313,7 +313,7 @@ label {
 	float: left;
 	display: block;
 	padding: 0px 0px 0px 7px;
-	color: #0071A5;
+	color: #38B0E3;
 	text-decoration: none;
 	font-size: 12px;
 }
@@ -322,7 +322,7 @@ label {
 	border-left: 1px solid #CCC;
 }
 #top {
-	background: #0071A5;
+	background: #38B0E3;
 	height: 2px;
 	margin-bottom: 15px;
 }
@@ -669,7 +669,7 @@ a.button:hover span {
 	border: 1px solid #E7E7E7;
 }
 .box-product .name a {
-	color: #0071A5;
+	color: #38B0E3;
 	font-weight: bold;
 	text-decoration: none;
 	display: block;
@@ -849,7 +849,7 @@ a.button:hover span {
 	margin-bottom: 3px;
 }
 .product-list .name a {
-	color: #0071A5;
+	color: #38B0E3;
 	font-weight: bold;
 	text-decoration: none;
 }
@@ -917,7 +917,7 @@ a.button:hover span {
 	border: 1px solid #E7E7E7;
 }
 .product-grid .name a {
-	color: #0071A5;
+	color: #38B0E3;
 	font-weight: bold;
 	text-decoration: none;
 	display: block;
@@ -1005,7 +1005,7 @@ a.button:hover span {
 	color: #4D4D4D;
 }
 .product-info .description span {
-	color: #0071A5;
+	color: #38B0E3;
 }
 .product-info .description a {
 	color: #4D4D4D;
@@ -1074,7 +1074,7 @@ a.button:hover span {
 	line-height: 20px;
 }
 .product-info .review > div > span {
-	color: #0071A5;
+	color: #38B0E3;
 }
 .product-info .review .share {
 	overflow: auto;

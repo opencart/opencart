@@ -21,7 +21,7 @@ class ModelCheckoutVoucher extends Model {
 			$voucher_history_query = $this->db->query("SELECT SUM(amount) AS total FROM `" . DB_PREFIX . "voucher_history` vh WHERE vh.voucher_id = '" . (int)$voucher_query->row['voucher_id'] . "' GROUP BY vh.voucher_id");
 	
 			if ($voucher_history_query->num_rows) {
-				$amount = $voucher_query->row['amount'] - $voucher_history_query->row['total'];
+				$amount = $voucher_query->row['amount'] + $voucher_history_query->row['total'];
 			} else {
 				$amount = $voucher_query->row['amount'];
 			}

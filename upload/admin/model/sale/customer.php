@@ -71,7 +71,7 @@ class ModelSaleCustomer extends Model {
 		}
 		
 		if (isset($data['filter_email']) && !is_null($data['filter_email'])) {
-			$implode[] = "c.email = '" . $this->db->escape($data['filter_email']) . "'";
+			$implode[] = "LCASE(c.email) LIKE '%" . $this->db->escape($data['filter_email']) . "%'";
 		}
 		
 		if (isset($data['filter_customer_group_id']) && !is_null($data['filter_customer_group_id'])) {
@@ -281,8 +281,8 @@ class ModelSaleCustomer extends Model {
 		}
 		
 		if (isset($data['filter_email']) && !is_null($data['filter_email'])) {
-			$implode[] = "email = '" . $this->db->escape($data['filter_email']) . "'";
-		}	
+			$implode[] = "LCASE(c.email) LIKE '%" . $this->db->escape($data['filter_email']) . "%'";
+		}
 		
 		if (isset($data['filter_customer_group_id']) && !is_null($data['filter_customer_group_id'])) {
 			$implode[] = "customer_group_id = '" . $this->db->escape($data['filter_customer_group_id']) . "'";

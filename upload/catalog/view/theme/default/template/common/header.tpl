@@ -99,13 +99,7 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
     <?php echo $text_logged; ?>
     <?php } ?>
   </div>
-  <div class="links"><a id="tab-home" href="<?php echo $home; ?>"><?php echo $text_home; ?></a><a href="<?php echo $wishlist; ?>" id="wishlist_total"><?php echo $text_wishlist; ?></a>
-    <?php if (!$logged) { ?>
-    <a id="tab-login" href="<?php echo $login; ?>"><?php echo $text_login; ?></a>
-    <?php } else { ?>
-    <a id="tab-login" href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a>
-    <?php } ?>
-    <a id="tab-account" href="<?php echo $account; ?>"><?php echo $text_account; ?></a><a id="tab-cart" href="<?php echo $cart; ?>"><span><?php echo $text_cart; ?></span></a> <a id="tab-checkout" href="<?php echo $checkout; ?>"><span><?php echo $text_checkout; ?></span></a></div>
+  <div class="links"><a href="<?php echo $home; ?>"><?php echo $text_home; ?></a><a href="<?php echo $wishlist; ?>"><?php echo $text_wishlist; ?></a><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a><a href="<?php echo $cart; ?>"><?php echo $text_cart; ?></a><a href="<?php echo $checkout; ?>"><?php echo $text_checkout; ?></a></div>
 </div>
 <?php if ($categories) { ?>
 <div id="menu">

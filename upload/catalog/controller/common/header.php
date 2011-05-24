@@ -73,8 +73,6 @@ class ControllerCommonHeader extends Controller {
     	$this->data['text_search'] = $this->language->get('text_search');
 		$this->data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
 		$this->data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', 'SSL'), $this->customer->getFirstName(), $this->url->link('account/logout', '', 'SSL'));
-		$this->data['text_login'] = $this->language->get('text_login');
-    	$this->data['text_logout'] = $this->language->get('text_logout');
 		$this->data['text_account'] = $this->language->get('text_account');
     	$this->data['text_checkout'] = $this->language->get('text_checkout');
 		$this->data['text_language'] = $this->language->get('text_language');
@@ -83,8 +81,6 @@ class ControllerCommonHeader extends Controller {
 		$this->data['home'] = $this->url->link('common/home');
 		$this->data['wishlist'] = $this->url->link('account/wishlist');
 		$this->data['logged'] = $this->customer->isLogged();
-		$this->data['login'] = $this->url->link('account/login', '', 'SSL');
-		$this->data['logout'] = $this->url->link('account/logout');
 		$this->data['account'] = $this->url->link('account/account', '', 'SSL');
 		$this->data['cart'] = $this->url->link('checkout/cart');
 		$this->data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');

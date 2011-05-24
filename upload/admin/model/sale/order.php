@@ -300,9 +300,9 @@ class ModelSaleOrder extends Model {
 	public function addOrderHistory($order_id, $data) {
         $order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "'");
 		
-		// Add invoice no. if not set
+		// Add invoice no. if not set.
 		if (!$order_query->row['invoice_no'] && $data['order_status_id']) {
-			$query = $this->db->query("SELECT MAX(invoice_no) AS invoice_no FROM `" . DB_PREFIX . "order`");
+			$query = $this->db->query("SELECT MAX(invoice_no) AS invoice_no FROM `" . DB_PREFIX . "order` WHERE invoice_prefix = '" . $this->db->escape($this->config->get('config_invoice_prefix')) . "'");
 	
 			if ($query->row['invoice_no']) {
 				$invoice_no = (int)$query->row['invoice_no'] + 1;

@@ -2724,7 +2724,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`) VAL
 (19060, 0, 'config', 'config_smtp_username', ''),
 (19059, 0, 'config', 'config_smtp_host', ''),
 (19058, 0, 'config', 'config_mail_parameter', ''),
-(19057, 0, 'config', 'config_mail_protocol', 'smtp'),
+(19057, 0, 'config', 'config_mail_protocol', 'mail'),
 (16984, 0, 'flat', 'flat_sort_order', '1'),
 (16983, 0, 'flat', 'flat_status', '1'),
 (16982, 0, 'flat', 'flat_geo_zone_id', '0'),

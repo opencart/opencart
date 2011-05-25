@@ -45,6 +45,7 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
   <?php if ($logo) { ?>
   <div id="logo"><a href="<?php echo $home; ?>"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
   <?php } ?>
+  <?php if (count($languages) > 1) { ?> 
   <div id="language"><?php echo $text_language; ?><br />
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
       <?php foreach ($languages as $language) { ?>
@@ -54,7 +55,9 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
       <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
     </form>
   </div>
-  <div id="currency"> <?php echo $text_currency; ?><br />
+  <?php } ?>
+  <?php if (count($currencies) > 1) { ?> 
+  <div id="currency"><?php echo $text_currency; ?><br />
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
       <?php foreach ($currencies as $currency) { ?>
       <?php if ($currency['code'] == $currency_code) { ?>
@@ -75,6 +78,7 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
       <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
     </form>
   </div>
+  <?php } ?>
   <div id="cart">
     <div class="heading">
       <h4><?php echo $text_cart; ?></h4>
@@ -124,6 +128,4 @@ DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .
     <?php } ?>
   </ul>
 </div>
-<?php } else { ?>
-<div id="top"></div>
 <?php } ?>

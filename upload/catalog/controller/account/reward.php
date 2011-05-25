@@ -68,7 +68,7 @@ class ControllerAccountReward extends Controller {
 				'order_id'    => $result['order_id'],
 				'points'      => $result['points'],
 				'description' => $result['description'],
-				'date_added'  => date('d/m/Y', strtotime($result['date_added'])),
+				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'href'        => $this->url->link('account/order/info', 'order_id=' . $result['order_id'], 'SSL')
 			);
 		}	

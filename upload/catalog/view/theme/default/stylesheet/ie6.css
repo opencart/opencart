@@ -1,0 +1,35 @@
+#header #search {
+	position: absolute;
+	top: 15px;
+	right: 0px;
+	width: 298px;
+	z-index: 15;
+}
+#header #search input {
+	background: #FFF;
+	border: 0;
+	padding: 1px;
+	margin-top: 1px;
+	width: 95%;
+	border: 1px solid #000;
+}
+#header #search .left {
+	float: left;
+	background: url('../image/search-left.png') no-repeat;
+	width: 28px;
+	height: 27px;
+	cursor: pointer;
+}
+#header #search .right {
+	float: right;
+	background: url('../image/search-right.png') no-repeat;
+	width: 3px;
+	height: 27px;
+}
+#header #search .center {
+	width: 256px;
+	padding-top: 1px;
+	padding-left: 5px;
+	margin-left: 0px;
+	margin-right: -5px;
+}

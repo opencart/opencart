@@ -280,7 +280,7 @@ label {
 #header #search .right {
 	float: right;
 	background: url('../image/search-right.png') no-repeat;
-	width: 2px;
+	width: 3px;
 	height: 27px;
 }
 #header #search .center {

@@ -98,4 +98,5 @@
 <?php } ?>
 <script type="text/javascript"><!--
 $('#payment-address select[name=\'zone_id\']').load('index.php?route=checkout/address/zone&country_id=<?php echo $country_id; ?>');
-//--></script> 
+//--></script>
+<script type="text/javascript">tb_init('a.thickbox');</script>

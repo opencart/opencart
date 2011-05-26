@@ -192,7 +192,7 @@ class ControllerProductSearch extends Controller {
 		
 		$this->data['products'] = array();
 		
-		if (isset($this->request->get['filter_name'])) {
+		if (isset($this->request->get['filter_name']) || isset($this->request->get['filter_tag'])) {
 			$data = array(
 				'filter_name'         => $filter_name, 
 				'filter_tag'          => $filter_tag, 

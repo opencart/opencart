@@ -73,7 +73,7 @@ class ModelCatalogProduct extends Model {
 		}
 		
 		if (isset($data['filter_tag']) && $data['filter_tag']) {
-			$sql .= " AND p.product_id IN (SELECT pt.product_id FROM " . DB_PREFIX . "product_tag pt WHERE pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND pt.tag LIKE '%" . $this->db->escape(strtolower($data['filter_tag'])) . "%')";
+			$sql .= " AND p.product_id IN (SELECT pt.product_id FROM " . DB_PREFIX . "product_tag pt WHERE pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND LOWER(pt.tag) LIKE '%" . $this->db->escape(strtolower($data['filter_tag'])) . "%')";
 		}
 									
 		if (isset($data['filter_category_id']) && $data['filter_category_id']) {

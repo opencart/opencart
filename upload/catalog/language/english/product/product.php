@@ -1,5 +1,7 @@
 <?php
 // Text
+$_['text_search']       = 'Search';
+$_['text_brand']        = 'Brand';
 $_['text_manufacturer'] = 'Brand:';
 $_['text_model']        = 'Product Code:';
 $_['text_reward']       = 'Reward Points:'; 
@@ -15,7 +17,6 @@ $_['text_minimum']      = 'This product has a minimum quantity of %s';
 $_['text_or']           = '- OR -';
 $_['text_reviews']      = '(%s reviews)'; 
 $_['text_write']        = 'Write a review';
-//$_['text_write']        = 'Be the first to <a href="">write a review</a>';
 $_['text_no_reviews']   = 'There are no reviews for this product.';
 $_['text_note']         = '<span style="color: #FF0000;">Note:</span> HTML is not translated!';
 $_['text_share']        = 'Share';

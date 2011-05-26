@@ -149,7 +149,7 @@ class ControllerProductManufacturer extends Controller {
 		   			
 			$this->data['breadcrumbs'][] = array(
        			'text'      => $manufacturer_info['name'],
-				'href'      => $this->url->link('product/manufacturer', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url),
+				'href'      => $this->url->link('product/manufacturer/product', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url),
       			'separator' => $this->language->get('text_separator')
    			);
 		
@@ -231,7 +231,7 @@ class ControllerProductManufacturer extends Controller {
 					'tax'         => $tax,
 					'rating'      => $result['rating'],
 					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-					'href'        => $this->url->link('product/product', $url . '&product_id=' . $result['product_id'])
+					'href'        => $this->url->link('product/product', $url . '&manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'])
 				);
 			}
 					

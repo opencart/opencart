@@ -29,6 +29,8 @@ class ControllerProductManufacturer extends Controller {
 			'href'      => $this->url->link('product/manufacturer'),
 			'separator' => $this->language->get('text_separator')
 		);
+		
+		$this->data['categories'] = array();
 									
 		$results = $this->model_catalog_manufacturer->getManufacturers();
 	

@@ -43,6 +43,7 @@ class ControllerCheckoutCart extends Controller {
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['payment_methods']);
 				unset($this->session->data['payment_method']);	
+				unset($this->session->data['reward']);	
 				
 				$this->redirect($this->url->link('checkout/cart'));
 			}

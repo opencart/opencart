@@ -1,3 +1,26 @@
+#column-left {
+	float: left;
+	width: 180px;
+}
+#column-right {
+	float: right;
+	width: 180px;
+}
+#content {
+	margin-right: 195px;
+	margin-left: 195px;
+}
+
+#column-left + #column-right + #content, #column-left + #content {
+	margin-left: 195px;
+}
+#column-right + #content {
+	margin-right: 195px;
+}
+
+
+
+
 #header #search {
 	right: -3px;
 }
@@ -14,4 +37,9 @@
 	padding-right: 0px;
 	position: relative;
 	left: 4px;
+}
+
+#header #cart {
+	right: -40px;
+	width: 400px;
 }

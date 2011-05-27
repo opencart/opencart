@@ -544,8 +544,16 @@ class ControllerSaleOrder extends Controller {
 			$this->data['credit_total'] = $this->model_sale_customer->getTotalCustomerTransactionsByOrderId($this->request->get['order_id']); 
 						
 			$this->data['reward_total'] = $this->model_sale_customer->getTotalCustomerRewardsByOrderId($this->request->get['order_id']);
-						
-			$this->data['affiliate'] = $order_info['affiliate'];
+
+			$this->data['affiliate_firstname'] = $order_info['affiliate_firstname'];
+			$this->data['affiliate_lastname'] = $order_info['affiliate_lastname'];
+			
+			if ($order_info['affiliate_id']) {
+				$this->data['affiliate'] = $this->url->link('sale/affliate', 'affiliate_id=' . $order_info['affiliate_id'], 'SSL');
+			} else {
+				$this->data['affiliate'] = '';
+			}
+			
 			$this->data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
 						
 			$this->load->model('sale/affiliate');

@@ -106,7 +106,7 @@
           <?php if ($affiliate) { ?>
           <tr>
             <td><?php echo $text_affiliate; ?></td>
-            <td><a href="<?php echo $affiliate; ?>"><?php echo $affiliate; ?></a></td>
+            <td><a href="<?php echo $affiliate; ?>"><?php echo $affiliate_firstname; ?> <?php echo $affiliate_lastname; ?></a></td>
           </tr>
           <tr>
             <td><?php echo $text_commission; ?></td>

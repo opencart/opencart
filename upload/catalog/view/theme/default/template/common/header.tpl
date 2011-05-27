@@ -34,9 +34,10 @@
 <!--[if lt IE 7]>
 <link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/ie6.css" />
 <script type="text/javascript" src="catalog/view/javascript/DD_belatedPNG_0.0.8a-min.js"></script>
-<script>
-DD_belatedPNG.fix('img, #header .div3 a, #content .left, #content .right, .box .top');
+<script type="text/javascript">
+DD_belatedPNG.fix('img');
 </script>
+<script type="text/javascript" src="catalog/view/javascript/ie6.js"></script>
 <![endif]-->
 </head>
 <body>

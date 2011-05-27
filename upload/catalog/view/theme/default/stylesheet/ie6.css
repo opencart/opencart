@@ -1,3 +1,4 @@
+/* layout */
 #column-left {
 	float: left;
 	width: 180px;
@@ -20,7 +21,7 @@
 
 
 
-
+/* header */
 #header #search {
 	right: -3px;
 }
@@ -42,4 +43,69 @@
 #header #cart {
 	right: -40px;
 	width: 400px;
+}
+
+
+
+/* menu */
+#menu {
+
+}
+#menu ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+#menu ul li {
+	position: relative;
+	float: left;
+}
+#menu ul li:hover {
+	background: #000;
+}
+#menu ul li a {
+	font-size: 13px;
+	color: #FFF;
+	line-height: 14px;
+	text-decoration: none;
+	display: block;
+	padding: 12px 15px 11px 15px;
+	z-index: 6;
+	position: relative;
+}
+#menu ul li div {
+	display: none;
+	background: #FFFFFF;
+	position: absolute;
+	z-index: 5;
+	padding: 5px;
+	border: 1px solid #000000;
+	-webkit-border-radius: 0px 0px 5px 5px;
+	-moz-border-radius: 0px 0px 5px 5px;
+	-khtml-border-radius: 0px 0px 5px 5px;
+	border-radius: 0px 0px 5px 5px;
+	background: url('../image/menu.png');
+}
+#menu ul li:hover > div {
+	display: table;
+}
+#menu ul li div ul {
+	display: table-cell;
+}
+#menu > ul > li ul + ul {
+	padding-left: 20px;
+}
+#menu ul li ul li a {
+	text-decoration: none;
+	padding: 4px;
+	color: #FFFFFF;
+	display: block;
+	white-space: nowrap;
+	min-width: 120px;
+}
+#menu ul li ul li a:hover {
+	background: #000000;
+}
+#menu > ul > li > div > ul > li > a {
+	color: #FFFFFF;
 }

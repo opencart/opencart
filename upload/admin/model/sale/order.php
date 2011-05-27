@@ -32,7 +32,7 @@ class ModelSaleOrder extends Model {
 	}
 
 	public function getOrder($order_id) {
-		$order_query = $this->db->query("SELECT *, (SELECT CONCAT(c.firstname, ' ', c.lastname) FROM " . DB_PREFIX . "customer c WHERE c.customer_id = o.customer_id) AS customer, (SELECT CONCAT(a.firstname, ' ', a.lastname) FROM " . DB_PREFIX . "affiliate a WHERE a.affiliate_id = o.affiliate_id) AS affiliate FROM `" . DB_PREFIX . "order` o WHERE o.order_id = '" . (int)$order_id . "'");
+		$order_query = $this->db->query("SELECT *, (SELECT CONCAT(c.firstname, ' ', c.lastname) FROM " . DB_PREFIX . "customer c WHERE c.customer_id = o.customer_id) AS customer FROM `" . DB_PREFIX . "order` o WHERE o.order_id = '" . (int)$order_id . "'");
 
 		if ($order_query->num_rows) {
 			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$order_query->row['shipping_country_id'] . "'");
@@ -69,6 +69,24 @@ class ModelSaleOrder extends Model {
 				$payment_zone_code = $zone_query->row['code'];
 			} else {
 				$payment_zone_code = '';
+			}
+
+			if ($order_query->row['affiliate_id']) {
+				$affiliate_id = $order_query->row['affiliate_id'];
+			} else {
+				$affiliate_id = 0;
+			}				
+				
+			$this->load->model('sale/affiliate');
+				
+			$affiliate_info = $this->model_sale_affiliate->getAffiliate($affiliate_id);
+				
+			if ($affiliate_info) {
+				$affiliate_firstname = $affiliate_info['firstname'];
+				$affiliate_lastname = $affiliate_info['lastname'];
+			} else {
+				$affiliate_firstname = '';
+				$affiliate_lastname = '';				
 			}
 
 			return array(
@@ -123,7 +141,8 @@ class ModelSaleOrder extends Model {
 				'reward'                  => $order_query->row['reward'],
 				'order_status_id'         => $order_query->row['order_status_id'],
 				'affiliate_id'            => $order_query->row['affiliate_id'],
-				'affiliate'               => $order_query->row['affiliate'],
+				'affiliate_firstname'     => $affiliate_firstname,
+				'affiliate_lastname'      => $affiliate_lastname,
 				'commission'              => $order_query->row['commission'],
 				'language_id'             => $order_query->row['language_id'],
 				'currency_id'             => $order_query->row['currency_id'],

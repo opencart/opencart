@@ -81,7 +81,7 @@ class ControllerAccountReward extends Controller {
 			
 		$this->data['pagination'] = $pagination->render();
 		
-		$this->data['total'] = $this->customer->getRewardPoints();
+		$this->data['total'] = (int)$this->customer->getRewardPoints();
 		
 		$this->data['continue'] = $this->url->link('account/account', '', 'SSL');
 		

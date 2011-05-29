@@ -397,33 +397,26 @@ label {
 	color: #CCCCCC;
 	margin-bottom: 10px;
 }
-.success {
+.success, .warning, .attention, .information {
 	padding: 10px 10px 10px 33px;
 	margin-bottom: 15px;
+	color: #555555;
+}
+.success {
 	background: #EAF7D9 url('../image/success.png') 10px center no-repeat;
 	border: 1px solid #BBDF8D;
-	color: #555555;
 }
 .warning {
-	padding: 10px 10px 10px 33px;
-	margin-bottom: 15px;
 	background: #FFD1D1 url('../image/warning.png') 10px center no-repeat;
 	border: 1px solid #F8ACAC;
-	color: #555555;
 }
 .attention {
-	padding: 10px 10px 10px 33px;
-	margin-bottom: 15px;
 	background: #FFF5CC url('../image/attention.png') 10px center no-repeat;
 	border: 1px solid #F2DD8C;
-	color: #555555;
 }
 .information {
-	padding: 10px 10px 10px 33px;
-	margin-bottom: 15px;
 	background: #E8F6FF url('../image/information.png') 10px center no-repeat;
 	border: 1px solid #B8E2FB;
-	color: #555555;
 }
 .success .close, .warning .close, .attention .close, .information .close {
 	float: right;
@@ -682,7 +675,7 @@ a.button:hover span {
 	display: block;
 	margin-bottom: 4px;
 }
-/* category */
+/* box category */
 .box-category {
 	margin-top: -5px;
 }
@@ -696,9 +689,6 @@ a.button:hover span {
 }
 .box-category > ul > li + li {
 	border-top: 1px solid #EEEEEE;
-}
-.box-category > ul > li > img {
-	cursor: pointer;
 }
 .box-category > ul > li > a {
 	text-decoration: none;

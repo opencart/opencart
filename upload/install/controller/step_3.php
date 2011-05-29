@@ -32,11 +32,11 @@ class ControllerStep3 extends Controller {
 		
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
-			$output .= 'define(\'DB_HOSTNAME\', \'' . $this->db->escape($this->request->post['db_host']) . '\');' . "\n";
-			$output .= 'define(\'DB_USERNAME\', \'' . $this->db->escape($this->request->post['db_user']) . '\');' . "\n";
-			$output .= 'define(\'DB_PASSWORD\', \'' . $this->db->escape($this->request->post['db_password']) . '\');' . "\n";
-			$output .= 'define(\'DB_DATABASE\', \'' . $this->db->escape($this->request->post['db_name']) . '\');' . "\n";
-			$output .= 'define(\'DB_PREFIX\', \'' . $this->db->escape($this->request->post['db_prefix']) . '\');' . "\n";
+			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_host']) . '\');' . "\n";
+			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_user']) . '\');' . "\n";
+			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($this->request->post['db_password']) . '\');' . "\n";
+			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_name']) . '\');' . "\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n";
 			$output .= '?>';				
 		
 			$file = fopen(DIR_OPENCART . 'config.php', 'w');
@@ -71,11 +71,11 @@ class ControllerStep3 extends Controller {
 
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
-			$output .= 'define(\'DB_HOSTNAME\', \'' . $this->db->escape($this->request->post['db_host']) . '\');' . "\n";
-			$output .= 'define(\'DB_USERNAME\', \'' . $this->db->escape($this->request->post['db_user']) . '\');' . "\n";
-			$output .= 'define(\'DB_PASSWORD\', \'' . $this->db->escape($this->request->post['db_password']) . '\');' . "\n";
-			$output .= 'define(\'DB_DATABASE\', \'' . $this->db->escape($this->request->post['db_name']) . '\');' . "\n";
-			$output .= 'define(\'DB_PREFIX\', \'' . $this->db->escape($this->request->post['db_prefix']) . '\');' . "\n";
+			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_host']) . '\');' . "\n";
+			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_user']) . '\');' . "\n";
+			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($this->request->post['db_password']) . '\');' . "\n";
+			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_name']) . '\');' . "\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n";
 			$output .= '?>';	
 
 			$file = fopen(DIR_OPENCART . 'admin/config.php', 'w');

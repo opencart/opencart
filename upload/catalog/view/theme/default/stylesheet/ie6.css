@@ -48,14 +48,6 @@
 
 
 /* menu */
-#menu {
-
-}
-#menu ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
 #menu ul li {
 	position: relative;
 	float: left;
@@ -90,7 +82,7 @@
 	display: block;
 }
 #menu ul li div ul {
-	display: table-cell;
+	float: left;
 }
 #menu > ul > li ul ul {
 	padding-left: 20px;
@@ -110,46 +102,59 @@
 	color: #FFFFFF;
 }
 
+.success, .warning, .attention, .information {
+	padding: 10px 10px 10px 33px;
+	margin-bottom: 15px;
+	color: #555555;
+}
 
-
-/* category */
+/* box category */
 .box-category {
 	margin-top: -5px;
-}
-.box-category ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
+	zoom: 1;
 }
 .box-category ul li {
 	padding: 8px 8px 8px 0px;
-}
-.box-category > ul > li + li {
 	border-top: 1px solid #EEEEEE;
 }
-.box-category > ul > li > img {
-	cursor: pointer;
-}
-.box-category > ul > li > a {
+.box-category ul li a, .box-category ul li a:visited {
 	text-decoration: none;
 	color: #333;
 }
-.box-category > ul > li ul {
+.box-category ul li ul {
 	display: none;
 }
-.box-category > ul > li a.active {
+.box-category ul li a.active {
 	font-weight: bold;
 }
-.box-category > ul > li a.active + ul {
-	display: block;
+.box-category ul li ul li {
+	padding: 0px 5px 0px 5px;
+	border-top: 0;	
 }
-.box-category > ul > li ul > li {
-	padding: 5px 5px 0px 10px;
-}
-.box-category > ul > li ul > li > a {
+.box-category ul li ul li a, .box-category ul li ul li a:visited {
+	color: #38B0E3;	
 	text-decoration: none;
 	display: block;
 }
-.box-category > ul > li ul > li > a.active {
+.box-category ul li ul li a.active {
 	font-weight: bold;
+}
+.category-info {
+	zoom: 1;
+}
+.category-list {
+	zoom: 1;
+}
+.category-list ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	width: 25%;
+}
+.product-filter {
+	zoom: 1;	
+}
+/* footer */ 
+#footer {
+	zoom: 1;
 }

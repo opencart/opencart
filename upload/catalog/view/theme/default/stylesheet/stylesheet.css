@@ -304,9 +304,8 @@ label {
 #header .links {
 	position: absolute;
 	right: 0px;
-	bottom: 6px;
+	bottom: 3px;
 	font-size: 10px;
-	line-height: 10px;
 	padding-right: 10px;
 }
 #header .links a {

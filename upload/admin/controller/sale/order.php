@@ -549,7 +549,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['affiliate_lastname'] = $order_info['affiliate_lastname'];
 			
 			if ($order_info['affiliate_id']) {
-				$this->data['affiliate'] = $this->url->link('sale/affliate', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $order_info['affiliate_id'], 'SSL');
+				$this->data['affiliate'] = $this->url->link('sale/affliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $order_info['affiliate_id'], 'SSL');
 			} else {
 				$this->data['affiliate'] = '';
 			}

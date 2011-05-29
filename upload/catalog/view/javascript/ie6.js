@@ -1,10 +1,10 @@
 $(document).ready(function() {
-	$('#menu > ul > li > a').bind('mouseover', function() {
+	$('#menu > ul > li').bind('mouseover', function() {
 		$(this).addClass('active');
 	});
 	
 	
-	$('#menu > ul > li > a').bind('mouseout', function() {
+	$('#menu > ul > li').bind('mouseout', function() {
 		$(this).removeClass('active');
 	});
 });	

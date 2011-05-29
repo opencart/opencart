@@ -60,7 +60,7 @@
 	position: relative;
 	float: left;
 }
-#menu ul li:hover {
+#menu ul li.active {
 	background: #000;
 }
 #menu ul li a {
@@ -86,13 +86,13 @@
 	border-radius: 0px 0px 5px 5px;
 	background: url('../image/menu.png');
 }
-#menu ul li:hover > div {
-	display: table;
+#menu ul li.active div {
+	display: block;
 }
 #menu ul li div ul {
 	display: table-cell;
 }
-#menu > ul > li ul + ul {
+#menu > ul > li ul ul {
 	padding-left: 20px;
 }
 #menu ul li ul li a {
@@ -108,4 +108,48 @@
 }
 #menu > ul > li > div > ul > li > a {
 	color: #FFFFFF;
+}
+
+
+
+/* category */
+.box-category {
+	margin-top: -5px;
+}
+.box-category ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.box-category ul li {
+	padding: 8px 8px 8px 0px;
+}
+.box-category > ul > li + li {
+	border-top: 1px solid #EEEEEE;
+}
+.box-category > ul > li > img {
+	cursor: pointer;
+}
+.box-category > ul > li > a {
+	text-decoration: none;
+	color: #333;
+}
+.box-category > ul > li ul {
+	display: none;
+}
+.box-category > ul > li a.active {
+	font-weight: bold;
+}
+.box-category > ul > li a.active + ul {
+	display: block;
+}
+.box-category > ul > li ul > li {
+	padding: 5px 5px 0px 10px;
+}
+.box-category > ul > li ul > li > a {
+	text-decoration: none;
+	display: block;
+}
+.box-category > ul > li ul > li > a.active {
+	font-weight: bold;
 }

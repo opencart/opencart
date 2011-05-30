@@ -36,7 +36,7 @@
 <script type="text/javascript" src="catalog/view/javascript/ie6.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/DD_belatedPNG_0.0.8a-min.js"></script>
 <script type="text/javascript">
-DD_belatedPNG.fix('');
+DD_belatedPNG.fix('#logo img');
 </script>
 <![endif]-->
 <?php echo $google_analytics; ?>

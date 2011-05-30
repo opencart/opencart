@@ -63,7 +63,6 @@
 	padding: 5px;
 	border: 1px solid #000000;
 	background: url('../image/menu.png');
- filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0.5);
 	white-space: nowrap;
 }
 #menu ul li.active div {

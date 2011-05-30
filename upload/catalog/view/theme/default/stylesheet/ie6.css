@@ -24,14 +24,14 @@
 #header #cart {
 	right: -40px;
 	width: 400px;
-	z-index: 100;
+	z-index: 11;
 }
 #header #cart.active .heading {
-	z-index: 10;
+	z-index: 11;
 }
 #header #cart.active .content {
 	height: 150px;
-	z-index: 101;
+	z-index: 12;
 }
 /* menu */
 #menu ul li {
@@ -60,6 +60,7 @@
 	padding: 5px;
 	border: 1px solid #000000;
 	background: url('../image/menu.png');
+	white-space: nowrap;
 }
 #menu ul li.active div {
 	display: block;
@@ -70,10 +71,8 @@
 #menu ul li div ul li {
 	float: none;
 }
-#menu ul li ul ul {
-	padding-left: 20px;
-}
 #menu ul li ul li a {
+	font-size: 12px;
 	text-decoration: none;
 	padding: 4px;
 	color: #FFFFFF;
@@ -84,7 +83,7 @@
 #menu ul li ul li a:hover {
 	background: #000000;
 }
-#menu > ul > li > div > ul > li > a {
+#menu ul li div ul li a {
 	color: #FFFFFF;
 }
 .success, .warning, .attention, .information {
@@ -120,10 +119,8 @@
 	padding: 0;		
 }
 .box-category ul li ul li {
-
-	padding: 5px 0px 0px 0px;
-	position: relative;
-	top: -5px;
+	zoom: 1;
+	padding: 5px 5px 0px 10px;
 	border-top: 0;
 }
 .box-category ul li ul li a, .box-category ul li ul li a:visited {
@@ -213,6 +210,41 @@
 .product-info .right {
 	zoom: 1;	
 	margin-left: 265px;
+}
+.product-info .price {
+	zoom: 1;		
+}
+.product-info .cart {
+	zoom: 1;		
+}
+.product-info .review {
+	zoom: 1;
+}
+.product-info .review div {
+	zoom: 1;
+	padding: 8px;
+	border-bottom: 1px solid #E7E7E7;
+	line-height: 20px;	
+}
+.product-info .review div div {
+	zoom: 0;
+	border-bottom: 0;
+	line-height: normal;				
+}
+.product-info .review .share {
+	zoom: 1;
+}
+
+.htabs {
+	zoom: 1;
+	margin-bottom: -1px;
+}
+.htabs a:visited {
+	text-decoration: none;	
+	color: #000000;	
+}
+.tab-content {
+	zoom: 1;	
 }
 /* footer */ 
 #footer {

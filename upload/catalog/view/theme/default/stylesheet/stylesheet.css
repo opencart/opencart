@@ -639,7 +639,6 @@ a.button:hover span {
 .box-product {
 	width: 100%;
 	overflow: auto;
-	zoom: 1;
 }
 .box-product > div {
 	width: 116px;

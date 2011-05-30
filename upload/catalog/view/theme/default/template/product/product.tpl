@@ -427,21 +427,16 @@ $('#button-review').bind('click', function() {
 		}
 	});
 });
-*/
 //--></script> 
 <script type="text/javascript"><!--
 $('#tabs a').tabs();
 //--></script> 
-<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
 <script type="text/javascript"><!--
-/*
 $('.date').datepicker({dateFormat: 'yy-mm-dd'});
-
 $('.datetime').datetimepicker({
 	dateFormat: 'yy-mm-dd',
 	timeFormat: 'h:m'
 });
 $('.time').timepicker({timeFormat: 'h:m'});
-*/
 //--></script> 
 <?php echo $footer; ?>

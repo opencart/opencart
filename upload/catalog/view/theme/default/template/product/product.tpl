@@ -431,7 +431,11 @@ $('#button-review').bind('click', function() {
 <script type="text/javascript"><!--
 $('#tabs a').tabs();
 //--></script> 
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
 <script type="text/javascript"><!--
+<!--[if lt IE 7]>
+$('.date, .datetime, .time').bgIframe();
+<![endif]-->
 $('.date').datepicker({dateFormat: 'yy-mm-dd'});
 $('.datetime').datetimepicker({
 	dateFormat: 'yy-mm-dd',

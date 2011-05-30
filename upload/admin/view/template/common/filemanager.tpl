@@ -4,7 +4,7 @@
 <head>
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
-<script type="text/javascript" src="view/javascript/jquery/jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.6.1.min.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.9.custom.min.js"></script>
 <link rel="stylesheet" type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.9.custom.css" />
 <script type="text/javascript" src="view/javascript/jquery/ui/external/jquery.bgiframe-2.1.2.js"></script>

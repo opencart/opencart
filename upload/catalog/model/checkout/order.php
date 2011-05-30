@@ -527,19 +527,15 @@ class ModelCheckoutOrder extends Model {
 				$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_info['language_id'] . "'");
 				
 				if ($order_status_query->num_rows) {
-					$order_status = $order_status_query->row['name'];	
-				} else {
-					$order_status = '';
-				}
-				
-				if ($order_status_query->num_rows) {
 					$message .= $language->get('text_update_order_status') . "\n\n";
-					$message .= $order_status . "\n\n";
+					$message .= $order_status_query->row['name'] . "\n\n";					
 				}
 				
-				$message .= $language->get('text_update_link') . "\n";
-				$message .= $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id . "\n\n";
-					
+				if ($order_info['customer_id']) {
+					$message .= $language->get('text_update_link') . "\n";
+					$message .= $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id . "\n\n";
+				}
+				
 				if ($comment) { 
 					$message .= $language->get('text_update_comment') . "\n\n";
 					$message .= $comment . "\n\n";

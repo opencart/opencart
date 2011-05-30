@@ -89,6 +89,20 @@ class ModelSaleOrder extends Model {
 				$affiliate_lastname = '';				
 			}
 
+			$this->load->model('localisation/language');
+			
+			$language_info = $this->model_localisation_language->getLanguage($order_query->row['language_id']);
+			
+			if ($language_info) {
+				$language_code = $language_info['code'];
+				$language_filename = $language_info['filename'];
+				$language_directory = $language_info['directory'];
+			} else {
+				$language_code = '';
+				$language_filename = '';
+				$language_directory = '';
+			}
+			
 			return array(
 				'order_id'                => $order_query->row['order_id'],
 				'invoice_no'              => $order_query->row['invoice_no'],
@@ -145,6 +159,9 @@ class ModelSaleOrder extends Model {
 				'affiliate_lastname'      => $affiliate_lastname,
 				'commission'              => $order_query->row['commission'],
 				'language_id'             => $order_query->row['language_id'],
+				'language_code'           => $language_code,
+				'language_filename'       => $language_filename,
+				'language_directory'      => $language_directory,				
 				'currency_id'             => $order_query->row['currency_id'],
 				'currency_code'           => $order_query->row['currency_code'],
 				'currency_value'          => $order_query->row['currency_value'],
@@ -317,10 +334,10 @@ class ModelSaleOrder extends Model {
 	}
 
 	public function addOrderHistory($order_id, $data) {
-        $order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "'");
+        $order_info = $this->getOrder($order_id);
 		
 		// Add invoice no. if not set.
-		if (!$order_query->row['invoice_no'] && $data['order_status_id']) {
+		if (!$order_info['invoice_no'] && $data['order_status_id']) {
 			$query = $this->db->query("SELECT MAX(invoice_no) AS invoice_no FROM `" . DB_PREFIX . "order` WHERE invoice_prefix = '" . $this->db->escape($this->config->get('config_invoice_prefix')) . "'");
 	
 			if ($query->row['invoice_no']) {
@@ -337,44 +354,48 @@ class ModelSaleOrder extends Model {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$data['order_status_id'] . "', notify = '" . (isset($data['notify']) ? (int)$data['notify'] : 0) . "', comment = '" . $this->db->escape(strip_tags($data['comment'])) . "', date_added = NOW()");
 
       	if ($data['notify']) {
-        	$order_query = $this->db->query("SELECT *, os.name AS status FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id AND os.language_id = o.language_id) LEFT JOIN " . DB_PREFIX . "language l ON (o.language_id = l.language_id) WHERE o.order_id = '" . (int)$order_id . "'");
+			$language = new Language($order_info['language_directory']);
+			$language->load($order_info['language_filename']);
+			$language->load('mail/order');
 
-			if ($order_query->num_rows) {
-				$language = new Language($order_query->row['directory']);
-				$language->load($order_query->row['filename']);
-				$language->load('sale/order');
+			$subject = sprintf($language->get('text_subject'), $order_info['store_name'], $order_id);
 
-				$subject = sprintf($language->get('text_subject'), $order_query->row['store_name'], $order_id);
-
-				$message  = $language->get('text_order') . ' ' . $order_id . "\n";
-				$message .= $language->get('text_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_query->row['date_added'])) . "\n\n";
+			$message  = $language->get('text_order') . ' ' . $order_id . "\n";
+			$message .= $language->get('text_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n\n";
+			
+			$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$data['order_status_id'] . "' AND language_id = '" . (int)$order_info['language_id'] . "'");
+				
+			if ($order_status_query->num_rows) {
 				$message .= $language->get('text_order_status') . "\n";
-				$message .= $order_query->row['status'] . "\n\n";
-				$message .= $language->get('text_link') . "\n";
-				$message .= html_entity_decode($order_query->row['store_url'] . 'index.php?route=account/invoice&order_id=' . $order_id, ENT_QUOTES, 'UTF-8') . "\n\n";
-
-				if ($data['comment']) {
-					$message .= $language->get('text_comment') . "\n\n";
-					$message .= strip_tags(html_entity_decode($data['comment'], ENT_QUOTES, 'UTF-8')) . "\n\n";
-				}
-
-				$message .= $language->get('text_footer');
-
-				$mail = new Mail();
-				$mail->protocol = $this->config->get('config_mail_protocol');
-				$mail->parameter = $this->config->get('config_mail_parameter');
-				$mail->hostname = $this->config->get('config_smtp_host');
-				$mail->username = $this->config->get('config_smtp_username');
-				$mail->password = $this->config->get('config_smtp_password');
-				$mail->port = $this->config->get('config_smtp_port');
-				$mail->timeout = $this->config->get('config_smtp_timeout');
-				$mail->setTo($order_query->row['email']);
-				$mail->setFrom($this->config->get('config_email'));
-	    		$mail->setSender($order_query->row['store_name']);
-	    		$mail->setSubject($subject);
-	    		$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
-	    		$mail->send();
+				$message .= $order_status_query->row['name'] . "\n\n";
 			}
+			
+			if ($order_info['customer_id']) {
+				$message .= $language->get('text_link') . "\n";
+				$message .= html_entity_decode($order_info['store_url'] . 'index.php?route=account/invoice&order_id=' . $order_id, ENT_QUOTES, 'UTF-8') . "\n\n";
+			}
+			
+			if ($data['comment']) {
+				$message .= $language->get('text_comment') . "\n\n";
+				$message .= strip_tags(html_entity_decode($data['comment'], ENT_QUOTES, 'UTF-8')) . "\n\n";
+			}
+
+			$message .= $language->get('text_footer');
+
+			$mail = new Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->hostname = $this->config->get('config_smtp_host');
+			$mail->username = $this->config->get('config_smtp_username');
+			$mail->password = $this->config->get('config_smtp_password');
+			$mail->port = $this->config->get('config_smtp_port');
+			$mail->timeout = $this->config->get('config_smtp_timeout');
+			$mail->setTo($order_info['email']);
+			$mail->setFrom($this->config->get('config_email'));
+			$mail->setSender($order_info['store_name']);
+			$mail->setSubject($subject);
+			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+			$mail->send();
 		}
 	}
 		

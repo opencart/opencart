@@ -25,9 +25,10 @@
 	right: -40px;
 	width: 400px;
 	z-index: 11;
+	zoom: 1;
 }
 #header #cart.active .heading {
-	z-index: 11;
+	z-index: 13;
 }
 #header #cart.active .content {
 	height: 150px;

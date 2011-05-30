@@ -39,6 +39,7 @@
 DD_belatedPNG.fix('');
 </script>
 <![endif]-->
+<?php echo $google_analytics; ?>
 </head>
 <body>
 <div id="container">

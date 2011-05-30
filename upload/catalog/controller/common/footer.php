@@ -44,8 +44,6 @@ class ControllerCommonFooter extends Controller {
 
 		$this->data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
 		
-		$this->data['google_analytics'] = html_entity_decode($this->config->get('config_google_analytics'), ENT_QUOTES, 'UTF-8');
-		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/footer.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/common/footer.tpl';
 		} else {

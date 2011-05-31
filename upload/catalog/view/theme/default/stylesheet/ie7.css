@@ -1,6 +1,3 @@
-#header {
-	z-index: 99;	
-}
 /* God I hate Microsoft! */
 #header #cart {
 	float: right;
@@ -10,8 +7,14 @@
 #header #cart .heading {
 	position: relative;
 	left: 0;
+	z-index: 99;
 }
 #header #cart .content {
+	float: right;
+	width: 305px;
+	position: absolute;
+	right: 0px;
+	top: 58px;
 }
 #header .button-search {
 	top: 1px;
@@ -23,7 +26,6 @@
 /* menu */
 #menu ul li {
 	position: relative;
-	z-index: 5;
 }
 #menu ul li div {
 	z-index: 5;
@@ -32,17 +34,32 @@
 	display: block;
 }
 #menu ul li div table {
-	border-collapse: collpase;	
+	border-collapse: collapse;
 }
-#menu > ul li div table a {
+#menu ul li div td {
+	padding: 0;
+}
+#menu ul li div table a {
 	font-size: 12px;
 	text-decoration: none;
 	padding: 4px;
 	color: #FFFFFF;
 	display: block;
 	width: 120px;
-	white-space: normal;	
+	white-space: normal;
 }
-#menu ul li div a:hover {
+#menu ul li div table a:hover {
 	background: #000000;
+}
+.success, .warning, .attention, .information {
+	position: relative;
+}
+.success .close, .warning .close, .attention .close, .information .close {
+	position: absolute;
+	right: 10px;	
+}
+/* button */
+.prduct-info a.button span {
+	line-height: 12px;
+	display: block;
 }

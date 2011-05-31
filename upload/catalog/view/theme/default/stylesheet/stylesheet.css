@@ -94,6 +94,7 @@ label {
 	padding-bottom: 4px;
 	position: relative;
 	background:  url('../image/header.png') bottom repeat-x;
+	z-index: 99;
 }
 #header #logo {
 	position: absolute;
@@ -334,6 +335,7 @@ label {
 #menu > ul > li {
 	position: relative;
 	float: left;
+	z-index: 20;	
 }
 #menu > ul > li:hover {
 	background: #000;

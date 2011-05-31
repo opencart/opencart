@@ -4,7 +4,7 @@
 }
 /* header */
 #header {
-	z-index: 99;	
+	z-index: 99;
 }
 #header .button-search {
 	z-index: 16;
@@ -60,27 +60,11 @@
 #menu ul li.active div {
 	display: block;
 }
-#menu ul li div ul {
-	float: left;
-}
-#menu ul li div ul li {
-	float: none;
-}
-#menu ul li ul li a {
-	font-size: 12px;
-	text-decoration: none;
-	padding: 4px;
-	color: #FFFFFF;
-	display: block;
-}
-#menu ul li ul li a:hover {
-	background: #000000;
-}
-#menu ul li div ul li a {
-	color: #FFFFFF;
-}
 #menu ul li div table {
-	border-collapse: collpase;	
+	border-collapse: collpase;
+}
+#menu ul li div td {
+	padding: 0;
 }
 #menu ul li div table a {
 	font-size: 12px;
@@ -89,12 +73,17 @@
 	color: #FFFFFF;
 	display: block;
 	width: 120px;
-	white-space: normal;	
+	white-space: normal;
+}
+#menu ul li div table a:hover {
+	background: #000000;
 }
 .success, .warning, .attention, .information {
-	padding: 10px 10px 10px 33px;
-	margin-bottom: 15px;
-	color: #555555;
+	position: relative;
+}
+.success .close, .warning .close, .attention .close, .information .close {
+	position: absolute;
+	right: 10px;	
 }
 .buttons {
 	zoom: 1;

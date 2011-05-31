@@ -57,11 +57,15 @@ $(document).ready(function() {
 			for (i = 0; i < category.length;) {
 				html += '<tr>';
 				
-				j = i + Math.ceil(category.length / columns);
+				if (columns > 1) {
+					j = i + Math.ceil(category.length / columns);
+				} else {
+					j = i + 1;
+				}
 				
 				for (; i < j; i++) {
 					if (category[i]) {
-						html += '<td><a href="' + $(category[i]).attr('href') + '">' + $(category[i]).text() + '</a></li>';
+						html += '<td><a href="' + $(category[i]).attr('href') + '">' + $(category[i]).text() + '</a></td>';
 					}
 				}
 				

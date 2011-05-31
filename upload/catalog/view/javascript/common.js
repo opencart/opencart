@@ -47,6 +47,32 @@ $(document).ready(function() {
 	
 	/* Mega Menu */
 	$('#menu ul > li > a + div').each(function(index, element) {
+		// IE6 & IE7 Fixes
+		if ($.browser.msie && ($.browser.version == 7 || $.browser.version == 6)) {
+			var category = $(element).find('a');
+			var columns = $(element).find('ul').length;
+			
+			html = '<table>';
+			
+			for (i = 0; i < category.length;) {
+				html += '<tr>';
+				
+				j = i + Math.ceil(category.length / columns);
+				
+				for (; i < j; i++) {
+					if (category[i]) {
+						html += '<td><a href="' + $(category[i]).attr('href') + '">' + $(category[i]).text() + '</a></li>';
+					}
+				}
+				
+				html += '</tr>';
+			}
+
+			html += '</table>';
+			
+			$(element).html(html);				
+		}		
+		
 		var menu = $('#menu').offset();
 		var dropdown = $(this).parent().offset();
 		
@@ -56,12 +82,10 @@ $(document).ready(function() {
 			$(this).css('margin-left', '-' + (i + 5) + 'px');
 		}
 	});
-	
+
 	// IE6 & IE7 Fixes
-	if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)){
-		var ieversion = new Number(RegExp.$1);
-	
-		if (ieversion <= 6) {
+	if ($.browser.msie) {
+		if ($.browser.version <= 6) {
 			$('#column-left + #column-right + #content, #column-left + #content').css('margin-left', '195px');
 			
 			$('#column-right + #content').css('margin-right', '195px');
@@ -69,7 +93,7 @@ $(document).ready(function() {
 			$('.box-category ul li a.active + ul').css('display', 'block');	
 		}
 		
-		if (ieversion <= 7) {
+		if ($.browser.version <= 7) {
 			$('#menu > ul > li').bind('mouseover', function() {
 				$(this).addClass('active');
 			});

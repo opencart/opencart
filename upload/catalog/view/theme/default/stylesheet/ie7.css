@@ -2,9 +2,16 @@
 	z-index: 99;	
 }
 /* God I hate Microsoft! */
+#header #cart {
+	float: right;
+	width: 321px;
+	min-width: 321px;
+}
+#header #cart .heading {
+	position: relative;
+	left: 0;
+}
 #header #cart .content {
-	float: left;
-	border: 1px solid #000;
 }
 #header .button-search {
 	top: 1px;
@@ -13,9 +20,29 @@
 	padding: 3px 1px 1px 33px;
 	height: 19px;
 }
+/* menu */
+#menu ul li {
+	position: relative;
+	z-index: 5;
+}
 #menu ul li div {
 	z-index: 5;
 }
 #menu ul li.active div {
 	display: block;
+}
+#menu ul li div table {
+	border-collapse: collpase;	
+}
+#menu > ul li div table a {
+	font-size: 12px;
+	text-decoration: none;
+	padding: 4px;
+	color: #FFFFFF;
+	display: block;
+	width: 120px;
+	white-space: normal;	
+}
+#menu ul li div a:hover {
+	background: #000000;
 }

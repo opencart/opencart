@@ -42,7 +42,6 @@
 #menu ul li a {
 	font-size: 13px;
 	color: #FFF;
-	line-height: 14px;
 	text-decoration: none;
 	display: block;
 	padding: 12px 15px 11px 15px;
@@ -57,7 +56,6 @@
 	padding: 5px;
 	border: 1px solid #000000;
 	background: url('../image/menu.png');
-	white-space: nowrap;
 }
 #menu ul li.active div {
 	display: block;
@@ -74,14 +72,24 @@
 	padding: 4px;
 	color: #FFFFFF;
 	display: block;
-	white-space: nowrap;
-	width: 120px;
 }
 #menu ul li ul li a:hover {
 	background: #000000;
 }
 #menu ul li div ul li a {
 	color: #FFFFFF;
+}
+#menu ul li div table {
+	border-collapse: collpase;	
+}
+#menu ul li div table a {
+	font-size: 12px;
+	text-decoration: none;
+	padding: 4px;
+	color: #FFFFFF;
+	display: block;
+	width: 120px;
+	white-space: normal;	
 }
 .success, .warning, .attention, .information {
 	padding: 10px 10px 10px 33px;

@@ -52,29 +52,8 @@ $(document).ready(function() {
 			var category = $(element).find('a');
 			var columns = $(element).find('ul').length;
 			
-			html = '<table>';
-			
-			for (i = 0; i < category.length;) {
-				html += '<tr>';
-				
-				if (columns > 1) {
-					j = i + Math.ceil(category.length / columns);
-				} else {
-					j = i + 1;
-				}
-				
-				for (; i < j; i++) {
-					if (category[i]) {
-						html += '<td><a href="' + $(category[i]).attr('href') + '">' + $(category[i]).text() + '</a></td>';
-					}
-				}
-				
-				html += '</tr>';
-			}
-
-			html += '</table>';
-			
-			$(element).html(html);				
+			$(element).css('width', (columns * 143) + 'px');
+			$(element).find('ul').css('float', 'left');
 		}		
 		
 		var menu = $('#menu').offset();

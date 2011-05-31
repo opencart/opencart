@@ -60,13 +60,10 @@
 #menu ul li.active div {
 	display: block;
 }
-#menu ul li div table {
-	border-collapse: collpase;
+#menu ul li div li {
+	float: none;
 }
-#menu ul li div td {
-	padding: 0;
-}
-#menu ul li div table a {
+#menu ul li div li a {
 	font-size: 12px;
 	text-decoration: none;
 	padding: 4px;
@@ -75,7 +72,7 @@
 	width: 120px;
 	white-space: normal;
 }
-#menu ul li div table a:hover {
+#menu ul li div li a:hover {
 	background: #000000;
 }
 .success, .warning, .attention, .information {
@@ -83,7 +80,7 @@
 }
 .success .close, .warning .close, .attention .close, .information .close {
 	position: absolute;
-	right: 10px;	
+	right: 10px;
 }
 .buttons {
 	zoom: 1;

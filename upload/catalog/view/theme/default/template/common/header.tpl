@@ -31,9 +31,11 @@
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/ie7.css" />
+<![endif]-->
 <!--[if lt IE 7]>
 <link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/ie6.css" />
-<script type="text/javascript" src="catalog/view/javascript/ie6.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/DD_belatedPNG_0.0.8a-min.js"></script>
 <script type="text/javascript">
 DD_belatedPNG.fix('#logo img');
@@ -47,7 +49,7 @@ DD_belatedPNG.fix('#logo img');
   <?php if ($logo) { ?>
   <div id="logo"><a href="<?php echo $home; ?>"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
   <?php } ?>
-  <?php if (count($languages) > 1) { ?> 
+  <?php if (count($languages) > 1) { ?>
   <div id="language"><?php echo $text_language; ?><br />
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
       <?php foreach ($languages as $language) { ?>
@@ -58,7 +60,7 @@ DD_belatedPNG.fix('#logo img');
     </form>
   </div>
   <?php } ?>
-  <?php if (count($currencies) > 1) { ?> 
+  <?php if (count($currencies) > 1) { ?>
   <div id="currency"><?php echo $text_currency; ?><br />
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
       <?php foreach ($currencies as $currency) { ?>
@@ -88,15 +90,12 @@ DD_belatedPNG.fix('#logo img');
     <div class="content"></div>
   </div>
   <div id="search">
-    <div class="left"></div>
-    <div class="right"></div>
-    <div class="center">
-      <?php if ($filter_name) { ?>
-      <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" />
-      <?php } else { ?>
-      <input type="text" name="filter_name" value="<?php echo $text_search; ?>" onclick="this.value = '';" onkeydown="this.style.color = '#000000';" />
-      <?php } ?>
-    </div>
+    <div class="button-search"></div>
+    <?php if ($filter_name) { ?>
+    <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" />
+    <?php } else { ?>
+    <input type="text" name="filter_name" value="<?php echo $text_search; ?>" onclick="this.value = '';" onkeydown="this.style.color = '#000000';" />
+    <?php } ?>
   </div>
   <div id="welcome">
     <?php if (!$logged) { ?>

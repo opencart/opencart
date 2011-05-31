@@ -45,7 +45,7 @@ class ControllerCommonSeoUrl extends Controller {
 			} elseif (isset($this->request->get['path'])) {
 				$this->request->get['route'] = 'product/category';
 			} elseif (isset($this->request->get['manufacturer_id'])) {
-				$this->request->get['route'] = 'product/manufacturer';
+				$this->request->get['route'] = 'product/manufacturer/product';
 			} elseif (isset($this->request->get['information_id'])) {
 				$this->request->get['route'] = 'information/information';
 			}

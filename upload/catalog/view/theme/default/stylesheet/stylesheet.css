@@ -136,7 +136,6 @@ label {
 	top: 0px;
 	right: 145px;
 	z-index: 9;
-	float: right;
 	min-width: 300px;
 }
 #header #cart .heading {
@@ -187,9 +186,7 @@ label {
 	box-shadow: 0px 2px 2px #DDDDDD;
 	background: #FFF;
 }
-#header #cart.active {
-	position: absolute;
-}
+
 #header #cart.active .heading {
 	margin-top: 5px;
 	padding-top: 10px;
@@ -263,34 +260,28 @@ label {
 	width: 298px;
 	z-index: 15;
 }
-#header #search input {
-	background: #FFF;
-	border: 0;
-	padding: 1px;
-	margin-top: 3px;
-	width: 95%;
-}
-#header #search .left {
-	float: left;
-	background: url('../image/search-left.png') no-repeat;
+#header .button-search {
+	position: absolute;
+	left: 0px;
+	background: url('../image/button-search.png') center center no-repeat;
 	width: 28px;
-	height: 27px;
+	height: 24px;
+	border-right: 1px solid #CCCCCC;
 	cursor: pointer;
 }
-#header #search .right {
-	float: right;
-	background: url('../image/search-right.png') no-repeat;
-	width: 3px;
-	height: 27px;
-}
-#header #search .center {
-	background: url('../image/search-center.png') repeat-x;
-	width: 263px;
-	height: 26px;
-	padding-top: 1px;
-	padding-left: 5px;
-	margin-left: 28px;
-	margin-right: 2px;
+#header #search input {
+	background: #FFF;
+	padding: 1px 1px 1px 33px;
+	width: 262px;
+	height: 21px;
+	border: 1px solid #CCCCCC;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-khtml-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px;
+	-webkit-box-shadow: 0px 2px 0px #F0F0F0;
+	-moz-box-shadow: 0px 2px 0px #F0F0F0;
+	box-shadow: 0px 2px 0px #F0F0F0;	
 }
 #header #welcome {
 	position: absolute;

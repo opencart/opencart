@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	/* Search */
-	$('#search .left').bind('click', function() {
+	$('.button-search').bind('click', function() {
 		url = 'index.php?route=product/search';
 		 
 		var filter_name = $('input[name=\'filter_name\']').attr('value')
@@ -56,6 +56,29 @@ $(document).ready(function() {
 			$(this).css('margin-left', '-' + (i + 5) + 'px');
 		}
 	});
+	
+	// IE6 & IE7 Fixes
+	if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)){
+		var ieversion = new Number(RegExp.$1);
+	
+		if (ieversion <= 6) {
+			$('#column-left + #column-right + #content, #column-left + #content').css('margin-left', '195px');
+			
+			$('#column-right + #content').css('margin-right', '195px');
+		
+			$('.box-category ul li a.active + ul').css('display', 'block');	
+		}
+		
+		if (ieversion <= 7) {
+			$('#menu > ul > li').bind('mouseover', function() {
+				$(this).addClass('active');
+			});
+				
+			$('#menu > ul > li').bind('mouseout', function() {
+				$(this).removeClass('active');
+			});	
+		}
+	}
 });
 
 $('.success img, .warning img, .attention img, .information img').live('click', function() {

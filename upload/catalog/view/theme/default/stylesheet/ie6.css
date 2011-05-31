@@ -6,20 +6,14 @@
 #header {
 	z-index: 99;	
 }
-#header #search {
-	right: -3px;
+#header .button-search {
+	z-index: 16;
+	top: 2px;
+	width: 30px;
 }
 #header #search input {
 	margin-top: 1px;
-}
-#header #search .left {
-	position: relative;
-	left: 7px;
-}
-#header #search .center {
 	width: 255px;
-	margin-left: 0px;
-	padding-right: 0px;
 	position: relative;
 	left: 4px;
 }

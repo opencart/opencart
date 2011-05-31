@@ -1,0 +1,21 @@
+#header {
+	z-index: 99;	
+}
+/* God I hate Microsoft! */
+#header #cart .content {
+	float: left;
+	border: 1px solid #000;
+}
+#header .button-search {
+	top: 1px;
+}
+#header #search input {
+	padding: 3px 1px 1px 33px;
+	height: 19px;
+}
+#menu ul li div {
+	z-index: 5;
+}
+#menu ul li.active div {
+	display: block;
+}

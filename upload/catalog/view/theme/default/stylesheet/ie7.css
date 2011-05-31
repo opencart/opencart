@@ -1,20 +1,16 @@
 /* God I hate Microsoft! */
 #header #cart {
-	float: right;
-	width: 321px;
-	min-width: 321px;
+	width: 310px;
 }
 #header #cart .heading {
-	position: relative;
-	left: 0;
-	z-index: 99;
+	
 }
 #header #cart .content {
+	width: 310px;
+}
+#header #search {
+	position: inherit;
 	float: right;
-	width: 305px;
-	position: absolute;
-	right: 0px;
-	top: 58px;
 }
 #header .button-search {
 	top: 1px;

@@ -2,7 +2,7 @@
 final class Json {
 	static public function encode($data) {
 		if (function_exists('json_encode')) {
-			return json_encode($data);
+			return json_encode($data) . "\n\n\n\n\n\n";
 		} else {
 			switch (gettype($data)) {
 				case 'boolean':
@@ -12,7 +12,9 @@ final class Json {
       				return $data;
     			case 'resource':
     			case 'string':
-      				return '"' . str_replace(array("\r", "\n", "<", ">", "&"), array('\r', '\n', '\x3c', '\x3e', '\x26'), addslashes($data)) . '"';
+      				return '"' . str_replace(array("\r", "\n", "/", "\""), array('\r', '\n', '\/', '\\"'), $data) . '"';
+					
+					//return '"' . preg_replace($pattern, $replace, $data) . '"';
 				case 'array':
 					if (empty($data) || array_keys($data) === range(0, sizeof($data) - 1)) {
 						$output = array();
@@ -21,16 +23,16 @@ final class Json {
 							$output[] = Json::encode($value);
 						}
 						
-						return '[ ' . implode(', ', $output) . ' ]';
+						return '[' . implode(',', $output) . ']';
 					}
     			case 'object':
       				$output = array();
       				
 					foreach ($data as $key => $value) {
-        				$output[] = Json::encode(strval($key)) . ': ' . Json::encode($value);
+        				$output[] = Json::encode(strval($key)) . ':' . Json::encode($value);
 					}
 					
-					return '{ ' . implode(', ', $output) . ' }';
+					return '{' . implode(',', $output) . '}';
 				default:
 					return 'null';
 			}

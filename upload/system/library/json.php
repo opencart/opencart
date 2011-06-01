@@ -13,8 +13,6 @@ final class Json {
     			case 'resource':
     			case 'string':
       				return '"' . str_replace(array("\r", "\n", "/", "\""), array('\r', '\n', '\/', '\\"'), $data) . '"';
-					
-					//return '"' . preg_replace($pattern, $replace, $data) . '"';
 				case 'array':
 					if (empty($data) || array_keys($data) === range(0, sizeof($data) - 1)) {
 						$output = array();

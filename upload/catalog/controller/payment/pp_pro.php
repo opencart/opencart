@@ -105,7 +105,7 @@ class ControllerPaymentPPPro extends Controller {
 		$request .= '&SIGNATURE=' . urlencode($this->config->get('pp_pro_signature'));
 		$request .= '&CUSTREF=' . (int)$order_info['order_id'];
 		$request .= '&PAYMENTACTION=' . $payment_type;
-		$request .= '&AMT=' . $this->currency->format($order_info['total'], $order_info['currency'], false, false);
+		$request .= '&AMT=' . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
 		$request .= '&CREDITCARDTYPE=' . $this->request->post['cc_type'];
 		$request .= '&ACCT=' . urlencode(str_replace(' ', '', $this->request->post['cc_number']));
 		$request .= '&CARDSTART=' . urlencode($this->request->post['cc_start_date_month'] . $this->request->post['cc_start_date_year']);

@@ -50,7 +50,10 @@
         <tbody id="module-row<?php echo $module_row; ?>">
           <tr>
             <td class="left"><input type="text" name="featured_<?php echo $module_row; ?>_image_width" value="<?php echo ${'featured_' . $module . '_image_width'}; ?>" size="3" />
-              <input type="text" name="featured_<?php echo $module_row; ?>_image_height" value="<?php echo ${'featured_' . $module . '_image_height'}; ?>" size="3" /></td>
+              <input type="text" name="featured_<?php echo $module_row; ?>_image_height" value="<?php echo ${'featured_' . $module . '_image_height'}; ?>" size="3" />
+              <?php if (isset(${'error_image_' . $module})) { ?>
+              <span class="error"><?php echo ${'error_image_' . $module}; ?></span>
+              <?php } ?></td>
             <td class="left"><select name="featured_<?php echo $module_row; ?>_layout_id">
                 <?php foreach ($layouts as $layout) { ?>
                 <?php if ($layout['layout_id'] == ${'featured_' . $module . '_layout_id'}) { ?>
@@ -146,7 +149,7 @@ $('#featured-product div img').live('click', function() {
 	$('#featured-product div:odd').attr('class', 'odd');
 	$('#featured-product div:even').attr('class', 'even');
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 var module_row = <?php echo $module_row; ?>;
 

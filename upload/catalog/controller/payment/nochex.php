@@ -22,8 +22,8 @@ class ControllerPaymentNochex extends Controller {
 		// Check for supported currency, otherwise convert to GBP.
         $supported_currencies = array('GBP');
         
-		if (in_array($order_info['currency'], $supported_currencies)) {
-            $currency = $order_info['currency'];
+		if (in_array($order_info['currency_code'], $supported_currencies)) {
+            $currency = $order_info['currency_code'];
         } else {
             $currency = 'GBP';
         }

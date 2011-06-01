@@ -25,5 +25,6 @@ $_['entry_sort_order']   = 'Sort Order:';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify module manufacturer!';
+$_['error_dimension']    = 'Dimension width &amp; height dimensions required!';
 $_['error_image']        = 'Image width &amp; height dimensions required!';
 ?>

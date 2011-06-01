@@ -9,7 +9,7 @@ class ControllerModuleBestSeller extends Controller {
 		
 		$this->load->model('setting/setting');
 				
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('bestseller', $this->request->post);		
 			
 			$this->cache->delete('product');
@@ -45,7 +45,19 @@ class ControllerModuleBestSeller extends Controller {
 		} else {
 			$this->data['error_warning'] = '';
 		}
-
+		
+		if (isset($this->request->post['banner_module'])) {
+			$modules = explode(',', $this->request->post['banner_module']);
+		} else {
+			$modules = array();
+		}	
+		
+		foreach ($modules as $module) {
+			if (isset($this->error['image_' . $module])) {
+				$this->data['error_image_' . $module] = $this->error['image_' . $module];
+			}
+		}
+		
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
@@ -148,6 +160,18 @@ class ControllerModuleBestSeller extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
+		if (isset($this->request->post['bestseller_module'])) {
+			$modules = explode(',', $this->request->post['bestseller_module']);
+		} else {
+			$modules = array();
+		}	
+		
+		foreach ($modules as $module) {
+			if (!$this->request->post['bestseller_' . $module . '_image_width'] || !$this->request->post['bestseller_' . $module . '_image_height']) {
+				$this->error['image_' . $module] = $this->language->get('error_image');
+			}	
+		}
+				
 		if (!$this->error) {
 			return true;
 		} else {

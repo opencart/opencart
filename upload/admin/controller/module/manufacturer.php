@@ -9,7 +9,7 @@ class ControllerModuleManufacturer extends Controller {
 		
 		$this->load->model('setting/setting');
 				
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('manufacturer', $this->request->post);		
 					
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -59,6 +59,10 @@ class ControllerModuleManufacturer extends Controller {
 			if (isset($this->error['image_' . $module])) {
 				$this->data['error_image_' . $module] = $this->error['image_' . $module];
 			}
+			
+			if (isset($this->error['dimension_' . $module])) {
+				$this->data['error_dimension_' . $module] = $this->error['dimension_' . $module];
+			}			
 		}
 		
   		$this->data['breadcrumbs'] = array();
@@ -191,16 +195,20 @@ class ControllerModuleManufacturer extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if ($this->request->post['manufacturer_module']) {
+		if (isset($this->request->post['manufacturer_module'])) {
 			$modules = explode(',', $this->request->post['manufacturer_module']);
 		} else {
 			$modules = array();
 		}	
 		
 		foreach ($modules as $module) {
-			if (!$this->request->post['manufacturer_' . $module . '_width'] || !$this->request->post['manufacturer_' . $module . '_height']) {
+			if (!$this->request->post['manufacturer_' . (int)$module . '_width'] || !$this->request->post['manufacturer_' . $module . '_height']) {
+				$this->error['dimension_' . $module] = $this->language->get('error_dimension');
+			}		
+			
+			if (!$this->request->post['manufacturer_' . $module . '_image_width'] || !$this->request->post['manufacturer_' . $module . '_image_height']) {
 				$this->error['image_' . $module] = $this->language->get('error_image');
-			}			
+			}	
 		}
 				
 		if (!$this->error) {

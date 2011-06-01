@@ -33,7 +33,10 @@
           <tr>
             <td class="left"><input type="text" name="bestseller_<?php echo $module_row; ?>_limit" value="<?php echo ${'bestseller_' . $module . '_limit'}; ?>" size="1" /></td>
             <td class="left"><input type="text" name="bestseller_<?php echo $module_row; ?>_image_width" value="<?php echo ${'bestseller_' . $module . '_image_width'}; ?>" size="3" />
-              <input type="text" name="bestseller_<?php echo $module_row; ?>_image_height" value="<?php echo ${'bestseller_' . $module . '_image_height'}; ?>" size="3" /></td>
+              <input type="text" name="bestseller_<?php echo $module_row; ?>_image_height" value="<?php echo ${'bestseller_' . $module . '_image_height'}; ?>" size="3" />
+              <?php if (isset(${'error_image_' . $module})) { ?>
+              <span class="error"><?php echo ${'error_image_' . $module}; ?></span>
+              <?php } ?></td>
             <td class="left"><select name="bestseller_<?php echo $module_row; ?>_layout_id">
                 <?php foreach ($layouts as $layout) { ?>
                 <?php if ($layout['layout_id'] == ${'bestseller_' . $module . '_layout_id'}) { ?>

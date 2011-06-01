@@ -325,12 +325,12 @@
             <tr>
               <td><?php echo $entry_logo; ?></td>
               <td><input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="logo" />
-                <img src="<?php echo $logo; ?>" alt="" id="preview-logo" class="image" onclick="image_upload('logo', 'preview_logo');" /></td>
+                <img src="<?php echo $logo; ?>" alt="" id="preview-logo" class="image" onclick="image_upload('logo', 'preview-logo');" /></td>
             </tr>
             <tr>
               <td><?php echo $entry_icon; ?></td>
               <td><input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="icon" />
-                <img src="<?php echo $icon; ?>" alt="" id="preview-icon" class="image" onclick="image_upload('icon', 'preview_icon');" /></td>
+                <img src="<?php echo $icon; ?>" alt="" id="preview-icon" class="image" onclick="image_upload('icon', 'preview-icon');" /></td>
             </tr>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_image_thumb; ?></td>

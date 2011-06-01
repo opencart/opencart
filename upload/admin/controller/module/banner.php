@@ -162,7 +162,7 @@ class ControllerModuleBanner extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ($this->request->post['banner_module']) {
+		if ($this->request->post['banner_module'] !== '') {
 			$modules = explode(',', $this->request->post['banner_module']);
 		} else {
 			$modules = array();

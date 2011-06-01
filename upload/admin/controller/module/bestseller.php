@@ -46,8 +46,8 @@ class ControllerModuleBestSeller extends Controller {
 			$this->data['error_warning'] = '';
 		}
 		
-		if (isset($this->request->post['banner_module'])) {
-			$modules = explode(',', $this->request->post['banner_module']);
+		if (isset($this->request->post['bestseller_module'])) {
+			$modules = explode(',', $this->request->post['bestseller_module']);
 		} else {
 			$modules = array();
 		}	
@@ -160,7 +160,7 @@ class ControllerModuleBestSeller extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (isset($this->request->post['bestseller_module'])) {
+		if ($this->request->post['bestseller_module'] !== '') {
 			$modules = explode(',', $this->request->post['bestseller_module']);
 		} else {
 			$modules = array();

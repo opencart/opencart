@@ -162,7 +162,7 @@ class ControllerModuleSlideshow extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if ($this->request->post['slideshow_module']) {
+		if ($this->request->post['slideshow_module'] !== '') {
 			$modules = explode(',', $this->request->post['slideshow_module']);
 		} else {
 			$modules = array();

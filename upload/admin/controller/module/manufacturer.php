@@ -195,7 +195,7 @@ class ControllerModuleManufacturer extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (isset($this->request->post['manufacturer_module'])) {
+		if ($this->request->post['manufacturer_module'] !== '') {
 			$modules = explode(',', $this->request->post['manufacturer_module']);
 		} else {
 			$modules = array();

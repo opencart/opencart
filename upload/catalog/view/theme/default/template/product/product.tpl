@@ -10,12 +10,12 @@
     <?php if ($thumb || $images) { ?>
     <div class="left">
       <?php if ($thumb) { ?>
-      <div class="image"><a href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>" class="thickbox" rel="gallery"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" id="image" /></a></div>
+      <div class="image"><a href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>" class="fancybox" rel="fancybox"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" id="image" /></a></div>
       <?php } ?>
       <?php if ($images) { ?>
       <div class="image-additional">
         <?php foreach ($images as $image) { ?>
-        <a href="<?php echo $image['popup']; ?>" title="<?php echo $heading_title; ?>" class="thickbox" rel="gallery"><img src="<?php echo $image['thumb']; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a>
+        <a href="<?php echo $image['popup']; ?>" title="<?php echo $heading_title; ?>" class="fancybox" rel="fancybox"><img src="<?php echo $image['thumb']; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a>
         <?php } ?>
       </div>
       <?php } ?>
@@ -300,6 +300,13 @@
   </div>
   <?php } ?>
   <?php echo $content_bottom; ?></div>
+<script type="text/javascript" src="catalog/view/javascript/jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/fancybox/jquery.fancybox-1.3.4.css" media="screen" />  
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	$('.fancybox').fancybox({cyclic: true});
+});  
+//--></script>
 <script type="text/javascript"><!--
 $('#button-cart').bind('click', function() {
 	$.ajax({
@@ -433,9 +440,9 @@ $('#tabs a').tabs();
 //--></script> 
 <script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
 <script type="text/javascript"><!--
-<!--[if lt IE 7]>
-$('.date, .datetime, .time').bgIframe();
-<![endif]-->
+if ($.browser.msie && $.browser.version == 6) {
+	$('.date, .datetime, .time').bgIframe();
+}
 $('.date').datepicker({dateFormat: 'yy-mm-dd'});
 $('.datetime').datetimepicker({
 	dateFormat: 'yy-mm-dd',

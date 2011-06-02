@@ -11,11 +11,8 @@ if (version_compare(phpversion(), '5.1.0', '<') == TRUE) {
 if (ini_get('register_globals')) {
 	ini_set('session.use_cookies', 'On');
 	ini_set('session.use_trans_sid', 'Off');
-	
-	if (isset($_COOKIE[session_name()])) {
-		session_id($_COOKIE[session_name()]);
-	}
-			
+		
+	session_set_cookie_params(0, '/');
 	session_start();
 	
 	$globals = array($_REQUEST, $_SESSION, $_SERVER, $_FILES);

@@ -365,7 +365,7 @@ class ModelCheckoutOrder extends Model {
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/order.tpl')) {
 				$html = $template->fetch($this->config->get('config_template') . '/template/mail/order.tpl');
 			} else {
-				$html = $template->fetch('default/template/checkout/mail/order.tpl');
+				$html = $template->fetch('default/template/mail/order.tpl');
 			}
 			
 			// Text Mail

@@ -63,30 +63,32 @@ class ControllerCommonSeoUrl extends Controller {
 			$url = ''; 
 			
 			$data = array();
-		
+			
 			parse_str($url_data['query'], $data);
 			
 			foreach ($data as $key => $value) {
-				if (($key == 'product_id') || ($key == 'manufacturer_id') || ($key == 'information_id')) {
-					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "'");
-				
-					if ($query->num_rows) {
-						$url .= '/' . $query->row['keyword'];
-						
-						unset($data[$key]);
-					}					
-				} elseif ($key == 'path') {
-					$categories = explode('_', $value);
+				if (isset($data['route'])) {
+					if (($data['route'] == 'product/product' && $key == 'product_id') || ($data['route'] == 'product/manufacturer/product' && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id')) {
+						$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "'");
 					
-					foreach ($categories as $category) {
-						$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = 'category_id=" . (int)$category . "'");
-				
 						if ($query->num_rows) {
 							$url .= '/' . $query->row['keyword'];
-						}							
-					}
+							
+							unset($data[$key]);
+						}					
+					} elseif ($key == 'path') {
+						$categories = explode('_', $value);
+						
+						foreach ($categories as $category) {
+							$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = 'category_id=" . (int)$category . "'");
 					
-					unset($data[$key]);
+							if ($query->num_rows) {
+								$url .= '/' . $query->row['keyword'];
+							}							
+						}
+						
+						unset($data[$key]);
+					}
 				}
 			}
 		

@@ -359,15 +359,15 @@ a.button span {
 	padding-top: 6px;
 	font-size: 12px;
 }
-.form {
+table.form {
 	width: 100%;
 	border-collapse: collapse;
 	margin-bottom: 20px;
 }
-table.form tr td:first-child {
-	min-width: 200px;
+table.form > tbody > tr > td:first-child {
+	width: 200px;
 }
-.form > * > * > td {
+table.form > tbody > tr > td {
 	padding: 10px;
 	color: #000000;
 	border-bottom: 1px dotted #CCCCCC;

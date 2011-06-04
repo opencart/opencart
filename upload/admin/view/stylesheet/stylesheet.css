@@ -365,7 +365,7 @@ a.button span {
 	margin-bottom: 20px;
 }
 table.form tr td:first-child {
-	width: 200px;
+	min-width: 200px;
 }
 .form > * > * > td {
 	padding: 10px;

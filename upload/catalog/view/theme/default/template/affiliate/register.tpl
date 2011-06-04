@@ -225,8 +225,6 @@ $('input[name=\'payment\']').bind('change', function() {
 
 $('input[name=\'payment\']:checked').trigger('change');
 //--></script> 
-<script type="text/javascript" src="catalog/view/javascript/jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-<link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/fancybox/jquery.fancybox-1.3.4.css" media="screen" />  
 <script type="text/javascript"><!--
 $('.fancybox').fancybox({
 	width: 560,

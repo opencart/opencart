@@ -74,10 +74,44 @@ $_['column_notify']           = 'Customer Notified';
 $_['column_action']           = 'Action';
 
 // Entry
+$_['entry_store']             = 'Store:';
+$_['entry_customer']          = 'Customer:';
+$_['entry_firstname']         = 'First Name:';
+$_['entry_lastname']          = 'Last Name:';
+$_['entry_email']             = 'E-Mail:';
+$_['entry_telephone']         = 'Telephone:';
+$_['entry_fax']               = 'Fax:';
+$_['entry_address']           = 'Choose Address:';
+$_['entry_company']           = 'Company:';
+$_['entry_address_1']         = 'Address 1:';
+$_['entry_address_2']         = 'Address 2:';
+$_['entry_city']              = 'City:';
+$_['entry_postcode']          = 'Postcode:';
+$_['entry_country']           = 'Country:';
+$_['entry_zone']              = 'Region / State:';
+$_['entry_zone_code']         = 'Region / State Code:';
+$_['entry_product']           = 'Product:';
+$_['entry_model']             = 'Model:';
+$_['entry_quantity']          = 'Quantity:';
+$_['entry_price']             = 'Unit Price:';
+$_['entry_affiliate']         = 'Affiliate:';
 $_['entry_order_status']      = 'Order Status:';
 $_['entry_notify']            = 'Notify Customer:';
 $_['entry_comment']           = 'Comment:';
+$_['entry_shipping']          = 'Shipping Method:';
+$_['entry_payment']           = 'Payment Method:';
 
 // Error
 $_['error_permission']        = 'Warning: You do not have permission to modify orders!';
+$_['error_firstname']         = 'First Name must be between 1 and 32 characters!';
+$_['error_lastname']          = 'Last Name must be between 1 and 32 characters!';
+$_['error_email']             = 'E-Mail Address does not appear to be valid!';
+$_['error_telephone']         = 'Telephone must be between 3 and 32 characters!';
+$_['error_password']          = 'Password must be between 3 and 20 characters!';
+$_['error_confirm']           = 'Password and password confirmation do not match!';
+$_['error_address_1']         = 'Address 1 must be between 3 and 128 characters!';
+$_['error_city']              = 'City must be between 3 and 128 characters!';
+$_['error_postcode']          = 'Postcode must be between 2 and 10 characters for this country!';
+$_['error_country']           = 'Please select a country!';
+$_['error_zone']              = 'Please select a region / state!';
 ?>

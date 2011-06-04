@@ -350,11 +350,11 @@ function addTransaction() {
 		data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
 		beforeSend: function() {
 			$('.success, .warning').remove();
-			$('#button-transaction').attr('disabled', 'disabled');
+			$('#button-transaction').attr('disabled', true);
 			$('#transaction').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
-			$('#button-transaction').attr('disabled', '');
+			$('#button-transaction').attr('disabled', false);
 			$('.attention').remove();
 		},
 		success: function(html) {
@@ -383,11 +383,11 @@ function addRewardPoints() {
 		data: 'description=' + encodeURIComponent($('#tab-reward input[name=\'description\']').val()) + '&points=' + encodeURIComponent($('#tab-reward input[name=\'points\']').val()),
 		beforeSend: function() {
 			$('.success, .warning').remove();
-			$('#button-reward').attr('disabled', 'disabled');
+			$('#button-reward').attr('disabled', true);
 			$('#reward').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
-			$('#button-reward').attr('disabled', '');
+			$('#button-reward').attr('disabled', false);
 			$('.attention').remove();
 		},
 		success: function(html) {

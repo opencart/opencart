@@ -13,11 +13,11 @@ $('#button-voucher').bind('click', function() {
 		dataType: 'json',		
 		beforeSend: function() {
 			$('.success, .warning').remove();
-			$('#button-voucher').attr('disabled', 'disabled');
+			$('#button-voucher').attr('disabled', true);
 			$('#button-voucher').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
 		},
 		complete: function() {
-			$('#button-voucher').attr('disabled', '');
+			$('#button-voucher').attr('disabled', false);
 			$('.wait').remove();
 		},		
 		success: function(json) {

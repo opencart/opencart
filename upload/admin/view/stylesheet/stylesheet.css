@@ -385,15 +385,16 @@ table.form > tbody > tr > td {
 .htabs {
 	padding: 0px 0px 0px 10px;
 	height: 30px;
+	line-height: 16px;
 	border-bottom: 1px solid #DDDDDD;
 	margin-bottom: 15px;
 }
 .htabs a {
 	border-top: 1px solid #DDDDDD;
 	border-left: 1px solid #DDDDDD;
-	border-right: 1px solid #DDDDDD;
+	border-right: 1px solid #DDDDDD; 
 	background: #FFFFFF url('../image/tab.png') repeat-x;
-	padding: 6px 15px 7px 15px;
+	padding: 7px 15px 6px 15px;
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
@@ -404,7 +405,7 @@ table.form > tbody > tr > td {
 	margin-right: 2px;
 }
 .htabs a.selected {
-	padding-bottom: 8px;
+	padding-bottom: 7px;
 	background: #FFFFFF;
 }
 .vtabs {

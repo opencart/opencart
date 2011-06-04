@@ -571,13 +571,16 @@ a.button:hover span {
 	margin-right: auto;
 }
 .htabs {
-	margin-bottom: -1px;
-	overflow: auto;
+	height: 30px;		
+	line-height: 16px;
+	border-bottom: 1px solid #DDDDDD;	
 }
 .htabs a {
-	border: 1px solid #DDDDDD;
+	border-top: 1px solid #DDDDDD;
+	border-left: 1px solid #DDDDDD;
+	border-right: 1px solid #DDDDDD; 
 	background: #FFFFFF url('../image/tab.png') repeat-x;
-	padding: 7px 15px 7px 15px;
+	padding: 7px 15px 6px 15px;
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
@@ -588,12 +591,13 @@ a.button:hover span {
 	margin-right: 2px;
 }
 .htabs a.selected {
-	z-index: 3;
-	border-bottom: 1px solid #FFFFFF;
+	padding-bottom: 7px;
 	background: #FFFFFF;
 }
 .tab-content {
-	border: 1px solid #DDDDDD;
+	border-left: 1px solid #DDDDDD;
+	border-right: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD;
 	padding: 10px;
 	margin-bottom: 20px;
 	z-index: 2;

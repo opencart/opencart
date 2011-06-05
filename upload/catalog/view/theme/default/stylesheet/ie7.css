@@ -1,12 +1,15 @@
 /* God I hate Microsoft! */
 #header #cart {
-	width: 310px;
+	width: 400px;
+	border: 1px solid #000;
 }
 #header #cart .heading {
-	
+	position: relative;
+	right: 172px;
+	margin-right: 0px;
 }
 #header #cart .content {
-	width: 310px;
+	
 }
 #header #search {
 	position: inherit;

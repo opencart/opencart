@@ -60,6 +60,10 @@ class ControllerProductProduct extends Controller {
 		if (isset($this->request->get['filter_name']) || isset($this->request->get['filter_tag'])) {
 			$url = '';
 			
+			if (isset($this->request->get['filter_name'])) {
+				$url .= '&filter_name=' . $this->request->get['filter_name'];
+			}
+						
 			if (isset($this->request->get['filter_tag'])) {
 				$url .= '&filter_tag=' . $this->request->get['filter_tag'];
 			}
@@ -74,7 +78,7 @@ class ControllerProductProduct extends Controller {
 						
 			$this->data['breadcrumbs'][] = array(
 				'text'      => $this->language->get('text_search'),
-				'href'      => $this->url->link('product/search', 'filter_name=' . $this->request->get['filter_name'] . $url),
+				'href'      => $this->url->link('product/search', $url),
 				'separator' => $this->language->get('text_separator')
 			);	
 		}

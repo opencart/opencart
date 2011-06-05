@@ -195,8 +195,6 @@ CREATE TABLE `oc_attribute_group` (
 --
 
 INSERT INTO `oc_attribute_group` (`attribute_group_id`, `sort_order`) VALUES
-(1, 0),
-(2, 1),
 (3, 2),
 (4, 1),
 (5, 3),

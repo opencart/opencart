@@ -502,7 +502,7 @@ class ModelSaleOrder extends Model {
 			
 			if ($order_info['customer_id']) {
 				$message .= $language->get('text_link') . "\n";
-				$message .= html_entity_decode($order_info['store_url'] . 'index.php?route=account/invoice&order_id=' . $order_id, ENT_QUOTES, 'UTF-8') . "\n\n";
+				$message .= html_entity_decode($order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id, ENT_QUOTES, 'UTF-8') . "\n\n";
 			}
 			
 			if ($data['comment']) {

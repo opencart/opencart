@@ -34,14 +34,14 @@
         <?php if (!$special) { ?>
         <?php echo $price; ?>
         <?php } else { ?>
-        <s><?php echo $price; ?></s> <b><?php echo $special; ?></b>
+        <span class="price-old"><?php echo $price; ?></span> <span class="price-new"><?php echo $special; ?></span>
         <?php } ?>
         <br />
         <?php if ($tax) { ?>
-        <span><?php echo $text_tax; ?> <?php echo $tax; ?></span> <br />
+        <span class="price-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></span><br />
         <?php } ?>
         <?php if ($points) { ?>
-        <span><small><?php echo $text_points; ?> <?php echo $points; ?></small></span> <br />
+        <span class="reward"><small><?php echo $text_points; ?> <?php echo $points; ?></small></span> <br />
         <?php } ?>
         <?php if ($discounts) { ?>
         <br />
@@ -84,8 +84,8 @@
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
           <?php foreach ($option['option_value'] as $option_value) { ?>
-          <input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-<?php echo $option_value['product_option_value_id']; ?>" />
-          <label for="option-<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
+          <input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-value-<?php echo $option_value['product_option_value_id']; ?>" />
+          <label for="option-value-<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
             <?php if ($option_value['price']) { ?>
             (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
             <?php } ?>
@@ -102,8 +102,8 @@
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
           <?php foreach ($option['option_value'] as $option_value) { ?>
-          <input type="checkbox" name="option[<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-<?php echo $option_value['product_option_value_id']; ?>" />
-          <label for="option-<?php echo $option_value['product_option_value_id']; ?>"> <?php echo $option_value['name']; ?>
+          <input type="checkbox" name="option[<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-value-<?php echo $option_value['product_option_value_id']; ?>" />
+          <label for="option-value-<?php echo $option_value['product_option_value_id']; ?>"> <?php echo $option_value['name']; ?>
             <?php if ($option_value['price']) { ?>
             (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
             <?php } ?>
@@ -129,7 +129,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <textarea type="text" name="option[<?php echo $option['product_option_id']; ?>]" cols="40" rows="5"><?php echo $option['option_value']; ?></textarea>
+          <textarea name="option[<?php echo $option['product_option_id']; ?>]" cols="40" rows="5"><?php echo $option['option_value']; ?></textarea>
         </div>
         <br />
         <?php } ?>
@@ -139,8 +139,8 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <a id="option-<?php echo $option['product_option_id']; ?>" class="button"><span><?php echo $button_upload; ?></span></a>
-          <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="" id="option-<?php echo $option['product_option_id']; ?>" />
+          <a id="button-option-<?php echo $option['product_option_id']; ?>" class="button"><span><?php echo $button_upload; ?></span></a>
+          <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="" />
         </div>
         <br />
         <?php } ?>
@@ -241,7 +241,7 @@
     <br />
     <br />
     <b><?php echo $entry_review; ?></b>
-    <textarea name="text" style="width: 98%;" rows="8"></textarea>
+    <textarea name="text" cols="40" rows="8" style="width: 98%;"></textarea>
     <span style="font-size: 11px;"><?php echo $text_note; ?></span><br />
     <br />
     <b><?php echo $entry_rating; ?></b> <span><?php echo $entry_bad; ?></span>&nbsp;
@@ -257,9 +257,9 @@
     &nbsp; <span><?php echo $entry_good; ?></span><br />
     <br />
     <b><?php echo $entry_captcha; ?></b><br />
-    <input type="text" name="captcha" value="" autocomplete="off" />
+    <input type="text" name="captcha" value="" />
     <br />
-    <img src="index.php?route=product/product/captcha" id="captcha" /><br />
+    <img src="index.php?route=product/product/captcha" alt="" id="captcha" /><br />
     <br />
     <div class="buttons">
       <div class="right"><a id="button-review" class="button"><span><?php echo $button_continue; ?></span></a></div>
@@ -280,7 +280,7 @@
           <?php if (!$product['special']) { ?>
           <?php echo $product['price']; ?>
           <?php } else { ?>
-          <s><?php echo $product['price']; ?></s> <?php echo $product['special']; ?>
+          <span class="price-old"><?php echo $product['price']; ?></span> <span class="price-new"><?php echo $product['special']; ?></span>
           <?php } ?>
         </div>
         <?php } ?>
@@ -358,13 +358,13 @@ $('#button-cart').bind('click', function() {
 <?php foreach ($options as $option) { ?>
 <?php if ($option['type'] == 'file') { ?>
 <script type="text/javascript"><!--
-new AjaxUpload('#option-<?php echo $option['product_option_id']; ?>', {
+new AjaxUpload('#button-option-<?php echo $option['product_option_id']; ?>', {
 	action: 'index.php?route=product/product/upload',
 	name: 'file',
 	autoSubmit: true,
 	responseType: 'json',
 	onSubmit: function(file, extension) {
-		$('#option-<?php echo $option['product_option_id']; ?>').after('<img src="catalog/view/theme/default/image/loading.gif" id="loading" style="padding-left: 5px;" />');
+		$('#button-option-<?php echo $option['product_option_id']; ?>').after('<img src="catalog/view/theme/default/image/loading.gif" id="loading" style="padding-left: 5px;" />');
 	},
 	onComplete: function(file, json) {
 		$('.error').remove();

@@ -42,16 +42,16 @@
     <?php } ?>
     <br />
     <b><?php echo $entry_enquiry; ?></b><br />
-    <textarea name="enquiry" style="width: 99%;" rows="10"><?php echo $enquiry; ?></textarea>
+    <textarea name="enquiry" cols="40" rows="10" style="width: 99%;"><?php echo $enquiry; ?></textarea>
     <br />
     <?php if ($error_enquiry) { ?>
     <span class="error"><?php echo $error_enquiry; ?></span>
     <?php } ?>
     <br />
     <b><?php echo $entry_captcha; ?></b><br />
-    <input type="text" name="captcha" value="<?php echo $captcha; ?>" autocomplete="off" />
+    <input type="text" name="captcha" value="<?php echo $captcha; ?>" />
     <br />
-    <img src="index.php?route=information/contact/captcha" />
+    <img src="index.php?route=information/contact/captcha" alt="" />
     <?php if ($error_captcha) { ?>
     <span class="error"><?php echo $error_captcha; ?></span>
     <?php } ?>

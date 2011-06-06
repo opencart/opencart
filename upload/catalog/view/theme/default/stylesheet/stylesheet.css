@@ -664,8 +664,12 @@ a.button:hover span {
 	color: #333333;
 	margin-bottom: 4px;
 }
-.box-product .price s {
+.box-product .price-old {
 	color: #F00;
+	text-decoration: line-through;
+}
+.box-product .price-new {
+	font-weight: bold;
 }
 .box-product .rating {
 	display: block;
@@ -849,10 +853,14 @@ a.button:hover span {
 	color: #333333;
 	font-size: 12px;
 }
-.product-list .price s {
+.product-list .price-old {
 	color: #F00;
+	text-decoration: line-through;
 }
-.product-list .price span {
+.product-list .price-new {
+	font-weight: bold;
+}
+.product-list .price-tax {
 	font-size: 12px;
 	font-weight: normal;
 	color: #BBBBBB;
@@ -916,10 +924,14 @@ a.button:hover span {
 	color: #333333;
 	margin-bottom: 4px;
 }
-.product-grid .price s {
+.product-grid .price-old {
 	color: #F00;
+	text-decoration: line-through;
 }
-.product-grid .price span {
+.product-grid .price-new {
+	font-weight: bold;
+}
+.product-grid .price .price-tax {
 	display: none;
 }
 .product-grid .cart {
@@ -1000,10 +1012,19 @@ a.button:hover span {
 	font-weight: bold;
 	color: #333333;
 }
-.product-info .price s {
+.product-info .price-old {
 	color: #F00;
+	text-decoration: line-through;
 }
-.product-info .price span {
+.product-info .price-new {
+	
+}
+.product-info .price-tax {
+	font-size: 12px;
+	font-weight: normal;
+	color: #999;
+}
+.product-info .price .reward {
 	font-size: 12px;
 	font-weight: normal;
 	color: #999;
@@ -1122,8 +1143,13 @@ a.button:hover span {
 .compare-info .name a {
 	font-weight: bold;
 }
-.compare-info s {
+.compare-info .price-old {
+	font-weight: bold;
 	color: #F00;
+	text-decoration: line-through;
+}
+.compare-info .price-new {
+	font-weight: bold;
 }
 /* wishlist */
 .wishlist-product table {

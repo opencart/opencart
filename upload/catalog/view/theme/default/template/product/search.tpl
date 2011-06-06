@@ -96,11 +96,11 @@
         <?php if (!$product['special']) { ?>
         <?php echo $product['price']; ?>
         <?php } else { ?>
-        <s><?php echo $product['price']; ?></s> <b><?php echo $product['special']; ?></b>
+        <span class="price-old"><?php echo $product['price']; ?></span> <span class="price-new"><?php echo $product['special']; ?></span>
         <?php } ?>
         <?php if ($product['tax']) { ?>
         <br />
-        <span><?php echo $text_tax; ?> <?php echo $product['tax']; ?></span>
+        <span class="price-tax"><?php echo $text_tax; ?> <?php echo $product['tax']; ?></span>
         <?php } ?>
       </div>
       <?php } ?>

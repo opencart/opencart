@@ -331,7 +331,7 @@ class ModelSaleOrder extends Model {
 
 		$sort_data = array(
 			'o.order_id',
-			'name',
+			'customer',
 			'status',
 			'o.date_added',
 			'o.date_modified',

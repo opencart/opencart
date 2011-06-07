@@ -119,6 +119,8 @@ function addToCart(product_id) {
 				$('.attention').fadeIn('slow');
 				
 				$('#cart_total').html(json['total']);
+				
+				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 			}	
 		}
 	});
@@ -175,12 +177,14 @@ function addToWishList(product_id) {
 				$('.attention').fadeIn('slow');
 				
 				$('#wishlist_total').html(json['total']);
+				
+				$('html, body').animate({ scrollTop: 0 }, 'slow'); 				
 			}	
 		}
 	});
 }
 
-function addToCompare(product_id) {
+function addToCompare(product_id) { 
 	$.ajax({
 		url: 'index.php?route=product/compare/update',
 		type: 'post',
@@ -195,6 +199,8 @@ function addToCompare(product_id) {
 				$('.attention').fadeIn('slow');
 				
 				$('#compare_total').html(json['total']);
+				
+				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 			}	
 		}
 	});

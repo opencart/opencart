@@ -394,10 +394,10 @@ class ControllerAffiliateRegister extends Controller {
       		$this->error['confirm'] = $this->language->get('error_confirm');
     	}
 		
-		if ($this->config->get('config_account_id')) {
+		if ($this->config->get('config_affiliate_id')) {
 			$this->load->model('catalog/information');
 			
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
 			
 			if ($information_info && !isset($this->request->post['agree'])) {
       			$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);

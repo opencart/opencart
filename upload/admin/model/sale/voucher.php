@@ -62,7 +62,7 @@ class ModelSaleVoucher extends Model {
 		
 		return $query->rows;
 	}
-	
+		
 	public function getTotalVouchers() {
       	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "voucher");
 		

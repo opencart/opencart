@@ -528,6 +528,68 @@ class ModelSaleOrder extends Model {
 			$mail->send();
 		}
 	}
+
+	public function confirm($order_id) {
+		$this->load->model('sale/order');
+		
+		$order_info = $this->model_sale_order->getOrder($order_id);
+		
+		if ($order_info) {
+			$this->load->model('localisation/language');
+			
+			$language = new Language($order_info['language_directory']);
+			$language->load($order_info['language_filename']);	
+			$language->load('mail/voucher');
+			
+			$voucher_query = $this->db->query("SELECT *, vtd.name AS theme FROM `" . DB_PREFIX . "voucher` v LEFT JOIN " . DB_PREFIX . "voucher_theme vt ON (v.voucher_theme_id = vt.voucher_theme_id) LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) AND vtd.language_id = '" . (int)$order_info['language_id'] . "' WHERE order_id = '" . (int)$order_id . "'");
+			
+			foreach ($voucher_query->rows as $voucher) {
+				// HTML Mail
+				$template = new Template();
+				
+				$template->data['title'] = sprintf($this->language->get('text_subject'), $voucher['from_name']);
+				
+				$template->data['text_greeting'] = sprintf($language->get('text_greeting'), $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']));
+				$template->data['text_from'] = sprintf($language->get('text_from'), $voucher['from_name']);
+				$template->data['text_message'] = $language->get('text_message');
+				$template->data['text_message'] = $language->get('text_message');
+				$template->data['text_redeem'] = sprintf($language->get('text_redeem'), $voucher['code']);
+				$template->data['text_footer'] = $language->get('text_footer');
+				
+				if (file_exists(DIR_IMAGE . $voucher['image'])) {
+					$template->data['image'] = 'cid:' . basename($voucher['image']);
+				} else {
+					$template->data['image'] = '';
+				}
+				
+				$template->data['store_name'] = $order_info['store_name'];
+				$template->data['store_url'] = $order_info['store_url'];
+				$template->data['message'] = nl2br($voucher['message']);
+
+				$html = $template->fetch('default/template/mail/voucher.tpl');
+					
+				$mail = new Mail(); 
+				$mail->protocol = $this->config->get('config_mail_protocol');
+				$mail->parameter = $this->config->get('config_mail_parameter');
+				$mail->hostname = $this->config->get('config_smtp_host');
+				$mail->username = $this->config->get('config_smtp_username');
+				$mail->password = $this->config->get('config_smtp_password');
+				$mail->port = $this->config->get('config_smtp_port');
+				$mail->timeout = $this->config->get('config_smtp_timeout');			
+				$mail->setTo($voucher['to_email']);
+				$mail->setFrom($this->config->get('config_email'));
+				$mail->setSender($order_info['store_name']);
+				$mail->setSubject(sprintf($language->get('text_subject'), $voucher['from_name']));
+				$mail->setHtml($html);
+				
+				if (file_exists(DIR_IMAGE . $voucher['image'])) {
+					$mail->addAttachment(DIR_IMAGE . $voucher['image']);
+				}
+				
+				$mail->send();		
+			}
+		}
+	}
 		
 	public function getOrderHistories($order_id, $start = 0, $limit = 10) {
 		$query = $this->db->query("SELECT oh.date_added, os.name AS status, oh.comment, oh.notify FROM " . DB_PREFIX . "order_history oh LEFT JOIN " . DB_PREFIX . "order_status os ON oh.order_status_id = os.order_status_id WHERE oh.order_id = '" . (int)$order_id . "' AND os.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY oh.date_added ASC LIMIT " . (int)$start . "," . (int)$limit);

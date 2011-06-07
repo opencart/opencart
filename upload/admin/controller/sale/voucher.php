@@ -175,7 +175,12 @@ class ControllerSaleVoucher extends Controller {
  
     	foreach ($results as $result) {
 			$action = array();
-						
+			
+			$action[] = array(
+				'text' => $this->language->get('text_send'),
+				'href' => $this->url->link('sale/voucher/send', 'token=' . $this->session->data['token'] . '&voucher_id=' . $result['voucher_id'] . $url, 'SSL')
+			);
+									
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('sale/voucher/update', 'token=' . $this->session->data['token'] . '&voucher_id=' . $result['voucher_id'] . $url, 'SSL')
@@ -565,6 +570,52 @@ class ControllerSaleVoucher extends Controller {
 		$this->template = 'sale/voucher_history.tpl';		
 		
 		$this->response->setOutput($this->render());
-  	}		
+  	}
+	
+	public function send() {
+    	$this->language->load('sale/voucher');
+		
+		$this->load->model('sale/voucher');
+				
+		$this->data['text_no_results'] = $this->language->get('text_no_results');
+		
+		$this->data['column_order_id'] = $this->language->get('column_order_id');
+		$this->data['column_customer'] = $this->language->get('column_customer');
+		$this->data['column_amount'] = $this->language->get('column_amount');
+		$this->data['column_date_added'] = $this->language->get('column_date_added');
+
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}  
+		
+		$this->data['histories'] = array();
+			
+		$results = $this->model_sale_voucher->getVoucherHistories($this->request->get['voucher_id'], ($page - 1) * 10, 10);
+      		
+		foreach ($results as $result) {
+        	$this->data['histories'][] = array(
+				'order_id'   => $result['order_id'],
+				'customer'   => $result['customer'],
+				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
+        		'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+        	);
+      	}			
+		
+		$history_total = $this->model_sale_voucher->getTotalVoucherHistories($this->request->get['voucher_id']);
+			
+		$pagination = new Pagination();
+		$pagination->total = $history_total;
+		$pagination->page = $page;
+		$pagination->limit = 10; 
+		$pagination->url = $this->url->link('sale/voucher/history', 'token=' . $this->session->data['token'] . '&voucher_id=' . $this->request->get['voucher_id'] . '&page={page}', 'SSL');
+			
+		$this->data['pagination'] = $pagination->render();
+		
+		$this->template = 'sale/voucher_history.tpl';		
+		
+		$this->response->setOutput($this->render());
+  	}			
 }
 ?>

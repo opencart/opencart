@@ -343,7 +343,7 @@ class ControllerCheckoutCart extends Controller {
 				unset($this->session->data['payment_methods']);
 				unset($this->session->data['payment_method']);			
 			} else {
-				$json['redirect'] = $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']);
+				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']));
 			}
 		}	
 		

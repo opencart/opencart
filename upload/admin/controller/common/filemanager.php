@@ -38,8 +38,12 @@ class ControllerCommonFileManager extends Controller {
 		} else {
 			$this->data['field'] = '';
 		}
-
-		$this->data['fckeditor'] = $this->request->get['CKEditorFuncNum'];
+		
+		if (isset($this->request->get['CKEditorFuncNum'])) {
+			$this->data['fckeditor'] = $this->request->get['CKEditorFuncNum'];
+		} else {
+			$this->data['fckeditor'] = false;
+		}
 		
 		$this->template = 'common/filemanager.tpl';
 		

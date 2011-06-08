@@ -195,7 +195,7 @@ $(document).ready(function () {
 	
 	$('#column-right a').live('dblclick', function () {
 		<?php if ($fckeditor) { ?>
-		window.opener.CKEDITOR.tools.callFunction(1, '<?php echo $directory; ?>' + $(this).attr('file'));
+		window.opener.CKEDITOR.tools.callFunction(<?php echo $fckeditor; ?>, '<?php echo $directory; ?>' + $(this).attr('file'));
 		
 		self.close();	
 		<?php } else { ?>

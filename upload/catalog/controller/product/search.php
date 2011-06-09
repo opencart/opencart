@@ -234,7 +234,7 @@ class ControllerProductSearch extends Controller {
 					$tax = false;
 				}				
 				
-				if ($this->config->get('config_review')) {
+				if ($this->config->get('config_review_status')) {
 					$rating = (int)$result['rating'];
 				} else {
 					$rating = false;

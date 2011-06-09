@@ -41,7 +41,7 @@ class ControllerModuleLatest extends Controller {
 				$special = false;
 			}
 			
-			if ($this->config->get('config_review')) {
+			if ($this->config->get('config_review_status')) {
 				$rating = $result['rating'];
 			} else {
 				$rating = false;

@@ -37,7 +37,7 @@ class ControllerModuleFeatured extends Controller {
 					$special = false;
 				}
 				
-				if ($this->config->get('config_review')) {
+				if ($this->config->get('config_review_status')) {
 					$rating = $product_info['rating'];
 				} else {
 					$rating = false;

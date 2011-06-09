@@ -94,19 +94,45 @@ class ControllerTotalShipping extends Controller {
 				$this->session->data['postcode'] = $this->request->post['postcode'];
 			
 				if ($country_info) {
+					$country = $country_info['name'];
 					$iso_code_2 = $country_info['iso_code_2'];
 					$iso_code_3 = $country_info['iso_code_3'];
+					$address_format = $country_info['address_format'];
 				} else {
+					$country = '';
 					$iso_code_2 = '';
-					$iso_code_3 = '';
+					$iso_code_3 = '';	
+					$address_format = '';
 				}
 				
+				$this->load->model('localisation/zone');
+			
+				$zone_info = $this->model_localisation_zone->getZone($this->request->post['zone_id']);
+				
+				if ($zone_info) {
+					$zone = $zone_info['name'];
+					$code = $zone_info['code'];
+				} else {
+					$zone = '';
+					$code = '';
+				}	
+			 
 				$address_data = array(
-					'country_id' => $this->request->post['country_id'],
-					'zone_id'    => $this->request->post['zone_id'],
-					'postcode'   => $this->request->post['postcode'],
-					'iso_code_2' => $iso_code_2,
-					'iso_code_3' => $iso_code_3
+					'firstname'      => '',
+					'lastname'       => '',
+					'company'        => '',
+					'address_1'      => '',
+					'address_2'      => '',
+					'postcode'       => $this->request->post['postcode'],
+					'city'           => '',
+					'zone_id'        => $this->request->post['zone_id'],
+					'zone'           => $zone,
+					'zone_code'      => $code,
+					'country_id'     => $this->request->post['country_id'],
+					'country'        => $country,	
+					'iso_code_2'     => $iso_code_2,
+					'iso_code_3'     => $iso_code_3,
+					'address_format' => $address_format
 				);
 			
 				$quote_data = array();
@@ -116,8 +142,6 @@ class ControllerTotalShipping extends Controller {
 				$results = $this->model_setting_extension->getExtensions('shipping');
 				
 				foreach ($results as $result) {
-					
-					
 					if ($this->config->get($result['code'] . '_status')) {
 						$this->load->model('shipping/' . $result['code']);
 						

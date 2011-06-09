@@ -37,7 +37,7 @@ $('#button-confirm').bind('click', function() {
 	$.ajax({
 		type: 'POST',
 		url: 'index.php?route=payment/authorizenet_aim/send',
-		data: $('#authorizenet :input'),
+		data: $('#payment :input'),
 		dataType: 'json',		
 		beforeSend: function() {
 			$('#button-confirm').attr('disabled', true);

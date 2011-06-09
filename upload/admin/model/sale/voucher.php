@@ -62,7 +62,92 @@ class ModelSaleVoucher extends Model {
 		
 		return $query->rows;
 	}
+	
+	public function getVouchersByOrderId($order_id) {
+		$query = $this->db->query("SELECT v.voucher_id, v.code, v.from_name, v.from_email, v.to_name, v.to_email, v.amount, vtd.name AS theme, v.status, v.date_added FROM " . DB_PREFIX . "voucher v LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (v.voucher_theme_id = vtd.voucher_theme_id) WHERE v.order_id = '" . (int)$order_id . "' AND vtd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+				
+		return $query->rows;
+	}
+	
+	public function sendVoucher($voucher_id) {
+		$voucher_info = $this->getVoucher($voucher_id);
 		
+		if ($voucher_info) {
+			// HTML Mail
+			$template = new Template();
+		
+			if ($voucher_info['order_id']) {
+				$order_id = $voucher_info['order_id'];
+			} else {
+				$order_id = 0;
+			}
+			
+			$this->load->model('sale/order');
+			
+			$order_info = $this->model_sale_order->getOrder($order_id);
+			
+			if ($order_info) {
+				$this->load->model('localisation/language');
+				
+				$language = new Language($order_info['language_directory']);
+				$language->load($order_info['language_filename']);	
+				$language->load('mail/voucher');
+				
+				$template->data['title'] = sprintf($language->get('text_subject'), $voucher_info['from_name']);
+				
+				$template->data['text_greeting'] = sprintf($language->get('text_greeting'), $this->currency->format($voucher_info['amount'], $order_info['currency_code'], $order_info['currency_value']));
+				$template->data['text_from'] = sprintf($language->get('text_from'), $voucher_info['from_name']);
+				$template->data['text_message'] = $language->get('text_message');
+				$template->data['text_redeem'] = sprintf($language->get('text_redeem'), $voucher_info['code']);
+				$template->data['text_footer'] = $language->get('text_footer');			
+			}  else {
+				$this->language->load('mail/voucher');
+				
+				$template->data['title'] = sprintf($this->language->get('text_subject'), $voucher_info['from_name']);
+				
+				$template->data['text_greeting'] = sprintf($this->language->get('text_greeting'), $this->currency->format($voucher_info['amount'], $order_info['currency_code'], $order_info['currency_value']));
+				$template->data['text_from'] = sprintf($this->language->get('text_from'), $voucher_info['from_name']);
+				$template->data['text_message'] = $this->language->get('text_message');
+				$template->data['text_redeem'] = sprintf($this->language->get('text_redeem'), $voucher_info['code']);
+				$template->data['text_footer'] = $this->language->get('text_footer');					
+			}
+			
+			$this->load->model('sale/voucher_theme');
+				
+			$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
+			
+			if ($voucher_info && file_exists(DIR_IMAGE . $voucher_theme_info['image'])) {
+				$template->data['image'] = 'cid:' . basename($voucher_theme_info['image']);
+			} else {
+				$template->data['image'] = '';
+			}
+			
+			$template->data['store_name'] = $order_info['store_name'];
+			$template->data['store_url'] = $order_info['store_url'];
+			$template->data['message'] = nl2br($voucher_info['message']);
+
+			$mail = new Mail(); 
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->hostname = $this->config->get('config_smtp_host');
+			$mail->username = $this->config->get('config_smtp_username');
+			$mail->password = $this->config->get('config_smtp_password');
+			$mail->port = $this->config->get('config_smtp_port');
+			$mail->timeout = $this->config->get('config_smtp_timeout');			
+			$mail->setTo($voucher_info['to_email']);
+			$mail->setFrom($this->config->get('config_email'));
+			$mail->setSender($order_info['store_name']);
+			$mail->setSubject(sprintf($language->get('text_subject'), $voucher_info['from_name']));
+			$mail->setHtml($template->fetch('mail/voucher.tpl'));
+			
+			if ($voucher_info && file_exists(DIR_IMAGE . $voucher_theme_info['image'])) {
+				$mail->addAttachment(DIR_IMAGE . $voucher_theme_info['image']);
+			}
+			
+			$mail->send();		
+		}
+	}
+			
 	public function getTotalVouchers() {
       	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "voucher");
 		

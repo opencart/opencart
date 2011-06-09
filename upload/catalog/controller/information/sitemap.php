@@ -77,7 +77,7 @@ class ControllerInformationSitemap extends Controller {
     	$this->data['edit'] = $this->url->link('account/edit', '', 'SSL');
     	$this->data['password'] = $this->url->link('account/password', '', 'SSL');
     	$this->data['address'] = $this->url->link('account/address', '', 'SSL');
-    	$this->data['history'] = $this->url->link('account/history', '', 'SSL');
+    	$this->data['history'] = $this->url->link('account/order', '', 'SSL');
     	$this->data['download'] = $this->url->link('account/download', '', 'SSL');
     	$this->data['cart'] = $this->url->link('checkout/cart');
     	$this->data['checkout'] = $this->url->link('checkout/shipping', '', 'SSL');

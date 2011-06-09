@@ -101,19 +101,20 @@ class ModelLocalisationCurrency extends Model {
 		if (extension_loaded('curl')) {
 			$data = array();
 			
-			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "' AND date_modified > '" . date(strtotime('-1 day')) . "'");
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "' AND date_modified < '" . date(strtotime('-1 day')) . "'");
 
 			foreach ($query->rows as $result) {
 				$data[] = $this->config->get('config_currency') . $result['code'] . '=X';
 			}	
 			
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, 'http://download.finance.yahoo.com/d/quotes.csv?s=' . implode(',', $data) . '&f=sl1&e=.csv');
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$curl = curl_init();
 			
-			$content = curl_exec($ch);
+			curl_setopt($curl, CURLOPT_URL, 'http://download.finance.yahoo.com/d/quotes.csv?s=' . implode(',', $data) . '&f=sl1&e=.csv');
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			
-			curl_close($ch);
+			$content = curl_exec($curl);
+			
+			curl_close($curl);
 			
 			$lines = explode("\n", trim($content));
 				

@@ -9,7 +9,7 @@ class ControllerAffiliatePassword extends Controller {
       		$this->redirect($this->url->link('affiliate/login', '', 'SSL'));
     	}
 
-		$this->language->load('account/password');
+		$this->language->load('affiliate/password');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 			  

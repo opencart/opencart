@@ -19,7 +19,7 @@ Options -Indexes
 RewriteEngine On
 # If your opencart installation does not run on the main web folder make sure you folder it does run in ie. / becomes /shop/ 
 
-RewriteBase /opencart/upload/
+RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]

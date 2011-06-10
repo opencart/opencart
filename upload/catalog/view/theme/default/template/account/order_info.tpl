@@ -79,8 +79,7 @@
       <tfoot>
         <?php foreach ($totals as $total) { ?>
         <tr>
-          <td colspan="4"></td>
-          <td class="right"><b><?php echo $total['title']; ?></b></td>
+          <td colspan="5" class="right"><b><?php echo $total['title']; ?></b></td>
           <td class="right"><?php echo $total['text']; ?></td>
         </tr>
         <?php } ?>

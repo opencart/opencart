@@ -335,6 +335,8 @@ class ControllerUserUserPermission extends Controller {
 			'common/startup',
 			'common/login',
 			'common/logout',
+			'common/forgotten',
+			'common/reset',			
 			'error/not_found',
 			'error/permission',
 			'common/footer',

@@ -3,7 +3,10 @@
 $_['heading_title']     = 'Gift Voucher';
 
 // Text
+$_['text_send']         = 'Send';
 $_['text_success']      = 'Success: You have modified vouchers!';
+$_['text_sent']         = 'Success: Gift Voucher e-mail has been sent!';
+$_['text_wait']         = 'Please Wait!';
 
 // Column
 $_['column_name']       = 'Voucher Name';

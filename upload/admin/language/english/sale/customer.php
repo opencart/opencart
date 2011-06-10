@@ -3,7 +3,7 @@
 $_['heading_title']         = 'Customer';
 
 // Text
-$_['text_login']            = 'Login';
+
 $_['text_success']          = 'Success: You have modified customers!';
 $_['text_approved']         = 'You have approved %s accounts!';
 $_['text_wait']             = 'Please Wait!';

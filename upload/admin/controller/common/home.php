@@ -394,8 +394,7 @@ class ControllerCommonHome extends Controller {
 				'common/forgotten',
 				'common/reset',
 				'error/not_found',
-				'error/permission',	
-				'error/token'		
+				'error/permission'		
 			);			
 						
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {

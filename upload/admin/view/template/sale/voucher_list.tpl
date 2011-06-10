@@ -76,7 +76,8 @@
               <td class="left"><?php echo $voucher['theme']; ?></td>
               <td class="left"><?php echo $voucher['status']; ?></td>
               <td class="left"><?php echo $voucher['date_added']; ?></td>
-              <td class="right"><?php foreach ($voucher['action'] as $action) { ?>
+              <td class="right">[ <a onclick="sendVoucher('<?php echo $voucher['voucher_id']; ?>');"><?php echo $text_send; ?></a> ]
+                <?php foreach ($voucher['action'] as $action) { ?>
                 [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
                 <?php } ?></td>
             </tr>
@@ -93,4 +94,29 @@
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+function sendVoucher(voucher_id) {
+	$.ajax({
+		type: 'POST',
+		url: 'index.php?route=sale/voucher/send&token=<?php echo $token; ?>&voucher_id=' + voucher_id,
+		dataType: 'json',
+		beforeSend: function() {
+			$('.success, .warning').remove();
+			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
+		},
+		complete: function() {
+			$('.attention').remove();
+		},
+		success: function(json) {
+			if (json['error']) {
+				$('.box').before('<div class="warning">' + json['error'] + '</div>');
+			}
+			
+			if (json['success']) {
+				$('.box').before('<div class="success">' + json['success'] + '</div>');
+			}		
+		}
+	});
+}
+//--></script> 
 <?php echo $footer; ?>

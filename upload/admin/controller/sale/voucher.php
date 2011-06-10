@@ -175,11 +175,6 @@ class ControllerSaleVoucher extends Controller {
  
     	foreach ($results as $result) {
 			$action = array();
-			
-			$action[] = array(
-				'text' => $this->language->get('text_send'),
-				'href' => $this->url->link('sale/voucher/send', 'token=' . $this->session->data['token'] . '&voucher_id=' . $result['voucher_id'] . $url, 'SSL')
-			);
 									
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
@@ -201,7 +196,9 @@ class ControllerSaleVoucher extends Controller {
 		}
 									
 		$this->data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$this->data['text_send'] = $this->language->get('text_send');
+		$this->data['text_wait'] = $this->language->get('text_wait');
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 
 		$this->data['column_code'] = $this->language->get('column_code');
@@ -216,6 +213,8 @@ class ControllerSaleVoucher extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
+ 		$this->data['token'] = $this->session->data['token'];
+		
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -575,47 +574,21 @@ class ControllerSaleVoucher extends Controller {
 	public function send() {
     	$this->language->load('sale/voucher');
 		
-		$this->load->model('sale/voucher');
-				
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		
-		$this->data['column_order_id'] = $this->language->get('column_order_id');
-		$this->data['column_customer'] = $this->language->get('column_customer');
-		$this->data['column_amount'] = $this->language->get('column_amount');
-		$this->data['column_date_added'] = $this->language->get('column_date_added');
-
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}  
-		
-		$this->data['histories'] = array();
+		$json = array();
+    	
+     	if (!$this->user->hasPermission('modify', 'sale/voucher')) {
+      		$json['error'] = $this->language->get('error_permission'); 
+    	} elseif (isset($this->request->get['voucher_id'])) {
+			$this->load->model('sale/voucher');
 			
-		$results = $this->model_sale_voucher->getVoucherHistories($this->request->get['voucher_id'], ($page - 1) * 10, 10);
-      		
-		foreach ($results as $result) {
-        	$this->data['histories'][] = array(
-				'order_id'   => $result['order_id'],
-				'customer'   => $result['customer'],
-				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
-        		'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-        	);
-      	}			
-		
-		$history_total = $this->model_sale_voucher->getTotalVoucherHistories($this->request->get['voucher_id']);
+			$this->model_sale_voucher->sendVoucher($this->request->get['voucher_id']);
 			
-		$pagination = new Pagination();
-		$pagination->total = $history_total;
-		$pagination->page = $page;
-		$pagination->limit = 10; 
-		$pagination->url = $this->url->link('sale/voucher/history', 'token=' . $this->session->data['token'] . '&voucher_id=' . $this->request->get['voucher_id'] . '&page={page}', 'SSL');
+			$json['success'] = $this->language->get('text_sent');
+		}	
 			
-		$this->data['pagination'] = $pagination->render();
+		$this->load->library('json');
 		
-		$this->template = 'sale/voucher_history.tpl';		
-		
-		$this->response->setOutput($this->render());
+		$this->response->setOutput(Json::encode($json));			
   	}			
 }
 ?>

@@ -1,7 +1,6 @@
 /* God I hate Microsoft! */
 #header #cart {
 	width: 400px;
-	border: 1px solid #000;
 }
 #header #cart .heading {
 	position: relative;

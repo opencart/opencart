@@ -59,7 +59,7 @@
       <tbody>
         <?php foreach ($products as $product) { ?>
         <tr>
-          <td style="text-align: center;"><?php if ($product['selected']) { ?>
+          <td style="text-align: center; vertical-align: middle;"><?php if ($product['selected']) { ?>
             <input type="checkbox" name="selected[]" value="<?php echo $product['order_product_id']; ?>" checked="checked" />
             <?php } else { ?>
             <input type="checkbox" name="selected[]" value="<?php echo $product['order_product_id']; ?>" />

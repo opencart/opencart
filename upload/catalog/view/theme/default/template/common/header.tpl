@@ -130,3 +130,4 @@ DD_belatedPNG.fix('#logo img');
   </ul>
 </div>
 <?php } ?>
+<div id="notification"></div>

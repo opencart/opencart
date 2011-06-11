@@ -38,6 +38,12 @@
 	position: absolute;
 	right: 10px;
 }
+.box-product > div {
+	display: inline;
+}
+.product-grid > div {
+	display: inline;
+}
 /* button */
 .prduct-info a.button span {
 	line-height: 12px;

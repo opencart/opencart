@@ -640,8 +640,8 @@ a.button:hover span {
 	
 .box-product > div {
 	width: 116px;
-	height: 200px;	
-	float: left;
+	display: inline-block;
+	vertical-align: top;
 	margin-right: 20px;
 	margin-bottom: 15px;	
 }
@@ -893,8 +893,8 @@ a.button:hover span {
 }
 .product-grid > div {
 	width: 120px;
-	height: 220px;
-	float: left;
+	display: inline-block;
+	vertical-align: top;
 	margin-right: 20px;
 	margin-bottom: 15px;
 }

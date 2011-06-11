@@ -128,8 +128,10 @@
 	zoom: 1;
 }
 .box-product div {
+	width: 116px;
+	vertical-align: top;	
 	zoom: 1;
-	float: left;
+	display: inline;
 	margin-right: 35px;
 	margin-bottom: 15px;
 }
@@ -173,8 +175,10 @@
 	width: auto;
 }
 .product-grid div {
+	width: 116px;
+	vertical-align: top;	
 	zoom: 1;
-	float: left;
+	display: inline;
 	margin-right: 35px;
 	margin-bottom: 15px;
 }

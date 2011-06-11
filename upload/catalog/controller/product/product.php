@@ -548,9 +548,16 @@ class ControllerProductProduct extends Controller {
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !isset($json['error'])) {
 			if (is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
-				$json['file'] = basename($this->request->files['file']['name']) . '.' . md5(rand());
+				$file = basename($this->request->files['file']['name']) . '.' . md5(rand());
 				
-				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $json['file']);
+				// Hide the uploaded file name sop people can not link to it directly.
+				$this->load->library('encryption');
+				
+				$encryption = new Encryption($this->config->get('config_encryption'));
+				
+				$json['file'] = $encryption->encrypt($file);
+				
+				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
 			}
 						
 			$json['success'] = $this->language->get('text_upload');

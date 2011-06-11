@@ -637,11 +637,13 @@ a.button:hover span {
 	width: 100%;
 	overflow: auto;
 }
+	
 .box-product > div {
 	width: 116px;
+	height: 200px;	
 	float: left;
 	margin-right: 20px;
-	margin-bottom: 20px;
+	margin-bottom: 15px;	
 }
 .box-product .image {
 	display: block;

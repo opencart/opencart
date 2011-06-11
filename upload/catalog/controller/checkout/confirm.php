@@ -191,17 +191,35 @@ class ControllerCheckoutConfirm extends Controller {
 				$option_data = array();
 	
 				foreach ($product['option'] as $option) {
-					$option_data[] = array(
-						'product_option_id'       => $option['product_option_id'],
-						'product_option_value_id' => $option['product_option_value_id'],
-						'product_option_id'       => $option['product_option_id'],
-						'product_option_value_id' => $option['product_option_value_id'],
-						'option_id'               => $option['option_id'],
-						'option_value_id'         => $option['option_value_id'],								   
-						'name'                    => $option['name'],
-						'value'                   => $option['option_value'],
-						'type'                    => $option['type']
-					);
+					if ($option['type'] != 'file') {	
+						$option_data[] = array(
+							'product_option_id'       => $option['product_option_id'],
+							'product_option_value_id' => $option['product_option_value_id'],
+							'product_option_id'       => $option['product_option_id'],
+							'product_option_value_id' => $option['product_option_value_id'],
+							'option_id'               => $option['option_id'],
+							'option_value_id'         => $option['option_value_id'],								   
+							'name'                    => $option['name'],
+							'value'                   => $option['option_value'],
+							'type'                    => $option['type']
+						);					
+					} else {
+						$this->load->library('encryption');
+						
+						$encryption = new Encryption($this->config->get('config_encryption'));
+						
+						$option_data[] = array(
+							'product_option_id'       => $option['product_option_id'],
+							'product_option_value_id' => $option['product_option_value_id'],
+							'product_option_id'       => $option['product_option_id'],
+							'product_option_value_id' => $option['product_option_value_id'],
+							'option_id'               => $option['option_id'],
+							'option_value_id'         => $option['option_value_id'],								   
+							'name'                    => $option['name'],
+							'value'                   => $encryption->decrypt($option['option_value']),
+							'type'                    => $option['type']
+						);								
+					}
 				}
 	 
 				$product_data[] = array(
@@ -296,12 +314,16 @@ class ControllerCheckoutConfirm extends Controller {
 							'value' => (strlen($option['option_value']) > 20 ? substr($option['option_value'], 0, 20) . '..' : $option['option_value'])
 						);
 					} else {
-						$filename = substr($option['option_value'], 0, strrpos($option['option_value'], '.'));
+						$this->load->library('encryption');
+						
+						$encryption = new Encryption($this->config->get('config_encryption'));
+						
+						$file = substr($encryption->decrypt($option['option_value']), 0, strrpos($encryption->decrypt($option['option_value']), '.'));
 						
 						$option_data[] = array(
 							'name'  => $option['name'],
-							'value' => (strlen($filename) > 20 ? substr($filename, 0, 20) . '..' : $filename)
-						);							
+							'value' => (strlen($file) > 20 ? substr($file, 0, 20) . '..' : $file)
+						);												
 					}
 				}  
 	 

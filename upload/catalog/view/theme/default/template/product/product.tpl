@@ -189,6 +189,7 @@
         <div class="minimum"><?php echo $text_minimum; ?></div>
         <?php } ?>
       </div>
+      <?php if ($review_status) { ?>
       <div class="review">
         <div><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" />&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $reviews; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $text_write; ?></a></div>
         <div class="share"><!-- AddThis Button BEGIN -->
@@ -197,6 +198,7 @@
           <!-- AddThis Button END --> 
         </div>
       </div>
+      <?php } ?>
     </div>
   </div>
   <div id="tabs" class="htabs"><a href="#tab-description"><?php echo $tab_description; ?></a>

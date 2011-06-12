@@ -813,7 +813,7 @@ class ControllerCatalogProduct extends Controller {
 		} elseif (isset($product_info)) {
 			$this->data['date_available'] = date('Y-m-d', strtotime($product_info['date_available']));
 		} else {
-			$this->data['date_available'] = date('Y-m-d', time()-86400);
+			$this->data['date_available'] = date('Y-m-d', time() - 86400);
 		}
 											
     	if (isset($this->request->post['quantity'])) {

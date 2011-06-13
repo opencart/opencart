@@ -238,7 +238,7 @@ class ControllerCheckoutVoucher extends Controller {
     	}
 		
 		if (($this->request->post['amount'] < 1) || ($this->request->post['amount'] > 1000)) {
-      		$this->error['amount'] = sprintf($this->language->get('error_amount'), $this->currency->format(1, $this->currency->getCode(), 1), $this->currency->format(1000, $this->currency->getCode(), 1) . ' ' . $this->currency->getCode());
+      		$this->error['amount'] = sprintf($this->language->get('error_amount'), $this->currency->format(1, false, 1), $this->currency->format(1000, false, 1) . ' ' . $this->currency->getCode());
     	}
 		
 		if (!isset($this->request->post['voucher_theme_id'])) {

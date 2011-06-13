@@ -107,41 +107,43 @@ class ControllerCommonFileManager extends Controller {
 		
 		$files = glob(rtrim($directory, '/') . '/*');
 		
-		foreach ($files as $file) {
-			if (is_file($file)) {
-				$ext = strrchr($file, '.');
-			} else {
-				$ext = '';
-			}	
-			
-			if (in_array(strtolower($ext), $allowed)) {
-				$size = filesize($file);
-	
-				$i = 0;
-	
-				$suffix = array(
-					'B',
-					'KB',
-					'MB',
-					'GB',
-					'TB',
-					'PB',
-					'EB',
-					'ZB',
-					'YB'
-				);
-	
-				while (($size / 1024) > 1) {
-					$size = $size / 1024;
-					$i++;
+		if ($files) {
+			foreach ($files as $file) {
+				if (is_file($file)) {
+					$ext = strrchr($file, '.');
+				} else {
+					$ext = '';
+				}	
+				
+				if (in_array(strtolower($ext), $allowed)) {
+					$size = filesize($file);
+		
+					$i = 0;
+		
+					$suffix = array(
+						'B',
+						'KB',
+						'MB',
+						'GB',
+						'TB',
+						'PB',
+						'EB',
+						'ZB',
+						'YB'
+					);
+		
+					while (($size / 1024) > 1) {
+						$size = $size / 1024;
+						$i++;
+					}
+						
+					$json[] = array(
+						'file'     => substr($file, strlen(DIR_IMAGE . 'data/')),
+						'filename' => basename($file),
+						'size'     => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
+						'thumb'    => $this->model_tool_image->resize(substr($file, strlen(DIR_IMAGE)), 100, 100)
+					);
 				}
-					
-				$json[] = array(
-					'file'     => substr($file, strlen(DIR_IMAGE . 'data/')),
-					'filename' => basename($file),
-					'size'     => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
-					'thumb'    => $this->model_tool_image->resize(substr($file, strlen(DIR_IMAGE)), 100, 100)
-				);
 			}
 		}
 		

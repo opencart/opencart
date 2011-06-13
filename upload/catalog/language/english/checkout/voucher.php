@@ -15,7 +15,7 @@ $_['entry_to_email']   = 'Recipient\'s Email:';
 $_['entry_from_name']  = 'Your Name:';
 $_['entry_from_email'] = 'Your Email:';
 $_['entry_message']    = 'Message:<br /><span class="help">(Optional)</span>';
-$_['entry_amount']     = 'Amount:';
+$_['entry_amount']     = 'Amount:<br /><span class="help">(Value must be between %s and %s)</span>';
 $_['entry_theme']      = 'Gift Certificate Theme:';
 
 // Error

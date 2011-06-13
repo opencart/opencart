@@ -7,8 +7,6 @@ class ControllerPaymentAlertPay extends Controller {
 		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		
-		$this->load->library('encryption');
-		
 		$this->data['action'] = 'https://www.alertpay.com/PayProcess.aspx';
 
 		$this->data['ap_merchant'] = $this->config->get('alertpay_merchant');

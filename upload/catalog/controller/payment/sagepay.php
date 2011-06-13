@@ -27,8 +27,8 @@ class ControllerPaymentSagepay extends Controller {
 		$data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 		$data['Currency'] = $order_info['currency_code'];
 		$data['Description'] = sprintf($this->language->get('text_description'), date($this->language->get('date_format_short')), $this->session->data['order_id']);
-		$data['SuccessURL'] = $this->url->link('payment/sagepay/success', 'order_id=' . $this->session->data['order_id']);
-		$data['FailureURL'] = $this->url->link('checkout/checkout', '', 'SSL');
+		$data['SuccessURL'] = str_replace('&amp;', '&', $this->url->link('payment/sagepay/success', 'order_id=' . $this->session->data['order_id']));
+		$data['FailureURL'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', '', 'SSL'));
 		
 		$data['CustomerName'] = html_entity_decode($order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
 		$data['SendEMail'] = '1';

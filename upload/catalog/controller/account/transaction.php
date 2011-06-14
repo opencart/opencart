@@ -75,6 +75,7 @@ class ControllerAccountTransaction extends Controller {
 		$pagination->total = $transaction_total;
 		$pagination->page = $page;
 		$pagination->limit = 10; 
+		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('account/transaction', 'page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();

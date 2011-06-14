@@ -77,6 +77,7 @@ class ControllerAccountReward extends Controller {
 		$pagination->total = $reward_total;
 		$pagination->page = $page;
 		$pagination->limit = 10; 
+		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('account/reward', 'page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();

@@ -136,3 +136,4 @@ $('#form').bind('submit', function() {
 	$('input[name=\'google_talk_module\']').attr('value', module.join(','));
 });
 //--></script>
+<?php echo $footer; ?>

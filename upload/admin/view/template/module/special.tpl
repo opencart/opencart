@@ -137,4 +137,5 @@ $('#form').bind('submit', function() {
 	
 	$('input[name=\'special_module\']').attr('value', module.join(','));
 });
-//--></script><?php echo $footer; ?>
+//--></script>
+<?php echo $footer; ?>

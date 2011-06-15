@@ -137,3 +137,4 @@ $('#form').bind('submit', function() {
 	$('input[name=\'bestseller_module\']').attr('value', module.join(','));
 });
 //--></script>
+<?php echo $footer; ?>

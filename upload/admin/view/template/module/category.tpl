@@ -127,3 +127,4 @@ $('#form').bind('submit', function() {
 	$('input[name=\'category_module\']').attr('value', module.join(','));
 });
 //--></script>
+<?php echo $footer; ?>

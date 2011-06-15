@@ -149,3 +149,4 @@ $('#form').bind('submit', function() {
 	$('input[name=\'slideshow_module\']').attr('value', module.join(','));
 });
 //--></script>
+<?php echo $footer; ?>

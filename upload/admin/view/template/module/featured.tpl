@@ -198,3 +198,4 @@ $('#form').bind('submit', function() {
 	$('input[name=\'featured_module\']').attr('value', module.join(','));
 });
 //--></script> 
+<?php echo $footer; ?>

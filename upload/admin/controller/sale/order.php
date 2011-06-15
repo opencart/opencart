@@ -515,9 +515,9 @@ class ControllerSaleOrder extends Controller {
 		$this->data['button_remove'] = $this->language->get('button_remove');
 
 		$this->data['tab_order'] = $this->language->get('tab_order');
+		$this->data['tab_product'] = $this->language->get('tab_product');
 		$this->data['tab_payment'] = $this->language->get('tab_payment');
 		$this->data['tab_shipping'] = $this->language->get('tab_shipping');
-		$this->data['tab_product'] = $this->language->get('tab_product');
 		$this->data['tab_total'] = $this->language->get('tab_total');
 
 		$this->data['token'] = $this->session->data['token'];
@@ -852,6 +852,14 @@ class ControllerSaleOrder extends Controller {
       		$this->data['shipping_zone_id'] = '';
     	}	
 		
+    	if (isset($this->request->post['shipping_method'])) {
+      		$this->data['shipping_method'] = $this->request->post['shipping_method'];
+    	} elseif (isset($order_info)) { 
+			$this->data['shipping_method'] = $order_info['shipping_method'];
+		} else {
+      		$this->data['shipping_method'] = '';
+    	}	
+				
     	if (isset($this->request->post['payment_firstname'])) {
       		$this->data['payment_firstname'] = $this->request->post['payment_firstname'];
 		} elseif (isset($order_info)) { 
@@ -927,7 +935,15 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('localisation/country');
 		
 		$this->data['countries'] = $this->model_localisation_country->getCountries();															
-
+		
+    	if (isset($this->request->post['payment_method'])) {
+      		$this->data['payment_method'] = $this->request->post['payment_method'];
+    	} elseif (isset($order_info)) { 
+			$this->data['payment_method'] = $order_info['payment_method'];
+		} else {
+      		$this->data['payment_method'] = '';
+    	}
+		
 		if (isset($this->request->post['affiliate_id'])) {
       		$this->data['affiliate_id'] = $this->request->post['affiliate_id'];
     	} elseif (isset($order_info)) { 
@@ -939,7 +955,7 @@ class ControllerSaleOrder extends Controller {
 		if (isset($this->request->post['affiliate'])) {
       		$this->data['affiliate'] = $this->request->post['affiliate'];
     	} elseif (isset($order_info)) { 
-			$this->data['affiliate'] = $order_info['affiliate'];
+			$this->data['affiliate'] = $order_info['affiliate_firstname'] . '' . $order_info['affiliate_lastname'];
 		} else {
       		$this->data['affiliate'] = '';
     	}
@@ -963,23 +979,7 @@ class ControllerSaleOrder extends Controller {
 		} else {
       		$this->data['comment'] = '';
     	}	
-		
-    	if (isset($this->request->post['shipping_method'])) {
-      		$this->data['shipping_method'] = $this->request->post['shipping_method'];
-    	} elseif (isset($order_info)) { 
-			$this->data['shipping_method'] = $order_info['shipping_method'];
-		} else {
-      		$this->data['shipping_method'] = '';
-    	}	
-		
-    	if (isset($this->request->post['payment_method'])) {
-      		$this->data['payment_method'] = $this->request->post['payment_method'];
-    	} elseif (isset($order_info)) { 
-			$this->data['payment_method'] = $order_info['payment_method'];
-		} else {
-      		$this->data['payment_method'] = '';
-    	}
-							
+			
 		if (isset($this->request->post['order_product'])) {
       		$this->data['order_products'] = $this->request->post['order_product'];
     	} elseif (isset($order_info)) { 

@@ -143,3 +143,4 @@ $('#form').bind('submit', function() {
 	$('input[name=\'store_module\']').attr('value', module.join(','));
 });
 //--></script>
+<?php echo $footer; ?>

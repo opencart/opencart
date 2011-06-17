@@ -97,7 +97,7 @@ class ControllerPaymentPPProUK extends Controller {
 			$payment_type = 'S';
 		}
 		
-		$request  = 'USER=' .urlencode($this->config->get('pp_pro_uk_user'));
+		$request  = 'USER=' . urlencode($this->config->get('pp_pro_uk_user'));
 		$request .= '&VENDOR=' . urlencode($this->config->get('pp_pro_uk_vendor'));
 		$request .= '&PARTNER=' . urlencode($this->config->get('pp_pro_uk_partner'));
 		$request .= '&PWD=' . urlencode($this->config->get('pp_pro_uk_password'));

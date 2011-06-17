@@ -39,7 +39,7 @@ final class Document {
 	}
 	
 	public function getLinks() {
-		return array_unique($this->links);
+		return $this->links;
 	}	
 	
 	public function addStyle($href, $rel = 'stylesheet', $media = 'screen') {
@@ -51,7 +51,7 @@ final class Document {
 	}
 	
 	public function getStyles() {
-		return array_unique($this->styles);
+		return $this->styles;
 	}	
 	
 	public function addScript($script) {
@@ -59,7 +59,7 @@ final class Document {
 	}
 	
 	public function getScripts() {
-		return array_unique($this->scripts);
+		return $this->scripts;
 	}
 }
 ?>

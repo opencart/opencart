@@ -473,7 +473,7 @@ function image_upload(field, preview) {
 			}
 		},	
 		bgiframe: false,
-		width: 700,
+		width: 800,
 		height: 400,
 		resizable: false,
 		modal: false

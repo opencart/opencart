@@ -90,6 +90,9 @@
             </tr>
           </table>
         </div>
+        
+        
+        
         <div id="tab-product" class="vtabs-content">
           <table id="product" class="list">
             <thead>
@@ -107,13 +110,64 @@
               <tr>
                 <td class="left"><input type="text" name="order_product[<?php echo $product_row; ?>][name]" value="<?php echo $order_product['name']; ?>" />
                   <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_product_id]" value="<?php echo $order_product['order_product_id']; ?>" />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
-                  <?php if (isset($order_product['option'])) { ?>
-                  <?php foreach ($order_product['option'] as $option) { ?>
-                  <br />
-                  &nbsp;<small> - <?php echo $option['name']; ?> <?php echo $option['value']; ?></small>
+                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" /><br />
+                  
+                  <?php $option_row = 0; ?> 
+                  
+                  <?php foreach ($order_product['option'] as $order_option) { ?>
+                  
+                  <?php if ($order_option['type'] == 'text') { ?>
+                  &nbsp;<?php echo $order_option['name']; ?><br />
+                  <input type="text" name="order_product[<?php echo $product_row; ?>][<?php echo $option_row; ?>][option_value]" value="<?php echo $order_option['option_value']; ?>" /><br />
                   <?php } ?>
-                  <?php } ?></td>
+                  
+                  <?php if ($order_option['type'] == 'textarea') { ?>
+                  &nbsp;<?php echo $order_option['name']; ?><br />
+                  <textarea name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" cols="40" rows="5"><?php echo $order_option['option_value']; ?></textarea><br />
+                  <?php } ?>
+                  
+                  <?php if ($order_option['type'] == 'file') { ?>
+                  &nbsp;<?php echo $order_option['name']; ?><br />
+                  <input type="text" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" value="<?php echo $order_option['option_value']; ?>" /><br />
+                  <?php } ?>
+                  
+                  <?php if ($order_option['type'] == 'date') { ?>
+                  &nbsp;<?php echo $order_option['name']; ?><br />
+                  <input type="text" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" value="<?php echo $order_option['option_value']; ?>" class="date" /><br />
+                  <?php } ?>
+                  
+                  <?php if ($order_option['type'] == 'datetime') { ?>
+                  &nbsp;<?php echo $order_option['name']; ?><br />
+                  <input type="text" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" value="<?php echo $order_option['option_value']; ?>" class="datetime" /><br />
+                  <?php } ?>
+                  
+                  <?php if ($order_option['type'] == 'time') { ?>
+                  &nbsp;<?php echo $option_option['name']; ?><br />
+                  <input type="text" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" value="<?php echo $order_option['option_value']; ?>" class="time" /><br />
+                  <?php } ?>
+                  
+                  <?php if ($order_option['type'] == 'select') { ?>
+                  &nbsp;<?php echo $order_option['name']; ?><br />
+                  
+                  <select name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]">
+                  <?php foreach ($option_value as $t) { ?>
+                  <option></option>
+                  <?php } ?>
+                  </select>
+                  <?php } ?>
+                  
+                  <?php if ($order_option['type'] == 'radio') { ?>
+                  &nbsp;<?php echo $order_option['name']; ?><br />
+                  <?php } ?>
+                  
+                  <?php if ($order_option['type'] == 'checkbox') { ?>
+                  &nbsp;<?php echo $order_option['name']; ?><br />
+                  <?php } ?>
+                  
+                  <?php $option_row++; ?>
+                  <?php } ?>
+                  
+                </td>
                 <td class="left"><input type="text" name="order_product[<?php echo $product_row; ?>][model]" value="<?php echo $order_product['model']; ?>" /></td>
                 <td class="right"><input type="text" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" size="3" /></td>
                 <td class="right"><input type="text" name="order_product[<?php echo $product_row; ?>][price]" value="<?php echo $order_product['price']; ?>" size="4" /></td>
@@ -130,6 +184,8 @@
             </tfoot>
           </table>
         </div>
+        
+        
         <div id="tab-payment" class="vtabs-content">
           <table class="form">
             <tr>
@@ -299,6 +355,18 @@
           </table>
         </div>
         <div id="tab-total" class="vtabs-content">
+        
+          <table class="form">
+            <tr>
+              <td><?php echo $entry_coupon; ?></td>
+              <td><input type="text" name="payment_method" value="<?php echo $payment_method; ?>" /></td>
+            </tr>
+             <tr>
+              <td><?php echo $entry_voucher; ?></td>
+              <td><input type="text" name="payment_method" value="<?php echo $payment_method; ?>" /></td>
+            </tr>           
+          </table>
+        
           <table class="list" id="total">
             <thead>
               <tr>
@@ -534,7 +602,7 @@ $('input[name=\'affiliate\']').autocomplete({
 	}
 });
 
-
+/*
 function calculate() {
 	$.ajax({
 		url: '<?php echo $store_url; ?>index.php?route=checkout/manual&token=<?php echo $token; ?>',
@@ -543,17 +611,17 @@ function calculate() {
 		data: $('#tab-order :input, #tab-payment :input, #tab-shipping :input, #tab-product :input'),
 		success: function(json) {
 			$('#test').html(json);
-			/*
+			
 			$('.autocomplete div').remove();
 			
 			shipping = json['product'];
 			shipping = json['shipping'];
 			total = json['total'];
-			*/
+			
 		}
 	});		
 }
-
+*/
 /*
 $('input[name=\'shipping_method\']').catcomplete({
 	delay: 0,
@@ -617,6 +685,15 @@ function getTotals() {
 	});		
 }
 */
+//--></script> 
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript"><!--
+$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+$('.datetime').datetimepicker({
+	dateFormat: 'yy-mm-dd',
+	timeFormat: 'h:m'
+});
+$('.time').timepicker({timeFormat: 'h:m'});
 //--></script> 
 <script type="text/javascript"><!--
 $('.vtabs a').tabs();

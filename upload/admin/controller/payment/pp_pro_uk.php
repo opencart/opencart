@@ -118,8 +118,10 @@ class ControllerPaymentPPProUK extends Controller {
 		
 		if (isset($this->request->post['pp_pro_uk_partner'])) {
 			$this->data['pp_pro_uk_partner'] = $this->request->post['pp_pro_uk_partner'];
-		} else {
+		} elseif ($this->config->has('pp_pro_uk_partner')) {
 			$this->data['pp_pro_uk_partner'] = $this->config->get('pp_pro_uk_partner');
+		} else {
+			$this->data['pp_pro_uk_test'] = 'PayPal';
 		}
 		
 		if (isset($this->request->post['pp_pro_uk_test'])) {

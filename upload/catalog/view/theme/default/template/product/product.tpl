@@ -333,23 +333,8 @@ $('#button-cart').bind('click', function() {
 				$('.attention').fadeIn('slow');
 					
 				$('#cart_total').html(json['total']);
-								
-				var image = $('#image').offset();
-				var cart  = $('#cart').offset();
-	
-				$('#image').before('<img src="' + $('#image').attr('src') + '" id="temp" style="position: absolute; top: ' + image.top + 'px; left: ' + image.left + 'px;" />');
-	
-				params = {
-					top : cart.top + 'px',
-					left : cart.left + 'px',
-					opacity : 0.0,
-					width : $('#cart').width(),  
-					height : $('#cart').height()
-				};		
-	
-				$('#temp').animate(params, 'slow', false, function () {
-					$('#temp').remove();
-				});		
+				
+				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 			}	
 		}
 	});

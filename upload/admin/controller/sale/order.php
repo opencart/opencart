@@ -993,66 +993,63 @@ class ControllerSaleOrder extends Controller {
 		$this->data['order_products'] = array();		
 		
 		foreach ($order_products as $order_product) {
-			$order_option_data = array();
+			$product_info = $this->model_catalog_product->getProduct($order_product['product_id']);
 			
-			$product_options = $this->model_catalog_product->getProductOptions($order_product['product_id']);	
-			
-			foreach ($product_options as $product_option) {
-			
-				//$order_options = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product_option['option_id']);	
+			if ($product_info) {
+				$option_data = array();
 				
-				if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox') {
-					$product_option_value_data = array();
+				$product_options = $this->model_catalog_product->getProductOptions($order_product['product_id']);	
+				
+				foreach ($product_options as $product_option) {
 					
-					foreach ($product_option['product_option_value'] as $product_option_value) {
-						$product_option_value_data[] = array(
-							'product_option_value_id' => $product_option_value['product_option_value_id'],
-							'option_value_id'         => $product_option_value['option_value_id'],
-							'quantity'                => $product_option_value['quantity'],
-							'subtract'                => $product_option_value['subtract'],
-							'price'                   => $product_option_value['price'],
-							'price_prefix'            => $product_option_value['price_prefix'],
-							'points'                  => $product_option_value['points'],
-							'points_prefix'           => $product_option_value['points_prefix'],						
-							'weight'                  => $product_option_value['weight'],
-							'weight_prefix'           => $product_option_value['weight_prefix']	
+					//$order_options = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product_option['option_id']);	
+					
+					if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox') {
+						$option_value_data = array();
+						
+						foreach ($product_option['product_option_value'] as $product_option_value) {
+							$option_value_data[] = array(
+								'product_option_value_id' => $product_option_value['product_option_value_id'],
+								'option_value_id'         => $product_option_value['option_value_id'],
+								'name'                    => $product_option_value['name'],
+								'price'                   => (float)$product_option_value['price'] ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
+								'price_prefix'            => $product_option_value['price_prefix']
+							);	
+						}
+						
+						$option_data[] = array(
+							'product_option_id' => $product_option['product_option_id'],
+							'option_id'         => $product_option['option_id'],
+							'name'              => $product_option['name'],
+							'type'              => $product_option['type'],
+							'option_value'      => $option_value_data,
+							'required'          => $product_option['required']
 						);	
-											
+					} else {
+						$option_data[] = array(
+							'product_option_id' => $product_option['product_option_id'],
+							'option_id'         => $product_option['option_id'],
+							'name'              => $product_option['name'],
+							'type'              => $product_option['type'],
+							'option_value'      => $product_option['option_value'],
+							'required'          => $product_option['required']
+						);				
 					}
-					
-					$this->data['product_options'][] = array(
-						'product_option_id'    => $product_option['product_option_id'],
-						'option_id'            => $product_option['option_id'],
-						'name'                 => $product_option['name'],
-						'type'                 => $product_option['type'],
-						'product_option_value' => $product_option_value_data,
-						'required'             => $product_option['required']
-					);	
-								
-				} else {
-					$this->data['product_options'][] = array(
-						'product_option_id' => $product_option['product_option_id'],
-						'option_id'         => $product_option['option_id'],
-						'name'              => $product_option['name'],
-						'type'              => $product_option['type'],
-						'option_value'      => $product_option['option_value'],
-						'required'          => $product_option['required']
-					);				
 				}
+				
+				$this->data['order_products'][] = array(
+					'order_product_id' => $order_product['order_product_id'],
+					'order_id'         => $order_product['order_id'],
+					'product_id'       => $product_info['product_id'],
+					'name'             => $product_info['name'],
+					'model'            => $product_info['model'],
+					'option'           => $option_data,
+					'quantity'         => $order_product['quantity'],
+					'price'            => $order_product['price'],
+					'total'            => $order_product['total'],
+					'tax'              => $order_product['tax']
+				);
 			}
-			
-			$this->data['order_products'][] = array(
-				'order_product_id' => $order_product['order_product_id'],
-				'order_id'         => $order_product['order_id'],
-				'product_id'       => $order_product['product_id'],
-				'name'             => $order_product['name'],
-				'model'            => $order_product['model'],
-				'option'           => $order_option_data,
-				'quantity'         => $order_product['quantity'],
-				'price'            => $order_product['price'],
-				'total'            => $order_product['total'],
-				'tax'              => $order_product['tax']
-			);			
 		}
 		   
 		if (isset($this->request->post['order_total'])) {

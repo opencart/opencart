@@ -457,7 +457,7 @@
                       <?php } else { ?>
                       <option value="+">+</option>
                       <?php } ?>
-                      <?php if ($product_option_value['price_prefix'] == '-') { ?>
+                      <?php if ($product_option_value['weight_prefix'] == '-') { ?>
                       <option value="-" selected="selected">-</option>
                       <?php } else { ?>
                       <option value="-">-</option>

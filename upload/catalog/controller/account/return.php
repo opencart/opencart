@@ -447,25 +447,25 @@ class ControllerAccountReturn extends Controller {
 		if (isset($this->request->post['firstname'])) {
     		$this->data['firstname'] = $this->request->post['firstname'];
 		} else {
-			$this->data['firstname'] = '';
+			$this->data['firstname'] = $this->customer->getFirstName();
 		}
 
 		if (isset($this->request->post['lastname'])) {
     		$this->data['lastname'] = $this->request->post['lastname'];
 		} else {
-			$this->data['lastname'] = '';
+			$this->data['lastname'] = $this->customer->getLastName();
 		}
 		
 		if (isset($this->request->post['email'])) {
     		$this->data['email'] = $this->request->post['email'];
 		} else {
-			$this->data['email'] = '';
+			$this->data['email'] = $this->customer->getEmail();
 		}
 		
 		if (isset($this->request->post['telephone'])) {
     		$this->data['telephone'] = $this->request->post['telephone'];
 		} else {
-			$this->data['telephone'] = '';
+			$this->data['telephone'] = $this->customer->getTelephone();
 		}
 		
 		$this->load->model('localisation/return_reason');

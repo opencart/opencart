@@ -1,7 +1,7 @@
 <?php
 class ModelAccountReturn extends Model {
 	public function addReturn($data) {			      	
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "return`SET order_id = '" . (int)$data['order_id'] . "', date_ordered = '" . $this->db->escape($data['date_ordered']) . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', return_status_id = '" . (int)$this->config->get('config_return_status_id') . "', comment = '" . $this->db->escape($data['comment']) . "', date_added = NOW(), date_modified = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "return` SET customer_id = '" . (int)$this->customer->getId() . "', order_id = '" . (int)$data['order_id'] . "', date_ordered = '" . $this->db->escape($data['date_ordered']) . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', return_status_id = '" . (int)$this->config->get('config_return_status_id') . "', comment = '" . $this->db->escape($data['comment']) . "', date_added = NOW(), date_modified = NOW()");
       	
 		$return_id = $this->db->getLastId();
 		

@@ -205,7 +205,8 @@
                   <?php echo $text_domestic_28; ?>
                   <?php } ?>
                 </div>
-              </div></td>
+              </div>
+              <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a></td>
           </tr>
           <tr>
             <td><?php echo $entry_international; ?></td>
@@ -355,7 +356,8 @@
                   <?php echo $text_international_21; ?>
                   <?php } ?>
                 </div>
-              </div></td>
+              </div>
+              <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a></td>
           </tr>
           <tr>
             <td><?php echo $entry_size; ?></td>

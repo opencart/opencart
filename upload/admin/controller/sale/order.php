@@ -998,12 +998,11 @@ class ControllerSaleOrder extends Controller {
 			if ($product_info) {
 				$option_data = array();
 				
+				//$this->data['order_products'][] = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product_option['option_id']);	
+				
 				$product_options = $this->model_catalog_product->getProductOptions($order_product['product_id']);	
 				
 				foreach ($product_options as $product_option) {
-					
-					//$order_options = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product_option['option_id']);	
-					
 					if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox') {
 						$option_value_data = array();
 						

@@ -639,7 +639,7 @@ a.button:hover span {
 }
 	
 .box-product > div {
-	width: 116px;
+	width: 134px;
 	display: inline-block;
 	vertical-align: top;
 	margin-right: 20px;
@@ -892,7 +892,7 @@ a.button:hover span {
 	overflow: auto;
 }
 .product-grid > div {
-	width: 120px;
+	width: 134px;
 	display: inline-block;
 	vertical-align: top;
 	margin-right: 20px;

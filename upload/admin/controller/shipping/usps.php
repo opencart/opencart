@@ -25,6 +25,8 @@ class ControllerShippingUsps extends Controller {
 		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');		
+		$this->data['text_select_all'] = $this->language->get('text_select_all');
+		$this->data['text_unselect_all'] = $this->language->get('text_unselect_all');		
 		$this->data['text_domestic_0'] = $this->language->get('text_domestic_0');
 		$this->data['text_domestic_1'] = $this->language->get('text_domestic_1');
 		$this->data['text_domestic_2'] = $this->language->get('text_domestic_2');
@@ -60,7 +62,7 @@ class ControllerShippingUsps extends Controller {
 		$this->data['text_international_15'] = $this->language->get('text_international_15');
 		$this->data['text_international_16'] = $this->language->get('text_international_16');
 		$this->data['text_international_21'] = $this->language->get('text_international_21');
-		
+				
 		$this->data['entry_user_id'] = $this->language->get('entry_user_id');
 		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
 		$this->data['entry_domestic'] = $this->language->get('entry_domestic');

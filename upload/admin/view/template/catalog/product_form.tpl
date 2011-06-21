@@ -131,7 +131,7 @@
             <tr>
               <td><?php echo $entry_upc; ?></td>
               <td><input type="text" name="upc" value="<?php echo $upc; ?>" /></td>
-            </tr>            
+            </tr>
             <tr>
               <td><?php echo $entry_location; ?></td>
               <td><input type="text" name="location" value="<?php echo $location; ?>" /></td>
@@ -232,7 +232,8 @@
                     <?php } ?>
                   </div>
                   <?php } ?>
-                </div></td>
+                </div>
+                <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a></td>
             </tr>
             <tr>
               <td><?php echo $entry_store; ?></td>
@@ -336,8 +337,9 @@
             <a href="#tab-option-<?php echo $option_row; ?>" id="option-<?php echo $option_row; ?>"><?php echo $product_option['name']; ?>&nbsp;<img src="view/image/delete.png" alt="" onclick="$('#vtabs a:first').trigger('click'); $('#option-<?php echo $option_row; ?>').remove(); $('#tab-option-<?php echo $option_row; ?>').remove(); return false;" /></a>
             <?php $option_row++; ?>
             <?php } ?>
-            <span id="option-add"><input name="option" value="" />&nbsp;<img src="view/image/add.png" alt="<?php echo $button_add_option; ?>" title="<?php echo $button_add_option; ?>" /></span>
-          </div>
+            <span id="option-add">
+            <input name="option" value="" />
+            &nbsp;<img src="view/image/add.png" alt="<?php echo $button_add_option; ?>" title="<?php echo $button_add_option; ?>" /></span> </div>
           <?php $option_row = 0; ?>
           <?php $option_value_row = 0; ?>
           <?php foreach ($product_options as $product_option) { ?>
@@ -376,25 +378,25 @@
                 <td><?php echo $entry_option_value; ?></td>
                 <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" /></td>
               </tr>
-              <?php } ?>              
+              <?php } ?>
               <?php if ($product_option['type'] == 'date') { ?>
               <tr>
                 <td><?php echo $entry_option_value; ?></td>
                 <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" class="date" /></td>
               </tr>
-              <?php } ?> 
+              <?php } ?>
               <?php if ($product_option['type'] == 'datetime') { ?>
               <tr>
                 <td><?php echo $entry_option_value; ?></td>
                 <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" class="datetime" /></td>
               </tr>
-              <?php } ?> 
+              <?php } ?>
               <?php if ($product_option['type'] == 'time') { ?>
               <tr>
                 <td><?php echo $entry_option_value; ?></td>
                 <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" class="time" /></td>
               </tr>
-              <?php } ?>                                                                      
+              <?php } ?>
             </table>
             <?php if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox') { ?>
             <table id="option-value<?php echo $option_row; ?>" class="list">
@@ -450,7 +452,7 @@
                       <option value="-">-</option>
                       <?php } ?>
                     </select>
-                    <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][points]" value="<?php echo $product_option_value['points']; ?>" size="5" /></td>                    
+                    <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][points]" value="<?php echo $product_option_value['points']; ?>" size="5" /></td>
                   <td class="right"><select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][weight_prefix]">
                       <?php if ($product_option_value['weight_prefix'] == '+') { ?>
                       <option value="+" selected="selected">+</option>
@@ -1064,7 +1066,7 @@ function addImage() {
 	image_row++;
 }
 //--></script> 
-<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
 <script type="text/javascript"><!--
 $('.date').datepicker({dateFormat: 'yy-mm-dd'});
 $('.datetime').datetimepicker({

@@ -261,6 +261,9 @@ class ControllerUserUserPermission extends Controller {
 	private function getForm() {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		
+		$this->data['text_select_all'] = $this->language->get('text_select_all');
+		$this->data['text_unselect_all'] = $this->language->get('text_unselect_all');
+				
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_access'] = $this->language->get('entry_access');
 		$this->data['entry_modify'] = $this->language->get('entry_modify');

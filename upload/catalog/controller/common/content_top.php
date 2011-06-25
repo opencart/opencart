@@ -20,11 +20,11 @@ class ControllerCommonContentTop extends Controller {
 			$layout_id = $this->model_catalog_category->getCategoryLayoutId(end($path));			
 		}
 		
-		if (substr($route, 0, 16) == 'product/product' && isset($this->request->get['product_id'])) {
+		if (substr($route, 0, 15) == 'product/product' && isset($this->request->get['product_id'])) {
 			$layout_id = $this->model_catalog_product->getProductLayoutId($this->request->get['product_id']);
 		}
 		
-		if (substr($route, 0, 16) == 'product/information' && isset($this->request->get['information_id'])) {
+		if (substr($route, 0, 19) == 'product/information' && isset($this->request->get['information_id'])) {
 			$layout_id = $this->model_catalog_information->getInformationLayoutId($this->request->get['information_id']);
 		}
 		

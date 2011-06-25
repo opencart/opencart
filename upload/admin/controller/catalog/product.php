@@ -1230,7 +1230,7 @@ class ControllerCatalogProduct extends Controller {
 				foreach ($product_options as $product_option) {
 					if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox') {
 						$option_value_data = array();
-						
+					
 						foreach ($product_option['product_option_value'] as $product_option_value) {
 							$option_value_data[] = array(
 								'product_option_value_id' => $product_option_value['product_option_value_id'],
@@ -1240,7 +1240,7 @@ class ControllerCatalogProduct extends Controller {
 								'price_prefix'            => $product_option_value['price_prefix']
 							);	
 						}
-						
+					
 						$option_data[] = array(
 							'product_option_id' => $product_option['product_option_id'],
 							'option_id'         => $product_option['option_id'],

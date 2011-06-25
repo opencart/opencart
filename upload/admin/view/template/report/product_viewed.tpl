@@ -17,9 +17,21 @@
       <table class="list">
         <thead>
           <tr>
-            <td class="left"><?php echo $column_name; ?></td>
-            <td class="left"><?php echo $column_model; ?></td>
-            <td class="right"><?php echo $column_viewed; ?></td>
+            <td class="left"><?php if ($sort == 'pd.name') { ?>
+              <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
+              <?php } else { ?>
+              <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
+              <?php } ?></td>
+            <td class="left"><?php if ($sort == 'p.model') { ?>
+              <a href="<?php echo $sort_model; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_model; ?></a>
+              <?php } else { ?>
+              <a href="<?php echo $sort_model; ?>"><?php echo $column_model; ?></a>
+              <?php } ?></td>
+            <td class="right"><?php if ($sort == 'p.viewed') { ?>
+              <a href="<?php echo $sort_viewed; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_viewed; ?></a>
+              <?php } else { ?>
+              <a href="<?php echo $sort_viewed; ?>"><?php echo $column_viewed; ?></a>
+              <?php } ?></td>
             <td class="right"><?php echo $column_percent; ?></td>
           </tr>
         </thead>

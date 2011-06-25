@@ -338,8 +338,8 @@
             <?php $option_row++; ?>
             <?php } ?>
             <span id="option-add">
-            <input name="option" value="" />
-            &nbsp;<img src="view/image/add.png" alt="<?php echo $button_add_option; ?>" title="<?php echo $button_add_option; ?>" /></span> </div>
+            <input name="option" value="" style="width: 130px;" />
+            &nbsp;<img src="view/image/add.png" alt="<?php echo $button_add_option; ?>" title="<?php echo $button_add_option; ?>" /></span></div>
           <?php $option_row = 0; ?>
           <?php $option_value_row = 0; ?>
           <?php foreach ($product_options as $product_option) { ?>

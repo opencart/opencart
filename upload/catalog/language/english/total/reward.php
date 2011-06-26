@@ -3,7 +3,7 @@
 $_['heading_title'] = 'Use Reward Points (Available %s)';
 
 // Text
-$_['text_reward']   = 'Reward Points(%s):';
+$_['text_reward']   = 'Reward Points(%s)';
 $_['text_order_id'] = 'Order ID: #%s';
 $_['text_success']  = 'Success: Your reward points discount has been applied!';
 

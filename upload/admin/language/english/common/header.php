@@ -43,6 +43,7 @@ $_['text_product']                     = 'Products';
 $_['text_reports']                     = 'Reports';
 $_['text_report_sale_order']           = 'Orders';
 $_['text_report_sale_tax']             = 'Tax';
+$_['text_report_sale_shipping']        = 'Shipping';
 $_['text_report_sale_return']          = 'Returns';
 $_['text_report_sale_coupon']          = 'Coupons';
 $_['text_report_product_viewed']       = 'Viewed';

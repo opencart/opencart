@@ -281,7 +281,7 @@
           <?php foreach ($totals as $totals) { ?>
           <tbody id="totals">
             <tr>
-              <td colspan="4" class="right"><?php echo $totals['title']; ?></td>
+              <td colspan="4" class="right"><?php echo $totals['title']; ?>:</td>
               <td class="right"><?php echo $totals['text']; ?></td>
             </tr>
           </tbody>

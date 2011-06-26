@@ -3,7 +3,7 @@
 $_['heading_title'] = 'Use Gift Voucher';
 
 // Text
-$_['text_voucher']  = 'Voucher(%s):';
+$_['text_voucher']  = 'Voucher(%s)';
 $_['text_success']  = 'Success: Your gift voucher discount has been applied!';
 
 // Entry

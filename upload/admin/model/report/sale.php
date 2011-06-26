@@ -1,7 +1,7 @@
 <?php
 class ModelReportSale extends Model {
 	public function getOrders($data = array()) {
-		$sql = "SELECT MIN(r.date_added) AS date_start, MAX(r.date_added) AS date_end, COUNT(r.order_id) AS `orders`, SUM(r.products) AS products, SUM(r.tax) AS tax, SUM(r.total) AS total FROM (SELECT o.order_id, (SELECT SUM(op.quantity) FROM `" . DB_PREFIX . "order_product` op WHERE op.order_id = o.order_id GROUP BY op.order_id) AS products, (SELECT SUM(ot.value) FROM `" . DB_PREFIX . "order_total` ot WHERE ot.order_id = o.order_id AND code = 'tax' GROUP BY ot.order_id) AS tax, o.total, o.date_added FROM `" . DB_PREFIX . "order` o"; 
+		$sql = "SELECT MIN(r.date_added) AS date_start, MAX(r.date_added) AS date_end, COUNT(r.order_id) AS `orders`, SUM(r.products) AS products, SUM(r.tax) AS tax, SUM(r.total) AS total FROM (SELECT o.order_id, (SELECT SUM(op.quantity) FROM `" . DB_PREFIX . "order_product` op WHERE op.order_id = o.order_id GROUP BY op.order_id) AS products, (SELECT SUM(ot.value) FROM `" . DB_PREFIX . "order_total` ot WHERE ot.order_id = o.order_id AND ot.code = 'tax' GROUP BY ot.order_id) AS tax, o.total, o.date_added FROM `" . DB_PREFIX . "order` o"; 
 
 		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
 			$sql .= " WHERE order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
@@ -71,17 +71,17 @@ class ModelReportSale extends Model {
 		
 		switch($group) {
 			case 'day';
-				$sql = "SELECT  COUNT(DISTINCT DAY(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT DAY(date_added)) AS total FROM `" . DB_PREFIX . "order`";
 				break;
 			default:
 			case 'week':
-				$sql = "SELECT  COUNT(DISTINCT WEEK(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT WEEK(date_added)) AS total FROM `" . DB_PREFIX . "order`";
 				break;	
 			case 'month':
-				$sql = "SELECT  COUNT(DISTINCT MONTH(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT MONTH(date_added)) AS total FROM `" . DB_PREFIX . "order`";
 				break;
 			case 'year':
-				$sql = "SELECT  COUNT(DISTINCT YEAR(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT YEAR(date_added)) AS total FROM `" . DB_PREFIX . "order`";
 				break;									
 		}
 		
@@ -115,12 +115,12 @@ class ModelReportSale extends Model {
 	}
 	
 	public function getTaxes($data = array()) {
-		$sql = "SELECT MIN(r.date_added) AS date_start, MAX(r.date_added) AS date_end, COUNT(r.order_id) AS `orders`, SUM(r.products) AS products, SUM(r.tax) AS tax, SUM(r.total) AS total FROM (SELECT o.order_id, (SELECT SUM(op.quantity) FROM `" . DB_PREFIX . "order_product` op WHERE op.order_id = o.order_id GROUP BY op.order_id) AS products, (SELECT SUM(ot.value) FROM `" . DB_PREFIX . "order_total` ot WHERE ot.order_id = o.order_id AND code = 'tax' GROUP BY ot.order_id) AS tax, o.total, o.date_added FROM `" . DB_PREFIX . "order` o"; 
+		$sql = "SELECT MIN(o.date_added) AS date_start, MAX(o.date_added) AS date_end, ot.title, SUM(ot.value) AS tax, COUNT(o.order_id) AS `orders` FROM `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'"; 
 
 		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
-			$sql .= " WHERE order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
+			$sql .= " AND order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
-			$sql .= " WHERE order_status_id > '0'";
+			$sql .= " AND order_status_id > '0'";
 		}
 		
 		if (isset($data['filter_date_start'])) {
@@ -135,7 +135,7 @@ class ModelReportSale extends Model {
 			$date_end = date('Y-m-d', time());
 		}
 		
-		$sql .= " AND (DATE(o.date_added) >= '" . $this->db->escape($date_start) . "' AND DATE(o.date_added) <= '" . $this->db->escape($date_end) . "') GROUP BY o.order_id) r";
+		$sql .= " AND (DATE(o.date_added) >= '" . $this->db->escape($date_start) . "' AND DATE(o.date_added) <= '" . $this->db->escape($date_end) . "')";
 		
 		if (isset($data['filter_group'])) {
 			$group = $data['filter_group'];
@@ -145,17 +145,17 @@ class ModelReportSale extends Model {
 		
 		switch($group) {
 			case 'day';
-				$sql .= " GROUP BY DAY(r.date_added)";
+				$sql .= " GROUP BY ot.title, DAY(o.date_added)";
 				break;
 			default:
 			case 'week':
-				$sql .= " GROUP BY WEEK(r.date_added)";
+				$sql .= " GROUP BY ot.title, WEEK(o.date_added)";
 				break;	
 			case 'month':
-				$sql .= " GROUP BY MONTH(r.date_added)";
+				$sql .= " GROUP BY ot.title, MONTH(o.date_added)";
 				break;
 			case 'year':
-				$sql .= " GROUP BY YEAR(r.date_added)";
+				$sql .= " GROUP BY ot.title, YEAR(o.date_added)";
 				break;									
 		}
 		
@@ -185,24 +185,24 @@ class ModelReportSale extends Model {
 		
 		switch($group) {
 			case 'day';
-				$sql = "SELECT  COUNT(DISTINCT DAY(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT DAY(date_added)) AS total FROM  `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
 				break;
 			default:
 			case 'week':
-				$sql = "SELECT  COUNT(DISTINCT WEEK(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT WEEK(date_added)) AS total FROM  `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
 				break;	
 			case 'month':
-				$sql = "SELECT  COUNT(DISTINCT MONTH(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT MONTH(date_added)) AS total FROM  `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
 				break;
 			case 'year':
-				$sql = "SELECT  COUNT(DISTINCT YEAR(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT YEAR(date_added)) AS total FROM  `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
 				break;									
 		}
 		
 		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
-			$sql .= " WHERE order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
+			$sql .= " AND order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
-			$sql .= " WHERE order_status_id > '0'";
+			$sql .= " AND order_status_id > '0'";
 		}
 				
 		if (isset($data['filter_date_start'])) {

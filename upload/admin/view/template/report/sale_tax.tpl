@@ -47,10 +47,9 @@
           <tr>
             <td class="left"><?php echo $column_date_start; ?></td>
             <td class="left"><?php echo $column_date_end; ?></td>
-            <td class="right"><?php echo $column_orders; ?></td>
-            <td class="right"><?php echo $column_products; ?></td>
+            <td class="left"><?php echo $column_title; ?></td>
             <td class="right"><?php echo $column_tax; ?></td>
-            <td class="right"><?php echo $column_total; ?></td>
+            <td class="right"><?php echo $column_orders; ?></td>
           </tr>
         </thead>
         <tbody>
@@ -59,10 +58,9 @@
           <tr>
             <td class="left"><?php echo $order['date_start']; ?></td>
             <td class="left"><?php echo $order['date_end']; ?></td>
-            <td class="right"><?php echo $order['orders']; ?></td>
-            <td class="right"><?php echo $order['products']; ?></td>
+            <td class="left"><?php echo $order['title']; ?></td>
             <td class="right"><?php echo $order['tax']; ?></td>
-            <td class="right"><?php echo $order['total']; ?></td>
+            <td class="right"><?php echo $order['orders']; ?></td>
           </tr>
           <?php } ?>
           <?php } else { ?>
@@ -78,7 +76,7 @@
 </div>
 <script type="text/javascript"><!--
 function filter() {
-	url = 'index.php?route=report/sale_order&token=<?php echo $token; ?>';
+	url = 'index.php?route=report/sale_tax&token=<?php echo $token; ?>';
 	
 	var filter_date_start = $('input[name=\'filter_date_start\']').attr('value');
 	

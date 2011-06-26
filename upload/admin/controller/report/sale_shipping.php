@@ -1,7 +1,7 @@
 <?php
-class ControllerReportSaleTax extends Controller {
+class ControllerReportSaleShipping extends Controller {
 	public function index() {     
-		$this->load->language('report/sale_tax');
+		$this->load->language('report/sale_shipping');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -67,7 +67,7 @@ class ControllerReportSaleTax extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+			'href'      => $this->url->link('report/sale_shipping', 'token=' . $this->session->data['token'] . $url, 'SSL'),
       		'separator' => ' :: '
    		);		
 		
@@ -165,7 +165,7 @@ class ControllerReportSaleTax extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+		$pagination->url = $this->url->link('report/sale_shipping', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
 		
@@ -175,7 +175,7 @@ class ControllerReportSaleTax extends Controller {
 		$this->data['filter_order_status_id'] = $filter_order_status_id;
 				 
 		$this->layout = 'common/layout';
-		$this->template = 'report/sale_tax.tpl';
+		$this->template = 'report/sale_shipping.tpl';
 		$this->children = array(
 			'common/header',
 			'common/footer',

@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']     = 'Tax Report';
+$_['heading_title']     = 'Shipping Report';
 
 // Text
 $_['text_year']         = 'Years';
@@ -12,7 +12,7 @@ $_['text_all_status']   = 'All Statuses';
 // Column
 $_['column_date_start'] = 'Date Start';
 $_['column_date_end']   = 'Date End';
-$_['column_title']      = 'Tax Title';
+$_['column_title']      = 'Shipping Title';
 $_['column_amount']     = 'Amount';
 $_['column_orders']     = 'No. Orders';
 

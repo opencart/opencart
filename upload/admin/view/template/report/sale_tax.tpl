@@ -48,7 +48,7 @@
             <td class="left"><?php echo $column_date_start; ?></td>
             <td class="left"><?php echo $column_date_end; ?></td>
             <td class="left"><?php echo $column_title; ?></td>
-            <td class="right"><?php echo $column_tax; ?></td>
+            <td class="right"><?php echo $column_amount; ?></td>
             <td class="right"><?php echo $column_orders; ?></td>
           </tr>
         </thead>

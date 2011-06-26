@@ -177,6 +177,7 @@ class ModelReportSale extends Model {
 	}	
 	
 	public function getTotalTaxes($data = array()) {
+		/*
 		if (isset($data['filter_group'])) {
 			$group = $data['filter_group'];
 		} else {
@@ -185,11 +186,11 @@ class ModelReportSale extends Model {
 		
 		switch($group) {
 			case 'day';
-				$sql = "SELECT COUNT(DISTINCT DAY(date_added)) AS total FROM  `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
+				$sql = "SELECT COUNT(DISTINCT DAY(date_added)) AS total FROM  (`" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax')";
 				break;
 			default:
 			case 'week':
-				$sql = "SELECT COUNT(DISTINCT WEEK(date_added)) AS total FROM  `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
+				$sql = "SELECT (COUNT(DISTINCT WEEK(date_added)) + COUNT(ot.title)) AS total FROM  `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
 				break;	
 			case 'month':
 				$sql = "SELECT COUNT(DISTINCT MONTH(date_added)) AS total FROM  `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
@@ -198,6 +199,8 @@ class ModelReportSale extends Model {
 				$sql = "SELECT COUNT(DISTINCT YEAR(date_added)) AS total FROM  `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
 				break;									
 		}
+		*/
+		$sql = "SELECT (COUNT(DISTINCT WEEK(date_added)) + COUNT(ot.title)) AS total FROM (SELECT COUNT(*) AS total `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
 		
 		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
 			$sql .= " AND order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
@@ -222,10 +225,179 @@ class ModelReportSale extends Model {
 		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
 			$sql .= " AND order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		}
-
+		
+		if (isset($data['filter_group'])) {
+			$group = $data['filter_group'];
+		} else {
+			$group = 'week';
+		}
+		
+		switch($group) {
+			case 'day';
+				$sql .= " GROUP BY DAY(o.date_added), ot.title";
+				break;
+			default:
+			case 'week':
+				$sql .= " GROUP BY WEEK(o.date_added), ot.title";
+				break;	
+			case 'month':
+				$sql .= " GROUP BY MONTH(o.date_added), ot.title";
+				break;
+			case 'year':
+				$sql .= " GROUP BY YEAR(o.date_added), ot.title";
+				break;									
+		}
+		
+		$sql .= ")";
+		
 		$query = $this->db->query($sql);
+
+		print_r($query->rows);
 
 		return $query->row['total'];	
 	}	
+	
+	public function getShipping($data = array()) {
+		$sql = "SELECT MIN(o.date_added) AS date_start, MAX(o.date_added) AS date_end, ot.title, SUM(ot.value) AS tax, COUNT(o.order_id) AS `orders` FROM `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'"; 
+
+		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+			$sql .= " AND order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
+		} else {
+			$sql .= " AND order_status_id > '0'";
+		}
+		
+		if (isset($data['filter_date_start'])) {
+			$date_start = $data['filter_date_start'];
+		} else {
+			$date_start = date('Y-m-d', strtotime('-7 day'));
+		}
+
+		if (isset($data['filter_date_end'])) {
+			$date_end = $data['filter_date_end'];
+		} else {
+			$date_end = date('Y-m-d', time());
+		}
+		
+		$sql .= " AND (DATE(o.date_added) >= '" . $this->db->escape($date_start) . "' AND DATE(o.date_added) <= '" . $this->db->escape($date_end) . "')";
+		
+		if (isset($data['filter_group'])) {
+			$group = $data['filter_group'];
+		} else {
+			$group = 'week';
+		}
+		
+		switch($group) {
+			case 'day';
+				$sql .= " GROUP BY ot.title, DAY(o.date_added)";
+				break;
+			default:
+			case 'week':
+				$sql .= " GROUP BY ot.title, WEEK(o.date_added)";
+				break;	
+			case 'month':
+				$sql .= " GROUP BY ot.title, MONTH(o.date_added)";
+				break;
+			case 'year':
+				$sql .= " GROUP BY ot.title, YEAR(o.date_added)";
+				break;									
+		}
+		
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}			
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}	
+			
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}	
+		
+		$query = $this->db->query($sql);
+		
+		return $query->rows;
+	}	
+	
+	public function getTotalShipping($data = array()) {
+		/*
+		if (isset($data['filter_group'])) {
+			$group = $data['filter_group'];
+		} else {
+			$group = 'week';
+		}
+		
+		switch($group) {
+			case 'day';
+				$sql = "SELECT COUNT(DISTINCT DAY(date_added)) AS total FROM  (`" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax')";
+				break;
+			default:
+			case 'week':
+				$sql = "SELECT (COUNT(DISTINCT WEEK(date_added)) + COUNT(ot.title)) AS total FROM  `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
+				break;	
+			case 'month':
+				$sql = "SELECT COUNT(DISTINCT MONTH(date_added)) AS total FROM  `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
+				break;
+			case 'year':
+				$sql = "SELECT COUNT(DISTINCT YEAR(date_added)) AS total FROM  `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
+				break;									
+		}
+		*/
+		$sql = "SELECT (COUNT(DISTINCT WEEK(date_added)) + COUNT(ot.title)) AS total FROM (SELECT COUNT(*) AS total `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
+		
+		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+			$sql .= " AND order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
+		} else {
+			$sql .= " AND order_status_id > '0'";
+		}
+				
+		if (isset($data['filter_date_start'])) {
+			$date_start = $data['filter_date_start'];
+		} else {
+			$date_start = date('Y-m-d', strtotime('-7 day'));
+		}
+
+		if (isset($data['filter_date_end'])) {
+			$date_end = $data['filter_date_end'];
+		} else {
+			$date_end = date('Y-m-d', time());
+		}
+		
+		$sql .= " AND (DATE(date_added) >= '" . $this->db->escape($date_start) . "' AND DATE(date_added) <= '" . $this->db->escape($date_end) . "')";
+		
+		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+			$sql .= " AND order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
+		}
+		
+		if (isset($data['filter_group'])) {
+			$group = $data['filter_group'];
+		} else {
+			$group = 'week';
+		}
+		
+		switch($group) {
+			case 'day';
+				$sql .= " GROUP BY DAY(o.date_added), ot.title";
+				break;
+			default:
+			case 'week':
+				$sql .= " GROUP BY WEEK(o.date_added), ot.title";
+				break;	
+			case 'month':
+				$sql .= " GROUP BY MONTH(o.date_added), ot.title";
+				break;
+			case 'year':
+				$sql .= " GROUP BY YEAR(o.date_added), ot.title";
+				break;									
+		}
+		
+		$sql .= ")";
+		
+		$query = $this->db->query($sql);
+
+		print_r($query->rows);
+
+		return $query->row['total'];	
+	}		
 }
 ?>

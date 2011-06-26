@@ -82,7 +82,7 @@ class ControllerReportSaleTax extends Controller {
 			'limit'                  => $this->config->get('config_admin_limit')
 		);
 				
-		$order_total = $this->model_report_sale->getTotalTaxes(); 
+		$order_total = $this->model_report_sale->getTotalTaxes($data); 
 		
 		$results = $this->model_report_sale->getTaxes($data);
 		
@@ -104,7 +104,7 @@ class ControllerReportSaleTax extends Controller {
 		$this->data['column_date_start'] = $this->language->get('column_date_start');
 		$this->data['column_date_end'] = $this->language->get('column_date_end');
 		$this->data['column_title'] = $this->language->get('column_title');
-		$this->data['column_tax'] = $this->language->get('column_tax');
+		$this->data['column_amount'] = $this->language->get('column_amount');
 		$this->data['column_orders'] = $this->language->get('column_orders');
 		
 		$this->data['entry_date_start'] = $this->language->get('entry_date_start');

@@ -13,7 +13,7 @@ $_['text_all_status']   = 'All Statuses';
 $_['column_date_start'] = 'Date Start';
 $_['column_date_end']   = 'Date End';
 $_['column_title']      = 'Shipping Title';
-$_['column_amount']     = 'Amount';
+$_['column_total']      = 'Total';
 $_['column_orders']     = 'No. Orders';
 
 // Entry

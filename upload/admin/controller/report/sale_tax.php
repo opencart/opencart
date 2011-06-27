@@ -73,6 +73,8 @@ class ControllerReportSaleTax extends Controller {
 		
 		$this->load->model('report/sale');
 		
+		$this->data['orders'] = array();
+		
 		$data = array(
 			'filter_date_start'	     => $filter_date_start, 
 			'filter_date_end'	     => $filter_date_end, 
@@ -84,6 +86,8 @@ class ControllerReportSaleTax extends Controller {
 				
 		$order_total = $this->model_report_sale->getTotalTaxes($data); 
 		
+		$this->data['orders'] = array();
+		
 		$results = $this->model_report_sale->getTaxes($data);
 		
 		foreach ($results as $result) {
@@ -91,7 +95,7 @@ class ControllerReportSaleTax extends Controller {
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
 				'title'      => $result['title'],
-				'tax'        => $this->currency->format($result['tax'], $this->config->get('config_currency')),
+				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency')),
 				'orders'     => $result['orders']
 			);
 		}
@@ -104,7 +108,7 @@ class ControllerReportSaleTax extends Controller {
 		$this->data['column_date_start'] = $this->language->get('column_date_start');
 		$this->data['column_date_end'] = $this->language->get('column_date_end');
 		$this->data['column_title'] = $this->language->get('column_title');
-		$this->data['column_amount'] = $this->language->get('column_amount');
+		$this->data['column_total'] = $this->language->get('column_total');
 		$this->data['column_orders'] = $this->language->get('column_orders');
 		
 		$this->data['entry_date_start'] = $this->language->get('entry_date_start');

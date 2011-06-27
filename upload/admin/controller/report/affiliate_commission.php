@@ -33,7 +33,7 @@ class ControllerReportAffiliateCommission extends Controller {
 		
 		$this->load->model('report/affiliate');
 		
-		$product_total = $this->model_catalog_product->getTotalProducts(); 
+		$product_total = $this->model_catalog_product->getTotalCommissions(); 
 		
 		$this->data['products'] = $this->model_report_viewed->getProductViewedReport(($page - 1) * $this->config->get('config_admin_limit'), $this->config->get('config_admin_limit'));
 		 

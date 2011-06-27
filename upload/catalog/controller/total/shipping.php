@@ -188,22 +188,22 @@ class ControllerTotalShipping extends Controller {
 		
 		$json = array();
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['shipping_method'])) {
+		if (isset($this->request->post['shipping_method']) && $this->request->post['shipping_method']) {
 			$shipping = explode('.', $this->request->post['shipping_method']);
 					
-			if (!isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {			
+			if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {			
 				$json['error'] = $this->language->get('error_shipping');
-			}
-								
-			if (!isset($json['error'])) {			
-				$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-				
-				$this->session->data['success'] = $this->language->get('text_success');
-				
-				$json['redirect'] = $this->url->link('checkout/cart', '', 'SSL');
 			}
 		} else {
 			$json['error'] = $this->language->get('error_shipping');
+		}
+		
+		if (!isset($json['error'])) {
+			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+				
+			$this->session->data['success'] = $this->language->get('text_success');
+				
+			$json['redirect'] = $this->url->link('checkout/cart', '', 'SSL');			
 		}
 		
 		$this->load->library('json');

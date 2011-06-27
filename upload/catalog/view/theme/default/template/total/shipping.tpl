@@ -71,7 +71,7 @@ $('#button-quote').bind('click', function() {
 					$('#shipping input[name=\'postcode\']').after('<span class="error">' + json['error']['postcode'] + '</span>');
 				}					
 			}
-			//.length > 0
+			
 			if (json['shipping_methods']) {
 				html  = '<br />';
 				html += '<table width="100%" cellpadding="3">';

@@ -14,7 +14,7 @@ $_['entry_password']  = 'New Password:';
 $_['entry_confirm']   = 'Confirm:';
 
 // Error
-$_['error_email']     = 'Error: The E-Mail Address was not found in our records, please try again!';
+$_['error_email']     = 'Warning: The E-Mail Address was not found in our records, please try again!';
 $_['error_password']  = 'Password must be between 3 and 20 characters!';
 $_['error_confirm']   = 'Password and password confirmation do not match!';
 ?>

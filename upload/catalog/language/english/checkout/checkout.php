@@ -59,8 +59,8 @@ $_['entry_shipping'] 	             = 'My delivery and billing addresses are the 
 // Error
 $_['error_warning']                  = 'There was a problem while trying to process your order! If the problem persists please try selecting a different payment method or you can contact the store owner by <a href="%s">clicking here</a>.';
 $_['error_minimum']                  = 'Minimum order amount for %s is %s!';	
-$_['error_login']                    = 'Error: No match for E-Mail Address and/or Password.';
-$_['error_exists']                   = 'Error: E-Mail Address is already registered!';
+$_['error_login']                    = 'Warning: No match for E-Mail Address and/or Password.';
+$_['error_exists']                   = 'Warning: E-Mail Address is already registered!';
 $_['error_firstname']                = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']                 = 'Last Name must be between 1 and 32 characters!';
 $_['error_email']                    = 'E-Mail Address does not appear to be valid!';
@@ -72,10 +72,10 @@ $_['error_city']                     = 'City must be between 2 and 128 character
 $_['error_postcode']                 = 'Postcode must be between 2 and 10 characters!';
 $_['error_country']                  = 'Please select a country!';
 $_['error_zone']                     = 'Please select a region / state!';
-$_['error_agree']                    = 'Error: You must agree to the %s!';
-$_['error_address']                  = 'Error: You must select address!';
-$_['error_shipping']                 = 'Error: Shipping method required!';
+$_['error_agree']                    = 'Warning: You must agree to the %s!';
+$_['error_address']                  = 'Warning: You must select address!';
+$_['error_shipping']                 = 'Warning: Shipping method required!';
 $_['error_no_shipping']              = 'No Shipping options are available. Please <a href="%s">contact us</a> for assistance!';
-$_['error_payment']                  = 'Error: Payment method required!';
-$_['error_no_payment']               = 'Error: No Payment options are available. Please <a href="%s">contact us</a> for assistance!';
+$_['error_payment']                  = 'Warning: Payment method required!';
+$_['error_no_payment']               = 'Warning: No Payment options are available. Please <a href="%s">contact us</a> for assistance!';
 ?>

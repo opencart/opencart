@@ -25,7 +25,7 @@ $_['entry_country']     = 'Country:';
 $_['entry_zone']        = 'Region / State:';
 
 // Error
-$_['error_exists']      = 'Error: E-Mail address is already registered!';
+$_['error_exists']      = 'Warning: E-Mail address is already registered!';
 $_['error_firstname']   = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']    = 'Last Name must be between 1 and 32 characters!';
 $_['error_email']       = 'E-Mail Address does not appear to be valid!';

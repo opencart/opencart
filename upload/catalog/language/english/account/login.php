@@ -17,5 +17,5 @@ $_['entry_email']                  = 'E-Mail Address:';
 $_['entry_password']               = 'Password:';
 
 // Error
-$_['error_login']                  = 'Error: No match for E-Mail Address and/or Password.';
+$_['error_login']                  = 'Warning: No match for E-Mail Address and/or Password.';
 ?>

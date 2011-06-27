@@ -23,8 +23,8 @@ $_['entry_zone']        = 'Region / State:';
 $_['entry_default']     = 'Default Address:';
 
 // Error
-$_['error_delete']      = 'Error: you must have at least one address!';
-$_['error_default']     = 'Error: you can not delete your default address!';
+$_['error_delete']      = 'Warning: You must have at least one address!';
+$_['error_default']     = 'Warning: You can not delete your default address!';
 $_['error_firstname']   = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']    = 'Last Name must be between 1 and 32 characters!';
 $_['error_address_1']   = 'Address must be between 3 and 128 characters!';

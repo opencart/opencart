@@ -24,7 +24,7 @@ class ControllerCommonContentTop extends Controller {
 			$layout_id = $this->model_catalog_product->getProductLayoutId($this->request->get['product_id']);
 		}
 		
-		if (substr($route, 0, 19) == 'product/information' && isset($this->request->get['information_id'])) {
+		if (substr($route, 0, 23) == 'information/information' && isset($this->request->get['information_id'])) {
 			$layout_id = $this->model_catalog_information->getInformationLayoutId($this->request->get['information_id']);
 		}
 		

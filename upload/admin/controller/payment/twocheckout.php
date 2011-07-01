@@ -137,7 +137,6 @@ class ControllerPaymentTwoCheckout extends Controller {
 			$this->data['twocheckout_sort_order'] = $this->config->get('twocheckout_sort_order');
 		}
 
-		$this->layout = 'common/layout';
 		$this->template = 'payment/twocheckout.tpl';
 		$this->children = array(
 			'common/header',

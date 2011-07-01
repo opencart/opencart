@@ -178,7 +178,6 @@ class ControllerReportSaleTax extends Controller {
 		$this->data['filter_group'] = $filter_group;
 		$this->data['filter_order_status_id'] = $filter_order_status_id;
 				 
-		$this->layout = 'common/layout';
 		$this->template = 'report/sale_tax.tpl';
 		$this->children = array(
 			'common/header',

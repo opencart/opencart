@@ -507,7 +507,6 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 
-		$this->layout = 'common/layout';
 		$this->template = 'catalog/product_list.tpl';
 		$this->children = array(
 			'common/header',

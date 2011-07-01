@@ -296,7 +296,6 @@ class ControllerSaleContact extends Controller {
 			$this->data['message'] = '';
 		}
 
-		$this->layout = 'common/layout';
 		$this->template = 'sale/contact.tpl';
 		$this->children = array(
 			'common/header',

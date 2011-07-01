@@ -97,7 +97,6 @@ class ControllerReportProductViewed extends Controller {
 			
 		$this->data['pagination'] = $pagination->render();
 				 
-		$this->layout = 'common/layout';
 		$this->template = 'report/product_viewed.tpl';
 		$this->children = array(
 			'common/header',

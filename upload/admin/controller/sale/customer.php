@@ -1042,7 +1042,6 @@ class ControllerSaleCustomer extends Controller {
 				'separator' => ' :: '
 			);
 		
-			$this->layout = 'common/layout';
 			$this->template = 'error/not_found.tpl';
 			$this->children = array(
 				'common/header',

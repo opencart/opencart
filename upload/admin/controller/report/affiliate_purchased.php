@@ -55,7 +55,6 @@ class ControllerReportAffiliateCommission extends Controller {
 			
 		$this->data['pagination'] = $pagination->render();
 		 
-		$this->layout = 'common/layout';
 		$this->template = 'report/affiliate_commission.tpl';
 		$this->children = array(
 			'common/header',

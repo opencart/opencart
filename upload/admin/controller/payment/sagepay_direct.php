@@ -142,7 +142,6 @@ class ControllerPaymentSagepayDirect extends Controller {
 			$this->data['sagepay_direct_sort_order'] = $this->config->get('sagepay_direct_sort_order');
 		}
 
-		$this->layout = 'common/layout';
 		$this->template = 'payment/sagepay_direct.tpl';
 		$this->children = array(
 			'common/header',

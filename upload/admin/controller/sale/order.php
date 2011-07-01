@@ -464,7 +464,6 @@ class ControllerSaleOrder extends Controller {
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 
-		$this->layout = 'common/layout';
 		$this->template = 'sale/order_list.tpl';
 		$this->children = array(
 			'common/header',
@@ -1357,7 +1356,6 @@ class ControllerSaleOrder extends Controller {
 
 			$this->data['order_status_id'] = $order_info['order_status_id'];
 
-			$this->layout = 'common/layout';
 			$this->template = 'sale/order_info.tpl';
 			$this->children = array(
 				'common/header',
@@ -1388,7 +1386,6 @@ class ControllerSaleOrder extends Controller {
 				'separator' => ' :: '
 			);
 		
-			$this->layout = 'common/layout';
 			$this->template = 'error/not_found.tpl';
 			$this->children = array(
 				'common/header',
@@ -1804,7 +1801,6 @@ class ControllerSaleOrder extends Controller {
 				'separator' => ' :: '
 			);
 		
-			$this->layout = 'common/layout';
 			$this->template = 'error/not_found.tpl';
 			$this->children = array(
 				'common/header',

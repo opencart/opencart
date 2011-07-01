@@ -252,7 +252,6 @@ class ControllerCatalogOption extends Controller {
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 
-		$this->layout = 'common/layout';
 		$this->template = 'catalog/option_list.tpl';
 		$this->children = array(
 			'common/header',

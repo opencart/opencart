@@ -17,7 +17,7 @@ class ModelReportSale extends Model {
 			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 		
-		$sql .= " GROUP BY o.order_id) r ORDER BY r.date_added ASC";
+		$sql .= " GROUP BY o.order_id) r";
 		
 		if (isset($data['filter_group'])) {
 			$group = $data['filter_group'];

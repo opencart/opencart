@@ -926,7 +926,6 @@ class ControllerSaleReturn extends Controller {
 			
 			$this->data['return_status_id'] = $return_info['return_status_id'];
 		
-			$this->layout = 'common/layout';
 			$this->template = 'sale/return_info.tpl';
 			$this->children = array(
 				'common/header',
@@ -957,7 +956,6 @@ class ControllerSaleReturn extends Controller {
 				'separator' => ' :: '
 			);
 		
-			$this->layout = 'common/layout';
 			$this->template = 'error/not_found.tpl';
 			$this->children = array(
 				'common/header',

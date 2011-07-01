@@ -133,7 +133,6 @@ class ControllerPaymentAuthorizeNet extends Controller {
 			$this->data['authorizenet_sort_order'] = $this->config->get('authorizenet_sort_order');
 		}
 
-		$this->layout = 'common/layout';
 		$this->template = 'payment/authorizenet.tpl';
 		$this->children = array(
 			'common/header',

@@ -1,25 +1,7 @@
 <?php
 class ModelReportProduct extends Model {
 	public function getProductsViewed($data = array()) {
-		$sql = "SELECT pd.name, p.model, p.viewed FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.viewed > 0";
-		
-		$sort_data = array(
-			'pd.name',
-			'p.model',
-			'p.viewed'
-		);	
-					
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];	
-		} else {
-			$sql .= " ORDER BY p.viewed";	
-		}
-		
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
-		}
+		$sql = "SELECT pd.name, p.model, p.viewed FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.viewed > 0 ORDER BY p.viewed DESC";
 					
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
@@ -54,27 +36,24 @@ class ModelReportProduct extends Model {
 		$this->db->query("UPDATE " . DB_PREFIX . "product SET viewed = '0'");
 	}
 	
-	public function getProductPurchasedReport($data = array()) {
-		$sql = "SELECT op.name, op.model, SUM(op.quantity) AS quantity, SUM(op.total + op.total * op.tax / 100) AS total FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_product op ON (op.order_id = o.order_id) WHERE o.order_status_id > '0' GROUP BY model ORDER BY total DESC";
-
-		$sort_data = array(
-			'op.name',
-			'op.model',
-			'quantity',
-			'total'
-		);	
-				
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];	
+	public function getPurchased($data = array()) {
+		$sql = "SELECT op.name, op.model, SUM(op.quantity) AS quantity, SUM(op.total + op.total * op.tax / 100) AS total FROM " . DB_PREFIX . "order_product op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.order_id = o.order_id)";
+		
+		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+			$sql .= " WHERE o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
-			$sql .= " ORDER BY quantity";	
+			$sql .= " WHERE o.order_status_id > '0'";
 		}
 		
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
+		if (isset($data['filter_date_start']) && $data['filter_date_start']) {
+			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
+
+		if (isset($data['filter_date_end']) && $data['filter_date_end']) {
+			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+		}
+		
+		$sql .= " GROUP BY model ORDER BY total DESC";
 					
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
@@ -88,15 +67,31 @@ class ModelReportProduct extends Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 		
-		$query = $this->db->query();
+		$query = $this->db->query($sql);
 	
 		return $query->rows;
 	}
 	
-	public function getTotalPurchasedProducts() {
-      	$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_product` op ON (o.order_id = op.order_id) WHERE o.order_status_id > '0' GROUP BY model");
+	public function getTotalPurchased($data) {
+      	$sql = "SELECT COUNT(DISTINCT op.model) AS total FROM `" . DB_PREFIX . "order_product` op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.order_id = o.order_id)";
+
+		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+			$sql .= " WHERE o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
+		} else {
+			$sql .= " WHERE o.order_status_id > '0'";
+		}
 		
-		return $query->num_rows;
+		if (isset($data['filter_date_start']) && $data['filter_date_start']) {
+			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+		}
+
+		if (isset($data['filter_date_end']) && $data['filter_date_end']) {
+			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+		}
+		
+		$query = $this->db->query($sql);
+				
+		return $query->row['total'];
 	}
 }
 ?>

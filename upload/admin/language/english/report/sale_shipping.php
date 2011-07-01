@@ -17,8 +17,8 @@ $_['column_total']      = 'Total';
 $_['column_orders']     = 'No. Orders';
 
 // Entry
-$_['entry_status']      = 'Status:';
 $_['entry_date_start']  = 'Date Start:';
 $_['entry_date_end']    = 'Date End:';
 $_['entry_group']       = 'Group By:';
+$_['entry_status']      = 'Order Status:';
 ?>

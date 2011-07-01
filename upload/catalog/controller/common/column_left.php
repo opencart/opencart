@@ -43,7 +43,7 @@ class ControllerCommonColumnLeft extends Controller {
 		$extensions = $this->model_setting_extension->getExtensions('module');		
 		
 		foreach ($extensions as $extension) {
-			$modules = explode(',', $this->config->get($extension['code'] . '_module'));
+			$modules = $this->config->get($extension['code'] . '_module');
 		
 			foreach ($modules as $module) {
 				if ($this->config->get($extension['code'] . '_' . $module . '_layout_id') == $layout_id && $this->config->get($extension['code'] . '_' . $module . '_position') == 'column_left' && $this->config->get($extension['code'] . '_' . $module . '_status')) {

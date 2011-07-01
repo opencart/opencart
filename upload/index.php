@@ -55,7 +55,11 @@ if ($store_query->num_rows) {
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0' OR store_id = '" . (int)$config->get('config_store_id') . "' ORDER BY store_id ASC");
 
 foreach ($query->rows as $setting) {
-	$config->set($setting['key'], $setting['value']);
+	if (!$setting['serialized']) {
+		$config->set($setting['key'], $setting['value']);
+	} else {
+		$config->set($setting['key'], unserialize($setting['value']));
+	}
 }
 
 if (!$store_query->num_rows) {

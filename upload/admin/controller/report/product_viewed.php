@@ -5,18 +5,6 @@ class ControllerReportProductViewed extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'p.viewed';
-		}
-		
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-		
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
@@ -24,14 +12,6 @@ class ControllerReportProductViewed extends Controller {
 		}
 
 		$url = '';
-						
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
 				
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
@@ -54,8 +34,6 @@ class ControllerReportProductViewed extends Controller {
 		$this->load->model('report/product');
 		
 		$data = array(
-			'sort'  => $sort,
-			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
 			'limit' => $this->config->get('config_admin_limit')
 		);
@@ -95,14 +73,6 @@ class ControllerReportProductViewed extends Controller {
 		$this->data['button_reset'] = $this->language->get('button_reset');
 
 		$url = '';		
-		
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
 				
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
@@ -117,44 +87,15 @@ class ControllerReportProductViewed extends Controller {
 		} else {
 			$this->data['success'] = '';
 		}
-
-		$url = '';
-								
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-		
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-						
-		$this->data['sort_name'] = $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'] . '&sort=pd.name' . $url, 'SSL');
-		$this->data['sort_model'] = $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'] . '&sort=p.model' . $url, 'SSL');
-		$this->data['sort_viewed'] = $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'] . '&sort=p.viewed' . $url, 'SSL');
-		
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-												
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
 						
 		$pagination = new Pagination();
 		$pagination->total = $product_viewed_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+		$pagination->url = $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
-		
-		$this->data['sort'] = $sort;
-		$this->data['order'] = $order;
 				 
 		$this->layout = 'common/layout';
 		$this->template = 'report/product_viewed.tpl';

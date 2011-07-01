@@ -29,7 +29,7 @@
         <?php foreach ($modules as $module) { ?>
         <tbody id="module-row<?php echo $module_row; ?>">
           <tr>
-            <td class="left"><select name="account_<?php echo $module_row; ?>_layout_id">
+            <td class="left"><select name="account[$module]_layout_id">
                 <?php foreach ($layouts as $layout) { ?>
                 <?php if ($layout['layout_id'] == ${'account_' . $module . '_layout_id'}) { ?>
                 <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>

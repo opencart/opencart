@@ -10,14 +10,14 @@
       <h1><img src="view/image/report.png" alt="" /> <?php echo $heading_title; ?></h1>
     </div>
     <div class="content">
-      <div style="background: #E7EFEF; border: 1px solid #C6D7D7; padding: 3px; margin-bottom: 15px;">
-        <div style="display: inline-block; width: 20%;"><?php echo $entry_date_start; ?>
+      <div style="background: #E7EFEF; border: 1px solid #C6D7D7; padding: 10px; margin-bottom: 15px; overflow: auto;">
+        <div style="float: left; width: 19%;"><?php echo $entry_date_start; ?>
           <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="date-start" size="12" />
         </div>
-        <div style="display: inline-block; width: 20%;"><?php echo $entry_date_end; ?><br />
+        <div style="float: left; width: 19%;"><?php echo $entry_date_end; ?>
           <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="date-end" size="12" />
         </div>
-        <div style="display: inline-block; width: 20%;"><?php echo $entry_status; ?>
+        <div style="float: left; width: 19%;"><?php echo $entry_status; ?>
           <select name="filter_order_status_id">
             <option value="0"><?php echo $text_all_status; ?></option>
             <?php foreach ($order_statuses as $order_status) { ?>
@@ -29,7 +29,7 @@
             <?php } ?>
           </select>
         </div>
-        <div style="display: inline-block; width: 20%; text-align: right;"><a onclick="filter();" class="button"><span><?php echo $button_filter; ?></span></a> </div>
+        <div style="float: right; width: 19%; text-align: right;"><a onclick="filter();" class="button"><span><?php echo $button_filter; ?></span></a></div>
       </div>
       <table class="list">
         <thead>
@@ -52,7 +52,7 @@
           <?php } ?>
           <?php } else { ?>
           <tr>
-            <td class="center" colspan="4"><?php echo $text_no_results; ?></td>
+            <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
           </tr>
           <?php } ?>
         </tbody>
@@ -63,7 +63,7 @@
 </div>
 <script type="text/javascript"><!--
 function filter() {
-	url = 'index.php?route=report/sale_order&token=<?php echo $token; ?>';
+	url = 'index.php?route=report/product_purchased&token=<?php echo $token; ?>';
 	
 	var filter_date_start = $('input[name=\'filter_date_start\']').attr('value');
 	
@@ -75,12 +75,6 @@ function filter() {
 	
 	if (filter_date_end) {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
-	}
-		
-	var filter_group = $('select[name=\'filter_group\']').attr('value');
-	
-	if (filter_group) {
-		url += '&filter_group=' + encodeURIComponent(filter_group);
 	}
 	
 	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').attr('value');

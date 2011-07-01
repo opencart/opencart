@@ -8,13 +8,13 @@ class ControllerReportCustomerReward extends Controller {
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
 		} else {
-			$filter_date_start = date('Y-m-d', strtotime('-7 day'));
+			$filter_date_start = '';
 		}
 
 		if (isset($this->request->get['filter_date_end'])) {
 			$filter_date_end = $this->request->get['filter_date_end'];
 		} else {
-			$filter_date_end = date('Y-m-d', time());
+			$filter_date_end = '';
 		}
 		
 		if (isset($this->request->get['page'])) {

@@ -82,8 +82,8 @@ CREATE TABLE `oc_affiliate` (
   `bank_account_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
   `bank_account_number` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
   `ip` varchar(15) COLLATE utf8_bin NOT NULL,
-  `status` int(1) NOT NULL,
-  `approved` int(1) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `approved` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`affiliate_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -234,7 +234,7 @@ DROP TABLE IF EXISTS `oc_banner`;
 CREATE TABLE `oc_banner` (
   `banner_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) COLLATE utf8_bin NOT NULL,
-  `status` int(1) NOT NULL,
+  `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`banner_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -303,10 +303,10 @@ CREATE TABLE `oc_category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `image` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
-  `top` int(1) NOT NULL,
+  `top` tinyint(1) NOT NULL,
   `column` int(3) NOT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
-  `status` int(1) NOT NULL,
+  `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`category_id`)
@@ -507,8 +507,8 @@ CREATE TABLE `oc_country` (
   `iso_code_2` varchar(2) COLLATE utf8_bin NOT NULL DEFAULT '',
   `iso_code_3` varchar(3) COLLATE utf8_bin NOT NULL DEFAULT '',
   `address_format` text COLLATE utf8_bin NOT NULL,
-  `postcode_required` int(1) NOT NULL,
-  `status` int(1) NOT NULL DEFAULT '1',
+  `postcode_required` tinyint(1) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`country_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -770,14 +770,14 @@ CREATE TABLE `oc_coupon` (
   `code` varchar(10) COLLATE utf8_bin NOT NULL,
   `type` char(1) COLLATE utf8_bin NOT NULL,
   `discount` decimal(15,4) NOT NULL,
-  `logged` int(1) NOT NULL,
-  `shipping` int(1) NOT NULL,
+  `logged` tinyint(1) NOT NULL,
+  `shipping` tinyint(1) NOT NULL,
   `total` decimal(15,4) NOT NULL,
   `date_start` date NOT NULL DEFAULT '0000-00-00',
   `date_end` date NOT NULL DEFAULT '0000-00-00',
   `uses_total` int(11) NOT NULL,
   `uses_customer` varchar(11) COLLATE utf8_bin NOT NULL,
-  `status` int(1) NOT NULL,
+  `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`coupon_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -850,7 +850,7 @@ CREATE TABLE `oc_currency` (
   `symbol_right` varchar(12) COLLATE utf8_bin NOT NULL,
   `decimal_place` char(1) COLLATE utf8_bin NOT NULL,
   `value` float(15,8) NOT NULL,
-  `status` int(1) NOT NULL,
+  `status` tinyint(1) NOT NULL,
   `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`currency_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -882,12 +882,12 @@ CREATE TABLE `oc_customer` (
   `password` varchar(40) COLLATE utf8_bin NOT NULL DEFAULT '',
   `cart` text COLLATE utf8_bin,
   `wishlist` text COLLATE utf8_bin,
-  `newsletter` int(1) NOT NULL DEFAULT '0',
+  `newsletter` tinyint(1) NOT NULL DEFAULT '0',
   `address_id` int(11) NOT NULL DEFAULT '0',
   `customer_group_id` int(11) NOT NULL,
   `ip` varchar(15) COLLATE utf8_bin NOT NULL DEFAULT '0',
-  `status` int(1) NOT NULL,
-  `approved` int(1) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `approved` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`customer_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -1106,7 +1106,7 @@ DROP TABLE IF EXISTS `oc_information`;
 CREATE TABLE `oc_information` (
   `information_id` int(11) NOT NULL AUTO_INCREMENT,
   `sort_order` int(3) NOT NULL DEFAULT '0',
-  `status` int(1) NOT NULL DEFAULT '1',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`information_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -1203,7 +1203,7 @@ CREATE TABLE `oc_language` (
   `directory` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
   `filename` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
   `sort_order` int(3) NOT NULL DEFAULT '0',
-  `status` int(1) NOT NULL,
+  `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`language_id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -1607,7 +1607,7 @@ CREATE TABLE `oc_order_history` (
   `order_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `order_status_id` int(5) NOT NULL,
-  `notify` int(1) NOT NULL DEFAULT '0',
+  `notify` tinyint(1) NOT NULL DEFAULT '0',
   `comment` text COLLATE utf8_bin NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`order_history_id`)
@@ -1749,7 +1749,7 @@ CREATE TABLE `oc_product` (
   `stock_status_id` int(11) NOT NULL,
   `image` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `manufacturer_id` int(11) NOT NULL,
-  `shipping` int(1) NOT NULL DEFAULT '1',
+  `shipping` tinyint(1) NOT NULL DEFAULT '1',
   `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `points` int(8) NOT NULL DEFAULT '0',
   `tax_class_id` int(11) NOT NULL,
@@ -1760,10 +1760,10 @@ CREATE TABLE `oc_product` (
   `width` decimal(5,2) NOT NULL DEFAULT '0.00',
   `height` decimal(5,2) NOT NULL DEFAULT '0.00',
   `length_class_id` int(11) NOT NULL DEFAULT '0',
-  `subtract` int(1) NOT NULL DEFAULT '1',
+  `subtract` tinyint(1) NOT NULL DEFAULT '1',
   `minimum` int(11) NOT NULL DEFAULT '1',
   `sort_order` int(11) NOT NULL DEFAULT '0',
-  `status` int(1) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '0',
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `viewed` int(5) NOT NULL DEFAULT '0',
@@ -1991,7 +1991,7 @@ CREATE TABLE `oc_product_option` (
   `product_id` int(11) NOT NULL,
   `option_id` int(11) NOT NULL,
   `option_value` text COLLATE utf8_bin NOT NULL,
-  `required` int(1) NOT NULL,
+  `required` tinyint(1) NOT NULL,
   PRIMARY KEY (`product_option_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -2026,7 +2026,7 @@ CREATE TABLE `oc_product_option_value` (
   `option_id` int(11) NOT NULL,
   `option_value_id` int(11) NOT NULL,
   `quantity` int(3) NOT NULL,
-  `subtract` int(1) NOT NULL,
+  `subtract` tinyint(1) NOT NULL,
   `price` decimal(15,4) NOT NULL,
   `price_prefix` varchar(1) COLLATE utf8_bin NOT NULL,
   `points` int(8) NOT NULL,
@@ -2391,7 +2391,7 @@ CREATE TABLE `oc_return_history` (
   `return_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `return_id` int(11) NOT NULL,
   `return_status_id` int(11) NOT NULL,
-  `notify` int(1) NOT NULL,
+  `notify` tinyint(1) NOT NULL,
   `comment` text COLLATE utf8_bin NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`return_history_id`)
@@ -2417,7 +2417,7 @@ CREATE TABLE `oc_return_product` (
   `model` varchar(64) COLLATE utf8_bin NOT NULL,
   `quantity` int(4) NOT NULL,
   `return_reason_id` int(11) NOT NULL,
-  `opened` int(1) NOT NULL,
+  `opened` tinyint(1) NOT NULL,
   `comment` text COLLATE utf8_bin NOT NULL,
   `return_action_id` int(11) NOT NULL,
   PRIMARY KEY (`return_product_id`)
@@ -2490,7 +2490,7 @@ CREATE TABLE `oc_review` (
   `author` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
   `text` text COLLATE utf8_bin NOT NULL,
   `rating` int(1) NOT NULL,
-  `status` int(1) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '0',
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`review_id`),
@@ -2874,7 +2874,7 @@ CREATE TABLE `oc_user` (
   `email` varchar(96) COLLATE utf8_bin NOT NULL DEFAULT '',
   `code` varchar(32) COLLATE utf8_bin NOT NULL,
   `ip` varchar(15) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `status` int(1) NOT NULL,
+  `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -2923,7 +2923,7 @@ CREATE TABLE `oc_voucher` (
   `message` text COLLATE utf8_bin NOT NULL,
   `amount` decimal(15,4) NOT NULL,
   `voucher_theme_id` int(11) NOT NULL,
-  `status` int(1) NOT NULL,
+  `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`voucher_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -3059,7 +3059,7 @@ CREATE TABLE `oc_zone` (
   `country_id` int(11) NOT NULL,
   `code` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
   `name` varchar(128) COLLATE utf8_bin NOT NULL,
-  `status` int(1) NOT NULL DEFAULT '1',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`zone_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 

@@ -48,8 +48,8 @@
             <td class="left"><?php echo $column_date_start; ?></td>
             <td class="left"><?php echo $column_date_end; ?></td>
             <td class="left"><?php echo $column_title; ?></td>
-            <td class="right"><?php echo $column_total; ?></td>
             <td class="right"><?php echo $column_orders; ?></td>
+            <td class="right"><?php echo $column_total; ?></td>
           </tr>
         </thead>
         <tbody>
@@ -59,8 +59,8 @@
             <td class="left"><?php echo $order['date_start']; ?></td>
             <td class="left"><?php echo $order['date_end']; ?></td>
             <td class="left"><?php echo $order['title']; ?></td>
-            <td class="right"><?php echo $order['total']; ?></td>
             <td class="right"><?php echo $order['orders']; ?></td>
+            <td class="right"><?php echo $order['total']; ?></td>
           </tr>
           <?php } ?>
           <?php } else { ?>

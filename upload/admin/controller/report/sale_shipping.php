@@ -93,8 +93,8 @@ class ControllerReportSaleShipping extends Controller {
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
 				'title'      => $result['title'],
-				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'orders'     => $result['orders']
+				'orders'     => $result['orders'],
+				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency'))
 			);
 		}
 		 
@@ -106,8 +106,8 @@ class ControllerReportSaleShipping extends Controller {
 		$this->data['column_date_start'] = $this->language->get('column_date_start');
 		$this->data['column_date_end'] = $this->language->get('column_date_end');
 		$this->data['column_title'] = $this->language->get('column_title');
-		$this->data['column_total'] = $this->language->get('column_total');
 		$this->data['column_orders'] = $this->language->get('column_orders');
+		$this->data['column_total'] = $this->language->get('column_total');
 		
 		$this->data['entry_date_start'] = $this->language->get('entry_date_start');
 		$this->data['entry_date_end'] = $this->language->get('entry_date_end');

@@ -10,42 +10,40 @@
 <?php foreach ($orders as $order) { ?>
 <div style="page-break-after: always;">
   <h1><?php echo $text_invoice; ?></h1>
-  <div class="div1">
-    <table width="100%">
-      <tr>
-        <td><?php echo $order['store_name']; ?><br />
-          <?php echo $address; ?><br />
-          <?php echo $text_telephone; ?> <?php echo $telephone; ?><br />
-          <?php if ($fax) { ?>
-          <?php echo $text_fax; ?> <?php echo $fax; ?><br />
+  <table class="store">
+    <tr>
+      <td><?php echo $order['store_name']; ?><br />
+        <?php echo $order['store_address']; ?><br />
+        <?php echo $text_telephone; ?> <?php echo $order['store_telephone']; ?><br />
+        <?php if ($order['store_fax']) { ?>
+        <?php echo $text_fax; ?> <?php echo $order['store_fax']; ?><br />
+        <?php } ?>
+        <?php echo $order['store_email']; ?><br />
+        <?php echo $order['store_url']; ?></td>
+      <td align="right" valign="top"><table>
+          <tr>
+            <td><b><?php echo $text_date_added; ?></b></td>
+            <td><?php echo $order['date_added']; ?></td>
+          </tr>
+          <?php if ($order['invoice_no']) { ?>
+          <tr>
+            <td><b><?php echo $text_invoice_no; ?></b></td>
+            <td><?php echo $order['invoice_no']; ?></td>
+          </tr>
+          <?php if ($order['invoice_date']) { ?>
+          <tr>
+            <td><b><?php echo $text_invoice_date; ?></b></td>
+            <td><?php echo $order['invoice_date']; ?></td>
+          </tr>
           <?php } ?>
-          <?php echo $email; ?><br />
-          <?php echo $order['store_url']; ?></td>
-        <td align="right" valign="top"><table>
-            <tr>
-              <td><b><?php echo $text_date_added; ?></b></td>
-              <td><?php echo $order['date_added']; ?></td>
-            </tr>
-            <?php if ($order['invoice_no']) { ?>
-            <tr>
-              <td><b><?php echo $text_invoice_no; ?></b></td>
-              <td><?php echo $order['invoice_no']; ?></td>
-            </tr>
-			<?php if ($order['invoice_date']) { ?>
-			<tr>
-              <td><b><?php echo $text_invoice_date; ?></b></td>
-              <td><?php echo $order['invoice_date']; ?></td>
-            </tr>
-            <?php } ?>
-			<?php } ?>
-            <tr>
-              <td><b><?php echo $text_order_id; ?></b></td>
-              <td><?php echo $order['order_id']; ?></td>
-            </tr>
-          </table></td>
-      </tr>
-    </table>
-  </div>
+          <?php } ?>
+          <tr>
+            <td><b><?php echo $text_order_id; ?></b></td>
+            <td><?php echo $order['order_id']; ?></td>
+          </tr>
+        </table></td>
+    </tr>
+  </table>
   <table class="address">
     <tr class="heading">
       <td width="50%"><b><?php echo $text_to; ?></b></td>
@@ -55,7 +53,7 @@
       <td><?php echo $order['payment_address']; ?><br/>
         <?php echo $order['email']; ?><br/>
         <?php echo $order['telephone']; ?></td>
-      <td><?php echo$order['shipping_address']; ?></td>
+      <td><?php echo $order['shipping_address']; ?></td>
     </tr>
   </table>
   <table class="product">
@@ -81,13 +79,13 @@
     <?php } ?>
     <?php foreach ($order['total'] as $total) { ?>
     <tr>
-      <td align="right" colspan="4"><b><?php echo $total['title']; ?></b></td>
+      <td align="right" colspan="4"><b><?php echo $total['title']; ?>:</b></td>
       <td align="right"><?php echo $total['text']; ?></td>
     </tr>
     <?php } ?>
   </table>
   <?php if ($order['comment']) { ?>
-  <table class="product">
+  <table class="comment">
     <tr class="heading">
       <td><b><?php echo $column_comment; ?></b></td>
     </tr>

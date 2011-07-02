@@ -17,7 +17,7 @@
             <td class="left"><?php echo $column_email; ?></td>
             <td class="left"><?php echo $column_customer_group; ?></td>
             <td class="left"><?php echo $column_status; ?></td>            
-            <td class="right"><?php echo $column_credit; ?></td>
+            <td class="right"><?php echo $column_total; ?></td>
             <td class="right"><?php echo $column_action; ?></td>
           </tr>
         </thead>
@@ -29,7 +29,7 @@
             <td class="left"><?php echo $customer['email']; ?></td>
             <td class="left"><?php echo $customer['customer_group']; ?></td>
             <td class="left"><?php echo $customer['status']; ?></td>
-            <td class="right"><?php echo $customer['credit']; ?></td>
+            <td class="right"><?php echo $customer['total']; ?></td>
             <td class="right"><?php foreach ($customer['action'] as $action) { ?>
               [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
               <?php } ?></td>            
@@ -37,7 +37,7 @@
           <?php } ?>
           <?php } else { ?>
           <tr>
-            <td class="center" colspan="4"><?php echo $text_no_results; ?></td>
+            <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
           </tr>
           <?php } ?>
         </tbody>

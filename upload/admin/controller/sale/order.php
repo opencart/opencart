@@ -1845,6 +1845,8 @@ class ControllerSaleOrder extends Controller {
 
 		$this->load->model('sale/order');
 
+		$this->load->model('setting/setting');
+
 		$this->data['orders'] = array();
 
 		$orders = array();
@@ -1859,6 +1861,20 @@ class ControllerSaleOrder extends Controller {
 			$order_info = $this->model_sale_order->getOrder($order_id);
 
 			if ($order_info) {
+				$store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
+				
+				if ($store_info) {
+					$store_address = $store_info['config_address'];
+					$store_email = $store_info['config_email'];
+					$store_telephone = $store_info['config_telephone'];
+					$store_fax = $store_info['config_fax'];
+				} else {
+					$store_address = $this->config->get('config_address');
+					$store_email = $this->config->get('config_email');
+					$store_telephone = $this->config->get('config_telephone');
+					$store_fax = $this->config->get('config_fax');
+				}
+				
 				if ($order_info['invoice_no']) {
 					$invoice_no = $order_info['invoice_prefix'] . $order_info['invoice_no'];
 				} else {
@@ -1975,10 +1991,12 @@ class ControllerSaleOrder extends Controller {
 					'date_added'       => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
 					'store_name'       => $order_info['store_name'],
 					'store_url'        => rtrim($order_info['store_url'], '/'),
-					'address'          => nl2br($this->config->get('config_address')),
-					'telephone'        => $this->config->get('config_telephone'),
-					'fax'              => $this->config->get('config_fax'),
-					'email'            => $this->config->get('config_email'),
+					'store_address'    => nl2br($store_address),
+					'store_email'      => $store_email,
+					'store_telephone'  => $store_telephone,
+					'store_fax'        => $store_fax,
+					'email'            => $order_info['email'],
+					'telephone'        => $order_info['telephone'],
 					'shipping_address' => $shipping_address,
 					'payment_address'  => $payment_address,
 					'product'          => $product_data,

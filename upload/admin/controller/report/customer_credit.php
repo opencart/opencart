@@ -79,7 +79,7 @@ class ControllerReportCustomerCredit extends Controller {
 				'email'          => $result['email'],
 				'customer_group' => $result['customer_group'],
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'credit'         => $result['credit'],
+				'total'          => $result['total'],
 				'orders'         => $result['orders'],
 				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
 				'action'         => $action
@@ -94,8 +94,6 @@ class ControllerReportCustomerCredit extends Controller {
 		$this->data['column_email'] = $this->language->get('column_email');
 		$this->data['column_customer_group'] = $this->language->get('column_customer_group');
 		$this->data['column_status'] = $this->language->get('column_status');
-		$this->data['column_credit'] = $this->language->get('column_credit');
-		$this->data['column_orders'] = $this->language->get('column_orders');
 		$this->data['column_total'] = $this->language->get('column_total');
 		$this->data['column_action'] = $this->language->get('column_action');
 		

@@ -17,7 +17,7 @@ h1 {
 	margin-bottom: 15px;
 	border-bottom: 1px solid #CDDDDD;
 }
-.div1 {
+.store {
 	width: 100%;
 	margin-bottom: 20px;
 }
@@ -46,6 +46,7 @@ h1 {
 	border-left: 1px solid #CDDDDD;
 	border-bottom: 1px solid #CDDDDD;
 	padding: 5px;
+	vertical-align: text-bottom;
 }
 .address td {
 	width: 50%;

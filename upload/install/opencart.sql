@@ -1068,7 +1068,6 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
 (382, 'module', 'special'),
 (384, 'module', 'slideshow'),
 (393, 'total', 'reward'),
-(396, 'module', 'store'),
 (398, 'total', 'voucher'),
 (407, 'payment', 'free_checkout');
 

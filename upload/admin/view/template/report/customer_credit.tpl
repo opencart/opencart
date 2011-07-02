@@ -13,7 +13,7 @@
       <table class="list">
         <thead>
           <tr>
-            <td class="left"><?php echo $column_name; ?></td>
+            <td class="left"><?php echo $column_customer; ?></td>
             <td class="left"><?php echo $column_email; ?></td>
             <td class="left"><?php echo $column_customer_group; ?></td>
             <td class="left"><?php echo $column_status; ?></td>            
@@ -25,7 +25,7 @@
           <?php if ($customers) { ?>
           <?php foreach ($customers as $customer) { ?>
           <tr>
-            <td class="left"><?php echo $customer['name']; ?></td>
+            <td class="left"><?php echo $customer['customer']; ?></td>
             <td class="left"><?php echo $customer['email']; ?></td>
             <td class="left"><?php echo $customer['customer_group']; ?></td>
             <td class="left"><?php echo $customer['status']; ?></td>

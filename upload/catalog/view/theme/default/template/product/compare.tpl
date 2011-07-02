@@ -31,10 +31,12 @@
       <tr>
         <td><?php echo $text_price; ?></td>
         <?php foreach ($products as $product) { ?>
-        <td><?php if (!$products[$product['product_id']]['special']) { ?>
+        <td><?php if ($products[$product['product_id']]['price']) { ?>
+          <?php if (!$products[$product['product_id']]['special']) { ?>
           <?php echo $products[$product['product_id']]['price']; ?>
           <?php } else { ?>
           <span class="price-old"><?php echo $products[$product['product_id']]['price']; ?></span> <span class="price-new"><?php echo $products[$product['product_id']]['special']; ?></span>
+          <?php } ?>
           <?php } ?></td>
         <?php } ?>
       </tr>

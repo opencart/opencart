@@ -94,7 +94,7 @@ final class Mail {
 		}
 		
 		$header .= 'Date: ' . date("D, d M Y H:i:s O") . $this->newline;
-		$header .= 'From: ' . '=?UTF-8?B?'.base64_encode($this->sender).'?=' . '<' . $this->from . '>' . $this->newline;
+		$header .= 'From: ' . '=?UTF-8?B?' . base64_encode($this->sender) . '?=' . '<' . $this->from . '>' . $this->newline;
 		$header .= 'Reply-To: ' . $this->sender . '<' . $this->from . '>' . $this->newline;
 		$header .= 'Return-Path: ' . $this->from . $this->newline;
 		$header .= 'X-Mailer: PHP/' . phpversion() . $this->newline;

@@ -1,6 +1,8 @@
 <?php  
 class ControllerModuleBanner extends Controller {
 	protected function index($setting) {
+		static $module = 0;
+		
 		$this->load->model('design/banner');
 		$this->load->model('tool/image');
 				
@@ -18,7 +20,7 @@ class ControllerModuleBanner extends Controller {
 			}
 		}
 		
-		$this->data['module'] = $module;
+		$this->data['module'] = $module++;
 				
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/banner.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/module/banner.tpl';

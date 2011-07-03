@@ -61,89 +61,97 @@ class ModelCatalogProduct extends Model {
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}	
-				
-		$sql = "SELECT p.product_id, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = p.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'"; 
 		
-		if (isset($data['filter_name']) && $data['filter_name']) {
-			if (isset($data['filter_description']) && $data['filter_description']) {
-				$sql .= " AND (LCASE(pd.name) LIKE '%" . $this->db->escape(strtolower($data['filter_name'])) . "%' OR p.product_id IN (SELECT pt.product_id FROM " . DB_PREFIX . "product_tag pt WHERE pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND pt.tag LIKE '%" . $this->db->escape(strtolower($data['filter_name'])) . "%') OR LCASE(pd.description) LIKE '%" . $this->db->escape(strtolower($data['filter_name'])) . "%')";
-			} else {
-				$sql .= " AND (LCASE(pd.name) LIKE '%" . $this->db->escape(strtolower($data['filter_name'])) . "%' OR p.product_id IN (SELECT pt.product_id FROM " . DB_PREFIX . "product_tag pt WHERE pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND pt.tag LIKE '%" . $this->db->escape(strtolower($data['filter_name'])) . "%'))";
-			}
-		}
+		$cache = md5(http_build_query($data));
 		
-		if (isset($data['filter_tag']) && $data['filter_tag']) {
-			$sql .= " AND p.product_id IN (SELECT pt.product_id FROM " . DB_PREFIX . "product_tag pt WHERE pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND LOWER(pt.tag) LIKE '%" . $this->db->escape(strtolower($data['filter_tag'])) . "%')";
-		}
-									
-		if (isset($data['filter_category_id']) && $data['filter_category_id']) {
-			if (isset($data['filter_sub_category']) && $data['filter_sub_category']) {
-				$implode_data = array();
-				
-				$this->load->model('catalog/category');
-				
-				$categories = $this->model_catalog_category->getCategoriesByParentId($data['filter_category_id']);
-				
-				foreach ($categories as $category_id) {
-					$implode_data[] = "p2c.category_id = '" . (int)$category_id . "'";
+		$product_data = $this->cache->get('product.' . $cache . '.' . $customer_group_id);
+		
+		if (!$product_data) {
+			$sql = "SELECT p.product_id, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = p.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'"; 
+			
+			if (isset($data['filter_name']) && $data['filter_name']) {
+				if (isset($data['filter_description']) && $data['filter_description']) {
+					$sql .= " AND (LCASE(pd.name) LIKE '%" . $this->db->escape(strtolower($data['filter_name'])) . "%' OR p.product_id IN (SELECT pt.product_id FROM " . DB_PREFIX . "product_tag pt WHERE pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND pt.tag LIKE '%" . $this->db->escape(strtolower($data['filter_name'])) . "%') OR LCASE(pd.description) LIKE '%" . $this->db->escape(strtolower($data['filter_name'])) . "%')";
+				} else {
+					$sql .= " AND (LCASE(pd.name) LIKE '%" . $this->db->escape(strtolower($data['filter_name'])) . "%' OR p.product_id IN (SELECT pt.product_id FROM " . DB_PREFIX . "product_tag pt WHERE pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND pt.tag LIKE '%" . $this->db->escape(strtolower($data['filter_name'])) . "%'))";
 				}
-				
-				$sql .= " AND p.product_id IN (SELECT p2c.product_id FROM " . DB_PREFIX . "product_to_category p2c WHERE " . implode(' OR ', $implode_data) . ")";			
-			} else {
-				$sql .= " AND p.product_id IN (SELECT p2c.product_id FROM " . DB_PREFIX . "product_to_category p2c WHERE p2c.category_id = '" . (int)$data['filter_category_id'] . "')";
 			}
-		}
-		
-		if (isset($data['filter_manufacturer_id'])) {
-			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";
-		}
-
-		$sort_data = array(
-			'pd.name',
-			'p.model',
-			'p.quantity',
-			'p.price',
-			'rating',
-			'p.sort_order',
-			'p.date_added'
-		);	
-		
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
-				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
-			} else {
-				$sql .= " ORDER BY " . $data['sort'];
+			
+			if (isset($data['filter_tag']) && $data['filter_tag']) {
+				$sql .= " AND p.product_id IN (SELECT pt.product_id FROM " . DB_PREFIX . "product_tag pt WHERE pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND LOWER(pt.tag) LIKE '%" . $this->db->escape(strtolower($data['filter_tag'])) . "%')";
 			}
-		} else {
-			$sql .= " ORDER BY p.sort_order";	
+										
+			if (isset($data['filter_category_id']) && $data['filter_category_id']) {
+				if (isset($data['filter_sub_category']) && $data['filter_sub_category']) {
+					$implode_data = array();
+					
+					$this->load->model('catalog/category');
+					
+					$categories = $this->model_catalog_category->getCategoriesByParentId($data['filter_category_id']);
+					
+					foreach ($categories as $category_id) {
+						$implode_data[] = "p2c.category_id = '" . (int)$category_id . "'";
+					}
+					
+					$sql .= " AND p.product_id IN (SELECT p2c.product_id FROM " . DB_PREFIX . "product_to_category p2c WHERE " . implode(' OR ', $implode_data) . ")";			
+				} else {
+					$sql .= " AND p.product_id IN (SELECT p2c.product_id FROM " . DB_PREFIX . "product_to_category p2c WHERE p2c.category_id = '" . (int)$data['filter_category_id'] . "')";
+				}
+			}
+			
+			if (isset($data['filter_manufacturer_id'])) {
+				$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";
+			}
+	
+			$sort_data = array(
+				'pd.name',
+				'p.model',
+				'p.quantity',
+				'p.price',
+				'rating',
+				'p.sort_order',
+				'p.date_added'
+			);	
+			
+			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+				if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
+					$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
+				} else {
+					$sql .= " ORDER BY " . $data['sort'];
+				}
+			} else {
+				$sql .= " ORDER BY p.sort_order";	
+			}
+			
+			if (isset($data['order']) && ($data['order'] == 'DESC')) {
+				$sql .= " DESC";
+			} else {
+				$sql .= " ASC";
+			}
+		
+			if (isset($data['start']) || isset($data['limit'])) {
+				if ($data['start'] < 0) {
+					$data['start'] = 0;
+				}				
+	
+				if ($data['limit'] < 1) {
+					$data['limit'] = 20;
+				}	
+			
+				$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+			}
+			
+			$product_data = array();
+					
+			$query = $this->db->query($sql);
+		
+			foreach ($query->rows as $result) {
+				$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+			}
+			
+			$this->cache->set('product.' . $cache . '.' . $customer_group_id, $product_data);
 		}
 		
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
-		}
-	
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}				
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}	
-		
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
-		
-		$product_data = array();
-				
-		$query = $this->db->query($sql);
-	
-		foreach ($query->rows as $result) {
-			$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
-		}
-	
 		return $product_data;
 	}
 	

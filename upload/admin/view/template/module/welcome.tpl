@@ -35,7 +35,7 @@
             <table class="form">
               <tr>
                 <td><?php echo $entry_description; ?></td>
-                <td><textarea name="welcome_<?php echo $module_row; ?>_description_<?php echo $language['language_id']; ?>" id="description-<?php echo $module_row; ?>-<?php echo $language['language_id']; ?>"><?php echo ${'welcome_' . $module . '_description_' . $language['language_id']}; ?></textarea></td>
+                <td><textarea name="welcome_module[<?php echo $module_row; ?>][description][<?php echo $language['language_id']; ?>]" id="description-<?php echo $module_row; ?>-<?php echo $language['language_id']; ?>"><?php echo isset($module['description'][$language['language_id']]) ? $module['description'][$language['language_id']] : ''; ?></textarea></td>
               </tr>
             </table>
           </div>
@@ -43,9 +43,9 @@
           <table class="form">
             <tr>
               <td><?php echo $entry_layout; ?></td>
-              <td><select name="welcome_<?php echo $module_row; ?>_layout_id">
+              <td><select name="welcome_module[<?php echo $module_row; ?>][layout_id]">
                   <?php foreach ($layouts as $layout) { ?>
-                  <?php if ($layout['layout_id'] == ${'welcome_' . $module . '_layout_id'}) { ?>
+                  <?php if ($layout['layout_id'] == $module['layout_id']) { ?>
                   <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
                   <?php } else { ?>
                   <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
@@ -55,23 +55,23 @@
             </tr>
             <tr>
               <td><?php echo $entry_position; ?></td>
-              <td><select name="welcome_<?php echo $module_row; ?>_position">
-                  <?php if (${'welcome_' . $module . '_position'} == 'content_top') { ?>
+              <td><select name="welcome_module[<?php echo $module_row; ?>][position]">
+                  <?php if ($module['position'] == 'content_top') { ?>
                   <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
                   <?php } else { ?>
                   <option value="content_top"><?php echo $text_content_top; ?></option>
                   <?php } ?>
-                  <?php if (${'welcome_' . $module . '_position'} == 'content_bottom') { ?>
+                  <?php if ($module['position'] == 'content_bottom') { ?>
                   <option value="content_bottom" selected="selected"><?php echo $text_content_bottom; ?></option>
                   <?php } else { ?>
                   <option value="content_bottom"><?php echo $text_content_bottom; ?></option>
                   <?php } ?>
-                  <?php if (${'welcome_' . $module . '_position'} == 'column_left') { ?>
+                  <?php if ($module['position'] == 'column_left') { ?>
                   <option value="column_left" selected="selected"><?php echo $text_column_left; ?></option>
                   <?php } else { ?>
                   <option value="column_left"><?php echo $text_column_left; ?></option>
                   <?php } ?>
-                  <?php if (${'welcome_' . $module . '_position'} == 'column_right') { ?>
+                  <?php if ($module['position'] == 'column_right') { ?>
                   <option value="column_right" selected="selected"><?php echo $text_column_right; ?></option>
                   <?php } else { ?>
                   <option value="column_right"><?php echo $text_column_right; ?></option>
@@ -80,8 +80,8 @@
             </tr>
             <tr>
               <td><?php echo $entry_status; ?></td>
-              <td><select name="welcome_<?php echo $module_row; ?>_status">
-                  <?php if (${'welcome_' . $module . '_status'}) { ?>
+              <td><select name="welcome_module[<?php echo $module_row; ?>][status]">
+                  <?php if ($module['status']) { ?>
                   <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                   <option value="0"><?php echo $text_disabled; ?></option>
                   <?php } else { ?>
@@ -92,13 +92,12 @@
             </tr>
             <tr>
               <td><?php echo $entry_sort_order; ?></td>
-              <td><input type="text" name="welcome_<?php echo $module_row; ?>_sort_order" value="<?php echo ${'welcome_' . $module . '_sort_order'}; ?>" size="3" /></td>
+              <td><input type="text" name="welcome_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" /></td>
             </tr>
           </table>
         </div>
         <?php $module_row++; ?>
         <?php } ?>
-        <input type="hidden" name="welcome_module" value="<?php echo $welcome_module; ?>" />
       </form>
     </div>
   </div>
@@ -135,7 +134,7 @@ function addModule() {
 	html += '      <table class="form">';
 	html += '        <tr>';
 	html += '          <td><?php echo $entry_description; ?></td>';
-	html += '          <td><textarea name="welcome_' + module_row + '_description_<?php echo $language['language_id']; ?>" id="description-' + module_row + '-<?php echo $language['language_id']; ?>"></textarea></td>';
+	html += '          <td><textarea name="welcome_module[' + module_row + '][description][<?php echo $language['language_id']; ?>]" id="description-' + module_row + '-<?php echo $language['language_id']; ?>"></textarea></td>';
 	html += '        </tr>';
 	html += '      </table>';
 	html += '    </div>';
@@ -144,7 +143,7 @@ function addModule() {
 	html += '  <table class="form">';
 	html += '    <tr>';
 	html += '      <td><?php echo $entry_layout; ?></td>';
-	html += '      <td><select name="welcome_' + module_row + '_layout_id">';
+	html += '      <td><select name="welcome_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>
 	html += '           <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>';
 	<?php } ?>
@@ -152,7 +151,7 @@ function addModule() {
 	html += '    </tr>';
 	html += '    <tr>';
 	html += '      <td><?php echo $entry_position; ?></td>';
-	html += '      <td><select name="welcome_' + module_row + '_position">';
+	html += '      <td><select name="welcome_module[' + module_row + '][position]">';
 	html += '        <option value="content_top"><?php echo $text_content_top; ?></option>';
 	html += '        <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
 	html += '        <option value="column_left"><?php echo $text_column_left; ?></option>';
@@ -161,14 +160,14 @@ function addModule() {
 	html += '    </tr>';
 	html += '    <tr>';
 	html += '      <td><?php echo $entry_status; ?></td>';
-	html += '      <td><select name="welcome_' + module_row + '_status">';
+	html += '      <td><select name="welcome_module[' + module_row + '][status]">';
 	html += '        <option value="1"><?php echo $text_enabled; ?></option>';
 	html += '        <option value="0"><?php echo $text_disabled; ?></option>';
 	html += '      </select></td>';
 	html += '    </tr>';
 	html += '    <tr>';
 	html += '      <td><?php echo $entry_sort_order; ?></td>';
-	html += '      <td><input type="text" name="welcome_' + module_row + '_sort_order" value="" size="3" /></td>';
+	html += '      <td><input type="text" name="welcome_module[' + module_row + '][sort_order]" value="" size="3" /></td>';
 	html += '    </tr>';
 	html += '  </table>'; 
 	html += '</div>';
@@ -195,16 +194,6 @@ function addModule() {
 	
 	module_row++;
 }
-
-$('#form').bind('submit', function() {
-	var module = new Array(); 
-
-	$('.vtabs-content').each(function(index, element) {
-		module[index] = $(element).attr('id').substr(11);
-	});
-	
-	$('input[name=\'welcome_module\']').attr('value', module.join(','));
-});
 //--></script> 
 <script type="text/javascript"><!--
 $('.vtabs a').tabs();

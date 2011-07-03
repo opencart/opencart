@@ -66,52 +66,18 @@ class ControllerModuleAffiliate extends Controller {
 		
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		
+		$this->data['modules'] = array();
+		
 		if (isset($this->request->post['affiliate_module'])) {
-			$modules = explode(',', $this->request->post['affiliate_module']);
-		} elseif ($this->config->get('affiliate_module') != '') {
-			$modules = explode(',', $this->config->get('affiliate_module'));
-		} else {
-			$modules = array();
+			$this->data['modules'] = $this->request->post['affiliate_module'];
+		} elseif ($this->config->get('affiliate_module')) { 
+			$this->data['modules'] = $this->config->get('affiliate_module');
 		}	
-			
+					
 		$this->load->model('design/layout');
 		
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
-				
-		foreach ($modules as $module) {
-			if (isset($this->request->post['affiliate_' . $module . '_layout_id'])) {
-				$this->data['affiliate_' . $module . '_layout_id'] = $this->request->post['affiliate_' . $module . '_layout_id'];
-			} else {
-				$this->data['affiliate_' . $module . '_layout_id'] = $this->config->get('affiliate_' . $module . '_layout_id');
-			}	
-			
-			if (isset($this->request->post['affiliate_' . $module . '_position'])) {
-				$this->data['affiliate_' . $module . '_position'] = $this->request->post['affiliate_' . $module . '_position'];
-			} else {
-				$this->data['affiliate_' . $module . '_position'] = $this->config->get('affiliate_' . $module . '_position');
-			}	
-			
-			if (isset($this->request->post['affiliate_' . $module . '_status'])) {
-				$this->data['affiliate_' . $module . '_status'] = $this->request->post['affiliate_' . $module . '_status'];
-			} else {
-				$this->data['affiliate_' . $module . '_status'] = $this->config->get('affiliate_' . $module . '_status');
-			}	
-						
-			if (isset($this->request->post['affiliate_' . $module . '_sort_order'])) {
-				$this->data['affiliate_' . $module . '_sort_order'] = $this->request->post['affiliate_' . $module . '_sort_order'];
-			} else {
-				$this->data['affiliate_' . $module . '_sort_order'] = $this->config->get('affiliate_' . $module . '_sort_order');
-			}				
-		}
-			
-		$this->data['modules'] = $modules;
 		
-		if (isset($this->request->post['affiliate_module'])) {
-			$this->data['affiliate_module'] = $this->request->post['affiliate_module'];
-		} else {
-			$this->data['affiliate_module'] = $this->config->get('affiliate_module');
-		}
-				
 		$this->template = 'module/affiliate.tpl';
 		$this->children = array(
 			'common/header',

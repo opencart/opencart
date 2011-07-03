@@ -75,51 +75,17 @@ class ControllerModuleStore extends Controller {
 			$this->data['store_admin'] = $this->config->get('store_admin');
 		}	
 			
+		$this->data['modules'] = array();
+		
 		if (isset($this->request->post['store_module'])) {
-			$modules = explode(',', $this->request->post['store_module']);
-		} elseif ($this->config->get('store_module') != '') { 
-			$modules = explode(',', $this->config->get('store_module'));
-		} else {
-			$modules = array();
-		}		
+			$this->data['modules'] = $this->request->post['store_module'];
+		} elseif ($this->config->get('store_module')) { 
+			$this->data['modules'] = $this->config->get('store_module');
+		}
 		
 		$this->load->model('design/layout');
 		
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
-				
-		foreach ($modules as $module) {
-			if (isset($this->request->post['store_' . $module . '_layout_id'])) {
-				$this->data['store_' . $module . '_layout_id'] = $this->request->post['store_' . $module . '_layout_id'];
-			} else {
-				$this->data['store_' . $module . '_layout_id'] = $this->config->get('store_' . $module . '_layout_id');
-			}	
-			
-			if (isset($this->request->post['store_' . $module . '_position'])) {
-				$this->data['store_' . $module . '_position'] = $this->request->post['store_' . $module . '_position'];
-			} else {
-				$this->data['store_' . $module . '_position'] = $this->config->get('store_' . $module . '_position');
-			}	
-			
-			if (isset($this->request->post['store_' . $module . '_status'])) {
-				$this->data['store_' . $module . '_status'] = $this->request->post['store_' . $module . '_status'];
-			} else {
-				$this->data['store_' . $module . '_status'] = $this->config->get('store_' . $module . '_status');
-			}	
-						
-			if (isset($this->request->post['store_' . $module . '_sort_order'])) {
-				$this->data['store_' . $module . '_sort_order'] = $this->request->post['store_' . $module . '_sort_order'];
-			} else {
-				$this->data['store_' . $module . '_sort_order'] = $this->config->get('store_' . $module . '_sort_order');
-			}				
-		}
-		
-		$this->data['modules'] = $modules;
-		
-		if (isset($this->request->post['store_module'])) {
-			$this->data['store_module'] = $this->request->post['store_module'];
-		} else {
-			$this->data['store_module'] = $this->config->get('store_module');
-		}
 				
 		$this->template = 'module/store.tpl';
 		$this->children = array(

@@ -44,16 +44,10 @@ class ControllerModuleSlideshow extends Controller {
 			$this->data['error_warning'] = '';
 		}
 		
-		if (isset($this->request->post['slideshow_module'])) {
-			$modules = explode(',', $this->request->post['slideshow_module']);
+		if (isset($this->error['dimension'])) {
+			$this->data['error_dimension'] = $this->error['dimension'];
 		} else {
-			$modules = array();
-		}	
-		
-		foreach ($modules as $module) {
-			if (isset($this->error['dimension_' . $module])) {
-				$this->data['error_dimension_' . $module] = $this->error['dimension_' . $module];
-			}
+			$this->data['error_dimension'] = array();
 		}
 		
   		$this->data['breadcrumbs'] = array();
@@ -80,14 +74,14 @@ class ControllerModuleSlideshow extends Controller {
 		
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		
+		$this->data['modules'] = array();
+		
 		if (isset($this->request->post['slideshow_module'])) {
-			$modules = explode(',', $this->request->post['slideshow_module']);
-		} elseif ($this->config->get('slideshow_module') != '') {
-			$modules = explode(',', $this->config->get('slideshow_module'));
-		} else {
-			$modules = array();
-		}		
-				
+			$this->data['modules'] = $this->request->post['slideshow_module'];
+		} elseif ($this->config->get('slideshow_module')) { 
+			$this->data['modules'] = $this->config->get('slideshow_module');
+		}	
+						
 		$this->load->model('design/layout');
 		
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
@@ -95,59 +89,7 @@ class ControllerModuleSlideshow extends Controller {
 		$this->load->model('design/banner');
 		
 		$this->data['banners'] = $this->model_design_banner->getBanners();
-						
-		foreach ($modules as $module) {
-			if (isset($this->request->post['slideshow_' . $module . '_banner_id'])) {
-				$this->data['slideshow_' . $module . '_banner_id'] = $this->request->post['slideshow_' . $module . '_banner_id'];
-			} else {
-				$this->data['slideshow_' . $module . '_banner_id'] = $this->config->get('slideshow_' . $module . '_banner_id');
-			}	
-
-			if (isset($this->request->post['slideshow_' . $module . '_width'])) {
-				$this->data['slideshow_' . $module . '_width'] = $this->request->post['slideshow_' . $module . '_width'];
-			} else {
-				$this->data['slideshow_' . $module . '_width'] = $this->config->get('slideshow_' . $module . '_width');
-			}	
-			
-			if (isset($this->request->post['slideshow_' . $module . '_height'])) {
-				$this->data['slideshow_' . $module . '_height'] = $this->request->post['slideshow_' . $module . '_height'];
-			} else {
-				$this->data['slideshow_' . $module . '_height'] = $this->config->get('slideshow_' . $module . '_height');
-			}
-						
-			if (isset($this->request->post['slideshow_' . $module . '_layout_id'])) {
-				$this->data['slideshow_' . $module . '_layout_id'] = $this->request->post['slideshow_' . $module . '_layout_id'];
-			} else {
-				$this->data['slideshow_' . $module . '_layout_id'] = $this->config->get('slideshow_' . $module . '_layout_id');
-			}	
-			
-			if (isset($this->request->post['slideshow_' . $module . '_position'])) {
-				$this->data['slideshow_' . $module . '_position'] = $this->request->post['slideshow_' . $module . '_position'];
-			} else {
-				$this->data['slideshow_' . $module . '_position'] = $this->config->get('slideshow_' . $module . '_position');
-			}	
-			
-			if (isset($this->request->post['slideshow_' . $module . '_status'])) {
-				$this->data['slideshow_' . $module . '_status'] = $this->request->post['slideshow_' . $module . '_status'];
-			} else {
-				$this->data['slideshow_' . $module . '_status'] = $this->config->get('slideshow_' . $module . '_status');
-			}	
-						
-			if (isset($this->request->post['slideshow_' . $module . '_sort_order'])) {
-				$this->data['slideshow_' . $module . '_sort_order'] = $this->request->post['slideshow_' . $module . '_sort_order'];
-			} else {
-				$this->data['slideshow_' . $module . '_sort_order'] = $this->config->get('slideshow_' . $module . '_sort_order');
-			}				
-		}
 		
-		$this->data['modules'] = $modules;
-		
-		if (isset($this->request->post['slideshow_module'])) {
-			$this->data['slideshow_module'] = $this->request->post['slideshow_module'];
-		} else {
-			$this->data['slideshow_module'] = $this->config->get('slideshow_module');
-		}
-
 		$this->template = 'module/slideshow.tpl';
 		$this->children = array(
 			'common/header',
@@ -162,18 +104,14 @@ class ControllerModuleSlideshow extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if ($this->request->post['slideshow_module'] !== '') {
-			$modules = explode(',', $this->request->post['slideshow_module']);
-		} else {
-			$modules = array();
+		if (isset($this->request->post['slideshow_module'])) {
+			foreach ($this->request->post['slideshow_module'] as $key => $value) {
+				if (!$value['width'] || !$value['height']) {
+					$this->error['dimension'][$key] = $this->language->get('error_dimension');
+				}				
+			}
 		}	
-		
-		foreach ($modules as $module) {
-			if (!$this->request->post['slideshow_' . $module . '_width'] || !$this->request->post['slideshow_' . $module . '_height']) {
-				$this->error['dimension_' . $module] = $this->language->get('error_dimension');
-			}			
-		}
-				
+						
 		if (!$this->error) {
 			return true;
 		} else {

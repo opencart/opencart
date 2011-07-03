@@ -1,6 +1,6 @@
 <?php
 class ControllerModuleSpecial extends Controller {
-	protected function index($module) {
+	protected function index($setting) {
 		$this->language->load('module/special');
  
       	$this->data['heading_title'] = $this->language->get('heading_title');
@@ -17,14 +17,14 @@ class ControllerModuleSpecial extends Controller {
 			'sort'  => 'pd.name',
 			'order' => 'ASC',
 			'start' => 0,
-			'limit' => $this->config->get('special_' . $module . '_limit')
+			'limit' => $setting['limit']
 		);
 
 		$results = $this->model_catalog_product->getProductSpecials($data);
 
 		foreach ($results as $result) {
 			if ($result['image']) {
-				$image = $this->model_tool_image->resize($result['image'], $this->config->get('special_' . $module . '_image_width'), $this->config->get('special_' . $module . '_image_height'));
+				$image = $this->model_tool_image->resize($result['image'], $setting['image_width'], $setting['image_height']);
 			} else {
 				$image = false;
 			}

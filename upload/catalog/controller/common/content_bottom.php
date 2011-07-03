@@ -43,14 +43,14 @@ class ControllerCommonContentBottom extends Controller {
 		$extensions = $this->model_setting_extension->getExtensions('module');		
 		
 		foreach ($extensions as $extension) {
-			$modules = explode(',', $this->config->get($extension['code'] . '_module'));
+			$modules = $this->config->get($extension['code'] . '_module');
 		
 			foreach ($modules as $module) {
-				if ($this->config->get($extension['code'] . '_' . $module . '_layout_id') == $layout_id && $this->config->get($extension['code'] . '_' . $module . '_position') == 'content_bottom' && $this->config->get($extension['code'] . '_' . $module . '_status')) {
+				if ($module['layout_id'] == $layout_id && $module['position'] == 'content_bottom' && $module['status']) {
 					$module_data[] = array(
 						'code'       => $extension['code'],
-						'module'     => $module,
-						'sort_order' => $this->config->get($extension['code'] . '_' . $module . '_sort_order')
+						'setting'    => $module,
+						'sort_order' => $module['sort_order']
 					);				
 				}
 			}
@@ -67,7 +67,7 @@ class ControllerCommonContentBottom extends Controller {
 		$this->data['modules'] = array();
 		
 		foreach ($module_data as $module) {
-			$module = $this->getChild('module/' . $module['code'], $module['module']);
+			$module = $this->getChild('module/' . $module['code'], $module['setting']);
 			
 			if ($module) {
 				$this->data['modules'][] = $module;

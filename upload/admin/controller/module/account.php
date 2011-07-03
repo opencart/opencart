@@ -70,7 +70,7 @@ class ControllerModuleAccount extends Controller {
 		
 		if (isset($this->request->post['account_module'])) {
 			$this->data['modules'] = $this->request->post['account_module'];
-		} elseif ($this->config->get('account_module') != '') { 
+		} elseif ($this->config->get('account_module')) { 
 			$this->data['modules'] = $this->config->get('account_module');
 		}	
 		

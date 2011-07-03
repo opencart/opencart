@@ -44,16 +44,10 @@ class ControllerModuleBanner extends Controller {
 			$this->data['error_warning'] = '';
 		}
 		
-		if (isset($this->request->post['banner_module'])) {
-			$modules = explode(',', $this->request->post['banner_module']);
+		if (isset($this->error['dimension'])) {
+			$this->data['error_dimension'] = $this->error['dimension'];
 		} else {
-			$modules = array();
-		}	
-		
-		foreach ($modules as $module) {
-			if (isset($this->error['dimension_' . $module])) {
-				$this->data['error_dimension_' . $module] = $this->error['dimension_' . $module];
-			}
+			$this->data['error_dimension'] = array();
 		}
 				
   		$this->data['breadcrumbs'] = array();
@@ -80,13 +74,13 @@ class ControllerModuleBanner extends Controller {
 		
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		
+		$this->data['modules'] = array();
+		
 		if (isset($this->request->post['banner_module'])) {
-			$modules = explode(',', $this->request->post['banner_module']);
-		} elseif ($this->config->get('banner_module') != '') {
-			$modules = explode(',', $this->config->get('banner_module'));
-		} else {
-			$modules = array();
-		}		
+			$this->data['modules'] = $this->request->post['banner_module'];
+		} elseif ($this->config->get('banner_module')) { 
+			$this->data['modules'] = $this->config->get('banner_module');
+		}	
 				
 		$this->load->model('design/layout');
 		
@@ -95,58 +89,6 @@ class ControllerModuleBanner extends Controller {
 		$this->load->model('design/banner');
 		
 		$this->data['banners'] = $this->model_design_banner->getBanners();
-						
-		foreach ($modules as $module) {
-			if (isset($this->request->post['banner_' . $module . '_banner_id'])) {
-				$this->data['banner_' . $module . '_banner_id'] = $this->request->post['banner_' . $module . '_banner_id'];
-			} else {
-				$this->data['banner_' . $module . '_banner_id'] = $this->config->get('banner_' . $module . '_banner_id');
-			}	
-			
-			if (isset($this->request->post['banner_' . $module . '_width'])) {
-				$this->data['banner_' . $module . '_width'] = $this->request->post['banner_' . $module . '_width'];
-			} else {
-				$this->data['banner_' . $module . '_width'] = $this->config->get('banner_' . $module . '_width');
-			}	
-			
-			if (isset($this->request->post['banner_' . $module . '_height'])) {
-				$this->data['banner_' . $module . '_height'] = $this->request->post['banner_' . $module . '_height'];
-			} else {
-				$this->data['banner_' . $module . '_height'] = $this->config->get('banner_' . $module . '_height');
-			}
-									
-			if (isset($this->request->post['banner_' . $module . '_layout_id'])) {
-				$this->data['banner_' . $module . '_layout_id'] = $this->request->post['banner_' . $module . '_layout_id'];
-			} else {
-				$this->data['banner_' . $module . '_layout_id'] = $this->config->get('banner_' . $module . '_layout_id');
-			}	
-			
-			if (isset($this->request->post['banner_' . $module . '_position'])) {
-				$this->data['banner_' . $module . '_position'] = $this->request->post['banner_' . $module . '_position'];
-			} else {
-				$this->data['banner_' . $module . '_position'] = $this->config->get('banner_' . $module . '_position');
-			}	
-			
-			if (isset($this->request->post['banner_' . $module . '_status'])) {
-				$this->data['banner_' . $module . '_status'] = $this->request->post['banner_' . $module . '_status'];
-			} else {
-				$this->data['banner_' . $module . '_status'] = $this->config->get('banner_' . $module . '_status');
-			}	
-						
-			if (isset($this->request->post['banner_' . $module . '_sort_order'])) {
-				$this->data['banner_' . $module . '_sort_order'] = $this->request->post['banner_' . $module . '_sort_order'];
-			} else {
-				$this->data['banner_' . $module . '_sort_order'] = $this->config->get('banner_' . $module . '_sort_order');
-			}				
-		}
-		
-		$this->data['modules'] = $modules;
-		
-		if (isset($this->request->post['banner_module'])) {
-			$this->data['banner_module'] = $this->request->post['banner_module'];
-		} else {
-			$this->data['banner_module'] = $this->config->get('banner_module');
-		}
 				
 		$this->template = 'module/banner.tpl';
 		$this->children = array(
@@ -162,16 +104,12 @@ class ControllerModuleBanner extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ($this->request->post['banner_module'] !== '') {
-			$modules = explode(',', $this->request->post['banner_module']);
-		} else {
-			$modules = array();
-		}	
-		
-		foreach ($modules as $module) {
-			if (!$this->request->post['banner_' . $module . '_width'] || !$this->request->post['banner_' . $module . '_height']) {
-				$this->error['dimension_' . $module] = $this->language->get('error_dimension');
-			}			
+		if (isset($this->request->post['banner_module'])) {
+			foreach ($this->request->post['banner_module'] as $key => $value) {
+				if (!$value['width'] || !$value['height']) {
+					$this->error['dimension'][$key] = $this->language->get('error_dimension');
+				}			
+			}
 		}
 		
 		if (!$this->error) {

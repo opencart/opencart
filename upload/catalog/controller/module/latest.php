@@ -1,6 +1,6 @@
 <?php
 class ControllerModuleLatest extends Controller {
-	protected function index($module) {
+	protected function index($setting) {
 		$this->language->load('module/latest');
 		
       	$this->data['heading_title'] = $this->language->get('heading_title');
@@ -17,14 +17,14 @@ class ControllerModuleLatest extends Controller {
 			'sort'  => 'p.date_added',
 			'order' => 'DESC',
 			'start' => 0,
-			'limit' => $this->config->get('latest_' . $module . '_limit')
+			'limit' => $setting['limit']
 		);
 
 		$results = $this->model_catalog_product->getProducts($data);
 
 		foreach ($results as $result) {
 			if ($result['image']) {
-				$image = $this->model_tool_image->resize($result['image'], $this->config->get('latest_' . $module . '_image_width'), $this->config->get('latest_' . $module . '_image_height'));
+				$image = $this->model_tool_image->resize($result['image'], $setting['image_width'], $setting['image_height']);
 			} else {
 				$image = false;
 			}

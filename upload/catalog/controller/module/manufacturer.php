@@ -1,6 +1,6 @@
 <?php  
 class ControllerModuleManufacturer extends Controller {
-	protected function index($module) {
+	protected function index($setting) {
 		$this->language->load('module/manufacturer');	
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -10,9 +10,9 @@ class ControllerModuleManufacturer extends Controller {
 		$this->load->model('catalog/manufacturer');
 		$this->load->model('tool/image');
 		
-		$this->data['limit'] = $this->config->get('manufacturer_' . $module . '_limit');
-		$this->data['scroll'] = $this->config->get('manufacturer_' . $module . '_scroll');
-		$this->data['axis'] = $this->config->get('manufacturer_' . $module . '_axis');
+		$this->data['limit'] = $setting['limit'];
+		$this->data['scroll'] = $setting['scroll'];
+		$this->data['axis'] = $setting['axis'];
 				
 		$this->data['manufacturers'] = array();
 		
@@ -24,12 +24,12 @@ class ControllerModuleManufacturer extends Controller {
 					'manufacturer_id' => $result['manufacturer_id'],
 					'name'            => $result['name'],
 					'href'            => $this->url->link('product/manufacturer/product', 'manufacturer_id=' . $result['manufacturer_id']),
-					'image'           => $this->model_tool_image->resize($result['image'], $this->config->get('manufacturer_' . $module . '_image_width'), $this->config->get('manufacturer_' . $module . '_image_height'))
+					'image'           => $this->model_tool_image->resize($result['image'], $setting['image_width'], $setting['image_height'])
 				);
 			}
 		}
 		
-		$this->data['module'] = $module; 
+		$this->data['module'] = $setting; 
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/manufacturer.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/module/manufacturer.tpl';

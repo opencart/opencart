@@ -79,51 +79,17 @@ class ControllerModuleGoogleTalk extends Controller {
 			$this->data['google_talk_code'] = $this->config->get('google_talk_code');
 		}	
 		
+		$this->data['modules'] = array();
+		
 		if (isset($this->request->post['google_talk_module'])) {
-			$modules = explode(',', $this->request->post['google_talk_module']);
-		} elseif ($this->config->get('google_talk_module') != '') {
-			$modules = explode(',', $this->config->get('google_talk_module'));
-		} else {
-			$modules = array();
+			$this->data['modules'] = $this->request->post['google_talk_module'];
+		} elseif ($this->config->get('google_talk_module')) { 
+			$this->data['modules'] = $this->config->get('google_talk_module');
 		}			
 				
 		$this->load->model('design/layout');
 		
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
-				
-		foreach ($modules as $module) {
-			if (isset($this->request->post['google_talk_' . $module . '_layout_id'])) {
-				$this->data['google_talk_' . $module . '_layout_id'] = $this->request->post['google_talk_' . $module . '_layout_id'];
-			} else {
-				$this->data['google_talk_' . $module . '_layout_id'] = $this->config->get('google_talk_' . $module . '_layout_id');
-			}	
-			
-			if (isset($this->request->post['google_talk_' . $module . '_position'])) {
-				$this->data['google_talk_' . $module . '_position'] = $this->request->post['google_talk_' . $module . '_position'];
-			} else {
-				$this->data['google_talk_' . $module . '_position'] = $this->config->get('google_talk_' . $module . '_position');
-			}	
-			
-			if (isset($this->request->post['google_talk_' . $module . '_status'])) {
-				$this->data['google_talk_' . $module . '_status'] = $this->request->post['google_talk_' . $module . '_status'];
-			} else {
-				$this->data['google_talk_' . $module . '_status'] = $this->config->get('google_talk_' . $module . '_status');
-			}	
-						
-			if (isset($this->request->post['google_talk_' . $module . '_sort_order'])) {
-				$this->data['google_talk_' . $module . '_sort_order'] = $this->request->post['google_talk_' . $module . '_sort_order'];
-			} else {
-				$this->data['google_talk_' . $module . '_sort_order'] = $this->config->get('google_talk_' . $module . '_sort_order');
-			}				
-		}
-		
-		$this->data['modules'] = $modules;
-		
-		if (isset($this->request->post['google_talk_module'])) {
-			$this->data['google_talk_module'] = $this->request->post['google_talk_module'];
-		} else {
-			$this->data['google_talk_module'] = $this->config->get('google_talk_module');
-		}
 
 		$this->template = 'module/google_talk.tpl';
 		$this->children = array(

@@ -66,51 +66,17 @@ class ControllerModuleInformation extends Controller {
 		
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 				
+		$this->data['modules'] = array();
+		
 		if (isset($this->request->post['information_module'])) {
-			$modules = explode(',', $this->request->post['information_module']);
-		} elseif ($this->config->get('information_module') != '') {
-			$modules = explode(',', $this->config->get('information_module'));
-		} else {
-			$modules = array();
+			$this->data['modules'] = $this->request->post['information_module'];
+		} elseif ($this->config->get('information_module')) { 
+			$this->data['modules'] = $this->config->get('information_module');
 		}		
 		
 		$this->load->model('design/layout');
 		
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
-				
-		foreach ($modules as $module) {
-			if (isset($this->request->post['information_' . $module . '_layout_id'])) {
-				$this->data['information_' . $module . '_layout_id'] = $this->request->post['information_' . $module . '_layout_id'];
-			} else {
-				$this->data['information_' . $module . '_layout_id'] = $this->config->get('information_' . $module . '_layout_id');
-			}	
-			
-			if (isset($this->request->post['information_' . $module . '_position'])) {
-				$this->data['information_' . $module . '_position'] = $this->request->post['information_' . $module . '_position'];
-			} else {
-				$this->data['information_' . $module . '_position'] = $this->config->get('information_' . $module . '_position');
-			}	
-			
-			if (isset($this->request->post['information_' . $module . '_status'])) {
-				$this->data['information_' . $module . '_status'] = $this->request->post['information_' . $module . '_status'];
-			} else {
-				$this->data['information_' . $module . '_status'] = $this->config->get('information_' . $module . '_status');
-			}	
-						
-			if (isset($this->request->post['information_' . $module . '_sort_order'])) {
-				$this->data['information_' . $module . '_sort_order'] = $this->request->post['information_' . $module . '_sort_order'];
-			} else {
-				$this->data['information_' . $module . '_sort_order'] = $this->config->get('information_' . $module . '_sort_order');
-			}				
-		}
-		
-		$this->data['modules'] = $modules;
-		
-		if (isset($this->request->post['information_module'])) {
-			$this->data['information_module'] = $this->request->post['information_module'];
-		} else {
-			$this->data['information_module'] = $this->config->get('information_module');
-		}
 
 		$this->template = 'module/information.tpl';
 		$this->children = array(

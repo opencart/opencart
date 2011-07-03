@@ -1,6 +1,6 @@
 <?php
 class ControllerModuleBestSeller extends Controller {
-	protected function index($module) {
+	protected function index($setting) {
 		$this->language->load('module/bestseller');
  
       	$this->data['heading_title'] = $this->language->get('heading_title');
@@ -13,11 +13,11 @@ class ControllerModuleBestSeller extends Controller {
 
 		$this->data['products'] = array();
 
-		$results = $this->model_catalog_product->getBestSellerProducts($this->config->get('bestseller_' . $module . '_limit'));
+		$results = $this->model_catalog_product->getBestSellerProducts($setting['limit']);
 		
 		foreach ($results as $result) {
 			if ($result['image']) {
-				$image = $this->model_tool_image->resize($result['image'], $this->config->get('bestseller_' . $module . '_image_width'), $this->config->get('bestseller_' . $module . '_image_height'));
+				$image = $this->model_tool_image->resize($result['image'], $setting['image_width'], $setting['image_height']);
 			} else {
 				$image = false;
 			}

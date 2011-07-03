@@ -44,18 +44,12 @@ class ControllerModuleFeatured extends Controller {
 			$this->data['error_warning'] = '';
 		}
 		
-		if (isset($this->request->post['featured_module'])) {
-			$modules = explode(',', $this->request->post['featured_module']);
+		if (isset($this->error['image'])) {
+			$this->data['error_image'] = $this->error['image'];
 		} else {
-			$modules = array();
-		}	
-		
-		foreach ($modules as $module) {
-			if (isset($this->error['image_' . $module])) {
-				$this->data['error_image_' . $module] = $this->error['image_' . $module];
-			}
+			$this->data['error_image'] = array();
 		}
-		
+				
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
@@ -109,63 +103,17 @@ class ControllerModuleFeatured extends Controller {
 			}
 		}	
 			
+		$this->data['modules'] = array();
+		
 		if (isset($this->request->post['featured_module'])) {
-			$modules = explode(',', $this->request->post['featured_module']);
-		} elseif ($this->config->get('featured_module') != '') {
-			$modules = explode(',', $this->config->get('featured_module'));
-		} else {
-			$modules = array();
+			$this->data['modules'] = $this->request->post['featured_module'];
+		} elseif ($this->config->get('featured_module')) { 
+			$this->data['modules'] = $this->config->get('featured_module');
 		}		
 				
 		$this->load->model('design/layout');
 		
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
-				
-		foreach ($modules as $module) {
-			if (isset($this->request->post['featured_' . $module . '_image_width'])) {
-				$this->data['featured_' . $module . '_image_width'] = $this->request->post['featured_' . $module . '_image_width'];
-			} else {
-				$this->data['featured_' . $module . '_image_width'] = $this->config->get('featured_' . $module . '_image_width');
-			}
-			
-			if (isset($this->request->post['featured_' . $module . '_image_height'])) {
-				$this->data['featured_' . $module . '_image_height'] = $this->request->post['featured_' . $module . '_image_height'];
-			} else {
-				$this->data['featured_' . $module . '_image_height'] = $this->config->get('featured_' . $module . '_image_height');
-			}			
-			
-			if (isset($this->request->post['featured_' . $module . '_layout_id'])) {
-				$this->data['featured_' . $module . '_layout_id'] = $this->request->post['featured_' . $module . '_layout_id'];
-			} else {
-				$this->data['featured_' . $module . '_layout_id'] = $this->config->get('featured_' . $module . '_layout_id');
-			}	
-			
-			if (isset($this->request->post['featured_' . $module . '_position'])) {
-				$this->data['featured_' . $module . '_position'] = $this->request->post['featured_' . $module . '_position'];
-			} else {
-				$this->data['featured_' . $module . '_position'] = $this->config->get('featured_' . $module . '_position');
-			}	
-			
-			if (isset($this->request->post['featured_' . $module . '_status'])) {
-				$this->data['featured_' . $module . '_status'] = $this->request->post['featured_' . $module . '_status'];
-			} else {
-				$this->data['featured_' . $module . '_status'] = $this->config->get('featured_' . $module . '_status');
-			}	
-						
-			if (isset($this->request->post['featured_' . $module . '_sort_order'])) {
-				$this->data['featured_' . $module . '_sort_order'] = $this->request->post['featured_' . $module . '_sort_order'];
-			} else {
-				$this->data['featured_' . $module . '_sort_order'] = $this->config->get('featured_' . $module . '_sort_order');
-			}				
-		}
-		
-		$this->data['modules'] = $modules;
-		
-		if (isset($this->request->post['featured_module'])) {
-			$this->data['featured_module'] = $this->request->post['featured_module'];
-		} else {
-			$this->data['featured_module'] = $this->config->get('featured_module');
-		}
 
 		$this->template = 'module/featured.tpl';
 		$this->children = array(
@@ -181,16 +129,12 @@ class ControllerModuleFeatured extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if ($this->request->post['featured_module'] !== '') {
-			$modules = explode(',', $this->request->post['featured_module']);
-		} else {
-			$modules = array();
-		}	
-		
-		foreach ($modules as $module) {
-			if (!$this->request->post['featured_' . $module . '_image_width'] || !$this->request->post['featured_' . $module . '_image_height']) {
-				$this->error['image_' . $module] = $this->language->get('error_image');
-			}	
+		if (isset($this->request->post['featured_module'])) {
+			foreach ($this->request->post['featured_module'] as $key => $value) {
+				if (!$value['image_width'] || !$value['image_height']) {
+					$this->error['image'][$key] = $this->language->get('error_image');
+				}
+			}
 		}
 				
 		if (!$this->error) {

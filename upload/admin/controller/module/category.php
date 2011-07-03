@@ -66,51 +66,17 @@ class ControllerModuleCategory extends Controller {
 		
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		
+		$this->data['modules'] = array();
+		
 		if (isset($this->request->post['category_module'])) {
-			$modules = explode(',', $this->request->post['category_module']);
-		} elseif ($this->config->get('category_module') != '') {
-			$modules = explode(',', $this->config->get('category_module'));
-		} else {
-			$modules = array();
-		}		
+			$this->data['modules'] = $this->request->post['category_module'];
+		} elseif ($this->config->get('category_module')) { 
+			$this->data['modules'] = $this->config->get('category_module');
+		}	
 				
 		$this->load->model('design/layout');
 		
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
-				
-		foreach ($modules as $module) {
-			if (isset($this->request->post['category_' . $module . '_layout_id'])) {
-				$this->data['category_' . $module . '_layout_id'] = $this->request->post['category_' . $module . '_layout_id'];
-			} else {
-				$this->data['category_' . $module . '_layout_id'] = $this->config->get('category_' . $module . '_layout_id');
-			}	
-			
-			if (isset($this->request->post['category_' . $module . '_position'])) {
-				$this->data['category_' . $module . '_position'] = $this->request->post['category_' . $module . '_position'];
-			} else {
-				$this->data['category_' . $module . '_position'] = $this->config->get('category_' . $module . '_position');
-			}	
-			
-			if (isset($this->request->post['category_' . $module . '_status'])) {
-				$this->data['category_' . $module . '_status'] = $this->request->post['category_' . $module . '_status'];
-			} else {
-				$this->data['category_' . $module . '_status'] = $this->config->get('category_' . $module . '_status');
-			}	
-						
-			if (isset($this->request->post['category_' . $module . '_sort_order'])) {
-				$this->data['category_' . $module . '_sort_order'] = $this->request->post['category_' . $module . '_sort_order'];
-			} else {
-				$this->data['category_' . $module . '_sort_order'] = $this->config->get('category_' . $module . '_sort_order');
-			}				
-		}
-		
-		$this->data['modules'] = $modules;
-		
-		if (isset($this->request->post['category_module'])) {
-			$this->data['category_module'] = $this->request->post['category_module'];
-		} else {
-			$this->data['category_module'] = $this->config->get('category_module');
-		}
 
 		$this->template = 'module/category.tpl';
 		$this->children = array(

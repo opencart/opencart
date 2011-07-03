@@ -49,20 +49,16 @@ class ControllerModuleManufacturer extends Controller {
 			$this->data['error_warning'] = '';
 		}
 		
-		if (isset($this->request->post['manufacturer_module'])) {
-			$modules = explode(',', $this->request->post['manufacturer_module']);
+		if (isset($this->error['image'])) {
+			$this->data['error_image'] = $this->error['image'];
 		} else {
-			$modules = array();
-		}	
+			$this->data['error_image'] = array();
+		}
 		
-		foreach ($modules as $module) {
-			if (isset($this->error['image_' . $module])) {
-				$this->data['error_image_' . $module] = $this->error['image_' . $module];
-			}
-			
-			if (isset($this->error['dimension_' . $module])) {
-				$this->data['error_dimension_' . $module] = $this->error['dimension_' . $module];
-			}			
+		if (isset($this->error['dimension'])) {
+			$this->data['error_dimension'] = $this->error['dimension'];
+		} else {
+			$this->data['error_dimension'] = array();
 		}
 		
   		$this->data['breadcrumbs'] = array();
@@ -89,97 +85,17 @@ class ControllerModuleManufacturer extends Controller {
 		
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
+		$this->data['modules'] = array();
+		
 		if (isset($this->request->post['manufacturer_module'])) {
-			$modules = explode(',', $this->request->post['manufacturer_module']);
-		} elseif ($this->config->get('manufacturer_module') != '') {
-			$modules = explode(',', $this->config->get('manufacturer_module'));
-		} else {
-			$modules = array();
-		}			
-				
+			$this->data['modules'] = $this->request->post['manufacturer_module'];
+		} elseif ($this->config->get('manufacturer_module')) { 
+			$this->data['modules'] = $this->config->get('manufacturer_module');
+		}
+						
 		$this->load->model('design/layout');
 		
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
-				
-		foreach ($modules as $module) {
-			if (isset($this->request->post['manufacturer_' . $module . '_limit'])) {
-				$this->data['manufacturer_' . $module . '_limit'] = $this->request->post['manufacturer_' . $module . '_limit'];
-			} elseif ($this->config->get('manufacturer_' . $module . '_limit')) {
-				$this->data['manufacturer_' . $module . '_limit'] = $this->config->get('manufacturer_' . $module . '_limit');
-			} else {
-				$this->data['manufacturer_' . $module . '_limit'] = 5;
-			}	
-			
-			if (isset($this->request->post['manufacturer_' . $module . '_scroll'])) {
-				$this->data['manufacturer_' . $module . '_scroll'] = $this->request->post['manufacturer_' . $module . '_scroll'];
-			} elseif ($this->config->get('manufacturer_' . $module . '_scroll')) {
-				$this->data['manufacturer_' . $module . '_scroll'] = $this->config->get('manufacturer_' . $module . '_scroll');
-			} else {
-				$this->data['manufacturer_' . $module . '_scroll'] = 5;
-			}
-						
-			if (isset($this->request->post['manufacturer_' . $module . '_width'])) {
-				$this->data['manufacturer_' . $module . '_width'] = $this->request->post['manufacturer_' . $module . '_width'];
-			} else {
-				$this->data['manufacturer_' . $module . '_width'] = $this->config->get('manufacturer_' . $module . '_width');
-			}	
-			
-			if (isset($this->request->post['manufacturer_' . $module . '_height'])) {
-				$this->data['manufacturer_' . $module . '_height'] = $this->request->post['manufacturer_' . $module . '_height'];
-			} else {
-				$this->data['manufacturer_' . $module . '_height'] = $this->config->get('manufacturer_' . $module . '_height');
-			}
-
-			if (isset($this->request->post['manufacturer_' . $module . '_image_width'])) {
-				$this->data['manufacturer_' . $module . '_image_width'] = $this->request->post['manufacturer_' . $module . '_image_width'];
-			} else {
-				$this->data['manufacturer_' . $module . '_image_width'] = $this->config->get('manufacturer_' . $module . '_image_width');
-			}
-			
-			if (isset($this->request->post['manufacturer_' . $module . '_image_height'])) {
-				$this->data['manufacturer_' . $module . '_image_height'] = $this->request->post['manufacturer_' . $module . '_image_height'];
-			} else {
-				$this->data['manufacturer_' . $module . '_image_height'] = $this->config->get('manufacturer_' . $module . '_image_height');
-			}
-									
-			if (isset($this->request->post['manufacturer_' . $module . '_axis'])) {
-				$this->data['manufacturer_' . $module . '_axis'] = $this->request->post['manufacturer_' . $module . '_axis'];
-			} else {
-				$this->data['manufacturer_' . $module . '_axis'] = $this->config->get('manufacturer_' . $module . '_axis');
-			}	
-			
-			if (isset($this->request->post['manufacturer_' . $module . '_layout_id'])) {
-				$this->data['manufacturer_' . $module . '_layout_id'] = $this->request->post['manufacturer_' . $module . '_layout_id'];
-			} else {
-				$this->data['manufacturer_' . $module . '_layout_id'] = $this->config->get('manufacturer_' . $module . '_layout_id');
-			}	
-			
-			if (isset($this->request->post['manufacturer_' . $module . '_position'])) {
-				$this->data['manufacturer_' . $module . '_position'] = $this->request->post['manufacturer_' . $module . '_position'];
-			} else {
-				$this->data['manufacturer_' . $module . '_position'] = $this->config->get('manufacturer_' . $module . '_position');
-			}	
-			
-			if (isset($this->request->post['manufacturer_' . $module . '_status'])) {
-				$this->data['manufacturer_' . $module . '_status'] = $this->request->post['manufacturer_' . $module . '_status'];
-			} else {
-				$this->data['manufacturer_' . $module . '_status'] = $this->config->get('manufacturer_' . $module . '_status');
-			}	
-						
-			if (isset($this->request->post['manufacturer_' . $module . '_sort_order'])) {
-				$this->data['manufacturer_' . $module . '_sort_order'] = $this->request->post['manufacturer_' . $module . '_sort_order'];
-			} else {
-				$this->data['manufacturer_' . $module . '_sort_order'] = $this->config->get('manufacturer_' . $module . '_sort_order');
-			}				
-		}
-		
-		$this->data['modules'] = $modules;
-		
-		if (isset($this->request->post['manufacturer_module'])) {
-			$this->data['manufacturer_module'] = $this->request->post['manufacturer_module'];
-		} else {
-			$this->data['manufacturer_module'] = $this->config->get('manufacturer_module');
-		}
 				
 		$this->template = 'module/manufacturer.tpl';
 		$this->children = array(
@@ -195,21 +111,18 @@ class ControllerModuleManufacturer extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if ($this->request->post['manufacturer_module'] !== '') {
-			$modules = explode(',', $this->request->post['manufacturer_module']);
-		} else {
-			$modules = array();
+		if (isset($this->request->post['manufacturer_module'])) {
+			foreach ($this->request->post['manufacturer_module'] as $key => $value) {
+				
+				if (!$value['width'] || !$value['height']) {
+					$this->error['dimension'][$key] = $this->language->get('error_dimension');
+				}				
+				
+				if (!$value['image_width'] || !$value['image_height']) {
+					$this->error['image'][$key] = $this->language->get('error_image');
+				}
+			}
 		}	
-		
-		foreach ($modules as $module) {
-			if (!$this->request->post['manufacturer_' . (int)$module . '_width'] || !$this->request->post['manufacturer_' . $module . '_height']) {
-				$this->error['dimension_' . $module] = $this->language->get('error_dimension');
-			}		
-			
-			if (!$this->request->post['manufacturer_' . $module . '_image_width'] || !$this->request->post['manufacturer_' . $module . '_image_height']) {
-				$this->error['image_' . $module] = $this->language->get('error_image');
-			}	
-		}
 				
 		if (!$this->error) {
 			return true;

@@ -71,64 +71,23 @@ class ControllerModuleWelcome extends Controller {
 		
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-		if (isset($this->request->post['welcome_module'])) {
-			$modules = explode(',', $this->request->post['welcome_module']);
-		} elseif ($this->config->get('welcome_module') != '') {
-			$modules = explode(',', $this->config->get('welcome_module'));
-		} else {
-			$modules = array();
-		}	
+		$this->data['modules'] = array();
+
+		$this->data['modules'] = array();
 		
+		if (isset($this->request->post['welcome_module'])) {
+			$this->data['modules'] = $this->request->post['welcome_module'];
+		} elseif ($this->config->get('welcome_module')) { 
+			$this->data['modules'] = $this->config->get('welcome_module');
+		}	
+				
 		$this->load->model('design/layout');
 		
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
 		
 		$this->load->model('localisation/language');
 		
-		$languages = $this->model_localisation_language->getLanguages();
-				
-		foreach ($modules as $module) {
-			foreach ($languages as $language) {
-				if (isset($this->request->post['welcome_' . $module . '_description_' . $language['language_id']])) {
-					$this->data['welcome_' . $module . '_description_' . $language['language_id']] = $this->request->post['welcome_' . $module . '_description_' . $language['language_id']];
-				} else {
-					$this->data['welcome_' . $module . '_description_' . $language['language_id']] = $this->config->get('welcome_' . $module . '_description_' . $language['language_id']);
-				}
-			}
-			
-			if (isset($this->request->post['welcome_' . $module . '_layout_id'])) {
-				$this->data['welcome_' . $module . '_layout_id'] = $this->request->post['welcome_' . $module . '_layout_id'];
-			} else {
-				$this->data['welcome_' . $module . '_layout_id'] = $this->config->get('welcome_' . $module . '_layout_id');
-			}	
-						
-			if (isset($this->request->post['welcome_' . $module . '_position'])) {
-				$this->data['welcome_' . $module . '_position'] = $this->request->post['welcome_' . $module . '_position'];
-			} else {
-				$this->data['welcome_' . $module . '_position'] = $this->config->get('welcome_' . $module . '_position');
-			}	
-						
-			if (isset($this->request->post['welcome_' . $module . '_status'])) {
-				$this->data['welcome_' . $module . '_status'] = $this->request->post['welcome_' . $module . '_status'];
-			} else {
-				$this->data['welcome_' . $module . '_status'] = $this->config->get('welcome_' . $module . '_status');
-			}
-			
-			if (isset($this->request->post['welcome_' . $module . '_sort_order'])) {
-				$this->data['welcome_' . $module . '_sort_order'] = $this->request->post['welcome_' . $module . '_sort_order'];
-			} else {
-				$this->data['welcome_' . $module . '_sort_order'] = $this->config->get('welcome_' . $module . '_sort_order');
-			}							
-		}
-		
-		$this->data['modules'] = $modules;
-		$this->data['languages'] = $languages;
-		
-		if (isset($this->request->post['welcome_module'])) {
-			$this->data['welcome_module'] = $this->request->post['welcome_module'];
-		} else {
-			$this->data['welcome_module'] = $this->config->get('welcome_module');
-		}
+		$this->data['languages'] = $this->model_localisation_language->getLanguages();
 
 		$this->template = 'module/welcome.tpl';
 		$this->children = array(

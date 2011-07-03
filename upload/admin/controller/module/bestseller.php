@@ -46,16 +46,10 @@ class ControllerModuleBestSeller extends Controller {
 			$this->data['error_warning'] = '';
 		}
 		
-		if (isset($this->request->post['bestseller_module'])) {
-			$modules = explode(',', $this->request->post['bestseller_module']);
+		if (isset($this->error['image'])) {
+			$this->data['error_image'] = $this->error['image'];
 		} else {
-			$modules = array();
-		}	
-		
-		foreach ($modules as $module) {
-			if (isset($this->error['image_' . $module])) {
-				$this->data['error_image_' . $module] = $this->error['image_' . $module];
-			}
+			$this->data['error_image'] = array();
 		}
 		
   		$this->data['breadcrumbs'] = array();
@@ -82,69 +76,17 @@ class ControllerModuleBestSeller extends Controller {
 		
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		
+		$this->data['modules'] = array();
+		
 		if (isset($this->request->post['bestseller_module'])) {
-			$modules = explode(',', $this->request->post['bestseller_module']);
-		} elseif ($this->config->get('bestseller_module') != '') {
-			$modules = explode(',', $this->config->get('bestseller_module'));
-		} else {
-			$modules = array();
+			$this->data['modules'] = $this->request->post['bestseller_module'];
+		} elseif ($this->config->get('bestseller_module')) { 
+			$this->data['modules'] = $this->config->get('bestseller_module');
 		}		
 
 		$this->load->model('design/layout');
 		
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
-				
-		foreach ($modules as $module) {
-			if (isset($this->request->post['bestseller_' . $module . '_limit'])) {
-				$this->data['bestseller_' . $module . '_limit'] = $this->request->post['bestseller_' . $module . '_limit'];
-			} else {
-				$this->data['bestseller_' . $module . '_limit'] = $this->config->get('bestseller_' . $module . '_limit');
-			}	
-			
-			if (isset($this->request->post['bestseller_' . $module . '_image_width'])) {
-				$this->data['bestseller_' . $module . '_image_width'] = $this->request->post['bestseller_' . $module . '_image_width'];
-			} else {
-				$this->data['bestseller_' . $module . '_image_width'] = $this->config->get('bestseller_' . $module . '_image_width');
-			}
-			
-			if (isset($this->request->post['bestseller_' . $module . '_image_height'])) {
-				$this->data['bestseller_' . $module . '_image_height'] = $this->request->post['bestseller_' . $module . '_image_height'];
-			} else {
-				$this->data['bestseller_' . $module . '_image_height'] = $this->config->get('bestseller_' . $module . '_image_height');
-			}
-											
-			if (isset($this->request->post['bestseller_' . $module . '_layout_id'])) {
-				$this->data['bestseller_' . $module . '_layout_id'] = $this->request->post['bestseller_' . $module . '_layout_id'];
-			} else {
-				$this->data['bestseller_' . $module . '_layout_id'] = $this->config->get('bestseller_' . $module . '_layout_id');
-			}	
-			
-			if (isset($this->request->post['bestseller_' . $module . '_position'])) {
-				$this->data['bestseller_' . $module . '_position'] = $this->request->post['bestseller_' . $module . '_position'];
-			} else {
-				$this->data['bestseller_' . $module . '_position'] = $this->config->get('bestseller_' . $module . '_position');
-			}	
-			
-			if (isset($this->request->post['bestseller_' . $module . '_status'])) {
-				$this->data['bestseller_' . $module . '_status'] = $this->request->post['bestseller_' . $module . '_status'];
-			} else {
-				$this->data['bestseller_' . $module . '_status'] = $this->config->get('bestseller_' . $module . '_status');
-			}	
-						
-			if (isset($this->request->post['bestseller_' . $module . '_sort_order'])) {
-				$this->data['bestseller_' . $module . '_sort_order'] = $this->request->post['bestseller_' . $module . '_sort_order'];
-			} else {
-				$this->data['bestseller_' . $module . '_sort_order'] = $this->config->get('bestseller_' . $module . '_sort_order');
-			}				
-		}
-		
-		$this->data['modules'] = $modules;
-		
-		if (isset($this->request->post['bestseller_module'])) {
-			$this->data['bestseller_module'] = $this->request->post['bestseller_module'];
-		} else {
-			$this->data['bestseller_module'] = $this->config->get('bestseller_module');
-		}
 
 		$this->template = 'module/bestseller.tpl';
 		$this->children = array(
@@ -160,18 +102,14 @@ class ControllerModuleBestSeller extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if ($this->request->post['bestseller_module'] !== '') {
-			$modules = explode(',', $this->request->post['bestseller_module']);
-		} else {
-			$modules = array();
-		}	
-		
-		foreach ($modules as $module) {
-			if (!$this->request->post['bestseller_' . $module . '_image_width'] || !$this->request->post['bestseller_' . $module . '_image_height']) {
-				$this->error['image_' . $module] = $this->language->get('error_image');
-			}	
+		if (isset($this->request->post['bestseller_module'])) {
+			foreach ($this->request->post['bestseller_module'] as $key => $value) {
+				if (!$value['image_width'] || !$value['image_height']) {
+					$this->error['image'][$key] = $this->language->get('error_image');
+				}
+			}
 		}
-				
+		
 		if (!$this->error) {
 			return true;
 		} else {

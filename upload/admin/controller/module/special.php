@@ -46,16 +46,10 @@ class ControllerModulespecial extends Controller {
 			$this->data['error_warning'] = '';
 		}
 		
-		if (isset($this->request->post['special_module'])) {
-			$modules = explode(',', $this->request->post['special_module']);
+		if (isset($this->error['image'])) {
+			$this->data['error_image'] = $this->error['image'];
 		} else {
-			$modules = array();
-		}	
-		
-		foreach ($modules as $module) {
-			if (isset($this->error['image_' . $module])) {
-				$this->data['error_image_' . $module] = $this->error['image_' . $module];
-			}
+			$this->data['error_image'] = array();
 		}
 		
   		$this->data['breadcrumbs'] = array();
@@ -82,69 +76,17 @@ class ControllerModulespecial extends Controller {
 		
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
+		$this->data['modules'] = array();
+		
 		if (isset($this->request->post['special_module'])) {
-			$modules = explode(',', $this->request->post['special_module']);
-		} elseif ($this->config->get('special_module') != '') {
-			$modules = explode(',', $this->config->get('special_module'));
-		} else {
-			$modules = array();
-		}		
-				
+			$this->data['modules'] = $this->request->post['special_module'];
+		} elseif ($this->config->get('special_module')) { 
+			$this->data['modules'] = $this->config->get('special_module');
+		}
+						
 		$this->load->model('design/layout');
 		
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
-				
-		foreach ($modules as $module) {
-			if (isset($this->request->post['special_' . $module . '_limit'])) {
-				$this->data['special_' . $module . '_limit'] = $this->request->post['special_' . $module . '_limit'];
-			} else {
-				$this->data['special_' . $module . '_limit'] = $this->config->get('special_' . $module . '_limit');
-			}	
-				
-			if (isset($this->request->post['special_' . $module . '_image_width'])) {
-				$this->data['special_' . $module . '_image_width'] = $this->request->post['special_' . $module . '_image_width'];
-			} else {
-				$this->data['special_' . $module . '_image_width'] = $this->config->get('special_' . $module . '_image_width');
-			}
-			
-			if (isset($this->request->post['special_' . $module . '_image_height'])) {
-				$this->data['special_' . $module . '_image_height'] = $this->request->post['special_' . $module . '_image_height'];
-			} else {
-				$this->data['special_' . $module . '_image_height'] = $this->config->get('special_' . $module . '_image_height');
-			}
-									
-			if (isset($this->request->post['special_' . $module . '_layout_id'])) {
-				$this->data['special_' . $module . '_layout_id'] = $this->request->post['special_' . $module . '_layout_id'];
-			} else {
-				$this->data['special_' . $module . '_layout_id'] = $this->config->get('special_' . $module . '_layout_id');
-			}	
-			
-			if (isset($this->request->post['special_' . $module . '_position'])) {
-				$this->data['special_' . $module . '_position'] = $this->request->post['special_' . $module . '_position'];
-			} else {
-				$this->data['special_' . $module . '_position'] = $this->config->get('special_' . $module . '_position');
-			}	
-			
-			if (isset($this->request->post['special_' . $module . '_status'])) {
-				$this->data['special_' . $module . '_status'] = $this->request->post['special_' . $module . '_status'];
-			} else {
-				$this->data['special_' . $module . '_status'] = $this->config->get('special_' . $module . '_status');
-			}	
-						
-			if (isset($this->request->post['special_' . $module . '_sort_order'])) {
-				$this->data['special_' . $module . '_sort_order'] = $this->request->post['special_' . $module . '_sort_order'];
-			} else {
-				$this->data['special_' . $module . '_sort_order'] = $this->config->get('special_' . $module . '_sort_order');
-			}				
-		}
-		
-		$this->data['modules'] = $modules;
-		
-		if (isset($this->request->post['special_module'])) {
-			$this->data['special_module'] = $this->request->post['special_module'];
-		} else {
-			$this->data['special_module'] = $this->config->get('special_module');
-		}
 
 		$this->template = 'module/special.tpl';
 		$this->children = array(
@@ -159,19 +101,15 @@ class ControllerModulespecial extends Controller {
 		if (!$this->user->hasPermission('modify', 'module/special')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-		
-		if ($this->request->post['special_module'] !== '') {
-			$modules = explode(',', $this->request->post['special_module']);
-		} else {
-			$modules = array();
-		}	
-		
-		foreach ($modules as $module) {
-			if (!$this->request->post['special_' . $module . '_image_width'] || !$this->request->post['special_' . $module . '_image_height']) {
-				$this->error['image_' . $module] = $this->language->get('error_image');
-			}	
-		}
 				
+		if (isset($this->request->post['special_module'])) {
+			foreach ($this->request->post['special_module'] as $key => $value) {
+				if (!$value['image_width'] || !$value['image_height']) {
+					$this->error['image'][$key] = $this->language->get('error_image');
+				}
+			}
+		}	
+						
 		if (!$this->error) {
 			return true;
 		} else {

@@ -77,15 +77,23 @@ class ControllerPaymentPPStandard extends Controller {
 					'weight'   => $product['weight']
 				);
 			}	
-									
-			$this->data['products'][] = array(
-				'name'     => $this->language->get('text_total'),
-				'model'    => '',
-				'price'    => $this->currency->format($order_info['total'] - $this->cart->getSubTotal(), $currency, false, false),
-				'quantity' => 1,
-				'option'   => array(),
-				'weight'   => 0
-			);			
+			
+			$this->data['discount_amount_cart'] = 0;
+			
+			$total = $this->currency->format($order_info['total'] - $this->cart->getSubTotal(), $currency, false, false);
+
+			if ($total > 0) {
+				$this->data['products'][] = array(
+					'name'     => $this->language->get('text_total'),
+					'model'    => '',
+					'price'    => $total,
+					'quantity' => 1,
+					'option'   => array(),
+					'weight'   => 0
+				);	
+			} else {
+				$this->data['discount_amount_cart'] -= $this->currency->format($total, $currency, FALSE, FALSE);
+			}
 			
 			$this->data['currency_code'] = $currency;
 			$this->data['first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');	

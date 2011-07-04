@@ -20,6 +20,9 @@
   <?php } ?>
   <?php $i++; ?>
   <?php } ?>
+  <?php if ($discount_amount_cart) { ?>
+  <input type="hidden" name="discount_amount_cart" value="<?php echo $discount_amount_cart; ?>" />
+  <?php } ?>
   <input type="hidden" name="currency_code" value="<?php echo $currency_code; ?>" />
   <input type="hidden" name="first_name" value="<?php echo $first_name; ?>" />
   <input type="hidden" name="last_name" value="<?php echo $last_name; ?>" />

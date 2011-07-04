@@ -160,8 +160,8 @@ class ModelSaleVoucher extends Model {
 					$template->data['image'] = '';
 				}
 				
-				$template->data['store_name'] = $order_info['store_name'];
-				$template->data['store_url'] = $order_info['store_url'];
+				$template->data['store_name'] = $this->config->get('config_name');
+				$template->data['store_url'] = HTTP_CATALOG;
 				$template->data['message'] = nl2br($voucher_info['message']);
 	
 				$mail = new Mail(); 

@@ -32,11 +32,7 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_email; ?>"><?php echo $column_email; ?></a>
                 <?php } ?></td>
-              <td class="left"><?php if ($sort == 'balance') { ?>
-                <a href="<?php echo $sort_balance; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_balance; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_balance; ?>"><?php echo $column_balance; ?></a>
-                <?php } ?></td>
+              <td class="right"><?php echo $column_balance; ?></td>
               <td class="left"><?php if ($sort == 'c.status') { ?>
                 <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                 <?php } else { ?>
@@ -100,7 +96,7 @@
                 <?php } ?></td>
               <td class="left"><?php echo $affiliate['name']; ?></td>
               <td class="left"><?php echo $affiliate['email']; ?></td>
-              <td class="left"><?php echo $affiliate['balance']; ?></td>
+              <td class="right"><?php echo $affiliate['balance']; ?></td>
               <td class="left"><?php echo $affiliate['status']; ?></td>
               <td class="left"><?php echo $affiliate['approved']; ?></td>
               <td class="left"><?php echo $affiliate['date_added']; ?></td>

@@ -60,7 +60,6 @@ class ModelSaleAffiliate extends Model {
 			'name',
 			'a.email',
 			'a.code',
-			'balance',
 			'a.status',
 			'a.approved',
 			'a.date_added'

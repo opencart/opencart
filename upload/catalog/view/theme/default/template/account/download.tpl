@@ -14,7 +14,11 @@
       <div><b><?php echo $text_name; ?></b> <?php echo $download['name']; ?><br />
         <b><?php echo $text_date_added; ?></b> <?php echo $download['date_added']; ?></div>
       <div><b><?php echo $text_remaining; ?></b> <?php echo $download['remaining']; ?></div>
-      <div class="download-info"><a href="<?php echo $download['href']; ?>" class="button"><span><?php echo $text_download; ?></span></a></div>
+      <div class="download-info">
+        <?php if ($download['remaining'] > 0) { ?>
+        <a href="<?php echo $download['href']; ?>" class="button"><span><?php echo $text_download; ?></span></a>
+        <?php } ?>
+      </div>
     </div>
   </div>
   <?php } ?>

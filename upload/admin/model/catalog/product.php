@@ -649,12 +649,6 @@ class ModelCatalogProduct extends Model {
 		return $query->row['total'];
 	}
 	
-	public function getTotalProductsByImageId($image_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product WHERE image_id = '" . (int)$image_id . "'");
-
-		return $query->row['total'];
-	}
-	
 	public function getTotalProductsByTaxClassId($tax_class_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product WHERE tax_class_id = '" . (int)$tax_class_id . "'");
 

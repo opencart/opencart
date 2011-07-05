@@ -53,7 +53,7 @@ class ModelReportProduct extends Model {
 			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 		
-		$sql .= " GROUP BY model ORDER BY total DESC";
+		$sql .= " GROUP BY op.model ORDER BY total DESC";
 					
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

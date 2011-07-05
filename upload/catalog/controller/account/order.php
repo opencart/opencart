@@ -163,6 +163,9 @@ class ControllerAccountOrder extends Controller {
       		$this->data['text_payment_address'] = $this->language->get('text_payment_address');
       		$this->data['text_history'] = $this->language->get('text_history');
 			$this->data['text_comment'] = $this->language->get('text_comment');
+			$this->data['text_selected'] = $this->language->get('text_selected');
+			$this->data['text_reorder'] = $this->language->get('text_reorder');
+			$this->data['text_return'] = $this->language->get('text_return');
 
       		$this->data['column_name'] = $this->language->get('column_name');
       		$this->data['column_model'] = $this->language->get('column_model');
@@ -173,7 +176,6 @@ class ControllerAccountOrder extends Controller {
       		$this->data['column_status'] = $this->language->get('column_status');
       		$this->data['column_comment'] = $this->language->get('column_comment');
 			
-			$this->data['button_reorder'] = $this->language->get('button_reorder');			
       		$this->data['button_continue'] = $this->language->get('button_continue');
 		
 			$this->data['breadcrumbs'] = array();

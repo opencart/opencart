@@ -44,14 +44,16 @@ class ControllerCommonColumnRight extends Controller {
 		
 		foreach ($extensions as $extension) {
 			$modules = $this->config->get($extension['code'] . '_module');
-		
-			foreach ($modules as $module) {
-				if ($module['layout_id'] == $layout_id && $module['position'] == 'column_right' && $module['status']) {
-					$module_data[] = array(
-						'code'       => $extension['code'],
-						'setting'    => $module,
-						'sort_order' => $module['sort_order']
-					);				
+			
+			if ($modules) {
+				foreach ($modules as $module) {
+					if ($module['layout_id'] == $layout_id && $module['position'] == 'column_right' && $module['status']) {
+						$module_data[] = array(
+							'code'       => $extension['code'],
+							'setting'    => $module,
+							'sort_order' => $module['sort_order']
+						);				
+					}
 				}
 			}
 		}

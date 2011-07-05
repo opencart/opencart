@@ -1,7 +1,7 @@
 <?php
 class ModelReportCustomer extends Model {
 	public function getOrders($data = array()) { 
-		$sql = "SELECT r.customer_id, r.customer, r.email, r.customer_group, r.status, COUNT(r.order_id) AS orders, SUM(r.products) AS products, SUM(r.total) AS total FROM (SELECT o.order_id, c.customer_id, CONCAT(o.firstname, ' ', o.lastname) AS customer, o.email, cg.name AS customer_group, c.status, (SELECT SUM(op.quantity) FROM `" . DB_PREFIX . "order_product` op WHERE op.order_id = o.order_id GROUP BY op.order_id) AS products, o.total FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "customer` c ON (o.customer_id > '0' AND o.customer_id = c.customer_id) LEFT JOIN " . DB_PREFIX . "customer_group cg ON (c.customer_group_id = cg.customer_group_id)";
+		$sql = "SELECT tmp.customer_id, tmp.customer, tmp.email, tmp.customer_group, tmp.status, COUNT(tmp.order_id) AS orders, SUM(tmp.products) AS products, SUM(tmp.total) AS total FROM (SELECT o.order_id, c.customer_id, CONCAT(o.firstname, ' ', o.lastname) AS customer, o.email, cg.name AS customer_group, c.status, (SELECT SUM(op.quantity) FROM `" . DB_PREFIX . "order_product` op WHERE op.order_id = o.order_id GROUP BY op.order_id) AS products, o.total FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "customer` c ON (o.customer_id > '0' AND o.customer_id = c.customer_id) LEFT JOIN " . DB_PREFIX . "customer_group cg ON (c.customer_group_id = cg.customer_group_id)";
 		
 		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
 			$sql .= " WHERE o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
@@ -17,7 +17,7 @@ class ModelReportCustomer extends Model {
 			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 		
-		$sql .= ") r GROUP BY r.customer_id ORDER BY total DESC";
+		$sql .= ") tmp GROUP BY tmp.customer_id ORDER BY total DESC";
 				
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

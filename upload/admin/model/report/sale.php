@@ -1,7 +1,7 @@
 <?php
 class ModelReportSale extends Model {
 	public function getOrders($data = array()) {
-		$sql = "SELECT MIN(r.date_added) AS date_start, MAX(r.date_added) AS date_end, COUNT(r.order_id) AS `orders`, SUM(r.products) AS products, SUM(r.tax) AS tax, SUM(r.total) AS total FROM (SELECT o.order_id, (SELECT SUM(op.quantity) FROM `" . DB_PREFIX . "order_product` op WHERE op.order_id = o.order_id GROUP BY op.order_id) AS products, (SELECT SUM(ot.value) FROM `" . DB_PREFIX . "order_total` ot WHERE ot.order_id = o.order_id AND ot.code = 'tax' GROUP BY ot.order_id) AS tax, o.total, o.date_added FROM `" . DB_PREFIX . "order` o"; 
+		$sql = "SELECT MIN(tmp.date_added) AS date_start, MAX(tmp.date_added) AS date_end, COUNT(tmp.order_id) AS `orders`, SUM(tmp.products) AS products, SUM(tmp.tax) AS tax, SUM(tmp.total) AS total FROM (SELECT o.order_id, (SELECT SUM(op.quantity) FROM `" . DB_PREFIX . "order_product` op WHERE op.order_id = o.order_id GROUP BY op.order_id) AS products, (SELECT SUM(ot.value) FROM `" . DB_PREFIX . "order_total` ot WHERE ot.order_id = o.order_id AND ot.code = 'tax' GROUP BY ot.order_id) AS tax, o.total, o.date_added FROM `" . DB_PREFIX . "order` o"; 
 
 		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
 			$sql .= " WHERE o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
@@ -17,7 +17,7 @@ class ModelReportSale extends Model {
 			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 		
-		$sql .= " GROUP BY o.order_id) r";
+		$sql .= " GROUP BY o.order_id) tmp";
 		
 		if (isset($data['filter_group'])) {
 			$group = $data['filter_group'];
@@ -27,17 +27,17 @@ class ModelReportSale extends Model {
 		
 		switch($group) {
 			case 'day';
-				$sql .= " GROUP BY DAY(r.date_added)";
+				$sql .= " GROUP BY DAY(tmp.date_added)";
 				break;
 			default:
 			case 'week':
-				$sql .= " GROUP BY WEEK(r.date_added)";
+				$sql .= " GROUP BY WEEK(tmp.date_added)";
 				break;	
 			case 'month':
-				$sql .= " GROUP BY MONTH(r.date_added)";
+				$sql .= " GROUP BY MONTH(tmp.date_added)";
 				break;
 			case 'year':
-				$sql .= " GROUP BY YEAR(r.date_added)";
+				$sql .= " GROUP BY YEAR(tmp.date_added)";
 				break;									
 		}
 		
@@ -195,7 +195,7 @@ class ModelReportSale extends Model {
 				break;									
 		}
 		
-		$sql .= ") r";
+		$sql .= ") tmp";
 		
 		$query = $this->db->query($sql);
 
@@ -297,7 +297,7 @@ class ModelReportSale extends Model {
 				break;									
 		}
 		
-		$sql .= ") r";
+		$sql .= ") tmp";
 		
 		$query = $this->db->query($sql);
 

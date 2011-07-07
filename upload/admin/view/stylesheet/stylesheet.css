@@ -405,6 +405,7 @@ table.form > tbody > tr > td {
 	text-decoration: none;
 	color: #000000;
 	margin-right: 2px;
+	display: none;
 }
 .htabs a.selected {
 	padding-bottom: 7px;
@@ -417,6 +418,9 @@ table.form > tbody > tr > td {
 	float: left;
 	display: block;
 	border-right: 1px solid #DDDDDD;
+}
+.vtabs a {
+	display: none;
 }
 .vtabs a, .vtabs span {
 	display: block;

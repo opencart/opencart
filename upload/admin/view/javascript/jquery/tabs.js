@@ -21,5 +21,7 @@ $.fn.tabs = function() {
 		});
 	});
 
+	$(this).show();
+	
 	$(this).first().click();
 };

@@ -589,6 +589,7 @@ a.button:hover span {
 	text-decoration: none;
 	color: #000000;
 	margin-right: 2px;
+	display: none;
 }
 .htabs a.selected {
 	padding-bottom: 7px;

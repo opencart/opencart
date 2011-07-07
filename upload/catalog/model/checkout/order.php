@@ -238,7 +238,7 @@ class ModelCheckoutOrder extends Model {
 			$template->data['text_footer'] = $language->get('text_new_footer');
 			$template->data['text_powered'] = $language->get('text_new_powered');
 			
-			$template->data['logo'] = 'cid:' . basename($this->config->get('config_logo'));		
+			$template->data['logo'] = 'cid:' . md5(basename($this->config->get('config_logo')));		
 			$template->data['store_name'] = $order_info['store_name'];
 			$template->data['store_url'] = $order_info['store_url'];
 			$template->data['customer_id'] = $order_info['customer_id'];
@@ -428,7 +428,7 @@ class ModelCheckoutOrder extends Model {
 			$mail->setSubject($subject);
 			$mail->setHtml($html);
 			$mail->setText(html_entity_decode($text, ENT_QUOTES, 'UTF-8'));
-			$mail->addAttachment(DIR_IMAGE . $this->config->get('config_logo'));
+			$mail->addAttachment(DIR_IMAGE . $this->config->get('config_logo'), md5(basename($this->config->get('config_logo'))));
 			$mail->send();
 
 			// Admin Alert Mail

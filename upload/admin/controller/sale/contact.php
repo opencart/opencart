@@ -105,7 +105,7 @@ class ControllerSaleContact extends Controller {
 
 				if (preg_match_all('#(src="([^"]*)")#mis', $message, $matches)) {
 					foreach ($matches[2] as $key => $value) {
-						$filename = md5($value) . strrchr($value, '.');
+						$filename = md5(basename($value)) . strrchr($value, '.');
 						$path = rtrim($this->request->server['DOCUMENT_ROOT'], '/') . parse_url($value, PHP_URL_PATH);
 						
 						$attachments[] = array(
@@ -113,7 +113,7 @@ class ControllerSaleContact extends Controller {
 							'path'     => $path
 						);
 						
-						$message = str_replace($value, 'cid:' . basename($filename), $message);
+						$message = str_replace($value, 'cid:' . $filename, $message);
 					}
 				}	
 				

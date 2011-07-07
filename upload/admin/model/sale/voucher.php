@@ -107,7 +107,7 @@ class ModelSaleVoucher extends Model {
 				$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
 				
 				if ($voucher_info && file_exists(DIR_IMAGE . $voucher_theme_info['image'])) {
-					$template->data['image'] = 'cid:' . basename($voucher_theme_info['image']);
+					$template->data['image'] = 'cid:' . md5(basename($voucher_theme_info['image']));
 				} else {
 					$template->data['image'] = '';
 				}
@@ -131,7 +131,7 @@ class ModelSaleVoucher extends Model {
 				$mail->setHtml($template->fetch('mail/voucher.tpl'));
 				
 				if ($voucher_info && file_exists(DIR_IMAGE . $voucher_theme_info['image'])) {
-					$mail->addAttachment(DIR_IMAGE . $voucher_theme_info['image']);
+					$mail->addAttachment(DIR_IMAGE . $voucher_theme_info['image'], md5(basename($voucher_theme_info['image'])));
 				}
 				
 				$mail->send();
@@ -155,7 +155,7 @@ class ModelSaleVoucher extends Model {
 				$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
 				
 				if ($voucher_info && file_exists(DIR_IMAGE . $voucher_theme_info['image'])) {
-					$template->data['image'] = 'cid:' . basename($voucher_theme_info['image']);
+					$template->data['image'] = 'cid:' . md5(basename($voucher_theme_info['image']));
 				} else {
 					$template->data['image'] = '';
 				}
@@ -179,7 +179,7 @@ class ModelSaleVoucher extends Model {
 				$mail->setHtml($template->fetch('mail/voucher.tpl'));
 				
 				if ($voucher_info && file_exists(DIR_IMAGE . $voucher_theme_info['image'])) {
-					$mail->addAttachment(DIR_IMAGE . $voucher_theme_info['image']);
+					$mail->addAttachment(DIR_IMAGE . $voucher_theme_info['image'], md5(basename($voucher_theme_info['image'])));
 				}
 				
 				$mail->send();				

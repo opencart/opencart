@@ -79,7 +79,7 @@ class ModelCheckoutVoucher extends Model {
 				$template->data['text_footer'] = $language->get('text_footer');
 				
 				if (file_exists(DIR_IMAGE . $voucher['image'])) {
-					$template->data['image'] = 'cid:' . basename($voucher['image']);
+					$template->data['image'] = 'cid:' . md5(basename($voucher['image']));
 				} else {
 					$template->data['image'] = '';
 				}
@@ -109,7 +109,7 @@ class ModelCheckoutVoucher extends Model {
 				$mail->setHtml($html);
 				
 				if (file_exists(DIR_IMAGE . $voucher['image'])) {
-					$mail->addAttachment(DIR_IMAGE . $voucher['image']);
+					$mail->addAttachment(DIR_IMAGE . $voucher['image'], md5(basename($voucher['image'])));
 				}
 				
 				$mail->send();		

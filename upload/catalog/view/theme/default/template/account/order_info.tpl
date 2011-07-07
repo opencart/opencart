@@ -6,6 +6,9 @@
     <?php } ?>
   </div>
   <h1><?php echo $heading_title; ?></h1>
+  <?php if ($error_warning) { ?>
+  <div class="warning"><?php echo $error_warning; ?></div>
+  <?php } ?>
   <table class="list">
     <thead>
       <tr>
@@ -44,7 +47,7 @@
       </tr>
     </tbody>
   </table>
-  <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="reorder">
+  <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="order">
     <table class="list">
       <thead>
         <tr>
@@ -85,16 +88,24 @@
         <?php } ?>
       </tfoot>
     </table>
+    <div class="buttons">
+      <div class="right">
+        <select name="action">
+          <option value=""><?php echo $text_selected; ?></option>
+          <?php if ($action == 'reorder') { ?>
+          <option value="reorder" selected="selected"><?php echo $text_reorder; ?></option>
+          <?php } else { ?>
+          <option value="reorder"><?php echo $text_reorder; ?></option>
+          <?php } ?>
+          <?php if ($action == 'return') { ?>
+          <option value="return" selected="selected"><?php echo $text_return; ?></option>
+          <?php } else { ?>
+          <option value="return"><?php echo $text_return; ?></option>
+          <?php } ?>
+        </select>
+        &nbsp;<a onclick="$('#order').submit();" class="button"><span><?php echo $button_continue; ?></span></a></div>
+    </div>
   </form>
-  <div class="buttons">
-    <div class="right">
-      <select>
-        <option value=""><?php echo $text_selected; ?></option>
-        <option value="reorder"><?php echo $text_reorder; ?></option>
-        <option value="return"><?php echo $text_return; ?></option>
-      </select>&nbsp;&nbsp;
-      <a onclick="$('#reorder').submit();" class="button"><span><?php echo $button_continue; ?></span></a></div>
-  </div>
   <?php if ($comment) { ?>
   <table class="list">
     <thead>

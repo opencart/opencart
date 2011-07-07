@@ -1,5 +1,7 @@
 <?php 
-class ControllerAccountOrder extends Controller {	
+class ControllerAccountOrder extends Controller {
+	private $error = array();
+		
 	public function index() {
     	if (!$this->customer->isLogged()) {
       		$this->session->data['redirect'] = $this->url->link('account/order', '', 'SSL');
@@ -104,6 +106,12 @@ class ControllerAccountOrder extends Controller {
 	}
 	
 	public function info() { 
+		if (!$this->customer->isLogged()) {
+			$this->session->data['redirect'] = $this->url->link('account/order/info', 'order_id=' . $order_id, 'SSL');
+			
+			$this->redirect($this->url->link('account/login', '', 'SSL'));
+    	}
+			
 		$this->language->load('account/order');
 		
 		if (isset($this->request->get['order_id'])) {
@@ -112,72 +120,59 @@ class ControllerAccountOrder extends Controller {
 			$order_id = 0;
 		}	
 		
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/order/info', 'order_id=' . $order_id, 'SSL');
-			
-			$this->redirect($this->url->link('account/login', '', 'SSL'));
-    	}
-		
 		$this->load->model('account/order');
 			
 		$order_info = $this->model_account_order->getOrder($order_id);
 		
 		if ($order_info) {
-			if (isset($this->request->post['selected'])) {
-				$order_products = $this->model_account_order->getOrderProducts($order_id);
+			if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+				if ($this->request->post['action'] == 'reorder') {
+					$order_products = $this->model_account_order->getOrderProducts($order_id);
+					
+					foreach ($order_products as $order_product) {
+						if (in_array($order_product['order_product_id'], $this->request->post['selected'])) {
+							$option_data = array();
+							
+							$order_options = $this->model_account_order->getOrderOptions($order_id, $order_product['order_product_id']);
+							
+							foreach ($order_options as $order_option) {
+								if ($order_option['type'] == 'select' || $order_option['type'] == 'radio') {
+									$option_data[$order_option['product_option_id']] = $order_option['product_option_value_id'];
+								} elseif ($order_option['type'] == 'checkbox') {
+									$option_data[$order_option['product_option_id']][] = $order_option['product_option_value_id'];
+								} elseif ($order_option['type'] == 'input' || $order_option['type'] == 'textarea' || $order_option['type'] == 'file' || $order_option['type'] == 'date' || $order_option['type'] == 'datetime' || $order_option['type'] == 'time') {
+									$option_data[$order_option['product_option_id']] = $order_option['value'];	
+								}
+							}
+							
+							$this->cart->add($order_product['product_id'], $order_product['quantity'], $option_data);
+						}
+					}
+									
+					$this->redirect($this->url->link('checkout/cart', '', 'SSL'));
+				}
 				
-				foreach ($order_products as $order_product) {
-					if (in_array($order_product['order_product_id'], $this->request->post['selected'])) {
-						$option_data = array();
-						
-						$order_options = $this->model_account_order->getOrderOptions($order_id, $order_product['order_product_id']);
-						
-						foreach ($order_options as $order_option) {
-							if ($order_option['type'] == 'select' || $order_option['type'] == 'radio') {
-								$option_data[$order_option['product_option_id']] = $order_option['product_option_value_id'];
-							} elseif ($order_option['type'] == 'checkbox') {
-								$option_data[$order_option['product_option_id']][] = $order_option['product_option_value_id'];
-							} elseif ($order_option['type'] == 'input' || $order_option['type'] == 'textarea' || $order_option['type'] == 'file' || $order_option['type'] == 'date' || $order_option['type'] == 'datetime' || $order_option['type'] == 'time') {
-								$option_data[$order_option['product_option_id']] = $order_option['value'];	
+				if ($this->request->post['action'] == 'return') {
+					$order_products = $this->model_account_order->getOrderProducts($order_id);
+					
+					foreach ($order_products as $order_product) {
+						if (in_array($order_product['order_product_id'], $this->request->post['selected'])) {
+							$option_data = array();
+							
+							$order_options = $this->model_account_order->getOrderOptions($order_id, $order_product['order_product_id']);
+							
+							foreach ($order_options as $order_option) {
+							
 							}
 						}
-						
-						$this->cart->add($order_product['product_id'], $order_product['quantity'], $option_data);
 					}
+					
+					//$this->session->data['return'] =  	
 				}
-								
-				$this->redirect($this->url->link('checkout/cart', '', 'SSL'));
 			} 
 			
 			$this->document->setTitle($this->language->get('text_order'));
-		
-      		$this->data['heading_title'] = $this->language->get('text_order');
 			
-			$this->data['text_order_detail'] = $this->language->get('text_order_detail');
-			$this->data['text_invoice_no'] = $this->language->get('text_invoice_no');
-    		$this->data['text_order_id'] = $this->language->get('text_order_id');
-			$this->data['text_date_added'] = $this->language->get('text_date_added');
-      		$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
-			$this->data['text_shipping_address'] = $this->language->get('text_shipping_address');
-      		$this->data['text_payment_method'] = $this->language->get('text_payment_method');
-      		$this->data['text_payment_address'] = $this->language->get('text_payment_address');
-      		$this->data['text_history'] = $this->language->get('text_history');
-			$this->data['text_comment'] = $this->language->get('text_comment');
-			$this->data['text_selected'] = $this->language->get('text_selected');
-			$this->data['text_reorder'] = $this->language->get('text_reorder');
-			$this->data['text_return'] = $this->language->get('text_return');
-
-      		$this->data['column_name'] = $this->language->get('column_name');
-      		$this->data['column_model'] = $this->language->get('column_model');
-      		$this->data['column_quantity'] = $this->language->get('column_quantity');
-      		$this->data['column_price'] = $this->language->get('column_price');
-      		$this->data['column_total'] = $this->language->get('column_total');
-			$this->data['column_date_added'] = $this->language->get('column_date_added');
-      		$this->data['column_status'] = $this->language->get('column_status');
-      		$this->data['column_comment'] = $this->language->get('column_comment');
-			
-      		$this->data['button_continue'] = $this->language->get('button_continue');
-		
 			$this->data['breadcrumbs'] = array();
 		
 			$this->data['breadcrumbs'][] = array(
@@ -209,6 +204,39 @@ class ControllerAccountOrder extends Controller {
 				'href'      => $this->url->link('account/order/info', 'order_id=' . $this->request->get['order_id'] . $url, 'SSL'),
 				'separator' => $this->language->get('text_separator')
 			);
+					
+      		$this->data['heading_title'] = $this->language->get('text_order');
+			
+			$this->data['text_order_detail'] = $this->language->get('text_order_detail');
+			$this->data['text_invoice_no'] = $this->language->get('text_invoice_no');
+    		$this->data['text_order_id'] = $this->language->get('text_order_id');
+			$this->data['text_date_added'] = $this->language->get('text_date_added');
+      		$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
+			$this->data['text_shipping_address'] = $this->language->get('text_shipping_address');
+      		$this->data['text_payment_method'] = $this->language->get('text_payment_method');
+      		$this->data['text_payment_address'] = $this->language->get('text_payment_address');
+      		$this->data['text_history'] = $this->language->get('text_history');
+			$this->data['text_comment'] = $this->language->get('text_comment');
+			$this->data['text_selected'] = $this->language->get('text_selected');
+			$this->data['text_reorder'] = $this->language->get('text_reorder');
+			$this->data['text_return'] = $this->language->get('text_return');
+
+      		$this->data['column_name'] = $this->language->get('column_name');
+      		$this->data['column_model'] = $this->language->get('column_model');
+      		$this->data['column_quantity'] = $this->language->get('column_quantity');
+      		$this->data['column_price'] = $this->language->get('column_price');
+      		$this->data['column_total'] = $this->language->get('column_total');
+			$this->data['column_date_added'] = $this->language->get('column_date_added');
+      		$this->data['column_status'] = $this->language->get('column_status');
+      		$this->data['column_comment'] = $this->language->get('column_comment');
+			
+      		$this->data['button_continue'] = $this->language->get('button_continue');
+		
+			if (isset($this->error['warning'])) {
+				$this->data['error_warning'] = $this->error['warning'];
+			} else {
+				$this->data['error_warning'] = '';
+			}
 			
 			$this->data['action'] = $this->url->link('account/order/info', 'order_id=' . $this->request->get['order_id'] . $url, 'SSL');
 			
@@ -334,6 +362,12 @@ class ControllerAccountOrder extends Controller {
 			
 			$this->data['comment'] = $order_info['comment'];
       		
+			if (isset($this->request->post['action'])) {
+				$this->data['action'] = $this->request->post['action'];
+			} else {
+				$this->data['action'] = '';
+			}
+			
 			$this->data['histories'] = array();
 
 			$results = $this->model_account_order->getOrderHistories($this->request->get['order_id']);
@@ -419,5 +453,17 @@ class ControllerAccountOrder extends Controller {
 			$this->response->setOutput($this->render());				
     	}
   	}
+	
+	private function validate() {
+		if (!isset($this->request->post['selected']) || !isset($this->request->post['action']) || !$this->request->post['action']) {
+			$this->error['warning'] = $this->language->get('error_warning');
+		}
+		
+		if (!$this->error) {
+      		return true;
+    	} else {
+      		return false;
+    	}		
+	}
 }
 ?>

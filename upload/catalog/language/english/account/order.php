@@ -34,4 +34,7 @@ $_['column_total']          = 'Total';
 $_['column_date_added']     = 'Date Added';
 $_['column_status']         = 'Status';
 $_['column_comment']        = 'Comment';
+
+// Error
+$_['error_warning']         = 'Warning: you must select some products and an action complete your request!';
 ?>

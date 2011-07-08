@@ -186,7 +186,7 @@ final class Cart {
 				}						
 		
 				// Reward Points
-				$query = $this->db->query("SELECT points FROM " . DB_PREFIX . "product_reward WHERE product_id = '" . $product_id . "' AND customer_group_id = '" . (int)$customer_group_id . "'");
+				$query = $this->db->query("SELECT points FROM " . DB_PREFIX . "product_reward WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . (int)$customer_group_id . "'");
 				
 				if ($query->num_rows) {	
 					$reward = $query->row['points'];

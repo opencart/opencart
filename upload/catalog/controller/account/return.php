@@ -434,12 +434,16 @@ class ControllerAccountReturn extends Controller {
 
     	if (isset($this->request->post['order_id'])) {
       		$this->data['order_id'] = $this->request->post['order_id']; 	
+		} elseif (isset($this->session->data['return']['order_id'])) {
+			$this->data['order_id'] = $this->session->data['return']['order_id'];
 		} else {
       		$this->data['order_id'] = ''; 
     	}
 				
     	if (isset($this->request->post['date_ordered'])) {
       		$this->data['date_ordered'] = $this->request->post['date_ordered']; 	
+		} elseif (isset($this->session->data['return'])) {
+			$this->data['date_ordered'] = date('Y-m-d', strtotime($this->session->data['return']['date_added']));
 		} else {
       		$this->data['date_ordered'] = '';
     	}
@@ -474,10 +478,16 @@ class ControllerAccountReturn extends Controller {
 
     	if (isset($this->request->post['return_product'])) {
       		$this->data['return_products'] = $this->request->post['return_product']; 	
+		} elseif (isset($this->session->data['return'])) {
+			$this->data['return_products'] = $this->session->data['return']['product'];
 		} else {
       		$this->data['return_products'] = array();
     	}
-				
+		
+		if (isset($this->session->data['return'])) {
+			unset($this->session->data['return']);
+		}
+		
     	if (isset($this->request->post['comment'])) {
       		$this->data['comment'] = $this->request->post['comment']; 	
 		} else {

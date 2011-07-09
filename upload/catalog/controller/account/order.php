@@ -153,21 +153,13 @@ class ControllerAccountOrder extends Controller {
 				}
 				
 				if ($this->request->post['action'] == 'return') {
-					$order_products = $this->model_account_order->getOrderProducts($order_id);
+					$this->session->data['return'] = array(
+						'order_id'   => $order_info['order_id'],
+						'date_added' => $order_info['date_added'],
+						'product'    => $this->model_account_order->getOrderProducts($order_id)
+					);
 					
-					foreach ($order_products as $order_product) {
-						if (in_array($order_product['order_product_id'], $this->request->post['selected'])) {
-							$option_data = array();
-							
-							$order_options = $this->model_account_order->getOrderOptions($order_id, $order_product['order_product_id']);
-							
-							foreach ($order_options as $order_option) {
-							
-							}
-						}
-					}
-					
-					//$this->session->data['return'] =  	
+					$this->redirect($this->url->link('account/return/insert', '', 'SSL'));	
 				}
 			} 
 			

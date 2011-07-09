@@ -353,7 +353,7 @@ class ControllerCommonFileManager extends Controller {
 		
 		@mkdir($destination); 
 		
-		while (false !== ($file = readdir($handle))) {
+		while (false !== ($file = readdir($directory))) {
 			if (($file != '.') && ($file != '..')) { 
 				if (is_dir($source . '/' . $file)) { 
 					$this->recursiveCopy($source . '/' . $file, $destination . '/' . $file); 

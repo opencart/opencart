@@ -249,9 +249,9 @@ final class Cart {
 		  
   	public function add($product_id, $qty = 1, $options = array()) {
     	if (!$options) {
-      		$key = $product_id;
+      		$key = (int)$product_id;
     	} else {
-      		$key = $product_id . ':' . base64_encode(serialize($options));
+      		$key = (int)$product_id . ':' . base64_encode(serialize($options));
     	}
     	
 		if ((int)$qty && ((int)$qty > 0)) {

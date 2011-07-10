@@ -102,7 +102,9 @@ class ModelCatalogProduct extends Model {
 			if (isset($data['filter_manufacturer_id'])) {
 				$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";
 			}
-	
+			
+			$sql .= " GROUP BY p.product_id";
+			
 			$sort_data = array(
 				'pd.name',
 				'p.model',

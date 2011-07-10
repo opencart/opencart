@@ -1,7 +1,7 @@
 <?php
 class ControllerReportAffiliateCommission extends Controller {
 	public function index() {     
-		$this->load->language('report/affiliate_commission');
+		$this->load->language('report/affiliate_product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -27,7 +27,7 @@ class ControllerReportAffiliateCommission extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('report/affiliate_commission', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+			'href'      => $this->url->link('report/affiliate_product', 'token=' . $this->session->data['token'] . $url, 'SSL'),
       		'separator' => ' :: '
    		);		
 		
@@ -51,11 +51,11 @@ class ControllerReportAffiliateCommission extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('report/affiliate_commission', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
+		$pagination->url = $this->url->link('report/affiliate_product', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
 		 
-		$this->template = 'report/affiliate_commission.tpl';
+		$this->template = 'report/affiliate_product.tpl';
 		$this->children = array(
 			'common/header',
 			'common/footer',

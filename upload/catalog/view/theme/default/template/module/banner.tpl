@@ -7,7 +7,6 @@
   <?php } ?>
   <?php } ?>
 </div>
-<script type="text/javascript" src="catalog/view/javascript/jquery/jquery.cycle.js"></script>
 <script type="text/javascript"><!--
 var banner = function() {
 	$('#banner<?php echo $module; ?>').cycle({

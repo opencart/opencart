@@ -64,7 +64,7 @@ class ControllerReportSaleCoupon extends Controller {
 				
 		$coupon_total = $this->model_report_coupon->getTotalCoupons($data); 
 		
-		$results = $this->model_report_coupon->getCoupon($data);
+		$results = $this->model_report_coupon->getCoupons($data);
 	
 		foreach ($results as $result) {
 			$action = array();
@@ -75,11 +75,9 @@ class ControllerReportSaleCoupon extends Controller {
 			);
 						
 			$this->data['coupons'][] = array(
-				'name'   => $result['coupon'],
-				'code'   => $result['code'],
-				'uses'   => $result['uses'],
-				'orders' => $result['orders'],
-				'total'  => $this->currency->format($result['total'], $this->config->get('config_currency'))
+				'name'  => $result['name'],
+				'code'  => $result['code'],
+				'total' => $this->currency->format($result['total'], $this->config->get('config_currency'))
 			);
 		}
 				 
@@ -87,16 +85,12 @@ class ControllerReportSaleCoupon extends Controller {
 		 
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 		
-		$this->data['column_date_start'] = $this->language->get('column_date_start');
-		$this->data['column_date_end'] = $this->language->get('column_date_end');
-		$this->data['column_title'] = $this->language->get('column_title');
-		$this->data['column_orders'] = $this->language->get('column_orders');
+		$this->data['column_name'] = $this->language->get('column_name');
+		$this->data['column_code'] = $this->language->get('column_code');
 		$this->data['column_total'] = $this->language->get('column_total');
 		
 		$this->data['entry_date_start'] = $this->language->get('entry_date_start');
 		$this->data['entry_date_end'] = $this->language->get('entry_date_end');
-		$this->data['entry_group'] = $this->language->get('entry_group');	
-		$this->data['entry_status'] = $this->language->get('entry_status');
 		
 		$this->data['button_filter'] = $this->language->get('button_filter');
 		

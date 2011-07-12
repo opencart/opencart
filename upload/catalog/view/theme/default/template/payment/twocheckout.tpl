@@ -27,7 +27,6 @@
   <?php if ($demo) { ?>
   <input type="hidden" name="demo" value="<?php echo $demo; ?>" />
   <?php } ?>
-  <input type="hidden" name="fixed" value="Y" />
   <input type="hidden" name="lang" value="<?php echo $lang; ?>" />
   <input type="hidden" name="return_url" value="<?php echo $return_url; ?>" />
   <div class="buttons">

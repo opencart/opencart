@@ -31,13 +31,13 @@ class ModelToolBackup extends Model {
 
 		foreach ($tables as $table) {
 			if (DB_PREFIX) {
-				if (strpos($table, DB_PREFIX) === FALSE) {
-					$status = FALSE;
+				if (strpos($table, DB_PREFIX) === false) {
+					$status = false;
 				} else {
-					$status = TRUE;
+					$status = true;
 				}
 			} else {
-				$status = TRUE;
+				$status = true;
 			}
 			
 			if ($status) {

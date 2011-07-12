@@ -18,7 +18,9 @@ class ModelToolBackup extends Model {
 		$query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
 		
 		foreach ($query->rows as $result) {
-			$table_data[] = $result['Tables_in_' . strtolower(DB_DATABASE)];
+			if (substr($result['Tables_in_' . strtolower(DB_DATABASE)], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+				$table_data[] = $result['Tables_in_' . strtolower(DB_DATABASE)];
+			}
 		}
 		
 		return $table_data;

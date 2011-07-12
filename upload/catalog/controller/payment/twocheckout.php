@@ -30,7 +30,7 @@ class ControllerPaymentTwoCheckout extends Controller {
 		} else {
 			$this->data['ship_street_address'] = $order_info['payment_address_1'];
 			$this->data['ship_city'] = $order_info['payment_city'];
-			$this->data['ship_statey'] = $order_info['payment_zone'];
+			$this->data['ship_state'] = $order_info['payment_zone'];
 			$this->data['ship_zip'] = $order_info['payment_postcode'];
 			$this->data['ship_country'] = $order_info['payment_country'];			
 		}
@@ -51,11 +51,13 @@ class ControllerPaymentTwoCheckout extends Controller {
 
 		if ($this->config->get('twocheckout_test')) {
 			$this->data['demo'] = 'Y';
-		}	
+		} else {
+			$this->data['demo'] = '';
+		}
 		
 		$this->data['lang'] = $this->session->data['language'];
 
-		$this->data['return_url'] = $this->url->link('checkout/checkout', '', 'SSL');
+		$this->data['return_url'] = $this->url->link('payment/twocheckout/callback', '', 'SSL');
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/twocheckout.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/twocheckout.tpl';
@@ -67,6 +69,15 @@ class ControllerPaymentTwoCheckout extends Controller {
 	}
 	
 	public function callback() {
+		$url = '';
+		
+		foreach ($this->request->post as $key => $value) {
+			$url .= $key . '=' . $value . "\n"	;
+		}
+		
+		$this->log->write($url);
+		//$this->log->write($this->request->get);
+		
 		$this->load->model('checkout/order');
 		
 		$order_info = $this->model_checkout_order->getOrder($this->request->post['order_number']);

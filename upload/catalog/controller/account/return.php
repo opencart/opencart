@@ -479,13 +479,24 @@ class ControllerAccountReturn extends Controller {
     	if (isset($this->request->post['return_product'])) {
       		$this->data['return_products'] = $this->request->post['return_product']; 	
 		} elseif (isset($this->session->data['return'])) {
-			$this->data['return_products'] = $this->session->data['return']['product'];
+			$this->data['return_products'] = array();
+			
+			foreach ($this->session->data['return']['product'] as $result) {
+				$this->data['return_products'][] = array(
+					'name'     => $result['name'],
+					'model'    => $result['model'],
+					'quantity' => 1,
+					'opened'   => false,
+					'comment'  => ''
+				
+				);
+			}
 		} else {
       		$this->data['return_products'] = array();
     	}
 		
 		if (isset($this->session->data['return'])) {
-			unset($this->session->data['return']);
+		//	unset($this->session->data['return']);
 		}
 		
     	if (isset($this->request->post['comment'])) {

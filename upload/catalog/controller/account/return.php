@@ -488,7 +488,6 @@ class ControllerAccountReturn extends Controller {
 					'quantity' => 1,
 					'opened'   => false,
 					'comment'  => ''
-				
 				);
 			}
 		} else {

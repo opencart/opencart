@@ -353,12 +353,6 @@ class ControllerAccountOrder extends Controller {
       		$this->data['totals'] = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
 			
 			$this->data['comment'] = $order_info['comment'];
-      		
-			if (isset($this->request->post['action'])) {
-				$this->data['action'] = $this->request->post['action'];
-			} else {
-				$this->data['action'] = '';
-			}
 			
 			$this->data['histories'] = array();
 

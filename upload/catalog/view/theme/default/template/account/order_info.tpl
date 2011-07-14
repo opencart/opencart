@@ -80,31 +80,31 @@
         <?php } ?>
       </tbody>
       <tfoot>
+        <?php $i = 0; ?>
         <?php foreach ($totals as $total) { ?>
         <tr>
-          <td colspan="5" class="right"><b><?php echo $total['title']; ?>:</b></td>
+          <?php if ($i == 0) { ?>
+          <td rowspan="<?php echo count($totals); ?>" colspan="4" class="left" style="vertical-align: top; border-left: none; border-bottom: none;"><select name="action" onchange="$('#order').submit();">
+              <option value=""><?php echo $text_selected; ?></option>
+              <?php if ($action == 'reorder') { ?>
+              <option value="reorder" selected="selected"><?php echo $text_reorder; ?></option>
+              <?php } else { ?>
+              <option value="reorder"><?php echo $text_reorder; ?></option>
+              <?php } ?>
+              <?php if ($action == 'return') { ?>
+              <option value="return" selected="selected"><?php echo $text_return; ?></option>
+              <?php } else { ?>
+              <option value="return"><?php echo $text_return; ?></option>
+              <?php } ?>
+            </select></td>
+          <?php } ?>
+          <td class="right"><b><?php echo $total['title']; ?>:</b></td>
           <td class="right"><?php echo $total['text']; ?></td>
         </tr>
+        <?php $i++; ?>
         <?php } ?>
       </tfoot>
     </table>
-    <div class="buttons">
-      <div class="right">
-        <select name="action">
-          <option value=""><?php echo $text_selected; ?></option>
-          <?php if ($action == 'reorder') { ?>
-          <option value="reorder" selected="selected"><?php echo $text_reorder; ?></option>
-          <?php } else { ?>
-          <option value="reorder"><?php echo $text_reorder; ?></option>
-          <?php } ?>
-          <?php if ($action == 'return') { ?>
-          <option value="return" selected="selected"><?php echo $text_return; ?></option>
-          <?php } else { ?>
-          <option value="return"><?php echo $text_return; ?></option>
-          <?php } ?>
-        </select>
-        &nbsp;<a onclick="$('#order').submit();" class="button"><span><?php echo $button_continue; ?></span></a></div>
-    </div>
   </form>
   <?php if ($comment) { ?>
   <table class="list">

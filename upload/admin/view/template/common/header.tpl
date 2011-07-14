@@ -179,7 +179,6 @@ $(document).ready(function(){
           <li><a class="parent"><?php echo $text_affiliate; ?></a>
             <ul>
               <li><a href="<?php echo $report_affiliate_commission; ?>"><?php echo $text_report_affiliate_commission; ?></a></li>
-              <li><a href="<?php echo $report_affiliate_product; ?>"><?php echo $text_report_affiliate_product; ?></a></li>
             </ul>
           </li>          
         </ul>

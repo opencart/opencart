@@ -77,6 +77,7 @@ class ControllerReportSaleCoupon extends Controller {
 			$this->data['coupons'][] = array(
 				'name'   => $result['name'],
 				'code'   => $result['code'],
+				'orders' => $result['orders'],
 				'total'  => $this->currency->format($result['total'], $this->config->get('config_currency')),
 				'action' => $action
 			);
@@ -88,6 +89,7 @@ class ControllerReportSaleCoupon extends Controller {
 		
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_code'] = $this->language->get('column_code');
+		$this->data['column_orders'] = $this->language->get('column_orders');
 		$this->data['column_total'] = $this->language->get('column_total');
 		$this->data['column_action'] = $this->language->get('column_action');
 		

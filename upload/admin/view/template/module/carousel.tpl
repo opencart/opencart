@@ -113,7 +113,7 @@ function addModule() {
 	html += '  <tr>';
 	html += '    <td class="left"><select name="carousel_module[' + module_row + '][banner_id]">';
 	<?php foreach ($banners as $banner) { ?>
-	html += '      <option value="<?php echo $banner['banner_id']; ?>"><?php echo $banner['name']; ?></option>';
+	html += '      <option value="<?php echo $banner['banner_id']; ?>"><?php echo addslashes($banner['name']); ?></option>';
 	<?php } ?>
 	html += '    </select></td>';	
 	html += '    <td class="left"><input type="text" name="carousel_module[' + module_row + '][limit]" value="5" size="1" /></td>';

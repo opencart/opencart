@@ -109,13 +109,13 @@ function addModule() {
 	html += '  <tr>';
 	html += '    <td class="left"><select name="slideshow_module[' + module_row + '][banner_id]">';
 	<?php foreach ($banners as $banner) { ?>
-	html += '      <option value="<?php echo $banner['banner_id']; ?>"><?php echo $banner['name']; ?></option>';
+	html += '      <option value="<?php echo $banner['banner_id']; ?>"><?php echo addslashes($banner['name']); ?></option>';
 	<?php } ?>
 	html += '    </select></td>';
 	html += '    <td class="left"><input type="text" name="slideshow_module[' + module_row + '][width]" value="" size="3" /> <input type="text" name="slideshow_module[' + module_row + '][height]" value="" size="3" /></td>';	
 	html += '    <td class="left"><select name="slideshow_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>
-	html += '      <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>';
+	html += '      <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
 	<?php } ?>
 	html += '    </select></td>';
 	html += '    <td class="left"><select name="slideshow_module[' + module_row + '][position]">';

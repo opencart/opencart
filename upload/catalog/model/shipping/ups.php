@@ -16,13 +16,13 @@ class ModelShippingUps extends Model {
 		$method_data = array();
 		
 		if ($status) {
-			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class'), $this->config->get('ups_weight_class'));
+			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('ups_weight_class_id'));
 			
 			$weight = ($weight < 0.1 ? 0.1 : $weight);
 			
-			$length = $this->length->convert($this->config->get('ups_length'), $this->config->get('config_length_class'), $this->config->get('ups_length_class'));
-			$width = $this->length->convert($this->config->get('ups_width'), $this->config->get('config_length_class'), $this->config->get('ups_length_class'));
-			$height = $this->length->convert($this->config->get('ups_height'), $this->config->get('config_length_class'), $this->config->get('ups_length_class'));
+			$length = $this->length->convert($this->config->get('ups_length'), $this->config->get('config_length_class_id'), $this->config->get('ups_length_class_id'));
+			$width = $this->length->convert($this->config->get('ups_width'), $this->config->get('config_length_class_id'), $this->config->get('ups_length_class_id'));
+			$height = $this->length->convert($this->config->get('ups_height'), $this->config->get('config_length_class_id'), $this->config->get('ups_length_class_id'));
 			
 			$service_code = array(
 				// US Origin
@@ -265,7 +265,7 @@ class ModelShippingUps extends Model {
 			$title = $this->language->get('text_title');
 			
 			if ($this->config->get('ups_display_weight')) {	  
-				$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('ups_weight_class')) . ')';
+				$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('ups_weight_class_id')) . ')';
 			}
 		
 			$method_data = array(

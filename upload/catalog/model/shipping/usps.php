@@ -20,7 +20,7 @@ class ModelShippingUsps extends Model {
 
 			$quote_data = array();
 			
-			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class'), $this->config->get('usps_weight_class'));
+			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('usps_weight_class_id'));
 			
 			$weight = ($weight < 0.1 ? 0.1 : $weight);
 			$pounds = floor($weight);
@@ -425,7 +425,7 @@ class ModelShippingUsps extends Model {
 				$title = $this->language->get('text_title');
 									
 				if ($this->config->get('usps_display_weight')) {	  
-					$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('usps_weight_class')) . ')';
+					$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('usps_weight_class_id')) . ')';
 				}		
 			
       			$method_data = array(

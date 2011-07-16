@@ -55,7 +55,7 @@ class ModelShippingRoyalMail extends Model {
 					$title = $this->language->get('text_1st_class_standard');
 					
 					if ($this->config->get('royal_mail_display_weight')) {
-						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class')) . ')';
+						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 				
 					if ($this->config->get('royal_mail_display_insurance') && (float)$compensation) {
@@ -112,7 +112,7 @@ class ModelShippingRoyalMail extends Model {
 					$title = $this->language->get('text_1st_class_recorded');
 					
 					if ($this->config->get('royal_mail_display_weight')) {
-						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class')) . ')';
+						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 				
 					if ($this->config->get('royal_mail_display_insurance') && (float)$compensation) {
@@ -154,7 +154,7 @@ class ModelShippingRoyalMail extends Model {
 					$title = $this->language->get('text_2nd_class_standard');
 					
 					if ($this->config->get('royal_mail_display_weight')) {
-						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class')) . ')';
+						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 		
 					if ($this->config->get('royal_mail_display_time')) {
@@ -207,7 +207,7 @@ class ModelShippingRoyalMail extends Model {
 					$title = $this->language->get('text_2nd_class_recorded');
 					
 					if ($this->config->get('royal_mail_display_weight')) {
-						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class')) . ')';
+						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 				
 					if ($this->config->get('royal_mail_display_insurance') && (float)$compensation) {
@@ -264,7 +264,7 @@ class ModelShippingRoyalMail extends Model {
 					$title = $this->language->get('text_standard_parcels');
 					
 					if ($this->config->get('royal_mail_display_weight')) {
-						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class')) . ')';
+						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 				
 					if ($this->config->get('royal_mail_display_insurance') && (float)$compensation) {
@@ -312,7 +312,7 @@ class ModelShippingRoyalMail extends Model {
 					$title = $this->language->get('text_airmail');
 					
 					if ($this->config->get('royal_mail_display_weight')) {
-						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class')) . ')';
+						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 		
 					if ($this->config->get('royal_mail_display_time')) {
@@ -375,7 +375,7 @@ class ModelShippingRoyalMail extends Model {
 					$title = $this->language->get('text_international_signed');
 					
 					if ($this->config->get('royal_mail_display_weight')) {
-						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class')) . ')';
+						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 				
 					if ($this->config->get('royal_mail_display_insurance') && (float)$compensation) {
@@ -457,7 +457,7 @@ class ModelShippingRoyalMail extends Model {
 					$title = $this->language->get('text_airsure');
 					
 					if ($this->config->get('royal_mail_display_weight')) {
-						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class')) . ')';
+						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 				
 					if ($this->config->get('royal_mail_display_insurance') && (float)$compensation) {
@@ -500,7 +500,7 @@ class ModelShippingRoyalMail extends Model {
 					$title = $this->language->get('text_surface');
 					
 					if ($this->config->get('royal_mail_display_weight')) {
-						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class')) . ')';
+						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 				
 					if ($this->config->get('royal_mail_display_insurance') && (float)$compensation) {

@@ -673,10 +673,10 @@ class ControllerShippingUPS extends Controller {
 			$this->data['ups_weight_code'] = $this->config->get('ups_weight_code');
 		}
 		
-		if (isset($this->request->post['ups_weight_class'])) {
-			$this->data['ups_weight_class'] = $this->request->post['ups_weight_class'];
+		if (isset($this->request->post['ups_weight_class_id'])) {
+			$this->data['ups_weight_class_id'] = $this->request->post['ups_weight_class_id'];
 		} else {
-			$this->data['ups_weight_class'] = $this->config->get('ups_weight_class');
+			$this->data['ups_weight_class_id'] = $this->config->get('ups_weight_class_id');
 		}
 		
 		$this->load->model('localisation/weight_class');

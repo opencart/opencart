@@ -464,10 +464,10 @@ class ControllerShippingUsps extends Controller {
 			$this->data['usps_display_weight'] = $this->config->get('usps_display_weight');
 		}
 		
-		if (isset($this->request->post['usps_weight_class'])) {
-			$this->data['usps_weight_class'] = $this->request->post['usps_weight_class'];
+		if (isset($this->request->post['usps_weight_class_id'])) {
+			$this->data['usps_weight_class_id'] = $this->request->post['usps_weight_class_id'];
 		} else {
-			$this->data['usps_weight_class'] = $this->config->get('usps_weight_class');
+			$this->data['usps_weight_class_id'] = $this->config->get('usps_weight_class_id');
 		}
 		
 		$this->load->model('localisation/weight_class');

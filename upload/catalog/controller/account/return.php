@@ -495,7 +495,7 @@ class ControllerAccountReturn extends Controller {
     	}
 		
 		if (isset($this->session->data['return'])) {
-		//	unset($this->session->data['return']);
+			unset($this->session->data['return']);
 		}
 		
     	if (isset($this->request->post['comment'])) {

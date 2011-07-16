@@ -160,10 +160,10 @@ class ControllerShippingRoyalMail extends Controller {
 			$this->data['royal_mail_display_time'] = $this->config->get('royal_mail_display_time');
 		}
 
-		if (isset($this->request->post['royal_mail_weight_class'])) {
-			$this->data['royal_mail_weight_class'] = $this->request->post['royal_mail_weight_class'];
+		if (isset($this->request->post['royal_mail_weight_class_id'])) {
+			$this->data['royal_mail_weight_class_id'] = $this->request->post['royal_mail_weight_class_id'];
 		} else {
-			$this->data['royal_mail_weight_class'] = $this->config->get('royal_mail_weight_class');
+			$this->data['royal_mail_weight_class_id'] = $this->config->get('royal_mail_weight_class_id');
 		}
 		
 		$this->load->model('localisation/weight_class');

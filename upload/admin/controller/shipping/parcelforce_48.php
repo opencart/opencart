@@ -31,7 +31,6 @@ class ControllerShippingParcelforce48 extends Controller {
 		$this->data['entry_display_insurance'] = $this->language->get('entry_display_insurance');
 		$this->data['entry_display_time'] = $this->language->get('entry_display_time');
 		$this->data['entry_compensation'] = $this->language->get('entry_compensation');
-		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');

@@ -110,7 +110,7 @@ class ControllerCheckoutCart extends Controller {
 			$this->data['action'] = $this->url->link('checkout/cart');
 						
 			if ($this->config->get('config_cart_weight')) {
-				$this->data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class'));
+				$this->data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'));
 			} else {
 				$this->data['weight'] = false;
 			}

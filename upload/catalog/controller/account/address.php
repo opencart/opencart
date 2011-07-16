@@ -62,12 +62,18 @@ class ControllerAccountAddress extends Controller {
 	  			unset($this->session->data['shipping_methods']);
 				unset($this->session->data['shipping_method']);	
 
-				$this->tax->setZone($this->request->post['country_id'], $this->request->post['zone_id']);
+				if ($this->cart->hasShipping()) {
+					$this->tax->setZone($this->request->post['country_id'], $this->request->post['zone_id']);
+				}
 			}
 
 			if (isset($this->session->data['payment_address_id']) && ($this->request->get['address_id'] == $this->session->data['payment_address_id'])) {
 	  			unset($this->session->data['payment_methods']);
-				unset($this->session->data['payment_method']);				
+				unset($this->session->data['payment_method']);
+				
+				if (!$this->cart->hasShipping()) {
+					$this->tax->setZone($this->request->post['country_id'], $this->request->post['zone_id']);
+				}		
 			}
 			
 			$this->session->data['success'] = $this->language->get('text_update');
@@ -98,12 +104,21 @@ class ControllerAccountAddress extends Controller {
 	  			unset($this->session->data['shipping_address_id']);
 				unset($this->session->data['shipping_methods']);
 				unset($this->session->data['shipping_method']);	
+				
+				
+				if ($this->cart->hasShipping()) {
+					$this->tax->setZone($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
+				}				
 			}
 
 			if (isset($this->session->data['payment_address_id']) && ($this->request->get['address_id'] == $this->session->data['payment_address_id'])) {
 	  			unset($this->session->data['payment_address_id']);
 				unset($this->session->data['payment_methods']);
-				unset($this->session->data['payment_method']);				
+				unset($this->session->data['payment_method']);	
+				
+				if (!$this->cart->hasShipping()) {
+					$this->tax->setZone($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
+				}								
 			}
 			
 			$this->session->data['success'] = $this->language->get('text_delete');

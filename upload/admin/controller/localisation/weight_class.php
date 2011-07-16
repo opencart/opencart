@@ -393,9 +393,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		$this->load->model('catalog/product');
 		
 		foreach ($this->request->post['selected'] as $weight_class_id) {
-			$weight_class_info = $this->model_localisation_weight_class->getWeightClass($weight_class_id);
-
-			if ($weight_class_info && ($this->config->get('config_weight_class') == $weight_class_info['unit'])) {
+			if ($this->config->get('config_weight_class_id') == $weight_class_id) {
 				$this->error['warning'] = $this->language->get('error_default');
 			}
 			

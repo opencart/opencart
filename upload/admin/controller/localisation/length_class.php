@@ -393,9 +393,7 @@ class ControllerLocalisationLengthClass extends Controller {
 		$this->load->model('catalog/product');
 		
 		foreach ($this->request->post['selected'] as $length_class_id) {
-			$length_class_info = $this->model_localisation_length_class->getLengthClass($length_class_id);
-			
-			if ($length_class_info && ($this->config->get('config_length_class') == $length_class_info['unit'])) {
+			if ($this->config->get('config_length_class_id') == $length_class_id) {
 				$this->error['warning'] = $this->language->get('error_default');
 			}
 			

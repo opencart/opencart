@@ -9,10 +9,10 @@ final class Length {
 		$length_class_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "length_class mc LEFT JOIN " . DB_PREFIX . "length_class_description mcd ON (mc.length_class_id = mcd.length_class_id) WHERE mcd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
     
     	foreach ($length_class_query->rows as $result) {
-      		$this->lengths[strtolower($result['unit'])] = array(
+      		$this->lengths[$result['length_class_id']] = array(
 				'length_class_id' => $result['length_class_id'],
-        		'unit'            => $result['unit'],
         		'title'           => $result['title'],
+				'unit'            => $result['unit'],
 				'value'           => $result['value']
       		);
     	}
@@ -23,14 +23,14 @@ final class Length {
       		return $value;
 		}
 		
-		if (isset($this->lengths[strtolower($from)])) {
-			$from = $this->lengths[strtolower($from)]['value'];
+		if (isset($this->lengths[$from])) {
+			$from = $this->lengths[$from]['value'];
 		} else {
 			$from = 0;
 		}
 		
-		if (isset($this->lengths[strtolower($to)])) {
-			$to = $this->lengths[strtolower($to)]['value'];
+		if (isset($this->lengths[$to])) {
+			$to = $this->lengths[$to]['value'];
 		} else {
 			$to = 0;
 		}		
@@ -38,8 +38,8 @@ final class Length {
       	return $value * ($to / $from);
   	}
 
-	public function format($value, $unit, $decimal_point = '.', $thousand_point = ',') {
-    	return number_format($value, 2, $decimal_point, $thousand_point) . $this->lengths[$unit]['unit'];
+	public function format($value, $length_class_id, $decimal_point = '.', $thousand_point = ',') {
+    	return number_format($value, 2, $decimal_point, $thousand_point) . $this->lengths[$length_class_id]['unit'];
   	}
 }
 ?>

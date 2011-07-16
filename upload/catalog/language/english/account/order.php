@@ -21,7 +21,8 @@ $_['text_comment']          = 'Order Comments';
 $_['text_history']          = 'Order History';
 $_['text_empty']            = 'You have not made any previous orders!';
 $_['text_error']            = 'The order you requested could not be found!';
-$_['text_selected']         = 'With selected ...';
+$_['text_action']           = 'Choose an action:';
+$_['text_selected']         = 'With selected..';
 $_['text_reorder']          = 'Add to Cart';
 $_['text_return']           = 'Return Products';
 

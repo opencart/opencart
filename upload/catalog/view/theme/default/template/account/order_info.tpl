@@ -80,31 +80,24 @@
         <?php } ?>
       </tbody>
       <tfoot>
-        <?php $i = 0; ?>
         <?php foreach ($totals as $total) { ?>
         <tr>
-          <?php if ($i == 0) { ?>
-          <td rowspan="<?php echo count($totals); ?>" colspan="4" class="left" style="vertical-align: top; border-left: none; border-bottom: none;"><select name="action" onchange="$('#order').submit();">
-              <option value=""><?php echo $text_selected; ?></option>
-              <?php if ($action == 'reorder') { ?>
-              <option value="reorder" selected="selected"><?php echo $text_reorder; ?></option>
-              <?php } else { ?>
-              <option value="reorder"><?php echo $text_reorder; ?></option>
-              <?php } ?>
-              <?php if ($action == 'return') { ?>
-              <option value="return" selected="selected"><?php echo $text_return; ?></option>
-              <?php } else { ?>
-              <option value="return"><?php echo $text_return; ?></option>
-              <?php } ?>
-            </select></td>
-          <?php } ?>
+          <td colspan="4"></td>
           <td class="right"><b><?php echo $total['title']; ?>:</b></td>
           <td class="right"><?php echo $total['text']; ?></td>
         </tr>
-        <?php $i++; ?>
         <?php } ?>
       </tfoot>
     </table>
+    <div class="buttons">
+      <div class="right"><?php echo $text_action; ?>
+        <select name="action" onchange="$('#order').submit();">
+          <option value=""><?php echo $text_selected; ?></option>
+          <option value="reorder"><?php echo $text_reorder; ?></option>
+          <option value="return"><?php echo $text_return; ?></option>
+        </select>
+      </div>
+    </div>
   </form>
   <?php if ($comment) { ?>
   <table class="list">

@@ -50,7 +50,7 @@ class ModelSaleReturn extends Model {
 		}
 						
 		if (isset($data['filter_customer']) && !is_null($data['filter_customer'])) {
-			$implode[] = "LCASE(CONCAT(r.firstname, ' ', r.lastname)) LIKE '" . $this->db->escape(mb_strtolower($data['filter_customer'], 'UTF-8')) . "%'";
+			$implode[] = "LCASE(CONCAT(r.firstname, ' ', r.lastname)) LIKE LCASE('" . $this->db->escape($data['filter_customer']) . "%')";
 		}
 		
 		if (isset($data['filter_quantity']) && !is_null($data['filter_quantity'])) {
@@ -121,7 +121,7 @@ class ModelSaleReturn extends Model {
 		}
 				
 		if (isset($data['filter_customer']) && !is_null($data['filter_customer'])) {
-			$implode[] = "LCASE(CONCAT(r.firstname, ' ', r.lastname)) LIKE '" . $this->db->escape(mb_strtolower($data['filter_customer'], 'UTF-8')) . "%'";
+			$implode[] = "LCASE(CONCAT(r.firstname, ' ', r.lastname)) LIKE LCASE('" . $this->db->escape($data['filter_customer']) . "%')";
 		}
 		
 		if (isset($data['filter_order_id']) && !is_null($data['filter_order_id'])) {

@@ -611,107 +611,126 @@ function productautocomplete(product_row) {
 				html = '<div>';
 
 				for (i = 0; i < ui.item.option.length; i++) {
-                    
-					<?php foreach ($order_product['option'] as $option) { ?>
-                    <?php if ($option['type'] == 'select') { ?>
-                    <?php if ($option['required']) { ?>
-                    <span class="required">*</span>
-                    <?php } ?>
-                    <?php echo $option['name']; ?><br />
-           		html = '       <select name="order_product[' + product_row + '][option][' + option_row + '][option_value_id]">';
-                      <option value=""><?php echo $text_select; ?></option>
-                      <?php foreach ($option['option_value'] as $option_value) { ?>
-                      <option value="<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
-                      <?php if ($option_value['price']) { ?>
-                      (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
-                      <?php } ?>
-                      </option>
-                      <?php } ?>
-                    </select>
-                    <br />
-                    <?php } ?>
-                    <?php if ($option['type'] == 'radio') { ?>
-                    <?php if ($option['required']) { ?>
-                    <span class="required">*</span>
-                    <?php } ?>
-                    <?php echo $option['name']; ?><br />
-                    <?php foreach ($option['option_value'] as $option_value) { ?>
-                    <input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-value-<?php echo $option_value['product_option_value_id']; ?>" />
-                    <label for="option-value-<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
-                      <?php if ($option_value['price']) { ?>
-                      (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
-                      <?php } ?>
-                    </label>
-                    <br />
-                    <?php } ?>
-                    <?php } ?>
-                    <?php if ($option['type'] == 'checkbox') { ?>
-                    <?php if ($option['required']) { ?>
-                    <span class="required">*</span>
-                    <?php } ?>
-                    <?php echo $option['name']; ?><br />
-                    <?php foreach ($option['option_value'] as $option_value) { ?>
-                    <input type="checkbox" name="option[<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-value-<?php echo $option_value['product_option_value_id']; ?>" />
-                    <label for="option-value-<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
-                      <?php if ($option_value['price']) { ?>
-                      (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
-                      <?php } ?>
-                    </label>
-                    <br />
-                    <?php } ?>
-                    <?php } ?>
-                    <?php if ($option['type'] == 'text') { ?>
-                    <?php if ($option['required']) { ?>
-                    <span class="required">*</span>
-                    <?php } ?>
-                    <?php echo $option['name']; ?><br />
-                    <input type="text" name="order_product[<?php echo $product_row; ?>][<?php echo $option_row; ?>][option_value]" value="<?php echo $option['option_value']; ?>" />
-                    <br />
-                    <?php } ?>
-                    <?php if ($option['type'] == 'textarea') { ?>
-                    <?php if ($option['required']) { ?>
-                    <span class="required">*</span>
-                    <?php } ?>
-                    <?php echo $option['name']; ?><br />
-                    <textarea name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" cols="40" rows="5"><?php echo $option['option_value']; ?></textarea>
-                    <br />
-                    <?php } ?>
-                    <?php if ($option['type'] == 'file') { ?>
-                    <?php if ($option['required']) { ?>
-                    <span class="required">*</span>
-                    <?php } ?>
-                    <?php echo $option['name']; ?><br />
-                    <input type="text" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" value="<?php echo $option['option_value']; ?>" />
-                    <br />
-                    <?php } ?>
-                    <?php if ($option['type'] == 'date') { ?>
-                    <?php if ($option['required']) { ?>
-                    <span class="required">*</span>
-                    <?php } ?>
-                    <?php echo $option['name']; ?><br />
-                    <input type="text" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" value="<?php echo $option['option_value']; ?>" class="date" />
-                    <br />
-                    <?php } ?>
-                    <?php if ($option['type'] == 'datetime') { ?>
-                    <?php if ($option['required']) { ?>
-                    <span class="required">*</span>
-                    <?php } ?>
-                    <?php echo $option['name']; ?><br />
-                    <input type="text" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" value="<?php echo $option['option_value']; ?>" class="datetime" />
-                    <br />
-                    <?php } ?>
-                    <?php if ($option['type'] == 'time') { ?>
-                    <?php if ($option['required']) { ?>
-                    <span class="required">*</span>
-                    <?php } ?>
-                    <?php echo $option['name']; ?><br />
-                    <input type="text" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" value="<?php echo $option['option_value']; ?>" class="time" />
-                    <br />
-                    <?php } ?>
-                    <?php $option_row++; ?>
-                    <?php } ?>
-                  </div>
-			
+                    option = ui.item.option[i];
+					
+					if (option['type'] == 'select') {
+						if (option['required']) {
+							html += '<span class="required">*</span>';
+						}
+					
+						html += option['name'] + '<br />';
+						html += '<select name="order_product[' + product_row + '][option][' + option_row + '][option_value_id]">';
+					
+						html += '<option value=""><?php echo $text_select; ?></option>';
+					
+						for (j = 0; j < option['option_value'].length; j++) {
+							option_value = option['option_value'][j];
+							
+							html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
+							
+							if ($option_value['price']) {
+								html += '(' + option_value['price_prefix'] + option_value['price'] + ')';
+							}
+							
+							html += '</option>';
+						}
+							
+						html += '</select>';
+						html += '<br />';
+					}
+					
+					if (option['type'] == 'radio') {
+						if (option['required']) {
+							html += '<span class="required">*</span>';
+						}
+					
+						html += option['name'] + '<br />';
+						
+						for (j = 0; j < option['option_value'].length; j++) {
+							option_value = option['option_value'][j];
+							
+							html += '<input type="radio" name="option[' + option['product_option_id'] + ']" value="' + option_value['product_option_value_id'] + '" id="option-value-' + option_value['product_option_value_id'] + '" />';
+							html += '<label for="option-value-' + option_value['product_option_value_id'] + '">' + option_value['name'];
+							
+							if (option_value['price']) {
+								html += '(' + option_value['price_prefix'] + option_value['price'] + ')';
+							}
+							
+							html += '</label>';
+							html += '<br />';
+						}
+					}
+					
+					if ($option['type'] == 'checkbox') {
+						if ($option['required']) {
+							html += '<span class="required">*</span>';
+						}
+						
+					<?php echo $option['name']; ?><br />
+					<?php foreach ($option['option_value'] as $option_value) { ?>
+					<input type="checkbox" name="option[<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-value-<?php echo $option_value['product_option_value_id']; ?>" />
+					<label for="option-value-<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
+					<?php if ($option_value['price']) { ?>
+					(<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
+					<?php } ?>
+					</label>
+					<br />
+					<?php } ?>
+					<?php } ?>
+					<?php if ($option['type'] == 'text') { ?>
+					<?php if ($option['required']) { ?>
+					<span class="required">*</span>
+					<?php } ?>
+					<?php echo $option['name']; ?><br />
+					<input type="text" name="order_product[<?php echo $product_row; ?>][<?php echo $option_row; ?>][option_value]" value="<?php echo $option['option_value']; ?>" />
+					<br />
+					<?php } ?>
+					<?php if ($option['type'] == 'textarea') { ?>
+					<?php if ($option['required']) { ?>
+					<span class="required">*</span>
+					<?php } ?>
+					<?php echo $option['name']; ?><br />
+					<textarea name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" cols="40" rows="5"><?php echo $option['option_value']; ?></textarea>
+					<br />
+					<?php } ?>
+					<?php if ($option['type'] == 'file') { ?>
+					<?php if ($option['required']) { ?>
+					<span class="required">*</span>
+					<?php } ?>
+					<?php echo $option['name']; ?><br />
+					<input type="text" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" value="<?php echo $option['option_value']; ?>" />
+					<br />
+					<?php } ?>
+					<?php if ($option['type'] == 'date') { ?>
+					<?php if ($option['required']) { ?>
+					<span class="required">*</span>
+					<?php } ?>
+					<?php echo $option['name']; ?><br />
+					<input type="text" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" value="<?php echo $option['option_value']; ?>" class="date" />
+					<br />
+					<?php } ?>
+					<?php if ($option['type'] == 'datetime') { ?>
+					<?php if ($option['required']) { ?>
+					<span class="required">*</span>
+					<?php } ?>
+					<?php echo $option['name']; ?><br />
+					<input type="text" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" value="<?php echo $option['option_value']; ?>" class="datetime" />
+					<br />
+					<?php } ?>
+					<?php if ($option['type'] == 'time') { ?>
+					<?php if ($option['required']) { ?>
+					<span class="required">*</span>
+					<?php } ?>
+					<?php echo $option['name']; ?><br />
+					<input type="text" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" value="<?php echo $option['option_value']; ?>" class="time" />
+					<br />
+					<?php } ?>
+					<?php $option_row++; ?>
+					<?php } ?>
+					</div>
+					*/
+				}
+				
 				option_row++;
 			}
 			

@@ -88,7 +88,7 @@ class ModelAccountCustomer extends Model {
 		$implode = array();
 		
 		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
-			$implode[] = "LCASE(CONCAT(c.firstname, ' ', c.lastname)) LIKE '" . $this->db->escape(mb_strtolower($data['filter_name'], 'UTF-8')) . "%'";
+			$implode[] = "LCASE(CONCAT(c.firstname, ' ', c.lastname)) LIKE LCASE('" . $this->db->escape($data['filter_name']) . "%')";
 		}
 		
 		if (isset($data['filter_email']) && !is_null($data['filter_email'])) {

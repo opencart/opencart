@@ -107,6 +107,7 @@
               <tr>
                 <td class="left"><input type="text" name="order_product[<?php echo $product_row; ?>][name]" value="<?php echo $order_product['name']; ?>" />
                   <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_product_id]" value="<?php echo $order_product['order_product_id']; ?>" />
+                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_id]" value="<?php echo $order_product['order_id']; ?>" />
                   <input type="hidden" name="order_product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
                   <br />
                   <?php $option_row = 0; ?>
@@ -210,7 +211,7 @@
                   <?php } ?></td>
                 <td class="left"><input type="text" name="order_product[<?php echo $product_row; ?>][model]" value="<?php echo $order_product['model']; ?>" /></td>
                 <td class="right"><input type="text" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" size="3" /></td>
-                <td class="right"><input type="text" name="order_product[<?php echo $product_row; ?>][price]" value="<?php echo $order_product['price']; ?>" size="4" /></td>
+                <td class="right"><input type="text" name="order_product[<?php echo $product_row; ?>][price]" value="<?php echo $order_product['price']; ?>" size="4" /><input type="text" name="order_product[<?php echo $product_row; ?>][total]" value="<?php echo $order_product['price']; ?>" size="4" /><input type="text" name="order_product[<?php echo $product_row; ?>][tax]" value="<?php echo $order_product['price']; ?>" size="4" /></td>
                 <td class="left"><a onclick="$('#product-row<?php echo $product_row; ?>').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>
               </tr>
             </tbody>
@@ -560,10 +561,10 @@ var product_row = <?php echo $product_row; ?>;
 function addProduct() {
     html  = '<tbody id="product-row' + product_row + '">';
     html += '  <tr>';
-    html += '    <td class="left"><input type="text" name="order_product[' + product_row + '][name]" value="" /><input type="hidden" name="order_product[' + product_row + '][order_product_id]" value="" /><input type="hidden" name="order_product[' + product_row + '][product_id]" value="" /></td>';
+    html += '    <td class="left"><input type="text" name="order_product[' + product_row + '][name]" value="" /><input type="hidden" name="order_product[' + product_row + '][order_product_id]" value="" /><input type="hidden" name="order_product[' + product_row + '][order_id]" value="" /><input type="hidden" name="order_product[' + product_row + '][product_id]" value="" /></td>';
     html += '    <td class="left"><input type="text" name="order_product[' + product_row + '][model]" value="" /></td>';
 	html += '    <td class="right"><input type="text" name="order_product[' + product_row + '][quantity]" value="1" size="3" /></td>';	
-	html += '    <td class="right"><input type="text" name="order_product[' + product_row + '][price]" value="" size="4" /></td>';
+	html += '    <td class="right"><input type="text" name="order_product[' + product_row + '][price]" value="" size="4" /><input type="hidden" name="order_product[' + product_row + '][total]" value="" /><input type="hidden" name="order_product[' + product_row + '][tax]" value="" /></td>';
     html += '    <td class="left"><a onclick="$(\'#product-row' + product_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
     html += '  </tr>';
 	html += '</tbody>';

@@ -1128,6 +1128,7 @@ class ControllerSaleCustomer extends Controller {
 		$pagination->total = $transaction_total;
 		$pagination->page = $page;
 		$pagination->limit = 10; 
+		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/customer/transaction', 'token=' . $this->session->data['token'] . '&customer_id=' . $this->request->get['customer_id'] . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
@@ -1189,6 +1190,7 @@ class ControllerSaleCustomer extends Controller {
 		$pagination->total = $reward_total;
 		$pagination->page = $page;
 		$pagination->limit = 10; 
+		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/customer/reward', 'token=' . $this->session->data['token'] . '&customer_id=' . $this->request->get['customer_id'] . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();

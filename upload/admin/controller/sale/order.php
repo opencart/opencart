@@ -1577,6 +1577,7 @@ class ControllerSaleOrder extends Controller {
 		$pagination->total = $history_total;
 		$pagination->page = $page;
 		$pagination->limit = 10; 
+		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/order/history', 'token=' . $this->session->data['token'] . '&order_id=' . $this->request->get['order_id'] . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();

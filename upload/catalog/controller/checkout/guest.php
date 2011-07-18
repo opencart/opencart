@@ -350,6 +350,9 @@ class ControllerCheckoutGuest extends Controller {
 					$this->tax->setZone($this->request->post['country_id'], $this->request->post['zone_id']);
 				}
 			}
+			
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['shipping_method']);			
 		} else {
 			$this->data['text_select'] = $this->language->get('text_select');
 	

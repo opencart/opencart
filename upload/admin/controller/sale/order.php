@@ -987,6 +987,10 @@ class ControllerSaleOrder extends Controller {
 			$order_products = array();
 		}
 		
+		echo '<pre>';
+		print_r($this->request->post);
+		echo '</pre>';
+		
 		$this->load->model('catalog/product');
 		
 		$this->data['order_products'] = array();		

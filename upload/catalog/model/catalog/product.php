@@ -71,9 +71,9 @@ class ModelCatalogProduct extends Model {
 			
 			if (isset($data['filter_name']) && $data['filter_name']) {
 				if (isset($data['filter_description']) && $data['filter_description']) {
-					$sql .= " AND (LCASE(pd.name) LIKE LCASE('%" . $this->db->escape($data['filter_name']) . "%') OR p.product_id IN (SELECT pt.product_id FROM " . DB_PREFIX . "product_tag pt WHERE pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND LCASE(pt.tag) LIKE LCASE('%" . $this->db->escape($data['filter_name']) . "%') OR LCASE(pd.description) LIKE LCASE('%" . $this->db->escape($data['filter_name']) . "%'))";
+					$sql .= " AND (LCASE(pd.name) LIKE LCASE('%" . $this->db->escape($data['filter_name']) . "%') OR p.product_id IN (SELECT pt.product_id FROM " . DB_PREFIX . "product_tag pt WHERE pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND LCASE(pt.tag) LIKE LCASE('%" . $this->db->escape($data['filter_name']) . "%') OR LCASE(pd.description) LIKE LCASE('%" . $this->db->escape($data['filter_name']) . "%')))";
 				} else {
-					$sql .= " AND (LCASE(pd.name) LIKE LCASE('%" . $this->db->escape($data['filter_name']) . "%') OR p.product_id IN (SELECT pt.product_id FROM " . DB_PREFIX . "product_tag pt WHERE pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND LCASE(pt.tag) LIKE LCASE('%" . $this->db->escape($data['filter_name']) . "%'))";
+					$sql .= " AND (LCASE(pd.name) LIKE LCASE('%" . $this->db->escape($data['filter_name']) . "%') OR p.product_id IN (SELECT pt.product_id FROM " . DB_PREFIX . "product_tag pt WHERE pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND LCASE(pt.tag) LIKE LCASE('%" . $this->db->escape($data['filter_name']) . "%')))";
 				}
 			}
 			

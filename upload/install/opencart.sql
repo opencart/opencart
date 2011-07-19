@@ -1670,9 +1670,6 @@ CREATE TABLE `oc_order_product` (
 -- Dumping data for table `oc_order_product`
 --
 
-INSERT INTO `oc_order_product` (`order_product_id`, `order_id`, `product_id`, `name`, `model`, `quantity`, `price`, `total`, `tax`) VALUES
-(576, 326, 33, 'Samsung SyncMaster 941BW', 'Product 6', 1, '200.0000', '200.0000', '17.5000');
-
 -- --------------------------------------------------------
 
 --

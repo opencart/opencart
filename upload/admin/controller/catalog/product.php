@@ -905,10 +905,8 @@ class ControllerCatalogProduct extends Controller {
       		$this->data['weight_class_id'] = $this->request->post['weight_class_id'];
     	} elseif (isset($product_info)) {
       		$this->data['weight_class_id'] = $product_info['weight_class_id'];
-    	} elseif (isset($weight_info)) {
-      		$this->data['weight_class_id'] = $this->config->get('config_weight_class_id');
 		} else {
-      		$this->data['weight_class_id'] = '';
+      		$this->data['weight_class_id'] = $this->config->get('config_weight_class_id');
     	}
 		
 		if (isset($this->request->post['length'])) {
@@ -943,10 +941,8 @@ class ControllerCatalogProduct extends Controller {
       		$this->data['length_class_id'] = $this->request->post['length_class_id'];
     	} elseif (isset($product_info)) {
       		$this->data['length_class_id'] = $product_info['length_class_id'];
-    	} elseif (isset($length_info)) {
-      		$this->data['length_class_id'] = $this->config->get('config_length_class_id');
     	} else {
-    		$this->data['length_class_id'] = '';
+      		$this->data['length_class_id'] = $this->config->get('config_length_class_id');
 		}
 
 		if (isset($this->request->post['product_attribute'])) {

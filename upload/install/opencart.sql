@@ -844,10 +844,6 @@ CREATE TABLE `oc_coupon_product` (
 -- Dumping data for table `oc_coupon_product`
 --
 
-INSERT INTO `oc_coupon_product` (`coupon_product_id`, `coupon_id`, `product_id`) VALUES
-(4, 7, 47),
-(3, 7, 30);
-
 -- --------------------------------------------------------
 
 --
@@ -1726,12 +1722,6 @@ CREATE TABLE `oc_order_total` (
 --
 -- Dumping data for table `oc_order_total`
 --
-
-INSERT INTO `oc_order_total` (`order_total_id`, `order_id`, `code`, `title`, `text`, `value`, `sort_order`) VALUES
-(1243, 326, 'total', 'Total:', '$576.24', '349.6411', 8),
-(1240, 326, 'sub_total', 'Sub-Total:', '$329.62', '200.0000', 1),
-(1241, 326, 'shipping', 'UPS Worldwide Express:', '$188.94', '114.6411', 3),
-(1242, 326, 'tax', 'VAT 17.5%:', '$57.68', '35.0000', 5);
 
 -- --------------------------------------------------------
 

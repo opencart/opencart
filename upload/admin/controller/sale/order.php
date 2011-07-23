@@ -995,10 +995,22 @@ class ControllerSaleOrder extends Controller {
 		
 		$this->data['order_products'] = array();		
 		
+		$i = 0;
+		
 		foreach ($order_products as $order_product) {
 			$product_info = $this->model_catalog_product->getProduct($order_product['product_id']);
 			
 			if ($product_info) {
+				
+				
+				if (isset($this->request->post['order_product'])) {
+					//$order_option = $order_product['option'][];
+				} else {
+					
+				}
+				
+				
+				
 				$option_data = array();
 				
 				//$this->data['order_products'][] = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product_option['option_id']);	

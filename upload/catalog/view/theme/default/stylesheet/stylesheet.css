@@ -639,13 +639,15 @@ a.button:hover span {
 	width: 100%;
 	overflow: auto;
 }
-	
 .box-product > div {
-	width: 134px;
+	width: 130px;
 	display: inline-block;
 	vertical-align: top;
 	margin-right: 20px;
-	margin-bottom: 15px;	
+	margin-bottom: 20px;	
+}
+#column-left + #column-right + #content .box-product > div {
+	width: 119px;
 }
 .box-product .image {
 	display: block;
@@ -894,11 +896,14 @@ a.button:hover span {
 	overflow: auto;
 }
 .product-grid > div {
-	width: 134px;
+	width: 130px;
 	display: inline-block;
 	vertical-align: top;
 	margin-right: 20px;
 	margin-bottom: 15px;
+}
+#column-left + #column-right + #content .product-grid > div {
+	width: 125px;
 }
 .product-grid .image {
 	display: block;
@@ -1044,6 +1049,26 @@ a.button:hover span {
 	margin-bottom: 10px;
 	color: #000000;
 }
+.product-info .option-image {
+	margin-top: 3px;
+	margin-bottom: 10px;
+	overflow: auto;
+}
+.product-info .option-image div {
+	display: inline-block; 
+	vertical-align: top; 
+	margin-bottom: 5px; 
+	margin-right: 5px; 
+	text-align: center;
+}
+.product-info .option-image img {
+	border: 2px solid #CCCCCC;
+	cursor: pointer;
+}
+.product-info .option-image img.selected {
+	border: 2px solid #38B0E3;
+}
+
 .product-info .cart {
 	border-bottom: 1px solid #E7E7E7;
 	padding: 0px 5px 10px 5px;

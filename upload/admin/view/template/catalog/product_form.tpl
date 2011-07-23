@@ -143,7 +143,7 @@
             <tr>
               <td><?php echo $entry_image; ?></td>
               <td><input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
-                <img src="<?php echo $preview; ?>" alt="" id="preview" class="image" onclick="image_upload('image', 'preview');" /></td>
+                <img src="<?php echo $thumb; ?>" alt="" id="thumb" class="image" onclick="image_upload('image', 'thumb');" /></td>
             </tr>
             <tr>
               <td><?php echo $entry_date_available; ?></td>
@@ -398,7 +398,7 @@
               </tr>
               <?php } ?>
             </table>
-            <?php if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox') { ?>
+            <?php if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') { ?>
             <table id="option-value<?php echo $option_row; ?>" class="list">
               <thead>
                 <tr>
@@ -486,7 +486,7 @@
           <?php $option_row = 0; ?>
           <?php $option_value_row = 0; ?>		  
 		  <?php foreach ($product_options as $product_option) { ?>
-          <?php if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox') { ?>
+          <?php if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') { ?>
 		  <?php foreach ($product_option['product_option_value'] as $product_option_value) { ?>
 		  $('select[name=\'product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][option_value_id]\']').load('index.php?route=catalog/product/option&token=<?php echo $token; ?>&option_id=<?php echo $product_option['option_id']; ?>&option_value_id=<?php echo $product_option_value['option_value_id']; ?>');
 		  <?php $option_value_row++; ?>
@@ -594,7 +594,7 @@
             <?php foreach ($product_images as $product_image) { ?>
             <tbody id="image-row<?php echo $image_row; ?>">
               <tr>
-                <td class="left"><img src="<?php echo $product_image['preview']; ?>" alt="" id="preview<?php echo $image_row; ?>" class="image" onclick="image_upload('image<?php echo $image_row; ?>', 'preview<?php echo $image_row; ?>');" />
+                <td class="left"><img src="<?php echo $product_image['thumb']; ?>" alt="" id="thumb<?php echo $image_row; ?>" class="image" onclick="image_upload('image<?php echo $image_row; ?>', 'thumb<?php echo $image_row; ?>');" />
                   <input type="hidden" name="product_image[<?php echo $image_row; ?>]" value="<?php echo $product_image['image']; ?>" id="image<?php echo $image_row; ?>"  /></td>
                 <td class="left"><a onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>
               </tr>
@@ -885,7 +885,7 @@ $('input[name=\'option\']').catcomplete({
 		
 		html += '  </table>';
 			
-		if (ui.item.type == 'select' || ui.item.type == 'radio' || ui.item.type == 'checkbox') {
+		if (ui.item.type == 'select' || ui.item.type == 'radio' || ui.item.type == 'checkbox' || ui.item.type == 'image') {
 			html += '  <table id="option-value' + option_row + '" class="list">';
 			html += '  	 <thead>'; 
 			html += '      <tr>';
@@ -1022,7 +1022,7 @@ function addSpecial() {
 }
 //--></script> 
 <script type="text/javascript"><!--
-function image_upload(field, preview) {
+function image_upload(field, thumb) {
 	$('#dialog').remove();
 	
 	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
@@ -1037,7 +1037,7 @@ function image_upload(field, preview) {
 					data: 'image=' + encodeURIComponent($('#' + field).attr('value')),
 					dataType: 'text',
 					success: function(data) {
-						$('#' + preview).replaceWith('<img src="' + data + '" alt="" id="' + preview + '" class="image" onclick="image_upload(\'' + field + '\', \'' + preview + '\');" />');
+						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" class="image" onclick="image_upload(\'' + field + '\', \'' + thumb + '\');" />');
 					}
 				});
 			}
@@ -1056,7 +1056,7 @@ var image_row = <?php echo $image_row; ?>;
 function addImage() {
     html  = '<tbody id="image-row' + image_row + '">';
 	html += '  <tr>';
-	html += '    <td class="left"><input type="hidden" name="product_image[' + image_row + ']" value="" id="image' + image_row + '" /><img src="<?php echo $no_image; ?>" alt="" id="preview' + image_row + '" class="image" onclick="image_upload(\'image' + image_row + '\', \'preview' + image_row + '\');" /></td>';
+	html += '    <td class="left"><input type="hidden" name="product_image[' + image_row + ']" value="" id="image' + image_row + '" /><img src="<?php echo $no_image; ?>" alt="" id="thumb' + image_row + '" class="image" onclick="image_upload(\'image' + image_row + '\', \'thumb' + image_row + '\');" /></td>';
 	html += '    <td class="left"><a onclick="$(\'#image-row' + image_row  + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
 	html += '  </tr>';
 	html += '</tbody>';

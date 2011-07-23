@@ -118,13 +118,25 @@
                     <?php } ?>
                     <?php echo $option['name']; ?><br />
                     <select name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value_id]">
+                     
                       <option value=""><?php echo $text_select; ?></option>
                       <?php foreach ($option['option_value'] as $option_value) { ?>
+                      
+                      
+                      <?php if ($option['type']) { ?>
                       <option value="<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
                       <?php if ($option_value['price']) { ?>
                       (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
                       <?php } ?>
                       </option>
+                      <?php } else { ?>
+                      
+                      
+                      <?php } ?>
+                       
+                       
+                      
+                      
                       <?php } ?>
                     </select>
                     <br />
@@ -150,7 +162,7 @@
                     <?php } ?>
                     <?php echo $option['name']; ?><br />
                     <?php foreach ($option['option_value'] as $option_value) { ?>
-                    <input type="checkbox" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-value-<?php echo $option_value['product_option_value_id']; ?>" />
+                    <input type="checkbox" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option['product_option_id']; ?>][option_value][]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-value-<?php echo $option_value['product_option_value_id']; ?>" />
                     <label for="option-value-<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
                       <?php if ($option_value['price']) { ?>
                       (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
@@ -207,6 +219,7 @@
                     <input type="text" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][option_value]" value="<?php echo $option['option_value']; ?>" class="time" />
                     <br />
                     <?php } ?>
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][option][<?php echo $option_row; ?>][type]" value="<?php echo $option['type']; ?>" />
                     <?php $option_row++; ?>
                     <?php } ?>
                   </div></td>
@@ -740,6 +753,8 @@ function productautocomplete(product_row) {
 						html += option['name'] + '<br />';
 						html += '<input type="text" name="order_product[' + product_row + '][option][' + option_row + '][option_value]" value="' + option['option_value'] + '" class="time" /><br />';
 					}
+
+					html += '<input type="hidden" name="order_product[' + product_row + '][option][' + option_row + '][type]" value="' + option['type'] + '" />';
 					
 					option_row++;
 				}

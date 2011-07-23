@@ -113,6 +113,21 @@
         </div>
         <br />
         <?php } ?>
+        <?php if ($option['type'] == 'image') { ?>
+        <div id="option-<?php echo $option['product_option_id']; ?>" class="option">
+          <?php if ($option['required']) { ?>
+          <span class="required">*</span>
+          <?php } ?>
+          <b><?php echo $option['name']; ?>:</b><br />
+          <div class="option-image">
+            <?php foreach ($option['option_value'] as $option_value) { ?>
+            <div><img src="<?php echo $option_value['image']; ?>" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" onclick="$('input[name=\'option[<?php echo $option['product_option_id']; ?>]\']').attr('value', '<?php echo $option_value['product_option_value_id']; ?>'); $('#option-<?php echo $option['product_option_id']; ?> .selected').removeClass('selected'); $(this).addClass('selected')" /></div>
+            <?php } ?>
+            <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="" />
+          </div>
+        </div>
+        <br />
+        <?php } ?>
         <?php if ($option['type'] == 'text') { ?>
         <div id="option-<?php echo $option['product_option_id']; ?>" class="option">
           <?php if ($option['required']) { ?>
@@ -304,7 +319,7 @@
   <?php echo $content_bottom; ?></div>
 <script type="text/javascript"><!--
 $('.fancybox').fancybox({cyclic: true});
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#button-cart').bind('click', function() {
 	$.ajax({

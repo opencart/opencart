@@ -45,6 +45,11 @@
                 <?php } else { ?>
                 <option value="checkbox"><?php echo $text_checkbox; ?></option>
                 <?php } ?>
+                <?php if ($type == 'image') { ?>
+                <option value="image" selected><?php echo $text_image; ?></option>
+                <?php } else { ?>
+                <option value="image"><?php echo $text_image; ?></option>
+                <?php } ?>
                 </optgroup>
                 <optgroup label="<?php echo $text_input; ?>">
                 <?php if ($type == 'text') { ?>
@@ -93,6 +98,7 @@
           <thead>
             <tr>
               <td class="left"><span class="required">*</span> <?php echo $entry_value; ?></td>
+              <td class="left"><?php echo $entry_image; ?></td>
               <td class="right"><?php echo $entry_sort_order; ?></td>
               <td></td>
             </tr>
@@ -109,6 +115,8 @@
                 <span class="error"><?php echo $error_option_value[$option_value_row][$language['language_id']]; ?></span>
                 <?php } ?>
                 <?php } ?></td>
+              <td class="left"><img src="<?php echo $option_value['thumb']; ?>" alt="" id="thumb<?php echo $option_value_row; ?>" class="image" onclick="image_upload('image<?php echo $option_value_row; ?>', 'thumb<?php echo $option_value_row; ?>');" />
+                <input type="hidden" name="option_value[<?php echo $option_value_row; ?>][image]" value="<?php echo $option_value['image']; ?>" id="image<?php echo $option_value_row; ?>"  /></td>
               <td class="right"><input type="text" name="option_value[<?php echo $option_value_row; ?>][sort_order]" value="<?php echo $option_value['sort_order']; ?>" size="1" /></td>
               <td class="left"><a onclick="$('#option-value-row<?php echo $option_value_row; ?>').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>
             </tr>
@@ -117,7 +125,7 @@
           <?php } ?>
           <tfoot>
             <tr>
-              <td colspan="2"></td>
+              <td colspan="3"></td>
               <td class="left"><a onclick="addOptionValue();" class="button"><span><?php echo $button_add_option_value; ?></span></a></td>
             </tr>
           </tfoot>
@@ -128,10 +136,10 @@
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'type\']').bind('change', function() {
-	if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox') {
+	if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox' || this.value == 'image') {
 		$('#option-value').show();
 	} else {
-		$('#option-value').hide();	
+		$('#option-value').hide();
 	}
 });
 
@@ -145,6 +153,7 @@ function addOptionValue() {
 	html += '<input type="text" name="option_value[' + option_value_row + '][option_value_description][<?php echo $language['language_id']; ?>][name]" value="" /> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
     <?php } ?>
 	html += '</td>';
+    html += '<td class="left"><img src="<?php echo $no_image; ?>" alt="" id="thumb' + option_value_row + '" class="image" onclick="image_upload(\'image' + option_value_row + '\', \'thumb' + option_value_row + '\');" /><input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="image' + option_value_row + '" /></td>';
 	html += '<td class="right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" size="1" /></td>';
 	html += '<td class="left"><a onclick="$(\'#option-value-row' + option_value_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
 	html += '</tr>';	
@@ -154,5 +163,34 @@ function addOptionValue() {
 	
 	option_value_row++;
 }
+//--></script> 
+<script type="text/javascript"><!--
+function image_upload(field, thumb) {
+	$('#dialog').remove();
+	
+	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
+	
+	$('#dialog').dialog({
+		title: '<?php echo $text_image_manager; ?>',
+		close: function (event, ui) {
+			if ($('#' + field).attr('value')) {
+				$.ajax({
+					url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>',
+					type: 'POST',
+					data: 'image=' + encodeURIComponent($('#' + field).attr('value')),
+					dataType: 'text',
+					success: function(data) {
+						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" class="image" onclick="image_upload(\'' + field + '\', \'' + thumb + '\');" />');
+					}
+				});
+			}
+		},	
+		bgiframe: false,
+		width: 800,
+		height: 400,
+		resizable: false,
+		modal: false
+	});
+};
 //--></script> 
 <?php echo $footer; ?>

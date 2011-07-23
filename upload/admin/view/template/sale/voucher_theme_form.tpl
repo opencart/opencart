@@ -29,7 +29,7 @@
           <tr>
             <td><?php echo $entry_image; ?></td>
             <td valign="top"><input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
-              <img src="<?php echo $preview; ?>" alt="" id="preview" class="image" onclick="image_upload('image', 'preview');" />
+              <img src="<?php echo $thumb; ?>" alt="" id="thumb" class="image" onclick="image_upload('image', 'thumb');" />
               <?php if ($error_image) { ?>
               <span class="error"><?php echo $error_image; ?></span>
               <?php } ?></td>
@@ -40,7 +40,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-function image_upload(field, preview) {
+function image_upload(field, thumb) {
 	$('#dialog').remove();
 	
 	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
@@ -55,7 +55,7 @@ function image_upload(field, preview) {
 					data: 'image=' + encodeURIComponent($('#' + field).val()),
 					dataType: 'text',
 					success: function(data) {
-						$('#' + preview).replaceWith('<img src="' + data + '" alt="" id="' + preview + '" class="image" onclick="image_upload(\'' + field + '\', \'' + preview + '\');" />');
+						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" class="image" onclick="image_upload(\'' + field + '\', \'' + thumb + '\');" />');
 					}
 				});
 			}

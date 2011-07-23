@@ -474,12 +474,12 @@
             <tr>
               <td><?php echo $entry_logo; ?></td>
               <td><input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="logo" />
-                <img src="<?php echo $logo; ?>" alt="" id="preview-logo" class="image" onclick="image_upload('logo', 'preview-logo');" /></td>
+                <img src="<?php echo $logo; ?>" alt="" id="thumb-logo" class="image" onclick="image_upload('logo', 'thumb-logo');" /></td>
             </tr>
             <tr>
               <td><?php echo $entry_icon; ?></td>
               <td><input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="icon" />
-                <img src="<?php echo $icon; ?>" alt="" id="preview-icon" class="image" onclick="image_upload('icon', 'preview-icon');" /></td>
+                <img src="<?php echo $icon; ?>" alt="" id="thumb-icon" class="image" onclick="image_upload('icon', 'thumb-icon');" /></td>
             </tr>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_image_thumb; ?></td>
@@ -751,7 +751,7 @@ $('#template').load('index.php?route=setting/setting/template&token=<?php echo $
 $('select[name=\'config_zone_id\']').load('index.php?route=setting/setting/zone&token=<?php echo $token; ?>&country_id=<?php echo $config_country_id; ?>&zone_id=<?php echo $config_zone_id; ?>');
 //--></script> 
 <script type="text/javascript"><!--
-function image_upload(field, preview) {
+function image_upload(field, thumb) {
 	$('#dialog').remove();
 	
 	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
@@ -766,7 +766,7 @@ function image_upload(field, preview) {
 					data: 'image=' + encodeURIComponent($('#' + field).val()),
 					dataType: 'text',
 					success: function(data) {
-						$('#' + preview).replaceWith('<img src="' + data + '" alt="" id="' + preview + '" class="image" onclick="image_upload(\'' + field + '\', \'' + preview + '\');" />');
+						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" class="image" onclick="image_upload(\'' + field + '\', \'' + thumb + '\');" />');
 					}
 				});
 			}

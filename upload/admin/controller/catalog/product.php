@@ -784,9 +784,9 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('tool/image');
 		
 		if (isset($product_info) && $product_info['image'] && file_exists(DIR_IMAGE . $product_info['image'])) {
-			$this->data['preview'] = $this->model_tool_image->resize($product_info['image'], 100, 100);
+			$this->data['thumb'] = $this->model_tool_image->resize($product_info['image'], 100, 100);
 		} else {
-			$this->data['preview'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 		}
 	
 		$this->load->model('catalog/manufacturer');
@@ -964,7 +964,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['product_options'] = array();
 			
 		foreach ($product_options as $product_option) {
-			if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox') {
+			if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
 				$product_option_value_data = array();
 				
 				foreach ($product_option['product_option_value'] as $product_option_value) {
@@ -1040,8 +1040,8 @@ class ControllerCatalogProduct extends Controller {
 			}
 			
 			$this->data['product_images'][] = array(
-				'image'   => $image,
-				'preview' => $this->model_tool_image->resize($image, 100, 100)
+				'image' => $image,
+				'thumb' => $this->model_tool_image->resize($image, 100, 100)
 			);
 		}
 
@@ -1219,7 +1219,7 @@ class ControllerCatalogProduct extends Controller {
 				$product_options = $this->model_catalog_product->getProductOptions($result['product_id']);	
 				
 				foreach ($product_options as $product_option) {
-					if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox') {
+					if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
 						$option_value_data = array();
 					
 						foreach ($product_option['product_option_value'] as $product_option_value) {

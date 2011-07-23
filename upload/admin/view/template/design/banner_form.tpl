@@ -58,7 +58,7 @@
                 <?php } ?></td>
               <td class="left"><input type="text" name="banner_image[<?php echo $image_row; ?>][link]" value="<?php echo $banner_image['link']; ?>" /></td>
               <td class="left"><input type="hidden" name="banner_image[<?php echo $image_row; ?>][image]" value="<?php echo $banner_image['image']; ?>" id="image<?php echo $image_row; ?>"  />
-                <img src="<?php echo $banner_image['preview']; ?>" alt="" id="preview<?php echo $image_row; ?>" class="image" onclick="image_upload('image<?php echo $image_row; ?>', 'preview<?php echo $image_row; ?>');" /></td>
+                <img src="<?php echo $banner_image['thumb']; ?>" alt="" id="thumb<?php echo $image_row; ?>" class="image" onclick="image_upload('image<?php echo $image_row; ?>', 'thumb<?php echo $image_row; ?>');" /></td>
               <td class="left"><a onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>
             </tr>
           </tbody>
@@ -87,7 +87,7 @@ function addImage() {
     <?php } ?>
 	html += '</td>';	
 	html += '<td class="left"><input type="text" name="banner_image[' + image_row + '][link]" value="" /></td>';	
-	html += '<td class="left"><input type="hidden" name="banner_image[' + image_row + '][image]" value="" id="image' + image_row + '" /><img src="<?php echo $no_image; ?>" alt="" id="preview' + image_row + '" class="image" onclick="image_upload(\'image' + image_row + '\', \'preview' + image_row + '\');" /></td>';
+	html += '<td class="left"><input type="hidden" name="banner_image[' + image_row + '][image]" value="" id="image' + image_row + '" /><img src="<?php echo $no_image; ?>" alt="" id="thumb' + image_row + '" class="image" onclick="image_upload(\'image' + image_row + '\', \'thumb' + image_row + '\');" /></td>';
 	html += '<td class="left"><a onclick="$(\'#image-row' + image_row  + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
 	html += '</tr>';
 	html += '</tbody>'; 
@@ -98,7 +98,7 @@ function addImage() {
 }
 //--></script>
 <script type="text/javascript"><!--
-function image_upload(field, preview) {
+function image_upload(field, thumb) {
 	$('#dialog').remove();
 	
 	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
@@ -113,7 +113,7 @@ function image_upload(field, preview) {
 					data: 'image=' + encodeURIComponent($('#' + field).attr('value')),
 					dataType: 'text',
 					success: function(data) {
-						$('#' + preview).replaceWith('<img src="' + data + '" alt="" id="' + preview + '" class="image" onclick="image_upload(\'' + field + '\', \'' + preview + '\');" />');
+						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" class="image" onclick="image_upload(\'' + field + '\', \'' + thumb + '\');" />');
 					}
 				});
 			}

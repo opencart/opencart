@@ -126,7 +126,12 @@ class ControllerProductCategory extends Controller {
 			$results = $this->model_catalog_category->getCategories($category_id);
 			
 			foreach ($results as $result) {
-				$product_total = $this->model_catalog_product->getTotalProducts(array('filter_category_id' => $result['category_id']));
+				$data = array(
+					'filter_category_id'  => $category['category_id'],
+					'filter_sub_category' => true	
+				);
+							
+				$product_total = $this->model_catalog_product->getTotalProducts($data);
 				
 				$this->data['categories'][] = array(
 					'name'  => $result['name'] . ' (' . $product_total . ')',

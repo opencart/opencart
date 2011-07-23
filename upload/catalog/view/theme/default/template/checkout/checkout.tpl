@@ -576,22 +576,22 @@ $('#shipping-address #button-address').live('click', function() {
 							
 							$('#shipping-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');							
 						}
+						
+						$.ajax({
+							url: 'index.php?route=checkout/address/shipping',
+							dataType: 'json',
+							success: function(json) {
+								if (json['redirect']) {
+									location = json['redirect'];
+								}	
+													
+								if (json['output']) {
+									$('#shipping-address .checkout-content').html(json['output']);
+								}
+							}
+						});						
 					}
 				});	
-				
-				$.ajax({
-					url: 'index.php?route=checkout/address/shipping',
-					dataType: 'json',
-					success: function(json) {
-						if (json['redirect']) {
-							location = json['redirect'];
-						}	
-											
-						if (json['output']) {
-							$('#shipping-address .checkout-content').html(json['output']);
-						}
-					}
-				});								
 			}  
 		}
 	});	

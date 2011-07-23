@@ -96,7 +96,7 @@ class ModelCatalogCategory extends Model {
 		return $query->row;
 	} 
 	
-	public function getCategories($parent_id) {
+	public function getCategories($parent_id = 0) {
 		$category_data = $this->cache->get('category.' . $this->config->get('config_language_id') . '.' . $parent_id);
 	
 		if (!$category_data) {

@@ -127,7 +127,7 @@ class ControllerProductCategory extends Controller {
 			
 			foreach ($results as $result) {
 				$data = array(
-					'filter_category_id'  => $category['category_id'],
+					'filter_category_id'  => $result['category_id'],
 					'filter_sub_category' => true	
 				);
 							

@@ -1446,6 +1446,7 @@ DROP TABLE IF EXISTS `oc_option_value`;
 CREATE TABLE `oc_option_value` (
   `option_value_id` int(11) NOT NULL AUTO_INCREMENT,
   `option_id` int(11) NOT NULL,
+  `image` varchar(255) COLLATE utf8_bin NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`option_value_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

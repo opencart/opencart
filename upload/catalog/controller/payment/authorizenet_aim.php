@@ -98,59 +98,71 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 10);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
  
 		$response = curl_exec($curl);
-  		
-		curl_close($curl);
 		
-		$i = 1;
-		
-		$response_data = array();
-		
-		$results = explode(',', $response);
-		
-		foreach ($results as $result) {
-			$response_data[$i] = trim($result, '"');
-			
-			$i++;
-		}
-
 		$json = array();
 		
-		if ($response_data[1] == '1') {
-			if (strtoupper($response_data[38]) != strtoupper(md5($this->config->get('authorizenet_aim_hash') . $this->config->get('authorizenet_aim_login') . $response_data[6] . $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false)))) {
-				$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
-				
-				$message = '';
-				
-				if (isset($response_data['5'])) {
-					$message .= 'Authorization Code: ' . $response_data['5'] . "\n";
-				}
-				
-				if (isset($response_data['6'])) {
-					$message .= 'AVS Response: ' . $response_data['6'] . "\n";
-				}
-		
-				if (isset($response_data['7'])) {
-					$message .= 'Transaction ID: ' . $response_data['7'] . "\n";
-				}
-
-				if (isset($response_data['39'])) {
-					$message .= 'Card Code Response: ' . $response_data['39'] . "\n";
-				}
-				
-				if (isset($response_data['40'])) {
-					$message .= 'Cardholder Authentication Verification Response: ' . $response_data['40'] . "\n";
-				}				
-
-				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('authorizenet_aim_order_status_id'), $message, false);				
-			}
+		if (curl_error($curl)) {
+			$json['error'] = 'CURL ERROR: ' . curl_errno($curl) . '::' . curl_error($curl);
 			
-			$json['success'] = $this->url->link('checkout/success', '', 'SSL');
+			$this->log->write('AUTHNET AIM CURL ERROR: ' . curl_errno($curl) . '::' . curl_error($curl));	
+		} elseif ($response) {
+			$i = 1;
+			
+			$response_data = array();
+			
+			$results = explode(',', $response);
+			
+			foreach ($results as $result) {
+				$response_data[$i] = trim($result, '"');
+				
+				$i++;
+			}
+		
+			if ($response_data[1] == '1') {
+				if (strtoupper($response_data[38]) != strtoupper(md5($this->config->get('authorizenet_aim_hash') . $this->config->get('authorizenet_aim_login') . $response_data[6] . $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false)))) {
+					$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
+					
+					$message = '';
+					
+					if (isset($response_data['5'])) {
+						$message .= 'Authorization Code: ' . $response_data['5'] . "\n";
+					}
+					
+					if (isset($response_data['6'])) {
+						$message .= 'AVS Response: ' . $response_data['6'] . "\n";
+					}
+			
+					if (isset($response_data['7'])) {
+						$message .= 'Transaction ID: ' . $response_data['7'] . "\n";
+					}
+	
+					if (isset($response_data['39'])) {
+						$message .= 'Card Code Response: ' . $response_data['39'] . "\n";
+					}
+					
+					if (isset($response_data['40'])) {
+						$message .= 'Cardholder Authentication Verification Response: ' . $response_data['40'] . "\n";
+					}				
+	
+					$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('authorizenet_aim_order_status_id'), $message, false);				
+				}
+				
+				$json['success'] = $this->url->link('checkout/success', '', 'SSL');
+			} else {
+				$json['error'] = $response_data[4];
+			}
 		} else {
-			$json['error'] = $response_data[4];
+			$json['error'] = 'Empty Gateway Response';
+			
+			$this->log->write('AUTHNET AIM CURL ERROR: Empty Gateway Response');
 		}
+		
+		curl_close($curl);
 		
 		$this->load->library('json');
 		

@@ -114,9 +114,9 @@ function addToCart(product_id) {
 			}	 
 						
 			if (json['success']) {
-				$('#notification').html('<div class="attention" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+				$('#notification').html('<div class="success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 				
-				$('.attention').fadeIn('slow');
+				$('.success').fadeIn('slow');
 				
 				$('#cart_total').html(json['total']);
 				
@@ -172,9 +172,9 @@ function addToWishList(product_id) {
 			$('.success, .warning, .attention, .information').remove();
 						
 			if (json['success']) {
-				$('#notification').html('<div class="attention" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+				$('#notification').html('<div class="success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 				
-				$('.attention').fadeIn('slow');
+				$('.success').fadeIn('slow');
 				
 				$('#wishlist_total').html(json['total']);
 				
@@ -194,9 +194,9 @@ function addToCompare(product_id) {
 			$('.success, .warning, .attention, .information').remove();
 						
 			if (json['success']) {
-				$('#notification').html('<div class="attention" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+				$('#notification').html('<div class="success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 				
-				$('.attention').fadeIn('slow');
+				$('.success').fadeIn('slow');
 				
 				$('#compare_total').html(json['total']);
 				

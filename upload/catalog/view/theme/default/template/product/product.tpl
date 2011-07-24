@@ -343,9 +343,9 @@ $('#button-cart').bind('click', function() {
 			}	 
 						
 			if (json['success']) {
-				$('#notification').html('<div class="attention" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+				$('#notification').html('<div class="success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 					
-				$('.attention').fadeIn('slow');
+				$('.success').fadeIn('slow');
 					
 				$('#cart_total').html(json['total']);
 				

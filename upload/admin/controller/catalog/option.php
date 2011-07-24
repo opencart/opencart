@@ -399,6 +399,7 @@ class ControllerCatalogOption extends Controller {
 			}
 			
 			$this->data['option_values'][] = array(
+				'option_value_id'          => $option_value['option_value_id'],
 				'option_value_description' => $option_value['option_value_description'],
 				'image'                    => $image,
 				'thumb'                    => $this->model_tool_image->resize($image, 100, 100),

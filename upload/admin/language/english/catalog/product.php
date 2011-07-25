@@ -63,7 +63,7 @@ $_['entry_status']           = 'Status:';
 $_['entry_sort_order']       = 'Sort Order:';
 $_['entry_category']         = 'Categories:';
 $_['entry_download']         = 'Downloads:';
-$_['entry_related']          = 'Related Products:';
+$_['entry_related']          = 'Related Products:<br /><span class="help">(Autocomplete)</span>';
 $_['entry_tag']          	 = 'Product Tags:<br /><span class="help">comma separated</span>';
 $_['entry_reward']           = 'Reward Points:';
 $_['entry_layout']           = 'Layout Override:';

@@ -54,12 +54,6 @@ class ControllerPaymentMoneyBookers extends Controller {
 			$this->data['error_email'] = '';
 		}
 		
-		if (isset($this->error['secret'])) {
-			$this->data['error_secret'] = $this->error['secret'];
-		} else {
-			$this->data['error_secret'] = '';
-		}
-		
   		$this->data['breadcrumbs'] = array();
 		
    		$this->data['breadcrumbs'][] = array(
@@ -186,10 +180,6 @@ class ControllerPaymentMoneyBookers extends Controller {
 		
 		if (!$this->request->post['moneybookers_email']) {
 			$this->error['email'] = $this->language->get('error_email');
-		}
-		
-		if (!$this->request->post['moneybookers_secret']) {
-			$this->error['secret'] = $this->language->get('error_secret');
 		}
 				
 		if (!$this->error) {

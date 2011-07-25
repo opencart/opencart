@@ -884,7 +884,7 @@ class ControllerSaleReturn extends Controller {
 			$order_info = $this->model_sale_order->getOrder($return_info['order_id']);
 			
 			if ($return_info['order_id'] && $order_info) {
-				$this->data['order'] = $this->url->link('sale/order/update', 'token=' . $this->session->data['token'] . '&order_id=' . $return_info['order_id'], 'SSL');
+				$this->data['order'] = $this->url->link('sale/order/view', 'token=' . $this->session->data['token'] . '&order_id=' . $return_info['order_id'], 'SSL');
 			} else {
 				$this->data['order'] = '';
 			}

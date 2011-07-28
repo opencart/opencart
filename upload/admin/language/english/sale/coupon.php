@@ -6,6 +6,7 @@ $_['heading_title']       = 'Coupon';
 $_['text_success']        = 'Success: You have modified coupons!';
 $_['text_percent']        = 'Percentage';
 $_['text_amount']         = 'Fixed Amount';
+$_['text_sub_category']   = 'Include products in subcategories';
 
 // Column
 $_['column_name']         = 'Coupon Name';
@@ -28,6 +29,7 @@ $_['entry_discount']      = 'Discount:';
 $_['entry_logged']        = 'Customer Login:<br /><span class="help">Customer must be logged in to use the coupon.</span>';
 $_['entry_shipping']      = 'Free Shipping:';
 $_['entry_total']         = 'Total Amount:<br /><span class="help">The total amount that must reached before the coupon is valid.</span>';
+$_['entry_category']      = 'Category:<br /><span class="help">Choose all products under selected category.</span>';
 $_['entry_product']       = 'Products:<br /><span class="help">Choose specific products the coupon will apply to. Select no products to apply coupon to entire cart.</span>';
 $_['entry_date_start']    = 'Date Start:';
 $_['entry_date_end']      = 'Date End:';

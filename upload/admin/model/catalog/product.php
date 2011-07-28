@@ -337,9 +337,32 @@ class ModelCatalogProduct extends Model {
 	
 	public function getProducts($data = array()) {
 		if ($data) {
-			$sql = "SELECT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'"; 
-		
-			if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
+			// For filting by categories
+			if (isset($data['filter_category_id']) && $data['filter_category_id']) {
+				if (isset($data['filter_sub_category']) && $data['filter_sub_category']) {
+					$implode_data = array();
+					
+					$implode_data[] = "category_id = '" . (int)$data['filter_category_id'] . "'";
+					
+					$this->load->model('catalog/category');
+					
+					$categories = $this->model_catalog_category->getCategories($data['filter_category_id']);
+					
+					foreach ($categories as $category) {
+						$implode_data[] = "category_id = '" . (int)$category['category_id'] . "'";
+					}
+					
+					$sql = "SELECT * FROM (SELECT product_id FROM " . DB_PREFIX . "product_to_category WHERE " . implode(' OR ', $implode_data) . ") p2c LEFT JOIN " . DB_PREFIX . "product p ON (p2c.product_id = p.product_id)";			
+				} else {
+					$sql = "SELECT * FROM (SELECT product_id FROM " . DB_PREFIX . "product_to_category WHERE category_id = '" . (int)$data['filter_category_id'] . "') p2c LEFT JOIN " . DB_PREFIX . "product p ON (p2c.product_id = p.product_id)";
+				}
+			} else {
+				$sql = "SELECT * FROM " . DB_PREFIX . "product p"; 
+			}
+			
+			$sql .= " LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'"; 
+			
+			if (isset($data['filter_name']) && $data['filter_name']) {
 				$sql .= " AND LCASE(pd.name) LIKE LCASE('" . $this->db->escape($data['filter_name']) . "%')";
 			}
 
@@ -358,7 +381,7 @@ class ModelCatalogProduct extends Model {
 			if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
 				$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
 			}
-
+			
 			$sort_data = array(
 				'pd.name',
 				'p.model',

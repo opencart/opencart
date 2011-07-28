@@ -282,6 +282,8 @@ class ControllerSaleCoupon extends Controller {
     	$this->data['text_no'] = $this->language->get('text_no');
     	$this->data['text_percent'] = $this->language->get('text_percent');
     	$this->data['text_amount'] = $this->language->get('text_amount');
+		$this->data['text_select'] = $this->language->get('text_select');
+		$this->data['text_sub_category'] = $this->language->get('text_sub_category');
 		
 		$this->data['entry_name'] = $this->language->get('entry_name');
     	$this->data['entry_description'] = $this->language->get('entry_description');
@@ -291,6 +293,7 @@ class ControllerSaleCoupon extends Controller {
 		$this->data['entry_shipping'] = $this->language->get('entry_shipping');
 		$this->data['entry_type'] = $this->language->get('entry_type');
 		$this->data['entry_total'] = $this->language->get('entry_total');
+		$this->data['entry_category'] = $this->language->get('entry_category');
 		$this->data['entry_product'] = $this->language->get('entry_product');
     	$this->data['entry_date_start'] = $this->language->get('entry_date_start');
     	$this->data['entry_date_end'] = $this->language->get('entry_date_end');
@@ -460,7 +463,11 @@ class ControllerSaleCoupon extends Controller {
 				);
 			}
 		}
-			
+
+		$this->load->model('catalog/category');
+				
+		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
+					
 		if (isset($this->request->post['date_start'])) {
        		$this->data['date_start'] = $this->request->post['date_start'];
 		} elseif (isset($coupon_info)) {

@@ -88,6 +88,17 @@
                 <?php } ?></td>
             </tr>
             <tr>
+              <td><?php echo $entry_category; ?></td>
+              <td><select name="filter_category_id">
+                  <option value=""><?php echo $text_select; ?></option>
+                  <?php foreach ($categories as $category) { ?>
+                  <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
+                  <?php } ?>
+                </select>
+                <input type="checkbox" name="filter_sub_category" value="1" id="sub_category" />
+                <label for="sub_category"><?php echo $text_sub_category; ?></label></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_product; ?></td>
               <td><input type="text" name="product" value="" /></td>
             </tr>
@@ -143,6 +154,39 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+$('select[name=\'filter_category_id\'], input[name=\'filter_sub_category\']').bind('change', function() {
+	$('#coupon-product div').remove();
+	
+	var filter_category_id = $('select[name=\'filter_category_id\']').attr('value');
+
+	url = 'filter_category_id=' + filter_category_id;
+		
+	var filter_sub_category = $('input[name=\'filter_sub_category\']:checked').attr('value');
+
+	if (filter_sub_category != undefined) {
+		url += '&filter_sub_category=' + filter_sub_category;
+	}
+	
+	if (filter_category_id) {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>',
+			type: 'POST',
+			dataType: 'json',
+			data: url,
+			success: function(json) {
+				for (i = 0; i < json.length; i++) {
+					$('#coupon-product' + json[i]['product_id']).remove();
+					
+					$('#coupon-product').append('<div id="coupon-product' + json[i]['product_id'] + '">' + json[i]['name'] + '<img src="view/image/delete.png" /><input type="hidden" name="coupon_product[]" value="' + json[i]['product_id'] + '" /></div>');
+				}
+				
+				$('#coupon-product div:odd').attr('class', 'odd');
+				$('#coupon-product div:even').attr('class', 'even');			
+			}
+		});
+	}
+});
+
 $('input[name=\'product\']').autocomplete({
 	delay: 0,
 	source: function(request, response) {

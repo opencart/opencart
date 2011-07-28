@@ -1202,13 +1202,33 @@ class ControllerCatalogProduct extends Controller {
 	public function autocomplete() {
 		$json = array();
 		
-		if (isset($this->request->post['filter_name'])) {
+		if (isset($this->request->post['filter_name']) || isset($this->request->post['filter_category_id'])) {
 			$this->load->model('catalog/product');
 			
+			if (isset($this->request->post['filter_name'])) {
+				$filter_name = $this->request->post['filter_name'];
+			} else {
+				$filter_name = '';
+			}
+			
+			if (isset($this->request->post['filter_category_id'])) {
+				$filter_category_id = $this->request->post['filter_category_id'];
+			} else {
+				$filter_category_id = '';
+			}
+			
+			if (isset($this->request->post['filter_sub_category'])) {
+				$filter_sub_category = $this->request->post['filter_sub_category'];
+			} else {
+				$filter_sub_category = '';
+			}
+						
 			$data = array(
-				'filter_name' => $this->request->post['filter_name'],
-				'start'       => 0,
-				'limit'       => 20
+				'filter_name'         => $filter_name,
+				'filter_category_id'  => $filter_category_id,
+				'filter_sub_category' => $filter_sub_category,
+				'start'               => 0,
+				'limit'               => 20
 			);
 			
 			$results = $this->model_catalog_product->getProducts($data);

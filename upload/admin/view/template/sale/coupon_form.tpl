@@ -89,14 +89,15 @@
             </tr>
             <tr>
               <td><?php echo $entry_category; ?></td>
-              <td><select name="filter_category_id">
-                  <option value=""><?php echo $text_select; ?></option>
+              <td><div class="scrollbox">
+                  <?php $class = 'odd'; ?>
                   <?php foreach ($categories as $category) { ?>
-                  <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
+                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                  <div class="<?php echo $class; ?>">
+                    <input type="checkbox" name="category[]" value="<?php echo $category['category_id']; ?>" />
+                    <?php echo $category['name']; ?> </div>
                   <?php } ?>
-                </select>
-                <input type="checkbox" name="filter_sub_category" value="1" id="sub_category" />
-                <label for="sub_category"><?php echo $text_sub_category; ?></label></td>
+                </div></td>
             </tr>
             <tr>
               <td><?php echo $entry_product; ?></td>
@@ -154,37 +155,29 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'filter_category_id\'], input[name=\'filter_sub_category\']').bind('change', function() {
-	$('#coupon-product div').remove();
+$('input[name=\'category[]\']').bind('change', function() {
+	var filter_category_id = this;
 	
-	var filter_category_id = $('select[name=\'filter_category_id\']').attr('value');
-
-	url = 'filter_category_id=' + filter_category_id;
-		
-	var filter_sub_category = $('input[name=\'filter_sub_category\']:checked').attr('value');
-
-	if (filter_sub_category != undefined) {
-		url += '&filter_sub_category=' + filter_sub_category;
-	}
-	
-	if (filter_category_id) {
-		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>',
-			type: 'POST',
-			dataType: 'json',
-			data: url,
-			success: function(json) {
-				for (i = 0; i < json.length; i++) {
+	$.ajax({
+		url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>',
+		type: 'POST',
+		dataType: 'json',
+		data: 'filter_category_id=' +  filter_category_id.value,
+		success: function(json) {
+			for (i = 0; i < json.length; i++) {
+				if ($(filter_category_id).attr('checked') == 'checked') {
 					$('#coupon-product' + json[i]['product_id']).remove();
 					
 					$('#coupon-product').append('<div id="coupon-product' + json[i]['product_id'] + '">' + json[i]['name'] + '<img src="view/image/delete.png" /><input type="hidden" name="coupon_product[]" value="' + json[i]['product_id'] + '" /></div>');
-				}
-				
-				$('#coupon-product div:odd').attr('class', 'odd');
-				$('#coupon-product div:even').attr('class', 'even');			
+				} else {
+					$('#coupon-product' + json[i]['product_id']).remove();
+				}			
 			}
-		});
-	}
+			
+			$('#coupon-product div:odd').attr('class', 'odd');
+			$('#coupon-product div:even').attr('class', 'even');			
+		}
+	});
 });
 
 $('input[name=\'product\']').autocomplete({

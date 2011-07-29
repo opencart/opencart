@@ -282,9 +282,7 @@ class ControllerSaleCoupon extends Controller {
     	$this->data['text_no'] = $this->language->get('text_no');
     	$this->data['text_percent'] = $this->language->get('text_percent');
     	$this->data['text_amount'] = $this->language->get('text_amount');
-		$this->data['text_select'] = $this->language->get('text_select');
-		$this->data['text_sub_category'] = $this->language->get('text_sub_category');
-		
+				
 		$this->data['entry_name'] = $this->language->get('entry_name');
     	$this->data['entry_description'] = $this->language->get('entry_description');
     	$this->data['entry_code'] = $this->language->get('entry_code');

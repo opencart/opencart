@@ -6,7 +6,6 @@ $_['heading_title']       = 'Coupon';
 $_['text_success']        = 'Success: You have modified coupons!';
 $_['text_percent']        = 'Percentage';
 $_['text_amount']         = 'Fixed Amount';
-$_['text_sub_category']   = 'Include products in subcategories';
 
 // Column
 $_['column_name']         = 'Coupon Name';

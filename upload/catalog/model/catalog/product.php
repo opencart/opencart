@@ -421,16 +421,10 @@ class ModelCatalogProduct extends Model {
 				$sql .= " AND (LCASE(pd.name) LIKE LCASE('%" . $this->db->escape($data['filter_name']) . "%') OR p.product_id IN (SELECT pt.product_id FROM " . DB_PREFIX . "product_tag pt WHERE pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND LCASE(pt.tag) LIKE LCASE('%" . $this->db->escape($data['filter_name']) . "%')))";
 			}
 		}
-		
-		if (isset($data['filter_tag']) && $data['filter_tag']) {
-			$sql .= " AND p.product_id IN (SELECT pt.product_id FROM " . DB_PREFIX . "product_tag pt WHERE pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND LCASE(pt.tag) LIKE LCASE('%" . $this->db->escape($data['filter_tag']) . "%'))";
-		}
 									
 		if (isset($data['filter_category_id']) && $data['filter_category_id']) {
 			if (isset($data['filter_sub_category']) && $data['filter_sub_category']) {
 				$implode_data = array();
-				
-				$implode_data[] = $data['filter_category_id'];
 				
 				$this->load->model('catalog/category');
 				
@@ -453,7 +447,7 @@ class ModelCatalogProduct extends Model {
 		if (isset($data['filter_manufacturer_id'])) {
 			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";
 		}
-				
+		
 		$query = $this->db->query($sql);
 		
 		return $query->row['total'];

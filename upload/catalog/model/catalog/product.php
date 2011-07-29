@@ -426,10 +426,12 @@ class ModelCatalogProduct extends Model {
 			if (isset($data['filter_sub_category']) && $data['filter_sub_category']) {
 				$implode_data = array();
 				
+				$implode_data[] = "p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
+				
 				$this->load->model('catalog/category');
 				
 				$categories = $this->model_catalog_category->getCategoriesByParentId($data['filter_category_id']);
-									
+					
 				foreach ($categories as $category_id) {
 					$implode_data[] = "p2c.category_id = '" . (int)$category_id . "'";
 				}

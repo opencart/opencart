@@ -384,6 +384,8 @@ class ModelCatalogProduct extends Model {
 					$sql .= " AND p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
 				}
 			}
+			
+			$sql .= " GROUP BY p.product_id";
 						
 			$sort_data = array(
 				'pd.name',
@@ -642,8 +644,14 @@ class ModelCatalogProduct extends Model {
 	}
 		
 	public function getTotalProducts($data = array()) {
-		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
-		
+		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id)";
+
+		if (isset($data['filter_category_id']) && $data['filter_category_id']) {
+			$sql .= " LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id)";			
+		}
+		 
+		$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+		 			
 		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
 			$sql .= " AND LCASE(pd.name) LIKE LCASE('%" . $this->db->escape($data['filter_name']) . "%')";
 		}
@@ -664,6 +672,26 @@ class ModelCatalogProduct extends Model {
 			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
 		}
 
+		if (isset($data['filter_category_id']) && $data['filter_category_id']) {
+			if (isset($data['filter_sub_category']) && $data['filter_sub_category']) {
+				$implode_data = array();
+				
+				$implode_data[] = "p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
+				
+				$this->load->model('catalog/category');
+				
+				$categories = $this->model_catalog_category->getCategories($data['filter_category_id']);
+				
+				foreach ($categories as $category) {
+					$implode_data[] = "p2c.category_id = '" . (int)$category['category_id'] . "'";
+				}
+				
+				$sql .= " AND (" . implode(' OR ', $implode_data) . ")";			
+			} else {
+				$sql .= " AND p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
+			}
+		}
+				
 		$query = $this->db->query($sql);
 		
 		return $query->row['total'];

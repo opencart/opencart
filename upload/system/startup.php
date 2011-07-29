@@ -19,7 +19,7 @@ if (ini_get('register_globals')) {
 
 	foreach ($globals as $global) {
 		foreach(array_keys($global) as $key) {
-			unset($$key);
+			unset(${$key}); 
 		}
 	}
 }

@@ -16,7 +16,7 @@ class ControllerAffiliatePassword extends Controller {
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('affiliate/affiliate');
 			
-			$this->model_affiliate_affiliate->editPassword($this->customer->getEmail(), $this->request->post['password']);
+			$this->model_affiliate_affiliate->editPassword($this->affiliate->getEmail(), $this->request->post['password']);
  
       		$this->session->data['success'] = $this->language->get('text_success');
 	  
@@ -100,7 +100,7 @@ class ControllerAffiliatePassword extends Controller {
   	}
   
   	private function validate() {
-    	if ((strlen(utf8_decode($this->request->post['password'])) < 4) || (strlen(utf8_decode($this->request->post['password'])) > 20)) {
+    	if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
       		$this->error['password'] = $this->language->get('error_password');
     	}
 

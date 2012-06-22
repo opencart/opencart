@@ -69,14 +69,14 @@ class ModelLocalisationWeightClass extends Model {
 	
 			return $query->rows;			
 		} else {
-			$weight_class_data = $this->cache->get('weight_class.' . $this->config->get('config_language_id'));
+			$weight_class_data = $this->cache->get('weight_class.' . (int)$this->config->get('config_language_id'));
 
 			if (!$weight_class_data) {
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "weight_class wc LEFT JOIN " . DB_PREFIX . "weight_class_description wcd ON (wc.weight_class_id = wcd.weight_class_id) WHERE wcd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 	
 				$weight_class_data = $query->rows;
 			
-				$this->cache->set('weight_class.' . $this->config->get('config_language_id'), $weight_class_data);
+				$this->cache->set('weight_class.' . (int)$this->config->get('config_language_id'), $weight_class_data);
 			}
 			
 			return $weight_class_data;

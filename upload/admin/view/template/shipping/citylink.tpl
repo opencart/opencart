@@ -11,7 +11,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/shipping.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -21,17 +21,17 @@
             <td><textarea name="citylink_rate" cols="40" rows="5"><?php echo $citylink_rate; ?></textarea></td>
           </tr>
           <tr>
-            <td><?php echo $entry_tax; ?></td>
+            <td><?php echo $entry_tax_class; ?></td>
             <td><select name="citylink_tax_class_id">
-                <option value="0"><?php echo $text_none; ?></option>
-                <?php foreach ($tax_classes as $tax_class) { ?>
-                <?php if ($tax_class['tax_class_id'] == $citylink_tax_class_id) { ?>
-                <option value="<?php echo $tax_class['tax_class_id']; ?>" selected="selected"><?php echo $tax_class['title']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $tax_class['tax_class_id']; ?>"><?php echo $tax_class['title']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select></td>
+                  <option value="0"><?php echo $text_none; ?></option>
+                  <?php foreach ($tax_classes as $tax_class) { ?>
+                  <?php if ($tax_class['tax_class_id'] == $citylink_tax_class_id) { ?>
+                  <option value="<?php echo $tax_class['tax_class_id']; ?>" selected="selected"><?php echo $tax_class['title']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $tax_class['tax_class_id']; ?>"><?php echo $tax_class['title']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select></td>
           </tr>
           <tr>
             <td><?php echo $entry_geo_zone; ?></td>

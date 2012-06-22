@@ -64,14 +64,14 @@ class ModelLocalisationReturnStatus extends Model {
 			
 			return $query->rows;
 		} else {
-			$return_status_data = $this->cache->get('return_status.' . $this->config->get('config_language_id'));
+			$return_status_data = $this->cache->get('return_status.' . (int)$this->config->get('config_language_id'));
 		
 			if (!$return_status_data) {
 				$query = $this->db->query("SELECT return_status_id, name FROM " . DB_PREFIX . "return_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY name");
 	
 				$return_status_data = $query->rows;
 			
-				$this->cache->set('return_status.' . $this->config->get('config_language_id'), $return_status_data);
+				$this->cache->set('return_status.' . (int)$this->config->get('config_language_id'), $return_status_data);
 			}	
 	
 			return $return_status_data;				

@@ -41,8 +41,6 @@ class ControllerPaymentPPPro extends Controller {
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
-		$this->data['tab_general'] = $this->language->get('tab_general');
-
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -102,7 +100,7 @@ class ControllerPaymentPPPro extends Controller {
 		} else {
 			$this->data['pp_pro_password'] = $this->config->get('pp_pro_password');
 		}
-		
+				
 		if (isset($this->request->post['pp_pro_signature'])) {
 			$this->data['pp_pro_signature'] = $this->request->post['pp_pro_signature'];
 		} else {
@@ -162,7 +160,7 @@ class ControllerPaymentPPPro extends Controller {
 		$this->template = 'payment/pp_pro.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

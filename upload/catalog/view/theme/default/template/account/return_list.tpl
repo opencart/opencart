@@ -14,9 +14,8 @@
     <div class="return-content">
       <div><b><?php echo $text_date_added; ?></b> <?php echo $return['date_added']; ?><br />
         <b><?php echo $text_order_id; ?></b> <?php echo $return['order_id']; ?></div>
-      <div><b><?php echo $text_customer; ?></b> <?php echo $return['name']; ?><br />
-        <b><?php echo $text_products; ?></b> <?php echo $return['products']; ?></div>
-      <div class="return-info"><a href="<?php echo $return['href']; ?>" class="button"><span><?php echo $button_view; ?></span></a></div>
+      <div><b><?php echo $text_customer; ?></b> <?php echo $return['name']; ?></div>
+      <div class="return-info"><a href="<?php echo $return['href']; ?>"><img src="catalog/view/theme/default/image/info.png" alt="<?php echo $button_view; ?>" title="<?php echo $button_view; ?>" /></a></div>
     </div>
   </div>
   <?php } ?>
@@ -25,7 +24,7 @@
   <div class="content"><?php echo $text_empty; ?></div>
   <?php } ?>
   <div class="buttons">
-    <div class="right"><a href="<?php echo $continue; ?>" class="button"><span><?php echo $button_continue; ?></span></a></div>
+    <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
   </div>
   <?php echo $content_bottom; ?></div>
 <?php echo $footer; ?>

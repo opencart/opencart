@@ -90,7 +90,7 @@ class ControllerModuleStore extends Controller {
 		$this->template = 'module/store.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

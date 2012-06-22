@@ -14,7 +14,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/customer.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('form').attr('action', '<?php echo $approve; ?>'); $('form').submit();" class="button"><span><?php echo $button_approve; ?></span></a><a onclick="location = '<?php echo $insert; ?>'" class="button"><span><?php echo $button_insert; ?></span></a><a onclick="$('form').attr('action', '<?php echo $delete; ?>'); $('form').submit();" class="button"><span><?php echo $button_delete; ?></span></a></div>
+      <div class="buttons"><a onclick="$('form').attr('action', '<?php echo $approve; ?>'); $('form').submit();" class="button"><?php echo $button_approve; ?></a><a onclick="location = '<?php echo $insert; ?>'" class="button"><?php echo $button_insert; ?></a><a onclick="$('form').attr('action', '<?php echo $delete; ?>'); $('form').submit();" class="button"><?php echo $button_delete; ?></a></div>
     </div>
     <div class="content">
       <form action="" method="post" enctype="multipart/form-data" id="form">
@@ -57,6 +57,7 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
                 <?php } ?></td>
+              <td class="left"><?php echo $column_login; ?></td>
               <td class="right"><?php echo $column_action; ?></td>
             </tr>
           </thead>
@@ -103,7 +104,8 @@
                 </select></td>
               <td><input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" /></td>
               <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" id="date" /></td>
-              <td align="right"><a onclick="filter();" class="button"><span><?php echo $button_filter; ?></span></a></td>
+              <td></td>
+              <td align="right"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
             </tr>
             <?php if ($customers) { ?>
             <?php foreach ($customers as $customer) { ?>
@@ -120,15 +122,21 @@
               <td class="left"><?php echo $customer['approved']; ?></td>
               <td class="left"><?php echo $customer['ip']; ?></td>
               <td class="left"><?php echo $customer['date_added']; ?></td>
-              <td class="right">[ <a href="<?php echo $customer['login']; ?>" target="_blank"><?php echo $text_login; ?></a> ]
-                <?php foreach ($customer['action'] as $action) { ?>
+              <td class="left"><select onchange="((this.value !== '') ? window.open('index.php?route=sale/customer/login&token=<?php echo $token; ?>&customer_id=<?php echo $customer['customer_id']; ?>&store_id=' + this.value) : null); this.value = '';">
+                  <option value=""><?php echo $text_select; ?></option>
+                  <option value="0"><?php echo $text_default; ?></option>
+                  <?php foreach ($stores as $store) { ?>
+                  <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+                  <?php } ?>
+                </select></td>
+              <td class="right"><?php foreach ($customer['action'] as $action) { ?>
                 [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
                 <?php } ?></td>
             </tr>
             <?php } ?>
             <?php } else { ?>
             <tr>
-              <td class="center" colspan="9"><?php echo $text_no_results; ?></td>
+              <td class="center" colspan="10"><?php echo $text_no_results; ?></td>
             </tr>
             <?php } ?>
           </tbody>

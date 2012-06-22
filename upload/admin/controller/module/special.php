@@ -91,7 +91,7 @@ class ControllerModulespecial extends Controller {
 		$this->template = 'module/special.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

@@ -258,7 +258,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		$this->template = 'localisation/weight_class_list.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -273,8 +273,6 @@ class ControllerLocalisationWeightClass extends Controller {
 
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-
-		$this->data['tab_general'] = $this->language->get('tab_general');
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -348,7 +346,7 @@ class ControllerLocalisationWeightClass extends Controller {
 
 		if (isset($this->request->post['value'])) {
 			$this->data['value'] = $this->request->post['value'];
-		} elseif (isset($weight_class_info)) {
+		} elseif (!empty($weight_class_info)) {
 			$this->data['value'] = $weight_class_info['value'];
 		} else {
 			$this->data['value'] = '';
@@ -357,7 +355,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		$this->template = 'localisation/weight_class_form.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -369,11 +367,11 @@ class ControllerLocalisationWeightClass extends Controller {
 		}
 
 		foreach ($this->request->post['weight_class_description'] as $language_id => $value) {
-			if ((strlen(utf8_decode($value['title'])) < 3) || (strlen(utf8_decode($value['title'])) > 32)) {
+			if ((utf8_strlen($value['title']) < 3) || (utf8_strlen($value['title']) > 32)) {
 				$this->error['title'][$language_id] = $this->language->get('error_title');
 			}
 
-			if ((!$value['unit']) || (strlen(utf8_decode($value['unit'])) > 4)) {
+			if (!$value['unit'] || (utf8_strlen($value['unit']) > 4)) {
 				$this->error['unit'][$language_id] = $this->language->get('error_unit');
 			}
 		}

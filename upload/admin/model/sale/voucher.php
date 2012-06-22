@@ -1,11 +1,11 @@
 <?php
 class ModelSaleVoucher extends Model {
 	public function addVoucher($data) {
-      	$this->db->query("INSERT INTO " . DB_PREFIX . "voucher SET code = '" . $this->db->escape($data['code']) . "', from_name = '" . $this->db->escape($data['from_name']) . "', from_email = '" . $this->db->escape($data['from_email']) . "', to_name = '" . $this->db->escape($data['to_name']) . "', to_email = '" . $this->db->escape($data['to_email']) . "', message = '" . $this->db->escape($data['message']) . "', amount = '" . (float)$data['amount'] . "', voucher_theme_id = '" . (int)$data['voucher_theme_id'] . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
+      	$this->db->query("INSERT INTO " . DB_PREFIX . "voucher SET code = '" . $this->db->escape($data['code']) . "', from_name = '" . $this->db->escape($data['from_name']) . "', from_email = '" . $this->db->escape($data['from_email']) . "', to_name = '" . $this->db->escape($data['to_name']) . "', to_email = '" . $this->db->escape($data['to_email']) . "', voucher_theme_id = '" . (int)$data['voucher_theme_id'] . "', message = '" . $this->db->escape($data['message']) . "', amount = '" . (float)$data['amount'] . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
 	}
 	
 	public function editVoucher($voucher_id, $data) {
-      	$this->db->query("UPDATE " . DB_PREFIX . "voucher SET code = '" . $this->db->escape($data['code']) . "', from_name = '" . $this->db->escape($data['from_name']) . "', from_email = '" . $this->db->escape($data['from_email']) . "', to_name = '" . $this->db->escape($data['to_name']) . "', to_email = '" . $this->db->escape($data['to_email']) . "', message = '" . $this->db->escape($data['message']) . "', amount = '" . (float)$data['amount'] . "', voucher_theme_id = '" . (int)$data['voucher_theme_id'] . "', status = '" . (int)$data['status'] . "' WHERE voucher_id = '" . (int)$voucher_id . "'");
+      	$this->db->query("UPDATE " . DB_PREFIX . "voucher SET code = '" . $this->db->escape($data['code']) . "', from_name = '" . $this->db->escape($data['from_name']) . "', from_email = '" . $this->db->escape($data['from_email']) . "', to_name = '" . $this->db->escape($data['to_name']) . "', to_email = '" . $this->db->escape($data['to_email']) . "', voucher_theme_id = '" . (int)$data['voucher_theme_id'] . "', message = '" . $this->db->escape($data['message']) . "', amount = '" . (float)$data['amount'] . "', status = '" . (int)$data['status'] . "' WHERE voucher_id = '" . (int)$voucher_id . "'");
 	}
 	
 	public function deleteVoucher($voucher_id) {
@@ -18,9 +18,15 @@ class ModelSaleVoucher extends Model {
 		
 		return $query->row;
 	}
-	
+
+	public function getVoucherByCode($code) {
+      	$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "voucher WHERE code = '" . $this->db->escape($code) . "'");
+		
+		return $query->row;
+	}
+		
 	public function getVouchers($data = array()) {
-		$sql = "SELECT v.voucher_id, v.code, v.from_name, v.from_email, v.to_name, v.to_email, v.amount, (SELECT vtd.name FROM " . DB_PREFIX . "voucher_theme_description vtd WHERE vtd.voucher_theme_id = v.voucher_theme_id AND vtd.language_id = '" . (int)$this->config->get('config_language_id') . "' ) AS theme, v.status, v.date_added FROM " . DB_PREFIX . "voucher v";
+		$sql = "SELECT v.voucher_id, v.code, v.from_name, v.from_email, v.to_name, v.to_email, (SELECT vtd.name FROM " . DB_PREFIX . "voucher_theme_description vtd WHERE vtd.voucher_theme_id = v.voucher_theme_id AND vtd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS theme, v.amount, v.status, v.date_added FROM " . DB_PREFIX . "voucher v";
 		
 		$sort_data = array(
 			'v.code',
@@ -28,8 +34,8 @@ class ModelSaleVoucher extends Model {
 			'v.from_email',
 			'v.to_name',
 			'v.to_email',
-			'v.amount',
 			'v.theme',
+			'v.amount',
 			'v.status',
 			'v.date_added'
 		);	
@@ -62,13 +68,7 @@ class ModelSaleVoucher extends Model {
 		
 		return $query->rows;
 	}
-	
-	public function getVouchersByOrderId($order_id) {
-		$query = $this->db->query("SELECT v.voucher_id, v.code, v.from_name, v.from_email, v.to_name, v.to_email, v.amount, vtd.name AS theme, v.status, v.date_added FROM " . DB_PREFIX . "voucher v LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (v.voucher_theme_id = vtd.voucher_theme_id) WHERE v.order_id = '" . (int)$order_id . "' AND vtd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
-				
-		return $query->rows;
-	}
-	
+		
 	public function sendVoucher($voucher_id) {
 		$voucher_info = $this->getVoucher($voucher_id);
 		
@@ -107,7 +107,7 @@ class ModelSaleVoucher extends Model {
 				$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
 				
 				if ($voucher_info && file_exists(DIR_IMAGE . $voucher_theme_info['image'])) {
-					$template->data['image'] = 'cid:' . md5(basename($voucher_theme_info['image']));
+					$template->data['image'] = HTTP_IMAGE . $voucher_theme_info['image'];
 				} else {
 					$template->data['image'] = '';
 				}
@@ -127,13 +127,8 @@ class ModelSaleVoucher extends Model {
 				$mail->setTo($voucher_info['to_email']);
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($order_info['store_name']);
-				$mail->setSubject(sprintf($language->get('text_subject'), $voucher_info['from_name']));
-				$mail->setHtml($template->fetch('mail/voucher.tpl'));
-				
-				if ($voucher_info && file_exists(DIR_IMAGE . $voucher_theme_info['image'])) {
-					$mail->addAttachment(DIR_IMAGE . $voucher_theme_info['image'], md5(basename($voucher_theme_info['image'])));
-				}
-				
+				$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $voucher_info['from_name']), ENT_QUOTES, 'UTF-8'));
+				$mail->setHtml($template->fetch('mail/voucher.tpl'));				
 				$mail->send();
 			
 			// If voucher does not belong to an order				
@@ -155,7 +150,7 @@ class ModelSaleVoucher extends Model {
 				$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
 				
 				if ($voucher_info && file_exists(DIR_IMAGE . $voucher_theme_info['image'])) {
-					$template->data['image'] = 'cid:' . md5(basename($voucher_theme_info['image']));
+					$template->data['image'] = HTTP_IMAGE . $voucher_theme_info['image'];
 				} else {
 					$template->data['image'] = '';
 				}
@@ -175,13 +170,8 @@ class ModelSaleVoucher extends Model {
 				$mail->setTo($voucher_info['to_email']);
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($this->config->get('config_name'));
-				$mail->setSubject(sprintf($this->language->get('text_subject'), $voucher_info['from_name']));
+				$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $voucher_info['from_name']), ENT_QUOTES, 'UTF-8'));
 				$mail->setHtml($template->fetch('mail/voucher.tpl'));
-				
-				if ($voucher_info && file_exists(DIR_IMAGE . $voucher_theme_info['image'])) {
-					$mail->addAttachment(DIR_IMAGE . $voucher_theme_info['image'], md5(basename($voucher_theme_info['image'])));
-				}
-				
 				$mail->send();				
 			}
 		}
@@ -200,6 +190,14 @@ class ModelSaleVoucher extends Model {
 	}	
 	
 	public function getVoucherHistories($voucher_id, $start = 0, $limit = 10) {
+		if ($start < 0) {
+			$start = 0;
+		}
+		
+		if ($limit < 1) {
+			$limit = 10;
+		}	
+				
 		$query = $this->db->query("SELECT vh.order_id, CONCAT(o.firstname, ' ', o.lastname) AS customer, vh.amount, vh.date_added FROM " . DB_PREFIX . "voucher_history vh LEFT JOIN `" . DB_PREFIX . "order` o ON (vh.order_id = o.order_id) WHERE vh.voucher_id = '" . (int)$voucher_id . "' ORDER BY vh.date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;

@@ -1,5 +1,5 @@
 <h2><?php echo $text_credit_card; ?></h2>
-<div id="payment">
+<div class="content" id="payment">
   <table class="form">
     <tr>
       <td><?php echo $entry_cc_owner; ?></td>
@@ -58,20 +58,25 @@
   </table>
 </div>
 <div class="buttons">
-  <div class="right"><a id="button-confirm" class="button"><span><?php echo $button_confirm; ?></span></a></div> 
+  <div class="right">
+    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="button" />
+  </div>
 </div>
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
 	$.ajax({
-		type: 'POST',
 		url: 'index.php?route=payment/sagepay_direct/send',
+		type: 'post',
 		data: $('#payment :input'),
 		dataType: 'json',		
 		beforeSend: function() {
 			$('#button-confirm').attr('disabled', true);
-			
 			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
+		complete: function() {
+			$('#button-confirm').attr('disabled', false);
+			$('.attention').remove();
+		},				
 		success: function(json) {
 			if (json['ACSURL']) {
 				$('#3dauth').remove();
@@ -89,11 +94,7 @@ $('#button-confirm').bind('click', function() {
 			
 			if (json['error']) {
 				alert(json['error']);
-				
-				$('#button-confirm').attr('disabled', false);
 			}
-			
-			$('.attention').remove();
 			
 			if (json['success']) {
 				location = json['success'];

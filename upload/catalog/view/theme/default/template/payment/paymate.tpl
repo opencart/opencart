@@ -1,8 +1,7 @@
-<form action="<?php echo $action; ?>" method="get" id="payment">
+<form action="<?php echo $action; ?>" method="get">
   <input type="hidden" name="mid" value="<?php echo $mid; ?>" />
   <input type="hidden" name="amt" value="<?php echo $amt; ?>" />
   <input type="hidden" name="amt_editable" value="N" />
-  <input type="hidden" name="popup" value="false" />
   <input type="hidden" name="currency" value="<?php echo $currency; ?>" />
   <input type="hidden" name="ref" value="<?php echo $ref; ?>" />
   <input type="hidden" name="pmt_sender_email" value="<?php echo $pmt_sender_email; ?>" />
@@ -16,7 +15,8 @@
   <input type="hidden" name="regindi_state" value="<?php echo $regindi_state; ?>" />
   <input type="hidden" name="regindi_pcode" value="<?php echo $regindi_pcode; ?>" />
   <input type="hidden" name="return" value="<?php echo $return; ?>" />
+  <input type="hidden" name="popup" value="false" />
   <div class="buttons">
-    <div class="right"><a onclick="$('#payment').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></div>
+    <div class="right"><input type="submit" value="<?php echo $button_confirm; ?>" class="button" /></div>
   </div>
 </form>

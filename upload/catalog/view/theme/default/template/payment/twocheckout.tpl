@@ -1,4 +1,4 @@
-<form action="<?php echo $action; ?>" method="post" id="payment">
+<form action="<?php echo $action; ?>" method="post">
   <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
   <input type="hidden" name="total" value="<?php echo $total; ?>" />
   <input type="hidden" name="cart_order_id" value="<?php echo $cart_order_id; ?>" />
@@ -30,6 +30,8 @@
   <input type="hidden" name="lang" value="<?php echo $lang; ?>" />
   <input type="hidden" name="return_url" value="<?php echo $return_url; ?>" />
   <div class="buttons">
-    <div class="right"><a onclick="$('#payment').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></div>
+    <div class="right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="button" />
+    </div>
   </div>
 </form>

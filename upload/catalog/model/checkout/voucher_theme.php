@@ -32,14 +32,14 @@ class ModelCheckoutVoucherTheme extends Model {
 			
 			return $query->rows;
 		} else {
-			$voucher_theme_data = $this->cache->get('voucher_theme.' . $this->config->get('config_language_id'));
+			$voucher_theme_data = $this->cache->get('voucher_theme.' . (int)$this->config->get('config_language_id'));
 		
 			if (!$voucher_theme_data) {
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_theme vt LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) WHERE vtd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY vtd.name");
 	
 				$voucher_theme_data = $query->rows;
 			
-				$this->cache->set('voucher_theme.' . $this->config->get('config_language_id'), $voucher_theme_data);
+				$this->cache->set('voucher_theme.' . (int)$this->config->get('config_language_id'), $voucher_theme_data);
 			}	
 	
 			return $voucher_theme_data;				

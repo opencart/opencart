@@ -71,7 +71,7 @@ class ControllerFeedGoogleSitemap extends Controller {
 		$this->template = 'feed/google_sitemap.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

@@ -129,7 +129,7 @@ class ControllerReportAffiliateCommission extends Controller {
 		$this->template = 'report/affiliate_commission.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

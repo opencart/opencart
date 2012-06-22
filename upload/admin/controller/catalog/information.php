@@ -255,7 +255,7 @@ class ControllerCatalogInformation extends Controller {
 		$this->template = 'catalog/information_list.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -272,6 +272,7 @@ class ControllerCatalogInformation extends Controller {
 		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
+		$this->data['entry_bottom'] = $this->language->get('entry_bottom');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
@@ -282,8 +283,6 @@ class ControllerCatalogInformation extends Controller {
 		$this->data['tab_general'] = $this->language->get('tab_general');
     	$this->data['tab_data'] = $this->language->get('tab_data');
 		$this->data['tab_design'] = $this->language->get('tab_design');
-		
-		$this->data['token'] = $this->session->data['token'];
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -343,6 +342,8 @@ class ControllerCatalogInformation extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);
 		}
 		
+		$this->data['token'] = $this->session->data['token'];
+		
 		$this->load->model('localisation/language');
 		
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();
@@ -355,21 +356,13 @@ class ControllerCatalogInformation extends Controller {
 			$this->data['information_description'] = array();
 		}
 
-		if (isset($this->request->post['status'])) {
-			$this->data['status'] = $this->request->post['status'];
-		} elseif (isset($information_info)) {
-			$this->data['status'] = $information_info['status'];
-		} else {
-			$this->data['status'] = 1;
-		}
-		
 		$this->load->model('setting/store');
 		
 		$this->data['stores'] = $this->model_setting_store->getStores();
 		
 		if (isset($this->request->post['information_store'])) {
 			$this->data['information_store'] = $this->request->post['information_store'];
-		} elseif (isset($information_info)) {
+		} elseif (isset($this->request->get['information_id'])) {
 			$this->data['information_store'] = $this->model_catalog_information->getInformationStores($this->request->get['information_id']);
 		} else {
 			$this->data['information_store'] = array(0);
@@ -377,15 +370,31 @@ class ControllerCatalogInformation extends Controller {
 		
 		if (isset($this->request->post['keyword'])) {
 			$this->data['keyword'] = $this->request->post['keyword'];
-		} elseif (isset($information_info)) {
+		} elseif (!empty($information_info)) {
 			$this->data['keyword'] = $information_info['keyword'];
 		} else {
 			$this->data['keyword'] = '';
 		}
 		
+		if (isset($this->request->post['bottom'])) {
+			$this->data['bottom'] = $this->request->post['bottom'];
+		} elseif (!empty($information_info)) {
+			$this->data['bottom'] = $information_info['bottom'];
+		} else {
+			$this->data['bottom'] = 0;
+		}
+		
+		if (isset($this->request->post['status'])) {
+			$this->data['status'] = $this->request->post['status'];
+		} elseif (!empty($information_info)) {
+			$this->data['status'] = $information_info['status'];
+		} else {
+			$this->data['status'] = 1;
+		}
+				
 		if (isset($this->request->post['sort_order'])) {
 			$this->data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (isset($information_info)) {
+		} elseif (!empty($information_info)) {
 			$this->data['sort_order'] = $information_info['sort_order'];
 		} else {
 			$this->data['sort_order'] = '';
@@ -393,7 +402,7 @@ class ControllerCatalogInformation extends Controller {
 		
 		if (isset($this->request->post['information_layout'])) {
 			$this->data['information_layout'] = $this->request->post['information_layout'];
-		} elseif (isset($information_info)) {
+		} elseif (isset($this->request->get['information_id'])) {
 			$this->data['information_layout'] = $this->model_catalog_information->getInformationLayouts($this->request->get['information_id']);
 		} else {
 			$this->data['information_layout'] = array();
@@ -406,7 +415,7 @@ class ControllerCatalogInformation extends Controller {
 		$this->template = 'catalog/information_form.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -418,11 +427,11 @@ class ControllerCatalogInformation extends Controller {
 		}
 
 		foreach ($this->request->post['information_description'] as $language_id => $value) {
-			if ((strlen(utf8_decode($value['title'])) < 3) || (strlen(utf8_decode($value['title'])) > 64)) {
+			if ((utf8_strlen($value['title']) < 3) || (utf8_strlen($value['title']) > 64)) {
 				$this->error['title'][$language_id] = $this->language->get('error_title');
 			}
 		
-			if (strlen(utf8_decode($value['description'])) < 3) {
+			if (utf8_strlen($value['description']) < 3) {
 				$this->error['description'][$language_id] = $this->language->get('error_description');
 			}
 		}

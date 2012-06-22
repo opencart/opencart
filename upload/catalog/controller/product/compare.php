@@ -10,17 +10,19 @@ class ControllerProductCompare extends Controller {
 		if (!isset($this->session->data['compare'])) {
 			$this->session->data['compare'] = array();
 		}	
-		
-		if (isset($this->request->post['remove'])) {
-			$key = array_search($this->request->post['remove'], $this->session->data['compare']);
-			
+				
+		if (isset($this->request->get['remove'])) {
+			$key = array_search($this->request->get['remove'], $this->session->data['compare']);
+				
 			if ($key !== false) {
 				unset($this->session->data['compare'][$key]);
 			}
-			
+		
+			$this->session->data['success'] = $this->language->get('text_remove');
+		
 			$this->redirect($this->url->link('product/compare'));
 		}
-							
+		
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->data['breadcrumbs'] = array();
@@ -30,16 +32,10 @@ class ControllerProductCompare extends Controller {
 			'href'      => $this->url->link('common/home'),			
 			'separator' => false
 		);
-		
-		$url = '';
-		
-		if (isset($this->request->get['compare'])) {
-			$url .= 'compare=' . $this->request->get['compare'];
-		}	
-		
+				
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('product/compare', $url),			
+			'href'      => $this->url->link('product/compare'),			
 			'separator' => $this->language->get('text_separator')
 		);	
 				
@@ -56,18 +52,25 @@ class ControllerProductCompare extends Controller {
 		$this->data['text_summary'] = $this->language->get('text_summary');
 		$this->data['text_weight'] = $this->language->get('text_weight');
 		$this->data['text_dimension'] = $this->language->get('text_dimension');
-		$this->data['text_remove'] = $this->language->get('text_remove');
 		$this->data['text_empty'] = $this->language->get('text_empty');
 		
-		$this->data['button_cart'] = $this->language->get('button_cart');
 		$this->data['button_continue'] = $this->language->get('button_continue');
+		$this->data['button_cart'] = $this->language->get('button_cart');
+		$this->data['button_remove'] = $this->language->get('button_remove');
 		
-		$this->data['action'] = $this->url->link('product/compare');	
-				
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
+			
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
+								
 		$this->data['products'] = array();
+		
 		$this->data['attribute_groups'] = array();
 
-		foreach ($this->session->data['compare'] as $product_id) {
+		foreach ($this->session->data['compare'] as $key => $product_id) {
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 			
 			if ($product_info) {
@@ -113,7 +116,7 @@ class ControllerProductCompare extends Controller {
 					'thumb'        => $image,
 					'price'        => $price,
 					'special'      => $special,
-					'description'  => substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, 200) . '..',
+					'description'  => utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, 200) . '..',
 					'model'        => $product_info['model'],
 					'manufacturer' => $product_info['manufacturer'],
 					'availability' => $availability,
@@ -125,7 +128,7 @@ class ControllerProductCompare extends Controller {
 					'height'       => $this->length->format($product_info['height'], $product_info['length_class_id']),
 					'attribute'    => $attribute_data,
 					'href'         => $this->url->link('product/product', 'product_id=' . $product_id),
-					'remove'       => $this->url->link('product/product', 'product_id=' . $product_id)
+					'remove'       => $this->url->link('product/compare', 'remove=' . $product_id)
 				);
 				
 				foreach ($attribute_groups as $attribute_group) {
@@ -135,6 +138,8 @@ class ControllerProductCompare extends Controller {
 						$this->data['attribute_groups'][$attribute_group['attribute_group_id']]['attribute'][$attribute['attribute_id']]['name'] = $attribute['name'];
 					}
 				}
+			} else {
+				unset($this->session->data['compare'][$key]);
 			}
 		}
 		
@@ -158,7 +163,7 @@ class ControllerProductCompare extends Controller {
 		$this->response->setOutput($this->render());
   	}
 	
-	public function update() {
+	public function add() {
 		$this->language->load('product/compare');
 		
 		$json = array();
@@ -179,7 +184,7 @@ class ControllerProductCompare extends Controller {
 		
 		if ($product_info) {
 			if (!in_array($this->request->post['product_id'], $this->session->data['compare'])) {	
-				if (count($this->session->data['compare']) > 4) {
+				if (count($this->session->data['compare']) >= 4) {
 					array_shift($this->session->data['compare']);
 				}
 				
@@ -191,9 +196,7 @@ class ControllerProductCompare extends Controller {
 			$json['total'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
 		}	
 
-		$this->load->library('json');
-		
-		$this->response->setOutput(Json::encode($json));
-	}		
+		$this->response->setOutput(json_encode($json));
+	}
 }
 ?>

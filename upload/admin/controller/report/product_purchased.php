@@ -138,7 +138,7 @@ class ControllerReportProductPurchased extends Controller {
 		$this->template = 'report/product_purchased.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

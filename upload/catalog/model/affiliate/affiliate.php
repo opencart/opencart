@@ -25,8 +25,8 @@ class ModelAffiliateAffiliate extends Model {
 		$mail->setTo($this->request->post['email']);
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender($this->config->get('config_name'));
-		$mail->setSubject($subject);
-		$mail->setText($message);
+		$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+		$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 		$mail->send();
 	}
 	
@@ -48,6 +48,12 @@ class ModelAffiliateAffiliate extends Model {
 		return $query->row;
 	}
 	
+	public function getAffiliateByEmail($email) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "affiliate WHERE email = '" . (int)$email . "'");
+		
+		return $query->row;
+	}
+		
 	public function getAffiliateByCode($code) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "affiliate WHERE code = '" . $this->db->escape($code) . "'");
 		
@@ -55,7 +61,7 @@ class ModelAffiliateAffiliate extends Model {
 	}
 			
 	public function getTotalAffiliatesByEmail($email) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "affiliate WHERE email = '" . $this->db->escape($email) . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "affiliate WHERE LOWER(email) = '" . $this->db->escape(strtolower($email)) . "'");
 		
 		return $query->row['total'];
 	}

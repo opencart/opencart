@@ -196,7 +196,7 @@ class ControllerCommonHome extends Controller {
 		$this->template = 'common/home.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -315,9 +315,7 @@ class ControllerCommonHome extends Controller {
 				break;	
 		} 
 		
-		$this->load->library('json');
-		
-		$this->response->setOutput(Json::encode($data));
+		$this->response->setOutput(json_encode($data));
 	}
 	
 	public function login() {

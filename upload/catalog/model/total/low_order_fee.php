@@ -13,10 +13,14 @@ class ModelTotalLowOrderFee extends Model {
 			);
 			
 			if ($this->config->get('low_order_fee_tax_class_id')) {
-				if (!isset($taxes[$this->config->get('low_order_fee_tax_class_id')])) {
-					$taxes[$this->config->get('low_order_fee_tax_class_id')] = $this->config->get('low_order_fee_fee') / 100 * $this->tax->getRate($this->config->get('low_order_fee_tax_class_id'));
-				} else {
-					$taxes[$this->config->get('low_order_fee_tax_class_id')] += $this->config->get('low_order_fee_fee') / 100 * $this->tax->getRate($this->config->get('low_order_fee_tax_class_id'));
+				$tax_rates = $this->tax->getRates($this->config->get('low_order_fee_fee'), $this->config->get('low_order_fee_tax_class_id'));
+				
+				foreach ($tax_rates as $tax_rate) {
+					if (!isset($taxes[$tax_rate['tax_rate_id']])) {
+						$taxes[$tax_rate['tax_rate_id']] = $tax_rate['amount'];
+					} else {
+						$taxes[$tax_rate['tax_rate_id']] += $tax_rate['amount'];
+					}
 				}
 			}
 			

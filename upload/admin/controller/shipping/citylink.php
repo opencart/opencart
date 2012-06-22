@@ -25,15 +25,13 @@ class ControllerShippingCitylink extends Controller {
 		$this->data['text_none'] = $this->language->get('text_none');
 		
 		$this->data['entry_rate'] = $this->language->get('entry_rate');
-		$this->data['entry_tax'] = $this->language->get('entry_tax');
+		$this->data['entry_tax_class'] = $this->language->get('entry_tax_class');
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-
-		$this->data['tab_general'] = $this->language->get('tab_general');
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -108,7 +106,7 @@ class ControllerShippingCitylink extends Controller {
 		$this->template = 'shipping/citylink.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

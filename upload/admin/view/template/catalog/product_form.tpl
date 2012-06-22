@@ -11,7 +11,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/product.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-data"><?php echo $tab_data; ?></a><a href="#tab-links"><?php echo $tab_links; ?></a><a href="#tab-attribute"><?php echo $tab_attribute; ?></a><a href="#tab-option"><?php echo $tab_option; ?></a><a href="#tab-discount"><?php echo $tab_discount; ?></a><a href="#tab-special"><?php echo $tab_special; ?></a><a href="#tab-image"><?php echo $tab_image; ?></a><a href="#tab-reward"><?php echo $tab_reward; ?></a><a href="#tab-design"><?php echo $tab_design; ?></a></div>
@@ -60,6 +60,18 @@
                 <?php if ($error_model) { ?>
                 <span class="error"><?php echo $error_model; ?></span>
                 <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_sku; ?></td>
+              <td><input type="text" name="sku" value="<?php echo $sku; ?>" /></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_upc; ?></td>
+              <td><input type="text" name="upc" value="<?php echo $upc; ?>" /></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_location; ?></td>
+              <td><input type="text" name="location" value="<?php echo $location; ?>" /></td>
             </tr>
             <tr>
               <td><?php echo $entry_price; ?></td>
@@ -125,25 +137,14 @@
                 <?php } ?></td>
             </tr>
             <tr>
-              <td><?php echo $entry_sku; ?></td>
-              <td><input type="text" name="sku" value="<?php echo $sku; ?>" /></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_upc; ?></td>
-              <td><input type="text" name="upc" value="<?php echo $upc; ?>" /></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_location; ?></td>
-              <td><input type="text" name="location" value="<?php echo $location; ?>" /></td>
-            </tr>
-            <tr>
               <td><?php echo $entry_keyword; ?></td>
               <td><input type="text" name="keyword" value="<?php echo $keyword; ?>" /></td>
             </tr>
             <tr>
               <td><?php echo $entry_image; ?></td>
-              <td><input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
-                <img src="<?php echo $thumb; ?>" alt="" id="thumb" class="image" onclick="image_upload('image', 'thumb');" /></td>
+              <td><div class="image"><img src="<?php echo $thumb; ?>" alt="" id="thumb" /><br />
+                  <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
+                  <a onclick="image_upload('image', 'thumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
             </tr>
             <tr>
               <td><?php echo $entry_date_available; ?></td>
@@ -286,7 +287,7 @@
             </tr>
             <tr>
               <td>&nbsp;</td>
-              <td><div class="scrollbox" id="product-related">
+              <td><div id="product-related" class="scrollbox">
                   <?php $class = 'odd'; ?>
                   <?php foreach ($product_related as $product_related) { ?>
                   <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
@@ -315,9 +316,9 @@
                   <input type="hidden" name="product_attribute[<?php echo $attribute_row; ?>][attribute_id]" value="<?php echo $product_attribute['attribute_id']; ?>" /></td>
                 <td class="left"><?php foreach ($languages as $language) { ?>
                   <textarea name="product_attribute[<?php echo $attribute_row; ?>][product_attribute_description][<?php echo $language['language_id']; ?>][text]" cols="40" rows="5"><?php echo isset($product_attribute['product_attribute_description'][$language['language_id']]) ? $product_attribute['product_attribute_description'][$language['language_id']]['text'] : ''; ?></textarea>
-                  <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
+                  <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" align="top" /><br />
                   <?php } ?></td>
-                <td class="left"><a onclick="$('#attribute-row<?php echo $attribute_row; ?>').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>
+                <td class="left"><a onclick="$('#attribute-row<?php echo $attribute_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
               </tr>
             </tbody>
             <?php $attribute_row++; ?>
@@ -325,7 +326,7 @@
             <tfoot>
               <tr>
                 <td colspan="2"></td>
-                <td class="left"><a onclick="addAttribute();" class="button"><span><?php echo $button_add_attribute; ?></span></a></td>
+                <td class="left"><a onclick="addAttribute();" class="button"><?php echo $button_add_attribute; ?></a></td>
               </tr>
             </tfoot>
           </table>
@@ -415,6 +416,15 @@
               <tbody id="option-value-row<?php echo $option_value_row; ?>">
                 <tr>
                   <td class="left"><select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][option_value_id]">
+                      <?php if (isset($option_values[$product_option['option_id']])) { ?>
+                      <?php foreach ($option_values[$product_option['option_id']] as $option_value) { ?>
+                      <?php if ($option_value['option_value_id'] == $product_option_value['option_value_id']) { ?>
+                      <option value="<?php echo $option_value['option_value_id']; ?>" selected="selected"><?php echo $option_value['name']; ?></option>
+                      <?php } else { ?>
+                      <option value="<?php echo $option_value['option_value_id']; ?>"><?php echo $option_value['name']; ?></option>
+                      <?php } ?>
+                      <?php } ?>
+                      <?php } ?>
                     </select>
                     <input type="hidden" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][product_option_value_id]" value="<?php echo $product_option_value['product_option_value_id']; ?>" /></td>
                   <td class="right"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][quantity]" value="<?php echo $product_option_value['quantity']; ?>" size="3" /></td>
@@ -466,7 +476,7 @@
                       <?php } ?>
                     </select>
                     <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][weight]" value="<?php echo $product_option_value['weight']; ?>" size="5" /></td>
-                  <td class="left"><a onclick="$('#option-value-row<?php echo $option_value_row; ?>').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>
+                  <td class="left"><a onclick="$('#option-value-row<?php echo $option_value_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
                 </tr>
               </tbody>
               <?php $option_value_row++; ?>
@@ -474,27 +484,21 @@
               <tfoot>
                 <tr>
                   <td colspan="6"></td>
-                  <td class="left"><a onclick="addOptionValue('<?php echo $option_row; ?>');" class="button"><span><?php echo $button_add_option_value; ?></span></a></td>
+                  <td class="left"><a onclick="addOptionValue('<?php echo $option_row; ?>');" class="button"><?php echo $button_add_option_value; ?></a></td>
                 </tr>
               </tfoot>
             </table>
+            <select id="option-values<?php echo $option_row; ?>" style="display: none;">
+              <?php if (isset($option_values[$product_option['option_id']])) { ?>
+              <?php foreach ($option_values[$product_option['option_id']] as $option_value) { ?>
+              <option value="<?php echo $option_value['option_value_id']; ?>"><?php echo $option_value['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select>
             <?php } ?>
           </div>
           <?php $option_row++; ?>
           <?php } ?>
-          <script type="text/javascript"><!--
-          <?php $option_row = 0; ?>
-          <?php $option_value_row = 0; ?>		  
-		  <?php foreach ($product_options as $product_option) { ?>
-          <?php if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') { ?>
-		  <?php foreach ($product_option['product_option_value'] as $product_option_value) { ?>
-		  $('select[name=\'product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][option_value_id]\']').load('index.php?route=catalog/product/option&token=<?php echo $token; ?>&option_id=<?php echo $product_option['option_id']; ?>&option_value_id=<?php echo $product_option_value['option_value_id']; ?>');
-		  <?php $option_value_row++; ?>
-		  <?php } ?>
-		  <?php } ?>
-		  <?php $option_row++; ?>
-          <?php } ?>
-		  //--></script> 
         </div>
         <div id="tab-discount">
           <table id="discount" class="list">
@@ -527,7 +531,7 @@
                 <td class="right"><input type="text" name="product_discount[<?php echo $discount_row; ?>][price]" value="<?php echo $product_discount['price']; ?>" /></td>
                 <td class="left"><input type="text" name="product_discount[<?php echo $discount_row; ?>][date_start]" value="<?php echo $product_discount['date_start']; ?>" class="date" /></td>
                 <td class="left"><input type="text" name="product_discount[<?php echo $discount_row; ?>][date_end]" value="<?php echo $product_discount['date_end']; ?>" class="date" /></td>
-                <td class="left"><a onclick="$('#discount-row<?php echo $discount_row; ?>').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>
+                <td class="left"><a onclick="$('#discount-row<?php echo $discount_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
               </tr>
             </tbody>
             <?php $discount_row++; ?>
@@ -535,7 +539,7 @@
             <tfoot>
               <tr>
                 <td colspan="6"></td>
-                <td class="left"><a onclick="addDiscount();" class="button"><span><?php echo $button_add_discount; ?></span></a></td>
+                <td class="left"><a onclick="addDiscount();" class="button"><?php echo $button_add_discount; ?></a></td>
               </tr>
             </tfoot>
           </table>
@@ -569,7 +573,7 @@
                 <td class="right"><input type="text" name="product_special[<?php echo $special_row; ?>][price]" value="<?php echo $product_special['price']; ?>" /></td>
                 <td class="left"><input type="text" name="product_special[<?php echo $special_row; ?>][date_start]" value="<?php echo $product_special['date_start']; ?>" class="date" /></td>
                 <td class="left"><input type="text" name="product_special[<?php echo $special_row; ?>][date_end]" value="<?php echo $product_special['date_end']; ?>" class="date" /></td>
-                <td class="left"><a onclick="$('#special-row<?php echo $special_row; ?>').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>
+                <td class="left"><a onclick="$('#special-row<?php echo $special_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
               </tr>
             </tbody>
             <?php $special_row++; ?>
@@ -577,7 +581,7 @@
             <tfoot>
               <tr>
                 <td colspan="5"></td>
-                <td class="left"><a onclick="addSpecial();" class="button"><span><?php echo $button_add_special; ?></span></a></td>
+                <td class="left"><a onclick="addSpecial();" class="button"><?php echo $button_add_special; ?></a></td>
               </tr>
             </tfoot>
           </table>
@@ -587,6 +591,7 @@
             <thead>
               <tr>
                 <td class="left"><?php echo $entry_image; ?></td>
+                <td class="right"><?php echo $entry_sort_order; ?></td>
                 <td></td>
               </tr>
             </thead>
@@ -594,17 +599,20 @@
             <?php foreach ($product_images as $product_image) { ?>
             <tbody id="image-row<?php echo $image_row; ?>">
               <tr>
-                <td class="left"><img src="<?php echo $product_image['thumb']; ?>" alt="" id="thumb<?php echo $image_row; ?>" class="image" onclick="image_upload('image<?php echo $image_row; ?>', 'thumb<?php echo $image_row; ?>');" />
-                  <input type="hidden" name="product_image[<?php echo $image_row; ?>]" value="<?php echo $product_image['image']; ?>" id="image<?php echo $image_row; ?>"  /></td>
-                <td class="left"><a onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>
+                <td class="left"><div class="image"><img src="<?php echo $product_image['thumb']; ?>" alt="" id="thumb<?php echo $image_row; ?>" />
+                    <input type="hidden" name="product_image[<?php echo $image_row; ?>][image]" value="<?php echo $product_image['image']; ?>" id="image<?php echo $image_row; ?>" />
+                    <br />
+                    <a onclick="image_upload('image<?php echo $image_row; ?>', 'thumb<?php echo $image_row; ?>');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb<?php echo $image_row; ?>').attr('src', '<?php echo $no_image; ?>'); $('#image<?php echo $image_row; ?>').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
+                <td class="right"><input type="text" name="product_image[<?php echo $image_row; ?>][sort_order]" value="<?php echo $product_image['sort_order']; ?>" size="2" /></td>
+                <td class="left"><a onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
               </tr>
             </tbody>
             <?php $image_row++; ?>
             <?php } ?>
             <tfoot>
               <tr>
-                <td></td>
-                <td class="left"><a onclick="addImage();" class="button"><span><?php echo $button_add_image; ?></span></a></td>
+                <td colspan="2"></td>
+                <td class="left"><a onclick="addImage();" class="button"><?php echo $button_add_image; ?></a></td>
               </tr>
             </tfoot>
           </table>
@@ -697,12 +705,10 @@ $('input[name=\'related\']').autocomplete({
 	delay: 0,
 	source: function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>',
-			type: 'POST',
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			data: 'filter_name=' +  encodeURIComponent(request.term),
-			success: function(data) {		
-				response($.map(data, function(item) {
+			success: function(json) {		
+				response($.map(json, function(item) {
 					return {
 						label: item.name,
 						value: item.product_id
@@ -721,7 +727,10 @@ $('input[name=\'related\']').autocomplete({
 		$('#product-related div:even').attr('class', 'even');
 				
 		return false;
-	}
+	},
+	focus: function(event, ui) {
+      return false;
+   }
 });
 
 $('#product-related div img').live('click', function() {
@@ -740,10 +749,10 @@ function addAttribute() {
 	html += '    <td class="left"><input type="text" name="product_attribute[' + attribute_row + '][name]" value="" /><input type="hidden" name="product_attribute[' + attribute_row + '][attribute_id]" value="" /></td>';
 	html += '    <td class="left">';
 	<?php foreach ($languages as $language) { ?>
-	html += '<textarea name="product_attribute[' + attribute_row + '][product_attribute_description][<?php echo $language['language_id']; ?>][text]" cols="40" rows="5"></textarea><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
+	html += '<textarea name="product_attribute[' + attribute_row + '][product_attribute_description][<?php echo $language['language_id']; ?>][text]" cols="40" rows="5"></textarea><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" align="top" /><br />';
     <?php } ?>
 	html += '    </td>';
-	html += '    <td class="left"><a onclick="$(\'#attribute-row' + attribute_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
+	html += '    <td class="left"><a onclick="$(\'#attribute-row' + attribute_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
     html += '  </tr>';	
     html += '</tbody>';
 	
@@ -775,12 +784,10 @@ function attributeautocomplete(attribute_row) {
 		delay: 0,
 		source: function(request, response) {
 			$.ajax({
-				url: 'index.php?route=catalog/attribute/autocomplete&token=<?php echo $token; ?>',
-				type: 'POST',
+				url: 'index.php?route=catalog/attribute/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 				dataType: 'json',
-				data: 'filter_name=' +  encodeURIComponent(request.term),
-				success: function(data) {	
-					response($.map(data, function(item) {
+				success: function(json) {	
+					response($.map(json, function(item) {
 						return {
 							category: item.attribute_group,
 							label: item.name,
@@ -795,7 +802,10 @@ function attributeautocomplete(attribute_row) {
 			$('input[name=\'product_attribute[' + attribute_row + '][attribute_id]\']').attr('value', ui.item.value);
 			
 			return false;
-		}
+		},
+		focus: function(event, ui) {
+      		return false;
+   		}
 	});
 }
 
@@ -810,17 +820,16 @@ $('input[name=\'option\']').catcomplete({
 	delay: 0,
 	source: function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/option/autocomplete&token=<?php echo $token; ?>',
-			type: 'POST',
+			url: 'index.php?route=catalog/option/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			data: 'filter_name=' +  encodeURIComponent(request.term),
-			success: function(data) {
-				response($.map(data, function(item) {
+			success: function(json) {
+				response($.map(json, function(item) {
 					return {
 						category: item.category,
 						label: item.name,
 						value: item.option_id,
-						type: item.type
+						type: item.type,
+						option_value: item.option_value
 					}
 				}));
 			}
@@ -901,10 +910,17 @@ $('input[name=\'option\']').catcomplete({
 			html += '    <tfoot>';
 			html += '      <tr>';
 			html += '        <td colspan="6"></td>';
-			html += '        <td class="left"><a onclick="addOptionValue(' + option_row + ');" class="button"><span><?php echo $button_add_option_value; ?></span></a></td>';
+			html += '        <td class="left"><a onclick="addOptionValue(' + option_row + ');" class="button"><?php echo $button_add_option_value; ?></a></td>';
 			html += '      </tr>';
 			html += '    </tfoot>';
 			html += '  </table>';
+            html += '  <select id="option-values' + option_row + '" style="display: none;">';
+			
+            for (i = 0; i < ui.item.option_value.length; i++) {
+				html += '  <option value="' + ui.item.option_value[i]['option_value_id'] + '">' + ui.item.option_value[i]['name'] + '</option>';
+            }
+
+            html += '  </select>';			
 			html += '</div>';	
 		}
 		
@@ -927,7 +943,10 @@ $('input[name=\'option\']').catcomplete({
 		option_row++;
 		
 		return false;
-	}
+	},
+	focus: function(event, ui) {
+      return false;
+   }
 });
 //--></script> 
 <script type="text/javascript"><!--		
@@ -936,7 +955,9 @@ var option_value_row = <?php echo $option_value_row; ?>;
 function addOptionValue(option_row) {	
 	html  = '<tbody id="option-value-row' + option_value_row + '">';
 	html += '  <tr>';
-	html += '    <td class="left"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][option_value_id]"></select><input type="hidden" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][product_option_value_id]" value="" /></td>';
+	html += '    <td class="left"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][option_value_id]">';
+	html += $('#option-values' + option_row).html();
+	html += '    </select><input type="hidden" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][product_option_value_id]" value="" /></td>';
 	html += '    <td class="right"><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][quantity]" value="" size="3" /></td>'; 
 	html += '    <td class="left"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][subtract]">';
 	html += '      <option value="1"><?php echo $text_yes; ?></option>';
@@ -957,14 +978,12 @@ function addOptionValue(option_row) {
 	html += '      <option value="-">-</option>';
 	html += '    </select>';
 	html += '    <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight]" value="" size="5" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#option-value-row' + option_value_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
+	html += '    <td class="left"><a onclick="$(\'#option-value-row' + option_value_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
 	html += '  </tr>';
 	html += '</tbody>';
 	
 	$('#option-value' + option_row + ' tfoot').before(html);
 
-	$('select[name=\'product_option[' + option_row + '][product_option_value][' + option_value_row + '][option_value_id]\']').load('index.php?route=catalog/product/option&token=<?php echo $token; ?>&option_id=' + $('input[name=\'product_option[' + option_row + '][option_id]\']').attr('value'));
-	
 	option_value_row++;
 }
 //--></script> 
@@ -984,7 +1003,7 @@ function addDiscount() {
 	html += '    <td class="right"><input type="text" name="product_discount[' + discount_row + '][price]" value="" /></td>';
     html += '    <td class="left"><input type="text" name="product_discount[' + discount_row + '][date_start]" value="" class="date" /></td>';
 	html += '    <td class="left"><input type="text" name="product_discount[' + discount_row + '][date_end]" value="" class="date" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#discount-row' + discount_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
+	html += '    <td class="left"><a onclick="$(\'#discount-row' + discount_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
 	html += '  </tr>';	
     html += '</tbody>';
 	
@@ -1010,7 +1029,7 @@ function addSpecial() {
 	html += '    <td class="right"><input type="text" name="product_special[' + special_row + '][price]" value="" /></td>';
     html += '    <td class="left"><input type="text" name="product_special[' + special_row + '][date_start]" value="" class="date" /></td>';
 	html += '    <td class="left"><input type="text" name="product_special[' + special_row + '][date_end]" value="" class="date" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#special-row' + special_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
+	html += '    <td class="left"><a onclick="$(\'#special-row' + special_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
 	html += '  </tr>';
     html += '</tbody>';
 	
@@ -1032,12 +1051,10 @@ function image_upload(field, thumb) {
 		close: function (event, ui) {
 			if ($('#' + field).attr('value')) {
 				$.ajax({
-					url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>',
-					type: 'POST',
-					data: 'image=' + encodeURIComponent($('#' + field).attr('value')),
+					url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($('#' + field).attr('value')),
 					dataType: 'text',
-					success: function(data) {
-						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" class="image" onclick="image_upload(\'' + field + '\', \'' + thumb + '\');" />');
+					success: function(text) {
+						$('#' + thumb).replaceWith('<img src="' + text + '" alt="" id="' + thumb + '" />');
 					}
 				});
 			}
@@ -1056,8 +1073,9 @@ var image_row = <?php echo $image_row; ?>;
 function addImage() {
     html  = '<tbody id="image-row' + image_row + '">';
 	html += '  <tr>';
-	html += '    <td class="left"><input type="hidden" name="product_image[' + image_row + ']" value="" id="image' + image_row + '" /><img src="<?php echo $no_image; ?>" alt="" id="thumb' + image_row + '" class="image" onclick="image_upload(\'image' + image_row + '\', \'thumb' + image_row + '\');" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#image-row' + image_row  + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
+	html += '    <td class="left"><div class="image"><img src="<?php echo $no_image; ?>" alt="" id="thumb' + image_row + '" /><input type="hidden" name="product_image[' + image_row + '][image]" value="" id="image' + image_row + '" /><br /><a onclick="image_upload(\'image' + image_row + '\', \'thumb' + image_row + '\');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$(\'#thumb' + image_row + '\').attr(\'src\', \'<?php echo $no_image; ?>\'); $(\'#image' + image_row + '\').attr(\'value\', \'\');"><?php echo $text_clear; ?></a></div></td>';
+	html += '    <td class="right"><input type="text" name="product_image[' + image_row + '][sort_order]" value="" size="2" /></td>';
+	html += '    <td class="left"><a onclick="$(\'#image-row' + image_row  + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
 	html += '  </tr>';
 	html += '</tbody>';
 	

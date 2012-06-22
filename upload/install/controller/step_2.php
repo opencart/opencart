@@ -31,7 +31,8 @@ class ControllerStep2 extends Controller {
 			'header',
 			'footer'
 		);		
-		$this->response->setOutput($this->render(TRUE));
+		
+		$this->response->setOutput($this->render());
 	}
 	
 	private function validate() {
@@ -92,9 +93,9 @@ class ControllerStep2 extends Controller {
 		}
 		
     	if (!$this->error) {
-      		return TRUE;
+      		return true;
     	} else {
-      		return FALSE;
+      		return false;
     	}
 	}
 }

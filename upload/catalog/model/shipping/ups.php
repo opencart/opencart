@@ -17,13 +17,22 @@ class ModelShippingUps extends Model {
 		
 		if ($status) {
 			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('ups_weight_class_id'));
+			$weight_code = strtoupper($this->weight->getUnit($this->config->get('ups_weight_class_id')));
+	
+			if ($weight_code == 'KG') {
+				$weight_code = 'KGS';
+			} elseif ($weight_code == 'LB') {
+				$weight_code = 'LBS';
+			}
 			
 			$weight = ($weight < 0.1 ? 0.1 : $weight);
 			
 			$length = $this->length->convert($this->config->get('ups_length'), $this->config->get('config_length_class_id'), $this->config->get('ups_length_class_id'));
 			$width = $this->length->convert($this->config->get('ups_width'), $this->config->get('config_length_class_id'), $this->config->get('ups_length_class_id'));
 			$height = $this->length->convert($this->config->get('ups_height'), $this->config->get('config_length_class_id'), $this->config->get('ups_length_class_id'));
-			
+
+			$length_code = strtoupper($this->length->getUnit($this->config->get('ups_length_class_id')));
+						
 			$service_code = array(
 				// US Origin
 				'US' => array(
@@ -123,7 +132,6 @@ class ModelShippingUps extends Model {
 			}
 			
 			$xml .= '	<Shipment>';  
-			
 			$xml .= '		<Shipper>';  
 			$xml .= '			<Address>';  
 			$xml .= '				<City>' . $this->config->get('ups_city') . '</City>';
@@ -161,7 +169,7 @@ class ModelShippingUps extends Model {
 
 			$xml .= '		    <Dimensions>';
     		$xml .= '				<UnitOfMeasurement>';
-    		$xml .= '					<Code>' . $this->config->get('ups_length_code') . '</Code>';
+    		$xml .= '					<Code>' . $length_code . '</Code>';
     		$xml .= '				</UnitOfMeasurement>';
     		$xml .= '				<Length>' . $length . '</Length>';
     		$xml .= '				<Width>' . $width . '</Width>';
@@ -170,7 +178,7 @@ class ModelShippingUps extends Model {
 			
 			$xml .= '			<PackageWeight>';
 			$xml .= '				<UnitOfMeasurement>';
-			$xml .= '					<Code>' . $this->config->get('ups_weight_code') . '</Code>';
+			$xml .= '					<Code>' . $weight_code . '</Code>';
 			$xml .= '				</UnitOfMeasurement>';
 			$xml .= '				<Weight>' . $weight . '</Weight>';
 			$xml .= '			</PackageWeight>';
@@ -215,7 +223,12 @@ class ModelShippingUps extends Model {
 			
 			$quote_data = array();
 			
-			if ($result) { 
+			if ($result) {
+				if ($this->config->get('ups_debug')) {
+					$this->log->write("UPS DATA SENT: " . $xml);
+					$this->log->write("UPS DATA RECV: " . $result);
+				}
+				
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->loadXml($result);	
 				
@@ -255,7 +268,7 @@ class ModelShippingUps extends Model {
 								'title'        => $service_code[$this->config->get('ups_origin')][$code],
 								'cost'         => $this->currency->convert($cost, $currency, $this->config->get('config_currency')),
 								'tax_class_id' => $this->config->get('ups_tax_class_id'),
-								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $this->config->get('config_currency'), $this->currency->getCode()), $this->config->get('ups_tax_class_id'), $this->config->get('config_tax')))
+								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->currency->getCode()), $this->config->get('ups_tax_class_id'), $this->config->get('config_tax')), $this->currency->getCode(), 1.0000000)
 							);
 						}
 					}

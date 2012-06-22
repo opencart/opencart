@@ -22,8 +22,12 @@ class ControllerPaymentPayMate extends Controller {
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
-				
+		$this->data['text_yes'] = $this->language->get('text_yes');
+		$this->data['text_no'] = $this->language->get('text_no');
+						
 		$this->data['entry_username'] = $this->language->get('entry_username');
+		$this->data['entry_password'] = $this->language->get('entry_password');
+		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');			
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
@@ -32,8 +36,6 @@ class ControllerPaymentPayMate extends Controller {
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-
-		$this->data['tab_general'] = $this->language->get('tab_general');
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -46,7 +48,13 @@ class ControllerPaymentPayMate extends Controller {
 		} else {
 			$this->data['error_username'] = '';
 		}
-
+		
+		if (isset($this->error['password'])) {
+			$this->data['error_password'] = $this->error['password'];
+		} else {
+			$this->data['error_password'] = '';
+		}
+		
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
@@ -77,6 +85,20 @@ class ControllerPaymentPayMate extends Controller {
 			$this->data['paymate_username'] = $this->config->get('paymate_username');
 		}
 		
+		if (isset($this->request->post['paymate_password'])) {
+			$this->data['paymate_username'] = $this->request->post['paymate_username'];
+		} elseif ($this->config->get('paymate_password')) {
+			$this->data['paymate_password'] = $this->config->get('paymate_password');
+		} else {
+			$this->data['paymate_password'] = md5(mt_rand());
+		}
+				
+		if (isset($this->request->post['paymate_test'])) {
+			$this->data['paymate_test'] = $this->request->post['paymate_test'];
+		} else {
+			$this->data['paymate_test'] = $this->config->get('paymate_test');
+		}
+				
 		if (isset($this->request->post['paymate_total'])) {
 			$this->data['paymate_total'] = $this->request->post['paymate_total'];
 		} else {
@@ -118,7 +140,7 @@ class ControllerPaymentPayMate extends Controller {
 		$this->template = 'payment/paymate.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -132,7 +154,11 @@ class ControllerPaymentPayMate extends Controller {
 		if (!$this->request->post['paymate_username']) {
 			$this->error['username'] = $this->language->get('error_username');
 		}
-				
+		
+		if (!$this->request->post['paymate_password']) {
+			$this->error['password'] = $this->language->get('error_password');
+		}
+						
 		if (!$this->error) {
 			return true;
 		} else {

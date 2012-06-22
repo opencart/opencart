@@ -11,7 +11,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/customer.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a>
@@ -105,7 +105,7 @@
             </tr>
             <tr>
               <td>&nbsp;</td>
-              <td><div class="scrollbox" id="coupon-product">
+              <td><div id="coupon-product" class="scrollbox">
                   <?php $class = 'odd'; ?>
                   <?php foreach ($coupon_product as $coupon_product) { ?>
                   <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
@@ -159,10 +159,8 @@ $('input[name=\'category[]\']').bind('change', function() {
 	var filter_category_id = this;
 	
 	$.ajax({
-		url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>',
-		type: 'POST',
+		url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_category_id=' +  filter_category_id.value + '&limit=10000',
 		dataType: 'json',
-		data: 'filter_category_id=' +  filter_category_id.value,
 		success: function(json) {
 			for (i = 0; i < json.length; i++) {
 				if ($(filter_category_id).attr('checked') == 'checked') {
@@ -184,12 +182,10 @@ $('input[name=\'product\']').autocomplete({
 	delay: 0,
 	source: function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>',
-			type: 'POST',
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			data: 'filter_name=' +  encodeURIComponent(request.term),
-			success: function(data) {		
-				response($.map(data, function(item) {
+			success: function(json) {		
+				response($.map(json, function(item) {
 					return {
 						label: item.name,
 						value: item.product_id
@@ -209,7 +205,10 @@ $('input[name=\'product\']').autocomplete({
 		$('input[name=\'product\']').val('');
 		
 		return false;
-	}
+	},
+	focus: function(event, ui) {
+      	return false;
+   	}
 });
 
 $('#coupon-product div img').live('click', function() {

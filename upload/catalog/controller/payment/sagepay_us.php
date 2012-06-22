@@ -97,9 +97,7 @@ class ControllerPaymentSagepayUS extends Controller {
 			$json['error'] = substr($response, 8, 32);
 		}
 		
-		$this->load->library('json');
-		
-		$this->response->setOutput(Json::encode($json));		
+		$this->response->setOutput(json_encode($json));		
 	}	
 }
 ?>

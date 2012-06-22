@@ -30,17 +30,21 @@
             <td><b><?php echo $text_invoice_no; ?></b></td>
             <td><?php echo $order['invoice_no']; ?></td>
           </tr>
-          <?php if ($order['invoice_date']) { ?>
-          <tr>
-            <td><b><?php echo $text_invoice_date; ?></b></td>
-            <td><?php echo $order['invoice_date']; ?></td>
-          </tr>
-          <?php } ?>
           <?php } ?>
           <tr>
             <td><b><?php echo $text_order_id; ?></b></td>
             <td><?php echo $order['order_id']; ?></td>
           </tr>
+          <tr>
+            <td><b><?php echo $text_payment_method; ?></b></td>
+            <td><?php echo $order['payment_method']; ?></td>
+          </tr>
+          <?php if ($order['shipping_method']) { ?>
+          <tr>
+            <td><b><?php echo $text_shipping_method; ?></b></td>
+            <td><?php echo $order['shipping_method']; ?></td>
+          </tr>
+          <?php } ?>
         </table></td>
     </tr>
   </table>
@@ -52,7 +56,16 @@
     <tr>
       <td><?php echo $order['payment_address']; ?><br/>
         <?php echo $order['email']; ?><br/>
-        <?php echo $order['telephone']; ?></td>
+        <?php echo $order['telephone']; ?>
+        <?php if ($order['payment_company_id']) { ?>
+        <br/>
+        <br/>
+        <?php echo $text_company_id; ?> <?php echo $order['payment_company_id']; ?>
+        <?php } ?>
+        <?php if ($order['payment_tax_id']) { ?>
+        <br/>
+        <?php echo $text_tax_id; ?> <?php echo $order['payment_tax_id']; ?>
+        <?php } ?></td>
       <td><?php echo $order['shipping_address']; ?></td>
     </tr>
   </table>
@@ -75,6 +88,15 @@
       <td align="right"><?php echo $product['quantity']; ?></td>
       <td align="right"><?php echo $product['price']; ?></td>
       <td align="right"><?php echo $product['total']; ?></td>
+    </tr>
+    <?php } ?>
+    <?php foreach ($order['voucher'] as $voucher) { ?>
+    <tr>
+      <td align="left"><?php echo $voucher['description']; ?></td>
+      <td align="left"></td>
+      <td align="right">1</td>
+      <td align="right"><?php echo $voucher['amount']; ?></td>
+      <td align="right"><?php echo $voucher['amount']; ?></td>
     </tr>
     <?php } ?>
     <?php foreach ($order['total'] as $total) { ?>

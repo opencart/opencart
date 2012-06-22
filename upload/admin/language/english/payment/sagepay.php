@@ -9,7 +9,6 @@ $_['text_sagepay']       = '<a onclick="window.open(\'https://support.sagepay.co
 $_['text_sim']           = 'Simulator';
 $_['text_test']          = 'Test';
 $_['text_live']          = 'Live';
-$_['text_payment']       = 'Payment';
 $_['text_defered']       = 'Defered';
 $_['text_authenticate']  = 'Authenticate';
 

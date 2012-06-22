@@ -1,8 +1,8 @@
 <?php
 // Version
-define('VERSION', '1.5.1.2');
+define('VERSION', '1.5.3');
 
-// Config
+// Configuration
 require_once('config.php');
    
 // Install 
@@ -68,7 +68,7 @@ if (!$store_query->num_rows) {
 }
 
 // Url
-$url = new Url($config->get('config_url'), $config->get('config_ssl'));	
+$url = new Url($config->get('config_url'), $config->get('config_use_ssl') ? $config->get('config_ssl') : $config->get('config_url'));	
 $registry->set('url', $url);
 
 // Log 
@@ -131,7 +131,7 @@ $registry->set('session', $session);
 // Language Detection
 $languages = array();
 
-$query = $db->query("SELECT * FROM " . DB_PREFIX . "language"); 
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "language WHERE status = '1'"); 
 
 foreach ($query->rows as $result) {
 	$languages[$result['code']] = $result;
@@ -155,11 +155,9 @@ if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && ($request->server['HTTP_A
 	}
 }
 
-if (isset($request->get['language']) && array_key_exists($request->get['language'], $languages) && $languages[$request->get['language']]['status']) {
-	$code = $request->get['language'];
-} elseif (isset($session->data['language']) && array_key_exists($session->data['language'], $languages)) {
+if (isset($session->data['language']) && array_key_exists($session->data['language'], $languages) && $languages[$session->data['language']]['status']) {
 	$code = $session->data['language'];
-} elseif (isset($request->cookie['language']) && array_key_exists($request->cookie['language'], $languages)) {
+} elseif (isset($request->cookie['language']) && array_key_exists($request->cookie['language'], $languages) && $languages[$request->cookie['language']]['status']) {
 	$code = $request->cookie['language'];
 } elseif ($detect) {
 	$code = $detect;
@@ -184,15 +182,13 @@ $language->load($languages[$code]['filename']);
 $registry->set('language', $language); 
 
 // Document
-$document = new Document();
-$registry->set('document', $document); 		
+$registry->set('document', new Document()); 		
 
 // Customer
 $registry->set('customer', new Customer($registry));
 
 // Affiliate
-$affiliate = new Affiliate($registry);		
-$registry->set('affiliate', $affiliate);
+$registry->set('affiliate', new Affiliate($registry));
 
 if (isset($request->get['tracking']) && !isset($request->cookie['tracking'])) {
 	setcookie('tracking', $request->get['tracking'], time() + 3600 * 24 * 1000, '/');
@@ -212,6 +208,9 @@ $registry->set('length', new Length($registry));
 
 // Cart
 $registry->set('cart', new Cart($registry));
+
+//  Encryption
+$registry->set('encryption', new Encryption($config->get('config_encryption')));
 		
 // Front Controller 
 $controller = new Front($registry);

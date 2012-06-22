@@ -1,5 +1,5 @@
-<?php if ($error_warning) { ?>
-<div class="warning"><?php echo $error_warning; ?></div>
+<?php if ($error) { ?>
+<div class="warning"><?php echo $error; ?></div>
 <?php } ?>
 <?php if ($success) { ?>
 <div class="success"><?php echo $success; ?></div>

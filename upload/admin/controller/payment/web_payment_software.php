@@ -3,7 +3,6 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		
 		$this->load->language('payment/web_payment_software');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -40,8 +39,6 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-
-		$this->data['tab_general'] = $this->language->get('tab_general');
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -153,7 +150,7 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 			'common/footer'	
 		);
 		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render());
 	}
 
 	private function validate() {
@@ -170,9 +167,9 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 		}
 		
 		if (!$this->error) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}	
 	}
 }

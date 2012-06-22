@@ -11,7 +11,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/shipping.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -35,12 +35,39 @@
             <td><div class="scrollbox">
                 <?php $class = 'odd'; ?>
                 <div class="even">
-                  <?php if ($usps_domestic_0) { ?>
-                  <input type="checkbox" name="usps_domestic_0" value="1" checked="checked" />
-                  <?php echo $text_domestic_0; ?>
+                  <?php if ($usps_domestic_00) { ?>
+                  <input type="checkbox" name="usps_domestic_00" value="1" checked="checked" />
+                  <?php echo $text_domestic_00; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="usps_domestic_0" value="1" />
-                  <?php echo $text_domestic_0; ?>
+                  <input type="checkbox" name="usps_domestic_00" value="1" />
+                  <?php echo $text_domestic_00; ?>
+                  <?php } ?>
+                </div>
+                <div class="even">
+                  <?php if ($usps_domestic_01) { ?>
+                  <input type="checkbox" name="usps_domestic_01" value="1" checked="checked" />
+                  <?php echo $text_domestic_01; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_01" value="1" />
+                  <?php echo $text_domestic_01; ?>
+                  <?php } ?>
+                </div>
+                <div class="even">
+                  <?php if ($usps_domestic_02) { ?>
+                  <input type="checkbox" name="usps_domestic_02" value="1" checked="checked" />
+                  <?php echo $text_domestic_02; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_02" value="1" />
+                  <?php echo $text_domestic_02; ?>
+                  <?php } ?>
+                </div>
+                <div class="even">
+                  <?php if ($usps_domestic_03) { ?>
+                  <input type="checkbox" name="usps_domestic_03" value="1" checked="checked" />
+                  <?php echo $text_domestic_03; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_03" value="1" />
+                  <?php echo $text_domestic_03; ?>
                   <?php } ?>
                 </div>
                 <div class="odd">
@@ -395,18 +422,6 @@
                 <?php } ?>
               </select></td>
           </tr>
-		  <tr>
-          <td><?php echo $entry_firstclass; ?></td>
-          <td><select name="usps_firstclass_type">
-              <?php foreach ($firstclass_types as $firstclass_type) { ?>
-              <?php if ($firstclass_type['value'] == $usps_firstclass_type) { ?>
-              <option value="<?php echo $firstclass_type['value']; ?>" selected="selected"><?php echo $firstclass_type['text']; ?></option>
-              <?php } else { ?>
-              <option value="<?php echo $firstclass_type['value']; ?>"><?php echo $firstclass_type['text']; ?></option>
-              <?php } ?>
-              <?php } ?>
-            </select></td>
-          </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_dimension; ?></td>
             <td>
@@ -421,14 +436,6 @@
               <?php } ?>
 			  <?php if ($error_height) { ?>
               <span class="error"><?php echo $error_height; ?></span>
-              <?php } ?>
-		    </td>
-          </tr>
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_girth; ?></td>
-            <td><input type="text" name="usps_girth" value="<?php echo $usps_girth; ?>" size="4" />
-		      <?php if ($error_girth) { ?>
-              <span class="error"><?php echo $error_girth; ?></span>
               <?php } ?>
 		    </td>
           </tr>
@@ -515,8 +522,8 @@
             <td><input type="text" name="usps_sort_order" value="<?php echo $usps_sort_order; ?>" size="1" /></td>
           </tr>
 		  <tr>
-          <td><?php echo $entry_debug; ?></td>
-          <td><select name="usps_debug">
+            <td><?php echo $entry_debug; ?></td>
+            <td><select name="usps_debug">
               <?php if ($usps_debug) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
               <option value="0"><?php echo $text_disabled; ?></option>
@@ -525,7 +532,7 @@
               <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
               <?php } ?>
             </select></td>
-        </tr>
+          </tr>
         </table>
       </form>
     </div>

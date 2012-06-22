@@ -80,7 +80,7 @@ class ControllerTotalShipping extends Controller {
 		$this->template = 'total/shipping.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

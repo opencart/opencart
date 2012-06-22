@@ -212,9 +212,9 @@ class ControllerPaymentSagepayDirect extends Controller {
 
 		$data = array();
 		
-		$response_data = explode(chr(10), $response);
+		$response_info = explode(chr(10), $response);
 
-		foreach ($response_data as $string) {
+		foreach ($response_info as $string) {
 			if (strpos($string, '=')) {
 				$parts = explode('=', $string, 2);
 				
@@ -269,9 +269,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 			$json['error'] = $data['StatusDetail'];
 		}
 
-		$this->load->library('json');
-		
-		$this->response->setOutput(Json::encode($json));
+		$this->response->setOutput(json_encode($json));
 	}	 
 	
 	public function callback() {
@@ -301,9 +299,9 @@ class ControllerPaymentSagepayDirect extends Controller {
 			
 			$data = array();
 			
-			$response_data = explode(chr(10), $response);
+			$response_info = explode(chr(10), $response);
 	
-			foreach ($response_data as $string) {
+			foreach ($response_info as $string) {
 				if (strpos($string, '=')) {
 					$parts = explode('=', $string, 2);
 					

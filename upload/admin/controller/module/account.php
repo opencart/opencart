@@ -81,7 +81,7 @@ class ControllerModuleAccount extends Controller {
 		$this->template = 'module/account.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

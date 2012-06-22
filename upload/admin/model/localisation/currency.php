@@ -3,6 +3,10 @@ class ModelLocalisationCurrency extends Model {
 	public function addCurrency($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "currency SET title = '" . $this->db->escape($data['title']) . "', code = '" . $this->db->escape($data['code']) . "', symbol_left = '" . $this->db->escape($data['symbol_left']) . "', symbol_right = '" . $this->db->escape($data['symbol_right']) . "', decimal_place = '" . $this->db->escape($data['decimal_place']) . "', value = '" . $this->db->escape($data['value']) . "', status = '" . (int)$data['status'] . "', date_modified = NOW()");
 
+		if ($this->config->get('config_currency_auto')) {
+			$this->updateCurrencies(true);
+		}
+
 		$this->cache->delete('currency');
 	}
 	
@@ -97,12 +101,16 @@ class ModelLocalisationCurrency extends Model {
 		}
 	}	
 
-	public function updateCurrencies() {
+	public function updateCurrencies($force = false) {
 		if (extension_loaded('curl')) {
 			$data = array();
 			
-			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "' AND date_modified < '" .  $this->db->escape(date('Y-m-d H:i:s', strtotime('-1 day'))) . "'");
-
+			if ($force) {
+				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "'");
+			} else {
+				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "' AND date_modified < '" .  $this->db->escape(date('Y-m-d H:i:s', strtotime('-1 day'))) . "'");
+			}
+			
 			foreach ($query->rows as $result) {
 				$data[] = $this->config->get('config_currency') . $result['code'] . '=X';
 			}	
@@ -119,8 +127,8 @@ class ModelLocalisationCurrency extends Model {
 			$lines = explode("\n", trim($content));
 				
 			foreach ($lines as $line) {
-				$currency = substr($line, 4, 3);
-				$value = substr($line, 11, 6);
+				$currency = utf8_substr($line, 4, 3);
+				$value = utf8_substr($line, 11, 6);
 				
 				if ((float)$value) {
 					$this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '" . (float)$value . "', date_modified = '" .  $this->db->escape(date('Y-m-d H:i:s')) . "' WHERE code = '" . $this->db->escape($currency) . "'");

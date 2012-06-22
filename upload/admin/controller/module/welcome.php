@@ -38,8 +38,6 @@ class ControllerModuleWelcome extends Controller {
 		$this->data['button_remove'] = $this->language->get('button_remove');
 		
 		$this->data['tab_module'] = $this->language->get('tab_module');
-		
-		$this->data['token'] = $this->session->data['token'];
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -70,8 +68,8 @@ class ControllerModuleWelcome extends Controller {
 		$this->data['action'] = $this->url->link('module/welcome', 'token=' . $this->session->data['token'], 'SSL');
 		
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-
-		$this->data['modules'] = array();
+		
+		$this->data['token'] = $this->session->data['token'];
 
 		$this->data['modules'] = array();
 		
@@ -92,7 +90,7 @@ class ControllerModuleWelcome extends Controller {
 		$this->template = 'module/welcome.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

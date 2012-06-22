@@ -51,7 +51,7 @@ class ControllerProductProduct extends Controller {
 			if ($manufacturer_info) {	
 				$this->data['breadcrumbs'][] = array(
 					'text'	    => $manufacturer_info['name'],
-					'href'	    => $this->url->link('product/manufacturer/product', 'manufacturer_id=' . $this->request->get['manufacturer_id']),					
+					'href'	    => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id']),					
 					'separator' => $this->language->get('text_separator')
 				);
 			}
@@ -80,11 +80,11 @@ class ControllerProductProduct extends Controller {
 				'text'      => $this->language->get('text_search'),
 				'href'      => $this->url->link('product/search', $url),
 				'separator' => $this->language->get('text_separator')
-			);	
+			); 	
 		}
 		
 		if (isset($this->request->get['product_id'])) {
-			$product_id = $this->request->get['product_id'];
+			$product_id = (int)$this->request->get['product_id'];
 		} else {
 			$product_id = 0;
 		}
@@ -92,8 +92,6 @@ class ControllerProductProduct extends Controller {
 		$this->load->model('catalog/product');
 		
 		$product_info = $this->model_catalog_product->getProduct($product_id);
-		
-		$this->data['product_info'] = $product_info;
 		
 		if ($product_info) {
 			$url = '';
@@ -177,7 +175,7 @@ class ControllerProductProduct extends Controller {
 			
 			$this->data['product_id'] = $this->request->get['product_id'];
 			$this->data['manufacturer'] = $product_info['manufacturer'];
-			$this->data['manufacturers'] = $this->url->link('product/manufacturer/product', 'manufacturer_id=' . $product_info['manufacturer_id']);
+			$this->data['manufacturers'] = $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $product_info['manufacturer_id']);
 			$this->data['model'] = $product_info['model'];
 			$this->data['reward'] = $product_info['reward'];
 			$this->data['points'] = $product_info['points'];
@@ -252,12 +250,18 @@ class ControllerProductProduct extends Controller {
 					
 					foreach ($option['option_value'] as $option_value) {
 						if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
+							if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$option_value['price']) {
+								$price = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+							} else {
+								$price = false;
+							}
+							
 							$option_value_data[] = array(
 								'product_option_value_id' => $option_value['product_option_value_id'],
 								'option_value_id'         => $option_value['option_value_id'],
 								'name'                    => $option_value['name'],
 								'image'                   => $this->model_tool_image->resize($option_value['image'], 50, 50),
-								'price'                   => (float)$option_value['price'] ? $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax'))) : false,
+								'price'                   => $price,
 								'price_prefix'            => $option_value['price_prefix']
 							);
 						}
@@ -432,6 +436,7 @@ class ControllerProductProduct extends Controller {
 		
 		$this->load->model('catalog/review');
 
+		$this->data['text_on'] = $this->language->get('text_on');
 		$this->data['text_no_reviews'] = $this->language->get('text_no_reviews');
 
 		if (isset($this->request->get['page'])) {
@@ -449,7 +454,7 @@ class ControllerProductProduct extends Controller {
 		foreach ($results as $result) {
         	$this->data['reviews'][] = array(
         		'author'     => $result['author'],
-				'text'       => strip_tags($result['text']),
+				'text'       => $result['text'],
 				'rating'     => (int)$result['rating'],
         		'reviews'    => sprintf($this->language->get('text_reviews'), (int)$review_total),
         		'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
@@ -481,31 +486,31 @@ class ControllerProductProduct extends Controller {
 		
 		$json = array();
 		
-		if ((strlen(utf8_decode($this->request->post['name'])) < 3) || (strlen(utf8_decode($this->request->post['name'])) > 25)) {
-			$json['error'] = $this->language->get('error_name');
-		}
-		
-		if ((strlen(utf8_decode($this->request->post['text'])) < 25) || (strlen(utf8_decode($this->request->post['text'])) > 1000)) {
-			$json['error'] = $this->language->get('error_text');
-		}
-
-		if (!$this->request->post['rating']) {
-			$json['error'] = $this->language->get('error_rating');
-		}
-
-		if (!isset($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
-			$json['error'] = $this->language->get('error_captcha');
-		}
-				
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !isset($json['error'])) {
-			$this->model_catalog_review->addReview($this->request->get['product_id'], $this->request->post);
+		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+			if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 25)) {
+				$json['error'] = $this->language->get('error_name');
+			}
 			
-			$json['success'] = $this->language->get('text_success');
+			if ((utf8_strlen($this->request->post['text']) < 25) || (utf8_strlen($this->request->post['text']) > 1000)) {
+				$json['error'] = $this->language->get('error_text');
+			}
+	
+			if (empty($this->request->post['rating'])) {
+				$json['error'] = $this->language->get('error_rating');
+			}
+	
+			if (empty($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
+				$json['error'] = $this->language->get('error_captcha');
+			}
+				
+			if (!isset($json['error'])) {
+				$this->model_catalog_review->addReview($this->request->get['product_id'], $this->request->post);
+				
+				$json['success'] = $this->language->get('text_success');
+			}
 		}
 		
-		$this->load->library('json');
-		
-		$this->response->setOutput(Json::encode($json));
+		$this->response->setOutput(json_encode($json));
 	}
 	
 	public function captcha() {
@@ -523,8 +528,10 @@ class ControllerProductProduct extends Controller {
 		
 		$json = array();
 		
-		if (isset($this->request->files['file']['name']) && $this->request->files['file']['name']) {
-			if ((strlen(utf8_decode($this->request->files['file']['name'])) < 3) || (strlen(utf8_decode($this->request->files['file']['name'])) > 128)) {
+		if (!empty($this->request->files['file']['name'])) {
+			$filename = basename(preg_replace('/[^a-zA-Z0-9\.\-\s+]/', '', html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8')));
+			
+			if ((strlen($filename) < 3) || (strlen($filename) > 64)) {
         		$json['error'] = $this->language->get('error_filename');
 	  		}	  	
 			
@@ -536,7 +543,7 @@ class ControllerProductProduct extends Controller {
 				$allowed[] = trim($filetype);
 			}
 			
-			if (!in_array(substr(strrchr($this->request->files['file']['name'], '.'), 1), $allowed)) {
+			if (!in_array(substr(strrchr($filename, '.'), 1), $allowed)) {
 				$json['error'] = $this->language->get('error_filetype');
        		}	
 						
@@ -547,16 +554,12 @@ class ControllerProductProduct extends Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !isset($json['error'])) {
+		if (!$json) {
 			if (is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
-				$file = basename($this->request->files['file']['name']) . '.' . md5(rand());
+				$file = basename($filename) . '.' . md5(mt_rand());
 				
-				// Hide the uploaded file name sop people can not link to it directly.
-				$this->load->library('encryption');
-				
-				$encryption = new Encryption($this->config->get('config_encryption'));
-				
-				$json['file'] = $encryption->encrypt($file);
+				// Hide the uploaded file name so people can not link to it directly.
+				$json['file'] = $this->encryption->encrypt($file);
 				
 				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
 			}
@@ -564,9 +567,7 @@ class ControllerProductProduct extends Controller {
 			$json['success'] = $this->language->get('text_upload');
 		}	
 		
-		$this->load->library('json');
-		
-		$this->response->setOutput(Json::encode($json));		
+		$this->response->setOutput(json_encode($json));		
 	}
 }
 ?>

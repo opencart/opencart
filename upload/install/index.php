@@ -1,7 +1,10 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 // HTTP
-define('HTTP_SERVER', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/');
-define('HTTP_OPENCART', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['PHP_SELF']), 'install'), '/.\\'). '/');
+define('HTTP_SERVER', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/');
+define('HTTP_OPENCART', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\'). '/');
 
 // DIR
 define('DIR_APPLICATION', str_replace('\'', '/', realpath(dirname(__FILE__))) . '/');
@@ -12,7 +15,22 @@ define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
 
-// Startup 
+// Upgrade
+$upgrade = false;
+
+if (filesize('../config.php') > 0) {
+	$upgrade = true;
+	
+	$file = file(DIR_OPENCART . 'config.php');
+	
+	foreach ($file as $num => $line) {
+		if (strpos(strtoupper($line), 'DB_') !== false) {
+			eval($line);
+		}
+	}
+}
+
+// Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
 // Registry
@@ -35,12 +53,14 @@ $registry->set('response', $response);
 $document = new Document();
 $registry->set('document', $document);
 
-// Front Controller 
+// Front Controller
 $controller = new Front($registry);
 
 // Router
 if (isset($request->get['route'])) {
 	$action = new Action($request->get['route']);
+} elseif ($upgrade) {
+	$action = new Action('upgrade');
 } else {
 	$action = new Action('step_1');
 }

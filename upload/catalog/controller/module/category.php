@@ -1,6 +1,6 @@
 <?php  
 class ControllerModuleCategory extends Controller {
-	protected function index() {
+	protected function index($setting) {
 		$this->language->load('module/category');
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
@@ -36,33 +36,19 @@ class ControllerModuleCategory extends Controller {
 			$children = $this->model_catalog_category->getCategories($category['category_id']);
 			
 			foreach ($children as $child) {
-				$data = array(
-					'filter_category_id'  => $child['category_id'],
-					'filter_sub_category' => true
-				);		
-					
-				$product_total = $this->model_catalog_product->getTotalProducts($data);
-							
 				$children_data[] = array(
 					'category_id' => $child['category_id'],
-					'name'        => $child['name'] . ' (' . $product_total . ')',
+					'name'        => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProductsByCategoryId($child['category_id']) . ')' : ''),
 					'href'        => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])	
-				);					
+				);		
 			}
 			
-			$data = array(
-				'filter_category_id'  => $category['category_id'],
-				'filter_sub_category' => true	
-			);		
-				
-			$product_total = $this->model_catalog_product->getTotalProducts($data);
-						
 			$this->data['categories'][] = array(
 				'category_id' => $category['category_id'],
-				'name'        => $category['name'] . ' (' . $product_total . ')',
+				'name'        => $category['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProductsByCategoryId($category['category_id']) . ')' : ''),
 				'children'    => $children_data,
 				'href'        => $this->url->link('product/category', 'path=' . $category['category_id'])
-			);
+			);	
 		}
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/category.tpl')) {

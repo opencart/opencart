@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 
 // Check Version
-if (version_compare(phpversion(), '5.1.0', '<') == TRUE) {
+if (version_compare(phpversion(), '5.1.0', '<') == true) {
 	exit('PHP5.1+ Required');
 }
 
@@ -69,6 +69,10 @@ if (!isset($_SERVER['REQUEST_URI'])) {
 	} 
 }
 
+// Helper
+require_once(DIR_SYSTEM . 'helper/json.php'); 
+require_once(DIR_SYSTEM . 'helper/utf8.php'); 
+
 // Engine
 require_once(DIR_SYSTEM . 'engine/action.php'); 
 require_once(DIR_SYSTEM . 'engine/controller.php');
@@ -83,6 +87,7 @@ require_once(DIR_SYSTEM . 'library/url.php');
 require_once(DIR_SYSTEM . 'library/config.php');
 require_once(DIR_SYSTEM . 'library/db.php');
 require_once(DIR_SYSTEM . 'library/document.php');
+require_once(DIR_SYSTEM . 'library/encryption.php');
 require_once(DIR_SYSTEM . 'library/image.php');
 require_once(DIR_SYSTEM . 'library/language.php');
 require_once(DIR_SYSTEM . 'library/log.php');

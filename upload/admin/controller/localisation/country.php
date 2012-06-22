@@ -258,7 +258,7 @@ class ControllerLocalisationCountry extends Controller {
 		$this->template = 'localisation/country_list.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -281,8 +281,6 @@ class ControllerLocalisationCountry extends Controller {
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-
-		$this->data['tab_general'] = $this->language->get('tab_general');
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -338,7 +336,7 @@ class ControllerLocalisationCountry extends Controller {
 
 		if (isset($this->request->post['name'])) {
 			$this->data['name'] = $this->request->post['name'];
-		} elseif (isset($country_info)) {
+		} elseif (!empty($country_info)) {
 			$this->data['name'] = $country_info['name'];
 		} else {
 			$this->data['name'] = '';
@@ -346,7 +344,7 @@ class ControllerLocalisationCountry extends Controller {
 
 		if (isset($this->request->post['iso_code_2'])) {
 			$this->data['iso_code_2'] = $this->request->post['iso_code_2'];
-		} elseif (isset($country_info)) {
+		} elseif (!empty($country_info)) {
 			$this->data['iso_code_2'] = $country_info['iso_code_2'];
 		} else {
 			$this->data['iso_code_2'] = '';
@@ -354,7 +352,7 @@ class ControllerLocalisationCountry extends Controller {
 
 		if (isset($this->request->post['iso_code_3'])) {
 			$this->data['iso_code_3'] = $this->request->post['iso_code_3'];
-		} elseif (isset($country_info)) {
+		} elseif (!empty($country_info)) {
 			$this->data['iso_code_3'] = $country_info['iso_code_3'];
 		} else {
 			$this->data['iso_code_3'] = '';
@@ -362,7 +360,7 @@ class ControllerLocalisationCountry extends Controller {
 
 		if (isset($this->request->post['address_format'])) {
 			$this->data['address_format'] = $this->request->post['address_format'];
-		} elseif (isset($country_info)) {
+		} elseif (!empty($country_info)) {
 			$this->data['address_format'] = $country_info['address_format'];
 		} else {
 			$this->data['address_format'] = '';
@@ -370,7 +368,7 @@ class ControllerLocalisationCountry extends Controller {
 
 		if (isset($this->request->post['postcode_required'])) {
 			$this->data['postcode_required'] = $this->request->post['postcode_required'];
-		} elseif (isset($country_info)) {
+		} elseif (!empty($country_info)) {
 			$this->data['postcode_required'] = $country_info['postcode_required'];
 		} else {
 			$this->data['postcode_required'] = 0;
@@ -378,7 +376,7 @@ class ControllerLocalisationCountry extends Controller {
 				
 		if (isset($this->request->post['status'])) {
 			$this->data['status'] = $this->request->post['status'];
-		} elseif (isset($country_info)) {
+		} elseif (!empty($country_info)) {
 			$this->data['status'] = $country_info['status'];
 		} else {
 			$this->data['status'] = '1';
@@ -387,7 +385,7 @@ class ControllerLocalisationCountry extends Controller {
 		$this->template = 'localisation/country_form.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -398,7 +396,7 @@ class ControllerLocalisationCountry extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((strlen(utf8_decode($this->request->post['name'])) < 3) || (strlen(utf8_decode($this->request->post['name'])) > 128)) {
+		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 128)) {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 

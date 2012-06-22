@@ -1,5 +1,5 @@
 <?php
-final class User {
+class User {
 	private $user_id;
 	private $username;
   	private $permission = array();

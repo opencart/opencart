@@ -35,7 +35,7 @@ $_['column_action']                 = 'Action';
 $_['entry_range']                   = 'Select Range:';
 
 // Error
-$_['error_install']                 = 'Warning: Install folder still exists!';
+$_['error_install']                 = 'Warning: Install folder still exists and should be deleted for security reasons!';
 $_['error_image']                   = 'Warning: Image directory %s not writeable!';
 $_['error_image_cache']             = 'Warning: Image cache directory %s not writeable!';
 $_['error_cache']                   = 'Warning: Cache directory %s not writeable!';

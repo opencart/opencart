@@ -14,7 +14,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/payment.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="location = '<?php echo $insert; ?>'" class="button"><span><?php echo $button_insert; ?></span></a><a onclick="document.getElementById('form').submit();" class="button"><span><?php echo $button_delete; ?></span></a></div>
+      <div class="buttons"><a onclick="location = '<?php echo $insert; ?>'" class="button"><?php echo $button_insert; ?></a><a onclick="document.getElementById('form').submit();" class="button"><?php echo $button_delete; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -97,8 +97,8 @@
 <script type="text/javascript"><!--
 function sendVoucher(voucher_id) {
 	$.ajax({
-		type: 'POST',
 		url: 'index.php?route=sale/voucher/send&token=<?php echo $token; ?>&voucher_id=' + voucher_id,
+		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
 			$('.success, .warning').remove();

@@ -252,7 +252,7 @@ class ControllerLocalisationReturnStatus extends Controller {
 		$this->template = 'localisation/return_status_list.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -329,7 +329,7 @@ class ControllerLocalisationReturnStatus extends Controller {
 		$this->template = 'localisation/return_status_form.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());	
@@ -341,7 +341,7 @@ class ControllerLocalisationReturnStatus extends Controller {
     	}
 	
     	foreach ($this->request->post['return_status'] as $language_id => $value) {
-      		if ((strlen(utf8_decode($value['name'])) < 3) || (strlen(utf8_decode($value['name'])) > 32)) {
+      		if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
         		$this->error['name'][$language_id] = $this->language->get('error_name');
       		}
     	}
@@ -370,6 +370,12 @@ class ControllerLocalisationReturnStatus extends Controller {
 			if ($return_total) {
 	  			$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);	
 			}  
+			
+			$return_total = $this->model_sale_return->getTotalReturnHistoriesByReturnStatusId($return_status_id);
+		
+			if ($return_total) {
+	  			$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);	
+			}  			
 	  	}
 		
 		if (!$this->error) { 

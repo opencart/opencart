@@ -1,5 +1,5 @@
 <?php
-final class Encryption {
+class Encryption {
 	private $key;
 	
 	function __construct($key) {
@@ -15,8 +15,8 @@ final class Encryption {
 		
 		for ($i = 0; $i < strlen($value); $i++) {
 			$char = substr($value, $i, 1);
-			$keychar = substr($this->key, ($i % strlen($this->key)) - 1, 1);
-			$char = chr(ord($char) + ord($keychar));
+			$key = substr($this->key, ($i % strlen($this->key)) - 1, 1);
+			$char = chr(ord($char) + ord($key));
 			
 			$output .= $char;
 		} 
@@ -35,8 +35,8 @@ final class Encryption {
 		
 		for ($i = 0; $i < strlen($value); $i++) {
 			$char = substr($value, $i, 1);
-			$keychar = substr($this->key, ($i % strlen($this->key)) - 1, 1);
-			$char = chr(ord($char) - ord($keychar));
+			$key = substr($this->key, ($i % strlen($this->key)) - 1, 1);
+			$char = chr(ord($char) - ord($key));
 			
 			$output .= $char;
 		}

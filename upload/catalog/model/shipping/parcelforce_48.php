@@ -34,14 +34,14 @@ class ModelShippingParcelforce48 extends Model {
   				}
 			}
 
-			$rates = explode(',', $this->config->get('parcelforce_48_compensation'));
+			$rates = explode(',', $this->config->get('parcelforce_48_insurance'));
 			
 			foreach ($rates as $rate) {
   				$data = explode(':', $rate);
   				
 				if ($data[0] >= $sub_total) {
 					if (isset($data[1])) {
-    					$compensation = $data[1];
+    					$insurance = $data[1];
 					}
 					
    					break; 
@@ -57,8 +57,8 @@ class ModelShippingParcelforce48 extends Model {
 					$text .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 				}
 			
-				if ($this->config->get('parcelforce_48_display_insurance') && (float)$compensation) {
-					$text .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($compensation) . ')';
+				if ($this->config->get('parcelforce_48_display_insurance') && (float)$insurance) {
+					$text .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance) . ')';
 				}		
 
 				if ($this->config->get('parcelforce_48_display_time')) {

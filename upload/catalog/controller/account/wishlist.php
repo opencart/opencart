@@ -17,18 +17,18 @@ class ControllerAccountWishList extends Controller {
 			$this->session->data['wishlist'] = array();
 		}
 		
-		if (isset($this->request->post['remove'])) {
-			foreach ($this->request->post['remove'] as $product_id) {
-				$key = array_search($product_id, $this->session->data['wishlist']);
-				
-				if ($key !== false) {
-					unset($this->session->data['wishlist'][$key]);
-				}
-			}			
+		if (isset($this->request->get['remove'])) {
+			$key = array_search($this->request->get['remove'], $this->session->data['wishlist']);
 			
+			if ($key !== false) {
+				unset($this->session->data['wishlist'][$key]);
+			}
+		
+			$this->session->data['success'] = $this->language->get('text_remove');
+		
 			$this->redirect($this->url->link('account/wishlist'));
 		}
-				
+						
 		$this->document->setTitle($this->language->get('heading_title'));	
       	
 		$this->data['breadcrumbs'] = array();
@@ -54,25 +54,29 @@ class ControllerAccountWishList extends Controller {
 		$this->data['heading_title'] = $this->language->get('heading_title');	
 		
 		$this->data['text_empty'] = $this->language->get('text_empty');
-     		
-		$this->data['column_remove'] = $this->language->get('column_remove');
+     	
 		$this->data['column_image'] = $this->language->get('column_image');
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_model'] = $this->language->get('column_model');
 		$this->data['column_stock'] = $this->language->get('column_stock');
 		$this->data['column_price'] = $this->language->get('column_price');
-		$this->data['column_cart'] = $this->language->get('column_cart');
-					
-		$this->data['button_cart'] = $this->language->get('button_cart');
-		$this->data['button_update'] = $this->language->get('button_update');
+		$this->data['column_action'] = $this->language->get('column_action');
+		
 		$this->data['button_continue'] = $this->language->get('button_continue');
-		$this->data['button_back'] = $this->language->get('button_back');
+		$this->data['button_cart'] = $this->language->get('button_cart');
+		$this->data['button_remove'] = $this->language->get('button_remove');
 		
-		$this->data['action'] = $this->url->link('account/wishlist');	
-		
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
+			
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
+							
 		$this->data['products'] = array();
 	
-		foreach ($this->session->data['wishlist'] as $product_id) {
+		foreach ($this->session->data['wishlist'] as $key => $product_id) {
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 			
 			if ($product_info) { 
@@ -110,13 +114,15 @@ class ControllerAccountWishList extends Controller {
 					'stock'      => $stock,
 					'price'      => $price,		
 					'special'    => $special,
-					'href'       => $this->url->link('product/product', 'product_id=' . $product_info['product_id'])
+					'href'       => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
+					'remove'     => $this->url->link('account/wishlist', 'remove=' . $product_info['product_id'])
 				);
+			} else {
+				unset($this->session->data['wishlist'][$key]);
 			}
 		}	
 
 		$this->data['continue'] = $this->url->link('account/account', '', 'SSL');
-		$this->data['back'] = $this->url->link('account/account', '', 'SSL');
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/wishlist.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/account/wishlist.tpl';
@@ -136,7 +142,7 @@ class ControllerAccountWishList extends Controller {
 		$this->response->setOutput($this->render());		
 	}
 	
-	public function update() {
+	public function add() {
 		$this->language->load('account/wishlist');
 		
 		$json = array();
@@ -168,10 +174,8 @@ class ControllerAccountWishList extends Controller {
 			
 			$json['total'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
 		}	
-
-		$this->load->library('json');
 		
-		$this->response->setOutput(Json::encode($json));
-	}		
+		$this->response->setOutput(json_encode($json));
+	}	
 }
 ?>

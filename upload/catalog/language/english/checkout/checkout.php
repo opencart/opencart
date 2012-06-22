@@ -23,7 +23,7 @@ $_['text_forgotten']                 = 'Forgotten Password';
 $_['text_your_details']              = 'Your Personal Details';
 $_['text_your_address']              = 'Your Address';
 $_['text_your_password']             = 'Your Password';
-$_['text_agree']                     = 'I have read and agree to the <a class="fancybox" href="%s" alt="%s"><b>%s</b></a>';
+$_['text_agree']                     = 'I have read and agree to the <a class="colorbox" href="%s" alt="%s"><b>%s</b></a>';
 $_['text_address_new']               = 'I want to use a new address';
 $_['text_address_existing']          = 'I want to use an existing address';
 $_['text_shipping_method']           = 'Please select the preferred shipping method to use on this order.';
@@ -47,6 +47,9 @@ $_['entry_lastname']                 = 'Last Name:';
 $_['entry_telephone']                = 'Telephone:';
 $_['entry_fax']                      = 'Fax:';
 $_['entry_company']                  = 'Company:';
+$_['entry_customer_group']           = 'Business Type:';
+$_['entry_company_id']               = 'Company ID:';
+$_['entry_tax_id']                   = 'Tax ID:';
 $_['entry_address_1']                = 'Address 1:';
 $_['entry_address_2']                = 'Address 2:';
 $_['entry_postcode']                 = 'Post Code:';
@@ -58,8 +61,8 @@ $_['entry_shipping'] 	             = 'My delivery and billing addresses are the 
 
 // Error
 $_['error_warning']                  = 'There was a problem while trying to process your order! If the problem persists please try selecting a different payment method or you can contact the store owner by <a href="%s">clicking here</a>.';
-$_['error_minimum']                  = 'Minimum order amount for %s is %s!';	
 $_['error_login']                    = 'Warning: No match for E-Mail Address and/or Password.';
+$_['error_approved']                 = 'Warning: Your account requires approval before you can login.'; 
 $_['error_exists']                   = 'Warning: E-Mail Address is already registered!';
 $_['error_firstname']                = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']                 = 'Last Name must be between 1 and 32 characters!';
@@ -67,6 +70,9 @@ $_['error_email']                    = 'E-Mail Address does not appear to be val
 $_['error_telephone']                = 'Telephone must be between 3 and 32 characters!';
 $_['error_password']                 = 'Password must be between 3 and 20 characters!';
 $_['error_confirm']                  = 'Password confirmation does not match password!';
+$_['error_company_id']               = 'Company ID required!';
+$_['error_tax_id']                   = 'Tax ID required!';
+$_['error_vat']                      = 'VAT number is invalid!';
 $_['error_address_1']                = 'Address 1 must be between 3 and 128 characters!';
 $_['error_city']                     = 'City must be between 2 and 128 characters!';
 $_['error_postcode']                 = 'Postcode must be between 2 and 10 characters!';
@@ -75,7 +81,7 @@ $_['error_zone']                     = 'Please select a region / state!';
 $_['error_agree']                    = 'Warning: You must agree to the %s!';
 $_['error_address']                  = 'Warning: You must select address!';
 $_['error_shipping']                 = 'Warning: Shipping method required!';
-$_['error_no_shipping']              = 'No Shipping options are available. Please <a href="%s">contact us</a> for assistance!';
+$_['error_no_shipping']              = 'Warning: No Shipping options are available. Please <a href="%s">contact us</a> for assistance!';
 $_['error_payment']                  = 'Warning: Payment method required!';
 $_['error_no_payment']               = 'Warning: No Payment options are available. Please <a href="%s">contact us</a> for assistance!';
 ?>

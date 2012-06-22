@@ -14,7 +14,7 @@ $_['column_action']        = 'Action';
 
 // Entry
 $_['entry_title']          = 'Currency Title:';
-$_['entry_code']           = 'Code:<br /><span class="help">Do not change if this is your default currency.</span>';
+$_['entry_code']           = 'Code:<br /><span class="help">Do not change if this is your default currency. Must be valid <a href="http://www.xe.com/iso4217.php" target="_blank">ISO code</a>.</span>';
 $_['entry_value']          = 'Value:<br /><span class="help">Set to 1.00000 if this is your default currency.</span>';
 $_['entry_symbol_left']    = 'Symbol Left:';
 $_['entry_symbol_right']   = 'Symbol Right:';

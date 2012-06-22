@@ -20,10 +20,22 @@ final class Loader {
 		if (file_exists($file)) {
 			include_once($file);
 		} else {
-			exit('Error: Could not load library ' . $library . '!');
+			trigger_error('Error: Could not load library ' . $library . '!');
+			exit();					
 		}
 	}
 	
+	public function helper($helper) {
+		$file = DIR_SYSTEM . 'helper/' . $helper . '.php';
+		
+		if (file_exists($file)) {
+			include_once($file);
+		} else {
+			trigger_error('Error: Could not load helper ' . $helper . '!');
+			exit();					
+		}
+	}
+		
 	public function model($model) {
 		$file  = DIR_APPLICATION . 'model/' . $model . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
@@ -33,7 +45,8 @@ final class Loader {
 			
 			$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));
 		} else {
-			exit('Error: Could not load model ' . $model . '!');
+			trigger_error('Error: Could not load model ' . $model . '!');
+			exit();					
 		}
 	}
 	 
@@ -46,7 +59,8 @@ final class Loader {
 			
 			$this->registry->set(str_replace('/', '_', $driver), new $class());
 		} else {
-			exit('Error: Could not load database ' . $driver . '!'); 
+			trigger_error('Error: Could not load database ' . $driver . '!');
+			exit();				
 		}
 	}
 	

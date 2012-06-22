@@ -1,52 +1,74 @@
 <?php 
 class ControllerCheckoutConfirm extends Controller { 
 	public function index() {
-		if ((!$this->cart->hasProducts() && (!isset($this->session->data['vouchers']) || !$this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-	  		$json['redirect'] = $this->url->link('checkout/cart');
-    	}			
+		$redirect = '';
 		
+		if ($this->cart->hasShipping()) {
+			// Validate if shipping address has been set.		
+			$this->load->model('account/address');
+	
+			if ($this->customer->isLogged() && isset($this->session->data['shipping_address_id'])) {					
+				$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);		
+			} elseif (isset($this->session->data['guest'])) {
+				$shipping_address = $this->session->data['guest']['shipping'];
+			}
+			
+			if (empty($shipping_address)) {								
+				$redirect = $this->url->link('checkout/checkout', '', 'SSL');
+			}
+			
+			// Validate if shipping method has been set.	
+			if (!isset($this->session->data['shipping_method'])) {
+				$redirect = $this->url->link('checkout/checkout', '', 'SSL');
+			}
+		} else {
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+		}
+		
+		// Validate if payment address has been set.
 		$this->load->model('account/address');
 		
-		if ($this->customer->isLogged()) {
+		if ($this->customer->isLogged() && isset($this->session->data['payment_address_id'])) {
 			$payment_address = $this->model_account_address->getAddress($this->session->data['payment_address_id']);		
 		} elseif (isset($this->session->data['guest'])) {
 			$payment_address = $this->session->data['guest']['payment'];
 		}	
-		
-		if (!isset($payment_address)) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
-		}
 				
+		if (empty($payment_address)) {
+			$redirect = $this->url->link('checkout/checkout', '', 'SSL');
+		}			
+		
+		// Validate if payment method has been set.	
 		if (!isset($this->session->data['payment_method'])) {
-	  		$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
-    	}
-					
-    	if ($this->cart->hasShipping()) {
-			$this->load->model('account/address');
-			
-			if ($this->customer->isLogged()) {
-				$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);		
-			} elseif (isset($this->session->data['guest'])) {
-				$shipping_address = $this->session->data['guest']['shipping'];
-			}				
-
-			if (!isset($shipping_address)) {								
-				$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
-			}
-			
-			if (!isset($this->session->data['shipping_method'])) {
-	  			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
-    		}
-		} else {
-			unset($this->session->data['guest']['shipping']);
-			unset($this->session->data['shipping_address_id']);
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);			
+			$redirect = $this->url->link('checkout/checkout', '', 'SSL');
 		}
+					
+		// Validate cart has products and has stock.	
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$redirect = $this->url->link('checkout/cart');				
+		}	
 		
-		$json = array();
-		
-		if (!$json) {
+		// Validate minimum quantity requirments.			
+		$products = $this->cart->getProducts();
+				
+		foreach ($products as $product) {
+			$product_total = 0;
+				
+			foreach ($products as $product_2) {
+				if ($product_2['product_id'] == $product['product_id']) {
+					$product_total += $product_2['quantity'];
+				}
+			}		
+			
+			if ($product['minimum'] > $product_total) {
+				$redirect = $this->url->link('checkout/cart');
+				
+				break;
+			}				
+		}
+						
+		if (!$redirect) {
 			$total_data = array();
 			$total = 0;
 			$taxes = $this->cart->getTaxes();
@@ -107,7 +129,7 @@ class ControllerCheckoutConfirm extends Controller {
 				$payment_address = $this->model_account_address->getAddress($this->session->data['payment_address_id']);
 			} elseif (isset($this->session->data['guest'])) {
 				$data['customer_id'] = 0;
-				$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+				$data['customer_group_id'] = $this->session->data['guest']['customer_group_id'];
 				$data['firstname'] = $this->session->data['guest']['firstname'];
 				$data['lastname'] = $this->session->data['guest']['lastname'];
 				$data['email'] = $this->session->data['guest']['email'];
@@ -120,6 +142,8 @@ class ControllerCheckoutConfirm extends Controller {
 			$data['payment_firstname'] = $payment_address['firstname'];
 			$data['payment_lastname'] = $payment_address['lastname'];	
 			$data['payment_company'] = $payment_address['company'];	
+			$data['payment_company_id'] = $payment_address['company_id'];	
+			$data['payment_tax_id'] = $payment_address['tax_id'];	
 			$data['payment_address_1'] = $payment_address['address_1'];
 			$data['payment_address_2'] = $payment_address['address_2'];
 			$data['payment_city'] = $payment_address['city'];
@@ -136,6 +160,12 @@ class ControllerCheckoutConfirm extends Controller {
 				$data['payment_method'] = '';
 			}
 			
+			if (isset($this->session->data['payment_method']['code'])) {
+				$data['payment_code'] = $this->session->data['payment_method']['code'];
+			} else {
+				$data['payment_code'] = '';
+			}
+						
 			if ($this->cart->hasShipping()) {
 				if ($this->customer->isLogged()) {
 					$this->load->model('account/address');
@@ -163,6 +193,12 @@ class ControllerCheckoutConfirm extends Controller {
 				} else {
 					$data['shipping_method'] = '';
 				}
+				
+				if (isset($this->session->data['shipping_method']['code'])) {
+					$data['shipping_code'] = $this->session->data['shipping_method']['code'];
+				} else {
+					$data['shipping_code'] = '';
+				}				
 			} else {
 				$data['shipping_firstname'] = '';
 				$data['shipping_lastname'] = '';	
@@ -177,13 +213,8 @@ class ControllerCheckoutConfirm extends Controller {
 				$data['shipping_country_id'] = '';
 				$data['shipping_address_format'] = '';
 				$data['shipping_method'] = '';
+				$data['shipping_code'] = '';
 			}
-			
-			if ($this->cart->hasShipping()) {
-				$this->tax->setZone($shipping_address['country_id'], $shipping_address['zone_id']);
-			} else {
-				$this->tax->setZone($payment_address['country_id'], $payment_address['zone_id']);
-			}				
 			
 			$product_data = array();
 		
@@ -191,35 +222,21 @@ class ControllerCheckoutConfirm extends Controller {
 				$option_data = array();
 	
 				foreach ($product['option'] as $option) {
-					if ($option['type'] != 'file') {	
-						$option_data[] = array(
-							'product_option_id'       => $option['product_option_id'],
-							'product_option_value_id' => $option['product_option_value_id'],
-							'product_option_id'       => $option['product_option_id'],
-							'product_option_value_id' => $option['product_option_value_id'],
-							'option_id'               => $option['option_id'],
-							'option_value_id'         => $option['option_value_id'],								   
-							'name'                    => $option['name'],
-							'value'                   => $option['option_value'],
-							'type'                    => $option['type']
-						);					
+					if ($option['type'] != 'file') {
+						$value = $option['option_value'];	
 					} else {
-						$this->load->library('encryption');
-						
-						$encryption = new Encryption($this->config->get('config_encryption'));
-						
-						$option_data[] = array(
-							'product_option_id'       => $option['product_option_id'],
-							'product_option_value_id' => $option['product_option_value_id'],
-							'product_option_id'       => $option['product_option_id'],
-							'product_option_value_id' => $option['product_option_value_id'],
-							'option_id'               => $option['option_id'],
-							'option_value_id'         => $option['option_value_id'],								   
-							'name'                    => $option['name'],
-							'value'                   => $encryption->decrypt($option['option_value']),
-							'type'                    => $option['type']
-						);								
-					}
+						$value = $this->encryption->decrypt($option['option_value']);
+					}	
+					
+					$option_data[] = array(
+						'product_option_id'       => $option['product_option_id'],
+						'product_option_value_id' => $option['product_option_value_id'],
+						'option_id'               => $option['option_id'],
+						'option_value_id'         => $option['option_value_id'],								   
+						'name'                    => $option['name'],
+						'value'                   => $value,
+						'type'                    => $option['type']
+					);					
 				}
 	 
 				$product_data[] = array(
@@ -232,33 +249,35 @@ class ControllerCheckoutConfirm extends Controller {
 					'subtract'   => $product['subtract'],
 					'price'      => $product['price'],
 					'total'      => $product['total'],
-					'tax'        => $this->tax->getRate($product['tax_class_id'])
+					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
+					'reward'     => $product['reward']
 				); 
 			}
 			
 			// Gift Voucher
-			if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
+			$voucher_data = array();
+			
+			if (!empty($this->session->data['vouchers'])) {
 				foreach ($this->session->data['vouchers'] as $voucher) {
-					$product_data[] = array(
-						'product_id' => 0,
-						'name'       => $voucher['description'],
-						'model'      => '',
-						'option'     => array(),
-						'download'   => array(),
-						'quantity'   => 1,
-						'subtract'   => false,
-						'price'      => $voucher['amount'],
-						'total'      => $voucher['amount'],
-						'tax'        => 0
+					$voucher_data[] = array(
+						'description'      => $voucher['description'],
+						'code'             => substr(md5(mt_rand()), 0, 10),
+						'to_name'          => $voucher['to_name'],
+						'to_email'         => $voucher['to_email'],
+						'from_name'        => $voucher['from_name'],
+						'from_email'       => $voucher['from_email'],
+						'voucher_theme_id' => $voucher['voucher_theme_id'],
+						'message'          => $voucher['message'],						
+						'amount'           => $voucher['amount']
 					);
 				}
-			} 
+			}  
 						
 			$data['products'] = $product_data;
+			$data['vouchers'] = $voucher_data;
 			$data['totals'] = $total_data;
 			$data['comment'] = $this->session->data['comment'];
 			$data['total'] = $total;
-			$data['reward'] = $this->cart->getTotalRewardPoints();
 			
 			if (isset($this->request->cookie['tracking'])) {
 				$this->load->model('affiliate/affiliate');
@@ -283,18 +302,29 @@ class ControllerCheckoutConfirm extends Controller {
 			$data['currency_value'] = $this->currency->getValue($this->currency->getCode());
 			$data['ip'] = $this->request->server['REMOTE_ADDR'];
 			
+			if (!empty($this->request->server['HTTP_X_FORWARDED_FOR'])) {
+				$data['forwarded_ip'] = $this->request->server['HTTP_X_FORWARDED_FOR'];	
+			} elseif(!empty($this->request->server['HTTP_CLIENT_IP'])) {
+				$data['forwarded_ip'] = $this->request->server['HTTP_CLIENT_IP'];	
+			} else {
+				$data['forwarded_ip'] = '';
+			}
+			
+			if (isset($this->request->server['HTTP_USER_AGENT'])) {
+				$data['user_agent'] = $this->request->server['HTTP_USER_AGENT'];	
+			} else {
+				$data['user_agent'] = '';
+			}
+			
+			if (isset($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
+				$data['accept_language'] = $this->request->server['HTTP_ACCEPT_LANGUAGE'];	
+			} else {
+				$data['accept_language'] = '';
+			}
+						
 			$this->load->model('checkout/order');
 			
-			$this->session->data['order_id'] = $this->model_checkout_order->create($data);
-			
-			// Gift Voucher
-			if (isset($this->session->data['vouchers']) && is_array($this->session->data['vouchers'])) {
-				$this->load->model('checkout/voucher');
-
-				foreach ($this->session->data['vouchers'] as $voucher) {
-					$this->model_checkout_voucher->addVoucher($this->session->data['order_id'], $voucher);
-				}
-			}
+			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($data);
 			
 			$this->data['column_name'] = $this->language->get('column_name');
 			$this->data['column_model'] = $this->language->get('column_model');
@@ -309,22 +339,17 @@ class ControllerCheckoutConfirm extends Controller {
 	
 				foreach ($product['option'] as $option) {
 					if ($option['type'] != 'file') {
-						$option_data[] = array(
-							'name'  => $option['name'],
-							'value' => (strlen($option['option_value']) > 20 ? substr($option['option_value'], 0, 20) . '..' : $option['option_value'])
-						);
+						$value = $option['option_value'];	
 					} else {
-						$this->load->library('encryption');
+						$filename = $this->encryption->decrypt($option['option_value']);
 						
-						$encryption = new Encryption($this->config->get('config_encryption'));
-						
-						$file = substr($encryption->decrypt($option['option_value']), 0, strrpos($encryption->decrypt($option['option_value']), '.'));
-						
-						$option_data[] = array(
-							'name'  => $option['name'],
-							'value' => (strlen($file) > 20 ? substr($file, 0, 20) . '..' : $file)
-						);												
+						$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
 					}
+										
+					$option_data[] = array(
+						'name'  => $option['name'],
+						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
+					);
 				}  
 	 
 				$this->data['products'][] = array(
@@ -334,9 +359,8 @@ class ControllerCheckoutConfirm extends Controller {
 					'option'     => $option_data,
 					'quantity'   => $product['quantity'],
 					'subtract'   => $product['subtract'],
-					'tax'        => $this->tax->getRate($product['tax_class_id']),
-					'price'      => $this->currency->format($product['price']),
-					'total'      => $this->currency->format($product['total']),
+					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
+					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']),
 					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id'])
 				); 
 			} 
@@ -344,8 +368,8 @@ class ControllerCheckoutConfirm extends Controller {
 			// Gift Voucher
 			$this->data['vouchers'] = array();
 			
-			if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
-				foreach ($this->session->data['vouchers'] as $key => $voucher) {
+			if (!empty($this->session->data['vouchers'])) {
+				foreach ($this->session->data['vouchers'] as $voucher) {
 					$this->data['vouchers'][] = array(
 						'description' => $voucher['description'],
 						'amount'      => $this->currency->format($voucher['amount'])
@@ -356,19 +380,17 @@ class ControllerCheckoutConfirm extends Controller {
 			$this->data['totals'] = $total_data;
 	
 			$this->data['payment'] = $this->getChild('payment/' . $this->session->data['payment_method']['code']);
-	
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/confirm.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/checkout/confirm.tpl';
-			} else {
-				$this->template = 'default/template/checkout/confirm.tpl';
-			}
+		} else {
+			$this->data['redirect'] = $redirect;
+		}			
 		
-			$json['output'] = $this->render();
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/confirm.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/checkout/confirm.tpl';
+		} else {
+			$this->template = 'default/template/checkout/confirm.tpl';
 		}
 		
-		$this->load->library('json');
-		
-		$this->response->setOutput(Json::encode($json));		
+		$this->response->setOutput($this->render());	
   	}
 }
 ?>

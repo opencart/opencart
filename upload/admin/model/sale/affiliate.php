@@ -22,21 +22,27 @@ class ModelSaleAffiliate extends Model {
 	
 		return $query->row;
 	}
-		
+	
+	public function getAffiliateByEmail($email) {
+		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "affiliate WHERE LCASE(email) = '" . $this->db->escape(strtolower($email)) . "'");
+	
+		return $query->row;
+	}
+			
 	public function getAffiliates($data = array()) {
 		$sql = "SELECT *, CONCAT(a.firstname, ' ', a.lastname) AS name, (SELECT SUM(at.amount) FROM " . DB_PREFIX . "affiliate_transaction at WHERE at.affiliate_id = a.affiliate_id GROUP BY at.affiliate_id) AS balance FROM " . DB_PREFIX . "affiliate a";
 
 		$implode = array();
 		
-		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
-			$implode[] = "LCASE(CONCAT(a.firstname, ' ', a.lastname)) LIKE LCASE('" . $this->db->escape($data['filter_name']) . "%')";
+		if (!empty($data['filter_name'])) {
+			$implode[] = "LCASE(CONCAT(a.firstname, ' ', a.lastname)) LIKE '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "%'";
 		}
 
-		if (isset($data['filter_email']) && !is_null($data['filter_email'])) {
+		if (!empty($data['filter_email'])) {
 			$implode[] = "a.email = '" . $this->db->escape($data['filter_email']) . "'";
 		}
 		
-		if (isset($data['filter_code']) && !is_null($data['filter_code'])) {
+		if (!empty($data['filter_code'])) {
 			$implode[] = "a.code = '" . $this->db->escape($data['filter_code']) . "'";
 		}
 					
@@ -48,7 +54,7 @@ class ModelSaleAffiliate extends Model {
 			$implode[] = "a.approved = '" . (int)$data['filter_approved'] . "'";
 		}		
 		
-		if (isset($data['filter_date_added']) && !is_null($data['filter_date_added'])) {
+		if (!empty($data['filter_date_added'])) {
 			$implode[] = "DATE(a.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 		
@@ -102,7 +108,7 @@ class ModelSaleAffiliate extends Model {
 			
 			$this->load->language('mail/affiliate');
 	
-			$message  = sprintf($this->language->get('text_approve_welcome'), $this->config->get('config_name')) . "\n\n";;
+			$message  = sprintf($this->language->get('text_approve_welcome'), $this->config->get('config_name')) . "\n\n";
 			$message .= $this->language->get('text_approve_login') . "\n";
 			$message .= HTTP_CATALOG . 'index.php?route=affiliate/login' . "\n\n";
 			$message .= $this->language->get('text_approve_services') . "\n\n";
@@ -119,7 +125,7 @@ class ModelSaleAffiliate extends Model {
 			$mail->setTo($affiliate_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($this->config->get('config_name'));
-			$mail->setSubject(sprintf($this->language->get('text_approve_subject'), $this->config->get('config_name')));
+			$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_approve_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
 			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
 		}
@@ -136,11 +142,11 @@ class ModelSaleAffiliate extends Model {
 		
 		$implode = array();
 		
-		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
+		if (!empty($data['filter_name'])) {
 			$implode[] = "CONCAT(firstname, ' ', lastname) LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
 		}
 		
-		if (isset($data['filter_email']) && !is_null($data['filter_email'])) {
+		if (!empty($data['filter_email'])) {
 			$implode[] = "email = '" . $this->db->escape($data['filter_email']) . "'";
 		}	
 				
@@ -152,7 +158,7 @@ class ModelSaleAffiliate extends Model {
 			$implode[] = "approved = '" . (int)$data['filter_approved'] . "'";
 		}		
 				
-		if (isset($data['filter_date_added']) && !is_null($data['filter_date_added'])) {
+		if (!empty($data['filter_date_added'])) {
 			$implode[] = "DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 		
@@ -205,8 +211,8 @@ class ModelSaleAffiliate extends Model {
 			$mail->setTo($affiliate_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($this->config->get('config_name'));
-			$mail->setSubject(sprintf($this->language->get('text_transaction_subject'), $this->config->get('config_name')));
-			$mail->setText($message);
+			$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_transaction_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
+			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
 		}
 	}
@@ -216,6 +222,14 @@ class ModelSaleAffiliate extends Model {
 	}
 	
 	public function getTransactions($affiliate_id, $start = 0, $limit = 10) {
+		if ($start < 0) {
+			$start = 0;
+		}
+		
+		if ($limit < 1) {
+			$limit = 10;
+		}	
+				
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "affiliate_transaction WHERE affiliate_id = '" . (int)$affiliate_id . "' ORDER BY date_added DESC LIMIT " . (int)$start . "," . (int)$limit);
 	
 		return $query->rows;

@@ -30,7 +30,6 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_transaction'] = $this->language->get('entry_transaction');
-		$this->data['entry_pdt_token'] = $this->language->get('entry_pdt_token');
 		$this->data['entry_debug'] = $this->language->get('entry_debug');
 		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_canceled_reversal_status'] = $this->language->get('entry_canceled_reversal_status');
@@ -102,12 +101,6 @@ class ControllerPaymentPPStandard extends Controller {
 			$this->data['pp_standard_transaction'] = $this->request->post['pp_standard_transaction'];
 		} else {
 			$this->data['pp_standard_transaction'] = $this->config->get('pp_standard_transaction');
-		}
-
-		if (isset($this->request->post['pp_standard_pdt_token'])) {
-			$this->data['pp_standard_pdt_token'] = $this->request->post['pp_standard_pdt_token'];
-		} else {
-			$this->data['pp_standard_pdt_token'] = $this->config->get('pp_standard_pdt_token');
 		}
 
 		if (isset($this->request->post['pp_standard_debug'])) {

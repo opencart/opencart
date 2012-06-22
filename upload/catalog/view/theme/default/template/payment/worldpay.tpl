@@ -1,4 +1,4 @@
-<form action="<?php echo $action; ?>" method="post" id="payment">
+<form action="<?php echo $action; ?>" method="post">
   <input type="hidden" name="instId" value="<?php echo $merchant; ?>" />
   <input type="hidden" name="cartId" value="<?php echo $order_id; ?>" />
   <input type="hidden" name="amount" value="<?php echo $amount; ?>" />
@@ -12,6 +12,8 @@
   <input type="hidden" name="email" value="<?php echo $email; ?>" />
   <input type="hidden" name="testMode" value="<?php echo $test; ?>" />
   <div class="buttons">
-    <div class="right"><a onclick="$('#payment').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></div>
+    <div class="right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="button" />
+    </div>
   </div>
 </form>

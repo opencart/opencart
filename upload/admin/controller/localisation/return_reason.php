@@ -252,7 +252,7 @@ class ControllerLocalisationReturnReason extends Controller {
 		$this->template = 'localisation/return_reason_list.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -329,7 +329,7 @@ class ControllerLocalisationReturnReason extends Controller {
 		$this->template = 'localisation/return_reason_form.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());	
@@ -341,7 +341,7 @@ class ControllerLocalisationReturnReason extends Controller {
     	}
 	
     	foreach ($this->request->post['return_reason'] as $language_id => $value) {
-      		if ((strlen(utf8_decode($value['name'])) < 3) || (strlen(utf8_decode($value['name'])) > 32)) {
+      		if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
         		$this->error['name'][$language_id] = $this->language->get('error_name');
       		}
     	}
@@ -361,7 +361,7 @@ class ControllerLocalisationReturnReason extends Controller {
 		$this->load->model('sale/return');
 		
 		foreach ($this->request->post['selected'] as $return_reason_id) {
-			$return_total = $this->model_sale_return->getTotalReturnProductsByReturnReasonId($return_reason_id);
+			$return_total = $this->model_sale_return->getTotalReturnsByReturnReasonId($return_reason_id);
 		
 			if ($return_total) {
 	  			$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);	

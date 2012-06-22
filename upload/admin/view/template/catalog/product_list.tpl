@@ -14,7 +14,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/product.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="location = '<?php echo $insert; ?>'" class="button"><span><?php echo $button_insert; ?></span></a><a onclick="$('#form').attr('action', '<?php echo $copy; ?>'); $('#form').submit();" class="button"><span><?php echo $button_copy; ?></span></a><a onclick="$('form').submit();" class="button"><span><?php echo $button_delete; ?></span></a></div>
+      <div class="buttons"><a onclick="location = '<?php echo $insert; ?>'" class="button"><?php echo $button_insert; ?></a><a onclick="$('#form').attr('action', '<?php echo $copy; ?>'); $('#form').submit();" class="button"><?php echo $button_copy; ?></a><a onclick="$('form').submit();" class="button"><?php echo $button_delete; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -72,7 +72,7 @@
                   <option value="0"><?php echo $text_disabled; ?></option>
                   <?php } ?>
                 </select></td>
-              <td align="right"><a onclick="filter();" class="button"><span><?php echo $button_filter; ?></span></a></td>
+              <td align="right"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
             </tr>
             <?php if ($products) { ?>
             <?php foreach ($products as $product) { ?>
@@ -85,13 +85,12 @@
               <td class="center"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" style="padding: 1px; border: 1px solid #DDDDDD;" /></td>
               <td class="left"><?php echo $product['name']; ?></td>
               <td class="left"><?php echo $product['model']; ?></td>
-              <td class="left">
-			    <?php if ($product['special']) { ?>
-                <span style="text-decoration:line-through"><?php echo $product['price']; ?></span><br/><span style="color:#b00;"><?php echo $product['special']; ?></span>
+              <td class="left"><?php if ($product['special']) { ?>
+                <span style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
+                <span style="color: #b00;"><?php echo $product['special']; ?></span>
                 <?php } else { ?>
-			    <?php echo $product['price']; ?>
-              <?php } ?>
-              </td>
+                <?php echo $product['price']; ?>
+                <?php } ?></td>
               <td class="right"><?php if ($product['quantity'] <= 0) { ?>
                 <span style="color: #FF0000;"><?php echo $product['quantity']; ?></span>
                 <?php } elseif ($product['quantity'] <= 5) { ?>
@@ -107,7 +106,7 @@
             <?php } ?>
             <?php } else { ?>
             <tr>
-              <td class="center" colspan="7"><?php echo $text_no_results; ?></td>
+              <td class="center" colspan="8"><?php echo $text_no_results; ?></td>
             </tr>
             <?php } ?>
           </tbody>
@@ -159,6 +158,59 @@ $('#form input').keydown(function(e) {
 	if (e.keyCode == 13) {
 		filter();
 	}
+});
+//--></script> 
+<script type="text/javascript"><!--
+$('input[name=\'filter_name\']').autocomplete({
+	delay: 0,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {		
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.product_id
+					}
+				}));
+			}
+		});
+	}, 
+	select: function(event, ui) {
+		$('input[name=\'filter_name\']').val(ui.item.label);
+						
+		return false;
+	},
+	focus: function(event, ui) {
+      	return false;
+   	}
+});
+
+$('input[name=\'filter_model\']').autocomplete({
+	delay: 0,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_model=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {		
+				response($.map(json, function(item) {
+					return {
+						label: item.model,
+						value: item.product_id
+					}
+				}));
+			}
+		});
+	}, 
+	select: function(event, ui) {
+		$('input[name=\'filter_model\']').val(ui.item.label);
+						
+		return false;
+	},
+	focus: function(event, ui) {
+      	return false;
+   	}
 });
 //--></script> 
 <?php echo $footer; ?>

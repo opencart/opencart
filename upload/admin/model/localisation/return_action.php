@@ -64,14 +64,14 @@ class ModelLocalisationReturnAction extends Model {
 			
 			return $query->rows;
 		} else {
-			$return_action_data = $this->cache->get('return_action.' . $this->config->get('config_language_id'));
+			$return_action_data = $this->cache->get('return_action.' . (int)$this->config->get('config_language_id'));
 		
 			if (!$return_action_data) {
 				$query = $this->db->query("SELECT return_action_id, name FROM " . DB_PREFIX . "return_action WHERE language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY name");
 	
 				$return_action_data = $query->rows;
 			
-				$this->cache->set('return_action.' . $this->config->get('config_language_id'), $return_action_data);
+				$this->cache->set('return_action.' . (int)$this->config->get('config_language_id'), $return_action_data);
 			}	
 	
 			return $return_action_data;				

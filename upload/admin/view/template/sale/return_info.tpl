@@ -8,7 +8,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/customer.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+      <div class="buttons"><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <div class="vtabs"><a href="#tab-return"><?php echo $tab_return; ?></a><a href="#tab-product"><?php echo $tab_product; ?></a><a href="#tab-history"><?php echo $tab_return_history; ?></a></div>
@@ -58,12 +58,6 @@
             <td id="return-status"><?php echo $return_status; ?></td>
           </tr>
           <?php } ?>
-          <?php if ($comment) { ?>
-          <tr>
-            <td><?php echo $text_comment; ?></td>
-            <td><?php echo $comment; ?></td>
-          </tr>
-          <?php } ?>
           <tr>
             <td><?php echo $text_date_added; ?></td>
             <td><?php echo $date_added; ?></td>
@@ -75,39 +69,45 @@
         </table>
       </div>
       <div id="tab-product" class="vtabs-content">
-        <table id="product" class="list">
-          <thead>
-            <tr>
-              <td class="left"><?php echo $column_product; ?></td>
-              <td class="left"><?php echo $column_model; ?></td>
-              <td class="right"><?php echo $column_quantity; ?></td>
-              <td class="left"><?php echo $column_reason; ?></td>
-              <td class="left"><?php echo $column_opened; ?></td>
-              <td class="left"><?php echo $column_comment; ?></td>
-              <td class="left"><?php echo $column_action; ?></td>
-            </tr>
-          </thead>
-          <?php foreach ($return_products as $return_product) { ?>
-          <tbody>
-            <tr>
-              <td class="left"><?php echo $return_product['name']; ?></td>
-              <td class="left"><?php echo $return_product['model']; ?></td>
-              <td class="right"><?php echo $return_product['quantity']; ?></td>
-              <td class="left"><?php echo $return_product['reason']; ?></td>
-              <td class="left"><?php echo $return_product['opened'] ? $text_yes : $text_no; ?></td>
-              <td class="left"><?php echo $return_product['comment']; ?></td>
-              <td class="left"><select name="return_product[<?php echo $return_product['return_product_id']; ?>][return_action_id]">
-                  <option value="0"></option>
-                  <?php foreach ($return_actions as $return_action) { ?>
-                  <?php if ($return_action['return_action_id'] == $return_product['return_action_id']) { ?>
-                  <option value="<?php echo $return_action['return_action_id']; ?>" selected="selected"><?php echo $return_action['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $return_action['return_action_id']; ?>"><?php echo $return_action['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select></td>
-            </tr>
-          </tbody>
+        <table class="form">
+          <tr>
+            <td><?php echo $text_product; ?></td>
+            <td><?php echo $product; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $text_model; ?></td>
+            <td><?php echo $model; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $text_quantity; ?></td>
+            <td><?php echo $quantity; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $text_return_reason; ?></td>
+            <td><?php echo $return_reason; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $text_opened; ?></td>
+            <td><?php echo $opened; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $text_return_action; ?></td>
+            <td><select name="return_action_id">
+                <option value="0"></option>
+                <?php foreach ($return_actions as $return_action) { ?>
+                <?php if ($return_action['return_action_id'] == $return_action_id) { ?>
+                <option value="<?php echo $return_action['return_action_id']; ?>" selected="selected"><?php echo $return_action['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $return_action['return_action_id']; ?>"><?php echo $return_action['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select></td>
+          </tr>
+          <?php if ($comment) { ?>
+          <tr>
+            <td><?php echo $text_comment; ?></td>
+            <td><?php echo $comment; ?></td>
+          </tr>
           <?php } ?>
         </table>
       </div>
@@ -133,7 +133,7 @@
           <tr>
             <td><?php echo $entry_comment; ?></td>
             <td><textarea name="comment" cols="40" rows="8" style="width: 99%"></textarea>
-              <div style="margin-top: 10px; text-align: right;"><a onclick="history();" id="button-history" class="button"><span><?php echo $button_add_history; ?></span></a></div></td>
+              <div style="margin-top: 10px; text-align: right;"><a onclick="history();" id="button-history" class="button"><?php echo $button_add_history; ?></a></div></td>
           </tr>
         </table>
       </div>
@@ -141,30 +141,34 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#product select').bind('change', function() {
-	var element = this;
-	 
+$('select[name=\'return_action_id\']').bind('change', function() {
 	$.ajax({
-		type: 'POST',
-		url: 'index.php?route=sale/return/product&token=<?php echo $token; ?>&return_id=<?php echo $return_id; ?>',
+		url: 'index.php?route=sale/return/action&token=<?php echo $token; ?>&return_id=<?php echo $return_id; ?>',
+		type: 'post',
 		dataType: 'json',
-		data: $('#product select'),
+		data: 'return_action_id=' + this.value,
 		beforeSend: function() {
-			$(element).after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
-		},
-		complete: function() {
-			$('.wait').remove();
+			$('.success, .warning, .attention').remove();
+			
+			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		success: function(json) {
-			$('.success, .warning').remove();
+			$('.success, .warning, .attention').remove();
 			
 			if (json['error']) {
-				$('#product').before('<div class="warning">' + json['error'] + '</div>');
+				$('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
+				
+				$('.warning').fadeIn('slow');
 			}
 			
 			if (json['success']) {
-				$('#product').before('<div class="success">' + json['success'] + '</div>');
+				$('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
+				
+				$('.success').fadeIn('slow');
 			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});	
 });
@@ -179,8 +183,8 @@ $('#history').load('index.php?route=sale/return/history&token=<?php echo $token;
 
 function history() {
 	$.ajax({
-		type: 'POST',
 		url: 'index.php?route=sale/return/history&token=<?php echo $token; ?>&return_id=<?php echo $return_id; ?>',
+		type: 'post',
 		dataType: 'html',
 		data: 'return_status_id=' + encodeURIComponent($('select[name=\'return_status_id\']').val()) + '&notify=' + encodeURIComponent($('input[name=\'notify\']').attr('checked') ? 1 : 0) + '&append=' + encodeURIComponent($('input[name=\'append\']').attr('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {

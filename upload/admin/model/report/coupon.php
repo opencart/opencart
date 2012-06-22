@@ -5,11 +5,11 @@ class ModelReportCoupon extends Model {
 
 		$implode = array();
 		
-		if (isset($data['filter_date_start']) && $data['filter_date_start']) {
+		if (!empty($data['filter_date_start'])) {
 			$implode[] = "DATE(c.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
 
-		if (isset($data['filter_date_end']) && $data['filter_date_end']) {
+		if (!empty($data['filter_date_end'])) {
 			$implode[] = "DATE(c.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 
@@ -41,11 +41,11 @@ class ModelReportCoupon extends Model {
 		
 		$implode = array();
 		
-		if (isset($data['filter_date_start']) && $data['filter_date_start']) {
+		if (!empty($data['filter_date_start'])) {
 			$implode[] = "DATE(date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
 
-		if (isset($data['filter_date_end']) && $data['filter_date_end']) {
+		if (!empty($data['filter_date_end'])) {
 			$implode[] = "DATE(date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 

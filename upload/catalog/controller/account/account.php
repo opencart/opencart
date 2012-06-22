@@ -55,11 +55,16 @@ class ControllerAccountAccount extends Controller {
 		$this->data['wishlist'] = $this->url->link('account/wishlist');
     	$this->data['order'] = $this->url->link('account/order', '', 'SSL');
     	$this->data['download'] = $this->url->link('account/download', '', 'SSL');
-		$this->data['reward'] = $this->url->link('account/reward', '', 'SSL');
 		$this->data['return'] = $this->url->link('account/return', '', 'SSL');
 		$this->data['transaction'] = $this->url->link('account/transaction', '', 'SSL');
 		$this->data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');
-				
+		
+		if ($this->config->get('reward_status')) {
+			$this->data['reward'] = $this->url->link('account/reward', '', 'SSL');
+		} else {
+			$this->data['reward'] = '';
+		}
+		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/account/account.tpl';
 		} else {

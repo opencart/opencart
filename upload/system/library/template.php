@@ -1,5 +1,5 @@
 <?php
-final class Template {
+class Template {
 	public $data = array();
 	
 	public function fetch($filename) {
@@ -18,7 +18,8 @@ final class Template {
 
       		return $content;
     	} else {
-      		exit('Error: Could not load template ' . $file . '!');
+			trigger_error('Error: Could not load template ' . $file . '!');
+			exit();				
     	}	
 	}
 }

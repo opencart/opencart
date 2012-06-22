@@ -4,9 +4,9 @@
 <head>
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
-<script type="text/javascript" src="view/javascript/jquery/jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.9.custom.min.js"></script>
-<link rel="stylesheet" type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.9.custom.css" />
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link rel="stylesheet" type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" />
 <script type="text/javascript" src="view/javascript/jquery/ui/external/jquery.bgiframe-2.1.2.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/jstree/jquery.tree.min.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/ajaxupload.js"></script>
@@ -100,13 +100,95 @@ img {
   <div id="column-right"></div>
 </div>
 <script type="text/javascript"><!--
-$(document).ready(function () { 
+$(document).ready(function() { 
+	(function(){
+		var special = jQuery.event.special,
+			uid1 = 'D' + (+new Date()),
+			uid2 = 'D' + (+new Date() + 1);
+	 
+		special.scrollstart = {
+			setup: function() {
+				var timer,
+					handler =  function(evt) {
+						var _self = this,
+							_args = arguments;
+	 
+						if (timer) {
+							clearTimeout(timer);
+						} else {
+							evt.type = 'scrollstart';
+							jQuery.event.handle.apply(_self, _args);
+						}
+	 
+						timer = setTimeout( function(){
+							timer = null;
+						}, special.scrollstop.latency);
+	 
+					};
+	 
+				jQuery(this).bind('scroll', handler).data(uid1, handler);
+			},
+			teardown: function(){
+				jQuery(this).unbind( 'scroll', jQuery(this).data(uid1) );
+			}
+		};
+	 
+		special.scrollstop = {
+			latency: 300,
+			setup: function() {
+	 
+				var timer,
+						handler = function(evt) {
+	 
+						var _self = this,
+							_args = arguments;
+	 
+						if (timer) {
+							clearTimeout(timer);
+						}
+	 
+						timer = setTimeout( function(){
+	 
+							timer = null;
+							evt.type = 'scrollstop';
+							jQuery.event.handle.apply(_self, _args);
+	 
+						}, special.scrollstop.latency);
+	 
+					};
+	 
+				jQuery(this).bind('scroll', handler).data(uid2, handler);
+	 
+			},
+			teardown: function() {
+				jQuery(this).unbind('scroll', jQuery(this).data(uid2));
+			}
+		};
+	})();
+	
+	$('#column-right').bind('scrollstop', function() {
+		$('#column-right a').each(function(index, element) {
+			var height = $('#column-right').height();
+			var offset = $(element).offset();
+						
+			if ((offset.top > 0) && (offset.top < height) && $(element).find('img').attr('src') == '<?php echo $no_image; ?>') {
+				$.ajax({
+					url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent('data/' + $(element).find('input[name=\'image\']').attr('value')),
+					dataType: 'html',
+					success: function(html) {
+						$(element).find('img').replaceWith('<img src="' + html + '" alt="" title="" />');
+					}
+				});
+			}
+		});
+	});
+	
 	$('#column-left').tree({
 		data: { 
 			type: 'json',
 			async: true, 
 			opts: { 
-				method: 'POST', 
+				method: 'post', 
 				url: 'index.php?route=common/filemanager/directory&token=<?php echo $token; ?>'
 			} 
 		},
@@ -151,7 +233,7 @@ $(document).ready(function () {
 			onselect: function (NODE, TREE_OBJ) {
 				$.ajax({
 					url: 'index.php?route=common/filemanager/files&token=<?php echo $token; ?>',
-					type: 'POST',
+					type: 'post',
 					data: 'directory=' + encodeURIComponent($(NODE).attr('directory')),
 					dataType: 'json',
 					success: function(json) {
@@ -159,31 +241,25 @@ $(document).ready(function () {
 						
 						if (json) {
 							for (i = 0; i < json.length; i++) {
-								
-								name = '';
-								
-								filename = json[i]['filename'];
-								
-								for (j = 0; j < filename.length; j = j + 15) {
-									name += filename.substr(j, 15) + '<br />';
-								}
-								
-								name += json[i]['size'];
-								
-								html += '<a file="' + json[i]['file'] + '"><img src="' + json[i]['thumb'] + '" title="' + json[i]['filename'] + '" /><br />' + name + '</a>';
+								html += '<a><img src="<?php echo $no_image; ?>" alt="" title="" /><br />' + ((json[i]['filename'].length > 15) ? (json[i]['filename'].substr(0, 15) + '..') : json[i]['filename']) + '<br />' + json[i]['size'] + '<input type="hidden" name="image" value="' + json[i]['file'] + '" /></a>';
 							}
 						}
 						
 						html += '</div>';
 						
 						$('#column-right').html(html);
+
+						$('#column-right').trigger('scrollstop');	
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
 				});
 			}
 		}
 	});	
-	
-	$('#column-right a').live('click', function () {
+
+	$('#column-right a').live('click', function() {
 		if ($(this).attr('class') == 'selected') {
 			$(this).removeAttr('class');
 		} else {
@@ -193,27 +269,27 @@ $(document).ready(function () {
 		}
 	});
 	
-	$('#column-right a').live('dblclick', function () {
+	$('#column-right a').live('dblclick', function() {
 		<?php if ($fckeditor) { ?>
-		window.opener.CKEDITOR.tools.callFunction(<?php echo $fckeditor; ?>, '<?php echo $directory; ?>' + $(this).attr('file'));
+		window.opener.CKEDITOR.tools.callFunction(<?php echo $fckeditor; ?>, '<?php echo $directory; ?>' + $(this).find('input[name=\'image\']').attr('value'));
 		
 		self.close();	
 		<?php } else { ?>
-		parent.$('#<?php echo $field; ?>').attr('value', 'data/' + $(this).attr('file'));
+		parent.$('#<?php echo $field; ?>').attr('value', 'data/' + $(this).find('input[name=\'image\']').attr('value'));
 		parent.$('#dialog').dialog('close');
 		
 		parent.$('#dialog').remove();	
 		<?php } ?>
 	});		
 						
-	$('#create').bind('click', function () {
+	$('#create').bind('click', function() {
 		var tree = $.tree.focused();
 		
 		if (tree.selected) {
 			$('#dialog').remove();
 			
 			html  = '<div id="dialog">';
-			html += '<?php echo $entry_folder; ?> <input type="text" name="name" value="" /> <input type="button" value="Submit" />';
+			html += '<?php echo $entry_folder; ?> <input type="text" name="name" value="" /> <input type="button" value="<?php echo $button_submit; ?>" />';
 			html += '</div>';
 			
 			$('#column-right').prepend(html);
@@ -223,10 +299,10 @@ $(document).ready(function () {
 				resizable: false
 			});	
 			
-			$('#dialog input[type=\'button\']').bind('click', function () {
+			$('#dialog input[type=\'button\']').bind('click', function() {
 				$.ajax({
 					url: 'index.php?route=common/filemanager/create&token=<?php echo $token; ?>',
-					type: 'POST',
+					type: 'post',
 					data: 'directory=' + encodeURIComponent($(tree.selected).attr('directory')) + '&name=' + encodeURIComponent($('#dialog input[name=\'name\']').val()),
 					dataType: 'json',
 					success: function(json) {
@@ -239,6 +315,9 @@ $(document).ready(function () {
 						} else {
 							alert(json.error);
 						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
 				});
 			});
@@ -247,14 +326,14 @@ $(document).ready(function () {
 		}
 	});
 	
-	$('#delete').bind('click', function () {
-		path = $('#column-right a.selected').attr('file');
+	$('#delete').bind('click', function() {
+		path = $('#column-right a.selected').find('input[name=\'image\']').attr('value');
 							 
 		if (path) {
 			$.ajax({
 				url: 'index.php?route=common/filemanager/delete&token=<?php echo $token; ?>',
-				type: 'POST',
-				data: 'path=' + path,
+				type: 'post',
+				data: 'path=' + encodeURIComponent(path),
 				dataType: 'json',
 				success: function(json) {
 					if (json.success) {
@@ -268,6 +347,9 @@ $(document).ready(function () {
 					if (json.error) {
 						alert(json.error);
 					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 				}
 			});				
 		} else {
@@ -276,7 +358,7 @@ $(document).ready(function () {
 			if (tree.selected) {
 				$.ajax({
 					url: 'index.php?route=common/filemanager/delete&token=<?php echo $token; ?>',
-					type: 'POST',
+					type: 'post',
 					data: 'path=' + encodeURIComponent($(tree.selected).attr('directory')),
 					dataType: 'json',
 					success: function(json) {
@@ -291,6 +373,9 @@ $(document).ready(function () {
 						if (json.error) {
 							alert(json.error);
 						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
 				});			
 			} else {
@@ -299,11 +384,11 @@ $(document).ready(function () {
 		}
 	});
 	
-	$('#move').bind('click', function () {
+	$('#move').bind('click', function() {
 		$('#dialog').remove();
 		
 		html  = '<div id="dialog">';
-		html += '<?php echo $entry_move; ?> <select name="to"></select> <input type="button" value="Submit" />';
+		html += '<?php echo $entry_move; ?> <select name="to"></select> <input type="button" value="<?php echo $button_submit; ?>" />';
 		html += '</div>';
 
 		$('#column-right').prepend(html);
@@ -315,13 +400,13 @@ $(document).ready(function () {
 
 		$('#dialog select[name=\'to\']').load('index.php?route=common/filemanager/folders&token=<?php echo $token; ?>');
 		
-		$('#dialog input[type=\'button\']').bind('click', function () {
-			path = $('#column-right a.selected').attr('file');
+		$('#dialog input[type=\'button\']').bind('click', function() {
+			path = $('#column-right a.selected').find('input[name=\'image\']').attr('value');
 							 
 			if (path) {																
 				$.ajax({
 					url: 'index.php?route=common/filemanager/move&token=<?php echo $token; ?>',
-					type: 'POST',
+					type: 'post',
 					data: 'from=' + encodeURIComponent(path) + '&to=' + encodeURIComponent($('#dialog select[name=\'to\']').val()),
 					dataType: 'json',
 					success: function(json) {
@@ -338,6 +423,9 @@ $(document).ready(function () {
 						if (json.error) {
 							alert(json.error);
 						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
 				});
 			} else {
@@ -345,7 +433,7 @@ $(document).ready(function () {
 				
 				$.ajax({
 					url: 'index.php?route=common/filemanager/move&token=<?php echo $token; ?>',
-					type: 'POST',
+					type: 'post',
 					data: 'from=' + encodeURIComponent($(tree.selected).attr('directory')) + '&to=' + encodeURIComponent($('#dialog select[name=\'to\']').val()),
 					dataType: 'json',
 					success: function(json) {
@@ -362,17 +450,20 @@ $(document).ready(function () {
 						if (json.error) {
 							alert(json.error);
 						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
 				});				
 			}
 		});
 	});
 
-	$('#copy').bind('click', function () {
+	$('#copy').bind('click', function() {
 		$('#dialog').remove();
 		
 		html  = '<div id="dialog">';
-		html += '<?php echo $entry_copy; ?> <input type="text" name="name" value="" /> <input type="button" value="Submit" />';
+		html += '<?php echo $entry_copy; ?> <input type="text" name="name" value="" /> <input type="button" value="<?php echo $button_submit; ?>" />';
 		html += '</div>';
 
 		$('#column-right').prepend(html);
@@ -384,13 +475,13 @@ $(document).ready(function () {
 		
 		$('#dialog select[name=\'to\']').load('index.php?route=common/filemanager/folders&token=<?php echo $token; ?>');
 		
-		$('#dialog input[type=\'button\']').bind('click', function () {
-			path = $('#column-right a.selected').attr('file');
+		$('#dialog input[type=\'button\']').bind('click', function() {
+			path = $('#column-right a.selected').find('input[name=\'image\']').attr('value');
 							 
 			if (path) {																
 				$.ajax({
 					url: 'index.php?route=common/filemanager/copy&token=<?php echo $token; ?>',
-					type: 'POST',
+					type: 'post',
 					data: 'path=' + encodeURIComponent(path) + '&name=' + encodeURIComponent($('#dialog input[name=\'name\']').val()),
 					dataType: 'json',
 					success: function(json) {
@@ -407,6 +498,9 @@ $(document).ready(function () {
 						if (json.error) {
 							alert(json.error);
 						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
 				});
 			} else {
@@ -414,7 +508,7 @@ $(document).ready(function () {
 				
 				$.ajax({
 					url: 'index.php?route=common/filemanager/copy&token=<?php echo $token; ?>',
-					type: 'POST',
+					type: 'post',
 					data: 'path=' + encodeURIComponent($(tree.selected).attr('directory')) + '&name=' + encodeURIComponent($('#dialog input[name=\'name\']').val()),
 					dataType: 'json',
 					success: function(json) {
@@ -431,17 +525,20 @@ $(document).ready(function () {
 						if (json.error) {
 							alert(json.error);
 						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
 				});				
 			}
 		});	
 	});
 	
-	$('#rename').bind('click', function () {
+	$('#rename').bind('click', function() {
 		$('#dialog').remove();
 		
 		html  = '<div id="dialog">';
-		html += '<?php echo $entry_rename; ?> <input type="text" name="name" value="" /> <input type="button" value="Submit" />';
+		html += '<?php echo $entry_rename; ?> <input type="text" name="name" value="" /> <input type="button" value="<?php echo $button_submit; ?>" />';
 		html += '</div>';
 
 		$('#column-right').prepend(html);
@@ -451,13 +548,13 @@ $(document).ready(function () {
 			resizable: false
 		});
 		
-		$('#dialog input[type=\'button\']').bind('click', function () {
-			path = $('#column-right a.selected').attr('file');
+		$('#dialog input[type=\'button\']').bind('click', function() {
+			path = $('#column-right a.selected').find('input[name=\'image\']').attr('value');
 							 
 			if (path) {		
 				$.ajax({
 					url: 'index.php?route=common/filemanager/rename&token=<?php echo $token; ?>',
-					type: 'POST',
+					type: 'post',
 					data: 'path=' + encodeURIComponent(path) + '&name=' + encodeURIComponent($('#dialog input[name=\'name\']').val()),
 					dataType: 'json',
 					success: function(json) {
@@ -474,6 +571,9 @@ $(document).ready(function () {
 						if (json.error) {
 							alert(json.error);
 						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
 				});			
 			} else {
@@ -481,7 +581,7 @@ $(document).ready(function () {
 				
 				$.ajax({ 
 					url: 'index.php?route=common/filemanager/rename&token=<?php echo $token; ?>',
-					type: 'POST',
+					type: 'post',
 					data: 'path=' + encodeURIComponent($(tree.selected).attr('directory')) + '&name=' + encodeURIComponent($('#dialog input[name=\'name\']').val()),
 					dataType: 'json',
 					success: function(json) {
@@ -498,6 +598,9 @@ $(document).ready(function () {
 						if (json.error) {
 							alert(json.error);
 						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
 				});
 			}
@@ -521,7 +624,7 @@ $(document).ready(function () {
 			this.submit();
 		},
 		onSubmit: function(file, extension) {
-			$('#upload').append('<img src="view/image/loading.gif" id="loading" style="padding-left: 5px;" />');
+			$('#upload').append('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		onComplete: function(file, json) {
 			if (json.success) {
@@ -536,11 +639,11 @@ $(document).ready(function () {
 				alert(json.error);
 			}
 			
-			$('#loading').remove();	
+			$('.loading').remove();	
 		}
 	});
 	
-	$('#refresh').bind('click', function () {
+	$('#refresh').bind('click', function() {
 		var tree = $.tree.focused();
 		
 		tree.refresh(tree.selected);

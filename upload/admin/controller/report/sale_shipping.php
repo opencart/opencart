@@ -179,7 +179,7 @@ class ControllerReportSaleShipping extends Controller {
 		$this->template = 'report/sale_shipping.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

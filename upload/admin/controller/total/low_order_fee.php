@@ -25,7 +25,7 @@ class ControllerTotalLowOrderFee extends Controller {
 		
 		$this->data['entry_total'] = $this->language->get('entry_total');
 		$this->data['entry_fee'] = $this->language->get('entry_fee');
-		$this->data['entry_tax'] = $this->language->get('entry_tax');
+		$this->data['entry_tax_class'] = $this->language->get('entry_tax_class');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 					
@@ -99,7 +99,7 @@ class ControllerTotalLowOrderFee extends Controller {
 		$this->template = 'total/low_order_fee.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

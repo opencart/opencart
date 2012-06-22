@@ -8,14 +8,18 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/order.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="window.open('<?php echo $invoice; ?>');" class="button"><span><?php echo $button_invoice; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+      <div class="buttons"><a onclick="window.open('<?php echo $invoice; ?>');" class="button"><?php echo $button_invoice; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <div class="vtabs"><a href="#tab-order"><?php echo $tab_order; ?></a><a href="#tab-payment"><?php echo $tab_payment; ?></a>
         <?php if ($shipping_method) { ?>
         <a href="#tab-shipping"><?php echo $tab_shipping; ?></a>
         <?php } ?>
-        <a href="#tab-product"><?php echo $tab_product; ?></a><a href="#tab-history"><?php echo $tab_order_history; ?></a></div>
+        <a href="#tab-product"><?php echo $tab_product; ?></a><a href="#tab-history"><?php echo $tab_order_history; ?></a>
+        <?php if ($maxmind_id) { ?>
+        <a href="#tab-fraud"><?php echo $tab_fraud; ?></a>
+        <?php } ?>
+      </div>
       <div id="tab-order" class="vtabs-content">
         <table class="form">
           <tr>
@@ -24,7 +28,11 @@
           </tr>
           <tr>
             <td><?php echo $text_invoice_no; ?></td>
-            <td><?php echo $invoice_no; ?></td>
+            <td><?php if ($invoice_no) { ?>
+              <?php echo $invoice_no; ?>
+              <?php } else { ?>
+              <span id="invoice"><b>[</b> <a id="invoice-generate"><?php echo $text_generate; ?></a> <b>]</b></span>
+              <?php } ?></td>
           </tr>
           <tr>
             <td><?php echo $text_store_name; ?></td>
@@ -52,10 +60,6 @@
           </tr>
           <?php } ?>
           <tr>
-            <td><?php echo $text_ip; ?></td>
-            <td><?php echo $ip; ?></td>
-          </tr>
-          <tr>
             <td><?php echo $text_email; ?></td>
             <td><?php echo $email; ?></td>
           </tr>
@@ -74,9 +78,9 @@
             <td><?php echo $total; ?>
               <?php if ($credit && $customer) { ?>
               <?php if (!$credit_total) { ?>
-              <img src="view/image/add.png" alt="<?php echo $text_credit_add; ?>" title="<?php echo $text_credit_add; ?>" id="credit_add" class="icon" />
+              <span id="credit"><b>[</b> <a id="credit-add"><?php echo $text_credit_add; ?></a> <b>]</b></span>
               <?php } else { ?>
-              <img src="view/image/delete.png" alt="<?php echo $text_credit_remove; ?>" title="<?php echo $text_credit_remove; ?>" id="credit_remove" class="icon" />
+              <span id="credit"><b>[</b> <a id="credit-remove"><?php echo $text_credit_remove; ?></a> <b>]</b></span>
               <?php } ?>
               <?php } ?></td>
           </tr>
@@ -85,9 +89,9 @@
             <td><?php echo $text_reward; ?></td>
             <td><?php echo $reward; ?>
               <?php if (!$reward_total) { ?>
-              <img src="view/image/add.png" alt="<?php echo $text_reward_add; ?>" title="<?php echo $text_reward_add; ?>" id="reward_add" class="icon" />
+              <span id="reward"><b>[</b> <a id="reward-add"><?php echo $text_reward_add; ?></a> <b>]</b></span>
               <?php } else { ?>
-              <img src="view/image/delete.png" alt="<?php echo $text_reward_remove; ?>" title="<?php echo $text_reward_remove; ?>" id="reward_remove" class="icon" />
+              <span id="reward"><b>[</b> <a id="reward-remove"><?php echo $text_reward_remove; ?></a> <b>]</b></span>
               <?php } ?></td>
           </tr>
           <?php } ?>
@@ -112,10 +116,34 @@
             <td><?php echo $text_commission; ?></td>
             <td><?php echo $commission; ?>
               <?php if (!$commission_total) { ?>
-              <img src="view/image/add.png" alt="<?php echo $text_commission_add; ?>" title="<?php echo $text_commission_add; ?>" id="commission_add" class="icon" />
+              <span id="commission"><b>[</b> <a id="commission-add"><?php echo $text_commission_add; ?></a> <b>]</b></span>
               <?php } else { ?>
-              <img src="view/image/delete.png" alt="<?php echo $text_commission_remove; ?>" title="<?php echo $text_commission_remove; ?>" id="commission_remove" class="icon" />
+              <span id="commission"><b>[</b> <a id="commission-remove"><?php echo $text_commission_remove; ?></a> <b>]</b></span>
               <?php } ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip) { ?>
+          <tr>
+            <td><?php echo $text_ip; ?></td>
+            <td><?php echo $ip; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($forwarded_ip) { ?>
+          <tr>
+            <td><?php echo $text_forwarded_ip; ?></td>
+            <td><?php echo $forwarded_ip; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($user_agent) { ?>
+          <tr>
+            <td><?php echo $text_user_agent; ?></td>
+            <td><?php echo $user_agent; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($accept_language) { ?>
+          <tr>
+            <td><?php echo $text_accept_language; ?></td>
+            <td><?php echo $accept_language; ?></td>
           </tr>
           <?php } ?>
           <tr>
@@ -144,6 +172,18 @@
             <td><?php echo $payment_company; ?></td>
           </tr>
           <?php } ?>
+          <?php if ($payment_company_id) { ?>
+          <tr>
+            <td><?php echo $text_company_id; ?></td>
+            <td><?php echo $payment_company_id; ?></td>
+          </tr>
+          <?php } ?>          
+          <?php if ($payment_tax_id) { ?>
+          <tr>
+            <td><?php echo $text_tax_id; ?></td>
+            <td><?php echo $payment_tax_id; ?></td>
+          </tr>
+          <?php } ?>            
           <tr>
             <td><?php echo $text_address_1; ?></td>
             <td><?php echo $payment_address_1; ?></td>
@@ -245,7 +285,7 @@
       </div>
       <?php } ?>
       <div id="tab-product" class="vtabs-content">
-        <table id="product" class="list">
+        <table class="list">
           <thead>
             <tr>
               <td class="left"><?php echo $column_product; ?></td>
@@ -255,14 +295,10 @@
               <td class="right"><?php echo $column_total; ?></td>
             </tr>
           </thead>
-          <?php foreach ($products as $product) { ?>
-          <tbody id="product-row<?php echo $product['order_product_id']; ?>">
+          <tbody>
+            <?php foreach ($products as $product) { ?>
             <tr>
-              <td class="left"><?php if ($product['product_id']) { ?>
-                <a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-                <?php } else { ?>
-                <?php echo $product['name']; ?>
-                <?php } ?>
+              <td class="left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
                 <?php foreach ($product['option'] as $option) { ?>
                 <br />
                 <?php if ($option['type'] != 'file') { ?>
@@ -276,8 +312,17 @@
               <td class="right"><?php echo $product['price']; ?></td>
               <td class="right"><?php echo $product['total']; ?></td>
             </tr>
+            <?php } ?>
+            <?php foreach ($vouchers as $voucher) { ?>
+            <tr>
+              <td class="left"><a href="<?php echo $voucher['href']; ?>"><?php echo $voucher['description']; ?></a></td>
+              <td class="left"></td>
+              <td class="right">1</td>
+              <td class="right"><?php echo $voucher['amount']; ?></td>
+              <td class="right"><?php echo $voucher['amount']; ?></td>
+            </tr>
+            <?php } ?>
           </tbody>
-          <?php } ?>
           <?php foreach ($totals as $totals) { ?>
           <tbody id="totals">
             <tr>
@@ -331,147 +376,531 @@
           <tr>
             <td><?php echo $entry_comment; ?></td>
             <td><textarea name="comment" cols="40" rows="8" style="width: 99%"></textarea>
-              <div style="margin-top: 10px; text-align: right;"><a onclick="history();" id="button-history" class="button"><span><?php echo $button_add_history; ?></span></a></div></td>
+              <div style="margin-top: 10px; text-align: right;"><a id="button-history" class="button"><?php echo $button_add_history; ?></a></div></td>
           </tr>
         </table>
       </div>
+      <?php if ($maxmind_id) { ?>
+      <div id="tab-fraud" class="vtabs-content">
+        <table class="form">
+          <?php if ($country_match) { ?>
+          <tr>
+            <td><?php echo $text_country_match; ?></td>
+            <td><?php echo $country_match; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($country_code) { ?>
+          <tr>
+            <td><?php echo $text_country_code; ?></td>
+            <td><?php echo $country_code; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($high_risk_country) { ?>
+          <tr>
+            <td><?php echo $text_high_risk_country; ?></td>
+            <td><?php echo $high_risk_country; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($distance) { ?>
+          <tr>
+            <td><?php echo $text_distance; ?></td>
+            <td><?php echo $distance; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_region) { ?>
+          <tr>
+            <td><?php echo $text_ip_region; ?></td>
+            <td><?php echo $ip_region; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_city) { ?>
+          <tr>
+            <td><?php echo $text_ip_city; ?></td>
+            <td><?php echo $ip_city; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_latitude) { ?>
+          <tr>
+            <td><?php echo $text_ip_latitude; ?></td>
+            <td><?php echo $ip_latitude; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_longitude) { ?>
+          <tr>
+            <td><?php echo $text_ip_longitude; ?></td>
+            <td><?php echo $ip_longitude; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_isp) { ?>
+          <tr>
+            <td><?php echo $text_ip_isp; ?></td>
+            <td><?php echo $ip_isp; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_org) { ?>
+          <tr>
+            <td><?php echo $text_ip_org; ?></td>
+            <td><?php echo $ip_org; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_asnum) { ?>
+          <tr>
+            <td><?php echo $text_ip_asnum; ?></td>
+            <td><?php echo $ip_asnum; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_user_type) { ?>
+          <tr>
+            <td><?php echo $text_ip_user_type; ?></td>
+            <td><?php echo $ip_user_type; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_country_confidence) { ?>
+          <tr>
+            <td><?php echo $text_ip_country_confidence; ?></td>
+            <td><?php echo $ip_country_confidence; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_region_confidence) { ?>
+          <tr>
+            <td><?php echo $text_ip_region_confidence; ?></td>
+            <td><?php echo $ip_region_confidence; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_city_confidence) { ?>
+          <tr>
+            <td><?php echo $text_ip_city_confidence; ?></td>
+            <td><?php echo $ip_city_confidence; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_postal_confidence) { ?>
+          <tr>
+            <td><?php echo $text_ip_postal_confidence; ?></td>
+            <td><?php echo $ip_postal_confidence; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_postal_code) { ?>
+          <tr>
+            <td><?php echo $text_ip_postal_code; ?></td>
+            <td><?php echo $ip_postal_code; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_accuracy_radius) { ?>
+          <tr>
+            <td><?php echo $text_ip_accuracy_radius; ?></td>
+            <td><?php echo $ip_accuracy_radius; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_net_speed_cell) { ?>
+          <tr>
+            <td><?php echo $text_ip_net_speed_cell; ?></td>
+            <td><?php echo $ip_net_speed_cell; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_metro_code) { ?>
+          <tr>
+            <td><?php echo $text_ip_metro_code; ?></td>
+            <td><?php echo $ip_metro_code; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_area_code) { ?>
+          <tr>
+            <td><?php echo $text_ip_area_code; ?></td>
+            <td><?php echo $ip_area_code; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_time_zone) { ?>
+          <tr>
+            <td><?php echo $text_ip_time_zone; ?></td>
+            <td><?php echo $ip_time_zone; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_region_name) { ?>
+          <tr>
+            <td><?php echo $text_ip_region_name; ?></td>
+            <td><?php echo $ip_region_name; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_domain) { ?>
+          <tr>
+            <td><?php echo $text_ip_domain; ?></td>
+            <td><?php echo $ip_domain; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_country_name) { ?>
+          <tr>
+            <td><?php echo $text_ip_country_name; ?></td>
+            <td><?php echo $ip_country_name; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_continent_code) { ?>
+          <tr>
+            <td><?php echo $text_ip_continent_code; ?></td>
+            <td><?php echo $ip_continent_code; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ip_corporate_proxy) { ?>
+          <tr>
+            <td><?php echo $text_ip_corporate_proxy; ?></td>
+            <td><?php echo $ip_corporate_proxy; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($anonymous_proxy) { ?>
+          <tr>
+            <td><?php echo $text_anonymous_proxy; ?></td>
+            <td><?php echo $anonymous_proxy; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($proxy_score) { ?>
+          <tr>
+            <td><?php echo $text_proxy_score; ?></td>
+            <td><?php echo $proxy_score; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($is_trans_proxy) { ?>
+          <tr>
+            <td><?php echo $text_is_trans_proxy; ?></td>
+            <td><?php echo $is_trans_proxy; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($free_mail) { ?>
+          <tr>
+            <td><?php echo $text_free_mail; ?></td>
+            <td><?php echo $free_mail; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($carder_email) { ?>
+          <tr>
+            <td><?php echo $text_carder_email; ?></td>
+            <td><?php echo $carder_email; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($high_risk_username) { ?>
+          <tr>
+            <td><?php echo $text_high_risk_username; ?></td>
+            <td><?php echo $high_risk_username; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($high_risk_password) { ?>
+          <tr>
+            <td><?php echo $text_high_risk_password; ?></td>
+            <td><?php echo $high_risk_password; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($bin_match) { ?>
+          <tr>
+            <td><?php echo $text_bin_match; ?></td>
+            <td><?php echo $bin_match; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($bin_country) { ?>
+          <tr>
+            <td><?php echo $text_bin_country; ?></td>
+            <td><?php echo $bin_country; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($bin_name_match) { ?>
+          <tr>
+            <td><?php echo $text_bin_name_match; ?></td>
+            <td><?php echo $bin_name_match; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($bin_name) { ?>
+          <tr>
+            <td><?php echo $text_bin_name; ?></td>
+            <td><?php echo $bin_name; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($bin_phone_match) { ?>
+          <tr>
+            <td><?php echo $text_bin_phone_match; ?></td>
+            <td><?php echo $bin_phone_match; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($bin_phone) { ?>
+          <tr>
+            <td><?php echo $text_bin_phone; ?></td>
+            <td><?php echo $bin_phone; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($customer_phone_in_billing_location) { ?>
+          <tr>
+            <td><?php echo $text_customer_phone_in_billing_location; ?></td>
+            <td><?php echo $customer_phone_in_billing_location; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ship_forward) { ?>
+          <tr>
+            <td><?php echo $text_ship_forward; ?></td>
+            <td><?php echo $ship_forward; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($city_postal_match) { ?>
+          <tr>
+            <td><?php echo $text_city_postal_match; ?></td>
+            <td><?php echo $city_postal_match; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($ship_city_postal_match) { ?>
+          <tr>
+            <td><?php echo $text_ship_city_postal_match; ?></td>
+            <td><?php echo $ship_city_postal_match; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($score) { ?>
+          <tr>
+            <td><?php echo $text_score; ?></td>
+            <td><?php echo $score; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($explanation) { ?>
+          <tr>
+            <td><?php echo $text_explanation; ?></td>
+            <td><?php echo $explanation; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($risk_score) { ?>
+          <tr>
+            <td><?php echo $text_risk_score; ?></td>
+            <td><?php echo $risk_score; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($queries_remaining) { ?>
+          <tr>
+            <td><?php echo $text_queries_remaining; ?></td>
+            <td><?php echo $queries_remaining; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($maxmind_id) { ?>
+          <tr>
+            <td><?php echo $text_maxmind_id; ?></td>
+            <td><?php echo $maxmind_id; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($error) { ?>
+          <tr>
+            <td><?php echo $text_error; ?></td>
+            <td><?php echo $error; ?></td>
+          </tr>
+          <?php } ?>
+        </table>
+      </div>
+      <?php } ?>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#reward_add').live('click', function() {
+$('#invoice-generate').live('click', function() {
 	$.ajax({
-		type: 'POST',
-		url: 'index.php?route=sale/order/addreward&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		url: 'index.php?route=sale/order/createinvoiceno&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		dataType: 'json',
+		beforeSend: function() {
+			$('#invoice').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');	
+		},
+		complete: function() {
+			$('.loading').remove();
+		},
 		success: function(json) {
-			if (json.error) {
-				alert(json.error);
+			$('.success, .warning').remove();
+						
+			if (json['error']) {
+				$('#tab-order').prepend('<div class="warning" style="display: none;">' + json['error'] + '</div>');
+				
+				$('.warning').fadeIn('slow');
 			}
 			
-			if (json.success) {
-				alert(json.success);
-
-				$('#reward_add').fadeOut();
-                
-				$('#reward_add').replaceWith('<img src="view/image/delete.png" alt="<?php echo $text_reward_remove; ?>" id="reward_remove" class="icon" />');
-      		  			
-				$('#reward_remove').fadeIn();
+			if (json.invoice_no) {
+				$('#invoice').fadeOut('slow', function() {
+					$('#invoice').html(json['invoice_no']);
+					
+					$('#invoice').fadeIn('slow');
+				});
 			}
 		}
 	});
 });
 
-$('#reward_remove').live('click', function() {
+$('#credit-add').live('click', function() {
 	$.ajax({
-		type: 'POST',
-		url: 'index.php?route=sale/order/removereward&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
-		dataType: 'json',
-		success: function(json) {
-			if (json.error) {
-				alert(json.error);
-			}
-			
-			if (json.success) {
-				alert(json.success);
-				
-				$('#reward_remove').fadeOut();
-				
-				$('#reward_remove').replaceWith('<img src="view/image/add.png" alt="<?php echo $text_reward_add; ?>" id="reward_add" class="icon" />');
-				
-				$('#reward_add').fadeIn();
-			}
-		}
-	});
-});
-
-$('#commission_add').live('click', function() {
-	$.ajax({
-		type: 'POST',
-		url: 'index.php?route=sale/order/addcommission&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
-		dataType: 'json',
-		success: function(json) {
-			if (json.error) {
-				alert(json.error);
-			}
-			
-			if (json.success) {
-				alert(json.success);
-
-				$('#commission_add').fadeOut();
-                
-				$('#commission_add').replaceWith('<img src="view/image/delete.png" alt="<?php echo $text_commission_remove; ?>" id="commission_remove" class="icon" />');
-      		  			
-				$('#commission_remove').fadeIn();
-			}
-		}
-	});
-});
-
-$('#commission_remove').live('click', function() {
-	$.ajax({
-		type: 'POST',
-		url: 'index.php?route=sale/order/removecommission&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
-		dataType: 'json',
-		success: function(json) {
-			if (json.error) {
-				alert(json.error);
-			}
-			
-			if (json.success) {
-				alert(json.success);
-				
-				$('#commission_remove').fadeOut();
-				
-				$('#commission_remove').replaceWith('<img src="view/image/add.png" alt="<?php echo $text_commission_add; ?>" id="commission_add" class="icon" />');
-				
-				$('#commission_add').fadeIn();
-			}
-		}
-	});
-});
-
-$('#credit_add').live('click', function() {
-	$.ajax({
-		type: 'POST',
 		url: 'index.php?route=sale/order/addcredit&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		type: 'post',
 		dataType: 'json',
+		beforeSend: function() {
+			$('#credit').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');			
+		},
+		complete: function() {
+			$('.loading').remove();
+		},			
 		success: function(json) {
-			if (json.error) {
-				alert(json.error);
+			$('.success, .warning').remove();
+			
+			if (json['error']) {
+				$('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
+				
+				$('.warning').fadeIn('slow');
 			}
 			
-			if (json.success) {
-				alert(json.success);
-
-				$('#credit_add').fadeOut();
-                
-				$('#credit_add').replaceWith('<img src="view/image/delete.png" alt="<?php echo $text_credit_remove; ?>" id="credit_remove" class="icon" />');
-      		  			
-				$('#credit_remove').fadeIn();
+			if (json['success']) {
+                $('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
+				
+				$('.success').fadeIn('slow');
+				
+				$('#credit').html('<b>[</b> <a id="credit-remove"><?php echo $text_credit_remove; ?></a> <b>]</b>');
 			}
 		}
 	});
 });
 
-$('#credit_remove').live('click', function() {
+$('#credit-remove').live('click', function() {
 	$.ajax({
-		type: 'POST',
 		url: 'index.php?route=sale/order/removecredit&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		type: 'post',
 		dataType: 'json',
+		beforeSend: function() {
+			$('#credit').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');			
+		},
+		complete: function() {
+			$('.loading').remove();
+		},			
 		success: function(json) {
-			if (json.error) {
-				alert(json.error);
+			$('.success, .warning').remove();
+						
+			if (json['error']) {
+				$('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
+				
+				$('.warning').fadeIn('slow');
 			}
 			
-			if (json.success) {
-				alert(json.success);
+			if (json['success']) {
+                $('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
 				
-				$('#credit_remove').fadeOut();
+				$('.success').fadeIn('slow');
 				
-				$('#credit_remove').replaceWith('<img src="view/image/add.png" alt="<?php echo $text_credit_add; ?>" id="credit_add" class="icon" />');
+				$('#credit').html('<b>[</b> <a id="credit-add"><?php echo $text_credit_add; ?></a> <b>]</b>');
+			}
+		}
+	});
+});
+
+$('#reward-add').live('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/addreward&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#reward').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');			
+		},
+		complete: function() {
+			$('.loading').remove();
+		},									
+		success: function(json) {
+			$('.success, .warning').remove();
+						
+			if (json['error']) {
+				$('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
 				
-				$('#credit_add').fadeIn();
+				$('.warning').fadeIn('slow');
+			}
+			
+			if (json['success']) {
+                $('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
+				
+				$('.success').fadeIn('slow');
+
+				$('#reward').html('<b>[</b> <a id="reward-remove"><?php echo $text_reward_remove; ?></a> <b>]</b>');
+			}
+		}
+	});
+});
+
+$('#reward-remove').live('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/removereward&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#reward').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+		},
+		complete: function() {
+			$('.loading').remove();
+		},				
+		success: function(json) {
+			$('.success, .warning').remove();
+						
+			if (json['error']) {
+				$('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
+				
+				$('.warning').fadeIn('slow');
+			}
+			
+			if (json['success']) {
+                $('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
+				
+				$('.success').fadeIn('slow');
+				
+				$('#reward').html('<b>[</b> <a id="reward-add"><?php echo $text_reward_add; ?></a> <b>]</b>');
+			}
+		}
+	});
+});
+
+$('#commission-add').live('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/addcommission&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#commission').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');			
+		},
+		complete: function() {
+			$('.loading').remove();
+		},			
+		success: function(json) {
+			$('.success, .warning').remove();
+						
+			if (json['error']) {
+				$('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
+				
+				$('.warning').fadeIn('slow');
+			}
+			
+			if (json['success']) {
+                $('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
+				
+				$('.success').fadeIn('slow');
+                
+				$('#commission').html('<b>[</b> <a id="commission-remove"><?php echo $text_commission_remove; ?></a> <b>]</b>');
+			}
+		}
+	});
+});
+
+$('#commission-remove').live('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/removecommission&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#commission').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');			
+		},
+		complete: function() {
+			$('.loading').remove();
+		},			
+		success: function(json) {
+			$('.success, .warning').remove();
+						
+			if (json['error']) {
+				$('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
+				
+				$('.warning').fadeIn('slow');
+			}
+			
+			if (json['success']) {
+                $('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
+				
+				$('.success').fadeIn('slow');
+				
+				$('#commission').html('<b>[</b> <a id="commission-add"><?php echo $text_commission_add; ?></a> <b>]</b>');
 			}
 		}
 	});
@@ -485,10 +914,10 @@ $('#history .pagination a').live('click', function() {
 
 $('#history').load('index.php?route=sale/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 
-function history() {
+$('#button-history').live('click', function() {
 	$.ajax({
-		type: 'POST',
 		url: 'index.php?route=sale/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		type: 'post',
 		dataType: 'html',
 		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + encodeURIComponent($('input[name=\'notify\']').attr('checked') ? 1 : 0) + '&append=' + encodeURIComponent($('input[name=\'append\']').attr('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
@@ -508,7 +937,7 @@ function history() {
 			$('#order-status').html($('select[name=\'order_status_id\'] option:selected').text());
 		}
 	});
-}
+});
 //--></script> 
 <script type="text/javascript"><!--
 $('.vtabs a').tabs();

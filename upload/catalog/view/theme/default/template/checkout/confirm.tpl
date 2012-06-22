@@ -1,3 +1,4 @@
+<?php if (!isset($redirect)) { ?>
 <div class="checkout-product">
   <table>
     <thead>
@@ -44,3 +45,8 @@
   </table>
 </div>
 <div class="payment"><?php echo $payment; ?></div>
+<?php } else { ?>
+<script type="text/javascript"><!--
+location = '<?php echo $redirect; ?>';
+//--></script> 
+<?php } ?>

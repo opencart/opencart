@@ -24,9 +24,15 @@ class ModelTotalReward extends Model {
 					
 					if ($product['points']) {
 						$discount = $product['total'] * ($this->session->data['reward'] / $points_total);
-
+						
 						if ($product['tax_class_id']) {
-							$taxes[$product['tax_class_id']] -= ($product['total'] / 100 * $this->tax->getRate($product['tax_class_id'])) - (($product['total'] - $discount) / 100 * $this->tax->getRate($product['tax_class_id']));
+							$tax_rates = $this->tax->getRates($product['total'] - ($product['total'] - $discount), $product['tax_class_id']);
+							
+							foreach ($tax_rates as $tax_rate) {
+								if ($tax_rate['type'] == 'P') {
+									$taxes[$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
+								}
+							}	
 						}
 					}
 					
@@ -59,7 +65,7 @@ class ModelTotalReward extends Model {
 		}	
 		
 		if ($points) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "customer_reward SET customer_id = '" . (int)$order_info['customer_id'] . "', order_id = '" . (int)$order_info['order_id'] . "', description = '" . $this->db->escape(sprintf($this->language->get('text_order_id'), (int)$order_info['order_id'])) . "', points = '" . (float)-$points . "', date_added = NOW()");				
+			$this->db->query("INSERT INTO " . DB_PREFIX . "customer_reward SET customer_id = '" . (int)$order_info['customer_id'] . "', description = '" . $this->db->escape(sprintf($this->language->get('text_order_id'), (int)$order_info['order_id'])) . "', points = '" . (float)-$points . "', date_added = NOW()");				
 		}
 	}		
 }

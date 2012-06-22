@@ -1,7 +1,7 @@
 <?php if ($testmode) { ?>
 <div class="warning"><?php echo $text_testmode; ?></div>
 <?php } ?>
-<form action="<?php echo $action; ?>" method="post" id="payment">
+<form action="<?php echo $action; ?>" method="post">
   <input type="hidden" name="cmd" value="_cart" />
   <input type="hidden" name="upload" value="1" />
   <input type="hidden" name="business" value="<?php echo $business; ?>" />
@@ -43,7 +43,9 @@
   <input type="hidden" name="cancel_return" value="<?php echo $cancel_return; ?>" />
   <input type="hidden" name="paymentaction" value="<?php echo $paymentaction; ?>" />
   <input type="hidden" name="custom" value="<?php echo $custom; ?>" />
+  <div class="buttons">
+    <div class="right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="button" />
+    </div>
+  </div>
 </form>
-<div class="buttons">
-  <div class="right"><a id="button-confirm" class="button" onclick="$('#payment').submit();"><span><?php echo $button_confirm; ?></span></a></div>
-</div>

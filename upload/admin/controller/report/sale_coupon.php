@@ -125,7 +125,7 @@ class ControllerReportSaleCoupon extends Controller {
 		$this->template = 'report/sale_coupon.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

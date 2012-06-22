@@ -11,7 +11,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/layout.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -48,7 +48,7 @@
                   <?php } ?>
                 </select></td>
               <td class="left"><input type="text" name="layout_route[<?php echo $route_row; ?>][route]" value="<?php echo $layout_route['route']; ?>" /></td>
-              <td class="left"><a onclick="$('#route-row<?php echo $route_row; ?>').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>
+              <td class="left"><a onclick="$('#route-row<?php echo $route_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
             </tr>
           </tbody>
           <?php $route_row++; ?>
@@ -56,7 +56,7 @@
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td class="left"><a onclick="addRoute();" class="button"><span><?php echo $button_add_route; ?></span></a></td>
+              <td class="left"><a onclick="addRoute();" class="button"><?php echo $button_add_route; ?></a></td>
             </tr>
           </tfoot>
         </table>
@@ -77,7 +77,7 @@ function addRoute() {
 	<?php } ?>   
 	html += '    </select></td>';
 	html += '    <td class="left"><input type="text" name="layout_route[' + route_row + '][route]" value="" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#route-row' + route_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
+	html += '    <td class="left"><a onclick="$(\'#route-row' + route_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
 	html += '  </tr>';
 	html += '</tbody>';
 	

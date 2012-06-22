@@ -11,7 +11,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/shipping.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -94,14 +94,14 @@
           </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_state; ?></td>
-            <td><input type="text" name="ups_state" value="<?php echo $ups_state; ?>" />
+            <td><input type="text" name="ups_state" value="<?php echo $ups_state; ?>" maxlength="2" size="4" />
               <?php if ($error_state) { ?>
               <span class="error"><?php echo $error_state; ?></span>
               <?php } ?></td>
           </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-            <td><input type="text" name="ups_country" value="<?php echo $ups_country; ?>" />
+            <td><input type="text" name="ups_country" value="<?php echo $ups_country; ?>" maxlength="2" size="4" />
               <?php if ($error_country) { ?>
               <span class="error"><?php echo $error_country; ?></span>
               <?php } ?></td>
@@ -606,7 +606,7 @@
               </div>
               <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a></td>
           </tr>
-		  <tr>
+          <tr>
             <td><?php echo $entry_insurance; ?></td>
             <td><?php if ($ups_insurance) { ?>
               <input type="radio" name="ups_insurance" value="1" checked="checked" />
@@ -635,10 +635,6 @@
               <?php } ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_weight_code; ?></td>
-            <td><input type="text" name="ups_weight_code" value="<?php echo $ups_weight_code; ?>" size="1" /></td>
-          </tr>
-          <tr>
             <td><?php echo $entry_weight_class; ?></td>
             <td><select name="ups_weight_class_id">
                 <?php foreach ($weight_classes as $weight_class) { ?>
@@ -650,40 +646,29 @@
                 <?php } ?>
               </select></td>
           </tr>
-		  <tr>
-            <td><?php echo $entry_length_code; ?></td>
-            <td><select name="ups_length_code">
-		    <?php if ($ups_length_code == 'CM') { ?>
-            <option value="CM" selected="selected">CM</option>
-			<option value="IN">IN</option>
-            <?php } else { ?>
-			<option value="CM">CM</option>
-            <option value="IN" selected="selected">IN</option>
-            <?php } ?>
-		    </select></td>
-          </tr>
           <tr>
             <td><?php echo $entry_length_class; ?></td>
-            <td><select name="ups_length_class">
-              <?php foreach ($length_classes as $length_class) { ?>
-              <?php if ($length_class['unit'] == $ups_length_class) { ?>
-              <option value="<?php echo $length_class['unit']; ?>" selected="selected"><?php echo $length_class['title']; ?></option>
-              <?php } else { ?>
-              <option value="<?php echo $length_class['unit']; ?>"><?php echo $length_class['title']; ?></option>
-              <?php } ?>
-              <?php } ?>
-            </select></td>
-          </tr>
-		  <tr>
-            <td><?php echo $entry_dimension; ?></td>
-            <td>
-		      <input type="text" name="ups_length" value="<?php echo $ups_length; ?>" size="4" />
-              <input type="text" name="ups_width" value="<?php echo $ups_width; ?>" size="4" />
-              <input type="text" name="ups_height" value="<?php echo $ups_height; ?>" size="4" />
-		    </td>
+            <td><select name="ups_length_class_id">
+                <?php foreach ($length_classes as $length_class) { ?>
+                <?php if ($length_class['length_class_id'] == $ups_length_class_id) { ?>
+                <option value="<?php echo $length_class['length_class_id']; ?>" selected="selected"><?php echo $length_class['title']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $length_class['length_class_id']; ?>"><?php echo $length_class['title']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select></td>
           </tr>
           <tr>
-            <td><?php echo $entry_tax; ?></td>
+            <td><span class="required">*</span> <?php echo $entry_dimension; ?></td>
+            <td><input type="text" name="ups_length" value="<?php echo $ups_length; ?>" size="4" />
+              <input type="text" name="ups_width" value="<?php echo $ups_width; ?>" size="4" />
+              <input type="text" name="ups_height" value="<?php echo $ups_height; ?>" size="4" /></td>
+			  <?php if ($error_dimension) { ?>
+              <span class="error"><?php echo $error_dimension; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_tax_class; ?></td>
             <td><select name="ups_tax_class_id">
                 <option value="0"><?php echo $text_none; ?></option>
                 <?php foreach ($tax_classes as $tax_class) { ?>
@@ -723,6 +708,18 @@
           <tr>
             <td><?php echo $entry_sort_order; ?></td>
             <td><input type="text" name="ups_sort_order" value="<?php echo $ups_sort_order; ?>" size="1" /></td>
+          </tr>
+		  <tr>
+            <td><?php echo $entry_debug; ?></td>
+            <td><select name="ups_debug">
+              <?php if ($ups_debug) { ?>
+              <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+              <option value="0"><?php echo $text_disabled; ?></option>
+              <?php } else { ?>
+              <option value="1"><?php echo $text_enabled; ?></option>
+              <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+              <?php } ?>
+            </select></td>
           </tr>
         </table>
       </form>

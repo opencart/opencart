@@ -6,6 +6,8 @@ $_['heading_title']      = 'Banners';
 $_['text_success']       = 'Success: You have modified banners!';
 $_['text_default']       = 'Default';
 $_['text_image_manager'] = 'Image Manager';
+$_['text_browse']        = 'Browse Files';
+$_['text_clear']         = 'Clear Image';
 
 // Column
 $_['column_name']        = 'Banner Name';

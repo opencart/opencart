@@ -1,5 +1,5 @@
 <?php
-final class DB {
+class DB {
 	private $driver;
 	
 	public function __construct($driver, $hostname, $username, $password, $database) {

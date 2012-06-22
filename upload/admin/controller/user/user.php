@@ -258,7 +258,7 @@ class ControllerUserUser extends Controller {
 		$this->template = 'user/user_list.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -282,8 +282,6 @@ class ControllerUserUser extends Controller {
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
-
-    	$this->data['tab_general'] = $this->language->get('tab_general');
     
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -363,7 +361,7 @@ class ControllerUserUser extends Controller {
 
     	if (isset($this->request->post['username'])) {
       		$this->data['username'] = $this->request->post['username'];
-    	} elseif (isset($user_info)) {
+    	} elseif (!empty($user_info)) {
 			$this->data['username'] = $user_info['username'];
 		} else {
       		$this->data['username'] = '';
@@ -383,7 +381,7 @@ class ControllerUserUser extends Controller {
   
     	if (isset($this->request->post['firstname'])) {
       		$this->data['firstname'] = $this->request->post['firstname'];
-    	} elseif (isset($user_info)) {
+    	} elseif (!empty($user_info)) {
 			$this->data['firstname'] = $user_info['firstname'];
 		} else {
       		$this->data['firstname'] = '';
@@ -391,7 +389,7 @@ class ControllerUserUser extends Controller {
 
     	if (isset($this->request->post['lastname'])) {
       		$this->data['lastname'] = $this->request->post['lastname'];
-    	} elseif (isset($user_info)) {
+    	} elseif (!empty($user_info)) {
 			$this->data['lastname'] = $user_info['lastname'];
 		} else {
       		$this->data['lastname'] = '';
@@ -399,7 +397,7 @@ class ControllerUserUser extends Controller {
   
     	if (isset($this->request->post['email'])) {
       		$this->data['email'] = $this->request->post['email'];
-    	} elseif (isset($user_info)) {
+    	} elseif (!empty($user_info)) {
 			$this->data['email'] = $user_info['email'];
 		} else {
       		$this->data['email'] = '';
@@ -407,7 +405,7 @@ class ControllerUserUser extends Controller {
 
     	if (isset($this->request->post['user_group_id'])) {
       		$this->data['user_group_id'] = $this->request->post['user_group_id'];
-    	} elseif (isset($user_info)) {
+    	} elseif (!empty($user_info)) {
 			$this->data['user_group_id'] = $user_info['user_group_id'];
 		} else {
       		$this->data['user_group_id'] = '';
@@ -419,7 +417,7 @@ class ControllerUserUser extends Controller {
  
      	if (isset($this->request->post['status'])) {
       		$this->data['status'] = $this->request->post['status'];
-    	} elseif (isset($user_info)) {
+    	} elseif (!empty($user_info)) {
 			$this->data['status'] = $user_info['status'];
 		} else {
       		$this->data['status'] = 0;
@@ -428,7 +426,7 @@ class ControllerUserUser extends Controller {
 		$this->template = 'user/user_form.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());	
@@ -439,20 +437,32 @@ class ControllerUserUser extends Controller {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
     
-    	if ((strlen(utf8_decode($this->request->post['username'])) < 3) || (strlen(utf8_decode($this->request->post['username'])) > 20)) {
+    	if ((utf8_strlen($this->request->post['username']) < 3) || (utf8_strlen($this->request->post['username']) > 20)) {
       		$this->error['username'] = $this->language->get('error_username');
     	}
-
-    	if ((strlen(utf8_decode($this->request->post['firstname'])) < 1) || (strlen(utf8_decode($this->request->post['firstname'])) > 32)) {
-      		$this->error['firstname'] = $this->language->get('error_firstname');
+		
+		$user_info = $this->model_user_user->getUserByUsername($this->request->post['username']);
+		
+		if (!isset($this->request->get['user_id'])) {
+			if ($user_info) {
+				$this->error['warning'] = $this->language->get('error_exists');
+			}
+		} else {
+			if ($user_info && ($this->request->get['user_id'] != $user_info['user_id'])) {
+				$this->error['warning'] = $this->language->get('error_exists');
+			}
+		}
+		
+    	if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
+			$this->error['firstname'] = $this->language->get('error_firstname');
     	}
 
-    	if ((strlen(utf8_decode($this->request->post['lastname'])) < 1) || (strlen(utf8_decode($this->request->post['lastname'])) > 32)) {
+    	if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
       		$this->error['lastname'] = $this->language->get('error_lastname');
     	}
 
-    	if (($this->request->post['password']) || (!isset($this->request->get['user_id']))) {
-      		if ((strlen(utf8_decode($this->request->post['password'])) < 4) || (strlen(utf8_decode($this->request->post['password'])) > 20)) {
+    	if ($this->request->post['password'] || (!isset($this->request->get['user_id']))) {
+      		if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
         		$this->error['password'] = $this->language->get('error_password');
       		}
 	

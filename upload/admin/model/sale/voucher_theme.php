@@ -1,7 +1,7 @@
 <?php 
 class ModelSaleVoucherTheme extends Model {
 	public function addVoucherTheme($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_theme SET image = '" . $this->db->escape($data['image']) . "'");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_theme SET image = '" . $this->db->escape(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8')) . "'");
 		
 		$voucher_theme_id = $this->db->getLastId();
 		
@@ -13,7 +13,7 @@ class ModelSaleVoucherTheme extends Model {
 	}
 
 	public function editVoucherTheme($voucher_theme_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "voucher_theme SET image = '" . $this->db->escape($data['image']) . "' WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "voucher_theme SET image = '" . $this->db->escape(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8')) . "' WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
 		
 		$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_theme_description WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
 
@@ -63,14 +63,14 @@ class ModelSaleVoucherTheme extends Model {
 			
 			return $query->rows;
 		} else {
-			$voucher_theme_data = $this->cache->get('voucher_theme.' . $this->config->get('config_language_id'));
+			$voucher_theme_data = $this->cache->get('voucher_theme.' . (int)$this->config->get('config_language_id'));
 		
 			if (!$voucher_theme_data) {
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_theme vt LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) WHERE vtd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY vtd.name");
 	
 				$voucher_theme_data = $query->rows;
 			
-				$this->cache->set('voucher_theme.' . $this->config->get('config_language_id'), $voucher_theme_data);
+				$this->cache->set('voucher_theme.' . (int)$this->config->get('config_language_id'), $voucher_theme_data);
 			}	
 	
 			return $voucher_theme_data;				

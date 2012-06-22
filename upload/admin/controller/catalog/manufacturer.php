@@ -255,7 +255,7 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->template = 'catalog/manufacturer_list.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -268,6 +268,8 @@ class ControllerCatalogManufacturer extends Controller {
     	$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_default'] = $this->language->get('text_default');
     	$this->data['text_image_manager'] = $this->language->get('text_image_manager');
+		$this->data['text_browse'] = $this->language->get('text_browse');
+		$this->data['text_clear'] = $this->language->get('text_clear');			
 		$this->data['text_percent'] = $this->language->get('text_percent');
 		$this->data['text_amount'] = $this->language->get('text_amount');
 				
@@ -331,15 +333,15 @@ class ControllerCatalogManufacturer extends Controller {
 		
 		$this->data['cancel'] = $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		$this->data['token'] = $this->session->data['token'];
-		
     	if (isset($this->request->get['manufacturer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
     	}
 
+		$this->data['token'] = $this->session->data['token'];
+
     	if (isset($this->request->post['name'])) {
       		$this->data['name'] = $this->request->post['name'];
-    	} elseif (isset($manufacturer_info)) {
+    	} elseif (!empty($manufacturer_info)) {
 			$this->data['name'] = $manufacturer_info['name'];
 		} else {	
       		$this->data['name'] = '';
@@ -351,7 +353,7 @@ class ControllerCatalogManufacturer extends Controller {
 		
 		if (isset($this->request->post['manufacturer_store'])) {
 			$this->data['manufacturer_store'] = $this->request->post['manufacturer_store'];
-		} elseif (isset($manufacturer_info)) {
+		} elseif (isset($this->request->get['manufacturer_id'])) {
 			$this->data['manufacturer_store'] = $this->model_catalog_manufacturer->getManufacturerStores($this->request->get['manufacturer_id']);
 		} else {
 			$this->data['manufacturer_store'] = array(0);
@@ -359,7 +361,7 @@ class ControllerCatalogManufacturer extends Controller {
 		
 		if (isset($this->request->post['keyword'])) {
 			$this->data['keyword'] = $this->request->post['keyword'];
-		} elseif (isset($manufacturer_info)) {
+		} elseif (!empty($manufacturer_info)) {
 			$this->data['keyword'] = $manufacturer_info['keyword'];
 		} else {
 			$this->data['keyword'] = '';
@@ -367,7 +369,7 @@ class ControllerCatalogManufacturer extends Controller {
 
 		if (isset($this->request->post['image'])) {
 			$this->data['image'] = $this->request->post['image'];
-		} elseif (isset($manufacturer_info)) {
+		} elseif (!empty($manufacturer_info)) {
 			$this->data['image'] = $manufacturer_info['image'];
 		} else {
 			$this->data['image'] = '';
@@ -375,15 +377,19 @@ class ControllerCatalogManufacturer extends Controller {
 		
 		$this->load->model('tool/image');
 
-		if (isset($manufacturer_info) && $manufacturer_info['image'] && file_exists(DIR_IMAGE . $manufacturer_info['image'])) {
+		if (isset($this->request->post['image']) && file_exists(DIR_IMAGE . $this->request->post['image'])) {
+			$this->data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
+		} elseif (!empty($manufacturer_info) && $manufacturer_info['image'] && file_exists(DIR_IMAGE . $manufacturer_info['image'])) {
 			$this->data['thumb'] = $this->model_tool_image->resize($manufacturer_info['image'], 100, 100);
 		} else {
 			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 		}
 		
+		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+		
 		if (isset($this->request->post['sort_order'])) {
       		$this->data['sort_order'] = $this->request->post['sort_order'];
-    	} elseif (isset($manufacturer_info)) {
+    	} elseif (!empty($manufacturer_info)) {
 			$this->data['sort_order'] = $manufacturer_info['sort_order'];
 		} else {
       		$this->data['sort_order'] = '';
@@ -392,7 +398,7 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->template = 'catalog/manufacturer_form.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -403,7 +409,7 @@ class ControllerCatalogManufacturer extends Controller {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
 
-    	if ((strlen(utf8_decode($this->request->post['name'])) < 3) || (strlen(utf8_decode($this->request->post['name'])) > 64)) {
+    	if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
       		$this->error['name'] = $this->language->get('error_name');
     	}
 		

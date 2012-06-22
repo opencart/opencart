@@ -6,7 +6,11 @@ class ModelSettingSetting extends Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `group` = '" . $this->db->escape($group) . "'");
 		
 		foreach ($query->rows as $result) {
-			$data[$result['key']] = $result['value'];
+			if (!$result['serialized']) {
+				$data[$result['key']] = $result['value'];
+			} else {
+				$data[$result['key']] = unserialize($result['value']);
+			}
 		}
 
 		return $data;

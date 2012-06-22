@@ -8,7 +8,7 @@ class ControllerStep4 extends Controller {
 		
 		$this->template = 'step_4.tpl';
 
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render());
 	}
 }
 ?>

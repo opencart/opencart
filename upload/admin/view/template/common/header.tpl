@@ -17,10 +17,9 @@
 <?php foreach ($styles as $style) { ?>
 <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
-<script type="text/javascript" src="view/javascript/jquery/jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.9.custom.min.js"></script>
-<link rel="stylesheet" type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.9.custom.css" />
-<script type="text/javascript" src="view/javascript/jquery/ui/external/jquery.bgiframe-2.1.2.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link rel="stylesheet" type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" />
 <script type="text/javascript" src="view/javascript/jquery/tabs.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/superfish/js/superfish.js"></script>
 <?php foreach ($scripts as $script) { ?>
@@ -31,11 +30,10 @@
 // Confirm Actions (delete, uninstall)
 //-----------------------------------------
 $(document).ready(function(){
-	
     // Confirm Delete
     $('#form').submit(function(){
         if ($(this).attr('action').indexOf('delete',1) != -1) {
-            if (!confirm ('<?php echo $text_confirm; ?>')) {
+            if (!confirm('<?php echo $text_confirm; ?>')) {
                 return false;
             }
         }
@@ -43,8 +41,8 @@ $(document).ready(function(){
     	
     // Confirm Uninstall
     $('a').click(function(){
-        if ($(this).attr('href') != null && $(this).attr('href').indexOf('uninstall',1) != -1) {
-            if (!confirm ('<?php echo $text_confirm; ?>')) {
+        if ($(this).attr('href') != null && $(this).attr('href').indexOf('uninstall', 1) != -1) {
+            if (!confirm('<?php echo $text_confirm; ?>')) {
                 return false;
             }
         }
@@ -99,6 +97,7 @@ $(document).ready(function(){
             <ul>
               <li><a href="<?php echo $customer; ?>"><?php echo $text_customer; ?></a></li>
               <li><a href="<?php echo $customer_group; ?>"><?php echo $text_customer_group; ?></a></li>
+              <li><a href="<?php echo $customer_blacklist; ?>"><?php echo $text_customer_blacklist; ?></a></li>
             </ul>
           </li>
           <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
@@ -143,7 +142,12 @@ $(document).ready(function(){
               <li><a href="<?php echo $country; ?>"><?php echo $text_country; ?></a></li>
               <li><a href="<?php echo $zone; ?>"><?php echo $text_zone; ?></a></li>
               <li><a href="<?php echo $geo_zone; ?>"><?php echo $text_geo_zone; ?></a></li>
-              <li><a href="<?php echo $tax_class; ?>"><?php echo $text_tax_class; ?></a></li>
+              <li><a class="parent"><?php echo $text_tax; ?></a>
+                <ul>
+                  <li><a href="<?php echo $tax_class; ?>"><?php echo $text_tax_class; ?></a></li>
+                  <li><a href="<?php echo $tax_rate; ?>"><?php echo $text_tax_rate; ?></a></li>
+                </ul>
+              </li>
               <li><a href="<?php echo $length_class; ?>"><?php echo $text_length_class; ?></a></li>
               <li><a href="<?php echo $weight_class; ?>"><?php echo $text_weight_class; ?></a></li>
             </ul>
@@ -171,6 +175,7 @@ $(document).ready(function(){
           </li>
           <li><a class="parent"><?php echo $text_customer; ?></a>
             <ul>
+              <li><a href="<?php echo $report_customer_online; ?>"><?php echo $text_report_customer_online; ?></a></li>
               <li><a href="<?php echo $report_customer_order; ?>"><?php echo $text_report_customer_order; ?></a></li>
               <li><a href="<?php echo $report_customer_reward; ?>"><?php echo $text_report_customer_reward; ?></a></li>
               <li><a href="<?php echo $report_customer_credit; ?>"><?php echo $text_report_customer_credit; ?></a></li>
@@ -180,7 +185,7 @@ $(document).ready(function(){
             <ul>
               <li><a href="<?php echo $report_affiliate_commission; ?>"><?php echo $text_report_affiliate_commission; ?></a></li>
             </ul>
-          </li>          
+          </li>
         </ul>
       </li>
       <li id="help"><a class="top"><?php echo $text_help; ?></a>

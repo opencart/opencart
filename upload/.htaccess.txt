@@ -20,8 +20,11 @@ RewriteEngine On
 # If your opencart installation does not run on the main web folder make sure you folder it does run in ie. / becomes /shop/ 
 
 RewriteBase /
+RewriteRule ^sitemap.xml$ index.php?route=feed/google_sitemap [L]
+RewriteRule ^googlebase.xml$ index.php?route=feed/google_base [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|js|css)
 RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
 
 ### Additional Settings that may need to be enabled for some servers 
@@ -45,3 +48,6 @@ RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
 
 # 6. set max time for input to be recieved. Uncomment this line if you have a lot of product options or are getting errors where forms are not saving all fields
 # php_value max_input_time 200
+
+# 7. disable open_basedir limitations
+# php_admin_value open_basedir none

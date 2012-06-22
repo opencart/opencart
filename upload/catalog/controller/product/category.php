@@ -48,9 +48,9 @@ class ControllerProductCategory extends Controller {
 		
 			foreach ($parts as $path_id) {
 				if (!$path) {
-					$path = $path_id;
+					$path = (int)$path_id;
 				} else {
-					$path .= '_' . $path_id;
+					$path .= '_' . (int)$path_id;
 				}
 									
 				$category_info = $this->model_catalog_category->getCategory($path_id);
@@ -64,7 +64,7 @@ class ControllerProductCategory extends Controller {
 				}
 			}		
 		
-			$category_id = array_pop($parts);
+			$category_id = (int)array_pop($parts);
 		} else {
 			$category_id = 0;
 		}
@@ -126,15 +126,8 @@ class ControllerProductCategory extends Controller {
 			$results = $this->model_catalog_category->getCategories($category_id);
 			
 			foreach ($results as $result) {
-				$data = array(
-					'filter_category_id'  => $result['category_id'],
-					'filter_sub_category' => true	
-				);
-							
-				$product_total = $this->model_catalog_product->getTotalProducts($data);
-				
 				$this->data['categories'][] = array(
-					'name'  => $result['name'] . ' (' . $product_total . ')',
+					'name'  => $result['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProductsByCategoryId($result['category_id']) . ')' : ''),
 					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)
 				);
 			}
@@ -188,7 +181,7 @@ class ControllerProductCategory extends Controller {
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
+					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
@@ -236,17 +229,19 @@ class ControllerProductCategory extends Controller {
 				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.price&order=DESC' . $url)
 			); 
 			
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_rating_desc'),
-				'value' => 'rating-DESC',
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=rating&order=DESC' . $url)
-			); 
-			
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_rating_asc'),
-				'value' => 'rating-ASC',
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=rating&order=ASC' . $url)
-			);
+			if ($this->config->get('config_review_status')) {
+				$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_rating_desc'),
+					'value' => 'rating-DESC',
+					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=rating&order=DESC' . $url)
+				); 
+				
+				$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_rating_asc'),
+					'value' => 'rating-ASC',
+					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=rating&order=ASC' . $url)
+				);
+			}
 			
 			$this->data['sorts'][] = array(
 				'text'  => $this->language->get('text_model_asc'),

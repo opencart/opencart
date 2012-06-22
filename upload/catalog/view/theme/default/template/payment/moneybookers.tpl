@@ -1,4 +1,4 @@
-<form action="<?php echo $action; ?>" method="post" id="payment">
+<form action="<?php echo $action; ?>" method="post">
   <input type="hidden" name="pay_to_email" value="<?php echo $pay_to_email; ?>" />
   <input type="hidden" name="recipient_description" value="<?php echo $description; ?>" />
   <input type="hidden" name="transaction_id" value="<?php echo $transaction_id; ?>" />
@@ -22,7 +22,10 @@
   <input type="hidden" name="detail1_text" value="<?php echo $detail1_text; ?>" />
   <input type="hidden" name="merchant_fields" value="order_id" />
   <input type="hidden" name="order_id" value="<?php echo $order_id; ?>" />
+  <input type="hidden" name="platform" value="<?php echo $platform; ?>" />
   <div class="buttons">
-    <div class="right"><a onclick="$('#payment').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></div>
+    <div class="right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="button" />
+    </div>
   </div>
 </form>

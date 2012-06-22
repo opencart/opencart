@@ -73,7 +73,7 @@ class ControllerTotalTax extends Controller {
 		$this->template = 'total/tax.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

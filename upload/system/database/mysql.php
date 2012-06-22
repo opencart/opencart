@@ -1,24 +1,24 @@
 <?php
 final class MySQL {
-	private $connection;
+	private $link;
 	
 	public function __construct($hostname, $username, $password, $database) {
-		if (!$this->connection = mysql_connect($hostname, $username, $password)) {
-      		exit('Error: Could not make a database connection using ' . $username . '@' . $hostname);
+		if (!$this->link = mysql_connect($hostname, $username, $password)) {
+      		trigger_error('Error: Could not make a database link using ' . $username . '@' . $hostname);
     	}
 
-    	if (!mysql_select_db($database, $this->connection)) {
-      		exit('Error: Could not connect to database ' . $database);
+    	if (!mysql_select_db($database, $this->link)) {
+      		trigger_error('Error: Could not connect to database ' . $database);
     	}
 		
-		mysql_query("SET NAMES 'utf8'", $this->connection);
-		mysql_query("SET CHARACTER SET utf8", $this->connection);
-		mysql_query("SET CHARACTER_SET_CONNECTION=utf8", $this->connection);
-		mysql_query("SET SQL_MODE = ''", $this->connection);
+		mysql_query("SET NAMES 'utf8'", $this->link);
+		mysql_query("SET CHARACTER SET utf8", $this->link);
+		mysql_query("SET CHARACTER_SET_CONNECTION=utf8", $this->link);
+		mysql_query("SET SQL_MODE = ''", $this->link);
   	}
 		
   	public function query($sql) {
-		$resource = mysql_query($sql, $this->connection);
+		$resource = mysql_query($sql, $this->link);
 
 		if ($resource) {
 			if (is_resource($resource)) {
@@ -43,27 +43,28 @@ final class MySQL {
 
 				return $query;	
     		} else {
-				return TRUE;
+				return true;
 			}
 		} else {
-			exit('Error: ' . mysql_error($this->connection) . '<br />Error No: ' . mysql_errno($this->connection) . '<br />' . $sql);
+			trigger_error('Error: ' . mysql_error($this->link) . '<br />Error No: ' . mysql_errno($this->link) . '<br />' . $sql);
+			exit();
     	}
   	}
 	
 	public function escape($value) {
-		return mysql_real_escape_string($value, $this->connection);
+		return mysql_real_escape_string($value, $this->link);
 	}
 	
   	public function countAffected() {
-    	return mysql_affected_rows($this->connection);
+    	return mysql_affected_rows($this->link);
   	}
 
   	public function getLastId() {
-    	return mysql_insert_id($this->connection);
+    	return mysql_insert_id($this->link);
   	}	
 	
 	public function __destruct() {
-		mysql_close($this->connection);
+		mysql_close($this->link);
 	}
 }
 ?>

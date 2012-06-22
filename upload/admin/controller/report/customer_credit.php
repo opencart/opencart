@@ -127,7 +127,7 @@ class ControllerReportCustomerCredit extends Controller {
 		$this->template = 'report/customer_credit.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

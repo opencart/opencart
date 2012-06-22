@@ -29,7 +29,7 @@ class ModelCatalogCategory extends Model {
 		
 		return $category_data;
 	}
-		
+			
 	public function getCategoryLayoutId($category_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category_to_layout WHERE category_id = '" . (int)$category_id . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 		

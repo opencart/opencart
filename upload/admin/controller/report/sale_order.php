@@ -8,13 +8,13 @@ class ControllerReportSaleOrder extends Controller {
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
 		} else {
-			$filter_date_start = '';
+			$filter_date_start = date('Y-m-d', strtotime(date('Y') . '-' . date('m') . '-01'));
 		}
 
 		if (isset($this->request->get['filter_date_end'])) {
 			$filter_date_end = $this->request->get['filter_date_end'];
 		} else {
-			$filter_date_end = '';
+			$filter_date_end = date('Y-m-d');
 		}
 		
 		if (isset($this->request->get['filter_group'])) {
@@ -181,7 +181,7 @@ class ControllerReportSaleOrder extends Controller {
 		$this->template = 'report/sale_order.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

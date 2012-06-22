@@ -92,8 +92,7 @@ class ControllerReportSaleReturn extends Controller {
 			$this->data['returns'][] = array(
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
-				'returns'    => $result['returns'],
-				'products'   => $result['products']
+				'returns'    => $result['returns']
 			);
 		}
 				 
@@ -105,7 +104,6 @@ class ControllerReportSaleReturn extends Controller {
 		$this->data['column_date_start'] = $this->language->get('column_date_start');
 		$this->data['column_date_end'] = $this->language->get('column_date_end');
     	$this->data['column_returns'] = $this->language->get('column_returns');
-		$this->data['column_products'] = $this->language->get('column_products');
 		$this->data['column_total'] = $this->language->get('column_total');
 		
 		$this->data['entry_date_start'] = $this->language->get('entry_date_start');
@@ -178,7 +176,7 @@ class ControllerReportSaleReturn extends Controller {
 		$this->template = 'report/sale_return.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

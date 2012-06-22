@@ -1,5 +1,5 @@
 <?php
-final class Image {
+class Image {
     private $file;
     private $image;
     private $info;
@@ -35,20 +35,22 @@ final class Image {
 		}
     }	
 	
-    public function save($file, $quality = 100) {
-       $info = pathinfo($file);
+    public function save($file, $quality = 90) {
+		$info = pathinfo($file);
        
-	   $extension = strtolower($info['extension']);
-   
-        if ($extension == 'jpeg' || $extension == 'jpg') {
-            imagejpeg($this->image, $file, $quality);
-        } elseif($extension == 'png') {
-            imagepng($this->image, $file, 0);
-        } elseif($extension == 'gif') {
-            imagegif($this->image, $file);
-        }
-		   
-	    imagedestroy($this->image);
+		$extension = strtolower($info['extension']);
+   		
+		if (is_resource($this->image)) {
+			if ($extension == 'jpeg' || $extension == 'jpg') {
+				imagejpeg($this->image, $file, $quality);
+			} elseif($extension == 'png') {
+				imagepng($this->image, $file, 0);
+			} elseif($extension == 'gif') {
+				imagegif($this->image, $file);
+			}
+			   
+			imagedestroy($this->image);
+		}
     }	    
 	
     public function resize($width = 0, $height = 0) {
@@ -61,7 +63,7 @@ final class Image {
 
 		$scale = min($width / $this->info['width'], $height / $this->info['height']);
 		
-		if ($scale == 1) {
+		if ($scale == 1 && $this->info['mime'] != 'image/png') {
 			return;
 		}
 		

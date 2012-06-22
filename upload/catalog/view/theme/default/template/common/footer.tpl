@@ -1,4 +1,5 @@
 <div id="footer">
+  <?php if ($informations) { ?>
   <div class="column">
     <h3><?php echo $text_information; ?></h3>
     <ul>
@@ -7,6 +8,7 @@
       <?php } ?>
     </ul>
   </div>
+  <?php } ?>
   <div class="column">
     <h3><?php echo $text_service; ?></h3>
     <ul>
@@ -34,13 +36,13 @@
     </ul>
   </div>
 </div>
-<!-- 
-OpenCart is open source software and you are free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donatation.
+<!--
+OpenCart is open source software and you are free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donation.
 Please donate via PayPal to donate@opencart.com
 //-->
 <div id="powered"><?php echo $powered; ?></div>
-<!-- 
-OpenCart is open source software and you are free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donatation.
+<!--
+OpenCart is open source software and you are free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donation.
 Please donate via PayPal to donate@opencart.com
 //-->
 </div>

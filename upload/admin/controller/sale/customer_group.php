@@ -114,7 +114,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'name';
+			$sort = 'cgd.name';
 		}
 		 
 		if (isset($this->request->get['order'])) {
@@ -184,6 +184,7 @@ class ControllerSaleCustomerGroup extends Controller {
 			$this->data['customer_groups'][] = array(
 				'customer_group_id' => $result['customer_group_id'],
 				'name'              => $result['name'] . (($result['customer_group_id'] == $this->config->get('config_customer_group_id')) ? $this->language->get('text_default') : null),
+				'sort_order'        => $result['sort_order'],
 				'selected'          => isset($this->request->post['selected']) && in_array($result['customer_group_id'], $this->request->post['selected']),
 				'action'            => $action
 			);
@@ -194,6 +195,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 
 		$this->data['column_name'] = $this->language->get('column_name');
+		$this->data['column_sort_order'] = $this->language->get('column_sort_order');
 		$this->data['column_action'] = $this->language->get('column_action');
 
 		$this->data['button_insert'] = $this->language->get('button_insert');
@@ -225,7 +227,8 @@ class ControllerSaleCustomerGroup extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$this->data['sort_name'] = $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
+		$this->data['sort_name'] = $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'] . '&sort=cgd.name' . $url, 'SSL');
+		$this->data['sort_sort_order'] = $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'] . '&sort=cg.sort_order' . $url, 'SSL');
 		
 		$url = '';
 
@@ -252,7 +255,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		$this->template = 'sale/customer_group_list.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -261,12 +264,20 @@ class ControllerSaleCustomerGroup extends Controller {
 	private function getForm() {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		
+		$this->data['text_yes'] = $this->language->get('text_yes');
+		$this->data['text_no'] = $this->language->get('text_no');
+				
 		$this->data['entry_name'] = $this->language->get('entry_name');
+		$this->data['entry_description'] = $this->language->get('entry_description');
+		$this->data['entry_approval'] = $this->language->get('entry_approval');
+		$this->data['entry_company_id_display'] = $this->language->get('entry_company_id_display');
+		$this->data['entry_company_id_required'] = $this->language->get('entry_company_id_required');
+		$this->data['entry_tax_id_display'] = $this->language->get('entry_tax_id_display');
+		$this->data['entry_tax_id_required'] = $this->language->get('entry_tax_id_required');
+		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-
-		$this->data['tab_general'] = $this->language->get('tab_general');
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -277,7 +288,7 @@ class ControllerSaleCustomerGroup extends Controller {
  		if (isset($this->error['name'])) {
 			$this->data['error_name'] = $this->error['name'];
 		} else {
-			$this->data['error_name'] = '';
+			$this->data['error_name'] = array();
 		}
 
 		$url = '';
@@ -319,19 +330,71 @@ class ControllerSaleCustomerGroup extends Controller {
 		if (isset($this->request->get['customer_group_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$customer_group_info = $this->model_sale_customer_group->getCustomerGroup($this->request->get['customer_group_id']);
 		}
-
-		if (isset($this->request->post['name'])) {
-			$this->data['name'] = $this->request->post['name'];
-		} elseif (isset($customer_group_info)) {
-			$this->data['name'] = $customer_group_info['name'];
+		
+		$this->load->model('localisation/language');
+		
+		$this->data['languages'] = $this->model_localisation_language->getLanguages();
+		
+		if (isset($this->request->post['customer_group_description'])) {
+			$this->data['customer_group_description'] = $this->request->post['customer_group_description'];
+		} elseif (isset($this->request->get['customer_group_id'])) {
+			$this->data['customer_group_description'] = $this->model_sale_customer_group->getCustomerGroupDescriptions($this->request->get['customer_group_id']);
 		} else {
-			$this->data['name'] = '';
-		}
-	
+			$this->data['customer_group_description'] = array();
+		}	
+		
+		if (isset($this->request->post['approval'])) {
+			$this->data['approval'] = $this->request->post['approval'];
+		} elseif (!empty($customer_group_info)) {
+			$this->data['approval'] = $customer_group_info['approval'];
+		} else {
+			$this->data['approval'] = '';
+		}	
+					
+		if (isset($this->request->post['company_id_display'])) {
+			$this->data['company_id_display'] = $this->request->post['company_id_display'];
+		} elseif (!empty($customer_group_info)) {
+			$this->data['company_id_display'] = $customer_group_info['company_id_display'];
+		} else {
+			$this->data['company_id_display'] = '';
+		}			
+			
+		if (isset($this->request->post['company_id_required'])) {
+			$this->data['company_id_required'] = $this->request->post['company_id_required'];
+		} elseif (!empty($customer_group_info)) {
+			$this->data['company_id_required'] = $customer_group_info['company_id_required'];
+		} else {
+			$this->data['company_id_required'] = '';
+		}		
+		
+		if (isset($this->request->post['tax_id_display'])) {
+			$this->data['tax_id_display'] = $this->request->post['tax_id_display'];
+		} elseif (!empty($customer_group_info)) {
+			$this->data['tax_id_display'] = $customer_group_info['tax_id_display'];
+		} else {
+			$this->data['tax_id_display'] = '';
+		}			
+			
+		if (isset($this->request->post['tax_id_required'])) {
+			$this->data['tax_id_required'] = $this->request->post['tax_id_required'];
+		} elseif (!empty($customer_group_info)) {
+			$this->data['tax_id_required'] = $customer_group_info['tax_id_required'];
+		} else {
+			$this->data['tax_id_required'] = '';
+		}	
+		
+		if (isset($this->request->post['sort_order'])) {
+			$this->data['sort_order'] = $this->request->post['sort_order'];
+		} elseif (!empty($customer_group_info)) {
+			$this->data['sort_order'] = $customer_group_info['sort_order'];
+		} else {
+			$this->data['sort_order'] = '';
+		}	
+									
 		$this->template = 'sale/customer_group_form.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render()); 
@@ -341,11 +404,13 @@ class ControllerSaleCustomerGroup extends Controller {
 		if (!$this->user->hasPermission('modify', 'sale/customer_group')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-
-		if ((strlen(utf8_decode($this->request->post['name'])) < 3) || (strlen(utf8_decode($this->request->post['name'])) > 64)) {
-			$this->error['name'] = $this->language->get('error_name');
+		
+		foreach ($this->request->post['customer_group_description'] as $language_id => $value) {
+			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
+				$this->error['name'][$language_id] = $this->language->get('error_name');
+			}
 		}
-
+		
 		if (!$this->error) {
 			return true;
 		} else {

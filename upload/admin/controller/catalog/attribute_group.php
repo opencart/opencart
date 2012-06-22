@@ -255,7 +255,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 		$this->template = 'catalog/attribute_group_list.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -336,7 +336,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 
 		if (isset($this->request->post['sort_order'])) {
 			$this->data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (isset($attribute_group_info)) {
+		} elseif (!empty($attribute_group_info)) {
 			$this->data['sort_order'] = $attribute_group_info['sort_order'];
 		} else {
 			$this->data['sort_order'] = '';
@@ -345,7 +345,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 		$this->template = 'catalog/attribute_group_form.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());	
@@ -357,7 +357,7 @@ class ControllerCatalogAttributeGroup extends Controller {
     	}
 	
     	foreach ($this->request->post['attribute_group_description'] as $language_id => $value) {
-      		if ((strlen(utf8_decode($value['name'])) < 3) || (strlen(utf8_decode($value['name'])) > 64)) {
+      		if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 64)) {
         		$this->error['name'][$language_id] = $this->language->get('error_name');
       		}
     	}

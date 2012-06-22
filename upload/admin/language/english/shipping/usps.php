@@ -5,10 +5,13 @@ $_['heading_title']         = 'United States Postal Service';
 // Text
 $_['text_shipping']         = 'Shipping';
 $_['text_success']          = 'Success: You have modified United States Postal Service!';
-$_['text_domestic_0']       = 'First-Class';
+$_['text_domestic_00']      = 'First-Class Mail Parcel';
+$_['text_domestic_01']      = 'First-Class Mail Large Envelope';
+$_['text_domestic_02']      = 'First-Class Mail Letter';
+$_['text_domestic_03']      = 'First-Class Mail Postcards';
 $_['text_domestic_1']       = 'Priority Mail';
 $_['text_domestic_2']       = 'Express Mail Hold for Pickup';
-$_['text_domestic_3']       = 'Express Mail PO to Addressee';
+$_['text_domestic_3']       = 'Express Mail';
 $_['text_domestic_4']       = 'Parcel Post';
 $_['text_domestic_5']       = 'Bound Printed Matter';
 $_['text_domestic_6']       = 'Media Mail';
@@ -45,8 +48,6 @@ $_['text_large']            = 'Large';
 $_['text_rectangular']      = 'Rectangular';
 $_['text_non_rectangular']  = 'Non Rectangular';
 $_['text_variable']         = 'Variable';
-$_['text_letter']           = 'Letter';
-$_['text_parcel']           = 'Parcel';
 
 // Entry
 $_['entry_user_id']         = 'User ID:';
@@ -56,12 +57,10 @@ $_['entry_international']   = 'International Services:';
 $_['entry_size']            = 'Size:';
 $_['entry_container']       = 'Container:';
 $_['entry_machinable']      = 'Machinable:';
-$_['entry_firstclass']      = 'Domestic First Class Rate Type:<br/><span class="help">First class applies to 13oz packages or less. When disabled, standard premium rates are returned.</span>';
 $_['entry_dimension']       = 'Dimensions (L x W x H):<br/><span class="help">Average package dimensions for shipping package. Product dimensions are not used for shipping at this time.</span>';
-$_['entry_girth']           = 'Girth:';
 $_['entry_display_time']    = 'Display Delivery Time:<br /><span class="help">Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)</span>';
 $_['entry_display_weight']  = 'Display Delivery Weight:<br /><span class="help">Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 Kg\'s)</span>';
-$_['entry_weight_class']    = 'Weight Class:<br /><span class="help">Set to pounds.</span>';
+$_['entry_weight_class']    = 'Weight Class:<br /><span class="help">Must be set to Pound.</span>';
 $_['entry_tax']             = 'Tax Class:';
 $_['entry_geo_zone']        = 'Geo Zone:';
 $_['entry_status']          = 'Status:';

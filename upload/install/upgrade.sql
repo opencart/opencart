@@ -1,7 +1,8 @@
-# OPENCART UPGRADE SCRIPT
+# OPENCART UPGRADE SCRIPT v1.5.x
 # WWW.OPENCART.COM
 # Qphoria
 
+# THIS UPGRADE ONLY APPLIES TO PREVIOUS 1.5.x VERSIONS. DO NOT RUN THIS SCRIPT IF UPGRADING FROM v1.4.x
 
 # DO NOT RUN THIS ENTIRE FILE MANUALLY THROUGH PHPMYADMIN OR OTHER MYSQL DB TOOL
 # THIS FILE IS GENERATED FOR USE WITH THE UPGRADE.PHP SCRIPT LOCATED IN THE INSTALL FOLDER
@@ -10,620 +11,219 @@
 # IF YOU NEED TO MANUALLY RUN THEN YOU CAN DO IT BY INDIVIDUAL VERSIONS. EACH SECTION IS LABELED.
 # BE SURE YOU CHANGE THE PREFIX "oc_" TO YOUR PREFIX OR REMOVE IT IF NOT USING A PREFIX
 
+#### START 1.5.1
 
-### Start 1.3.2
-SET FOREIGN_KEY_CHECKS = 0;
-
-#
-# DDL START
-#
-CREATE TABLE IF NOT EXISTS oc_customer_group (
-    customer_group_id int(11) NOT NULL COMMENT '' auto_increment,
-    name varchar(32) NOT NULL COMMENT '' COLLATE utf8_unicode_ci,
-    PRIMARY KEY (customer_group_id)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-CREATE TABLE IF NOT EXISTS oc_measurement_class (
-    measurement_class_id int(11) NOT NULL COMMENT '' auto_increment,
-    language_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    title varchar(32) NOT NULL COMMENT '' COLLATE utf8_unicode_ci,
-    unit varchar(4) NOT NULL COMMENT '' COLLATE utf8_unicode_ci,
-    PRIMARY KEY (measurement_class_id, language_id)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-CREATE TABLE IF NOT EXISTS oc_measurement_rule (
-    from_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    to_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    rule decimal(15,4) NOT NULL DEFAULT '0.0000' COMMENT ''
-) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-ALTER TABLE oc_customer ADD customer_group_id int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER status;
-ALTER TABLE oc_customer MODIFY cart text NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci;
-ALTER TABLE oc_customer ALTER ip SET DEFAULT 0;
-#
-#  Fieldformat of
-#    oc_customer.cart changed from text NOT NULL COMMENT '' COLLATE utf8_unicode_ci to text NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
-#  Possibly data modifications needed!
-#
-
-ALTER TABLE oc_order_product DROP discount;
+ALTER TABLE `oc_affiliate` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_affiliate` MODIFY `approved` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_banner` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_category` MODIFY `top` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_category` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_country` MODIFY `postcode_required` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_country` MODIFY `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '';
+ALTER TABLE `oc_coupon` MODIFY `logged` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_coupon` MODIFY `shipping` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_coupon` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_currency` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_customer` MODIFY `newsletter` tinyint(1) NOT NULL DEFAULT '0' COMMENT '';
+ALTER TABLE `oc_customer`  MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_customer`  MODIFY `approved` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_information` MODIFY `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '';
+ALTER TABLE `oc_language` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_order_history` MODIFY `notify` tinyint(1) NOT NULL DEFAULT '0' COMMENT '';
+ALTER TABLE `oc_product` MODIFY `shipping` tinyint(1) NOT NULL DEFAULT '1' COMMENT '';
+ALTER TABLE `oc_product` MODIFY `subtract` tinyint(1) NOT NULL DEFAULT '1' COMMENT '';
+ALTER TABLE `oc_product` MODIFY `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '';
+ALTER TABLE `oc_product_option` MODIFY `required` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_product_option_value` MODIFY `subtract` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_return_history` MODIFY `notify` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_return_product` MODIFY `opened` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_review` MODIFY `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '';
+ALTER TABLE `oc_user` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_voucher` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '';
+ALTER TABLE `oc_zone`  MODIFY `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '';
+ALTER TABLE `oc_setting` ADD `serialized` tinyint(1) NOT NULL DEFAULT 0 COMMENT '' AFTER value;
 
 
-ALTER TABLE oc_product ADD measurement_class_id int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER height;
-ALTER TABLE oc_product  ALTER length SET DEFAULT 0.00;
-ALTER TABLE oc_product  ALTER width SET DEFAULT 0.00;
-ALTER TABLE oc_product  ALTER height SET DEFAULT 0.00;
+#### START 1.5.1.3
 
-
-ALTER TABLE oc_product_discount ADD customer_group_id int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER product_id;
-ALTER TABLE oc_product_discount ADD priority int(5) NOT NULL DEFAULT '1' COMMENT '' AFTER quantity;
-ALTER TABLE oc_product_discount ADD price decimal(15,4) NOT NULL DEFAULT '0.0000' COMMENT '' AFTER priority;
-ALTER TABLE oc_product_discount ADD date_start date NOT NULL DEFAULT '0000-00-00' COMMENT '' AFTER price;
-ALTER TABLE oc_product_discount ADD date_end date NOT NULL DEFAULT '0000-00-00' COMMENT '' AFTER date_start;
-ALTER TABLE oc_product_discount ALTER quantity SET DEFAULT 0;
-ALTER TABLE oc_product_discount DROP discount;
-
-
-ALTER TABLE oc_product_special ADD customer_group_id int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER product_id;
-ALTER TABLE oc_product_special ADD priority int(5) NOT NULL DEFAULT '1' COMMENT '' AFTER customer_group_id;
-ALTER TABLE oc_product_special ALTER price SET DEFAULT 0.0000;
-ALTER TABLE oc_product_special ALTER date_start SET DEFAULT '0000-00-00';
-ALTER TABLE oc_product_special ALTER date_end SET DEFAULT '0000-00-00';
-
-INSERT INTO `oc_setting` (`setting_id` ,`group` ,`key` ,`value`) VALUES (NULL , 'config', 'config_error_filename', 'error.log') ON DUPLICATE KEY UPDATE setting_id=setting_id;
-
-#
-# DDL END
-#
-
-SET FOREIGN_KEY_CHECKS = 1;
-
-
-### Start 1.3.4
-SET FOREIGN_KEY_CHECKS = 0;
-
-#
-# DDL START
-#
-ALTER TABLE oc_category MODIFY image varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci;
-#
-#  Fieldformat of
-#    oc_category.image changed from varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
-#  Possibly data modifications needed!
-#
-
-ALTER TABLE oc_category_description MODIFY meta_description varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci;
-#
-#  Fieldformat of
-#    oc_category_description.meta_description changed from varchar(66) NOT NULL COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci.
-#  Possibly data modifications needed!
-#
-
-ALTER TABLE oc_coupon ADD logged int(1) NOT NULL DEFAULT 0 COMMENT '' AFTER discount;
-ALTER TABLE oc_coupon ALTER date_start SET DEFAULT '0000-00-00';
-ALTER TABLE oc_coupon ALTER date_end SET DEFAULT '0000-00-00';
-
-
-ALTER TABLE oc_manufacturer MODIFY image varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci;
-#
-#  Fieldformat of
-#    oc_manufacturer.image changed from varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
-#  Possibly data modifications needed!
-#
-
-ALTER TABLE oc_order ADD shipping_zone_id int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER shipping_zone;
-ALTER TABLE oc_order ADD shipping_country_id int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER shipping_country;
-ALTER TABLE oc_order ADD payment_zone_id int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER payment_zone;
-ALTER TABLE oc_order ADD payment_country_id int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER payment_country;
-
-
-ALTER TABLE oc_order_option ADD product_option_value_id int(11) NOT NULL DEFAULT '0' COMMENT '' AFTER order_product_id;
-
-ALTER TABLE oc_product ADD sku varchar(64) NOT NULL COMMENT '' COLLATE utf8_unicode_ci AFTER model;
-ALTER TABLE oc_product ADD location varchar(128) NOT NULL COMMENT '' COLLATE utf8_unicode_ci AFTER sku;
-ALTER TABLE oc_product MODIFY model varchar(64) NOT NULL COMMENT '' COLLATE utf8_unicode_ci;
-ALTER TABLE oc_product MODIFY image varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci;
-ALTER TABLE oc_product ALTER measurement_class_id SET DEFAULT 0;
-ALTER TABLE oc_product DROP sort_order;
-#
-#  Fieldformats of
-#    oc_product.model changed from varchar(24) NOT NULL COMMENT '' COLLATE utf8_unicode_ci to varchar(64) NOT NULL COMMENT '' COLLATE utf8_unicode_ci.
-#    oc_product.image changed from varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
-#  Possibly data modifications needed!
-#
-
-ALTER TABLE oc_product_description MODIFY meta_description varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci;
-#
-#  Fieldformat of
-#    oc_product_description.meta_description changed from varchar(66) NOT NULL COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci.
-#  Possibly data modifications needed!
-#
-
-ALTER TABLE oc_product_image MODIFY image varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci;
-#
-#  Fieldformat of
-#    oc_product_image.image changed from varchar(255) NOT NULL COMMENT '' COLLATE utf8_unicode_ci to varchar(255) NULL DEFAULT NULL COMMENT '' COLLATE utf8_unicode_ci.
-#  Possibly data modifications needed!
-#
-
-ALTER TABLE oc_product_option_value ADD quantity int(4) NOT NULL DEFAULT '0' COMMENT '' AFTER product_id;
-ALTER TABLE oc_product_option_value ADD subtract int(1) NOT NULL DEFAULT '0' COMMENT '' AFTER quantity;
-
-
-#
-# DDL END
-#
-
-SET FOREIGN_KEY_CHECKS = 1;
-
-
-### Start 1.4.0
-SET FOREIGN_KEY_CHECKS = 0;
-
-#
-# DDL START
-#
-ALTER TABLE oc_user DROP INDEX username;
-
-
-#
-# DDL END
-#
-
-SET FOREIGN_KEY_CHECKS = 1;
-
-
-### Start 1.4.1
-SET FOREIGN_KEY_CHECKS = 0;
-
-#
-# DDL START
-#
-
-DELETE FROM oc_extension WHERE `type` = 'module' AND `key` = 'currency';
-DELETE FROM oc_setting WHERE `group` = 'currency';
-
-CREATE TABLE IF NOT EXISTS oc_category_to_store (
-    category_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    store_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    PRIMARY KEY (category_id, store_id)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-CREATE TABLE IF NOT EXISTS oc_information_to_store (
-    information_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    store_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    PRIMARY KEY (information_id, store_id)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-CREATE TABLE IF NOT EXISTS oc_length_class (
-    length_class_id int(11) NOT NULL COMMENT '' auto_increment,
-    value decimal(15,8) NOT NULL COMMENT '',
-    PRIMARY KEY (length_class_id)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-INSERT INTO `oc_length_class` (`length_class_id`, `value`) VALUES (1, '1.00000000') ON DUPLICATE KEY UPDATE length_class_id=length_class_id;
-INSERT INTO `oc_length_class` (`length_class_id`, `value`) VALUES (2, '10.00000000') ON DUPLICATE KEY UPDATE length_class_id=length_class_id;
-INSERT INTO `oc_length_class` (`length_class_id`, `value`) VALUES (3, '0.39370000') ON DUPLICATE KEY UPDATE length_class_id=length_class_id;
-
-CREATE TABLE IF NOT EXISTS oc_length_class_description (
-    length_class_id int(11) NOT NULL COMMENT '' auto_increment,
-    language_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    title varchar(32) NOT NULL COMMENT '' COLLATE utf8_bin,
-    unit varchar(4) NOT NULL COMMENT '' COLLATE utf8_bin,
-    PRIMARY KEY (length_class_id, language_id)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-INSERT INTO `oc_length_class_description` (`length_class_id`, `language_id`, `title`, `unit`) VALUES (1, 1, 'Centimeter', 'cm') ON DUPLICATE KEY UPDATE length_class_id=length_class_id;
-INSERT INTO `oc_length_class_description` (`length_class_id`, `language_id`, `title`, `unit`) VALUES (2, 1, 'Millimeter', 'mm') ON DUPLICATE KEY UPDATE length_class_id=length_class_id;
-INSERT INTO `oc_length_class_description` (`length_class_id`, `language_id`, `title`, `unit`) VALUES (3, 1, 'Inch', 'in') ON DUPLICATE KEY UPDATE length_class_id=length_class_id;
-
-CREATE TABLE IF NOT EXISTS oc_manufacturer_to_store (
-    manufacturer_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    store_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    PRIMARY KEY (manufacturer_id, store_id)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-CREATE TABLE IF NOT EXISTS oc_product_to_store (
-    product_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    store_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    PRIMARY KEY (product_id, store_id)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-CREATE TABLE IF NOT EXISTS oc_store (
-    store_id int(11) NOT NULL COMMENT '' auto_increment,
-    name varchar(64) NOT NULL COMMENT '' COLLATE utf8_bin,
-    url varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin,
-    title varchar(128) NOT NULL COMMENT '' COLLATE utf8_bin,
-    meta_description varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin,
-    template varchar(64) NOT NULL COMMENT '' COLLATE utf8_bin,
-    country_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    zone_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    language varchar(5) NOT NULL COMMENT '' COLLATE utf8_bin,
-    currency varchar(3) NOT NULL COMMENT '' COLLATE utf8_bin,
-    tax int(1) NOT NULL DEFAULT '0' COMMENT '',
+CREATE TABLE IF NOT EXISTS oc_tax_rate_to_customer_group (
+    tax_rate_id int(11) NOT NULL DEFAULT 0 COMMENT '',
     customer_group_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    customer_price int(1) NOT NULL DEFAULT 0 COMMENT '',
-    customer_approval int(1) NOT NULL DEFAULT 0 COMMENT '',
-    guest_checkout int(1) NOT NULL DEFAULT 0 COMMENT '',
-    account_id int(11) NOT NULL DEFAULT '0' COMMENT '',
-    checkout_id int(11) NOT NULL DEFAULT '0' COMMENT '',
-    stock_display int(1) NOT NULL DEFAULT 0 COMMENT '',
-    stock_check int(1) NOT NULL DEFAULT 0 COMMENT '',
-    stock_checkout int(1) NOT NULL DEFAULT 0 COMMENT '',
-    stock_subtract int(1) NOT NULL DEFAULT 0 COMMENT '',
-    order_status_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    stock_status_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    logo varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin,
-    icon varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin,
-    image_thumb_width int(5) NOT NULL DEFAULT 0 COMMENT '',
-    image_thumb_height int(5) NOT NULL DEFAULT 0 COMMENT '',
-    image_popup_width int(5) NOT NULL DEFAULT 0 COMMENT '',
-    image_popup_height int(5) NOT NULL DEFAULT 0 COMMENT '',
-    image_category_width int(5) NOT NULL DEFAULT 0 COMMENT '',
-    image_category_height int(5) NOT NULL DEFAULT 0 COMMENT '',
-    image_product_width int(5) NOT NULL DEFAULT 0 COMMENT '',
-    image_product_height int(5) NOT NULL DEFAULT 0 COMMENT '',
-    image_additional_width int(5) NOT NULL DEFAULT 0 COMMENT '',
-    image_additional_height int(5) NOT NULL DEFAULT 0 COMMENT '',
-    image_related_width int(5) NOT NULL DEFAULT 0 COMMENT '',
-    image_related_height int(5) NOT NULL DEFAULT 0 COMMENT '',
-    image_cart_width int(5) NOT NULL DEFAULT 0 COMMENT '',
-    image_cart_height int(5) NOT NULL DEFAULT 0 COMMENT '',
-    PRIMARY KEY (store_id)
+    PRIMARY KEY (tax_rate_id, customer_group_id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-CREATE TABLE IF NOT EXISTS oc_store_description (
-    store_id int(11) NOT NULL DEFAULT 0 COMMENT '',
+CREATE TABLE IF NOT EXISTS oc_tax_rule (
+    tax_rule_id int(11) NOT NULL DEFAULT 0 COMMENT '' auto_increment,
+    tax_class_id int(11) NOT NULL DEFAULT 0 COMMENT '',
+    tax_rate_id int(11) NOT NULL DEFAULT 0 COMMENT '',
+    based varchar(10) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    priority int(5) NOT NULL DEFAULT '1' COMMENT '',
+    PRIMARY KEY (tax_rule_id)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+ALTER TABLE oc_customer ADD token varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER approved;
+ALTER TABLE oc_option_value ADD image varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER option_id;
+ALTER TABLE oc_order MODIFY invoice_prefix varchar(26) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin;
+ALTER TABLE oc_product_image ADD sort_order int(3) NOT NULL DEFAULT '0' COMMENT '' AFTER image;
+ALTER TABLE oc_tax_rate ADD name varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER geo_zone_id;
+ALTER TABLE oc_tax_rate ADD type char(1) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER rate;
+ALTER TABLE oc_tax_rate DROP tax_class_id;
+ALTER TABLE oc_tax_rate DROP priority;
+ALTER TABLE oc_tax_rate MODIFY rate decimal(15,4) NOT NULL DEFAULT '0.0000' COMMENT '';
+ALTER TABLE oc_tax_rate DROP description;
+
+ALTER TABLE oc_product_tag ADD INDEX product_id (product_id);
+ALTER TABLE oc_product_tag ADD INDEX language_id (language_id);
+ALTER TABLE oc_product_tag ADD INDEX tag (tag);
+
+
+#### START 1.5.2
+
+
+CREATE TABLE IF NOT EXISTS oc_customer_ip_blacklist (
+    customer_ip_blacklist_id int(11) NOT NULL DEFAULT 0 COMMENT '' auto_increment,
+    ip varchar(15) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    PRIMARY KEY (customer_ip_blacklist_id),
+    INDEX ip (ip)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE IF NOT EXISTS oc_order_fraud (
+    order_id int(11) NOT NULL DEFAULT 0 COMMENT '',
+    customer_id int(11) NOT NULL DEFAULT 0 COMMENT '',
+    country_match varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    country_code varchar(2) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    high_risk_country varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    distance int(11) NOT NULL DEFAULT 0 COMMENT '',
+    ip_region varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_city varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_latitude decimal(10,6) NOT NULL DEFAULT '' COMMENT '',
+    ip_longitude decimal(10,6) NOT NULL DEFAULT '' COMMENT '',
+    ip_isp varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_org varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_asnum int(11) NOT NULL DEFAULT 0 COMMENT '',
+    ip_user_type varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_country_confidence varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_region_confidence varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_city_confidence varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_postal_confidence varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_postal_code varchar(10) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_accuracy_radius int(11) NOT NULL DEFAULT 0 COMMENT '',
+    ip_net_speed_cell varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_metro_code int(3) NOT NULL DEFAULT 0 COMMENT '',
+    ip_area_code int(3) NOT NULL DEFAULT 0 COMMENT '',
+    ip_time_zone varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_region_name varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_domain varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_country_name varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_continent_code varchar(2) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ip_corporate_proxy varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    anonymous_proxy varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    proxy_score int(3) NOT NULL DEFAULT 0 COMMENT '',
+    is_trans_proxy varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    free_mail varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    carder_email varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    high_risk_username varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    high_risk_password varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    bin_match varchar(10) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    bin_country varchar(2) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    bin_name_match varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    bin_name varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    bin_phone_match varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    bin_phone varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    customer_phone_in_billing_location varchar(8) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ship_forward varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    city_postal_match varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    ship_city_postal_match varchar(3) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    score decimal(10,5) NOT NULL DEFAULT '' COMMENT '',
+    explanation text NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    risk_score decimal(10,5) NOT NULL DEFAULT '' COMMENT '',
+    queries_remaining int(11) NOT NULL DEFAULT 0 COMMENT '',
+    maxmind_id varchar(8) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    error text NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '',
+    PRIMARY KEY (order_id)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE IF NOT EXISTS oc_order_voucher (
+    order_voucher_id int(11) NOT NULL DEFAULT 0 COMMENT '' auto_increment,
+    order_id int(11) NOT NULL DEFAULT 0 COMMENT '',
+    voucher_id int(11) NOT NULL DEFAULT 0 COMMENT '',
+    description varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    code varchar(10) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    from_name varchar(64) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    from_email varchar(96) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    to_name varchar(64) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    to_email varchar(96) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    voucher_theme_id int(11) NOT NULL DEFAULT 0 COMMENT '',
+    message text NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    amount decimal(15,4) NOT NULL DEFAULT '' COMMENT '',
+    PRIMARY KEY (order_voucher_id)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+ALTER TABLE oc_order ADD shipping_code varchar(128) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER shipping_method;
+ALTER TABLE oc_order ADD payment_code varchar(128) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER payment_method;
+ALTER TABLE oc_order ADD forwarded_ip varchar(15) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER ip;
+ALTER TABLE oc_order ADD user_agent varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER forwarded_ip;
+ALTER TABLE oc_order ADD accept_language varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER user_agent;
+ALTER TABLE oc_order DROP reward;
+
+ALTER TABLE oc_order_product ADD reward int(8) NOT NULL DEFAULT 0 COMMENT '' AFTER tax;
+
+ALTER TABLE oc_product MODIFY `weight` decimal(15,8) NOT NULL DEFAULT '0.00000000' COMMENT '';
+ALTER TABLE oc_product MODIFY `length` decimal(15,8) NOT NULL DEFAULT '0.00000000' COMMENT '';
+ALTER TABLE oc_product MODIFY `width` decimal(15,8) NOT NULL DEFAULT '0.00000000' COMMENT '';
+ALTER TABLE oc_product MODIFY `height` decimal(15,8) NOT NULL DEFAULT '0.00000000' COMMENT '';
+
+ALTER TABLE `oc_return` ADD `product_id` int(11) NOT NULL DEFAULT '0' COMMENT '' AFTER `order_id`;
+ALTER TABLE `oc_return` ADD `product` varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER `telephone`;
+ALTER TABLE `oc_return` ADD `model` varchar(64) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER `product`;
+ALTER TABLE `oc_return` ADD `quantity` int(4) NOT NULL DEFAULT '0' COMMENT '' AFTER `model`;
+ALTER TABLE `oc_return` ADD `opened` tinyint(1) NOT NULL DEFAULT '0' COMMENT '' AFTER `quantity`;
+ALTER TABLE `oc_return` ADD `return_reason_id` int(11) NOT NULL DEFAULT '0' COMMENT '' AFTER `opened`;
+ALTER TABLE `oc_return` ADD `return_action_id` int(11) NOT NULL DEFAULT '0' COMMENT '' AFTER `return_reason_id`;
+
+DROP TABLE IF EXISTS oc_return_product;
+
+ALTER TABLE oc_tax_rate_to_customer_group DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+# Disable Category Module to force user to reenable with new settings to avoid php error
+UPDATE `oc_setting` SET `value` = replace(`value`, 's:6:"status";s:1:"1"', 's:6:"status";s:1:"0"') WHERE `key` = 'category_module';
+
+#### Start 1.5.2.2
+
+# Disable UPS Extension to force user to reenable with new settings to avoid php error
+UPDATE `oc_setting` SET `value` = 0 WHERE `key` = 'ups_status';
+
+CREATE TABLE IF NOT EXISTS oc_customer_group_description (
+    customer_group_id int(11) NOT NULL DEFAULT 0 COMMENT '',
     language_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    description text NOT NULL COMMENT '' COLLATE utf8_bin,
-    PRIMARY KEY (store_id, language_id)
+    name varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    description text NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    PRIMARY KEY (customer_group_id, language_id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-DROP TABLE IF EXISTS `oc_weight_class`;
+ALTER TABLE oc_address ADD company_id varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER company;
+ALTER TABLE oc_address ADD tax_id varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER company_id;
+ALTER TABLE oc_address DROP company_no;
+ALTER TABLE oc_address DROP company_tax;
 
-CREATE TABLE `oc_weight_class` (
-  `weight_class_id` int(11) NOT NULL AUTO_INCREMENT,
-  `value` decimal(15,8) NOT NULL DEFAULT '0.00000000',
-  PRIMARY KEY (`weight_class_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=7 ;
+ALTER TABLE oc_customer_group ADD approval int(1) NOT NULL DEFAULT 0 COMMENT '' AFTER customer_group_id;
+ALTER TABLE oc_customer_group ADD company_id_display int(1) NOT NULL DEFAULT 0 COMMENT '' AFTER approval;
+ALTER TABLE oc_customer_group ADD company_id_required int(1) NOT NULL DEFAULT 0 COMMENT '' AFTER company_id_display;
+ALTER TABLE oc_customer_group ADD tax_id_display int(1) NOT NULL DEFAULT 0 COMMENT '' AFTER company_id_required;
+ALTER TABLE oc_customer_group ADD tax_id_required int(1) NOT NULL DEFAULT 0 COMMENT '' AFTER tax_id_display;
+ALTER TABLE oc_customer_group ADD sort_order int(3) NOT NULL DEFAULT 0 COMMENT '' AFTER tax_id_required;
 
---
--- Dumping data for table `oc_weight_class`
---
+### This line is executed using php in the upgrade model file so we dont lose names
+#ALTER TABLE oc_customer_group DROP name;
 
-INSERT INTO `oc_weight_class` (`weight_class_id`, `value`) VALUES (1, '1.00000000') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
-INSERT INTO `oc_weight_class` (`weight_class_id`, `value`) VALUES (2, '1000.00000000') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
-INSERT INTO `oc_weight_class` (`weight_class_id`, `value`) VALUES (3, '2.20460000') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
-INSERT INTO `oc_weight_class` (`weight_class_id`, `value`) VALUES (4, '35.27400000') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
-INSERT INTO `oc_weight_class` (`weight_class_id`, `value`) VALUES (5, '2.20460000') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
-INSERT INTO `oc_weight_class` (`weight_class_id`, `value`) VALUES (6, '35.27400000') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
+ALTER TABLE `oc_order` ADD payment_company_id varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER payment_company;
+ALTER TABLE `oc_order` ADD payment_tax_id varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER payment_company_id;
+ALTER TABLE `oc_information` ADD bottom int(1) NOT NULL DEFAULT '1' COMMENT '' AFTER information_id;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `oc_weight_class_description`
---
-
-
-CREATE TABLE IF NOT EXISTS oc_weight_class_description (
-    weight_class_id int(11) NOT NULL COMMENT '' auto_increment,
-    language_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    title varchar(32) NOT NULL COMMENT '' COLLATE utf8_bin,
-    unit varchar(4) NOT NULL COMMENT '' COLLATE utf8_bin,
-    PRIMARY KEY (weight_class_id, language_id)
+CREATE TABLE IF NOT EXISTS oc_order_misc (
+    order_id int(11) NOT NULL DEFAULT 0 COMMENT '',
+    `key` varchar(64) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    value text NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
+    PRIMARY KEY (order_id, `key`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (1, 1, 'Kilogram', 'kg') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
-INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (2, 1, 'Gram', 'g') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
-INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (3, 1, 'Pounds ', 'lbs') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
-INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (4, 1, 'Ounces', 'ozs') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
-INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (5, 1, 'Pound ', 'lb') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
-INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES (6, 1, 'Ounce', 'oz') ON DUPLICATE KEY UPDATE weight_class_id=weight_class_id;
-
-UPDATE `oc_product` SET `weight_class_id` = '5' WHERE `weight_class_id` = '3';
-UPDATE `oc_product` SET `weight_class_id` = '6' WHERE `weight_class_id` = '4';
-
-ALTER TABLE oc_address DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_category DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_category_description DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_country DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_coupon DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_coupon_description DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_coupon_product DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_currency DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_customer ADD approved int(1) NOT NULL DEFAULT '0' COMMENT '' AFTER status, DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_customer_group DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_download DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_download_description DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_extension DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_geo_zone DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_information DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_information_description DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_language DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_manufacturer DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-DROP TABLE IF EXISTS oc_measurement_class;
-
-DROP TABLE IF EXISTS oc_measurement_rule;
-
-ALTER TABLE oc_order ADD store_id int(11) NOT NULL DEFAULT '0' COMMENT '' AFTER order_id;
-ALTER TABLE oc_order ADD store_name varchar(64) NOT NULL COMMENT '' COLLATE utf8_bin AFTER store_id;
-ALTER TABLE oc_order ADD store_url varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin AFTER store_name;
-ALTER TABLE oc_order ADD customer_group_id int(11) NOT NULL DEFAULT '0' COMMENT '' AFTER customer_id;
-ALTER TABLE oc_order ALTER customer_id SET DEFAULT 0, DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_order_download DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_order_history DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_order_option DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_order_product DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_order_status DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_order_total DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_product ADD length_class_id int(11) NOT NULL DEFAULT '0' COMMENT '' AFTER height;
-ALTER TABLE oc_product DROP measurement_class_id, DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_product_description DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_product_discount DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_product_image DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_product_option DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_product_option_description DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_product_option_value DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_product_option_value_description DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_product_related DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_product_special DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_product_to_category DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_product_to_download DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_review DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_setting DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_stock_status DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_tax_class DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_tax_rate DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_url_alias DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_user DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_user_group DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_weight_class ADD value decimal(15,8) NOT NULL DEFAULT '0.00000000' COMMENT '' AFTER weight_class_id;
-ALTER TABLE oc_weight_class DROP language_id;
-ALTER TABLE oc_weight_class DROP title;
-ALTER TABLE oc_weight_class DROP unit;
-ALTER TABLE oc_weight_class DROP PRIMARY KEY;
-ALTER TABLE oc_weight_class ADD PRIMARY KEY (weight_class_id), DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-DROP TABLE IF EXISTS oc_weight_rule;
-
-ALTER TABLE oc_zone DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-ALTER TABLE oc_zone_to_geo_zone DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-#
-# DDL END
-#
-
-SET FOREIGN_KEY_CHECKS = 1;
-
-
-### Start 1.4.3
-ALTER TABLE oc_store ADD `ssl` int(1) NOT NULL DEFAULT '0' COMMENT '' AFTER url;
-
-	
-### Start 1.4.5
-ALTER TABLE oc_customer ADD store_id int(11) NOT NULL DEFAULT '0' COMMENT '' AFTER customer_id;
-
-
-ALTER TABLE oc_order ADD invoice_id int(11) NOT NULL DEFAULT '0' COMMENT '' AFTER order_id;
-ALTER TABLE oc_order ADD invoice_prefix varchar(10) NOT NULL COMMENT '' COLLATE utf8_bin AFTER invoice_id;
-
-
-ALTER TABLE oc_store ALTER `ssl` DROP DEFAULT;
-ALTER TABLE oc_store DROP stock_status_id;
-
-
-### Start 1.4.6
-
-
-### Start 1.4.7
-
-ALTER TABLE `oc_country` ADD `status` INT( 1 ) NOT NULL DEFAULT '1';
-
-ALTER TABLE `oc_zone` ADD `status` INT( 1 ) NOT NULL DEFAULT '1';
-
-ALTER TABLE `oc_category` ADD `status` INT( 1 ) NOT NULL DEFAULT '1';
-
-ALTER TABLE `oc_information` ADD `status` INT( 1 ) NOT NULL DEFAULT '1';
-
-
-CREATE TABLE IF NOT EXISTS `oc_product_featured` (
-  `product_id` int(11) NOT NULL default '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-CREATE TABLE IF NOT EXISTS `oc_product_tags` (
-  `product_id` int(11) NOT NULL,
-  `tag` varchar(32) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  PRIMARY KEY  (`product_id`,`tag`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-INSERT INTO `oc_setting` (`setting_id`, `group`, `key`, `value`) VALUES (NULL, 'config', 'config_catalog_limit', '12') ON DUPLICATE KEY UPDATE setting_id=setting_id;
-INSERT INTO `oc_setting` (`setting_id`, `group`, `key`, `value`) VALUES (NULL, 'config', 'config_admin_limit', '20') ON DUPLICATE KEY UPDATE setting_id=setting_id;
-
-ALTER TABLE `oc_store` ADD `catalog_limit` INT( 4 ) NOT NULL DEFAULT '12';
-ALTER TABLE `oc_store` ADD `cart_weight` INT( 1 ) NOT NULL;
-
-### Start 1.4.8
-
-# Update the default configs for compression and new review field
-INSERT INTO `oc_setting` (`setting_id` ,`group` ,`key` ,`value`) VALUES (NULL , 'config', 'config_compression', '0') ON DUPLICATE KEY UPDATE setting_id=setting_id;
-INSERT INTO `oc_setting` (`setting_id`, `group`, `key`, `value`) VALUES (NULL, 'config', 'config_review', '1') ON DUPLICATE KEY UPDATE setting_id=setting_id;
-
-# Remove existing entries for latest sidebox module so that it can replace the homepage latest
-DELETE FROM oc_setting WHERE `group` = 'latest';
-INSERT INTO `oc_setting` (`setting_id` ,`group` ,`key` ,`value`) VALUES (NULL, 'latest', 'latest_limit', '8') ON DUPLICATE KEY UPDATE setting_id=setting_id;
-INSERT INTO `oc_setting` (`setting_id` ,`group` ,`key` ,`value`) VALUES (NULL, 'latest', 'latest_position', 'home') ON DUPLICATE KEY UPDATE setting_id=setting_id;
-INSERT INTO `oc_setting` (`setting_id` ,`group` ,`key` ,`value`) VALUES (NULL, 'latest', 'latest_status', '1') ON DUPLICATE KEY UPDATE setting_id=setting_id;
-INSERT INTO `oc_setting` (`setting_id` ,`group` ,`key` ,`value`) VALUES (NULL, 'latest', 'latest_sort_order', '0') ON DUPLICATE KEY UPDATE setting_id=setting_id;
-DELETE FROM `oc_extension` WHERE `type` = 'module' AND `key` = 'latest';
-INSERT INTO `oc_extension` (`extension_id`, `type`, `key`) VALUES (NULL, 'module', 'latest') ON DUPLICATE KEY UPDATE extension_id=extension_id;
-
-# Add Meta Keywords
-ALTER TABLE `oc_category_description` MODIFY name varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin;
-ALTER TABLE `oc_category_description` ADD `meta_keywords` varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin;
-ALTER TABLE `oc_product_description` ADD `meta_keywords` varchar(255) NOT NULL COMMENT '' COLLATE utf8_bin;
-
-# Add additional fields to products for new features
-ALTER TABLE `oc_product` ADD `cost` DECIMAL(15,4) NOT NULL DEFAULT '0.0000' COMMENT '';
-ALTER TABLE `oc_product` ADD `sort_order` int(11) NOT NULL DEFAULT '0' COMMENT '';
-ALTER TABLE `oc_product` ADD `minimum` int(11) NOT NULL DEFAULT '1' COMMENT '';
-ALTER TABLE `oc_product` ADD `subtract` int(1) NOT NULL DEFAULT '1' COMMENT '';
-ALTER TABLE `oc_order_product` ADD `subtract` int(1) NOT NULL DEFAULT '0' COMMENT '';
-
-# Stock subtract is at product level now so no need at store level.
-ALTER TABLE `oc_store` DROP stock_subtract;
-
-### Start 1.4.9
-ALTER TABLE oc_order_product DROP subtract;
-
-UPDATE `oc_setting` SET `value` = '0' WHERE `key` = 'pp_standard_status';
-
-DELETE FROM `oc_zone` WHERE `code` = 'ANT';
-DELETE FROM `oc_zone` WHERE `code` = 'ARM';
-DELETE FROM `oc_zone` WHERE `code` = 'DOW';
-DELETE FROM `oc_zone` WHERE `code` = 'FER';
-DELETE FROM `oc_zone` WHERE `code` = 'LDY';
-DELETE FROM `oc_zone` WHERE `code` = 'TYR';
-
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'ANT', 'County Antrim', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'ARM', 'County Armagh', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'DOW', 'County Down', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'FER', 'County Fermanagh', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'LDY', 'County Londonderry', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'TYR', 'County Tyrone', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
-
-ALTER TABLE `oc_product_special` ADD INDEX ( `product_id` ) ;
-ALTER TABLE `oc_product_discount` ADD INDEX ( `product_id` ) ;
-ALTER TABLE `oc_product_related` ADD INDEX ( `product_id` ) ;
-ALTER TABLE `oc_review` ADD INDEX ( `product_id` ) ;
-
-ALTER TABLE `oc_country` ADD `postcode_required` int(1) NOT NULL DEFAULT '1' ;
-UPDATE `oc_country` SET `postcode_required` = 0 WHERE iso_code_3 = 'IRL';
-UPDATE `oc_country` SET `postcode_required` = 0 WHERE iso_code_3 = 'HKG';
-UPDATE `oc_country` SET `postcode_required` = 0 WHERE iso_code_3 = 'PAN';
-
-### Start 1.4.9.2
-DELETE FROM `oc_zone` WHERE `code` = 'CMA';
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, 222, 'CMA', 'Cumbria', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
-
-### Start 1.4.9.3
-# None
-
-### Start 1.4.9.4
-ALTER TABLE `oc_order` ADD `invoice_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER invoice_prefix;
-
-ALTER TABLE `oc_order` MODIFY `invoice_prefix` varchar(24) COLLATE utf8_bin NOT NULL;
-
-INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `address_format`, `postcode_required`, `status`) VALUES (NULL, 'Channel Islands', 'CI', 'CHI', '', 0, 1) ON DUPLICATE KEY UPDATE country_id=country_id;
-
-SET @cid='';
-SELECT @cid:=`country_id` FROM oc_country WHERE `iso_code_2` = 'CI' and `name` = 'Channel Islands';
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, @cid, 'JER', 'Jersey', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, @cid, 'GUE', 'Guernsey', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, @cid, 'ALD', 'Alderney', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, @cid, 'SRK', 'Sark', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
-INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES (NULL, @cid, 'HRM', 'Herm', 1) ON DUPLICATE KEY UPDATE zone_id=zone_id;
-
-### Start 1.4.9.5
-ALTER TABLE `oc_product` ADD `maximum` int(11) NOT NULL DEFAULT '0' COMMENT '' AFTER `minimum`;
-
-
-### Start 1.5.0
-#DROP TABLE `oc_product_featured`

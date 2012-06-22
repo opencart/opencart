@@ -3,23 +3,23 @@ class ModelReportSale extends Model {
 	public function getOrders($data = array()) {
 		$sql = "SELECT MIN(tmp.date_added) AS date_start, MAX(tmp.date_added) AS date_end, COUNT(tmp.order_id) AS `orders`, SUM(tmp.products) AS products, SUM(tmp.tax) AS tax, SUM(tmp.total) AS total FROM (SELECT o.order_id, (SELECT SUM(op.quantity) FROM `" . DB_PREFIX . "order_product` op WHERE op.order_id = o.order_id GROUP BY op.order_id) AS products, (SELECT SUM(ot.value) FROM `" . DB_PREFIX . "order_total` ot WHERE ot.order_id = o.order_id AND ot.code = 'tax' GROUP BY ot.order_id) AS tax, o.total, o.date_added FROM `" . DB_PREFIX . "order` o"; 
 
-		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+		if (!empty($data['filter_order_status_id'])) {
 			$sql .= " WHERE o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
 			$sql .= " WHERE o.order_status_id > '0'";
 		}
 		
-		if (isset($data['filter_date_start']) && $data['filter_date_start']) {
+		if (!empty($data['filter_date_start'])) {
 			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
 
-		if (isset($data['filter_date_end']) && $data['filter_date_end']) {
+		if (!empty($data['filter_date_end'])) {
 			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 		
 		$sql .= " GROUP BY o.order_id) tmp";
 		
-		if (isset($data['filter_group'])) {
+		if (!empty($data['filter_group'])) {
 			$group = $data['filter_group'];
 		} else {
 			$group = 'week';
@@ -41,6 +41,8 @@ class ModelReportSale extends Model {
 				break;									
 		}
 		
+		$sql .= " ORDER BY tmp.date_added DESC";
+		
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
 				$data['start'] = 0;
@@ -59,7 +61,7 @@ class ModelReportSale extends Model {
 	}	
 	
 	public function getTotalOrders($data = array()) {
-		if (isset($data['filter_group'])) {
+		if (!empty($data['filter_group'])) {
 			$group = $data['filter_group'];
 		} else {
 			$group = 'week';
@@ -81,17 +83,17 @@ class ModelReportSale extends Model {
 				break;									
 		}
 		
-		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+		if (!empty($data['filter_order_status_id'])) {
 			$sql .= " WHERE order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
 			$sql .= " WHERE order_status_id > '0'";
 		}
 				
-		if (isset($data['filter_date_start']) && $data['filter_date_start']) {
+		if (!empty($data['filter_date_start'])) {
 			$sql .= " AND DATE(date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
 
-		if (isset($data['filter_date_end']) && $data['filter_date_end']) {
+		if (!empty($data['filter_date_end'])) {
 			$sql .= " AND DATE(date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 
@@ -103,21 +105,21 @@ class ModelReportSale extends Model {
 	public function getTaxes($data = array()) {
 		$sql = "SELECT MIN(o.date_added) AS date_start, MAX(o.date_added) AS date_end, ot.title, SUM(ot.value) AS total, COUNT(o.order_id) AS `orders` FROM `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'"; 
 
-		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+		if (!empty($data['filter_order_status_id'])) {
 			$sql .= " AND o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
 			$sql .= " AND o.order_status_id > '0'";
 		}
 		
-		if (isset($data['filter_date_start']) && $data['filter_date_start']) {
+		if (!empty($data['filter_date_start'])) {
 			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
 
-		if (isset($data['filter_date_end']) && $data['filter_date_end']) {
+		if (!empty($data['filter_date_end'])) {
 			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 		
-		if (isset($data['filter_group'])) {
+		if (!empty($data['filter_group'])) {
 			$group = $data['filter_group'];
 		} else {
 			$group = 'week';
@@ -159,21 +161,21 @@ class ModelReportSale extends Model {
 	public function getTotalTaxes($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM (SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
 		
-		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+		if (!empty($data['filter_order_status_id'])) {
 			$sql .= " AND order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
 			$sql .= " AND order_status_id > '0'";
 		}
 				
-		if (isset($data['filter_date_start']) && $data['filter_date_start']) {
+		if (!empty($data['filter_date_start'])) {
 			$sql .= " AND DATE(date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
 
-		if (isset($data['filter_date_end']) && $data['filter_date_end']) {
+		if (!empty($data['filter_date_end'])) {
 			$sql .= " AND DATE(date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 		
-		if (isset($data['filter_group'])) {
+		if (!empty($data['filter_group'])) {
 			$group = $data['filter_group'];
 		} else {
 			$group = 'week';
@@ -205,21 +207,21 @@ class ModelReportSale extends Model {
 	public function getShipping($data = array()) {
 		$sql = "SELECT MIN(o.date_added) AS date_start, MAX(o.date_added) AS date_end, ot.title, SUM(ot.value) AS total, COUNT(o.order_id) AS `orders` FROM `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'shipping'"; 
 
-		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+		if (!empty($data['filter_order_status_id'])) {
 			$sql .= " AND o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
 			$sql .= " AND o.order_status_id > '0'";
 		}
 		
-		if (isset($data['filter_date_start']) && $data['filter_date_start']) {
+		if (!empty($data['filter_date_start'])) {
 			$sql .= " AND DATE(date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
 
-		if (isset($data['filter_date_end']) && $data['filter_date_end']) {
+		if (!empty($data['filter_date_end'])) {
 			$sql .= " AND DATE(date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 		
-		if (isset($data['filter_group'])) {
+		if (!empty($data['filter_group'])) {
 			$group = $data['filter_group'];
 		} else {
 			$group = 'week';
@@ -261,21 +263,21 @@ class ModelReportSale extends Model {
 	public function getTotalShipping($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM (SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order_total` ot LEFT JOIN `" . DB_PREFIX . "order` o ON (ot.order_id = o.order_id) WHERE ot.code = 'shipping'";
 		
-		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+		if (!empty($data['filter_order_status_id'])) {
 			$sql .= " AND order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
 			$sql .= " AND order_status_id > '0'";
 		}
 				
-		if (isset($data['filter_date_start']) && $data['filter_date_start']) {
+		if (!empty($data['filter_date_start'])) {
 			$sql .= " AND DATE(date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
 
-		if (isset($data['filter_date_end']) && $data['filter_date_end']) {
+		if (!empty($data['filter_date_end'])) {
 			$sql .= " AND DATE(date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 		
-		if (isset($data['filter_group'])) {
+		if (!empty($data['filter_group'])) {
 			$group = $data['filter_group'];
 		} else {
 			$group = 'week';

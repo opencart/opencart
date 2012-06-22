@@ -1,4 +1,8 @@
-<?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
+<?php echo $header; ?>
+<?php if ($success) { ?>
+<div class="success"><?php echo $success; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+<?php } ?>
+<?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
   <div class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -10,7 +14,7 @@
   <table class="compare-info">
     <thead>
       <tr>
-        <td colspan="<?php echo count($products) + 1; ?>"><?php echo $text_product; ?></td>
+        <td class="compare-product" colspan="<?php echo count($products) + 1; ?>"><?php echo $text_product; ?></td>
       </tr>
     </thead>
     <tbody>
@@ -87,7 +91,7 @@
     <?php foreach ($attribute_groups as $attribute_group) { ?>
     <thead>
       <tr>
-        <td colspan="<?php echo count($products) + 1; ?>"><?php echo $attribute_group['name']; ?></td>
+        <td class="compare-attribute" colspan="<?php echo count($products) + 1; ?>"><?php echo $attribute_group['name']; ?></td>
       </tr>
     </thead>
     <?php foreach ($attribute_group['attribute'] as $key => $attribute) { ?>
@@ -108,26 +112,23 @@
     <tr>
       <td></td>
       <?php foreach ($products as $product) { ?>
-      <td><a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><span><?php echo $button_cart; ?></span></a></td>
+      <td><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></td>
       <?php } ?>
     </tr>
     <tr>
       <td></td>
       <?php foreach ($products as $product) { ?>
-      <td><form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-          <input type="hidden" name="remove" value="<?php echo $product['product_id']; ?>" />
-          <a class="button" onclick="$(this).parent().submit();"><span><?php echo $text_remove; ?></span></a>
-        </form></td>
+      <td class="remove"><a href="<?php echo $product['remove']; ?>" class="button"><?php echo $button_remove; ?></a></td>
       <?php } ?>
     </tr>
   </table>
   <div class="buttons">
-    <div class="right"><a href="<?php echo $continue; ?>" class="button"><span><?php echo $button_continue; ?></span></a></div>
+    <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
   </div>
   <?php } else { ?>
   <div class="content"><?php echo $text_empty; ?></div>
   <div class="buttons">
-    <div class="right"><a href="<?php echo $continue; ?>" class="button"><span><?php echo $button_continue; ?></span></a></div>
+    <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
   </div>
   <?php } ?>
   <?php echo $content_bottom; ?></div>

@@ -153,7 +153,7 @@ class ControllerReportCustomerOrder extends Controller {
 		$this->template = 'report/customer_order.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

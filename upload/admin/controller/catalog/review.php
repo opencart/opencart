@@ -264,7 +264,7 @@ class ControllerCatalogReview extends Controller {
 		$this->template = 'catalog/review_list.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -355,17 +355,17 @@ class ControllerCatalogReview extends Controller {
 		
 		$this->data['cancel'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		$this->data['token'] = $this->session->data['token'];
-
 		if (isset($this->request->get['review_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$review_info = $this->model_catalog_review->getReview($this->request->get['review_id']);
 		}
+		
+		$this->data['token'] = $this->session->data['token'];
 			
 		$this->load->model('catalog/product');
 		
 		if (isset($this->request->post['product_id'])) {
 			$this->data['product_id'] = $this->request->post['product_id'];
-		} elseif (isset($review_info)) {
+		} elseif (!empty($review_info)) {
 			$this->data['product_id'] = $review_info['product_id'];
 		} else {
 			$this->data['product_id'] = '';
@@ -373,7 +373,7 @@ class ControllerCatalogReview extends Controller {
 
 		if (isset($this->request->post['product'])) {
 			$this->data['product'] = $this->request->post['product'];
-		} elseif (isset($review_info)) {
+		} elseif (!empty($review_info)) {
 			$this->data['product'] = $review_info['product'];
 		} else {
 			$this->data['product'] = '';
@@ -381,7 +381,7 @@ class ControllerCatalogReview extends Controller {
 				
 		if (isset($this->request->post['author'])) {
 			$this->data['author'] = $this->request->post['author'];
-		} elseif (isset($review_info)) {
+		} elseif (!empty($review_info)) {
 			$this->data['author'] = $review_info['author'];
 		} else {
 			$this->data['author'] = '';
@@ -389,7 +389,7 @@ class ControllerCatalogReview extends Controller {
 
 		if (isset($this->request->post['text'])) {
 			$this->data['text'] = $this->request->post['text'];
-		} elseif (isset($review_info)) {
+		} elseif (!empty($review_info)) {
 			$this->data['text'] = $review_info['text'];
 		} else {
 			$this->data['text'] = '';
@@ -397,7 +397,7 @@ class ControllerCatalogReview extends Controller {
 
 		if (isset($this->request->post['rating'])) {
 			$this->data['rating'] = $this->request->post['rating'];
-		} elseif (isset($review_info)) {
+		} elseif (!empty($review_info)) {
 			$this->data['rating'] = $review_info['rating'];
 		} else {
 			$this->data['rating'] = '';
@@ -405,7 +405,7 @@ class ControllerCatalogReview extends Controller {
 
 		if (isset($this->request->post['status'])) {
 			$this->data['status'] = $this->request->post['status'];
-		} elseif (isset($review_info)) {
+		} elseif (!empty($review_info)) {
 			$this->data['status'] = $review_info['status'];
 		} else {
 			$this->data['status'] = '';
@@ -414,7 +414,7 @@ class ControllerCatalogReview extends Controller {
 		$this->template = 'catalog/review_form.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -429,11 +429,11 @@ class ControllerCatalogReview extends Controller {
 			$this->error['product'] = $this->language->get('error_product');
 		}
 		
-		if ((strlen(utf8_decode($this->request->post['author'])) < 3) || (strlen(utf8_decode($this->request->post['author'])) > 64)) {
+		if ((utf8_strlen($this->request->post['author']) < 3) || (utf8_strlen($this->request->post['author']) > 64)) {
 			$this->error['author'] = $this->language->get('error_author');
 		}
 
-		if (strlen(utf8_decode($this->request->post['text'])) < 1) {
+		if (utf8_strlen($this->request->post['text']) < 1) {
 			$this->error['text'] = $this->language->get('error_text');
 		}
 				

@@ -11,7 +11,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/report.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="location = '<?php echo $reset; ?>';" class="button"><span><?php echo $button_reset; ?></span></a></div>
+      <div class="buttons"><a onclick="location = '<?php echo $reset; ?>';" class="button"><?php echo $button_reset; ?></a></div>
     </div>
     <div class="content">
       <table class="list">

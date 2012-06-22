@@ -1,5 +1,5 @@
 <?php
-final class Affiliate {
+class Affiliate {
 	private $affiliate_id;
 	private $firstname;
 	private $lastname;
@@ -62,8 +62,6 @@ final class Affiliate {
 		$this->email = '';
 		$this->telephone = '';
 		$this->fax = '';
-		
-		session_destroy();
   	}
   
   	public function isLogged() {

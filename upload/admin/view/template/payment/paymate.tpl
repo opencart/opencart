@@ -11,7 +11,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/payment.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -24,9 +24,33 @@
               <?php } ?></td>
           </tr>
           <tr>
+            <td><span class="required">*</span> <?php echo $entry_password; ?><br /></td>
+            <td><input type="text" name="paymate_password" value="<?php echo $paymate_password; ?>" />
+              <?php if ($error_password) { ?>
+              <span class="error"><?php echo $error_password; ?></span>
+              <?php } ?></td>
+          </tr>          
+          <tr>
+            <td><?php echo $entry_test; ?></td>
+            <td><?php if ($paymate_test) { ?>
+              <input type="radio" name="paymate_test" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <?php } else { ?>
+              <input type="radio" name="paymate_test" value="1" />
+              <?php echo $text_yes; ?>
+              <?php } ?>
+              <?php if (!$paymate_test) { ?>
+              <input type="radio" name="paymate_test" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="paymate_test" value="0" />
+              <?php echo $text_no; ?>
+              <?php } ?></td>
+          </tr>
+          <tr>
             <td><?php echo $entry_total; ?></td>
             <td><input type="text" name="paymate_total" value="<?php echo $paymate_total; ?>" /></td>
-          </tr>          
+          </tr>
           <tr>
             <td><?php echo $entry_order_status; ?></td>
             <td><select name="paymate_order_status_id">

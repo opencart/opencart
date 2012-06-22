@@ -10,6 +10,7 @@
 }
 .jcarousel-skin-opencart .jcarousel-clip {
 	overflow: hidden;
+	width: 100%;
 }
 .jcarousel-skin-opencart .jcarousel-clip-horizontal {
 }

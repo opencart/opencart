@@ -10,7 +10,7 @@
       <h1><img src="view/image/report.png" alt="" /> <?php echo $heading_title; ?></h1>
     </div>
     <div class="content">
-      <table class="filter">
+      <table class="form">
         <tr>
           <td><?php echo $entry_date_start; ?>
             <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="date-start" size="12" /></td>
@@ -37,7 +37,7 @@
               <?php } ?>
               <?php } ?>
             </select></td>
-          <td><a onclick="filter();" class="button"><span><?php echo $button_filter; ?></span></a></td>
+          <td style="text-align: right;"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
         </tr>
       </table>
       <table class="list">
@@ -46,7 +46,6 @@
             <td class="left"><?php echo $column_date_start; ?></td>
             <td class="left"><?php echo $column_date_end; ?></td>
             <td class="right"><?php echo $column_returns; ?></td>
-            <td class="right"><?php echo $column_products; ?></td>
           </tr>
         </thead>
         <tbody>
@@ -56,12 +55,11 @@
             <td class="left"><?php echo $return['date_start']; ?></td>
             <td class="left"><?php echo $return['date_end']; ?></td>
             <td class="right"><?php echo $return['returns']; ?></td>
-            <td class="right"><?php echo $return['products']; ?></td>
           </tr>
           <?php } ?>
           <?php } else { ?>
           <tr>
-            <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
+            <td class="center" colspan="3"><?php echo $text_no_results; ?></td>
           </tr>
           <?php } ?>
         </tbody>
@@ -94,7 +92,7 @@ function filter() {
 	
 	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').attr('value');
 	
-	if (filter_order_status_id) {
+	if (filter_order_status_id != 0) {
 		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
 	}	
 

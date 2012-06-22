@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '1.5.1.2');
+define('VERSION', '1.5.3');
 
 // Configuration
 require_once('config.php');
@@ -47,7 +47,7 @@ foreach ($query->rows as $setting) {
 }
 
 // Url
-$url = new Url(HTTP_SERVER, HTTPS_SERVER);	
+$url = new Url(HTTP_SERVER, $config->get('config_use_ssl') ? HTTPS_SERVER : HTTP_SERVER);	
 $registry->set('url', $url);
 		
 // Log 
@@ -123,8 +123,7 @@ $language->load($languages[$config->get('config_admin_language')]['filename']);
 $registry->set('language', $language); 		
 
 // Document
-$document = new Document();
-$registry->set('document', $document); 		
+$registry->set('document', new Document()); 		
 		
 // Currency
 $registry->set('currency', new Currency($registry));		

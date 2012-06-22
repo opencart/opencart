@@ -8,6 +8,10 @@
   <?php } ?>
 </div>
 <script type="text/javascript"><!--
+$(document).ready(function() {
+	$('#banner<?php echo $module; ?> div:first-child').css('display', 'block');
+});
+
 var banner = function() {
 	$('#banner<?php echo $module; ?>').cycle({
 		before: function(current, next) {

@@ -252,7 +252,7 @@ class ControllerDesignLayout extends Controller {
 		$this->template = 'design/layout_list.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -326,7 +326,7 @@ class ControllerDesignLayout extends Controller {
 
 		if (isset($this->request->post['name'])) {
 			$this->data['name'] = $this->request->post['name'];
-		} elseif (isset($layout_info)) {
+		} elseif (!empty($layout_info)) {
 			$this->data['name'] = $layout_info['name'];
 		} else {
 			$this->data['name'] = '';
@@ -338,7 +338,7 @@ class ControllerDesignLayout extends Controller {
 		
 		if (isset($this->request->post['layout_route'])) {
 			$this->data['layout_routes'] = $this->request->post['layout_route'];
-		} elseif (isset($layout_info)) {
+		} elseif (isset($this->request->get['layout_id'])) {
 			$this->data['layout_routes'] = $this->model_design_layout->getLayoutRoutes($this->request->get['layout_id']);
 		} else {
 			$this->data['layout_routes'] = array();
@@ -347,7 +347,7 @@ class ControllerDesignLayout extends Controller {
 		$this->template = 'design/layout_form.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -358,7 +358,7 @@ class ControllerDesignLayout extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((strlen(utf8_decode($this->request->post['name'])) < 3) || (strlen(utf8_decode($this->request->post['name'])) > 64)) {
+		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 

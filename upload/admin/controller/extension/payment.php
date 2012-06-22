@@ -107,7 +107,7 @@ class ControllerExtensionPayment extends Controller {
 		$this->template = 'extension/payment.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

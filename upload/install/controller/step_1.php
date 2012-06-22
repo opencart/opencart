@@ -22,7 +22,7 @@ class ControllerStep1 extends Controller {
 		
 		$this->template = 'step_1.tpl';
 
-		$this->response->setOutput($this->render(TRUE));
+		$this->response->setOutput($this->render());
 	}
 	
 	private function validate() {
@@ -31,9 +31,9 @@ class ControllerStep1 extends Controller {
 		}
 		
     	if (!$this->error) {
-      		return TRUE;
+      		return true;
     	} else {
-      		return FALSE;
+      		return false;
     	}		
 	}	
 }

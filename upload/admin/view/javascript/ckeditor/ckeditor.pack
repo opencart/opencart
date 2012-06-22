@@ -4,7 +4,7 @@
 
 header :
 	'/*'																			+ '\n' +
-	'Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.'	+ '\n' +
+	'Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.'	+ '\n' +
 	'For licensing, see LICENSE.html or http://ckeditor.com/license'				+ '\n' +
 	'*/'																			+ '\n' +
 	'\n',
@@ -16,9 +16,9 @@ constants :
 		'CKEDITOR.ELEMENT_MODE_NONE' : 0,
 		'CKEDITOR.ELEMENT_MODE_REPLACE' : 1,
 		'CKEDITOR.ELEMENT_MODE_APPENDTO' : 2,
-		'CKEDITOR.CTRL' : 1000,
-		'CKEDITOR.SHIFT' : 2000,
-		'CKEDITOR.ALT' : 4000,
+		'CKEDITOR.CTRL' : 0x110000,
+		'CKEDITOR.SHIFT' : 0x220000,
+		'CKEDITOR.ALT' : 0x440000,
 		'CKEDITOR.NODE_ELEMENT' : 1,
 		'CKEDITOR.NODE_DOCUMENT' : 9,
 		'CKEDITOR.NODE_TEXT' : 3,

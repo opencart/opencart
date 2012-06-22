@@ -59,7 +59,7 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 		$request .= '&CC_COMPANY=' . urlencode($order_info['payment_company']);
 		$request .= '&CC_ADDRESS=' . urlencode($order_info['payment_address_1']);
 		$request .= '&CC_CITY=' . urlencode($order_info['payment_city']);
-		$request .= '&CC_STATE=' . urlencode($order_info['payment_iso_code_2'] != 'US' ? $order_info['payment_zone'] : $order_info['payment_zone_code'], ENT_QUOTES, 'UTF-8');
+		$request .= '&CC_STATE=' . urlencode($order_info['payment_iso_code_2'] != 'US' ? $order_info['payment_zone'] : $order_info['payment_zone_code']);
 		$request .= '&CC_ZIP=' . urlencode($order_info['payment_postcode']);
 		$request .= '&CC_COUNTRY=' . urlencode($order_info['payment_country']);
 		$request .= '&CC_PHONE=' . urlencode($order_info['telephone']);
@@ -142,14 +142,12 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 			
 			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('web_payment_software_order_status_id'), $message, false);				
 			
-			$json['success'] = HTTPS_SERVER . 'index.php?route=checkout/success';
+			$json['success'] = $this->url->link('checkout/success', '', 'SSL');
 		} else {
 			$json['error'] = (string)$xml->response_text;
 		}
 		
-		$this->load->library('json');
-		
-		$this->response->setOutput(Json::encode($json));
+		$this->response->setOutput(json_encode($json));
 	}
 }
 ?>

@@ -6,7 +6,7 @@
     <?php } ?>
   </div>
   <h1><?php echo $heading_title; ?></h1>
-  <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="payment">
+  <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <h2><?php echo $text_your_payment; ?></h2>
     <div class="content">
       <table class="form">
@@ -74,8 +74,8 @@
       </table>
     </div>
     <div class="buttons">
-      <div class="left"><a href="<?php echo $back; ?>" class="button"><span><?php echo $button_back; ?></span></a></div>
-      <div class="right"><a onclick="$('#payment').submit();" class="button"><span><?php echo $button_continue; ?></span></a></div>
+      <div class="left"><a href="<?php echo $back; ?>" class="button"><?php echo $button_back; ?></a></div>
+      <div class="right"><input type="submit" value="<?php echo $button_continue; ?>" class="button" /></div>
     </div>
   </form>
   <?php echo $content_bottom; ?></div>

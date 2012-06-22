@@ -1,7 +1,9 @@
-<form action="<?php echo $action; ?>" method="post" id="payment">
+<form action="<?php echo $action; ?>" method="post">
   <input type="hidden" name="operation_xml" value="<?php echo $xml; ?>">
   <input type="hidden" name="signature" value="<?php echo $signature; ?>">
   <div class="buttons">
-    <div class="right"><a onclick="$('#payment').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></div>
+    <div class="right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="button" />
+    </div>
   </div>
 </form>

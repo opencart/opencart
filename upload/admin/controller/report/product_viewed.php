@@ -100,7 +100,7 @@ class ControllerReportProductViewed extends Controller {
 		$this->template = 'report/product_viewed.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

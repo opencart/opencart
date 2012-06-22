@@ -71,7 +71,7 @@ class ControllerFeedGoogleBase extends Controller {
 		$this->template = 'feed/google_base.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

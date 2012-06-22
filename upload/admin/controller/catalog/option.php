@@ -255,7 +255,7 @@ class ControllerCatalogOption extends Controller {
 		$this->template = 'catalog/option_list.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -277,7 +277,9 @@ class ControllerCatalogOption extends Controller {
 		$this->data['text_datetime'] = $this->language->get('text_datetime');
 		$this->data['text_time'] = $this->language->get('text_time');
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
-
+		$this->data['text_browse'] = $this->language->get('text_browse');
+		$this->data['text_clear'] = $this->language->get('text_clear');	
+		
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_type'] = $this->language->get('entry_type');
 		$this->data['entry_value'] = $this->language->get('entry_value');
@@ -345,11 +347,11 @@ class ControllerCatalogOption extends Controller {
 
 		$this->data['cancel'] = $this->url->link('catalog/option', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		$this->data['token'] = $this->session->data['token'];
-
 		if (isset($this->request->get['option_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$option_info = $this->model_catalog_option->getOption($this->request->get['option_id']);
     	}
+		
+		$this->data['token'] = $this->session->data['token'];
 		
 		$this->load->model('localisation/language');
 		
@@ -365,7 +367,7 @@ class ControllerCatalogOption extends Controller {
 
 		if (isset($this->request->post['type'])) {
 			$this->data['type'] = $this->request->post['type'];
-		} elseif (isset($option_info)) {
+		} elseif (!empty($option_info)) {
 			$this->data['type'] = $option_info['type'];
 		} else {
 			$this->data['type'] = '';
@@ -373,7 +375,7 @@ class ControllerCatalogOption extends Controller {
 		
 		if (isset($this->request->post['sort_order'])) {
 			$this->data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (isset($option_info)) {
+		} elseif (!empty($option_info)) {
 			$this->data['sort_order'] = $option_info['sort_order'];
 		} else {
 			$this->data['sort_order'] = '';
@@ -412,7 +414,7 @@ class ControllerCatalogOption extends Controller {
 		$this->template = 'catalog/option_form.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -424,7 +426,7 @@ class ControllerCatalogOption extends Controller {
 		}
 
 		foreach ($this->request->post['option_description'] as $language_id => $value) {
-			if ((strlen(utf8_decode($value['name'])) < 1) || (strlen(utf8_decode($value['name'])) > 128)) {
+			if ((utf8_strlen($value['name']) < 1) || (utf8_strlen($value['name']) > 128)) {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
 		}
@@ -436,7 +438,7 @@ class ControllerCatalogOption extends Controller {
 		if (isset($this->request->post['option_value'])) {
 			foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
 				foreach ($option_value['option_value_description'] as $language_id => $option_value_description) {
-					if ((strlen(utf8_decode($option_value_description['name'])) < 1) || (strlen(utf8_decode($option_value_description['name'])) > 128)) {
+					if ((utf8_strlen($option_value_description['name']) < 1) || (utf8_strlen($option_value_description['name']) > 128)) {
 						$this->error['option_value'][$option_value_id][$language_id] = $this->language->get('error_option_value'); 
 					}					
 				}
@@ -475,13 +477,15 @@ class ControllerCatalogOption extends Controller {
 	public function autocomplete() {
 		$json = array();
 		
-		if (isset($this->request->post['filter_name'])) {
+		if (isset($this->request->get['filter_name'])) {
 			$this->load->language('catalog/option');
 			
 			$this->load->model('catalog/option');
 			
+			$this->load->model('tool/image');
+			
 			$data = array(
-				'filter_name' => $this->request->post['filter_name'],
+				'filter_name' => $this->request->get['filter_name'],
 				'start'       => 0,
 				'limit'       => 20
 			);
@@ -495,9 +499,16 @@ class ControllerCatalogOption extends Controller {
 					$option_values = $this->model_catalog_option->getOptionValues($option['option_id']);
 					
 					foreach ($option_values as $option_value) {
+						if ($option_value['image'] && file_exists(DIR_IMAGE . $option_value['image'])) {
+							$image = $this->model_tool_image->resize($option_value['image'], 50, 50);
+						} else {
+							$image = '';
+						}
+													
 						$option_value_data[] = array(
 							'option_value_id' => $option_value['option_value_id'],
-							'name'            => html_entity_decode($option_value['name'], ENT_QUOTES, 'UTF-8')					
+							'name'            => html_entity_decode($option_value['name'], ENT_QUOTES, 'UTF-8'),
+							'image'           => $image					
 						);
 					}
 					
@@ -530,7 +541,7 @@ class ControllerCatalogOption extends Controller {
 												
 				$json[] = array(
 					'option_id'    => $option['option_id'],
-					'name'         => html_entity_decode($option['name'], ENT_QUOTES, 'UTF-8'),
+					'name'         => strip_tags(html_entity_decode($option['name'], ENT_QUOTES, 'UTF-8')),
 					'category'     => $type,
 					'type'         => $option['type'],
 					'option_value' => $option_value_data
@@ -546,9 +557,7 @@ class ControllerCatalogOption extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $json);
 				
-		$this->load->library('json');
-		
-		$this->response->setOutput(Json::encode($json));
+		$this->response->setOutput(json_encode($json));
 	}
 }
 ?>

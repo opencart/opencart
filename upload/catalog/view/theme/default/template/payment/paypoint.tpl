@@ -1,7 +1,10 @@
-<form action="<?php echo $action; ?>" method="post" id="payment">
+<form action="https://www.secpay.com/java-bin/ValCard" method="post">
   <input type="hidden" name="merchant" value="<?php echo $merchant; ?>" />
   <input type="hidden" name="trans_id" value="<?php echo $trans_id; ?>" />
   <input type="hidden" name="amount" value="<?php echo $amount; ?>" />
+  <?php if ($digest) { ?>
+  <input type="hidden" name="digest" value="<?php echo $digest; ?>" />
+  <?php } ?>  
   <input type="hidden" name="bill_name" value="<?php echo $bill_name; ?>" />
   <input type="hidden" name="bill_addr_1" value="<?php echo $bill_addr_1; ?>" />
   <input type="hidden" name="bill_addr_2" value="<?php echo $bill_addr_2; ?>" />
@@ -20,9 +23,10 @@
   <input type="hidden" name="ship_country" value="<?php echo $ship_country; ?>" />
   <input type="hidden" name="currency" value="<?php echo $currency; ?>" />
   <input type="hidden" name="callback" value="<?php echo $callback; ?>" />
-  <input type="hidden" name="order_id" value="<?php echo $order_id; ?>" />
   <input type="hidden" name="options" value="<?php echo $options; ?>" />
   <div class="buttons">
-    <div class="right"><a onclick="$('#payment').submit();" class="button"><span><?php echo $button_confirm; ?></span></a></div>
+    <div class="right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="button" />
+    </div>
   </div>
 </form>

@@ -5,71 +5,32 @@
     <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
     <?php } ?>
   </div>
-  <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
-  <?php } ?>
-  <?php if ($success) { ?>
-  <div class="success"><?php echo $success; ?></div>
-  <?php } ?>
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/mail.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_send; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+      <div class="buttons"><a id="button-send" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');" class="button"><?php echo $button_send; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <table id="mail" class="form">
           <tr>
             <td><?php echo $entry_store; ?></td>
             <td><select name="store_id">
                 <option value="0"><?php echo $text_default; ?></option>
                 <?php foreach ($stores as $store) { ?>
-                <?php if ($store['store_id'] == $store_id) { ?>
                 <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
-                <?php } ?>
                 <?php } ?>
               </select></td>
           </tr>
           <tr>
             <td><?php echo $entry_to; ?></td>
             <td><select name="to">
-                <?php if ($to == 'newsletter') { ?>
-                <option value="newsletter" selected="selected"><?php echo $text_newsletter; ?></option>
-                <?php } else { ?>
                 <option value="newsletter"><?php echo $text_newsletter; ?></option>
-                <?php } ?>
-                <?php if ($to == 'customer_all') { ?>
-                <option value="customer_all" selected="selected"><?php echo $text_customer_all; ?></option>
-                <?php } else { ?>
                 <option value="customer_all"><?php echo $text_customer_all; ?></option>
-                <?php } ?>
-                <?php if ($to == 'customer_group') { ?>
-                <option value="customer_group" selected="selected"><?php echo $text_customer_group; ?></option>
-                <?php } else { ?>
                 <option value="customer_group"><?php echo $text_customer_group; ?></option>
-                <?php } ?>
-                <?php if ($to == 'customer') { ?>
-                <option value="customer" selected="selected"><?php echo $text_customer; ?></option>
-                <?php } else { ?>
                 <option value="customer"><?php echo $text_customer; ?></option>
-                <?php } ?>
-                <?php if ($to == 'affiliate_all') { ?>
-                <option value="affiliate_all" selected="selected"><?php echo $text_affiliate_all; ?></option>
-                <?php } else { ?>
                 <option value="affiliate_all"><?php echo $text_affiliate_all; ?></option>
-                <?php } ?>
-                <?php if ($to == 'affiliate') { ?>
-                <option value="affiliate" selected="selected"><?php echo $text_affiliate; ?></option>
-                <?php } else { ?>
                 <option value="affiliate"><?php echo $text_affiliate; ?></option>
-                <?php } ?>
-                <?php if ($to == 'product') { ?>
-                <option value="product" selected="selected"><?php echo $text_product; ?></option>
-                <?php } else { ?>
                 <option value="product"><?php echo $text_product; ?></option>
-                <?php } ?>
               </select></td>
           </tr>
           <tbody id="to-customer-group" class="to">
@@ -77,11 +38,7 @@
               <td><?php echo $entry_customer_group; ?></td>
               <td><select name="customer_group_id">
                   <?php foreach ($customer_groups as $customer_group) { ?>
-                  <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
-                  <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
-                  <?php } else { ?>
                   <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
-                  <?php } ?>
                   <?php } ?>
                 </select></td>
             </tr>
@@ -93,15 +50,7 @@
             </tr>
             <tr>
               <td>&nbsp;</td>
-              <td><div class="scrollbox" id="customer">
-                  <?php $class = 'odd'; ?>
-                  <?php foreach ($customers as $customer) { ?>
-                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div id="customer<?php echo $customer['customer_id']; ?>" class="<?php echo $class; ?>"><?php echo $customer['name']; ?><img src="view/image/delete.png" />
-                    <input type="hidden" name="customer[]" value="<?php echo $customer['customer_id']; ?>" />
-                  </div>
-                  <?php } ?>
-                </div></td>
+              <td><div id="customer" class="scrollbox"></div></td>
             </tr>
           </tbody>
           <tbody id="to-affiliate" class="to">
@@ -111,15 +60,7 @@
             </tr>
             <tr>
               <td>&nbsp;</td>
-              <td><div class="scrollbox" id="affiliate">
-                  <?php $class = 'odd'; ?>
-                  <?php foreach ($affiliates as $affiliate) { ?>
-                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div id="affiliate<?php echo $affiliate['affiliate_id']; ?>" class="<?php echo $class; ?>"><?php echo $affiliate['name']; ?><img src="view/image/delete.png" />
-                    <input type="hidden" name="affiliate[]" value="<?php echo $affiliate['affiliate_id']; ?>" />
-                  </div>
-                  <?php } ?>
-                </div></td>
+              <td><div id="affiliate" class="scrollbox"></div></td>
             </tr>
           </tbody>
           <tbody id="to-product" class="to">
@@ -129,39 +70,25 @@
             </tr>
             <tr>
               <td>&nbsp;</td>
-              <td><div class="scrollbox" id="product">
-                  <?php $class = 'odd'; ?>
-                  <?php foreach ($products as $product) { ?>
-                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div id="product<?php echo $product['product_id']; ?>" class="<?php echo $class; ?>"><?php echo $product['name']; ?><img src="view/image/delete.png" />
-                    <input type="hidden" name="product[]" value="<?php echo $product['product_id']; ?>" />
-                  </div>
-                  <?php } ?>
-                </div></td>
+              <td><div id="product" class="scrollbox"></div></td>
             </tr>
           </tbody>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_subject; ?></td>
-            <td><input type="text" name="subject" value="<?php echo $subject; ?>" />
-              <?php if ($error_subject) { ?>
-              <span class="error"><?php echo $error_subject; ?></span>
-              <?php } ?></td>
+            <td><input type="text" name="subject" value="" /></td>
           </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_message; ?></td>
-            <td><textarea name="message"><?php echo $message; ?></textarea>
-              <?php if ($error_message) { ?>
-              <span class="error"><?php echo $error_message; ?></span>
-              <?php } ?></td>
+            <td><textarea name="message"></textarea></td>
           </tr>
         </table>
-      </form>
     </div>
   </div>
 </div>
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
+<script type="text/javascript" src="view/javascript/ckeditor/adapters/jquery.js"></script> 
 <script type="text/javascript"><!--
-CKEDITOR.replace('message', {
+$('textarea[name=\'message\']').ckeditor({
 	filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 	filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 	filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
@@ -178,7 +105,7 @@ $('select[name=\'to\']').bind('change', function() {
 });
 
 $('select[name=\'to\']').trigger('change');
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $.widget('custom.catcomplete', $.ui.autocomplete, {
 	_renderMenu: function(ul, items) {
@@ -200,12 +127,10 @@ $('input[name=\'customers\']').catcomplete({
 	delay: 0,
 	source: function(request, response) {
 		$.ajax({
-			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>',
-			type: 'POST',
+			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			data: 'filter_name=' +  encodeURIComponent(request.term),
-			success: function(data) {	
-				response($.map(data, function(item) {
+			success: function(json) {	
+				response($.map(json, function(item) {
 					return {
 						category: item.customer_group,
 						label: item.name,
@@ -225,7 +150,10 @@ $('input[name=\'customers\']').catcomplete({
 		$('#customer div:even').attr('class', 'even');
 				
 		return false;
-	}
+	},
+	focus: function(event, ui) {
+      	return false;
+   	}
 });
 
 $('#customer div img').live('click', function() {
@@ -240,12 +168,10 @@ $('input[name=\'affiliates\']').autocomplete({
 	delay: 0,
 	source: function(request, response) {
 		$.ajax({
-			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>',
-			type: 'POST',
+			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			data: 'filter_name=' +  encodeURIComponent(request.term),
-			success: function(data) {		
-				response($.map(data, function(item) {
+			success: function(json) {		
+				response($.map(json, function(item) {
 					return {
 						label: item.name,
 						value: item.affiliate_id
@@ -264,7 +190,10 @@ $('input[name=\'affiliates\']').autocomplete({
 		$('#affiliate div:even').attr('class', 'even');
 				
 		return false;
-	}
+	},
+	focus: function(event, ui) {
+      	return false;
+   	}
 });
 
 $('#affiliate div img').live('click', function() {
@@ -278,12 +207,10 @@ $('input[name=\'products\']').autocomplete({
 	delay: 0,
 	source: function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>',
-			type: 'POST',
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			data: 'filter_name=' +  encodeURIComponent(request.term),
-			success: function(data) {		
-				response($.map(data, function(item) {
+			success: function(json) {		
+				response($.map(json, function(item) {
 					return {
 						label: item.name,
 						value: item.product_id
@@ -301,7 +228,10 @@ $('input[name=\'products\']').autocomplete({
 		$('#product div:even').attr('class', 'even');
 				
 		return false;
-	}
+	},
+	focus: function(event, ui) {
+      	return false;
+   	}
 });
 
 $('#product div img').live('click', function() {
@@ -310,5 +240,57 @@ $('#product div img').live('click', function() {
 	$('#product div:odd').attr('class', 'odd');
 	$('#product div:even').attr('class', 'even');	
 });
+
+function send(url) { 
+	$('textarea[name=\'message\']').html($('textarea[name=\'message\']').val());
+	
+	$.ajax({
+		url: url,
+		type: 'post',
+		data: $('select, input, textarea'),		
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-send').attr('disabled', true);
+			$('#button-send').before('<span class="wait"><img src="view/image/loading.gif" alt="" />&nbsp;</span>');
+		},
+		complete: function() {
+			$('#button-send').attr('disabled', false);
+			$('.wait').remove();
+		},				
+		success: function(json) {
+			$('.success, .warning, .error').remove();
+			
+			if (json['error']) {
+				if (json['error']['warning']) {
+					$('.box').before('<div class="warning" style="display: none;">' + json['error']['warning'] + '</div>');
+			
+					$('.warning').fadeIn('slow');
+				}
+				
+				if (json['error']['subject']) {
+					$('input[name=\'subject\']').after('<span class="error">' + json['error']['subject'] + '</span>');
+				}	
+				
+				if (json['error']['message']) {
+					$('textarea[name=\'message\']').parent().append('<span class="error">' + json['error']['message'] + '</span>');
+				}									
+			}			
+			
+			if (json['next']) {
+				if (json['success']) {
+					$('.box').before('<div class="success">' + json['success'] + '</div>');
+					
+					send(json['next']);
+				}		
+			} else {
+				if (json['success']) {
+					$('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
+			
+					$('.success').fadeIn('slow');
+				}					
+			}				
+		}
+	});
+}
 //--></script> 
 <?php echo $footer; ?>

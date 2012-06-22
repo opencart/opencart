@@ -11,7 +11,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/review.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -97,12 +97,10 @@ $('input[name=\'product\']').autocomplete({
 	delay: 0,
 	source: function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>',
-			type: 'POST',
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			data: 'filter_name=' +  encodeURIComponent(request.term),
-			success: function(data) {		
-				response($.map(data, function(item) {
+			success: function(json) {		
+				response($.map(json, function(item) {
 					return {
 						label: item.name,
 						value: item.product_id
@@ -110,14 +108,16 @@ $('input[name=\'product\']').autocomplete({
 				}));
 			}
 		});
-		
 	},
 	select: function(event, ui) {
 		$('input[name=\'product\']').val(ui.item.label);
 		$('input[name=\'product_id\']').val(ui.item.value);
 		
 		return false;
-	}
+	},
+	focus: function(event, ui) {
+      	return false;
+   	}
 });
 //--></script> 
 <?php echo $footer; ?>

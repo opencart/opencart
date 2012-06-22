@@ -252,7 +252,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		$this->template = 'localisation/stock_status_list.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());
@@ -266,8 +266,6 @@ class ControllerLocalisationStockStatus extends Controller {
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
-
-    	$this->data['tab_general'] = $this->language->get('tab_general');
     
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -332,7 +330,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		$this->template = 'localisation/stock_status_form.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());	
@@ -344,7 +342,7 @@ class ControllerLocalisationStockStatus extends Controller {
     	}
 	
     	foreach ($this->request->post['stock_status'] as $language_id => $value) {
-      		if ((strlen(utf8_decode($value['name'])) < 3) || (strlen(utf8_decode($value['name'])) > 32)) {
+      		if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
         		$this->error['name'][$language_id] = $this->language->get('error_name');
       		}
     	}

@@ -39,17 +39,17 @@ class ModelReportProduct extends Model {
 	public function getPurchased($data = array()) {
 		$sql = "SELECT op.name, op.model, SUM(op.quantity) AS quantity, SUM(op.total + op.total * op.tax / 100) AS total FROM " . DB_PREFIX . "order_product op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.order_id = o.order_id)";
 		
-		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+		if (!empty($data['filter_order_status_id'])) {
 			$sql .= " WHERE o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
 			$sql .= " WHERE o.order_status_id > '0'";
 		}
 		
-		if (isset($data['filter_date_start']) && $data['filter_date_start']) {
+		if (!empty($data['filter_date_start'])) {
 			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
 
-		if (isset($data['filter_date_end']) && $data['filter_date_end']) {
+		if (!empty($data['filter_date_end'])) {
 			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 		
@@ -75,17 +75,17 @@ class ModelReportProduct extends Model {
 	public function getTotalPurchased($data) {
       	$sql = "SELECT COUNT(DISTINCT op.model) AS total FROM `" . DB_PREFIX . "order_product` op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.order_id = o.order_id)";
 
-		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id']) {
+		if (!empty($data['filter_order_status_id'])) {
 			$sql .= " WHERE o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
 			$sql .= " WHERE o.order_status_id > '0'";
 		}
 		
-		if (isset($data['filter_date_start']) && $data['filter_date_start']) {
+		if (!empty($data['filter_date_start'])) {
 			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
 
-		if (isset($data['filter_date_end']) && $data['filter_date_end']) {
+		if (!empty($data['filter_date_end'])) {
 			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 		

@@ -175,6 +175,10 @@ body > #container {
 	background: #EAF7D9 url('../image/success.png') 10px center no-repeat;
 	border: 1px solid #BBDF8D;
 	color: #555555;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-khtml-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
 }
 .warning {
 	padding: 10px 10px 10px 33px;
@@ -182,6 +186,10 @@ body > #container {
 	background: #FFD1D1 url('../image/warning.png') 10px center no-repeat;
 	border: 1px solid #F8ACAC;
 	color: #555555;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-khtml-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
 }
 .attention {
 	padding: 10px 10px 10px 33px;
@@ -189,6 +197,10 @@ body > #container {
 	background: #FFF5CC url('../image/attention.png') 10px center no-repeat;
 	border: 1px solid #F2DD8C;
 	color: #555555;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-khtml-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
 }
 .required {
 	color: #FF0000;
@@ -203,7 +215,7 @@ body > #container {
 }
 .help {
 	color: #666;
-	font-size: 10px;
+	font-size: 11px;
 	font-weight: normal;
 	font-family: Verdana, Geneva, sans-serif;
 	display: block;
@@ -213,7 +225,12 @@ body > #container {
 	cursor: pointer;
 }
 .image {
-	cursor: pointer;
+	border: 1px solid #EEEEEE;
+	padding: 10px;
+	display: inline-block;
+}
+.image img {
+	margin-bottom: 5px;
 }
 .box {
 	margin-bottom: 15px;
@@ -244,7 +261,19 @@ body > #container {
 }
 .box > .heading .buttons {
 	float: right;
-	padding-top: 8px;
+	padding-top: 7px;
+	margin-right: 5px;
+}
+.box > .heading .buttons .button {
+	margin-left: 5px;
+}
+.box > .content h2 { 
+	text-transform: uppercase;
+	color: #FF802B;
+	font-size: 15px;
+	font-weight: bold;
+	padding-bottom: 3px;
+	border-bottom: 1px dotted #000000;	
 }
 .box > .content {
 	padding: 10px;
@@ -258,25 +287,12 @@ a.button, .list a.button {
 	text-decoration: none;
 	color: #FFF;
 	display: inline-block;
-	padding-left: 8px;
-	margin-right: 5px;
-	background: url('../image/button-left.png') top left no-repeat;
-}
-a.button span {
-	color: #FFF;
-	text-decoration: none;
-	display: block;
-	padding: 5px 10px 5px 2px;
-	background: url('../image/button-right.png') top right no-repeat;
-}
-table.filter {
-	width: 100%;
-	background: #E7EFEF; 
-	border: 1px solid #C6D7D7; 
-	margin-bottom: 15px;	
-}
-table.filter td {
-	padding: 5px;
+	padding: 5px 15px 5px 15px;
+	background: #003A88;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-khtml-border-radius: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;
 }
 .list {
 	border-collapse: collapse;
@@ -326,7 +342,7 @@ table.filter td {
 	padding-right: 15px;
 	background: url('../image/desc.png') right center no-repeat;
 }
-.list .filter td {
+.list tr.filter td {
 	padding: 5px;
 	background: #E7EFEF;
 }
@@ -383,6 +399,7 @@ table.form > tbody > tr > td {
 }
 .scrollbox img {
 	float: right;
+	cursor: pointer;
 }
 .htabs {
 	padding: 0px 0px 0px 10px;
@@ -394,7 +411,7 @@ table.form > tbody > tr > td {
 .htabs a {
 	border-top: 1px solid #DDDDDD;
 	border-left: 1px solid #DDDDDD;
-	border-right: 1px solid #DDDDDD; 
+	border-right: 1px solid #DDDDDD;
 	background: #FFFFFF url('../image/tab.png') repeat-x;
 	padding: 7px 15px 6px 15px;
 	float: left;
@@ -452,6 +469,25 @@ table.form > tbody > tr > td {
 .vtabs-content {
 	margin-left: 205px;
 }
+.accordion-heading {
+	background: #EFEFEF;
+	border: 1px solid #DDDDDD;
+	padding: 8px;
+	font-weight: bold;
+	font-size: 13px;
+	color: #555555;
+	margin-bottom: 15px;
+}
+.accordion-heading a {
+	float: right;
+	margin-top: 1px;
+	font-weight: normal;
+	text-decoration: none;
+}
+.accordion-content {
+	padding: 0px 0px 15px 0px;
+	overflow: auto;
+}
 .scrollbox div {
 	padding: 3px;
 }
@@ -466,11 +502,10 @@ table.form > tbody > tr > td {
 .scrollbox div.odd {
 	background: #E4EEF7;
 }
-
 .overview {
 	float: left;
 	width: 49%;
-	margin-bottom: 20px;	
+	margin-bottom: 20px;
 }
 .overview table {
 	width: 100%;
@@ -493,25 +528,30 @@ table.form > tbody > tr > td {
 	padding-right: 1px;
 }
 .range, .range select {
-	font-size: 11px;	
+	font-size: 11px;
 }
 .latest {
-	clear: both;	
+	clear: both;
 }
 .latest tbody td {
 	background: #FFF;
 }
 .dashboard-heading {
-	background: #547C96; 
-	color: #FFF; 
-	border-bottom: 1px solid #8EAEC3; 
-	padding: 5px; 
-	font-size: 14px; 
-	font-weight: bold;	
+	background: #547C96;
+	color: #FFF;
+	border-bottom: 1px solid #8EAEC3;
+	padding: 5px;
+	font-size: 14px;
+	font-weight: bold;
 }
 .dashboard-content {
-	background: #FCFCFC; 
-	border: 1px solid #8EAEC3; 
-	padding: 10px; 
-	min-height: 180px;	
+	background: #FCFCFC;
+	border: 1px solid #8EAEC3;
+	padding: 10px;
+	min-height: 180px;
+}
+.refresh {
+	cursor: pointer;
+	position: relative;
+	top: 3px;
 }

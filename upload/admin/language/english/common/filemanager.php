@@ -31,7 +31,7 @@ $_['error_move']       = 'Warning: Move to directory does not exists!';
 $_['error_copy']       = 'Warning: Can not copy this file or directory!';
 $_['error_rename']     = 'Warning: Can not rename this directory!';
 $_['error_file_type']  = 'Warning: Incorrect file type!';
-$_['error_file_size']  = 'Warning: File to big please keep below 300kb and no more than 1000px height or width!';
+$_['error_file_size']  = 'Warning: File too big please keep below 300kb and no more than 1000px height or width!';
 $_['error_uploaded']   = 'Warning: File could not be uploaded for an unknown reason!';
 $_['error_permission'] = 'Warning: Permission Denied!';
 

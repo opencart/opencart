@@ -14,7 +14,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/order.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="location = '<?php echo $insert; ?>'" class="button"><span><?php echo $button_insert; ?></span></a><a onclick="$('form').submit();" class="button"><span><?php echo $button_delete; ?></span></a></div>
+      <div class="buttons"><a onclick="location = '<?php echo $insert; ?>'" class="button"><?php echo $button_insert; ?></a><a onclick="$('form').submit();" class="button"><?php echo $button_delete; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -37,11 +37,16 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_customer; ?>"><?php echo $column_customer; ?></a>
                 <?php } ?></td>
-              <td class="right"><?php if ($sort == 'quantity') { ?>
-                <a href="<?php echo $sort_quantity; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_quantity; ?></a>
+              <td class="left"><?php if ($sort == 'r.product') { ?>
+                <a href="<?php echo $sort_product; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_product; ?></a>
                 <?php } else { ?>
-                <a href="<?php echo $sort_quantity; ?>"><?php echo $column_quantity; ?></a>
+                <a href="<?php echo $sort_product; ?>"><?php echo $column_product; ?></a>
                 <?php } ?></td>
+              <td class="left"><?php if ($sort == 'r.model') { ?>
+                <a href="<?php echo $sort_model; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_model; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_model; ?>"><?php echo $column_model; ?></a>
+                <?php } ?></td>                
               <td class="left"><?php if ($sort == 'status') { ?>
                 <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                 <?php } else { ?>
@@ -66,7 +71,8 @@
               <td align="right"><input type="text" name="filter_return_id" value="<?php echo $filter_return_id; ?>" size="4" style="text-align: right;" /></td>
               <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" size="4" style="text-align: right;" /></td>
               <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" /></td>
-              <td align="right"><input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" size="4" style="text-align: right;" /></td>
+              <td><input type="text" name="filter_product" value="<?php echo $filter_product; ?>" /></td>
+              <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" /></td>
               <td><select name="filter_return_status_id">
                   <option value="*"></option>
                   <?php foreach ($return_statuses as $return_status) { ?>
@@ -79,7 +85,7 @@
                 </select></td>
               <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" class="date" /></td>
               <td><input type="text" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" size="12" class="date" /></td>
-              <td align="right"><a onclick="filter();" class="button"><span><?php echo $button_filter; ?></span></a></td>
+              <td align="right"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
             </tr>
             <?php if ($returns) { ?>
             <?php foreach ($returns as $return) { ?>
@@ -92,7 +98,8 @@
               <td class="right"><?php echo $return['return_id']; ?></td>
               <td class="right"><?php echo $return['order_id']; ?></td>
               <td class="left"><?php echo $return['customer']; ?></td>
-              <td class="right"><?php echo $return['quantity']; ?></td>
+              <td class="left"><?php echo $return['product']; ?></td>
+              <td class="left"><?php echo $return['model']; ?></td>
               <td class="left"><?php echo $return['status']; ?></td>
               <td class="left"><?php echo $return['date_added']; ?></td>
               <td class="left"><?php echo $return['date_modified']; ?></td>
@@ -103,7 +110,7 @@
             <?php } ?>
             <?php } else { ?>
             <tr>
-              <td class="center" colspan="9"><?php echo $text_no_results; ?></td>
+              <td class="center" colspan="10"><?php echo $text_no_results; ?></td>
             </tr>
             <?php } ?>
           </tbody>
@@ -129,18 +136,24 @@ function filter() {
 		url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
 	}	
 		
-	var filter_name = $('input[name=\'filter_name\']').attr('value');
+	var filter_customer = $('input[name=\'filter_customer\']').attr('value');
 	
-	if (filter_name) {
-		url += '&filter_name=' + encodeURIComponent(filter_name);
+	if (filter_customer) {
+		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
 	
-	var filter_quantity = $('input[name=\'filter_quantity\']').attr('value');
+	var filter_product = $('input[name=\'filter_product\']').attr('value');
 	
-	if (filter_quantity) {
-		url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
+	if (filter_product) {
+		url += '&filter_product=' + encodeURIComponent(filter_product);
 	}
+
+	var filter_model = $('input[name=\'filter_model\']').attr('value');
 	
+	if (filter_model) {
+		url += '&filter_model=' + encodeURIComponent(filter_model);
+	}
+		
 	var filter_return_status_id = $('select[name=\'filter_return_status_id\']').attr('value');
 	
 	if (filter_return_status_id != '*') {
@@ -161,6 +174,50 @@ function filter() {
 			
 	location = url;
 }
+//--></script> 
+<script type="text/javascript"><!--
+$.widget('custom.catcomplete', $.ui.autocomplete, {
+	_renderMenu: function(ul, items) {
+		var self = this, currentCategory = '';
+		
+		$.each(items, function(index, item) {
+			if (item.category != currentCategory) {
+				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
+				
+				currentCategory = item.category;
+			}
+			
+			self._renderItem(ul, item);
+		});
+	}
+});
+
+$('input[name=\'filter_customer\']').catcomplete({
+	delay: 0,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {		
+				response($.map(json, function(item) {
+					return {
+						category: item.customer_group,
+						label: item.name,
+						value: item.customer_id
+					}
+				}));
+			}
+		});
+	}, 
+	select: function(event, ui) {
+		$('input[name=\'filter_customer\']').val(ui.item.label);
+						
+		return false;
+	},
+	focus: function(event, ui) {
+      	return false;
+   	}
+});
 //--></script> 
 <script type="text/javascript"><!--
 $(document).ready(function() {

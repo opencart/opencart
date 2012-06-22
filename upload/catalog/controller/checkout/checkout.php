@@ -1,35 +1,32 @@
 <?php  
 class ControllerCheckoutCheckout extends Controller { 
 	public function index() {
-		if ((!$this->cart->hasProducts() && (!isset($this->session->data['vouchers']) || !$this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		// Validate cart has products and has stock.
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 	  		$this->redirect($this->url->link('checkout/cart'));
-    	}				
+    	}	
 		
-		$this->language->load('checkout/checkout');
-		
-		$this->document->setTitle($this->language->get('heading_title')); 
-		
-		// Minimum quantity validation
+		// Validate minimum quantity requirments.			
 		$products = $this->cart->getProducts();
 				
 		foreach ($products as $product) {
 			$product_total = 0;
 				
-			foreach ($this->session->data['cart'] as $key => $quantity) {
-				$product_2 = explode(':', $key);
-					
-				if ($product_2[0] == $product['product_id']) {
-					$product_total += $quantity;
+			foreach ($products as $product_2) {
+				if ($product_2['product_id'] == $product['product_id']) {
+					$product_total += $product_2['quantity'];
 				}
-			}			
+			}		
 			
 			if ($product['minimum'] > $product_total) {
-				$this->session->data['error'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
-				
 				$this->redirect($this->url->link('checkout/cart'));
 			}				
 		}
-      	
+				
+		$this->language->load('checkout/checkout');
+		
+		$this->document->setTitle($this->language->get('heading_title')); 
+		
 		$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
@@ -52,7 +49,7 @@ class ControllerCheckoutCheckout extends Controller {
 					
 	    $this->data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_checkout_option'] = sprintf($this->language->get('text_checkout_option'));
+		$this->data['text_checkout_option'] = $this->language->get('text_checkout_option');
 		$this->data['text_checkout_account'] = $this->language->get('text_checkout_account');
 		$this->data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');
 		$this->data['text_checkout_shipping_address'] = $this->language->get('text_checkout_shipping_address');
@@ -81,5 +78,30 @@ class ControllerCheckoutCheckout extends Controller {
 				
 		$this->response->setOutput($this->render());
   	}
+	
+	public function country() {
+		$json = array();
+		
+		$this->load->model('localisation/country');
+
+    	$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
+		
+		if ($country_info) {
+			$this->load->model('localisation/zone');
+
+			$json = array(
+				'country_id'        => $country_info['country_id'],
+				'name'              => $country_info['name'],
+				'iso_code_2'        => $country_info['iso_code_2'],
+				'iso_code_3'        => $country_info['iso_code_3'],
+				'address_format'    => $country_info['address_format'],
+				'postcode_required' => $country_info['postcode_required'],
+				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
+				'status'            => $country_info['status']		
+			);
+		}
+		
+		$this->response->setOutput(json_encode($json));
+	}
 }
 ?>

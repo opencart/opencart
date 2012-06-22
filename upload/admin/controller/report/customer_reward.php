@@ -131,7 +131,7 @@ class ControllerReportCustomerReward extends Controller {
 		$this->template = 'report/customer_reward.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

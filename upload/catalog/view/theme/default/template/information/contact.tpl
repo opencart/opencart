@@ -6,7 +6,7 @@
     <?php } ?>
   </div>
   <h1><?php echo $heading_title; ?></h1>
-  <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="contact">
+  <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <h2><?php echo $text_location; ?></h2>
     <div class="contact-info">
       <div class="content"><div class="left"><b><?php echo $text_address; ?></b><br />
@@ -57,7 +57,7 @@
     <?php } ?>
     </div>
     <div class="buttons">
-      <div class="right"><a onclick="$('#contact').submit();" class="button"><span><?php echo $button_continue; ?></span></a></div>
+      <div class="right"><input type="submit" value="<?php echo $button_continue; ?>" class="button" /></div>
     </div>
   </form>
   <?php echo $content_bottom; ?></div>

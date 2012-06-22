@@ -94,7 +94,7 @@ class ControllerModuleGoogleTalk extends Controller {
 		$this->template = 'module/google_talk.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

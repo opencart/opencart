@@ -26,8 +26,8 @@ abstract class Controller {
 
 	protected function redirect($url, $status = 302) {
 		header('Status: ' . $status);
-		header('Location: ' . str_replace('&amp;', '&', $url));
-		exit();
+		header('Location: ' . str_replace(array('&amp;', "\n", "\r"), array('&', '', ''), $url));
+		exit();				
 	}
 	
 	protected function getChild($child, $args = array()) {
@@ -45,7 +45,8 @@ abstract class Controller {
 			
 			return $controller->output;
 		} else {
-			exit('Error: Could not load controller ' . $child . '!');
+			trigger_error('Error: Could not load controller ' . $child . '!');
+			exit();					
 		}		
 	}
 	
@@ -67,7 +68,8 @@ abstract class Controller {
       		
 			return $this->output;
     	} else {
-      		exit('Error: Could not load template ' . DIR_TEMPLATE . $this->template . '!');
+			trigger_error('Error: Could not load template ' . DIR_TEMPLATE . $this->template . '!');
+			exit();				
     	}
 	}
 }

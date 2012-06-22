@@ -91,7 +91,7 @@ class ControllerModuleLatest extends Controller {
 		$this->template = 'module/latest.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 				
 		$this->response->setOutput($this->render());

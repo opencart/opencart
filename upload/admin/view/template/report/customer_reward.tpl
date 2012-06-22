@@ -10,15 +10,15 @@
       <h1><img src="view/image/report.png" alt="" /> <?php echo $heading_title; ?></h1>
     </div>
     <div class="content">
-      <div style="background: #E7EFEF; border: 1px solid #C6D7D7; padding: 10px; margin-bottom: 15px; overflow: auto;">
-        <div style="float: left; width: 19%;"><?php echo $entry_date_start; ?>
-          <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="date-start" size="12" />
-        </div>
-        <div style="float: left; width: 19%;"><?php echo $entry_date_end; ?>
-          <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="date-end" size="12" />
-        </div>
-        <div style="float: right; width: 19%; text-align: right;"><a onclick="filter();" class="button"><span><?php echo $button_filter; ?></span></a></div>
-      </div>    
+      <table class="form">
+        <tr>
+          <td><?php echo $entry_date_start; ?>
+            <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="date-start" size="12" /></td>
+          <td><?php echo $entry_date_end; ?>
+            <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="date-end" size="12" /></td>
+          <td style="text-align: right;"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
+        </tr>
+      </table>
       <table class="list">
         <thead>
           <tr>
@@ -84,5 +84,5 @@ $(document).ready(function() {
 	
 	$('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
 });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

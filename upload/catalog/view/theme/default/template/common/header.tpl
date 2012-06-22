@@ -20,12 +20,12 @@
 <?php foreach ($styles as $style) { ?>
 <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
-<script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-1.8.9.custom.min.js"></script>
-<link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.9.custom.css" />
+<script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" />
 <script type="text/javascript" src="catalog/view/javascript/jquery/ui/external/jquery.cookie.js"></script>
-<script type="text/javascript" src="catalog/view/javascript/jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-<link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+<script type="text/javascript" src="catalog/view/javascript/jquery/colorbox/jquery.colorbox.js"></script>
+<link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/colorbox/colorbox.css" media="screen" />
 <script type="text/javascript" src="catalog/view/javascript/jquery/tabs.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/common.js"></script>
 <?php foreach ($scripts as $script) { ?>
@@ -49,46 +49,9 @@ DD_belatedPNG.fix('#logo img');
   <?php if ($logo) { ?>
   <div id="logo"><a href="<?php echo $home; ?>"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
   <?php } ?>
-  <?php if (count($languages) > 1) { ?>
-  <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-    <div id="language"><?php echo $text_language; ?><br />
-      <?php foreach ($languages as $language) { ?>
-      &nbsp;<img src="image/flags/<?php echo $language['image']; ?>" alt="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>" onclick="$('input[name=\'language_code\']').attr('value', '<?php echo $language['code']; ?>').submit(); $(this).parent().parent().submit();" />
-      <?php } ?>
-      <input type="hidden" name="language_code" value="" />
-      <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
-    </div>
-  </form>
-  <?php } ?>
-  <?php if (count($currencies) > 1) { ?>
-  <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-    <div id="currency"><?php echo $text_currency; ?><br />
-      <?php foreach ($currencies as $currency) { ?>
-      <?php if ($currency['code'] == $currency_code) { ?>
-      <?php if ($currency['symbol_left']) { ?>
-      <a title="<?php echo $currency['title']; ?>"><b><?php echo $currency['symbol_left']; ?></b></a>
-      <?php } else { ?>
-      <a title="<?php echo $currency['title']; ?>"><b><?php echo $currency['symbol_right']; ?></b></a>
-      <?php } ?>
-      <?php } else { ?>
-      <?php if ($currency['symbol_left']) { ?>
-      <a title="<?php echo $currency['title']; ?>" onclick="$('input[name=\'currency_code\']').attr('value', '<?php echo $currency['code']; ?>').submit(); $(this).parent().parent().submit();"><?php echo $currency['symbol_left']; ?></a>
-      <?php } else { ?>
-      <a title="<?php echo $currency['title']; ?>" onclick="$('input[name=\'currency_code\']').attr('value', '<?php echo $currency['code']; ?>').submit(); $(this).parent().parent().submit();"><?php echo $currency['symbol_right']; ?></a>
-      <?php } ?>
-      <?php } ?>
-      <?php } ?>
-      <input type="hidden" name="currency_code" value="" />
-      <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
-    </div>
-  </form>
-  <?php } ?>
-  <div id="cart">
-    <div class="heading">
-      <h4><?php echo $text_cart; ?></h4>
-      <a><span id="cart_total"><?php echo $text_items; ?></span></a></div>
-    <div class="content"></div>
-  </div>
+  <?php echo $language; ?>
+  <?php echo $currency; ?>
+  <?php echo $cart; ?>
   <div id="search">
     <div class="button-search"></div>
     <?php if ($filter_name) { ?>
@@ -104,7 +67,7 @@ DD_belatedPNG.fix('#logo img');
     <?php echo $text_logged; ?>
     <?php } ?>
   </div>
-  <div class="links"><a href="<?php echo $home; ?>"><?php echo $text_home; ?></a><a href="<?php echo $wishlist; ?>" id="wishlist_total"><?php echo $text_wishlist; ?></a><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a><a href="<?php echo $cart; ?>"><?php echo $text_cart; ?></a><a href="<?php echo $checkout; ?>"><?php echo $text_checkout; ?></a></div>
+  <div class="links"><a href="<?php echo $home; ?>"><?php echo $text_home; ?></a><a href="<?php echo $wishlist; ?>" id="wishlist-total"><?php echo $text_wishlist; ?></a><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a><a href="<?php echo $shopping_cart; ?>"><?php echo $text_shopping_cart; ?></a><a href="<?php echo $checkout; ?>"><?php echo $text_checkout; ?></a></div>
 </div>
 <?php if ($categories) { ?>
 <div id="menu">

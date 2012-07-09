@@ -1,6 +1,6 @@
 <?php
 
-//fix for sites that do not work that way: http://site.com
+// fix for sites that do not work that way: http://site.com
 $url = $_SERVER["SERVER_NAME"]; // name domain
 $uri = $_SERVER["REQUEST_URI"]; // path after the domain
 

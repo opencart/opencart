@@ -7,7 +7,7 @@ $uri = $_SERVER["REQUEST_URI"]; // path after the domain
 $pattern = '/^www\./';
 preg_match($pattern, $url, $matches);
 
-if (empty($matches[0])) {
+if (empty($matches[0]) && $url != 'localhost') {
 $nova_url = "http://www.".$url.$uri;
 header('HTTP/1.1 301 Moved Permanently');
 header('Location: '.$nova_url);

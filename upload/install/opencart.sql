@@ -1794,7 +1794,7 @@ CREATE TABLE `oc_order_product` (
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
-  `model` varchar(24) COLLATE utf8_bin NOT NULL,
+  `model` varchar(64) COLLATE utf8_bin NOT NULL,
   `quantity` int(4) NOT NULL,
   `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `total` decimal(15,4) NOT NULL DEFAULT '0.0000',

@@ -101,6 +101,8 @@ class ControllerExtensionModule extends Controller {
 	}
 	
 	public function install() {
+		$this->load->language('extension/module');
+		
 		if (!$this->user->hasPermission('modify', 'extension/module')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 
 			
@@ -129,6 +131,8 @@ class ControllerExtensionModule extends Controller {
 	}
 	
 	public function uninstall() {
+		$this->load->language('extension/module');
+		
 		if (!$this->user->hasPermission('modify', 'extension/module')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 
 			

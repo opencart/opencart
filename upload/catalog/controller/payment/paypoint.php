@@ -86,7 +86,7 @@ class ControllerPaymentPaypoint extends Controller {
 		// Validate the request is from PayPoint
 		if ($this->config->get('paypoint_password')) {
 			if (!empty($this->request->get['hash'])) {
-				$status = ($this->request->get['hash'] == str_replace('&hash=' . $this->request->get['hash'], '', $this->request->server['REQUEST_URI']) . '&' . $this->config->get('paypoint_password'));
+				$status = ($this->request->get['hash'] == md5(str_replace('hash=' . $this->request->get['hash'], '', $this->request->server['REQUEST_URI']) . $this->config->get('paypoint_password')));
 			} else {
 				$status = false;
 			}

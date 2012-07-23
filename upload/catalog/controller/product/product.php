@@ -342,12 +342,12 @@ class ControllerProductProduct extends Controller {
 			
 			$this->data['tags'] = array();
 					
-			$results = $this->model_catalog_product->getProductTags($this->request->get['product_id']);
+			$tags = explode(',', $product_info['tag']);
 			
-			foreach ($results as $result) {
+			foreach ($tags as $tag) {
 				$this->data['tags'][] = array(
-					'tag'  => $result['tag'],
-					'href' => $this->url->link('product/search', 'filter_tag=' . $result['tag'])
+					'tag'  => trim($tag),
+					'href' => $this->url->link('product/search', 'filter_tag=' . trim($tag))
 				);
 			}
 			

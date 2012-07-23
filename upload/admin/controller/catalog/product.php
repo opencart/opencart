@@ -768,14 +768,6 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['keyword'] = '';
 		}
 		
-		if (isset($this->request->post['product_tag'])) {
-			$this->data['product_tag'] = $this->request->post['product_tag'];
-		} elseif (isset($this->request->get['product_id'])) {
-			$this->data['product_tag'] = $this->model_catalog_product->getProductTags($this->request->get['product_id']);
-		} else {
-			$this->data['product_tag'] = array();
-		}
-		
 		if (isset($this->request->post['image'])) {
 			$this->data['image'] = $this->request->post['image'];
 		} elseif (!empty($product_info)) {
@@ -1294,10 +1286,6 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		$this->response->setOutput(json_encode($json));
-	}
-	
-	public function sync() {
-		$this->load->model('catalog/product');
 	}
 }
 ?>

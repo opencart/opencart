@@ -103,6 +103,8 @@ class ControllerExtensionFeed extends Controller {
 	}
 	
 	public function install() {
+		$this->load->language('extension/feed');
+		
     	if (!$this->user->hasPermission('modify', 'extension/feed')) {
       		$this->session->data['error'] = $this->language->get('error_permission'); 
 			
@@ -131,6 +133,8 @@ class ControllerExtensionFeed extends Controller {
 	}
 	
 	public function uninstall() {
+		$this->load->language('extension/feed');
+		
     	if (!$this->user->hasPermission('modify', 'extension/feed')) {
       		$this->session->data['error'] = $this->language->get('error_permission'); 
 			

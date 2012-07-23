@@ -146,7 +146,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 						}					
 						
 						// Tax ID
-						if ($customer_group_info['tax_id_display'] && $customer_group_info['tax_id_required'] && empty($this->request->post['tax_id'])) {
+						if ($customer_group_info['tax_id_display'] && $customer_group_info['tax_id_required'] && !$address_info['tax_id']) {
 							$json['error']['warning'] = $this->language->get('error_tax_id');
 						}						
 					}					

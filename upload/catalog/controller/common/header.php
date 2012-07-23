@@ -75,7 +75,7 @@ class ControllerCommonHeader extends Controller {
     	$this->data['text_checkout'] = $this->language->get('text_checkout');
 				
 		$this->data['home'] = $this->url->link('common/home');
-		$this->data['wishlist'] = $this->url->link('account/wishlist');
+		$this->data['wishlist'] = $this->url->link('account/wishlist', '', 'SSL');
 		$this->data['logged'] = $this->customer->isLogged();
 		$this->data['account'] = $this->url->link('account/account', '', 'SSL');
 		$this->data['shopping_cart'] = $this->url->link('checkout/cart');

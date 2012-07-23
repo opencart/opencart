@@ -105,6 +105,8 @@ class ControllerExtensionShipping extends Controller {
 	}
 	
 	public function install() {
+		$this->load->language('extension/shipping');
+		
 		if (!$this->user->hasPermission('modify', 'extension/shipping')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 
 			
@@ -133,6 +135,8 @@ class ControllerExtensionShipping extends Controller {
 	}
 	
 	public function uninstall() {
+		$this->load->language('extension/shipping');
+		
 		if (!$this->user->hasPermission('modify', 'extension/shipping')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 
 			

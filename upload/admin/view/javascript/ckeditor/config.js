@@ -16,6 +16,7 @@ CKEDITOR.editorConfig = function( config )
 	config.filebrowserImageUploadUrl = 'index.php?route=common/filemanager';
 	config.filebrowserFlashUploadUrl = 'index.php?route=common/filemanager';		
 	*/
+	
 	config.filebrowserWindowWidth = '800';
 	config.filebrowserWindowHeight = '500';
 

@@ -2,10 +2,14 @@
 class Cache { 
 	private $expire = 3600; 
 
-  	public function __construct() {
-		$files = glob(DIR_CACHE . 'cache.*');
-		
+	public function get($key) {
+		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
+
 		if ($files) {
+			$cache = file_get_contents($files[0]);
+			
+			$data = unserialize($cache);
+			
 			foreach ($files as $file) {
 				$time = substr(strrchr($file, '.'), 1);
 
@@ -15,16 +19,8 @@ class Cache {
 					}
       			}
     		}
-		}
-  	}
-
-	public function get($key) {
-		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
-
-		if ($files) {
-			$cache = file_get_contents($files[0]);
 			
-			return unserialize($cache);
+			return $data;			
 		}
 	}
 

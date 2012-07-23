@@ -549,6 +549,10 @@ class ControllerCatalogProduct extends Controller {
     	$this->data['entry_model'] = $this->language->get('entry_model');
 		$this->data['entry_sku'] = $this->language->get('entry_sku');
 		$this->data['entry_upc'] = $this->language->get('entry_upc');
+		$this->data['entry_ean'] = $this->language->get('entry_ean');
+		$this->data['entry_jan'] = $this->language->get('entry_jan');
+		$this->data['entry_isbn'] = $this->language->get('entry_isbn');
+		$this->data['entry_mpn'] = $this->language->get('entry_mpn');
 		$this->data['entry_location'] = $this->language->get('entry_location');
 		$this->data['entry_minimum'] = $this->language->get('entry_minimum');
 		$this->data['entry_manufacturer'] = $this->language->get('entry_manufacturer');
@@ -739,6 +743,38 @@ class ControllerCatalogProduct extends Controller {
 		} else {
       		$this->data['upc'] = '';
     	}
+		
+		if (isset($this->request->post['ean'])) {
+      		$this->data['ean'] = $this->request->post['ean'];
+    	} elseif (!empty($product_info)) {
+			$this->data['ean'] = $product_info['ean'];
+		} else {
+      		$this->data['ean'] = '';
+    	}
+		
+		if (isset($this->request->post['jan'])) {
+      		$this->data['jan'] = $this->request->post['jan'];
+    	} elseif (!empty($product_info)) {
+			$this->data['jan'] = $product_info['jan'];
+		} else {
+      		$this->data['jan'] = '';
+    	}
+		
+		if (isset($this->request->post['isbn'])) {
+      		$this->data['isbn'] = $this->request->post['isbn'];
+    	} elseif (!empty($product_info)) {
+			$this->data['isbn'] = $product_info['isbn'];
+		} else {
+      		$this->data['isbn'] = '';
+    	}
+		
+		if (isset($this->request->post['mpn'])) {
+      		$this->data['mpn'] = $this->request->post['mpn'];
+    	} elseif (!empty($product_info)) {
+			$this->data['mpn'] = $product_info['mpn'];
+		} else {
+      		$this->data['mpn'] = '';
+    	}								
 				
 		if (isset($this->request->post['location'])) {
       		$this->data['location'] = $this->request->post['location'];

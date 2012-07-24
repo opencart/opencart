@@ -83,7 +83,7 @@ CREATE TABLE `oc_affiliate` (
   `bank_swift_code` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
   `bank_account_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
   `bank_account_number` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `ip` varchar(15) COLLATE utf8_bin NOT NULL,
+  `ip` varchar(40) COLLATE utf8_bin NOT NULL,
   `status` tinyint(1) NOT NULL,
   `approved` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
@@ -896,7 +896,7 @@ CREATE TABLE `oc_customer` (
   `newsletter` tinyint(1) NOT NULL DEFAULT '0',
   `address_id` int(11) NOT NULL DEFAULT '0',
   `customer_group_id` int(11) NOT NULL,
-  `ip` varchar(15) COLLATE utf8_bin NOT NULL DEFAULT '0',
+  `ip` varchar(40) COLLATE utf8_bin NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   `approved` tinyint(1) NOT NULL,
   `token` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -985,7 +985,7 @@ CREATE TABLE `oc_customer_ip` (
 DROP TABLE IF EXISTS `oc_customer_ip_blacklist`;
 CREATE TABLE `oc_customer_ip_blacklist` (
   `customer_ip_blacklist_id` int(11) NOT NULL AUTO_INCREMENT,
-  `ip` varchar(15) COLLATE utf8_bin NOT NULL,
+  `ip` varchar(40) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`customer_ip_blacklist_id`),
   KEY `ip` (`ip`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -998,7 +998,7 @@ CREATE TABLE `oc_customer_ip_blacklist` (
 
 DROP TABLE IF EXISTS `oc_customer_online`;
 CREATE TABLE `oc_customer_online` (
-  `ip` bigint(10) NOT NULL,
+  `ip` varchar(40) COLLATE utf8_bin NOT NULL,
   `customer_id` int(11) NOT NULL,
   `url` text COLLATE utf8_bin NOT NULL,
   `referer` text COLLATE utf8_bin NOT NULL,
@@ -1622,7 +1622,7 @@ CREATE TABLE `oc_order` (
   `currency_id` int(11) NOT NULL,
   `currency_code` varchar(3) COLLATE utf8_bin NOT NULL,
   `currency_value` decimal(15,8) NOT NULL DEFAULT '1.0000',
-  `ip` varchar(15) COLLATE utf8_bin NOT NULL,
+  `ip` varchar(40) COLLATE utf8_bin NOT NULL,
   `forwarded_ip` varchar(15) COLLATE utf8_bin NOT NULL,
   `user_agent` varchar(255) COLLATE utf8_bin NOT NULL,
   `accept_language` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -2919,7 +2919,7 @@ CREATE TABLE `oc_user` (
   `lastname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
   `email` varchar(96) COLLATE utf8_bin NOT NULL DEFAULT '',
   `code` varchar(32) COLLATE utf8_bin NOT NULL,
-  `ip` varchar(15) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ip` varchar(40) COLLATE utf8_bin NOT NULL DEFAULT '',
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`user_id`)

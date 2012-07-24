@@ -6,7 +6,7 @@ class ModelReportOnline extends Model {
 		$implode = array();
 				
 		if (isset($data['filter_ip']) && !is_null($data['filter_ip'])) {
-			$implode[] = "INET_NTOA(co.ip) LIKE '" . $this->db->escape($data['filter_ip']) . "'";
+			$implode[] = "co.ip LIKE '" . $this->db->escape($data['filter_ip']) . "'";
 		}
 		
 		if (isset($data['filter_customer']) && !is_null($data['filter_customer'])) {
@@ -42,7 +42,7 @@ class ModelReportOnline extends Model {
 		$implode = array();
 		
 		if (isset($data['filter_ip']) && !is_null($data['filter_ip'])) {
-			$implode[] = "INET_NTOA(co.ip) LIKE '" . $this->db->escape($data['filter_ip']) . "'";
+			$implode[] = "co.ip LIKE '" . $this->db->escape($data['filter_ip']) . "'";
 		}
 		
 		if (isset($data['filter_customer']) && !is_null($data['filter_customer'])) {

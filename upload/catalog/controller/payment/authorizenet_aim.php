@@ -124,7 +124,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 			}
 		
 			if ($response_info[1] == '1') {
-				if (strtoupper($response_info[38]) != strtoupper(md5($this->config->get('authorizenet_aim_hash') . $this->config->get('authorizenet_aim_login') . $response_info[6] . $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false)))) {
+				if (strtoupper($response_info[38]) == strtoupper(md5($this->config->get('authorizenet_aim_hash') . $response_info[6] . $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false)))) {
 					$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
 					
 					$message = '';

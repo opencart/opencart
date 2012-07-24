@@ -86,55 +86,55 @@ class ModelShippingAuspost extends Model {
 			
 			curl_close($ch); 
 		
-			if (strstr($get_express, 'err_msg=OK') == false) {
-			$error = 'Error interfacing with Australia Post';
-			} else {
-			$get_express_charge = preg_match('/^charge=([0-9]{1,3}\.?[0-9]{0,2})/', $get_express, $post_charge_express);
+					if (strstr($get_express, 'err_msg=OK') == false) {
+						$error = 'Error interfacing with Australia Post';
+					} else {
+						$get_express_charge = preg_match('/^charge=([0-9]{1,3}\.?[0-9]{0,2})/', $get_express, $post_charge_express);
 			
-			if (!isset($post_charge_express[1])) {
-				$error = 'Error interfacing with Australia Post (charge)';
-			} else {
-				$post_charge_express = sprintf('%.2f', $post_charge_express[1]);
-				
-				if (preg_match('/^[0-9]{1,2}\.[0-9]{2,2}$/', $this->config->get('auspost_handling')) && $this->config->get('auspost_handling') > 0) {
-					$post_charge_express = sprintf('%.2f', $post_charge_express + $this->config->get('auspost_handling'));
-				}
-				
-				$get_days_express = preg_match('/days=([0-9]{1,2})/', $get_express, $post_days_express);
-				$post_days_express_append = '';
-				
-				if ($this->config->get('auspost_display_estimate') && isset($post_days_express[1])) {
-					if (is_numeric($post_days_express[1])) {
-						if ($post_days_express[1] == 1) {
-							$post_days_express_append = ' (est. ' . $post_days_express[1] . ' day delivery)';
+						if (!isset($post_charge_express[1])) {
+							$error = 'Error interfacing with Australia Post (charge)';
 						} else {
-							$post_days_express_append = ' (est. ' . $post_days_express[1] . ' days delivery)';
-						}
-				}
-			}
+							$post_charge_express = sprintf('%.2f', $post_charge_express[1]);
+							
+							if (preg_match('/^[0-9]{1,2}\.[0-9]{2,2}$/', $this->config->get('auspost_handling')) && $this->config->get('auspost_handling') > 0) {
+								$post_charge_express = sprintf('%.2f', $post_charge_express + $this->config->get('auspost_handling'));
+							}
+				
+							$get_days_express = preg_match('/days=([0-9]{1,2})/', $get_express, $post_days_express);
+							$post_days_express_append = '';
+				
+							if ($this->config->get('auspost_display_estimate') && isset($post_days_express[1])) {
+								if (is_numeric($post_days_express[1])) {
+									if ($post_days_express[1] == 1) {
+										$post_days_express_append = ' (est. ' . $post_days_express[1] . ' day delivery)';
+									} else {
+										$post_days_express_append = ' (est. ' . $post_days_express[1] . ' days delivery)';
+									}
+								}
+							}
 		
-			$quote_data['auspost_express'] = array(
-				'id'           => 'auspost.auspost_express',
-				'title'        => $this->language->get('text_express') . $post_days_express_append,
-				'cost'         => $post_charge_express,
-				'tax_class_id' => 0,
-				'text'         => '$' . $post_charge_express
-			);
-		}
-			}
-			}
+							$quote_data['auspost_express'] = array(
+								'id'           => 'auspost.auspost_express',
+								'title'        => $this->language->get('text_express') . $post_days_express_append,
+								'cost'         => $post_charge_express,
+								'tax_class_id' => 0,
+								'text'         => '$' . $post_charge_express
+							);
+						}
+					}
+				}
 			}
 			
 			$method_data = array(
-			'id'         => 'auspost_express',
-			'title'      => $this->language->get('text_title'),
-			'quote'      => $quote_data,
-			'sort_order' => $this->config->get('auspost_sort_order'),
-			'error'      => $error 
+				'id'         => 'auspost_express',
+				'title'      => $this->language->get('text_title'),
+				'quote'      => $quote_data,
+				'sort_order' => $this->config->get('auspost_sort_order'),
+				'error'      => $error 
 			);
-			}
+		}
 		
 		return $method_data;
-		}
+	}
 }
 ?>

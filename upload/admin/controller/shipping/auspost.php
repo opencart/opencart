@@ -27,7 +27,6 @@ class ControllerShippingAusPost extends Controller {
 		$this->data['entry_standard'] = $this->language->get('entry_standard');
 		$this->data['entry_express'] = $this->language->get('entry_express');
 		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
-		$this->data['entry_handling'] = $this->language->get('entry_handling');
 		$this->data['entry_estimate'] = $this->language->get('entry_estimate');
 		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$this->data['entry_tax_class'] = $this->language->get('entry_tax_class');
@@ -90,12 +89,6 @@ class ControllerShippingAusPost extends Controller {
 			$this->data['auspost_postcode'] = $this->request->post['auspost_postcode'];
 		} else {
 			$this->data['auspost_postcode'] = $this->config->get('auspost_postcode');
-		}
-		
-		if (isset($this->request->post['auspost_handling'])) {
-			$this->data['auspost_handling'] = $this->request->post['auspost_handling'];
-		} else {
-			$this->data['auspost_handling'] = $this->config->get('auspost_handling');
 		}
 		
 		if (isset($this->request->post['auspost_estimate'])) {

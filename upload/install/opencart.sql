@@ -966,7 +966,7 @@ DROP TABLE IF EXISTS `oc_customer_ip`;
 CREATE TABLE `oc_customer_ip` (
   `customer_ip_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
-  `ip` varchar(15) COLLATE utf8_bin NOT NULL,
+  `ip` varchar(40) COLLATE utf8_bin NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_ip_id`),
   KEY `ip` (`ip`)
@@ -1623,7 +1623,7 @@ CREATE TABLE `oc_order` (
   `currency_code` varchar(3) COLLATE utf8_bin NOT NULL,
   `currency_value` decimal(15,8) NOT NULL DEFAULT '1.0000',
   `ip` varchar(40) COLLATE utf8_bin NOT NULL,
-  `forwarded_ip` varchar(15) COLLATE utf8_bin NOT NULL,
+  `forwarded_ip` varchar(40) COLLATE utf8_bin NOT NULL,
   `user_agent` varchar(255) COLLATE utf8_bin NOT NULL,
   `accept_language` varchar(255) COLLATE utf8_bin NOT NULL,
   `date_added` datetime NOT NULL,

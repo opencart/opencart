@@ -52,6 +52,8 @@ abstract class Controller {
 	}
 
 	protected function render() {
+  		$this->data = array_merge($this->language->getData(), $this->data);
+
 		foreach ($this->children as $child) {
 			$this->data[basename($child)] = $this->getChild($child);
 		}
@@ -74,4 +76,3 @@ abstract class Controller {
     	}
 	}
 }
-?>

@@ -11,11 +11,17 @@ class ControllerModuleLanguage extends Controller {
 			}
     	}		
 		
-		$this->language->load('module/language');
+		$this->language->load('module/language');	
+					
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$connection = 'SSL';
+		} else {
+			$connection = 'NONSSL';
+		}
 		
 		$this->data['text_language'] = $this->language->get('text_language');
 
-		$this->data['action'] = $this->url->link('module/language');
+		$this->data['action'] = $this->url->link('module/language', '', $connection);
 
 		$this->data['language_code'] = $this->session->data['language'];
 		
@@ -50,12 +56,6 @@ class ControllerModuleLanguage extends Controller {
 			
 			if ($data) {
 				$url = '&' . urldecode(http_build_query($data, '', '&'));
-			}	
-					
-			if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-				$connection = 'SSL';
-			} else {
-				$connection = 'NONSSL';
 			}
 						
 			$this->data['redirect'] = $this->url->link($route, $url, $connection);

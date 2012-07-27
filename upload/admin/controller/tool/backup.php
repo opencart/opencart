@@ -9,7 +9,7 @@ class ControllerToolBackup extends Controller {
 		
 		$this->load->model('tool/backup');
 				
-		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validate()) {
+		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->user->hasPermission('modify', 'tool/backup')) {
 			if (is_uploaded_file($this->request->files['import']['tmp_name'])) {
 				$content = file_get_contents($this->request->files['import']['tmp_name']);
 			} else {
@@ -38,7 +38,11 @@ class ControllerToolBackup extends Controller {
 		$this->data['button_backup'] = $this->language->get('button_backup');
 		$this->data['button_restore'] = $this->language->get('button_restore');
 		
- 		if (isset($this->error['warning'])) {
+		if (isset($this->session->data['error'])) {
+    		$this->data['error_warning'] = $this->session->data['error'];
+    
+			unset($this->session->data['error']);
+ 		} elseif (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
 			$this->data['error_warning'] = '';
@@ -84,7 +88,13 @@ class ControllerToolBackup extends Controller {
 	}
 	
 	public function backup() {
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		$this->load->language('tool/backup');
+		
+		if (!isset($this->request->post['backup'])) {
+			$this->session->data['error'] = $this->language->get('error_backup');
+			
+			$this->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL'));
+		} elseif ($this->user->hasPermission('modify', 'tool/backup')) {
 			$this->response->addheader('Pragma: public');
 			$this->response->addheader('Expires: 0');
 			$this->response->addheader('Content-Description: File Transfer');
@@ -96,20 +106,10 @@ class ControllerToolBackup extends Controller {
 			
 			$this->response->setOutput($this->model_tool_backup->backup($this->request->post['backup']));
 		} else {
-			return $this->forward('error/permission');
+			$this->session->data['error'] = $this->language->get('error_permission');
+			
+			$this->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL'));			
 		}
-	}
-	
-	private function validate() {
-		if (!$this->user->hasPermission('modify', 'tool/backup')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-		
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}		
 	}
 }
 ?>

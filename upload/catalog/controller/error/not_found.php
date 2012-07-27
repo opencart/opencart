@@ -14,9 +14,29 @@ class ControllerErrorNotFound extends Controller {
       	);		
 		
 		if (isset($this->request->get['route'])) {
+			$data = $this->request->get;
+			
+			unset($data['_route_']);
+			
+			$route = $data['route'];
+			
+			unset($data['route']);
+			
+			$url = '';
+			
+			if ($data) {
+				$url = '&' . urldecode(http_build_query($data, '', '&'));
+			}	
+			
+			if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+				$connection = 'SSL';
+			} else {
+				$connection = 'NONSSL';
+			}
+											
        		$this->data['breadcrumbs'][] = array(
 				'text'      => $this->language->get('heading_title'),
-				'href'      => $this->url->link($this->request->get['route']),
+				'href'      => $this->url->link($route, $url, $connection),
         		'separator' => $this->language->get('text_separator')
       		);	   	
 		}

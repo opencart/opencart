@@ -15,7 +15,7 @@ class ControllerErrorNotFound extends Controller {
 		
 		if (isset($this->request->get['route'])) {
        		$this->data['breadcrumbs'][] = array(
-        		'text'      => $this->language->get('text_error'),
+				'text'      => $this->language->get('heading_title'),
 				'href'      => $this->url->link($this->request->get['route']),
         		'separator' => $this->language->get('text_separator')
       		);	   	

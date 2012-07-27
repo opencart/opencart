@@ -782,8 +782,7 @@ function utf8_from_unicode($data) {
 			echo chr(0xc0 | ($data[$key] >> 6));
 			echo chr(0x80 | ($data[$key] & 0x003f));
 		} elseif ($data[$key] == 0xFEFF) {
-			
-			// nop -- zap the BOM
+		// nop -- zap the BOM
 		
 		# Test for illegal surrogates
 		} elseif ($data[$key] >= 0xD800 && $data[$key] <= 0xDFFF) {

@@ -154,7 +154,7 @@ class ControllerAccountOrder extends Controller {
 		}	
 
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/order', 'order_id=' . $order_id, 'SSL');
+			$this->session->data['redirect'] = $this->url->link('account/order/info', 'order_id=' . $order_id, 'SSL');
 			
 			$this->redirect($this->url->link('account/login', '', 'SSL'));
     	}

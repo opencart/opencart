@@ -40,7 +40,7 @@ abstract class Controller {
 
 			$controller = new $class($this->registry);
 
-			call_user_func_array(array($controller, $action->getMethod()), $action->getArgs());
+			$controller->{$action->getMethod()}($action->getArgs());
 			
 			return $controller->output;
 		} else {

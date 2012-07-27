@@ -135,17 +135,17 @@ class ModelCatalogProduct extends Model {
 				if (!empty($data['filter_sub_category'])) {
 					$implode_data = array();
 					
-					$implode_data[] = "p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
+					$implode_data[] = (int)$data['filter_category_id'];
 					
 					$this->load->model('catalog/category');
 					
 					$categories = $this->model_catalog_category->getCategoriesByParentId($data['filter_category_id']);
 										
 					foreach ($categories as $category_id) {
-						$implode_data[] = "p2c.category_id = '" . (int)$category_id . "'";
+						$implode_data[] = (int)$category_id;
 					}
 								
-					$sql .= " AND (" . implode(' OR ', $implode_data) . ")";			
+					$sql .= " AND p2c.category_id IN (" . implode(', ', $implode_data) . ")";			
 				} else {
 					$sql .= " AND p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
 				}
@@ -514,17 +514,17 @@ class ModelCatalogProduct extends Model {
 				if (!empty($data['filter_sub_category'])) {
 					$implode_data = array();
 					
-					$implode_data[] = "p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
+					$implode_data[] = (int)$data['filter_category_id'];
 					
 					$this->load->model('catalog/category');
 					
 					$categories = $this->model_catalog_category->getCategoriesByParentId($data['filter_category_id']);
-						
+										
 					foreach ($categories as $category_id) {
-						$implode_data[] = "p2c.category_id = '" . (int)$category_id . "'";
+						$implode_data[] = (int)$category_id;
 					}
 								
-					$sql .= " AND (" . implode(' OR ', $implode_data) . ")";			
+					$sql .= " AND p2c.category_id IN (" . implode(', ', $implode_data) . ")";			
 				} else {
 					$sql .= " AND p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
 				}

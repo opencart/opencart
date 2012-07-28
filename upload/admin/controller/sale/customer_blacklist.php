@@ -343,7 +343,7 @@ class ControllerSaleCustomerBlacklist extends Controller {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
 
-    	if ((utf8_strlen($this->request->post['ip']) < 1) || (utf8_strlen($this->request->post['ip']) > 15)) {
+    	if ((utf8_strlen($this->request->post['ip']) < 1) || (utf8_strlen($this->request->post['ip']) > 40)) {
       		$this->error['ip'] = $this->language->get('error_ip');
     	}
 		

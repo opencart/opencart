@@ -33,7 +33,7 @@ p {
 	margin-bottom: 20px;
 }
 a, a:visited, a b {
-	color: #38B0E3;
+	color: #0099FF;
 	text-decoration: underline;
 	cursor: pointer;
 }
@@ -54,11 +54,23 @@ input[type='text'], input[type='password'], textarea {
 	padding: 3px;
 	margin-left: 0px;
 	margin-right: 0px;
+    	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+    	-webkit-box-shadow: 0px 0px 8px #CCCCCC  inset ;
+	-moz-box-shadow: 0px 0px 8px #CCCCCC  inset ;
+    	-o-box-shadow: 0px 0px 8px #CCCCCC  inset ;
+	box-shadow: 0px 0px 8px #CCCCCC  inset ;
 }
 select {
 	background: #F8F8F8;
 	border: 1px solid #CCCCCC;
 	padding: 2px;
+    	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+    	border-radius: 5px;
 }
 label {
 	cursor: pointer;
@@ -108,10 +120,12 @@ label {
 	width: 80px;
 	color: #999;
 	line-height: 17px;
+    	text-align: center;
 }
 #language img {
 	cursor: pointer;
 	margin-right: 5px;
+    	width: 19px;
 }
 #currency {
 	width: 75px;
@@ -120,6 +134,7 @@ label {
 	left: 425px;
 	color: #999;
 	line-height: 17px;
+    	text-align: center;
 }
 #currency a {
 	display: inline-block;
@@ -129,6 +144,20 @@ label {
 	text-decoration: none;
 	margin-right: 2px;
 	margin-bottom: 2px;
+    	-webkit-border-radius: 7px ;
+	-moz-border-radius: 7px ;
+	-khtml-border-radius: 7px ;
+	border-radius: 7px ;
+}
+#currency a:hover {
+    	transform:scale(1.2,1.2);
+    	-webkit-transform:scale(1.2,1.2);
+    	-moz-transform:scale(1.2,1.2);
+    	-o-transform:scale(1.2,1.2);
+    	-webkit-box-shadow: 0px 3px 8px #BBBBBB ;
+	-moz-box-shadow: 0px 3px 8px #BBBBBB ;
+    	-o-box-shadow: 0px 3px 8px #BBBBBB ;
+	box-shadow: 0px 3px 8px #BBBBBB ;
 }
 #currency a b {
 	color: #000;
@@ -162,7 +191,7 @@ label {
 	margin-bottom: 3px;
 }
 #header #cart .heading a {
-	color: #38B0E3;
+	color: #0099FF;
 	text-decoration: none;
 }
 #header #cart .heading a span {
@@ -283,9 +312,10 @@ label {
 	-moz-border-radius: 3px 3px 3px 3px;
 	-khtml-border-radius: 3px 3px 3px 3px;
 	border-radius: 3px 3px 3px 3px;
-	-webkit-box-shadow: 0px 2px 0px #F0F0F0;
-	-moz-box-shadow: 0px 2px 0px #F0F0F0;
-	box-shadow: 0px 2px 0px #F0F0F0;
+	-webkit-box-shadow: 0px 0px 10px #CCCCCC  inset;
+	-moz-box-shadow: 0px 0px 10px #CCCCCC  inset;
+    	-o-box-shadow: 0px 0px 10px #CCCCCC  inset;
+	box-shadow: 0px 0px 10px #CCCCCC  inset;
 }
 #header #welcome {
 	position: absolute;
@@ -307,7 +337,7 @@ label {
 	float: left;
 	display: block;
 	padding: 0px 0px 0px 7px;
-	color: #38B0E3;
+	color: #0099FF;
 	text-decoration: none;
 	font-size: 12px;
 }
@@ -317,17 +347,17 @@ label {
 }
 /* menu */
 #menu {
-	background: #585858;
-	border-bottom: 1px solid #000000;
-	height: 37px;
+	background: #F3F4F4;
+   	height: 37px;
 	margin-bottom: 15px;
 	-webkit-border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
 	-khtml-border-radius: 5px 5px 5px 5px;
 	border-radius: 5px 5px 5px 5px;
-	-webkit-box-shadow: 0px 2px 2px #DDDDDD;
-	-moz-box-shadow: 0px 2px 2px #DDDDDD;
-	box-shadow: 0px 2px 2px #DDDDDD;
+	-webkit-box-shadow: 2px 2px 10px #999999 ;
+	-moz-box-shadow: 2px 2px 10px #999999 ;
+    	-o-box-shadow: 2px 2px 10px #999999 ;
+	box-shadow: 2px 2px 10px #999999 ;
 	padding: 0px 5px;
 }
 #menu ul {
@@ -345,7 +375,7 @@ label {
 }
 #menu > ul > li > a {
 	font-size: 13px;
-	color: #FFF;
+	color: #000000;
 	line-height: 14px;
 	text-decoration: none;
 	display: block;
@@ -353,26 +383,44 @@ label {
 	margin-bottom: 5px;
 	z-index: 6;
 	position: relative;
+    	-webkit-transition: background-color 0.3s ease-in-out;
+    	-moz-transition: background-color 0.3s ease-in-out;
+    	-o-transition: background-color 0.3s ease-in-out;
+    	-ms-transition: background-color 0.3s ease-in-out;
+    	transition: background-color 0.3s ease-in-out;
+    	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	border-radius: 8px;
+
 }
 #menu > ul > li:hover > a {
-	background: #000000;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	-khtml-border-radius: 5px;
-	border-radius: 5px;
+	background: #0066CC;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	border-radius: 8px;
+    	color: #FFF;
+    	-webkit-box-shadow: 0px 0px 8px #000099  inset ;
+	-moz-box-shadow: 0px 0px 8px #000099  inset ;
+    	-o-box-shadow: 0px 0px 8px #000099  inset ;
+	box-shadow: 0px 0px 8px #000099  inset ;
 }
 #menu > ul > li > div {
-	display: none;
+    	display: none;
 	background: #FFFFFF;
 	position: absolute;
 	z-index: 5;
 	padding: 5px;
-	border: 1px solid #000000;
-	-webkit-border-radius: 0px 0px 5px 5px;
-	-moz-border-radius: 0px 0px 5px 5px;
-	-khtml-border-radius: 0px 0px 5px 5px;
-	border-radius: 0px 0px 5px 5px;
-	background: url('../image/menu.png');
+	border:  1px  solid #BABAB8;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	border-radius: 8px;
+    	-webkit-box-shadow: 1px 1px 8px #999999 ;
+	-moz-box-shadow: 1px 1px 8px #999999 ;
+    	-o-box-shadow: 1px 1px 8px #999999 ;
+	box-shadow: 1px 1px 8px #999999 ;
 }
 #menu > ul > li:hover > div {
 	display: table;
@@ -392,10 +440,12 @@ label {
 	min-width: 120px;
 }
 #menu > ul > li ul > li > a:hover {
-	background: #000000;
+	background: #0066CC;
+    	color: #FFF;
 }
 #menu > ul > li > div > ul > li > a {
-	color: #FFFFFF;
+	color: #000000;
+
 }
 .breadcrumb {
 	color: #CCCCCC;
@@ -630,10 +680,18 @@ a.button:hover, input.button:hover {
 	color: #000000;
 	margin-right: 2px;
 	display: none;
+    	-webkit-border-radius: 9px 9px 0px 0px;
+	-moz-border-radius: 9px 9px 0px 0px;
+	-khtml-border-radius: 9px 9px 0px 0px;
+	border-radius: 9px 9px 0px 0px;
 }
 .htabs a.selected {
 	padding-bottom: 7px;
 	background: #FFFFFF;
+    	-webkit-box-shadow: 0px 0px 10px #7B7B7B  inset ;
+	-moz-box-shadow: 0px 0px 10px #7B7B7B  inset ;
+    	-o-box-shadow: 0px 0px 10px #7B7B7B  inset ;
+	box-shadow: 0px 0px 10px #7B7B7B  inset ;
 }
 .tab-content {
 	border-left: 1px solid #DDDDDD;
@@ -643,6 +701,10 @@ a.button:hover, input.button:hover {
 	margin-bottom: 20px;
 	z-index: 2;
 	overflow: auto;
+    	-webkit-box-shadow: 0px 4px 20px #CCCCCC ;
+	-moz-box-shadow: 0px 4px 20px #CCCCCC ;
+    	-o-box-shadow: 0px 4px 20px #CCCCCC ;
+	box-shadow: 0px 4px 20px #CCCCCC ;
 }
 /* box */
 .box {
@@ -661,6 +723,10 @@ a.button:hover, input.button:hover {
 	font-weight: bold;
 	line-height: 14px;
 	color: #333;
+    	box-shadow: 0px 0px 10px #CCCCCC  inset;
+	-webkit-box-shadow: 0px 0px 10px #CCCCCC  inset;
+	-moz-box-shadow: 0px 0px 10px #CCCCCC  inset;
+    	-o-box-shadow: 0px 0px 10px #CCCCCC  inset;
 }
 .box .box-content {
 	background: #FFFFFF;
@@ -672,6 +738,10 @@ a.button:hover, input.button:hover {
 	border-right: 1px solid #DBDEE1;
 	border-bottom: 1px solid #DBDEE1;
 	padding: 10px;
+    	-moz-box-shadow: 3px 3px 10px #A3A3A3;
+    	-webkit-box-shadow: 3px 3px 10px #A3A3A3;
+    	-o-box-shadow: 3px 3px 10px #A3A3A3;
+    	box-shadow: 3px 3px 10px #A3A3A3;
 }
 /* box products */
 .box-product {
@@ -682,8 +752,11 @@ a.button:hover, input.button:hover {
 	width: 130px;
 	display: inline-block;
 	vertical-align: top;
-	margin-right: 20px;
+    	text-align:center;
+	margin-right: 10px;
 	margin-bottom: 20px;
+    	margin-top: 10px;
+    	margin-left: 10px
 }
 #column-left + #column-right + #content .box-product > div {
 	width: 119px;
@@ -695,13 +768,30 @@ a.button:hover, input.button:hover {
 .box-product .image img {
 	padding: 3px;
 	border: 1px solid #E7E7E7;
+    	-moz-box-shadow: 0px 0px 10px #A3A3A3;
+    	-webkit-box-shadow: 0px 0px 10px #A3A3A3;
+    	-o-box-shadow: 0px 0px 10px #A3A3A3;
+    	box-shadow: 0px 0px 10px #A3A3A3;
+   	-webkit-border-radius: 7px ;
+	-moz-border-radius: 7px ;
+	-khtml-border-radius: 7px ;
+	border-radius: 7px ;
+}
+.box-product .image img:hover {
+	padding: 3px;
+	border: 1px solid #E7E7E7;
+    	-moz-box-shadow: 3px 3px 15px #A3A3A3;
+    	-webkit-box-shadow: 3px 3px 15px #A3A3A3;
+    	-o-box-shadow: 3px 3px 15px #A3A3A3;
+    	box-shadow: 3px 3px 15px #A3A3A3;
 }
 .box-product .name a {
-	color: #38B0E3;
+	color: #0099FF;
 	font-weight: bold;
 	text-decoration: none;
 	display: block;
 	margin-bottom: 4px;
+    	margin-top: 4px
 }
 .box-product .price {
 	display: block;
@@ -783,6 +873,10 @@ a.button:hover, input.button:hover {
 	padding: 5px;
 	margin-right: 15px;
 	border: 1px solid #E7E7E7;
+    	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
 }
 .category-list {
 	overflow: auto;
@@ -873,12 +967,22 @@ a.button:hover, input.button:hover {
 .product-list .image img {
 	padding: 3px;
 	border: 1px solid #E7E7E7;
+    	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+    	-webkit-box-shadow: 0px 0px 8px #BBBBBB  ;
+	-moz-box-shadow: 0px 0px 8px #BBBBBB  ;
+    	-o-box-shadow: 0px 0px 8px #BBBBBB  ;
+	box-shadow: 0px 0px 8px #BBBBBB  ;
+   	margin-left:  3px;
+    	margin-top: 3px;
 }
 .product-list .name {
 	margin-bottom: 3px;
 }
 .product-list .name a {
-	color: #38B0E3;
+	color: #0099FF;
 	font-weight: bold;
 	text-decoration: none;
 }
@@ -951,9 +1055,19 @@ a.button:hover, input.button:hover {
 .product-grid .image img {
 	padding: 3px;
 	border: 1px solid #E7E7E7;
+    	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+    	-webkit-box-shadow: 0px 0px 8px #BBBBBB  ;
+	-moz-box-shadow: 0px 0px 8px #BBBBBB  ;
+    	-o-box-shadow: 0px 0px 8px #BBBBBB  ;
+	box-shadow: 0px 0px 8px #BBBBBB  ;
+    	margin-left: 3px;
+    	margin-top: 3px;
 }
 .product-grid .name a {
-	color: #38B0E3;
+	color: #0099FF;
 	font-weight: bold;
 	text-decoration: none;
 	display: block;
@@ -1015,50 +1129,95 @@ a.button:hover, input.button:hover {
 	margin-left: 265px;
 }
 .product-info .image {
-	border: 1px solid #E7E7E7;
+    	border:  1px  solid #CCCCCC;
 	float: left;
 	margin-bottom: 20px;
 	padding: 10px;
 	text-align: center;
+    	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+    	-webkit-box-shadow: 0px 0px 10px #CCCCCC inset ;
+	-moz-box-shadow: 0px 0px 10px #CCCCCC inset ;
+    	-o-box-shadow: 0px 0px 10px #CCCCCC inset ;
+	box-shadow: 0px 0px 10px #CCCCCC inset ;
 }
 .product-info .image-additional {
-	width: 260px;
-	margin-left: -10px;
+	width: 265px;
+	margin-left: -8px;
 	clear: both;
 	overflow: hidden;
 }
 .product-info .image-additional img {
-	border: 1px solid #E7E7E7;
+	border:  1px  solid #BBBBBB;
+    	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+    	-webkit-box-shadow: 0px 0px 8px #BBBBBB  ;
+	-moz-box-shadow: 0px 0px 8px #BBBBBB  ;
+    	-o-box-shadow: 0px 0px 8px #BBBBBB  ;
+	box-shadow: 0px 0px 8px #BBBBBB  ;
+    	margin-top: 5px;
+}
+.product-info .image-additional img:hover {
+	border:  1px  solid #269BC6;
+    	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+    	-webkit-box-shadow: 0px 0px 10px #269BC6  ;
+	-moz-box-shadow: 0px 0px 10px #269BC6  ;
+    	-o-box-shadow: 0px 0px 10px #269BC6  ;
+	box-shadow: 0px 0px 10px #269BC6  ;
+    	margin-top: 5px;
 }
 .product-info .image-additional a {
 	float: left;
 	display: block;
 	margin-left: 10px;
-	margin-bottom: 10px;
+	margin-bottom: 12px;
 }
 .product-info .description {
-	border-top: 1px solid #E7E7E7;
-	border-bottom: 1px solid #E7E7E7;
-	padding: 5px 5px 10px 5px;
-	margin-bottom: 10px;
+	padding: 5px 5px 10px 10px;
+	margin-bottom: 15px;
 	line-height: 20px;
 	color: #4D4D4D;
+    	border: 1px  solid #CCCCCC;
+    	background: #FBFBFB;
+    	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+    	-webkit-box-shadow: 0px 2px 10px #CCCCCC ;
+	-moz-box-shadow: 0px 2px 10px #CCCCCC ;
+    	-o-box-shadow: 0px 2px 10px #CCCCCC ;
+	box-shadow: 0px 2px 10px #CCCCCC ;
 }
 .product-info .description span {
-	color: #38B0E3;
+	color: #0099FF;
 }
 .product-info .description a {
 	color: #4D4D4D;
 	text-decoration: none;
 }
 .product-info .price {
-	overflow: auto;
-	border-bottom: 1px solid #E7E7E7;
-	padding: 0px 5px 10px 5px;
-	margin-bottom: 10px;
+	padding: 5px 5px 10px 10px;
+	margin-bottom: 15px;
 	font-size: 15px;
 	font-weight: bold;
 	color: #333333;
+    	border: 1px solid #CCCCCC;
+    	background: #FBFBFB;
+    	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+    	-webkit-box-shadow: 0px 2px 10px #CCCCCC ;
+	-moz-box-shadow: 0px 2px 10px #CCCCCC ;
+    	-o-box-shadow: 0px 2px 10px #CCCCCC ;
+	box-shadow: 0px 2px 10px #CCCCCC ;
 }
 .product-info .price-old {
 	color: #F00;
@@ -1082,10 +1241,19 @@ a.button:hover, input.button:hover {
 	color: #4D4D4D;
 }
 .product-info .options {
-	border-bottom: 1px solid #E7E7E7;
-	padding: 0px 5px 10px 5px;
-	margin-bottom: 10px;
+	padding: 5px 5px 10px 10px;
+	margin-bottom: 15px;
 	color: #000000;
+    	border: 1px solid #CCCCCC;
+   	background: #FBFBFB;
+    	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+    	-webkit-box-shadow: 0px 2px 10px #CCCCCC ;
+	-moz-box-shadow: 0px 2px 10px #CCCCCC ;
+    	-o-box-shadow: 0px 2px 10px #CCCCCC ;
+	box-shadow: 0px 2px 10px #CCCCCC ;
 }
 .product-info .option-image {
 	margin-top: 3px;
@@ -1102,11 +1270,10 @@ a.button:hover, input.button:hover {
 	cursor: pointer;
 }
 .product-info .cart {
-	border-bottom: 1px solid #E7E7E7;
-	padding: 0px 5px 10px 5px;
-	margin-bottom: 20px;
+	padding: 5px 5px 10px 10px;
+	margin-bottom: 10px;
 	color: #4D4D4D;
-	overflow: auto;
+    	overflow: auto;
 }
 .product-info .cart div {
 	float: left;
@@ -1125,10 +1292,18 @@ a.button:hover, input.button:hover {
 }
 .product-info .review {
 	color: #4D4D4D;
-	border-top: 1px solid #E7E7E7;
-	border-left: 1px solid #E7E7E7;
-	border-right: 1px solid #E7E7E7;
 	margin-bottom: 10px;
+    	border: 1px solid #CCCCCC;
+    	background: #FBFBFB;
+    	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+    	-webkit-box-shadow: 0px 2px 10px #CCCCCC ;
+	-moz-box-shadow: 0px 2px 10px #CCCCCC ;
+    	-o-box-shadow: 0px 2px 10px #CCCCCC ;
+	box-shadow: 0px 2px 10px #CCCCCC ;
+
 }
 .product-info .review > div {
 	padding: 8px;
@@ -1136,7 +1311,7 @@ a.button:hover, input.button:hover {
 	line-height: 20px;
 }
 .product-info .review > div > span {
-	color: #38B0E3;
+	color: #0099FF;
 }
 .product-info .review .share {
 	overflow: auto;
@@ -1585,15 +1760,23 @@ a.button:hover, input.button:hover {
 	float: left;
 	width: 48%;
 }
-/* footer */ 
+/* footer */
 #footer {
 	clear: both;
 	overflow: auto;
 	min-height: 100px;
 	padding: 20px;
-	border-top: 1px solid #DBDEE1;
-	border-bottom: 1px solid #DBDEE1;
+	border-top:  1px  solid #EFEFEF;
+	border-bottom: 1px solid #EFEFEF;
 	background: #F8F8F8;
+    	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	border-radius: 8px;
+    	-webkit-box-shadow: 0px 2px 5px #7B7B7B ;
+	-moz-box-shadow: 0px 2px 5px #7B7B7B ;
+    	-o-box-shadow: 0px 2px 5px #7B7B7B ;
+	box-shadow: 0px 2px 5px #7B7B7B ;
 }
 #footer h3 {
 	color: #000000;
@@ -1612,7 +1795,14 @@ a.button:hover, input.button:hover {
 	padding-left: 12px;
 }
 #footer .column ul li {
-	margin-bottom: 3px;
+    	border-bottom: 2px  dotted #CCCCCC;
+    	padding-bottom: 5px;
+    	padding-top: 5px;
+
+}
+#footer .column ul li:hover {
+    	background:#FFFFFF;
+    	font-weight: bold
 }
 #footer .column a {
 	text-decoration: none;
@@ -1620,11 +1810,24 @@ a.button:hover, input.button:hover {
 }
 #footer .column a:hover {
 	text-decoration: underline;
+    	color: #0099FF;
 }
 #powered {
-	margin-top: 5px;
-	text-align: right;
+	margin-top: 10px;
+	text-align: center;
 	clear: both;
+        -webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	border-radius: 8px;
+        -webkit-box-shadow: 0px 1px 5px #7B7B7B ;
+	-moz-box-shadow: 0px 1px 5px #7B7B7B ;
+        -o-box-shadow: 0px 1px 5px #7B7B7B ;
+	box-shadow: 0px 1px 5px #7B7B7B ;
+        padding-bottom: 2px;
+        padding-top: 2px;
+    	margin-bottom: 15px;
+    	background: #F7F7F7;
 }
 /* banner */
 .banner div {

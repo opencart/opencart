@@ -1,0 +1,10 @@
+!.gitignore
+!index.html
+
+config.php
+admin/config.php
+
+download
+image/cache
+system/cache
+system/logs

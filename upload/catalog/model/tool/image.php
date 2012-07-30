@@ -23,10 +23,16 @@ class ModelToolImage extends Model {
 					@mkdir(DIR_IMAGE . $path, 0777);
 				}		
 			}
-			
-			$image = new Image(DIR_IMAGE . $old_image);
-			$image->resize($width, $height);
-			$image->save(DIR_IMAGE . $new_image);
+
+			list($width_orig, $height_orig) = getimagesize(DIR_IMAGE . $old_image);
+
+			if ($width_orig != $width || $height_orig != $height) {
+				$image = new Image(DIR_IMAGE . $old_image);
+				$image->resize($width, $height);
+				$image->save(DIR_IMAGE . $new_image);
+			} else {
+				copy(DIR_IMAGE . $old_image, DIR_IMAGE . $new_image);
+			}
 		}
 		
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {

@@ -44,7 +44,7 @@ class Image {
 			if ($extension == 'jpeg' || $extension == 'jpg') {
 				imagejpeg($this->image, $file, $quality);
 			} elseif($extension == 'png') {
-				imagepng($this->image, $file, 0);
+				imagepng($this->image, $file);
 			} elseif($extension == 'gif') {
 				imagegif($this->image, $file);
 			}

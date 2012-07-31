@@ -252,8 +252,10 @@ class ModelCatalogProduct extends Model {
 			
 			$data = $query->row;
 			
+			$data['sku'] = '';
+			$data['upc'] = '';
+			$data['viewed'] = '0';
 			$data['keyword'] = '';
-
 			$data['status'] = '0';
 						
 			$data = array_merge($data, array('product_attribute' => $this->getProductAttributes($product_id)));

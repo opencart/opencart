@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']      = 'Cheque / Money Order';
 
-// Text 
+// Text
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified cheque / money order account details!';
 
@@ -17,4 +17,3 @@ $_['entry_sort_order']   = 'Sort Order:';
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify payment cheque / money order!';
 $_['error_payable']      = 'Payable To Required!';
-?>

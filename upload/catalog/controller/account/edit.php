@@ -10,14 +10,14 @@ class ControllerAccountEdit extends Controller {
 		}
 
 		$this->language->load('account/edit');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('account/customer');
-		
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_account_customer->editCustomer($this->request->post);
-			
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->redirect($this->url->link('account/account', '', 'SSL'));
@@ -27,22 +27,22 @@ class ControllerAccountEdit extends Controller {
 
       	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),     	
+			'href'      => $this->url->link('common/home'),
         	'separator' => false
-      	); 
+      	);
 
       	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),        	
+			'href'      => $this->url->link('account/account', '', 'SSL'),
         	'separator' => $this->language->get('text_separator')
       	);
 
       	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_edit'),
-			'href'      => $this->url->link('account/edit', '', 'SSL'),       	
+			'href'      => $this->url->link('account/edit', '', 'SSL'),
         	'separator' => $this->language->get('text_separator')
       	);
-		
+
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['text_your_details'] = $this->language->get('text_your_details');
@@ -73,18 +73,18 @@ class ControllerAccountEdit extends Controller {
 		} else {
 			$this->data['error_lastname'] = '';
 		}
-		
+
 		if (isset($this->error['email'])) {
 			$this->data['error_email'] = $this->error['email'];
 		} else {
 			$this->data['error_email'] = '';
-		}	
-		
+		}
+
 		if (isset($this->error['telephone'])) {
 			$this->data['error_telephone'] = $this->error['telephone'];
 		} else {
 			$this->data['error_telephone'] = '';
-		}	
+		}
 
 		$this->data['action'] = $this->url->link('account/edit', '', 'SSL');
 
@@ -139,17 +139,17 @@ class ControllerAccountEdit extends Controller {
 		} else {
 			$this->template = 'default/template/account/edit.tpl';
 		}
-		
+
 		$this->children = array(
 			'common/column_left',
 			'common/column_right',
 			'common/content_top',
 			'common/content_bottom',
 			'common/footer',
-			'common/header'	
+			'common/header'
 		);
-						
-		$this->response->setOutput($this->render());	
+
+		$this->response->setOutput($this->render());
 	}
 
 	private function validate() {
@@ -164,7 +164,7 @@ class ControllerAccountEdit extends Controller {
 		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
-		
+
 		if (($this->customer->getEmail() != $this->request->post['email']) && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
 			$this->error['warning'] = $this->language->get('error_exists');
 		}
@@ -180,4 +180,3 @@ class ControllerAccountEdit extends Controller {
 		}
 	}
 }
-?>

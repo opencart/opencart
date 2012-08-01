@@ -1,5 +1,5 @@
 <?php
-// Heading 
+// Heading
 $_['heading_title']    = 'Newsletter Subscription';
 
 // Text
@@ -9,4 +9,3 @@ $_['text_success']     = 'Success: Your newsletter subscription has been success
 
 // Entry
 $_['entry_newsletter'] = 'Subscribe:';
-?>

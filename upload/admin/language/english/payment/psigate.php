@@ -2,8 +2,8 @@
 // Heading
 $_['heading_title']      = 'PSIGate';
 
-// Text 
-$_['text_payment']       = 'Payment'; 
+// Text
+$_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified PSIGate account details!';
 
 // Entry
@@ -22,4 +22,3 @@ $_['error_permission']   = 'Warning: You do not have permission to modify paymen
 $_['error_merchant']     = 'Merchant Required!';
 $_['error_password']     = 'Passphrase Required!';
 $_['error_gateway']      = 'Gateway URL Required!';
-?>

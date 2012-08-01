@@ -5,7 +5,7 @@ define('VERSION', '1.5.3');
 // Configuration
 require_once('config.php');
 
-// Install 
+// Install
 if (!defined('DIR_APPLICATION')) {
 	header('Location: ../install/index.php');
 	exit;
@@ -34,10 +34,10 @@ $registry->set('config', $config);
 // Database
 $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 $registry->set('db', $db);
-		
+
 // Settings
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0'");
- 
+
 foreach ($query->rows as $setting) {
 	if (!$setting['serialized']) {
 		$config->set($setting['key'], $setting['value']);
@@ -47,16 +47,16 @@ foreach ($query->rows as $setting) {
 }
 
 // Url
-$url = new Url(HTTP_SERVER, $config->get('config_use_ssl') ? HTTPS_SERVER : HTTP_SERVER);	
+$url = new Url(HTTP_SERVER, $config->get('config_use_ssl') ? HTTPS_SERVER : HTTP_SERVER);
 $registry->set('url', $url);
-		
-// Log 
+
+// Log
 $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
 function error_handler($errno, $errstr, $errfile, $errline) {
 	global $log, $config;
-	
+
 	switch ($errno) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
@@ -74,11 +74,11 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 			$error = 'Unknown';
 			break;
 	}
-		
+
 	if ($config->get('config_error_display')) {
 		echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
 	}
-	
+
 	if ($config->get('config_error_log')) {
 		$log->write('PHP ' . $error . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
 	}
@@ -88,7 +88,7 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 
 // Error Handler
 set_error_handler('error_handler');
-		
+
 // Request
 $request = new Request();
 $registry->set('request', $request);
@@ -96,20 +96,20 @@ $registry->set('request', $request);
 // Response
 $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
-$registry->set('response', $response); 
+$registry->set('response', $response);
 
 // Cache
 $cache = new Cache();
-$registry->set('cache', $cache); 
+$registry->set('cache', $cache);
 
 // Session
 $session = new Session();
-$registry->set('session', $session); 
+$registry->set('session', $session);
 
 // Language
 $languages = array();
 
-$query = $db->query("SELECT * FROM " . DB_PREFIX . "language"); 
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "language");
 
 foreach ($query->rows as $result) {
 	$languages[$result['code']] = $result;
@@ -117,17 +117,17 @@ foreach ($query->rows as $result) {
 
 $config->set('config_language_id', $languages[$config->get('config_admin_language')]['language_id']);
 
-// Language	
+// Language
 $language = new Language($languages[$config->get('config_admin_language')]['directory']);
-$language->load($languages[$config->get('config_admin_language')]['filename']);	
-$registry->set('language', $language); 		
+$language->load($languages[$config->get('config_admin_language')]['filename']);
+$registry->set('language', $language);
 
 // Document
-$registry->set('document', new Document()); 		
-		
+$registry->set('document', new Document());
+
 // Currency
-$registry->set('currency', new Currency($registry));		
-		
+$registry->set('currency', new Currency($registry));
+
 // Weight
 $registry->set('weight', new Weight($registry));
 
@@ -136,7 +136,7 @@ $registry->set('length', new Length($registry));
 
 // User
 $registry->set('user', new User($registry));
-						
+
 // Front Controller
 $controller = new Front($registry);
 
@@ -158,4 +158,3 @@ $controller->dispatch($action, new Action('error/not_found'));
 
 // Output
 $response->output();
-?>

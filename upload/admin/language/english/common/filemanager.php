@@ -1,7 +1,7 @@
 <?php
 // Heading
 $_['heading_title']    = 'Image Manager';
- 
+
 // Text
 $_['text_uploaded']    = 'Success: Your file has been uploaded!';
 $_['text_file_delete'] = 'File has been deleted!';
@@ -43,4 +43,3 @@ $_['button_copy']      = 'Copy';
 $_['button_rename']    = 'Rename';
 $_['button_upload']    = 'Upload';
 $_['button_refresh']   = 'Refresh';
-?>

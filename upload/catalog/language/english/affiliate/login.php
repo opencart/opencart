@@ -1,5 +1,5 @@
 <?php
-// Heading 
+// Heading
 $_['heading_title']                 = 'Affiliate Program';
 
 // Text
@@ -19,4 +19,3 @@ $_['entry_password']                = 'Password:';
 // Error
 $_['error_login']                   = 'Warning: No match for E-Mail Address and/or Password.';
 $_['error_approved']                = 'Warning: Your account requires approval before you can login.';
-?>

@@ -20,9 +20,9 @@ $upgrade = false;
 
 if (filesize('../config.php') > 0) {
 	$upgrade = true;
-	
+
 	$file = file(DIR_OPENCART . 'config.php');
-	
+
 	foreach ($file as $num => $line) {
 		if (strpos(strtoupper($line), 'DB_') !== false) {
 			eval($line);
@@ -70,4 +70,3 @@ $controller->dispatch($action, new Action('not_found'));
 
 // Output
 $response->output();
-?>

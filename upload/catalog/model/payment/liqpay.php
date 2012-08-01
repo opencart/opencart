@@ -1,4 +1,4 @@
-<?php 
+<?php
 class ModelPaymentLiqPay extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('payment/liqpay');
@@ -28,4 +28,3 @@ class ModelPaymentLiqPay extends Model {
 		return $method_data;
 	}
 }
-?>

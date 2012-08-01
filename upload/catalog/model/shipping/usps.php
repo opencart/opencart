@@ -47,11 +47,11 @@ class ModelShippingUsps extends Model {
 				$xml .= '		<Width>' . $this->config->get('usps_width') . '</Width>';
 				$xml .= '		<Length>' . $this->config->get('usps_length') . '</Length>';
 				$xml .= '		<Height>' . $this->config->get('usps_height') . '</Height>';
-				
+
 				// Calculate girth based on usps calculation
 				$xml .= '		<Girth>' . (round(((float)$this->config->get('usps_length') + (float)$this->config->get('usps_width') * 2 + (float)$this->config->get('usps_height') * 2), 1)) . '</Girth>';
-				 
-				 
+
+
 				$xml .=	'		<Machinable>' . ($this->config->get('usps_machinable') ? 'true' : 'false') . '</Machinable>';
 				$xml .=	'	</Package>';
 				$xml .= '</RateV4Request>';
@@ -458,7 +458,7 @@ class ModelShippingUsps extends Model {
 				if ($this->config->get('usps_display_weight')) {
 					$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('usps_weight_class_id')) . ')';
 				}
-								
+
       			$method_data = array(
         			'code'       => 'usps',
         			'title'      => $title,
@@ -472,4 +472,3 @@ class ModelShippingUsps extends Model {
 		return $method_data;
 	}
 }
-?>

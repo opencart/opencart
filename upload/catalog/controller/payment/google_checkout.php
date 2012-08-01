@@ -2,56 +2,56 @@
 class ControllerPaymentGoogleCheckout extends Controller {
 	public function index() {
 		$this->data['button_confirm'] = $this->language->get('button_confirm');
-				
+
 		if (!$this->config->get('google_checkout_test')) {
-			$this->data['action'] = 'https://checkout.google.com/api/checkout/v2/checkout/Merchant/' . $this->config->get('google_checkout_merchant_id');	
+			$this->data['action'] = 'https://checkout.google.com/api/checkout/v2/checkout/Merchant/' . $this->config->get('google_checkout_merchant_id');
 		} else {
 			$this->data['action'] = 'https://sandbox.google.com/checkout/api/checkout/v2/checkout/Merchant/' . $this->config->get('google_checkout_merchant_id');
 		}
-		
+
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-		
-		if ($order_info) {		
+
+		if ($order_info) {
 			$xml  = '<?xml version="1.0" encoding="UTF-8"?>';
 			$xml .= '<checkout-shopping-cart xmlns="http://checkout.google.com/schema/2">';
 			$xml .= '	<shopping-cart>';
 			$xml .= '   	<merchant-private-data>';
 			$xml .= '			<order_id>' . $this->session->data['order_id'] . '</order_id>';
-			$xml .= '   	</merchant-private-data>'; 
+			$xml .= '   	</merchant-private-data>';
 			$xml .= '		<items>';
-			
+
 			$products = $this->cart->getProducts();
-			
-			foreach ($products as $product) { 
+
+			foreach ($products as $product) {
 				$xml .= '			<item>';
 				$xml .= '				<merchant-item-id>' . $product['product_id'] . '</merchant-item-id>';
-				
+
 				$option_data = array();
-				
+
 				foreach ($product['option'] as $option) {
 					$option_data[] = $option['name'] . ': ' . $option['value'];
 				}
-			
+
 				if ($option_data) {
-					$xml .= '				<item-name>' . $product['name'] . ' ' . implode('; ', $option_data) . '</item-name>'; 
-					$xml .= '				<item-description>' . $product['name'] . ' ' . implode('; ', $option_data) . '</item-description>';  
+					$xml .= '				<item-name>' . $product['name'] . ' ' . implode('; ', $option_data) . '</item-name>';
+					$xml .= '				<item-description>' . $product['name'] . ' ' . implode('; ', $option_data) . '</item-description>';
 				} else {
-					$xml .= '				<item-name>' . $product['name'] . '</item-name>'; 
-					$xml .= '				<item-description>' . $product['name'] . '</item-description>';  
+					$xml .= '				<item-name>' . $product['name'] . '</item-name>';
+					$xml .= '				<item-description>' . $product['name'] . '</item-description>';
 				}
-				
+
 				$xml .= '				<unit-price currency="' . $this->currency->getCode() . '">' . $this->currency->format($product['price'], $this->currency->getCode(), false, false) . '</unit-price>';
 				$xml .= '				<quantity>' . $product['quantity'] . '</quantity>';
-				$xml .= '			</item>'; 
+				$xml .= '			</item>';
 			}
-			
+
 			$xml .= '		</items>';
 			$xml .= '	</shopping-cart>';
-			
+
 			if ($this->cart->hasShipping()) {
-				$xml .= '	<checkout-flow-support>';  
+				$xml .= '	<checkout-flow-support>';
 				$xml .= '		<merchant-checkout-flow-support>';
 				$xml .= '			<shipping-methods>';
 				$xml .= '				<flat-rate-shipping name="' . $this->session->data['shipping_method']['title'] . '">';
@@ -61,62 +61,62 @@ class ControllerPaymentGoogleCheckout extends Controller {
 				$xml .= '		</merchant-checkout-flow-support>';
 				$xml .= '	</checkout-flow-support>';
 			}
-			
+
 			$xml .= '</checkout-shopping-cart>';
-			
+
 			$key = $this->config->get('google_checkout_merchant_key');
 			$blocksize = 64;
 			$hash = 'sha1';
-			
+
 			if (strlen($key) > $blocksize) {
 				$key = pack('H*', $hash($key));
 			}
-			
+
 			$key = str_pad($key, $blocksize, chr(0x00));
 			$ipad = str_repeat(chr(0x36), $blocksize);
 			$opad = str_repeat(chr(0x5c), $blocksize);
 			$hmac = pack('H*', $hash(($key ^ $opad) . pack('H*', $hash(($key ^ $ipad) . $xml))));
-	
+
 			$this->data['cart'] = base64_encode($xml);
 			$this->data['signature'] = base64_encode($hmac);
-			
+
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/google_checkout.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/payment/google_checkout.tpl';
 			} else {
 				$this->template = 'default/template/payment/google_checkout.tpl';
-			}	
-			
+			}
+
 			$this->render();
 		}
 	}
 
 	public function callback() {
 		$this->log->write($_SERVER['REQUEST_URI']);
-		/*	
+		/*
 		order-summary.google-order-number=923823874108605
-		
+
 		&order-summary.total-chargeback-amount.currency=USD
 		&order-summary.total-chargeback-amount=0.0
 		&order-summary.total-charge-amount=0.0
 		&order-summary.total-charge-amount.currency=USD
 		&order-summary.total-refund-amount.currency=USD
 		&order-summary.total-refund-amount=0.0
-		
+
 		&order-summary.purchase-date=2010-04-21T14%3A09%3A40.000Z
 		&order-summary.archived=false
-		
+
 		&order-summary.shopping-cart.items.item-1.item-name=Peanut+Butter
 		&order-summary.shopping-cart.items.item-1.item-description=Crunchy+peanut+butter
 		&order-summary.shopping-cart.items.item-1.unit-price.currency=USD
 		&order-summary.shopping-cart.items.item-1.unit-price=2.95
 		&order-summary.shopping-cart.items.item-1.quantity=1
 		&order-summary.shopping-cart.items=order-summary.shopping-cart.items.item-1
-		
+
 		&order-summary.order-adjustment.total-tax=0.0
 		&order-summary.order-adjustment.total-tax.currency=USD
 		&order-summary.order-adjustment.adjustment-total.currency=USD
 		&order-summary.order-adjustment.adjustment-total=0.0
-		
+
 		&order-summary.buyer-id=539251754962590
 		&order-summary.buyer-marketing-preferences.email-allowed=false
 		&order-summary.buyer-shipping-address.email=test%40sandbox.google.com
@@ -132,18 +132,18 @@ class ControllerPaymentGoogleCheckout extends Controller {
 		&order-summary.buyer-shipping-address.postal-code=10001
 		&order-summary.buyer-shipping-address.city=Test+City
 		&order-summary.buyer-shipping-address.region=NY
-		
+
 		&order-summary.order-total=2.95
 		&order-summary.order-total.currency=USD
 		&order-summary.fulfillment-order-state=NEW
-		&order-summary.financial-order-state=REVIEWING	
-		
-		
-		
-		
-		
-		
-		
+		&order-summary.financial-order-state=REVIEWING
+
+
+
+
+
+
+
 	_type=new-order-notification
   &serial-number=85f54628-538a-44fc-8605-ae62364f6c71
   &google-order-number=841171949013218
@@ -196,10 +196,9 @@ class ControllerPaymentGoogleCheckout extends Controller {
   &buyer-marketing-preferences.email-allowed=false
   ×tamp=2007-03-19T15%3A06%3A26.051Z
   &order-summary...
-  ... [order-summary parameters]	
-		
-		
-		*/	
+  ... [order-summary parameters]
+
+
+		*/
 	}
 }
-?>

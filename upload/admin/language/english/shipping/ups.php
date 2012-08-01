@@ -27,7 +27,7 @@ $_['text_pr']                      = 'Puerto Rico Origin';
 $_['text_mx']                      = 'Mexico Origin';
 $_['text_other']                   = 'All Other Origins';
 $_['text_test']                    = 'Test';
-$_['text_production']              = 'Production';	
+$_['text_production']              = 'Production';
 $_['text_residential']             = 'Residential';
 $_['text_commercial']              = 'Commercial';
 $_['text_next_day_air']            = 'UPS Next Day Air';
@@ -87,4 +87,3 @@ $_['error_city']                   = 'Origin City!';
 $_['error_state']                  = 'Origin State/Province Required!';
 $_['error_country']                = 'Origin Country Required!';
 $_['error_dimension']              = 'Average Dimensions Required!';
-?>

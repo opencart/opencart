@@ -2,13 +2,13 @@
 class ControllerPaymentKlarnaInvoice extends Controller {
 	protected function index() {
 		$this->language->load('payment/klarna_invoice');
-		
+
 		$this->data['text_information'] = $this->language->get('text_information');
 		$this->data['text_additional'] = $this->language->get('text_additional');
 		$this->data['text_male'] = $this->language->get('text_male');
 		$this->data['text_female'] = $this->language->get('text_female');
 		$this->data['text_wait'] = $this->language->get('text_wait');
-		
+
 		$this->data['entry_gender'] = $this->language->get('entry_gender');
 		$this->data['entry_pno'] = $this->language->get('entry_pno');
 		$this->data['entry_cellno'] = $this->language->get('entry_cellno');
@@ -20,13 +20,13 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
- 		
+
 		if ($order_info) {
  			$this->data['iso_code_2'] = $order_info['payment_iso_code_2'];
 		} else {
 			$this->data['iso_code_2'] = '';
 		}
-		
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/klarna_invoice.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/klarna_invoice.tpl';
 		} else {
@@ -35,15 +35,15 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
 		$this->render();
 	}
-	
+
 	public function send() {
 		$json = array();
-		
+
 		$this->load->model('checkout/order');
-				
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-		
-		if ($order_info) {	
+
+		if ($order_info) {
 			// Server
 			switch ($this->config->get('klarna_invoice_server')) {
 				case 'live':
@@ -51,9 +51,9 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 					break;
 				case 'beta':
 					$url = 'payment-beta.klarna.com';
-					break;						
+					break;
 			}
-			
+
 			// Gender
 			switch ($this->request->post['gender']) {
 				case 'M':
@@ -63,7 +63,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 					$gender = 0;
 					break;
 			}
-						
+
 			// Country language and encoding because Klarna does not work well when language and country are not from the same place.
 			// Its completly pointless to convert countries to numbers instead of just using the countries ISO code! What a waste of time for developers having to look up which number equals the country.
 			// Same for language and encoding.
@@ -87,24 +87,24 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 					$language = 27;
 					$encoding = 5;
 					break;
-				// Norway	
+				// Norway
 				case 'NO':
 					$country = 164;
 					$language = 97;
 					$encoding = 3;
 					break;
-				// Germany	
+				// Germany
 				case 'DE':
 					$country = 81;
 					$language = 28;
 					$encoding = 6;
 					break;
-				// Netherlands															
+				// Netherlands
 				case 'NL':
 					$country = 154;
 					$language = 101;
 					$encoding = 7;
-					break;					
+					break;
 			}
 
 			// Billing Address & Shipping address because Klarna does not handle different ones very well.
@@ -123,14 +123,14 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				'city'            => $order_info['payment_city'],
 				'country'         => $country,
 			);
-			
+
 			// IS_SHIPMENT = 8;
 			// IS_HANDLING = 16;
-			// INC_VAT = 32;			
-			
+			// INC_VAT = 32;
+
 			// Products
 			$goodslist = array();
-			
+
 			foreach ($this->cart->getProducts() as $product) {
 				$goodslist[] = array(
 					'qty'   => $product['quantity'],
@@ -138,10 +138,10 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 						'artno'    => $product['model'],
 						'title'    => $product['name'],
 						'price'    => (int)str_replace('.', '', $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id']), $order_info['currency_code'], false, false)),
-						'vat'      => (float)str_replace('.', '', $this->currency->format($this->tax->getTax($product['price'], $product['tax_class_id']), $order_info['currency_code'], false, false)),	
-						'discount' => 0,   
+						'vat'      => (float)str_replace('.', '', $this->currency->format($this->tax->getTax($product['price'], $product['tax_class_id']), $order_info['currency_code'], false, false)),
+						'discount' => 0,
 						'flags'    => 32
-					)	
+					)
 				);
 			}
 
@@ -152,19 +152,19 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 					'artNo'    => $order_info['shipping_code'],
 					'title'    => $order_info['shipping_method'],
 					'price'    => (int)str_replace('.', '', $this->currency->format($this->tax->calculate($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']), $order_info['currency_code'], false, false)),
-					'vat'      => (float)str_replace('.', '', $this->currency->format($this->tax->getTax($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']), $order_info['currency_code'], false, false)),	
-					'discount' => 0,   
+					'vat'      => (float)str_replace('.', '', $this->currency->format($this->tax->getTax($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']), $order_info['currency_code'], false, false)),
+					'discount' => 0,
 					'flags'    => 8 + 32
-				)	
+				)
 			);
-				
+
 			// Digest
 			$digest = '';
-			
+
 			foreach ($goodslist as $goods) {
 			   $digest .= $goods['goods']['title'] . ':';
 			}
-			
+
 			$digest = base64_encode(pack('H*', hash('sha512', $digest . $this->config->get('klarna_invoice_secret'))));
 
 			// Currency
@@ -173,20 +173,20 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				case 'SEK':
 					$currency = 0;
 					break;
-				// Norwegian krona	
+				// Norwegian krona
 				case 'NOK':
 					$currency = 1;
-					break;	
-				// Euro					
+					break;
+				// Euro
 				case 'EUR':
 					$currency = 2;
 					break;
-				// Danish krona		
+				// Danish krona
 				case 'DKK':
 					$currency = 3;
 					break;
-			}	
-			
+			}
+
 			// Developers have to guess which vars go in which order. Did you hear of key => values?
 			$data = array(
 			   '4.1',
@@ -220,50 +220,49 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
 			/*
 			From the PHP.net web site:
-			
+
 			Warning
-			
+
 			This function is EXPERIMENTAL. The behaviour of this function, its name, and surrounding documentation may change without notice in a future release of PHP. This function should be used at your own risk.
-	
+
 			Yet Klarna decided to use xmlrpc when no other payment gateway in the world does this!
 			*/
 			$request = xmlrpc_encode_request('add_invoice', $data);
-			
+
 			$header  = 'Host: ' . $url . "\r\n";
 			$header .= 'User-Agent: Kreditor PHP Client' . "\r\n";
 			$header .= 'Connection: close' . "\r\n";
 			$header .= 'Content-Type: text/xml' . "\r\n";
 			$header .= 'Content-Length: ' . strlen($request) . "\r\n";
-			
+
 			$curl = curl_init('https://' . $url);
-			
+
 			curl_setopt($curl, CURLOPT_HEADER, $header);
 			curl_setopt($curl, CURLOPT_POST, true);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
 			curl_setopt($curl, CURLOPT_PORT, 443);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			
+
 			$response = curl_exec($curl);
-			
+
 			if (curl_errno($curl)) {
 				 curl_error($curl);
 			} else {
 				curl_close($curl);
-				
+
 				preg_match('/<member><name>faultString<\/name><value><string>(.+)<\/string><\/value><\/member>/', $response, $match);
-				
+
 				if (isset($match[1])) {
 					$json['error'] = utf8_encode($match[1]);
 				} else {
 					$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('klarna_invoice_order_status_id'));
-					
+
 					$json['redirect'] = $this->url->link('checkout/success');
-				}		
-			}			
+				}
+			}
 		}
-		
-		$this->response->setOutput(json_encode($json));	
+
+		$this->response->setOutput(json_encode($json));
 	}
 }
-?>

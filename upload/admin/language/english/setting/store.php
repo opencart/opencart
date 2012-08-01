@@ -87,4 +87,3 @@ $_['error_image_wishlist']         = 'Wish List Image Size dimensions required!'
 $_['error_image_cart']             = 'Cart Image Size dimensions required!';
 $_['error_default']                = 'Warning: You can not delete your default store!';
 $_['error_store']                  = 'Warning: This Store cannot be deleted as it is currently assigned to %s orders!';
-?>

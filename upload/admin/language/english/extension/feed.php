@@ -1,5 +1,5 @@
 <?php
-// Heading 
+// Heading
 $_['heading_title']    = 'Product Feeds';
 
 // Text
@@ -13,4 +13,3 @@ $_['column_action']    = 'Action';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify feeds!';
-?>

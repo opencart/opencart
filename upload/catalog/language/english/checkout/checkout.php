@@ -1,5 +1,5 @@
 <?php
-// Heading 
+// Heading
 $_['heading_title']                  = 'Checkout';
 
 // Text
@@ -62,7 +62,7 @@ $_['entry_shipping'] 	             = 'My delivery and billing addresses are the 
 // Error
 $_['error_warning']                  = 'There was a problem while trying to process your order! If the problem persists please try selecting a different payment method or you can contact the store owner by <a href="%s">clicking here</a>.';
 $_['error_login']                    = 'Warning: No match for E-Mail Address and/or Password.';
-$_['error_approved']                 = 'Warning: Your account requires approval before you can login.'; 
+$_['error_approved']                 = 'Warning: Your account requires approval before you can login.';
 $_['error_exists']                   = 'Warning: E-Mail Address is already registered!';
 $_['error_firstname']                = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']                 = 'Last Name must be between 1 and 32 characters!';
@@ -84,4 +84,3 @@ $_['error_shipping']                 = 'Warning: Shipping method required!';
 $_['error_no_shipping']              = 'Warning: No Shipping options are available. Please <a href="%s">contact us</a> for assistance!';
 $_['error_payment']                  = 'Warning: Payment method required!';
 $_['error_no_payment']               = 'Warning: No Payment options are available. Please <a href="%s">contact us</a> for assistance!';
-?>

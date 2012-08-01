@@ -1,5 +1,5 @@
 <?php
-// Heading 
+// Heading
 $_['heading_title']    = 'Affiliate Tracking';
 
 // Text
@@ -8,4 +8,3 @@ $_['text_description'] = 'To make sure you get paid for referrals you send to us
 $_['text_code']        = '<b>Your Tracking Code:</b>';
 $_['text_generator']   = '<b>Tracking Link Generator</b><br />Type in the name of a product you would like to link to:';
 $_['text_link']        = '<b>Tracking Link:</b>';
-?>

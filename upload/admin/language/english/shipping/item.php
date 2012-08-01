@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Heading
 $_['heading_title']     = 'Per Item';
 
@@ -15,4 +15,3 @@ $_['entry_sort_order'] = 'Sort Order:';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify shipping per item rates!';
-?>

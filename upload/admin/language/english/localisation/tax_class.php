@@ -25,4 +25,3 @@ $_['error_permission']  = 'Warning: You do not have permission to modify tax cla
 $_['error_title']       = 'Tax Class Title must be between 3 and 32 characters!';
 $_['error_description'] = 'Description must be between 3 and 255 characters!';
 $_['error_product']     = 'Warning: This tax class cannot be deleted as it is currently assigned to %s products!';
-?>

@@ -20,4 +20,3 @@ $_['entry_sort_order']   = 'Sort Order:';
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify Australia Post shipping!';
 $_['error_postcode']     = 'Post Code must be 4 digits!';
-?>

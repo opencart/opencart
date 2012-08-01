@@ -21,7 +21,7 @@ $_['text_year']                     = 'This Year';
 $_['text_order']                    = 'Total Orders';
 $_['text_customer']                 = 'Total Customers';
 
-// Column 
+// Column
 $_['column_order']                  = 'Order ID';
 $_['column_customer']               = 'Customer';
 $_['column_status']                 = 'Status';
@@ -41,4 +41,3 @@ $_['error_image_cache']             = 'Warning: Image cache directory %s not wri
 $_['error_cache']                   = 'Warning: Cache directory %s not writeable!';
 $_['error_download']                = 'Warning: Download directory %s not writeable!';
 $_['error_logs']                    = 'Warning: Log directory %s not writeable!';
-?>

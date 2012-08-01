@@ -15,7 +15,7 @@ $_['text_remove_blacklist'] = 'Remove Blacklist';
 $_['column_name']           = 'Customer Name';
 $_['column_email']          = 'E-Mail';
 $_['column_customer_group'] = 'Customer Group';
-$_['column_status']         = 'Status'; 
+$_['column_status']         = 'Status';
 $_['column_login']          = 'Login into Store';
 $_['column_approved']       = 'Approved';
 $_['column_date_added']     = 'Date Added';
@@ -69,4 +69,3 @@ $_['error_city']            = 'City must be between 2 and 128 characters!';
 $_['error_postcode']        = 'Postcode must be between 2 and 10 characters for this country!';
 $_['error_country']         = 'Please select a country!';
 $_['error_zone']            = 'Please select a region / state!';
-?>

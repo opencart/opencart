@@ -21,4 +21,3 @@ $_['entry_sort_order']    = 'Sort Order:';
 // Error
 $_['error_permission']    = 'Warning: You do not have permission to modify module bestsellers!';
 $_['error_image']         = 'Image width &amp; height dimensions required!';
-?>

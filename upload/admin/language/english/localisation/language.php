@@ -1,9 +1,9 @@
 <?php
 // Heading
-$_['heading_title']     = 'Language';  
+$_['heading_title']     = 'Language';
 
 // Text
-$_['text_success']      = 'Success: You have modified languages!'; 
+$_['text_success']      = 'Success: You have modified languages!';
 
 // Column
 $_['column_name']       = 'Language Name';
@@ -33,4 +33,3 @@ $_['error_default']     = 'Warning: This language cannot be deleted as it is cur
 $_['error_admin']       = 'Warning: This Language cannot be deleted as it is currently assigned as the administration language!';
 $_['error_store']       = 'Warning: This language cannot be deleted as it is currently assigned to %s stores!';
 $_['error_order']       = 'Warning: This language cannot be deleted as it is currently assigned to %s orders!';
-?>

@@ -2,8 +2,8 @@
 // Heading
 $_['heading_title']      = 'SagePay (US)';
 
-// Text 
-$_['text_payment']       = 'Payment'; 
+// Text
+$_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified SagePay account details!';
 
 // Entry
@@ -19,4 +19,3 @@ $_['entry_sort_order']   = 'Sort Order:';
 $_['error_permission']   = 'Warning: You do not have permission to modify payment SagePay!';
 $_['error_merchant_id']  = 'Merchant ID Required!';
 $_['error_merchant_key'] = 'Merchant Key Required!';
-?>

@@ -1,5 +1,5 @@
 <?php
-// Heading 
+// Heading
 $_['heading_title']      = 'Your Reward Points';
 
 // Column
@@ -12,4 +12,3 @@ $_['text_account']       = 'Account';
 $_['text_reward']        = 'Reward Points';
 $_['text_total']         = 'Your total number of reward points is:';
 $_['text_empty']         = 'You do not have any reward points!';
-?>

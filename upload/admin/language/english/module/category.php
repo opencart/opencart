@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']       = 'Category'; 
+$_['heading_title']       = 'Category';
 
 // Text
 $_['text_module']         = 'Modules';
@@ -19,4 +19,3 @@ $_['entry_sort_order']    = 'Sort Order:';
 
 // Error
 $_['error_permission']    = 'Warning: You do not have permission to modify module category!';
-?>

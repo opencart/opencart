@@ -41,7 +41,7 @@ class ControllerUpgrade extends Controller {
 			$this->load->model('upgrade');
 
 			$this->model_upgrade->mysql($this->request->post, 'upgrade.sql');
-			
+
 			$this->model_upgrade->modifications();
 
 			$this->redirect(HTTP_SERVER . 'index.php?route=upgrade/success');
@@ -82,4 +82,3 @@ class ControllerUpgrade extends Controller {
     	}
 	}
 }
-?>

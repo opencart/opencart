@@ -19,4 +19,3 @@ $_['error_gender']     = 'Gender Required!';
 $_['error_dob']        = 'PNO/BIRTH DATA Required!';
 $_['error_house_no']   = 'House No. Required!';
 $_['error_house_ext']  = 'House Extension Required!';
-?>

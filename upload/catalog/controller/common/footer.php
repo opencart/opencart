@@ -1,8 +1,8 @@
-<?php  
+<?php
 class ControllerCommonFooter extends Controller {
 	protected function index() {
 		$this->language->load('common/footer');
-		
+
 		$this->data['text_information'] = $this->language->get('text_information');
 		$this->data['text_service'] = $this->language->get('text_service');
 		$this->data['text_extra'] = $this->language->get('text_extra');
@@ -17,9 +17,9 @@ class ControllerCommonFooter extends Controller {
 		$this->data['text_order'] = $this->language->get('text_order');
 		$this->data['text_wishlist'] = $this->language->get('text_wishlist');
 		$this->data['text_newsletter'] = $this->language->get('text_newsletter');
-		
+
 		$this->load->model('catalog/information');
-		
+
 		$this->data['informations'] = array();
 
 		foreach ($this->model_catalog_information->getInformations() as $result) {
@@ -41,17 +41,16 @@ class ControllerCommonFooter extends Controller {
 		$this->data['account'] = $this->url->link('account/account', '', 'SSL');
 		$this->data['order'] = $this->url->link('account/order', '', 'SSL');
 		$this->data['wishlist'] = $this->url->link('account/wishlist', '', 'SSL');
-		$this->data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');		
+		$this->data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');
 
 		$this->data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
-		
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/footer.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/common/footer.tpl';
 		} else {
 			$this->template = 'default/template/common/footer.tpl';
 		}
-		
+
 		$this->render();
 	}
 }
-?>

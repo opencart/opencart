@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']      = 'Paymate';
 
-// Text 
+// Text
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified Paymate account details!';
 
@@ -20,4 +20,3 @@ $_['entry_sort_order']   = 'Sort Order:';
 $_['error_permission']   = 'Warning: You do not have permission to modify payment Paymate!';
 $_['error_username']     = 'Paymate Username required!';
 $_['error_password']     = 'Password required!';
-?>

@@ -1,5 +1,5 @@
 <?php
-// Heading 
+// Heading
 $_['heading_title']   = 'Account Downloads';
 
 // Text
@@ -11,4 +11,3 @@ $_['text_name']       = 'Name:';
 $_['text_remaining']  = 'Remaining:';
 $_['text_size']       = 'Size:';
 $_['text_empty']      = 'You have not made any previous downloadable orders!';
-?>

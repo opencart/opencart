@@ -1,13 +1,13 @@
 <?php
 // Heading
-$_['heading_title']        = 'Currency';  
+$_['heading_title']        = 'Currency';
 
 // Text
 $_['text_success']         = 'Success: You have modified currencies!';
 
 // Column
 $_['column_title']         = 'Currency Title';
-$_['column_code']          = 'Code'; 
+$_['column_code']          = 'Code';
 $_['column_value']         = 'Value';
 $_['column_date_modified'] = 'Last Updated';
 $_['column_action']        = 'Action';
@@ -28,4 +28,3 @@ $_['error_code']           = 'Currency Code must contain 3 characters!';
 $_['error_default']        = 'Warning: This currency cannot be deleted as it is currently assigned as the default store currency!';
 $_['error_store']          = 'Warning: This currency cannot be deleted as it is currently assigned to %s stores!';
 $_['error_order']          = 'Warning: This currency cannot be deleted as it is currently assigned to %s orders!';
-?>

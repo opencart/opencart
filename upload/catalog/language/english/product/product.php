@@ -4,18 +4,18 @@ $_['text_search']       = 'Search';
 $_['text_brand']        = 'Brand';
 $_['text_manufacturer'] = 'Brand:';
 $_['text_model']        = 'Product Code:';
-$_['text_reward']       = 'Reward Points:'; 
+$_['text_reward']       = 'Reward Points:';
 $_['text_points']       = 'Price in reward points:';
 $_['text_stock']        = 'Availability:';
 $_['text_instock']      = 'In Stock';
-$_['text_price']        = 'Price:'; 
-$_['text_tax']          = 'Ex Tax:'; 
+$_['text_price']        = 'Price:';
+$_['text_tax']          = 'Ex Tax:';
 $_['text_discount']     = '%s or more %s';
 $_['text_option']       = 'Available Options';
 $_['text_qty']          = 'Qty:';
 $_['text_minimum']      = 'This product has a minimum quantity of %s';
 $_['text_or']           = '- OR -';
-$_['text_reviews']      = '%s reviews'; 
+$_['text_reviews']      = '%s reviews';
 $_['text_write']        = 'Write a review';
 $_['text_no_reviews']   = 'There are no reviews for this product.';
 $_['text_on']           = ' on ';
@@ -39,7 +39,7 @@ $_['entry_captcha']     = 'Enter the code in the box below:';
 $_['tab_description']   = 'Description';
 $_['tab_attribute']     = 'Specification';
 $_['tab_review']        = 'Reviews (%s)';
-$_['tab_related']       = 'Related Products'; 
+$_['tab_related']       = 'Related Products';
 
 // Error
 $_['error_name']        = 'Warning: Review Name must be between 3 and 25 characters!';
@@ -49,4 +49,3 @@ $_['error_captcha']     = 'Warning: Verification code does not match the image!'
 $_['error_upload']      = 'Upload required!';
 $_['error_filename']    = 'Filename must be between 3 and 64 characters!';
 $_['error_filetype']    = 'Invalid file type!';
-?>

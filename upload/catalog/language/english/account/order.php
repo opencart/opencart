@@ -1,5 +1,5 @@
 <?php
-// Heading 
+// Heading
 $_['heading_title']         = 'Order History';
 
 // Text
@@ -33,4 +33,3 @@ $_['column_action']         = 'Action';
 $_['column_date_added']     = 'Date Added';
 $_['column_status']         = 'Status';
 $_['column_comment']        = 'Comment';
-?>

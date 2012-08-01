@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']      = '2Checkout';
 
-// Text 
+// Text
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified 2Checkout account details!';
 $_['text_twocheckout']	 = '<a onclick="window.open(\'https://www.2checkout.com/2co/affiliate?affiliate=1596408\');"><img src="view/image/payment/2checkout.png" alt="2Checkout" title="2Checkout" style="border: 1px solid #EEEEEE;" /></a>';
@@ -21,4 +21,3 @@ $_['entry_sort_order']   = 'Sort Order:';
 $_['error_permission']   = 'Warning: You do not have permission to modify payment 2Checkout!';
 $_['error_account']      = 'Account No. Required!';
 $_['error_secret']       = 'Secret Word Required!';
-?>

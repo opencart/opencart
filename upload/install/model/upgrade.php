@@ -151,9 +151,9 @@ class ModelUpgrade extends Model {
 			}
 			// Comment this for now in case people want to roll back to 1.5.2 from 1.5.3
 			// Uncomment it when 1.5.4 is out.
-			//$db->query("ALTER TABLE " . DB_PREFIX . "customer_group DROP `name`");			
+			//$db->query("ALTER TABLE " . DB_PREFIX . "customer_group DROP `name`");
 		}
-		
+
 		// Default to "default" customer group display for registration if this is the first time using this version to avoid registration confusion.
 		// In 1.5.2 and earlier, the default install uses "8" as the "Default" customer group
 		// In 1.5.3 the default install uses "1" as the "Default" customer group.
@@ -223,4 +223,3 @@ class ModelUpgrade extends Model {
 		}
 	}
 }
-?>

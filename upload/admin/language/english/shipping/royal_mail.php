@@ -1,5 +1,5 @@
 <?php
-// Heading 
+// Heading
 $_['heading_title']                          = 'Royal Mail';
 
 // Text
@@ -43,4 +43,3 @@ $_['tab_surface']                            = 'Surface';
 
 // Error
 $_['error_permission']                       = 'Warning: You do not have permission to modify Royal Mail shipping!';
-?>

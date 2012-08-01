@@ -1,17 +1,17 @@
-<?php 
+<?php
 class ControllerPaymentPPPro extends Controller {
-	private $error = array(); 
+
 
 	public function index() {
 		$this->load->language('payment/pp_pro');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('setting/setting');
-			
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('pp_pro', $this->request->post);				
-			
+			$this->model_setting_setting->editSetting('pp_pro', $this->request->post);
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
@@ -26,18 +26,18 @@ class ControllerPaymentPPPro extends Controller {
 		$this->data['text_no'] = $this->language->get('text_no');
 		$this->data['text_authorization'] = $this->language->get('text_authorization');
 		$this->data['text_sale'] = $this->language->get('text_sale');
-		
+
 		$this->data['entry_username'] = $this->language->get('entry_username');
 		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_signature'] = $this->language->get('entry_signature');
 		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_transaction'] = $this->language->get('entry_transaction');
-		$this->data['entry_total'] = $this->language->get('entry_total');	
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$this->data['entry_total'] = $this->language->get('entry_total');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		
+
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -52,13 +52,13 @@ class ControllerPaymentPPPro extends Controller {
 		} else {
 			$this->data['error_username'] = '';
 		}
-		
+
  		if (isset($this->error['password'])) {
 			$this->data['error_password'] = $this->error['password'];
 		} else {
 			$this->data['error_password'] = '';
 		}
-		
+
  		if (isset($this->error['signature'])) {
 			$this->data['error_signature'] = $this->error['signature'];
 		} else {
@@ -84,9 +84,9 @@ class ControllerPaymentPPPro extends Controller {
 			'href'      => $this->url->link('payment/pp_pro', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => ' :: '
    		);
-				
+
 		$this->data['action'] = $this->url->link('payment/pp_pro', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		$this->data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
 		if (isset($this->request->post['pp_pro_username'])) {
@@ -94,63 +94,63 @@ class ControllerPaymentPPPro extends Controller {
 		} else {
 			$this->data['pp_pro_username'] = $this->config->get('pp_pro_username');
 		}
-		
+
 		if (isset($this->request->post['pp_pro_password'])) {
 			$this->data['pp_pro_password'] = $this->request->post['pp_pro_password'];
 		} else {
 			$this->data['pp_pro_password'] = $this->config->get('pp_pro_password');
 		}
-				
+
 		if (isset($this->request->post['pp_pro_signature'])) {
 			$this->data['pp_pro_signature'] = $this->request->post['pp_pro_signature'];
 		} else {
 			$this->data['pp_pro_signature'] = $this->config->get('pp_pro_signature');
 		}
-		
+
 		if (isset($this->request->post['pp_pro_test'])) {
 			$this->data['pp_pro_test'] = $this->request->post['pp_pro_test'];
 		} else {
 			$this->data['pp_pro_test'] = $this->config->get('pp_pro_test');
 		}
-		
+
 		if (isset($this->request->post['pp_pro_method'])) {
 			$this->data['pp_pro_transaction'] = $this->request->post['pp_pro_transaction'];
 		} else {
 			$this->data['pp_pro_transaction'] = $this->config->get('pp_pro_transaction');
 		}
-		
+
 		if (isset($this->request->post['pp_pro_total'])) {
 			$this->data['pp_pro_total'] = $this->request->post['pp_pro_total'];
 		} else {
-			$this->data['pp_pro_total'] = $this->config->get('pp_pro_total'); 
-		} 
-				
+			$this->data['pp_pro_total'] = $this->config->get('pp_pro_total');
+		}
+
 		if (isset($this->request->post['pp_pro_order_status_id'])) {
 			$this->data['pp_pro_order_status_id'] = $this->request->post['pp_pro_order_status_id'];
 		} else {
-			$this->data['pp_pro_order_status_id'] = $this->config->get('pp_pro_order_status_id'); 
-		} 
+			$this->data['pp_pro_order_status_id'] = $this->config->get('pp_pro_order_status_id');
+		}
 
 		$this->load->model('localisation/order_status');
-		
+
 		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		
+
 		if (isset($this->request->post['pp_pro_geo_zone_id'])) {
 			$this->data['pp_pro_geo_zone_id'] = $this->request->post['pp_pro_geo_zone_id'];
 		} else {
-			$this->data['pp_pro_geo_zone_id'] = $this->config->get('pp_pro_geo_zone_id'); 
-		} 
-		
+			$this->data['pp_pro_geo_zone_id'] = $this->config->get('pp_pro_geo_zone_id');
+		}
+
 		$this->load->model('localisation/geo_zone');
-										
+
 		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-		
+
 		if (isset($this->request->post['pp_pro_status'])) {
 			$this->data['pp_pro_status'] = $this->request->post['pp_pro_status'];
 		} else {
 			$this->data['pp_pro_status'] = $this->config->get('pp_pro_status');
 		}
-		
+
 		if (isset($this->request->post['pp_pro_sort_order'])) {
 			$this->data['pp_pro_sort_order'] = $this->request->post['pp_pro_sort_order'];
 		} else {
@@ -162,7 +162,7 @@ class ControllerPaymentPPPro extends Controller {
 			'common/header',
 			'common/footer'
 		);
-				
+
 		$this->response->setOutput($this->render());
 	}
 
@@ -170,7 +170,7 @@ class ControllerPaymentPPPro extends Controller {
 		if (!$this->user->hasPermission('modify', 'payment/pp_pro')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-		
+
 		if (!$this->request->post['pp_pro_username']) {
 			$this->error['username'] = $this->language->get('error_username');
 		}
@@ -182,12 +182,12 @@ class ControllerPaymentPPPro extends Controller {
 		if (!$this->request->post['pp_pro_signature']) {
 			$this->error['signature'] = $this->language->get('error_signature');
 		}
-		
+
 		if (!$this->error) {
 			return true;
 		} else {
 			return false;
-		}	
+		}
 	}
 }
 ?>

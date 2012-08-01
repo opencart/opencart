@@ -131,9 +131,7 @@ class ControllerShippingFedex extends Controller {
 		
 		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 								
-		$this->id       = 'content';
 		$this->template = 'shipping/fedex.tpl';
-		$this->layout   = 'common/layout';
 		
  		$this->render();
 	}

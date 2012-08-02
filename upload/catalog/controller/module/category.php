@@ -57,7 +57,7 @@ class ControllerModuleCategory extends Controller {
 							
 			$this->data['categories'][] = array(
 				'category_id' => $category['category_id'],
-				'name'        => $category['name'] . ($this->config->get('config_product_count') ? ' (' . ($total + $product_total) . ')' : ''),
+				'name'        => $category['name'] . ($this->config->get('config_product_count') ? ' (' . $total . ')' : ''),
 				'children'    => $children_data,
 				'href'        => $this->url->link('product/category', 'path=' . $category['category_id'])
 			);	

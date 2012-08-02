@@ -21,9 +21,29 @@ class ControllerShippingFedex extends Controller {
 
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
+		$this->data['text_yes'] = $this->language->get('text_yes');
+		$this->data['text_no'] = $this->language->get('text_no');		
+		$this->data['text_select_all'] = $this->language->get('text_select_all');
+		$this->data['text_unselect_all'] = $this->language->get('text_unselect_all');
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
-		
+		$this->data['text_priority_overnight'] = $this->language->get('text_priority_overnight');
+		$this->data['text_standard_overnight'] = $this->language->get('text_standard_overnight');
+		$this->data['text_first_overnight'] = $this->language->get('text_first_overnight');
+		$this->data['text_2_day'] = $this->language->get('text_2_day');
+		$this->data['text_express_saver'] = $this->language->get('text_express_saver');
+		$this->data['text_international_priority'] = $this->language->get('text_international_priority');
+		$this->data['text_international_economy'] = $this->language->get('textinternational_economy');
+		$this->data['text_international_first'] = $this->language->get('text_international_first');
+		$this->data['text_1_day_freight'] = $this->language->get('text_1_day_freight');
+		$this->data['text_2_day_freight'] = $this->language->get('text_2_day_freight');
+		$this->data['text_3_day_freight'] = $this->language->get('text_3_day_freight');
+		$this->data['text_ground'] = $this->language->get('text_ground');
+		$this->data['text_ground_home'] = $this->language->get('text_ground_home');
+		$this->data['text_international_priority_freight'] = $this->language->get('text_international_priority_freight');
+		$this->data['text_international_economy_freight'] = $this->language->get('text_international_economy_freight');
+		$this->data['text_europe_first_international_priority'] = $this->language->get('text_europe_first_international_priority');				
+						
 		$this->data['entry_key'] = $this->language->get('entry_key');
 		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_account'] = $this->language->get('entry_account');

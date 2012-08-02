@@ -17,205 +17,192 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <table class="form">
           <tr>
-            <td><?php echo $entry_domestic; ?></td>
+            <td><span class="required">*</span> <?php echo $entry_key; ?></td>
+            <td><input type="text" name="fedex_key" value="<?php echo $fedex_key; ?>" />
+              <?php if ($error_key) { ?>
+              <span class="error"><?php echo $error_key; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><span class="required">*</span> <?php echo $entry_password; ?></td>
+            <td><input type="text" name="fedex_password" value="<?php echo $fedex_password; ?>" />
+              <?php if ($error_password) { ?>
+              <span class="error"><?php echo $error_password; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><span class="required">*</span> <?php echo $entry_account; ?></td>
+            <td><input type="text" name="fedex_account" value="<?php echo $fedex_account; ?>" />
+              <?php if ($error_account) { ?>
+              <span class="error"><?php echo $error_account; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><span class="required">*</span> <?php echo $entry_meter; ?></td>
+            <td><input type="text" name="fedex_meter" value="<?php echo $fedex_meter; ?>" />
+              <?php if ($error_meter) { ?>
+              <span class="error"><?php echo $error_meter; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_test; ?></td>
+            <td><?php if ($fedex_test) { ?>
+              <input type="radio" name="fedex_test" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="fedex_test" value="0" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="fedex_test" value="1" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="fedex_test" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } ?></td>
+          </tr>          
+          <tr>
+            <td><?php echo $entry_service; ?></td>
             <td><div class="scrollbox">
-                <?php $class = 'odd'; ?>
-                <div class="even">
-                  <?php if ($fedex_domestic_00) { ?>
-                  <input type="checkbox" name="fedex_domestic_00" value="1" checked="checked" />
-                  <?php echo $text_domestic_00; ?>
+                <div class="odd">
+                  <?php if ($fedex_priority_overnight) { ?>
+                  <input type="checkbox" name="fedex_priority_overnight" value="1" checked="checked" />
+                  <?php echo $text_priority_overnight; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_00" value="1" />
-                  <?php echo $text_domestic_00; ?>
+                  <input type="checkbox" name="fedex_priority_overnight" value="1" />
+                  <?php echo $text_priority_overnight; ?>
                   <?php } ?>
                 </div>
                 <div class="even">
-                  <?php if ($fedex_domestic_01) { ?>
-                  <input type="checkbox" name="fedex_domestic_01" value="1" checked="checked" />
-                  <?php echo $text_domestic_01; ?>
+                  <?php if ($fedex_standard_overnight) { ?>
+                  <input type="checkbox" name="fedex_standard_overnight" value="1" checked="checked" />
+                  <?php echo $text_standard_overnight; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_01" value="1" />
-                  <?php echo $text_domestic_01; ?>
-                  <?php } ?>
-                </div>
-                <div class="even">
-                  <?php if ($fedex_domestic_02) { ?>
-                  <input type="checkbox" name="fedex_domestic_02" value="1" checked="checked" />
-                  <?php echo $text_domestic_02; ?>
-                  <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_02" value="1" />
-                  <?php echo $text_domestic_02; ?>
-                  <?php } ?>
-                </div>
-                <div class="even">
-                  <?php if ($fedex_domestic_03) { ?>
-                  <input type="checkbox" name="fedex_domestic_03" value="1" checked="checked" />
-                  <?php echo $text_domestic_03; ?>
-                  <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_03" value="1" />
-                  <?php echo $text_domestic_03; ?>
+                  <input type="checkbox" name="fedex_standard_overnight" value="1" />
+                  <?php echo $text_standard_overnight; ?>
                   <?php } ?>
                 </div>
                 <div class="odd">
-                  <?php if ($fedex_domestic_1) { ?>
-                  <input type="checkbox" name="fedex_domestic_1" value="1" checked="checked" />
-                  <?php echo $text_domestic_1; ?>
+                  <?php if ($fedex_first_overnight) { ?>
+                  <input type="checkbox" name="fedex_first_overnight" value="1" checked="checked" />
+                  <?php echo $text_first_overnight; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_1" value="1" />
-                  <?php echo $text_domestic_1; ?>
+                  <input type="checkbox" name="fedex_first_overnight" value="1" />
+                  <?php echo $text_first_overnight; ?>
                   <?php } ?>
                 </div>
                 <div class="even">
-                  <?php if ($fedex_domestic_2) { ?>
-                  <input type="checkbox" name="fedex_domestic_2" value="1" checked="checked" />
-                  <?php echo $text_domestic_2; ?>
+                  <?php if ($fedex_2_day) { ?>
+                  <input type="checkbox" name="fedex_2_day" value="1" checked="checked" />
+                  <?php echo $text_2_day; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_2" value="1" />
-                  <?php echo $text_domestic_2; ?>
+                  <input type="checkbox" name="fedex_2_day" value="1" />
+                  <?php echo $text_2_day; ?>
                   <?php } ?>
                 </div>
                 <div class="odd">
-                  <?php if ($fedex_domestic_3) { ?>
-                  <input type="checkbox" name="fedex_domestic_3" value="1" checked="checked" />
-                  <?php echo $text_domestic_3; ?>
+                  <?php if ($fedex_express_saver) { ?>
+                  <input type="checkbox" name="fedex_express_saver" value="1" checked="checked" />
+                  <?php echo $text_express_saver; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_3" value="1" />
-                  <?php echo $text_domestic_3; ?>
+                  <input type="checkbox" name="fedex_express_saver" value="1" />
+                  <?php echo $text_express_saver; ?>
                   <?php } ?>
                 </div>
                 <div class="even">
-                  <?php if ($fedex_domestic_4) { ?>
-                  <input type="checkbox" name="fedex_domestic_4" value="1" checked="checked" />
-                  <?php echo $text_domestic_4; ?>
+                  <?php if ($fedex_international_priority) { ?>
+                  <input type="checkbox" name="fedex_international_priority" value="1" checked="checked" />
+                  <?php echo $text_international_priority; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_4" value="1" />
-                  <?php echo $text_domestic_4; ?>
+                  <input type="checkbox" name="fedex_international_priority" value="1" />
+                  <?php echo $text_international_priority; ?>
                   <?php } ?>
                 </div>
                 <div class="odd">
-                  <?php if ($fedex_domestic_5) { ?>
-                  <input type="checkbox" name="fedex_domestic_5" value="1" checked="checked" />
-                  <?php echo $text_domestic_5; ?>
+                  <?php if ($fedex_international_economy) { ?>
+                  <input type="checkbox" name="fedex_international_economy" value="1" checked="checked" />
+                  <?php echo $text_international_economy; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_5" value="1" />
-                  <?php echo $text_domestic_5; ?>
+                  <input type="checkbox" name="fedex_international_economy" value="1" />
+                  <?php echo $text_international_economy; ?>
                   <?php } ?>
                 </div>
                 <div class="even">
-                  <?php if ($fedex_domestic_6) { ?>
-                  <input type="checkbox" name="fedex_domestic_6" value="1" checked="checked" />
-                  <?php echo $text_domestic_6; ?>
+                  <?php if ($fedex_international_first) { ?>
+                  <input type="checkbox" name="fedex_international_first" value="1" checked="checked" />
+                  <?php echo $text_international_first; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_6" value="1" />
-                  <?php echo $text_domestic_6; ?>
+                  <input type="checkbox" name="fedex_international_first" value="1" />
+                  <?php echo $text_international_first; ?>
                   <?php } ?>
                 </div>
                 <div class="odd">
-                  <?php if ($fedex_domestic_7) { ?>
-                  <input type="checkbox" name="fedex_domestic_7" value="1" checked="checked" />
-                  <?php echo $text_domestic_7; ?>
+                  <?php if ($fedex_1_day_freight) { ?>
+                  <input type="checkbox" name="fedex_1_day_freight" value="1" checked="checked" />
+                  <?php echo $text_1_day_freight; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_7" value="1" />
-                  <?php echo $text_domestic_7; ?>
+                  <input type="checkbox" name="fedex_1_day_freight" value="1" />
+                  <?php echo $text_1_day_freight; ?>
                   <?php } ?>
                 </div>
                 <div class="even">
-                  <?php if ($fedex_domestic_12) { ?>
-                  <input type="checkbox" name="fedex_domestic_12" value="1" checked="checked" />
-                  <?php echo $text_domestic_12; ?>
+                  <?php if ($fedex_2_day_freight) { ?>
+                  <input type="checkbox" name="fedex_2_day_freight" value="1" checked="checked" />
+                  <?php echo $text_2_day_freight; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_12" value="1" />
-                  <?php echo $text_domestic_12; ?>
+                  <input type="checkbox" name="fedex_2_day_freight" value="1" />
+                  <?php echo $text_2_day_freight; ?>
                   <?php } ?>
                 </div>
                 <div class="odd">
-                  <?php if ($fedex_domestic_13) { ?>
-                  <input type="checkbox" name="fedex_domestic_13" value="1" checked="checked" />
-                  <?php echo $text_domestic_13; ?>
+                  <?php if ($fedex_3_day_freight) { ?>
+                  <input type="checkbox" name="fedex_3_day_freight" value="1" checked="checked" />
+                  <?php echo $text_3_day_freight; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_13" value="1" />
-                  <?php echo $text_domestic_13; ?>
+                  <input type="checkbox" name="fedex_3_day_freight" value="1" />
+                  <?php echo $text_3_day_freight; ?>
                   <?php } ?>
                 </div>
                 <div class="even">
-                  <?php if ($fedex_domestic_16) { ?>
-                  <input type="checkbox" name="fedex_domestic_16" value="1" checked="checked" />
-                  <?php echo $text_domestic_16; ?>
+                  <?php if ($fedex_ground) { ?>
+                  <input type="checkbox" name="fedex_ground" value="1" checked="checked" />
+                  <?php echo $text_ground; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_16" value="1" />
-                  <?php echo $text_domestic_16; ?>
+                  <input type="checkbox" name="fedex_ground" value="1" />
+                  <?php echo $text_ground; ?>
                   <?php } ?>
                 </div>
                 <div class="odd">
-                  <?php if ($fedex_domestic_17) { ?>
-                  <input type="checkbox" name="fedex_domestic_17" value="1" checked="checked" />
-                  <?php echo $text_domestic_17; ?>
+                  <?php if ($fedex_ground_home) { ?>
+                  <input type="checkbox" name="fedex_ground_home" value="1" checked="checked" />
+                  <?php echo $text_ground_home; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_17" value="1" />
-                  <?php echo $text_domestic_17; ?>
+                  <input type="checkbox" name="fedex_ground_home" value="1" />
+                  <?php echo $text_ground_home; ?>
                   <?php } ?>
                 </div>
                 <div class="even">
-                  <?php if ($fedex_domestic_18) { ?>
-                  <input type="checkbox" name="fedex_domestic_18" value="1" checked="checked" />
-                  <?php echo $text_domestic_18; ?>
+                  <?php if ($fedex_international_priority_freight) { ?>
+                  <input type="checkbox" name="fedex_international_priority_freight" value="1" checked="checked" />
+                  <?php echo $text_international_priority_freight; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_18" value="1" />
-                  <?php echo $text_domestic_18; ?>
+                  <input type="checkbox" name="fedex_international_priority_freight" value="1" />
+                  <?php echo $text_international_priority_freight; ?>
                   <?php } ?>
                 </div>
                 <div class="odd">
-                  <?php if ($fedex_domestic_19) { ?>
-                  <input type="checkbox" name="fedex_domestic_19" value="1" checked="checked" />
-                  <?php echo $text_domestic_19; ?>
+                  <?php if ($fedex_international_economy_freight) { ?>
+                  <input type="checkbox" name="fedex_international_economy_freight" value="1" checked="checked" />
+                  <?php echo $text_international_economy_freight; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_19" value="1" />
-                  <?php echo $text_domestic_19; ?>
+                  <input type="checkbox" name="fedex_international_economy_freight" value="1" />
+                  <?php echo $text_international_economy_freight; ?>
                   <?php } ?>
                 </div>
                 <div class="even">
-                  <?php if ($fedex_domestic_22) { ?>
-                  <input type="checkbox" name="fedex_domestic_22" value="1" checked="checked" />
-                  <?php echo $text_domestic_22; ?>
+                  <?php if ($fedex_europe_first_international_priority) { ?>
+                  <input type="checkbox" name="fedex_europe_first_international_priority" value="1" checked="checked" />
+                  <?php echo $text_europe_first_international_priority; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_22" value="1" />
-                  <?php echo $text_domestic_22; ?>
-                  <?php } ?>
-                </div>
-                <div class="odd">
-                  <?php if ($fedex_domestic_23) { ?>
-                  <input type="checkbox" name="fedex_domestic_23" value="1" checked="checked" />
-                  <?php echo $text_domestic_23; ?>
-                  <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_23" value="1" />
-                  <?php echo $text_domestic_23; ?>
-                  <?php } ?>
-                </div>
-                <div class="even">
-                  <?php if ($fedex_domestic_25) { ?>
-                  <input type="checkbox" name="fedex_domestic_25" value="1" checked="checked" />
-                  <?php echo $text_domestic_25; ?>
-                  <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_25" value="1" />
-                  <?php echo $text_domestic_25; ?>
-                  <?php } ?>
-                </div>
-                <div class="odd">
-                  <?php if ($fedex_domestic_27) { ?>
-                  <input type="checkbox" name="fedex_domestic_27" value="1" checked="checked" />
-                  <?php echo $text_domestic_27; ?>
-                  <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_27" value="1" />
-                  <?php echo $text_domestic_27; ?>
-                  <?php } ?>
-                </div>
-                <div class="even">
-                  <?php if ($fedex_domestic_28) { ?>
-                  <input type="checkbox" name="fedex_domestic_28" value="1" checked="checked" />
-                  <?php echo $text_domestic_28; ?>
-                  <?php } else { ?>
-                  <input type="checkbox" name="fedex_domestic_28" value="1" />
-                  <?php echo $text_domestic_28; ?>
+                  <input type="checkbox" name="fedex_europe_first_international_priority" value="1" />
+                  <?php echo $text_europe_first_international_priority; ?>
                   <?php } ?>
                 </div>
               </div>

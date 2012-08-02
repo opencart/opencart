@@ -43,6 +43,4 @@ $_['error_permission']                         = 'Warning: You do not have permi
 $_['error_key']                                = 'Key Required!';
 $_['error_password']                           = 'Password Required!';
 $_['error_account']                            = 'Account Required!';
-$_['error_meter']                              = 'Meter Required!';
-$_['error_service']                            = 'Service Required!';
-?>
+$_['error_meter']                              = 'Meter Required!';?>

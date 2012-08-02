@@ -268,7 +268,15 @@ class ControllerShippingFedex extends Controller {
 		if (!$this->user->hasPermission('modify', 'shipping/fedex')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
+
+		if (!$this->request->post['fedex_key']) {
+			$this->error['key'] = $this->language->get('error_key');
+		}
 		
+		if (!$this->request->post['fedex_password']) {
+			$this->error['password'] = $this->language->get('error_password');
+		}
+						
 		if (!$this->request->post['fedex_account']) {
 			$this->error['account'] = $this->language->get('error_account');
 		}

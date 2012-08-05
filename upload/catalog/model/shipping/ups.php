@@ -219,8 +219,6 @@ class ModelShippingUps extends Model {
 					
 			$error = '';
 			
-			$error_msg = '';
-			
 			$quote_data = array();
 			
 			if ($result) {
@@ -239,11 +237,7 @@ class ModelShippingUps extends Model {
 				$response_status_code = $response->getElementsByTagName('ResponseStatusCode');
 				
 				if ($response_status_code->item(0)->nodeValue != '1') {
-					$error = $response->getElementsByTagName('Error')->item(0);
-					
-					$error_msg = $error->getElementsByTagName('ErrorCode')->item(0)->nodeValue;
-
-					$error_msg .= ': ' . $error->getElementsByTagName('ErrorDescription')->item(0)->nodeValue;
+					$error = $response->getElementsByTagName('Error')->item(0)->getElementsByTagName('ErrorCode')->item(0)->nodeValue . ': ' . $response->getElementsByTagName('Error')->item(0)->getElementsByTagName('ErrorDescription')->item(0)->nodeValue;
 				} else {
 					$rated_shipments = $rating_service_selection_response->getElementsByTagName('RatedShipment');
 	
@@ -286,7 +280,7 @@ class ModelShippingUps extends Model {
 				'title'      => $title,
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('ups_sort_order'),
-				'error'      => $error_msg
+				'error'      => $error
 			);
 		}
 		

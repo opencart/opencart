@@ -404,7 +404,7 @@ class ModelShippingUsps extends Model {
 								$error = $package->getElementsByTagName('Error')->item(0);
 
 								$method_data = array(
-									'id'         => 'usps',
+									'code'       => 'usps',
 									'title'      => $this->language->get('text_title'),
 									'quote'      => $quote_data,
 									'sort_order' => $this->config->get('usps_sort_order'),

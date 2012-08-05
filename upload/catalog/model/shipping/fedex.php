@@ -13,28 +13,102 @@ class ModelShippingFedex extends Model {
 			$status = false;
 		}	
 		
+		$error = '';
+		
 		$quote_data = array();
 		
 		if ($status) {
+			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('ups_weight_class_id'));
+			$weight_code = strtoupper($this->weight->getUnit($this->config->get('ups_weight_class_id')));
+	
+			if ($weight_code == 'KG') {
+				$weight_code = 'KGS';
+			} elseif ($weight_code == 'LB') {
+				$weight_code = 'LBS';
+			}
+			
+			$date = time();
+			
+			$day = date('l', $date);
+			
+			if ($day == 'Saturday') {
+				$date += 172800;
+			} elseif ($day == 'Sunday') {
+				$date += 86400;
+			}
+			
+			$this->load->model('localisation/country');
+			
+			$country_info = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
+					
 			if ($this->config->get('fedex_test')) {
 				$url = 'https://gateway.fedex.com/GatewayDC';
 			} else {
 				$url = 'https://gatewaybeta.fedex.com/GatewayDC';
 			}
 			
-			$curl = curl_init();
+			$data = array(
+				'WebAuthenticationDetail' => array (
+					'UserCredential' => array(
+						'Key' 		=> $this->config->get('fedex_key'),
+						'Password'	=> $this->config->get('fedex_password')
+					)
+				),
+				'ClientDetail' => array(
+					'AccountNumber'	=> $this->config->get('fedex_account'),
+					'MeterNumber'	=> $this->config->get('fedex_meter')
+				),
+				'Version' => array(
+					'ServiceId'		=> 'crs',
+					'Major' 		=> '7',
+					'Intermediate'	=> '0',
+					'Minor' 		=> '0'
+				),
+				'ReturnTransitAndCommit' => true,
+				'RequestedShipment' => array(
+					'Shipper' => array(
+						'Address' => array(
+							'StreetLines'         => array('1755 Purina Way'), // Origin details
+							'City'                => 'Sparks',
+							'StateOrProvinceCode' => 'NV',						
+							'CountryCode'         => $country_info['iso_code_2'],
+							'PostalCode'          => $this->config->get('fedex_postcode')
+						)
+					),
+					'Recipient' => array(
+						'Address' => array(
+							'StreetLines'         => array('1755 Purina Way'), // Origin details
+							'City'                => 'Sparks',
+							'StateOrProvinceCode' => 'NV',						
+							'CountryCode'	      => $address['iso_code_2'],
+							'PostalCode'	      => $address['postcode'],
+							'Residential'	      => ($this->config->get('destination_type') == 'residential'),
+						)
+					),
+					'ShippingChargesPayment' => array(
+						'PaymentType' => 'SENDER'
+					),
+					'RateRequestTypes' 	        => $this->config->get('fedex_rate_type'),
+					'PackageCount'		        => 1,
+					'PackageDetail'		        => 'INDIVIDUAL_PACKAGES',
+					'PackagingType'		        => $this->config->get('fedex_packaging_type'),
+					'DropoffType'		        => $this->config->get('fedex_dropoff_type'),
+					'ShipTimestamp'		        => date('c', $date),
+					'RequestedPackageLineItems' => array(
+						'Weight' => array(
+							'Units' => $weight_code,
+							'Value' => $weight
+						)
+					),
+				)
+			);
 			
-			curl_setopt($curl, CURLOPT_URL, $url);
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-			curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
+			//$client = new nusoap_client(DIR_APPLICATION . 'model/shipping/fedex_rates_v7.wsdl', 'wsdl');
+			//$result = $client->call('getRates', $data);
 			
-			$response = curl_exec($curl);
-			
-			curl_close($curl);
-			
+			foreach ($response->RateReplyDetails as $result) {
+				
+			}     			
 		}
 		
 		$method_data = array();

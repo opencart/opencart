@@ -27,33 +27,35 @@ class ControllerShippingFedex extends Controller {
 		$this->data['text_unselect_all'] = $this->language->get('text_unselect_all');
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
-		$this->data['text_priority_overnight'] = $this->language->get('text_priority_overnight');
-		$this->data['text_standard_overnight'] = $this->language->get('text_standard_overnight');
-		$this->data['text_first_overnight'] = $this->language->get('text_first_overnight');
-		$this->data['text_2_day'] = $this->language->get('text_2_day');
-		$this->data['text_express_saver'] = $this->language->get('text_express_saver');
-		$this->data['text_international_priority'] = $this->language->get('text_international_priority');
-		$this->data['text_international_economy'] = $this->language->get('textinternational_economy');
-		$this->data['text_international_first'] = $this->language->get('text_international_first');
-		$this->data['text_1_day_freight'] = $this->language->get('text_1_day_freight');
-		$this->data['text_2_day_freight'] = $this->language->get('text_2_day_freight');
-		$this->data['text_3_day_freight'] = $this->language->get('text_3_day_freight');
-		$this->data['text_ground'] = $this->language->get('text_ground');
-		$this->data['text_ground_home'] = $this->language->get('text_ground_home');
-		$this->data['text_international_priority_freight'] = $this->language->get('text_international_priority_freight');
-		$this->data['text_international_economy_freight'] = $this->language->get('text_international_economy_freight');
-		$this->data['text_europe_first_international_priority'] = $this->language->get('text_europe_first_international_priority');				
+		$this->data['text_regular_pickup'] = $this->language->get('text_regular_pickup');
+		$this->data['text_request_courier'] = $this->language->get('text_request_courier');
+		$this->data['text_drop_box'] = $this->language->get('text_drop_box');
+		$this->data['text_business_service_center'] = $this->language->get('text_business_service_center');
+		$this->data['text_station'] = $this->language->get('text_station');
+		$this->data['text_fedex_envelope'] = $this->language->get('text_fedex_envelope');
+		$this->data['text_fedex_pak'] = $this->language->get('text_fedex_pak');
+		$this->data['text_fedex_box'] = $this->language->get('text_fedex_box');
+		$this->data['text_fedex_tube'] = $this->language->get('text_fedex_tube');
+		$this->data['text_fedex_10kg_box'] = $this->language->get('text_fedex_10kg_box');
+		$this->data['text_fedex_25kg_box'] = $this->language->get('text_fedex_25kg_box');
+		$this->data['text_your_packaging'] = $this->language->get('text_your_packaging');
+		$this->data['text_list_rate'] = $this->language->get('text_list_rate');
+		$this->data['text_account_rate'] = $this->language->get('text_account_rate');
+		$this->data['text_residential'] = $this->language->get('text_residential');
+		$this->data['text_business'] = $this->language->get('text_business');
 						
 		$this->data['entry_key'] = $this->language->get('entry_key');
 		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_account'] = $this->language->get('entry_account');
 		$this->data['entry_meter'] = $this->language->get('entry_meter');
+		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
 		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_service'] = $this->language->get('entry_service');
 		$this->data['entry_delivery_type'] = $this->language->get('entry_delivery_type');
 		$this->data['entry_packaging_type'] = $this->language->get('entry_packaging_type');
 		$this->data['entry_rate_type'] = $this->language->get('entry_rate_type');
 		$this->data['entry_destination_type'] = $this->language->get('entry_destination_type');
+		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$this->data['entry_tax_class'] = $this->language->get('entry_tax_class');
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -92,6 +94,12 @@ class ControllerShippingFedex extends Controller {
 			$this->data['error_meter'] = '';
 		}
 		
+		if (isset($this->error['postcode'])) {
+			$this->data['error_postcode'] = $this->error['postcode'];
+		} else {
+			$this->data['error_postcode'] = '';
+		}
+				
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
@@ -139,13 +147,109 @@ class ControllerShippingFedex extends Controller {
 		} else {
 			$this->data['fedex_meter'] = $this->config->get('fedex_meter');
 		}
-
+		
+		if (isset($this->request->post['fedex_postcode'])) {
+			$this->data['fedex_postcode'] = $this->request->post['fedex_postcode'];
+		} else {
+			$this->data['fedex_postcode'] = $this->config->get('fedex_postcode');
+		}
+		
 		if (isset($this->request->post['fedex_test'])) {
 			$this->data['fedex_test'] = $this->request->post['fedex_test'];
 		} else {
 			$this->data['fedex_test'] = $this->config->get('fedex_test');
 		}
+										
+		if (isset($this->request->post['fedex_service'])) {
+			$this->data['fedex_service'] = $this->request->post['fedex_service'];
+		} elseif ($this->config->has('fedex_service')) {
+			$this->data['fedex_service'] = $this->config->get('fedex_service');
+		} else {
+			$this->data['fedex_service'] = array();	
+		}
 		
+		$this->data['service'] = array();
+		
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_priority_overnight'),
+			'value' => 'PRIORITY_OVERNIGHT'
+		);
+
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_standard_overnight'),
+			'value' => 'STANDARD_OVERNIGHT'
+		);
+		
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_first_overnight'),
+			'value' => 'FIRST_OVERNIGHT'
+		);
+		
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_2_day'),
+			'value' => 'FEDEX_2_DAY'
+		);
+		
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_express_saver'),
+			'value' => 'FEDEX_EXPRESS_SAVER'
+		);
+
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_international_priority'),
+			'value' => 'INTERNATIONAL_PRIORITY'
+		);
+		
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_international_economy'),
+			'value' => 'INTERNATIONAL_ECONOMY'
+		);
+		
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_international_first'),
+			'value' => 'INTERNATIONAL_FIRST'
+		);
+		
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_1_day_freight'),
+			'value' => 'FEDEX_1_DAY_FREIGHT'
+		);
+		
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_2_day_freight'),
+			'value' => 'FEDEX_2_DAY_FREIGHT'
+		);
+		
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_3_day_freight'),
+			'value' => 'FEDEX_3_DAY_FREIGHT'
+		);	
+					
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_ground'),
+			'value' => 'FEDEX_GROUND'
+		);	
+
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_ground_home'),
+			'value' => 'GROUND_HOME_DELIVERY'
+		);	
+		
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_international_priority_freight'),
+			'value' => 'INTERNATIONAL_PRIORITY_FREIGHT'
+		);	
+		
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_international_economy_freight'),
+			'value' => 'INTERNATIONAL_ECONOMY_FREIGHT'
+		);	
+		
+		$this->data['services'][] = array(
+			'text'  => $this->language->get('text_europe_first_international_priority'),
+			'value' => 'EUROPE_FIRST_INTERNATIONAL_PRIORITY'
+		);	
+																												
 		if (isset($this->request->post['fedex_priority_overnight'])) {
 			$this->data['fedex_priority_overnight'] = $this->request->post['fedex_priority_overnight'];
 		} else {
@@ -242,7 +346,41 @@ class ControllerShippingFedex extends Controller {
 		} else {
 			$this->data['fedex_europe_first_international_priority'] = $this->config->get('fedex_europe_first_international_priority');
 		}
-																														
+		
+		if (isset($this->request->post['fedex_delivery_type'])) {
+			$this->data['fedex_delivery_type'] = $this->request->post['fedex_delivery_type'];
+		} else {
+			$this->data['fedex_delivery_type'] = $this->config->get('fedex_delivery_type');
+		}		
+		
+		if (isset($this->request->post['fedex_packaging_type'])) {
+			$this->data['fedex_packaging_type'] = $this->request->post['fedex_packaging_type'];
+		} else {
+			$this->data['fedex_packaging_type'] = $this->config->get('fedex_packaging_type');
+		}
+		
+		if (isset($this->request->post['fedex_rate_type'])) {
+			$this->data['fedex_rate_type'] = $this->request->post['fedex_rate_type'];
+		} else {
+			$this->data['fedex_rate_type'] = $this->config->get('fedex_rate_type');
+		}
+			
+		if (isset($this->request->post['fedex_destination_type'])) {
+			$this->data['fedex_destination_type'] = $this->request->post['fedex_destination_type'];
+		} else {
+			$this->data['fedex_destination_type'] = $this->config->get('fedex_destination_type');
+		}
+		
+		if (isset($this->request->post['fedex_weight_class_id'])) {
+			$this->data['fedex_weight_class_id'] = $this->request->post['fedex_weight_class_id'];
+		} else {
+			$this->data['fedex_weight_class_id'] = $this->config->get('fedex_weight_class_id');
+		}
+		
+		$this->load->model('localisation/weight_class');
+		
+		$this->data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
+																																						
 		if (isset($this->request->post['fedex_tax_class_id'])) {
 			$this->data['fedex_tax_class_id'] = $this->request->post['fedex_tax_class_id'];
 		} else {
@@ -305,6 +443,10 @@ class ControllerShippingFedex extends Controller {
 			$this->error['meter'] = $this->language->get('error_meter');
 		}
 		
+		if (!$this->request->post['fedex_postcode']) {
+			$this->error['postcode'] = $this->language->get('error_postcode');
+		}
+				
 		if (!$this->error) {
 			return TRUE;
 		} else {

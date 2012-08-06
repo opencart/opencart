@@ -1,0 +1,7 @@
+!.gitignore
+!index.html
+
+download
+image/cache
+system/cache
+system/logs

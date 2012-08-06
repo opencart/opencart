@@ -508,6 +508,11 @@ table.list .center {
 	text-align: center;
 	padding: 7px;
 }
+table.list .left > img
+{
+	float: left;
+}
+
 table.radio {
 	width: 100%;
 	border-collapse: collapse;

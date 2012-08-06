@@ -85,29 +85,29 @@
               <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a></td>
           </tr>
           <tr>
-            <td><?php echo $entry_delivery_type; ?></td>
-            <td><select name="fedex_delivery_type">
-                <?php if ($fedex_delivery_type == 'REGULAR_PICKUP') { ?>
+            <td><?php echo $entry_dropoff_type; ?></td>
+            <td><select name="fedex_dropoff_type">
+                <?php if ($fedex_dropoff_type == 'REGULAR_PICKUP') { ?>
                 <option value="REGULAR_PICKUP" selected="selected"><?php echo $text_regular_pickup; ?></option>
                 <?php } else { ?>
                 <option value="REGULAR_PICKUP"><?php echo $text_regular_pickup; ?></option>
                 <?php } ?>
-                <?php if ($fedex_delivery_type == 'REQUEST_COURIER') { ?>
+                <?php if ($fedex_dropoff_type == 'REQUEST_COURIER') { ?>
                 <option value="REQUEST_COURIER" selected="selected"><?php echo $text_request_courier; ?></option>
                 <?php } else { ?>
                 <option value="REQUEST_COURIER"><?php echo $text_request_courier; ?></option>
                 <?php } ?>
-                <?php if ($fedex_delivery_type == 'DROP_BOX') { ?>
+                <?php if ($fedex_dropoff_type == 'DROP_BOX') { ?>
                 <option value="DROP_BOX" selected="selected"><?php echo $text_drop_box; ?></option>
                 <?php } else { ?>
                 <option value="DROP_BOX"><?php echo $text_drop_box; ?></option>
                 <?php } ?>
-                <?php if ($fedex_delivery_type == 'BUSINESS_SERVICE_CENTER') { ?>
+                <?php if ($fedex_dropoff_type == 'BUSINESS_SERVICE_CENTER') { ?>
                 <option value="BUSINESS_SERVICE_CENTER" selected="selected"><?php echo $text_business_service_center; ?></option>
                 <?php } else { ?>
                 <option value="BUSINESS_SERVICE_CENTER"><?php echo $text_business_service_center; ?></option>
                 <?php } ?>
-                <?php if ($fedex_delivery_type == 'STATION') { ?>
+                <?php if ($fedex_dropoff_type == 'STATION') { ?>
                 <option value="STATION" selected="selected"><?php echo $text_station; ?></option>
                 <?php } else { ?>
                 <option value="STATION"><?php echo $text_station; ?></option>

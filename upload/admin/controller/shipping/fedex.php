@@ -51,7 +51,7 @@ class ControllerShippingFedex extends Controller {
 		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
 		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_service'] = $this->language->get('entry_service');
-		$this->data['entry_delivery_type'] = $this->language->get('entry_delivery_type');
+		$this->data['entry_dropoff_type'] = $this->language->get('entry_dropoff_type');
 		$this->data['entry_packaging_type'] = $this->language->get('entry_packaging_type');
 		$this->data['entry_rate_type'] = $this->language->get('entry_rate_type');
 		$this->data['entry_destination_type'] = $this->language->get('entry_destination_type');
@@ -249,108 +249,11 @@ class ControllerShippingFedex extends Controller {
 			'text'  => $this->language->get('text_europe_first_international_priority'),
 			'value' => 'EUROPE_FIRST_INTERNATIONAL_PRIORITY'
 		);	
-																												
-		if (isset($this->request->post['fedex_priority_overnight'])) {
-			$this->data['fedex_priority_overnight'] = $this->request->post['fedex_priority_overnight'];
-		} else {
-			$this->data['fedex_priority_overnight'] = $this->config->get('fedex_priority_overnight');
-		}
 		
-		if (isset($this->request->post['fedex_standard_overnight'])) {
-			$this->data['fedex_standard_overnight'] = $this->request->post['fedex_standard_overnight'];
+		if (isset($this->request->post['fedex_dropoff_type'])) {
+			$this->data['fedex_dropoff_type'] = $this->request->post['fedex_dropoff_type'];
 		} else {
-			$this->data['fedex_standard_overnight'] = $this->config->get('fedex_standard_overnight');
-		}
-		
-		if (isset($this->request->post['fedex_first_overnight'])) {
-			$this->data['fedex_first_overnight'] = $this->request->post['fedex_first_overnight'];
-		} else {
-			$this->data['fedex_first_overnight'] = $this->config->get('fedex_first_overnight');
-		}	
-			
-		if (isset($this->request->post['fedex_2_day'])) {
-			$this->data['fedex_2_day'] = $this->request->post['fedex_2_day'];
-		} else {
-			$this->data['fedex_2_day'] = $this->config->get('fedex_2_day');
-		}	
-		
-		if (isset($this->request->post['fedex_express_saver'])) {
-			$this->data['fedex_express_saver'] = $this->request->post['fedex_express_saver'];
-		} else {
-			$this->data['fedex_express_saver'] = $this->config->get('fedex_express_saver');
-		}	
-		
-		if (isset($this->request->post['fedex_international_priority'])) {
-			$this->data['fedex_international_priority'] = $this->request->post['fedex_international_priority'];
-		} else {
-			$this->data['fedex_international_priority'] = $this->config->get('fedex_international_priority');
-		}
-		
-		if (isset($this->request->post['fedex_international_economy'])) {
-			$this->data['fedex_international_economy'] = $this->request->post['fedex_international_economy'];
-		} else {
-			$this->data['fedex_international_economy'] = $this->config->get('fedex_international_economy');
-		}
-		
-		if (isset($this->request->post['fedex_international_first'])) {
-			$this->data['fedex_international_first'] = $this->request->post['fedex_international_first'];
-		} else {
-			$this->data['fedex_international_first'] = $this->config->get('fedex_international_first');
-		}
-		
-		if (isset($this->request->post['fedex_1_day_freight'])) {
-			$this->data['fedex_1_day_freight'] = $this->request->post['fedex_1_day_freight'];
-		} else {
-			$this->data['fedex_1_day_freight'] = $this->config->get('fedex_1_day_freight');
-		}
-		
-		if (isset($this->request->post['fedex_2_day_freight'])) {
-			$this->data['fedex_2_day_freight'] = $this->request->post['fedex_2_day_freight'];
-		} else {
-			$this->data['fedex_2_day_freight'] = $this->config->get('fedex_2_day_freight');
-		}
-		
-		if (isset($this->request->post['fedex_3_day_freight'])) {
-			$this->data['fedex_3_day_freight'] = $this->request->post['fedex_3_day_freight'];
-		} else {
-			$this->data['fedex_3_day_freight'] = $this->config->get('fedex_3_day_freight');
-		}
-		
-		if (isset($this->request->post['fedex_ground'])) {
-			$this->data['fedex_ground'] = $this->request->post['fedex_ground'];
-		} else {
-
-			$this->data['fedex_ground'] = $this->config->get('fedex_ground');
-		}
-		
-		if (isset($this->request->post['fedex_ground_home'])) {
-			$this->data['fedex_ground_home'] = $this->request->post['fedex_ground_home'];
-		} else {
-			$this->data['fedex_ground_home'] = $this->config->get('fedex_ground_home');
-		}
-		
-		if (isset($this->request->post['fedex_international_priority_freight'])) {
-			$this->data['fedex_international_priority_freight'] = $this->request->post['fedex_international_priority_freight'];
-		} else {
-			$this->data['fedex_international_priority_freight'] = $this->config->get('fedex_international_priority_freight');
-		}
-		
-		if (isset($this->request->post['fedex_international_economy_freight'])) {
-			$this->data['fedex_international_economy_freight'] = $this->request->post['fedex_international_economy_freight'];
-		} else {
-			$this->data['fedex_international_economy_freight'] = $this->config->get('fedex_international_economy_freight');
-		}
-		
-		if (isset($this->request->post['fedex_europe_first_international_priority'])) {
-			$this->data['fedex_europe_first_international_priority'] = $this->request->post['fedex_europe_first_international_priority'];
-		} else {
-			$this->data['fedex_europe_first_international_priority'] = $this->config->get('fedex_europe_first_international_priority');
-		}
-		
-		if (isset($this->request->post['fedex_delivery_type'])) {
-			$this->data['fedex_delivery_type'] = $this->request->post['fedex_delivery_type'];
-		} else {
-			$this->data['fedex_delivery_type'] = $this->config->get('fedex_delivery_type');
+			$this->data['fedex_dropoff_type'] = $this->config->get('fedex_dropoff_type');
 		}		
 		
 		if (isset($this->request->post['fedex_packaging_type'])) {

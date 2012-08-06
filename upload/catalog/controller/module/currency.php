@@ -1,6 +1,6 @@
 <?php  
 class ControllerModuleCurrency extends Controller {
-	protected function index() {
+	public function index() {
 		if (isset($this->request->post['currency_code'])) {
       		$this->currency->set($this->request->post['currency_code']);
 			

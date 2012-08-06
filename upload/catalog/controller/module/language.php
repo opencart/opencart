@@ -1,6 +1,6 @@
 <?php  
 class ControllerModuleLanguage extends Controller {
-	protected function index() {
+	public function index() {
     	if (isset($this->request->post['language_code'])) {
 			$this->session->data['language'] = $this->request->post['language_code'];
 		

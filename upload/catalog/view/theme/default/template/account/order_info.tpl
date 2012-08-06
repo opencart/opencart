@@ -62,11 +62,14 @@
     <tbody>
       <?php foreach ($products as $product) { ?>
       <tr>
-        <td class="left"><?php echo $product['name']; ?>
+        <td class="left">
+          <img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" />
+          <?php echo $product['name']; ?>
           <?php foreach ($product['option'] as $option) { ?>
           <br />
           &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
-          <?php } ?></td>
+          <?php } ?>
+        </td>
         <td class="left"><?php echo $product['model']; ?></td>
         <td class="right"><?php echo $product['quantity']; ?></td>
         <td class="right"><?php echo $product['price']; ?></td>

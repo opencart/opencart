@@ -34,7 +34,11 @@ class ModelShippingFedex extends Model {
 			$this->load->model('localisation/country');
 			
 			$country_info = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
-					
+			
+			$this->load->model('localisation/zone');
+			
+			$zone_info = $this->model_localisation_zone->getZone($this->config->get('config_zone_id'));
+			
 			if (!$this->config->get('fedex_test')) {
 				$url = 'https://gateway.fedex.com/web-services/';
 			} else {
@@ -65,24 +69,40 @@ class ModelShippingFedex extends Model {
 			$xml .= '			<ns1:ReturnTransitAndCommit>true</ns1:ReturnTransitAndCommit>';
 			$xml .= '			<ns1:RequestedShipment>';
 			$xml .= '				<ns1:ShipTimestamp>' . date('c', $date) . '</ns1:ShipTimestamp>';
-			$xml .= '				<ns1:DropoffType>' . $this->config->get('fedex_dropoff_type') . '</ns1:DropoffType>';						
+			$xml .= '				<ns1:DropoffType>' . $this->config->get('fedex_dropoff_type') . '</ns1:DropoffType>';	
+			$xml .= '				<ns1:PackagingType>' . $this->config->get('fedex_packaging_type') . '</ns1:PackagingType>';					
 			$xml .= '				<ns1:Shipper>';
+			$xml .= '					<ns1:Contact>';
+            $xml .= '						<ns1:PersonName>' . $this->config->get('config_owner') . '</ns1:PersonName>';
+            $xml .= '						<ns1:CompanyName>' . $this->config->get('config_name') . '</ns1:CompanyName>';
+            $xml .= '						<ns1:PhoneNumber>' . $this->config->get('config_telephone') . '</ns1:PhoneNumber>';
+          	$xml .= '					</ns1:Contact>';
 			$xml .= '					<ns1:Address>';
-			//$xml .= '						<ns1:StreetLines>10 Fed Ex Pkwy</ns1:StreetLines>';
-			//$xml .= '						<ns1:City>Memphis</ns1:City>';
-			//$xml .= '						<ns1:StateOrProvinceCode>TN</ns1:StateOrProvinceCode>';
+			$xml .= '						<ns1:StreetLines>10 Fed Ex Pkwy</ns1:StreetLines>';
+			$xml .= '						<ns1:City>Memphis</ns1:City>';
+			$xml .= '						<ns1:StateOrProvinceCode>' . ($zone_info ? $zone_info['iso_code_2'] : '') . '</ns1:StateOrProvinceCode>';
 			$xml .= '						<ns1:PostalCode>' . $this->config->get('fedex_postcode') . '</ns1:PostalCode>';
 			$xml .= '						<ns1:CountryCode>' . $country_info['iso_code_2'] . '</ns1:CountryCode>';
 			$xml .= '					</ns1:Address>';
 			$xml .= '				</ns1:Shipper>';
 			
 			$xml .= '				<ns1:Recipient>';
+			$xml .= '					<ns1:Contact>';
+			$xml .= '						<ns1:PersonName>' . $address['firstname'] . ' ' . $address['lastname'] . '</ns1:PersonName>';
+			$xml .= '						<ns1:CompanyName>' . $address['company'] . '</ns1:CompanyName>';
+			$xml .= '						<ns1:PhoneNumber>' . $this->customer->getTelephone() . '</ns1:PhoneNumber>';
+			$xml .= '					</ns1:Contact>';
 			$xml .= '					<ns1:Address>';
-			//$xml .= '						<ns1:StreetLines>13450 Farmcrest Ct</ns1:StreetLines>';
-			//$xml .= '						<ns1:City>Herndon</ns1:City>';
-			//$xml .= '						<ns1:StateOrProvinceCode>VA</ns1:StateOrProvinceCode>';
+			$xml .= '						<ns1:StreetLines>' . $address['address_1'] . '</ns1:StreetLines>';
+			$xml .= '						<ns1:City>' . $address['city'] . '</ns1:City>';
+			
+			if ($address['iso_code_2'] == 'US') {
+				//$xml .= '						<ns1:StateOrProvinceCode>VA</ns1:StateOrProvinceCode>';
+			}
+			
 			$xml .= '						<ns1:PostalCode>' . $address['postcode'] . '</ns1:PostalCode>';
 			$xml .= '						<ns1:CountryCode>' . $address['iso_code_2'] . '</ns1:CountryCode>';
+			$xml .= '						<ns1:Residential>' . ($address['company'] ? 'true' : 'false') . '</ns1:Residential>';
 			$xml .= '					</ns1:Address>';
 			$xml .= '				</ns1:Recipient>';
 			$xml .= '				<ns1:ShippingChargesPayment>';
@@ -126,26 +146,38 @@ class ModelShippingFedex extends Model {
 			
 			curl_close($curl); 
 			
-			$this->log->write($response);
-			
 			$dom = new DOMDocument('1.0', 'UTF-8');
 			$dom->loadXml($response);	
 	
-			if ($dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue != 'FAILURE' || $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue != 'ERROR') {
+			if ($dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue == 'FAILURE' || $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue == 'ERROR') {
 				$error = $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue;
 			} else {
-				$rates = $dom->getElementsByTagName('RateReplyDetails');
+				$rate_reply_details = $dom->getElementsByTagName('RateReplyDetails');
 				
-				foreach ($rates as $rate) { 
-					$code = strtolower($rate->getElementsByTagName('ServiceType')->item(0)->nodeValue);
+				foreach ($rate_reply_details as $rate_reply_detail) { 
+					$code = $rate_reply_detail->getElementsByTagName('ServiceType')->item(0)->nodeValue;
 					
 					if (in_array($code, $this->config->get('fedex_service'))) {
+						$code = strtolower($code);
+						
+						$title = $this->language->get('text_' . $code);
+						
+						if ($this->config->get('fedex_display_time')) {
+							$title .= ' (' . $this->language->get('text_eta') . ' ' . date($this->language->get('date_format_short') . ' ' . $this->language->get('time_format'), strtotime($rate_reply_detail->getElementsByTagName('DeliveryTimestamp')->item(0)->nodeValue)) . ')';
+						}
+						
+						$total_net_charge = $rate_reply_detail->getElementsByTagName('RatedShipmentDetails')->item(0)->getElementsByTagName('ShipmentRateDetail')->item(0)->getElementsByTagName('TotalNetCharge')->item(0);
+						
+						$cost = $total_net_charge->getElementsByTagName('Amount')->item(0)->nodeValue;
+						
+						$currency = $total_net_charge->getElementsByTagName('Currency')->item(0)->nodeValue;
+						
 						$quote_data[$code] = array(
 							'code'         => 'fedex.' . $code,
-							'title'        => $this->language->get('text_' . $code),
+							'title'        => $title,
 							'cost'         => $this->currency->convert($cost, $currency, $this->config->get('config_currency')),
-							'tax_class_id' => $this->config->get('ups_tax_class_id'),
-							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->currency->getCode()), $this->config->get('ups_tax_class_id'), $this->config->get('config_tax')), $this->currency->getCode(), 1.0000000)
+							'tax_class_id' => $this->config->get('fedex_tax_class_id'),
+							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->currency->getCode()), $this->config->get('fedex_tax_class_id'), $this->config->get('config_tax')), $this->currency->getCode(), 1.0000000)
 						);
 					}
 				}
@@ -155,6 +187,12 @@ class ModelShippingFedex extends Model {
 		$method_data = array();
 		
 		if ($quote_data) {
+			$title = $this->language->get('text_title');
+
+			if ($this->config->get('fedex_display_weight')) {
+				$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('fedex_weight_class_id')) . ')';
+			}
+							
 			$method_data = array(
 				'code'       => 'fedex',
 				'title'      => $title,

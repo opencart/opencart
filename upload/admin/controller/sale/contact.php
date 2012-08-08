@@ -217,7 +217,7 @@ class ControllerSaleContact extends Controller {
 					}				
 						
 					if ($end < $email_total) {
-						$json['next'] = str_replace('&amp;', '&', $this->url->link('sale/contact/send', 'token=' . $this->session->data['token'] . '&page=' . ($page + 1)));
+						$json['next'] = str_replace('&amp;', '&', $this->url->link('sale/contact/send', 'token=' . $this->session->data['token'] . '&page=' . ($page + 1), 'SSL'));
 					} else {
 						$json['next'] = '';
 					}

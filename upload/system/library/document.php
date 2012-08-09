@@ -50,12 +50,48 @@ class Document {
 		);
 	}
 	
+	public function inStyles($href) {
+		foreach ($this->styles as $key => $style) {
+			if ($style['href'] == $href) {
+					return true;
+				} 
+		}
+		return false;
+	}
+	
+	public function removeStyle($href) {
+		if ($this->inStyles($href)) {
+			unset($this->styles[md5($href)]);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public function getStyles() {
 		return $this->styles;
 	}	
 	
 	public function addScript($script) {
 		$this->scripts[md5($script)] = $script;			
+	}
+	
+	public function inScripts($hrefscript) {
+		foreach ($this->scripts as $key => $script) {
+			if ($script == $hrefscript) {
+					return true;
+				} 
+		}
+		return false;
+	}
+	
+	public function removeScript($hrefscript) {
+		if ($this->inScripts($hrefscript)) {
+			unset($this->scripts[md5($hrefscript)]);
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public function getScripts() {

@@ -80,7 +80,13 @@ class ModelShippingFedex extends Model {
 			$xml .= '					<ns1:Address>';
 			$xml .= '						<ns1:StreetLines>10 Fed Ex Pkwy</ns1:StreetLines>';
 			$xml .= '						<ns1:City>Memphis</ns1:City>';
-			$xml .= '						<ns1:StateOrProvinceCode>' . ($zone_info ? $zone_info['iso_code_2'] : '') . '</ns1:StateOrProvinceCode>';
+			
+			if ($country_info['iso_code_2'] == 'US') {
+				$xml .= '						<ns1:StateOrProvinceCode>' . ($zone_info ? $zone_info['iso_code_2'] : '') . '</ns1:StateOrProvinceCode>';
+			} else {
+				$xml .= '						<ns1:StateOrProvinceCode>' . ($zone_info ? $zone_info['name'] : '') . '</ns1:StateOrProvinceCode>';
+			}
+			
 			$xml .= '						<ns1:PostalCode>' . $this->config->get('fedex_postcode') . '</ns1:PostalCode>';
 			$xml .= '						<ns1:CountryCode>' . $country_info['iso_code_2'] . '</ns1:CountryCode>';
 			$xml .= '					</ns1:Address>';
@@ -97,7 +103,9 @@ class ModelShippingFedex extends Model {
 			$xml .= '						<ns1:City>' . $address['city'] . '</ns1:City>';
 			
 			if ($address['iso_code_2'] == 'US') {
-				//$xml .= '						<ns1:StateOrProvinceCode>VA</ns1:StateOrProvinceCode>';
+				$xml .= '						<ns1:StateOrProvinceCode>' . $address['iso_code_2'] . '</ns1:StateOrProvinceCode>';
+			} else {
+				$xml .= '						<ns1:StateOrProvinceCode>' . $address['zone'] . '</ns1:StateOrProvinceCode>';
 			}
 			
 			$xml .= '						<ns1:PostalCode>' . $address['postcode'] . '</ns1:PostalCode>';
@@ -155,11 +163,9 @@ class ModelShippingFedex extends Model {
 				$rate_reply_details = $dom->getElementsByTagName('RateReplyDetails');
 				
 				foreach ($rate_reply_details as $rate_reply_detail) { 
-					$code = $rate_reply_detail->getElementsByTagName('ServiceType')->item(0)->nodeValue;
+					$code = strtolower($rate_reply_detail->getElementsByTagName('ServiceType')->item(0)->nodeValue);
 					
-					if (in_array($code, $this->config->get('fedex_service'))) {
-						$code = strtolower($code);
-						
+					if (in_array(strtoupper($code), $this->config->get('fedex_service'))) {
 						$title = $this->language->get('text_' . $code);
 						
 						if ($this->config->get('fedex_display_time')) {

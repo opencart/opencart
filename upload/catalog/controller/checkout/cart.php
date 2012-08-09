@@ -145,10 +145,13 @@ class ControllerCheckoutCart extends Controller {
 			
 			if (isset($this->error['warning'])) {
 				$this->data['error_warning'] = $this->error['warning'];
-			} elseif (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
-      			$this->data['error_warning'] = $this->language->get('error_stock');		
 			} else {
 				$this->data['error_warning'] = '';
+			}
+			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
+      				$this->data['error_stock'] = $this->language->get('error_stock');		
+			} else {
+				$this->data['error_stock'] = '';
 			}
 			
 			if ($this->config->get('config_customer_price') && !$this->customer->isLogged()) {

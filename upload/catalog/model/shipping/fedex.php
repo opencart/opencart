@@ -78,8 +78,6 @@ class ModelShippingFedex extends Model {
             $xml .= '						<ns1:PhoneNumber>' . $this->config->get('config_telephone') . '</ns1:PhoneNumber>';
           	$xml .= '					</ns1:Contact>';
 			$xml .= '					<ns1:Address>';
-			$xml .= '						<ns1:StreetLines>10 Fed Ex Pkwy</ns1:StreetLines>';
-			$xml .= '						<ns1:City>Memphis</ns1:City>';
 			
 			if ($country_info['iso_code_2'] == 'US') {
 				$xml .= '						<ns1:StateOrProvinceCode>' . ($zone_info ? $zone_info['iso_code_2'] : '') . '</ns1:StateOrProvinceCode>';

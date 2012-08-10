@@ -76,9 +76,9 @@
           </tr>
           <tr>
             <td>mCrypt:</td>
-            <td><?php echo function_exists('mcrypt') ? 'On' : 'Off'; ?></td>
+            <td><?php echo function_exists('mcrypt_encrypt') ? 'On' : 'Off'; ?></td>
             <td>On</td>
-            <td align="center"><?php echo function_exists('mcrypt') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
+            <td align="center"><?php echo function_exists('mcrypt_encrypt') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
           </tr>          
           <tr>
             <td>ZIP:</td>

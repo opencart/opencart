@@ -243,3 +243,7 @@ UPDATE `oc_setting` set `group` = replace(`group`, 'alertpay', 'payza');
 UPDATE `oc_setting` set `key` = replace(`key`, 'alertpay', 'payza');
 UPDATE `oc_order` set `payment_method` = replace(`payment_method`, 'AlertPay', 'Payza');
 UPDATE `oc_order` set `payment_code` = replace(`payment_code`, 'alertpay', 'payza');
+
+ALTER TABLE `oc_affiliate` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER password;
+ALTER TABLE `oc_customer` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER password;
+ALTER TABLE `oc_user` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER password;

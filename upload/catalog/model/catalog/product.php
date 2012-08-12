@@ -549,6 +549,47 @@ class ModelCatalogProduct extends Model {
 		
 		return $product_data;
 	}
+
+	// Product prev/next
+	public function getTotalProductsByCategoryId($category_id) {
+		$product_total = 0;
+		
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE p.status = '1' AND p.date_available <= NOW() AND p2c.category_id = '" . (int)$category_id . "' AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
+
+		$product_total += $query->row['total'];
+		
+		$query = $this->db->query("SELECT c.category_id FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_to_store c2s ON (c.category_id = c2s.category_id) WHERE c.parent_id = '" . (int)$category_id . "' AND c.status = '1' AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
+		
+		foreach ($query->rows as $result) {
+			$product_total += $this->getTotalProductsByCategoryId($result['category_id']);
+		}
+		
+		return $product_total;
+	}
+	
+	public function getProductsIDbyCategoryID( $category_id, $order = '', $state = false ) {
+		$query = 'SELECT p2c.product_id AS product_id, p.status, p.date_added FROM ' . DB_PREFIX . 'product_to_category AS p2c LEFT JOIN `' . DB_PREFIX . 'product` AS p ON p.product_id = p2c.product_id WHERE category_id = ' . (int) $category_id . ( $state ? ' AND p.status = 1' : '' ) . ' ORDER BY ' . ( $order ? $order : 'p.date_added' ) . ' DESC';
+		$result = $this->db->query( $query );
+
+		$ret = array();
+		if( $result->num_rows ) {
+			foreach( $result->rows as $res ) {
+				$ret[] = $res['product_id'];
+			}
+		}else{
+			$ret = false;
+		}
+
+		return $ret;
+	}
+
+	public function getProductCategory( $product_id ) {
+		$query = 'SELECT DISTINCT category_id FROM ' . DB_PREFIX . 'product_to_category WHERE product_id = ' . (int) $product_id . ' LIMIT 1';
+		$result = $this->db->query( $query );
+
+		return $result->row['category_id'];
+	}
+	// Product prev/next
 			
 	public function getTotalProductSpecials() {
 		if ($this->customer->isLogged()) {

@@ -6,6 +6,23 @@
     <?php } ?>
   </div>
   <h1><?php echo $heading_title; ?></h1>
+  <!-- Product prev/next -->
+  <?php if( !empty( $previous_url ) || !empty( $next_url ) ) { ?>
+      <div class="prev_next">
+          <div class="buttons">
+              <?php
+              if( $previous_url ) { ?>
+                  <div style="float:right;"><a href="<?php echo $previous_url['href']; ?>" class="button" style="text-decoration:none;" title="<?php echo $previous_url['title']; ?>"><span><?php echo $previous_url['separator']; ?></span></a></div>
+                  <?php
+              }
+              if( $next_url ) { ?>
+                  <div style="float:left;"><a href="<?php echo $next_url['href']; ?>" class="button" style="text-decoration:none;" title="<?php echo $next_url['title']; ?>"><span><?php echo $next_url['separator']; ?></span></a></div>
+                  <?php
+              } ?>
+          </div>
+      </div>
+  <?php } ?>
+  <!-- Product prev/next -->
   <div class="product-info">
     <?php if ($thumb || $images) { ?>
     <div class="left">

@@ -27,6 +27,13 @@ $_['text_wait']         = 'Please Wait!';
 $_['text_tags']         = 'Tags:';
 $_['text_error']        = 'Product not found!';
 
+// Product prev/next
+$_['text_prev_product']	  = 'Next product';
+$_['text_prev_seperator'] = '&gt;&gt;';
+$_['text_next_product']	  = 'Previous product';
+$_['text_next_seperator'] = '&lt;&lt;';
+// Product prev/next
+
 // Entry
 $_['entry_name']        = 'Your Name:';
 $_['entry_review']      = 'Your Review:';

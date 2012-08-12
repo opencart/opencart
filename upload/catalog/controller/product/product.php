@@ -15,6 +15,16 @@ class ControllerProductProduct extends Controller {
 		
 		$this->load->model('catalog/category');	
 		
+		// Product prev/next 
+		$this->load->model('catalog/product');
+
+		if( isset( $this->request->get['product_id'] ) ) {
+			$product_id = $this->request->get['product_id'];
+		}else{
+			$product_id = 0;
+		}
+		// Product prev/next 
+		
 		if (isset($this->request->get['path'])) {
 			$path = '';
 				
@@ -36,6 +46,14 @@ class ControllerProductProduct extends Controller {
 				}
 			}
 		}
+
+		// Product prev/next 
+		if( isset( $this->request->get['product_id'] ) ) {
+			$category_id = $this->model_catalog_product->getProductCategory( $product_id );
+		}else{
+			$category_id = 0;
+		}
+		// Product prev/next 
 		
 		$this->load->model('catalog/manufacturer');	
 		
@@ -92,6 +110,45 @@ class ControllerProductProduct extends Controller {
 		$this->load->model('catalog/product');
 		
 		$product_info = $this->model_catalog_product->getProduct($product_id);
+
+		// Product prev/next 
+		$this->data['next_url'] = '';
+		$this->data['previous_url']	= '';
+		$order = ''; // prepared
+
+		$productsByCategoryID = $this->model_catalog_product->getProductsIDbyCategoryID( $category_id, $order, true );
+		$n = count( $productsByCategoryID );
+
+		if( $n ) {
+			foreach( $productsByCategoryID as $key => $value ) {
+				$next	= '';
+				$prev	= '';
+				$url	= 'product/product';
+
+				if( isset( $this->request->get['path'] ) ) {
+					$url .= '&amp;path=' . $this->request->get['path'];
+				}
+
+				if( $value == $product_id ) {
+					if( $key != 0 ) {
+						$this->data['previous_url'] = array (
+							'href'		=> $this->url->link($url . '&amp;product_id=' . $productsByCategoryID[$key - 1]),
+							'title' 	=> $this->language->get('text_prev_product'),
+							'separator'	=> $this->language->get('text_prev_seperator')
+						);
+					}
+
+					if( ( $n - 1 ) > $key ) {
+						$this->data['next_url']		= array(
+							'href'		=> $this->url->link($url . '&amp;product_id=' . $productsByCategoryID[$key + 1]),
+							'title'		=> $this->language->get('text_next_product'),
+							'separator'	=> $this->language->get('text_next_seperator')
+						);
+					}
+				}
+			}
+		}
+		// Product prev/next 
 		
 		if ($product_info) {
 			$url = '';

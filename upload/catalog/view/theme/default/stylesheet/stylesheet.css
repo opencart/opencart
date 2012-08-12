@@ -1662,3 +1662,8 @@ a.button:hover, input.button:hover {
 .banner div img {
 	margin-bottom: 20px;
 }
+/* Product prev/next */
+.prev_next {
+	margin: 0 0 15px 0;
+}
+

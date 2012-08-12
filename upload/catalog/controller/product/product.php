@@ -347,7 +347,7 @@ class ControllerProductProduct extends Controller {
 			foreach ($tags as $tag) {
 				$this->data['tags'][] = array(
 					'tag'  => trim($tag),
-					'href' => $this->url->link('product/search', 'filter_tag=' . trim($tag))
+					'href' => $this->url->link('product/search', 'filter_name=' . trim($tag))
 				);
 			}
 			

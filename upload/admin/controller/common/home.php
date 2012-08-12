@@ -147,6 +147,16 @@ class ControllerCommonHome extends Controller {
 		$this->data['total_sale'] = $this->currency->format($this->model_sale_order->getTotalSales(), $this->config->get('config_currency'));
 		$this->data['total_sale_year'] = $this->currency->format($this->model_sale_order->getTotalSalesByYear(date('Y')), $this->config->get('config_currency'));
 		$this->data['total_order'] = $this->model_sale_order->getTotalOrders();
+
+		// Show number of Categories and Products in dashboard
+		$this->load->model('catalog/category');
+		
+		$this->data['total_category'] = $this->model_catalog_category->getTotalCategories();
+		
+		$this->load->model('catalog/product');
+
+		$this->data['total_product'] = $this->model_catalog_product->getTotalProducts();
+		// Show number of Categories and Products in dashboard
 		
 		$this->load->model('sale/customer');
 		

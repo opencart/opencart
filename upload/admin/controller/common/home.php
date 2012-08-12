@@ -35,6 +35,11 @@ class ControllerCommonHome extends Controller {
 		
 		$this->data['entry_range'] = $this->language->get('entry_range');
 		
+		// Show number of Categories and Products in dashboard
+		$this->data['text_total_category'] = $this->language->get('text_total_category');
+		$this->data['text_total_product'] = $this->language->get('text_total_product');
+		// Show number of Categories and Products in dashboard
+		
 		// Check install directory exists
  		if (is_dir(dirname(DIR_APPLICATION) . '/install')) {
 			$this->data['error_install'] = $this->language->get('error_install');

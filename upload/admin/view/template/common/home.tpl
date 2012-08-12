@@ -44,6 +44,16 @@
               <td><?php echo $text_total_order; ?></td>
               <td><?php echo $total_order; ?></td>
             </tr>
+	    <!-- Show number of Categories and Products in dashboard -->
+            <tr>
+              <td><?php echo $text_total_category; ?></td>
+              <td><?php echo $total_category; ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $text_total_product; ?></td>
+              <td><?php echo $total_product; ?></td>
+            </tr>
+	    <!-- Show number of Categories and Products in dashboard -->
             <tr>
               <td><?php echo $text_total_customer; ?></td>
               <td><?php echo $total_customer; ?></td>

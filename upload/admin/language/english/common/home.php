@@ -41,4 +41,10 @@ $_['error_image_cache']             = 'Warning: Image cache directory %s not wri
 $_['error_cache']                   = 'Warning: Cache directory %s not writeable!';
 $_['error_download']                = 'Warning: Download directory %s not writeable!';
 $_['error_logs']                    = 'Warning: Log directory %s not writeable!';
+
+// Show number of Categories and Products in dashboard
+$_['text_total_category']           = 'No. of Categories:';
+$_['text_total_product']            = 'No. of Products:';
+// Show number of Categories and Products in dashboard
+
 ?>

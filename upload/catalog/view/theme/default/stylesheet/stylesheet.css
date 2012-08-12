@@ -184,9 +184,9 @@ label {
 	-moz-border-radius: 0px 7px 7px 7px;
 	-khtml-border-radius: 0px 7px 7px 7px;
 	border-radius: 0px 7px 7px 7px;
-	-webkit-box-shadow: 0px 2px 2px #DDDDDD;
-	-moz-box-shadow: 0px 2px 2px #DDDDDD;
-	box-shadow: 0px 2px 2px #DDDDDD;
+	-webkit-box-shadow: 2px 2px 2px #999999;
+	   -moz-box-shadow: 2px 2px 2px #999999;
+			box-shadow: 2px 2px 2px #999999;
 	background: #FFF;
 }
 #header #cart.active .heading {
@@ -283,9 +283,9 @@ label {
 	-moz-border-radius: 3px 3px 3px 3px;
 	-khtml-border-radius: 3px 3px 3px 3px;
 	border-radius: 3px 3px 3px 3px;
-	-webkit-box-shadow: 0px 2px 0px #F0F0F0;
-	-moz-box-shadow: 0px 2px 0px #F0F0F0;
-	box-shadow: 0px 2px 0px #F0F0F0;
+	-webkit-box-shadow: 2px 2px 2px #999999;
+	   -moz-box-shadow: 2px 2px 2px #999999;
+			box-shadow: 2px 2px 2px #999999;
 }
 #header #welcome {
 	position: absolute;
@@ -325,9 +325,9 @@ label {
 	-moz-border-radius: 5px 5px 5px 5px;
 	-khtml-border-radius: 5px 5px 5px 5px;
 	border-radius: 5px 5px 5px 5px;
-	-webkit-box-shadow: 0px 2px 2px #DDDDDD;
-	-moz-box-shadow: 0px 2px 2px #DDDDDD;
-	box-shadow: 0px 2px 2px #DDDDDD;
+	-webkit-box-shadow: 2px 2px 2px #999999;
+	   -moz-box-shadow: 2px 2px 2px #999999;
+			box-shadow: 2px 2px 2px #999999;
 	padding: 0px 5px;
 }
 #menu ul {
@@ -572,9 +572,9 @@ a.button, input.button {
 	-moz-border-radius: 7px 7px 7px 7px;
 	-khtml-border-radius: 7px 7px 7px 7px;
 	border-radius: 7px 7px 7px 7px;
-	-webkit-box-shadow: 0px 2px 2px #DDDDDD;
-	-moz-box-shadow: 0px 2px 2px #DDDDDD;
-	box-shadow: 0px 2px 2px #DDDDDD;
+	-webkit-box-shadow: 2px 2px 2px #999999;
+	   -moz-box-shadow: 2px 2px 2px #999999;
+			box-shadow: 2px 2px 2px #999999;
 }
 a.button {
 	display: inline-block;
@@ -676,14 +676,25 @@ a.button:hover, input.button:hover {
 /* box products */
 .box-product {
 	width: 100%;
+	text-align: center;
 	overflow: auto;
 }
 .box-product > div {
 	width: 130px;
 	display: inline-block;
 	vertical-align: top;
-	margin-right: 20px;
-	margin-bottom: 20px;
+	text-align: left;
+	vertical-align: top;
+	margin-left: auto;
+	margin-right: auto;
+	margin: 10px;
+	border: 1px solid #E7E7E7;
+	-webkit-border-radius: 7px;
+	   -moz-border-radius: 7px;
+			border-radius: 7px;
+	-webkit-box-shadow: 2px 2px 2px #999999;
+	   -moz-box-shadow: 2px 2px 2px #999999;
+			box-shadow: 2px 2px 2px #999999;
 }
 #column-left + #column-right + #content .box-product > div {
 	width: 119px;
@@ -693,15 +704,35 @@ a.button:hover, input.button:hover {
 	margin-bottom: 0px;
 }
 .box-product .image img {
-	padding: 3px;
-	border: 1px solid #E7E7E7;
+	display: block;   
+	margin-left: auto;   
+	margin-right: auto; 
+	border: 0px solid #E7E7E7;
 }
 .box-product .name a {
 	color: #38B0E3;
 	font-weight: bold;
+	font-size: 12px;
 	text-decoration: none;
 	display: block;
 	margin-bottom: 4px;
+}
+.box-product .cart {
+	font-size: 10px;
+	text-align: center;
+	margin: 10px;
+}
+.box-product .cart .button{
+	font-size: 10px;
+	text-align: center;
+}
+.box-product .name {
+	text-align: center;
+	margin: 10px;
+}
+.box-product .price {
+	text-align: center;
+	margin: 10px;
 }
 .box-product .price {
 	display: block;

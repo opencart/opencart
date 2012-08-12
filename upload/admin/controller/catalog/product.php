@@ -1224,6 +1224,58 @@ class ControllerCatalogProduct extends Controller {
 	  		return false;
 		}
   	}
+	
+	// Former amazing product related
+	public function category() {
+	  $json = array();
+	  
+	  $this->load->model('catalog/product');
+	
+	  if (isset($this->request->get['category_id'])) {
+		 $category_id = $this->request->get['category_id'];
+	  } else {
+		 $category_id = 0;
+	  }
+	
+	  $results = $this->model_catalog_product->getProductsByCategoryId($category_id);
+	
+	  foreach ($results as $result) {
+		 $json[] = array(
+			'product_id' => $result['product_id'],
+			'name'       => html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'),	
+			'model'      => $result['model']
+		 );
+	  }
+	
+	  $this->response->setOutput(json_encode($json));
+	}
+	
+	public function related() {
+	  $json = array();
+	  
+	  $this->load->model('catalog/product');
+	
+	  if (isset($this->request->post['product_related'])) {
+		 $products = $this->request->post['product_related'];
+	  } else {
+		 $products = array();
+	  }
+	
+	  foreach ($products as $product_id) {
+      	 $product_info = $this->model_catalog_product->getProduct($product_id);
+	
+		 if ($product_info) {
+			$json[] = array(
+				'product_id' => $product_info['product_id'],
+				'name'       => html_entity_decode($product_info['name'], ENT_QUOTES, 'UTF-8'),	
+				'model'      => $product_info['model'],
+			);	
+		 }
+	  }
+	  
+	  $this->response->setOutput(json_encode($json));
+	}
+	// Former amazing product related
 		
 	public function autocomplete() {
 		$json = array();

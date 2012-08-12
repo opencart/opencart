@@ -297,22 +297,35 @@
                   <?php } ?>
                 </div></td>
             </tr>
+            <!-- Former amazing product related -->
             <tr>
-              <td><?php echo $entry_related; ?></td>
-              <td><input type="text" name="related" value="" /></td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td><div id="product-related" class="scrollbox">
-                  <?php $class = 'odd'; ?>
+                <td><?php echo $entry_related; ?></td>
+                <td><table>
+                    <tr>
+                      <td style="padding: 0;" colspan="3"><select id="category" style="margin-bottom: 5px;" onchange="getProducts();">
+                          <?php foreach ($categories as $category) { ?>
+                          <?php if (in_array((int)$category['category_id'], $product_category)) { ?>
+                              <option value="<?php echo (int)$category['category_id']; ?>" selected="selected"><?php echo $category['name']; ?></option>
+                          <?php } else { ?>
+                              <option value="<?php echo (int)$category['category_id']; ?>"><?php echo $category['name']; ?></option>
+                          <?php } ?>
+                          <?php } ?>
+                        </select></td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 0;"><select class="scrollbox" multiple="multiple" id="product"></select></td>
+                      <td style="vertical-align: middle;"><input type="button" value="--&gt;" onclick="addRelated();" />
+                      <br /><input type="button" value="&lt;--" onclick="removeRelated();" /></td>
+                      <td style="padding: 0;"><select class="scrollbox" multiple="multiple" id="related"></select></td>
+                    </tr>
+                  </table>
+                  <div id="product_related">
                   <?php foreach ($product_related as $product_related) { ?>
-                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div id="product-related<?php echo $product_related['product_id']; ?>" class="<?php echo $class; ?>"> <?php echo $product_related['name']; ?><img src="view/image/delete.png" />
                     <input type="hidden" name="product_related[]" value="<?php echo $product_related['product_id']; ?>" />
-                  </div>
-                  <?php } ?>
-                </div></td>
-            </tr>
+                    <?php } ?>
+                  </div></td>
+              </tr>
+            <!-- Former amazing product related -->
           </table>
         </div>
         <div id="tab-attribute">
@@ -1114,4 +1127,71 @@ $('#tabs a').tabs();
 $('#languages a').tabs(); 
 $('#vtab-option a').tabs();
 //--></script> 
+<script type="text/javascript"><!--
+function addRelated() {
+   $('#product :selected').each(function() {
+	  $(this).remove();
+	  
+	  $('#related option[value=\'' + $(this).attr('value') + '\']').remove();
+	  
+	  $('#related').append('<option value="' + $(this).attr('value') + '">' + $(this).text() + '</option>');
+	  
+	  $('#product_related input[value=\'' + $(this).attr('value') + '\']').remove();
+	  
+	  $('#product_related').append('<input type="hidden" name="product_related[]" value="' + $(this).attr('value') + '" />');
+   });
+}
+
+function removeRelated() {
+   $('#related :selected').each(function() {
+	  $(this).remove();
+	  
+	  $('#product_related input[value=\'' + $(this).attr('value') + '\']').remove();
+   });
+}
+
+function getProducts() {
+   $('#product option').remove();
+
+   <?php if (isset($this->request->get['product_id'])) {?>
+   var product_id = '<?php echo $this->request->get['product_id'] ?>';
+   <?php } else { ?>
+   var product_id = 0;
+   <?php } ?>
+
+   $.ajax({
+	  url: 'index.php?route=catalog/product/category&token=<?php echo $token; ?>&category_id=' + $('#category').attr('value'),
+	  dataType: 'json',
+	  success: function(data) {
+		 for (i = 0; i < data.length; i++) {
+			if (data[i]['product_id'] == product_id) { continue; }
+			 $('#product').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + ' (' + data[i]['model'] + ') </option>');
+		 }
+	  }
+   });
+}
+
+function getRelated() {
+   $('#related option').remove();
+   
+   $.ajax({
+	  url: 'index.php?route=catalog/product/related&token=<?php echo $token; ?>',
+	  type: 'POST',
+	  dataType: 'json',
+	  data: $('#product_related input'),
+	  success: function(data) {
+		 $('#product_related input').remove();
+		 
+		 for (i = 0; i < data.length; i++) {
+			 $('#related').append('<option value="' + data[i]['product_id'] + '">' + data[i]['name'] + ' (' + data[i]['model'] + ') </option>');
+			
+			$('#product_related').append('<input type="hidden" name="product_related[]" value="' + data[i]['product_id'] + '" />');
+		 }
+	  }
+   });
+}
+
+getProducts();
+getRelated();
+//--></script>
 <?php echo $footer; ?>

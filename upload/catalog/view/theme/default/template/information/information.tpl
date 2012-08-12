@@ -1,4 +1,6 @@
+<?php if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH']!='XMLHttpRequest') {?>
 <?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
+<?php } ?>
 <div id="content"><?php echo $content_top; ?>
   <div class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -11,4 +13,6 @@
     <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
   </div>
   <?php echo $content_bottom; ?></div>
+<?php if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH']!='XMLHttpRequest') {?>
 <?php echo $footer; ?>
+<?php } ?>

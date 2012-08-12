@@ -74,8 +74,11 @@ class Currency {
     	$string = '';
 
     	if (($symbol_left) && ($format)) {
-      		$string .= $symbol_left;
-    	}
+		// space between price and currency name
+		// $string .= $symbol_left;
+      		$string .= $symbol_left . ' ';
+ 		// space between price and currency name
+   	}
 
 		if ($format) {
 			$decimal_point = $this->language->get('decimal_point');
@@ -92,8 +95,11 @@ class Currency {
     	$string .= number_format(round($value, (int)$decimal_place), (int)$decimal_place, $decimal_point, $thousand_point);
 
     	if (($symbol_right) && ($format)) {
-      		$string .= $symbol_right;
-    	}
+		// space between price and currency name
+      		// $string .= $symbol_right;
+      		$string .= ' ' . $symbol_right;
+ 		// space between price and currency name
+   	}
 
     	return $string;
   	}

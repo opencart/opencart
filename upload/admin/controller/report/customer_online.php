@@ -86,7 +86,7 @@ class ControllerReportCustomerOnline extends Controller {
 			}
 								
       		$this->data['customers'][] = array(
-				'ip'         => long2ip($result['ip']),
+				'ip'         => $result['ip'],
 				'customer'   => $customer,
 				'url'        => $result['url'],
 				'referer'    => $result['referer'],

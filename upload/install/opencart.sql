@@ -2898,7 +2898,7 @@ CREATE TABLE `oc_user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_group_id` int(11) NOT NULL,
   `username` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `password` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `password` varchar(40) COLLATE utf8_bin NOT NULL DEFAULT '',
   `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '',
   `firstname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
   `lastname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',

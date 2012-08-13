@@ -568,12 +568,11 @@ class ModelCatalogProduct extends Model {
 	}
 	
 	public function getProductsIDbyCategoryID( $category_id, $order = '', $state = false ) {
-		$query = 'SELECT p2c.product_id AS product_id, p.status, p.date_added FROM ' . DB_PREFIX . 'product_to_category AS p2c LEFT JOIN `' . DB_PREFIX . 'product` AS p ON p.product_id = p2c.product_id WHERE category_id = ' . (int) $category_id . ( $state ? ' AND p.status = 1' : '' ) . ' ORDER BY ' . ( $order ? $order : 'p.date_added' ) . ' DESC';
-		$result = $this->db->query( $query );
+		$query = $this->db->query("SELECT p2c.product_id AS product_id, p.status, p.date_added FROM " . DB_PREFIX . "product_to_category AS p2c LEFT JOIN " . DB_PREFIX . "product AS p ON p.product_id = p2c.product_id WHERE category_id = " . (int) $category_id . ( $state ? " AND p.status = 1" : "" ) . " ORDER BY " . ( $order ? $order : "p.date_added" ) . " DESC");
 
 		$ret = array();
-		if( $result->num_rows ) {
-			foreach( $result->rows as $res ) {
+		if( $query->num_rows ) {
+			foreach( $query->rows as $res ) {
 				$ret[] = $res['product_id'];
 			}
 		}else{
@@ -584,10 +583,9 @@ class ModelCatalogProduct extends Model {
 	}
 
 	public function getProductCategory( $product_id ) {
-		$query = 'SELECT DISTINCT category_id FROM ' . DB_PREFIX . 'product_to_category WHERE product_id = ' . (int) $product_id . ' LIMIT 1';
-		$result = $this->db->query( $query );
+		$query = $this->db->query("SELECT DISTINCT category_id FROM " . DB_PREFIX . "product_to_category WHERE product_id = " . (int) $product_id . " LIMIT 1");
 
-		return $result->row['category_id'];
+		return $query->row['category_id'];
 	}
 	// Product prev/next
 			

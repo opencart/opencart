@@ -7049,7 +7049,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3965, 190, '10', 'Notranjsko-kraška', 1),
 (3966, 190, '11', 'Goriška', 1),
 (3967, 190, '12', 'Obalno-kraška', 1),
-(3968, 33, '', 'Ruse', 1);
+(3968, 33, '', 'Ruse', 1),
 (3969, 101, 'ALB', 'Alborz', 1);
 
 -- --------------------------------------------------------

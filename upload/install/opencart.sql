@@ -658,7 +658,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (123, 'Lithuania', 'LT', 'LTU', '', 0, 1),
 (124, 'Luxembourg', 'LU', 'LUX', '', 0, 1),
 (125, 'Macau', 'MO', 'MAC', '', 0, 1),
-(126, 'Macedonia', 'MK', 'MKD', '', 0, 1),
+(126, 'FYROM', 'MK', 'MKD', '', 0, 1),
 (127, 'Madagascar', 'MG', 'MDG', '', 0, 1),
 (128, 'Malawi', 'MW', 'MWI', '', 0, 1),
 (129, 'Malaysia', 'MY', 'MYS', '', 0, 1),

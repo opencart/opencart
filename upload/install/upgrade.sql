@@ -238,7 +238,7 @@ UPDATE `oc_order` set `payment_code` = replace(`payment_code`, 'alertpay', 'payz
 ALTER TABLE `oc_affiliate`ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' after `password`;
 ALTER TABLE `oc_customer` MODIFY `ip` varchar(40) NOT NULL;
 ALTER TABLE `oc_customer_ip` MODIFY `ip` varchar(40) NOT NULL;
-ALTER TABLE `oc_customer_ip_ip_blacklist` MODIFY `ip` varchar(40) NOT NULL;
+ALTER TABLE `oc_customer_ip_blacklist` MODIFY `ip` varchar(40) NOT NULL;
 ALTER TABLE oc_customer_group ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `password`;
 ALTER TABLE `oc_order` MODIFY `ip` varchar(40) NOT NULL;
 ALTER TABLE `oc_order` MODIFY `forwarded_ip` varchar(40) NOT NULL;

@@ -40,7 +40,7 @@
               <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
               <?php } ?></td>
             <td class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-              <?php if (!$product['stock']) { ?>
+              <?php if (isset($error_stock)) { ?>
               <span class="stock">***</span>
               <?php } ?>
               <div>

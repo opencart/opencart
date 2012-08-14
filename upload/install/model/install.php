@@ -24,7 +24,7 @@ class ModelInstall extends Model {
 						$query = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $query);
 						$query = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $query);
 						
-						$result = mysql_query($query, $connection);
+						$result = mysql_query($query, $connection); 
   
 						if (!$result) {
 							die(mysql_error());

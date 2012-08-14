@@ -250,18 +250,18 @@ ALTER TABLE `oc_order` MODIFY `forwarded_ip` varchar(40) NOT NULL;
 
 ALTER TABLE `oc_order_product` MODIFY `model` varchar(64) NOT NULL;
 
+
 ALTER TABLE oc_product ADD `ean` varchar(12) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `upc`;
 ALTER TABLE oc_product ADD `jan` varchar(12) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `ean`;
 ALTER TABLE oc_product ADD `isbn` varchar(12) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `jan`;
 ALTER TABLE oc_product ADD `mpn` varchar(12) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `isbn`;
 
-ALTER TABLE `oc_order_product` MODIFY `tag` text COLLATE utf8_bin NOT NULL;
+ALTER TABLE oc_product_description ADD `tag` text COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `meta_keyword`;
+
 FULLTEXT KEY `tag` (`tag`)
 
 
-
-
-
-ALTER TABLE `oc_user`      ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' after `password`;
-
+ALTER TABLE `oc_user` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' after `password`;
+ALTER TABLE `oc_user` MODIFY `password` varchar(40) NOT NULL;
+ALTER TABLE `oc_user` MODIFY `ip` varchar(40) NOT NULL;
 

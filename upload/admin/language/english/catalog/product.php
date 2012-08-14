@@ -79,4 +79,11 @@ $_['error_warning']          = 'Warning: Please check the form carefully for err
 $_['error_permission']       = 'Warning: You do not have permission to modify products!';
 $_['error_name']             = 'Product Name must be greater than 3 and less than 255 characters!';
 $_['error_model']            = 'Product Model must be greater than 3 and less than 64 characters!';
+
+// Including/excluding VAT / Product Tags
+$_['text_nonedefined']       = 'Nothing is defined!';
+$_['column_tags']            = 'Product Tags';
+$_['entry_price_exclude_vat']  = 'Price excluding VAT:';
+$_['entry_price_include_vat']  = 'Price including VAT:';
+// Including/excluding VAT / Product Tags
 ?>

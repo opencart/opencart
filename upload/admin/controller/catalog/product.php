@@ -346,6 +346,25 @@ class ControllerCatalogProduct extends Controller {
 		$results = $this->model_catalog_product->getProducts($data);
 				    	
 		foreach ($results as $result) {
+			
+			// Show Tags In Product List
+            $tags = $this->model_catalog_product->getProductTags($result['product_id']);
+			
+			$tags_array = array();
+			
+			if ($tags){
+			  foreach ($tags as $tag) {
+				  $tags_array[] = $tag;
+			  }
+			}
+			
+			if (count($tags_array) > 0){
+				$str_tags = substr(implode("," , $tags_array), 0, 100) . " ..."; 
+			} else {
+				$str_tags = $this->language->get('text_nonedefined');
+			}	
+			// Show Tags In Product List
+
 			$action = array();
 			
 			$action[] = array(
@@ -372,6 +391,9 @@ class ControllerCatalogProduct extends Controller {
 			}
 	
       		$this->data['products'][] = array(
+				// Show Tags In Product List
+				'tags'		 => $str_tags,
+				// Show Tags In Product List
 				'product_id' => $result['product_id'],
 				'name'       => $result['name'],
 				'model'      => $result['model'],
@@ -404,6 +426,12 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');		
 		$this->data['button_delete'] = $this->language->get('button_delete');		
 		$this->data['button_filter'] = $this->language->get('button_filter');
+		
+		// Show Tags In Product List
+		$this->data['text_nonedefined'] = $this->language->get('text_nonedefined');
+		$this->data['column_tags'] = $this->language->get('column_tags');
+		// Show Tags In Product List
+		 
 		 
  		$this->data['token'] = $this->session->data['token'];
 		
@@ -562,6 +590,10 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['entry_stock_status'] = $this->language->get('entry_stock_status');
     	$this->data['entry_price'] = $this->language->get('entry_price');
 		$this->data['entry_tax_class'] = $this->language->get('entry_tax_class');
+        // Including/excluding VAT
+		$this->data['entry_price_include_vat'] = $this->language->get('entry_price_include_vat');
+		$this->data['entry_price_exclude_vat'] = $this->language->get('entry_price_exclude_vat');
+        // Including/excluding VAT
 		$this->data['entry_points'] = $this->language->get('entry_points');
 		$this->data['entry_option_points'] = $this->language->get('entry_option_points');
 		$this->data['entry_subtract'] = $this->language->get('entry_subtract');
@@ -803,6 +835,16 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$this->data['keyword'] = '';
 		}
+
+		// Show Tags In Product List
+		if (isset($this->request->post['product_tag'])) {
+			$this->data['product_tag'] = $this->request->post['product_tag'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$this->data['product_tag'] = $this->model_catalog_product->getProductTags($this->request->get['product_id']);
+		} else {
+			$this->data['product_tag'] = array();
+		}
+		// Show Tags In Product List
 		
 		if (isset($this->request->post['image'])) {
 			$this->data['image'] = $this->request->post['image'];
@@ -851,9 +893,31 @@ class ControllerCatalogProduct extends Controller {
     	}
 		
 		$this->load->model('localisation/tax_class');
+
+        // Including/excluding VAT
+		$this->load->model('localisation/tax_rate');
+        // Including/excluding VAT
 		
 		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
-    	
+ 
+        // Including/excluding VAT
+		$tax_rates = $this->model_localisation_tax_rate->getTaxRates();
+		foreach ($this->data['tax_classes'] as $tax_class) {
+		  $tax_rules = $this->model_localisation_tax_class->getTaxRules($tax_class['tax_class_id']);
+		  
+		  foreach ($tax_rules as $tax_rule) {
+			if($tax_rule['based'] == 'shipping') {
+			  foreach ($tax_rates as $tax_rate) {
+				if($tax_rate['tax_rate_id'] == $tax_rule['tax_rate_id'] && $tax_rate['type'] == 'P') {
+				  $this->data['tax_rates'][] = array('tax_class_id' => $tax_class['tax_class_id'], 'rate' => $tax_rate['rate']);
+				  break;
+				}
+			  }
+			}
+		  }
+		}
+        // Including/excluding VAT
+   	
 		if (isset($this->request->post['tax_class_id'])) {
       		$this->data['tax_class_id'] = $this->request->post['tax_class_id'];
     	} elseif (!empty($product_info)) {

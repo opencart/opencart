@@ -25,7 +25,21 @@
           <?php foreach ($languages as $language) { ?>
           <div id="language<?php echo $language['language_id']; ?>">
             <table class="form">
-              <tr>
+            <!-- Show Enable/Disable Product Status copied to here for direct access -->
+             <tr>
+              <td><?php echo $entry_status; ?></td>
+              <td><select name="status">
+                  <?php if ($status) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <?php } ?>
+                </select></td>
+            </tr>
+            <!-- Show Enable/Disable Product Status copied to here for direct access -->
+            <tr>
                 <td><span class="required">*</span> <?php echo $entry_name; ?></td>
                 <td><input type="text" name="product_description[<?php echo $language['language_id']; ?>][name]" size="100" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['name'] : ''; ?>" />
                   <?php if (isset($error_name[$language['language_id']])) { ?>
@@ -89,13 +103,17 @@
               <td><?php echo $entry_location; ?></td>
               <td><input type="text" name="location" value="<?php echo $location; ?>" /></td>
             </tr>
+            <!-- Including/excluding VAT 
             <tr>
               <td><?php echo $entry_price; ?></td>
               <td><input type="text" name="price" value="<?php echo $price; ?>" /></td>
             </tr>
+            Including/excluding VAT -->	    
             <tr>
               <td><?php echo $entry_tax_class; ?></td>
-              <td><select name="tax_class_id">
+	          <!-- Including/excluding VAT -->
+              <td><select name="tax_class_id" onChange="updateGross()">
+	          <!-- Including/excluding VAT -->	      
                   <option value="0"><?php echo $text_none; ?></option>
                   <?php foreach ($tax_classes as $tax_class) { ?>
                   <?php if ($tax_class['tax_class_id'] == $tax_class_id) { ?>
@@ -105,8 +123,18 @@
                   <?php } ?>
                   <?php } ?>
                 </select></td>
-            </tr>
-            <tr>
+          </tr>
+          <!-- Including/excluding VAT -->
+          <tr>
+            <td><?php echo $entry_price_exclude_vat; ?></td>
+            <td><input type="text" name="price" value="<?php echo $price; ?>" OnKeyUp="updateGross()" /></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_price_include_vat; ?></td>
+            <td><input type="text" name="price_gross" value="" OnKeyUp="updateNet()" /></td>
+          </tr>
+          <!-- Including/excluding VAT -->
+          <tr>
               <td><?php echo $entry_quantity; ?></td>
               <td><input type="text" name="quantity" value="<?php echo $quantity; ?>" size="2" /></td>
             </tr>
@@ -1194,4 +1222,46 @@ function getRelated() {
 getProducts();
 getRelated();
 //--></script>
+<!-- Including/excluding VAT -->
+<script type="text/javascript"><!--
+function doRound(x, places) {
+  return Math.round(x * Math.pow(10, places)) / Math.pow(10, places);
+}
+
+function getTaxRate() {
+  var selected_value = $('select[name=\'tax_class_id\']').val();
+  if ((selected_value) && (tax_rates[selected_value] > 0) ) {
+    return tax_rates[selected_value];
+  } else {
+    return 0;
+  }
+}
+function updateNet() {
+  var netValue = $("input[name='price_gross']").val();
+  var tax_rate = getTaxRate();
+  if (tax_rate > 0) {
+    netValue = netValue / ((tax_rate / 100) + 1);
+  }
+  $("input[name='price']").val(doRound(netValue, 4));
+}
+
+function updateGross() {
+  var grossValue = $("input[name='price']").val();
+  var tax_rate = getTaxRate();
+  if (tax_rate > 0) {
+    grossValue = grossValue * ((tax_rate / 100) + 1);
+  }
+  $("input[name='price_gross']").val(doRound(grossValue, 4));
+}
+
+var tax_rates = new Array();
+<?php
+    for ($i=0, $n=sizeof($tax_rates); $i<$n; $i++) {
+      if ($tax_rates[$i]['tax_class_id'] > 0) {
+        echo 'tax_rates["' . $tax_rates[$i]['tax_class_id'] . '"] = ' . $tax_rates[$i]['rate'] . ';' . "\n";
+      }
+    }
+?>
+//--></script>
+<!-- Including/excluding VAT -->
 <?php echo $footer; ?>

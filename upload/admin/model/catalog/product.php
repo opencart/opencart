@@ -596,6 +596,26 @@ class ModelCatalogProduct extends Model {
 		return $product_related_data;
 	}
 	
+	// Show Tags In Product List
+	public function getProductTags($product_id) {
+		$product_tag_data = array();
+		
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_description WHERE product_id = '" . (int)$product_id . "'");
+		
+		$tag_data = array();
+		
+		foreach ($query->rows as $result) {
+			$tag_data[$result['language_id']][] = $result['tag'];
+		}
+		
+		foreach ($tag_data as $language => $tags) {
+			$product_tag_data[$language] = implode(',', $tags);
+		}
+		
+		return $product_tag_data;
+	}
+	// Show Tags In Product List
+	
 	public function getTotalProducts($data = array()) {
 		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id)";
 

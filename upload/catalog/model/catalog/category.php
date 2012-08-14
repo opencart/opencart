@@ -7,9 +7,41 @@ class ModelCatalogCategory extends Model {
 	}
 	
 	public function getCategories($parent_id = 0) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_description cd ON (c.category_id = cd.category_id) LEFT JOIN " . DB_PREFIX . "category_to_store c2s ON (c.category_id = c2s.category_id) WHERE c.parent_id = '" . (int)$parent_id . "' AND cd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "'  AND c.status = '1' ORDER BY c.sort_order, LCASE(cd.name)");
+	
+		$sql = "SELECT *,
+				(SELECT COUNT(product_id) FROM " . DB_PREFIX . "product_to_category p2c WHERE p2c.category_id = c.category_id) products
+				FROM " . DB_PREFIX . "category c 
+				LEFT JOIN " . DB_PREFIX . "category_description cd ON (c.category_id = cd.category_id) 
+				LEFT JOIN " . DB_PREFIX . "category_to_store c2s ON (c.category_id = c2s.category_id) 
+				WHERE 1 ";
+		if($parent_id >= 0) {
+		
+			// Specify '-1' to select all categories
+			$sql .= "AND c.parent_id = '" . (int)$parent_id . "' ";
+		}
+		$sql .= "AND cd.language_id = '" . (int)$this->config->get('config_language_id') . "' 
+				AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "'  
+				AND c.status = '1' 
+				ORDER BY c.sort_order, LCASE(cd.name)";
+		$query = $this->db->query($sql);
 		
 		return $query->rows;
+	}
+	
+	public function setCategoryTotals($category) {
+	
+		$category['total'] = $category['products'];
+		if (isset($category['children']) && is_array($category['children'])) {
+		
+			$children = array();
+		
+			foreach ($category['children'] as $child_id=>$child) {
+				$children[$child_id] = $this->setCategoryTotals($child);
+				$category['total'] += $children[$child_id]['total'];
+			}
+			$category['children'] = $children;
+		}
+		return $category;
 	}
 
 	public function getCategoriesByParentId($category_id) {

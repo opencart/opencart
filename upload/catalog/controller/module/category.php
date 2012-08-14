@@ -29,38 +29,59 @@ class ControllerModuleCategory extends Controller {
 		
 		$this->data['categories'] = array();
 					
-		$categories = $this->model_catalog_category->getCategories(0);
+		$categories = $this->model_catalog_category->getCategories(-1); // Select all categories
 		
-		foreach ($categories as $category) {
-			$total = $this->model_catalog_product->getTotalProducts(array('filter_category_id'  => $category['category_id']));
+		$catrefs = array();
+		$catlist = array();
+		foreach($categories as $tmp) {
+			
+			$thisref = &$catrefs[ $tmp['category_id'] ];
+			$thisref['parent_id'] = $tmp['parent_id'];
+			$thisref['name'] = $tmp['name'];
+			$thisref['products'] = $tmp['products'];
+			$thisref['total'] = $tmp['products'];
+			
+			if($tmp['parent_id'] == 0) {
+
+				$catlist[ $tmp['category_id'] ] = & $thisref;
+			}
+			else {
+
+				$catrefs[ $tmp['parent_id'] ]['children'][ $tmp['category_id'] ] = &$thisref;
+			}
+		}
+
+		foreach($catlist as $cat_id=>$category) {
+
+			$catlist[$cat_id] = $this->model_catalog_category->setCategoryTotals($category);
+		}
+		
+		
+		foreach($catlist as $cat_id=>$category) {
+
+			$total = $category['total'];
 			
 			$children_data = array();
 			
-			$children = $this->model_catalog_category->getCategories($category['category_id']);
+			if(!empty($category['children'])) {
 			
-			foreach ($children as $child) {
-				$data = array(
-					'filter_category_id'  => $child['category_id'],
-					'filter_sub_category' => true
-				);
+				foreach($category['children'] as $child_id=>$child) {
 				
-				$product_total = $this->model_catalog_product->getTotalProducts($data);
-				
-				$total += $product_total;
-				
-				$children_data[] = array(
-					'category_id' => $child['category_id'],
-					'name'        => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),
-					'href'        => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])	
-				);		
+					$children_data[] = array(
+						'category_id'	=> $child_id,
+						'name'			=> $child['name'] . ($this->config->get('config_product_count') ? ' (' . $child['products'] . ')' : ''),
+						'href'			=> $this->url->link('product/category', 'path=' . $cat_id . '_' . $child_id)
+					);
+				}
 			}
-							
+			
 			$this->data['categories'][] = array(
-				'category_id' => $category['category_id'],
-				'name'        => $category['name'] . ($this->config->get('config_product_count') ? ' (' . $total . ')' : ''),
-				'children'    => $children_data,
-				'href'        => $this->url->link('product/category', 'path=' . $category['category_id'])
-			);	
+				'category_id'	=> $cat_id,
+				'name'			=> $category['name'] . ($this->config->get('config_product_count') ? ' (' . $category['total'] . ')' : ''),
+				'children'		=> $children_data,
+				'href' 			=> $this->url->link('product/category', 'path=' . $cat_id)
+			);
+			
 		}
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/category.tpl')) {
@@ -71,5 +92,6 @@ class ControllerModuleCategory extends Controller {
 		
 		$this->render();
   	}
+
 }
 ?>

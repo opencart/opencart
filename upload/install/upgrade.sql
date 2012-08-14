@@ -221,17 +221,10 @@ ALTER TABLE `oc_order` ADD payment_company_id varchar(32) NOT NULL DEFAULT '' CO
 ALTER TABLE `oc_order` ADD payment_tax_id varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER payment_company_id;
 ALTER TABLE `oc_information` ADD bottom int(1) NOT NULL DEFAULT '1' COMMENT '' AFTER information_id;
 
-CREATE TABLE IF NOT EXISTS oc_order_misc (
-    order_id int(11) NOT NULL DEFAULT 0 COMMENT '',
-    `key` varchar(64) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
-    value text NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin,
-    PRIMARY KEY (order_id, `key`)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 #### Start 1.5.4
 
 CREATE TABLE IF NOT EXISTS `oc_customer_online` (
-  `ip` bigint(10) NOT NULL,
+  `ip` varchar(40) COLLATE utf8_bin NOT NULL,
   `customer_id` int(11) NOT NULL,
   `url` text COLLATE utf8_bin NOT NULL,
   `referer` text COLLATE utf8_bin NOT NULL,
@@ -244,6 +237,31 @@ UPDATE `oc_setting` set `key` = replace(`key`, 'alertpay', 'payza');
 UPDATE `oc_order` set `payment_method` = replace(`payment_method`, 'AlertPay', 'Payza');
 UPDATE `oc_order` set `payment_code` = replace(`payment_code`, 'alertpay', 'payza');
 
-ALTER TABLE `oc_affiliate` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER password;
-ALTER TABLE `oc_customer` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER password;
-ALTER TABLE `oc_user` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER password;
+ALTER TABLE `oc_affiliate` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' after `password`;
+
+ALTER TABLE `oc_customer`  MODIFY `ip` varchar(40) NOT NULL;
+ALTER TABLE `oc_customer_ip`  MODIFY `ip` varchar(40) NOT NULL;
+ALTER TABLE `oc_customer_ip_ip_blacklist`  MODIFY `ip` varchar(40) NOT NULL;
+
+ALTER TABLE oc_customer_group ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `password`;
+
+ALTER TABLE `oc_order` MODIFY `ip` varchar(40) NOT NULL;
+ALTER TABLE `oc_order` MODIFY `forwarded_ip` varchar(40) NOT NULL;
+
+ALTER TABLE `oc_order_product` MODIFY `model` varchar(64) NOT NULL;
+
+ALTER TABLE oc_product ADD `ean` varchar(12) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `upc`;
+ALTER TABLE oc_product ADD `jan` varchar(12) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `ean`;
+ALTER TABLE oc_product ADD `isbn` varchar(12) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `jan`;
+ALTER TABLE oc_product ADD `mpn` varchar(12) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `isbn`;
+
+ALTER TABLE `oc_order_product` MODIFY `tag` text COLLATE utf8_bin NOT NULL;
+FULLTEXT KEY `tag` (`tag`)
+
+
+
+
+
+ALTER TABLE `oc_user`      ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' after `password`;
+
+

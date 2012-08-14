@@ -2,6 +2,7 @@
 class ModelUpgrade extends Model {
 	public function mysql($data, $sqlfile) {
 		ini_set('display_errors', 1);
+		
 		error_reporting(E_ALL);
 
 		$connection = mysql_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD);
@@ -13,7 +14,9 @@ class ModelUpgrade extends Model {
 
 		$file = DIR_APPLICATION . $sqlfile;
 
-		if (!file_exists($file)) { die('Could not load sql file: ' . $file); }
+		if (!file_exists($file)) { 
+			die('Could not load sql file: ' . $file); 
+		}
 
 		if ($sql = file($file)) {
 			$query = '';
@@ -37,37 +40,62 @@ class ModelUpgrade extends Model {
 					// For example, ALTER TABLE will error if the table has since been removed,
 					// So validate the table exists first, etc.
 					if (preg_match('/^ALTER TABLE (.+?) ADD PRIMARY KEY/', $line, $matches)) {
-						$info = mysql_fetch_assoc(mysql_query(sprintf("SHOW KEYS FROM %s",$matches[1]), $connection));
-						if ($info['Key_name'] == 'PRIMARY') { continue; }
+						$info = mysql_fetch_assoc(mysql_query(sprintf("SHOW KEYS FROM %s", $matches[1]), $connection));
+						
+						if ($info['Key_name'] == 'PRIMARY') { 
+							continue; 
+						}
 					}
 					if (preg_match('/^ALTER TABLE (.+?) ADD INDEX (.+?) /', $line, $matches)) {
-						$info = mysql_fetch_assoc(mysql_query(sprintf("SHOW INDEX FROM %s",$matches[1]), $connection));
-						if ($info['Key_name'] == 'PRIMARY') { continue; }
+						$info = mysql_fetch_assoc(mysql_query(sprintf("SHOW INDEX FROM %s", $matches[1]), $connection));
+						
+						if ($info['Key_name'] == 'PRIMARY') { 
+							continue; 
+						}
 					}
 					if (preg_match('/^ALTER TABLE (.+?) ADD PRIMARY KEY/', $line, $matches)) {
 						$info = mysql_fetch_assoc(mysql_query(sprintf("SHOW KEYS FROM %s",$matches[1]), $connection));
-						if ($info['Key_name'] == 'PRIMARY') { continue; }
-					}
-					if (preg_match('/^ALTER TABLE (.+?) ADD (.+?) /', $line, $matches)) {
-						if (@mysql_num_rows(@mysql_query(sprintf("SHOW COLUMNS FROM %s LIKE '%s'", $matches[1],str_replace('`', '', $matches[2])), $connection)) > 0) { continue; }
-					}
-					if (preg_match('/^ALTER TABLE (.+?) DROP (.+?) /', $line, $matches)) {
-						if (@mysql_num_rows(@mysql_query(sprintf("SHOW COLUMNS FROM %s LIKE '%s'", $matches[1],str_replace('`', '', $matches[2])), $connection)) <= 0) { continue; }
-					}
-					if (preg_match('/^ALTER TABLE ([^\s]+) DEFAULT (.+?) /', $line, $matches)) {
-						if (@mysql_num_rows(@mysql_query(sprintf("SHOW TABLES LIKE '%s'", str_replace('`', '', $matches[1])), $connection)) <= 0) { continue; }
-					}
-					if (preg_match('/^ALTER TABLE (.+?) MODIFY (.+?) /', $line, $matches)) {
-						if (@mysql_num_rows(@mysql_query(sprintf("SHOW COLUMNS FROM %s LIKE '%s'", $matches[1],str_replace('`', '', $matches[2])), $connection)) <= 0) { continue; }
-					}
-					if (strpos($line, 'ALTER TABLE') !== false && strpos($line, 'DROP') !== false && strpos($line, 'PRIMARY') === false) {
-						$params = explode(' ', $line);
-						if ($params[3] == 'DROP') {
-							if (@mysql_num_rows(@mysql_query(sprintf("SHOW COLUMNS FROM $params[2] LIKE '$params[4]'", $matches[1],str_replace('`', '', $matches[2])), $connection)) <= 0) { continue; }
+						
+						if ($info['Key_name'] == 'PRIMARY') { 
+							continue; 
 						}
 					}
+					if (preg_match('/^ALTER TABLE (.+?) ADD (.+?) /', $line, $matches)) {
+						if (@mysql_num_rows(@mysql_query(sprintf("SHOW COLUMNS FROM %s LIKE '%s'", $matches[1],str_replace('`', '', $matches[2])), $connection)) > 0) { 
+							continue; 
+						}
+					}
+					if (preg_match('/^ALTER TABLE (.+?) DROP (.+?) /', $line, $matches)) {
+						if (@mysql_num_rows(@mysql_query(sprintf("SHOW COLUMNS FROM %s LIKE '%s'", $matches[1],str_replace('`', '', $matches[2])), $connection)) <= 0) { 
+							continue; 
+						}
+					}
+					if (preg_match('/^ALTER TABLE ([^\s]+) DEFAULT (.+?) /', $line, $matches)) {
+						if (@mysql_num_rows(@mysql_query(sprintf("SHOW TABLES LIKE '%s'", str_replace('`', '', $matches[1])), $connection)) <= 0) { 
+							continue; 
+						}
+					}
+					
 					if (preg_match('/^ALTER TABLE (.+?) MODIFY (.+?) /', $line, $matches)) {
-						if (@mysql_num_rows(@mysql_query(sprintf("SHOW COLUMNS FROM %s LIKE '%s'", $matches[1],str_replace('`', '', $matches[2])), $connection)) <= 0) { continue; }
+						if (@mysql_num_rows(@mysql_query(sprintf("SHOW COLUMNS FROM %s LIKE '%s'", $matches[1],str_replace('`', '', $matches[2])), $connection)) <= 0) { 
+							continue; 
+						}
+					}
+					
+					if (strpos($line, 'ALTER TABLE') !== false && strpos($line, 'DROP') !== false && strpos($line, 'PRIMARY') === false) {
+						$params = explode(' ', $line);
+						
+						if ($params[3] == 'DROP') {
+							if (@mysql_num_rows(@mysql_query(sprintf("SHOW COLUMNS FROM $params[2] LIKE '$params[4]'", $matches[1],str_replace('`', '', $matches[2])), $connection)) <= 0) { 
+								continue;
+							}
+						}
+					}
+					
+					if (preg_match('/^ALTER TABLE (.+?) MODIFY (.+?) /', $line, $matches)) {
+						if (@mysql_num_rows(@mysql_query(sprintf("SHOW COLUMNS FROM %s LIKE '%s'", $matches[1],str_replace('`', '', $matches[2])), $connection)) <= 0) { 
+							continue;
+						}
 					}
 
 					$query .= $line;
@@ -142,12 +170,16 @@ class ModelUpgrade extends Model {
 
 		// Customer Group 'name' field moved to new customer_group_description table. Need to loop through and move over.
 		$column_query = $db->query("DESC " . DB_PREFIX . "customer_group `name`");
+		
 		if ($column_query->num_rows) {
 			$customer_group_query = $db->query("SELECT * FROM " . DB_PREFIX . "customer_group");
+			
 			$default_language_query = $db->query("SELECT language_id FROM " . DB_PREFIX . "language WHERE code = '" . $settings['config_admin_language'] . "'");
+			
 			$default_language_id = $default_language_query->row['language_id'];
+			
 			foreach ($customer_group_query->rows as $customer_group) {
-				$db->query("INSERT INTO " . DB_PREFIX . "customer_group_description SET customer_group_id = '" . (int)$customer_group['customer_group_id'] . "', language_id = '" . (int)$default_language_id . "', `name` = '" . $db->escape($customer_group['name']) . "' ON DUPLICATE KEY UPDATE customer_group_id=customer_group_id");
+				$db->query("INSERT INTO " . DB_PREFIX . "customer_group_description SET customer_group_id = '" . (int)$customer_group['customer_group_id'] . "', language_id = '" . (int)$default_language_id . "', `name` = '" . $db->escape($customer_group['name']) . "' ON DUPLICATE KEY UPDATE customer_group_id = customer_group_id");
 			}
 			// Comment this for now in case people want to roll back to 1.5.2 from 1.5.3
 			// Uncomment it when 1.5.4 is out.
@@ -159,6 +191,7 @@ class ModelUpgrade extends Model {
 		// In 1.5.3 the default install uses "1" as the "Default" customer group.
 		// Since this is an upgrade script and only triggers if the checkboxes aren't selected, I use 8 since that is what people will be upgrading from.
 		$query = $db->query("SELECT setting_id FROM " . DB_PREFIX . "setting WHERE `group` = 'config' AND `key` = 'config_customer_group_display'");
+		
 		if (!$query->num_rows) {
 			$db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = 0, `group` = 'config', `key` = 'config_customer_group_display', `value` = 'a:1:{i:0;s:1:\"8\";}', `serialized` = 1");
 		}
@@ -191,6 +224,7 @@ class ModelUpgrade extends Model {
 					$schema = 'http';
 					$http_catalog = false;
 					$https_server_idx = false;
+					
 					foreach ($lines as $i => $line) {
 						if (strpos($line, 'HTTPS_CATALOG') !== false) {
 							$exists = true;

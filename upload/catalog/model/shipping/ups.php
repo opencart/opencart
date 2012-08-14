@@ -203,23 +203,21 @@ class ModelShippingUps extends Model {
 				$url = 'https://wwwcie.ups.com/ups.app/xml/Rate';
 			}
 			
-			$ch = curl_init($url);  
+			$curl = curl_init($url);  
 			
-			curl_setopt($ch, CURLOPT_HEADER, 0);  
-			curl_setopt($ch, CURLOPT_POST, 1);  
-			curl_setopt($ch, CURLOPT_TIMEOUT, 60);  
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);  
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);  
-			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);  
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);  
+			curl_setopt($curl, CURLOPT_HEADER, 0);  
+			curl_setopt($curl, CURLOPT_POST, 1);  
+			curl_setopt($curl, CURLOPT_TIMEOUT, 60);  
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);  
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);  
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);  
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $xml);  
 			
-			$result = curl_exec($ch);  
+			$result = curl_exec($curl);  
 			
-			curl_close($ch); 
+			curl_close($curl); 
 					
 			$error = '';
-			
-			$error_msg = '';
 			
 			$quote_data = array();
 			
@@ -239,11 +237,7 @@ class ModelShippingUps extends Model {
 				$response_status_code = $response->getElementsByTagName('ResponseStatusCode');
 				
 				if ($response_status_code->item(0)->nodeValue != '1') {
-					$error = $response->getElementsByTagName('Error')->item(0);
-					
-					$error_msg = $error->getElementsByTagName('ErrorCode')->item(0)->nodeValue;
-
-					$error_msg .= ': ' . $error->getElementsByTagName('ErrorDescription')->item(0)->nodeValue;
+					$error = $response->getElementsByTagName('Error')->item(0)->getElementsByTagName('ErrorCode')->item(0)->nodeValue . ': ' . $response->getElementsByTagName('Error')->item(0)->getElementsByTagName('ErrorDescription')->item(0)->nodeValue;
 				} else {
 					$rated_shipments = $rating_service_selection_response->getElementsByTagName('RatedShipment');
 	
@@ -286,7 +280,7 @@ class ModelShippingUps extends Model {
 				'title'      => $title,
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('ups_sort_order'),
-				'error'      => $error_msg
+				'error'      => $error
 			);
 		}
 		

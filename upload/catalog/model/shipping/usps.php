@@ -315,15 +315,15 @@ class ModelShippingUsps extends Model {
 			}
 
 			if ($status) {
-				$ch = curl_init();
+				$curl = curl_init();
 
-				curl_setopt($ch, CURLOPT_URL, 'production.shippingapis.com/ShippingAPI.dll?' . $request);
-				curl_setopt($ch, CURLOPT_HEADER, 0);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($curl, CURLOPT_URL, 'production.shippingapis.com/ShippingAPI.dll?' . $request);
+				curl_setopt($curl, CURLOPT_HEADER, 0);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
-				$result = curl_exec($ch);
+				$result = curl_exec($curl);
 
-				curl_close($ch);
+				curl_close($curl);
 
 				// strip reg, trade and ** out 01-02-2011
 				$result = str_replace('&amp;lt;sup&amp;gt;&amp;amp;reg;&amp;lt;/sup&amp;gt;', '', $result);
@@ -404,7 +404,7 @@ class ModelShippingUsps extends Model {
 								$error = $package->getElementsByTagName('Error')->item(0);
 
 								$method_data = array(
-									'id'         => 'usps',
+									'code'       => 'usps',
 									'title'      => $this->language->get('text_title'),
 									'quote'      => $quote_data,
 									'sort_order' => $this->config->get('usps_sort_order'),

@@ -72,10 +72,6 @@ ALTER TABLE oc_tax_rate DROP priority;
 ALTER TABLE oc_tax_rate MODIFY rate decimal(15,4) NOT NULL DEFAULT '0.0000' COMMENT '';
 ALTER TABLE oc_tax_rate DROP description;
 
-ALTER TABLE oc_product_tag ADD INDEX product_id (product_id);
-ALTER TABLE oc_product_tag ADD INDEX language_id (language_id);
-ALTER TABLE oc_product_tag ADD INDEX tag (tag);
-
 
 #### START 1.5.2
 
@@ -242,8 +238,6 @@ ALTER TABLE `oc_affiliate` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAU
 ALTER TABLE `oc_customer`  MODIFY `ip` varchar(40) NOT NULL;
 ALTER TABLE `oc_customer_ip`  MODIFY `ip` varchar(40) NOT NULL;
 ALTER TABLE `oc_customer_ip_ip_blacklist`  MODIFY `ip` varchar(40) NOT NULL;
-
-ALTER TABLE oc_customer_group ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `password`;
 
 ALTER TABLE `oc_order` MODIFY `ip` varchar(40) NOT NULL;
 ALTER TABLE `oc_order` MODIFY `forwarded_ip` varchar(40) NOT NULL;

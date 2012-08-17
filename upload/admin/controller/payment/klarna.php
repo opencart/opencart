@@ -295,7 +295,9 @@ class ControllerPaymentKlarna extends Controller {
 
             $responseString = curl_exec($ch);
             
-            $pclasses = xmlrpc_decode($responseString);
+            //$pclasses = xmlrpc_decode($responseString);
+            // @TODO: Write a PHP implementation of xmlrpc_decode
+            $pclasses = array();
             
             $classes = array();
             

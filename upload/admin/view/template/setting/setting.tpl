@@ -362,7 +362,7 @@
                 <input type="radio" name="config_customer_online" value="0" checked="checked" />
                 <?php echo $text_no; ?>
                 <?php } ?></td>
-            </tr>          
+            </tr>
             <tr>
               <td><?php echo $entry_customer_group; ?></td>
               <td><select name="config_customer_group_id">
@@ -851,7 +851,10 @@
             </tr>
             <tr>
               <td><?php echo $entry_encryption; ?></td>
-              <td><input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" /></td>
+              <td><input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" />
+                <?php if ($error_encryption) { ?>
+                <span class="error"><?php echo $error_encryption; ?></span>
+                <?php } ?></td>
             </tr>
             <tr>
               <td><?php echo $entry_compression; ?></td>

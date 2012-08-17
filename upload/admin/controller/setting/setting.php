@@ -276,6 +276,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['error_admin_limit'] = '';
 		}
 		
+		if (isset($this->error['encryption'])) {
+			$this->data['error_encryption'] = $this->error['encryption'];
+		} else {
+			$this->data['error_encryption'] = '';
+		}		
+		
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
@@ -1026,14 +1032,18 @@ class ControllerSettingSetting extends Controller {
 			$this->error['error_filename'] = $this->language->get('error_error_filename');
 		}
 		
-		if (!$this->request->post['config_admin_limit']) {
-			$this->error['admin_limit'] = $this->language->get('error_limit');
-		}
-		
 		if (!$this->request->post['config_catalog_limit']) {
 			$this->error['catalog_limit'] = $this->language->get('error_limit');
 		}
 		
+		if (!$this->request->post['config_admin_limit']) {
+			$this->error['admin_limit'] = $this->language->get('error_limit');
+		}
+				
+		if ((utf8_strlen($this->request->post['config_encryption']) < 3) || (utf8_strlen($this->request->post['config_encryption']) > 32)) {
+			$this->error['encryption'] = $this->language->get('error_encryption');
+		}
+				
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}

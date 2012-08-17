@@ -27,7 +27,10 @@
                     <div id="tab-general" class="page">
                         <table class="form">
                             <tr>
-                                <td><span class="required">*</span> <?php echo $entry_merchant; ?></td>
+                                <td>
+                                    <span class="required">*</span> <?php echo $entry_merchant; ?><br />
+                                    <span class="help"><?php echo $help_merchant ?></span>
+                                </td>
                                 <td>
                                     <input type="text" name="klarna_merchant" value="<?php echo $klarna_merchant; ?>" />
                                     <?php if ($error_merchant) { ?>
@@ -36,7 +39,10 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><span class="required">*</span> <?php echo $entry_secret; ?></td>
+                                <td>
+                                    <span class="required">*</span> <?php echo $entry_secret; ?><br />
+                                    <span class="help"><?php echo $help_secret ?></span>
+                                </td>
                                 <td>
                                     <input type="text" name="klarna_secret" value="<?php echo $klarna_secret; ?>" />
                                     <?php if ($error_secret) { ?>
@@ -90,39 +96,23 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><?php echo $entry_invoice_fee; ?></td>
                                 <td>
-                                    <input type="text" name="klarna_invoice_fee" value="<?php echo $klarna_invoice_fee; ?>" />
-                                    <?php if ($error_klarna_invoice_fee) { ?>
-                                        <span class="error"><?php echo $error_klarna_invoice_fee; ?></span>
+                                    <?php echo $entry_minimum_amount; ?>
+                                    <span class="help"><?php echo $help_minimum_total ?></span>
+                                </td>
+                                <td>
+                                    <input type="text" name="klarna_minimum_amount" value="<?php echo $klarna_minimum_amount; ?>" />
+                                    <?php if ($error_minimum_amount) { ?>
+                                        <span class="error"><?php echo $error_minimum_amount; ?></span>
                                     <?php } ?>
                                 </td>
                             </tr>
                             <tr>
-                                <td><?php echo $entry_invoice_fee_tax_class; ?></td>
-                                <td>
-                                    <select name="klarna_invoice_fee_tax_class">
-                                        <?php foreach($tax_classes as $tax_class) { ?>
-                                            <?php if ($klarna_invoice_fee_tax_class == $tax_class['tax_class_id']) {?>
-                                                <option selected="selected" value="<?php echo $tax_class['tax_class_id'] ?>"><?php echo $tax_class['title'] ?></option>
-                                            <?php } else {?>
-                                                <option value="<?php echo $tax_class['tax_class_id'] ?>"><?php echo $tax_class['title'] ?></option>
-                                            <?php } ?>
-                                        <?php } ?>
-                                    </select>
-                                </td>
+                                <td><?php echo $entry_sort_order; ?></td>
+                                <td><input type="text" name="klarna_sort_order" value="<?php echo $klarna_sort_order; ?>" size="1" /></td>
                             </tr>
                             <tr>
                                 <td colspan="2"><h3><?php echo $text_klarna_account ?></h3></td>
-                            </tr>
-                            <tr>
-                                <td><?php echo $entry_minimum_amount; ?></td>
-                                <td>
-                                    <input type="text" name="klarna_acc_minimum_amount" value="<?php echo $klarna_acc_minimum_amount; ?>" />
-                                    <?php if ($error_acc_minimum_amount) { ?>
-                                        <span class="error"><?php echo $error_acc_minimum_amount; ?></span>
-                                    <?php } ?>
-                                </td>
                             </tr>
                             <tr>
                                 <td><?php echo $entry_geo_zone; ?></td>
@@ -152,10 +142,6 @@
                                         <?php } ?>
                                     </select>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td><?php echo $entry_sort_order; ?></td>
-                                <td><input type="text" name="klarna_acc_sort_order" value="<?php echo $klarna_acc_sort_order; ?>" size="1" /></td>
                             </tr>
                             <tr>
                                 <td colspan="2"><h3><?php echo $text_klarna_invoice  ?></h3></td>
@@ -188,10 +174,6 @@
                                         <?php } ?>
                                     </select>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td><?php echo $entry_sort_order; ?></td>
-                                <td><input type="text" name="klarna_inv_sort_order" value="<?php echo $klarna_inv_sort_order; ?>" size="1" /></td>
                             </tr>
                         </table>
                     </div>

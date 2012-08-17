@@ -8,7 +8,6 @@ class ControllerPaymentKlarna extends Controller {
         $this->load->model('setting/setting');
         $this->load->model('localisation/order_status');
         $this->load->model('localisation/geo_zone');
-        $this->load->model('localisation/tax_class');
         
         $this->data = array_merge($this->data, $this->load->language('payment/klarna'));
 
@@ -44,18 +43,12 @@ class ControllerPaymentKlarna extends Controller {
             $this->data['error_secret'] = '';
         }
 
-        if (isset($this->error['acc_minimum_amount'])) {
-            $this->data['error_acc_minimum_amount'] = $this->error['acc_minimum_amount'];
+        if (isset($this->error['minimum_amount'])) {
+            $this->data['error_minimum_amount'] = $this->error['minimum_amount'];
         } else {
-            $this->data['error_acc_minimum_amount'] = '';
+            $this->data['error_minimum_amount'] = '';
         }
-
-        if (isset($this->error['klarna_invoice_fee'])) {
-            $this->data['error_klarna_invoice_fee'] = $this->error['klarna_invoice_fee'];
-        } else {
-            $this->data['error_klarna_invoice_fee'] = '';
-        }
-
+        
         $this->data['breadcrumbs'] = array();
 
         $this->data['breadcrumbs'][] = array(
@@ -107,30 +100,23 @@ class ControllerPaymentKlarna extends Controller {
             $this->data['klarna_accepted_order_status_id'] = $this->request->post['klarna_accepted_order_status_id'];
         } else {
             $this->data['klarna_accepted_order_status_id'] = $this->config->get('klarna_accepted_order_status_id');
-        }
-
-        if (isset($this->request->post['klarna_invoice_fee'])) {
-            $this->data['klarna_invoice_fee'] = $this->request->post['klarna_invoice_fee'];
+        } 
+        
+        if (isset($this->request->post['klarna_sort_order'])) {
+            $this->data['klarna_sort_order'] = $this->request->post['klarna_sort_order'];
         } else {
-            $this->data['klarna_invoice_fee'] = $this->config->get('klarna_invoice_fee');
-        }
-
-        if (isset($this->request->post['klarna_invoice_fee_tax_class'])) {
-            $this->data['klarna_invoice_fee_tax_class'] = $this->request->post['klarna_invoice_fee_tax_class'];
-        } else {
-            $this->data['klarna_invoice_fee_tax_class'] = $this->config->get('klarna_invoice_fee_tax_class');
+            $this->data['klarna_sort_order'] = $this->config->get('klarna_sort_order');
         }
 
         $this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
         $this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-        $this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
         
         /* Klarna Account */
         
-        if (isset($this->request->post['klarna_acc_minimum_amount'])) {
-            $this->data['klarna_acc_minimum_amount'] = $this->request->post['klarna_acc_minimum_amount'];
+        if (isset($this->request->post['klarna_minimum_amount'])) {
+            $this->data['klarna_minimum_amount'] = $this->request->post['klarna_minimum_amount'];
         } else {
-            $this->data['klarna_acc_minimum_amount'] = $this->config->get('klarna_acc_minimum_amount');
+            $this->data['klarna_minimum_amount'] = $this->config->get('klarna_minimum_amount');
         }
         
         if (isset($this->request->post['klarna_acc_geo_zone_id'])) {
@@ -145,24 +131,12 @@ class ControllerPaymentKlarna extends Controller {
             $this->data['klarna_acc_status'] = $this->config->get('klarna_acc_status');
         }
 
-        if (isset($this->request->post['klarna_acc_sort_order'])) {
-            $this->data['klarna_acc_sort_order'] = $this->request->post['klarna_acc_sort_order'];
-        } else {
-            $this->data['klarna_acc_sort_order'] = $this->config->get('klarna_acc_sort_order');
-        }
-
         /* Klarna Invoice */
 
         if (isset($this->request->post['klarna_inv_status'])) {
             $this->data['klarna_inv_status'] = $this->request->post['klarna_inv_status'];
         } else {
             $this->data['klarna_inv_status'] = $this->config->get('klarna_inv_status');
-        }
-
-        if (isset($this->request->post['klarna_inv_sort_order'])) {
-            $this->data['klarna_inv_sort_order'] = $this->request->post['klarna_inv_sort_order'];
-        } else {
-            $this->data['klarna_inv_sort_order'] = $this->config->get('klarna_inv_sort_order');
         }
         
         if (isset($this->request->post['klarna_inv_geo_zone_id'])) {
@@ -214,13 +188,9 @@ class ControllerPaymentKlarna extends Controller {
         if (!$this->request->post['klarna_secret']) {
             $this->error['secret'] = $this->language->get('error_secret');
         }
-        
-        if (!empty($this->request->post['klarna_acc_minimum_amount']) && !is_numeric($this->request->post['klarna_acc_minimum_amount'])) {
-            $this->error['acc_minimum_amount'] = $this->language->get('error_valid_number');
-        }
-        
-        if (!empty($this->request->post['klarna_invoice_fee']) && !is_numeric($this->request->post['klarna_invoice_fee'])) {
-            $this->error['klarna_invoice_fee'] = $this->language->get('error_valid_number');
+
+        if (!empty($this->request->post['klarna_minimum_amount']) && !is_numeric($this->request->post['klarna_minimum_amount'])) {
+            $this->error['minimum_amount'] = $this->language->get('error_valid_number');
         }
 
         if (!$this->error) {

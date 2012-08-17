@@ -1,36 +1,12 @@
 <?php
-class ControllerPaymentKlarnaInvoice extends Controller {
+class ControllerPaymentKlarna extends Controller {
 	protected function index() {
-		$this->language->load('payment/klarna_invoice');
+		$this->data = array_merge($this->data, $this->language->load('payment/klarna'));
 		
-		$this->data['text_information'] = $this->language->get('text_information');
-		$this->data['text_additional'] = $this->language->get('text_additional');
-		$this->data['text_male'] = $this->language->get('text_male');
-		$this->data['text_female'] = $this->language->get('text_female');
-		$this->data['text_wait'] = $this->language->get('text_wait');
-		
-		$this->data['entry_gender'] = $this->language->get('entry_gender');
-		$this->data['entry_pno'] = $this->language->get('entry_pno');
-		$this->data['entry_cellno'] = $this->language->get('entry_cellno');
-		$this->data['entry_house_no'] = $this->language->get('entry_house_no');
-		$this->data['entry_house_ext'] = $this->language->get('entry_house_ext');
-
-		$this->data['button_confirm'] = $this->language->get('button_confirm');
-
-		$this->load->model('checkout/order');
-
-		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
- 		
-		if ($order_info) {
- 			$this->data['iso_code_2'] = $order_info['payment_iso_code_2'];
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/klarna.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/payment/klarna.tpl';
 		} else {
-			$this->data['iso_code_2'] = '';
-		}
-		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/klarna_invoice.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/klarna_invoice.tpl';
-		} else {
-			$this->template = 'default/template/payment/klarna_invoice.tpl';
+			$this->template = 'default/template/payment/klarna.tpl';
 		}
 
 		$this->render();
@@ -266,4 +242,3 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 		$this->response->setOutput(json_encode($json));	
 	}
 }
-?>

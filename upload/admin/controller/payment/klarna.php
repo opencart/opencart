@@ -8,6 +8,7 @@ class ControllerPaymentKlarna extends Controller {
         $this->load->model('setting/setting');
         $this->load->model('localisation/order_status');
         $this->load->model('localisation/geo_zone');
+        $this->load->model('localisation/tax_class');
         
         $this->data = array_merge($this->data, $this->load->language('payment/klarna'));
 
@@ -49,6 +50,12 @@ class ControllerPaymentKlarna extends Controller {
             $this->data['error_acc_minimum_amount'] = '';
         }
 
+        if (isset($this->error['klarna_invoice_fee'])) {
+            $this->data['error_klarna_invoice_fee'] = $this->error['klarna_invoice_fee'];
+        } else {
+            $this->data['error_klarna_invoice_fee'] = '';
+        }
+
         $this->data['breadcrumbs'] = array();
 
         $this->data['breadcrumbs'][] = array(
@@ -70,7 +77,6 @@ class ControllerPaymentKlarna extends Controller {
         );
 
         $this->data['action'] = $this->url->link('payment/klarna', 'token=' . $this->session->data['token'], 'SSL');
-
         $this->data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
         if (isset($this->request->post['klarna_merchant'])) {
@@ -103,8 +109,21 @@ class ControllerPaymentKlarna extends Controller {
             $this->data['klarna_accepted_order_status_id'] = $this->config->get('klarna_accepted_order_status_id');
         }
 
+        if (isset($this->request->post['klarna_invoice_fee'])) {
+            $this->data['klarna_invoice_fee'] = $this->request->post['klarna_invoice_fee'];
+        } else {
+            $this->data['klarna_invoice_fee'] = $this->config->get('klarna_invoice_fee');
+        }
+
+        if (isset($this->request->post['klarna_invoice_fee_tax_class'])) {
+            $this->data['klarna_invoice_fee_tax_class'] = $this->request->post['klarna_invoice_fee_tax_class'];
+        } else {
+            $this->data['klarna_invoice_fee_tax_class'] = $this->config->get('klarna_invoice_fee_tax_class');
+        }
+
         $this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
         $this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+        $this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
         
         /* Klarna Account */
         
@@ -197,7 +216,11 @@ class ControllerPaymentKlarna extends Controller {
         }
         
         if (!empty($this->request->post['klarna_acc_minimum_amount']) && !is_numeric($this->request->post['klarna_acc_minimum_amount'])) {
-            $this->error['acc_minimum_amount'] = $this->language->get('error_minimum_amount');
+            $this->error['acc_minimum_amount'] = $this->language->get('error_valid_number');
+        }
+        
+        if (!empty($this->request->post['klarna_invoice_fee']) && !is_numeric($this->request->post['klarna_invoice_fee'])) {
+            $this->error['klarna_invoice_fee'] = $this->language->get('error_valid_number');
         }
 
         if (!$this->error) {

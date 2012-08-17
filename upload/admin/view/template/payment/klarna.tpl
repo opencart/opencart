@@ -19,7 +19,6 @@
 
             <div id="tabs" class="htabs">
                 <a href="#page-settings" id="tab-settings"><?php echo $text_settings ?></a>
-                <a href="#page-help" id="tab-subscription"><?php echo $text_help ?></a>
                 <a href="#page-log" id="tab-settings"><?php echo $text_log ?></a>
             </div>
 
@@ -85,6 +84,29 @@
                                                 <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                                             <?php } else { ?>
                                                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $entry_invoice_fee; ?></td>
+                                <td>
+                                    <input type="text" name="klarna_invoice_fee" value="<?php echo $klarna_invoice_fee; ?>" />
+                                    <?php if ($error_klarna_invoice_fee) { ?>
+                                        <span class="error"><?php echo $error_klarna_invoice_fee; ?></span>
+                                    <?php } ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $entry_invoice_fee_tax_class; ?></td>
+                                <td>
+                                    <select name="klarna_invoice_fee_tax_class">
+                                        <?php foreach($tax_classes as $tax_class) { ?>
+                                            <?php if ($klarna_invoice_fee_tax_class == $tax_class['tax_class_id']) {?>
+                                                <option selected="selected" value="<?php echo $tax_class['tax_class_id'] ?>"><?php echo $tax_class['title'] ?></option>
+                                            <?php } else {?>
+                                                <option value="<?php echo $tax_class['tax_class_id'] ?>"><?php echo $tax_class['title'] ?></option>
                                             <?php } ?>
                                         <?php } ?>
                                     </select>
@@ -176,7 +198,6 @@
                 </form>
             </div>
                 
-            <div id="page-help">Help</div>
             <div id="page-log">
                 <textarea style="width: 98%; min-height: 250px" readonly><?php echo $klarna_log ?></textarea>
                 <a href="<?php echo $clear_log ?>" class="button" style="float: right; margin-top: 15px">Clear</a>

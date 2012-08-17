@@ -255,6 +255,8 @@ class ControllerPaymentKlarna extends Controller {
         $merchantId = $this->request->post['klarna_merchant'];
         $secret = $this->request->post['klarna_secret'];
         
+        $count = 0;
+        
         foreach ($countries as $countryCode => $country) {
             $digest = base64_encode(pack("H*", hash('sha256', $merchantId  . ':' . $country['currency'] . ':' . $secret)));
             
@@ -295,11 +297,9 @@ class ControllerPaymentKlarna extends Controller {
 
             $responseString = curl_exec($ch);
             
-            //$pclasses = xmlrpc_decode($responseString);
-            // @TODO: Write a PHP implementation of xmlrpc_decode
-            $pclasses = array();
+            $xmlResponse = simplexml_load_string($responseString);
             
-            $classes = array();
+            $pclasses = $this->parseResponse($xmlResponse->params->param->value);
             
             foreach($pclasses as $pclass) {
                 $classes[] = array(
@@ -314,6 +314,8 @@ class ControllerPaymentKlarna extends Controller {
                     'country' => $pclass[8],
                     'type' => ($pclass[9] != '-') ? strtotime($pclass[9]) : $pclass[9],
                 );
+                
+                $count++;
             }
             
             $this->cache->set('klarna.' . $countryCode, $classes);
@@ -321,5 +323,50 @@ class ControllerPaymentKlarna extends Controller {
             curl_close($ch);
         }
     }
+    
+    private function parseResponse($xml) {
+        $child = $xml->children();
+        $child = $child[0];
 
+        switch ($child->getName()) {
+            case 'string':
+                $value = (string) $child;
+                break;
+
+            case 'boolean':
+                $value = (string) $child;
+
+                if ($value == '0') {
+                    $value = false;
+                } elseif ($value == '1') {
+                    $value = true;
+                } else {
+                    $value = null;
+                }
+
+                break;
+
+            case 'integer':
+            case 'int':
+            case 'i4':
+            case 'i8':
+                $value = (int) $child;
+                break;
+
+            case 'array':
+                $value = array();
+
+                foreach ($child->data->value as $val) {
+                    $value[] = $this->parseResponse($val);
+                }
+
+                break;
+
+            default:
+                $value = null;
+        }
+
+        return $value;
+    }
+    
 }

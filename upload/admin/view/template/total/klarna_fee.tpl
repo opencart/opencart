@@ -17,7 +17,10 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <table class="form">
           <tr>
-            <td><?php echo $entry_total; ?></td>
+            <td>
+                <?php echo $entry_total; ?><br />
+                <span class="help"><?php echo $help_total ?></span>
+            </td>
             <td><input type="text" name="klarna_fee_total" value="<?php echo $klarna_fee_total; ?>" /></td>
           </tr>
           <tr>

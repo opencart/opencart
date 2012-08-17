@@ -19,6 +19,8 @@ class ControllerPaymentKlarna extends Controller {
             $settings['klarna_status'] = $settings['klarna_acc_status'] == 1 || $settings['klarna_inv_status'] == 1;
             
             $this->model_setting_setting->editSetting('klarna', $settings);
+            
+            $this->fetchPClasses();
 
             $this->session->data['success'] = $this->language->get('text_success');
 
@@ -212,6 +214,110 @@ class ControllerPaymentKlarna extends Controller {
         }
         
         $this->redirect($this->url->link('payment/klarna', 'token=' . $this->session->data['token'], 'SSL'));
+    }
+    
+    private function fetchPClasses() {
+        $countries = array(
+            'NOR' => array(
+                'currency' => 1,
+                'country'  => 164,
+                'language' => 97,
+            ),
+            'SWE' => array(
+                'currency' => 0,
+                'country'  => 209,
+                'language' => 138,
+            ),
+            'FIN' => array(
+                'currency' => 2,
+                'country'  => 73,
+                'language' => 101,
+            ),
+            'DNK' => array(
+                'currency' => 3,
+                'country'  => 59,
+                'language' => 27,
+            ),
+            'DEU' => array(
+                'currency' => 2,
+                'country'  => 81,
+                'language' => 28,
+            ),
+            'NLD' => array(
+                'currency' => 2,
+                'country'  => 154,
+                'language' => 101,
+            ),
+        );
+        
+        $this->cache->delete('klarna');
+        
+        $merchantId = $this->request->post['klarna_merchant'];
+        $secret = $this->request->post['klarna_secret'];
+        
+        foreach ($countries as $countryCode => $country) {
+            $digest = base64_encode(pack("H*", hash('sha256', $merchantId  . ':' . $country['currency'] . ':' . $secret)));
+            
+            $xml  = "<methodCall>";
+            $xml .= "  <methodName>get_pclasses</methodName>";
+            $xml .= '  <params>';
+            $xml .= ' <param><value><string>4.1</string></value></param>';
+            $xml .= ' <param><value><string>PHP:WM:1</string></value></param>';
+            $xml .= ' <param><value><int>' . $merchantId . '</int></value></param>';
+            $xml .= ' <param><value><int>' . $country['currency'] . '</int></value></param>';
+            $xml .= ' <param><value><string>' . $digest . '</string></value></param>';
+            $xml .= ' <param><value><int>' . $country['country'] . '</int></value></param>';
+            $xml .= ' <param><value><int>' . $country['language'] . '</int></value></param>';
+            $xml .= "  </params>";
+            $xml .= "</methodCall>";
+            
+            if ($this->request->post['klarna_server'] == 'live') {
+                //$server = 'https://payment.klarna.com';
+                $server = 'https://payment-beta.klarna.com';
+            } else {
+                $server = 'https://payment-beta.klarna.com';
+            }
+            
+            $ch = curl_init($server);
+
+            $headers = array(
+                'Content-Type: text/xml',
+                'Content-Length: ' . strlen($xml),
+            );
+
+            curl_setopt($ch, CURLOPT_URL, $server);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
+
+            $responseString = curl_exec($ch);
+            
+            $pclasses = xmlrpc_decode($responseString);
+            
+            $classes = array();
+            
+            foreach($pclasses as $pclass) {
+                $classes[] = array(
+                    'eid' => $pclass[0],
+                    'id' => $pclass[1],
+                    'description' => $pclass[2],
+                    'months' => $pclass[3],
+                    'startfee' => $pclass[4],
+                    'invoicefee' => $pclass[5],
+                    'interestrate' => $pclass[6],
+                    'minamount' => $pclass[7],
+                    'country' => $pclass[8],
+                    'type' => ($pclass[9] != '-') ? strtotime($pclass[9]) : $pclass[9],
+                );
+            }
+            
+            $this->cache->set('klarna.' . $countryCode, $classes);
+
+            curl_close($ch);
+        }
     }
 
 }

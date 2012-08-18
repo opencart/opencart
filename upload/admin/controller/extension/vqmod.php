@@ -91,7 +91,7 @@ class ControllerExtensionVQMOD extends Controller {
 			}
 		}
 
-		$this->template = 'extension/vqmod.tpl';
+		$this->template = 'extension/vqmod_list.tpl';
 		$this->children = array(
 			'common/header',
 			'common/footer'

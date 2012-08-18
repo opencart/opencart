@@ -20,9 +20,7 @@
             <tr>
               <td class="left"><?php echo $entry_banner; ?></td>
               <td class="left"><?php echo $entry_limit; ?></td>
-	      <td class="left"><?php echo $entry_auto; ?></td>
               <td class="left"><?php echo $entry_scroll; ?></td>
-	      <td class="left"><?php echo $entry_wrap; ?></td>
               <td class="left"><?php echo $entry_image; ?></td>
               <td class="left"><?php echo $entry_layout; ?></td>
               <td class="left"><?php echo $entry_position; ?></td>
@@ -45,32 +43,7 @@
                   <?php } ?>
                 </select></td>
               <td class="left"><input type="text" name="carousel_module[<?php echo $module_row; ?>][limit]" value="<?php echo $module['limit']; ?>" size="1" /></td>
-	      <td class="left"><input type="text" name="carousel_module[<?php echo $module_row; ?>][auto]" value="<?php echo $module['auto']; ?>" size="3" /></td>
               <td class="left"><input type="text" name="carousel_module[<?php echo $module_row; ?>][scroll]" value="<?php echo $module['scroll']; ?>" size="3" /></td>
-	      <td class="left">
-	      	<select name="carousel_module[<?php echo $module_row; ?>][cwrap]">
-			<?php if ($module['cwrap'] == 'null') { ?>
-			<option value="null" selected="selected">null</option>
-			<?php } else { ?>
-			<option value="null">null</option>
-			<?php } ?>
-			<?php if ($module['cwrap'] == 'circular') { ?>
-			<option value="circular" selected="selected">circular</option>
-			<?php } else { ?>
-			<option value="circular">circular</option>
-			<?php } ?>
-			<?php if ($module['cwrap'] == 'first') { ?>
-			<option value="first" selected="selected">first</option>
-			<?php } else { ?>
-			<option value="first">first</option>
-			<?php } ?>
-			<?php if ($module['cwrap'] == 'last') { ?>
-			<option value="last" selected="selected">last</option>
-			<?php } else { ?>
-			<option value="last">last</option>
-			<?php } ?>
-		  </select>
-	      </td>
               <td class="left"><input type="text" name="carousel_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" size="3" />
                 <input type="text" name="carousel_module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" size="3" />
                 <?php if (isset($error_image[$module_row])) { ?>
@@ -124,7 +97,7 @@
           <?php } ?>
           <tfoot>
             <tr>
-              <td colspan="10"></td>
+              <td colspan="8"></td>
               <td class="left"><a onclick="addModule();" class="button"><?php echo $button_add_module; ?></a></td>
             </tr>
           </tfoot>
@@ -145,14 +118,7 @@ function addModule() {
 	<?php } ?>
 	html += '    </select></td>';	
 	html += '    <td class="left"><input type="text" name="carousel_module[' + module_row + '][limit]" value="5" size="1" /></td>';
-	html += '    <td class="left"><input type="text" name="carousel_module[' + module_row + '][auto]" value="0" size="1" /></td>';
 	html += '    <td class="left"><input type="text" name="carousel_module[' + module_row + '][scroll]" value="3" size="1" /></td>';
-	html += '    <td class="left"><select name="carousel_module[' + module_row + '][cwrap]">';
-	html += '      <option value="null">null</option>';
-	html += '      <option value="circular">circular</option>';
-	html += '      <option value="first">first</option>';
-	html += '      <option value="last">last</option>';
-	html += '    </select></td>';
 	html += '    <td class="left"><input type="text" name="carousel_module[' + module_row + '][width]" value="80" size="3" /> <input type="text" name="carousel_module[' + module_row + '][height]" value="80" size="3" /></td>';	
 	html += '    <td class="left"><select name="carousel_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>

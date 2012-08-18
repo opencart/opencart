@@ -73,6 +73,7 @@ $_['text_user']                        = 'Users';
 $_['text_documentation']               = 'Documentation';
 $_['text_users']                       = 'Users';
 $_['text_user_group']                  = 'User Groups';
+$_['text_vqmod']                       = 'VQMOD';
 $_['text_voucher']                     = 'Gift Vouchers';
 $_['text_voucher_theme']               = 'Voucher Themes';
 $_['text_weight_class']                = 'Weight Classes';

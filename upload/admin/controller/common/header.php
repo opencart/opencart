@@ -94,6 +94,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_user'] = $this->language->get('text_user');
 		$this->data['text_user_group'] = $this->language->get('text_user_group');
 		$this->data['text_users'] = $this->language->get('text_users');
+		$this->data['text_vqmod'] = $this->language->get('text_vqmod');
 		$this->data['text_voucher'] = $this->language->get('text_voucher');
 		$this->data['text_voucher_theme'] = $this->language->get('text_voucher_theme');
 		$this->data['text_weight_class'] = $this->language->get('text_weight_class');
@@ -162,6 +163,7 @@ class ControllerCommonHeader extends Controller {
 			$this->data['total'] = $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['user'] = $this->url->link('user/user', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['user_group'] = $this->url->link('user/user_permission', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['vqmod'] = $this->url->link('extension/vqmod', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['voucher'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['voucher_theme'] = $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['weight_class'] = $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'], 'SSL');

@@ -91,7 +91,7 @@ class ControllerPaymentPPStandard extends Controller {
 				$this->data['paymentaction'] = 'sale';
 			}
 			
-			$this->data['custom'] = $this->encryption->encrypt($this->session->data['order_id']);
+			$this->data['custom'] = $this->session->data['order_id'];
 		
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_standard.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/payment/pp_standard.tpl';
@@ -105,7 +105,7 @@ class ControllerPaymentPPStandard extends Controller {
 	
 	public function callback() {
 		if (isset($this->request->post['custom'])) {
-			$order_id = $this->encryption->decrypt($this->request->post['custom']);
+			$order_id = $this->request->post['custom'];
 		} else {
 			$order_id = 0;
 		}		

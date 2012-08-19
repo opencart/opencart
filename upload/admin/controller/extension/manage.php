@@ -23,44 +23,52 @@ class ControllerExtensionManage extends Controller {
 
 		$this->data['button_upload'] = $this->language->get('button_upload');
 
+		$connection = ftp_connect($this->config->get('config_ftp_host'), $this->config->get('config_ftp_port'));
+
+		if (!$connection) {
+			exit($this->language->get('error_ftp_connection') . $this->config->get('config_ftp_host') . ':' . $this->config->get('config_ftp_port')) ;
+		}
+		
+		$login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
+		
+		if (!$login) {
+			exit('Couldn\'t connect as ' . $this->config->get('config_ftp_username'));
+		}
+	
+		$file = 'public_html/news-blog.zip';
+		
+		//$handle = fopen(DIR_DOWNLOAD . 'news-blog.zip', 'c+');
+		
+		if (ftp_put($connection, $file, DIR_DOWNLOAD . 'news-blog.zip', FTP_BINARY)) {			
+			echo "Successfully uploaded $file\n";
+		} else {
+    		echo "There was a problem while uploading $file\n";
+		}
+							
+	/*
 		$zip = zip_open(DIR_DOWNLOAD . 'news-blog.zip');
+				
+		while ($handle = zip_read($zip)) {
+			$filename = zip_entry_name($handle) . '<br />';
 			
-		while ($file = zip_read($zip)) {
+			echo $filename . '<br />';
+				
+			zip_entry_open($zip, $handle, 'r');
+				
+			// read entry
+			//$content = zip_entry_read($file, zip_entry_filesize($file));		
+				
+			if (ftp_fput($connection, 'public_html/test/' . $filename, $handle, FTP_ASCII)) {			
+				echo "Successfully uploaded $file\n";
+			}
 			
-			echo zip_entry_name($file) . '<br />';
-			
-			zip_entry_open($zip, $zip_entry, 'r');
+			zip_entry_close($file);
 		}
 		
 		zip_close($zip);
- 
-			/*
-		//if ($ttt) { 
-			$connection = ftp_connect($this->config->get('config_ftp_host'), $this->config->get('config_ftp_port'));
-	
-			if ($connection) {
-				$login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
-				
-				if ($login) {
-					
-				} else {
-					echo "Couldn't connect as $ftp_user\n";	
-				}
-			
-			
-				ftp_close($connection);
-			} else {
-				echo $this->language->get('error_ftp_connection');
-			}
-	
-			*/
-	
-	
-
 		
-		//}
-		
-
+		*/
+		ftp_close($connection);
 
 		$this->template = 'extension/manage.tpl';
 		$this->children = array(

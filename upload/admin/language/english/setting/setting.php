@@ -82,8 +82,14 @@ $_['entry_image_related']          = 'Related Product Image Size:';
 $_['entry_image_compare']          = 'Compare Image Size:';
 $_['entry_image_wishlist']         = 'Wish List Image Size:';
 $_['entry_image_cart']             = 'Cart Image Size:';
-$_['entry_mail_protocol']          = 'Mail Protocol:<span class="help">Only choose \'Mail\' unless your host has disabled the php mail function.';
-$_['entry_mail_parameter']         = 'Mail Parameters:<span class="help">When using \'Mail\', additional mail parameters can be added here (e.g. "-femail@storeaddress.com".';
+$_['entry_ftp_host']               = 'FTP Host:';
+$_['entry_ftp_port']               = 'FTP Post:';
+$_['entry_ftp_username']           = 'FTP Username:';
+$_['entry_ftp_password']           = 'FTP Password:';
+$_['entry_ftp_root']               = 'FTP Root:<span class="help">The directory your opencart installation is stored in normally \'public_html/\'.</span>';
+$_['entry_ftp_status']             = 'Enable FTP:';
+$_['entry_mail_protocol']          = 'Mail Protocol:<span class="help">Only choose \'Mail\' unless your host has disabled the php mail function.</span>';
+$_['entry_mail_parameter']         = 'Mail Parameters:<span class="help">When using \'Mail\', additional mail parameters can be added here (e.g. "-femail@storeaddress.com").</span>';
 $_['entry_smtp_host']              = 'SMTP Host:';
 $_['entry_smtp_username']          = 'SMTP Username:';
 $_['entry_smtp_password']          = 'SMTP Password:';
@@ -128,6 +134,10 @@ $_['error_image_related']          = 'Related Product Image Size dimensions requ
 $_['error_image_compare']          = 'Compare Image Size dimensions required!';
 $_['error_image_wishlist']         = 'Wish List Image Size dimensions required!';
 $_['error_image_cart']             = 'Cart Image Size dimensions required!';
+$_['error_ftp_host']               = 'FTP Host required!';
+$_['error_ftp_port']               = 'FTP Port required!';
+$_['error_ftp_username']           = 'FTP Username required!';
+$_['error_ftp_password']           = 'FTP Password required!';
 $_['error_error_filename']         = 'Error Log Filename required!';
 $_['error_encryption']             = 'Encryption must be between 3 and 32 characters!';
 ?>

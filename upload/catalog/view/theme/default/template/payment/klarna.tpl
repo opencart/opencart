@@ -1,3 +1,14 @@
+<?php if ($address_match) { ?>
+    <?php if ($country_code == 'DEU') { ?>
+    <?php } elseif ($country_code == 'NLD') { ?>
+        <img src="http://www.afm.nl/~/media/Images/wetten-regels/kredietwaarschuwing/balk_afm3-jpg.ashx" /> 
+    <?php } ?>
+<?php } else { ?>
+    <div class="warning">
+        <?php echo $error_address_match ?>
+    </div>
+<?php } ?>
+<!--
 <h2><?php echo $text_information; ?></h2>
 <div id="payment" class="content">
   <p><?php echo $text_additional; ?></p>
@@ -35,7 +46,7 @@
     <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="button" />
   </div>
 </div>
-<script type="text/javascript"><!--
+<script type="text/javascript">
 $('#button-confirm').bind('click', function() {
 	$.ajax({
 		url: 'index.php?route=payment/klarna_invoice/send',
@@ -63,4 +74,5 @@ $('#button-confirm').bind('click', function() {
 		}
 	});
 });
-//--></script> 
+</script> 
+-->

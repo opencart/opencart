@@ -31,32 +31,34 @@ class ModelShippingAusPost extends Model {
 				
 				curl_close($curl);
 				
-				$response_info = array();
-				
-				$parts = explode("\n", $response);
-				
-				foreach ($parts as $part) {
-					list($key, $value) = explode('=', $part);
+				if ($response) {
+					$response_info = array();
 					
-					$response_info[$key] = $value;
-				}
-				
-				if ($response_info['err_msg'] != 'OK') {
-					$error = $response_info['err_msg'];
-				} else {
-					$title = $this->language->get('text_standard');
-				
-					if ($this->config->get('auspost_display_time')) {
-						$title .= ' (' . $response_info['days'] . ' ' . $this->language->get('text_eta') . ')';
-					}	
-		
-					$quote_data['auspost_standard'] = array(
-						'code'         => 'auspost.standard',
-						'title'        => $title,
-						'cost'         => $this->currency->convert($response_info['charge'], 'AUD', $this->config->get('config_currency')),
-						'tax_class_id' => $this->config->get('auspost_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_info['charge'], 'AUD', $this->currency->getCode()), $this->config->get('auspost_tax_class_id'), $this->config->get('config_tax')), $this->currency->getCode(), 1.0000000)
-					);
+					$parts = explode("\n", $response);
+					
+					foreach ($parts as $part) {
+						list($key, $value) = explode('=', $part);
+						
+						$response_info[$key] = $value;
+					}
+					
+					if ($response_info['err_msg'] != 'OK') {
+						$error = $response_info['err_msg'];
+					} else {
+						$title = $this->language->get('text_standard');
+					
+						if ($this->config->get('auspost_display_time')) {
+							$title .= ' (' . $response_info['days'] . ' ' . $this->language->get('text_eta') . ')';
+						}	
+			
+						$quote_data['auspost_standard'] = array(
+							'code'         => 'auspost.standard',
+							'title'        => $title,
+							'cost'         => $this->currency->convert($response_info['charge'], 'AUD', $this->config->get('config_currency')),
+							'tax_class_id' => $this->config->get('auspost_tax_class_id'),
+							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_info['charge'], 'AUD', $this->currency->getCode()), $this->config->get('auspost_tax_class_id'), $this->config->get('config_tax')), $this->currency->getCode(), 1.0000000)
+						);
+					}
 				}
 			}
 	
@@ -71,32 +73,34 @@ class ModelShippingAusPost extends Model {
 				
 				curl_close($curl); 
 				
-				$response_info = array();
-				
-				$parts = explode("\n", $response);
-				
-				foreach ($parts as $part) {
-					list($key, $value) = explode('=', $part);
+				if ($response) {
+					$response_info = array();
 					
-					$response_info[$key] = $value;
-				}
-							
-				if ($response_info['err_msg'] != 'OK') {
-					$error = $response_info['err_msg'];
-				} else {
-					$title = $this->language->get('text_express');
+					$parts = explode("\n", $response);
 					
-					if ($this->config->get('auspost_display_time')) {
-						$title .= ' (' . $response_info['days'] . ' ' . $this->language->get('text_eta') . ')';
-					}	
-	
-					$quote_data['auspost_express'] = array(
-						'code'         => 'auspost.express',
-						'title'        => $title,
-						'cost'         => $this->currency->convert($response_info['charge'], 'AUD', $this->config->get('config_currency')),
-						'tax_class_id' => $this->config->get('auspost_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_info['charge'], 'AUD', $this->currency->getCode()), $this->config->get('auspost_tax_class_id'), $this->config->get('config_tax')), $this->currency->getCode(), 1.0000000)
-					);
+					foreach ($parts as $part) {
+						list($key, $value) = explode('=', $part);
+						
+						$response_info[$key] = $value;
+					}
+								
+					if ($response_info['err_msg'] != 'OK') {
+						$error = $response_info['err_msg'];
+					} else {
+						$title = $this->language->get('text_express');
+						
+						if ($this->config->get('auspost_display_time')) {
+							$title .= ' (' . $response_info['days'] . ' ' . $this->language->get('text_eta') . ')';
+						}	
+		
+						$quote_data['auspost_express'] = array(
+							'code'         => 'auspost.express',
+							'title'        => $title,
+							'cost'         => $this->currency->convert($response_info['charge'], 'AUD', $this->config->get('config_currency')),
+							'tax_class_id' => $this->config->get('auspost_tax_class_id'),
+							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_info['charge'], 'AUD', $this->currency->getCode()), $this->config->get('auspost_tax_class_id'), $this->config->get('config_tax')), $this->currency->getCode(), 1.0000000)
+						);
+					}
 				}
 			}
 		}

@@ -17,7 +17,7 @@
       <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-store"><?php echo $tab_store; ?></a><a href="#tab-local"><?php echo $tab_local; ?></a><a href="#tab-option"><?php echo $tab_option; ?></a><a href="#tab-image"><?php echo $tab_image; ?></a><a href="#tab-mail"><?php echo $tab_mail; ?></a><a href="#tab-fraud"><?php echo $tab_fraud; ?></a><a href="#tab-server"><?php echo $tab_server; ?></a></div>
+      <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-store"><?php echo $tab_store; ?></a><a href="#tab-local"><?php echo $tab_local; ?></a><a href="#tab-option"><?php echo $tab_option; ?></a><a href="#tab-image"><?php echo $tab_image; ?></a><a href="#tab-ftp"><?php echo $tab_ftp; ?></a><a href="#tab-mail"><?php echo $tab_mail; ?></a><a href="#tab-fraud"><?php echo $tab_fraud; ?></a><a href="#tab-server"><?php echo $tab_server; ?></a></div>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <div id="tab-general">
           <table class="form">
@@ -688,6 +688,56 @@
                 <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" size="3" />
                 <?php if ($error_image_cart) { ?>
                 <span class="error"><?php echo $error_image_cart; ?></span>
+                <?php } ?></td>
+            </tr>
+          </table>
+        </div>
+        <div id="tab-ftp">
+          <table class="form">
+            <tr>
+              <td><?php echo $entry_ftp_host; ?></td>
+              <td><input type="text" name="config_ftp_host" value="<?php echo $config_ftp_host; ?>" />
+                <?php if ($error_ftp_host) { ?>
+                <span class="error"><?php echo $error_ftp_host; ?></span>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_ftp_port; ?></td>
+              <td><input type="text" name="config_ftp_port" value="<?php echo $config_ftp_port; ?>" />
+                <?php if ($error_ftp_port) { ?>
+                <span class="error"><?php echo $error_ftp_port; ?></span>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_ftp_username; ?></td>
+              <td><input type="text" name="config_ftp_username" value="<?php echo $config_ftp_username; ?>" />
+                <?php if ($error_ftp_username) { ?>
+                <span class="error"><?php echo $error_ftp_username; ?></span>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_ftp_password; ?></td>
+              <td><input type="text" name="config_ftp_password" value="<?php echo $config_ftp_password; ?>" />
+                <?php if ($error_ftp_password) { ?>
+                <span class="error"><?php echo $error_ftp_password; ?></span>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_ftp_root; ?></td>
+              <td><input type="text" name="config_ftp_root" value="<?php echo $config_ftp_root; ?>" /></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_ftp_status; ?></td>
+              <td><?php if ($config_ftp_status) { ?>
+                <input type="radio" name="config_ftp_status" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_ftp_status" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_ftp_status" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_ftp_status" value="0" checked="checked" />
+                <?php echo $text_no; ?>
                 <?php } ?></td>
             </tr>
           </table>

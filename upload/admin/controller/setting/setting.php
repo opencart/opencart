@@ -106,7 +106,13 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_image_related'] = $this->language->get('entry_image_related');
 		$this->data['entry_image_compare'] = $this->language->get('entry_image_compare');
 		$this->data['entry_image_wishlist'] = $this->language->get('entry_image_wishlist');
-		$this->data['entry_image_cart'] = $this->language->get('entry_image_cart');		
+		$this->data['entry_image_cart'] = $this->language->get('entry_image_cart');	
+		$this->data['entry_ftp_host'] = $this->language->get('entry_ftp_host');
+		$this->data['entry_ftp_port'] = $this->language->get('entry_ftp_port');
+		$this->data['entry_ftp_username'] = $this->language->get('entry_ftp_username');
+		$this->data['entry_ftp_password'] = $this->language->get('entry_ftp_password');
+		$this->data['entry_ftp_root'] = $this->language->get('entry_ftp_root');
+		$this->data['entry_ftp_status'] = $this->language->get('entry_ftp_status');
 		$this->data['entry_mail_protocol'] = $this->language->get('entry_mail_protocol');
 		$this->data['entry_mail_parameter'] = $this->language->get('entry_mail_parameter');
 		$this->data['entry_smtp_host'] = $this->language->get('entry_smtp_host');
@@ -123,7 +129,6 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_fraud_status'] = $this->language->get('entry_fraud_status');
 		$this->data['entry_use_ssl'] = $this->language->get('entry_use_ssl');
 		$this->data['entry_maintenance'] = $this->language->get('entry_maintenance');
-		
 		$this->data['entry_encryption'] = $this->language->get('entry_encryption');
 		$this->data['entry_seo_url'] = $this->language->get('entry_seo_url');
 		$this->data['entry_compression'] = $this->language->get('entry_compression');
@@ -140,6 +145,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['tab_local'] = $this->language->get('tab_local');
 		$this->data['tab_option'] = $this->language->get('tab_option');
 		$this->data['tab_image'] = $this->language->get('tab_image');
+		$this->data['tab_ftp'] = $this->language->get('tab_ftp');
 		$this->data['tab_mail'] = $this->language->get('tab_mail');
 		$this->data['tab_fraud'] = $this->language->get('tab_fraud');
 		$this->data['tab_server'] = $this->language->get('tab_server');
@@ -203,7 +209,31 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['error_voucher_max'] = '';
 		}
-				
+		
+ 		if (isset($this->error['ftp_host'])) {
+			$this->data['error_ftp_host'] = $this->error['ftp_host'];
+		} else {
+			$this->data['error_ftp_host'] = '';
+		}
+		
+ 		if (isset($this->error['ftp_port'])) {
+			$this->data['error_ftp_port'] = $this->error['ftp_port'];
+		} else {
+			$this->data['error_ftp_port'] = '';
+		}
+		
+ 		if (isset($this->error['ftp_username'])) {
+			$this->data['error_ftp_username'] = $this->error['ftp_username'];
+		} else {
+			$this->data['error_ftp_username'] = '';
+		}
+		
+ 		if (isset($this->error['ftp_password'])) {
+			$this->data['error_ftp_password'] = $this->error['ftp_password'];
+		} else {
+			$this->data['error_ftp_password'] = '';
+		}
+														
  		if (isset($this->error['image_category'])) {
 			$this->data['error_image_category'] = $this->error['image_category'];
 		} else {
@@ -799,7 +829,47 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_image_cart_height'] = $this->config->get('config_image_cart_height');
 		}		
+				
+		if (isset($this->request->post['config_ftp_host'])) {
+			$this->data['config_ftp_host'] = $this->request->post['config_ftp_host'];
+		} elseif ($this->config->get('config_ftp_host')) {
+			$this->data['config_ftp_host'] = $this->config->get('config_ftp_host');		
+		} else {
+			$this->data['config_ftp_host'] = str_replace('www.', '', $this->request->server['HTTP_HOST']);
+		}
 		
+		if (isset($this->request->post['config_ftp_port'])) {
+			$this->data['config_ftp_port'] = $this->request->post['config_ftp_port'];
+		} elseif ($this->config->get('config_ftp_port')) {
+			$this->data['config_ftp_port'] = $this->config->get('config_ftp_port');
+		} else {
+			$this->data['config_ftp_port'] = 21;
+		}
+		
+		if (isset($this->request->post['config_ftp_username'])) {
+			$this->data['config_ftp_username'] = $this->request->post['config_ftp_username'];
+		} else {
+			$this->data['config_ftp_username'] = $this->config->get('config_ftp_username');
+		}
+		
+		if (isset($this->request->post['config_ftp_password'])) {
+			$this->data['config_ftp_password'] = $this->request->post['config_ftp_password'];
+		} else {
+			$this->data['config_ftp_password'] = $this->config->get('config_ftp_password');
+		}
+		
+		if (isset($this->request->post['config_ftp_root'])) {
+			$this->data['config_ftp_root'] = $this->request->post['config_ftp_root'];
+		} else {
+			$this->data['config_ftp_root'] = $this->config->get('config_ftp_root');
+		}
+		
+		if (isset($this->request->post['config_ftp_status'])) {
+			$this->data['config_ftp_status'] = $this->request->post['config_ftp_status'];
+		} else {
+			$this->data['config_ftp_status'] = $this->config->get('config_ftp_status');
+		}
+												
 		if (isset($this->request->post['config_mail_protocol'])) {
 			$this->data['config_mail_protocol'] = $this->request->post['config_mail_protocol'];
 		} else {
@@ -1028,6 +1098,24 @@ class ControllerSettingSetting extends Controller {
 			$this->error['image_cart'] = $this->language->get('error_image_cart');
 		}
 		
+		if ($this->request->post['config_ftp_status']) {
+			if (!$this->request->post['config_ftp_host']) {
+				$this->error['ftp_host'] = $this->language->get('error_ftp_host');
+			}
+			
+			if (!$this->request->post['config_ftp_port']) {
+				$this->error['ftp_port'] = $this->language->get('error_ftp_port');
+			}
+			
+			if (!$this->request->post['config_ftp_username']) {
+				$this->error['ftp_username'] = $this->language->get('error_ftp_username');
+			}	
+			
+			if (!$this->request->post['config_ftp_password']) {
+				$this->error['ftp_password'] = $this->language->get('error_ftp_password');
+			}											
+		}
+	
 		if (!$this->request->post['config_error_filename']) {
 			$this->error['error_filename'] = $this->language->get('error_error_filename');
 		}

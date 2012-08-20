@@ -453,21 +453,27 @@ class ControllerCatalogDownload extends Controller {
 		$this->language->load('sale/order');
 		
 		$json = array();
+    	
+		if (!$this->user->hasPermission('modify', 'catalog/download')) {
+      		$json['error'] = $this->language->get('error_permission');
+    	}	
 		
-		if (!empty($this->request->files['file']['name'])) {
-			$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
-			
-			if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 128)) {
-				$json['error'] = $this->language->get('error_filename');
-			}	  	
-					
-			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
-				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
+		if (!isset($json['error'])) {	
+			if (!empty($this->request->files['file']['name'])) {
+				$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
+				
+				if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 128)) {
+					$json['error'] = $this->language->get('error_filename');
+				}	  	
+						
+				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
+					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
+				}
+			} else {
+				$json['error'] = $this->language->get('error_upload');
 			}
-		} else {
-			$json['error'] = $this->language->get('error_upload');
 		}
-	
+		
 		if (!isset($json['error'])) {
 			if (is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
 				$ext = md5(mt_rand());

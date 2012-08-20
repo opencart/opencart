@@ -9,8 +9,6 @@
 $('#carousel<?php echo $module; ?> ul').jcarousel({
 	vertical: false,
 	visible: <?php echo $limit; ?>,
-	scroll: <?php echo $scroll; ?>,
-	wrap: '<?php echo $cwrap; ?>',
-	auto: <?php echo $auto; ?>
+	scroll: <?php echo $scroll; ?>
 });
 //--></script>

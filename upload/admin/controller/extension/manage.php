@@ -23,6 +23,55 @@ class ControllerExtensionManage extends Controller {
 
 		$this->data['button_upload'] = $this->language->get('button_upload');
 
+
+		/*
+	$type = $_FILES["zip_file"]["type"];
+ 
+	$name = explode(".", $filename);
+	$accepted_types = array('application/zip', 'application/x-zip-compressed', 'multipart/x-zip', 'application/x-compressed');
+	foreach($accepted_types as $mime_type) {
+		if($mime_type == $type) {
+			$okay = true;
+			break;
+		} 
+	}
+		*/	
+		/*
+		$file = 'public_html/news-blog.zip';
+		
+		$handle = fopen(DIR_DOWNLOAD . 'news-blog.zip', 'r');
+		
+		if (ftp_fput($connection, 'public_html/test/test/news-blog.zip', $handle, FTP_ASCII)) {			
+			echo "Successfully uploaded $file\n";
+		} else {
+    		echo "There was a problem while uploading $file\n";
+		}
+		*/
+		
+		$zip = zip_open(DIR_DOWNLOAD . 'test.zip');
+				
+		while ($handle = zip_read($zip)) {
+			$filename = zip_entry_name($handle);
+			
+			if ($file[strlen($file) - 1] == '/' && !file_exists($file)) {
+				mkdir($tmp, 0777);
+			} elseif (zip_entry_open($zip, $handle, 'rb')) {
+				
+				$fd = @fopen($file, 'w+')
+				
+				fwrite($fd, zip_entry_read($handle, zip_entry_filesize($handle)));
+                
+				fclose($fd);
+						
+				zip_entry_close($handle);
+			}
+			
+			echo $file . '<br>';
+		}
+		
+		zip_close($zip);
+		
+		/*
 		$connection = ftp_connect($this->config->get('config_ftp_host'), $this->config->get('config_ftp_port'));
 
 		if (!$connection) {
@@ -34,42 +83,27 @@ class ControllerExtensionManage extends Controller {
 		if (!$login) {
 			exit('Couldn\'t connect as ' . $this->config->get('config_ftp_username'));
 		}
-	
-		$file = 'public_html/news-blog.zip';
 		
-		//$handle = fopen(DIR_DOWNLOAD . 'news-blog.zip', 'c+');
+		$ignore = array(
+			//'upload/vqmod/'
+		);
 		
-		if (ftp_put($connection, $file, DIR_DOWNLOAD . 'news-blog.zip', FTP_BINARY)) {			
-			echo "Successfully uploaded $file\n";
-		} else {
-    		echo "There was a problem while uploading $file\n";
-		}
-							
-	/*
-		$zip = zip_open(DIR_DOWNLOAD . 'news-blog.zip');
-				
-		while ($handle = zip_read($zip)) {
-			$filename = zip_entry_name($handle) . '<br />';
-			
-			echo $filename . '<br />';
-				
-			zip_entry_open($zip, $handle, 'r');
-				
-			// read entry
-			//$content = zip_entry_read($file, zip_entry_filesize($file));		
-				
-			if (ftp_fput($connection, 'public_html/test/' . $filename, $handle, FTP_ASCII)) {			
-				echo "Successfully uploaded $file\n";
-			}
-			
-			zip_entry_close($file);
-		}
-		
-		zip_close($zip);
-		
-		*/
-		ftp_close($connection);
 
+		if (ftp_fput($connection, trim($this->config->get('config_ftp_root'), '/') . '/' . $file, $handle, FTP_ASCII)) {			
+			echo 'Successfully uploaded ' . $filename . "\n";
+		}		
+				
+		if ($file[strlen($file) - 1] == '/') {
+			if (@ftp_chdir($connection, trim($this->config->get('config_ftp_root'), '/') . '/' . $file)) {
+				echo 'changed directory to ' . $file . '<br />';
+			} elseif (@ftp_mkdir($connection, '/' . trim($this->config->get('config_ftp_root'), '/') . '/' . $file)) {
+				echo 'made directory ' . $file . '<br />';					
+			}
+		}
+		
+		ftp_close($connection);
+		*/
+		
 		$this->template = 'extension/manage.tpl';
 		$this->children = array(
 			'common/header',

@@ -28,7 +28,7 @@ class ModelPaymentKlarna extends Model {
         /* Maps countries to currencies */
         $countries = array(
             'NOR' => 'NOK',
-            'SWE' => 'SKE',
+            'SWE' => 'SEK',
             'FIN' => 'EUR',
             'DNK' => 'DKK',
             'DEU' => 'EUR',

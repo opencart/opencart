@@ -1,8 +1,15 @@
 <?php if ($address_match) { ?>
-    <?php if ($country_code == 'DEU') { ?>
-    <?php } elseif ($country_code == 'NLD') { ?>
-        <img src="http://www.afm.nl/~/media/Images/wetten-regels/kredietwaarschuwing/balk_afm3-jpg.ashx" /> 
-    <?php } ?>
+    <form>
+        <?php if ($country_code == 'DEU') { ?>
+            <div class="buttons">
+                <input type="checkbox" name="deu_toc" value="1" />
+                Mit der Übermittlung der für die Abwicklung des Rechnungskaufes und einer Identitäts - und Bonitätsprüfung erforderlichen 
+                Daten an Klarna bin ich einverstanden. Meine <a href="https://online.klarna.com/consent_de.yaws" target="_blank">Einwilligung</a> kann ich jederzeit mit Wirkung für die Zukunft widerrufen.
+            </div>
+        <?php } elseif ($country_code == 'NLD') { ?>
+            <img src="http://www.afm.nl/~/media/Images/wetten-regels/kredietwaarschuwing/balk_afm3-jpg.ashx" /> 
+        <?php } ?>
+    </form>
 <?php } else { ?>
     <div class="warning">
         <?php echo $error_address_match ?>

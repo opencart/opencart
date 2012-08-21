@@ -25,26 +25,56 @@ class ControllerExtensionManage extends Controller {
 
 
 		/*
-	$type = $_FILES["zip_file"]["type"];
- 
-	$name = explode(".", $filename);
-	$accepted_types = array('application/zip', 'application/x-zip-compressed', 'multipart/x-zip', 'application/x-compressed');
-	foreach($accepted_types as $mime_type) {
-		if($mime_type == $type) {
-			$okay = true;
-			break;
-		} 
-	}
+		$type = $this->request->files["zip_file"]["type"];
+	 
+		$name = explode(".", $filename);
+		
+		$allowed = array(
+			'application/zip', 
+			'application/x-zip-compressed', 
+			'multipart/x-zip', 
+			'application/x-compressed'
+		);
+		
+		foreach($accepted_types as $mime_type) {
+			if($mime_type == $type) {
+				$okay = true;
+				break;
+			} 
+		}
 		*/	
 
+		// Unzip the files
 		$file = DIR_DOWNLOAD . 'news-blog.zip';
-		$directory = basename($file, '.zip');
+		$directory = DIR_DOWNLOAD . basename($file, '.zip') . '/';
 
 		$zip = new ZipArchive();
 		$zip->open($file);
 		$zip->extractTo($directory);
 		$zip->close();
 		
+		//unlink($file);
+		
+		// Get a list of files ready to upload
+		$files = array();
+		
+		$path = array($directory . '*');
+		
+		while(count($path) != 0) {
+			$next = array_shift($path);
+    
+			foreach(glob($next) as $file) {
+				if (is_dir($file)) {
+					$path[] = $file . '/*';
+				}
+				
+				$files[] = $file;
+    		}
+		}
+		
+		sort($files);		
+		
+		// Connect to the site via FTP
 		$connection = ftp_connect($this->config->get('config_ftp_host'), $this->config->get('config_ftp_port'));
 
 		if (!$connection) {
@@ -57,21 +87,23 @@ class ControllerExtensionManage extends Controller {
 			exit('Couldn\'t connect as ' . $this->config->get('config_ftp_username'));
 		}
 		
-		$ignore = array(
-			//'upload/vqmod/'
-		);
-		
-		if (ftp_fput($connection, trim($this->config->get('config_ftp_root'), '/') . '/' . $file, $handle, FTP_ASCII)) {			
-			echo 'Successfully uploaded ' . $filename . "\n";
-		}		
-		
-		
-				
-		if ($file[strlen($file) - 1] == '/') {
-			if (@ftp_chdir($connection, trim($this->config->get('config_ftp_root'), '/') . '/' . $file)) {
-				echo 'changed directory to ' . $file . '<br />';
-			} elseif (@ftp_mkdir($connection, '/' . trim($this->config->get('config_ftp_root'), '/') . '/' . $file)) {
-				echo 'made directory ' . $file . '<br />';					
+		foreach ($files as $file) {
+			$destination = substr($file, strlen($directory));
+			
+			if (is_dir($file)) {
+				$list = ftp_nlist($connection, $this->config->get('config_ftp_root') . substr($destination, 0, strrpos($destination, '/')));
+
+				if (!in_array(basename($destination), $list)) {
+					if (ftp_mkdir($connection, $this->config->get('config_ftp_root') . $destination)) {
+						echo 'made directory ' . $destination . '<br />';
+					}
+				}
+			}		
+			
+			if (is_file($file)) {
+				if (ftp_put($connection, trim($this->config->get('config_ftp_root'), '/') . '/' . $destination, $file, FTP_ASCII)) {		
+					echo 'Successfully uploaded ' . $file . '<br />';
+				}
 			}
 		}
 		

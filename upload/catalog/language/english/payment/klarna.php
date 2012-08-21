@@ -16,6 +16,7 @@ $_['entry_pno'] = 'PNO / Date of Birth:';
 $_['entry_house_no'] = 'House No.:';
 $_['entry_house_ext'] = 'House Ext.:';
 $_['entry_cellno'] = 'Cell Phone:';
+$_['entry_company'] = 'Company registration number:';
 
 $_['help_swe_pno'] = 'Format: yymmdd-nnnn (d - day, m - month, y - year, n - person specific number, e. g., 800131-0000)';
 $_['help_fin_pno'] = 'Format: ddmmyy-nnnn (d - day, m - month, y - year, n - person specific number, e. g., 310180-000F)';

@@ -10,31 +10,43 @@
             <?php } elseif ($country_code == 'NLD') { ?>
                 <img src="<?php echo $klarna_nld_warning_banner ?>" />
             <?php } ?>
-            <p><?php echo $text_additional; ?></p>
             <table class="form">
                 
-            <tr>
-                <td>
-                    <?php echo $entry_pno ?><br />
-                    
-                    <span class="help">
-                        <?php if ($country_code == 'SWE') { ?>
-                            <?php echo $help_swe_pno ?>
-                        <?php } elseif ($country_code == 'FIN') {?>
-                            <?php echo $help_fin_pno ?>
-                        <?php } elseif ($country_code == 'DNK') { ?>
-                            <?php echo $help_dnk_pno ?>
-                        <?php } elseif ($country_code == 'NOR') { ?>
-                            <?php echo $help_nor_pno ?>
-                        <?php } elseif ($country_code == 'DEU') { ?>
-                            <?php echo $help_deu_pno ?>
-                        <?php } elseif ($country_code == 'NLD') {?>
-                            <?php echo $help_nld_pno ?>
-                        <?php } ?>
-                    </span>
-                </td>
-                <td><input name="pno" /></td>
-            </tr>
+            <?php if (!$is_company || $contry_code == 'DEU' || $country_code == 'NLD') { ?>
+                <tr>
+                    <td colspan="2"><?php echo $text_additional; ?></td>
+                </tr>
+                <tr>
+                    <td>
+                        <?php echo $entry_pno ?><br />
+
+                        <span class="help">
+                            <?php if ($country_code == 'SWE') { ?>
+                                <?php echo $help_swe_pno ?>
+                            <?php } elseif ($country_code == 'FIN') { ?>
+                                <?php echo $help_fin_pno ?>
+                            <?php } elseif ($country_code == 'DNK') { ?>
+                                <?php echo $help_dnk_pno ?>
+                            <?php } elseif ($country_code == 'NOR') { ?>
+                                <?php echo $help_nor_pno ?>
+                            <?php } elseif ($country_code == 'DEU') { ?>
+                                <?php echo $help_deu_pno ?>
+                            <?php } elseif ($country_code == 'NLD') { ?>
+                                <?php echo $help_nld_pno ?>
+                            <?php } ?>
+                        </span>
+                    </td>
+                    <td><input name="pno" /></td>
+                </tr>
+            <?php } elseif (empty($company_id)) { ?>
+                <tr>
+                    <td colspan="2"><?php echo $text_additional; ?></td>
+                </tr>
+                <tr>
+                    <td><?php echo $entry_company ?></td>
+                    <td><input type="text" name="pno" /></td>
+                </tr>
+            <?php } ?>
             
             <?php if ($country_code == 'DEU' || $country_code == 'NLD') { ?>
 

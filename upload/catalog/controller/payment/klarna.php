@@ -17,6 +17,14 @@ class ControllerPaymentKlarna extends Controller {
             $addressMatch = false;
         }
         
+        if (empty($orderInfo['payment_company'])) {
+            $this->data['is_company'] = false;
+        } else {
+            $this->data['is_company'] = true;
+        }
+        
+        $this->data['company_id'] = $orderInfo['payment_company_id'];
+        
         $this->data['address_match'] = $addressMatch;
         $this->data['country_code'] = $orderInfo['payment_iso_code_3'];
         $this->data['klarna_send'] = $this->url->link('payment/klarna/send');
@@ -193,10 +201,18 @@ class ControllerPaymentKlarna extends Controller {
         
         $digest = base64_encode(pack('H*', hash('sha256', $digest . $this->config->get('klarna_secret'))));
         
+        if (isset($this->request->post['pno'])) {
+            $pno = $request->post['pno'];
+        } elseif (!empty($orderInfo['payment_company_id'])) {
+            $pno = $orderInfo['payment_company_id'];
+        } else {
+            $pno = '';
+        }
+        
         $transaction = array(
             '4.1',
             'API:OPENCART:' . VERSION,
-            $this->request->post['pno'],
+            $pno,
             (int) $this->request->post['gender'],
             '',
             '', 
@@ -261,7 +277,8 @@ class ControllerPaymentKlarna extends Controller {
             preg_match('/<member><name>faultString<\/name><value><string>(.+)<\/string><\/value><\/member>/', $response, $match);
 
             if (isset($match[1])) {
-                $json['error'] = utf8_encode($match[1]);
+                die(htmlspecialchars($response));
+                $json['error'] = utf8_encode(htmlspecialchars($repsonse));
             } else {
                 $xml = simplexml_load_string($response);
                 

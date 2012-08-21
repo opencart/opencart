@@ -559,7 +559,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (24, 'Bermuda', 'BM', 'BMU', '', 0, 1),
 (25, 'Bhutan', 'BT', 'BTN', '', 0, 1),
 (26, 'Bolivia', 'BO', 'BOL', '', 0, 1),
-(27, 'Bosnia and Herzegowina', 'BA', 'BIH', '', 0, 1),
+(27, 'Bosnia and Herzegovina', 'BA', 'BIH', '', 0, 1),
 (28, 'Botswana', 'BW', 'BWA', '', 0, 1),
 (29, 'Bouvet Island', 'BV', 'BVT', '', 0, 1),
 (30, 'Brazil', 'BR', 'BRA', '', 0, 1),
@@ -771,7 +771,9 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (236, 'Yugoslavia', 'YU', 'YUG', '', 0, 1),
 (237, 'Democratic Republic of Congo', 'CD', 'COD', '', 0, 1),
 (238, 'Zambia', 'ZM', 'ZMB', '', 0, 1),
-(239, 'Zimbabwe', 'ZW', 'ZWE', '', 0, 1);
+(239, 'Zimbabwe', 'ZW', 'ZWE', '', 0, 1),
+(240, 'Jersey', 'JE', 'JEY', '', 1, 1),
+(241, 'Guernsey', 'GG', 'GGY', '', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -7050,7 +7052,8 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3966, 190, '11', 'Goriška', 1),
 (3967, 190, '12', 'Obalno-kraška', 1),
 (3968, 33, '', 'Ruse', 1),
-(3969, 101, 'ALB', 'Alborz', 1);
+(3969, 101, 'ALB', 'Alborz', 1),
+(3970, 21, 'Brussels-Capital Region', 'BRU', 1);
 
 -- --------------------------------------------------------
 

@@ -36,42 +36,15 @@ class ControllerExtensionManage extends Controller {
 		} 
 	}
 		*/	
-		/*
-		$file = 'public_html/news-blog.zip';
+
+		$file = DIR_DOWNLOAD . 'news-blog.zip';
+		$directory = basename($file, '.zip');
+
+		$zip = new ZipArchive();
+		$zip->open($file);
+		$zip->extractTo($directory);
+		$zip->close();
 		
-		$handle = fopen(DIR_DOWNLOAD . 'news-blog.zip', 'r');
-		
-		if (ftp_fput($connection, 'public_html/test/test/news-blog.zip', $handle, FTP_ASCII)) {			
-			echo "Successfully uploaded $file\n";
-		} else {
-    		echo "There was a problem while uploading $file\n";
-		}
-		*/
-		
-		$zip = zip_open(DIR_DOWNLOAD . 'test.zip');
-				
-		while ($handle = zip_read($zip)) {
-			$filename = zip_entry_name($handle);
-			
-			if ($file[strlen($file) - 1] == '/' && !file_exists($file)) {
-				mkdir($tmp, 0777);
-			} elseif (zip_entry_open($zip, $handle, 'rb')) {
-				
-				$fd = @fopen($file, 'w+')
-				
-				fwrite($fd, zip_entry_read($handle, zip_entry_filesize($handle)));
-                
-				fclose($fd);
-						
-				zip_entry_close($handle);
-			}
-			
-			echo $file . '<br>';
-		}
-		
-		zip_close($zip);
-		
-		/*
 		$connection = ftp_connect($this->config->get('config_ftp_host'), $this->config->get('config_ftp_port'));
 
 		if (!$connection) {
@@ -88,10 +61,11 @@ class ControllerExtensionManage extends Controller {
 			//'upload/vqmod/'
 		);
 		
-
 		if (ftp_fput($connection, trim($this->config->get('config_ftp_root'), '/') . '/' . $file, $handle, FTP_ASCII)) {			
 			echo 'Successfully uploaded ' . $filename . "\n";
 		}		
+		
+		
 				
 		if ($file[strlen($file) - 1] == '/') {
 			if (@ftp_chdir($connection, trim($this->config->get('config_ftp_root'), '/') . '/' . $file)) {
@@ -102,7 +76,6 @@ class ControllerExtensionManage extends Controller {
 		}
 		
 		ftp_close($connection);
-		*/
 		
 		$this->template = 'extension/manage.tpl';
 		$this->children = array(

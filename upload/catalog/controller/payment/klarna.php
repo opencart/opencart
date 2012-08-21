@@ -4,6 +4,7 @@ class ControllerPaymentKlarna extends Controller {
 
     protected function index() {
         $this->load->model('checkout/order');
+        $this->load->model('tool/image');
         $this->data = array_merge($this->data, $this->language->load('payment/klarna'));
         
         $orderInfo = $this->model_checkout_order->getOrder($this->session->data['order_id']);
@@ -19,7 +20,9 @@ class ControllerPaymentKlarna extends Controller {
         $this->data['address_match'] = $addressMatch;
         $this->data['country_code'] = $orderInfo['payment_iso_code_3'];
         $this->data['klarna_send'] = $this->url->link('payment/klarna/send');
-
+        
+        $this->data['klarna_nld_warning_banner'] = $this->model_tool_image->resize('data/klarna_nld_warning.jpg', 950, 118);
+        
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/klarna.tpl')) {
             $this->template = $this->config->get('config_template') . '/template/payment/klarna.tpl';
         } else {
@@ -210,8 +213,6 @@ class ControllerPaymentKlarna extends Controller {
         
         $xml .= "  </params>";
         $xml .= "</methodCall>";        
-        
-        $request = xmlrpc_encode_request('add_invoice', $transaction);
 
         $ch = curl_init($server);
 

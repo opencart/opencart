@@ -8,7 +8,8 @@
                     Daten an Klarna bin ich einverstanden. Meine <a href="https://online.klarna.com/consent_de.yaws" target="_blank">Einwilligung</a> kann ich jederzeit mit Wirkung für die Zukunft widerrufen.
                 </div>
             <?php } elseif ($country_code == 'NLD') { ?>
-                <img src="http://www.afm.nl/~/media/Images/wetten-regels/kredietwaarschuwing/balk_afm3-jpg.ashx" /> 
+                <!--<img width="950" src="http://www.afm.nl/~/media/Images/wetten-regels/kredietwaarschuwing/balk_afm3-jpg.ashx" /> -->
+                <img src="<?php echo $klarna_nld_warning_banner ?>" />
             <?php } ?>
             <p><?php echo $text_additional; ?></p>
             <table class="form">

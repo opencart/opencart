@@ -45,7 +45,7 @@ class ControllerPaymentKlarna extends Controller {
         }
         
         if ($this->config->get('klarna_server') == 'live') {
-            //$server = 'payment.klarna.com';
+            //$server = 'https://payment.klarna.com/';
             $server = 'https://payment-beta.klarna.com/';
         } elseif ($this->config->get('klarna_server') == 'beta') {
             $server = 'https://payment-beta.klarna.com/';
@@ -149,7 +149,28 @@ class ControllerPaymentKlarna extends Controller {
             )
         );
         
-        $tax = $this->db->query("SELECT (SELECT `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `code` = 'total') - (SELECT `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `code` = 'sub_total') - (SELECT `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `code` = 'shipping') AS 'tax';")->row['tax'];
+        
+        $tax = 0;
+        
+        $totals = $this->db->query("SELECT `value`, `code` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'])->rows;
+        
+        foreach ($totals as $total) {
+            if ($total['code'] == 'klarna_fee') {
+                $goodsList[] = array(
+                    'qty' => 1,
+                    'goods' => array(
+                        'artNo' => '',
+                        'title' => 'Klarna Invoice fee',
+                        'price' => (int) str_replace('.', '', $this->currency->format($total['value'], '', '', false)),
+                        'vat' => 0.0,
+                        'discount' => 0,
+                        'flags' => 16,
+                    )
+                );
+            } elseif ($total['code'] == 'tax') {
+                $tax += $total['value'];
+            }
+        }
         
         // Taxes
         $goodsList[] = array(
@@ -232,7 +253,6 @@ class ControllerPaymentKlarna extends Controller {
         $response = curl_exec($ch);
         
         if (curl_errno($ch)) {
-            curl_error($ch);
             $log = new Log('klarna.log');
             
             $log->write('HTTP Error. Code: ' . curl_errno($ch) . ' message: ' . curl_error($ch));
@@ -243,8 +263,21 @@ class ControllerPaymentKlarna extends Controller {
             if (isset($match[1])) {
                 $json['error'] = utf8_encode($match[1]);
             } else {
-                $this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('klarna_pending_order_status_id'));
+                $xml = simplexml_load_string($response);
+                
+                $invoiceNumber = (string) $xml->params->param->value->array->data->value[0]->string;
+                $klarnaOrderStatus = (int) $xml->params->param->value->array->data->value[1]->int;
 
+                if ($klarnaOrderStatus == 1) {
+                    $orderStatus = $this->config->get('klarna_accepted_order_status_id');
+                } elseif ($klarnaOrderStatus == 2) {
+                    $orderStatus = $this->config->get('klarna_pending_order_status_id');
+                } else {
+                    $orderStatus = $this->config->get('config_order_status_id');
+                }
+                
+                $this->model_checkout_order->confirm($this->session->data['order_id'], $orderStatus, "Klarna's Invoice ID: " . $invoiceNumber, 1);
+                
                 $json['redirect'] = $this->url->link('checkout/success');
             }
         }

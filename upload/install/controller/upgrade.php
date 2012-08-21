@@ -52,7 +52,6 @@ class ControllerUpgrade extends Controller {
 	}
 
 	private function validate() {
-
 		if (!defined('DB_HOSTNAME')) {
 			$this->error['warning'] = 'Host required!';
 		}

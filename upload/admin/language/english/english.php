@@ -79,6 +79,7 @@ $_['tab_design']              = 'Design';
 $_['tab_discount']            = 'Discount';
 $_['tab_general']             = 'General';
 $_['tab_fraud']               = 'Fraud';
+$_['tab_ftp']                 = 'FTP';
 $_['tab_ip']                  = 'IP Addresses';
 $_['tab_links']               = 'Links';
 $_['tab_image']               = 'Image';

@@ -17,6 +17,13 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <table class="form">
           <tr>
+            <td><span class="required">*</span> <?php echo $entry_postcode; ?></td>
+            <td><input type="text" name="auspost_postcode" size="4" maxlength="4" value="<?php echo $auspost_postcode; ?>" />
+              <?php if ($error_postcode) { ?>
+              <span class="error"><?php echo $error_postcode; ?></span>
+              <?php } ?></td>
+          </tr>        
+          <tr>
             <td><?php echo $entry_standard ?></td>
             <td><select name="auspost_standard">
                 <?php if ($auspost_standard) { ?>
@@ -41,20 +48,9 @@
               </select></td>
           </tr>
           <tr>
-            <td><span class="required">*</span> <?php echo $entry_postcode; ?></td>
-            <td><input type="text" name="auspost_postcode" size="4" maxlength="4" value="<?php echo $auspost_postcode; ?>" />
-              <?php if ($error_postcode) { ?>
-              <span class="error"><?php echo $error_postcode; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_handling; ?></td>
-            <td><input type="text" name="auspost_handling" size="5" maxlength="5" value="<?php echo $auspost_handling; ?>" /></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_estimate ?></td>
-            <td><select name="auspost_estimate">
-                <?php if ($auspost_estimate) { ?>
+            <td><?php echo $entry_display_time ?></td>
+            <td><select name="auspost_display_time">
+                <?php if ($auspost_display_time) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>
@@ -63,6 +59,18 @@
                 <?php } ?>
               </select></td>
           </tr>
+          <tr>
+            <td><?php echo $entry_weight_class; ?></td>
+            <td><select name="auspost_weight_class_id">
+                <?php foreach ($weight_classes as $weight_class) { ?>
+                <?php if ($weight_class['weight_class_id'] == $auspost_weight_class_id) { ?>
+                <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select></td>
+          </tr>          
           <tr>
             <td><?php echo $entry_tax_class; ?></td>
             <td><select name="auspost_tax_class_id">

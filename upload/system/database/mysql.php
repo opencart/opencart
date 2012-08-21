@@ -40,7 +40,7 @@ final class MySQL {
 				$query->num_rows = $i;
 				
 				unset($data);
-
+				
 				return $query;	
     		} else {
 				return true;

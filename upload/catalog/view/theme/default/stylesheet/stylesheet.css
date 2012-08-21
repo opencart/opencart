@@ -792,10 +792,6 @@ a.button:hover, input.button:hover {
 	float: left;
 	width: 18%;
 }
-.category-list .div a {
-	text-decoration: underline;
-	font-weight: bold;
-}
 /* manufacturer */
 .manufacturer-list {
 	border: 1px solid #DBDEE1;

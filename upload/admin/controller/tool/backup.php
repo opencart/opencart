@@ -99,7 +99,7 @@ class ControllerToolBackup extends Controller {
 			$this->response->addheader('Expires: 0');
 			$this->response->addheader('Content-Description: File Transfer');
 			$this->response->addheader('Content-Type: application/octet-stream');
-			$this->response->addheader('Content-Disposition: attachment; filename=backup.sql');
+			$this->response->addheader('Content-Disposition: attachment; filename=' . date('Y-m-d_H-i-s', time()).'_backup.sql');
 			$this->response->addheader('Content-Transfer-Encoding: binary');
 			
 			$this->load->model('tool/backup');

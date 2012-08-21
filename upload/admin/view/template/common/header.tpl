@@ -1,7 +1,7 @@
-<?php echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n"; ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>" xml:lang="<?php echo $lang; ?>">
+<!DOCTYPE html>
+<html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>">
 <head>
+<meta charset="UTF-8" />
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
 <?php if ($description) { ?>
@@ -82,11 +82,13 @@ $(document).ready(function(){
       </li>
       <li id="extension"><a class="top"><?php echo $text_extension; ?></a>
         <ul>
+          <li><a href="<?php echo $manage; ?>"><?php echo $text_manage; ?></a></li>
           <li><a href="<?php echo $module; ?>"><?php echo $text_module; ?></a></li>
           <li><a href="<?php echo $shipping; ?>"><?php echo $text_shipping; ?></a></li>
           <li><a href="<?php echo $payment; ?>"><?php echo $text_payment; ?></a></li>
           <li><a href="<?php echo $total; ?>"><?php echo $text_total; ?></a></li>
           <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
+          <li><a href="<?php echo $vqmod; ?>"><?php echo $text_vqmod; ?></a></li>
         </ul>
       </li>
       <li id="sale"><a class="top"><?php echo $text_sale; ?></a>

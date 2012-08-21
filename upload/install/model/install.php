@@ -24,7 +24,7 @@ class ModelInstall extends Model {
 						$query = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $query);
 						$query = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $query);
 						
-						$result = mysql_query($query, $connection);
+						$result = mysql_query($query, $connection); 
   
 						if (!$result) {
 							die(mysql_error());
@@ -41,7 +41,7 @@ class ModelInstall extends Model {
 		
 			mysql_query("DELETE FROM `" . $data['db_prefix'] . "user` WHERE user_id = '1'");
 		
-			mysql_query("INSERT INTO `" . $data['db_prefix'] . "user` SET user_id = '1', user_group_id = '1', username = '" . mysql_real_escape_string($data['username']) . "', password = '" . mysql_real_escape_string(md5($data['password'])) . "', status = '1', email = '" . mysql_real_escape_string($data['email']) . "', date_added = NOW()", $connection);
+			mysql_query("INSERT INTO `" . $data['db_prefix'] . "user` SET user_id = '1', user_group_id = '1', username = '" . mysql_real_escape_string($data['username']) . "', salt = '" . mysql_real_escape_string($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . mysql_real_escape_string(sha1($salt . sha1($salt . sha1($data['password'])))) . "', status = '1', email = '" . mysql_real_escape_string($data['email']) . "', date_added = NOW()", $connection);
 
 			mysql_query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_email'", $connection);
 			mysql_query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `group` = 'config', `key` = 'config_email', value = '" . mysql_real_escape_string($data['email']) . "'", $connection);

@@ -140,7 +140,6 @@
             <td><?php echo $entry_service; ?></td>
             <td id="service"><div id="US">
                 <div class="scrollbox">
-                  <?php $class = 'odd'; ?>
                   <div class="even">
                     <?php if ($ups_us_01) { ?>
                     <input type="checkbox" name="ups_us_01" value="1" checked="checked" />

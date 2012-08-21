@@ -1,5 +1,5 @@
 <?php
-class ModelShippingAuspost extends Model {
+class ModelShippingAusPost extends Model {
 	public function getQuote($address) {
 		$this->load->language('shipping/auspost');
 
@@ -13,120 +13,103 @@ class ModelShippingAuspost extends Model {
 			$status = false;
 		}
 		
-		$weight = intval($this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class'), 2));
+		$error = '';
 		
-		$method_data = array();
+		$quote_data = array();
 		
-		if ($this->config->get('auspost_status') && ($this->config->get('auspost_standard') || $this->config->get('auspost_express')) && $address['iso_code_2'] == 'AU') {
-			$quote_data = array();
-			
-			$error = false; 
-			
-			if (!preg_match('/^[0-9]{4}$/', $address['postcode'])) {
-				$error = 'Your postcode is not valid in Australia';
-			} else {
-				if ($this->config->get('auspost_standard')) {
-					$ch = curl_init();
-			
-					curl_setopt($ch, CURLOPT_URL, 'http://drc.edeliver.com.au/ratecalc.asp?pickup_postcode=' . $this->config->get('auspost_postcode') . '&destination_postcode=' . $address['postcode'] . '&height=70&width=70&length=70&country=AU&service_type=standard&quantity=1&weight=' . $weight);
-					curl_setopt($ch, CURLOPT_HEADER, 0);
-					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-					
-					$get_standard = curl_exec($ch);
-					
-					curl_close($ch); 
+		if ($status) {
+			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('auspost_weight_class_id'));
 		
-					if (strstr($get_standard, 'err_msg=OK') == false) {
-						$error = 'Error interfacing with Australia Post (connection)';
-					} else {
-						$get_standard_charge = preg_match('/^charge=([0-9]{1,3}\.?[0-9]{0,2})/', $get_standard, $post_charge_standard);
+			if ($this->config->get('auspost_standard') && $address['iso_code_2'] == 'AU') {
+				$curl = curl_init();
+		
+				curl_setopt($curl, CURLOPT_URL, 'http://drc.edeliver.com.au/ratecalc.asp?pickup_postcode=' . urlencode($this->config->get('auspost_postcode')) . '&destination_postcode=' . urlencode($address['postcode']) . '&height=70&width=70&length=70&country=AU&service_type=standard&quantity=1&weight=' . urlencode($weight));
+				curl_setopt($curl, CURLOPT_HEADER, 0);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+				
+				$response = curl_exec($curl);
+				
+				curl_close($curl);
+				
+				if ($response) {
+					$response_info = array();
 					
-					if (!isset($post_charge_standard[1])) {
-						$error = 'Error interfacing with Australia Post (charge)';
-					} else {
-						$post_charge_standard = sprintf('%.2f', $post_charge_standard[1]);
+					$parts = explode("\n", trim($response));
 					
-					if (preg_match('/^[0-9]{1,2}\.[0-9]{2,2}$/', $this->config->get('auspost_handling')) && $this->config->get('auspost_handling') > 0) {
-						$post_charge_standard = sprintf('%.2f', $post_charge_standard + $this->config->get('auspost_handling'));
+					foreach ($parts as $part) {
+						list($key, $value) = explode('=', $part);
+						
+						$response_info[$key] = $value;
 					}
-		
-					$get_days_standard = preg_match('/days=([0-9]{1,2})/', $get_standard, $post_days_standard);
 					
-					$post_days_standard_append = '';
+					if ($response_info['err_msg'] != 'OK') {
+						$error = $response_info['err_msg'];
+					} else {
+						$title = $this->language->get('text_standard');
 					
-					if ($this->config->get('auspost_display_estimate') && isset($post_days_standard[1])) {
-						if (is_numeric($post_days_standard[1])) {
-							if($post_days_standard[1] == 1) {
-								$post_days_standard_append = ' (est. ' . $post_days_standard[1] . ' day delivery)';
-							} else {
-								$post_days_standard_append = ' (est. ' . $post_days_standard[1] . ' days delivery)';
-							}
-						}
+						if ($this->config->get('auspost_display_time')) {
+							$title .= ' (' . $response_info['days'] . ' ' . $this->language->get('text_eta') . ')';
+						}	
+			
+						$quote_data['auspost_standard'] = array(
+							'code'         => 'auspost.standard',
+							'title'        => $title,
+							'cost'         => $this->currency->convert($response_info['charge'], 'AUD', $this->config->get('config_currency')),
+							'tax_class_id' => $this->config->get('auspost_tax_class_id'),
+							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_info['charge'], 'AUD', $this->currency->getCode()), $this->config->get('auspost_tax_class_id'), $this->config->get('config_tax')), $this->currency->getCode(), 1.0000000)
+						);
 					}
+				}
+			}
+	
+			if ($this->config->get('auspost_express') && $address['iso_code_2'] == 'AU') {
+				$curl = curl_init();
+				
+				curl_setopt($curl, CURLOPT_URL, 'http://drc.edeliver.com.au/ratecalc.asp?pickup_postcode=' . urlencode($this->config->get('auspost_postcode')) . '&destination_postcode=' . urlencode($address['postcode']) . '&height=70&width=70&length=70&country=AU&service_type=express&quantity=1&weight=' . urlencode($weight));
+				curl_setopt($curl, CURLOPT_HEADER, 0);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+				
+				$response = curl_exec($curl);
+				
+				curl_close($curl); 
+				
+				if ($response) {
+					$response_info = array();
+					
+					$parts = explode("\n", trim($response));
+					
+					foreach ($parts as $part) {
+						list($key, $value) = explode('=', $part);
+						
+						$response_info[$key] = $value;
+					}
+								
+					if ($response_info['err_msg'] != 'OK') {
+						$error = $response_info['err_msg'];
+					} else {
+						$title = $this->language->get('text_express');
+						
+						if ($this->config->get('auspost_display_time')) {
+							$title .= ' (' . $response_info['days'] . ' ' . $this->language->get('text_eta') . ')';
+						}	
 		
-					$quote_data['auspost_standard'] = array(
-						'id'           => 'auspost.auspost_standard',
-						'title'        => $this->language->get('text_standard') . $post_days_standard_append,
-						'cost'         => $post_charge_standard,
-						'tax_class_id' => 0,
-						'text'         => '$' . $post_charge_standard
-					);
+						$quote_data['auspost_express'] = array(
+							'code'         => 'auspost.express',
+							'title'        => $title,
+							'cost'         => $this->currency->convert($response_info['charge'], 'AUD', $this->config->get('config_currency')),
+							'tax_class_id' => $this->config->get('auspost_tax_class_id'),
+							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_info['charge'], 'AUD', $this->currency->getCode()), $this->config->get('auspost_tax_class_id'), $this->config->get('config_tax')), $this->currency->getCode(), 1.0000000)
+						);
+					}
 				}
 			}
 		}
 		
-		if ($this->config->get('auspost_express') && $error == false) {
-			$ch = curl_init();
-			
-			curl_setopt($ch, CURLOPT_URL, 'http://drc.edeliver.com.au/ratecalc.asp?pickup_postcode=' . $this->config->get('auspost_postcode') . '&destination_postcode=' . $address['postcode'] . '&height=70&width=70&length=70&country=AU&service_type=express&quantity=1&weight=' . $weight);
-			curl_setopt($ch, CURLOPT_HEADER, 0);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			
-			$get_express = curl_exec($ch);
-			
-			curl_close($ch); 
+		$method_data = array();
 		
-					if (strstr($get_express, 'err_msg=OK') == false) {
-						$error = 'Error interfacing with Australia Post';
-					} else {
-						$get_express_charge = preg_match('/^charge=([0-9]{1,3}\.?[0-9]{0,2})/', $get_express, $post_charge_express);
-			
-						if (!isset($post_charge_express[1])) {
-							$error = 'Error interfacing with Australia Post (charge)';
-						} else {
-							$post_charge_express = sprintf('%.2f', $post_charge_express[1]);
-							
-							if (preg_match('/^[0-9]{1,2}\.[0-9]{2,2}$/', $this->config->get('auspost_handling')) && $this->config->get('auspost_handling') > 0) {
-								$post_charge_express = sprintf('%.2f', $post_charge_express + $this->config->get('auspost_handling'));
-							}
-				
-							$get_days_express = preg_match('/days=([0-9]{1,2})/', $get_express, $post_days_express);
-							$post_days_express_append = '';
-				
-							if ($this->config->get('auspost_display_estimate') && isset($post_days_express[1])) {
-								if (is_numeric($post_days_express[1])) {
-									if ($post_days_express[1] == 1) {
-										$post_days_express_append = ' (est. ' . $post_days_express[1] . ' day delivery)';
-									} else {
-										$post_days_express_append = ' (est. ' . $post_days_express[1] . ' days delivery)';
-									}
-								}
-							}
-		
-							$quote_data['auspost_express'] = array(
-								'id'           => 'auspost.auspost_express',
-								'title'        => $this->language->get('text_express') . $post_days_express_append,
-								'cost'         => $post_charge_express,
-								'tax_class_id' => 0,
-								'text'         => '$' . $post_charge_express
-							);
-						}
-					}
-				}
-			}
-			
+		if ($quote_data) {
 			$method_data = array(
-				'id'         => 'auspost_express',
+				'code'       => 'auspost',
 				'title'      => $this->language->get('text_title'),
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('auspost_sort_order'),

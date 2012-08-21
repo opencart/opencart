@@ -60,7 +60,7 @@ $_['entry_account']                = 'Account Terms:<br /><span class="help">For
 $_['entry_cart_weight']            = 'Display Weight on Cart Page:<br /><span class="help">Show the cart weight on the cart page</span>';
 $_['entry_guest_checkout']         = 'Guest Checkout:<br /><span class="help">Allow customers to checkout without creating an account. This will not be available when a downloadable product is in the shopping cart.</span>';
 $_['entry_checkout']               = 'Checkout Terms:<br /><span class="help">Forces people to agree to terms before an a customer can checkout.</span>';
-$_['entry_order_edit']             = 'Order Editing:<br /><span class="help">Number of days allowed to edit an order. This is required because prices and discounts may change over time corrupting the order if its edited.</span>';
+$_['entry_order_edit']             = 'Order Editing:<br /><span class="help">Number of days allowed to edit an order. This is required because prices and discounts may change over time corrupting the order if it\'s edited.</span>';
 $_['entry_invoice_prefix']         = 'Invoice Prefix:<br /><span class="help">Set the invoice prefix (e.g. INV-2011-00). Invoice ID\'s will start at 1 for each unique prefix</span>';
 $_['entry_order_status']           = 'Order Status:<br /><span class="help">Set the default order status when an order is processed.</span>';
 $_['entry_complete_status']        = 'Complete Order Status:<br /><span class="help">Set the order status the customers order must reach before they are allowed to access their downloadable products and gift vouchers.</span>';
@@ -82,8 +82,14 @@ $_['entry_image_related']          = 'Related Product Image Size:';
 $_['entry_image_compare']          = 'Compare Image Size:';
 $_['entry_image_wishlist']         = 'Wish List Image Size:';
 $_['entry_image_cart']             = 'Cart Image Size:';
-$_['entry_mail_protocol']          = 'Mail Protocol:<span class="help">Only choose \'Mail\' unless your host has disabled the php mail function.';
-$_['entry_mail_parameter']         = 'Mail Parameters:<span class="help">When using \'Mail\', additional mail parameters can be added here (e.g. "-femail@storeaddress.com".';
+$_['entry_ftp_host']               = 'FTP Host:';
+$_['entry_ftp_port']               = 'FTP Post:';
+$_['entry_ftp_username']           = 'FTP Username:';
+$_['entry_ftp_password']           = 'FTP Password:';
+$_['entry_ftp_root']               = 'FTP Root:<span class="help">The directory your opencart installation is stored in normally \'public_html/\'.</span>';
+$_['entry_ftp_status']             = 'Enable FTP:';
+$_['entry_mail_protocol']          = 'Mail Protocol:<span class="help">Only choose \'Mail\' unless your host has disabled the php mail function.</span>';
+$_['entry_mail_parameter']         = 'Mail Parameters:<span class="help">When using \'Mail\', additional mail parameters can be added here (e.g. "-femail@storeaddress.com").</span>';
 $_['entry_smtp_host']              = 'SMTP Host:';
 $_['entry_smtp_username']          = 'SMTP Username:';
 $_['entry_smtp_password']          = 'SMTP Password:';
@@ -128,5 +134,10 @@ $_['error_image_related']          = 'Related Product Image Size dimensions requ
 $_['error_image_compare']          = 'Compare Image Size dimensions required!';
 $_['error_image_wishlist']         = 'Wish List Image Size dimensions required!';
 $_['error_image_cart']             = 'Cart Image Size dimensions required!';
+$_['error_ftp_host']               = 'FTP Host required!';
+$_['error_ftp_port']               = 'FTP Port required!';
+$_['error_ftp_username']           = 'FTP Username required!';
+$_['error_ftp_password']           = 'FTP Password required!';
 $_['error_error_filename']         = 'Error Log Filename required!';
+$_['error_encryption']             = 'Encryption must be between 3 and 32 characters!';
 ?>

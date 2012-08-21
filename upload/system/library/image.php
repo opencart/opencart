@@ -44,7 +44,7 @@ class Image {
 			if ($extension == 'jpeg' || $extension == 'jpg') {
 				imagejpeg($this->image, $file, $quality);
 			} elseif($extension == 'png') {
-				imagepng($this->image, $file, 0);
+				imagepng($this->image, $file);
 			} elseif($extension == 'gif') {
 				imagegif($this->image, $file);
 			}
@@ -60,10 +60,13 @@ class Image {
 
 		$xpos = 0;
 		$ypos = 0;
-
-		$scale = min($width / $this->info['width'], $height / $this->info['height']);
 		
-		if ($scale == 1 && $this->info['mime'] != 'image/png') {
+		$scale_w = $width / $this->info['width'];
+		$scale_h = $height / $this->info['height'];
+
+		$scale = min($scale_w, $scale_h);
+		
+		if ($scale == 1 && $scale_h == $scale_w && $this->info['mime'] != 'image/png') {
 			return;
 		}
 		

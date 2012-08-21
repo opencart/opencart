@@ -33,7 +33,6 @@
           <tr>
             <td><?php echo $entry_domestic; ?></td>
             <td><div class="scrollbox">
-                <?php $class = 'odd'; ?>
                 <div class="even">
                   <?php if ($usps_domestic_00) { ?>
                   <input type="checkbox" name="usps_domestic_00" value="1" checked="checked" />

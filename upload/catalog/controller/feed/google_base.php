@@ -35,18 +35,24 @@ class ControllerFeedGoogleBase extends Controller {
 					
 					$output .= '<g:mpn>' . $product['model'] . '</g:mpn>';
 
-					$supported_currencies = array('USD', 'EUR', 'GBP');
+					$currencies = array(
+						'USD', 
+						'EUR', 
+						'GBP'
+					);
 
-                    if (in_array($this->currency->getCode(), $supported_currencies)) {
-                        $currency = $this->currency->getCode();
+                    if (in_array($this->currency->getCode(), $currencies)) {
+                        $currency_code = $this->currency->getCode();
+						$currency_value = $this->currency->getValue();
                     } else {
-                        $currency = ($this->config->get('google_base_status')) ? $this->config->get('google_base_status') : 'USD';
+                        $currency_code = 'USD';
+						$currency_value = $this->currency->getValue('USD');
                     }
 									
 					if ((float)$product['special']) {
-                        $output .= '<g:price>' .  $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id']), $currency, false, false) . '</g:price>';
+                        $output .= '<g:price>' .  $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id']), $currency_code, $currency_value, false) . '</g:price>';
                     } else {
-                        $output .= '<g:price>' . $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id']), $currency, false, false) . '</g:price>';
+                        $output .= '<g:price>' . $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id']), $currency_code, $currency_value, false) . '</g:price>';
                     }
 			   
 					$categories = $this->model_catalog_product->getCategories($product['product_id']);

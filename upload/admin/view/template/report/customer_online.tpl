@@ -28,7 +28,7 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td align="right"><a onClick="filter();" class="button">Filter</a></td>
+            <td align="right"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
           </tr>
           <?php if ($customers) { ?>
           <?php foreach ($customers as $customer) { ?>

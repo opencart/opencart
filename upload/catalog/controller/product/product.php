@@ -341,14 +341,16 @@ class ControllerProductProduct extends Controller {
 			}	
 			
 			$this->data['tags'] = array();
-					
-			$tags = explode(',', $product_info['tag']);
 			
-			foreach ($tags as $tag) {
-				$this->data['tags'][] = array(
-					'tag'  => trim($tag),
-					'href' => $this->url->link('product/search', 'filter_tag=' . trim($tag))
-				);
+			if ($product_info['tag']) {		
+				$tags = explode(',', $product_info['tag']);
+				
+				foreach ($tags as $tag) {
+					$this->data['tags'][] = array(
+						'tag'  => trim($tag),
+						'href' => $this->url->link('product/search', 'filter_tag=' . trim($tag))
+					);
+				}
 			}
 			
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);

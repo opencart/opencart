@@ -18,15 +18,17 @@
 <script type="text/javascript" src="view/javascript/jquery/ajaxupload.js"></script> 
 <script type="text/javascript"><!--
 new AjaxUpload('#button-upload', {
-	action: 'index.php?route=catalog/download/upload&token=<?php echo $token; ?>',
+	action: 'index.php?route=extension/manage/upload&token=<?php echo $token; ?>',
 	name: 'file',
 	autoSubmit: true,
 	responseType: 'text',
 	onSubmit: function(file, extension) {
-		$('#button-upload').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+		$('#button-upload').before('<img src="view/image/loading.gif" class="loading" style="padding-right: 5px;" />');
 		$('#button-upload').attr('disabled', true);
 	},
 	onComplete: function(file, json) {
+		alert(json);
+		/*
 		$('#button-upload').attr('disabled', false);
 		
 		if (json['success']) {
@@ -38,6 +40,7 @@ new AjaxUpload('#button-upload', {
 		}
 		
 		$('.loading').remove();	
+		*/
 	}
 });
 //--></script>

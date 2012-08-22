@@ -556,15 +556,13 @@ class ControllerProductProduct extends Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 		
-		if (!$json) {
-			if (is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
-				$file = basename($filename) . '.' . md5(mt_rand());
-				
-				// Hide the uploaded file name so people can not link to it directly.
-				$json['file'] = $this->encryption->encrypt($file);
-				
-				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
-			}
+		if (!$json && is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
+			$file = basename($filename) . '.' . md5(mt_rand());
+			
+			// Hide the uploaded file name so people can not link to it directly.
+			$json['file'] = $this->encryption->encrypt($file);
+			
+			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
 						
 			$json['success'] = $this->language->get('text_upload');
 		}	

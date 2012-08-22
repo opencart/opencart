@@ -37,31 +37,16 @@ class ControllerExtensionManage extends Controller {
 	public function upload() {
 		$this->language->load('extension/manage');
 		
-		$log = '';
-		
-		if (!$this->user->hasPermission('modify', 'catalog/manage')) {
-      		$log .= $this->language->get('error_permission') . "\n";
-    	}		
-		
 		$json = array();
 		
+		if (!$this->user->hasPermission('modify', 'extension/manage')) {
+      		$json['error'] = $this->language->get('error_permission') . "\n";
+    	}		
+		
 		if (!empty($this->request->files['file']['name'])) {
-			$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
-			
-			
-			
-			$allowed = array(
-				'application/zip', 
-				'application/x-zip-compressed', 
-				'multipart/x-zip',
-				'application/x-compressed'
-			);
-			
-			if (!in_array($this->request->files['file']['type'], $allowed)) {
-				
-			}
-			
-			$ext = strrchr($filename);
+			if (substr(strrchr($this->request->files['file']['name'], '.'), 1) != 'zip') {
+				$json['error'] = $this->language->get('error_filetype');
+       		}
 					
 			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
@@ -70,25 +55,19 @@ class ControllerExtensionManage extends Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 	
-		if (!isset($json['error'])) {
-			if (is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
-
-
-
-			}
-			
-			
+		if (!isset($json['error']) && is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
 			// Unzip the files
 			$file = $this->request->files['file']['tmp_name'];
-			$directory = DIR_DOWNLOAD . basename($file, '.zip') . '/';
+			$directory = dirname($this->request->files['file']['tmp_name']) . '/' . basename($this->request->files['file']['name'], '.zip') . '/';
 	
 			$zip = new ZipArchive();
 			$zip->open($file);
 			$zip->extractTo($directory);
 			$zip->close();
 			
-			//unlink($file);
+			unlink($file);
 			
+			/*
 			// Get a list of files ready to upload
 			$files = array();
 			
@@ -143,11 +122,18 @@ class ControllerExtensionManage extends Controller {
 			}
 			
 			ftp_close($connection);
+			
+			rsort($files);
 						
-			$json['success'] = $this->language->get('text_upload');
+			foreach ($files as $file) {
+				unlink($file);
+			}
+						
+			$json['success'] = $this->language->get('text_success');
+			*/
 		}	
-	
-		$this->response->setOutput($log);
+		
+		$this->response->setOutput(json_encode($json));
 	}			
 }
 ?>

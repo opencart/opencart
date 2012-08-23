@@ -104,19 +104,23 @@ class ControllerExtensionManage extends Controller {
 			foreach ($files as $file) {
 				$destination = substr($file, strlen($directory));
 				
-				if (is_dir($file)) {
-					$list = ftp_nlist($connection, $this->config->get('config_ftp_root') . substr($destination, 0, strrpos($destination, '/')));
-					
-					if (!in_array('/' . $destination, $list)) {
-						if (ftp_mkdir($connection, $this->config->get('config_ftp_root') . $destination)) {
-							echo 'made directory ' . $destination . '<br />';
+				if (substr($destination, 0, 6) == 'upload') {
+					if (is_dir($file)) {
+						
+						
+						$list = ftp_nlist($connection, $this->config->get('config_ftp_root') . substr($destination, 0, strrpos($destination, '/')));
+						
+						if (!in_array('/' . $destination, $list)) {
+							if (ftp_mkdir($connection, $this->config->get('config_ftp_root') . $destination)) {
+								echo 'made directory ' . $destination . '<br />';
+							}
 						}
-					}
-				}		
-				
-				if (is_file($file)) {
-					if (ftp_put($connection, $this->config->get('config_ftp_root') . $destination, $file, FTP_ASCII)) {		
-						echo 'Successfully uploaded ' . $file . '<br />';
+					}		
+					
+					if (is_file($file)) {
+						if (ftp_put($connection, $this->config->get('config_ftp_root') . $destination, $file, FTP_ASCII)) {		
+							echo 'Successfully uploaded ' . $file . '<br />';
+						}
 					}
 				}
 			}
@@ -131,6 +135,10 @@ class ControllerExtensionManage extends Controller {
 				} elseif (is_dir($file)) {
 					rmdir($file);	
 				}
+			}
+			
+			if (file_exists($directory)) {
+				rmdir($directory);
 			}
 						
 			$json['success'] = $this->language->get('text_success');

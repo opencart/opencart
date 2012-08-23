@@ -44,7 +44,7 @@ class ControllerExtensionManage extends Controller {
     	}		
 		
 		if (!empty($this->request->files['file']['name'])) {
-			if (substr(strrchr($this->request->files['file']['name'], '.'), 1) != 'zip') {
+			if (strrchr($this->request->files['file']['name'], '.') != '.zip') {
 				$json['error'] = $this->language->get('error_filetype');
        		}
 					
@@ -100,28 +100,30 @@ class ControllerExtensionManage extends Controller {
 				exit('Couldn\'t connect as ' . $this->config->get('config_ftp_username'));
 			}
 			
-			// Upload files
 			foreach ($files as $file) {
 				$destination = substr($file, strlen($directory));
 				
-				if (substr($destination, 0, 6) == 'upload') {
+				// Upload everything in the upload directory
+				if (substr($destination, 0, 7) == 'upload/') {
 					if (is_dir($file)) {
-						
-						
 						$list = ftp_nlist($connection, $this->config->get('config_ftp_root') . substr($destination, 0, strrpos($destination, '/')));
 						
 						if (!in_array('/' . $destination, $list)) {
-							if (ftp_mkdir($connection, $this->config->get('config_ftp_root') . $destination)) {
+							if (ftp_mkdir($connection, $this->config->get('config_ftp_root') . substr($destination, 7))) {
 								echo 'made directory ' . $destination . '<br />';
 							}
 						}
 					}		
 					
 					if (is_file($file)) {
-						if (ftp_put($connection, $this->config->get('config_ftp_root') . $destination, $file, FTP_ASCII)) {		
+						if (ftp_put($connection, $this->config->get('config_ftp_root') . substr($destination, 7), $file, FTP_ASCII)) {		
 							echo 'Successfully uploaded ' . $file . '<br />';
 						}
 					}
+				} elseif (strrchr($file, '.') != '.sql') {
+					
+				} elseif (strrchr($file, '.') != '.xml') {
+					
 				}
 			}
 			

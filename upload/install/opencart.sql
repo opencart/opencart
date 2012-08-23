@@ -553,7 +553,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (18, 'Bangladesh', 'BD', 'BGD', '', 0, 1),
 (19, 'Barbados', 'BB', 'BRB', '', 0, 1),
 (20, 'Belarus', 'BY', 'BLR', '', 0, 1),
-(21, 'Belgium', 'BE', 'BEL', '', 0, 1),
+(21, 'Belgium', 'BE', 'BEL', '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 0, 1),
 (22, 'Belize', 'BZ', 'BLZ', '', 0, 1),
 (23, 'Benin', 'BJ', 'BEN', '', 0, 1),
 (24, 'Bermuda', 'BM', 'BMU', '', 0, 1),
@@ -593,7 +593,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (58, 'Djibouti', 'DJ', 'DJI', '', 0, 1),
 (59, 'Dominica', 'DM', 'DMA', '', 0, 1),
 (60, 'Dominican Republic', 'DO', 'DOM', '', 0, 1),
-(61, 'East Timor', 'TP', 'TMP', '', 0, 1),
+(61, 'East Timor', 'TL', 'TLS', '', 0, 1),
 (62, 'Ecuador', 'EC', 'ECU', '', 0, 1),
 (63, 'Egypt', 'EG', 'EGY', '', 0, 1),
 (64, 'El Salvador', 'SV', 'SLV', '', 0, 1),
@@ -623,7 +623,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (88, 'Guam', 'GU', 'GUM', '', 0, 1),
 (89, 'Guatemala', 'GT', 'GTM', '', 0, 1),
 (90, 'Guinea', 'GN', 'GIN', '', 0, 1),
-(91, 'Guinea-bissau', 'GW', 'GNB', '', 0, 1),
+(91, 'Guinea-Bissau', 'GW', 'GNB', '', 0, 1),
 (92, 'Guyana', 'GY', 'GUY', '', 0, 1),
 (93, 'Haiti', 'HT', 'HTI', '', 0, 1),
 (94, 'Heard and Mc Donald Islands', 'HM', 'HMD', '', 0, 1),
@@ -773,7 +773,9 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (238, 'Zambia', 'ZM', 'ZMB', '', 0, 1),
 (239, 'Zimbabwe', 'ZW', 'ZWE', '', 0, 1),
 (240, 'Jersey', 'JE', 'JEY', '', 1, 1),
-(241, 'Guernsey', 'GG', 'GGY', '', 1, 1);
+(241, 'Guernsey', 'GG', 'GGY', '', 1, 1),
+(242, 'Montenegro', 'ME', 'MNE', '', 0, 1),
+(243, 'Serbia', 'RS', 'SRB', '', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -3447,7 +3449,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (344, 21, 'VAN', 'Antwerpen', 1),
 (345, 21, 'WBR', 'Brabant Wallon', 1),
 (346, 21, 'WHT', 'Hainaut', 1),
-(347, 21, 'WLG', 'Liege', 1),
+(347, 21, 'WLG', 'Liège', 1),
 (348, 21, 'VLI', 'Limburg', 1),
 (349, 21, 'WLX', 'Luxembourg', 1),
 (350, 21, 'WNA', 'Namur', 1),
@@ -7053,7 +7055,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3967, 190, '12', 'Obalno-kraška', 1),
 (3968, 33, '', 'Ruse', 1),
 (3969, 101, 'ALB', 'Alborz', 1),
-(3970, 21, 'Brussels-Capital Region', 'BRU', 1);
+(3970, 21, 'BRU', 'Brussels-Capital Region', 1);
 
 -- --------------------------------------------------------
 

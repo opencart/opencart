@@ -279,6 +279,7 @@ class ModelCheckoutOrder extends Model {
 			$template->data['text_quantity'] = $language->get('text_new_quantity');
 			$template->data['text_price'] = $language->get('text_new_price');
 			$template->data['text_total'] = $language->get('text_new_total');
+			$template->data['text_comment'] = $language->get('text_new_comment');
 			$template->data['text_footer'] = $language->get('text_new_footer');
 			$template->data['text_powered'] = $language->get('text_new_powered');
 			
@@ -303,9 +304,9 @@ class ModelCheckoutOrder extends Model {
 			$template->data['ip'] = $order_info['ip'];
 			
 			if ($comment && $notify) {
-				$template->data['comment'] = nl2br($comment);
+				$template->data['instruction'] = nl2br($comment);
 			} else {
-				$template->data['comment'] = '';
+				$template->data['instruction'] = '';
 			}
 						
 			if ($order_info['payment_address_format']) {
@@ -418,7 +419,13 @@ class ModelCheckoutOrder extends Model {
 			}
 	
 			$template->data['totals'] = $order_total_query->rows;
-			
+
+			if ($order_info['comment']) {
+				$template->data['comment'] = nl2br($order_info['comment']);
+			} else {
+				$template->data['comment'] = '';
+			}
+
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/order.tpl')) {
 				$html = $template->fetch($this->config->get('config_template') . '/template/mail/order.tpl');
 			} else {

@@ -65,9 +65,9 @@ class ControllerExtensionManage extends Controller {
 			$zip->extractTo($directory);
 			$zip->close();
 			
+			// Remove Zip
 			unlink($file);
 			
-			/*
 			// Get a list of files ready to upload
 			$files = array();
 			
@@ -85,8 +85,8 @@ class ControllerExtensionManage extends Controller {
 				}
 			}
 			
-			sort($files);		
-			
+			sort($files);
+					
 			// Connect to the site via FTP
 			$connection = ftp_connect($this->config->get('config_ftp_host'), $this->config->get('config_ftp_port'));
 	
@@ -106,8 +106,8 @@ class ControllerExtensionManage extends Controller {
 				
 				if (is_dir($file)) {
 					$list = ftp_nlist($connection, $this->config->get('config_ftp_root') . substr($destination, 0, strrpos($destination, '/')));
-	
-					if (!in_array(basename($destination), $list)) {
+					
+					if (!in_array('/' . $destination, $list)) {
 						if (ftp_mkdir($connection, $this->config->get('config_ftp_root') . $destination)) {
 							echo 'made directory ' . $destination . '<br />';
 						}
@@ -115,7 +115,7 @@ class ControllerExtensionManage extends Controller {
 				}		
 				
 				if (is_file($file)) {
-					if (ftp_put($connection, trim($this->config->get('config_ftp_root'), '/') . '/' . $destination, $file, FTP_ASCII)) {		
+					if (ftp_put($connection, $this->config->get('config_ftp_root') . $destination, $file, FTP_ASCII)) {		
 						echo 'Successfully uploaded ' . $file . '<br />';
 					}
 				}
@@ -126,11 +126,14 @@ class ControllerExtensionManage extends Controller {
 			rsort($files);
 						
 			foreach ($files as $file) {
-				unlink($file);
+				if (is_file($file)) {
+					unlink($file);
+				} elseif (is_dir($file)) {
+					rmdir($file);	
+				}
 			}
 						
 			$json['success'] = $this->language->get('text_success');
-			*/
 		}	
 		
 		$this->response->setOutput(json_encode($json));

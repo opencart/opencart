@@ -27,7 +27,7 @@ new AjaxUpload('#button-upload', {
 		$('#button-upload').attr('disabled', true);
 	},
 	onComplete: function(file, json) {
-		alert(json);
+		$('.content').after(json);
 		/*
 		$('#button-upload').attr('disabled', false);
 		

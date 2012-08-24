@@ -25,6 +25,8 @@ class ControllerExtensionVQMOD extends Controller {
 		$this->data['text_confirm'] = $this->language->get('text_confirm');
 
 		$this->data['column_name'] = $this->language->get('column_name');
+		$this->data['column_status'] = $this->language->get('column_status');
+		$this->data['column_sort_order'] = $this->language->get('column_sort_order');
 		$this->data['column_action'] = $this->language->get('column_action');
 
 		if (isset($this->session->data['success'])) {

@@ -100,40 +100,40 @@ class ControllerExtensionManage extends Controller {
 				exit('Couldn\'t connect as ' . $this->config->get('config_ftp_username'));
 			}
 			
+			if ($this->config->get('config_ftp_root')) {
+				$root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
+				
+				if (!$root) {
+					exit('Couldn\'t change to directory ' . $this->config->get('config_ftp_root'));
+				}
+			}
+		
 			foreach ($files as $file) {
 				$destination = substr($file, strlen($directory));
 				
 				// Upload everything in the upload directory
 				if (substr($destination, 0, 7) == 'upload/') {
-					echo $file . '<br />';
-					
-					//$destination = substr($destination, 7);
+					$destination = substr($destination, 7);
 					
 					if (is_dir($file)) {
-						echo $this->config->get('config_ftp_root') . substr($destination, 0, strrpos($destination, '/')) . '<br>';
+						$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
 						
-						$list = ftp_nlist($connection, $this->config->get('config_ftp_root') . substr($destination, 0, strrpos($destination, '/')));
-						
-						if ($list) {
-							if (!in_array('/' . $destination, $list)) {
-								if (ftp_mkdir($connection, $this->config->get('config_ftp_root') . $destination)) {
-									echo 'made directory ' . $destination . '<br />';
-								}
+						if (!in_array($destination, $list)) {
+							if (ftp_mkdir($connection, $destination)) {
+								echo 'made directory ' . $destination . '<br />';
 							}
 						}
 					}	
 					
 					if (is_file($file)) {
-						echo $this->config->get('config_ftp_root') . $destination . '<br>';
-						
-						if (ftp_put($connection, $this->config->get('config_ftp_root') . $destination, $file, FTP_ASCII)) {		
+						if (ftp_put($connection, $destination, $file, FTP_ASCII)) {		
 							echo 'Successfully uploaded ' . $file . '<br />';
 						}
 					}
-				} elseif (strrchr($file, '.') != '.sql') {
-					
-				} elseif (strrchr($file, '.') != '.xml') {
-					
+				} elseif (strrchr(basename($file), '.') == '.sql') {
+					//file_get_contents($file);
+				} elseif (strrchr(basename($file), '.') == '.xml') {
+					//file_get_contents($file);
 				}
 			}
 			

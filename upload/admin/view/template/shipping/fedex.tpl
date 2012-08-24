@@ -142,12 +142,12 @@
                 <?php } else { ?>
                 <option value="FEDEX_10KG_BOX"><?php echo $text_fedex_10kg_box; ?></option>
                 <?php } ?>
-                <?php if ($fedex_packaging_type == 'STATION') { ?>
+                <?php if ($fedex_packaging_type == 'FEDEX_25KG_BOX') { ?>
                 <option value="FEDEX_25KG_BOX" selected="selected"><?php echo $text_fedex_25kg_box; ?></option>
                 <?php } else { ?>
                 <option value="FEDEX_25KG_BOX"><?php echo $text_fedex_25kg_box; ?></option>
                 <?php } ?>
-                <?php if ($fedex_packaging_type == 'STATION') { ?>
+                <?php if ($fedex_packaging_type == 'YOUR_PACKAGING') { ?>
                 <option value="YOUR_PACKAGING" selected="selected"><?php echo $text_your_packaging; ?></option>
                 <?php } else { ?>
                 <option value="YOUR_PACKAGING"><?php echo $text_your_packaging; ?></option>

@@ -190,7 +190,7 @@ $registry->set('customer', new Customer($registry));
 // Affiliate
 $registry->set('affiliate', new Affiliate($registry));
 
-if (isset($request->get['tracking']) && !isset($request->cookie['tracking'])) {
+if (isset($request->get['tracking'])) {
 	setcookie('tracking', $request->get['tracking'], time() + 3600 * 24 * 1000, '/');
 }
 		

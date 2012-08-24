@@ -41,15 +41,40 @@ class ControllerPaymentKlarna extends Controller {
     }
 
     public function send() {
+        $this->load->model('checkout/order');
+        $this->load->model('checkout/coupon');
+        
         $json = array();
 
-        $this->load->model('checkout/order');
-
         $orderInfo = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-
+        
         if (!$orderInfo) {
             $this->response->setOutput(json_encode($json));
             return;
+        }
+        
+        $discount = 0;
+        
+        if (isset($this->session->data['coupon'])) {
+            $couponInfo = $this->model_checkout_coupon->getCoupon($this->session->data['coupon']);;
+        } else {
+            $couponInfo = false;
+        }
+
+        if (!$couponInfo['product']) {
+            $subTotal = $this->cart->getSubTotal();
+        } else {
+            $subTotal = 0;
+
+            foreach ($this->cart->getProducts() as $product) {
+                if (in_array($product['product_id'], $couponInfo['product'])) {
+                    $subTotal += $product['total'];
+                }
+            }
+        }
+        
+        if ($couponInfo['type'] == 'F') {
+            $couponInfo['discount'] = min($couponInfo['discount'], $subTotal);
         }
         
         if ($this->config->get('klarna_server') == 'live') {
@@ -130,69 +155,79 @@ class ControllerPaymentKlarna extends Controller {
 
         $goodsList = array();
         
-        foreach ($this->cart->getProducts() as $product) {
+        foreach ($this->cart->getProducts() as $product) {            
+            $discount = 0;
+            
+            if (!$couponInfo['product']) {
+                $status = true;
+            } else {
+                if (in_array($product['product_id'], $couponInfo['product'])) {
+                    $status = true;
+                } else {
+                    $status = false;
+                }
+            }
+            
+            if ($status) {
+                if ($couponInfo['type'] == 'F') {
+                    $discount = $couponInfo['discount'] * ($product['total'] / $subTotal);
+                } elseif ($couponInfo['type'] == 'P') {
+                    $discount = $product['total'] / 100 * $couponInfo['discount'];
+                }
+            }
+            
+            $taxPaid = $this->tax->calculate($product['total'] - $discount, $product['tax_class_id']);
+            $productPrice = $this->tax->calculate($product['price'] - $discount, $product['tax_class_id']);
+            
             $goodsList[] = array(
                 'qty' => (int)$product['quantity'],
                 'goods' => array(
                     'artno' => $product['model'],
                     'title' => $product['name'],
-                    'price' => (int) str_replace('.', '', $this->currency->format($product['price'], '', '', false)),
-                    'vat' => 0.0,
-                    'discount' => 0,
-                    'flags' => 0,
+                    'price' => (int) str_replace('.', '', $this->currency->format($productPrice, '', '', false)),
+                    'vat' => (double) ($taxPaid / ($product['total'] - $discount) - 1) * 100,
+                    'discount' => (double)(($discount / $product['total']) * 100),
+                    'flags' => 32,
                 )
             );
         }
-        
+
+        $taxPaid = $this->tax->calculate($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']);
+
         // Shipping
         $goodsList[] = array(
             'qty' => 1,
             'goods' => array(
                 'artNo' => $orderInfo['shipping_code'],
                 'title' => $orderInfo['shipping_method'],
-                'price' => (int) str_replace('.', '', $this->currency->format($this->session->data['shipping_method']['cost'], '', '', false)),
-                'vat' => 0.0,
+                'price' => (int) str_replace('.', '', $this->currency->format($taxPaid, '', '', false)),
+                'vat' => (double) (($taxPaid / $this->session->data['shipping_method']['cost'] - 1) * 100),
                 'discount' => 0,
-                'flags' => 8,
+                'flags' => 8 + 32,
             )
         );
         
+        // Klarna Fee
         
-        $tax = 0;
+        $result = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `code` = 'klarna_fee'")->row;
         
-        $totals = $this->db->query("SELECT `value`, `code` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'])->rows;
-        
-        foreach ($totals as $total) {
-            if ($total['code'] == 'klarna_fee') {
-                $goodsList[] = array(
-                    'qty' => 1,
-                    'goods' => array(
-                        'artNo' => '',
-                        'title' => 'Klarna Invoice fee',
-                        'price' => (int) str_replace('.', '', $this->currency->format($total['value'], '', '', false)),
-                        'vat' => 0.0,
-                        'discount' => 0,
-                        'flags' => 16,
-                    )
-                );
-            } elseif ($total['code'] == 'tax') {
-                $tax += $total['value'];
-            }
+        if (isset($result['value'])) {
+            
+            $feeWithTax  = $this->tax->calculate($result['value'], $this->config->get('klarna_fee_tax_class_id'));
+            
+            $goodsList[] = array(
+                'qty' => 1,
+                'goods' => array(
+                    'artNo' => '',
+                    'title' => 'Klarna Invoice fee',
+                    'price' => (int) str_replace('.', '', $this->currency->format($feeWithTax, '', '', false)),
+                    'vat' => (double) (($feeWithTax / $result['value'] - 1) * 100),
+                    'discount' => 0,
+                    'flags' => 16 + 32,
+                )
+            );
         }
-        
-        // Taxes
-        $goodsList[] = array(
-            'qty' => 1,
-            'goods' => array(
-                'artNo' => '',
-                'title' => 'Taxes',
-                'price' => (int) str_replace('.', '', $this->currency->format($tax, '', '', false)),
-                'vat' => 0.0,
-                'discount' => 0,
-                'flags' => 16,
-            )
-        );
-        
+
         $digest = '';
         
         foreach ($goodsList as $goods) {
@@ -202,7 +237,7 @@ class ControllerPaymentKlarna extends Controller {
         $digest = base64_encode(pack('H*', hash('sha256', $digest . $this->config->get('klarna_secret'))));
         
         if (isset($this->request->post['pno'])) {
-            $pno = $request->post['pno'];
+            $pno = $this->request->post['pno'];
         } elseif (!empty($orderInfo['payment_company_id'])) {
             $pno = $orderInfo['payment_company_id'];
         } else {
@@ -239,7 +274,7 @@ class ControllerPaymentKlarna extends Controller {
             array(),
             array(),
         );
-
+        
         $xml  = "<methodCall>";
         $xml .= "  <methodName>add_invoice</methodName>";
         $xml .= '  <params>';
@@ -277,8 +312,7 @@ class ControllerPaymentKlarna extends Controller {
             preg_match('/<member><name>faultString<\/name><value><string>(.+)<\/string><\/value><\/member>/', $response, $match);
 
             if (isset($match[1])) {
-                die(htmlspecialchars($response));
-                $json['error'] = utf8_encode(htmlspecialchars($repsonse));
+                $json['error'] = utf8_encode($match[1]); 
             } else {
                 $xml = simplexml_load_string($response);
                 

@@ -1,7 +1,7 @@
 <?php
-class ControllerExtensionManage extends Controller {
+class ControllerExtensionManager extends Controller {
 	public function index() {
-		$this->load->language('extension/manage');
+		$this->load->language('extension/manager');
 		 
 		$this->document->setTitle($this->language->get('heading_title')); 
 
@@ -15,7 +15,7 @@ class ControllerExtensionManage extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('extension/manage', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('extension/manager', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => ' :: '
    		);
 		
@@ -25,7 +25,7 @@ class ControllerExtensionManage extends Controller {
 		
 		$this->data['token'] = $this->session->data['token'];
 		
-		$this->template = 'extension/manage.tpl';
+		$this->template = 'extension/manager.tpl';
 		$this->children = array(
 			'common/header',
 			'common/footer'
@@ -35,11 +35,11 @@ class ControllerExtensionManage extends Controller {
 	}
 	
 	public function upload() {
-		$this->language->load('extension/manage');
+		$this->language->load('extension/manager');
 		
 		$json = array();
 		
-		if (!$this->user->hasPermission('modify', 'extension/manage')) {
+		if (!$this->user->hasPermission('modify', 'extension/manager')) {
       		$json['error'] = $this->language->get('error_permission') . "\n";
     	}		
 		
@@ -109,11 +109,9 @@ class ControllerExtensionManage extends Controller {
 			}
 		
 			foreach ($files as $file) {
-				$destination = substr($file, strlen($directory));
-				
 				// Upload everything in the upload directory
-				if (substr($destination, 0, 7) == 'upload/') {
-					$destination = substr($destination, 7);
+				if (substr(substr($file, strlen($directory)), 0, 7) == 'upload/') {
+					$destination = substr(substr($file, strlen($directory)), 7);
 					
 					if (is_dir($file)) {
 						$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));

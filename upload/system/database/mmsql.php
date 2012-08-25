@@ -4,10 +4,12 @@ final class MSSQL {
 	
 	public function __construct($hostname, $username, $password, $database) {
 		if (!$this->link = mssql_connect($hostname, $username, $password)) {
+		header(':', true, 503);
       		exit('Error: Could not make a database connection using ' . $username . '@' . $hostname);
     	}
 
     	if (!mssql_select_db($database, $this->link)) {
+    		header(':', true, 503);
       		exit('Error: Could not connect to database ' . $database);
     	}
 		

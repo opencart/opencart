@@ -4,10 +4,12 @@ final class MySQL {
 	
 	public function __construct($hostname, $username, $password, $database) {
 		if (!$this->link = mysql_connect($hostname, $username, $password)) {
+		header(':', true, 503);
       		trigger_error('Error: Could not make a database link using ' . $username . '@' . $hostname);
     	}
 
     	if (!mysql_select_db($database, $this->link)) {
+    		header(':', true, 503);
       		trigger_error('Error: Could not connect to database ' . $database);
     	}
 		

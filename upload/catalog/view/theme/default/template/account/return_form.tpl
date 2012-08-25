@@ -126,10 +126,10 @@
           </div>
         </div>
       </div>
-    </div>    
+    </div>
     <?php if ($text_agree) { ?>
     <div class="buttons">
-    <div class="left"><a href="<?php echo $back; ?>" class="button"><?php echo $button_back; ?></a></div>
+      <div class="left"><a href="<?php echo $back; ?>" class="button"><?php echo $button_back; ?></a></div>
       <div class="right"><?php echo $text_agree; ?>
         <?php if ($agree) { ?>
         <input type="checkbox" name="agree" value="1" checked="checked" />
@@ -141,7 +141,7 @@
     </div>
     <?php } else { ?>
     <div class="buttons">
-    <div class="left"><a href="<?php echo $back; ?>" class="button"><?php echo $button_back; ?></a></div>
+      <div class="left"><a href="<?php echo $back; ?>" class="button"><?php echo $button_back; ?></a></div>
       <div class="right">
         <input type="submit" value="<?php echo $button_continue; ?>" class="button" />
       </div>
@@ -153,11 +153,11 @@
 $(document).ready(function() {
 	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('.colorbox').colorbox({
 	width: 640,
 	height: 480
 });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

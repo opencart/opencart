@@ -70,5 +70,7 @@ http://www.ampps.com/
 http://www.usbwebserver.net
 http://www.apachefriends.org/en/xampp.html
 
+An online version of this file can be found here:
+http://www.opencart.com/index.php?route=documentation/documentation&path=4
 
 EOF

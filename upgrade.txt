@@ -83,6 +83,8 @@ Many bugs may have already been reported and fixes will be offered in the first 
 You should always visit this thread immediately after a fresh upgrade to see if there are any immediate bug fixes
 If nobody has reported your bug, then please report it.
 
+An online version of this file can be found here:
+http://www.opencart.com/index.php?route=documentation/documentation&path=98
 
 
 That's It!

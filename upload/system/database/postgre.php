@@ -4,12 +4,10 @@ final class Postgre {
 	
 	public function __construct($hostname, $username, $password, $database) {
 		if (!$this->link = pg_connect('hostname=' . $hostname . ' username=' . $username . ' password='	. $password . ' database=' . $database)) {
-      		header(':', true, 503);
       		trigger_error('Error: Could not make a database link using ' . $username . '@' . $hostname);
     	}
 
     	if (!mysql_select_db($database, $this->link)) {
-    		header(':', true, 503);
       		trigger_error('Error: Could not connect to database ' . $database);
     	}
 		

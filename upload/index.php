@@ -34,6 +34,9 @@ $registry->set('load', $loader);
 $config = new Config();
 $registry->set('config', $config);
 
+// Error Handler
+set_error_handler('error_handler');
+
 // Database 
 $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 $registry->set('db', $db);
@@ -77,7 +80,9 @@ $registry->set('log', $log);
 
 function error_handler($errno, $errstr, $errfile, $errline) {
 	global $log, $config;
-	
+
+	header(':', true, 503);
+
 	switch ($errno) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
@@ -107,9 +112,6 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	return true;
 }
 	
-// Error Handler
-set_error_handler('error_handler');
-
 // Request
 $request = new Request();
 $registry->set('request', $request);

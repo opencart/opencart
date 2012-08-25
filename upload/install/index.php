@@ -40,6 +40,10 @@ $registry = new Registry();
 $loader = new Loader($registry);
 $registry->set('load', $loader);
 
+// Url
+$url = new Url(HTTP_SERVER);
+$registry->set('url', $url);
+
 // Request
 $request = new Request();
 $registry->set('request', $request);

@@ -118,7 +118,7 @@ class ControllerPaymentPPStandard extends Controller {
 			$request = 'cmd=_notify-validate';
 		
 			foreach ($this->request->post as $key => $value) {
-				$request .= '&' . $key . '=' . urlencode($value);
+				$request .= '&' . $key . '=' . urlencode(html_entity_decode($value, ENT_QUOTES, 'UTF-8'));
 			}
 			
 			if (!$this->config->get('pp_standard_test')) {

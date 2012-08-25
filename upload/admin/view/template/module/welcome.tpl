@@ -21,7 +21,8 @@
           <a href="#tab-module-<?php echo $module_row; ?>" id="module-<?php echo $module_row; ?>"><?php echo $tab_module . ' ' . $module_row; ?>&nbsp;<img src="view/image/delete.png" alt="" onclick="$('.vtabs a:first').trigger('click'); $('#module-<?php echo $module_row; ?>').remove(); $('#tab-module-<?php echo $module_row; ?>').remove(); return false;" /></a>
           <?php $module_row++; ?>
           <?php } ?>
-          <span id="module-add"><?php echo $button_add_module; ?>&nbsp;<img src="view/image/add.png" alt="" onclick="addModule();" /></span> </div>
+          <span id="module-add"><?php echo $button_add_module; ?>&nbsp;<img src="view/image/add.png" alt="" onclick="addModule();" /></span>
+        </div>
         <?php $module_row = 1; ?>
         <?php foreach ($modules as $module) { ?>
         <div id="tab-module-<?php echo $module_row; ?>" class="vtabs-content">
@@ -33,6 +34,10 @@
           <?php foreach ($languages as $language) { ?>
           <div id="tab-language-<?php echo $module_row; ?>-<?php echo $language['language_id']; ?>">
             <table class="form">
+            <tr>
+                <td><?php echo $entry_heading; ?></td>
+                <td><input type="text" size="75" name="welcome_module[<?php echo $module_row; ?>][heading][<?php echo $language['language_id']; ?>]" value="<?php echo isset($module['heading'][$language['language_id']]) ? $module['heading'][$language['language_id']] : ''; ?>" /></td>
+              </tr>
               <tr>
                 <td><?php echo $entry_description; ?></td>
                 <td><textarea name="welcome_module[<?php echo $module_row; ?>][description][<?php echo $language['language_id']; ?>]" id="description-<?php echo $module_row; ?>-<?php echo $language['language_id']; ?>"><?php echo isset($module['description'][$language['language_id']]) ? $module['description'][$language['language_id']] : ''; ?></textarea></td>
@@ -75,6 +80,18 @@
                   <option value="column_right" selected="selected"><?php echo $text_column_right; ?></option>
                   <?php } else { ?>
                   <option value="column_right"><?php echo $text_column_right; ?></option>
+                  <?php } ?>
+                </select></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_box_status; ?></td>
+              <td><select name="welcome_module[<?php echo $module_row; ?>][box_status]">
+                  <?php if ($module['box_status']) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } ?>
                 </select></td>
             </tr>
@@ -134,6 +151,10 @@ function addModule() {
 	html += '    <div id="tab-language-'+ module_row + '-<?php echo $language['language_id']; ?>">';
 	html += '      <table class="form">';
 	html += '        <tr>';
+	html += '          <td><?php echo $entry_heading; ?></td>';
+	html += '          <td><input type="text" size="75" name="welcome_module[' + module_row + '][heading][<?php echo $language['language_id']; ?>]" value=""/></td>';
+	html += '        </tr>';
+	html += '        <tr>';
 	html += '          <td><?php echo $entry_description; ?></td>';
 	html += '          <td><textarea name="welcome_module[' + module_row + '][description][<?php echo $language['language_id']; ?>]" id="description-' + module_row + '-<?php echo $language['language_id']; ?>"></textarea></td>';
 	html += '        </tr>';
@@ -146,7 +167,7 @@ function addModule() {
 	html += '      <td><?php echo $entry_layout; ?></td>';
 	html += '      <td><select name="welcome_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>
-	html += '           <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
+	html += '           <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout["name"]); ?></option>';
 	<?php } ?>
 	html += '      </select></td>';
 	html += '    </tr>';
@@ -157,6 +178,13 @@ function addModule() {
 	html += '        <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
 	html += '        <option value="column_left"><?php echo $text_column_left; ?></option>';
 	html += '        <option value="column_right"><?php echo $text_column_right; ?></option>';
+	html += '      </select></td>';
+	html += '    </tr>';
+	html += '    <tr>';
+	html += '      <td><?php echo $entry_box_status; ?></td>';
+	html += '      <td><select name="welcome_module[' + module_row + '][box_status]">';
+	html += '        <option value="1"><?php echo $text_enabled; ?></option>';
+	html += '        <option value="0"><?php echo $text_disabled; ?></option>';
 	html += '      </select></td>';
 	html += '    </tr>';
 	html += '    <tr>';

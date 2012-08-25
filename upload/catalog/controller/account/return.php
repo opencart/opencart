@@ -522,7 +522,27 @@ class ControllerAccountReturn extends Controller {
 			$this->data['captcha'] = $this->request->post['captcha'];
 		} else {
 			$this->data['captcha'] = '';
-		}		
+		}
+
+		if ($this->config->get('config_return_id')) {
+			$this->load->model('catalog/information');
+			
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_return_id'));
+			
+			if ($information_info) {
+				$this->data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/info', 'information_id=' . $this->config->get('config_return_id'), 'SSL'), $information_info['title'], $information_info['title']);
+			} else {
+				$this->data['text_agree'] = '';
+			}
+		} else {
+			$this->data['text_agree'] = '';
+		}
+		
+		if (isset($this->request->post['agree'])) {
+      		$this->data['agree'] = $this->request->post['agree'];
+		} else {
+			$this->data['agree'] = false;
+		}
 
 		$this->data['back'] = $this->url->link('account/account', '', 'SSL');
 				
@@ -625,6 +645,16 @@ class ControllerAccountReturn extends Controller {
     	if (empty($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
       		$this->error['captcha'] = $this->language->get('error_captcha');
     	}
+		
+		if ($this->config->get('config_return_id')) {
+			$this->load->model('catalog/information');
+			
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_return_id'));
+			
+			if ($information_info && !isset($this->request->post['agree'])) {
+      			$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+			}
+		}
 
 		if (!$this->error) {
       		return true;

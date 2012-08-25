@@ -93,8 +93,9 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_stock_warning'] = $this->language->get('entry_stock_warning');
 		$this->data['entry_stock_checkout'] = $this->language->get('entry_stock_checkout');
 		$this->data['entry_stock_status'] = $this->language->get('entry_stock_status');
-		$this->data['entry_affiliate'] = $this->language->get('entry_affiliate');	
-		$this->data['entry_commission'] = $this->language->get('entry_commission');	
+		$this->data['entry_affiliate'] = $this->language->get('entry_affiliate');
+		$this->data['entry_commission'] = $this->language->get('entry_commission');
+		$this->data['entry_return'] = $this->language->get('entry_return');
 		$this->data['entry_return_status'] = $this->language->get('entry_return_status');
 		$this->data['entry_logo'] = $this->language->get('entry_logo');
 		$this->data['entry_icon'] = $this->language->get('entry_icon');
@@ -682,6 +683,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_commission'] = $this->config->get('config_commission');		
 		} else {
 			$this->data['config_commission'] = '5.00';
+		}
+
+		if (isset($this->request->post['config_return_id'])) {
+			$this->data['config_return_id'] = $this->request->post['config_return_id'];
+		} else {
+			$this->data['config_return_id'] = $this->config->get('config_return_id');		
 		}
 						
 		if (isset($this->request->post['config_return_status_id'])) {

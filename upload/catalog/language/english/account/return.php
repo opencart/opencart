@@ -19,7 +19,7 @@ $_['text_customer']      = 'Customer:';
 $_['text_comment']       = 'Return Comments';
 $_['text_history']       = 'Return History';
 $_['text_empty']         = 'You have not made any previous returns!';
-$_['text_error']         = 'The returns you requested could not be found!';
+$_['text_agree']         = 'I have read and agree to the <a class="colorbox" href="%s" alt="%s"><b>%s</b></a>';
 
 // Column
 $_['column_product']     = 'Product Name';
@@ -49,6 +49,7 @@ $_['entry_fault_detail'] = 'Faulty or other details:';
 $_['entry_captcha']      = 'Enter the code in the box below:';
 
 // Error
+$_['text_error']         = 'The returns you requested could not be found!';
 $_['error_order_id']     = 'Order ID required!';
 $_['error_firstname']    = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']     = 'Last Name must be between 1 and 32 characters!';
@@ -58,4 +59,5 @@ $_['error_product']      = 'Product Name must be greater than 3 and less than 25
 $_['error_model']        = 'Product Model must be greater than 3 and less than 64 characters!';
 $_['error_reason']       = 'You must select at a return product reason!';
 $_['error_captcha']      = 'Verification code does not match the image!';
+$_['error_agree']        = 'Warning: You must agree to the %s!';
 ?>

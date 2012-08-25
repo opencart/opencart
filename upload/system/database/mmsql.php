@@ -4,11 +4,11 @@ final class MSSQL {
 	
 	public function __construct($hostname, $username, $password, $database) {
 		if (!$this->link = mssql_connect($hostname, $username, $password)) {
-      		exit('Error: Could not make a database connection using ' . $username . '@' . $hostname);
+      		trigger_error('Error: Could not make a database connection using ' . $username . '@' . $hostname);
     	}
 
     	if (!mssql_select_db($database, $this->link)) {
-      		exit('Error: Could not connect to database ' . $database);
+      		trigger_error('Error: Could not connect to database ' . $database);
     	}
 		
 		mssql_query("SET NAMES 'utf8'", $this->link);

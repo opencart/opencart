@@ -22,7 +22,6 @@ class ControllerUpgrade extends Controller {
 	}
 
 	public function success() {
-
 		$this->template = 'success.tpl';
 		$this->children = array(
 			'header',

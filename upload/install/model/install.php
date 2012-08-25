@@ -9,14 +9,18 @@ class ModelInstall extends Model {
 		mysql_query("SET CHARACTER SET utf8", $connection);
 		
 		$file = DIR_APPLICATION . 'opencart.sql';
-	
-		if ($sql = file($file)) {
+		
+		if (!file_exists($file)) { 
+			exit('Could not load sql file: ' . $file); 
+		}
+		
+		$sql = file($file);
+		
+		if ($sql) {
 			$query = '';
 
 			foreach($sql as $line) {
-				$tsl = trim($line);
-
-				if (($sql != '') && (substr($tsl, 0, 2) != "--") && (substr($tsl, 0, 1) != '#')) {
+				if ($line && (substr($line, 0, 2) != "--") && (substr($line, 0, 1) != '#')) {
 					$query .= $line;
   
 					if (preg_match('/;\s*$/', $line)) {

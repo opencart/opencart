@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 1);
+// Error Reporting
 error_reporting(E_ALL);
 
 // HTTP
@@ -14,21 +14,6 @@ define('DIR_DATABASE', DIR_SYSTEM . 'database/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
-
-// Upgrade
-$upgrade = false;
-
-if (filesize('../config.php') > 0) {
-	$upgrade = true;
-	
-	$file = file(DIR_OPENCART . 'config.php');
-	
-	foreach ($file as $num => $line) {
-		if (strpos(strtoupper($line), 'DB_') !== false) {
-			eval($line);
-		}
-	}
-}
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
@@ -56,6 +41,21 @@ $registry->set('response', $response);
 // Document
 $document = new Document();
 $registry->set('document', $document);
+
+// Upgrade
+$upgrade = false;
+
+if (filesize('../config.php') > 0) {
+	$upgrade = true;
+	
+	$lines = file(DIR_OPENCART . 'config.php');
+	
+	foreach ($lines as $line) {
+		if (strpos(strtoupper($line), 'DB_') !== false) {
+			eval($line);
+		}
+	}
+}
 
 // Front Controller
 $controller = new Front($registry);

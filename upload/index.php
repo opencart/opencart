@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '1.5.3');
+define('VERSION', '1.5.4');
 
 // Configuration
 require_once('config.php');
@@ -190,7 +190,7 @@ $registry->set('customer', new Customer($registry));
 // Affiliate
 $registry->set('affiliate', new Affiliate($registry));
 
-if (isset($request->get['tracking']) && !isset($request->cookie['tracking'])) {
+if (isset($request->get['tracking'])) {
 	setcookie('tracking', $request->get['tracking'], time() + 3600 * 24 * 1000, '/');
 }
 		
@@ -209,7 +209,7 @@ $registry->set('length', new Length($registry));
 // Cart
 $registry->set('cart', new Cart($registry));
 
-//  Encryption
+// Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
 		
 // Front Controller 

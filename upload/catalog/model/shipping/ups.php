@@ -187,7 +187,7 @@ class ModelShippingUps extends Model {
 				$xml .= '           <PackageServiceOptions>';
 				$xml .= '               <InsuredValue>';
 				$xml .= '                   <CurrencyCode>' . $this->currency->getCode() . '</CurrencyCode>';
-				$xml .= '                   <MonetaryValue>' . $this->currency->format($this->cart->getTotal(), false, false, false) . '</MonetaryValue>';
+				$xml .= '                   <MonetaryValue>' . $this->currency->format($this->cart->getSubTotal(), false, false, false) . '</MonetaryValue>';
 				$xml .= '               </InsuredValue>';
 				$xml .= '           </PackageServiceOptions>';
 			}

@@ -213,39 +213,37 @@ class ControllerCommonFileManager extends Controller {
 			if (is_file($path)) {
 				unlink($path);
 			} elseif (is_dir($path)) {
-				$this->recursiveDelete($path);
+				$files = array();
+				
+				$path = array($path . '*');
+				
+				while(count($path) != 0) {
+					$next = array_shift($path);
+			
+					foreach(glob($next) as $file) {
+						if (is_dir($file)) {
+							$path[] = $file . '/*';
+						}
+						
+						$files[] = $file;
+					}
+				}
+				
+				rsort($files);
+				
+				foreach ($files as $file) {
+					if (is_file($file)) {
+						unlink($file);
+					} elseif(is_dir($file)) {
+						rmdir($file);	
+					} 
+				}				
 			}
 			
 			$json['success'] = $this->language->get('text_delete');
 		}				
 		
 		$this->response->setOutput(json_encode($json));
-	}
-
-	protected function recursiveDelete($directory) {
-		if (is_dir($directory)) {
-			$handle = opendir($directory);
-		}
-		
-		if (!$handle) {
-			return false;
-		}
-		
-		while (false !== ($file = readdir($handle))) {
-			if ($file != '.' && $file != '..') {
-				if (!is_dir($directory . '/' . $file)) {
-					unlink($directory . '/' . $file);
-				} else {
-					$this->recursiveDelete($directory . '/' . $file);
-				}
-			}
-		}
-		
-		closedir($handle);
-		
-		rmdir($directory);
-		
-		return true;
 	}
 
 	public function move() {

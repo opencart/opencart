@@ -38,6 +38,8 @@ INSTALL
 
 6. Delete the install directory after install is complete.
 
+More detailed instructions here:
+  http://www.opencart.com/index.php?route=documentation/documentation&path=4
 
 For any support issues please visit: http://www.opencart.com
 

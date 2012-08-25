@@ -60,10 +60,13 @@ class Image {
 
 		$xpos = 0;
 		$ypos = 0;
-
-		$scale = min($width / $this->info['width'], $height / $this->info['height']);
 		
-		if ($scale == 1 && $this->info['mime'] != 'image/png') {
+		$scale_w = $width / $this->info['width'];
+		$scale_h = $height / $this->info['height'];
+
+		$scale = min($scale_w, $scale_h);
+		
+		if ($scale == 1 && $scale_h == $scale_w && $this->info['mime'] != 'image/png') {
 			return;
 		}
 		

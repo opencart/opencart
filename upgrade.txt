@@ -63,6 +63,9 @@ STEP 11. Goto Admin and Edit the main System Settings. Update all fields and cli
 STEP 12. Load the store front & press Ctrl+F5 to force the browser to update the css changes.
 
 
+More detailed instructions here:
+  http://www.opencart.com/index.php?route=documentation/documentation&path=98
+
 
 Possible Errors and Solutions:
 ------------------------------

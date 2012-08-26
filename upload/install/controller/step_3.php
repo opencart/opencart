@@ -84,7 +84,7 @@ class ControllerStep3 extends Controller {
 
 			fclose($file);
 			
-			$this->redirect(HTTP_SERVER . 'index.php?route=step_4');
+			$this->redirect($this->url->link('step_4'));
 		}
 		
 		if (isset($this->error['warning'])) {
@@ -129,7 +129,13 @@ class ControllerStep3 extends Controller {
 			$this->data['error_email'] = '';
 		}	
 		
-		$this->data['action'] = HTTP_SERVER . 'index.php?route=step_3';
+		$this->data['action'] = $this->url->link('step_3');
+		
+		if (isset($this->request->post['db_driver'])) {
+			$this->data['db_driver'] = $this->request->post['db_driver'];
+		} else {
+			$this->data['db_driver'] = 'mysql';
+		}
 		
 		if (isset($this->request->post['db_host'])) {
 			$this->data['db_host'] = $this->request->post['db_host'];
@@ -178,6 +184,8 @@ class ControllerStep3 extends Controller {
 		} else {
 			$this->data['email'] = '';
 		}
+		
+		$this->data['back'] = $this->url->link('step_2');
 		
 		$this->template = 'step_3.tpl';
 		$this->children = array(

@@ -15,7 +15,7 @@
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <p>1 . Please enter your database connection details.</p>
     <fieldset>
-      <table>
+      <table class="form">
         <tr>
           <td>Database Driver:</td>
           <td><select name="db_driver">
@@ -58,7 +58,7 @@
     </fieldset>
     <p>2. Please enter a username and password for the administration.</p>
     <fieldset>
-      <table>
+      <table class="form">
         <tr>
           <td width="185"><span class="required">*</span> Username:</td>
           <td><input type="text" name="username" value="<?php echo $username; ?>" />

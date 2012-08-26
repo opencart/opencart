@@ -59,7 +59,7 @@ fieldset table {
 	width: 100%;
 	border-collapse: collapse;
 }
-fieldset table tr td:first-child {
+fieldset table.form tr td:first-child {
 	width: 250px;
 }
 fieldset table td {

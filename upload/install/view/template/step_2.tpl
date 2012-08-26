@@ -56,7 +56,7 @@
     </fieldset>
     <p>2. Please make sure the extensions listed below are installed.</p>
     <fieldset>
-      <table width="100%">
+      <table>
         <tr>
           <th width="35%" align="left"><b>Extension</b></th>
           <th width="25%" align="left"><b>Current Settings</b></th>
@@ -97,10 +97,10 @@
     </fieldset>
     <p>3. Please make sure you have set the correct permissions on the files list below.</p>
     <fieldset>
-      <table width="100%">
+      <table>
         <tr>
           <th align="left"><b>Files</b></th>
-          <th width="15%" align="left"><b>Status</b></th>
+          <th align="left"><b>Status</b></th>
         </tr>
         <tr>
           <td><?php echo $config_catalog; ?></td>
@@ -114,7 +114,7 @@
     </fieldset>
     <p>4. Please make sure you have set the correct permissions on the directories list below.</p>
     <fieldset>
-      <table width="100%">
+      <table>
         <tr>
           <th align="left"><b>Directories</b></th>
           <th align="left"><b>Status</b></th>

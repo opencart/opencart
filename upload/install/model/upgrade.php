@@ -1,6 +1,6 @@
 <?php
 class ModelUpgrade extends Model {
-	public function mysql($data, $sqlfile) {
+	public function mysql($data, $file) {
 		$connection = mysql_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD);
 
 		mysql_select_db(DB_DATABASE, $connection);
@@ -8,19 +8,19 @@ class ModelUpgrade extends Model {
 		mysql_query("SET NAMES 'utf8'", $connection);
 		mysql_query("SET CHARACTER SET utf8", $connection);
 
-		$file = DIR_APPLICATION . $sqlfile;
+		$file = DIR_APPLICATION . $file;
 
 		if (!file_exists($file)) { 
 			exit('Could not load sql file: ' . $file); 
 		}
 
-		$sql = file($file);
+		$lines = file($file);
 
-		if ($sql) {
+		if ($lines) {
 			$query = '';
 
-			foreach($sql as $line) {
-				if ($tsl && (substr($tsl, 0, 2) != "--") && (substr($tsl, 0, 1) != '#')) {
+			foreach($lines as $line) {
+				if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
 
 					// Improved compatibility...
 					$line = str_replace("oc_", DB_PREFIX, $line);

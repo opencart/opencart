@@ -14,13 +14,13 @@ class ModelInstall extends Model {
 			exit('Could not load sql file: ' . $file); 
 		}
 		
-		$sql = file($file);
+		$lines = file($file);
 		
 		if ($sql) {
 			$query = '';
 
-			foreach($sql as $line) {
-				if ($line && (substr($line, 0, 2) != "--") && (substr($line, 0, 1) != '#')) {
+			foreach($lines as $line) {
+				if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
 					$query .= $line;
   
 					if (preg_match('/;\s*$/', $line)) {

@@ -36,9 +36,13 @@ class ModelUpgrade extends Model {
 					// For example, ALTER TABLE will error if the table has since been removed,
 					// So validate the table exists first, etc.
 					if (preg_match('/^ALTER TABLE (.+?) ADD INDEX (.+?) /', $line, $matches)) {
-						if ($res = mysql_query(sprintf("SHOW INDEX FROM %s",$matches[1]), $connection)) {
+						if ($res = mysql_query(sprintf("SHOW INDEX FROM %s", $matches[1]), $connection)) {
+							
 							$info = mysql_fetch_assoc($res);
-							if ($info && $info['Key_name'] == 'PRIMARY') { continue; }
+							
+							if ($info && $info['Key_name'] == 'PRIMARY') { 
+								continue; 
+							}
 						} else {
 							continue;	
 						}
@@ -147,6 +151,7 @@ class ModelUpgrade extends Model {
 		}
 
 		## v1.5.3
+		
 		// Set defaults for new Voucher Min/Max fields
 		if (empty($settings['config_voucher_min'])) {
 			$db->query("INSERT INTO " . DB_PREFIX . "setting SET value = '1', `key` = 'config_voucher_min', `group` = 'config', store_id = 0");
@@ -157,6 +162,7 @@ class ModelUpgrade extends Model {
 
 		// Layout routes now require "%" for wildcard paths
 		$layout_route_query = $db->query("SELECT * FROM " . DB_PREFIX . "layout_route");
+		
 		foreach ($layout_route_query->rows as $layout_route) {
 			if (strpos($layout_route['route'], '/') === false) { // If missing the trailing slash, add "/%"
 					$db->query("UPDATE " . DB_PREFIX . "layout_route SET route = '" . $layout_route['route'] . "/%' WHERE `layout_route_id` = '" . $layout_route['layout_route_id'] . "'");

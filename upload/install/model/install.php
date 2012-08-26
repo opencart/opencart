@@ -16,7 +16,7 @@ class ModelInstall extends Model {
 		
 		$lines = file($file);
 		
-		if ($sql) {
+		if ($lines) {
 			$query = '';
 
 			foreach($lines as $line) {

@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<h1 style="background: url('view/image/finished.png') no-repeat;">Step 4 - Finished!</h1>
+<h1>Step 4 - Finished!</h1>
 <div style="width: 100%; display: inline-block;">
   <div style="float: left; width: 569px;">
     <div class="warning">Don't forget to delete your installation directory!</div>

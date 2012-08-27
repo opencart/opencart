@@ -40,9 +40,6 @@ final class MySQLi {
 				
 				unset($data);
 				
-				
-				
-				
 				return $query;	
     		} else {
 				return true;

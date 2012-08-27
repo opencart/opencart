@@ -19,11 +19,7 @@ final class MySQLi {
 		$result = $this->mysqli->query($sql);
 
 		
-
-		if ($this->mysqli->errno) {
-		//$mysqli->errno
-		}
-		
+		if($result){		
 			if (is_resource($resource)) {
 				$i = 0;
     	

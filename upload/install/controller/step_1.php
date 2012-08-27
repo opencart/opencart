@@ -30,11 +30,7 @@ class ControllerStep1 extends Controller {
 			$this->error['warning'] = 'You must agree to the license before you can install OpenCart!';
 		}
 		
-    	if (!$this->error) {
-      		return true;
-    	} else {
-      		return false;
-    	}		
+    	return !$this->error;
 	}	
 }
 ?>

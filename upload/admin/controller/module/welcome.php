@@ -22,13 +22,15 @@ class ControllerModuleWelcome extends Controller {
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_content_top'] = $this->language->get('text_content_top');
-		$this->data['text_content_bottom'] = $this->language->get('text_content_bottom');		
+		$this->data['text_content_bottom'] = $this->language->get('text_content_bottom');
 		$this->data['text_column_left'] = $this->language->get('text_column_left');
 		$this->data['text_column_right'] = $this->language->get('text_column_right');
 		
+		$this->data['entry_heading'] = $this->language->get('entry_heading');
 		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
 		$this->data['entry_position'] = $this->language->get('entry_position');
+		$this->data['entry_box_status'] = $this->language->get('entry_box_status');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
@@ -70,7 +72,7 @@ class ControllerModuleWelcome extends Controller {
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		
 		$this->data['token'] = $this->session->data['token'];
-
+		
 		$this->data['modules'] = array();
 		
 		if (isset($this->request->post['welcome_module'])) {

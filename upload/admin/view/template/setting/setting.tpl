@@ -580,6 +580,19 @@
           <h2><?php echo $text_return; ?></h2>
           <table class="form">
             <tr>
+              <td><?php echo $entry_return; ?></td>
+              <td><select name="config_return_id">
+                  <option value="0"><?php echo $text_none; ?></option>
+                  <?php foreach ($informations as $information) { ?>
+                  <?php if ($information['information_id'] == $config_return_id) { ?>
+                  <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_return_status; ?></td>
               <td><select name="config_return_status_id">
                   <?php foreach ($return_statuses as $return_status) { ?>

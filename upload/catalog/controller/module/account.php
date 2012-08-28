@@ -12,6 +12,7 @@ class ControllerModuleAccount extends Controller {
 		$this->data['text_account'] = $this->language->get('text_account');
 		$this->data['text_edit'] = $this->language->get('text_edit');
 		$this->data['text_password'] = $this->language->get('text_password');
+		$this->data['text_address'] = $this->language->get('text_address');
 		$this->data['text_wishlist'] = $this->language->get('text_wishlist');
 		$this->data['text_order'] = $this->language->get('text_order');
 		$this->data['text_download'] = $this->language->get('text_download');
@@ -27,6 +28,7 @@ class ControllerModuleAccount extends Controller {
 		$this->data['account'] = $this->url->link('account/account', '', 'SSL');
 		$this->data['edit'] = $this->url->link('account/edit', '', 'SSL');
 		$this->data['password'] = $this->url->link('account/password', '', 'SSL');
+		$this->data['address'] = $this->url->link('account/address', '', 'SSL');
 		$this->data['wishlist'] = $this->url->link('account/wishlist');
 		$this->data['order'] = $this->url->link('account/order', '', 'SSL');
 		$this->data['download'] = $this->url->link('account/download', '', 'SSL');

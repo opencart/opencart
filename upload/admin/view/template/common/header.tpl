@@ -82,13 +82,12 @@ $(document).ready(function(){
       </li>
       <li id="extension"><a class="top"><?php echo $text_extension; ?></a>
         <ul>
-          <li><a href="<?php echo $manage; ?>"><?php echo $text_manage; ?></a></li>
+          <li><a href="<?php echo $manager; ?>"><?php echo $text_manager; ?></a></li>
           <li><a href="<?php echo $module; ?>"><?php echo $text_module; ?></a></li>
           <li><a href="<?php echo $shipping; ?>"><?php echo $text_shipping; ?></a></li>
           <li><a href="<?php echo $payment; ?>"><?php echo $text_payment; ?></a></li>
           <li><a href="<?php echo $total; ?>"><?php echo $text_total; ?></a></li>
           <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
-          <li><a href="<?php echo $vqmod; ?>"><?php echo $text_vqmod; ?></a></li>
         </ul>
       </li>
       <li id="sale"><a class="top"><?php echo $text_sale; ?></a>

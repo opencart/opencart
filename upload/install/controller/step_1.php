@@ -3,8 +3,8 @@ class ControllerStep1 extends Controller {
 	private $error = array();
 	
 	public function index() {
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
-			$this->redirect(HTTP_SERVER . 'index.php?route=step_2');
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$this->redirect($this->url->link('step_2'));
 		}
 		
 		if (isset($this->error['warning'])) {
@@ -13,7 +13,7 @@ class ControllerStep1 extends Controller {
 			$this->data['error_warning'] = '';	
 		}		
 		
-		$this->data['action'] = HTTP_SERVER . 'index.php?route=step_1';
+		$this->data['action'] = $this->url->link('step_1');
 		
 		$this->children = array(
 			'header',

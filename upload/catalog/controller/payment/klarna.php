@@ -60,18 +60,6 @@ class ControllerPaymentKlarna extends Controller {
         } else {
             $couponInfo = false;
         }
-
-        if (!$couponInfo['product']) {
-            $subTotal = $this->cart->getSubTotal();
-        } else {
-            $subTotal = 0;
-
-            foreach ($this->cart->getProducts() as $product) {
-                if (in_array($product['product_id'], $couponInfo['product'])) {
-                    $subTotal += $product['total'];
-                }
-            }
-        }
         
         if ($couponInfo['type'] == 'F') {
             $couponInfo['discount'] = min($couponInfo['discount'], $subTotal);
@@ -152,60 +140,59 @@ class ControllerPaymentKlarna extends Controller {
         if ($orderInfo['payment_iso_code_3'] == 'NLD') {
             $address['house_extension'] = $this->request->post['house_ext'];
         }
-
+        
+        // Discounts
+        $result = $this->db->query("SELECT (SELECT ABS(`value`) FROM `" . DB_PREFIX . "order_total` WHERE `code` = 'credit' AND `order_id` = " . (int) $orderInfo['order_id'] . ") AS `credit`, (SELECT ABS(SUM(`value`)) FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `value` < 0 AND `code` != 'credit') AS `discount`")->row;
+        
+        $totalDiscount = (int) $result['discount'];
+        $totalCredit = (int) $result['credit'];
+        
         $goodsList = array();
         
-        foreach ($this->cart->getProducts() as $product) {            
-            $discount = 0;
+        foreach ($this->cart->getProducts() as $product) {
+            $price = 0;
             
-            if (!$couponInfo['product']) {
-                $status = true;
-            } else {
-                if (in_array($product['product_id'], $couponInfo['product'])) {
-                    $status = true;
-                } else {
-                    $status = false;
-                }
-            }
+            $discount = min($product['total'], $totalDiscount);
+            $totalDiscount -= $discount;
+            $discount = $discount / $product['quantity'];
             
-            if ($status) {
-                if ($couponInfo['type'] == 'F') {
-                    $discount = $couponInfo['discount'] * ($product['total'] / $subTotal);
-                } elseif ($couponInfo['type'] == 'P') {
-                    $discount = $product['total'] / 100 * $couponInfo['discount'];
-                }
-            }
+            $credit = min($product['total'], $totalCredit);
+            $totalCredit -= $credit;
+            $credit = $credit / $product['quantity'];
             
-            $taxPaid = $this->tax->calculate($product['total'] - $discount, $product['tax_class_id']);
-            $productPrice = $this->tax->calculate($product['price'] - $discount, $product['tax_class_id']);
+            $productTax = $this->tax->getTax($product['price'] - $discount, $product['tax_class_id']);
+            
+            $price = $product['price'] - $credit - $discount + $productTax;
             
             $goodsList[] = array(
-                'qty' => (int)$product['quantity'],
+                'qty' => (int) $product['quantity'],
                 'goods' => array(
                     'artno' => $product['model'],
                     'title' => $product['name'],
-                    'price' => (int) str_replace('.', '', $this->currency->format($productPrice, '', '', false)),
-                    'vat' => (double) ($taxPaid / ($product['total'] - $discount) - 1) * 100,
-                    'discount' => (double)(($discount / $product['total']) * 100),
+                    'price' => (int) str_replace('.', '', $this->currency->format($price, '', '', false)),
+                    'vat' => 0.0,
+                    'discount' => 0.0,
                     'flags' => 32,
                 )
             );
         }
-
-        $taxPaid = $this->tax->calculate($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']);
-
+        
         // Shipping
-        $goodsList[] = array(
-            'qty' => 1,
-            'goods' => array(
-                'artNo' => $orderInfo['shipping_code'],
-                'title' => $orderInfo['shipping_method'],
-                'price' => (int) str_replace('.', '', $this->currency->format($taxPaid, '', '', false)),
-                'vat' => (double) (($taxPaid / $this->session->data['shipping_method']['cost'] - 1) * 100),
-                'discount' => 0,
-                'flags' => 8 + 32,
-            )
-        );
+        if (!$couponInfo || $couponInfo['shipping'] != '1') {
+            $price = $this->tax->calculate($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']);
+
+            $goodsList[] = array(
+                'qty' => 1,
+                'goods' => array(
+                    'artno' => $orderInfo['shipping_code'],
+                    'title' => $orderInfo['shipping_method'],
+                    'price' => (int) str_replace('.', '', $this->currency->format($price, '', '', false)),
+                    'vat' => (double) (($price / $this->session->data['shipping_method']['cost'] - 1) * 100),
+                    'discount' => 0,
+                    'flags' => 8 + 32,
+                )
+            );
+        }
         
         // Klarna Fee
         
@@ -312,6 +299,7 @@ class ControllerPaymentKlarna extends Controller {
             preg_match('/<member><name>faultString<\/name><value><string>(.+)<\/string><\/value><\/member>/', $response, $match);
 
             if (isset($match[1])) {
+                die(htmlspecialchars($response));
                 $json['error'] = utf8_encode($match[1]); 
             } else {
                 $xml = simplexml_load_string($response);

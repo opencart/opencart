@@ -1,12 +1,10 @@
 <?php
 class Url {
 	private $url;
-	private $ssl;
 	private $rewrite = array();
 	
-	public function __construct($url, $ssl = '') {
+	public function __construct($url) {
 		$this->url = $url;
-		$this->ssl = $ssl;
 	}
 		
 	public function addRewrite($rewrite) {
@@ -17,7 +15,7 @@ class Url {
 		if ($connection ==  'NONSSL') {
 			$url = $this->url;	
 		} else {
-			$url = $this->ssl;	
+			$url = str_replace('http://', 'https://', $this->url);	
 		}
 		
 		$url .= 'index.php?route=' . $route;

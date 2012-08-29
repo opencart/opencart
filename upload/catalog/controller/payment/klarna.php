@@ -142,11 +142,15 @@ class ControllerPaymentKlarna extends Controller {
         }
         
         // Discounts
-        $result = $this->db->query("SELECT (SELECT ABS(`value`) FROM `" . DB_PREFIX . "order_total` WHERE `code` = 'credit' AND `order_id` = " . (int) $orderInfo['order_id'] . ") AS `credit`, (SELECT ABS(SUM(`value`)) FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `value` < 0 AND `code` != 'credit') AS `discount`")->row;
+        $result = $this->db->query("SELECT (SELECT ABS(SUM(`value`)) FROM `" . DB_PREFIX . "order_total` WHERE (`code` = 'credit' OR `code` = 'voucher') AND `order_id` = " . (int) $orderInfo['order_id'] . ") AS `credit`, (SELECT ABS(SUM(`value`)) FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `value` < 0 AND `code` != 'credit' AND `code` != 'voucher') AS `discount`")->row;
         
         $totalDiscount = (int) $result['discount'];
-        $totalCredit = (int) $result['credit'];
+        if ($couponInfo && $couponInfo['shipping'] == '1') {
+            $totalDiscount -= $this->session->data['shipping_method']['cost'];
+        }
         
+        $totalCredit = (int) $result['credit'];
+
         $goodsList = array();
         
         foreach ($this->cart->getProducts() as $product) {
@@ -154,15 +158,13 @@ class ControllerPaymentKlarna extends Controller {
             
             $discount = min($product['total'], $totalDiscount);
             $totalDiscount -= $discount;
-            $discount = $discount / $product['quantity'];
             
-            $credit = min($product['total'], $totalCredit);
+            $credit = min($product['total'] - $discount, $totalCredit);
             $totalCredit -= $credit;
-            $credit = $credit / $product['quantity'];
             
-            $productTax = $this->tax->getTax($product['price'] - $discount, $product['tax_class_id']);
+            $productTax = $this->tax->getTax($product['price'] - $discount / $product['quantity'], $product['tax_class_id']);
             
-            $price = $product['price'] - $credit - $discount + $productTax;
+            $price = $product['price'] - $credit / $product['quantity'] - $discount / $product['quantity'] + $productTax;
             
             $goodsList[] = array(
                 'qty' => (int) $product['quantity'],
@@ -177,39 +179,53 @@ class ControllerPaymentKlarna extends Controller {
             );
         }
         
-        // Shipping
-        if (!$couponInfo || $couponInfo['shipping'] != '1') {
+        if ($couponInfo && $couponInfo['shipping'] == '1') {
+            $price = $this->tax->getTax(0, $this->session->data['shipping_method']['tax_class_id']);
+        } else {
             $price = $this->tax->calculate($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']);
+        }    
 
-            $goodsList[] = array(
-                'qty' => 1,
-                'goods' => array(
-                    'artno' => $orderInfo['shipping_code'],
-                    'title' => $orderInfo['shipping_method'],
-                    'price' => (int) str_replace('.', '', $this->currency->format($price, '', '', false)),
-                    'vat' => (double) (($price / $this->session->data['shipping_method']['cost'] - 1) * 100),
-                    'discount' => 0,
-                    'flags' => 8 + 32,
-                )
-            );
+        $goodsList[] = array(
+            'qty' => 1,
+            'goods' => array(
+                'artno' => $orderInfo['shipping_code'],
+                'title' => $orderInfo['shipping_method'],
+                'price' => (int) str_replace('.', '', $this->currency->format($price, '', '', false)),
+                'vat' => 0.0,
+                'discount' => 0.0,
+                'flags' => 8 + 32,
+            )
+        );
+        
+        // Klarna Fee and other handling fees
+        
+        $results = $this->db->query("SELECT `code`, `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . "")->rows;
+        
+        $fees = 0;
+        
+        foreach ($results as $result) {
+            if ($result['code'] == 'handling') {
+                $fees += $this->tax->calculate($result['value'], $this->config->get('handling_tax_class_id'));
+            }
+            
+            if ($result['code'] == 'klarna_fee') {
+                $fees += $this->tax->calculate($result['value'], $this->config->get('klarna_fee_tax_class_id'));
+            }
+            
+            if ($result['code'] == 'low_order_fee') {
+                $fees += $this->tax->calculate($result['value'], $this->config->get('low_order_fee_tax_class_id'));
+            }
         }
         
-        // Klarna Fee
-        
-        $result = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `code` = 'klarna_fee'")->row;
-        
-        if (isset($result['value'])) {
-            
-            $feeWithTax  = $this->tax->calculate($result['value'], $this->config->get('klarna_fee_tax_class_id'));
-            
+        if ($fees > 0) {
             $goodsList[] = array(
                 'qty' => 1,
                 'goods' => array(
                     'artNo' => '',
-                    'title' => 'Klarna Invoice fee',
-                    'price' => (int) str_replace('.', '', $this->currency->format($feeWithTax, '', '', false)),
-                    'vat' => (double) (($feeWithTax / $result['value'] - 1) * 100),
-                    'discount' => 0,
+                    'title' => 'Handling fees',
+                    'price' => (int) str_replace('.', '', $this->currency->format($fees, '', '', false)),
+                    'vat' => 0.0,
+                    'discount' => 0.0,
                     'flags' => 16 + 32,
                 )
             );
@@ -290,9 +306,8 @@ class ControllerPaymentKlarna extends Controller {
 
         $response = curl_exec($ch);
         
+        $log = new Log('klarna.log');
         if (curl_errno($ch)) {
-            $log = new Log('klarna.log');
-            
             $log->write('HTTP Error. Code: ' . curl_errno($ch) . ' message: ' . curl_error($ch));
             $json['error'] = $this->language->get('error_network');
         } else {

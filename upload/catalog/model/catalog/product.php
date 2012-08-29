@@ -99,8 +99,6 @@ class ModelCatalogProduct extends Model {
 				if (!empty($data['filter_tag'])) {
 					$sql .= "MATCH(pd.tag) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_tag'])) . "')";
 				}
-			
-				$sql .= ")";
 				
 				if (!empty($data['filter_name'])) {
 					$sql .= " OR LCASE(p.model) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
@@ -128,7 +126,9 @@ class ModelCatalogProduct extends Model {
 				
 				if (!empty($data['filter_name'])) {
 					$sql .= " OR LCASE(p.mpn) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
-				}					
+				}
+				
+				$sql .= ")";
 			}
 			
 			if (!empty($data['filter_category_id'])) {
@@ -485,8 +485,6 @@ class ModelCatalogProduct extends Model {
 					$sql .= "MATCH(pd.tag) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_tag'])) . "')";
 				}
 			
-				$sql .= ")";
-				
 				if (!empty($data['filter_name'])) {
 					$sql .= " OR LCASE(p.model) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
 				}
@@ -513,7 +511,9 @@ class ModelCatalogProduct extends Model {
 				
 				if (!empty($data['filter_name'])) {
 					$sql .= " OR LCASE(p.mpn) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
-				}				
+				}
+				
+				$sql .= ")";				
 			}
 						
 			if (!empty($data['filter_category_id'])) {

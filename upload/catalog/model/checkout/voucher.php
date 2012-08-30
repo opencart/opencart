@@ -87,7 +87,7 @@ class ModelCheckoutVoucher extends Model {
 				$template->data['text_footer'] = $language->get('text_footer');
 				
 				if (file_exists(DIR_IMAGE . $voucher['image'])) {
-					$template->data['image'] = HTTP_IMAGE . $voucher['image'];
+					$template->data['image'] = $this->config->get('config_url') . 'image/' . $voucher['image'];
 				} else {
 					$template->data['image'] = '';
 				}

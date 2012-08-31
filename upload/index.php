@@ -128,6 +128,14 @@ $registry->set('cache', $cache);
 $session = new Session();
 $registry->set('session', $session); 
 
+function session() {
+	global $db, $session;
+	
+   // $this->db->query("REPLACE key = '" . . "', ip = '" . . "', user_agent = '" . . "', date_added = '" . . "'");
+}
+
+register_shutdown_function('session');
+
 // Language Detection
 $languages = array();
 
@@ -233,4 +241,9 @@ $controller->dispatch($action, new Action('error/not_found'));
 
 // Output
 $response->output();
+
+echo '<pre>';
+print_r($_SESSION);
+print_r($_COOKIE);
+echo '</pre>';
 ?>

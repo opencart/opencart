@@ -89,7 +89,7 @@ class ControllerStep3 extends Controller {
 			$this->data['error_warning'] = '';
 		}
 
-		if (isset($this->error['error_db_host'])) {
+		if (isset($this->error['db_host'])) {
 			$this->data['error_db_host'] = $this->error['db_host'];
 		} else {
 			$this->data['error_db_host'] = '';

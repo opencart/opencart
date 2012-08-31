@@ -13,7 +13,7 @@
   <div class="warning"><?php echo $error_warning; ?></div>
   <?php } ?>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-    <p>1 . Please enter your database connection details.</p>
+    <p>1. Please enter your database connection details.</p>
     <fieldset>
       <table class="form">
         <tr>
@@ -60,7 +60,7 @@
     <fieldset>
       <table class="form">
         <tr>
-          <td width="185"><span class="required">*</span> Username:</td>
+          <td><span class="required">*</span> Username:</td>
           <td><input type="text" name="username" value="<?php echo $username; ?>" />
             <?php if ($error_username) { ?>
             <span class="required"><?php echo $error_username; ?></span>

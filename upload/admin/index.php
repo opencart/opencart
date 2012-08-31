@@ -109,7 +109,7 @@ $registry->set('session', $session);
 // Language
 $languages = array();
 
-$query = $db->query("SELECT * FROM " . DB_PREFIX . "language"); 
+$query = $db->query("SELECT * FROM `" . DB_PREFIX . "language`"); 
 
 foreach ($query->rows as $result) {
 	$languages[$result['code']] = $result;

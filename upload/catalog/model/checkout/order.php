@@ -282,7 +282,7 @@ class ModelCheckoutOrder extends Model {
 			$template->data['text_footer'] = $language->get('text_new_footer');
 			$template->data['text_powered'] = $language->get('text_new_powered');
 			
-			$template->data['logo'] = HTTP_IMAGE . $this->config->get('config_logo');		
+			$template->data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');		
 			$template->data['store_name'] = $order_info['store_name'];
 			$template->data['store_url'] = $order_info['store_url'];
 			$template->data['customer_id'] = $order_info['customer_id'];

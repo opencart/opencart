@@ -32,7 +32,7 @@ class ControllerCommonFileManager extends Controller {
 		
 		$this->data['token'] = $this->session->data['token'];
 		
-		$this->data['directory'] = HTTP_IMAGE . 'data/';
+		$this->data['directory'] = HTTP_CATALOG . 'image/data/';
 				
 		$this->load->model('tool/image');
 

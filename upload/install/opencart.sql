@@ -2618,7 +2618,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (23, 0, 'config', 'config_account_mail', '0', 0),
 (24, 0, 'config', 'config_alert_emails', '', 0),
 (25, 0, 'config', 'config_use_ssl', '0', 0),
-(26, 0, 'config', 'config_seo_url', '0', 0),
+(26, 0, 'config', 'config_use_seo_url', '0', 0),
 (27, 0, 'coupon', 'coupon_sort_order', '4', 0),
 (28, 0, 'coupon', 'coupon_status', '1', 0),
 (29, 0, 'config', 'config_alert_mail', '0', 0),

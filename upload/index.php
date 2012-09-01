@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '1.5.4');
+define('VERSION', '1.5.5');
 
 // Configuration
 require_once('config.php');
@@ -216,8 +216,7 @@ $registry->set('length', new Length($registry));
 $registry->set('cart', new Cart($registry));
 
 // Encryption
-$encryption = new Encryption($config->get('config_encryption'));
-$registry->set('encryption', $encryption);
+$registry->set('encryption', new Encryption($config->get('config_encryption')));
 		
 // Front Controller 
 $controller = new Front($registry);
@@ -226,7 +225,7 @@ $controller = new Front($registry);
 $controller->addPreAction(new Action('common/maintenance'));
 
 // SSL
-$controller->addPreAction(new Action('common/ssl'));
+$controller->addPreAction(new Action('common/shared'));
 
 // SEO URL's
 $controller->addPreAction(new Action('common/seo_url'));	

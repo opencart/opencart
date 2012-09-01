@@ -978,10 +978,10 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_use_shared'] = $this->config->get('config_use_shared');
 		}
 				
-		if (isset($this->request->post['config_seo_url'])) {
-			$this->data['config_seo_url'] = $this->request->post['config_seo_url'];
+		if (isset($this->request->post['config_use_seo_url'])) {
+			$this->data['config_use_seo_url'] = $this->request->post['config_use_seo_url'];
 		} else {
-			$this->data['config_seo_url'] = $this->config->get('config_seo_url');
+			$this->data['config_use_seo_url'] = $this->config->get('config_use_seo_url');
 		}
 		
 		if (isset($this->request->post['config_maintenance'])) {

@@ -900,15 +900,15 @@
             </tr>            
             <tr>
               <td><?php echo $entry_seo_url; ?></td>
-              <td><?php if ($config_seo_url) { ?>
-                <input type="radio" name="config_seo_url" value="1" checked="checked" />
+              <td><?php if ($config_use_seo_url) { ?>
+                <input type="radio" name="config_use_seo_url" value="1" checked="checked" />
                 <?php echo $text_yes; ?>
-                <input type="radio" name="config_seo_url" value="0" />
+                <input type="radio" name="config_use_seo_url" value="0" />
                 <?php echo $text_no; ?>
                 <?php } else { ?>
-                <input type="radio" name="config_seo_url" value="1" />
+                <input type="radio" name="config_use_seo_url" value="1" />
                 <?php echo $text_yes; ?>
-                <input type="radio" name="config_seo_url" value="0" checked="checked" />
+                <input type="radio" name="config_use_seo_url" value="0" checked="checked" />
                 <?php echo $text_no; ?>
                 <?php } ?></td>
             </tr>

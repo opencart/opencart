@@ -33,6 +33,14 @@ class ModelCatalogCategory extends Model {
 		
 		$this->cache->delete('category');
 	}
+
+		public function updateCategoryStatus($category_id, $status) {
+				if (is_numeric($status)) {
+						$res = $this->db->query("UPDATE " . DB_PREFIX . "category SET status = '" . (int)$status . "' WHERE category_id = '" . (int)$category_id . "'");
+				}
+
+				$this->cache->delete('category');
+		}
 	
 	public function editCategory($category_id, $data) {
 		$this->db->query("UPDATE " . DB_PREFIX . "category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE category_id = '" . (int)$category_id . "'");

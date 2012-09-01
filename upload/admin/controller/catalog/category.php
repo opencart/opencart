@@ -48,6 +48,46 @@ class ControllerCatalogCategory extends Controller {
 		$this->getForm();
 	}
 
+		public function enable() {
+				$this->load->language('catalog/category');
+
+				$this->document->setTitle($this->language->get('heading_title'));
+
+				$this->load->model('catalog/category');
+
+				if (isset($this->request->post['selected']) && $this->validateDelete()) {
+						foreach ($this->request->post['selected'] as $category_id) {
+								$this->model_catalog_category->updateCategoryStatus($category_id, 1);
+						}
+
+					$this->session->data['success'] = $this->language->get('text_success');
+
+					$this->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL'));
+				}
+
+				$this->getList();
+		}
+
+		public function disable() {
+				$this->load->language('catalog/category');
+
+				$this->document->setTitle($this->language->get('heading_title'));
+
+				$this->load->model('catalog/category');
+
+				if (isset($this->request->post['selected']) && $this->validateDelete()) {
+						foreach ($this->request->post['selected'] as $category_id) {
+								$this->model_catalog_category->updateCategoryStatus($category_id, 0);
+						}
+
+						$this->session->data['success'] = $this->language->get('text_success');
+
+						$this->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL'));
+				}
+
+				$this->getList();
+		}
+
 	public function delete() {
 		$this->load->language('catalog/category');
 
@@ -84,6 +124,8 @@ class ControllerCatalogCategory extends Controller {
    		);
 									
 		$this->data['insert'] = $this->url->link('catalog/category/insert', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['enable'] = $this->url->link('catalog/category/enable', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['disable'] = $this->url->link('catalog/category/disable', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['delete'] = $this->url->link('catalog/category/delete', 'token=' . $this->session->data['token'], 'SSL');
 		
 		$this->data['categories'] = array();
@@ -102,6 +144,7 @@ class ControllerCatalogCategory extends Controller {
 				'category_id' => $result['category_id'],
 				'name'        => $result['name'],
 				'sort_order'  => $result['sort_order'],
+				'status'      => $result['status'],
 				'selected'    => isset($this->request->post['selected']) && in_array($result['category_id'], $this->request->post['selected']),
 				'action'      => $action
 			);
@@ -113,9 +156,12 @@ class ControllerCatalogCategory extends Controller {
 
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_sort_order'] = $this->language->get('column_sort_order');
+		$this->data['column_status'] = $this->language->get('column_status');
 		$this->data['column_action'] = $this->language->get('column_action');
 
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_enable'] = $this->language->get('button_enable');
+		$this->data['button_disable'] = $this->language->get('button_disable');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
  		if (isset($this->error['warning'])) {

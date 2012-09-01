@@ -125,21 +125,19 @@ $cache = new Cache();
 $registry->set('cache', $cache); 
 
 // Session
-$session = new Session();
-$registry->set('session', $session); 
-
-function session() {
-	global $db, $session;
-	
-   // $this->db->query("REPLACE key = '" . . "', ip = '" . . "', user_agent = '" . . "', date_added = '" . . "'");
+if (isset($request->get['session_id'])) {
+	$session_id = $request->get['session_id'];
+} else {
+	$session_id = '';
 }
 
-register_shutdown_function('session');
+$session = new Session($session_id);
+$registry->set('session', $session);
 
 // Language Detection
 $languages = array();
 
-$query = $db->query("SELECT * FROM " . DB_PREFIX . "language WHERE status = '1'"); 
+$query = $db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE status = '1'"); 
 
 foreach ($query->rows as $result) {
 	$languages[$result['code']] = $result;
@@ -218,13 +216,17 @@ $registry->set('length', new Length($registry));
 $registry->set('cart', new Cart($registry));
 
 // Encryption
-$registry->set('encryption', new Encryption($config->get('config_encryption')));
+$encryption = new Encryption($config->get('config_encryption'));
+$registry->set('encryption', $encryption);
 		
 // Front Controller 
 $controller = new Front($registry);
 
 // Maintenance Mode
 $controller->addPreAction(new Action('common/maintenance'));
+
+// SSL
+$controller->addPreAction(new Action('common/ssl'));
 
 // SEO URL's
 $controller->addPreAction(new Action('common/seo_url'));	
@@ -241,9 +243,4 @@ $controller->dispatch($action, new Action('error/not_found'));
 
 // Output
 $response->output();
-
-echo '<pre>';
-print_r($_SESSION);
-print_r($_COOKIE);
-echo '</pre>';
 ?>

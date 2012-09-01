@@ -104,6 +104,7 @@ $_['entry_fraud_key']              = 'MaxMind License Key:</span>';
 $_['entry_fraud_score']            = 'MaxMind Risk Score:<br /><span class="help">The higher the score the more likly the order is fraudulent. Set a score between 0 - 100.</span>';
 $_['entry_fraud_status']           = 'MaxMind Fraud Order Status:<br /><span class="help">Orders over your set score will be assigned this order status and will not be allowed to reach the complete status automatically.</span>';
 $_['entry_use_ssl']                = 'Use SSL:<br /><span class="help">To use SSL check with your host if a SSL certificate is installed and added the SSL URL to the catalog and admin config files.</span>';
+$_['entry_use_shared']             = 'Use Shared Sessions:<br /><span class="help">Place a session id into the url between different sites so the session can be passed between.</span>';
 $_['entry_seo_url']                = 'Use SEO URL\'s:<br /><span class="help">To use SEO URL\'s apache module mod-rewrite must be installed and you need to rename the htaccess.txt to .htaccess.</span>';
 $_['entry_maintenance']            = 'Maintenance Mode:<br /><span class="help">Prevents customers from browsing your store. They will instead see a maintenance message. If logged in as admin, you will see the store as normal.</span>';
 $_['entry_encryption']             = 'Encryption Key:<br /><span class="help">Please provide a secret key that will be used to encrypt private information when processing orders.</span>';

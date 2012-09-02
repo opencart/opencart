@@ -3,19 +3,25 @@ class ControllerCommonShared extends Controller {
 	// The purpurse of this function is to allow shared ssl to run accross multiple domains.
 	public function index() {
 		// Add rewrite to url class
-		if ($this->config->get('config_use_shared')) {
+		if ($this->config->get('config_shared')) {
 			$this->url->addRewrite($this);
 		}
 	}
 	
 	public function rewrite($link) {
-		$url_info = parse_url(str_replace('&amp;', '&', $link));
+		$link = str_replace('&amp;', '&', $link);
 		
-		if ($this->request->server['HTTP_HOST'] != $url_info['host']) {
-			if ($url_info['query']) {
-				$link .= '&session_id=' . $this->session->getId();
-			} else {
-				$link .= '?session_id=' . $this->session->getId();
+		$url_info = parse_url($link);
+		
+		if (isset($this->request->server['HTTP_USER_AGENT']) && $this->request->server['HTTP_HOST'] != $url_info['host']) {
+			$robots = trim($this->config->get('config_robots'));
+			
+			if (!$robots || !preg_match('/' . str_replace("\n", '|', $robots) . '/i', $this->request->server['HTTP_USER_AGENT'])) {
+				if ($url_info['query']) {
+					$link .= '&session_id=' . $this->session->getId();
+				} else {
+					$link .= '?session_id=' . $this->session->getId();
+				}
 			}
 		}
 		

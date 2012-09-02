@@ -236,7 +236,7 @@ class ControllerSettingStore extends Controller {
 		$this->data['entry_image_compare'] = $this->language->get('entry_image_compare');
 		$this->data['entry_image_wishlist'] = $this->language->get('entry_image_wishlist');
 		$this->data['entry_image_cart'] = $this->language->get('entry_image_cart');
-		$this->data['entry_use_ssl'] = $this->language->get('entry_use_ssl');
+		$this->data['entry_secure'] = $this->language->get('entry_secure');
 				
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -852,12 +852,12 @@ class ControllerSettingStore extends Controller {
 			$this->data['config_image_cart_height'] = 80;
 		}
 
-		if (isset($this->request->post['config_use_ssl'])) {
-			$this->data['config_use_ssl'] = $this->request->post['config_use_ssl'];
-		} elseif (isset($store_info['config_use_ssl'])) {
-			$this->data['config_use_ssl'] = $store_info['config_use_ssl'];
+		if (isset($this->request->post['config_secure'])) {
+			$this->data['config_secure'] = $this->request->post['config_secure'];
+		} elseif (isset($store_info['config_secure'])) {
+			$this->data['config_secure'] = $store_info['config_secure'];
 		} else {
-			$this->data['config_use_ssl'] = '';
+			$this->data['config_secure'] = '';
 		}
 
 		$this->template = 'setting/store_form.tpl';

@@ -2,7 +2,7 @@
 class ControllerCommonSeoUrl extends Controller {
 	public function index() {
 		// Add rewrite to url class
-		if ($this->config->get('config_use_seo_url')) {
+		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
 		}
 		

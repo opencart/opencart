@@ -8,8 +8,7 @@ class ControllerHeader extends Controller {
 		$this->data['scripts'] = $this->document->getScripts();		
 		
 		$this->data['base'] = HTTP_SERVER;
-				
-		$this->id       = 'header';
+		
 		$this->template = 'header.tpl';
 
 		$this->render();

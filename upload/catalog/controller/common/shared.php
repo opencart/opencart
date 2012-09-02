@@ -1,6 +1,6 @@
 <?php
 class ControllerCommonShared extends Controller {
-	// The purpurse of this function is to allow shared ssl to run accross multiple domains.
+	// The purpurse of this class is to allow shared ssl to run accross multiple domains.
 	public function index() {
 		// Add rewrite to url class
 		if ($this->config->get('config_shared')) {

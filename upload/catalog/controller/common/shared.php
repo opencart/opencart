@@ -14,9 +14,19 @@ class ControllerCommonShared extends Controller {
 		$url_info = parse_url($link);
 		
 		if (isset($this->request->server['HTTP_USER_AGENT']) && $this->request->server['HTTP_HOST'] != $url_info['host']) {
-			$robots = trim($this->config->get('config_robots'));
+			$status = true;
 			
-			if (!$robots || !preg_match('/' . str_replace("\n", '|', $robots) . '/i', $this->request->server['HTTP_USER_AGENT'])) {
+			$robots = explode("\n", trim($this->config->get('config_robots')));
+			
+			foreach ($robots as $robot) {
+				if (strpos($this->request->server['HTTP_USER_AGENT'], trim($robot)) !== false) {
+					$status = false;
+					
+					break;
+				}
+			}
+			
+			if ($status) {
 				if ($url_info['query']) {
 					$link .= '&session_id=' . $this->session->getId();
 				} else {

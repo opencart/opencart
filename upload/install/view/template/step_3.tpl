@@ -62,6 +62,7 @@
         <tr>
           <td><span class="required">*</span> Username:</td>
           <td><input type="text" name="username" value="<?php echo $username; ?>" />
+            <br />
             <?php if ($error_username) { ?>
             <span class="required"><?php echo $error_username; ?></span>
             <?php } ?></td>
@@ -69,6 +70,7 @@
         <tr>
           <td><span class="required">*</span> Password:</td>
           <td><input type="text" name="password" value="<?php echo $password; ?>" />
+            <br />
             <?php if ($error_password) { ?>
             <span class="required"><?php echo $error_password; ?></span>
             <?php } ?></td>
@@ -76,6 +78,7 @@
         <tr>
           <td><span class="required">*</span> E-Mail:</td>
           <td><input type="text" name="email" value="<?php echo $email; ?>" />
+            <br />
             <?php if ($error_email) { ?>
             <span class="required"><?php echo $error_email; ?></span>
             <?php } ?></td>

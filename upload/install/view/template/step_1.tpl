@@ -579,11 +579,9 @@
         Public License instead of this License.  But first, please read
         &lt;http://www.gnu.org/philosophy/why-not-lgpl.html&gt;.</p>
     </div>
-    <div>I agree to the license
-      <input type="checkbox" name="agree" />
-    </div>
     <div class="buttons">
-      <div class="right">
+      <div class="right">I agree to the license
+        <input type="checkbox" name="agree" />&nbsp;
         <input type="submit" value="Continue" class="button" />
       </div>
     </div>

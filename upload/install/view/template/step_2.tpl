@@ -54,7 +54,7 @@
         </tr>
       </table>
     </fieldset>
-    <p>2. Please make sure the extensions listed below are installed.</p>
+    <p>2. Please make sure the PHP extensions listed below are installed.</p>
     <fieldset>
       <table>
         <tr>
@@ -77,7 +77,7 @@
         </tr>
         <tr>
           <td>cURL:</td>
-          <td><?php echo extension_loaded('curl') ? 'On' : 'Off'; ?></td>
+          <td><?php echo extension_loaded('curl_init') ? 'On' : 'Off'; ?></td>
           <td>On</td>
           <td align="center"><?php echo extension_loaded('curl') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
         </tr>

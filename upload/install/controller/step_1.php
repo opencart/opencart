@@ -15,13 +15,12 @@ class ControllerStep1 extends Controller {
 		
 		$this->data['action'] = $this->url->link('step_1');
 		
+		$this->template = 'step_1.tpl';
 		$this->children = array(
 			'header',
 			'footer'
 		);
 		
-		$this->template = 'step_1.tpl';
-
 		$this->response->setOutput($this->render());
 	}
 	

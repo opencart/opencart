@@ -204,6 +204,18 @@ class ControllerStep3 extends Controller {
 			$this->error['db_name'] = 'Database Name required!';
 		}
 		
+		if ($this->request->post['db_driver'] == 'mysql') {
+			if (!$connection = @mysql_connect($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'])) {
+				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
+			} else {
+				if (!@mysql_select_db($this->request->post['db_name'], $connection)) {
+					$this->error['warning'] = 'Error: Database does not exist!';
+				}
+				
+				mysql_close($connection);
+			}
+		}
+				
 		if (!$this->request->post['username']) {
 			$this->error['username'] = 'Username required!';
 		}
@@ -214,16 +226,6 @@ class ControllerStep3 extends Controller {
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
 			$this->error['email'] = 'Invalid E-Mail!';
-		}
-
-		if (!$connection = @mysql_connect($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'])) {
-			$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
-		} else {
-			if (!@mysql_select_db($this->request->post['db_name'], $connection)) {
-				$this->error['warning'] = 'Error: Database does not exist!';
-			}
-			
-			mysql_close($connection);
 		}
 		
 		if (!is_writable(DIR_OPENCART . 'config.php')) {

@@ -1,5 +1,5 @@
 html {
-	overflow: -moz-scrollbars-vertical;
+	overflow-y: scroll;
 	margin: 0;
 	padding: 0;
 }

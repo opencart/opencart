@@ -734,7 +734,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (200, 'Suriname', 'SR', 'SUR', '', 0, 1),
 (201, 'Svalbard and Jan Mayen Islands', 'SJ', 'SJM', '', 0, 1),
 (202, 'Swaziland', 'SZ', 'SWZ', '', 0, 1),
-(203, 'Sweden', 'SE', 'SWE', '', 0, 1),
+(203, 'Sweden', 'SE', 'SWE', '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 1, 1),
 (204, 'Switzerland', 'CH', 'CHE', '', 0, 1),
 (205, 'Syrian Arab Republic', 'SY', 'SYR', '', 0, 1),
 (206, 'Taiwan', 'TW', 'TWN', '', 0, 1),

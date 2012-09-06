@@ -84,11 +84,20 @@ class ModelCatalogProduct extends Model {
 			if (!empty($data['filter_name']) || !empty($data['filter_tag'])) {
 				$sql .= " AND (";
 				
-				if (!empty($data['filter_name'])) {					
+				if (!empty($data['filter_name'])) {
+					$implode = array();
+
+					$words = explode(' ', trim(preg_replace('/\s\s+/', ' ', $data['filter_name'])));
+
+					foreach ($words as $word) {
+						$implode[] = "LCASE(pd.name) LIKE '%" . $this->db->escape(utf8_strtolower($word)) . "%'";
+					}
+					if ($implode) {
+						$sql .= " " . implode(" AND ", $implode) . "";
+					}
+
 					if (!empty($data['filter_description'])) {
-						$sql .= "LCASE(pd.name) LIKE '%" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "%' OR MATCH(pd.description) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "')";
-					} else {
-						$sql .= "LCASE(pd.name) LIKE '%" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "%'";
+						$sql .= " OR MATCH(pd.description) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "')";
 					}
 				}
 				
@@ -469,11 +478,20 @@ class ModelCatalogProduct extends Model {
 			if (!empty($data['filter_name']) || !empty($data['filter_tag'])) {
 				$sql .= " AND (";
 				
-				if (!empty($data['filter_name'])) {					
+				if (!empty($data['filter_name'])) {
+					$implode = array();
+
+					$words = explode(' ', trim(preg_replace('/\s\s+/', ' ', $data['filter_name'])));
+
+					foreach ($words as $word) {
+						$implode[] = "LCASE(pd.name) LIKE '%" . $this->db->escape(utf8_strtolower($word)) . "%'";
+					}
+					if ($implode) {
+						$sql .= " " . implode(" AND ", $implode) . "";
+					}
+
 					if (!empty($data['filter_description'])) {
-						$sql .= "LCASE(pd.name) LIKE '%" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "%' OR MATCH(pd.description) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "')";
-					} else {
-						$sql .= "LCASE(pd.name) LIKE '%" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "%'";
+						$sql .= " OR MATCH(pd.description) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "')";
 					}
 				}
 				

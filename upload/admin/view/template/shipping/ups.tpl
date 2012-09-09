@@ -661,7 +661,7 @@
             <td><span class="required">*</span> <?php echo $entry_dimension; ?></td>
             <td><input type="text" name="ups_length" value="<?php echo $ups_length; ?>" size="4" />
               <input type="text" name="ups_width" value="<?php echo $ups_width; ?>" size="4" />
-              <input type="text" name="ups_height" value="<?php echo $ups_height; ?>" size="4" /></td>
+              <input type="text" name="ups_height" value="<?php echo $ups_height; ?>" size="4" />
 			  <?php if ($error_dimension) { ?>
               <span class="error"><?php echo $error_dimension; ?></span>
               <?php } ?></td>

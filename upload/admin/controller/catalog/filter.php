@@ -381,10 +381,6 @@ class ControllerCatalogFilter extends Controller {
 			}
 		}
 
-		if (($this->request->post['type'] == 'select' || $this->request->post['type'] == 'radio' || $this->request->post['type'] == 'checkbox') && !isset($this->request->post['filter_value'])) {
-			$this->error['warning'] = $this->language->get('error_type');
-		}
-
 		if (isset($this->request->post['filter_value'])) {
 			foreach ($this->request->post['filter_value'] as $filter_value_id => $filter_value) {
 				foreach ($filter_value['filter_value_description'] as $language_id => $filter_value_description) {

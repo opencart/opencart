@@ -64,52 +64,59 @@ class ControllerCommonSeoUrl extends Controller {
 		$data = array();
 		
 		parse_str($url_info['query'], $data);
-		
-		foreach ($data as $key => $value) {
-			if (isset($data['route'])) {
-				if (($data['route'] == 'product/product' && $key == 'product_id') || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id')) {
-					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "'");
-				
-					if ($query->num_rows) {
-						$url .= '/' . $query->row['keyword'];
-						
-						unset($data[$key]);
-					}					
-				} elseif ($key == 'path') {
-					$categories = explode('_', $value);
-					
-					foreach ($categories as $category) {
-						$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = 'category_id=" . (int)$category . "'");
-				
-						if ($query->num_rows) {
-							$url .= '/' . $query->row['keyword'];
-						}							
-					}
-					
-					unset($data[$key]);
-				}
-			}
-		}
-	
-		if ($url) {
-			unset($data['route']);
-		
-			$query = '';
-		
-			if ($data) {
-				foreach ($data as $key => $value) {
-					$query .= '&' . $key . '=' . $value;
-				}
-				
-				if ($query) {
-					$query = '?' . trim($query, '&');
-				}
+
+		if (isset($data['route'])) {
+
+			$query_base = "SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '%s=%d'";
+
+			$searches = array(
+				'product_id'      => array('product/product'),
+				'category_id'     => array('product/category'),
+				'manufacturer_id' => array('product/product', 'product/manufacturer/info'),
+				'information_id'  => array('information/information'),
+			);
+
+			if ($data['route'] == 'common/home') {
+				$url .= '/';
+
+			} elseif (isset($data['path'])) {
+				$data['category_id'] = explode('_', $data['path']);
+				unset($data['path']);
 			}
 
-			return $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . str_replace('/index.php', '', $url_info['path']) . $url . $query;
+			foreach ($searches as $key => $routes) {
+				if (isset($data[$key]) && in_array($data['route'], $routes)) {
+
+					$value = (is_array($data[$key]) ? $data[$key] : array($data[$key]));
+
+					foreach ($value as $i => $id) {
+						$query = $this->db->query(sprintf($query_base, $this->db->escape($key), (int)$id));
+
+						if ($query->num_rows) {
+							$url .= '/' . $query->row['keyword'];
+
+							unset($value[$i]);
+						}
+						else { break; }
+					}
+					if (empty($value)) { unset($data[$key]); }
+					else               { $url = ''; }
+
+					break;
+				}
+			}
+		}
+		
+		if ($url) {
+			unset($data['route']);
+
+			$url_info['path'] = str_replace('/index.php', $url, $url_info['path']);
+			$url_info['query'] = http_build_query($data);
+
+			return $this->url->build($url_info);
 		} else {
 			return $link;
-		}
+		}		
 	}	
 }
 ?>

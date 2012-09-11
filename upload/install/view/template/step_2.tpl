@@ -136,10 +136,6 @@
           <td><?php echo is_writable($image_cache) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
         </tr>
         <tr>
-          <td><?php echo $image_cache_data . '/'; ?></td>
-          <td><?php echo is_writable($image_cache_data) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
-        </tr>
-        <tr>
           <td><?php echo $image_data . '/'; ?></td>
           <td><?php echo is_writable($image_data) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
         </tr>

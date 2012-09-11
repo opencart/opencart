@@ -22,7 +22,6 @@ class ControllerStep2 extends Controller {
 		$this->data['logs'] = DIR_SYSTEM . 'logs';
 		$this->data['image'] = DIR_OPENCART . 'image';
 		$this->data['image_cache'] = DIR_OPENCART . 'image/cache';
-		$this->data['image_cache_data'] = DIR_OPENCART . 'image/cache/data';
 		$this->data['image_data'] = DIR_OPENCART . 'image/data';
 		$this->data['download'] = DIR_OPENCART . 'download';
 		
@@ -92,10 +91,6 @@ class ControllerStep2 extends Controller {
 
 		if (!is_writable(DIR_OPENCART . 'image/cache')) {
 			$this->error['warning'] = 'Warning: Image cache directory needs to be writable for OpenCart to work!';
-		}
-
-		if (!is_writable(DIR_OPENCART . 'image/cache/data')) {
-			$this->error['warning'] = 'Warning: Image cache data directory needs to be writable for OpenCart to work!';
 		}
 		
 		if (!is_writable(DIR_OPENCART . 'image/data')) {

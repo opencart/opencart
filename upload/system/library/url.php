@@ -32,5 +32,21 @@ class Url {
 				
 		return $url;
 	}
+
+	function build($url) {
+		if (function_exists('http_build_url')) {
+			return http_build_url($url);
+		}
+		return implode('', array(
+			'scheme'   => $url['scheme'] . '://',
+			'userpass' => (empty($url['user']) || empty($url['pass']) ? '' : $url['user'] . ':' . $url['pass'] . '@'),
+			'host'     => $url['host'],
+			'port'     => (empty($url['port']) ? '' : ':' . $url['port']),
+			'path'     => $url['path'],
+			'query'    => (empty($url['query']) ? '' : '?' . $url['query']),
+			'fragment' => (empty($url['fragment']) ? '' : '#' . $url['fragment']),
+		));
+	}
+
 }
 ?>

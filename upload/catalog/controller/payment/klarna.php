@@ -144,12 +144,12 @@ class ControllerPaymentKlarna extends Controller {
         // Discounts
         $result = $this->db->query("SELECT (SELECT ABS(SUM(`value`)) FROM `" . DB_PREFIX . "order_total` WHERE (`code` = 'credit' OR `code` = 'voucher') AND `order_id` = " . (int) $orderInfo['order_id'] . ") AS `credit`, (SELECT ABS(SUM(`value`)) FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `value` < 0 AND `code` != 'credit' AND `code` != 'voucher') AS `discount`")->row;
         
-        $totalDiscount = (int) $result['discount'];
+        $totalDiscount = $result['discount'];
         if ($couponInfo && $couponInfo['shipping'] == '1') {
             $totalDiscount -= $this->session->data['shipping_method']['cost'];
         }
         
-        $totalCredit = (int) $result['credit'];
+        $totalCredit = $result['credit'];
 
         $goodsList = array();
         
@@ -165,6 +165,8 @@ class ControllerPaymentKlarna extends Controller {
             $productTax = $this->tax->getTax($product['price'] - $discount / $product['quantity'], $product['tax_class_id']);
             
             $price = $product['price'] - $credit / $product['quantity'] - $discount / $product['quantity'] + $productTax;
+            
+            //var_dump($discount, $credit, $productTax, $price);
             
             $goodsList[] = array(
                 'qty' => (int) $product['quantity'],

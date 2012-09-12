@@ -109,6 +109,7 @@ class ControllerCommonSeoUrl extends Controller {
 		
 		if ($url) {
 			unset($data['route']);
+			unset($data['category_id']);
 
 			$url_info['path'] = str_replace('/index.php', $url, $url_info['path']);
 			$url_info['query'] = http_build_query($data);

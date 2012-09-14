@@ -1,0 +1,27 @@
+#
+# Opencart v1.5.4.*
+#
+
+config.php
+admin/config.php
+
+*.log
+
+download/*
+image/cache/*
+system/logs/*
+system/cache/*
+vqmod/vqcache/*
+
+# Track empty folders
+!.gitignore
+!.gitkeep
+!index.html
+
+# Ignore OS generated files
+._*
+.DS_Store
+Icon
+Thumbs.db
+ehthumbs.db
+Spotlight-V100

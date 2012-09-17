@@ -291,8 +291,6 @@ class ControllerCatalogOption extends Controller {
 		$this->data['button_add_option_value'] = $this->language->get('button_add_option_value');
 		$this->data['button_remove'] = $this->language->get('button_remove');
 
-		$this->data['tab_general'] = $this->language->get('tab_general');
-
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {

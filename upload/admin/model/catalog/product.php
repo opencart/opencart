@@ -288,6 +288,7 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_reward WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_special WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_category WHERE product_id = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_filter WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_download WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_layout WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_store WHERE product_id = '" . (int)$product_id . "'");
@@ -506,6 +507,30 @@ class ModelCatalogProduct extends Model {
 		return $product_option_data;
 	}
 	
+	public function getProductFilters($product_id) {
+		$product_filter_data = array();
+		
+		$product_filter_query = $this->db->query("SELECT p2f.filter_id, fd.name FROM " . DB_PREFIX . "product_to_filter p2f LEFT JOIN " . DB_PREFIX . "filter f ON (p2f.filter_id = f.filter_id) LEFT JOIN " . DB_PREFIX . "filter_description fd ON (f.filter_id = fd.filter_id) WHERE pf.product_id = '" . (int)$product_id . "' AND fd.language_id = '" . (int)$this->config->get('config_language_id') . "' GROUP BY pa.filter_id");
+		
+		foreach ($product_filter_query->rows as $product_filter) {
+			$product_filter_description_data = array();
+			
+			$product_filter_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_filter WHERE product_id = '" . (int)$product_id . "' AND attribute_id = '" . (int)$product_attribute['attribute_id'] . "'");
+			
+			foreach ($product_attribute_description_query->rows as $product_attribute_description) {
+				$product_attribute_description_data[$product_attribute_description['language_id']] = array('text' => $product_attribute_description['text']);
+			}
+			
+			$product_filter_data[] = array(
+				'attribute_id'                  => $product_attribute['attribute_id'],
+				'name'                          => $product_attribute['name'],
+				'product_attribute_description' => $product_attribute_description_data
+			);
+		}
+		
+		return $product_filter_data;
+	}
+		
 	public function getProductImages($product_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_image WHERE product_id = '" . (int)$product_id . "'");
 		

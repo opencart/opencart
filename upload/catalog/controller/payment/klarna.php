@@ -325,13 +325,14 @@ class ControllerPaymentKlarna extends Controller {
         
         $log = new Log('klarna.log');
         if (curl_errno($ch)) {
-            $log->write('HTTP Error. Code: ' . curl_errno($ch) . ' message: ' . curl_error($ch));
+            $log->write('HTTP Error for order #' . $orderInfo['order_id'] . '. Code: ' . curl_errno($ch) . ' message: ' . curl_error($ch));
             $json['error'] = $this->language->get('error_network');
         } else {
             preg_match('/<member><name>faultString<\/name><value><string>(.+)<\/string><\/value><\/member>/', $response, $match);
 
             if (isset($match[1])) {
-                die(htmlspecialchars($response));
+                preg_match('/<member><name>faultCode<\/name><value><int>([0-9]+)<\/int><\/value><\/member>/', $response, $match2);
+                $log->write('Failed to create an invoice for order #' . $orderInfo['order_id'] . '. Message: ' . utf8_encode($match[1]) . ' Code: ' . $match2[1]);
                 $json['error'] = utf8_encode($match[1]); 
             } else {
                 $xml = simplexml_load_string($response);

@@ -165,7 +165,7 @@ $('#button-confirm').bind('click', function() {
                 
 		success: function(json) {			
 			if (json['error']) {
-				$('#payment').prepend('<div class="warning">' + json['error'] + '</div>');
+				$('#payment').before('<div class="warning">' + json['error'] + '</div>');
 			}
 			
 			if (json['redirect']) {

@@ -17,13 +17,26 @@ class ControllerPaymentKlarna extends Controller {
             $addressMatch = false;
         }
         
-        if (empty($orderInfo['payment_company'])) {
+        if (empty($orderInfo['payment_company']) && empty($orderInfo['payment_company_id'])) {
             $this->data['is_company'] = false;
         } else {
             $this->data['is_company'] = true;
         }
         
+        $this->data['phone_number'] = $orderInfo['telephone'];
         $this->data['company_id'] = $orderInfo['payment_company_id'];
+        
+        if ($orderInfo['payment_iso_code_3'] == 'DEU' || $orderInfo['payment_iso_code_3'] == 'NLD') {
+            $addressParts = $this->splitAddress($orderInfo['payment_address_1']);
+            
+            $this->data['street'] = $addressParts[0];
+            $this->data['street_number'] = $addressParts[1];
+            $this->data['street_extension'] = $addressParts[2];
+            
+            if($orderInfo['payment_iso_code_3'] == 'DEU') {
+                $this->data['street_number'] = trim($addressParts[1] . ' ' . $addressParts[2]);
+            }
+        }
         
         $this->data['address_match'] = $addressMatch;
         $this->data['country_code'] = $orderInfo['payment_iso_code_3'];
@@ -119,7 +132,7 @@ class ControllerPaymentKlarna extends Controller {
         
         $address = array(
             'email' => $orderInfo['email'],
-            'telno' => $orderInfo['telephone'],
+            'telno' => $this->request->post['phone_no'],
             'cellno' => '',
             'fname' => $orderInfo['payment_firstname'],
             'lname' => $orderInfo['payment_lastname'],
@@ -134,6 +147,7 @@ class ControllerPaymentKlarna extends Controller {
         );
         
         if ($orderInfo['payment_iso_code_3'] == 'DEU' || $orderInfo['payment_iso_code_3'] == 'NLD') {
+            $address['street'] = $this->request->post['street'];
             $address['house_number'] = $this->request->post['house_no'];
         }
         
@@ -165,8 +179,6 @@ class ControllerPaymentKlarna extends Controller {
             $productTax = $this->tax->getTax($product['price'] - $discount / $product['quantity'], $product['tax_class_id']);
             
             $price = $product['price'] - $credit / $product['quantity'] - $discount / $product['quantity'] + $productTax;
-            
-            //var_dump($discount, $credit, $productTax, $price);
             
             $goodsList[] = array(
                 'qty' => (int) $product['quantity'],
@@ -246,7 +258,10 @@ class ControllerPaymentKlarna extends Controller {
         } elseif (!empty($orderInfo['payment_company_id'])) {
             $pno = $orderInfo['payment_company_id'];
         } else {
-            $pno = '';
+            $day = sprintf("%02d", (int) $this->request->post['pno_day']);
+            $month = sprintf("%02d", (int) $this->request->post['pno_month']);
+            $year = (int) $this->request->post['pno_year']; 
+            $pno = $day . $month . $year;
         }
         
         $transaction = array(
@@ -403,6 +418,63 @@ class ControllerPaymentKlarna extends Controller {
         }
         
         return $xml;
+    }
+    
+    private function splitAddress( $address ) {
+        $numbers = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+        
+        $characters = array('-', '/', ' ', '#', '.', 'a', 'b', 'c', 'd', 'e',
+                        'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+                        'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A',
+                        'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+                        'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
+                        'X', 'Y', 'Z');
+        
+        $specialchars = array('-', '/', ' ', '#', '.');
+
+        $numpos = $this->strposArr($address, $numbers, 2);
+
+        $streetname = substr($address, 0, $numpos);
+
+        $streetname = trim($streetname);
+
+        $numberpart = substr($address, $numpos);
+        
+        $numberpart = trim($numberpart);
+
+        $extpos = $this->strposArr($numberpart, $characters, 0);
+
+        if ($extpos != '') {
+
+            $housenumber = substr($numberpart, 0, $extpos);
+
+            $houseextension = substr($numberpart, $extpos);
+
+            $houseextension = str_replace($specialchars, '', $houseextension);
+        } else {
+            $housenumber = $numberpart;
+            $houseextension = '';
+        }
+
+        return array($streetname, $housenumber, $houseextension);
+    }
+    
+    private function strposArr($haystack, $needle, $where) {
+        $defpos = 10000;
+        
+        if (!is_array($needle)) {
+            $needle = array($needle);
+        }
+
+        foreach ($needle as $what) {
+            if (($pos = strpos($haystack, $what, $where)) !== false) {
+                if ($pos < $defpos) {
+                    $defpos = $pos;
+                }
+            }
+        }
+        
+        return $defpos;
     }
 
 }

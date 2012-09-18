@@ -9,21 +9,27 @@ $_['text_additional'] = 'Klarna requires some additional information before they
 $_['text_wait'] = 'Please wait!';
 $_['text_male'] = 'Male';
 $_['text_female'] = 'Female';
+$_['text_year'] = 'Year';
+$_['text_month'] = 'Month';
+$_['text_day'] = 'Day';
 
 // Entry
 $_['entry_gender'] = 'Gender:';
-$_['entry_pno'] = 'PNO / Date of Birth:';
+$_['entry_pno'] = 'Personal Number';
+$_['entry_birthday'] = 'Date of Birth';
+$_['entry_phone_no'] = 'Phone number';
+$_['entry_street'] = 'Street:';
 $_['entry_house_no'] = 'House No.:';
 $_['entry_house_ext'] = 'House Ext.:';
 $_['entry_cellno'] = 'Cell Phone:';
 $_['entry_company'] = 'Company registration number:';
 
-$_['help_swe_pno'] = 'Format: yymmdd-nnnn (d - day, m - month, y - year, n - person specific number, e. g., 800131-0000)';
-$_['help_fin_pno'] = 'Format: ddmmyy-nnnn (d - day, m - month, y - year, n - person specific number, e. g., 310180-000F)';
-$_['help_dnk_pno'] = 'Format: ddmmyynnnn (d - day, m - month, y - year, n - person specific number, e. g., 3101800000)';
-$_['help_nor_pno'] = 'Format: ddmmyynnnnn (d - day, m - month, y - year, n - person specific number, e. g., 31018000000)';
-$_['help_deu_pno'] = 'Format: ddmmyyyy (d - day, m - month, y - year, e. g., 31011980)';
-$_['help_nld_pno'] = 'Format: ddmmyyyy (d - day, m - month, y - year, e. g., 31011980)';
+$_['help_pno'] = 'Please enter your Social Security number here';
+$_['help_company_id'] = "Please enter your Company's registration number";
+$_['help_street'] = "Please note that delivery can only take place to the registered address when paying with Klarna";
+$_['help_house_number'] = "Please enter your house number";
+$_['help_house_extension'] = "Please submit your house extension here. E.g. A, B, C, Red, Blue ect.";
+$_['help_phone_number'] = "Please enter your phone number";
 
 // Error
 $_['error_gender'] = 'Gender Required!';

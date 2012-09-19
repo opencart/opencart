@@ -3,14 +3,23 @@ class ModelInstall extends Model {
 	public function mysql($data) {
 		$db = new DB('mysql', $data['db_host'], $data['db_user'], $data['db_password'], $data['db_name']);
 				
-		$file = DIR_APPLICATION . 'opencart.sql';
+		$file = DIR_APPLICATION . 'base.sql';
 		
-		if (!file_exists($file)) { 
-			exit('Could not load sql file: ' . $file); 
+		if (!file_exists($file)) {
+			exit('Could not load base sql file: ' . $file);
 		}
 		
 		$lines = file($file);
 		
+		if ($data['populate']) {
+			$all_db_files = glob(DIR_APPLICATION . '*.sql');
+			$optional_db_files = array_diff($all_db_files, array($file));
+
+			foreach($optional_db_files as $db_file) {
+				$lines = array_merge($lines, file($db_file));
+			}
+		}
+
 		if ($lines) {
 			$query = '';
 

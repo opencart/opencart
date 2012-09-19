@@ -47,8 +47,8 @@ class ModelPaymentKlarna extends Model {
         
         $method = array();
         
-        if ($klarnaAccountStatus || $klarnaAccountStatus) {
-            
+        if ($klarnaAccountStatus || $klarnaInvoiceStatus) {
+
             $method = array(
                 'code' => 'klarna',
                 'title' => $this->language->get('text_title'),

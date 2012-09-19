@@ -644,6 +644,10 @@ class ControllerPaymentKlarna extends Controller {
         if (!empty($orderInfo['payment_company']) || !empty($orderInfo['payment_company_id'])) {
             $status = false;
         }
+        
+        if ($orderInfo['payment_iso_code_3'] == 'NLD' && $this->currency->format($orderInfo['total'], 'EUR', '', false) > 250.00) {
+            $status = false;
+        }
 
         return $status;
     }

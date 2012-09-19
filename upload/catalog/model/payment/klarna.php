@@ -5,12 +5,11 @@ class ModelPaymentKlarna extends Model {
     public function getMethod($address, $total) {        
         $this->language->load('payment/klarna');
         
-        $klarnaInvoiceStatus = true;
-        $klarnaAccountStatus = true;
+        $klarnaInvoiceStatus = $this->config->get('klarna_inv_status') == '1';
+        $klarnaAccountStatus = $this->config->get('klarna_acc_status') == '1';
         
-        $countAcc = $this->db->query("SELECT COUNT(*) AS `count` FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('klarna_acc_geo_zone_id') . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')")->row['count'];
-        $countInv = $this->db->query("SELECT COUNT(*) AS `count` FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('klarna_inv_geo_zone_id') . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')")->row['count'];
-        
+        $countAcc = $this->db->query("SELECT COUNT(*) AS `count` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int) $this->config->get('klarna_acc_geo_zone_id') . "' AND `country_id` = '" . (int) $address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = 0)")->row['count'];
+        $countInv = $this->db->query("SELECT COUNT(*) AS `count` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int) $this->config->get('klarna_inv_geo_zone_id') . "' AND `country_id` = '" . (int) $address['country_id'] . "' AND (`zone_id` = '" . (int) $address['zone_id'] . "' OR `zone_id` = 0)")->row['count'];
         
         if ($this->config->get('klarna_minimum_amount') > $total) {
             $klarnaAccountStatus = false;
@@ -44,17 +43,9 @@ class ModelPaymentKlarna extends Model {
         
         if ($klarnaAccountStatus || $klarnaAccountStatus) {
             
-            $invoiceFee = $this->config->get('klarna_invoice_fee');
-            
-            if (!empty($invoiceFee)) {
-                $title = sprintf($this->language->get('text_title_with_fee'), $this->currency->format($invoiceFee));
-            } else {
-                $title = $this->language->get('text_title');
-            }
-            
             $method = array(
                 'code' => 'klarna',
-                'title' => $title,
+                'title' => $this->language->get('text_title'),
                 'sort_order' => $this->config->get('klarna_sort_order')
             );
         }

@@ -2,18 +2,37 @@
 <form id="klarna-payment-form" method="POST" action="<?php echo html_entity_decode($klarna_send) ?>">
     <div id="payment" class="content">
         <div class="klarna-logo"></div>
+        
         <!--
         Should be displayed only for part-payments
         <?php if ($country_code == 'NLD') { ?>
             <img src="<?php echo $klarna_nld_warning_banner ?>" />
         <?php } ?>
         -->
-        <table class="form">
+        
+        <div class="payment-options">
+            
+            <b><?php echo $text_payment_options ?></b><br />
+            
+            <input name="payment_plan" type="radio" value="-1" checked="checked" id="plan_id_0" /><label for="plan_id_0"><?php echo $text_single_payment ?></label><br />
+            
+            <?php if (!$is_company) { ?>
 
+                <?php foreach ($part_payment_options as $plan_id => $payment) { ?>
+
+                    <input name="payment_plan" type="radio" value="<?php echo $plan_id ?>" id="plan_id_<?php echo $plan_id ?>" /><label for="plan_id_<?php echo $plan_id ?>"><?php echo $payment ?></label><br />
+
+                <?php } ?>
+
+            <?php } ?>
+        </div>
+
+        <table class="form">
+            <tr>
+                <td colspan="2"><b><?php echo $text_additional; ?></b></td>
+            </tr>
+            
             <?php if (!$is_company || $contry_code == 'DEU' || $country_code == 'NLD') { ?>
-                <tr>
-                    <td colspan="2"><?php echo $text_additional; ?></td>
-                </tr>
                 <tr>
                     <td>
                         <?php if ($country_code == 'DEU' || $country_code == 'NLD') { ?>
@@ -52,9 +71,6 @@
                     </td>
                 </tr>
             <?php } elseif (empty($company_id)) { ?>
-                <tr>
-                    <td colspan="2"><?php echo $text_additional; ?></td>
-                </tr>
                 <tr>
                     <td><?php echo $entry_company ?></td>
                     <td><input type="text" name="pno" alt="<?php echo $help_company_id ?>" /></td>
@@ -99,6 +115,13 @@
                     <td><input type="text" name="phone_no" id="input_phone_no" alt="<?php echo $help_phone_number ?>" value="<?php echo $phone_number ?>" /></td>
                 </tr>
                 
+            <?php if ($country_code == 'DNK') { ?>
+                <tr>
+                    <td><label for="input_yearly_salary"><?php echo $entry_yearly_salary ?></label></td>
+                    <td><input type="text" name="yearly_salary" id="input_yearly_salary" alt="<?php echo $help_yearly_salary ?>" value="" disabled /></td>
+                </tr>
+            <?php } ?>
+                
             <?php if ($country_code == 'DEU') { ?>
                 <tr>
                     <td colspan="2">
@@ -111,6 +134,7 @@
             <?php } ?>
 
         </table>
+        
     </div>
 </form>
 <div class="buttons">
@@ -147,6 +171,7 @@ $('#button-confirm').bind('click', function() {
             return;
         }
     <?php } ?>
+    
 	$.ajax({
 		url: 'index.php?route=payment/klarna/send',
 		type: 'post',
@@ -224,5 +249,15 @@ $('#payment table.form input[type="text"]').focusin(function () {
 }).focusout(function () {
     hideBaloon();
 });
+
+<?php if ($country_code == 'DNK' && !$is_company) { ?>
+    $('input[name="payment_plan"]').change(function(){
+        if ($(this).attr('value') == '-1') {
+            $('input[name="yearly_salary"]').prop('disabled', true);
+        } else {
+            $('input[name="yearly_salary"]').prop('disabled', false);
+        }
+    });
+<?php } ?>
 
 </script>

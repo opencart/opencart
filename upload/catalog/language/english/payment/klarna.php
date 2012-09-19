@@ -2,7 +2,6 @@
 
 // Text
 $_['text_title'] = 'Klarna Payments';
-$_['text_title_with_fee'] = 'Klarna Payments (+%s)';
 $_['text_toc'] = 'I have read and agree to the <a href="%s">Klarna Payments</a> Terms & conditions';
 $_['text_information'] = 'Klarna Information';
 $_['text_additional'] = 'Klarna requires some additional information before they can proccess your order.';
@@ -12,6 +11,9 @@ $_['text_female'] = 'Female';
 $_['text_year'] = 'Year';
 $_['text_month'] = 'Month';
 $_['text_day'] = 'Day';
+$_['text_payment_options'] = 'Payment options';
+$_['text_single_payment'] = 'Single Payment';
+$_['text_monthly_payment'] = '%d month(s) - %s per month';
 
 // Entry
 $_['entry_gender'] = 'Gender:';
@@ -23,6 +25,7 @@ $_['entry_house_no'] = 'House No.:';
 $_['entry_house_ext'] = 'House Ext.:';
 $_['entry_cellno'] = 'Cell Phone:';
 $_['entry_company'] = 'Company registration number:';
+$_['entry_yearly_salary'] = 'Yearly salary:';
 
 $_['help_pno'] = 'Please enter your Social Security number here';
 $_['help_company_id'] = "Please enter your Company's registration number";
@@ -30,6 +33,7 @@ $_['help_street'] = "Please note that delivery can only take place to the regist
 $_['help_house_number'] = "Please enter your house number";
 $_['help_house_extension'] = "Please submit your house extension here. E.g. A, B, C, Red, Blue ect.";
 $_['help_phone_number'] = "Please enter your phone number";
+$_['help_yearly_salary'] = "Your yearly salary before taxes";
 
 // Error
 $_['error_gender'] = 'Gender Required!';

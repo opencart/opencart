@@ -1632,7 +1632,7 @@ a.button:hover, input.button:hover {
 	margin-bottom: 20px;
 }
 
-/* Klarna's' branding */
+/* Klarna's branding */
 
 #klarna-payment-form #payment {
     min-height: 300px;
@@ -1641,7 +1641,11 @@ a.button:hover, input.button:hover {
 
 #klarna-payment-form #payment > table {
     width: 580px;
-    float: right;
+    float: left;
+}
+#klarna-payment-form #payment > .payment-options {
+    float: left;
+    width: 370px;
 }
 
 #klarna-payment-form input[type="text"] {
@@ -1650,9 +1654,9 @@ a.button:hover, input.button:hover {
 
 .klarna-logo {
     display: inline-block;
-    background: url('../image/klarna_logo.png');
-    width: 151px;
-    height: 33px;
+    background: url('../image/klarna_logo.png') no-repeat;
+    width: 100%;
+    height: 45px;
 }
 
 .klarna_baloon {
@@ -1664,7 +1668,7 @@ a.button:hover, input.button:hover {
 .klarna_baloon_top {
     width: 100%;
     height: 14px;
-    background-image: url(../image/klarna_green_full.png);
+    background-image: url('../image/klarna_green_full.png');
     background-repeat: no-repeat;
     background-position: 0 top;
 }
@@ -1672,7 +1676,7 @@ a.button:hover, input.button:hover {
 .klarna_baloon_middle {
     width: 100%;
     min-height: 30px;
-    background-image: url(../image/klarna_green_middle.png);
+    background-image: url('../image/klarna_green_middle.png');
     background-repeat: repeat-y;
 }
 
@@ -1688,7 +1692,7 @@ a.button:hover, input.button:hover {
 .klarna_baloon_bottom {
     width: 100%;
     height: 25px;
-    background-image: url(../image/klarna_green_full.png);
+    background-image: url('../image/klarna_green_full.png');
     background-repeat: no-repeat;
     background-position: 0 bottom;
 }

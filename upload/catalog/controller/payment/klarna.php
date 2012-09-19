@@ -26,14 +26,16 @@ class ControllerPaymentKlarna extends Controller {
         $this->data['phone_number'] = $orderInfo['telephone'];
         $this->data['company_id'] = $orderInfo['payment_company_id'];
         
-        if ($orderInfo['payment_iso_code_3'] == 'DEU' || $orderInfo['payment_iso_code_3'] == 'NLD') {
+        $country = $orderInfo['payment_iso_code_3'];
+        
+        if ($country == 'DEU' || $country == 'NLD') {
             $addressParts = $this->splitAddress($orderInfo['payment_address_1']);
             
             $this->data['street'] = $addressParts[0];
             $this->data['street_number'] = $addressParts[1];
             $this->data['street_extension'] = $addressParts[2];
             
-            if($orderInfo['payment_iso_code_3'] == 'DEU') {
+            if($country == 'DEU') {
                 $this->data['street_number'] = trim($addressParts[1] . ' ' . $addressParts[2]);
             }
         }
@@ -43,6 +45,120 @@ class ControllerPaymentKlarna extends Controller {
         $this->data['klarna_send'] = $this->url->link('payment/klarna/send');
         
         $this->data['klarna_nld_warning_banner'] = $this->model_tool_image->resize('data/klarna_nld_warning.jpg', 950, 118);
+        
+        $partPaymentOptions = array();
+        
+        // Show part payment options?
+        if ($this->showPartPaymentOptions($orderInfo)) {
+
+            $pclasses = $this->config->get('klarna_pclasses');
+
+            if (isset($pclasses[$country])) {
+                $pclasses = $pclasses[$country];
+            } else {
+                $pclasses = array();
+            }
+
+            $orderTotal = $this->currency->format($orderInfo['total'], '', '', false);
+
+            foreach ($pclasses as $pclass) {                
+                // 0 - Campaign
+                // 1 - Account
+                // 2 - Special
+                // 3 - Fixed
+                if (!in_array($pclass['type'], array(0, 1, 3))) {
+                    continue;
+                }
+
+                if ($pclass['type'] == 2) {
+                    $monthlyCost = -1;
+                } else {
+                    if ($orderTotal < $pclass['minamount']) {
+                        continue;
+                    }
+
+                    if ($pclass['type'] == 3) {
+                        continue;
+                    } else {
+                        $sum = $orderTotal;
+
+                        $lowestPayment = $this->getLowestPaymentAccount($country);
+                        $monthlyCost = 0;
+
+                        $monthsFee = $pclass['invoicefee'];
+                        $startFee = $pclass['startfee'];
+
+                        $sum += $startFee;
+
+                        $base = ($pclass['type'] == 1);
+
+                        $minpay = ($pclass['type'] === 1) ? $this->getLowestPaymentAccount($country) : 0;
+
+                        if ($pclass['months'] == 0) {
+                            $payment = $sum;
+                        } elseif ($pclass['interestrate'] == 0) {
+                            $payment = $sum / $pclass['months'];
+                        } else {
+                            $p = $pclass['interestrate'] / (100.0 * 12);
+                            $payment = $sum * $p / (1 - pow((1 + $p), -$pclass['months']));
+                        }
+
+                        $payment += $monthsFee;
+
+                        $bal = $sum;
+                        $payarray = array();
+
+                        $months = $pclass['months'];
+                        while (($months != 0) && ($bal > 0.01)) {
+                            $interest = $bal * $pclass['interestrate'] / (100.0 * 12);
+                            $newbal = $bal + $interest + $monthsFee;
+
+                            if ($minpay >= $newbal || $payment >= $newbal) {
+                                $payarray[] = $newbal;
+                                $payarray = $payarray;
+                                break;
+                            }
+
+                            $newpay = max($payment, $minpay);
+                            if ($base) {
+                                $newpay = max($newpay, $bal / 24.0 + $monthsFee + $interest);
+                            }
+
+                            $bal = $newbal - $newpay;
+                            $payarray[] = $newpay;
+                            $months -= 1;
+                        }
+
+                        $monthlyCost = round(isset($payarray[0]) ? ($payarray[0]) : 0, 2);
+
+                        if ($monthlyCost < 0.01) {
+                            continue;
+                        }
+
+                        if ($pclass['type'] == 1 && $monthlyCost < $lowestPayment) {
+                            $monthlyCost = $lowestPayment;
+                        }
+
+                        if ($pclass['type'] == 0 && $monthlyCost < $lowestPayment) {
+                            continue;
+                        }
+                    }
+                }
+                
+                $partPaymentOptions[$pclass['id']]['monthly_cost'] = $monthlyCost;
+                $partPaymentOptions[$pclass['id']]['pclass_id'] = $pclass['id'];
+                $partPaymentOptions[$pclass['id']]['months'] = $pclass['months'];
+            }
+            
+        }
+        
+        usort($partPaymentOptions, array($this, 'sortPaymentPlans'));
+        
+        $this->data['part_payment_options'] = array();
+        
+        foreach ($partPaymentOptions as $paymentOption) {
+            $this->data['part_payment_options'][$paymentOption['pclass_id']] = sprintf($this->language->get('text_monthly_payment'), $paymentOption['months'], $this->currency->format($paymentOption['monthly_cost'], '', 1.0));
+        }
         
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/klarna.tpl')) {
             $this->template = $this->config->get('config_template') . '/template/payment/klarna.tpl';
@@ -79,8 +195,7 @@ class ControllerPaymentKlarna extends Controller {
         }
         
         if ($this->config->get('klarna_server') == 'live') {
-            //$server = 'https://payment.klarna.com/';
-            $server = 'https://payment-beta.klarna.com/';
+            $server = 'https://payment.klarna.com/';
         } elseif ($this->config->get('klarna_server') == 'beta') {
             $server = 'https://payment-beta.klarna.com/';
         }
@@ -264,6 +379,17 @@ class ControllerPaymentKlarna extends Controller {
             $pno = $day . $month . $year;
         }
         
+        $pclass = -1;
+        
+        if ($this->showPartPaymentOptions($orderInfo)) {
+            $pclass = (int) $this->request->post['payment_plan'];
+        }
+        
+        $yearlySalary = array();
+        if ($country == 'DNK' && $pclass != -1) {
+            $yearlySalary['yearly_salary'] = (int) $this->request->post['yearly_salary'];
+        }
+        
         $transaction = array(
             '4.1',
             'API:OPENCART:' . VERSION,
@@ -275,8 +401,7 @@ class ControllerPaymentKlarna extends Controller {
             '',
             $address, 
             $address, 
-            //$orderInfo['ip'], 
-            '109.239.111.4',
+            $orderInfo['ip'], 
             0, 
             $currency, 
             $country,
@@ -284,12 +409,12 @@ class ControllerPaymentKlarna extends Controller {
             (int) $this->config->get('klarna_merchant'),
             $digest, 
             $encoding,
-            -1, 
+            $pclass, 
             $goodsList,
             $orderInfo['comment'],
             array('delay_adjust' => 1),
             array(),
-            array(), // yearly_salary for customers in Denmark when Part Payment is used
+            $yearlySalary, // yearly_salary for customers in Denmark when Part Payments are used
             array(),
             array(),
             array(),
@@ -476,6 +601,55 @@ class ControllerPaymentKlarna extends Controller {
         }
         
         return $defpos;
+    }
+    
+    private function getLowestPaymentAccount($country) {
+        switch ($country) {
+            case 'SWE':
+                $lowestPayment = 50.0;
+                break;
+            case 'NOR':
+                $lowestPayment = 95.0;
+                break;
+            case 'FIN':
+                $lowestPayment = 8.95;
+                break;
+            case 'DNK':
+                $lowestPayment = 89.0;
+                break;
+            case 'DEU':
+            case 'NLD':
+                $lowestPayment = 6.95;
+                break;
+
+            default:
+                $log = new Log('klarna.log');
+                $log->write('Unknown country ' . $country);
+                $this->redirect($this->url->link('checkout/checkout', 'SSL'));
+                break;
+        }
+        
+        return $lowestPayment;
+    }
+    
+    private function showPartPaymentOptions($orderInfo) {
+        $status = $this->config->get('klarna_acc_status') == '1';        
+        
+        $countAcc = $this->db->query("SELECT COUNT(*) AS `count` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int) $this->config->get('klarna_acc_geo_zone_id') . "' AND `country_id` = '" . (int) $orderInfo['payment_country_id'] . "' AND (`zone_id` = '" . (int)$orderInfo['payment_zone_id'] . "' OR `zone_id` = 0)")->row['count'];
+        
+        if ($this->config->get('klarna_acc_geo_zone_id') != 0 && $countAcc == 0) {
+            $status = false;
+        }
+        
+        if (!empty($orderInfo['payment_company']) || !empty($orderInfo['payment_company_id'])) {
+            $status = false;
+        }
+
+        return $status;
+    }
+    
+    private function sortPaymentPlans($a, $b) {
+        return $a['months'] - $b['months'];
     }
 
 }

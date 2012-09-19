@@ -250,12 +250,12 @@ class ControllerPaymentKlarna extends Controller {
             ),
         );
         
-        $this->cache->delete('klarna');
-        
         $merchantId = $this->request->post['klarna_merchant'];
         $secret = $this->request->post['klarna_secret'];
         
         $count = 0;
+        
+        $result = array();
         
         foreach ($countries as $countryCode => $country) {
             $digest = base64_encode(pack("H*", hash('sha256', $merchantId  . ':' . $country['currency'] . ':' . $secret)));
@@ -302,26 +302,37 @@ class ControllerPaymentKlarna extends Controller {
             $pclasses = $this->parseResponse($xmlResponse->params->param->value);
             
             foreach($pclasses as $pclass) {
-                $classes[] = array(
-                    'eid' => $pclass[0],
-                    'id' => $pclass[1],
+                
+                $pclass[3] /= 100;
+                $pclass[4] /= 100;
+                $pclass[5] /= 100;
+                $pclass[6] /= 100;
+                $pclass[9] = ($pclass[9] != '-') ? strtotime($pclass[9]) : $pclass[9];
+                
+                array_unshift($pclass, $merchantId);
+                
+                $result[$countryCode][] = array(
+                    'eid' => intval($pclass[0]),
+                    'id' => intval($pclass[1]),
                     'description' => $pclass[2],
-                    'months' => $pclass[3],
-                    'startfee' => $pclass[4],
-                    'invoicefee' => $pclass[5],
-                    'interestrate' => $pclass[6],
-                    'minamount' => $pclass[7],
-                    'country' => $pclass[8],
-                    'type' => ($pclass[9] != '-') ? strtotime($pclass[9]) : $pclass[9],
+                    'months' => intval($pclass[3]),
+                    'startfee' => floatval($pclass[4]),
+                    'invoicefee' => floatval($pclass[5]),
+                    'interestrate' => floatval($pclass[6]),
+                    'minamount' => floatval($pclass[7]),
+                    'country' => intval($pclass[8]),
+                    'type' => intval($pclass[9]),
                 );
                 
                 $count++;
             }
-            
-            $this->cache->set('klarna.' . $countryCode, $classes);
 
             curl_close($ch);
         }
+        
+        $settings = $this->model_setting_setting->getSetting('klarna');
+        $settings['klarna_pclasses'] = $result;
+        $this->model_setting_setting->editSetting('klarna', $settings);
     }
     
     private function parseResponse($xml) {

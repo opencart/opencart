@@ -11,7 +11,9 @@ class ModelPaymentKlarna extends Model {
         $countAcc = $this->db->query("SELECT COUNT(*) AS `count` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int) $this->config->get('klarna_acc_geo_zone_id') . "' AND `country_id` = '" . (int) $address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = 0)")->row['count'];
         $countInv = $this->db->query("SELECT COUNT(*) AS `count` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int) $this->config->get('klarna_inv_geo_zone_id') . "' AND `country_id` = '" . (int) $address['country_id'] . "' AND (`zone_id` = '" . (int) $address['zone_id'] . "' OR `zone_id` = 0)")->row['count'];
         
-        if ($this->config->get('klarna_minimum_amount') > $total) {
+        $minimumTotal = (double) $this->config->get('klarna_minimum_amount');
+        
+        if ($minimumTotal > 0 && $minimumTotal > $total) {
             $klarnaAccountStatus = false;
             $klarnaInvoiceStatus = false;
         }

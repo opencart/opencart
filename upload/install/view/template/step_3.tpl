@@ -54,6 +54,10 @@
           <td>Database Prefix:</td>
           <td><input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" /></td>
         </tr>
+        <tr>
+          <td><label for="populate">Populate database with sample data:</label></td>
+          <td><input type="checkbox" name="populate" id="populate" checked /></td>
+        </tr>
       </table>
     </fieldset>
     <p>2. Please enter a username and password for the administration.</p>

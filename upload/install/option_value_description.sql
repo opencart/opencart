@@ -1,0 +1,15 @@
+INSERT INTO `oc_option_value_description` (`option_value_id`, `language_id`, `option_id`, `name`) VALUES
+(43, 1, 1, 'Large'),
+(32, 1, 1, 'Small'),
+(45, 1, 2, 'Checkbox 4'),
+(44, 1, 2, 'Checkbox 3'),
+(31, 1, 1, 'Medium'),
+(42, 1, 5, 'Yellow'),
+(41, 1, 5, 'Green'),
+(39, 1, 5, 'Red'),
+(40, 1, 5, 'Blue'),
+(23, 1, 2, 'Checkbox 1'),
+(24, 1, 2, 'Checkbox 2'),
+(48, 1, 11, 'Large'),
+(47, 1, 11, 'Medium'),
+(46, 1, 11, 'Small');

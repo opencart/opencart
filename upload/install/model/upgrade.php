@@ -293,6 +293,8 @@ class ModelUpgrade extends Model {
 		$db->query("UPDATE `oc_order` set `payment_code` = replace(`payment_code`, 'alertpay', 'payza')");
 		
 		$db->query("ALTER TABLE `oc_affiliate` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' after `password`");
+		$db->query("ALTER TABLE `oc_category ADD `left` int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER `parent_id`");
+		$db->query("ALTER TABLE `oc_category ADD `right` int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER `left`");
 		$db->query("ALTER TABLE `oc_customer` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `password`");
 		$db->query("ALTER TABLE `oc_customer` MODIFY `ip` varchar(40) NOT NULL");
 		$db->query("ALTER TABLE `oc_customer_ip` MODIFY `ip` varchar(40) NOT NULL");

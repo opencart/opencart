@@ -525,8 +525,6 @@ class ControllerCatalogProduct extends Controller {
     	$this->data['text_none'] = $this->language->get('text_none');
     	$this->data['text_yes'] = $this->language->get('text_yes');
     	$this->data['text_no'] = $this->language->get('text_no');
-		$this->data['text_select_all'] = $this->language->get('text_select_all');
-		$this->data['text_unselect_all'] = $this->language->get('text_unselect_all');
 		$this->data['text_plus'] = $this->language->get('text_plus');
 		$this->data['text_minus'] = $this->language->get('text_minus');
 		$this->data['text_default'] = $this->language->get('text_default');
@@ -977,19 +975,44 @@ class ControllerCatalogProduct extends Controller {
 		} else {
       		$this->data['manufacturer_id'] = 0;
     	} 
-				
-		$this->load->model('catalog/category');
-				
-		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
 		
 		if (isset($this->request->post['product_category'])) {
-			$this->data['product_category'] = $this->request->post['product_category'];
-		} elseif (isset($this->request->get['product_id'])) {
-			$this->data['product_category'] = $this->model_catalog_product->getProductCategories($this->request->get['product_id']);
+			$categories = $this->request->post['product_category'];
+		} elseif (isset($this->request->get['product_id'])) {		
+			$categories = $this->model_catalog_product->getProductCategories($this->request->get['product_id']);
 		} else {
-			$this->data['product_category'] = array();
+			$categories = array();
 		}
+	
+		$this->load->model('catalog/category');
+	
+		$this->data['product_categories'] = array();
 		
+		foreach ($categories as $category_id) {
+			$category_info = $this->model_catalog_category->getCategory($category_id);
+			
+			if ($category_info) {
+				$path_data = array();
+				
+				$parts = $this->model_catalog_category->getPath($category_info['parent_id']);
+				
+				foreach ($parts as $part) {
+					$path_data[] = $part['name'];
+				}
+	
+				if ($path_data) {
+					$name = implode(' > ', $path_data) . ' > ' .  $category_info['name'];
+				} else {
+					$name = $category_info['name'];
+				}				
+				
+				$this->data['product_categories'][] = array(
+					'category_id' => $category_info['category_id'],
+					'name'        => $name
+				);
+			}
+		}
+				
 		if (isset($this->request->post['product_filter'])) {
 			$this->data['product_filters'] = $this->request->post['product_filter'];
 		} elseif (isset($this->request->get['product_id'])) {

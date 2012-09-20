@@ -318,8 +318,9 @@ DROP TABLE IF EXISTS `oc_category`;
 CREATE TABLE `oc_category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `image` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `path` text COLLATE utf8_bin NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
+  `left` int(11) NOT NULL DEFAULT '0',
+  `right` int(11) NOT NULL DEFAULT '0',
   `top` tinyint(1) NOT NULL,
   `column` int(3) NOT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
@@ -813,6 +814,22 @@ INSERT INTO `oc_coupon` (`coupon_id`, `name`, `code`, `type`, `discount`, `logge
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `oc_coupon_category`
+--
+
+CREATE TABLE IF NOT EXISTS `oc_coupon_category` (
+  `coupon_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`coupon_id`,`category_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_coupon_history`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_coupon_history`
 --
 
@@ -830,7 +847,6 @@ CREATE TABLE `oc_coupon_history` (
 --
 -- Dumping data for table `oc_coupon_history`
 --
-
 
 -- --------------------------------------------------------
 

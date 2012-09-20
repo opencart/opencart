@@ -986,7 +986,7 @@ class ControllerCatalogProduct extends Controller {
 	
 		$this->load->model('catalog/category');
 	
-		$this->data['product_categories'] = array();
+		$this->data['product_category'] = array();
 		
 		foreach ($categories as $category_id) {
 			$category_info = $this->model_catalog_category->getCategory($category_id);
@@ -1006,7 +1006,7 @@ class ControllerCatalogProduct extends Controller {
 					$name = $category_info['name'];
 				}				
 				
-				$this->data['product_categories'][] = array(
+				$this->data['product_category'][] = array(
 					'category_id' => $category_info['category_id'],
 					'name'        => $name
 				);

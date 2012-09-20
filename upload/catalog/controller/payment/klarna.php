@@ -390,11 +390,17 @@ class ControllerPaymentKlarna extends Controller {
             $yearlySalary['yearly_salary'] = (int) $this->request->post['yearly_salary'];
         }
         
+        $gender = 1;
+        
+        if ($orderInfo['payment_iso_code_3'] == 'DEU' || $orderInfo['payment_iso_code_3'] == 'NLD') {
+            $gender = (int) $this->request->post['gender'];
+        }
+        
         $transaction = array(
             '4.1',
             'API:OPENCART:' . VERSION,
             $pno,
-            (int) $this->request->post['gender'],
+            $gender,
             '',
             '', 
             (string) $this->session->data['order_id'], 

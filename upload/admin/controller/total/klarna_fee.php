@@ -12,8 +12,42 @@ class ControllerTotalKlarnaFee extends Controller {
 
         $this->document->setTitle($this->language->get('heading_title'));
 
+        $this->data['country_names'] = array(
+            'DEU' => $this->language->get('text_germany'),
+            'NLD' => $this->language->get('text_netherlands'),
+            'DNK' => $this->language->get('text_denmark'),
+            'SWE' => $this->language->get('text_sweden'),
+            'NOR' => $this->language->get('text_norway'),
+            'FIN' => $this->language->get('text_finland'),
+            
+        );
+        
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
-            $this->model_setting_setting->editSetting('klarna_fee', $this->request->post);
+            
+            $status = false;
+            $klarnaFeeCountry = array();
+            
+            foreach (array_keys($this->data['country_names']) as $iso3) {
+             
+                if (isset($this->request->post['klarna_fee_country'][$iso3]['status']) && $this->request->post['klarna_fee_country'][$iso3]['status'] == 1) {
+                    $klarnaFeeCountry[$iso3] = $this->request->post['klarna_fee_country'][$iso3];
+                    $status = true;
+                } else {
+                    $klarnaFeeCountry[$iso3] = array(
+                        'status' => '',
+                        'total' => '',
+                        'fee' => '',
+                        'tax_class_id' => '',
+                    );
+                }
+            }
+            
+            $settings = array(
+                'klarna_fee_country' => $klarnaFeeCountry,
+                'klarna_fee_status' => $status,
+            );
+            
+            $this->model_setting_setting->editSetting('klarna_fee', $settings);
 
             $this->session->data['success'] = $this->language->get('text_success');
 
@@ -45,40 +79,16 @@ class ControllerTotalKlarnaFee extends Controller {
             'href' => $this->url->link('total/klarna_fee', 'token=' . $this->session->data['token'], 'SSL'),
             'separator' => ' :: '
         );
-
+        
+        if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+            $this->data['klarna_fee_country'] = $klarnaFeeCountry;
+        } else {
+            $this->data['klarna_fee_country'] = $this->config->get('klarna_fee_country');
+        }
+        
         $this->data['action'] = $this->url->link('total/klarna_fee', 'token=' . $this->session->data['token'], 'SSL');
 
         $this->data['cancel'] = $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL');
-
-        if (isset($this->request->post['klarna_fee_total'])) {
-            $this->data['klarna_fee_total'] = $this->request->post['klarna_fee_total'];
-        } else {
-            $this->data['klarna_fee_total'] = $this->config->get('klarna_fee_total');
-        }
-
-        if (isset($this->request->post['klarna_fee_fee'])) {
-            $this->data['klarna_fee_fee'] = $this->request->post['klarna_fee_fee'];
-        } else {
-            $this->data['klarna_fee_fee'] = $this->config->get('klarna_fee_fee');
-        }
-
-        if (isset($this->request->post['klarna_fee_tax_class_id'])) {
-            $this->data['klarna_fee_tax_class_id'] = $this->request->post['klarna_fee_tax_class_id'];
-        } else {
-            $this->data['klarna_fee_tax_class_id'] = $this->config->get('klarna_fee_tax_class_id');
-        }
-
-        if (isset($this->request->post['klarna_fee_status'])) {
-            $this->data['klarna_fee_status'] = $this->request->post['klarna_fee_status'];
-        } else {
-            $this->data['klarna_fee_status'] = $this->config->get('klarna_fee_status');
-        }
-
-        if (isset($this->request->post['klarna_fee_sort_order'])) {
-            $this->data['klarna_fee_sort_order'] = $this->request->post['klarna_fee_sort_order'];
-        } else {
-            $this->data['klarna_fee_sort_order'] = $this->config->get('klarna_fee_sort_order');
-        }
 
         $this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 

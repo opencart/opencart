@@ -26,7 +26,7 @@ define('DIR_CATALOG', 'C:\xampp\htdocs\klarna\upload/catalog/');
 define('DB_DRIVER', 'mysql');
 define('DB_HOSTNAME', 'localhost');
 define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', 'root');
 define('DB_DATABASE', 'klarna');
 define('DB_PREFIX', '');
 ?>

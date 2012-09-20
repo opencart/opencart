@@ -24,7 +24,7 @@ define('DIR_LOGS', 'C:\xampp\htdocs\klarna\upload/system/logs/');
 define('DB_DRIVER', 'mysql');
 define('DB_HOSTNAME', 'localhost');
 define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', 'root');
 define('DB_DATABASE', 'klarna');
 define('DB_PREFIX', '');
 ?>

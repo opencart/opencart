@@ -9,6 +9,9 @@ class ControllerPaymentKlarna extends Controller {
         
         $orderInfo = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         
+        $countries = $this->config->get('klarna_country');
+        $settings = $countries[$orderInfo['payment_iso_code_3']];
+        
         $addressMatch = false;
         
         if ($orderInfo['payment_firstname'] == $orderInfo['shipping_firstname'] && $orderInfo['payment_lastname'] == $orderInfo['shipping_lastname'] && $orderInfo['payment_address_1'] == $orderInfo['shipping_address_1'] && $orderInfo['payment_address_2'] == $orderInfo['shipping_address_2'] && $orderInfo['payment_postcode'] == $orderInfo['shipping_postcode'] && $orderInfo['payment_city'] == $orderInfo['shipping_city'] && $orderInfo['payment_zone_id'] == $orderInfo['shipping_zone_id'] && $orderInfo['payment_zone_code'] == $orderInfo['shipping_zone_code'] && $orderInfo['payment_country_id'] == $orderInfo['shipping_country_id'] && $orderInfo['payment_country'] == $orderInfo['shipping_country'] && $orderInfo['payment_iso_code_3'] == $orderInfo['shipping_iso_code_3']) {
@@ -46,13 +49,11 @@ class ControllerPaymentKlarna extends Controller {
         
         $this->data['klarna_nld_warning_banner'] = $this->model_tool_image->resize('data/klarna_nld_warning.jpg', 950, 118);
         
-        $partPaymentOptions = array();
-        
         // Show part payment options?
-        if ($this->showPartPaymentOptions($orderInfo)) {
+        if ($this->showPartPaymentOptions($orderInfo, $settings)) {
 
             $pclasses = $this->config->get('klarna_pclasses');
-
+            
             if (isset($pclasses[$country])) {
                 $pclasses = $pclasses[$country];
             } else {
@@ -177,6 +178,9 @@ class ControllerPaymentKlarna extends Controller {
 
         $orderInfo = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         
+        $countries = $this->config->get('klarna_country');
+        $settings = $countries[$orderInfo['payment_iso_code_3']];
+        
         if (!$orderInfo) {
             $this->response->setOutput(json_encode($json));
             return;
@@ -194,9 +198,9 @@ class ControllerPaymentKlarna extends Controller {
             $couponInfo['discount'] = min($couponInfo['discount'], $subTotal);
         }
         
-        if ($this->config->get('klarna_server') == 'live') {
+        if ($settings['server'] == 'live') {
             $server = 'https://payment.klarna.com/';
-        } elseif ($this->config->get('klarna_server') == 'beta') {
+        } else {
             $server = 'https://payment-beta.klarna.com/';
         }
         
@@ -338,7 +342,7 @@ class ControllerPaymentKlarna extends Controller {
             }
             
             if ($result['code'] == 'klarna_fee') {
-                $fees += $this->tax->calculate($result['value'], $this->config->get('klarna_fee_tax_class_id'));
+                $fees += $this->tax->calculate($result['value'], $settings['tax_class_id']);
             }
             
             if ($result['code'] == 'low_order_fee') {
@@ -366,7 +370,7 @@ class ControllerPaymentKlarna extends Controller {
             $digest .= $goods['goods']['title'] . ':';
         }
         
-        $digest = base64_encode(pack('H*', hash('sha256', $digest . $this->config->get('klarna_secret'))));
+        $digest = base64_encode(pack('H*', hash('sha256', $digest . $settings['secret'])));
         
         if (isset($this->request->post['pno'])) {
             $pno = $this->request->post['pno'];
@@ -381,7 +385,7 @@ class ControllerPaymentKlarna extends Controller {
         
         $pclass = -1;
         
-        if ($this->showPartPaymentOptions($orderInfo)) {
+        if ($this->showPartPaymentOptions($orderInfo, $settings)) {
             $pclass = (int) $this->request->post['payment_plan'];
         }
         
@@ -390,7 +394,7 @@ class ControllerPaymentKlarna extends Controller {
             $yearlySalary['yearly_salary'] = (int) $this->request->post['yearly_salary'];
         }
         
-        $gender = 1;
+        $gender = 0;
         
         if ($orderInfo['payment_iso_code_3'] == 'DEU' || $orderInfo['payment_iso_code_3'] == 'NLD') {
             $gender = (int) $this->request->post['gender'];
@@ -403,16 +407,17 @@ class ControllerPaymentKlarna extends Controller {
             $gender,
             '',
             '', 
-            (string) $this->session->data['order_id'], 
+            (string) $orderInfo['order_id'], 
             '',
             $address, 
             $address, 
-            $orderInfo['ip'], 
+            //$orderInfo['ip'],
+            '109.239.111.4',
             0, 
             $currency, 
             $country,
             $language, 
-            (int) $this->config->get('klarna_merchant'),
+            (int) $settings['merchant'],
             $digest, 
             $encoding,
             $pclass, 
@@ -638,12 +643,12 @@ class ControllerPaymentKlarna extends Controller {
         return $lowestPayment;
     }
     
-    private function showPartPaymentOptions($orderInfo) {
-        $status = $this->config->get('klarna_acc_status') == '1';        
+    private function showPartPaymentOptions($orderInfo, $settings) {
+        $status = $settings['account'] == '1';        
         
-        $countAcc = $this->db->query("SELECT COUNT(*) AS `count` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int) $this->config->get('klarna_acc_geo_zone_id') . "' AND `country_id` = '" . (int) $orderInfo['payment_country_id'] . "' AND (`zone_id` = '" . (int)$orderInfo['payment_zone_id'] . "' OR `zone_id` = 0)")->row['count'];
+        $countAcc = $this->db->query("SELECT COUNT(*) AS `count` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int) $settings['geo_zone_id'] . "' AND `country_id` = '" . (int) $orderInfo['payment_country_id'] . "' AND (`zone_id` = '" . (int)$orderInfo['payment_zone_id'] . "' OR `zone_id` = 0)")->row['count'];
         
-        if ($this->config->get('klarna_acc_geo_zone_id') != 0 && $countAcc == 0) {
+        if ($settings['geo_zone_id'] != 0 && $countAcc == 0) {
             $status = false;
         }
         

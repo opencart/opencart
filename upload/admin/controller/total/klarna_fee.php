@@ -19,7 +19,6 @@ class ControllerTotalKlarnaFee extends Controller {
             'SWE' => $this->language->get('text_sweden'),
             'NOR' => $this->language->get('text_norway'),
             'FIN' => $this->language->get('text_finland'),
-            
         );
         
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
@@ -38,6 +37,7 @@ class ControllerTotalKlarnaFee extends Controller {
                         'total' => '',
                         'fee' => '',
                         'tax_class_id' => '',
+                        'sort_order' => '',
                     );
                 }
             }

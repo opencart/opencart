@@ -5,11 +5,13 @@ class ModelPaymentKlarna extends Model {
     public function getMethod($address, $total) {        
         $this->language->load('payment/klarna');
         
-        $klarnaInvoiceStatus = $this->config->get('klarna_inv_status') == '1';
-        $klarnaAccountStatus = $this->config->get('klarna_acc_status') == '1';
+        $klarnaCountry = $this->config->get('klarna_country');
+        $settings = $klarnaCountry[$address['iso_code_3']];
         
-        $countAcc = $this->db->query("SELECT COUNT(*) AS `count` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int) $this->config->get('klarna_acc_geo_zone_id') . "' AND `country_id` = '" . (int) $address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = 0)")->row['count'];
-        $countInv = $this->db->query("SELECT COUNT(*) AS `count` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int) $this->config->get('klarna_inv_geo_zone_id') . "' AND `country_id` = '" . (int) $address['country_id'] . "' AND (`zone_id` = '" . (int) $address['zone_id'] . "' OR `zone_id` = 0)")->row['count'];
+        $klarnaInvoiceStatus = $settings['invoice'] == '1';
+        $klarnaAccountStatus = $settings['account'] == '1';
+        
+        $zoneCount = $this->db->query("SELECT COUNT(*) AS `count` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int) $settings['geo_zone_id'] . "' AND `country_id` = '" . (int) $address['country_id'] . "' AND (`zone_id` = '" . (int) $address['zone_id'] . "' OR `zone_id` = 0)")->row['count'];
         
         $minimumTotal = (double) $this->config->get('klarna_minimum_amount');
         
@@ -18,15 +20,12 @@ class ModelPaymentKlarna extends Model {
             $klarnaInvoiceStatus = false;
         }
         
-        if ($this->config->get('klarna_acc_geo_zone_id') != 0 && $countAcc == 0) {
+        if ($settings['geo_zone_id'] != 0 && $zoneCount == 0) {
             $klarnaAccountStatus = false;
-        }
-        
-        if ($this->config->get('klarna_inv_geo_zone_id') != 0 && $countInv == 0) {
             $klarnaInvoiceStatus = false;
         }
         
-        /* Maps countries to currencies */
+        // Maps countries to currencies
         $countries = array(
             'NOR' => 'NOK',
             'SWE' => 'SEK',
@@ -52,7 +51,7 @@ class ModelPaymentKlarna extends Model {
             $method = array(
                 'code' => 'klarna',
                 'title' => $this->language->get('text_title'),
-                'sort_order' => $this->config->get('klarna_sort_order')
+                'sort_order' => $settings['sort_order'],
             );
         }
         

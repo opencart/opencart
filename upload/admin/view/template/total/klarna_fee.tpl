@@ -33,6 +33,7 @@
       <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
+      <?php //die(var_dump($klarna_fee_country)); ?>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <table class="form">
         <tr>
@@ -84,6 +85,10 @@
                                         <?php } ?>
                                     </select>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td><label for="input_sort_order_<?php echo $iso_3 ?>"><?php echo $entry_sort_order ?></label></td>
+                                <td><input type="text" id="input_sort_order_<?php echo $iso_3 ?>" name="klarna_fee_country[<?php echo $iso_3 ?>][sort_order]" value="<?php echo $klarna_fee_country[$iso_3]['sort_order'] ?>" /></td>
                             </tr>
                         </table>
                     </div>

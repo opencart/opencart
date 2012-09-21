@@ -1,4 +1,19 @@
 <?php echo $header; ?>
+<style type="text/css">
+    
+    table.sub-form > tbody > tr > td:first-child {
+        width: 200px;
+    }
+    
+    .hidden {
+        display: none;
+    }
+    
+    span.help {
+        display: inline;
+    }
+    
+</style>
 <div id="content">
     <div class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -27,47 +42,6 @@
                     <div id="tab-general" class="page">
                         <table class="form">
                             <tr>
-                                <td>
-                                    <span class="required">*</span> <?php echo $entry_merchant; ?><br />
-                                    <span class="help"><?php echo $help_merchant ?></span>
-                                </td>
-                                <td>
-                                    <input type="text" name="klarna_merchant" value="<?php echo $klarna_merchant; ?>" />
-                                    <?php if ($error_merchant) { ?>
-                                        <span class="error"><?php echo $error_merchant; ?></span>
-                                    <?php } ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="required">*</span> <?php echo $entry_secret; ?><br />
-                                    <span class="help"><?php echo $help_secret ?></span>
-                                </td>
-                                <td>
-                                    <input type="text" name="klarna_secret" value="<?php echo $klarna_secret; ?>" />
-                                    <?php if ($error_secret) { ?>
-                                        <span class="error"><?php echo $error_secret; ?></span>
-                                    <?php } ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?php echo $entry_server; ?></td>
-                                <td>
-                                    <select name="klarna_server">
-                                        <?php if ($klarna_server == 'live') { ?>
-                                            <option value="live" selected="selected"><?php echo $text_live; ?></option>
-                                        <?php } else { ?>
-                                            <option value="live"><?php echo $text_live; ?></option>
-                                        <?php } ?>
-                                        <?php if ($klarna_server == 'beta') { ?>
-                                            <option value="beta" selected="selected"><?php echo $text_beta; ?></option>
-                                        <?php } else { ?>
-                                            <option value="beta"><?php echo $text_beta; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td><?php echo $entry_pending_order_status; ?></td>
                                 <td>
                                     <select name="klarna_pending_order_status_id">
@@ -95,86 +69,122 @@
                                     </select>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <?php echo $entry_minimum_amount; ?>
-                                    <span class="help"><?php echo $help_minimum_total ?></span>
-                                </td>
-                                <td>
-                                    <input type="text" name="klarna_minimum_amount" value="<?php echo $klarna_minimum_amount; ?>" />
-                                    <?php if ($error_minimum_amount) { ?>
-                                        <span class="error"><?php echo $error_minimum_amount; ?></span>
-                                    <?php } ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?php echo $entry_sort_order; ?></td>
-                                <td><input type="text" name="klarna_sort_order" value="<?php echo $klarna_sort_order; ?>" size="1" /></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><h3><?php echo $text_klarna_account ?></h3></td>
-                            </tr>
-                            <tr>
-                                <td><?php echo $entry_geo_zone; ?></td>
-                                <td>
-                                    <select name="klarna_acc_geo_zone_id">
-                                        <option value="0"><?php echo $text_all_zones; ?></option>
-                                        <?php foreach ($geo_zones as $geo_zone) { ?>
-                                            <?php if ($geo_zone['geo_zone_id'] == $klarna_acc_geo_zone_id) { ?>
-                                                <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-                                            <?php } else { ?>
-                                                <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
-                                            <?php } ?>
-                                        <?php } ?>
-                                    </select>
-                                </td>
-                            </tr>            
-                            <tr>
-                                <td><?php echo $entry_status; ?></td>
-                                <td>
-                                    <select name="klarna_acc_status">
-                                        <?php if ($klarna_acc_status) { ?>
-                                            <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                                            <option value="0"><?php echo $text_disabled; ?></option>
+                                
+                            <?php foreach ($country_names as $iso_3 => $country) { ?>
+                                    
+                                <tr>
+                                    <td style="text-align: center">
+                                        <?php if ($klarna_country[$iso_3]['status'] == 1) { ?>
+                                            <input type="checkbox" checked="checked" class="input_country" id="input_coutry_<?php echo $iso_3 ?>" name="klarna_country[<?php echo $iso_3 ?>][status]" value="1" />
                                         <?php } else { ?>
-                                            <option value="1"><?php echo $text_enabled; ?></option>
-                                            <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                                            <input type="checkbox" class="input_country" id="input_coutry_<?php echo $iso_3 ?>" name="klarna_country[<?php echo $iso_3 ?>][status]" value="1" />
                                         <?php } ?>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><h3><?php echo $text_klarna_invoice  ?></h3></td>
-                            </tr>
-                            <tr>
-                                <td><?php echo $entry_geo_zone; ?></td>
-                                <td>
-                                    <select name="klarna_inv_geo_zone_id">
-                                        <option value="0"><?php echo $text_all_zones; ?></option>
-                                        <?php foreach ($geo_zones as $geo_zone) { ?>
-                                            <?php if ($geo_zone['geo_zone_id'] == $klarna_inv_geo_zone_id) { ?>
-                                                <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-                                            <?php } else { ?>
-                                                <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
-                                            <?php } ?>
-                                        <?php } ?>
-                                    </select>
-                                </td>
-                            </tr>            
-                            <tr>
-                                <td><?php echo $entry_status; ?></td>
-                                <td>
-                                    <select name="klarna_inv_status">
-                                        <?php if ($klarna_inv_status) { ?>
-                                            <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                                            <option value="0"><?php echo $text_disabled; ?></option>
+                                    </td>
+                                    <td>
+                                        <label for="input_coutry_<?php echo $iso_3 ?>" ><?php echo $country ?></label>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <?php if ($klarna_country[$iso_3]['status'] == 1) { ?>
+                                        <div class="country_options">
                                         <?php } else { ?>
-                                            <option value="1"><?php echo $text_enabled; ?></option>
-                                            <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                                        <div class="country_options hidden">
                                         <?php } ?>
-                                    </select>
-                                </td>
-                            </tr>
+                                            <table class="form sub-form">
+                                                <tr>
+                                                    <td><label for="input_merchant_<?php echo $iso_3 ?>"><?php echo $entry_merchant ?></label></td>
+                                                    <td><input type="text" id="input_merchant_<?php echo $iso_3 ?>" name="klarna_country[<?php echo $iso_3 ?>][merchant]" value="<?php echo $klarna_country[$iso_3]['merchant'] ?>" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><label for="input_secret_<?php echo $iso_3 ?>"><?php echo $entry_secret ?></label></td>
+                                                    <td><input type="text" id="input_secret_<?php echo $iso_3 ?>" name="klarna_country[<?php echo $iso_3 ?>][secret]" value="<?php echo $klarna_country[$iso_3]['secret'] ?>" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><label for="select_server_<?php echo $iso_3 ?>"><?php echo $entry_server; ?></label></td>
+                                                    <td>
+                                                        <select id="select_server_<?php echo $iso_3 ?>" name="klarna_country[<?php echo $iso_3 ?>][server]">
+                                                            <?php if ($klarna_country[$iso_3]['server'] == 'live') { ?>
+                                                                <option value="live" selected="selected"><?php echo $text_live; ?></option>
+                                                            <?php } else { ?>
+                                                                <option value="live"><?php echo $text_live; ?></option>
+                                                            <?php } ?>
+                                                            <?php if ($klarna_country[$iso_3]['server'] == 'beta') { ?>
+                                                                <option value="beta" selected="selected"><?php echo $text_beta; ?></option>
+                                                            <?php } else { ?>
+                                                                <option value="beta"><?php echo $text_beta; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><?php echo $entry_klarna_invoice ?></td>
+                                                    <td>
+                                                        <?php if ($klarna_country[$iso_3]['invoice']) { ?>
+                                                            <input id="invoice_<?php echo $iso_3 ?>_yes" type="radio" name="klarna_country[<?php echo $iso_3 ?>][invoice]" value="1" checked="checked" />
+                                                            <label for="invoice_<?php echo $iso_3 ?>_yes"><?php echo $text_enabled ?></label>
+                                                            <input id="invoice_<?php echo $iso_3 ?>_no" type="radio" name="klarna_country[<?php echo $iso_3 ?>][invoice]" value="0" />
+                                                            <label for="invoice_<?php echo $iso_3 ?>_no"><?php echo $text_disabled ?></label>
+                                                        <?php } else { ?>
+                                                            <input id="invoice_<?php echo $iso_3 ?>_yes" type="radio" name="klarna_country[<?php echo $iso_3 ?>][invoice]" value="1" />
+                                                            <label for="invoice_<?php echo $iso_3 ?>_yes"><?php echo $text_enabled ?></label>
+                                                            <input id="invoice_<?php echo $iso_3 ?>_no" type="radio" name="klarna_country[<?php echo $iso_3 ?>][invoice]" value="0" checked="checked" />
+                                                            <label for="invoice_<?php echo $iso_3 ?>_no"><?php echo $text_disabled ?></label>
+                                                        <?php } ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><?php echo $entry_klarna_account ?></td>
+                                                    <td>
+                                                        <?php if ($klarna_country[$iso_3]['account']) { ?>
+                                                            <input id="account_<?php echo $iso_3 ?>_yes" type="radio" name="klarna_country[<?php echo $iso_3 ?>][account]" value="1" checked="checked" />
+                                                            <label for="account_<?php echo $iso_3 ?>_yes"><?php echo $text_enabled ?></label>
+                                                            <input id="account_<?php echo $iso_3 ?>_no" type="radio" name="klarna_country[<?php echo $iso_3 ?>][account]" value="0" />
+                                                            <label for="account_<?php echo $iso_3 ?>_no"><?php echo $text_disabled ?></label>
+                                                        <?php } else { ?>
+                                                            <input id="account_<?php echo $iso_3 ?>_yes" type="radio" name="klarna_country[<?php echo $iso_3 ?>][account]" value="1" />
+                                                            <label for="account_<?php echo $iso_3 ?>_yes"><?php echo $text_enabled ?></label>
+                                                            <input id="account_<?php echo $iso_3 ?>_no" type="radio" name="klarna_country[<?php echo $iso_3 ?>][account]" value="0" checked="checked" />
+                                                            <label for="account_<?php echo $iso_3 ?>_no"><?php echo $text_disabled ?></label>
+                                                        <?php } ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><label for="input_minimum_<?php echo $iso_3?>"><?php echo $entry_minimum_amount ?></label></td>
+                                                    <td><input id="input_minimum_<?php echo $iso_3?>"type="text" name="klarna_country[<?php echo $iso_3 ?>][minimum]" value="<?php echo $klarna_country[$iso_3]['minimum'] ?>" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><label for="input_sort_order_<?php echo $iso_3?>"><?php echo $entry_sort_order ?></label></td>
+                                                    <td><input id="input_sort_order_<?php echo $iso_3?>" type="text" name="klarna_country[<?php echo $iso_3 ?>][sort_order]" value="<?php echo $klarna_country[$iso_3]['sort_order'] ?>" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><label for="select_geo_zone_<?php echo $iso_3?>"><?php echo $entry_geo_zone ?></label></td>
+                                                    <td>
+                                                        <select id="select_geo_zone_<?php echo $iso_3 ?>" name="klarna_country[<?php echo $iso_3 ?>][geo_zone_id]">
+                                                            <?php if ($klarna_country[$iso_3]['geo_zone_id'] == 0) { ?>
+                                                                <option value="0" selected="selected"><?php echo $text_all_zones ?></option>
+                                                            <?php } else {?>
+                                                                <option value="0"><?php echo $text_all_zones ?></option>
+                                                            <?php } ?>
+                                                            <?php foreach ($geo_zones as $geo_zone) { ?>
+                                                                <?php if ($geo_zone['geo_zone_id'] == $klarna_country[$iso_3]['geo_zone_id']) {  ?>
+                                                                    <option value="<?php echo $geo_zone['geo_zone_id'] ?>" selected="selected"><?php echo $geo_zone['name'] ?></option>
+                                                                <?php } else { ?>
+                                                                    <option value="<?php echo $geo_zone['geo_zone_id'] ?>"><?php echo $geo_zone['name'] ?></option>
+                                                                <?php } ?>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            <?php } ?>
+                            
                         </table>
                     </div>
                 </form>
@@ -191,6 +201,16 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('#tabs a').tabs();  
+    });
+    
+    $('.input_country').change(function(){
+        var target = $(this).closest('tr').next().find('.country_options');
+
+        if ($(this).is(':checked')) {
+            target.slideDown(300);
+        } else {
+            target.slideUp(220);
+        }
     });
 </script>
 <?php echo $footer; ?> 

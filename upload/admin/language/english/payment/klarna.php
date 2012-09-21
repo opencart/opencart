@@ -13,9 +13,16 @@ $_['text_beta'] = 'Beta';
 $_['text_settings'] = 'Settings';
 $_['text_log'] = 'Logs';
 $_['text_help'] = 'Help';
+$_['text_enabled'] = 'Enabled';
+$_['text_disabled'] = 'Disabled';
+$_['text_all_zones'] = 'All Zones';
 
-$_['text_klarna_invoice'] = 'Klarna Invoice';
-$_['text_klarna_account'] = 'Klarna Account';
+$_['text_sweden'] = 'Sweden';
+$_['text_norway'] = 'Norway';
+$_['text_finland'] = 'Finland';
+$_['text_denmark'] = 'Denmark';
+$_['text_germany'] = 'Germany';
+$_['text_netherlands'] = 'The Netherlands';
 
 // Entry
 $_['entry_merchant'] = 'Klarna Merchant ID:';
@@ -27,6 +34,8 @@ $_['entry_geo_zone'] = 'Geo Zone:';
 $_['entry_status'] = 'Status:';
 $_['entry_sort_order'] = 'Sort Order:';
 $_['entry_minimum_amount'] = 'Minimum Amount:';
+$_['entry_klarna_invoice'] = 'Klarna Invoice:';
+$_['entry_klarna_account'] = 'Klarna Account:';
 
 // Help
 $_['help_minimum_total'] = "Cart's total before the module becomes active";
@@ -35,8 +44,5 @@ $_['help_secret'] = 'Shared secret to use with the Klarna service (provided by K
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify payment Klarna Part Payment!';
-$_['error_xmlrpc'] = 'XML-RPC PHP extension is required to be installed!';
-$_['error_merchant'] = 'Merchant ID required!';
-$_['error_secret'] = 'Secret required!';
-$_['error_valid_number'] = 'A valid number is required!';
+$_['error_retrive_pclass'] = 'Could not retrieve pClass for %s. Please check your credentials for that country';
 $_['error_log_clear'] = 'Error: Log file was not cleared. Please check write permissions for the file';

@@ -82,7 +82,30 @@ class ControllerCatalogCategory extends Controller {
 			
 			$this->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
+		$this->getList();
+	}
+	
+	public function move() {
+		$this->load->language('catalog/category');
 
+		$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->load->model('catalog/category');
+		
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			$this->model_catalog_category->moveCategory($this->request->get['category_id'], $this->request->post);
+			
+			$this->session->data['success'] = $this->language->get('text_success');
+			
+			$url = '';
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+						
+			$this->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+		}
+		
 		$this->getList();
 	}
 	

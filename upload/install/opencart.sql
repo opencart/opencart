@@ -2137,8 +2137,9 @@ INSERT INTO `oc_product_discount` (`product_discount_id`, `product_id`, `custome
 DROP TABLE IF EXISTS `oc_product_filter`;
 CREATE TABLE `oc_product_filter` (
   `product_id` int(11) NOT NULL,
+  `filter_id` int(11) NOT NULL,
   `filter_value_id` int(11) NOT NULL,
-  PRIMARY KEY (`product_id`,`filter_value_id`)
+  PRIMARY KEY (`product_id`,`filter_id`,`filter_value_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --

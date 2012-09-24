@@ -570,6 +570,7 @@ class ControllerCatalogProduct extends Controller {
     	$this->data['entry_image'] = $this->language->get('entry_image');
     	$this->data['entry_download'] = $this->language->get('entry_download');
     	$this->data['entry_category'] = $this->language->get('entry_category');
+		$this->data['entry_filter'] = $this->language->get('entry_filter');
 		$this->data['entry_related'] = $this->language->get('entry_related');
 		$this->data['entry_attribute'] = $this->language->get('entry_attribute');
 		$this->data['entry_text'] = $this->language->get('entry_text');
@@ -986,7 +987,7 @@ class ControllerCatalogProduct extends Controller {
 	
 		$this->load->model('catalog/category');
 	
-		$this->data['product_category'] = array();
+		$this->data['product_categories'] = array();
 		
 		foreach ($categories as $category_id) {
 			$category_info = $this->model_catalog_category->getCategory($category_id);
@@ -1006,21 +1007,21 @@ class ControllerCatalogProduct extends Controller {
 					$name = $category_info['name'];
 				}				
 				
-				$this->data['product_category'][] = array(
+				$this->data['product_categories'][] = array(
 					'category_id' => $category_info['category_id'],
 					'name'        => $name
 				);
 			}
 		}
-				
+						
 		if (isset($this->request->post['product_filter'])) {
 			$this->data['product_filters'] = $this->request->post['product_filter'];
 		} elseif (isset($this->request->get['product_id'])) {
-			//$this->data['product_filters'] = $this->model_catalog_product->getProductFilters($this->request->get['product_id']);
+			$this->data['product_filters'] = $this->model_catalog_product->getProductFilters($this->request->get['product_id']);
 		} else {
 			$this->data['product_filters'] = array();
 		}
-				
+		
 		if (isset($this->request->post['product_attribute'])) {
 			$this->data['product_attributes'] = $this->request->post['product_attribute'];
 		} elseif (isset($this->request->get['product_id'])) {

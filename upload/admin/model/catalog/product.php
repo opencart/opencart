@@ -496,21 +496,31 @@ class ModelCatalogProduct extends Model {
 	public function getProductFilters($product_id) {
 		$product_filter_data = array();
 		
-		$product_filter_query = $this->db->query("SELECT p2f.filter_id, fd.name FROM " . DB_PREFIX . "product_to_filter p2f LEFT JOIN " . DB_PREFIX . "filter f ON (p2f.filter_id = f.filter_id) LEFT JOIN " . DB_PREFIX . "filter_description fd ON (f.filter_id = fd.filter_id) WHERE pf.product_id = '" . (int)$product_id . "' AND fd.language_id = '" . (int)$this->config->get('config_language_id') . "' GROUP BY pa.filter_id");
+		$product_filter_query = $this->db->query("
+		SELECT pf.filter_id, fd.name 
+		FROM " . DB_PREFIX . "product_filter pf 
+		LEFT JOIN " . DB_PREFIX . "filter f ON (pf.filter_id = f.filter_id) 
+		LEFT JOIN " . DB_PREFIX . "filter_description fd ON (f.filter_id = fd.filter_id) 
+		LEFT JOIN " . DB_PREFIX . "filter_value fv ON (pf.filter_value_id = fv.filter_value_id) 
+		LEFT JOIN " . DB_PREFIX . "filter_value_description fvd ON (fv.filter_id = fvd.filter_id) 		
+		
+		WHERE pf.product_id = '" . (int)$product_id . "' 
+		AND fd.language_id = '" . (int)$this->config->get('config_language_id') . "'
+		AND fvd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 		
 		foreach ($product_filter_query->rows as $product_filter) {
 			$product_filter_description_data = array();
 			
 			$product_filter_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_filter WHERE product_id = '" . (int)$product_id . "' AND attribute_id = '" . (int)$product_attribute['attribute_id'] . "'");
 			
-			foreach ($product_attribute_description_query->rows as $product_attribute_description) {
-				$product_attribute_description_data[$product_attribute_description['language_id']] = array('text' => $product_attribute_description['text']);
+			foreach ($product_filter_description_query->rows as $product_attribute_description) {
+				$product_filter_description_data[$product_attribute_description['language_id']] = array('text' => $product_attribute_description['text']);
 			}
 			
-			$product_filter_data[] = array(
-				'attribute_id'                  => $product_attribute['attribute_id'],
-				'name'                          => $product_attribute['name'],
-				'product_attribute_description' => $product_attribute_description_data
+			$product_filter_data[$product_filter['filter_id']] = array(
+				'filter_id'    => $product_filter['filter_id'],
+				'name'         => $product_filter['name'],
+				'filter_value' => $product_filter_description_data
 			);
 		}
 		

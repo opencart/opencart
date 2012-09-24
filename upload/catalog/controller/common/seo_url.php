@@ -1,5 +1,26 @@
 <?php
 class ControllerCommonSeoUrl extends Controller {
+	/* SEO Custom URL */
+	private $url_list = array (
+		'common/home'       	=> 'home',
+		'checkout/cart'     	=> 'cart',
+		'account/register'  	=> 'register',
+		'account/wishlist'  	=> 'wishlist',
+		'checkout/checkout' 	=> 'checkout',
+		'account/login'     	=> 'login',
+		'product/special'   	=> 'special',
+		'affiliate/account' 	=> 'affiliate',
+		'checkout/voucher'  	=> 'voucher',
+		'product/manufacturer' => 'brand',
+		'account/newsletter'   => 'newsletter',
+		'account/order'        => 'order',
+		'account/account'      => 'account',
+		'information/contact'  => 'contact',
+		'account/return/insert' => 'return/insert',
+		'information/sitemap'   => 'sitemap',
+	);
+	/* SEO Custom URL */
+
 	public function index() {
 		// Add rewrite to url class
 		if ($this->config->get('config_seo_url')) {
@@ -39,7 +60,12 @@ class ControllerCommonSeoUrl extends Controller {
 					$this->request->get['route'] = 'error/not_found';	
 				}
 			}
-			
+
+			/* SEO Custom URL */
+			if ( $_s = $this->setURL($this->request->get['_route_']) ) {
+			    $this->request->get['route'] = $_s;
+			}/* SEO Custom URL */
+
 			if (isset($this->request->get['product_id'])) {
 				$this->request->get['route'] = 'product/product';
 			} elseif (isset($this->request->get['path'])) {
@@ -88,6 +114,13 @@ class ControllerCommonSeoUrl extends Controller {
 					
 					unset($data[$key]);
 				}
+
+				/* SEO Custom URL */
+			    	if( $_u = $this->getURL($data['route']) ){
+		        		$url .= $_u;
+		        		unset($data[$key]);
+			    	}/* SEO Custom URL */        
+
 			}
 		}
 	
@@ -111,5 +144,29 @@ class ControllerCommonSeoUrl extends Controller {
 			return $link;
 		}
 	}	
+
+	/* SEO Custom URL */
+	public function getURL($route) {
+		if( count($this->url_list) > 0) {
+			foreach ($this->url_list as $key => $value) {
+				if($route == $key) {
+					return '/'.$value;
+				}
+			}
+		}
+		return false;
+	}
+
+	public function setURL($_route) {
+		if( count($this->url_list) > 0 ){
+			foreach ($this->url_list as $key => $value) {
+				if($_route == $value) {
+					return $key;
+				}
+			}
+		}
+		return false;
+	}/* SEO Custom URL */
+
 }
 ?>

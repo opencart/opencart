@@ -40,6 +40,7 @@ class ControllerCheckoutManual extends Controller {
 
 				if ($customer_info) {
 					$this->customer->login($customer_info['email'], '', true);
+					$this->cart->clear();
 				} else {
 					$json['error']['customer'] = $this->language->get('error_customer');
 				}

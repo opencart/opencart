@@ -2067,6 +2067,7 @@ CREATE TABLE `oc_product_description` (
   `description` text COLLATE utf8_bin NOT NULL,
   `meta_description` varchar(255) COLLATE utf8_bin NOT NULL,
   `meta_keyword` varchar(255) COLLATE utf8_bin NOT NULL,
+  `seo_title` varchar(255) COLLATE utf8_bin NOT NULL,
   `tag` text COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`product_id`,`language_id`),
   KEY `name` (`name`),

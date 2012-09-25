@@ -74,6 +74,7 @@ $_['entry_related']          = 'Related Products:<br /><span class="help">(Autoc
 $_['entry_tag']          	 = 'Product Tags:<br /><span class="help">comma separated</span>';
 $_['entry_reward']           = 'Reward Points:';
 $_['entry_layout']           = 'Layout Override:';
+$_['entry_seo_title']        = 'HTML Tag Title:';
 
 // Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';

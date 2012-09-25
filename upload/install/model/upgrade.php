@@ -309,6 +309,7 @@ class ModelUpgrade extends Model {
 		$db->query("ALTER TABLE `oc_product_description` ADD `tag` text COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `meta_keyword`");
 		$db->query("ALTER TABLE `oc_product_description` ADD FULLTEXT (`description`)");
 		$db->query("ALTER TABLE `oc_product_description` ADD FULLTEXT (`tag`)");
+		$db->query("ALTER TABLE `oc_product_description` ADD `seo_title` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `meta_keyword`");
 		$db->query("ALTER TABLE `oc_user` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' after `password`");
 		$db->query("ALTER TABLE `oc_user` MODIFY `password` varchar(40) NOT NULL");
 		$db->query("ALTER TABLE `oc_user` MODIFY `ip` varchar(40) NOT NULL");

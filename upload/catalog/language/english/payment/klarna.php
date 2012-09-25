@@ -2,7 +2,7 @@
 
 // Text
 $_['text_title'] = 'Klarna Payments';
-$_['text_toc'] = 'I have read and agree to the <a href="%s">Klarna Payments</a> Terms & conditions';
+$_['text_toc'] = 'I have read and agree to the Klarna Payments terms & conditions';
 $_['text_information'] = 'Klarna Information';
 $_['text_additional'] = 'Klarna requires some additional information before they can proccess your order.';
 $_['text_wait'] = 'Please wait!';

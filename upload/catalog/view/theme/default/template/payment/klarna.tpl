@@ -1,4 +1,5 @@
 <?php if ($address_match) { ?>
+<script src="http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js" type="text/javascript" charset="utf-8"></script>
 <form id="klarna-payment-form" method="POST" action="<?php echo html_entity_decode($klarna_send) ?>">
     <div id="payment" class="content">
         <div class="klarna-logo"></div>
@@ -132,7 +133,14 @@
                     </td> 
                 </tr>
             <?php } ?>
-
+                
+                <tr>
+                    <td colspan="2">
+                        <input type="checkbox" name="klarna_toc" value="1" />
+                        <?php echo $text_toc ?> <span id="klarna_toc_link"></span>
+                    </td>
+                </tr>
+                
         </table>
         
     </div>
@@ -160,17 +168,23 @@
 <?php } ?>
 
 <script type="text/javascript">
+var terms = new Klarna.Terms.Account({  
+     el: 'klarna_toc_link', 
+     eid: <?php echo $merchant ?>,             
+     country: '<?php echo strtolower($klarna_country_code) ?>',
+     <?php if ($klarna_fee) { ?>
+     charge: <?php echo $klarna_fee ?>
+     <?php } ?>
+ })
+    
 $('#button-confirm').bind('click', function() {
     
-        $('.warning, .error').remove();
-    
-    <?php if ($country_code == 'DEU') { ?>
-    
-        if (!$('input[name="deu_toc"]').is(':checked')) {
-            $('#payment').before("<div class=\"warning\"><?php echo $error_deu_toc ?></div>");
-            return;
-        }
-    <?php } ?>
+    $('.warning, .error').remove();
+
+    if (!$('input[name="deu_toc"], input[name="klarna_toc"]').is(':checked')) {
+        $('#payment').before("<div class=\"warning\"><?php echo $error_deu_toc ?></div>");
+        return;
+    }
     
 	$.ajax({
 		url: 'index.php?route=payment/klarna/send',

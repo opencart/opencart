@@ -45,6 +45,7 @@ class ControllerPaymentKlarna extends Controller {
         
         $this->data['address_match'] = $addressMatch;
         $this->data['country_code'] = $orderInfo['payment_iso_code_3'];
+        $this->data['klarna_country_code'] = $orderInfo['payment_iso_code_2'];
         $this->data['klarna_send'] = $this->url->link('payment/klarna/send');
         
         $this->data['klarna_nld_warning_banner'] = $this->model_tool_image->resize('data/klarna_nld_warning.jpg', 950, 118);
@@ -160,6 +161,17 @@ class ControllerPaymentKlarna extends Controller {
         foreach ($partPaymentOptions as $paymentOption) {
             $this->data['part_payment_options'][$paymentOption['pclass_id']] = sprintf($this->language->get('text_monthly_payment'), $paymentOption['months'], $this->currency->format($paymentOption['monthly_cost'], '', 1.0));
         }
+        
+        // Get the invoice fee
+        $result = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `code` = 'klarna_fee'")->row;
+        
+        if (isset($result['value']) && !empty($result['value'])) {
+            $this->data['klarna_fee'] = $result['value'];
+        } else {
+            $this->data['klarna_fee'] = '';
+        }
+
+        $this->data['merchant'] = $settings['merchant'];
         
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/klarna.tpl')) {
             $this->template = $this->config->get('config_template') . '/template/payment/klarna.tpl';

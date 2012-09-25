@@ -38,7 +38,7 @@ class ModelPaymentKlarna extends Model {
         if(!isset($countries[$address['iso_code_3']]) || $countries[$address['iso_code_3']] != $this->currency->getCode()) {
             $klarnaAccountStatus = false;
             $klarnaInvoiceStatus = false;
-        }
+        }        
         
         if ($address['iso_code_3'] == 'NLD' && $this->currency->has('EUR') && $this->currency->format($total, 'EUR', '', false) > 250.00) {
             $klarnaAccountStatus = false;

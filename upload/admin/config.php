@@ -2,12 +2,10 @@
 // HTTP
 define('HTTP_SERVER', 'http://klarna.welfordlocal.co.uk/admin/');
 define('HTTP_CATALOG', 'http://klarna.welfordlocal.co.uk/');
-define('HTTP_IMAGE', 'http://klarna.welfordlocal.co.uk/image/');
 
 // HTTPS
 define('HTTPS_SERVER', 'http://klarna.welfordlocal.co.uk/admin/');
 define('HTTPS_CATALOG', 'http://klarna.welfordlocal.co.uk/');
-define('HTTPS_IMAGE', 'http://klarna.welfordlocal.co.uk/image/');
 
 // DIR
 define('DIR_APPLICATION', 'C:\xampp\htdocs\klarna\upload/admin/');

@@ -445,9 +445,8 @@ class ControllerCatalogFilter extends Controller {
 												
 				$json[] = array(
 					'filter_id'    => $filter['filter_id'],
-					'name'         => strip_tags(html_entity_decode($filter['name'], ENT_QUOTES, 'UTF-8')),
-					'category'     => $type,
-					'type'         => $filter['type'],
+					'name'         => strip_tags(html_entity_decode($filter_value['name'], ENT_QUOTES, 'UTF-8')),
+					'category'     => $filter['name'],
 					'filter_value' => $filter_value_data
 				);
 			}

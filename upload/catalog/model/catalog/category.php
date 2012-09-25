@@ -11,24 +11,6 @@ class ModelCatalogCategory extends Model {
 
 		return $query->rows;
 	}
-		
-	public function getCategoriesByParentId($category_id) {
-		$category_data = array();
-
-		$category_query = $this->db->query("SELECT category_id FROM " . DB_PREFIX . "category WHERE parent_id = '" . (int)$category_id . "'");
-
-		foreach ($category_query->rows as $category) {
-			$category_data[] = $category['category_id'];
-
-			$children = $this->getCategoriesByParentId($category['category_id']);
-
-			if ($children) {
-				$category_data = array_merge($children, $category_data);
-			}			
-		}
-
-		return $category_data;
-	}
 			
 	public function getCategoryLayoutId($category_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category_to_layout WHERE category_id = '" . (int)$category_id . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");

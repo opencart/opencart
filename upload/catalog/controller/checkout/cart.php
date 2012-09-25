@@ -537,6 +537,10 @@ class ControllerCheckoutCart extends Controller {
 				}
 			}
 			
+			//if ($product_info['minimum'] > $this->request->post['quantity']) {
+			//	$json['error']['option'] = sprintf($this->language->get('error_minimum'), $product_info['name']);
+			//}
+			
 			if (!$json) {
 				$this->cart->add($this->request->post['product_id'], $quantity, $option);
 

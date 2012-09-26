@@ -1653,9 +1653,7 @@ a.button:hover, input.button:hover {
 }
 
 .klarna-logo {
-    display: inline-block;
-    background: url('../image/klarna_logo.png') no-repeat;
-    width: 100%;
+    display: block;
     height: 45px;
 }
 

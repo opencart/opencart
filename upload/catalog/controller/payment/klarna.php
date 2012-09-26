@@ -50,6 +50,8 @@ class ControllerPaymentKlarna extends Controller {
         
         $this->data['klarna_nld_warning_banner'] = $this->model_tool_image->resize('data/klarna_nld_warning.jpg', 950, 118);
         
+        $partPaymentOptions = array();
+        
         // Show part payment options?
         if ($this->showPartPaymentOptions($orderInfo, $settings)) {
 

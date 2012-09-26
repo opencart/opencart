@@ -1,7 +1,9 @@
 <?php if ($address_match) { ?>
 <form id="klarna-payment-form" method="POST" action="<?php echo html_entity_decode($klarna_send) ?>">
     <div id="payment" class="content">
-        <div class="klarna-logo"></div>
+        <div class="klarna-logo">
+            <img src="https://cdn.klarna.com/public/images/DE/logos/v1/basic/DE_basic_logo_std_blue-black.png?width=150&eid=<?php echo $merchant ?>"/>
+        </div>
         
         <!--
         Should be displayed only for part-payments
@@ -266,10 +268,6 @@ $(document).ready(function(){
             <?php } ?>
         });
     });
-
-    /*
-    
-    */
 
 });
 

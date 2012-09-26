@@ -181,7 +181,14 @@ $('#button-confirm').bind('click', function() {
     
     $('.warning, .error').remove();
 
-    if (!$('input[name="deu_toc"], input[name="klarna_toc"]').is(':checked')) {
+    var checked = true;
+    $.each($('input[name="deu_toc"], input[name="klarna_toc"]'), function(i, element){
+        if (!$(element).is(':checked')) {
+            checked = false;
+        }
+    });
+    
+    if (!checked) {
         $('#payment').before("<div class=\"warning\"><?php echo $error_deu_toc ?></div>");
         return;
     }

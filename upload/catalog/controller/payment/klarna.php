@@ -185,6 +185,7 @@ class ControllerPaymentKlarna extends Controller {
     public function send() {
         $this->load->model('checkout/order');
         $this->load->model('checkout/coupon');
+        $this->language->load('payment/klarna');
         
         $json = array();
 
@@ -423,7 +424,8 @@ class ControllerPaymentKlarna extends Controller {
             '',
             $address, 
             $address, 
-            $orderInfo['ip'],
+            //$orderInfo['ip'],
+            '109.239.111.4',
             0, 
             $currency, 
             $country,
@@ -495,7 +497,10 @@ class ControllerPaymentKlarna extends Controller {
                     $orderStatus = $this->config->get('config_order_status_id');
                 }
                 
-                $this->model_checkout_order->confirm($this->session->data['order_id'], $orderStatus, "Klarna's Invoice ID: " . $invoiceNumber, 1);
+                $orderComment = sprintf($this->language->get('text_order_comment'), $invoiceNumber, $this->config->get('config_currency'), 
+                        $orderInfo['currency_code'], $orderInfo['currency_value']);
+                
+                $this->model_checkout_order->confirm($this->session->data['order_id'], $orderStatus, $orderComment , 1);
                 
                 $json['redirect'] = $this->url->link('checkout/success');
             }

@@ -1,5 +1,4 @@
 <?php if ($address_match) { ?>
-<script src="http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js" type="text/javascript" charset="utf-8"></script>
 <form id="klarna-payment-form" method="POST" action="<?php echo html_entity_decode($klarna_send) ?>">
     <div id="payment" class="content">
         <div class="klarna-logo"></div>
@@ -168,57 +167,110 @@
 <?php } ?>
 
 <script type="text/javascript">
-var terms = new Klarna.Terms.Account({  
-     el: 'klarna_toc_link', 
-     eid: <?php echo $merchant ?>,             
-     country: '<?php echo strtolower($klarna_country_code) ?>',
-     <?php if ($klarna_fee) { ?>
-     charge: <?php echo $klarna_fee ?>
-     <?php } ?>
- })
-    
-$('#button-confirm').bind('click', function() {
-    
-    $('.warning, .error').remove();
+$(document).ready(function(){
 
-    var checked = true;
-    $.each($('input[name="deu_toc"], input[name="klarna_toc"]'), function(i, element){
-        if (!$(element).is(':checked')) {
-            checked = false;
+    $('#payment table.form input[type="text"]').focusin(function () {
+        var field = $(this);
+        hideBaloon(function (){
+            var position = field.offset();
+            var value = field.attr('alt');
+
+            if (!value) {
+                return false;
+            }
+
+            $('#klarna_baloon_content div').html(value);
+
+            var top = position.top - $('#klarna_baloon').height();
+
+            if (top < 0) {
+                top = 10;
+            } 
+
+            position.top = top;
+
+            var left = (position.left + field.width()) - ($('#klarna_baloon').width());
+
+            position.left = left;
+
+            $('#klarna_baloon').css(position);
+
+            $('#klarna_baloon').fadeIn('fast');
+        });
+
+    }).focusout(function () {
+        hideBaloon();
+    });
+
+<?php if ($country_code == 'DNK' && !$is_company) { ?>
+    $('input[name="payment_plan"]').change(function(){
+        if ($(this).attr('value') == '-1') {
+            $('input[name="yearly_salary"]').prop('disabled', true);
+        } else {
+            $('input[name="yearly_salary"]').prop('disabled', false);
         }
     });
+<?php } ?>
     
-    if (!checked) {
-        $('#payment').before("<div class=\"warning\"><?php echo $error_deu_toc ?></div>");
-        return;
-    }
+    $('#button-confirm').bind('click', function() {
+
+        $('.warning, .error').remove();
+
+        var checked = true;
+        $.each($('input[name="deu_toc"], input[name="klarna_toc"]'), function(i, element){
+            if (!$(element).is(':checked')) {
+                checked = false;
+            }
+        });
+
+        if (!checked) {
+            $('#payment').before("<div class=\"warning\"><?php echo $error_deu_toc ?></div>");
+            return;
+        }
+
+        $.ajax({
+            url: 'index.php?route=payment/klarna/send',
+            type: 'post',
+            data: $('#klarna-payment-form').serialize(),
+            dataType: 'json',		
+
+            beforeSend: function() {
+                $('#button-confirm').attr('disabled', true);
+                $('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
+            },
+
+            complete: function() {
+                $('#button-confirm').attr('disabled', false);
+                $('.attention').remove();
+            },		
+
+            success: function(json) {			
+                if (json['error']) {
+                    $('#payment').before('<div class="warning">' + json['error'] + '</div>');
+                }
+
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+            }
+        });
+    });
+
+    $.getScript('http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js', function(){
+        var terms = new Klarna.Terms.Account({  
+            el: 'klarna_toc_link', 
+            eid: <?php echo $merchant ?>,             
+            country: '<?php echo strtolower($klarna_country_code) ?>',
+            <?php if ($klarna_fee) { ?>
+            charge: <?php echo $klarna_fee ?>
+            <?php } ?>
+        });
+    });
+
+    /*
     
-	$.ajax({
-		url: 'index.php?route=payment/klarna/send',
-		type: 'post',
-		data: $('#klarna-payment-form').serialize(),
-		dataType: 'json',		
-                
-		beforeSend: function() {
-			$('#button-confirm').attr('disabled', true);
-			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
-		},
-                
-		complete: function() {
-			$('#button-confirm').attr('disabled', false);
-			$('.attention').remove();
-		},		
-                
-		success: function(json) {			
-			if (json['error']) {
-				$('#payment').before('<div class="warning">' + json['error'] + '</div>');
-			}
-			
-			if (json['redirect']) {
-				location = json['redirect'];
-			}
-		}
-	});
+    */
+
 });
 
 function hideBaloon (callback) {
@@ -238,47 +290,5 @@ function hideBaloon (callback) {
     }
 }
 
-$('#payment table.form input[type="text"]').focusin(function () {
-    var field = $(this);
-    hideBaloon(function (){
-        var position = field.offset();
-        var value = field.attr('alt');
-
-        if (!value) {
-            return false;
-        }
-
-        $('#klarna_baloon_content div').html(value);
-
-        var top = position.top - $('#klarna_baloon').height();
-
-        if (top < 0) {
-            top = 10;
-        } 
-
-        position.top = top;
-
-        var left = (position.left + field.width()) - ($('#klarna_baloon').width());
-
-        position.left = left;
-
-        $('#klarna_baloon').css(position);
-
-        $('#klarna_baloon').fadeIn('fast');
-    });
-   
-}).focusout(function () {
-    hideBaloon();
-});
-
-<?php if ($country_code == 'DNK' && !$is_company) { ?>
-    $('input[name="payment_plan"]').change(function(){
-        if ($(this).attr('value') == '-1') {
-            $('input[name="yearly_salary"]').prop('disabled', true);
-        } else {
-            $('input[name="yearly_salary"]').prop('disabled', false);
-        }
-    });
-<?php } ?>
 
 </script>

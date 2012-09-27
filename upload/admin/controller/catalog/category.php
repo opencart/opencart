@@ -85,30 +85,6 @@ class ControllerCatalogCategory extends Controller {
 		$this->getList();
 	}
 	
-	public function move() {
-		$this->load->language('catalog/category');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-		
-		$this->load->model('catalog/category');
-		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_category->moveCategory($this->request->get['category_id'], $this->request->post);
-			
-			$this->session->data['success'] = $this->language->get('text_success');
-			
-			$url = '';
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-						
-			$this->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-		}
-		
-		$this->getList();
-	}
-	
 	private function getList() {
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -154,10 +130,15 @@ class ControllerCatalogCategory extends Controller {
 			$action = array();
 			
 			$action[] = array(
+				'text' => $this->language->get('text_move'),
+				'href' => $this->url->link('catalog/category/move', 'token=' . $this->session->data['token'] . '&category_id=' . $result['category_id'] . $url, 'SSL')
+			);
+						
+			$action[] = array(
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('catalog/category/update', 'token=' . $this->session->data['token'] . '&category_id=' . $result['category_id'] . $url, 'SSL')
 			);
-
+			
 			$path_data = array();
 			
 			$parts = $this->model_catalog_category->getPath($result['parent_id']);
@@ -243,7 +224,6 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
-		$this->data['entry_parent'] = $this->language->get('entry_parent');
 		$this->data['entry_image'] = $this->language->get('entry_image');
 		$this->data['entry_top'] = $this->language->get('entry_top');
 		$this->data['entry_column'] = $this->language->get('entry_column');		
@@ -309,35 +289,7 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$this->data['category_description'] = array();
 		}
-		
-		if (isset($this->request->post['parent_id'])) {
-			$this->data['parent_id'] = $this->request->post['parent_id'];
-		} elseif (!empty($category_info)) {
-			$this->data['parent_id'] = $category_info['parent_id'];
-		} else {
-			$this->data['parent_id'] = '';
-		}
 				
-		if (isset($this->request->post['parent'])) {
-			$this->data['parent'] = $this->request->post['parent'];
-		} elseif (!empty($category_info)) {
-			$path_data = array();
-			
-			$parts = $this->model_catalog_category->getPath($category_info['parent_id']);
-			
-			foreach ($parts as $part) {
-				$path_data[] = $part['name'];
-			}
-
-			if ($path_data) {
-				$this->data['parent'] = implode(' > ', $path_data);
-			} else {
-				$this->data['parent'] = '';
-			}
-		} else {
-			$this->data['parent'] = '';
-		}
-		
 		$this->load->model('setting/store');
 		
 		$this->data['stores'] = $this->model_setting_store->getStores();
@@ -430,6 +382,99 @@ class ControllerCatalogCategory extends Controller {
 				
 		$this->response->setOutput($this->render());
 	}
+	
+	public function move() {
+		$this->load->language('catalog/category');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->load->model('catalog/category');
+		
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateMove()) {
+			$this->model_catalog_category->moveCategory($this->request->get['category_id'], $this->request->post);
+			
+			$this->session->data['success'] = $this->language->get('text_success');
+			
+			$url = '';
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+						
+			$this->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+		}
+		
+		$this->data['heading_title'] = $this->language->get('heading_title');
+		
+		$this->data['entry_parent'] = $this->language->get('entry_parent');
+ 		
+		$this->data['button_save'] = $this->language->get('button_save');
+		$this->data['button_cancel'] = $this->language->get('button_cancel');
+		
+		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+
+  		$this->data['breadcrumbs'] = array();
+
+   		$this->data['breadcrumbs'][] = array(
+       		'text'      => $this->language->get('text_home'),
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
+   		);
+
+   		$this->data['breadcrumbs'][] = array(
+       		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => ' :: '
+   		);
+		
+		if (!isset($this->request->get['category_id'])) {
+			$this->data['action'] = $this->url->link('catalog/category/insert', 'token=' . $this->session->data['token'], 'SSL');
+		} else {
+			$this->data['action'] = $this->url->link('catalog/category/update', 'token=' . $this->session->data['token'] . '&category_id=' . $this->request->get['category_id'], 'SSL');
+		}
+		
+		$this->data['cancel'] = $this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL');
+			
+		if (isset($this->request->post['parent_id'])) {
+			$this->data['parent_id'] = $this->request->post['parent_id'];
+		} elseif (!empty($category_info)) {
+			$this->data['parent_id'] = $category_info['parent_id'];
+		} else {
+			$this->data['parent_id'] = '';
+		}
+				
+		if (isset($this->request->post['parent'])) {
+			$this->data['parent'] = $this->request->post['parent'];
+		} elseif (!empty($category_info)) {
+			$path_data = array();
+			
+			$parts = $this->model_catalog_category->getPath($category_info['parent_id']);
+			
+			foreach ($parts as $part) {
+				$path_data[] = $part['name'];
+			}
+
+			if ($path_data) {
+				$this->data['parent'] = implode(' > ', $path_data);
+			} else {
+				$this->data['parent'] = '';
+			}
+		} else {
+			$this->data['parent'] = '';
+		}
+		
+		$this->template = 'catalog/category_move.tpl';
+		$this->children = array(
+			'common/header',
+			'common/footer'
+		);
+				
+		$this->response->setOutput($this->render());
+	}
 
 	private function validateForm() {
 		if (!$this->user->hasPermission('modify', 'catalog/category')) {
@@ -452,7 +497,7 @@ class ControllerCatalogCategory extends Controller {
 			return false;
 		}
 	}
-
+	
 	private function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'catalog/category')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -465,6 +510,18 @@ class ControllerCatalogCategory extends Controller {
 		}
 	}
 	
+	private function validateMove() {
+		if (!$this->user->hasPermission('modify', 'catalog/category')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+ 
+		if (!$this->error) {
+			return true; 
+		} else {
+			return false;
+		}
+	}
+		
 	public function autocomplete() {
 		$json = array();
 		

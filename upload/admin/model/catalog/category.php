@@ -4,25 +4,6 @@ class ModelCatalogCategory extends Model {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW(), date_added = NOW()");
 
 		$category_id = $this->db->getLastId();
-
-		// Adding a node
-		if ($data['parent_id']) {
-			$category_info = $this->getCategory($data['parent_id']);
-		
-			// Add to the right
-			if ($data['position'] == 'next') { 
-				$this->db->query("UPDATE " . DB_PREFIX . "category SET `right` = `right` + 2 WHERE `right` > '" . (int)$category_info['right'] . "'");
-				$this->db->query("UPDATE " . DB_PREFIX . "category SET `left` = `left` + 2 WHERE `left` > '" . (int)$category_info['right'] . "'");
-					
-				$this->db->query("UPDATE " . DB_PREFIX . "category SET `left` = '" . (int)($category_info['right'] + 1) . "', `right` = '" . (int)($category_info['right'] + 2) . "' WHERE category_id = '" . (int)$category_id . "'");
-			} elseif ($data['position'] == 'child') {
-				// Add as a child
-				$this->db->query("UPDATE " . DB_PREFIX . "category SET `right` = `right` + 2 WHERE `right` > '" . (int)$category_info['left'] . "'");
-				$this->db->query("UPDATE " . DB_PREFIX . "category SET `left` = `left` + 2 WHERE `left` > '" . (int)$category_info['left'] . "'");
-					
-				$this->db->query("UPDATE " . DB_PREFIX . "category SET `left` = '" . (int)($category_info['left'] + 1) . "', `right` = '" . (int)($category_info['left'] + 2) . "' WHERE category_id = '" . (int)$category_id . "'");
-			}
-		}
 				
 		if (isset($data['image'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "category SET image = '" . $this->db->escape(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8')) . "' WHERE category_id = '" . (int)$category_id . "'");
@@ -54,7 +35,92 @@ class ModelCatalogCategory extends Model {
 	}
 	
 	public function editCategory($category_id, $data) {
+		$this->db->query("UPDATE " . DB_PREFIX . "category SET `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE category_id = '" . (int)$category_id . "'");
 
+		if (isset($data['image'])) {
+			$this->db->query("UPDATE " . DB_PREFIX . "category SET image = '" . $this->db->escape(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8')) . "' WHERE category_id = '" . (int)$category_id . "'");
+		}
+
+		$this->db->query("DELETE FROM " . DB_PREFIX . "category_description WHERE category_id = '" . (int)$category_id . "'");
+
+		foreach ($data['category_description'] as $language_id => $value) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "category_description SET category_id = '" . (int)$category_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', description = '" . $this->db->escape($value['description']) . "'");
+		}
+		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_store WHERE category_id = '" . (int)$category_id . "'");
+		
+		if (isset($data['category_store'])) {		
+			foreach ($data['category_store'] as $store_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "category_to_store SET category_id = '" . (int)$category_id . "', store_id = '" . (int)$store_id . "'");
+			}
+		}
+
+		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_layout WHERE category_id = '" . (int)$category_id . "'");
+
+		if (isset($data['category_layout'])) {
+			foreach ($data['category_layout'] as $store_id => $layout) {
+				if ($layout['layout_id']) {
+					$this->db->query("INSERT INTO " . DB_PREFIX . "category_to_layout SET category_id = '" . (int)$category_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout['layout_id'] . "'");
+				}
+			}
+		}
+						
+		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'category_id=" . (int)$category_id. "'");
+		
+		if ($data['keyword']) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+		}
+		
+		$this->cache->delete('category');
+	}
+	
+	public function deleteCategory($category_id) {
+		
+		// Deleting a node
+		$category_info = $this->getCategory($data['parent_id']);
+		
+		$this->db->query("DELETE FROM nested_category WHERE `LEFT` BETWEEN '" . (int)$category_info['left'] . "' AND '" . (int)$category_info['right'] . "'");
+		
+		$this->db->query("UPDATE nested_category SET rgt = rgt - @myWidth WHERE rgt > @myRight");
+		$this->db->query("UPDATE nested_category SET lft = lft - @myWidth WHERE lft > @myRight");
+		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "category WHERE category_id = '" . (int)$category_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "category_description WHERE category_id = '" . (int)$category_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_store WHERE category_id = '" . (int)$category_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_layout WHERE category_id = '" . (int)$category_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_category WHERE category_id = '" . (int)$category_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'category_id=" . (int)$category_id . "'");
+		
+		$query = $this->db->query("SELECT category_id FROM " . DB_PREFIX . "category WHERE parent_id = '" . (int)$category_id . "'");
+
+		foreach ($query->rows as $result) {
+			$this->deleteCategory($result['category_id']);
+		}
+		
+		$this->cache->delete('category');
+	} 
+	
+	public function moveCategory($category_id, $data) {
+		// Adding a node
+		if ($data['parent_id']) {
+			$category_info = $this->getCategory($data['parent_id']);
+		
+			// Add to the right
+			if ($data['position'] == 'next') { 
+				$this->db->query("UPDATE " . DB_PREFIX . "category SET `right` = `right` + 2 WHERE `right` > '" . (int)$category_info['right'] . "'");
+				$this->db->query("UPDATE " . DB_PREFIX . "category SET `left` = `left` + 2 WHERE `left` > '" . (int)$category_info['right'] . "'");
+					
+				$this->db->query("UPDATE " . DB_PREFIX . "category SET `left` = '" . (int)($category_info['right'] + 1) . "', `right` = '" . (int)($category_info['right'] + 2) . "' WHERE category_id = '" . (int)$category_id . "'");
+			} elseif ($data['position'] == 'child') {
+				// Add as a child
+				$this->db->query("UPDATE " . DB_PREFIX . "category SET `right` = `right` + 2 WHERE `right` > '" . (int)$category_info['left'] . "'");
+				$this->db->query("UPDATE " . DB_PREFIX . "category SET `left` = `left` + 2 WHERE `left` > '" . (int)$category_info['left'] . "'");
+					
+				$this->db->query("UPDATE " . DB_PREFIX . "category SET `left` = '" . (int)($category_info['left'] + 1) . "', `right` = '" . (int)($category_info['left'] + 2) . "' WHERE category_id = '" . (int)$category_id . "'");
+			}
+		}	
+		
+		
 		/*
 		// cat_b.lft + 1 is the destination. 
 		SELECT @destination := (lft + 1)
@@ -132,93 +198,7 @@ foreach($sql as $sqlQuery){
     mysql_query($sqlQuery);
 }		
 		*/
-	
-	
-		$category_info = $this->getCategory($category_id);
 		
-		if ($category_info) {
-
-
-
-
-		}	
-
-		
-		//$this->db->query("UPDATE " . DB_PREFIX . "category SET path = REPLACE('" . $this->db->escape($data['path']) . "') WHERE path LIKE '" . (int)$category_id . "_%'");
-		
-		
-		
-		$this->db->query("UPDATE " . DB_PREFIX . "category SET `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE category_id = '" . (int)$category_id . "'");
-
-		if (isset($data['image'])) {
-			$this->db->query("UPDATE " . DB_PREFIX . "category SET image = '" . $this->db->escape(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8')) . "' WHERE category_id = '" . (int)$category_id . "'");
-		}
-
-		$this->db->query("DELETE FROM " . DB_PREFIX . "category_description WHERE category_id = '" . (int)$category_id . "'");
-
-		foreach ($data['category_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "category_description SET category_id = '" . (int)$category_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', description = '" . $this->db->escape($value['description']) . "'");
-		}
-		
-		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_store WHERE category_id = '" . (int)$category_id . "'");
-		
-		if (isset($data['category_store'])) {		
-			foreach ($data['category_store'] as $store_id) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "category_to_store SET category_id = '" . (int)$category_id . "', store_id = '" . (int)$store_id . "'");
-			}
-		}
-
-		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_layout WHERE category_id = '" . (int)$category_id . "'");
-
-		if (isset($data['category_layout'])) {
-			foreach ($data['category_layout'] as $store_id => $layout) {
-				if ($layout['layout_id']) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "category_to_layout SET category_id = '" . (int)$category_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout['layout_id'] . "'");
-				}
-			}
-		}
-						
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'category_id=" . (int)$category_id. "'");
-		
-		if ($data['keyword']) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
-		}
-		
-		$this->cache->delete('category');
-	}
-	
-	public function deleteCategory($category_id) {
-		
-		// Deleting a node
-		$category_info = $this->getCategory($data['parent_id']);
-		
-		$this->db->query("DELETE FROM nested_category WHERE `LEFT` BETWEEN '" . (int)$category_info['left'] . "' AND '" . (int)$category_info['right'] . "'");
-		
-		$this->db->query("UPDATE nested_category SET rgt = rgt - @myWidth WHERE rgt > @myRight");
-		$this->db->query("UPDATE nested_category SET lft = lft - @myWidth WHERE lft > @myRight");
-		
-		
-		
-				
-		
-		$this->db->query("DELETE FROM " . DB_PREFIX . "category WHERE category_id = '" . (int)$category_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "category_description WHERE category_id = '" . (int)$category_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_store WHERE category_id = '" . (int)$category_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_layout WHERE category_id = '" . (int)$category_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_category WHERE category_id = '" . (int)$category_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'category_id=" . (int)$category_id . "'");
-		
-		$query = $this->db->query("SELECT category_id FROM " . DB_PREFIX . "category WHERE parent_id = '" . (int)$category_id . "'");
-
-		foreach ($query->rows as $result) {
-			$this->deleteCategory($result['category_id']);
-		}
-		
-		$this->cache->delete('category');
-	} 
-	
-	public function moveCategory($category_id, $data) {
-	
 	}
 	
 	public function getCategory($category_id) {

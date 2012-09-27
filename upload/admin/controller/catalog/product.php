@@ -1274,18 +1274,6 @@ class ControllerCatalogProduct extends Controller {
 			} else {
 				$filter_model = '';
 			}
-						
-			if (isset($this->request->get['filter_category_id'])) {
-				$filter_category_id = $this->request->get['filter_category_id'];
-			} else {
-				$filter_category_id = '';
-			}
-			
-			if (isset($this->request->get['filter_sub_category'])) {
-				$filter_sub_category = $this->request->get['filter_sub_category'];
-			} else {
-				$filter_sub_category = '';
-			}
 			
 			if (isset($this->request->get['limit'])) {
 				$limit = $this->request->get['limit'];	
@@ -1294,12 +1282,10 @@ class ControllerCatalogProduct extends Controller {
 			}			
 						
 			$data = array(
-				'filter_name'         => $filter_name,
-				'filter_model'        => $filter_model,
-				'filter_category_id'  => $filter_category_id,
-				'filter_sub_category' => $filter_sub_category,
-				'start'               => 0,
-				'limit'               => $limit
+				'filter_name'  => $filter_name,
+				'filter_model' => $filter_model,
+				'start'        => 0,
+				'limit'        => $limit
 			);
 			
 			$results = $this->model_catalog_product->getProducts($data);

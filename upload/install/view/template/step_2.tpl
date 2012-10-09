@@ -54,7 +54,7 @@
         </tr>
       </table>
     </fieldset>
-    <p>2. Please make sure the extensions listed below are installed.</p>
+    <p>2. Please make sure the PHP extensions listed below are installed.</p>
     <fieldset>
       <table>
         <tr>

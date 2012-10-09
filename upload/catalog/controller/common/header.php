@@ -4,11 +4,12 @@ class ControllerCommonHeader extends Controller {
 		$this->data['title'] = $this->document->getTitle();
 		
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			$this->data['base'] = $this->config->get('config_ssl');
+			$server = $this->config->get('config_ssl');
 		} else {
-			$this->data['base'] = $this->config->get('config_url');
+			$server = $this->config->get('config_url');
 		}
-		
+
+		$this->data['base'] = $server;
 		$this->data['description'] = $this->document->getDescription();
 		$this->data['keywords'] = $this->document->getKeywords();
 		$this->data['links'] = $this->document->getLinks();	 
@@ -17,7 +18,20 @@ class ControllerCommonHeader extends Controller {
 		$this->data['lang'] = $this->language->get('code');
 		$this->data['direction'] = $this->language->get('direction');
 		$this->data['google_analytics'] = html_entity_decode($this->config->get('config_google_analytics'), ENT_QUOTES, 'UTF-8');
-
+		$this->data['name'] = $this->config->get('config_name');
+		
+		if ($this->config->get('config_icon') && file_exists(DIR_IMAGE . $this->config->get('config_icon'))) {
+			$this->data['icon'] = $server . 'image/' . $this->config->get('config_icon');
+		} else {
+			$this->data['icon'] = '';
+		}
+		
+		if ($this->config->get('config_logo') && file_exists(DIR_IMAGE . $this->config->get('config_logo'))) {
+			$this->data['logo'] = $server . 'image/' . $this->config->get('config_logo');
+		} else {
+			$this->data['logo'] = '';
+		}		
+		
 		// Whos Online
 		if ($this->config->get('config_customer_online')) {
 			$this->load->model('tool/online');
@@ -44,26 +58,6 @@ class ControllerCommonHeader extends Controller {
 		}
 				
 		$this->language->load('common/header');
-		
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			$server = HTTPS_IMAGE;
-		} else {
-			$server = HTTP_IMAGE;
-		}	
-				
-		if ($this->config->get('config_icon') && file_exists(DIR_IMAGE . $this->config->get('config_icon'))) {
-			$this->data['icon'] = $server . $this->config->get('config_icon');
-		} else {
-			$this->data['icon'] = '';
-		}
-		
-		$this->data['name'] = $this->config->get('config_name');
-				
-		if ($this->config->get('config_logo') && file_exists(DIR_IMAGE . $this->config->get('config_logo'))) {
-			$this->data['logo'] = $server . $this->config->get('config_logo');
-		} else {
-			$this->data['logo'] = '';
-		}
 		
 		$this->data['text_home'] = $this->language->get('text_home');
 		$this->data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
@@ -98,6 +92,7 @@ class ControllerCommonHeader extends Controller {
 		
 		foreach ($categories as $category) {
 			if ($category['top']) {
+				// Level 2
 				$children_data = array();
 				
 				$children = $this->model_catalog_category->getCategories($category['category_id']);
@@ -112,7 +107,7 @@ class ControllerCommonHeader extends Controller {
 									
 					$children_data[] = array(
 						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),
-						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])	
+						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
 					);						
 				}
 				

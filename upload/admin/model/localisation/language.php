@@ -56,7 +56,20 @@ class ModelLocalisationLanguage extends Model {
 		foreach ($query->rows as $download) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "download_description SET download_id = '" . (int)$download['download_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($download['name']) . "'");
 		}
-				
+		
+		// Filter
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "filter_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+		foreach ($query->rows as $filter) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "filter_description SET filter_id = '" . (int)$filter['filter_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($filter['name']) . "'");
+		}
+		
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "filter_value_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+		foreach ($query->rows as $filter_value) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "filter_value_description SET filter_value_id = '" . (int)$filter_value['filter_value_id'] . "', language_id = '" . (int)$language_id . "', filter_id = '" . (int)$filter_value['filter_id'] . "', name = '" . $this->db->escape($filter_value['name']) . "'");
+		}
+								
 		// Information
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "information_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -183,6 +196,8 @@ class ModelLocalisationLanguage extends Model {
 		
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_group_description WHERE language_id = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "download_description WHERE language_id = '" . (int)$language_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "filter_description WHERE language_id = '" . (int)$language_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "filter_value_description WHERE language_id = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_description WHERE language_id = '" . (int)$language_id . "'");
 		
 		$this->cache->delete('information');

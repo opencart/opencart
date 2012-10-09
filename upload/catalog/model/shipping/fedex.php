@@ -189,8 +189,8 @@ class ModelShippingFedex extends Model {
 		}
 		
 		$method_data = array();
-		
-		if ($quote_data) {
+
+		if ($quote_data || $error) {
 			$title = $this->language->get('text_title');
 
 			if ($this->config->get('fedex_display_weight')) {

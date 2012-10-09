@@ -6,7 +6,7 @@ class ControllerUpgrade extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('upgrade');
 
-			$this->model_upgrade->mysql($this->request->post, 'upgrade.sql');
+			$this->model_upgrade->mysql();
 			
 			$this->redirect($this->url->link('upgrade/success'));
 		}		
@@ -26,7 +26,6 @@ class ControllerUpgrade extends Controller {
 		);
 
 		$this->response->setOutput($this->render());
-
 	}
 
 	public function success() {
@@ -40,26 +39,16 @@ class ControllerUpgrade extends Controller {
 	}
 
 	private function validate() {
-		if (!defined('DB_HOSTNAME')) {
-			$this->error['warning'] = 'Host required!';
-		}
-
-		if (!defined('DB_USERNAME')) {
-			$this->error['warning'] = 'User required!';
-		}
-
-		if (!defined('DB_DATABASE')) {
-			$this->error['warning'] = 'Database Name required!';
-		}
-
-		if (!$connection = @mysql_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD)) {
-			$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct in the config.php file!';
-		} else {
-			if (!mysql_select_db(DB_DATABASE, $connection)) {
-				$this->error['warning'] = 'Error: Database "'. DB_DATABASE . '" does not exist!';
+		if (DB_DRIVER == 'mysql') {		
+			if (!$connection = @mysql_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD)) {
+				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct in the config.php file!';
+			} else {
+				if (!mysql_select_db(DB_DATABASE, $connection)) {
+					$this->error['warning'] = 'Error: Database "'. DB_DATABASE . '" does not exist!';
+				}
+	
+				mysql_close($connection);
 			}
-
-			mysql_close($connection);
 		}
 
     	if (!$this->error) {

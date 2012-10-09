@@ -120,7 +120,7 @@ class ControllerCommonHome extends Controller {
 		fclose($handle); 		
 		
 		if (!file_exists($file)) {
-			$this->data['errorlogs'] = sprintf($this->language->get('error_logs'). DIR_LOGS);
+			$this->data['error_logs'] = sprintf($this->language->get('error_logs'). DIR_LOGS);
 		} else {
 			$this->data['error_logs'] = '';
 			

@@ -5548,7 +5548,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (2358, 153, 'TKI', 'Taranaki', 1),
 (2359, 153, 'WGN', 'Wellington', 1),
 (2360, 153, 'WKO', 'Waikato', 1),
-(2361, 153, 'WAI', 'Wairprarapa', 1),
+(2361, 153, 'WAI', 'Wairarapa', 1),
 (2362, 153, 'WTC', 'West Coast', 1),
 (2363, 154, 'AN', 'Atlantico Norte', 1),
 (2364, 154, 'AS', 'Atlantico Sur', 1),

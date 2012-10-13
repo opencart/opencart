@@ -1,5 +1,5 @@
 html {
-	overflow: -moz-scrollbars-vertical;
+	overflow-y: scroll;
 	margin: 0;
 	padding: 0;
 }
@@ -567,7 +567,7 @@ a.button, input.button {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: bold;
-	background: url('../image/button.png') top left repeat-x;
+	background: url('../image/button.png') repeat-x;
 	-webkit-border-radius: 7px 7px 7px 7px;
 	-moz-border-radius: 7px 7px 7px 7px;
 	-khtml-border-radius: 7px 7px 7px 7px;
@@ -588,7 +588,7 @@ input.button {
 	padding: 0px 12px 0px 12px;
 }
 a.button:hover, input.button:hover {
-	background: url('../image/button-active.png') repeat-x;
+	background-position: 0px -24px;
 }
 .buttons {
 	background: #FFFFFF;

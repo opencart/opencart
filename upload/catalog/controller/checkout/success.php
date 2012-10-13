@@ -1,14 +1,9 @@
 <?php
 class ControllerCheckoutSuccess extends Controller { 
 	public function index() { 	
-		
-		if ( isset($this->session->data['order_id']) && ( ! empty($this->session->data['order_id']))  ) {
-			$this->session->data['last_order_id'] = $this->session->data['order_id'];
-		}
-		
 		if (isset($this->session->data['order_id'])) {
 			$this->cart->clear();
-			
+
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
@@ -24,11 +19,7 @@ class ControllerCheckoutSuccess extends Controller {
 									   
 		$this->language->load('checkout/success');
 		
-		if (! empty($this->session->data['last_order_id']) ) {
-			$this->document->setTitle(sprintf($this->language->get('heading_title_customer'), $this->session->data['last_order_id']));
-		} else {
-    		$this->document->setTitle($this->language->get('heading_title'));
-		}
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->data['breadcrumbs'] = array(); 
 
@@ -56,16 +47,12 @@ class ControllerCheckoutSuccess extends Controller {
         	'separator' => $this->language->get('text_separator')
       	);
 
-		if (! empty($this->session->data['last_order_id']) ) {
-			$this->data['heading_title'] = sprintf($this->language->get('heading_title_customer'), $this->session->data['last_order_id']);
-		} else {
-    		$this->data['heading_title'] = $this->language->get('heading_title');
-		}
+		$this->data['heading_title'] = $this->language->get('heading_title');
 		
 		if ($this->customer->isLogged()) {
-			$this->data['text_message'] = sprintf($this->language->get('text_customer'), $this->url->link('account/order/info&order_id=' . $this->session->data['last_order_id'], '', 'SSL'), $this->session->data['last_order_id'], $this->url->link('account/account', '', 'SSL'), $this->url->link('account/order', '', 'SSL'), $this->url->link('account/download', '', 'SSL'), $this->url->link('information/contact'));
+    		$this->data['text_message'] = sprintf($this->language->get('text_customer'), $this->url->link('account/account', '', 'SSL'), $this->url->link('account/order', '', 'SSL'), $this->url->link('account/download', '', 'SSL'), $this->url->link('information/contact'));
 		} else {
-    		$this->data['text_message'] = sprintf($this->language->get('text_guest'), $this->session->data['last_order_id'], $this->url->link('information/contact'));
+    		$this->data['text_message'] = sprintf($this->language->get('text_guest'), $this->url->link('information/contact'));
 		}
 		
     	$this->data['button_continue'] = $this->language->get('button_continue');

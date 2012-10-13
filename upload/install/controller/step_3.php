@@ -11,13 +11,10 @@ class ControllerStep3 extends Controller {
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
 			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n";
-			$output .= 'define(\'HTTP_IMAGE\', \'' . HTTP_OPENCART . 'image/\');' . "\n";			
-			$output .= 'define(\'HTTP_ADMIN\', \'' . HTTP_OPENCART . 'admin/\');' . "\n\n";
-
+			
 			$output .= '// HTTPS' . "\n";
-			$output .= 'define(\'HTTPS_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n";
-			$output .= 'define(\'HTTPS_IMAGE\', \'' . HTTP_OPENCART . 'image/\');' . "\n\n";
-						
+			$output .= 'define(\'HTTPS_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n\n";
+									
 			$output .= '// DIR' . "\n";
 			$output .= 'define(\'DIR_APPLICATION\', \'' . DIR_OPENCART . 'catalog/\');' . "\n";
 			$output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART. 'system/\');' . "\n";
@@ -31,7 +28,7 @@ class ControllerStep3 extends Controller {
 			$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n\n";
 		
 			$output .= '// DB' . "\n";
-			$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
+			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
 			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_host']) . '\');' . "\n";
 			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_user']) . '\');' . "\n";
 			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($this->request->post['db_password']) . '\');' . "\n";
@@ -48,14 +45,12 @@ class ControllerStep3 extends Controller {
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
 			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . 'admin/\');' . "\n";
-			$output .= 'define(\'HTTP_CATALOG\', \'' . HTTP_OPENCART . '\');' . "\n";
-			$output .= 'define(\'HTTP_IMAGE\', \'' . HTTP_OPENCART . 'image/\');' . "\n\n";
-
+			$output .= 'define(\'HTTP_CATALOG\', \'' . HTTP_OPENCART . '\');' . "\n\n";
+			
 			$output .= '// HTTPS' . "\n";
 			$output .= 'define(\'HTTPS_SERVER\', \'' . HTTP_OPENCART . 'admin/\');' . "\n";
-			$output .= 'define(\'HTTPS_CATALOG\', \'' . HTTP_OPENCART . '\');' . "\n";
-			$output .= 'define(\'HTTPS_IMAGE\', \'' . HTTP_OPENCART . 'image/\');' . "\n\n";
-
+			$output .= 'define(\'HTTPS_CATALOG\', \'' . HTTP_OPENCART . '\');' . "\n\n";
+			
 			$output .= '// DIR' . "\n";
 			$output .= 'define(\'DIR_APPLICATION\', \'' . DIR_OPENCART . 'admin/\');' . "\n";
 			$output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART . 'system/\');' . "\n";
@@ -70,7 +65,7 @@ class ControllerStep3 extends Controller {
 			$output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
-			$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
+			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
 			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_host']) . '\');' . "\n";
 			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_user']) . '\');' . "\n";
 			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($this->request->post['db_password']) . '\');' . "\n";
@@ -84,7 +79,7 @@ class ControllerStep3 extends Controller {
 
 			fclose($file);
 			
-			$this->redirect(HTTP_SERVER . 'index.php?route=step_4');
+			$this->redirect($this->url->link('step_4'));
 		}
 		
 		if (isset($this->error['warning'])) {
@@ -93,7 +88,7 @@ class ControllerStep3 extends Controller {
 			$this->data['error_warning'] = '';
 		}
 
-		if (isset($this->error['error_db_host'])) {
+		if (isset($this->error['db_host'])) {
 			$this->data['error_db_host'] = $this->error['db_host'];
 		} else {
 			$this->data['error_db_host'] = '';
@@ -129,7 +124,13 @@ class ControllerStep3 extends Controller {
 			$this->data['error_email'] = '';
 		}	
 		
-		$this->data['action'] = HTTP_SERVER . 'index.php?route=step_3';
+		$this->data['action'] = $this->url->link('step_3');
+		
+		if (isset($this->request->post['db_driver'])) {
+			$this->data['db_driver'] = $this->request->post['db_driver'];
+		} else {
+			$this->data['db_driver'] = 'mysql';
+		}
 		
 		if (isset($this->request->post['db_host'])) {
 			$this->data['db_host'] = $this->request->post['db_host'];
@@ -179,6 +180,8 @@ class ControllerStep3 extends Controller {
 			$this->data['email'] = '';
 		}
 		
+		$this->data['back'] = $this->url->link('step_2');
+		
 		$this->template = 'step_3.tpl';
 		$this->children = array(
 			'header',
@@ -201,6 +204,18 @@ class ControllerStep3 extends Controller {
 			$this->error['db_name'] = 'Database Name required!';
 		}
 		
+		if ($this->request->post['db_driver'] == 'mysql') {
+			if (!$connection = @mysql_connect($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'])) {
+				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
+			} else {
+				if (!@mysql_select_db($this->request->post['db_name'], $connection)) {
+					$this->error['warning'] = 'Error: Database does not exist!';
+				}
+				
+				mysql_close($connection);
+			}
+		}
+				
 		if (!$this->request->post['username']) {
 			$this->error['username'] = 'Username required!';
 		}
@@ -211,16 +226,6 @@ class ControllerStep3 extends Controller {
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
 			$this->error['email'] = 'Invalid E-Mail!';
-		}
-
-		if (!$connection = @mysql_connect($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'])) {
-			$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
-		} else {
-			if (!@mysql_select_db($this->request->post['db_name'], $connection)) {
-				$this->error['warning'] = 'Error: Database does not exist!';
-			}
-			
-			mysql_close($connection);
 		}
 		
 		if (!is_writable(DIR_OPENCART . 'config.php')) {

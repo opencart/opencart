@@ -25,7 +25,7 @@ class ControllerModuleStore extends Controller {
 			$this->data['stores'][] = array(
 				'store_id' => 0,
 				'name'     => $this->language->get('text_default'),
-				'url'      => HTTP_SERVER . 'index.php?route=common/home'
+				'url'      => HTTP_SERVER . 'index.php?route=common/home&session_id=' . $this->session->getId()
 			);
 			
 			$this->load->model('setting/store');
@@ -36,7 +36,7 @@ class ControllerModuleStore extends Controller {
 				$this->data['stores'][] = array(
 					'store_id' => $result['store_id'],
 					'name'     => $result['name'],
-					'url'      => $result['url'] . 'index.php?route=common/home'
+					'url'      => $result['url'] . 'index.php?route=common/home&session_id=' . $this->session->getId()
 				);
 			}
 	

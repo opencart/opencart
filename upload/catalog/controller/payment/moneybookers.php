@@ -17,7 +17,7 @@ class ControllerPaymentMoneybookers extends Controller {
 		$this->data['cancel_url'] = $this->url->link('checkout/checkout', '', 'SSL');
 		$this->data['status_url'] = $this->url->link('payment/moneybookers/callback');
 		$this->data['language'] = $this->session->data['language'];		
-		$this->data['logo'] = HTTP_IMAGE . $this->config->get('config_logo');
+		$this->data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
 		
         $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 			

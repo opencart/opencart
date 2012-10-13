@@ -12,35 +12,62 @@ IF UPGRADING YOUR EXISTING CART, BE SURE TO READ THE UPGRADE.TXT FILE INSTEAD
 -------
 INSTALL
 -------
+These instructions are for a manual installation using FTP, cPanel or other web hosting Control Panel.
 
-1. Upload all the files and folders to your server from the "Upload" folder.
-   This can be to anywhere of your choice.
-	
-   e.g. /public_html/store or /public_html
+- Linux Install -
 
-2. If you have a Linux/Unix make sure the following folders and files are writable.
-   chmod 0755 or 0777 image/
-   chmod 0755 or 0777 image/cache/
-   chmod 0755 or 0777 image/data/   
-   chmod 0755 or 0777 system/cache/
-   chmod 0755 or 0777 system/logs/
-   chmod 0755 or 0777 download/
-   chmod 0755 or 0777 config.php
-   chmod 0755 or 0777 admin/config.php
+1. Upload all the files and folders to your server from the "Upload" folder. This can be to anywhere of your choice. e.g. /public_html/store or /public_html
 
-3. Make sure you have installed a MySQL Database which has a user assigned to it 
-   DO NOT USE YOUR ROOT USERNAME AND ROOT PASSWORD
+2. For Linux/Unix make sure the following folders and files are writable.
 
-4. Visit the store homepage
-   e.g. http://www.example.com or http://www.example.com/store/
+		chmod 0755 or 0777 image/
+		chmod 0755 or 0777 image/cache/
+		chmod 0755 or 0777 cache/
+		chmod 0755 or 0777 download/
+		chmod 0755 or 0777 config.php
+		chmod 0755 or 0777 admin/config.php
 
-5. Follow the onscreen instructions.
+		If 0755 does not work try 0777.
 
-6. Delete the install directory after install is complete.
+3. Make sure you have installed a MySQL Database which has a user assigned to it
+	DO NOT USE YOUR ROOT USERNAME AND ROOT PASSWORD
 
-More detailed instructions here:
-  http://www.opencart.com/index.php?route=documentation/documentation&path=4
+4. Visit the store homepage e.g. http://www.example.com or http://www.example.com/store/
 
-For any support issues please visit: http://www.opencart.com
+5. You should be taken to the installer page. Follow the onscreen instructions.
+
+6. After successful install, delete the /install/ directory from ftp.
+
+
+- Windows Install -
+
+1. Upload all the files and folders to your server from the "Upload" folder. This can be to anywhere of your choice. e.g. /wwwroot/store or /wwwroot
+
+2. For Windows make sure the following folders and files permissions allow Read and Write.
+
+		image/
+		image/cache/
+		cache/
+		download/
+		config.php
+		admin/config.php
+
+3. Make sure you have installed a MySQL Database which has a user assigned to it
+	DO NOT USE YOUR ROOT USERNAME AND ROOT PASSWORD
+
+5. You should be taken to the installer page. Follow the onscreen instructions.
+
+6. After successful install, delete the /install/ directory from ftp.
+
+
+
+- Local Install -
+
+There are many all-in-one webservers out there and most of them should work with OpenCart out of the box. Some examples...
+
+http://www.ampps.com/
+http://www.usbwebserver.net
+http://www.apachefriends.org/en/xampp.html
+
 
 EOF

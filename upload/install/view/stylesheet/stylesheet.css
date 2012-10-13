@@ -1,127 +1,248 @@
-body {
+html {
+	overflow: -moz-scrollbars-vertical;
 	margin: 0;
 	padding: 0;
-	background: #EFEFEF;
 }
-body, td, th, input, select, textarea {
-	font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
-	font-size: 12px;
-	color: #666666;
+* {
+	font-family: Arial, Verdana, sans-serif;
 }
-h1 {
-	font-size: 20px;
-	font-weight: 200;
-	color: #999;
-	padding-top: 4px;
-	padding-bottom: 6px;
-	padding-left: 38px;	
+body {
+	margin: 0px;
+	padding: 0px;
+	background: #F6F6F6 url('../image/background.png');
+}
+body, p, td, th, input, textarea, select, option {
+	color: #777777;
+	text-decoration: none;
+	font-size: 13px;
+}
+#container > h1 {
+	background: url('../image/heading.png') repeat-y;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 26px;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 26px 27px;
 	margin-top: 0px;
-}
-a, a:visited {
-	color: #999;
-	text-decoration: underline;
-	cursor: pointer;
-}
-b {
-	color: #000000;
+	margin-bottom: 25px;
+	color: #FFF;
+	vertical-align: middle;
 }
 p {
 	margin-top: 0px;
 	margin-bottom: 20px;
 }
+p, ul, ol, li, td {
+	line-height: 18px;
+}
 form {
-	margin: 0;
 	padding: 0;
-} 
-.required {
-	color: #FF0000;
-	margin-right: 5px;
+	margin: 0;
+	display: inline;
 }
-.error {
-	color: #FF0000;
-	display: block;
-	clear: both;
+fieldset {
+	border: 1px solid #DBDBDB;
+	padding: 10px;
+	margin-bottom: 20px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-khtml-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
 }
-.warning {
-	padding: 5px 0px;
-	margin-bottom: 15px;
-	background: #FFDFE0;
-	border: 1px solid #FF9999;
-	font-size: 11px;
-	font-family: Verdana, Geneva, sans-serif;
-	text-align: center;
+fieldset table {
+	width: 100%;
+	border-collapse: collapse;
 }
-.buttons {
-	float: right;
+fieldset table.form tr td:first-child {
+	width: 250px;
 }
-.button {
-	display: inline-block;
+fieldset table td {
+	padding: 5px;
+}
+select, input[type='text'], input[type='password'], textarea {
+	background: #FFFFFF url('../image/field.png') repeat-x;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-khtml-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
+	border: 1px solid #DBDBDB;
+	padding: 4px;
+	color: #000;
+}
+option {
+	color: #000;
+}
+a, a:visited, a b {
+	color: #23A1D1;
+	text-decoration: underline;
+	cursor: pointer;
+}
+a:hover {
 	text-decoration: none;
 }
-.buttons .button {
-	margin-left: 5px;
+img {
+	margin: 0;
+	padding: 0;
 }
-.button .button_left {
-	width: 30px;
-	height: 30px;
-	display: block;
-	float: left;
+a img {
+	border: none;
 }
-.button .button_middle {
-	background: url('../image/button_middle.png') repeat-x;
-	padding-top: 8px;
-	padding-bottom: 8px;
-	display: block;
-	float: left;
-	color: #333333;
+b, strong {
+	color: #555;
 }
-.button .button_right {
-	width: 15px;
-	height: 30px;
-	background: url('../image/button_right.png') no-repeat;
-	display: block;
-	float: left;
-}
-.button .button_continue {
-	background: url('../image/button_save.png') no-repeat;
-}
-.button .button_cancel {
-	background: url('../image/button_cancel.png') no-repeat;
+label {
+	cursor: pointer;
 }
 #container {
-	margin-top: 20px;
-	width: 860px;
+	width: 960px;
+	margin: 0 auto;
+}
+#header {
+	height: 100px;
+	position: relative;
+}
+#header #logo {
+	position: absolute;
+	left: 3px;
+	top: 26px;
+	width: 264px;
+	height: 50px;
+}
+#column-right {
+	float: right;
+	width: 284px;
+	margin-left: 30px;
+	margin-bottom: 20px;
+	min-height: 350px;
+}
+#column-right ul, #column-right ul li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#column-right ul ul {
+	margin-left: 30px;
+}
+#column-right ul a, #column-right ul a b {
+	color: #777777;
+	text-decoration: none;
+}
+#column-right ul li {
+	display: block;
+	padding: 0px 8px 8px 22px;
+	margin-bottom: 8px;
+	border-bottom: 1px solid #DBDBDB;
+	background: url('../image/bullet-arrow.png') 0px 5px no-repeat;
+}
+#content {
+	margin-bottom: 20px;
+	overflow: hidden;
+	min-height: 350px;
+}
+.warning {
+	padding: 10px 10px 10px 33px;
+	margin-bottom: 15px;
+	background: #FFD1D1 url('../image/warning.png') 10px center no-repeat;
+	border: 1px solid #F8ACAC;
+	color: #555555;
+}
+.required {
+	color: #F00;
+}
+.error {
+	color: #F00;
+}
+.good {
+	color: #0F0;
+}
+.bad {
+	color: #F00;
+}
+a.button, input.button {
+	cursor: pointer;
+	color: #FFF;
+	font-size: 13px;
+	border: 1px solid #78883C;
+	background: url('../image/button.png') repeat-x;
+	text-shadow: 0px -1px #7A8A3D;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-khtml-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
+	-webkit-box-shadow: 1px 2px 2px #DDDDDD;
+	-moz-box-shadow: 1px 2px 2px #DDDDDD;
+	box-shadow: 1px 2px 2px #DDDDDD;
+	margin-bottom: 2px;
+}
+a.button:hover, input.button:hover {
+	text-shadow: 0px -1px #626F30;
+	border: 1px solid #606D30;
+	background-position: 0px -26px;
+}
+a.button {
+	display: inline-block;
+	text-decoration: none;
+	padding: 4px 11px 4px 11px;
+}
+input.button {
+	margin: 0;
+	height: 24px;
+	padding: 0px 11px 0px 11px;
+	height: 28px;
+}
+.buttons {
+	border: 1px solid #DBDBDB;
+	overflow: auto;
+	padding: 6px;
+	margin-bottom: 20px;
+}
+.buttons .left {
+	float: left;
+	text-align: left;
+}
+.buttons .right {
+	float: right;
+	text-align: right;
+}
+.buttons .center {
+	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
 }
-#header {
-	margin-bottom: 10px;
+/* Terms */
+.terms {
+	background: #FFFFFF;
+	border: 1px solid #DBDBDB;
+	margin: 3px 0px 10px 0px;
+	padding: 4px;
+	height: 250px;
+	overflow-y: scroll;
 }
-#content_top {
-	background: url('../image/content_top.png') no-repeat;
-	height: 7px;
+.terms p, .terms ul, .terms ol {
+	color: #000000;
 }
-#content_middle {
-	border-left: 1px solid #DDDDDD;
-	border-right: 1px solid #DDDDDD;
+.success {
+	overflow: auto;
+	margin-bottom: 15px;
+}
+.success div {
+	text-align: center;
+	float: left;
+	width: 50%;
+	float: left;
+}
+.success img {
+	border: 1px solid #DDDDDD;
+	padding: 5px;
 	background: #FFF;
-	padding-top: 10px;
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-bottom: 10px;
-	min-height: 400px;
-}
-#content_bottom {
-	background: url('../image/content_bottom.png') no-repeat;
-	height: 7px;
-	margin-bottom: 5px;
+	margin-bottom: 3px;
+	width: 270px;
 }
 #footer {
 	text-align: center;
-	color: #CCC;
+	margin-bottom: 25px;
 }
 #footer a {
-	color: #999;
-	margin-left: 10px;
-	margin-right: 10px;
+	margin: 0px 5px;
+	line-height: 28px;
 }

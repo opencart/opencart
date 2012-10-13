@@ -1,7 +1,7 @@
 <?php
-class ControllerExtensionManage extends Controller {
+class ControllerExtensionManager extends Controller {
 	public function index() {
-		$this->load->language('extension/manage');
+		$this->load->language('extension/manager');
 		 
 		$this->document->setTitle($this->language->get('heading_title')); 
 
@@ -15,7 +15,7 @@ class ControllerExtensionManage extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('extension/manage', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('extension/manager', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => ' :: '
    		);
 		
@@ -25,7 +25,7 @@ class ControllerExtensionManage extends Controller {
 		
 		$this->data['token'] = $this->session->data['token'];
 		
-		$this->template = 'extension/manage.tpl';
+		$this->template = 'extension/manager.tpl';
 		$this->children = array(
 			'common/header',
 			'common/footer'
@@ -35,11 +35,11 @@ class ControllerExtensionManage extends Controller {
 	}
 	
 	public function upload() {
-		$this->language->load('extension/manage');
+		$this->language->load('extension/manager');
 		
 		$json = array();
 		
-		if (!$this->user->hasPermission('modify', 'extension/manage')) {
+		if (!$this->user->hasPermission('modify', 'extension/manager')) {
       		$json['error'] = $this->language->get('error_permission') . "\n";
     	}		
 		
@@ -100,30 +100,38 @@ class ControllerExtensionManage extends Controller {
 				exit('Couldn\'t connect as ' . $this->config->get('config_ftp_username'));
 			}
 			
-			foreach ($files as $file) {
-				$destination = substr($file, strlen($directory));
+			if ($this->config->get('config_ftp_root')) {
+				$root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
 				
+				if (!$root) {
+					exit('Couldn\'t change to directory ' . $this->config->get('config_ftp_root'));
+				}
+			}
+		
+			foreach ($files as $file) {
 				// Upload everything in the upload directory
-				if (substr($destination, 0, 7) == 'upload/') {
+				if (substr(substr($file, strlen($directory)), 0, 7) == 'upload/') {
+					$destination = substr(substr($file, strlen($directory)), 7);
+					
 					if (is_dir($file)) {
-						$list = ftp_nlist($connection, $this->config->get('config_ftp_root') . substr($destination, 0, strrpos($destination, '/')));
+						$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
 						
-						if (!in_array('/' . $destination, $list)) {
-							if (ftp_mkdir($connection, $this->config->get('config_ftp_root') . substr($destination, 7))) {
+						if (!in_array($destination, $list)) {
+							if (ftp_mkdir($connection, $destination)) {
 								echo 'made directory ' . $destination . '<br />';
 							}
 						}
-					}		
+					}	
 					
 					if (is_file($file)) {
-						if (ftp_put($connection, $this->config->get('config_ftp_root') . substr($destination, 7), $file, FTP_ASCII)) {		
+						if (ftp_put($connection, $destination, $file, FTP_ASCII)) {		
 							echo 'Successfully uploaded ' . $file . '<br />';
 						}
 					}
-				} elseif (strrchr($file, '.') != '.sql') {
-					
-				} elseif (strrchr($file, '.') != '.xml') {
-					
+				} elseif (strrchr(basename($file), '.') == '.sql') {
+					//file_get_contents($file);
+				} elseif (strrchr(basename($file), '.') == '.xml') {
+					//file_get_contents($file);
 				}
 			}
 			

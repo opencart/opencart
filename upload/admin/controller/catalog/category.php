@@ -44,6 +44,12 @@ class ControllerCatalogCategory extends Controller {
 		$this->load->model('catalog/category');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+
+			
+			if (isset($this->request->post['parent']) && $this->request->post['parent'] == "") {
+				$this->request->post['parent_id'] = 0;
+			}
+
 			$this->model_catalog_category->editCategory($this->request->get['category_id'], $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -224,6 +230,7 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
+		$this->data['entry_parent'] = $this->language->get('entry_parent');
 		$this->data['entry_image'] = $this->language->get('entry_image');
 		$this->data['entry_top'] = $this->language->get('entry_top');
 		$this->data['entry_column'] = $this->language->get('entry_column');		
@@ -289,7 +296,21 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$this->data['category_description'] = array();
 		}
-				
+
+		if (isset($this->request->post['parent_id'])) {
+			$this->data['parent_id'] = $this->request->post['parent_id'];
+		} elseif (!empty($category_info)) {
+			$this->data['parent_id'] = $category_info['parent_id'];
+		} else {
+			$this->data['parent_id'] = 0;
+		}
+
+		if(isset($this->data['parent_id']) && $this->data['parent_id'] > 0){
+			$this->data['parent'] = $this->model_catalog_category->getCategoryDescriptions($this->data['parent_id']);
+		} else {
+			$this->data['parent'] = "";
+		}
+					
 		$this->load->model('setting/store');
 		
 		$this->data['stores'] = $this->model_setting_store->getStores();

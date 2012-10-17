@@ -52,8 +52,8 @@
           <table class="form">
             <tr>
               <td><?php echo $entry_parent; ?></td>
-              <td><input type="text" name="parent" value="<?php echo $parent; ?>" size="100" />
-                <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" /></td>
+              <td><input type="text" name="parent" id="parent" value="<?php echo isset($parent[$language['language_id']]) ? $parent[$language['language_id']]['name'] : ''; ?>" size="100" />
+                <input type="hidden" name="parent_id" id="parent_id" value="<?php echo $parent_id; ?>" /></td>
             </tr>
             <tr>
               <td><?php echo $entry_store; ?></td>
@@ -200,8 +200,8 @@ $('input[name=\'parent\']').autocomplete({
 		});
 	},
 	select: function(event, ui) {
-		$('input[name=\'parent\']').val(ui.item.label);
-		$('input[name=\'parent_id\']').val(ui.item.value);
+		document.getElementById('parent').value = ui.item.label;
+		document.getElementById('parent_id').value = ui.item.value;
 		
 		return false;
 	},

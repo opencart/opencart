@@ -178,7 +178,16 @@ class ControllerAccountDownload extends Controller {
 					
 					if (ob_get_level()) ob_end_clean();
 					
-					readfile($file, 'rb');
+					ob_clean();
+					$handle = fopen($file, "rb");
+					$chunksize=(filesize($file)/1024);
+			
+					set_time_limit(0);
+					while (!feof($handle)) {
+						echo fgets($handle, $chunksize);
+						flush();
+					}
+					fclose($handle);
 					
 					$this->model_account_download->updateRemaining($this->request->get['order_download_id']);
 					

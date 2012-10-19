@@ -82,8 +82,10 @@ class ControllerAccountWishList extends Controller {
 			if ($product_info) { 
 				if ($product_info['image']) {
 					$image = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_wishlist_width'), $this->config->get('config_image_wishlist_height'));
+				} elseif(file_exists(DIR_IMAGE . 'no_image.jpg')) {
+					$image = $this->model_tool_image->resize('no_image.jpg', $this->config->get('config_image_wishlist_width'), $this->config->get('config_image_wishlist_height'));
 				} else {
-					$image = false;
+					$image = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_wishlist_width'), $this->config->get('config_image_wishlist_height'));
 				}
 
 				if ($product_info['quantity'] <= 0) {

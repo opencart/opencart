@@ -189,17 +189,22 @@ class ControllerProductProduct extends Controller {
 			}
 			
 			$this->load->model('tool/image');
-
+			
+			
 			if ($product_info['image']) {
 				$this->data['popup'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+			} elseif(file_exists(DIR_IMAGE . 'no_image.jpg')) {
+				$this->data['popup'] = $this->model_tool_image->resize('no_image.jpg', $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
 			} else {
-				$this->data['popup'] = '';
+				$this->data['popup'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
 			}
 			
 			if ($product_info['image']) {
 				$this->data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+			} elseif(file_exists(DIR_IMAGE . 'no_image.jpg')) {
+				$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
 			} else {
-				$this->data['thumb'] = '';
+				$this->data['thumb'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
 			}
 			
 			$this->data['images'] = array();

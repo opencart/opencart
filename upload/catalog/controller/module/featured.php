@@ -26,9 +26,11 @@ class ControllerModuleFeatured extends Controller {
 			
 			if ($product_info) {
 				if ($product_info['image']) {
-					$image = $this->model_tool_image->resize($product_info['image'], $setting['image_width'], $setting['image_height']);
+					$image = $product_info['image'];
+				} elseif(file_exists(DIR_IMAGE . 'no_image.jpg')) {
+					$image = 'no_image.jpg';
 				} else {
-					$image = false;
+					$image = 'no_image.png';
 				}
 
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -51,7 +53,7 @@ class ControllerModuleFeatured extends Controller {
 					
 				$this->data['products'][] = array(
 					'product_id' => $product_info['product_id'],
-					'thumb'   	 => $image,
+					'thumb'   	 => $this->model_tool_image->resize($image, $setting['image_width'], $setting['image_height']),
 					'name'    	 => $product_info['name'],
 					'price'   	 => $price,
 					'special' 	 => $special,

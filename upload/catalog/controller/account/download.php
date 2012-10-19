@@ -170,13 +170,13 @@ class ControllerAccountDownload extends Controller {
 			if (!headers_sent()) {
 				if (file_exists($file)) {
 					header('Content-Type: application/octet-stream');
-					header('Content-Description: File Transfer');
 					header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
-					header('Content-Transfer-Encoding: binary');
 					header('Expires: 0');
 					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 					header('Pragma: public');
 					header('Content-Length: ' . filesize($file));
+					
+					if (ob_get_level()) ob_end_clean();
 					
 					readfile($file, 'rb');
 					

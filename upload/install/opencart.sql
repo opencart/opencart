@@ -2061,7 +2061,7 @@ INSERT INTO `oc_product_attribute` (`product_id`, `attribute_id`, `language_id`,
 
 DROP TABLE IF EXISTS `oc_product_description`;
 CREATE TABLE `oc_product_description` (
-  `product_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin NOT NULL,
@@ -5548,7 +5548,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (2358, 153, 'TKI', 'Taranaki', 1),
 (2359, 153, 'WGN', 'Wellington', 1),
 (2360, 153, 'WKO', 'Waikato', 1),
-(2361, 153, 'WAI', 'Wairprarapa', 1),
+(2361, 153, 'WAI', 'Wairarapa', 1),
 (2362, 153, 'WTC', 'West Coast', 1),
 (2363, 154, 'AN', 'Atlantico Norte', 1),
 (2364, 154, 'AS', 'Atlantico Sur', 1),

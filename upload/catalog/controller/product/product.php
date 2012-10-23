@@ -310,9 +310,11 @@ class ControllerProductProduct extends Controller {
 			
 			foreach ($results as $result) {
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+					$image = $result['image'];
+				} elseif(file_exists(DIR_IMAGE . 'no_image.jpg')) {
+					$image = 'no_image.jpg';
 				} else {
-					$image = false;
+					$image = 'no_image.png';
 				}
 				
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -335,7 +337,7 @@ class ControllerProductProduct extends Controller {
 							
 				$this->data['products'][] = array(
 					'product_id' => $result['product_id'],
-					'thumb'   	 => $image,
+					'thumb'   	 => $this->model_tool_image->resize($image, $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height')),
 					'name'    	 => $result['name'],
 					'price'   	 => $price,
 					'special' 	 => $special,

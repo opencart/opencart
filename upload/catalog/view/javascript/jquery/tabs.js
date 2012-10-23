@@ -6,16 +6,16 @@ $.fn.tabs = function() {
 		
 		$(obj.attr('href')).hide();
 		
-		$(obj).click(function() {
+		obj.click(function() {
 			$(selector).removeClass('selected');
-			
-			$(selector).each(function(i, element) {
-				$($(element).attr('href')).hide();
-			});
 			
 			$(this).addClass('selected');
 			
 			$($(this).attr('href')).fadeIn();
+			
+			$(selector).not(this).each(function(i, element) {
+				$($(element).attr('href')).hide();
+			});
 			
 			return false;
 		});

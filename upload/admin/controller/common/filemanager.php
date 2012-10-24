@@ -11,7 +11,10 @@ class ControllerCommonFileManager extends Controller {
 			$this->data['base'] = HTTPS_SERVER;
 		} else {
 			$this->data['base'] = HTTP_SERVER;
-		}
+		} 		
+
+		$this->data['lang'] = $this->language->get('code');
+		$this->data['direction'] = $this->language->get('direction');
 		
 		$this->data['entry_folder'] = $this->language->get('entry_folder');
 		$this->data['entry_move'] = $this->language->get('entry_move');

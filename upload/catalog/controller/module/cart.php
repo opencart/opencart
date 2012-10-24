@@ -63,8 +63,10 @@ class ControllerModuleCart extends Controller {
 		foreach ($this->cart->getProducts() as $product) {
 			if ($product['image']) {
 				$image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
+			} elseif(file_exists(DIR_IMAGE . 'no_image.jpg')) {
+				$image = $this->model_tool_image->resize('no_image.jpg', $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
 			} else {
-				$image = '';
+				$image = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
 			}
 							
 			$option_data = array();

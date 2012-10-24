@@ -172,30 +172,32 @@ class ControllerCheckoutCart extends Controller {
 			} else {
 				$this->data['weight'] = '';
 			}
-						 
+
 			$this->load->model('tool/image');
-			
+
       		$this->data['products'] = array();
-			
+
 			$products = $this->cart->getProducts();
 
       		foreach ($products as $product) {
 				$product_total = 0;
-					
+
 				foreach ($products as $product_2) {
 					if ($product_2['product_id'] == $product['product_id']) {
 						$product_total += $product_2['quantity'];
 					}
-				}			
+				}
 				
 				if ($product['minimum'] > $product_total) {
 					$this->data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
-				}				
-					
+				}
+
 				if ($product['image']) {
-					$image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
+					$image = $product['image'];
+				} elseif(file_exists(DIR_IMAGE . 'no_image.jpg')) {
+					$image = 'no_image.jpg';
 				} else {
-					$image = '';
+					$image = 'no_image.png';
 				}
 
 				$option_data = array();
@@ -231,7 +233,7 @@ class ControllerCheckoutCart extends Controller {
 				
         		$this->data['products'][] = array(
           			'key'      => $product['key'],
-          			'thumb'    => $image,
+          			'thumb'    => $this->model_tool_image->resize($image, $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height')),
 					'name'     => $product['name'],
           			'model'    => $product['model'],
           			'option'   => $option_data,

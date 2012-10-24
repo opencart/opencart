@@ -100,9 +100,12 @@ class ControllerInformationInformation extends Controller {
 		}      
 		
 		$information_info = $this->model_catalog_information->getInformation($information_id);
+		
+		$lang = $this->language->get('code');
+		$direction = $this->language->get('direction');
 
 		if ($information_info) {
-			$output  = '<html dir="ltr" lang="en">' . "\n";
+			$output  = '<html dir="'. $direction .'" lang="' . $lang . '">' . "\n";
 			$output .= '<head>' . "\n";
 			$output .= '  <title>' . $information_info['title'] . '</title>' . "\n";
 			$output .= '  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . "\n";

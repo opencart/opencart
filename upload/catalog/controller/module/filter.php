@@ -31,8 +31,14 @@ class ControllerModuleFilter extends Controller {
 
 		$categories = $this->model_catalog_filter->getCategories(0);
 
+		$config_product_count = $this->config->get('config_product_count');
+		$product_total = '';
+		$total = '';
+		
 		foreach ($categories as $filter) {
-			$total = $this->model_catalog_product->getTotalProducts(array('filter_filter_id' => $filter['filter_id']));
+			if ($config_product_count) {
+				$total = $this->model_catalog_product->getTotalProducts(array('filter_filter_id' => $filter['filter_id']));
+			}
 
 			$children_data = array();
 
@@ -44,20 +50,21 @@ class ControllerModuleFilter extends Controller {
 					'filter_sub_filter' => true
 				);
 
-				$product_total = $this->model_catalog_product->getTotalProducts($data);
-
-				$total += $product_total;
+				if ($config_product_count) {
+					$product_total = $this->model_catalog_product->getTotalProducts($data);
+					$total += $product_total;
+				}
 
 				$children_data[] = array(
 					'filter_id' => $child['filter_id'],
-					'name'        => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),
+					'name'        => $child['name'] . ($product_total != '' ? ' (' . $product_total . ')' : ''),
 					'href'        => $this->url->link('product/filter', 'path=' . $filter['filter_id'] . '_' . $child['filter_id'])	
 				);		
 			}
 
 			$this->data['categories'][] = array(
 				'filter_id' => $filter['filter_id'],
-				'name'        => $filter['name'] . ($this->config->get('config_product_count') ? ' (' . $total . ')' : ''),
+				'name'        => $filter['name'] . ($total != '' ? ' (' . $total . ')' : ''),
 				'children'    => $children_data,
 				'href'        => $this->url->link('product/filter', 'path=' . $filter['filter_id'])
 			);	

@@ -8,7 +8,7 @@ class ModelShippingWeight extends Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "geo_zone ORDER BY name");
 	
 		foreach ($query->rows as $result) {
-			if ($this->config->get('weight_' . $result['geo_zone_id'] . '_status')) {
+			if ($this->config->get('weight_' . $result['geo_zone_id'] . '_status') && $this->cart->getSubTotal() < $this->config->get('free_total')) {
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$result['geo_zone_id'] . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 			
 				if ($query->num_rows) {

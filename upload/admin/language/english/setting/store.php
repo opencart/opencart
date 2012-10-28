@@ -52,7 +52,7 @@ $_['entry_order_status']           = 'Order Status:<br /><span class="help">Set 
 $_['entry_stock_display']          = 'Display Stock:<br /><span class="help">Display stock quantity on the product page.</span>';
 $_['entry_stock_checkout']         = 'Stock Checkout:<br /><span class="help">Allow customers to still checkout if the products they are ordering are not in stock.</span>';
 $_['entry_logo']                   = 'Store Logo:';
-$_['entry_icon']                   = 'Icon:<br /><span class="help">The icon should be a PNG that is 16px x 16px.</span>';
+$_['entry_icon']                   = 'Icon:<br /><span class="help">The icon should be a PNG that is 16px × 16px.</span>';
 $_['entry_image_category']         = 'Category Image Size:';
 $_['entry_image_thumb']            = 'Product Image Thumb Size:';
 $_['entry_image_popup']            = 'Product Image Popup Size:';

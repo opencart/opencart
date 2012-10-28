@@ -37,7 +37,7 @@ class ControllerPaymentMoneybookers extends Controller {
 		$products = '';
 		
 		foreach ($this->cart->getProducts() as $product) {
-    		$products .= $product['quantity'] . ' x ' . $product['name'] . ', ';
+			$products .= $product['quantity'] . ' × ' . $product['name'] . ', ';
     	}		
 		
 		$this->data['detail1_text'] = $products;

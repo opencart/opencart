@@ -57,7 +57,7 @@ $_['entry_international']   = 'International Services:';
 $_['entry_size']            = 'Size:';
 $_['entry_container']       = 'Container:';
 $_['entry_machinable']      = 'Machinable:';
-$_['entry_dimension']       = 'Dimensions (L x W x H):<br/><span class="help">Average package dimensions for shipping package. Product dimensions are not used for shipping at this time.</span>';
+$_['entry_dimension']       = 'Dimensions (L × W × H):<br/><span class="help">Average package dimensions for shipping package. Product dimensions are not used for shipping at this time.</span>';
 $_['entry_display_time']    = 'Display Delivery Time:<br /><span class="help">Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)</span>';
 $_['entry_display_weight']  = 'Display Delivery Weight:<br /><span class="help">Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 Kg\'s)</span>';
 $_['entry_weight_class']    = 'Weight Class:<br /><span class="help">Must be set to Pound.</span>';

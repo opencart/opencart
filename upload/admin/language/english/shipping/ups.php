@@ -71,7 +71,7 @@ $_['entry_insurance']              = 'Enable Insurance:<span class="help">Enable
 $_['entry_display_weight']         = 'Display Delivery Weight:<br /><span class="help">Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 Kg\'s)</span>';
 $_['entry_weight_class']           = 'Weight Class:<span class="help">Set to kilograms or pounds.</span>';
 $_['entry_length_class']           = 'Length Class:<span class="help">Set to centimeters or inches.</span>';
-$_['entry_dimension']			   = 'Dimensions (L x W x H):<br /><span class="help">This is assumed to be your average packing box size. Individual item dimensions are not supported at this time so you must enter average dimensions like 5x5x5.</span>';
+$_['entry_dimension']			   = 'Dimensions (L × W × H):<br /><span class="help">This is assumed to be your average packing box size. Individual item dimensions are not supported at this time so you must enter average dimensions like 5x5x5.</span>';
 $_['entry_tax_class']              = 'Tax Class:';
 $_['entry_geo_zone']               = 'Geo Zone:';
 $_['entry_status']                 = 'Status:';

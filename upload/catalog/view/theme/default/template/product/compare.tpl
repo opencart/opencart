@@ -84,7 +84,7 @@
       <tr>
         <td><?php echo $text_dimension; ?></td>
         <?php foreach ($products as $product) { ?>
-        <td><?php echo $products[$product['product_id']]['length']; ?> x <?php echo $products[$product['product_id']]['width']; ?> x <?php echo $products[$product['product_id']]['height']; ?></td>
+        <td><?php echo $products[$product['product_id']]['length']; ?> × <?php echo $products[$product['product_id']]['width']; ?> × <?php echo $products[$product['product_id']]['height']; ?></td>
         <?php } ?>
       </tr>
     </tbody>

@@ -46,7 +46,7 @@ class ControllerCheckoutError extends Controller {
     		$this->data['heading_title'] = $this->language->get('heading_title');
 		}
 		
-    	$this->data['text_message'] = $this->language->get('text_customer');
+    	$this->data['text_message'] = sprintf($this->language->get('text_customer'), $this->url->link('information/contact'));
 		
     	$this->data['button_continue'] = $this->language->get('button_continue');
 

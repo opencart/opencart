@@ -1102,22 +1102,18 @@ a.button:hover, input.button:hover {
 	padding: 0px 5px 10px 5px;
 	margin-bottom: 20px;
 	color: #4D4D4D;
-	overflow: auto;
-}
-.product-info .cart div {
-	float: left;
-	vertical-align: middle;
 }
 .product-info .cart div > span {
-	padding-top: 7px;
-	display: block;
 	color: #999;
+}
+.product-info .cart .links {
+	display: inline-block;
+	vertical-align: middle;
 }
 .product-info .cart .minimum {
 	padding-top: 5px;
 	font-size: 11px;
 	color: #999;
-	clear: both;
 }
 .product-info .review {
 	color: #4D4D4D;

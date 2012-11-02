@@ -44,9 +44,9 @@
                             <tr>
                                 <td><?php echo $entry_pending_order_status; ?></td>
                                 <td>
-                                    <select name="klarna_pending_order_status_id">
+                                    <select name="klarna_invoice_pending_order_status_id">
                                         <?php foreach ($order_statuses as $order_status) { ?>
-                                            <?php if ($order_status['order_status_id'] == $klarna_pending_order_status_id) { ?>
+                                            <?php if ($order_status['order_status_id'] == $klarna_invoice_pending_order_status_id) { ?>
                                                 <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                                             <?php } else { ?>
                                                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -58,9 +58,9 @@
                             <tr>
                                 <td><?php echo $entry_accepted_order_status; ?></td>
                                 <td>
-                                    <select name="klarna_accepted_order_status_id">
+                                    <select name="klarna_invoice_accepted_order_status_id">
                                         <?php foreach ($order_statuses as $order_status) { ?>
-                                            <?php if ($order_status['order_status_id'] == $klarna_accepted_order_status_id) { ?>
+                                            <?php if ($order_status['order_status_id'] == $klarna_invoice_accepted_order_status_id) { ?>
                                                 <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                                             <?php } else { ?>
                                                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -74,10 +74,10 @@
                                     
                                 <tr>
                                     <td style="text-align: center">
-                                        <?php if ($klarna_country[$iso_3]['status'] == 1) { ?>
-                                            <input type="checkbox" checked="checked" class="input_country" id="input_coutry_<?php echo $iso_3 ?>" name="klarna_country[<?php echo $iso_3 ?>][status]" value="1" />
+                                        <?php if ($klarna_invoice_country[$iso_3]['status'] == 1) { ?>
+                                            <input type="checkbox" checked="checked" class="input_country" id="input_coutry_<?php echo $iso_3 ?>" name="klarna_invoice_country[<?php echo $iso_3 ?>][status]" value="1" />
                                         <?php } else { ?>
-                                            <input type="checkbox" class="input_country" id="input_coutry_<?php echo $iso_3 ?>" name="klarna_country[<?php echo $iso_3 ?>][status]" value="1" />
+                                            <input type="checkbox" class="input_country" id="input_coutry_<?php echo $iso_3 ?>" name="klarna_invoice_country[<?php echo $iso_3 ?>][status]" value="1" />
                                         <?php } ?>
                                     </td>
                                     <td>
@@ -88,7 +88,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <?php if ($klarna_country[$iso_3]['status'] == 1) { ?>
+                                        <?php if ($klarna_invoice_country[$iso_3]['status'] == 1) { ?>
                                         <div class="country_options">
                                         <?php } else { ?>
                                         <div class="country_options hidden">
@@ -96,22 +96,22 @@
                                             <table class="form sub-form">
                                                 <tr>
                                                     <td><label for="input_merchant_<?php echo $iso_3 ?>"><?php echo $entry_merchant ?></label></td>
-                                                    <td><input type="text" id="input_merchant_<?php echo $iso_3 ?>" name="klarna_country[<?php echo $iso_3 ?>][merchant]" value="<?php echo $klarna_country[$iso_3]['merchant'] ?>" /></td>
+                                                    <td><input type="text" id="input_merchant_<?php echo $iso_3 ?>" name="klarna_invoice_country[<?php echo $iso_3 ?>][merchant]" value="<?php echo $klarna_invoice_country[$iso_3]['merchant'] ?>" /></td>
                                                 </tr>
                                                 <tr>
                                                     <td><label for="input_secret_<?php echo $iso_3 ?>"><?php echo $entry_secret ?></label></td>
-                                                    <td><input type="text" id="input_secret_<?php echo $iso_3 ?>" name="klarna_country[<?php echo $iso_3 ?>][secret]" value="<?php echo $klarna_country[$iso_3]['secret'] ?>" /></td>
+                                                    <td><input type="text" id="input_secret_<?php echo $iso_3 ?>" name="klarna_invoice_country[<?php echo $iso_3 ?>][secret]" value="<?php echo $klarna_invoice_country[$iso_3]['secret'] ?>" /></td>
                                                 </tr>
                                                 <tr>
                                                     <td><label for="select_server_<?php echo $iso_3 ?>"><?php echo $entry_server; ?></label></td>
                                                     <td>
-                                                        <select id="select_server_<?php echo $iso_3 ?>" name="klarna_country[<?php echo $iso_3 ?>][server]">
-                                                            <?php if ($klarna_country[$iso_3]['server'] == 'live') { ?>
+                                                        <select id="select_server_<?php echo $iso_3 ?>" name="klarna_invoice_country[<?php echo $iso_3 ?>][server]">
+                                                            <?php if ($klarna_invoice_country[$iso_3]['server'] == 'live') { ?>
                                                                 <option value="live" selected="selected"><?php echo $text_live; ?></option>
                                                             <?php } else { ?>
                                                                 <option value="live"><?php echo $text_live; ?></option>
                                                             <?php } ?>
-                                                            <?php if ($klarna_country[$iso_3]['server'] == 'beta') { ?>
+                                                            <?php if ($klarna_invoice_country[$iso_3]['server'] == 'beta') { ?>
                                                                 <option value="beta" selected="selected"><?php echo $text_beta; ?></option>
                                                             <?php } else { ?>
                                                                 <option value="beta"><?php echo $text_beta; ?></option>
@@ -120,56 +120,24 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><?php echo $entry_klarna_invoice ?></td>
-                                                    <td>
-                                                        <?php if ($klarna_country[$iso_3]['invoice']) { ?>
-                                                            <input id="invoice_<?php echo $iso_3 ?>_yes" type="radio" name="klarna_country[<?php echo $iso_3 ?>][invoice]" value="1" checked="checked" />
-                                                            <label for="invoice_<?php echo $iso_3 ?>_yes"><?php echo $text_enabled ?></label>
-                                                            <input id="invoice_<?php echo $iso_3 ?>_no" type="radio" name="klarna_country[<?php echo $iso_3 ?>][invoice]" value="0" />
-                                                            <label for="invoice_<?php echo $iso_3 ?>_no"><?php echo $text_disabled ?></label>
-                                                        <?php } else { ?>
-                                                            <input id="invoice_<?php echo $iso_3 ?>_yes" type="radio" name="klarna_country[<?php echo $iso_3 ?>][invoice]" value="1" />
-                                                            <label for="invoice_<?php echo $iso_3 ?>_yes"><?php echo $text_enabled ?></label>
-                                                            <input id="invoice_<?php echo $iso_3 ?>_no" type="radio" name="klarna_country[<?php echo $iso_3 ?>][invoice]" value="0" checked="checked" />
-                                                            <label for="invoice_<?php echo $iso_3 ?>_no"><?php echo $text_disabled ?></label>
-                                                        <?php } ?>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><?php echo $entry_klarna_account ?></td>
-                                                    <td>
-                                                        <?php if ($klarna_country[$iso_3]['account']) { ?>
-                                                            <input id="account_<?php echo $iso_3 ?>_yes" type="radio" name="klarna_country[<?php echo $iso_3 ?>][account]" value="1" checked="checked" />
-                                                            <label for="account_<?php echo $iso_3 ?>_yes"><?php echo $text_enabled ?></label>
-                                                            <input id="account_<?php echo $iso_3 ?>_no" type="radio" name="klarna_country[<?php echo $iso_3 ?>][account]" value="0" />
-                                                            <label for="account_<?php echo $iso_3 ?>_no"><?php echo $text_disabled ?></label>
-                                                        <?php } else { ?>
-                                                            <input id="account_<?php echo $iso_3 ?>_yes" type="radio" name="klarna_country[<?php echo $iso_3 ?>][account]" value="1" />
-                                                            <label for="account_<?php echo $iso_3 ?>_yes"><?php echo $text_enabled ?></label>
-                                                            <input id="account_<?php echo $iso_3 ?>_no" type="radio" name="klarna_country[<?php echo $iso_3 ?>][account]" value="0" checked="checked" />
-                                                            <label for="account_<?php echo $iso_3 ?>_no"><?php echo $text_disabled ?></label>
-                                                        <?php } ?>
-                                                    </td>
-                                                </tr>
-                                                <tr>
                                                     <td><label for="input_minimum_<?php echo $iso_3?>"><?php echo $entry_minimum_amount ?></label></td>
-                                                    <td><input id="input_minimum_<?php echo $iso_3?>"type="text" name="klarna_country[<?php echo $iso_3 ?>][minimum]" value="<?php echo $klarna_country[$iso_3]['minimum'] ?>" /></td>
+                                                    <td><input id="input_minimum_<?php echo $iso_3?>"type="text" name="klarna_invoice_country[<?php echo $iso_3 ?>][minimum]" value="<?php echo $klarna_invoice_country[$iso_3]['minimum'] ?>" /></td>
                                                 </tr>
                                                 <tr>
                                                     <td><label for="input_sort_order_<?php echo $iso_3?>"><?php echo $entry_sort_order ?></label></td>
-                                                    <td><input id="input_sort_order_<?php echo $iso_3?>" type="text" name="klarna_country[<?php echo $iso_3 ?>][sort_order]" value="<?php echo $klarna_country[$iso_3]['sort_order'] ?>" /></td>
+                                                    <td><input id="input_sort_order_<?php echo $iso_3?>" type="text" name="klarna_invoice_country[<?php echo $iso_3 ?>][sort_order]" value="<?php echo $klarna_invoice_country[$iso_3]['sort_order'] ?>" /></td>
                                                 </tr>
                                                 <tr>
                                                     <td><label for="select_geo_zone_<?php echo $iso_3?>"><?php echo $entry_geo_zone ?></label></td>
                                                     <td>
-                                                        <select id="select_geo_zone_<?php echo $iso_3 ?>" name="klarna_country[<?php echo $iso_3 ?>][geo_zone_id]">
-                                                            <?php if ($klarna_country[$iso_3]['geo_zone_id'] == 0) { ?>
+                                                        <select id="select_geo_zone_<?php echo $iso_3 ?>" name="klarna_invoice_country[<?php echo $iso_3 ?>][geo_zone_id]">
+                                                            <?php if ($klarna_invoice_country[$iso_3]['geo_zone_id'] == 0) { ?>
                                                                 <option value="0" selected="selected"><?php echo $text_all_zones ?></option>
                                                             <?php } else {?>
                                                                 <option value="0"><?php echo $text_all_zones ?></option>
                                                             <?php } ?>
                                                             <?php foreach ($geo_zones as $geo_zone) { ?>
-                                                                <?php if ($geo_zone['geo_zone_id'] == $klarna_country[$iso_3]['geo_zone_id']) {  ?>
+                                                                <?php if ($geo_zone['geo_zone_id'] == $klarna_invoice_country[$iso_3]['geo_zone_id']) {  ?>
                                                                     <option value="<?php echo $geo_zone['geo_zone_id'] ?>" selected="selected"><?php echo $geo_zone['name'] ?></option>
                                                                 <?php } else { ?>
                                                                     <option value="<?php echo $geo_zone['geo_zone_id'] ?>"><?php echo $geo_zone['name'] ?></option>
@@ -191,8 +159,8 @@
             </div>
                 
             <div id="page-log">
-                <textarea style="width: 98%; min-height: 250px" readonly><?php echo $klarna_log ?></textarea>
-                <a href="<?php echo $clear_log ?>" class="button" style="float: right; margin-top: 15px">Clear</a>
+                <textarea style="width: 98%; min-height: 250px" readonly><?php echo $klarna_invoice_log ?></textarea>
+                <a href="<?php echo $clear_log ?>" class="button" style="float: right; margin-top: 15px"><?php echo $text_clear ?></a>
             </div>
             
         </div>

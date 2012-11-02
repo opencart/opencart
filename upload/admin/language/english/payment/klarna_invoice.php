@@ -1,7 +1,7 @@
 <?php
 
 // Heading
-$_['heading_title'] = 'Klarna';
+$_['heading_title'] = 'Klarna Invoice';
 
 // Text
 $_['text_payment'] = 'Payment';
@@ -24,6 +24,8 @@ $_['text_denmark'] = 'Denmark';
 $_['text_germany'] = 'Germany';
 $_['text_netherlands'] = 'The Netherlands';
 
+$_['text_clear'] = 'Clear';
+
 // Entry
 $_['entry_merchant'] = 'Klarna Merchant ID:';
 $_['entry_secret'] = 'Klarna Secret:';
@@ -34,8 +36,6 @@ $_['entry_geo_zone'] = 'Geo Zone:';
 $_['entry_status'] = 'Status:';
 $_['entry_sort_order'] = 'Sort Order:';
 $_['entry_minimum_amount'] = 'Minimum Amount:';
-$_['entry_klarna_invoice'] = 'Klarna Invoice:';
-$_['entry_klarna_account'] = 'Klarna Account:';
 
 // Help
 $_['help_minimum_total'] = "Cart's total before the module becomes active";

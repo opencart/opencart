@@ -3,7 +3,7 @@
 class ControllerTotalKlarnaFee extends Controller {
 
     private $error = array();
-
+    
     public function index() {
         $this->load->model('setting/setting');
         $this->load->model('localisation/tax_class');
@@ -22,7 +22,6 @@ class ControllerTotalKlarnaFee extends Controller {
         );
         
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
-            
             $status = false;
             $klarnaFeeCountry = array();
             

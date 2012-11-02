@@ -25,3 +25,4 @@ $_['help_total'] = "If cart's total is less than the specified total then an Inv
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify Klarna Fee total!';
+?>

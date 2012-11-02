@@ -6,7 +6,6 @@ class ModelTotalKlarnaFee extends Model {
         $this->load->language('total/klarna_fee');
         
         if (isset($this->session->data['payment_method']['code']) && $this->session->data['payment_method']['code'] == 'klarna') {
-        
             $iso3 = $this->db->query("SELECT `iso_code_3` FROM `" . DB_PREFIX . "country` WHERE `country_id` = " . (int) $this->session->data['payment_country_id'])->row['iso_code_3'];
 
             $countries = $this->config->get('klarna_fee_country');            

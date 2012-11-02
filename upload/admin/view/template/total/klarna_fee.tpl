@@ -39,8 +39,8 @@
         <tr>
             <td colspan="2"><h2><?php echo $text_activated_countries ?></h2></td>
         </tr>
+        
         <?php foreach ($country_names as $iso_3 => $country) { ?>
-            
             <tr>
                 <td>
                     <?php if ($klarna_fee_country[$iso_3]['status'] == 1) { ?>

@@ -40,8 +40,6 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                         'minimum' => '',
                         'status' => '',
                         'sort_order' => '',
-                        'invoice' => '',
-                        'account' => '',
                         'geo_zone_id' => '',
                     );
                 }

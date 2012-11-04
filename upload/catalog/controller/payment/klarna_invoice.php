@@ -107,6 +107,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         }
         
         switch ($orderInfo['payment_iso_code_3']) {
+            
             // Sweden
             case 'SWE':
                 $country = 209;
@@ -114,6 +115,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 $encoding = 2;
                 $currency = 0;
                 break;
+            
             // Finland
             case 'FIN':
                 $country = 73;
@@ -121,6 +123,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 $encoding = 4;
                 $currency = 2;
                 break;
+            
             // Denmark
             case 'DNK':
                 $country = 59;
@@ -128,6 +131,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 $encoding = 5;
                 $currency = 3;
                 break;
+            
             // Norway	
             case 'NOR':
                 $country = 164;
@@ -135,6 +139,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 $encoding = 3;
                 $currency = 1;
                 break;
+            
             // Germany	
             case 'DEU':
                 $country = 81;
@@ -142,6 +147,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 $encoding = 6;
                 $currency = 2;
                 break;
+            
             // Netherlands															
             case 'NLD':
                 $country = 154;
@@ -149,6 +155,24 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 $encoding = 7;
                 $currency = 2;
                 break;
+        }
+        
+        if (isset($this->request->post['street'])) {
+            $street = $this->request->post['street'];
+        } else {
+            $street = $orderInfo['payment_address_1'];
+        }
+        
+        if (isset($this->request->post['house_no'])) {
+            $houseNo = $this->request->post['house_no'];
+        } else {
+            $houseNo = '';
+        }
+        
+        if (isset($this->request->post['house_ext'])) {
+            $houseExt = $this->request->post['house_ext'];
+        } else {
+            $houseExt = '';
         }
         
         $address = array(
@@ -159,9 +183,9 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             'lname' => $orderInfo['payment_lastname'],
             'company' => $orderInfo['payment_company'],
             'careof' => '',
-            'street' => trim($orderInfo['payment_address_1'] . ' ' . $orderInfo['payment_address_2']),
-            'house_number' => '',
-            'house_extension' => '',
+            'street' => $street,
+            'house_number' => $houseNo,
+            'house_extension' => $houseExt,
             'zip' => $orderInfo['payment_postcode'],
             'city' => $orderInfo['payment_city'],
             'country' => $country,

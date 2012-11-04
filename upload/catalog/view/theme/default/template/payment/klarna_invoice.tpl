@@ -1,10 +1,10 @@
 <?php if ($address_match) { ?>
 <form id="klarna-payment-form" method="POST" action="<?php echo html_entity_decode($klarna_send) ?>">
     <div id="payment" class="content">
-        <div class="klarna-logo">
-            <img src="https://cdn.klarna.com/public/images/DE/logos/v1/basic/DE_basic_logo_std_blue-black.png?width=150&eid=<?php echo $merchant ?>"/>
+        <div>
+            <img src="https://cdn.klarna.com/public/images/<?php echo $klarna_country_code ?>/badges/v1/invoice/<?php echo $klarna_country_code ?>_invoice_badge_std_blue.png?width=150&eid=<?php echo $merchant ?>"/>
         </div>
-
+        
         <table class="form">
             <tr>
                 <td colspan="2"><b><?php echo $text_additional; ?></b></td>
@@ -110,14 +110,6 @@
                     </td> 
                 </tr>
             <?php } ?>
-                
-                <tr>
-                    <td colspan="2">
-                        <input type="checkbox" name="klarna_toc" value="1" />
-                        <?php echo $text_toc ?> <span id="klarna_toc_link"></span>
-                    </td>
-                </tr>
-                
         </table>
         
     </div>
@@ -194,14 +186,7 @@ $(document).ready(function(){
 
         $('.warning, .error').remove();
 
-        var checked = true;
-        $.each($('input[name="deu_toc"], input[name="klarna_toc"]'), function(i, element){
-            if (!$(element).is(':checked')) {
-                checked = false;
-            }
-        });
-
-        if (!checked) {
+        if (!$('input[name="deu_toc"]').is(':checked')) {
             $('#payment').before("<div class=\"warning\"><?php echo $error_deu_toc ?></div>");
             return;
         }

@@ -219,17 +219,6 @@ $(document).ready(function(){
         });
     });
 
-    $.getScript('http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js', function(){
-        var terms = new Klarna.Terms.Account({  
-            el: 'klarna_toc_link', 
-            eid: <?php echo $merchant ?>,             
-            country: '<?php echo strtolower($klarna_country_code) ?>',
-            <?php if ($klarna_fee) { ?>
-            charge: <?php echo $klarna_fee ?>
-            <?php } ?>
-        });
-    });
-
 });
 
 function hideBaloon (callback) {

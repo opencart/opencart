@@ -212,84 +212,81 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
         $goodsList = array();
         
-        foreach ($this->cart->getProducts() as $product) {
-            $price = 0;
-            
-            $discount = min($product['total'], $totalDiscount);
-            $totalDiscount -= $discount;
-            
-            $credit = min($product['total'] - $discount, $totalCredit);
-            $totalCredit -= $credit;
-            
-            $productTax = $this->tax->getTax($product['price'] - $discount / $product['quantity'], $product['tax_class_id']);
-            
-            $price = $product['price'] - $credit / $product['quantity'] - $discount / $product['quantity'] + $productTax;
+        $totalsData = $this->db->query("
+            SELECT (
+                SELECT SUM((`price` + `tax`) * `quantity`)
+                FROM (
+                    SELECT `price`, `tax`, `quantity`
+                    FROM `" . DB_PREFIX . "order_product`
+                    WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
+
+                    UNION ALL
+
+                    SELECT `amount`, '0.00', 1
+                    FROM `" . DB_PREFIX . "order_voucher`
+                    WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
+                ) AS `order_product`
+            ) AS `product_total`, (
+                SELECT `value`
+                FROM `" . DB_PREFIX . "order_total`
+                WHERE `code` = 'shipping' AND `order_id` = " . (int) $orderInfo['order_id'] . "
+            ) AS `shipping`, (
+                SELECT `value`
+                FROM `" . DB_PREFIX . "order_total`
+                WHERE `code` = 'total' AND `order_id` = " . (int) $orderInfo['order_id'] . "
+            ) AS `order_total`")->row;
+        
+        $difference = $totalsData['order_total'] - $totalsData['product_total'] - $totalsData['shipping'];
+        
+        $orderedProducts = $this->db->query("
+            SELECT `name`, `model`, (`price` + `tax`) AS `price`, `quantity`
+            FROM (
+                SELECT `name`, `model`, `price`, `tax`, `quantity`
+                FROM `" . DB_PREFIX . "order_product`
+                WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
+
+                UNION ALL
+
+                SELECT '', `code`, `amount`, '0.00', '1'
+                FROM `" . DB_PREFIX . "order_voucher`
+                WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
+            ) AS `order_product`")->rows;
+        
+        foreach ($orderedProducts as $product) {
+
+            if ($difference < 0) {
+                $diff = -min($product['price'] - 0.01, abs($difference) / $product['quantity']);
+                $difference -= $diff * $product['quantity'];
+            } else {
+                $diff = $difference / $product['quantity'];
+                $difference = 0;
+            }
             
             $goodsList[] = array(
                 'qty' => (int) $product['quantity'],
                 'goods' => array(
                     'artno' => $product['model'],
                     'title' => $product['name'],
-                    'price' => (int) str_replace('.', '', $this->currency->format($price, '', '', false)),
+                    'price' => (int) str_replace('.', '', $this->currency->format($product['price'] + $diff, '', '', false)),
                     'vat' => 0.0,
                     'discount' => 0.0,
                     'flags' => 32,
                 )
             );
         }
-        
-        if ($couponInfo && $couponInfo['shipping'] == '1') {
-            $price = $this->tax->getTax(0, $this->session->data['shipping_method']['tax_class_id']);
-        } else {
-            $price = $this->tax->calculate($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']);
-        }    
 
         $goodsList[] = array(
             'qty' => 1,
             'goods' => array(
                 'artno' => $orderInfo['shipping_code'],
                 'title' => $orderInfo['shipping_method'],
-                'price' => (int) str_replace('.', '', $this->currency->format($price, '', '', false)),
+                'price' => (int) str_replace('.', '', $this->currency->format($totalsData['shipping'], '', '', false)),
                 'vat' => 0.0,
                 'discount' => 0.0,
-                'flags' => 8 + 32,
+                'flags' => 8,
             )
         );
         
-        // Klarna Fee and other handling fees
-        
-        $results = $this->db->query("SELECT `code`, `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . "")->rows;
-        
-        $fees = 0;
-        
-        foreach ($results as $result) {
-            if ($result['code'] == 'handling') {
-                $fees += $this->tax->calculate($result['value'], $this->config->get('handling_tax_class_id'));
-            }
-            
-            if ($result['code'] == 'klarna_fee') {
-                $fees += $this->tax->calculate($result['value'], $settings['tax_class_id']);
-            }
-            
-            if ($result['code'] == 'low_order_fee') {
-                $fees += $this->tax->calculate($result['value'], $this->config->get('low_order_fee_tax_class_id'));
-            }
-        }
-        
-        if ($fees > 0) {
-            $goodsList[] = array(
-                'qty' => 1,
-                'goods' => array(
-                    'artNo' => '',
-                    'title' => 'Handling fees',
-                    'price' => (int) str_replace('.', '', $this->currency->format($fees, '', '', false)),
-                    'vat' => 0.0,
-                    'discount' => 0.0,
-                    'flags' => 16 + 32,
-                )
-            );
-        }
-
         $digest = '';
         
         foreach ($goodsList as $goods) {

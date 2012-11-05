@@ -10,7 +10,7 @@
                 <td colspan="2"><b><?php echo $text_additional; ?></b></td>
             </tr>
             
-            <?php if (!$is_company || $contry_code == 'DEU' || $country_code == 'NLD') { ?>
+            <?php if (!$is_company || $country_code == 'DEU' || $country_code == 'NLD') { ?>
                 <tr>
                     <td>
                         <?php if ($country_code == 'DEU' || $country_code == 'NLD') { ?>
@@ -51,7 +51,7 @@
             <?php } elseif (empty($company_id)) { ?>
                 <tr>
                     <td><?php echo $entry_company ?></td>
-                    <td><input type="text" name="pno" alt="<?php echo $help_company_id ?>" /></td>
+                    <td><input type="text" name="pno" alt="<?php echo $help_company_id ?>" value="<?php $company_id ?>" /></td>
                 </tr>
             <?php } ?>
 
@@ -92,13 +92,6 @@
                     <td><label for="input_phone_no"><?php echo $entry_phone_no ?></label></td>
                     <td><input type="text" name="phone_no" id="input_phone_no" alt="<?php echo $help_phone_number ?>" value="<?php echo $phone_number ?>" /></td>
                 </tr>
-                
-            <?php if ($country_code == 'DNK') { ?>
-                <tr>
-                    <td><label for="input_yearly_salary"><?php echo $entry_yearly_salary ?></label></td>
-                    <td><input type="text" name="yearly_salary" id="input_yearly_salary" alt="<?php echo $help_yearly_salary ?>" value="" disabled /></td>
-                </tr>
-            <?php } ?>
                 
             <?php if ($country_code == 'DEU') { ?>
                 <tr>
@@ -171,25 +164,18 @@ $(document).ready(function(){
     }).focusout(function () {
         hideBaloon();
     });
-
-<?php if ($country_code == 'DNK' && !$is_company) { ?>
-    $('input[name="payment_plan"]').change(function(){
-        if ($(this).attr('value') == '-1') {
-            $('input[name="yearly_salary"]').prop('disabled', true);
-        } else {
-            $('input[name="yearly_salary"]').prop('disabled', false);
-        }
-    });
-<?php } ?>
     
     $('#button-confirm').bind('click', function() {
 
         $('.warning, .error').remove();
 
+        <?php if ($country_code == 'DEU') { ?>
         if (!$('input[name="deu_toc"]').is(':checked')) {
             $('#payment').before("<div class=\"warning\"><?php echo $error_deu_toc ?></div>");
             return;
         }
+        
+        <?php } ?>
 
         $.ajax({
             url: 'index.php?route=payment/klarna_invoice/send',

@@ -1,31 +1,26 @@
 <?php if ($address_match) { ?>
 <form id="klarna-payment-form" method="POST" action="<?php echo html_entity_decode($klarna_send) ?>">
     <div id="payment" class="content">
-        <div class="klarna-logo">
-            <img src="https://cdn.klarna.com/public/images/DE/logos/v1/basic/DE_basic_logo_std_blue-black.png?width=150&eid=<?php echo $merchant ?>"/>
+        <div>
+            <img src="https://cdn.klarna.com/public/images/<?php echo $klarna_country_code ?>/badges/v1/account/<?php echo $klarna_country_code ?>_account_badge_std_blue.png?width=150&eid=<?php echo $merchant ?>"/>
         </div>
-        
-        <!--
-        Should be displayed only for part-payments
-        <?php if ($country_code == 'NLD') { ?>
-            <img src="<?php echo $klarna_nld_warning_banner ?>" />
-        <?php } ?>
-        -->
         
         <div class="payment-options">
             
             <b><?php echo $text_payment_options ?></b><br />
-            
-            <input name="payment_plan" type="radio" value="-1" checked="checked" id="plan_id_0" /><label for="plan_id_0"><?php echo $text_single_payment ?></label><br />
-            
-            <?php if (!$is_company) { ?>
 
-                <?php foreach ($part_payment_options as $plan_id => $payment) { ?>
-
+            <?php $checked = false; ?>
+            <?php foreach ($part_payment_options as $plan_id => $payment) { ?>
+                <?php if ($checked) { ?>
                     <input name="payment_plan" type="radio" value="<?php echo $plan_id ?>" id="plan_id_<?php echo $plan_id ?>" /><label for="plan_id_<?php echo $plan_id ?>"><?php echo $payment ?></label><br />
-
+                <?php } else {?>
+                    <?php $checked = true; ?>
+                    <input checked="checked" name="payment_plan" type="radio" value="<?php echo $plan_id ?>" id="plan_id_<?php echo $plan_id ?>" /><label for="plan_id_<?php echo $plan_id ?>"><?php echo $payment ?></label><br />
                 <?php } ?>
+            <?php } ?>
 
+            <?php if ($country_code == 'NLD') { ?>
+                <img src="catalog/view/theme/default/image/klarna_nld_banner.png" />
             <?php } ?>
         </div>
 
@@ -34,7 +29,7 @@
                 <td colspan="2"><b><?php echo $text_additional; ?></b></td>
             </tr>
             
-            <?php if (!$is_company || $contry_code == 'DEU' || $country_code == 'NLD') { ?>
+            <?php if (!$is_company || $country_code == 'DEU' || $country_code == 'NLD') { ?>
                 <tr>
                     <td>
                         <?php if ($country_code == 'DEU' || $country_code == 'NLD') { ?>
@@ -135,13 +130,6 @@
                 </tr>
             <?php } ?>
                 
-                <tr>
-                    <td colspan="2">
-                        <input type="checkbox" name="klarna_toc" value="1" />
-                        <?php echo $text_toc ?> <span id="klarna_toc_link"></span>
-                    </td>
-                </tr>
-                
         </table>
         
     </div>
@@ -204,7 +192,7 @@ $(document).ready(function(){
         hideBaloon();
     });
 
-<?php if ($country_code == 'DNK' && !$is_company) { ?>
+<?php if ($country_code == 'DNK') { ?>
     $('input[name="payment_plan"]').change(function(){
         if ($(this).attr('value') == '-1') {
             $('input[name="yearly_salary"]').prop('disabled', true);
@@ -218,20 +206,15 @@ $(document).ready(function(){
 
         $('.warning, .error').remove();
 
-        var checked = true;
-        $.each($('input[name="deu_toc"], input[name="klarna_toc"]'), function(i, element){
-            if (!$(element).is(':checked')) {
-                checked = false;
-            }
-        });
-
-        if (!checked) {
+        <?php if ($country_code == 'DEU') { ?>
+        if (!$('input[name="deu_toc"]').is(':checked')) {
             $('#payment').before("<div class=\"warning\"><?php echo $error_deu_toc ?></div>");
             return;
         }
+        <?php } ?>
 
         $.ajax({
-            url: 'index.php?route=payment/klarna/send',
+            url: '<?php echo $klarna_send ?>',
             type: 'post',
             data: $('#klarna-payment-form').serialize(),
             dataType: 'json',		

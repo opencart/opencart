@@ -1,15 +1,15 @@
 <?php
 
-class ControllerPaymentKlarna extends Controller {
+class ControllerPaymentKlarnaAccount extends Controller {
 
     protected function index() {
         $this->load->model('checkout/order');
         $this->load->model('tool/image');
-        $this->data = array_merge($this->data, $this->language->load('payment/klarna'));
+        $this->data = array_merge($this->data, $this->language->load('payment/klarna_account'));
         
         $orderInfo = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         
-        $countries = $this->config->get('klarna_country');
+        $countries = $this->config->get('klarna_account_country');
         $settings = $countries[$orderInfo['payment_iso_code_3']];
         
         $addressMatch = false;
@@ -46,16 +46,16 @@ class ControllerPaymentKlarna extends Controller {
         $this->data['address_match'] = $addressMatch;
         $this->data['country_code'] = $orderInfo['payment_iso_code_3'];
         $this->data['klarna_country_code'] = $orderInfo['payment_iso_code_2'];
-        $this->data['klarna_send'] = $this->url->link('payment/klarna/send');
+        $this->data['klarna_send'] = $this->url->link('payment/klarna_account/send');
         
-        $this->data['klarna_nld_warning_banner'] = $this->model_tool_image->resize('data/klarna_nld_warning.jpg', 950, 118);
+        $this->data['klarna_nld_warning_banner'] = $this->model_tool_image->resize('data/klarna_nld_warning.jpg', 950, 118);       
         
         $partPaymentOptions = array();
         
         // Show part payment options?
         if ($this->showPartPaymentOptions($orderInfo, $settings)) {
 
-            $pclasses = $this->config->get('klarna_pclasses');
+            $pclasses = $this->config->get('klarna_account_pclasses');
             
             if (isset($pclasses[$country])) {
                 $pclasses = $pclasses[$country];
@@ -172,13 +172,14 @@ class ControllerPaymentKlarna extends Controller {
         } else {
             $this->data['klarna_fee'] = '';
         }
-
+        
         $this->data['merchant'] = $settings['merchant'];
         
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/klarna.tpl')) {
-            $this->template = $this->config->get('config_template') . '/template/payment/klarna.tpl';
+
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/klarna_account.tpl')) {
+            $this->template = $this->config->get('config_template') . '/template/payment/klarna_account.tpl';
         } else {
-            $this->template = 'default/template/payment/klarna.tpl';
+            $this->template = 'default/template/payment/klarna_account.tpl';
         }
 
         $this->render();
@@ -187,13 +188,13 @@ class ControllerPaymentKlarna extends Controller {
     public function send() {
         $this->load->model('checkout/order');
         $this->load->model('checkout/coupon');
-        $this->language->load('payment/klarna');
+        $this->language->load('payment/klarna_invoice');
         
         $json = array();
 
         $orderInfo = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         
-        $countries = $this->config->get('klarna_country');
+        $countries = $this->config->get('klarna_invoice_country');
         $settings = $countries[$orderInfo['payment_iso_code_3']];
         
         if (!$orderInfo) {
@@ -220,6 +221,7 @@ class ControllerPaymentKlarna extends Controller {
         }
         
         switch ($orderInfo['payment_iso_code_3']) {
+            
             // Sweden
             case 'SWE':
                 $country = 209;
@@ -227,6 +229,7 @@ class ControllerPaymentKlarna extends Controller {
                 $encoding = 2;
                 $currency = 0;
                 break;
+            
             // Finland
             case 'FIN':
                 $country = 73;
@@ -234,6 +237,7 @@ class ControllerPaymentKlarna extends Controller {
                 $encoding = 4;
                 $currency = 2;
                 break;
+            
             // Denmark
             case 'DNK':
                 $country = 59;
@@ -241,6 +245,7 @@ class ControllerPaymentKlarna extends Controller {
                 $encoding = 5;
                 $currency = 3;
                 break;
+            
             // Norway	
             case 'NOR':
                 $country = 164;
@@ -248,6 +253,7 @@ class ControllerPaymentKlarna extends Controller {
                 $encoding = 3;
                 $currency = 1;
                 break;
+            
             // Germany	
             case 'DEU':
                 $country = 81;
@@ -255,6 +261,7 @@ class ControllerPaymentKlarna extends Controller {
                 $encoding = 6;
                 $currency = 2;
                 break;
+            
             // Netherlands															
             case 'NLD':
                 $country = 154;
@@ -262,6 +269,24 @@ class ControllerPaymentKlarna extends Controller {
                 $encoding = 7;
                 $currency = 2;
                 break;
+        }
+        
+        if (isset($this->request->post['street'])) {
+            $street = $this->request->post['street'];
+        } else {
+            $street = $orderInfo['payment_address_1'];
+        }
+        
+        if (isset($this->request->post['house_no'])) {
+            $houseNo = $this->request->post['house_no'];
+        } else {
+            $houseNo = '';
+        }
+        
+        if (isset($this->request->post['house_ext'])) {
+            $houseExt = $this->request->post['house_ext'];
+        } else {
+            $houseExt = '';
         }
         
         $address = array(
@@ -272,9 +297,9 @@ class ControllerPaymentKlarna extends Controller {
             'lname' => $orderInfo['payment_lastname'],
             'company' => $orderInfo['payment_company'],
             'careof' => '',
-            'street' => trim($orderInfo['payment_address_1'] . ' ' . $orderInfo['payment_address_2']),
-            'house_number' => '',
-            'house_extension' => '',
+            'street' => $street,
+            'house_number' => $houseNo,
+            'house_extension' => $houseExt,
             'zip' => $orderInfo['payment_postcode'],
             'city' => $orderInfo['payment_city'],
             'country' => $country,
@@ -301,84 +326,81 @@ class ControllerPaymentKlarna extends Controller {
 
         $goodsList = array();
         
-        foreach ($this->cart->getProducts() as $product) {
-            $price = 0;
-            
-            $discount = min($product['total'], $totalDiscount);
-            $totalDiscount -= $discount;
-            
-            $credit = min($product['total'] - $discount, $totalCredit);
-            $totalCredit -= $credit;
-            
-            $productTax = $this->tax->getTax($product['price'] - $discount / $product['quantity'], $product['tax_class_id']);
-            
-            $price = $product['price'] - $credit / $product['quantity'] - $discount / $product['quantity'] + $productTax;
+        $totalsData = $this->db->query("
+            SELECT (
+                SELECT SUM((`price` + `tax`) * `quantity`)
+                FROM (
+                    SELECT `price`, `tax`, `quantity`
+                    FROM `" . DB_PREFIX . "order_product`
+                    WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
+
+                    UNION ALL
+
+                    SELECT `amount`, '0.00', 1
+                    FROM `" . DB_PREFIX . "order_voucher`
+                    WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
+                ) AS `order_product`
+            ) AS `product_total`, (
+                SELECT `value`
+                FROM `" . DB_PREFIX . "order_total`
+                WHERE `code` = 'shipping' AND `order_id` = " . (int) $orderInfo['order_id'] . "
+            ) AS `shipping`, (
+                SELECT `value`
+                FROM `" . DB_PREFIX . "order_total`
+                WHERE `code` = 'total' AND `order_id` = " . (int) $orderInfo['order_id'] . "
+            ) AS `order_total`")->row;
+        
+        $difference = $totalsData['order_total'] - $totalsData['product_total'] - $totalsData['shipping'];
+        
+        $orderedProducts = $this->db->query("
+            SELECT `name`, `model`, (`price` + `tax`) AS `price`, `quantity`
+            FROM (
+                SELECT `name`, `model`, `price`, `tax`, `quantity`
+                FROM `" . DB_PREFIX . "order_product`
+                WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
+
+                UNION ALL
+
+                SELECT '', `code`, `amount`, '0.00', '1'
+                FROM `" . DB_PREFIX . "order_voucher`
+                WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
+            ) AS `order_product`")->rows;
+        
+        foreach ($orderedProducts as $product) {
+
+            if ($difference < 0) {
+                $diff = -min($product['price'] - 0.01, abs($difference) / $product['quantity']);
+                $difference -= $diff * $product['quantity'];
+            } else {
+                $diff = $difference / $product['quantity'];
+                $difference = 0;
+            }
             
             $goodsList[] = array(
                 'qty' => (int) $product['quantity'],
                 'goods' => array(
                     'artno' => $product['model'],
                     'title' => $product['name'],
-                    'price' => (int) str_replace('.', '', $this->currency->format($price, '', '', false)),
+                    'price' => (int) str_replace('.', '', $this->currency->format($product['price'] + $diff, '', '', false)),
                     'vat' => 0.0,
                     'discount' => 0.0,
                     'flags' => 32,
                 )
             );
         }
-        
-        if ($couponInfo && $couponInfo['shipping'] == '1') {
-            $price = $this->tax->getTax(0, $this->session->data['shipping_method']['tax_class_id']);
-        } else {
-            $price = $this->tax->calculate($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']);
-        }    
 
         $goodsList[] = array(
             'qty' => 1,
             'goods' => array(
                 'artno' => $orderInfo['shipping_code'],
                 'title' => $orderInfo['shipping_method'],
-                'price' => (int) str_replace('.', '', $this->currency->format($price, '', '', false)),
+                'price' => (int) str_replace('.', '', $this->currency->format($totalsData['shipping'], '', '', false)),
                 'vat' => 0.0,
                 'discount' => 0.0,
-                'flags' => 8 + 32,
+                'flags' => 8,
             )
         );
         
-        // Klarna Fee and other handling fees
-        
-        $results = $this->db->query("SELECT `code`, `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . "")->rows;
-        
-        $fees = 0;
-        
-        foreach ($results as $result) {
-            if ($result['code'] == 'handling') {
-                $fees += $this->tax->calculate($result['value'], $this->config->get('handling_tax_class_id'));
-            }
-            
-            if ($result['code'] == 'klarna_fee') {
-                $fees += $this->tax->calculate($result['value'], $settings['tax_class_id']);
-            }
-            
-            if ($result['code'] == 'low_order_fee') {
-                $fees += $this->tax->calculate($result['value'], $this->config->get('low_order_fee_tax_class_id'));
-            }
-        }
-        
-        if ($fees > 0) {
-            $goodsList[] = array(
-                'qty' => 1,
-                'goods' => array(
-                    'artNo' => '',
-                    'title' => 'Handling fees',
-                    'price' => (int) str_replace('.', '', $this->currency->format($fees, '', '', false)),
-                    'vat' => 0.0,
-                    'discount' => 0.0,
-                    'flags' => 16 + 32,
-                )
-            );
-        }
-
         $digest = '';
         
         foreach ($goodsList as $goods) {
@@ -398,16 +420,9 @@ class ControllerPaymentKlarna extends Controller {
             $pno = $day . $month . $year;
         }
         
-        $pclass = -1;
-        
-        if ($this->showPartPaymentOptions($orderInfo, $settings)) {
-            $pclass = (int) $this->request->post['payment_plan'];
-        }
+        $pclass = (int) $this->request->post['payment_plan'];
         
         $yearlySalary = array();
-        if ($country == 'DNK' && $pclass != -1) {
-            $yearlySalary['yearly_salary'] = (int) $this->request->post['yearly_salary'];
-        }
         
         $gender = 0;
         
@@ -474,7 +489,7 @@ class ControllerPaymentKlarna extends Controller {
 
         $response = curl_exec($ch);
         
-        $log = new Log('klarna.log');
+        $log = new Log('klarna_invoice.log');
         if (curl_errno($ch)) {
             $log->write('HTTP Error for order #' . $orderInfo['order_id'] . '. Code: ' . curl_errno($ch) . ' message: ' . curl_error($ch));
             $json['error'] = $this->language->get('error_network');
@@ -492,9 +507,9 @@ class ControllerPaymentKlarna extends Controller {
                 $klarnaOrderStatus = (int) $xml->params->param->value->array->data->value[1]->int;
 
                 if ($klarnaOrderStatus == 1) {
-                    $orderStatus = $this->config->get('klarna_accepted_order_status_id');
+                    $orderStatus = $this->config->get('klarna_invoice_accepted_order_status_id');
                 } elseif ($klarnaOrderStatus == 2) {
-                    $orderStatus = $this->config->get('klarna_pending_order_status_id');
+                    $orderStatus = $this->config->get('klarna_invoice_pending_order_status_id');
                 } else {
                     $orderStatus = $this->config->get('config_order_status_id');
                 }
@@ -631,7 +646,7 @@ class ControllerPaymentKlarna extends Controller {
         
         return $defpos;
     }
-    
+
     private function getLowestPaymentAccount($country) {
         switch ($country) {
             case 'SWE':
@@ -656,13 +671,13 @@ class ControllerPaymentKlarna extends Controller {
                 $log->write('Unknown country ' . $country);
                 $this->redirect($this->url->link('checkout/checkout', 'SSL'));
                 break;
-        }
+}
         
         return $lowestPayment;
     }
     
-    private function showPartPaymentOptions($orderInfo, $settings) {
-        $status = $settings['account'] == '1';        
+    private function showPartPaymentOptions($orderInfo, $settings) {        
+        $status = $settings['status'] == '1';        
         
         $countAcc = $this->db->query("SELECT COUNT(*) AS `count` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int) $settings['geo_zone_id'] . "' AND `country_id` = '" . (int) $orderInfo['payment_country_id'] . "' AND (`zone_id` = '" . (int)$orderInfo['payment_zone_id'] . "' OR `zone_id` = 0)")->row['count'];
         
@@ -674,7 +689,7 @@ class ControllerPaymentKlarna extends Controller {
             $status = false;
         }
         
-        if ($orderInfo['payment_iso_code_3'] == 'NLD' && $this->currency->format($orderInfo['total'], 'EUR', '', false) > 250.00) {
+        if ($orderInfo['payment_iso_code_3'] == 'NLD' && $this->currency->has('EUR') && $this->currency->format($orderInfo['total'], 'EUR', '', false) > 250.00) {
             $status = false;
         }
 

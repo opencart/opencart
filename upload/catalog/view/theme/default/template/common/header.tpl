@@ -14,7 +14,7 @@
 <link href="<?php echo $icon; ?>" rel="icon" />
 <?php } ?>
 <?php foreach ($custom_tags as $custom_tag) { 
-echo $custom_tags;
+echo $custom_tag;
 } ?>
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />

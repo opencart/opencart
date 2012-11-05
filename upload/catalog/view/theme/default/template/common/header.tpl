@@ -13,6 +13,9 @@
 <?php if ($icon) { ?>
 <link href="<?php echo $icon; ?>" rel="icon" />
 <?php } ?>
+<?php foreach ($custom_tags as $custom_tag) { 
+echo $custom_tags;
+} ?>
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>

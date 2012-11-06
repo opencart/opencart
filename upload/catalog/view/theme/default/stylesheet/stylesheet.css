@@ -1634,11 +1634,6 @@ a.button:hover, input.button:hover {
 
 /* Klarna's branding */
 
-#klarna-payment-form #payment {
-    min-height: 300px;
-    background: url('../image/klarna_tulip.png') no-repeat 0 100%;
-}
-
 #klarna-payment-form #payment > table {
     width: 580px;
     float: left;

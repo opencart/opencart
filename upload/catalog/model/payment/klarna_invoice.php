@@ -37,10 +37,22 @@ class ModelPaymentKlarnaInvoice extends Model {
         $method = array();
         
         if ($klarnaInvoiceStatus) {
+            $iso3 = $this->db->query("SELECT `iso_code_3` FROM `" . DB_PREFIX . "country` WHERE `country_id` = " . (int) $this->session->data['payment_country_id'])->row['iso_code_3'];
 
+            $countries = $this->config->get('klarna_fee_country');
+            $country = $countries[$iso3];
+
+            if ($country['status'] == 1 && $this->cart->getSubTotal() < $country['total']) {
+                $klarnaFee = $this->currency->format($this->tax->calculate($country['fee'], $country['tax_class_id']), '', '', false);
+                $klarnaFeeText = $this->currency->format($this->tax->calculate($country['fee'], $country['tax_class_id']), '', '');
+            } else {
+                $klarnaFee = 0;
+                $klarnaFeeText = '';
+            }
+            
             $method = array(
                 'code' => 'klarna_invoice',
-                'title' => sprintf($this->language->get('text_title'), $settings['merchant'], strtolower($address['iso_code_2'])),
+                'title' => sprintf($this->language->get('text_title'), $klarnaFeeText, $settings['merchant'], strtolower($address['iso_code_2']), $klarnaFee),
                 'sort_order' => $settings['sort_order'],
             );
         }

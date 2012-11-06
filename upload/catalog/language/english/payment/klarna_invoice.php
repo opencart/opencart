@@ -3,7 +3,7 @@
 // Text
 $_['text_title'] = "Klarna Invoice - Pay within 14 days <span id=\"klarna_invoice_toc_link\"></span><script text=\"javascript\">$.getScript('http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js', function(){ var terms = new Klarna.Terms.Invoice({ el: 'klarna_invoice_toc_link', eid: '%s',   country: '%s'});})</script>";
 
-$_['text_payment_method'] = "Klarna Invoice";
+$_['text_payment_method_title'] = "Klarna Invoice";
 
 $_['text_information'] = 'Klarna Invoice Information';
 $_['text_additional'] = 'Klarna Invoice requires some additional information before they can proccess your order.';

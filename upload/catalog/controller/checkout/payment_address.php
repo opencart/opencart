@@ -166,9 +166,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 					unset($this->session->data['payment_method']);	
 					unset($this->session->data['payment_methods']);
 				}
-			} 
-			
-			if ($this->request->post['payment_address'] == 'new') {
+			} else {
 				if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 					$json['error']['firstname'] = $this->language->get('error_firstname');
 				}

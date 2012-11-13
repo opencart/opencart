@@ -146,7 +146,7 @@ class Customer {
   	}
 
   	public function getCustomerGroupId() {
-		if ($this->customer->isLogged()) {
+		if ($this->isLogged()) {
 			$customer_group_id = $this->customer_group_id;
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');

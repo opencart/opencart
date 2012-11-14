@@ -21,7 +21,7 @@ class ModelPaymentKlarnaInvoice extends Model {
         }
         
         // Maps countries to currencies
-        $countries = array(
+        $countryToCurrency = array(
             'NOR' => 'NOK',
             'SWE' => 'SEK',
             'FIN' => 'EUR',
@@ -30,7 +30,7 @@ class ModelPaymentKlarnaInvoice extends Model {
             'NLD' => 'EUR',
         );
         
-        if(!isset($countries[$address['iso_code_3']]) || $countries[$address['iso_code_3']] != $this->currency->getCode()) {
+        if(!isset($countryToCurrency[$address['iso_code_3']]) || !$this->currency->has($countryToCurrency[$address['iso_code_3']])) {
             $klarnaInvoiceStatus = false;
         }        
         
@@ -43,12 +43,11 @@ class ModelPaymentKlarnaInvoice extends Model {
             $country = $countries[$iso3];
 
             if ($country['status'] == 1 && $this->cart->getSubTotal() < $country['total']) {
-                $klarnaFee = $this->currency->format($this->tax->calculate($country['fee'], $country['tax_class_id']), '', '', false);
+                $klarnaFee = $this->currency->format($this->tax->calculate($country['fee'], $country['tax_class_id']), $countryToCurrency[$address['iso_code_3']], '', false);
                 $klarnaFeeText = $this->currency->format($this->tax->calculate($country['fee'], $country['tax_class_id']), '', '');
                 
                 $title = sprintf($this->language->get('text_title'), $klarnaFeeText, $settings['merchant'], strtolower($address['iso_code_2']), $klarnaFee);
             } else {
-                $klarnaFeeText = '';
                 $title = sprintf($this->language->get('text_title_no_fee'), $settings['merchant'], strtolower($address['iso_code_2']));
             }
             

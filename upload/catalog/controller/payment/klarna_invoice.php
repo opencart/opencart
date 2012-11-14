@@ -99,7 +99,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         }
         
         if ($couponInfo['type'] == 'F') {
-            $couponInfo['discount'] = min($couponInfo['discount'], $subTotal);
+            $couponInfo['discount'] = min($couponInfo['discount'], $this->cart->getSubTotal());
         }
         
         if ($settings['server'] == 'live') {
@@ -107,6 +107,15 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         } else {
             $server = 'https://payment-beta.klarna.com/';
         }
+        
+        $countryToCurrency = array(
+            'NOR' => 'NOK',
+            'SWE' => 'SEK',
+            'FIN' => 'EUR',
+            'DNK' => 'DKK',
+            'DEU' => 'EUR',
+            'NLD' => 'EUR',
+        );
         
         switch ($orderInfo['payment_iso_code_3']) {
             
@@ -269,7 +278,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 'goods' => array(
                     'artno' => $product['model'],
                     'title' => $product['name'],
-                    'price' => (int) str_replace('.', '', $this->currency->format($product['price'] + $diff, '', '', false)),
+                    'price' => (int) str_replace('.', '', $this->currency->format($product['price'] + $diff, $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
                     'vat' => 0.0,
                     'discount' => 0.0,
                     'flags' => 32,
@@ -282,7 +291,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             'goods' => array(
                 'artno' => $orderInfo['shipping_code'],
                 'title' => $orderInfo['shipping_method'],
-                'price' => (int) str_replace('.', '', $this->currency->format($totalsData['shipping'], '', '', false)),
+                'price' => (int) str_replace('.', '', $this->currency->format($totalsData['shipping'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
                 'vat' => 0.0,
                 'discount' => 0.0,
                 'flags' => 8,

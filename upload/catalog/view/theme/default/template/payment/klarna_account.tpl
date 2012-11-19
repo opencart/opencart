@@ -1,11 +1,12 @@
 <?php if ($address_match) { ?>
 <form id="klarna-payment-form" method="POST" action="<?php echo html_entity_decode($klarna_send) ?>">
     <div id="payment" class="content">
-        <div>
-            <img src="https://cdn.klarna.com/public/images/<?php echo $klarna_country_code ?>/badges/v1/account/<?php echo $klarna_country_code ?>_account_badge_std_blue.png?width=150&eid=<?php echo $merchant ?>"/>
-        </div>
         
         <div class="payment-options">
+            
+            <div>
+                <img src="https://cdn.klarna.com/public/images/<?php echo $klarna_country_code ?>/badges/v1/account/<?php echo $klarna_country_code ?>_account_badge_std_blue.png?width=150&eid=<?php echo $merchant ?>"/>
+            </div>
             
             <b><?php echo $text_payment_options ?></b><br />
 

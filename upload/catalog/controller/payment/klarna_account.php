@@ -222,6 +222,15 @@ class ControllerPaymentKlarnaAccount extends Controller {
             $server = 'https://payment-beta.klarna.com/';
         }
         
+        $countryToCurrency = array(
+            'NOR' => 'NOK',
+            'SWE' => 'SEK',
+            'FIN' => 'EUR',
+            'DNK' => 'DKK',
+            'DEU' => 'EUR',
+            'NLD' => 'EUR',
+        );
+        
         switch ($orderInfo['payment_iso_code_3']) {
             
             // Sweden
@@ -315,93 +324,78 @@ class ControllerPaymentKlarnaAccount extends Controller {
         if ($orderInfo['payment_iso_code_3'] == 'NLD') {
             $address['house_extension'] = $this->request->post['house_ext'];
         }
+        $subTotal = 0;
         
-        // Discounts
-        $result = $this->db->query("SELECT (SELECT ABS(SUM(`value`)) FROM `" . DB_PREFIX . "order_total` WHERE (`code` = 'credit' OR `code` = 'voucher') AND `order_id` = " . (int) $orderInfo['order_id'] . ") AS `credit`, (SELECT ABS(SUM(`value`)) FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `value` < 0 AND `code` != 'credit' AND `code` != 'voucher') AS `discount`")->row;
+        $totalQuery = $this->db->query("
+            SELECT `code`, `value`
+            FROM `" . DB_PREFIX . "order_total`
+            WHERE `order_id` = " . (int) $orderInfo['order_id']);
         
-        $totalDiscount = $result['discount'];
-        if ($couponInfo && $couponInfo['shipping'] == '1') {
-            $totalDiscount -= $this->session->data['shipping_method']['cost'];
+        $totals = array();
+        
+        foreach ($totalQuery->rows as $row) {
+            $totals[$row['code']] = $row['value'];
         }
         
-        $totalCredit = $result['credit'];
-
-        $goodsList = array();
-        
-        $totalsData = $this->db->query("
-            SELECT (
-                SELECT SUM((`price` + `tax`) * `quantity`)
-                FROM (
-                    SELECT `price`, `tax`, `quantity`
-                    FROM `" . DB_PREFIX . "order_product`
-                    WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
-
-                    UNION ALL
-
-                    SELECT `amount`, '0.00', 1
-                    FROM `" . DB_PREFIX . "order_voucher`
-                    WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
-                ) AS `order_product`
-            ) AS `product_total`, (
-                SELECT `value`
-                FROM `" . DB_PREFIX . "order_total`
-                WHERE `code` = 'shipping' AND `order_id` = " . (int) $orderInfo['order_id'] . "
-            ) AS `shipping`, (
-                SELECT `value`
-                FROM `" . DB_PREFIX . "order_total`
-                WHERE `code` = 'total' AND `order_id` = " . (int) $orderInfo['order_id'] . "
-            ) AS `order_total`")->row;
-        
-        $difference = $totalsData['order_total'] - $totalsData['product_total'] - $totalsData['shipping'];
-        
         $orderedProducts = $this->db->query("
-            SELECT `name`, `model`, (`price` + `tax`) AS `price`, `quantity`
-            FROM (
-                SELECT `name`, `model`, `price`, `tax`, `quantity`
-                FROM `" . DB_PREFIX . "order_product`
-                WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
+            SELECT `name`, `model`, `price`, `tax`, `tax` / `price` * 100 AS `tax_rate`, `quantity`
+            FROM `" . DB_PREFIX . "order_product`
+            WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
 
-                UNION ALL
+            UNION ALL
 
-                SELECT '', `code`, `amount`, '0.00', '1'
-                FROM `" . DB_PREFIX . "order_voucher`
-                WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
-            ) AS `order_product`")->rows;
-        
+            SELECT '', `code`, `amount`, '0.00', '0.00', '1'
+            FROM `" . DB_PREFIX . "order_voucher`
+            WHERE `order_id` = " . (int) $orderInfo['order_id'])->rows;
+       
         foreach ($orderedProducts as $product) {
-
-            if ($difference < 0) {
-                $diff = -min($product['price'] - 0.01, abs($difference) / $product['quantity']);
-                $difference -= $diff * $product['quantity'];
-            } else {
-                $diff = $difference / $product['quantity'];
-                $difference = 0;
-            }
             
             $goodsList[] = array(
                 'qty' => (int) $product['quantity'],
                 'goods' => array(
                     'artno' => $product['model'],
                     'title' => $product['name'],
-                    'price' => (int) str_replace('.', '', $this->currency->format($product['price'] + $diff, '', '', false)),
+                    'price' => (int) str_replace('.', '', $this->currency->format($product['price'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
+                    'vat' => (double) $product['tax_rate'],
+                    'discount' => 0.0,
+                    'flags' => 0,
+                )
+            );
+            
+            $subTotal += ($product['price'] + $product['tax']) * $product['quantity'];
+        }
+
+        if (isset($totals['shipping'])) {
+            $goodsList[] = array(
+                'qty' => 1,
+                'goods' => array(
+                    'artno' => $orderInfo['shipping_code'],
+                    'title' => $orderInfo['shipping_method'],
+                    'price' => (int) str_replace('.', '', $this->currency->format($totals['shipping']['value'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
                     'vat' => 0.0,
                     'discount' => 0.0,
-                    'flags' => 32,
+                    'flags' => 8,
+                )
+            );
+            
+            $subTotal += $totals['shipping']['value'];
+        }
+        
+        $other = $orderInfo['total'] - $subTotal;
+        
+        if ($other != 0) {
+            $goodsList[] = array(
+                'qty' => 1,
+                'goods' => array(
+                    'artno' => '',
+                    'title' => $this->language->get('text_other'),
+                    'price' => (int) str_replace('.', '', $this->currency->format($other, $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
+                    'vat' => 0.0,
+                    'discount' => 0.0,
+                    'flags' => 0,
                 )
             );
         }
-
-        $goodsList[] = array(
-            'qty' => 1,
-            'goods' => array(
-                'artno' => $orderInfo['shipping_code'],
-                'title' => $orderInfo['shipping_method'],
-                'price' => (int) str_replace('.', '', $this->currency->format($totalsData['shipping'], '', '', false)),
-                'vat' => 0.0,
-                'discount' => 0.0,
-                'flags' => 8,
-            )
-        );
         
         $digest = '';
         

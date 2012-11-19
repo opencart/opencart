@@ -268,13 +268,29 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             $subTotal += $totals['shipping']['value'];
         }
         
+        if (isset($totals['klarna_fee'])) {
+            $goodsList[] = array(
+                'qty' => 1,
+                'goods' => array(
+                    'artno' => '',
+                    'title' => $this->language->get('text_klarna_fee'),
+                    'price' => (int) str_replace('.', '', $this->currency->format($totals['klarna_fee']['value'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
+                    'vat' => 0.0,
+                    'discount' => 0.0,
+                    'flags' => 8,
+                )
+            );
+            
+            $subTotal += $totals['klarna_fee']['value'];
+        }
+        
         $other = $orderInfo['total'] - $subTotal;
         
         if ($other != 0) {
             $goodsList[] = array(
                 'qty' => 1,
                 'goods' => array(
-                    'artno' => $this->language->get('text_other'),
+                    'artno' => '',
                     'title' => $this->language->get('text_other'),
                     'price' => (int) str_replace('.', '', $this->currency->format($other, $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
                     'vat' => 0.0,
@@ -283,11 +299,6 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 )
             );
         }
-        
-        /*
-        print_r($goodsList);
-        die();
-        */
         
         $digest = '';
         
@@ -329,8 +340,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             '',
             $address, 
             $address, 
-            //$orderInfo['ip'],
-            '81.97.201.157',
+            $orderInfo['ip'],
             0, 
             $currency, 
             $country,

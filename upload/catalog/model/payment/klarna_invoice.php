@@ -6,7 +6,12 @@ class ModelPaymentKlarnaInvoice extends Model {
         $this->language->load('payment/klarna_invoice');
         
         $klarnaCountry = $this->config->get('klarna_invoice_country');
-        $settings = $klarnaCountry[$address['iso_code_3']];
+        
+        if (isset($klarnaCountry[$address['iso_code_3']])) {
+            $settings = $klarnaCountry[$address['iso_code_3']];
+        } else {
+            $settings = null;
+        }
         
         $klarnaInvoiceStatus = $settings['status'] == '1';
         

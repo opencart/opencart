@@ -6,7 +6,12 @@ class ModelPaymentKlarnaAccount extends Model {
         $this->language->load('payment/klarna_account');
 
         $klarnaCountry = $this->config->get('klarna_account_country');
-        $settings = $klarnaCountry[$address['iso_code_3']];
+        
+        if (isset($klarnaCountry[$address['iso_code_3']])) {
+            $settings = $klarnaCountry[$address['iso_code_3']];
+        } else {
+            $settings = null;
+        }
 
         $klarnaAccountStatus = $settings['status'] == '1';
 

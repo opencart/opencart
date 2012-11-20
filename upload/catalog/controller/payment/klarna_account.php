@@ -516,8 +516,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
                     $orderStatus = $this->config->get('config_order_status_id');
                 }
                 
-                $orderComment = sprintf($this->language->get('text_order_comment'), $invoiceNumber, $this->config->get('config_currency'), 
-                        $orderInfo['currency_code'], $orderInfo['currency_value']);
+                $orderComment = sprintf($this->language->get('text_order_comment'), $invoiceNumber, $this->config->get('config_currency'), $countryToCurrency[$orderInfo['payment_iso_code_3']], $this->currency->getValue($countryToCurrency[$orderInfo['payment_iso_code_3']]));
                 
                 $this->model_checkout_order->confirm($this->session->data['order_id'], $orderStatus, $orderComment , 1);
                 

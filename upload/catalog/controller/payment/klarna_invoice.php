@@ -16,7 +16,8 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         
         $addressMatch = false;
         
-        if ($orderInfo['payment_firstname'] == $orderInfo['shipping_firstname'] && $orderInfo['payment_lastname'] == $orderInfo['shipping_lastname'] && $orderInfo['payment_address_1'] == $orderInfo['shipping_address_1'] && $orderInfo['payment_address_2'] == $orderInfo['shipping_address_2'] && $orderInfo['payment_postcode'] == $orderInfo['shipping_postcode'] && $orderInfo['payment_city'] == $orderInfo['shipping_city'] && $orderInfo['payment_zone_id'] == $orderInfo['shipping_zone_id'] && $orderInfo['payment_zone_code'] == $orderInfo['shipping_zone_code'] && $orderInfo['payment_country_id'] == $orderInfo['shipping_country_id'] && $orderInfo['payment_country'] == $orderInfo['shipping_country'] && $orderInfo['payment_iso_code_3'] == $orderInfo['shipping_iso_code_3']) {
+        // Order must have identical shipping and billing address or have no shipping address at all
+        if (empty($orderInfo['payment_firstname']) || $orderInfo['payment_firstname'] == $orderInfo['shipping_firstname'] && $orderInfo['payment_lastname'] == $orderInfo['shipping_lastname'] && $orderInfo['payment_address_1'] == $orderInfo['shipping_address_1'] && $orderInfo['payment_address_2'] == $orderInfo['shipping_address_2'] && $orderInfo['payment_postcode'] == $orderInfo['shipping_postcode'] && $orderInfo['payment_city'] == $orderInfo['shipping_city'] && $orderInfo['payment_zone_id'] == $orderInfo['shipping_zone_id'] && $orderInfo['payment_zone_code'] == $orderInfo['shipping_zone_code'] && $orderInfo['payment_country_id'] == $orderInfo['shipping_country_id'] && $orderInfo['payment_country'] == $orderInfo['shipping_country'] && $orderInfo['payment_iso_code_3'] == $orderInfo['shipping_iso_code_3']) {
             $addressMatch = true;
         } else {
             $addressMatch = false;
@@ -88,18 +89,6 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         if (!$orderInfo) {
             $this->response->setOutput(json_encode($json));
             return;
-        }
-        
-        $discount = 0;
-        
-        if (isset($this->session->data['coupon'])) {
-            $couponInfo = $this->model_checkout_coupon->getCoupon($this->session->data['coupon']);;
-        } else {
-            $couponInfo = false;
-        }
-        
-        if ($couponInfo['type'] == 'F') {
-            $couponInfo['discount'] = min($couponInfo['discount'], $this->cart->getSubTotal());
         }
         
         if ($settings['server'] == 'live') {

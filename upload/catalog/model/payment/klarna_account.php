@@ -21,7 +21,7 @@ class ModelPaymentKlarnaAccount extends Model {
         }
 
         // Maps countries to currencies
-        $countries = array(
+        $countryToCurrency = array(
             'NOR' => 'NOK',
             'SWE' => 'SEK',
             'FIN' => 'EUR',
@@ -29,10 +29,10 @@ class ModelPaymentKlarnaAccount extends Model {
             'DEU' => 'EUR',
             'NLD' => 'EUR',
         );
-
-        if (!isset($countries[$address['iso_code_3']]) || $countries[$address['iso_code_3']] != $this->currency->getCode()) {
+        
+        if(!isset($countryToCurrency[$address['iso_code_3']]) || !$this->currency->has($countryToCurrency[$address['iso_code_3']])) {
             $klarnaAccountStatus = false;
-        }
+        }  
         
         if ($address['iso_code_3'] == 'NLD' && $this->currency->has('EUR') && $this->currency->format($total, 'EUR', '', false) > 250.00) {
             $klarnaAccountStatus = false;
@@ -48,94 +48,99 @@ class ModelPaymentKlarnaAccount extends Model {
 
         $paymentOptions = array();
 
-        foreach ($pclasses as $pclass) {
+        if ($klarnaAccountStatus) {
+            
+            $total = $this->currency->format($total, $countryToCurrency[$address['iso_code_3']], '', false);
+            
             foreach ($pclasses as $pclass) {
-                // 0 - Campaign
-                // 1 - Account
-                // 2 - Special
-                // 3 - Fixed
-                if (!in_array($pclass['type'], array(0, 1, 3))) {
-                    continue;
-                }
-
-                if ($pclass['type'] == 2) {
-                    $monthlyCost = -1;
-                } else {
-                    if ($total < $pclass['minamount']) {
+                foreach ($pclasses as $pclass) {
+                    // 0 - Campaign
+                    // 1 - Account
+                    // 2 - Special
+                    // 3 - Fixed
+                    if (!in_array($pclass['type'], array(0, 1, 3))) {
                         continue;
                     }
 
-                    if ($pclass['type'] == 3) {
-                        continue;
+                    if ($pclass['type'] == 2) {
+                        $monthlyCost = -1;
                     } else {
-                        $sum = $total;
+                        if ($total < $pclass['minamount']) {
+                            continue;
+                        }
 
-                        $lowestPayment = $this->getLowestPaymentAccount($address['iso_code_3']);
-                        $monthlyCost = 0;
-
-                        $monthsFee = $pclass['invoicefee'];
-                        $startFee = $pclass['startfee'];
-
-                        $sum += $startFee;
-
-                        $base = ($pclass['type'] == 1);
-
-                        $minpay = ($pclass['type'] === 1) ? $this->getLowestPaymentAccount($address['iso_code_3']) : 0;
-
-                        if ($pclass['months'] == 0) {
-                            $payment = $sum;
-                        } elseif ($pclass['interestrate'] == 0) {
-                            $payment = $sum / $pclass['months'];
+                        if ($pclass['type'] == 3) {
+                            continue;
                         } else {
-                            $p = $pclass['interestrate'] / (100.0 * 12);
-                            $payment = $sum * $p / (1 - pow((1 + $p), -$pclass['months']));
-                        }
+                            $sum = $total;
 
-                        $payment += $monthsFee;
+                            $lowestPayment = $this->getLowestPaymentAccount($address['iso_code_3']);
+                            $monthlyCost = 0;
 
-                        $bal = $sum;
-                        $payarray = array();
+                            $monthsFee = $pclass['invoicefee'];
+                            $startFee = $pclass['startfee'];
 
-                        $months = $pclass['months'];
-                        while (($months != 0) && ($bal > 0.01)) {
-                            $interest = $bal * $pclass['interestrate'] / (100.0 * 12);
-                            $newbal = $bal + $interest + $monthsFee;
+                            $sum += $startFee;
 
-                            if ($minpay >= $newbal || $payment >= $newbal) {
-                                $payarray[] = $newbal;
-                                $payarray = $payarray;
-                                break;
+                            $base = ($pclass['type'] == 1);
+
+                            $minpay = ($pclass['type'] === 1) ? $this->getLowestPaymentAccount($address['iso_code_3']) : 0;
+
+                            if ($pclass['months'] == 0) {
+                                $payment = $sum;
+                            } elseif ($pclass['interestrate'] == 0) {
+                                $payment = $sum / $pclass['months'];
+                            } else {
+                                $p = $pclass['interestrate'] / (100.0 * 12);
+                                $payment = $sum * $p / (1 - pow((1 + $p), -$pclass['months']));
                             }
 
-                            $newpay = max($payment, $minpay);
-                            if ($base) {
-                                $newpay = max($newpay, $bal / 24.0 + $monthsFee + $interest);
+                            $payment += $monthsFee;
+
+                            $bal = $sum;
+                            $payarray = array();
+
+                            $months = $pclass['months'];
+                            while (($months != 0) && ($bal > 0.01)) {
+                                $interest = $bal * $pclass['interestrate'] / (100.0 * 12);
+                                $newbal = $bal + $interest + $monthsFee;
+
+                                if ($minpay >= $newbal || $payment >= $newbal) {
+                                    $payarray[] = $newbal;
+                                    $payarray = $payarray;
+                                    break;
+                                }
+
+                                $newpay = max($payment, $minpay);
+                                if ($base) {
+                                    $newpay = max($newpay, $bal / 24.0 + $monthsFee + $interest);
+                                }
+
+                                $bal = $newbal - $newpay;
+                                $payarray[] = $newpay;
+                                $months -= 1;
                             }
 
-                            $bal = $newbal - $newpay;
-                            $payarray[] = $newpay;
-                            $months -= 1;
-                        }
+                            $monthlyCost = round(isset($payarray[0]) ? ($payarray[0]) : 0, 2);
 
-                        $monthlyCost = round(isset($payarray[0]) ? ($payarray[0]) : 0, 2);
+                            if ($monthlyCost < 0.01) {
+                                continue;
+                            }
 
-                        if ($monthlyCost < 0.01) {
-                            continue;
-                        }
+                            if ($pclass['type'] == 1 && $monthlyCost < $lowestPayment) {
+                                $monthlyCost = $lowestPayment;
+                            }
 
-                        if ($pclass['type'] == 1 && $monthlyCost < $lowestPayment) {
-                            $monthlyCost = $lowestPayment;
-                        }
-
-                        if ($pclass['type'] == 0 && $monthlyCost < $lowestPayment) {
-                            continue;
+                            if ($pclass['type'] == 0 && $monthlyCost < $lowestPayment) {
+                                continue;
+                            }
                         }
                     }
-                }
 
-                $paymentOptions[$pclass['id']]['monthly_cost'] = $monthlyCost;
-                $paymentOptions[$pclass['id']]['pclass_id'] = $pclass['id'];
-                $paymentOptions[$pclass['id']]['months'] = $pclass['months'];
+                    $paymentOptions[$pclass['id']]['monthly_cost'] = $monthlyCost;
+                    $paymentOptions[$pclass['id']]['pclass_id'] = $pclass['id'];
+                    $paymentOptions[$pclass['id']]['months'] = $pclass['months'];
+                }
             }
         }
 
@@ -155,7 +160,7 @@ class ModelPaymentKlarnaAccount extends Model {
             
             $method = array(
                 'code' => 'klarna_account',
-                'title' => sprintf($this->language->get('text_title'), $this->currency->format($paymentOptions[0]['monthly_cost'], '', ''), $settings['merchant'], strtolower($address['iso_code_2'])),
+                'title' => sprintf($this->language->get('text_title'), $this->currency->format($this->currency->convert($paymentOptions[0]['monthly_cost'], $countryToCurrency[$address['iso_code_3']], $this->currency->getCode())), $settings['merchant'], strtolower($address['iso_code_2'])),
                 'sort_order' => $settings['sort_order'],
             );
         }

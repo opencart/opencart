@@ -22,6 +22,15 @@ class ControllerPaymentKlarnaAccount extends Controller {
             $addressMatch = false;
         }
         
+        $countryToCurrency = array(
+            'NOR' => 'NOK',
+            'SWE' => 'SEK',
+            'FIN' => 'EUR',
+            'DNK' => 'DKK',
+            'DEU' => 'EUR',
+            'NLD' => 'EUR',
+        );
+        
         if (empty($orderInfo['payment_company']) && empty($orderInfo['payment_company_id'])) {
             $this->data['is_company'] = false;
         } else {
@@ -50,8 +59,6 @@ class ControllerPaymentKlarnaAccount extends Controller {
         $this->data['klarna_country_code'] = $orderInfo['payment_iso_code_2'];
         $this->data['klarna_send'] = $this->url->link('payment/klarna_account/send');
         
-        $this->data['klarna_nld_warning_banner'] = $this->model_tool_image->resize('data/klarna_nld_warning.jpg', 950, 118);       
-        
         $partPaymentOptions = array();
         
         // Show part payment options?
@@ -65,7 +72,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
                 $pclasses = array();
             }
 
-            $orderTotal = $this->currency->format($orderInfo['total'], '', '', false);
+            $orderTotal = $this->currency->format($orderInfo['total'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false);
 
             foreach ($pclasses as $pclass) {                
                 // 0 - Campaign
@@ -163,7 +170,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
         $this->data['part_payment_options'] = array();
         
         foreach ($partPaymentOptions as $paymentOption) {
-            $this->data['part_payment_options'][$paymentOption['pclass_id']] = sprintf($this->language->get('text_monthly_payment'), $paymentOption['months'], $this->currency->format($paymentOption['monthly_cost'], '', 1.0));
+            $this->data['part_payment_options'][$paymentOption['pclass_id']] = sprintf($this->language->get('text_monthly_payment'), $paymentOption['months'], $this->currency->format($this->currency->convert($paymentOption['monthly_cost'], $countryToCurrency[$orderInfo['payment_iso_code_3']], $this->currency->getCode())));
         }
         
         // Get the invoice fee

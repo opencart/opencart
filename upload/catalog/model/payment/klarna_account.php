@@ -143,7 +143,7 @@ class ModelPaymentKlarnaAccount extends Model {
                 }
             }
         }
-
+        
         if (empty($paymentOptions)) {
             $klarnaAccountStatus = false;
         }
@@ -160,7 +160,7 @@ class ModelPaymentKlarnaAccount extends Model {
             
             $method = array(
                 'code' => 'klarna_account',
-                'title' => sprintf($this->language->get('text_title'), $this->currency->format($this->currency->convert($paymentOptions[0]['monthly_cost'], $countryToCurrency[$address['iso_code_3']], $this->currency->getCode())), $settings['merchant'], strtolower($address['iso_code_2'])),
+                'title' => sprintf($this->language->get('text_title'), $this->currency->format($this->currency->convert($paymentOptions[0]['monthly_cost'], $countryToCurrency[$address['iso_code_3']], $this->currency->getCode()), 1, 1), $settings['merchant'], strtolower($address['iso_code_2'])),
                 'sort_order' => $settings['sort_order'],
             );
         }

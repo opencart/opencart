@@ -32,8 +32,8 @@ class ControllerModuleCategory extends Controller {
 		$categories = $this->model_catalog_category->getCategories(0);
                 
 		// Counting definitions
-                $total = $product_total = 0;
-                $config_product_count = $this->config->get('config_product_count'); // no need to call function every run
+		$total = $product_total = 0;
+		$config_product_count = $this->config->get('config_product_count');
                 
 		foreach ($categories as $category) {
                         

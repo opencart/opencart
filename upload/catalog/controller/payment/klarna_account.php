@@ -388,7 +388,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
                     'price' => (int) str_replace('.', '', $this->currency->format($other, $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
                     'vat' => 0.0,
                     'discount' => 0.0,
-                    'flags' => 0,
+                    'flags' => 32,
                 )
             );
         }

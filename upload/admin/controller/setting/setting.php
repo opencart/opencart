@@ -93,8 +93,9 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_stock_warning'] = $this->language->get('entry_stock_warning');
 		$this->data['entry_stock_checkout'] = $this->language->get('entry_stock_checkout');
 		$this->data['entry_stock_status'] = $this->language->get('entry_stock_status');
-		$this->data['entry_affiliate'] = $this->language->get('entry_affiliate');	
-		$this->data['entry_commission'] = $this->language->get('entry_commission');	
+		$this->data['entry_affiliate'] = $this->language->get('entry_affiliate');
+		$this->data['entry_commission'] = $this->language->get('entry_commission');
+		$this->data['entry_return'] = $this->language->get('entry_return');
 		$this->data['entry_return_status'] = $this->language->get('entry_return_status');
 		$this->data['entry_logo'] = $this->language->get('entry_logo');
 		$this->data['entry_icon'] = $this->language->get('entry_icon');
@@ -127,7 +128,9 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_fraud_key'] = $this->language->get('entry_fraud_key');
 		$this->data['entry_fraud_score'] = $this->language->get('entry_fraud_score');
 		$this->data['entry_fraud_status'] = $this->language->get('entry_fraud_status');
-		$this->data['entry_use_ssl'] = $this->language->get('entry_use_ssl');
+		$this->data['entry_secure'] = $this->language->get('entry_secure');
+		$this->data['entry_shared'] = $this->language->get('entry_shared');
+		$this->data['entry_robots'] = $this->language->get('entry_robots');
 		$this->data['entry_maintenance'] = $this->language->get('entry_maintenance');
 		$this->data['entry_encryption'] = $this->language->get('entry_encryption');
 		$this->data['entry_seo_url'] = $this->language->get('entry_seo_url');
@@ -683,6 +686,12 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_commission'] = '5.00';
 		}
+
+		if (isset($this->request->post['config_return_id'])) {
+			$this->data['config_return_id'] = $this->request->post['config_return_id'];
+		} else {
+			$this->data['config_return_id'] = $this->config->get('config_return_id');		
+		}
 						
 		if (isset($this->request->post['config_return_status_id'])) {
 			$this->data['config_return_status_id'] = $this->request->post['config_return_status_id'];
@@ -958,12 +967,24 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
 		}		
 				
-		if (isset($this->request->post['config_use_ssl'])) {
-			$this->data['config_use_ssl'] = $this->request->post['config_use_ssl'];
+		if (isset($this->request->post['config_secure'])) {
+			$this->data['config_secure'] = $this->request->post['config_secure'];
 		} else {
-			$this->data['config_use_ssl'] = $this->config->get('config_use_ssl');
+			$this->data['config_secure'] = $this->config->get('config_secure');
+		}
+
+		if (isset($this->request->post['config_shared'])) {
+			$this->data['config_shared'] = $this->request->post['config_shared'];
+		} else {
+			$this->data['config_shared'] = $this->config->get('config_shared');
 		}
 		
+		if (isset($this->request->post['config_robots'])) {
+			$this->data['config_robots'] = $this->request->post['config_robots'];
+		} else {
+			$this->data['config_robots'] = $this->config->get('config_robots');
+		}
+						
 		if (isset($this->request->post['config_seo_url'])) {
 			$this->data['config_seo_url'] = $this->request->post['config_seo_url'];
 		} else {
@@ -1144,10 +1165,16 @@ class ControllerSettingSetting extends Controller {
 	}
 	
 	public function template() {
-		if (file_exists(DIR_IMAGE . 'templates/' . basename($this->request->get['template']) . '.png')) {
-			$image = HTTPS_IMAGE . 'templates/' . basename($this->request->get['template']) . '.png';
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$server = HTTPS_CATALOG;
 		} else {
-			$image = HTTPS_IMAGE . 'no_image.jpg';
+			$server = HTTP_CATALOG;
+		}
+		
+		if (file_exists(DIR_IMAGE . 'templates/' . basename($this->request->get['template']) . '.png')) {
+			$image = $server . 'image/templates/' . basename($this->request->get['template']) . '.png';
+		} else {
+			$image = $server . 'image/no_image.jpg';
 		}
 		
 		$this->response->setOutput('<img src="' . $image . '" alt="" title="" style="border: 1px solid #EEEEEE;" />');

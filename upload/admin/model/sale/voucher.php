@@ -107,7 +107,7 @@ class ModelSaleVoucher extends Model {
 				$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
 				
 				if ($voucher_info && file_exists(DIR_IMAGE . $voucher_theme_info['image'])) {
-					$template->data['image'] = HTTP_IMAGE . $voucher_theme_info['image'];
+					$template->data['image'] = HTTP_CATALOG . 'image/' . $voucher_theme_info['image'];
 				} else {
 					$template->data['image'] = '';
 				}
@@ -150,7 +150,7 @@ class ModelSaleVoucher extends Model {
 				$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
 				
 				if ($voucher_info && file_exists(DIR_IMAGE . $voucher_theme_info['image'])) {
-					$template->data['image'] = HTTP_IMAGE . $voucher_theme_info['image'];
+					$template->data['image'] = HTTP_CATALOG . 'image/' . $voucher_theme_info['image'];
 				} else {
 					$template->data['image'] = '';
 				}

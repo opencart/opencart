@@ -70,6 +70,7 @@ $_['entry_stock_checkout']         = 'Stock Checkout:<br /><span class="help">Al
 $_['entry_stock_status']           = 'Out of Stock Status:<br /><span class="help">Set the default out of stock status selected in product edit.</span>';
 $_['entry_affiliate']              = 'Affiliate Terms:<br /><span class="help">Forces people to agree to terms before an affiliate account can be created.</span>';
 $_['entry_commission']             = 'Affiliate Commission (%):<br /><span class="help">The default affiliate commission percentage.</span>';
+$_['entry_return']                 = 'Return Terms:<br /><span class="help">Forces people to agree to terms before an return account can be created.</span>';
 $_['entry_return_status']          = 'Return Status:<br /><span class="help">Set the default return status when an returns request is submitted.</span>';
 $_['entry_logo']                   = 'Store Logo:';
 $_['entry_icon']                   = 'Icon:<br /><span class="help">The icon should be a PNG that is 16px x 16px.</span>';
@@ -102,7 +103,9 @@ $_['entry_fraud_detection']        = 'Use MaxMind Fraud Detection System:<br /><
 $_['entry_fraud_key']              = 'MaxMind License Key:</span>';
 $_['entry_fraud_score']            = 'MaxMind Risk Score:<br /><span class="help">The higher the score the more likly the order is fraudulent. Set a score between 0 - 100.</span>';
 $_['entry_fraud_status']           = 'MaxMind Fraud Order Status:<br /><span class="help">Orders over your set score will be assigned this order status and will not be allowed to reach the complete status automatically.</span>';
-$_['entry_use_ssl']                = 'Use SSL:<br /><span class="help">To use SSL check with your host if a SSL certificate is installed and added the SSL URL to the catalog and admin config files.</span>';
+$_['entry_secure']                 = 'Use SSL:<br /><span class="help">To use SSL check with your host if a SSL certificate is installed and added the SSL URL to the catalog and admin config files.</span>';
+$_['entry_shared']                 = 'Use Shared Sessions:<br /><span class="help">Place a session ID into the url so the session can be passed between different domains.</span>';
+$_['entry_robots']                 = 'Robots:<br /><span class="help">A list of web crawler user agents that shared sessions will not be used with. Use separate lines for each user agent.</span>';
 $_['entry_seo_url']                = 'Use SEO URL\'s:<br /><span class="help">To use SEO URL\'s apache module mod-rewrite must be installed and you need to rename the htaccess.txt to .htaccess.</span>';
 $_['entry_maintenance']            = 'Maintenance Mode:<br /><span class="help">Prevents customers from browsing your store. They will instead see a maintenance message. If logged in as admin, you will see the store as normal.</span>';
 $_['entry_encryption']             = 'Encryption Key:<br /><span class="help">Please provide a secret key that will be used to encrypt private information when processing orders.</span>';

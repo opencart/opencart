@@ -580,6 +580,19 @@
           <h2><?php echo $text_return; ?></h2>
           <table class="form">
             <tr>
+              <td><?php echo $entry_return; ?></td>
+              <td><select name="config_return_id">
+                  <option value="0"><?php echo $text_none; ?></option>
+                  <?php foreach ($informations as $information) { ?>
+                  <?php if ($information['information_id'] == $config_return_id) { ?>
+                  <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_return_status; ?></td>
               <td><select name="config_return_status_id">
                   <?php foreach ($return_statuses as $return_status) { ?>
@@ -858,19 +871,37 @@
         <div id="tab-server">
           <table class="form">
             <tr>
-              <td><?php echo $entry_use_ssl; ?></td>
-              <td><?php if ($config_use_ssl) { ?>
-                <input type="radio" name="config_use_ssl" value="1" checked="checked" />
+              <td><?php echo $entry_secure; ?></td>
+              <td><?php if ($config_secure) { ?>
+                <input type="radio" name="config_secure" value="1" checked="checked" />
                 <?php echo $text_yes; ?>
-                <input type="radio" name="config_use_ssl" value="0" />
+                <input type="radio" name="config_secure" value="0" />
                 <?php echo $text_no; ?>
                 <?php } else { ?>
-                <input type="radio" name="config_use_ssl" value="1" />
+                <input type="radio" name="config_secure" value="1" />
                 <?php echo $text_yes; ?>
-                <input type="radio" name="config_use_ssl" value="0" checked="checked" />
+                <input type="radio" name="config_secure" value="0" checked="checked" />
                 <?php echo $text_no; ?>
                 <?php } ?></td>
             </tr>
+            <tr>
+              <td><?php echo $entry_shared; ?></td>
+              <td><?php if ($config_shared) { ?>
+                <input type="radio" name="config_shared" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_shared" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_shared" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_shared" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_robots; ?></td>
+              <td><textarea name="config_robots" cols="40" rows="5"><?php echo $config_robots; ?></textarea></td>
+            </tr>                        
             <tr>
               <td><?php echo $entry_seo_url; ?></td>
               <td><?php if ($config_seo_url) { ?>
@@ -989,7 +1020,7 @@ $('select[name=\'config_country_id\']').bind('change', function() {
 	    			html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
-				html += '<option value="0" selected="selected><?php echo $text_none; ?></option>';
+				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
 			
 			$('select[name=\'config_zone_id\']').html(html);

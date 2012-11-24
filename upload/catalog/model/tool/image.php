@@ -6,6 +6,7 @@ class ModelToolImage extends Model {
 		} 
 		
 		$info = pathinfo($filename);
+		
 		$extension = $info['extension'];
 		
 		$old_image = $filename;
@@ -36,9 +37,9 @@ class ModelToolImage extends Model {
 		}
 		
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			return HTTPS_IMAGE . $new_image;
+			return $this->config->get('config_ssl') . 'image/' . $new_image;
 		} else {
-			return HTTP_IMAGE . $new_image;
+			return $this->config->get('config_url') . 'image/' . $new_image;
 		}	
 	}
 }

@@ -80,7 +80,7 @@ class ModelShippingFedex extends Model {
 			$xml .= '					<ns1:Address>';
 			
 			if ($country_info['iso_code_2'] == 'US') {
-				$xml .= '						<ns1:StateOrProvinceCode>' . ($zone_info ? $zone_info['iso_code_2'] : '') . '</ns1:StateOrProvinceCode>';
+				$xml .= '						<ns1:StateOrProvinceCode>' . ($zone_info ? $zone_info['code'] : '') . '</ns1:StateOrProvinceCode>';
 			} else {
 				$xml .= '						<ns1:StateOrProvinceCode>' . ($zone_info ? $zone_info['name'] : '') . '</ns1:StateOrProvinceCode>';
 			}
@@ -101,7 +101,7 @@ class ModelShippingFedex extends Model {
 			$xml .= '						<ns1:City>' . $address['city'] . '</ns1:City>';
 			
 			if ($address['iso_code_2'] == 'US') {
-				$xml .= '						<ns1:StateOrProvinceCode>' . $address['iso_code_2'] . '</ns1:StateOrProvinceCode>';
+				$xml .= '						<ns1:StateOrProvinceCode>' . $address['zone_code'] . '</ns1:StateOrProvinceCode>';
 			} else {
 				$xml .= '						<ns1:StateOrProvinceCode>' . $address['zone'] . '</ns1:StateOrProvinceCode>';
 			}
@@ -189,8 +189,8 @@ class ModelShippingFedex extends Model {
 		}
 		
 		$method_data = array();
-		
-		if ($quote_data) {
+
+		if ($quote_data || $error) {
 			$title = $this->language->get('text_title');
 
 			if ($this->config->get('fedex_display_weight')) {

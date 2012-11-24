@@ -319,6 +319,8 @@ CREATE TABLE `oc_category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `image` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
+  `left` int(11) NOT NULL DEFAULT '0',
+  `right` int(11) NOT NULL DEFAULT '0',
   `top` tinyint(1) NOT NULL,
   `column` int(3) NOT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
@@ -553,7 +555,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (18, 'Bangladesh', 'BD', 'BGD', '', 0, 1),
 (19, 'Barbados', 'BB', 'BRB', '', 0, 1),
 (20, 'Belarus', 'BY', 'BLR', '', 0, 1),
-(21, 'Belgium', 'BE', 'BEL', '', 0, 1),
+(21, 'Belgium', 'BE', 'BEL', '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 0, 1),
 (22, 'Belize', 'BZ', 'BLZ', '', 0, 1),
 (23, 'Benin', 'BJ', 'BEN', '', 0, 1),
 (24, 'Bermuda', 'BM', 'BMU', '', 0, 1),
@@ -593,7 +595,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (58, 'Djibouti', 'DJ', 'DJI', '', 0, 1),
 (59, 'Dominica', 'DM', 'DMA', '', 0, 1),
 (60, 'Dominican Republic', 'DO', 'DOM', '', 0, 1),
-(61, 'East Timor', 'TP', 'TMP', '', 0, 1),
+(61, 'East Timor', 'TL', 'TLS', '', 0, 1),
 (62, 'Ecuador', 'EC', 'ECU', '', 0, 1),
 (63, 'Egypt', 'EG', 'EGY', '', 0, 1),
 (64, 'El Salvador', 'SV', 'SLV', '', 0, 1),
@@ -605,8 +607,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (70, 'Faroe Islands', 'FO', 'FRO', '', 0, 1),
 (71, 'Fiji', 'FJ', 'FJI', '', 0, 1),
 (72, 'Finland', 'FI', 'FIN', '', 0, 1),
-(73, 'France', 'FR', 'FRA', '', 0, 1),
-(74, 'France, Metropolitan', 'FX', 'FXX', '', 0, 1),
+(74, 'France, Metropolitan', 'FR', 'FRA', '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 1, 1),
 (75, 'French Guiana', 'GF', 'GUF', '', 0, 1),
 (76, 'French Polynesia', 'PF', 'PYF', '', 0, 1),
 (77, 'French Southern Territories', 'TF', 'ATF', '', 0, 1),
@@ -623,7 +624,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (88, 'Guam', 'GU', 'GUM', '', 0, 1),
 (89, 'Guatemala', 'GT', 'GTM', '', 0, 1),
 (90, 'Guinea', 'GN', 'GIN', '', 0, 1),
-(91, 'Guinea-bissau', 'GW', 'GNB', '', 0, 1),
+(91, 'Guinea-Bissau', 'GW', 'GNB', '', 0, 1),
 (92, 'Guyana', 'GY', 'GUY', '', 0, 1),
 (93, 'Haiti', 'HT', 'HTI', '', 0, 1),
 (94, 'Heard and Mc Donald Islands', 'HM', 'HMD', '', 0, 1),
@@ -735,7 +736,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (200, 'Suriname', 'SR', 'SUR', '', 0, 1),
 (201, 'Svalbard and Jan Mayen Islands', 'SJ', 'SJM', '', 0, 1),
 (202, 'Swaziland', 'SZ', 'SWZ', '', 0, 1),
-(203, 'Sweden', 'SE', 'SWE', '', 0, 1),
+(203, 'Sweden', 'SE', 'SWE', '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 1, 1),
 (204, 'Switzerland', 'CH', 'CHE', '', 0, 1),
 (205, 'Syrian Arab Republic', 'SY', 'SYR', '', 0, 1),
 (206, 'Taiwan', 'TW', 'TWN', '', 0, 1),
@@ -768,12 +769,13 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (233, 'Wallis and Futuna Islands', 'WF', 'WLF', '', 0, 1),
 (234, 'Western Sahara', 'EH', 'ESH', '', 0, 1),
 (235, 'Yemen', 'YE', 'YEM', '', 0, 1),
-(236, 'Yugoslavia', 'YU', 'YUG', '', 0, 1),
 (237, 'Democratic Republic of Congo', 'CD', 'COD', '', 0, 1),
 (238, 'Zambia', 'ZM', 'ZMB', '', 0, 1),
 (239, 'Zimbabwe', 'ZW', 'ZWE', '', 0, 1),
 (240, 'Jersey', 'JE', 'JEY', '', 1, 1),
-(241, 'Guernsey', 'GG', 'GGY', '', 1, 1);
+(241, 'Guernsey', 'GG', 'GGY', '', 1, 1),
+(242, 'Montenegro', 'ME', 'MNE', '', 0, 1),
+(243, 'Serbia', 'RS', 'SRB', '', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -812,6 +814,22 @@ INSERT INTO `oc_coupon` (`coupon_id`, `name`, `code`, `type`, `discount`, `logge
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `oc_coupon_category`
+--
+
+CREATE TABLE IF NOT EXISTS `oc_coupon_category` (
+  `coupon_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`coupon_id`,`category_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_coupon_history`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_coupon_history`
 --
 
@@ -829,7 +847,6 @@ CREATE TABLE `oc_coupon_history` (
 --
 -- Dumping data for table `oc_coupon_history`
 --
-
 
 -- --------------------------------------------------------
 
@@ -1008,7 +1025,7 @@ CREATE TABLE `oc_customer_online` (
   `referer` text COLLATE utf8_bin NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`ip`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -1072,8 +1089,7 @@ CREATE TABLE `oc_download` (
 -- Dumping data for table `oc_download`
 --
 
-
--- --------------------------------------------------------
+----------------------------------------------------------
 
 --
 -- Table structure for table `oc_download_description`
@@ -1091,6 +1107,77 @@ CREATE TABLE `oc_download_description` (
 -- Dumping data for table `oc_download_description`
 --
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_filter`
+--
+
+DROP TABLE IF EXISTS `oc_filter`;
+CREATE TABLE `oc_filter` (
+  `filter_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`filter_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_filter`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_filter_description`
+--
+
+DROP TABLE IF EXISTS `oc_filter_description`;
+CREATE TABLE `oc_filter_description` (
+  `filter_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(64) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`filter_id`,`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_filter_description`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_filter_value`
+--
+
+DROP TABLE IF EXISTS `oc_filter_value`;
+CREATE TABLE `oc_filter_value` (
+  `filter_value_id` int(11) NOT NULL AUTO_INCREMENT,
+  `filter_id` int(11) NOT NULL,
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`filter_value_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_filter_value`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_filter_value_description`
+--
+
+DROP TABLE IF EXISTS `oc_filter_value_description`;
+CREATE TABLE `oc_filter_value_description` (
+  `filter_value_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `filter_id` int(11) NOT NULL,
+  `name` varchar(64) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`filter_value_id`,`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_filter_value_description`
+--
 
 -- --------------------------------------------------------
 
@@ -1334,7 +1421,8 @@ INSERT INTO `oc_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `rout
 (24, 11, 0, 'information/information'),
 (22, 5, 0, 'product/manufacturer'),
 (23, 7, 0, 'checkout/'),
-(31, 8, 0, 'information/contact');
+(31, 8, 0, 'information/contact'),
+(32, 9, 0, 'information/sitemap');
 
 -- --------------------------------------------------------
 
@@ -1974,7 +2062,7 @@ INSERT INTO `oc_product_attribute` (`product_id`, `attribute_id`, `language_id`,
 
 DROP TABLE IF EXISTS `oc_product_description`;
 CREATE TABLE `oc_product_description` (
-  `product_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin NOT NULL,
@@ -2040,6 +2128,24 @@ INSERT INTO `oc_product_discount` (`product_discount_id`, `product_id`, `custome
 (440, 42, 1, 30, 1, '66.0000', '0000-00-00', '0000-00-00'),
 (439, 42, 1, 20, 1, '77.0000', '0000-00-00', '0000-00-00'),
 (438, 42, 1, 10, 1, '88.0000', '0000-00-00', '0000-00-00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_product_filter`
+--
+
+DROP TABLE IF EXISTS `oc_product_filter`;
+CREATE TABLE `oc_product_filter` (
+  `product_id` int(11) NOT NULL,
+  `filter_id` int(11) NOT NULL,
+  `filter_value_id` int(11) NOT NULL,
+  PRIMARY KEY (`product_id`,`filter_id`,`filter_value_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_product_filter`
+--
 
 -- --------------------------------------------------------
 
@@ -2617,7 +2723,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (22, 0, 'config', 'config_maintenance', '0', 0),
 (23, 0, 'config', 'config_account_mail', '0', 0),
 (24, 0, 'config', 'config_alert_emails', '', 0),
-(25, 0, 'config', 'config_use_ssl', '0', 0),
+(25, 0, 'config', 'config_secure', '0', 0),
 (26, 0, 'config', 'config_seo_url', '0', 0),
 (27, 0, 'coupon', 'coupon_sort_order', '4', 0),
 (28, 0, 'coupon', 'coupon_status', '1', 0),
@@ -2717,7 +2823,8 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (123, 0, 'config', 'config_order_edit', '100', 0),
 (124, 0, 'config', 'config_voucher_min', '1', 0),
 (125, 0, 'config', 'config_voucher_max', '1000', 0),
-(126, 0, 'config', 'config_customer_group_display', 'a:1:{i:0;s:1:\"1\";}', 1);
+(126, 0, 'config', 'config_customer_group_display', 'a:1:{i:0;s:1:\"1\";}', 1),
+(127, 0, 'config', 'config_robots', 'abot\r\ndbot\r\nebot\r\nhbot\r\nkbot\r\nlbot\r\nmbot\r\nnbot\r\nobot\r\npbot\r\nrbot\r\nsbot\r\ntbot\r\nvbot\r\nybot\r\nzbot\r\nbot.\r\nbot/\r\n_bot\r\n.bot\r\n/bot\r\n-bot\r\n:bot\r\n(bot\r\ncrawl\r\nslurp\r\nspider\r\nseek\r\naccoona\r\nacoon\r\nadressendeutschland\r\nah-ha.com\r\nahoy\r\naltavista\r\nananzi\r\nanthill\r\nappie\r\narachnophilia\r\narale\r\naraneo\r\naranha\r\narchitext\r\naretha\r\narks\r\nasterias\r\natlocal\r\natn\r\natomz\r\naugurfind\r\nbackrub\r\nbannana_bot\r\nbaypup\r\nbdfetch\r\nbig brother\r\nbiglotron\r\nbjaaland\r\nblackwidow\r\nblaiz\r\nblog\r\nblo.\r\nbloodhound\r\nboitho\r\nbooch\r\nbradley\r\nbutterfly\r\ncalif\r\ncassandra\r\nccubee\r\ncfetch\r\ncharlotte\r\nchurl\r\ncienciaficcion\r\ncmc\r\ncollective\r\ncomagent\r\ncombine\r\ncomputingsite\r\ncsci\r\ncurl\r\ncusco\r\ndaumoa\r\ndeepindex\r\ndelorie\r\ndepspid\r\ndeweb\r\ndie blinde kuh\r\ndigger\r\nditto\r\ndmoz\r\ndocomo\r\ndownload express\r\ndtaagent\r\ndwcp\r\nebiness\r\nebingbong\r\ne-collector\r\nejupiter\r\nemacs-w3 search engine\r\nesther\r\nevliya celebi\r\nezresult\r\nfalcon\r\nfelix ide\r\nferret\r\nfetchrover\r\nfido\r\nfindlinks\r\nfireball\r\nfish search\r\nfouineur\r\nfunnelweb\r\ngazz\r\ngcreep\r\ngenieknows\r\ngetterroboplus\r\ngeturl\r\nglx\r\ngoforit\r\ngolem\r\ngrabber\r\ngrapnel\r\ngralon\r\ngriffon\r\ngromit\r\ngrub\r\ngulliver\r\nhamahakki\r\nharvest\r\nhavindex\r\nhelix\r\nheritrix\r\nhku www octopus\r\nhomerweb\r\nhtdig\r\nhtml index\r\nhtml_analyzer\r\nhtmlgobble\r\nhubater\r\nhyper-decontextualizer\r\nia_archiver\r\nibm_planetwide\r\nichiro\r\niconsurf\r\niltrovatore\r\nimage.kapsi.net\r\nimagelock\r\nincywincy\r\nindexer\r\ninfobee\r\ninformant\r\ningrid\r\ninktomisearch.com\r\ninspector web\r\nintelliagent\r\ninternet shinchakubin\r\nip3000\r\niron33\r\nisraeli-search\r\nivia\r\njack\r\njakarta\r\njavabee\r\njetbot\r\njumpstation\r\nkatipo\r\nkdd-explorer\r\nkilroy\r\nknowledge\r\nkototoi\r\nkretrieve\r\nlabelgrabber\r\nlachesis\r\nlarbin\r\nlegs\r\nlibwww\r\nlinkalarm\r\nlink validator\r\nlinkscan\r\nlockon\r\nlwp\r\nlycos\r\nmagpie\r\nmantraagent\r\nmapoftheinternet\r\nmarvin/\r\nmattie\r\nmediafox\r\nmediapartners\r\nmercator\r\nmerzscope\r\nmicrosoft url control\r\nminirank\r\nmiva\r\nmj12\r\nmnogosearch\r\nmoget\r\nmonster\r\nmoose\r\nmotor\r\nmultitext\r\nmuncher\r\nmuscatferret\r\nmwd.search\r\nmyweb\r\nnajdi\r\nnameprotect\r\nnationaldirectory\r\nnazilla\r\nncsa beta\r\nnec-meshexplorer\r\nnederland.zoek\r\nnetcarta webmap engine\r\nnetmechanic\r\nnetresearchserver\r\nnetscoop\r\nnewscan-online\r\nnhse\r\nnokia6682/\r\nnomad\r\nnoyona\r\nnutch\r\nnzexplorer\r\nobjectssearch\r\noccam\r\nomni\r\nopen text\r\nopenfind\r\nopenintelligencedata\r\norb search\r\nosis-project\r\npack rat\r\npageboy\r\npagebull\r\npage_verifier\r\npanscient\r\nparasite\r\npartnersite\r\npatric\r\npear.\r\npegasus\r\nperegrinator\r\npgp key agent\r\nphantom\r\nphpdig\r\npicosearch\r\npiltdownman\r\npimptrain\r\npinpoint\r\npioneer\r\npiranha\r\nplumtreewebaccessor\r\npogodak\r\npoirot\r\npompos\r\npoppelsdorf\r\npoppi\r\npopular iconoclast\r\npsycheclone\r\npublisher\r\npython\r\nrambler\r\nraven search\r\nroach\r\nroad runner\r\nroadhouse\r\nrobbie\r\nrobofox\r\nrobozilla\r\nrules\r\nsalty\r\nsbider\r\nscooter\r\nscoutjet\r\nscrubby\r\nsearch.\r\nsearchprocess\r\nsemanticdiscovery\r\nsenrigan\r\nsg-scout\r\nshai''hulud\r\nshark\r\nshopwiki\r\nsidewinder\r\nsift\r\nsilk\r\nsimmany\r\nsite searcher\r\nsite valet\r\nsitetech-rover\r\nskymob.com\r\nsleek\r\nsmartwit\r\nsna-\r\nsnappy\r\nsnooper\r\nsohu\r\nspeedfind\r\nsphere\r\nsphider\r\nspinner\r\nspyder\r\nsteeler/\r\nsuke\r\nsuntek\r\nsupersnooper\r\nsurfnomore\r\nsven\r\nsygol\r\nszukacz\r\ntach black widow\r\ntarantula\r\ntempleton\r\n/teoma\r\nt-h-u-n-d-e-r-s-t-o-n-e\r\ntheophrastus\r\ntitan\r\ntitin\r\ntkwww\r\ntoutatis\r\nt-rex\r\ntutorgig\r\ntwiceler\r\ntwisted\r\nucsd\r\nudmsearch\r\nurl check\r\nupdated\r\nvagabondo\r\nvalkyrie\r\nverticrawl\r\nvictoria\r\nvision-search\r\nvolcano\r\nvoyager/\r\nvoyager-hc\r\nw3c_validator\r\nw3m2\r\nw3mir\r\nwalker\r\nwallpaper\r\nwanderer\r\nwauuu\r\nwavefire\r\nweb core\r\nweb hopper\r\nweb wombat\r\nwebbandit\r\nwebcatcher\r\nwebcopy\r\nwebfoot\r\nweblayers\r\nweblinker\r\nweblog monitor\r\nwebmirror\r\nwebmonkey\r\nwebquest\r\nwebreaper\r\nwebsitepulse\r\nwebsnarf\r\nwebstolperer\r\nwebvac\r\nwebwalk\r\nwebwatch\r\nwebwombat\r\nwebzinger\r\nwget\r\nwhizbang\r\nwhowhere\r\nwild ferret\r\nworldlight\r\nwwwc\r\nwwwster\r\nxenu\r\nxget\r\nxift\r\nxirq\r\nyandex\r\nyanga\r\nyeti\r\nyodao\r\nzao\r\nzippp\r\nzyborg', 0);
 
 -- --------------------------------------------------------
 
@@ -2905,7 +3012,7 @@ CREATE TABLE `oc_user` (
   `firstname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
   `lastname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
   `email` varchar(96) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `code` varchar(32) COLLATE utf8_bin NOT NULL,
+  `code` varchar(40) COLLATE utf8_bin NOT NULL,
   `ip` varchar(40) COLLATE utf8_bin NOT NULL DEFAULT '',
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -3447,7 +3554,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (344, 21, 'VAN', 'Antwerpen', 1),
 (345, 21, 'WBR', 'Brabant Wallon', 1),
 (346, 21, 'WHT', 'Hainaut', 1),
-(347, 21, 'WLG', 'Liege', 1),
+(347, 21, 'WLG', 'Liège', 1),
 (348, 21, 'VLI', 'Limburg', 1),
 (349, 21, 'WLX', 'Luxembourg', 1),
 (350, 21, 'WNA', 'Namur', 1),
@@ -3542,29 +3649,29 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (439, 28, 'SO', 'Southern', 1),
 (440, 30, 'AC', 'Acre', 1),
 (441, 30, 'AL', 'Alagoas', 1),
-(442, 30, 'AP', 'Amapa', 1),
+(442, 30, 'AP', 'Amapá', 1),
 (443, 30, 'AM', 'Amazonas', 1),
 (444, 30, 'BA', 'Bahia', 1),
-(445, 30, 'CE', 'Ceara', 1),
+(445, 30, 'CE', 'Ceará', 1),
 (446, 30, 'DF', 'Distrito Federal', 1),
-(447, 30, 'ES', 'Espirito Santo', 1),
-(448, 30, 'GO', 'Goias', 1),
-(449, 30, 'MA', 'Maranhao', 1),
+(447, 30, 'ES', 'Espírito Santo', 1),
+(448, 30, 'GO', 'Goiás', 1),
+(449, 30, 'MA', 'Maranhão', 1),
 (450, 30, 'MT', 'Mato Grosso', 1),
 (451, 30, 'MS', 'Mato Grosso do Sul', 1),
 (452, 30, 'MG', 'Minas Gerais', 1),
-(453, 30, 'PA', 'Para', 1),
-(454, 30, 'PB', 'Paraiba', 1),
-(455, 30, 'PR', 'Parana', 1),
+(453, 30, 'PA', 'Pará', 1),
+(454, 30, 'PB', 'Paraíba', 1),
+(455, 30, 'PR', 'Paraná', 1),
 (456, 30, 'PE', 'Pernambuco', 1),
-(457, 30, 'PI', 'Piaui', 1),
+(457, 30, 'PI', 'Piauí', 1),
 (458, 30, 'RJ', 'Rio de Janeiro', 1),
 (459, 30, 'RN', 'Rio Grande do Norte', 1),
 (460, 30, 'RS', 'Rio Grande do Sul', 1),
-(461, 30, 'RO', 'Rondonia', 1),
+(461, 30, 'RO', 'Rondônia', 1),
 (462, 30, 'RR', 'Roraima', 1),
 (463, 30, 'SC', 'Santa Catarina', 1),
-(464, 30, 'SP', 'Sao Paulo', 1),
+(464, 30, 'SP', 'São Paulo', 1),
 (465, 30, 'SE', 'Sergipe', 1),
 (466, 30, 'TO', 'Tocantins', 1),
 (467, 31, 'PB', 'Peros Banhos', 1),
@@ -4194,26 +4301,6 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (1091, 73, 'AL', 'Alsace', 1),
 (1092, 73, 'AQ', 'Aquitaine', 1),
 (1093, 73, 'AU', 'Auvergne', 1),
-(1094, 73, 'BR', 'Brittany', 1),
-(1095, 73, 'BU', 'Burgundy', 1),
-(1096, 73, 'CE', 'Center Loire Valley', 1),
-(1097, 73, 'CH', 'Champagne', 1),
-(1098, 73, 'CO', 'Corse', 1),
-(1099, 73, 'FR', 'France Comte', 1),
-(1100, 73, 'LA', 'Languedoc Roussillon', 1),
-(1101, 73, 'LI', 'Limousin', 1),
-(1102, 73, 'LO', 'Lorraine', 1),
-(1103, 73, 'MI', 'Midi Pyrenees', 1),
-(1104, 73, 'NO', 'Nord Pas de Calais', 1),
-(1105, 73, 'NR', 'Normandy', 1),
-(1106, 73, 'PA', 'Paris / Ill de France', 1),
-(1107, 73, 'PI', 'Picardie', 1),
-(1108, 73, 'PO', 'Poitou Charente', 1),
-(1109, 73, 'PR', 'Provence', 1),
-(1110, 73, 'RH', 'Rhone Alps', 1),
-(1111, 73, 'RI', 'Riviera', 1),
-(1112, 73, 'WE', 'Western Loire Valley', 1),
-(1113, 74, 'Et', 'Etranger', 1),
 (1114, 74, '01', 'Ain', 1),
 (1115, 74, '02', 'Aisne', 1),
 (1116, 74, '03', 'Allier', 1),
@@ -5462,7 +5549,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (2358, 153, 'TKI', 'Taranaki', 1),
 (2359, 153, 'WGN', 'Wellington', 1),
 (2360, 153, 'WKO', 'Waikato', 1),
-(2361, 153, 'WAI', 'Wairprarapa', 1),
+(2361, 153, 'WAI', 'Wairarapa', 1),
 (2362, 153, 'WTC', 'West Coast', 1),
 (2363, 154, 'AN', 'Atlantico Norte', 1),
 (2364, 154, 'AS', 'Atlantico Sur', 1),
@@ -6910,10 +6997,6 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3805, 235, 'SN', 'San''a', 1),
 (3806, 235, 'SH', 'Shabwah', 1),
 (3807, 235, 'TA', 'Ta''izz', 1),
-(3808, 236, 'KOS', 'Kosovo', 1),
-(3809, 236, 'MON', 'Montenegro', 1),
-(3810, 236, 'SER', 'Serbia', 1),
-(3811, 236, 'VOJ', 'Vojvodina', 1),
 (3812, 237, 'BC', 'Bas-Congo', 1),
 (3813, 237, 'BN', 'Bandundu', 1),
 (3814, 237, 'EQ', 'Equateur', 1),
@@ -7053,7 +7136,56 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3967, 190, '12', 'Obalno-kraška', 1),
 (3968, 33, '', 'Ruse', 1),
 (3969, 101, 'ALB', 'Alborz', 1),
-(3970, 21, 'Brussels-Capital Region', 'BRU', 1);
+(3970, 21, 'BRU', 'Brussels-Capital Region', 1),
+(3971, 138, 'AG', 'Aguascalientes', 1),
+(3972, 222, 'IOM', 'Isle of Man', 1),
+(3973, 242, '01', 'Andrijevica', 1),
+(3974, 242, '02', 'Bar', 1),
+(3975, 242, '03', 'Berane', 1),
+(3976, 242, '04', 'Bijelo Polje', 1),
+(3977, 242, '05', 'Budva', 1),
+(3978, 242, '06', 'Cetinje', 1),
+(3979, 242, '07', 'Danilovgrad', 1),
+(3980, 242, '08', 'Herceg-Novi', 1),
+(3981, 242, '09', 'Kolašin', 1),
+(3982, 242, '10', 'Kotor', 1),
+(3983, 242, '11', 'Mojkovac', 1),
+(3984, 242, '12', 'Nikšić', 1),
+(3985, 242, '13', 'Plav', 1),
+(3986, 242, '14', 'Pljevlja', 1),
+(3987, 242, '15', 'Plužine', 1),
+(3988, 242, '16', 'Podgorica', 1),
+(3989, 242, '17', 'Rožaje', 1),
+(3990, 242, '18', 'Šavnik', 1),
+(3991, 242, '19', 'Tivat', 1),
+(3992, 242, '20', 'Ulcinj', 1),
+(3993, 242, '21', 'Žabljak', 1),
+(3994, 243, '00', 'Belgrade', 1),
+(3995, 243, '01', 'North Bačka', 1),
+(3996, 243, '02', 'Central Banat', 1),
+(3997, 243, '03', 'North Banat', 1),
+(3998, 243, '04', 'South Banat', 1),
+(3999, 243, '05', 'West Bačka', 1),
+(4000, 243, '06', 'South Bačka', 1),
+(4001, 243, '07', 'Srem', 1),
+(4002, 243, '08', 'Mačva', 1),
+(4003, 243, '09', 'Kolubara', 1),
+(4004, 243, '10', 'Podunavlje', 1),
+(4005, 243, '11', 'Braničevo', 1),
+(4006, 243, '12', 'Šumadija', 1),
+(4007, 243, '13', 'Pomoravlje', 1),
+(4008, 243, '14', 'Bor', 1),
+(4009, 243, '15', 'Zaječar', 1),
+(4010, 243, '16', 'Zlatibor', 1),
+(4011, 243, '17', 'Moravica', 1),
+(4012, 243, '18', 'Raška', 1),
+(4013, 243, '19', 'Rasina', 1),
+(4014, 243, '20', 'Nišava', 1),
+(4015, 243, '21', 'Toplica', 1),
+(4016, 243, '22', 'Pirot', 1),
+(4017, 243, '23', 'Jablanica', 1),
+(4018, 243, '24', 'Pčinja', 1),
+(4019, 243, 'KM', 'Kosovo', 1);
 
 -- --------------------------------------------------------
 

@@ -51,7 +51,7 @@ class ModelShippingAusPost extends Model {
 							$title .= ' (' . $response_info['days'] . ' ' . $this->language->get('text_eta') . ')';
 						}	
 			
-						$quote_data['auspost_standard'] = array(
+						$quote_data['standard'] = array(
 							'code'         => 'auspost.standard',
 							'title'        => $title,
 							'cost'         => $this->currency->convert($response_info['charge'], 'AUD', $this->config->get('config_currency')),
@@ -93,7 +93,7 @@ class ModelShippingAusPost extends Model {
 							$title .= ' (' . $response_info['days'] . ' ' . $this->language->get('text_eta') . ')';
 						}	
 		
-						$quote_data['auspost_express'] = array(
+						$quote_data['express'] = array(
 							'code'         => 'auspost.express',
 							'title'        => $title,
 							'cost'         => $this->currency->convert($response_info['charge'], 'AUD', $this->config->get('config_currency')),

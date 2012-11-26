@@ -42,6 +42,11 @@
                     <div id="tab-general" class="page">
                         <table class="form">
                             <tr>
+                                <td colspan="2">
+                                    <a onclick="window.open('https://merchants.klarna.com/signup?locale=en&partner_id=d5c87110cebc383a826364769047042e777da5e8&utm_campaign=Platform&utm_medium=Partners&utm_source=Opencart');" ><img src="view/image/payment/klarna_banner.gif" /></a>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td><?php echo $entry_pending_order_status; ?></td>
                                 <td>
                                     <select name="klarna_invoice_pending_order_status_id">

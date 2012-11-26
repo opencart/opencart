@@ -367,14 +367,14 @@ class ControllerPaymentKlarnaAccount extends Controller {
                 'goods' => array(
                     'artno' => $orderInfo['shipping_code'],
                     'title' => $orderInfo['shipping_method'],
-                    'price' => (int) str_replace('.', '', $this->currency->format($totals['shipping']['value'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
+                    'price' => (int) str_replace('.', '', $this->currency->format($totals['shipping'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
                     'vat' => 0.0,
                     'discount' => 0.0,
                     'flags' => 8,
                 )
             );
             
-            $subTotal += $totals['shipping']['value'];
+            $subTotal += $totals['shipping'];
         }
         
         $other = $orderInfo['total'] - $subTotal;

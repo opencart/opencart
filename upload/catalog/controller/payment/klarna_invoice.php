@@ -247,14 +247,14 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 'goods' => array(
                     'artno' => $orderInfo['shipping_code'],
                     'title' => $orderInfo['shipping_method'],
-                    'price' => (int) str_replace('.', '', $this->currency->format($totals['shipping']['value'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
+                    'price' => (int) str_replace('.', '', $this->currency->format($totals['shipping'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
                     'vat' => 0.0,
                     'discount' => 0.0,
                     'flags' => 8,
                 )
             );
             
-            $subTotal += $totals['shipping']['value'];
+            $subTotal += $totals['shipping'];
         }
         
         if (isset($totals['klarna_fee'])) {
@@ -263,14 +263,14 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 'goods' => array(
                     'artno' => '',
                     'title' => $this->language->get('text_klarna_fee'),
-                    'price' => (int) str_replace('.', '', $this->currency->format($totals['klarna_fee']['value'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
+                    'price' => (int) str_replace('.', '', $this->currency->format($totals['klarna_fee'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
                     'vat' => 0.0,
                     'discount' => 0.0,
                     'flags' => 8,
                 )
             );
             
-            $subTotal += $totals['klarna_fee']['value'];
+            $subTotal += $totals['klarna_fee'];
         }
         
         $other = $orderInfo['total'] - $subTotal;

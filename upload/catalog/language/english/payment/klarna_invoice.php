@@ -20,7 +20,7 @@ $_['text_single_payment'] = 'Single Payment';
 $_['text_monthly_payment'] = '%d month(s) - %s per month';
 $_['text_order_comment'] = "Klarna's Invoice ID: %s\n%s/%s: %.4f";
 $_['text_toc'] = 'I have read and agree to the Klarna Payments terms & conditions';
-$_['text_other'] = 'Other';
+$_['text_other'] = 'Handling / Tax / Discount';
 $_['text_klarna_fee'] = 'Klarna Fee';
 
 // Entry

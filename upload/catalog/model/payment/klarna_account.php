@@ -52,7 +52,7 @@ class ModelPaymentKlarnaAccount extends Model {
         }
 
         $paymentOptions = array();
-
+        
         if ($klarnaAccountStatus) {
             
             $total = $this->currency->format($total, $countryToCurrency[$address['iso_code_3']], '', false);

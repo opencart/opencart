@@ -188,13 +188,13 @@ class ControllerPaymentKlarnaAccount extends Controller {
     public function send() {
         $this->load->model('checkout/order');
         $this->load->model('checkout/coupon');
-        $this->language->load('payment/klarna_invoice');
+        $this->language->load('payment/klarna_account');
         
         $json = array();
 
         $orderInfo = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         
-        $countries = $this->config->get('klarna_invoice_country');
+        $countries = $this->config->get('klarna_account_country');
         $settings = $countries[$orderInfo['payment_iso_code_3']];
         
         if (!$orderInfo) {
@@ -468,7 +468,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
         $response = curl_exec($ch);
         
-        $log = new Log('klarna_invoice.log');
+        $log = new Log('klarna_account.log');
         if (curl_errno($ch)) {
             $log->write('HTTP Error for order #' . $orderInfo['order_id'] . '. Code: ' . curl_errno($ch) . ' message: ' . curl_error($ch));
             $json['error'] = $this->language->get('error_network');
@@ -486,9 +486,9 @@ class ControllerPaymentKlarnaAccount extends Controller {
                 $klarnaOrderStatus = (int) $xml->params->param->value->array->data->value[1]->int;
 
                 if ($klarnaOrderStatus == 1) {
-                    $orderStatus = $this->config->get('klarna_invoice_accepted_order_status_id');
+                    $orderStatus = $this->config->get('klarna_account_accepted_order_status_id');
                 } elseif ($klarnaOrderStatus == 2) {
-                    $orderStatus = $this->config->get('klarna_invoice_pending_order_status_id');
+                    $orderStatus = $this->config->get('klarna_account_pending_order_status_id');
                 } else {
                     $orderStatus = $this->config->get('config_order_status_id');
                 }

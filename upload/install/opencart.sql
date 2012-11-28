@@ -1421,7 +1421,8 @@ INSERT INTO `oc_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `rout
 (24, 11, 0, 'information/information'),
 (22, 5, 0, 'product/manufacturer'),
 (23, 7, 0, 'checkout/'),
-(31, 8, 0, 'information/contact');
+(31, 8, 0, 'information/contact'),
+(32, 9, 0, 'information/sitemap');
 
 -- --------------------------------------------------------
 

@@ -37,7 +37,6 @@ $_['help_street'] = "Please note that delivery can only take place to the regist
 $_['help_house_number'] = "Please enter your house number";
 $_['help_house_extension'] = "Please submit your house extension here. E.g. A, B, C, Red, Blue ect.";
 $_['help_phone_number'] = "Please enter your phone number";
-$_['help_yearly_salary'] = "Your yearly salary before taxes";
 
 // Error
 $_['error_gender'] = 'Gender Required!';

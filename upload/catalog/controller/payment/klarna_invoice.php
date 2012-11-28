@@ -51,8 +51,6 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         $this->data['klarna_country_code'] = $orderInfo['payment_iso_code_2'];
         $this->data['klarna_send'] = $this->url->link('payment/klarna_invoice/send');
         
-        $this->data['klarna_nld_warning_banner'] = $this->model_tool_image->resize('data/klarna_nld_warning.jpg', 950, 118);       
-        
         // Get the invoice fee
         $result = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `code` = 'klarna_fee'")->row;
         
@@ -310,8 +308,6 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         
         $pclass = -1;
         
-        $yearlySalary = array();
-        
         $gender = 0;
         
         if ($orderInfo['payment_iso_code_3'] == 'DEU' || $orderInfo['payment_iso_code_3'] == 'NLD') {
@@ -342,7 +338,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             $orderInfo['comment'],
             array('delay_adjust' => 1),
             array(),
-            $yearlySalary, // yearly_salary for customers in Denmark when Part Payments are used
+            array(),
             array(),
             array(),
             array(),

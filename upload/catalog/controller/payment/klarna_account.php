@@ -174,18 +174,8 @@ class ControllerPaymentKlarnaAccount extends Controller {
             $this->data['part_payment_options'][$paymentOption['pclass_id']] = sprintf($this->language->get('text_monthly_payment'), $paymentOption['months'], $this->currency->format($this->currency->convert($paymentOption['monthly_cost'], $countryToCurrency[$orderInfo['payment_iso_code_3']], $this->currency->getCode()), 1, 1));
         }
         
-        // Get the invoice fee
-        $result = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `code` = 'klarna_fee'")->row;
-        
-        if (isset($result['value']) && !empty($result['value'])) {
-            $this->data['klarna_fee'] = $result['value'];
-        } else {
-            $this->data['klarna_fee'] = '';
-        }
-        
         $this->data['merchant'] = $settings['merchant'];
         
-
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/klarna_account.tpl')) {
             $this->template = $this->config->get('config_template') . '/template/payment/klarna_account.tpl';
         } else {
@@ -414,8 +404,6 @@ class ControllerPaymentKlarnaAccount extends Controller {
         
         $pclass = (int) $this->request->post['payment_plan'];
         
-        $yearlySalary = array();
-        
         $gender = 0;
         
         if ($orderInfo['payment_iso_code_3'] == 'DEU' || $orderInfo['payment_iso_code_3'] == 'NLD') {
@@ -446,7 +434,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
             $orderInfo['comment'],
             array('delay_adjust' => 1),
             array(),
-            $yearlySalary, // yearly_salary for customers in Denmark when Part Payments are used
+            array(),
             array(),
             array(),
             array(),

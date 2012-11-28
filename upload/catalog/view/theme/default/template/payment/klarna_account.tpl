@@ -113,13 +113,6 @@
                     <td><input type="text" name="phone_no" id="input_phone_no" alt="<?php echo $help_phone_number ?>" value="<?php echo $phone_number ?>" /></td>
                 </tr>
                 
-            <?php if ($country_code == 'DNK') { ?>
-                <tr>
-                    <td><label for="input_yearly_salary"><?php echo $entry_yearly_salary ?></label></td>
-                    <td><input type="text" name="yearly_salary" id="input_yearly_salary" alt="<?php echo $help_yearly_salary ?>" value="" disabled /></td>
-                </tr>
-            <?php } ?>
-                
             <?php if ($country_code == 'DEU') { ?>
                 <tr>
                     <td colspan="2">
@@ -247,9 +240,6 @@ $(document).ready(function(){
             el: 'klarna_toc_link', 
             eid: <?php echo $merchant ?>,             
             country: '<?php echo strtolower($klarna_country_code) ?>',
-            <?php if ($klarna_fee) { ?>
-            charge: <?php echo $klarna_fee ?>
-            <?php } ?>
         });
     });
 

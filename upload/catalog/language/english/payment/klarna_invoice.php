@@ -33,7 +33,6 @@ $_['entry_house_no'] = 'House No.:';
 $_['entry_house_ext'] = 'House Ext.:';
 $_['entry_cellno'] = 'Cell Phone:';
 $_['entry_company'] = 'Company registration number:';
-$_['entry_yearly_salary'] = 'Yearly salary:';
 
 $_['help_pno'] = 'Please enter your Social Security number here';
 $_['help_company_id'] = "Please enter your Company's registration number";

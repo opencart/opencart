@@ -82,9 +82,13 @@ class ControllerCommonLogin extends Controller {
 		} else {
 			$this->data['redirect'] = '';	
 		}
-	
-		$this->data['forgotten'] = $this->url->link('common/forgotten', '', 'SSL');
-	
+		
+		if ($this->config->get('config_password')) {
+			$this->data['forgotten'] = $this->url->link('common/forgotten', '', 'SSL');
+		} else {
+			$this->data['forgotten'] = '';
+		}
+		
 		$this->template = 'common/login.tpl';
 		$this->children = array(
 			'common/header',

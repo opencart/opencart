@@ -6,7 +6,11 @@ class ControllerCommonForgotten extends Controller {
 		if ($this->user->isLogged()) {
 			$this->redirect($this->url->link('common/home', '', 'SSL'));
 		}
-
+		
+		if (!$this->config->get('config_password')) {
+			$this->redirect($this->url->link('common/login', '', 'SSL'));
+		}
+		
 		$this->language->load('common/forgotten');
 
 		$this->document->setTitle($this->language->get('heading_title'));

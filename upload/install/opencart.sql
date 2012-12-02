@@ -438,6 +438,20 @@ INSERT INTO `oc_category_description` (`category_id`, `language_id`, `name`, `de
 
 -- --------------------------------------------------------
 
+DROP TABLE IF EXISTS `oc_category_path`;
+CREATE TABLE `oc_category_path` (
+  `category_id` int(11) NOT NULL,
+  `path_id` int(11) NOT NULL,
+  `length` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`, `path_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_category_path`
+--
+
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `oc_category_to_layout`
 --
@@ -453,7 +467,6 @@ CREATE TABLE `oc_category_to_layout` (
 --
 -- Dumping data for table `oc_category_to_layout`
 --
-
 
 -- --------------------------------------------------------
 

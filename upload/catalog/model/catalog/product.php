@@ -70,8 +70,8 @@ class ModelCatalogProduct extends Model {
 		
 		$sql = "SELECT p.product_id, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = p.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating"; 
 					
-		if (!empty($data['filter_category_id'])) {
-			$sql .= " FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (c.category_id = p2c.category_id) LEFT JOIN " . DB_PREFIX . "product p ON (p2c.product_id = p.product_id)";			
+		if (!empty($data['filter_sub_category'])) {
+			$sql .= " FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (cp.category_id = p2c.category_id) LEFT JOIN " . DB_PREFIX . "product p ON (p2c.product_id = p.product_id)";			
 		} else {
 			$sql .= " FROM " . DB_PREFIX . "product p"; 
 		}
@@ -80,15 +80,9 @@ class ModelCatalogProduct extends Model {
 		
 		if (!empty($data['filter_category_id'])) {
 			if (empty($data['filter_sub_category'])) {
-				$sql .= " AND p2c.category_id = '" . $this->db->escape($data['filter_category_id']) . "'";			
+				//$sql .= " AND p2c.category_id = '" . (int)$data['filter_category_id'] . "'";			
 			} else {
-				$this->load->model('catalog/category');
-			
-				$category_info = $this->model_catalog_category->getCategory($data['filter_category_id']);				
-				
-				if ($category_info) {
-					$sql .= " AND c.`left` BETWEEN '" . (int)$category_info['left'] . "' AND '" . (int)$category_info['right'] . "'";
-				}
+				//$sql .= " AND cp.path_id = '" . (int)$data['filter_category_id'] . "'";
 			}
 		}		
 
@@ -452,25 +446,19 @@ class ModelCatalogProduct extends Model {
 
 		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total"; 
 		
-		if (!empty($data['filter_category_id'])) {
-			$sql .= " FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (c.category_id = p2c.category_id) LEFT JOIN " . DB_PREFIX . "product p ON (p2c.product_id = p.product_id)";			
+		if (!empty($data['filter_sub_category'])) {
+			$sql .= " FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (cp.category_id = p2c.category_id) LEFT JOIN " . DB_PREFIX . "product p ON (p2c.product_id = p.product_id)";			
 		} else {
-			$sql .= " FROM " . DB_PREFIX . "product p";
+			$sql .= " FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p2c.category_id = c.category_id)";
 		}
-					
+		
 		$sql .= " LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
 					
 		if (!empty($data['filter_category_id'])) {
 			if (empty($data['filter_sub_category'])) {
-				$sql .= " AND c.category_id = '" . $this->db->escape($data['filter_category_id']) . "'";			
+			//	$sql .= " AND cp.category_id = '" . (int)$data['filter_category_id'] . "'";			
 			} else {
-				$this->load->model('catalog/category');
-			
-				$category_info = $this->model_catalog_category->getCategory($data['filter_category_id']);				
-				
-				if ($category_info) {
-					$sql .= " AND c.`left` BETWEEN '" . (int)$category_info['left'] . "' AND '" . (int)$category_info['right'] . "'";
-				}
+			//	$sql .= " AND cp.category_id = '" . (int)$data['filter_category_id'] . "' AND '" . (int)$data['right'] . "'";
 			}
 		}	
 		

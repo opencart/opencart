@@ -475,23 +475,9 @@ class ControllerCatalogCategory extends Controller {
 			*/
 				
 			foreach ($results as $result) {
-				$path_data = array();
-				
-				$parts = $this->model_catalog_category->getPath($result['parent_id']);
-				
-				foreach ($parts as $part) {
-					$path_data[] = $part['name'];
-				}
-	
-				if ($path_data) {
-					$name = implode(' > ', $path_data) . ' > ' .  $result['name'];
-				} else {
-					$name = $result['name'];
-				}
-				
 				$json[] = array(
 					'category_id' => $result['category_id'], 
-					'name'        => strip_tags(html_entity_decode($name, ENT_QUOTES, 'UTF-8')),
+					'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
 					'parent_id'   => $result['parent_id']
 				);
 			}		

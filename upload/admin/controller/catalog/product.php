@@ -993,23 +993,9 @@ class ControllerCatalogProduct extends Controller {
 			$category_info = $this->model_catalog_category->getCategory($category_id);
 			
 			if ($category_info) {
-				$path_data = array();
-				
-				$parts = $this->model_catalog_category->getPath($category_info['parent_id']);
-				
-				foreach ($parts as $part) {
-					$path_data[] = $part['name'];
-				}
-	
-				if ($path_data) {
-					$name = implode(' > ', $path_data) . ' > ' .  $category_info['name'];
-				} else {
-					$name = $category_info['name'];
-				}				
-				
 				$this->data['product_categories'][] = array(
 					'category_id' => $category_info['category_id'],
-					'name'        => $name
+					'name'        => ($category_info['path'] ? $category_info['path'] . ' &gt; ' : '') . $category_info['name']
 				);
 			}
 		}

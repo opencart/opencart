@@ -292,7 +292,23 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$this->data['category_description'] = array();
 		}
-				
+
+		if (isset($this->request->post['path'])) {
+			$this->data['path'] = $this->request->post['path'];
+		} elseif (!empty($category_info)) {
+			$this->data['path'] = $category_info['path'];
+		} else {
+			$this->data['path'] = '';
+		}
+		
+		if (isset($this->request->post['parent_id'])) {
+			$this->data['parent_id'] = $this->request->post['parent_id'];
+		} elseif (!empty($category_info)) {
+			$this->data['parent_id'] = $category_info['parent_id'];
+		} else {
+			$this->data['parent_id'] = 0;
+		}
+								
 		$this->load->model('setting/store');
 		
 		$this->data['stores'] = $this->model_setting_store->getStores();

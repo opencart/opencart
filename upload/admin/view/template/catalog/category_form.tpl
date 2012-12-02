@@ -52,7 +52,7 @@
           <table class="form">
             <tr>
               <td><?php echo $entry_parent; ?></td>
-              <td><input type="text" name="parent" value="<?php echo $parent; ?>" size="100" />
+              <td><input type="text" name="path" value="<?php echo $path; ?>" size="100" />
                 <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" /></td>
             </tr>
             <tr>

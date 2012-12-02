@@ -442,7 +442,7 @@ DROP TABLE IF EXISTS `oc_category_path`;
 CREATE TABLE `oc_category_path` (
   `category_id` int(11) NOT NULL,
   `path_id` int(11) NOT NULL,
-  `length` int(11) NOT NULL,
+  `level` int(11) NOT NULL,
   PRIMARY KEY (`category_id`, `path_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 

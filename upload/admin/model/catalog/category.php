@@ -73,7 +73,7 @@ class ModelCatalogCategory extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE path_id = '" . (int)$category_id . "' ORDER BY level ASC");
 		
 		if ($query->rows) {
-			foreach ($query->rows as $documentation_path) {
+			foreach ($query->rows as $category_path) {
 				// Delete the path below the current one
 				$this->db->query("DELETE FROM `" . DB_PREFIX . "category_path` WHERE category_id = '" . (int)$category_path['category_id'] . "' AND level < '" . (int)$category_path['level'] . "'");
 				

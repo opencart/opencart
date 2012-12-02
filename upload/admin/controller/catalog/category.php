@@ -451,6 +451,11 @@ class ControllerCatalogCategory extends Controller {
 	public function autocomplete() {
 		$json = array();
 		
+		$json[] = array(
+			'category_id' => 0, 
+			'name'        => $this->language->get('text_none')
+		);
+		
 		if (isset($this->request->get['filter_name'])) {
 			$this->load->model('catalog/category');
 			
@@ -460,25 +465,12 @@ class ControllerCatalogCategory extends Controller {
 				'limit'       => 20
 			);
 			
-			$json = array();
-			
 			$results = $this->model_catalog_category->getCategories($data);
-			/*
-			// Remove own id from list
-			if (!empty($category_info)) {
-				foreach ($categories as $key => $category) {
-					if ($category['category_id'] == $category_info['category_id']) {
-						unset($categories[$key]);
-					}
-				}
-			}
-			*/
 				
 			foreach ($results as $result) {
 				$json[] = array(
 					'category_id' => $result['category_id'], 
-					'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
-					'parent_id'   => $result['parent_id']
+					'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
 				);
 			}		
 		}

@@ -183,7 +183,7 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
 <?php } ?>
 //--></script> 
 <script type="text/javascript"><!--
-$('input[name=\'parent\']').autocomplete({
+$('input[name=\'path\']').autocomplete({
 	delay: 0,
 	source: function(request, response) {
 		$.ajax({
@@ -200,7 +200,7 @@ $('input[name=\'parent\']').autocomplete({
 		});
 	},
 	select: function(event, ui) {
-		$('input[name=\'parent\']').val(ui.item.label);
+		$('input[name=\'path\']').val(ui.item.label);
 		$('input[name=\'parent_id\']').val(ui.item.value);
 		
 		return false;

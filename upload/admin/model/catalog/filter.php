@@ -56,7 +56,7 @@ class ModelCatalogFilter extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE filter_id = '" . (int)$filter_id . "'");	
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_value` WHERE filter_id = '" . (int)$filter_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_value_description` WHERE filter_id = '" . (int)$filter_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_filter` WHERE filter_id = '" . (int)$filter_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_filter` WHERE filter_id = '" . (int)$filter_id . "'");
 	}
 	
 	public function getFilter($filter_id) {

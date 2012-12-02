@@ -88,18 +88,6 @@
                 <?php } ?></td>
             </tr>
             <tr>
-              <td><?php echo $entry_category; ?></td>
-              <td><div class="scrollbox">
-                  <?php $class = 'odd'; ?>
-                  <?php foreach ($categories as $category) { ?>
-                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div class="<?php echo $class; ?>">
-                    <input type="checkbox" name="category[]" value="<?php echo $category['category_id']; ?>" />
-                    <?php echo $category['name']; ?> </div>
-                  <?php } ?>
-                </div></td>
-            </tr>
-            <tr>
               <td><?php echo $entry_product; ?></td>
               <td><input type="text" name="product" value="" /></td>
             </tr>
@@ -115,6 +103,22 @@
                   <?php } ?>
                 </div></td>
             </tr>
+             <tr>
+              <td><?php echo $entry_category; ?></td>
+              <td><input type="text" name="category" value="" /></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><div id="coupon-category" class="scrollbox">
+                  <?php $class = 'odd'; ?>
+                  <?php foreach ($coupon_category as $coupon_category) { ?>
+                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                  <div id="coupon-category<?php echo $coupon_category['category_id']; ?>" class="<?php echo $class; ?>"> <?php echo $coupon_category['name']; ?><img src="view/image/delete.png" />
+                    <input type="hidden" name="coupon_category[]" value="<?php echo $coupon_category['category_id']; ?>" />
+                  </div>
+                  <?php } ?>
+                </div></td>
+            </tr>           
             <tr>
               <td><?php echo $entry_date_start; ?></td>
               <td><input type="text" name="date_start" value="<?php echo $date_start; ?>" size="12" id="date-start" /></td>
@@ -216,6 +220,46 @@ $('#coupon-product div img').live('click', function() {
 	
 	$('#coupon-product div:odd').attr('class', 'odd');
 	$('#coupon-product div:even').attr('class', 'even');	
+});
+
+
+$('input[name=\'category\']').autocomplete({
+	delay: 0,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {		
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.category_id
+					}
+				}));
+			}
+		});
+		
+	}, 
+	select: function(event, ui) {
+		$('#coupon-category' + ui.item.value).remove();
+		
+		$('#coupon-category').append('<div id="product-category' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="coupon_category[]" value="' + ui.item.value + '" /></div>');
+
+		$('#coupon-category div:odd').attr('class', 'odd');
+		$('#coupon-category div:even').attr('class', 'even');
+				
+		return false;
+	},
+	focus: function(event, ui) {
+      return false;
+   }
+});
+
+$('#coupon-category div img').live('click', function() {
+	$(this).parent().remove();
+	
+	$('#coupon-category div:odd').attr('class', 'odd');
+	$('#coupon-category div:even').attr('class', 'even');	
 });
 //--></script> 
 <script type="text/javascript"><!--

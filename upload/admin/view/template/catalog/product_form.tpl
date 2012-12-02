@@ -235,23 +235,36 @@
             </tr>
             <tr>
               <td><?php echo $entry_category; ?></td>
-              <td><div class="scrollbox">
+              <td><input type="text" name="category" value="" /></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><div id="product-category" class="scrollbox">
                   <?php $class = 'odd'; ?>
-                  <?php foreach ($categories as $category) { ?>
+                  <?php foreach ($product_categories as $product_category) { ?>
                   <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div class="<?php echo $class; ?>">
-                    <?php if (in_array($category['category_id'], $product_category)) { ?>
-                    <input type="checkbox" name="product_category[]" value="<?php echo $category['category_id']; ?>" checked="checked" />
-                    <?php echo $category['name']; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="product_category[]" value="<?php echo $category['category_id']; ?>" />
-                    <?php echo $category['name']; ?>
-                    <?php } ?>
+                  <div id="product-category<?php echo $product_category['category_id']; ?>" class="<?php echo $class; ?>"><?php echo $product_category['name']; ?><img src="view/image/delete.png" />
+                    <input type="hidden" name="product_category[]" value="<?php echo $product_category['category_id']; ?>" />
                   </div>
                   <?php } ?>
-                </div>
-                <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a></td>
+                </div></td>
+            </tr> 
+            <tr>
+              <td><?php echo $entry_filter; ?></td>
+              <td><input type="text" name="filter" value="" /></td>
             </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><div id="product-filter" class="scrollbox">
+                  <?php $class = 'odd'; ?>
+                  <?php foreach ($product_filters as $product_filter) { ?>
+                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                  <div id="product-filter<?php echo $product_filter['filter_id']; ?>" class="<?php echo $class; ?>"><?php echo $product_filter['name']; ?><img src="view/image/delete.png" />
+                    <input type="hidden" name="product_filter[]" value="<?php echo $product_filter['filter_id']; ?>" />
+                  </div>
+                  <?php } ?>
+                </div></td>
+            </tr>                       
             <tr>
               <td><?php echo $entry_store; ?></td>
               <td><div class="scrollbox">
@@ -717,6 +730,102 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
 <?php } ?>
 //--></script> 
 <script type="text/javascript"><!--
+$.widget('custom.catcomplete', $.ui.autocomplete, {
+	_renderMenu: function(ul, items) {
+		var self = this, currentCategory = '';
+		
+		$.each(items, function(index, item) {
+			if (item.category != currentCategory) {
+				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
+				
+				currentCategory = item.category;
+			}
+			
+			self._renderItem(ul, item);
+		});
+	}
+});
+
+// Category
+$('input[name=\'category\']').autocomplete({
+	delay: 0,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {		
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.category_id
+					}
+				}));
+			}
+		});
+	}, 
+	select: function(event, ui) {
+		$('#product-category' + ui.item.value).remove();
+		
+		$('#product-category').append('<div id="product-category' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="product_category[]" value="' + ui.item.value + '" /></div>');
+
+		$('#product-category div:odd').attr('class', 'odd');
+		$('#product-category div:even').attr('class', 'even');
+				
+		return false;
+	},
+	focus: function(event, ui) {
+      return false;
+   }
+});
+
+$('#product-category div img').live('click', function() {
+	$(this).parent().remove();
+	
+	$('#product-category div:odd').attr('class', 'odd');
+	$('#product-category div:even').attr('class', 'even');	
+});
+
+// Filter
+$('input[name=\'filter\']').catcomplete({
+	delay: 0,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {		
+				response($.map(json, function(item) {
+					return {
+						category: item.category,
+						label: item.name,
+						value: item.attribute_id
+					}
+				}));
+			}
+		});
+	}, 
+	select: function(event, ui) {
+		$('#product-filter' + ui.item.value).remove();
+		
+		$('#product-filter').append('<div id="product-filter' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="product_filter[]" value="' + ui.item.value + '" /></div>');
+
+		$('#product-filter div:odd').attr('class', 'odd');
+		$('#product-filter div:even').attr('class', 'even');
+				
+		return false;
+	},
+	focus: function(event, ui) {
+      return false;
+   }
+});
+
+$('#product-filter div img').live('click', function() {
+	$(this).parent().remove();
+	
+	$('#product-filter div:odd').attr('class', 'odd');
+	$('#product-filter div:even').attr('class', 'even');	
+});
+
+// Related
 $('input[name=\'related\']').autocomplete({
 	delay: 0,
 	source: function(request, response) {
@@ -778,22 +887,6 @@ function addAttribute() {
 	
 	attribute_row++;
 }
-
-$.widget('custom.catcomplete', $.ui.autocomplete, {
-	_renderMenu: function(ul, items) {
-		var self = this, currentCategory = '';
-		
-		$.each(items, function(index, item) {
-			if (item.category != currentCategory) {
-				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
-				
-				currentCategory = item.category;
-			}
-			
-			self._renderItem(ul, item);
-		});
-	}
-});
 
 function attributeautocomplete(attribute_row) {
 	$('input[name=\'product_attribute[' + attribute_row + '][name]\']').catcomplete({

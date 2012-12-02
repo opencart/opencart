@@ -525,8 +525,6 @@ class ControllerCatalogProduct extends Controller {
     	$this->data['text_none'] = $this->language->get('text_none');
     	$this->data['text_yes'] = $this->language->get('text_yes');
     	$this->data['text_no'] = $this->language->get('text_no');
-		$this->data['text_select_all'] = $this->language->get('text_select_all');
-		$this->data['text_unselect_all'] = $this->language->get('text_unselect_all');
 		$this->data['text_plus'] = $this->language->get('text_plus');
 		$this->data['text_minus'] = $this->language->get('text_minus');
 		$this->data['text_default'] = $this->language->get('text_default');
@@ -572,6 +570,7 @@ class ControllerCatalogProduct extends Controller {
     	$this->data['entry_image'] = $this->language->get('entry_image');
     	$this->data['entry_download'] = $this->language->get('entry_download');
     	$this->data['entry_category'] = $this->language->get('entry_category');
+		$this->data['entry_filter'] = $this->language->get('entry_filter');
 		$this->data['entry_related'] = $this->language->get('entry_related');
 		$this->data['entry_attribute'] = $this->language->get('entry_attribute');
 		$this->data['entry_text'] = $this->language->get('entry_text');
@@ -977,27 +976,38 @@ class ControllerCatalogProduct extends Controller {
 		} else {
       		$this->data['manufacturer_id'] = 0;
     	} 
-				
-		$this->load->model('catalog/category');
-				
-		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
 		
 		if (isset($this->request->post['product_category'])) {
-			$this->data['product_category'] = $this->request->post['product_category'];
-		} elseif (isset($this->request->get['product_id'])) {
-			$this->data['product_category'] = $this->model_catalog_product->getProductCategories($this->request->get['product_id']);
+			$categories = $this->request->post['product_category'];
+		} elseif (isset($this->request->get['product_id'])) {		
+			$categories = $this->model_catalog_product->getProductCategories($this->request->get['product_id']);
 		} else {
-			$this->data['product_category'] = array();
+			$categories = array();
 		}
+	
+		$this->load->model('catalog/category');
+	
+		$this->data['product_categories'] = array();
 		
+		foreach ($categories as $category_id) {
+			$category_info = $this->model_catalog_category->getCategory($category_id);
+			
+			if ($category_info) {
+				$this->data['product_categories'][] = array(
+					'category_id' => $category_info['category_id'],
+					'name'        => ($category_info['path'] ? $category_info['path'] . ' &gt; ' : '') . $category_info['name']
+				);
+			}
+		}
+						
 		if (isset($this->request->post['product_filter'])) {
 			$this->data['product_filters'] = $this->request->post['product_filter'];
 		} elseif (isset($this->request->get['product_id'])) {
-			//$this->data['product_filters'] = $this->model_catalog_product->getProductFilters($this->request->get['product_id']);
+			$this->data['product_filters'] = $this->model_catalog_product->getProductFilters($this->request->get['product_id']);
 		} else {
 			$this->data['product_filters'] = array();
 		}
-				
+		
 		if (isset($this->request->post['product_attribute'])) {
 			$this->data['product_attributes'] = $this->request->post['product_attribute'];
 		} elseif (isset($this->request->get['product_id'])) {
@@ -1250,18 +1260,6 @@ class ControllerCatalogProduct extends Controller {
 			} else {
 				$filter_model = '';
 			}
-						
-			if (isset($this->request->get['filter_category_id'])) {
-				$filter_category_id = $this->request->get['filter_category_id'];
-			} else {
-				$filter_category_id = '';
-			}
-			
-			if (isset($this->request->get['filter_sub_category'])) {
-				$filter_sub_category = $this->request->get['filter_sub_category'];
-			} else {
-				$filter_sub_category = '';
-			}
 			
 			if (isset($this->request->get['limit'])) {
 				$limit = $this->request->get['limit'];	
@@ -1270,12 +1268,10 @@ class ControllerCatalogProduct extends Controller {
 			}			
 						
 			$data = array(
-				'filter_name'         => $filter_name,
-				'filter_model'        => $filter_model,
-				'filter_category_id'  => $filter_category_id,
-				'filter_sub_category' => $filter_sub_category,
-				'start'               => 0,
-				'limit'               => $limit
+				'filter_name'  => $filter_name,
+				'filter_model' => $filter_model,
+				'start'        => 0,
+				'limit'        => $limit
 			);
 			
 			$results = $this->model_catalog_product->getProducts($data);

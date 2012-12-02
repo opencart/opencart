@@ -462,9 +462,28 @@ class ControllerSaleCoupon extends Controller {
 			}
 		}
 
+		if (isset($this->request->post['coupon_category'])) {
+			$categories = $this->request->post['coupon_category'];
+		} elseif (isset($this->request->get['coupon_id'])) {		
+			$categories = $this->model_sale_coupon->getCouponCategories($this->request->get['coupon_id']);
+		} else {
+			$categories = array();
+		}
+	
 		$this->load->model('catalog/category');
-				
-		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
+	
+		$this->data['coupon_category'] = array();
+		
+		foreach ($categories as $category_id) {
+			$category_info = $this->model_catalog_category->getCategory($category_id);
+			
+			if ($category_info) {
+				$this->data['coupon_category'][] = array(
+					'category_id' => $category_info['category_id'],
+					'name'        => ($category_info['path'] ? $category_info['path'] . ' &gt; ' : '') . $category_info['name']
+				);
+			}
+		}
 					
 		if (isset($this->request->post['date_start'])) {
        		$this->data['date_start'] = $this->request->post['date_start'];

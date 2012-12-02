@@ -293,6 +293,8 @@ class ModelUpgrade extends Model {
 		$db->query("UPDATE `oc_order` set `payment_code` = replace(`payment_code`, 'alertpay', 'payza')");
 		
 		$db->query("ALTER TABLE `oc_affiliate` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' after `password`");
+		$db->query("ALTER TABLE `oc_category ADD `left` int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER `parent_id`");
+		$db->query("ALTER TABLE `oc_category ADD `right` int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER `left`");
 		$db->query("ALTER TABLE `oc_customer` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `password`");
 		$db->query("ALTER TABLE `oc_customer` MODIFY `ip` varchar(40) NOT NULL");
 		$db->query("ALTER TABLE `oc_customer_ip` MODIFY `ip` varchar(40) NOT NULL");
@@ -310,6 +312,23 @@ class ModelUpgrade extends Model {
 		$db->query("ALTER TABLE `oc_user` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' after `password`");
 		$db->query("ALTER TABLE `oc_user` MODIFY `password` varchar(40) NOT NULL");
 		$db->query("ALTER TABLE `oc_user` MODIFY `ip` varchar(40) NOT NULL");
+		
+		// Sort the categories to take advantage of the nested set model
+		$this->path(0, 0);
 	}
+	
+	protected function path($category_id = 0, $level) {
+		$this->db->query("UPDATE " . DB_PREFIX . "category SET `left` = '" . (int)$level++ . "' WHERE category_id = '" . (int)$category_id . "'");
+		
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category WHERE parent_id = '" . (int)$category_id . "' ORDER BY sort_order");
+		
+		foreach ($query->rows as $result) {
+			$level = $this->path($result['category_id'], $level);
+		}
+		
+		$this->db->query("UPDATE " . DB_PREFIX . "category SET `right` = '" . (int)$level++ . "' WHERE category_id = '" . (int)$category_id . "'");
+	
+		return $level;
+	}	
 }
 ?>

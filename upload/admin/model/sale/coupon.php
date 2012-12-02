@@ -10,6 +10,12 @@ class ModelSaleCoupon extends Model {
         		$this->db->query("INSERT INTO " . DB_PREFIX . "coupon_product SET coupon_id = '" . (int)$coupon_id . "', product_id = '" . (int)$product_id . "'");
       		}			
 		}
+		
+		if (isset($data['coupon_category'])) {
+      		foreach ($data['coupon_category'] as $category_id) {
+        		$this->db->query("INSERT INTO " . DB_PREFIX . "coupon_category SET coupon_id = '" . (int)$coupon_id . "', category_id = '" . (int)$category_id . "'");
+      		}			
+		}		
 	}
 	
 	public function editCoupon($coupon_id, $data) {
@@ -21,12 +27,21 @@ class ModelSaleCoupon extends Model {
       		foreach ($data['coupon_product'] as $product_id) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "coupon_product SET coupon_id = '" . (int)$coupon_id . "', product_id = '" . (int)$product_id . "'");
       		}
-		}		
+		}	
+		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_category WHERE coupon_id = '" . (int)$coupon_id . "'");
+		
+		if (isset($data['coupon_category'])) {
+      		foreach ($data['coupon_category'] as $category_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "coupon_category SET coupon_id = '" . (int)$coupon_id . "', category_id = '" . (int)$category_id . "'");
+      		}
+		}				
 	}
 	
 	public function deleteCoupon($coupon_id) {
       	$this->db->query("DELETE FROM " . DB_PREFIX . "coupon WHERE coupon_id = '" . (int)$coupon_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_product WHERE coupon_id = '" . (int)$coupon_id . "'");		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_product WHERE coupon_id = '" . (int)$coupon_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_category WHERE coupon_id = '" . (int)$coupon_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_history WHERE coupon_id = '" . (int)$coupon_id . "'");		
 	}
 	
@@ -95,6 +110,18 @@ class ModelSaleCoupon extends Model {
 		return $coupon_product_data;
 	}
 	
+	public function getCouponCategories($coupon_id) {
+		$coupon_category_data = array();
+		
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "coupon_category WHERE coupon_id = '" . (int)$coupon_id . "'");
+		
+		foreach ($query->rows as $result) {
+			$coupon_category_data[] = $result['category_id'];
+		}
+
+		return $coupon_category_data;
+	}
+		
 	public function getTotalCoupons() {
       	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "coupon");
 		

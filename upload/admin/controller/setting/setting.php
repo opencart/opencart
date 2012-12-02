@@ -10,7 +10,6 @@ class ControllerSettingSetting extends Controller {
 		$this->load->model('setting/setting');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			
 			$this->model_setting_setting->editSetting('config', $this->request->post);
 
 			if ($this->config->get('config_currency_auto')) {
@@ -132,6 +131,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_shared'] = $this->language->get('entry_shared');
 		$this->data['entry_robots'] = $this->language->get('entry_robots');
 		$this->data['entry_maintenance'] = $this->language->get('entry_maintenance');
+		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_encryption'] = $this->language->get('entry_encryption');
 		$this->data['entry_seo_url'] = $this->language->get('entry_seo_url');
 		$this->data['entry_compression'] = $this->language->get('entry_compression');
@@ -997,6 +997,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_maintenance'] = $this->config->get('config_maintenance');
 		}
 		
+		if (isset($this->request->post['config_password'])) {
+			$this->data['config_password'] = $this->request->post['config_password'];
+		} else {
+			$this->data['config_password'] = $this->config->get('config_password');
+		}
+				
 		if (isset($this->request->post['config_encryption'])) {
 			$this->data['config_encryption'] = $this->request->post['config_encryption'];
 		} else {

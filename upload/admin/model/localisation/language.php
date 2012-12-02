@@ -67,7 +67,7 @@ class ModelLocalisationLanguage extends Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "filter_value_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		foreach ($query->rows as $filter_value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "filter_value_description SET filter_value_id = '" . (int)$filter_value['filter_value_id'] . "', language_id = '" . (int)$language_id . "'filter_id = '" . (int)$filter_value['filter_id'] . "', , name = '" . $this->db->escape($filter_value['name']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "filter_value_description SET filter_value_id = '" . (int)$filter_value['filter_value_id'] . "', language_id = '" . (int)$language_id . "', filter_id = '" . (int)$filter_value['filter_id'] . "', name = '" . $this->db->escape($filter_value['name']) . "'");
 		}
 								
 		// Information

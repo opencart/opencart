@@ -42,6 +42,7 @@ $_['button_back']             = 'Back';
 $_['button_remove']           = 'Remove';
 $_['button_backup']           = 'Backup';
 $_['button_restore']          = 'Restore';
+$_['button_repair']           = 'Repair';
 $_['button_upload']           = 'Upload';
 $_['button_submit']           = 'Submit';
 $_['button_invoice']          = 'Print Invoice';

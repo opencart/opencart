@@ -52,7 +52,7 @@
           <table class="form">
             <tr>
               <td><?php echo $entry_parent; ?></td>
-              <td><input type="text" name="parent" value="<?php echo $parent; ?>" size="100" />
+              <td><input type="text" name="path" value="<?php echo $path; ?>" size="100" />
                 <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" /></td>
             </tr>
             <tr>
@@ -183,7 +183,7 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
 <?php } ?>
 //--></script> 
 <script type="text/javascript"><!--
-$('input[name=\'parent\']').autocomplete({
+$('input[name=\'path\']').autocomplete({
 	delay: 0,
 	source: function(request, response) {
 		$.ajax({
@@ -200,7 +200,7 @@ $('input[name=\'parent\']').autocomplete({
 		});
 	},
 	select: function(event, ui) {
-		$('input[name=\'parent\']').val(ui.item.label);
+		$('input[name=\'path\']').val(ui.item.label);
 		$('input[name=\'parent_id\']').val(ui.item.value);
 		
 		return false;

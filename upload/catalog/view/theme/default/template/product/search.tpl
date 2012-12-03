@@ -125,6 +125,17 @@ $('#content input[name=\'filter_name\']').keydown(function(e) {
 	}
 });
 
+$('select[name=\'filter_category_id\']').bind('change', function() {
+	if (this.value == '0') {
+		$('input[name=\'filter_sub_category\']').attr('disabled', 'disabled');
+		$('input[name=\'filter_sub_category\']').removeAttr('checked');
+	} else {
+		$('input[name=\'filter_sub_category\']').removeAttr('disabled');
+	}
+});
+
+$('select[name=\'filter_category_id\']').trigger('change');
+
 $('#button-search').bind('click', function() {
 	url = 'index.php?route=product/search';
 	

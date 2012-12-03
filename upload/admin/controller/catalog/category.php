@@ -451,11 +451,6 @@ class ControllerCatalogCategory extends Controller {
 	public function autocomplete() {
 		$json = array();
 		
-		$json[] = array(
-			'category_id' => 0, 
-			'name'        => $this->language->get('text_none')
-		);
-		
 		if (isset($this->request->get['filter_name'])) {
 			$this->load->model('catalog/category');
 			

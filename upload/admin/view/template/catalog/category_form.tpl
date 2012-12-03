@@ -185,11 +185,16 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
 <script type="text/javascript"><!--
 $('input[name=\'path\']').autocomplete({
 	delay: 0,
-	source: function(request, response) {
+	source: function(request, response) {		
 		$.ajax({
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {		
+			success: function(json) {
+				json.unshift({
+					'category_id':  0,
+					'name':  '<?php echo $text_none; ?>'
+				});
+				
 				response($.map(json, function(item) {
 					return {
 						label: item.name,

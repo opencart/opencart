@@ -198,27 +198,21 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             $address['house_extension'] = $this->request->post['house_ext'];
         }
         
-        $subTotal = 0;
-        
         $totalQuery = $this->db->query("
-            SELECT `code`, `value`
+            SELECT `title`, `code`, `value`
             FROM `" . DB_PREFIX . "order_total`
-            WHERE `order_id` = " . (int) $orderInfo['order_id']);
+            WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `code` != 'sub_total' AND `code` != 'total'");
         
-        $totals = array();
-        
-        foreach ($totalQuery->rows as $row) {
-            $totals[$row['code']] = $row['value'];
-        }
+        $totals = $totalQuery->rows;
         
         $orderedProducts = $this->db->query("
-            SELECT `name`, `model`, `price`, `tax`, `tax` / `price` * 100 AS `tax_rate`, `quantity`
+            SELECT `name`, `model`, `price`, `quantity`
             FROM `" . DB_PREFIX . "order_product`
             WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
 
             UNION ALL
 
-            SELECT '', `code`, `amount`, '0.00', '0.00', '1'
+            SELECT '', `code`, `amount`, '1'
             FROM `" . DB_PREFIX . "order_voucher`
             WHERE `order_id` = " . (int) $orderInfo['order_id'])->rows;
        
@@ -230,59 +224,29 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                     'artno' => $product['model'],
                     'title' => $product['name'],
                     'price' => (int) str_replace('.', '', $this->currency->format($product['price'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
-                    'vat' => (double) $product['tax_rate'],
+                    'vat' => 0.0,
                     'discount' => 0.0,
                     'flags' => 0,
                 )
             );
-            
-            $subTotal += ($product['price'] + $product['tax']) * $product['quantity'];
-        }
-
-        if (isset($totals['shipping'])) {
-            $goodsList[] = array(
-                'qty' => 1,
-                'goods' => array(
-                    'artno' => $orderInfo['shipping_code'],
-                    'title' => $orderInfo['shipping_method'],
-                    'price' => (int) str_replace('.', '', $this->currency->format($totals['shipping'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
-                    'vat' => 0.0,
-                    'discount' => 0.0,
-                    'flags' => 8,
-                )
-            );
-            
-            $subTotal += $totals['shipping'];
         }
         
-        if (isset($totals['klarna_fee'])) {
+        foreach($totals as $total) {
+            if ($total['code'] == 'shipping' || $total['code'] == 'klarna_fee') {
+                $flag = 8;
+            } else {
+                $flag = 32;
+            }
+            
             $goodsList[] = array(
                 'qty' => 1,
                 'goods' => array(
                     'artno' => '',
-                    'title' => $this->language->get('text_klarna_fee'),
-                    'price' => (int) str_replace('.', '', $this->currency->format($totals['klarna_fee'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
+                    'title' => $total['title'],
+                    'price' => (int) str_replace('.', '', $this->currency->format($total['value'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
                     'vat' => 0.0,
                     'discount' => 0.0,
-                    'flags' => 8,
-                )
-            );
-            
-            $subTotal += $totals['klarna_fee'];
-        }
-        
-        $other = $orderInfo['total'] - $subTotal;
-        
-        if ($other != 0) {
-            $goodsList[] = array(
-                'qty' => 1,
-                'goods' => array(
-                    'artno' => '',
-                    'title' => $this->language->get('text_other'),
-                    'price' => (int) str_replace('.', '', $this->currency->format($other, $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
-                    'vat' => 0.0,
-                    'discount' => 0.0,
-                    'flags' => 32,
+                    'flags' => $flag,
                 )
             );
         }

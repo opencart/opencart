@@ -748,7 +748,7 @@ $.widget('custom.catcomplete', $.ui.autocomplete, {
 
 // Category
 $('input[name=\'category\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
@@ -787,7 +787,7 @@ $('#product-category div img').live('click', function() {
 
 // Filter
 $('input[name=\'filter\']').catcomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
@@ -827,7 +827,7 @@ $('#product-filter div img').live('click', function() {
 
 // Related
 $('input[name=\'related\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
@@ -890,7 +890,7 @@ function addAttribute() {
 
 function attributeautocomplete(attribute_row) {
 	$('input[name=\'product_attribute[' + attribute_row + '][name]\']').catcomplete({
-		delay: 0,
+		delay: 500,
 		source: function(request, response) {
 			$.ajax({
 				url: 'index.php?route=catalog/attribute/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
@@ -926,7 +926,7 @@ $('#attribute tbody').each(function(index, element) {
 var option_row = <?php echo $option_row; ?>;
 
 $('input[name=\'option\']').catcomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/option/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),

@@ -124,7 +124,7 @@ $.widget('custom.catcomplete', $.ui.autocomplete, {
 });
 
 $('input[name=\'customers\']').catcomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
@@ -165,7 +165,7 @@ $('#customer div img').live('click', function() {
 //--></script> 
 <script type="text/javascript"><!--	
 $('input[name=\'affiliates\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
@@ -204,7 +204,7 @@ $('#affiliate div img').live('click', function() {
 });
 
 $('input[name=\'products\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),

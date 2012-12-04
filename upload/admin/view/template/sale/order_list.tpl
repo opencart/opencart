@@ -184,7 +184,7 @@ $.widget('custom.catcomplete', $.ui.autocomplete, {
 });
 
 $('input[name=\'filter_customer\']').catcomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),

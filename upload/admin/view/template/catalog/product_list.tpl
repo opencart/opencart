@@ -162,7 +162,7 @@ $('#form input').keydown(function(e) {
 //--></script> 
 <script type="text/javascript"><!--
 $('input[name=\'filter_name\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
@@ -188,7 +188,7 @@ $('input[name=\'filter_name\']').autocomplete({
 });
 
 $('input[name=\'filter_model\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_model=' +  encodeURIComponent(request.term),

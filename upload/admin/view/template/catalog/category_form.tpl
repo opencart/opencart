@@ -184,7 +184,7 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
 //--></script> 
 <script type="text/javascript"><!--
 $('input[name=\'path\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {		
 		$.ajax({
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),

@@ -167,7 +167,7 @@ $(document).ready(function() {
 //--></script> 
 <script type="text/javascript"><!--
 $('input[name=\'filter_name\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),

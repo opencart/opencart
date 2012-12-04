@@ -183,7 +183,7 @@ $('input[name=\'category[]\']').bind('change', function() {
 });
 
 $('input[name=\'product\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
@@ -224,7 +224,7 @@ $('#coupon-product div img').live('click', function() {
 
 
 $('input[name=\'category\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),

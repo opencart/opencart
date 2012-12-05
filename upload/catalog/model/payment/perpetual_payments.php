@@ -7,6 +7,8 @@ class ModelPaymentPerpetualPayments extends Model {
 		
 		if ($this->config->get('perpetual_payments_total') > $total) {
 			$status = false;
+		} elseif ($this->config->get('free_checkout_status')) {
+			$status = false;
 		} elseif (!$this->config->get('perpetual_payments_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {

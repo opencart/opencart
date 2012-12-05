@@ -7,6 +7,8 @@ class ModelPaymentPayMate extends Model {
 		
 		if ($this->config->get('paymate_total') > $total) {
 			$status = false;
+		} elseif ($this->config->get('free_checkout_status')) {
+			$status = false;
 		} elseif (!$this->config->get('paymate_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {

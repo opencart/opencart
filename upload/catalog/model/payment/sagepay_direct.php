@@ -7,6 +7,8 @@ class ModelPaymentSagePayDirect extends Model {
 		
 		if ($this->config->get('sagepay_direct_total') > $total) {
 			$status = false;
+		} elseif ($this->config->get('free_checkout_status')) {
+			$status = false;
 		} elseif (!$this->config->get('sagepay_direct_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {

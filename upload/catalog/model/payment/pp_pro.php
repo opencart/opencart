@@ -7,6 +7,8 @@ class ModelPaymentPPPro extends Model {
 		
 		if ($this->config->get('pp_pro_total') > $total) {
 			$status = false;
+		} elseif ($this->config->get('free_checkout_status')) {
+			$status = false;
 		} elseif (!$this->config->get('pp_pro_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {

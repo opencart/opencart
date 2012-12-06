@@ -8,7 +8,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/mail.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a id="button-send" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');" class="button"><?php echo $button_send; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
+      <div class="buttons"><a id="button-send" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');" class="button"><?php echo $button_send; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
         <table id="mail" class="form">
@@ -144,7 +144,7 @@ $('input[name=\'customers\']').catcomplete({
 	select: function(event, ui) {
 		$('#customer' + ui.item.value).remove();
 		
-		$('#customer').append('<div id="customer' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="customer[]" value="' + ui.item.value + '" /></div>');
+		$('#customer').append('<div id="customer' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="customer[]" value="' + ui.item.value + '" /></div>');
 
 		$('#customer div:odd').attr('class', 'odd');
 		$('#customer div:even').attr('class', 'even');
@@ -184,7 +184,7 @@ $('input[name=\'affiliates\']').autocomplete({
 	select: function(event, ui) {
 		$('#affiliate' + ui.item.value).remove();
 		
-		$('#affiliate').append('<div id="affiliate' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="affiliate[]" value="' + ui.item.value + '" /></div>');
+		$('#affiliate').append('<div id="affiliate' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="affiliate[]" value="' + ui.item.value + '" /></div>');
 
 		$('#affiliate div:odd').attr('class', 'odd');
 		$('#affiliate div:even').attr('class', 'even');
@@ -222,7 +222,7 @@ $('input[name=\'products\']').autocomplete({
 	select: function(event, ui) {
 		$('#product' + ui.item.value).remove();
 		
-		$('#product').append('<div id="product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="product[]" value="' + ui.item.value + '" /></div>');
+		$('#product').append('<div id="product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="product[]" value="' + ui.item.value + '" /></div>');
 
 		$('#product div:odd').attr('class', 'odd');
 		$('#product div:even').attr('class', 'even');

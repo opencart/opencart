@@ -99,7 +99,7 @@ $_['entry_smtp_timeout']           = 'SMTP Timeout:';
 $_['entry_account_mail']           = 'New Account Alert Mail:<br /><span class="help">Send a email to the store owner when a new account is registered.</span>';
 $_['entry_alert_mail']             = 'New Order Alert Mail:<br /><span class="help">Send a email to the store owner when a new order is created.</span>';
 $_['entry_alert_emails']           = 'Additional Alert E-Mails:<br /><span class="help">Any additional emails you want to receive the alert email, in addition to the main store email. (comma separated)</span>';
-$_['entry_fraud_detection']        = 'Use MaxMind Fraud Detection System:<br /><span class="help">MaxMind is a fraud detections service. If you don\'t have a license key you can <a onclick="window.open(\'http://www.maxmind.com/?rId=opencart\');"><u>sign up here</u></a>. Once you have obtained a key copy and paste it into the field below.</span>';
+$_['entry_fraud_detection']        = 'Use MaxMind Fraud Detection System:<br /><span class="help">MaxMind is a fraud detections service. If you don\'t have a license key you can <a href="http://www.maxmind.com/?rId=opencart" target="_blank"><u>sign up here</u></a>. Once you have obtained a key copy and paste it into the field below.</span>';
 $_['entry_fraud_key']              = 'MaxMind License Key:</span>';
 $_['entry_fraud_score']            = 'MaxMind Risk Score:<br /><span class="help">The higher the score the more likly the order is fraudulent. Set a score between 0 - 100.</span>';
 $_['entry_fraud_status']           = 'MaxMind Fraud Order Status:<br /><span class="help">Orders over your set score will be assigned this order status and will not be allowed to reach the complete status automatically.</span>';
@@ -114,7 +114,7 @@ $_['entry_compression']            = 'Output Compression Level:<br /><span class
 $_['entry_error_display']          = 'Display Errors:';
 $_['entry_error_log']              = 'Log Errors:';
 $_['entry_error_filename']         = 'Error Log Filename:';
-$_['entry_google_analytics']       = 'Google Analytics Code:<br /><span class="help">Login to your <a onclick="window.open(\'http://www.google.com/analytics/\');"><u>Google Analytics</u></a> account and after creating your web site profile copy and paste the analytics code into this field.</span>';
+$_['entry_google_analytics']       = 'Google Analytics Code:<br /><span class="help">Login to your <a href="http://www.google.com/analytics/" target="_blank"><u>Google Analytics</u></a> account and after creating your web site profile copy and paste the analytics code into this field.</span>';
 
 // Error
 $_['error_warning']                = 'Warning: Please check the form carefully for errors!';

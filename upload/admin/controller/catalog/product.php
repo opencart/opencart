@@ -967,15 +967,29 @@ class ControllerCatalogProduct extends Controller {
 
 		$this->load->model('catalog/manufacturer');
 		
-    	$this->data['manufacturers'] = $this->model_catalog_manufacturer->getManufacturers();
-
     	if (isset($this->request->post['manufacturer_id'])) {
       		$this->data['manufacturer_id'] = $this->request->post['manufacturer_id'];
 		} elseif (!empty($product_info)) {
 			$this->data['manufacturer_id'] = $product_info['manufacturer_id'];
 		} else {
       		$this->data['manufacturer_id'] = 0;
+    	} 		
+		
+    	if (isset($this->request->post['manufacturer'])) {
+      		$this->data['manufacturer'] = $this->request->post['manufacturer'];
+		} elseif (!empty($product_info)) {
+			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($product_info['manufacturer_id']);
+			
+			if ($manufacturer_info) {		
+				$this->data['manufacturer'] = $manufacturer_info['name'];
+			} else {
+				$this->data['manufacturer'] = '';
+			}	
+		} else {
+      		$this->data['manufacturer'] = '';
     	} 
+		
+		$this->load->model('catalog/category');
 		
 		if (isset($this->request->post['product_category'])) {
 			$categories = $this->request->post['product_category'];
@@ -984,8 +998,6 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$categories = array();
 		}
-	
-		$this->load->model('catalog/category');
 	
 		$this->data['product_categories'] = array();
 		
@@ -1125,15 +1137,26 @@ class ControllerCatalogProduct extends Controller {
 
 		$this->load->model('catalog/download');
 		
-		$this->data['downloads'] = $this->model_catalog_download->getDownloads();
-		
 		if (isset($this->request->post['product_download'])) {
-			$this->data['product_download'] = $this->request->post['product_download'];
+			$product_downloads = $this->request->post['product_download'];
 		} elseif (isset($this->request->get['product_id'])) {
-			$this->data['product_download'] = $this->model_catalog_product->getProductDownloads($this->request->get['product_id']);
+			$product_downloads = $this->model_catalog_product->getProductDownloads($this->request->get['product_id']);
 		} else {
-			$this->data['product_download'] = array();
-		}		
+			$product_downloads = array();
+		}
+			
+		$this->data['product_downloads'] = array();
+		
+		foreach ($product_downloads as $download_id) {
+			$download_info = $this->model_catalog_download->getDownload($download_id);
+			
+			if ($download_info) {
+				$this->data['product_downloads'][] = array(
+					'download_id' => $download_info['download_id'],
+					'name'        => $download_info['name']
+				);
+			}
+		}
 		
 		if (isset($this->request->post['product_related'])) {
 			$products = $this->request->post['product_related'];

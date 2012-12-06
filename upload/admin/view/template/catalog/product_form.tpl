@@ -222,16 +222,7 @@
           <table class="form">
             <tr>
               <td><?php echo $entry_manufacturer; ?></td>
-              <td><select name="manufacturer_id">
-                  <option value="0" selected="selected"><?php echo $text_none; ?></option>
-                  <?php foreach ($manufacturers as $manufacturer) { ?>
-                  <?php if ($manufacturer['manufacturer_id'] == $manufacturer_id) { ?>
-                  <option value="<?php echo $manufacturer['manufacturer_id']; ?>" selected="selected"><?php echo $manufacturer['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $manufacturer['manufacturer_id']; ?>"><?php echo $manufacturer['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select></td>
+              <td><input type="text" name="manufacturer" value="<?php echo $manufacturer ?>" /><input type="hidden" name="manufacturer_id" value="<?php echo $manufacturer_id; ?>" /></td>
             </tr>
             <tr>
               <td><?php echo $entry_category; ?></td>
@@ -243,7 +234,7 @@
                   <?php $class = 'odd'; ?>
                   <?php foreach ($product_categories as $product_category) { ?>
                   <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div id="product-category<?php echo $product_category['category_id']; ?>" class="<?php echo $class; ?>"><?php echo $product_category['name']; ?><img src="view/image/delete.png" />
+                  <div id="product-category<?php echo $product_category['category_id']; ?>" class="<?php echo $class; ?>"><?php echo $product_category['name']; ?><img src="view/image/delete.png" alt="" />
                     <input type="hidden" name="product_category[]" value="<?php echo $product_category['category_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -259,7 +250,7 @@
                   <?php $class = 'odd'; ?>
                   <?php foreach ($product_filters as $product_filter) { ?>
                   <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div id="product-filter<?php echo $product_filter['filter_id']; ?>" class="<?php echo $class; ?>"><?php echo $product_filter['name']; ?><img src="view/image/delete.png" />
+                  <div id="product-filter<?php echo $product_filter['filter_id']; ?>" class="<?php echo $class; ?>"><?php echo $product_filter['name']; ?><img src="view/image/delete.png" alt="" />
                     <input type="hidden" name="product_filter[]" value="<?php echo $product_filter['filter_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -294,18 +285,16 @@
             </tr>
             <tr>
               <td><?php echo $entry_download; ?></td>
-              <td><div class="scrollbox">
+              <td><input type="text" name="download" value="" /></td>
+            </tr>			
+            <tr>
+              <td>&nbsp;</td>
+              <td><div id="product-download" class="scrollbox">
                   <?php $class = 'odd'; ?>
-                  <?php foreach ($downloads as $download) { ?>
+                  <?php foreach ($product_downloads as $product_download) { ?>
                   <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div class="<?php echo $class; ?>">
-                    <?php if (in_array($download['download_id'], $product_download)) { ?>
-                    <input type="checkbox" name="product_download[]" value="<?php echo $download['download_id']; ?>" checked="checked" />
-                    <?php echo $download['name']; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="product_download[]" value="<?php echo $download['download_id']; ?>" />
-                    <?php echo $download['name']; ?>
-                    <?php } ?>
+                  <div id="product-download<?php echo $product_download['download_id']; ?>" class="<?php echo $class; ?>"> <?php echo $product_download['name']; ?><img src="view/image/delete.png" alt="" />
+                    <input type="hidden" name="product_download[]" value="<?php echo $product_download['download_id']; ?>" />
                   </div>
                   <?php } ?>
                 </div></td>
@@ -320,7 +309,7 @@
                   <?php $class = 'odd'; ?>
                   <?php foreach ($product_related as $product_related) { ?>
                   <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div id="product-related<?php echo $product_related['product_id']; ?>" class="<?php echo $class; ?>"> <?php echo $product_related['name']; ?><img src="view/image/delete.png" />
+                  <div id="product-related<?php echo $product_related['product_id']; ?>" class="<?php echo $class; ?>"> <?php echo $product_related['name']; ?><img src="view/image/delete.png" alt="" />
                     <input type="hidden" name="product_related[]" value="<?php echo $product_related['product_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -746,6 +735,34 @@ $.widget('custom.catcomplete', $.ui.autocomplete, {
 	}
 });
 
+// Manufacturer
+$('input[name=\'manufacturer\']').autocomplete({
+	delay: 500,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/manufacturer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {		
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.manufacturer_id
+					}
+				}));
+			}
+		});
+	}, 
+	select: function(event, ui) {
+		$('input[name=\'manufacturer\']').attr('value', ui.item.label);
+		$('input[name=\'manufacturer_id\']').attr('value', ui.item.value);
+	
+		return false;
+	},
+	focus: function(event, ui) {
+      return false;
+   }
+});
+
 // Category
 $('input[name=\'category\']').autocomplete({
 	delay: 500,
@@ -766,7 +783,7 @@ $('input[name=\'category\']').autocomplete({
 	select: function(event, ui) {
 		$('#product-category' + ui.item.value).remove();
 		
-		$('#product-category').append('<div id="product-category' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="product_category[]" value="' + ui.item.value + '" /></div>');
+		$('#product-category').append('<div id="product-category' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="product_category[]" value="' + ui.item.value + '" /></div>');
 
 		$('#product-category div:odd').attr('class', 'odd');
 		$('#product-category div:even').attr('class', 'even');
@@ -806,7 +823,7 @@ $('input[name=\'filter\']').catcomplete({
 	select: function(event, ui) {
 		$('#product-filter' + ui.item.value).remove();
 		
-		$('#product-filter').append('<div id="product-filter' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="product_filter[]" value="' + ui.item.value + '" /></div>');
+		$('#product-filter').append('<div id="product-filter' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="product_filter[]" value="' + ui.item.value + '" /></div>');
 
 		$('#product-filter div:odd').attr('class', 'odd');
 		$('#product-filter div:even').attr('class', 'even');
@@ -825,6 +842,45 @@ $('#product-filter div img').live('click', function() {
 	$('#product-filter div:even').attr('class', 'even');	
 });
 
+// Downloads
+$('input[name=\'download\']').autocomplete({
+	delay: 500,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/download/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {		
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.download_id
+					}
+				}));
+			}
+		});
+	}, 
+	select: function(event, ui) {
+		$('#product-download' + ui.item.value).remove();
+		
+		$('#product-download').append('<div id="product-download' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="product_download[]" value="' + ui.item.value + '" /></div>');
+
+		$('#product-download div:odd').attr('class', 'odd');
+		$('#product-download div:even').attr('class', 'even');
+				
+		return false;
+	},
+	focus: function(event, ui) {
+      return false;
+   }
+});
+
+$('#product-download div img').live('click', function() {
+	$(this).parent().remove();
+	
+	$('#product-download div:odd').attr('class', 'odd');
+	$('#product-download div:even').attr('class', 'even');	
+});
+
 // Related
 $('input[name=\'related\']').autocomplete({
 	delay: 500,
@@ -841,12 +897,11 @@ $('input[name=\'related\']').autocomplete({
 				}));
 			}
 		});
-		
 	}, 
 	select: function(event, ui) {
 		$('#product-related' + ui.item.value).remove();
 		
-		$('#product-related').append('<div id="product-related' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="product_related[]" value="' + ui.item.value + '" /></div>');
+		$('#product-related').append('<div id="product-related' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="product_related[]" value="' + ui.item.value + '" /></div>');
 
 		$('#product-related div:odd').attr('class', 'odd');
 		$('#product-related div:even').attr('class', 'even');

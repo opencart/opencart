@@ -34,14 +34,18 @@ class ModelCatalogDownload extends Model {
 	}	
 
 	public function getDownload($download_id) {
-		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "download WHERE download_id = '" . (int)$download_id . "'");
+		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "download d LEFT JOIN " . DB_PREFIX . "download_description dd ON (d.download_id = dd.download_id) WHERE d.download_id = '" . (int)$download_id . "' AND dd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 		
 		return $query->row;
 	}
 
 	public function getDownloads($data = array()) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "download d LEFT JOIN " . DB_PREFIX . "download_description dd ON (d.download_id = dd.download_id) WHERE dd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
-	
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " AND LCASE(dd.name) LIKE '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "%'";
+		}
+		
 		$sort_data = array(
 			'dd.name',
 			'd.remaining'

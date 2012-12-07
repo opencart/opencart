@@ -7,6 +7,8 @@ class ModelPaymentNOCHEX extends Model {
 		
 		if ($this->config->get('nochex_total') > $total) {
 			$status = false;
+		} elseif ($this->config->get('free_checkout_status') && $this->config->get('cod_total') > $total) {
+			$status = false;
 		} elseif (!$this->config->get('nochex_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {

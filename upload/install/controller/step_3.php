@@ -159,7 +159,7 @@ class ControllerStep3 extends Controller {
 		if (isset($this->request->post['db_prefix'])) {
 			$this->data['db_prefix'] = html_entity_decode($this->request->post['db_prefix']);
 		} else {
-			$this->data['db_prefix'] = '';
+			$this->data['db_prefix'] = 'oc_';
 		}
 		
 		if (isset($this->request->post['username'])) {

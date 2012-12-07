@@ -310,37 +310,19 @@ class ControllerProductManufacturer extends Controller {
 			}
 			
 			$this->data['limits'] = array();
-			
-			$this->data['limits'][] = array(
-				'text'  => $this->config->get('config_catalog_limit'),
-				'value' => $this->config->get('config_catalog_limit'),
-				'href'  => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&limit=' . $this->config->get('config_catalog_limit'))
-			);
-						
-			$this->data['limits'][] = array(
-				'text'  => 25,
-				'value' => 25,
-				'href'  => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&limit=25')
-			);
-			
-			$this->data['limits'][] = array(
-				'text'  => 50,
-				'value' => 50,
-				'href'  => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&limit=50')
-			);
 	
-			$this->data['limits'][] = array(
-				'text'  => 75,
-				'value' => 75,
-				'href'  => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&limit=75')
-			);
+			$limits = array_unique(array($this->config->get('config_catalog_limit'), 25, 50, 75, 100));
 			
-			$this->data['limits'][] = array(
-				'text'  => 100,
-				'value' => 100,
-				'href'  => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&limit=100')
-			);
-					
+			sort($limits);
+	
+			foreach($limits as $limit){
+				$this->data['limits'][] = array(
+					'text'  => $limit,
+					'value' => $limit,
+					'href'  => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&limit=' . $limit)
+				);
+			}
+			
 			$url = '';
 							
 			if (isset($this->request->get['sort'])) {

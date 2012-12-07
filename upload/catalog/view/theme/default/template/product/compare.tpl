@@ -62,6 +62,7 @@
         <td><?php echo $products[$product['product_id']]['availability']; ?></td>
         <?php } ?>
       </tr>
+	  <?php if ($review_status) { ?>
       <tr>
         <td><?php echo $text_rating; ?></td>
         <?php foreach ($products as $product) { ?>
@@ -69,7 +70,8 @@
           <?php echo $products[$product['product_id']]['reviews']; ?></td>
         <?php } ?>
       </tr>
-      <tr>
+      <?php } ?>
+	  <tr>
         <td><?php echo $text_summary; ?></td>
         <?php foreach ($products as $product) { ?>
         <td class="description"><?php echo $products[$product['product_id']]['description']; ?></td>

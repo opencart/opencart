@@ -273,37 +273,19 @@ class ControllerProductCategory extends Controller {
 			}
 			
 			$this->data['limits'] = array();
+	
+			$limits = array_unique(array($this->config->get('config_catalog_limit'), 25, 50, 75, 100));
 			
-			$this->data['limits'][] = array(
-				'text'  => $this->config->get('config_catalog_limit'),
-				'value' => $this->config->get('config_catalog_limit'),
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&limit=' . $this->config->get('config_catalog_limit'))
-			);
-						
-			$this->data['limits'][] = array(
-				'text'  => 25,
-				'value' => 25,
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&limit=25')
-			);
+			sort($limits);
+	
+			foreach($limits as $limit){
+				$this->data['limits'][] = array(
+					'text'  => $limit,
+					'value' => $limit,
+					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&limit=' . $limit)
+				);
+			}
 			
-			$this->data['limits'][] = array(
-				'text'  => 50,
-				'value' => 50,
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&limit=50')
-			);
-
-			$this->data['limits'][] = array(
-				'text'  => 75,
-				'value' => 75,
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&limit=75')
-			);
-			
-			$this->data['limits'][] = array(
-				'text'  => 100,
-				'value' => 100,
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&limit=100')
-			);
-						
 			$url = '';
 	
 			if (isset($this->request->get['sort'])) {

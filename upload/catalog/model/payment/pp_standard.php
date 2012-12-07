@@ -7,6 +7,8 @@ class ModelPaymentPPStandard extends Model {
 		
 		if ($this->config->get('pp_standard_total') > $total) {
 			$status = false;
+		} elseif ($this->config->get('free_checkout_status') && $this->config->get('cod_total') > $total) {
+			$status = false;
 		} elseif (!$this->config->get('pp_standard_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {

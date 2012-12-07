@@ -7,6 +7,8 @@ class ModelPaymentKlarnaPP extends Model {
 		
 		if ($this->config->get('klarna_pp_total') > $total) {
 			$status = false;
+		} elseif ($this->config->get('free_checkout_status') && $this->config->get('cod_total') > $total) {
+			$status = false;
 		} elseif (!$this->config->get('klarna_pp_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {

@@ -308,6 +308,9 @@ $('select[name=\'customer_group_id\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 function country(element, index, zone_id) {
+  if (element.value == ''){
+    return;
+  }
 	$.ajax({
 		url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
 		dataType: 'json',

@@ -803,7 +803,7 @@ $('#product-category div img').live('click', function() {
 });
 
 // Filter
-$('input[name=\'filter\']').catcomplete({
+$('input[name=\'filter\']').autocomplete({
 	delay: 500,
 	source: function(request, response) {
 		$.ajax({
@@ -812,9 +812,8 @@ $('input[name=\'filter\']').catcomplete({
 			success: function(json) {		
 				response($.map(json, function(item) {
 					return {
-						category: item.category,
 						label: item.name,
-						value: item.attribute_id
+						value: item.filter_id
 					}
 				}));
 			}
@@ -833,6 +832,13 @@ $('input[name=\'filter\']').catcomplete({
 	focus: function(event, ui) {
       return false;
    }
+});
+
+$('#product-filter div img').live('click', function() {
+	$(this).parent().remove();
+	
+	$('#product-filter div:odd').attr('class', 'odd');
+	$('#product-filter div:even').attr('class', 'even');	
 });
 
 $('#product-filter div img').live('click', function() {

@@ -11,66 +11,59 @@ class ControllerModuleFilter extends Controller {
 			$parts = array();
 		}
 		
-		if (isset($parts[0])) {
-			$this->data['filter_id'] = $parts[0];
-		} else {
-			$this->data['filter_id'] = 0;
-		}
+		$category_id = end($parts);
 		
-		if (isset($parts[1])) {
-			$this->data['child_id'] = $parts[1];
-		} else {
-			$this->data['child_id'] = 0;
-		}
-							
-		$this->load->model('catalog/filter');
+		$this->load->model('catalog/category');
+		
+		$category_info = $this->model_catalog_category->getCategory($category_id);
+		
+		if ($category_info) {
+			$this->load->model('catalog/filter');
 
-		$this->load->model('catalog/product');
+			$this->load->model('catalog/product');
 
-		$this->data['categories'] = array();
+			$this->data['filters'] = array();
 
-		$categories = $this->model_catalog_filter->getCategories(0);
+			$filters = $this->model_catalog_filter->getFilterGroupsByCategoryId($category_id);
 
-		foreach ($categories as $filter) {
-			$total = $this->model_catalog_product->getTotalProducts(array('filter_filter_id' => $filter['filter_id']));
+			foreach ($filters as $filter) {
+				$filter_value_data = array();
 
-			$children_data = array();
+				$filter_values = $this->model_catalog_filter->getFilters($filter['filter_id']);
 
-			$children = $this->model_catalog_filter->getCategories($filter['filter_id']);
+				foreach ($filter_values as $filter_value) {
+					$data = array(
+						'filter_category_id'     => $category_id,
+						'filter_sub_filter'      => true,
+						'filter_filter_value_id' => $filter_value['filter_value_id']
+					);
 
-			foreach ($children as $child) {
-				$data = array(
-					'filter_filter_id'  => $child['filter_id'],
-					'filter_sub_filter' => true
-				);
+					$product_total = $this->model_catalog_product->getTotalProducts($data);
 
-				$product_total = $this->model_catalog_product->getTotalProducts($data);
+					$total += $product_total;
 
-				$total += $product_total;
+					$filter_value_data[] = array(
+						'filter_id' => $child['filter_id'],
+						'name'        => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),
+						'href'        => $this->url->link('product/filter', 'path=' . $filter['filter_id'] . '_' . $child['filter_id'])	
+					);		
+				}
 
-				$children_data[] = array(
-					'filter_id' => $child['filter_id'],
-					'name'        => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),
-					'href'        => $this->url->link('product/filter', 'path=' . $filter['filter_id'] . '_' . $child['filter_id'])	
-				);		
+				$this->data['filters'][] = array(
+					'filter_id'     => $filter['filter_id'],
+					'name'          => $filter['name'],
+					'cfilter_value' => $filter_value_data
+				);	
 			}
-
-			$this->data['categories'][] = array(
-				'filter_id' => $filter['filter_id'],
-				'name'        => $filter['name'] . ($this->config->get('config_product_count') ? ' (' . $total . ')' : ''),
-				'children'    => $children_data,
-				'href'        => $this->url->link('product/filter', 'path=' . $filter['filter_id'])
-			);	
+			
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/filter.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/module/filter.tpl';
+			} else {
+				$this->template = 'default/template/module/filter.tpl';
+			}
+			
+			$this->render();
 		}
-		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/filter.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/module/filter.tpl';
-		} else {
-			$this->template = 'default/template/module/filter.tpl';
-		}
-		
-		$this->render();
   	}
-
 }
 ?>

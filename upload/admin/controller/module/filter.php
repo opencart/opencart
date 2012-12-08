@@ -28,7 +28,6 @@ class ControllerModulefilter extends Controller {
 		
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
 		$this->data['entry_position'] = $this->language->get('entry_position');
-		$this->data['entry_count'] = $this->language->get('entry_count');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		

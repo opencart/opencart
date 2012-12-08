@@ -22,12 +22,12 @@
           <thead>
             <tr>
               <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
-              <td class="left"><?php if ($sort == 'fd.name') { ?>
-                <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
+              <td class="left"><?php if ($sort == 'fgd.name') { ?>
+                <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_group; ?></a>
                 <?php } else { ?>
-                <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
+                <a href="<?php echo $sort_name; ?>"><?php echo $column_group; ?></a>
                 <?php } ?></td>
-              <td class="right"><?php if ($sort == 'f.sort_order') { ?>
+              <td class="right"><?php if ($sort == 'fg.sort_order') { ?>
                 <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
@@ -40,9 +40,9 @@
             <?php foreach ($filters as $filter) { ?>
             <tr>
               <td style="text-align: center;"><?php if ($filter['selected']) { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $filter['filter_id']; ?>" checked="checked" />
+                <input type="checkbox" name="selected[]" value="<?php echo $filter['filter_group_id']; ?>" checked="checked" />
                 <?php } else { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $filter['filter_id']; ?>" />
+                <input type="checkbox" name="selected[]" value="<?php echo $filter['filter_group_id']; ?>" />
                 <?php } ?></td>
               <td class="left"><?php echo $filter['name']; ?></td>
               <td class="right"><?php echo $filter['sort_order']; ?></td>

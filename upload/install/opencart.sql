@@ -1195,12 +1195,48 @@ CREATE TABLE `oc_download_description` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_filter`
+-- Table structure for table `oc_filter_group`
+--
+
+DROP TABLE IF EXISTS `oc_filter_group`;
+CREATE TABLE `oc_filter_group` (
+  `filter_group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`filter_group_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_filter`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_filter_description`
+--
+
+DROP TABLE IF EXISTS `oc_filter_group_description`;
+CREATE TABLE `oc_filter_group_description` (
+  `filter_group_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(64) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`filter_group_id`,`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_filter_description`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_filter_value`
 --
 
 DROP TABLE IF EXISTS `oc_filter`;
 CREATE TABLE `oc_filter` (
   `filter_id` int(11) NOT NULL AUTO_INCREMENT,
+  `filter_group_id` int(11) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`filter_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -1219,49 +1255,30 @@ DROP TABLE IF EXISTS `oc_filter_description`;
 CREATE TABLE `oc_filter_description` (
   `filter_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
+  `filter_group_id` int(11) NOT NULL,
   `name` varchar(64) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`filter_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `oc_filter_description`
+-- Dumping data for table `oc_filter_value_description`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_filter_value`
+-- Table structure for table `oc_filter_group_to_category`
 --
 
-DROP TABLE IF EXISTS `oc_filter_value`;
-CREATE TABLE `oc_filter_value` (
-  `filter_value_id` int(11) NOT NULL AUTO_INCREMENT,
-  `filter_id` int(11) NOT NULL,
-  `sort_order` int(3) NOT NULL,
-  PRIMARY KEY (`filter_value_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `oc_filter_value`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `oc_filter_value_description`
---
-
-DROP TABLE IF EXISTS `oc_filter_value_description`;
-CREATE TABLE `oc_filter_value_description` (
-  `filter_value_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `filter_id` int(11) NOT NULL,
-  `name` varchar(64) COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`filter_value_id`,`language_id`)
+DROP TABLE IF EXISTS `oc_filter_group_to_category`;
+CREATE TABLE `oc_filter_group_to_category` (
+  `filter_group_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`filter_group_id`,`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `oc_filter_value_description`
+-- Dumping data for table `oc_filter_to_category`
 --
 
 -- --------------------------------------------------------

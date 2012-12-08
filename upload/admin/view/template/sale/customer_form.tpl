@@ -308,47 +308,46 @@ $('select[name=\'customer_group_id\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 function country(element, index, zone_id) {
-  if (element.value == ''){
-    return;
-  }
-	$.ajax({
-		url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('select[name=\'address[' + index + '][country_id]\']').after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
-		},
-		complete: function() {
-			$('.wait').remove();
-		},			
-		success: function(json) {
-			if (json['postcode_required'] == '1') {
-				$('#postcode-required' + index).show();
-			} else {
-				$('#postcode-required' + index).hide();
-			}
-			
-			html = '<option value=""><?php echo $text_select; ?></option>';
-			
-			if (json['zone'] != '') {
-				for (i = 0; i < json['zone'].length; i++) {
-        			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-	    			
-					if (json['zone'][i]['zone_id'] == zone_id) {
-	      				html += ' selected="selected"';
-	    			}
-	
-	    			html += '>' + json['zone'][i]['name'] + '</option>';
+  if (element.value != '') {
+		$.ajax({
+			url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
+			dataType: 'json',
+			beforeSend: function() {
+				$('select[name=\'address[' + index + '][country_id]\']').after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
+			},
+			complete: function() {
+				$('.wait').remove();
+			},			
+			success: function(json) {
+				if (json['postcode_required'] == '1') {
+					$('#postcode-required' + index).show();
+				} else {
+					$('#postcode-required' + index).hide();
 				}
-			} else {
-				html += '<option value="0"><?php echo $text_none; ?></option>';
+				
+				html = '<option value=""><?php echo $text_select; ?></option>';
+				
+				if (json['zone'] != '') {
+					for (i = 0; i < json['zone'].length; i++) {
+						html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+						
+						if (json['zone'][i]['zone_id'] == zone_id) {
+							html += ' selected="selected"';
+						}
+		
+						html += '>' + json['zone'][i]['name'] + '</option>';
+					}
+				} else {
+					html += '<option value="0"><?php echo $text_none; ?></option>';
+				}
+				
+				$('select[name=\'address[' + index + '][zone_id]\']').html(html);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-			
-			$('select[name=\'address[' + index + '][zone_id]\']').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+		});
+	}
 }
 
 $('select[name$=\'[country_id]\']').trigger('change');

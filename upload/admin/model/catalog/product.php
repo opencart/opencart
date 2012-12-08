@@ -79,6 +79,12 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 		
+		if (isset($data['product_filter'])) {
+			foreach ($data['product_filter'] as $filter_value_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product_filter SET product_id = '" . (int)$product_id . "', filter_id = '" . (int)$filter_id . "'");
+			}
+		}
+		
 		if (isset($data['product_related'])) {
 			foreach ($data['product_related'] as $related_id) {
 				$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int)$product_id . "' AND related_id = '" . (int)$related_id . "'");
@@ -204,7 +210,15 @@ class ModelCatalogProduct extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_category SET product_id = '" . (int)$product_id . "', category_id = '" . (int)$category_id . "'");
 			}		
 		}
-
+		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_filter WHERE product_id = '" . (int)$product_id . "'");
+		
+		if (isset($data['product_filter'])) {
+			foreach ($data['product_filter'] as $filter_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product_filter SET product_id = '" . (int)$product_id . "', filter_id = '" . (int)$filter_id . "'");
+			}		
+		}
+		
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE related_id = '" . (int)$product_id . "'");
 
@@ -398,11 +412,29 @@ class ModelCatalogProduct extends Model {
 		
 		return $product_description_data;
 	}
+		
+	public function getProductCategories($product_id) {
+		$product_category_data = array();
+		
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_category WHERE product_id = '" . (int)$product_id . "'");
+		
+		foreach ($query->rows as $result) {
+			$product_category_data[] = $result['category_id'];
+		}
 
+		return $product_category_data;
+	}
+	
+	public function getProductFilters($product_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_filter WHERE product_id = '" . (int)$product_id . "'");
+		
+		return $query->rows;
+	}
+	
 	public function getProductAttributes($product_id) {
 		$product_attribute_data = array();
 		
-		$product_attribute_query = $this->db->query("SELECT pa.attribute_id, ad.name FROM " . DB_PREFIX . "product_attribute pa LEFT JOIN " . DB_PREFIX . "attribute a ON (pa.attribute_id = a.attribute_id) LEFT JOIN " . DB_PREFIX . "attribute_description ad ON (a.attribute_id = ad.attribute_id) WHERE pa.product_id = '" . (int)$product_id . "' AND ad.language_id = '" . (int)$this->config->get('config_language_id') . "' GROUP BY pa.attribute_id");
+		$product_attribute_query = $this->db->query("SELECT attribute_id FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "' GROUP BY attribute_id");
 		
 		foreach ($product_attribute_query->rows as $product_attribute) {
 			$product_attribute_description_data = array();
@@ -415,7 +447,6 @@ class ModelCatalogProduct extends Model {
 			
 			$product_attribute_data[] = array(
 				'attribute_id'                  => $product_attribute['attribute_id'],
-				'name'                          => $product_attribute['name'],
 				'product_attribute_description' => $product_attribute_description_data
 			);
 		}
@@ -426,88 +457,40 @@ class ModelCatalogProduct extends Model {
 	public function getProductOptions($product_id) {
 		$product_option_data = array();
 		
-		$product_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_option po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.option_id = o.option_id) LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE po.product_id = '" . (int)$product_id . "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY o.sort_order");
+		$product_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_option WHERE product_id = '" . (int)$product_id . "'");
 		
 		foreach ($product_option_query->rows as $product_option) {
-			if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
-				$product_option_value_data = array();	
+			$product_option_value_data = array();	
 				
-				$product_option_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_id = '" . (int)$product_option['product_option_id'] . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY ov.sort_order");
+			$product_option_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_option_value WHERE product_option_id = '" . (int)$product_option['product_option_id'] . "'");
 				
-				foreach ($product_option_value_query->rows as $product_option_value) {
-					$product_option_value_data[] = array(
-						'product_option_value_id' => $product_option_value['product_option_value_id'],
-						'option_value_id'         => $product_option_value['option_value_id'],
-						'name'                    => $product_option_value['name'],
-						'image'                   => $product_option_value['image'],
-						'quantity'                => $product_option_value['quantity'],
-						'subtract'                => $product_option_value['subtract'],
-						'price'                   => $product_option_value['price'],
-						'price_prefix'            => $product_option_value['price_prefix'],
-						'points'                  => $product_option_value['points'],
-						'points_prefix'           => $product_option_value['points_prefix'],						
-						'weight'                  => $product_option_value['weight'],
-						'weight_prefix'           => $product_option_value['weight_prefix']					
-					);
-				}
-				
-				$product_option_data[] = array(
-					'product_option_id'    => $product_option['product_option_id'],
-					'option_id'            => $product_option['option_id'],
-					'name'                 => $product_option['name'],
-					'type'                 => $product_option['type'],
-					'product_option_value' => $product_option_value_data,
-					'required'             => $product_option['required']
-				);				
-			} else {
-				$product_option_data[] = array(
-					'product_option_id' => $product_option['product_option_id'],
-					'option_id'         => $product_option['option_id'],
-					'name'              => $product_option['name'],
-					'type'              => $product_option['type'],
-					'option_value'      => $product_option['option_value'],
-					'required'          => $product_option['required']
-				);				
+			foreach ($product_option_value_query->rows as $product_option_value) {
+				$product_option_value_data[] = array(
+					'product_option_value_id' => $product_option_value['product_option_value_id'],
+					'option_value_id'         => $product_option_value['option_value_id'],
+					'quantity'                => $product_option_value['quantity'],
+					'subtract'                => $product_option_value['subtract'],
+					'price'                   => $product_option_value['price'],
+					'price_prefix'            => $product_option_value['price_prefix'],
+					'points'                  => $product_option_value['points'],
+					'points_prefix'           => $product_option_value['points_prefix'],						
+					'weight'                  => $product_option_value['weight'],
+					'weight_prefix'           => $product_option_value['weight_prefix']					
+				);
 			}
-		}	
-		
-		return $product_option_data;
-	}
-	
-	public function getProductFilters($product_id) {
-		$product_filter_data = array();
-		
-		$product_filter_query = $this->db->query("
-		SELECT pf.filter_id, fd.name 
-		FROM " . DB_PREFIX . "product_filter pf 
-		LEFT JOIN " . DB_PREFIX . "filter f ON (pf.filter_id = f.filter_id) 
-		LEFT JOIN " . DB_PREFIX . "filter_description fd ON (f.filter_id = fd.filter_id) 
-		LEFT JOIN " . DB_PREFIX . "filter_value fv ON (pf.filter_value_id = fv.filter_value_id) 
-		LEFT JOIN " . DB_PREFIX . "filter_value_description fvd ON (fv.filter_id = fvd.filter_id) 		
-		
-		WHERE pf.product_id = '" . (int)$product_id . "' 
-		AND fd.language_id = '" . (int)$this->config->get('config_language_id') . "'
-		AND fvd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
-		
-		foreach ($product_filter_query->rows as $product_filter) {
-			$product_filter_description_data = array();
-			
-			$product_filter_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_filter WHERE product_id = '" . (int)$product_id . "' AND attribute_id = '" . (int)$product_attribute['attribute_id'] . "'");
-			
-			foreach ($product_filter_description_query->rows as $product_attribute_description) {
-				$product_filter_description_data[$product_attribute_description['language_id']] = array('text' => $product_attribute_description['text']);
-			}
-			
-			$product_filter_data[$product_filter['filter_id']] = array(
-				'filter_id'    => $product_filter['filter_id'],
-				'name'         => $product_filter['name'],
-				'filter_value' => $product_filter_description_data
+				
+			$product_option_data[] = array(
+				'product_option_id'    => $product_option['product_option_id'],
+				'option_id'            => $product_option['option_id'],
+				'product_option_value' => $product_option_value_data,
+				'option_value'         => $product_option['option_value'],
+				'required'             => $product_option['required']				
 			);
 		}
 		
-		return $product_filter_data;
+		return $product_option_data;
 	}
-		
+			
 	public function getProductImages($product_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_image WHERE product_id = '" . (int)$product_id . "'");
 		
@@ -572,18 +555,6 @@ class ModelCatalogProduct extends Model {
 		}
 		
 		return $product_layout_data;
-	}
-		
-	public function getProductCategories($product_id) {
-		$product_category_data = array();
-		
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_category WHERE product_id = '" . (int)$product_id . "'");
-		
-		foreach ($query->rows as $result) {
-			$product_category_data[] = $result['category_id'];
-		}
-
-		return $product_category_data;
 	}
 
 	public function getProductRelated($product_id) {

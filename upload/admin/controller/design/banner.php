@@ -400,7 +400,7 @@ class ControllerDesignBanner extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validateForm() {
+	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'design/banner')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -426,7 +426,7 @@ class ControllerDesignBanner extends Controller {
 		}
 	}
 
-	private function validateDelete() {
+	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'design/banner')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

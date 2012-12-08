@@ -369,7 +369,7 @@ class ControllerDesignLayout extends Controller {
 		}
 	}
 
-	protected function validateDelete() {
+	private function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'design/layout')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

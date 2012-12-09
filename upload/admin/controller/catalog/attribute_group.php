@@ -351,7 +351,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 		$this->response->setOutput($this->render());	
   	}
   	
-	private function validateForm() {
+	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'catalog/attribute_group')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -369,7 +369,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 		}
   	}
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'catalog/attribute_group')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}

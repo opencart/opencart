@@ -370,7 +370,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		$this->response->setOutput($this->render());	
   	}
   	
-	private function validateForm() {
+	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'sale/voucher_theme')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -392,7 +392,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		}
   	}
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'sale/voucher_theme')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}

@@ -371,7 +371,7 @@ class ControllerLocalisationTaxClass extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validateForm() {
+	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'localisation/tax_class')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -391,7 +391,7 @@ class ControllerLocalisationTaxClass extends Controller {
 		}
 	}
 
-	private function validateDelete() {
+	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'localisation/tax_class')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

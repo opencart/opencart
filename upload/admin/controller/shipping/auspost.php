@@ -148,7 +148,7 @@ class ControllerShippingAusPost extends Controller {
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'shipping/auspost')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

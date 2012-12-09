@@ -98,7 +98,7 @@ class ControllerCommonReset extends Controller {
 		}
 	}
 
-	private function validate() {
+	protected function validate() {
     	if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
       		$this->error['password'] = $this->language->get('error_password');
     	}

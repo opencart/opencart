@@ -1077,7 +1077,7 @@ class ControllerSaleReturn extends Controller {
 		}
 	}
 		
-  	private function validateForm() {
+  	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'sale/return')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -1121,7 +1121,7 @@ class ControllerSaleReturn extends Controller {
 		}
   	}    
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
     	if (!$this->user->hasPermission('modify', 'sale/return')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}	

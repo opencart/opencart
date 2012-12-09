@@ -380,11 +380,11 @@ class ControllerProductSearch extends Controller {
 			
 			sort($limits);
 	
-			foreach($limits as $limit){
+			foreach($limits as $limits){
 				$this->data['limits'][] = array(
-					'text'  => $limit,
-					'value' => $limit,
-					'href'  => $this->url->link('product/search', $url . '&limit=' . $limit)
+					'text'  => $limits,
+					'value' => $limits,
+					'href'  => $this->url->link('product/search', $url . '&limit=' . $limits)
 				);
 			}
 					

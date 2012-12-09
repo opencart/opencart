@@ -457,13 +457,17 @@ class ModelCatalogProduct extends Model {
 			$sql .= " FROM " . DB_PREFIX . "product p";
 		}
 		
+		if (!empty($data['filter_filter'])) {
+			$sql .= " LEFT JOIN " . DB_PREFIX . "product_filter pf ON (p.product_id = pf.product_id AND pf.filter_id IN (" . implode(',', $data['filter_filter']). "))";
+		}
+		
 		$sql .= " LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
 		
 		if (!empty($data['filter_sub_category'])) {
 			$sql .= " AND cp.path_id = '" . (int)$data['filter_category_id'] . "'";
 		} elseif (!empty($data['filter_category_id'])) {
 			$sql .= " AND p2c.category_id = '" . (int)$data['filter_category_id'] . "'";			
-		}	
+		}
 		
 		if (!empty($data['filter_name']) || !empty($data['filter_tag'])) {
 			$sql .= " AND (";

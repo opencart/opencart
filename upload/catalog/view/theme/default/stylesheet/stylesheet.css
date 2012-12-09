@@ -758,6 +758,17 @@ a.button:hover, input.button:hover {
 .box-category > ul > li ul > li > a.active {
 	font-weight: bold;
 }
+/* box filter */
+.box-filter-group {
+	background: #EEEEEE;
+	padding: 5px;
+	font-weight: bold;
+	margin-bottom: 3px;
+}
+.box-filter {
+	padding: 5px;
+	margin-bottom: 3px;
+}
 /* content */
 #content .content {
 	padding: 10px;

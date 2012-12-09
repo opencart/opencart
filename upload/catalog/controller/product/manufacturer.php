@@ -315,11 +315,11 @@ class ControllerProductManufacturer extends Controller {
 			
 			sort($limits);
 	
-			foreach($limits as $limit){
+			foreach($limits as $limits){
 				$this->data['limits'][] = array(
-					'text'  => $limit,
-					'value' => $limit,
-					'href'  => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&limit=' . $limit)
+					'text'  => $limits,
+					'value' => $limits,
+					'href'  => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&limit=' . $limits)
 				);
 			}
 			

@@ -2,7 +2,7 @@ opencart
 ========
 
 A free shopping cart system. OpenCart is an open source PHP-based online e-commerce solution.
-This version was forked from Daniel's opencart/opencart repo. All private validation methods
+This version was forked from Daniel's opencart/opencart repo on 8 Dec 2012. All private validation methods
 were changed to protected validation methods in the controller files. This makes it a lot easier
 for 3rd party addons to extend controllers and then introduce their own additional variables
 which may have to be validated, too.

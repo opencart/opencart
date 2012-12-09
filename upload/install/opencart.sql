@@ -1230,7 +1230,7 @@ CREATE TABLE `oc_filter_group_description` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_filter_value`
+-- Table structure for table `oc_filter`
 --
 
 DROP TABLE IF EXISTS `oc_filter`;
@@ -1261,7 +1261,7 @@ CREATE TABLE `oc_filter_description` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `oc_filter_value_description`
+-- Dumping data for table `oc_filter_description`
 --
 
 -- --------------------------------------------------------
@@ -2241,8 +2241,7 @@ DROP TABLE IF EXISTS `oc_product_filter`;
 CREATE TABLE `oc_product_filter` (
   `product_id` int(11) NOT NULL,
   `filter_id` int(11) NOT NULL,
-  `filter_value_id` int(11) NOT NULL,
-  PRIMARY KEY (`product_id`,`filter_id`,`filter_value_id`)
+  PRIMARY KEY (`product_id`,`filter_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --

@@ -1121,7 +1121,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['option_values'] = array();
 		
 		foreach ($this->data['product_options'] as $product_option) {
-			if ($option_info['type'] == 'select' || $option_info['type'] == 'radio' || $option_info['type'] == 'checkbox' || $option_info['type'] == 'image') {
+			if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
 				if (!isset($this->data['option_values'][$product_option['option_id']])) {
 					$this->data['option_values'][$product_option['option_id']] = $this->model_catalog_option->getOptionValues($product_option['option_id']);
 				}

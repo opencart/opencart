@@ -902,7 +902,8 @@ INSERT INTO `oc_coupon` (`coupon_id`, `name`, `code`, `type`, `discount`, `logge
 -- Table structure for table `oc_coupon_category`
 --
 
-CREATE TABLE IF NOT EXISTS `oc_coupon_category` (
+DROP TABLE IF EXISTS `oc_coupon_category`;
+CREATE TABLE `oc_coupon_category` (
   `coupon_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   PRIMARY KEY (`coupon_id`,`category_id`)
@@ -4401,9 +4402,9 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (1088, 72, 'LS', 'Lansi-Suomen Laani', 1),
 (1089, 72, 'LA', 'Lapin Lanani', 1),
 (1090, 72, 'OU', 'Oulun Laani', 1),
-(1091, 73, 'AL', 'Alsace', 1),
-(1092, 73, 'AQ', 'Aquitaine', 1),
-(1093, 73, 'AU', 'Auvergne', 1),
+(1091, 74, 'AL', 'Alsace', 1),
+(1092, 74, 'AQ', 'Aquitaine', 1),
+(1093, 74, 'AU', 'Auvergne', 1),
 (1114, 74, '01', 'Ain', 1),
 (1115, 74, '02', 'Aisne', 1),
 (1116, 74, '03', 'Allier', 1),
@@ -6635,7 +6636,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3340, 215, 'DIY', 'Diyarbakir', 1),
 (3341, 215, 'DUZ', 'Düzce', 1),
 (3342, 215, 'EDI', 'Edirne', 1),
-(3343, 215, 'ELA', 'Elazig', 1),
+(3343, 215, 'ELA', 'Elazığ', 1),
 (3344, 215, 'EZC', 'Erzincan', 1),
 (3345, 215, 'EZR', 'Erzurum', 1),
 (3346, 215, 'ESK', 'Eskişehir', 1),
@@ -6655,9 +6656,9 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3360, 215, 'KAS', 'Kastamonu', 1),
 (3361, 215, 'KAY', 'Kayseri', 1),
 (3362, 215, 'KLS', 'Kilis', 1),
-(3363, 215, 'KRK', 'Kirikkale', 1),
-(3364, 215, 'KLR', 'Kirklareli', 1),
-(3365, 215, 'KRH', 'Kirsehir', 1),
+(3363, 215, 'KRK', 'Kırıkkale', 1),
+(3364, 215, 'KLR', 'Kırklareli', 1),
+(3365, 215, 'KRH', 'Kırşehir', 1),
 (3366, 215, 'KOC', 'Kocaeli', 1),
 (3367, 215, 'KON', 'Konya', 1),
 (3368, 215, 'KUT', 'Kütahya', 1),

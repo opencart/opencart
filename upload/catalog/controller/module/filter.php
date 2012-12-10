@@ -18,6 +18,8 @@ class ControllerModuleFilter extends Controller {
 		
 			$this->data['heading_title'] = $this->language->get('heading_title');
 			
+			$this->data['button_filter'] = $this->language->get('button_filter');
+			
 			if (isset($this->session->data['filter'][$category_id])) {
 				$this->data['filter_category'] = $this->session->data['filter'][$category_id];
 			} else {
@@ -52,8 +54,9 @@ class ControllerModuleFilter extends Controller {
 				
 				if ($filter_data) {
 					$this->data['filter_groups'][] = array(
-						'name'   => $filter_group['name'],
-						'filter' => $filter_data
+						'filter_group_id' => $filter_group['filter_group_id'],
+						'name'            => $filter_group['name'],
+						'filter'          => $filter_data
 					);
 				}
 			}
@@ -70,6 +73,8 @@ class ControllerModuleFilter extends Controller {
 	
 	public function filter() {
 		$this->session->data['filter_category'][] = $this->request->post['filter'];	
+		
+		print_r($this->request->post);
 	}
 }
 ?>

@@ -721,53 +721,58 @@ a.button:hover, input.button:hover {
 	margin-bottom: 4px;
 }
 /* box category */
-.box-category {
-	margin-top: -5px;
-}
-.box-category ul {
+ul.box-category, ul.box-category ul {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
-.box-category > ul > li {
+ul.box-category > li:first-child {
+	padding: 0px 8px 8px 0px;
+}
+ul.box-category > li {
 	padding: 8px 8px 8px 0px;
 }
-.box-category > ul > li + li {
+ul.box-category > li + li {
 	border-top: 1px solid #EEEEEE;
 }
-.box-category > ul > li > a {
+ul.box-category > li > a {
 	text-decoration: none;
 	color: #333;
 }
-.box-category > ul > li ul {
+ul.box-category > li ul {
 	display: none;
 }
-.box-category > ul > li a.active {
+ul.box-category > li a.active {
 	font-weight: bold;
 }
-.box-category > ul > li a.active + ul {
+ul.box-category > li a.active + ul {
 	display: block;
 }
-.box-category > ul > li ul > li {
+ul.box-category > li ul > li {
 	padding: 5px 5px 0px 10px;
 }
-.box-category > ul > li ul > li > a {
+ul.box-category > li ul > li > a {
 	text-decoration: none;
 	display: block;
 }
-.box-category > ul > li ul > li > a.active {
+ul.box-category > li ul > li > a.active {
 	font-weight: bold;
 }
 /* box filter */
-.box-filter-group {
-	background: #EEEEEE;
-	padding: 5px;
-	font-weight: bold;
-	margin-bottom: 3px;
+ul.box-filter, ul.box-filter ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
-.box-filter {
-	padding: 5px;
-	margin-bottom: 3px;
+ul.box-filter span {
+	font-weight: bold;
+	border-bottom: 1px solid #EEEEEE;	
+	display: block;
+	padding-bottom: 5px;
+	margin-bottom: 8px;
+}
+ul.box-filter > li ul {
+	padding-bottom: 10px;
 }
 /* content */
 #content .content {

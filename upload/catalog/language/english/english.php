@@ -31,6 +31,7 @@ $_['button_coupon']         = 'Apply Coupon';
 $_['button_delete']         = 'Delete';
 $_['button_download']       = 'Download';
 $_['button_edit']           = 'Edit';
+$_['button_filter']         = 'Refine Search';
 $_['button_new_address']    = 'New Address';
 $_['button_change_address'] = 'Change Address';
 $_['button_reviews']        = 'Reviews';

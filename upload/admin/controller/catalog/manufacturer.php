@@ -404,7 +404,7 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->response->setOutput($this->render());
 	}  
 	 
-  	private function validateForm() {
+  	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -420,7 +420,7 @@ class ControllerCatalogManufacturer extends Controller {
 		}
   	}    
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
     	if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
 			$this->error['warning'] = $this->language->get('error_permission');
     	}	

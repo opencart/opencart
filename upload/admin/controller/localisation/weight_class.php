@@ -361,7 +361,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validateForm() {
+	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'localisation/weight_class')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -383,7 +383,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		}
 	}
 
-	private function validateDelete() {
+	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'localisation/weight_class')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

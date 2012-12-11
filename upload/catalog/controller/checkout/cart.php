@@ -421,7 +421,7 @@ class ControllerCheckoutCart extends Controller {
     	}
   	}
 	
-	private function validateCoupon() {
+	protected function validateCoupon() {
 		$this->load->model('checkout/coupon');
 				
 		$coupon_info = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);			
@@ -437,7 +437,7 @@ class ControllerCheckoutCart extends Controller {
 		}		
 	}
 	
-	private function validateVoucher() {
+	protected function validateVoucher() {
 		$this->load->model('checkout/voucher');
 				
 		$voucher_info = $this->model_checkout_voucher->getVoucher($this->request->post['voucher']);			
@@ -453,7 +453,7 @@ class ControllerCheckoutCart extends Controller {
 		}		
 	}
 	
-	private function validateReward() {
+	protected function validateReward() {
 		$points = $this->customer->getRewardPoints();
 		
 		$points_total = 0;
@@ -483,7 +483,7 @@ class ControllerCheckoutCart extends Controller {
 		}		
 	}
 	
-	private function validateShipping() {
+	protected function validateShipping() {
 		if (!empty($this->request->post['shipping_method'])) {
 			$shipping = explode('.', $this->request->post['shipping_method']);
 					

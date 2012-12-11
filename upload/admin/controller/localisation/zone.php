@@ -375,7 +375,7 @@ class ControllerLocalisationZone extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validateForm() {
+	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'localisation/zone')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -391,7 +391,7 @@ class ControllerLocalisationZone extends Controller {
 		}
 	}
 
-	private function validateDelete() {
+	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'localisation/zone')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

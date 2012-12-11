@@ -181,7 +181,7 @@ class ControllerPaymentPPProUK extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/pp_pro_uk')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

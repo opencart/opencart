@@ -402,7 +402,7 @@ class ControllerCatalogCategory extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validateForm() {
+	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'catalog/category')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -424,7 +424,7 @@ class ControllerCatalogCategory extends Controller {
 		}
 	}
 	
-	private function validateDelete() {
+	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'catalog/category')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -436,7 +436,7 @@ class ControllerCatalogCategory extends Controller {
 		}
 	}
 	
-	private function validateRepair() {
+	protected function validateRepair() {
 		if (!$this->user->hasPermission('modify', 'catalog/category')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

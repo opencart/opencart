@@ -96,7 +96,7 @@ class ControllerModuleWelcome extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'module/welcome')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

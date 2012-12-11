@@ -335,7 +335,7 @@ class ControllerLocalisationReturnReason extends Controller {
 		$this->response->setOutput($this->render());	
   	}
   	
-	private function validateForm() {
+	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'localisation/return_reason')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -353,7 +353,7 @@ class ControllerLocalisationReturnReason extends Controller {
 		}
   	}
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'localisation/return_reason')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}

@@ -383,7 +383,7 @@ class ControllerUserUserPermission extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validateForm() {
+	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'user/user_permission')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -399,7 +399,7 @@ class ControllerUserUserPermission extends Controller {
 		}
 	}
 
-	private function validateDelete() {
+	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'user/user_permission')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

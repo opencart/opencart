@@ -495,7 +495,7 @@ class ControllerAccountAddress extends Controller {
 		$this->response->setOutput($this->render());	
   	}
 	
-  	private function validateForm() {
+  	protected function validateForm() {
     	if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
       		$this->error['firstname'] = $this->language->get('error_firstname');
     	}
@@ -544,7 +544,7 @@ class ControllerAccountAddress extends Controller {
     	}
   	}
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
     	if ($this->model_account_address->getTotalAddresses() == 1) {
       		$this->error['warning'] = $this->language->get('error_delete');
     	}

@@ -1163,7 +1163,7 @@ class ControllerSaleOrder extends Controller {
 		$this->response->setOutput($this->render());
   	}
 	
-  	private function validateForm() {
+  	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'sale/order')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -1297,7 +1297,7 @@ class ControllerSaleOrder extends Controller {
 		}
   	}    
 	
-   	private function validateDelete() {
+   	protected function validateDelete() {
     	if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$this->error['warning'] = $this->language->get('error_permission');
     	}

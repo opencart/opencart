@@ -76,13 +76,15 @@ class ControllerModuleFilter extends Controller {
 				}
 			}
 			
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/filter.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/module/filter.tpl';
-			} else {
-				$this->template = 'default/template/module/filter.tpl';
+			if ($this->data['filter_groups']) {
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/filter.tpl')) {
+					$this->template = $this->config->get('config_template') . '/template/module/filter.tpl';
+				} else {
+					$this->template = 'default/template/module/filter.tpl';
+				}
+				
+				$this->render();
 			}
-			
-			$this->render();
 		}
   	}
 }

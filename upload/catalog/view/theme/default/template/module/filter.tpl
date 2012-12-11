@@ -8,12 +8,12 @@
           <?php foreach ($filter_group['filter'] as $filter) { ?>
           <?php if (in_array($filter['filter_id'], $filter_category)) { ?>
           <li>
-            <input type="checkbox" name="filter[]" value="<?php echo $filter['filter_id']; ?>" id="filter<?php echo $filter['filter_id']; ?>" checked="checked" />
+            <input type="checkbox" value="<?php echo $filter['filter_id']; ?>" id="filter<?php echo $filter['filter_id']; ?>" checked="checked" />
             <label for="filter<?php echo $filter['filter_id']; ?>"><?php echo $filter['name']; ?></label>
           </li>
           <?php } else { ?>
           <li>
-            <input type="checkbox" name="filter[]" value="<?php echo $filter['filter_id']; ?>" id="filter<?php echo $filter['filter_id']; ?>" />
+            <input type="checkbox" value="<?php echo $filter['filter_id']; ?>" id="filter<?php echo $filter['filter_id']; ?>" />
             <label for="filter<?php echo $filter['filter_id']; ?>"><?php echo $filter['name']; ?></label>
           </li>
           <?php } ?>
@@ -27,23 +27,12 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-filter').bind('click', function() {
-	$.ajax({
-		url: 'index.php?route=module/filter/filter',
-		type: 'post',
-		dataType: 'html',
-		data: $('.box-filter input[type=\'checkbox\']:checked'),
-		beforeSend: function() {
-			//$('.success, .warning').remove();
-			//$('#button-review').attr('disabled', true);
-			//$('#review-title').after('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
-		},
-		complete: function() {
-			//$('#button-review').attr('disabled', false);
-			//$('.attention').remove();
-		},
-		success: function(html) {
-			alert(html);
-		}
+	filter = [];
+	
+	$('.box-filter input[type=\'checkbox\']:checked').each(function(element) {
+		filter.push(this.value);
 	});
+	
+	location = '<?php echo $action; ?>&filter=' + filter.join(',');
 });
 //--></script> 

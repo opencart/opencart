@@ -20,12 +20,28 @@ class ControllerModuleFilter extends Controller {
 			
 			$this->data['button_filter'] = $this->language->get('button_filter');
 			
-			if (isset($this->session->data['filter'][$category_id])) {
-				$this->data['filter_category'] = $this->session->data['filter'][$category_id];
+			$url = '';
+			
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}	
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}	
+			
+			if (isset($this->request->get['limit'])) {
+				$url .= '&limit=' . $this->request->get['limit'];
+			}
+									
+			$this->data['action'] = str_replace('&amp;', '&', $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url));
+			
+			if (isset($this->request->get['filter'])) {
+				$this->data['filter_category'] = explode(',', $this->request->get['filter']);
 			} else {
 				$this->data['filter_category'] = array();
 			}
-			
+						
 			$this->load->model('catalog/filter');
 
 			$this->load->model('catalog/product');
@@ -42,8 +58,7 @@ class ControllerModuleFilter extends Controller {
 				foreach ($filters as $filter) {
 					$data = array(
 						'filter_category_id' => $category_id,
-						'filter_sub_filter'  => true,
-						'filter_filter'      => array($filter['filter_id'])
+						'filter_filter'      => $filter['filter_id']
 					);
 										
 					$filter_data[] = array(
@@ -70,11 +85,5 @@ class ControllerModuleFilter extends Controller {
 			$this->render();
 		}
   	}
-	
-	public function filter() {
-		$this->session->data['filter_category'][] = $this->request->post['filter'];	
-		
-		print_r($this->request->post);
-	}
 }
 ?>

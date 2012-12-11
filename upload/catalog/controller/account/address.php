@@ -128,7 +128,7 @@ class ControllerAccountAddress extends Controller {
 		$this->getList();	
   	}
 
-  	private function getList() {
+  	protected function getList() {
       	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home'),
@@ -236,7 +236,7 @@ class ControllerAccountAddress extends Controller {
 		$this->response->setOutput($this->render());		
   	}
 
-  	private function getForm() {
+  	protected function getForm() {
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
@@ -495,7 +495,7 @@ class ControllerAccountAddress extends Controller {
 		$this->response->setOutput($this->render());	
   	}
 	
-  	private function validateForm() {
+  	protected function validateForm() {
     	if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
       		$this->error['firstname'] = $this->language->get('error_firstname');
     	}
@@ -544,7 +544,7 @@ class ControllerAccountAddress extends Controller {
     	}
   	}
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
     	if ($this->model_account_address->getTotalAddresses() == 1) {
       		$this->error['warning'] = $this->language->get('error_delete');
     	}

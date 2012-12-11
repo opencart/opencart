@@ -347,7 +347,7 @@ class ControllerAccountRegister extends Controller {
 		$this->response->setOutput($this->render());	
   	}
 
-  	private function validate() {
+  	protected function validate() {
     	if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
       		$this->error['firstname'] = $this->language->get('error_firstname');
     	}

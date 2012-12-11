@@ -144,7 +144,7 @@ class ControllerPaymentPerpetualPayments extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/perpetual_payments')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

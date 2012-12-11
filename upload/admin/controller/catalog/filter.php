@@ -110,7 +110,7 @@ class ControllerCatalogFilter extends Controller {
 		$this->getList();
 	}
 
-	private function getList() {
+	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -261,7 +261,7 @@ class ControllerCatalogFilter extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function getForm() {
+	protected function getForm() {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 				
 		$this->data['entry_group'] = $this->language->get('entry_group');
@@ -394,7 +394,7 @@ class ControllerCatalogFilter extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validateForm() {
+	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'catalog/filter')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -422,7 +422,7 @@ class ControllerCatalogFilter extends Controller {
 		}
 	}
 
-	private function validateDelete() {
+	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'catalog/filter')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

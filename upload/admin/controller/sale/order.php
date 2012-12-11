@@ -182,7 +182,7 @@ class ControllerSaleOrder extends Controller {
     	$this->getList();
   	}
 
-  	private function getList() {
+  	protected function getList() {
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = $this->request->get['filter_order_id'];
 		} else {
@@ -1163,7 +1163,7 @@ class ControllerSaleOrder extends Controller {
 		$this->response->setOutput($this->render());
   	}
 	
-  	private function validateForm() {
+  	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'sale/order')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -1297,7 +1297,7 @@ class ControllerSaleOrder extends Controller {
 		}
   	}    
 	
-   	private function validateDelete() {
+   	protected function validateDelete() {
     	if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$this->error['warning'] = $this->language->get('error_permission');
     	}

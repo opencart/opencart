@@ -110,7 +110,7 @@ class ControllerSaleCustomerBlacklist extends Controller {
     	$this->getList();
   	}  
     
-  	private function getList() {
+  	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -261,7 +261,7 @@ class ControllerSaleCustomerBlacklist extends Controller {
 		$this->response->setOutput($this->render());
   	}
   
-  	private function getForm() {
+  	protected function getForm() {
     	$this->data['heading_title'] = $this->language->get('heading_title');
  		
     	$this->data['entry_ip'] = $this->language->get('entry_ip');
@@ -338,7 +338,7 @@ class ControllerSaleCustomerBlacklist extends Controller {
 		$this->response->setOutput($this->render());
 	}
 			 
-  	private function validateForm() {
+  	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'sale/customer_blacklist')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -354,7 +354,7 @@ class ControllerSaleCustomerBlacklist extends Controller {
 		}
   	}    
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
     	if (!$this->user->hasPermission('modify', 'sale/customer_blacklist')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}	

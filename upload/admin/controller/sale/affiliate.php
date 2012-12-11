@@ -234,7 +234,7 @@ class ControllerSaleAffiliate extends Controller {
 		$this->getList();
 	} 
 	    
-  	private function getList() {
+  	protected function getList() {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
 		} else {
@@ -506,7 +506,7 @@ class ControllerSaleAffiliate extends Controller {
 		$this->response->setOutput($this->render());
   	}
   
-  	private function getForm() {
+  	protected function getForm() {
     	$this->data['heading_title'] = $this->language->get('heading_title');
  
     	$this->data['text_enabled'] = $this->language->get('text_enabled');
@@ -919,7 +919,7 @@ class ControllerSaleAffiliate extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-  	private function validateForm() {
+  	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'sale/affiliate')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -997,7 +997,7 @@ class ControllerSaleAffiliate extends Controller {
 		}
   	}    
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
     	if (!$this->user->hasPermission('modify', 'sale/affiliate')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}	

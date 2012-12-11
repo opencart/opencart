@@ -104,7 +104,7 @@ class ControllerAccountForgotten extends Controller {
 		$this->response->setOutput($this->render());		
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!isset($this->request->post['email'])) {
 			$this->error['warning'] = $this->language->get('error_email');
 		} elseif (!$this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {

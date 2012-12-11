@@ -3,7 +3,7 @@
   <div class="box-content">
     <ul class="box-filter">
       <?php foreach ($filter_groups as $filter_group) { ?>
-      <li><span id="filter-group<?php echo $filter_group['filter_group_id']; ?>"><?php echo $filter_group['name']; ?></span>
+      <li><span id="filter-group<?php echo $filter_group['filter_group_id']; ?>">[+] <?php echo $filter_group['name']; ?></span>
         <ul>
           <?php foreach ($filter_group['filter'] as $filter) { ?>
           <?php if (in_array($filter['filter_id'], $filter_category)) { ?>

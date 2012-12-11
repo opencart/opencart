@@ -110,7 +110,7 @@ class ControllerSaleVoucherTheme extends Controller {
     	$this->getList();
   	}
     
-  	private function getList() {
+  	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -258,7 +258,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		$this->response->setOutput($this->render());
   	}
   
-  	private function getForm() {
+  	protected function getForm() {
      	$this->data['heading_title'] = $this->language->get('heading_title');
 		
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
@@ -370,7 +370,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		$this->response->setOutput($this->render());	
   	}
   	
-	private function validateForm() {
+	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'sale/voucher_theme')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -392,7 +392,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		}
   	}
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'sale/voucher_theme')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}

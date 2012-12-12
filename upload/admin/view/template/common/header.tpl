@@ -211,7 +211,6 @@ $(document).ready(function(){
     <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('#menu > ul').superfish({
-		hoverClass	 : 'sfHover',
 		pathClass	 : 'overideThisToUse',
 		delay		 : 0,
 		animation	 : {height: 'show'},

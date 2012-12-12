@@ -1,7 +1,10 @@
 <?php
 class ModelUpgrade extends Model {
 	public function mysql() {
-		$db = new DB('mysql', DB_HOSTNAME, DB_USERNAME, DB_PASSWORD);
+		// Upgrade script to opgrade opencart to the latst version. 
+		// Oldest version supported is 1.3.2
+		
+		$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 		
 		// Settings
 		$query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0' ORDER BY store_id ASC");
@@ -13,22 +16,134 @@ class ModelUpgrade extends Model {
 				$settings[$setting['key']] = unserialize($setting['value']);
 			}
 		}
+		
+		// Get all the tables
+		$table_data = array();
+		
+		$table_query = $db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
+		
+		foreach ($table_query->rows as $table) {
+			if (utf8_substr($table['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+				$field_data = array(); 
+				
+				$field_query = $db->query("SHOW COLUMNS FROM `" . $table['Tables_in_' . DB_DATABASE] . "`");
+				
+				foreach ($field_query->rows as $field) {
+					
+					
+					$field_data[$field['Field']] = array(
+						'type' => $field['Field'],
+						'size' => $field['Field']
+					);
+				}
+				
+				$table_data[$table['Tables_in_' . DB_DATABASE]] = $field_data;
+			}
+		}
+		
+		// Address
+		if (!isset($table_data[DB_PREFIX . 'address']['company_id'])) {
+			$db->query("ALTER TABLE " . DB_PREFIX . "address ADD company_id varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER company");
+		}
 
-		// 1.5.1
-		$db->query("ALTER TABLE `" . DB_PREFIX . "affiliate` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
-		$db->query("ALTER TABLE `" . DB_PREFIX . "affiliate` MODIFY `approved` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
-		$db->query("ALTER TABLE `" . DB_PREFIX . "banner` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
+		if (!isset($table_data[DB_PREFIX . 'address']['tax_id'])) {
+			$db->query("ALTER TABLE " . DB_PREFIX . "address ADD tax_id varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER company_id");
+		}
+		
+		if (isset($table_data[DB_PREFIX . 'address']['company_no'])) {
+			$db->query("ALTER TABLE " . DB_PREFIX . "address DROP company_no");
+		}
+				
+		if (isset($table_data[DB_PREFIX . 'address']['company_tax'])) {
+			$db->query("ALTER TABLE " . DB_PREFIX . "address DROP company_tax");	
+		}
+			
+		// Affiliate
+		if (!isset($table_data[DB_PREFIX . 'affiliate'])) {
+			$db->query("CREATE TABLE `" . DB_PREFIX . "affiliate` (
+				`affiliate_id` int(11) NOT NULL AUTO_INCREMENT,
+				`firstname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`lastname` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`email` varchar(96) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`telephone` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`fax` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`password` varchar(40) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`company` varchar(32) COLLATE utf8_bin NOT NULL,
+				`website` varchar(255) COLLATE utf8_bin NOT NULL,
+				`address_1` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`address_2` varchar(128) COLLATE utf8_bin NOT NULL,
+				`city` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`postcode` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`country_id` int(11) NOT NULL,
+				`zone_id` int(11) NOT NULL,
+				`code` varchar(64) COLLATE utf8_bin NOT NULL,
+				`commission` decimal(4,2) NOT NULL DEFAULT '0.00',
+				`tax` varchar(64) COLLATE utf8_bin NOT NULL,
+				`payment` varchar(6) COLLATE utf8_bin NOT NULL,
+				`cheque` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`paypal` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`bank_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`bank_branch_number` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`bank_swift_code` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`bank_account_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`bank_account_number` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+				`ip` varchar(40) COLLATE utf8_bin NOT NULL,
+				`status` tinyint(1) NOT NULL,
+				`approved` tinyint(1) NOT NULL,
+				`date_added` datetime NOT NULL,
+				PRIMARY KEY (`affiliate_id`)
+				) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin");	
+		} else {
+			if (isset($table_data[DB_PREFIX . 'affiliate']['company_tax'])) {
+				$db->query("ALTER TABLE `" . DB_PREFIX . "affiliate` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
+			}
+			
+			$db->query("ALTER TABLE `" . DB_PREFIX . "affiliate` MODIFY `approved` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
+			
+			$db->query("ALTER TABLE `oc_affiliate` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' after `password`");				
+		}
+		
+		
+		// Affiliate Transaction		
+		$db->query("DROP TABLE IF EXISTS `oc_affiliate_transaction`;
+			CREATE TABLE `oc_affiliate_transaction` (
+			  `affiliate_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
+			  `affiliate_id` int(11) NOT NULL,
+			  `order_id` int(11) NOT NULL,
+			  `description` text COLLATE utf8_bin NOT NULL,
+			  `amount` decimal(15,4) NOT NULL,
+			  `date_added` datetime NOT NULL,
+			  PRIMARY KEY (`affiliate_transaction_id`)
+			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin");	
+		
+		
+		
+		
+		/*
 		$db->query("ALTER TABLE `" . DB_PREFIX . "category` MODIFY `top` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
-		$db->query("ALTER TABLE `" . DB_PREFIX . "category` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
+		$db->query("ALTER TABLE `" . DB_PREFIX . "category` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");		
+		
+		$db->query("ALTER TABLE `oc_category ADD `left` int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER `parent_id`");
+		$db->query("ALTER TABLE `oc_category ADD `right` int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER `left`");		
+		
 		$db->query("ALTER TABLE `" . DB_PREFIX . "country` MODIFY `postcode_required` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
 		$db->query("ALTER TABLE `" . DB_PREFIX . "country` MODIFY `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT ''");
+		
+		$db->query("ALTER TABLE `" . DB_PREFIX . "customer` MODIFY `newsletter` tinyint(1) NOT NULL DEFAULT '0' COMMENT ''");
+		$db->query("ALTER TABLE `" . DB_PREFIX . "customer` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
+		$db->query("ALTER TABLE `" . DB_PREFIX . "customer` MODIFY `approved` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");				
+		
+		
+
+		$db->query("ALTER TABLE `" . DB_PREFIX . "banner` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
+
+
 		$db->query("ALTER TABLE `" . DB_PREFIX . "coupon` MODIFY `logged` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
 		$db->query("ALTER TABLE `" . DB_PREFIX . "coupon` MODIFY `shipping` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
 		$db->query("ALTER TABLE `" . DB_PREFIX . "coupon` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
 		$db->query("ALTER TABLE `" . DB_PREFIX . "currency` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
-		$db->query("ALTER TABLE `" . DB_PREFIX . "customer` MODIFY `newsletter` tinyint(1) NOT NULL DEFAULT '0' COMMENT ''");
-		$db->query("ALTER TABLE `" . DB_PREFIX . "customer` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
-		$db->query("ALTER TABLE `" . DB_PREFIX . "customer` MODIFY `approved` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
+
 		$db->query("ALTER TABLE `" . DB_PREFIX . "information` MODIFY `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT ''");
 		$db->query("ALTER TABLE `" . DB_PREFIX . "language` MODIFY `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT ''");
 		$db->query("ALTER TABLE `" . DB_PREFIX . "order_history` MODIFY `notify` tinyint(1) NOT NULL DEFAULT '0' COMMENT ''");
@@ -292,9 +407,8 @@ class ModelUpgrade extends Model {
 		$db->query("UPDATE `oc_order` set `payment_method` = replace(`payment_method`, 'AlertPay', 'Payza')");
 		$db->query("UPDATE `oc_order` set `payment_code` = replace(`payment_code`, 'alertpay', 'payza')");
 		
-		$db->query("ALTER TABLE `oc_affiliate` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' after `password`");
-		$db->query("ALTER TABLE `oc_category ADD `left` int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER `parent_id`");
-		$db->query("ALTER TABLE `oc_category ADD `right` int(11) NOT NULL DEFAULT 0 COMMENT '' AFTER `left`");
+		
+
 		$db->query("ALTER TABLE `oc_customer` ADD `salt` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT '' AFTER `password`");
 		$db->query("ALTER TABLE `oc_customer` MODIFY `ip` varchar(40) NOT NULL");
 		$db->query("ALTER TABLE `oc_customer_ip` MODIFY `ip` varchar(40) NOT NULL");
@@ -315,6 +429,7 @@ class ModelUpgrade extends Model {
 		
 		// Sort the categories to take advantage of the nested set model
 		$this->path(0, 0);
+		*/
 	}
 	
 	protected function path($category_id = 0, $level) {

@@ -105,7 +105,13 @@ class ControllerStep3 extends Controller {
 		} else {
 			$this->data['error_db_name'] = '';
 		}
-
+		
+		if (isset($this->error['db_prefix'])) {
+			$this->data['error_db_prefix'] = $this->error['db_prefix'];
+		} else {
+			$this->data['error_db_prefix'] = '';
+		}
+		
 		if (isset($this->error['username'])) {
 			$this->data['error_username'] = $this->error['username'];
 		} else {
@@ -204,6 +210,10 @@ class ControllerStep3 extends Controller {
 			$this->error['db_name'] = 'Database Name required!';
 		}
 		
+		if ($this->request->post['db_prefix'] && !preg_match('/![a-z0-9\_]/', $this->request->post['db_prefix'])) {
+			$this->error['db_prefix'] = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and "_"!';
+		}
+				
 		if ($this->request->post['db_driver'] == 'mysql') {
 			if (!$connection = @mysql_connect($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'])) {
 				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';

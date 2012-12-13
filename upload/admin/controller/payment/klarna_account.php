@@ -188,31 +188,37 @@ class ControllerPaymentKlarnaAccount extends Controller {
     
     private function fetchPClasses($klarnaCountries) {
         $countries = array(
+            
             'NOR' => array(
                 'currency' => 1,
                 'country'  => 164,
                 'language' => 97,
             ),
+            
             'SWE' => array(
                 'currency' => 0,
                 'country'  => 209,
                 'language' => 138,
             ),
+            
             'FIN' => array(
                 'currency' => 2,
                 'country'  => 73,
                 'language' => 101,
             ),
+            
             'DNK' => array(
                 'currency' => 3,
                 'country'  => 59,
                 'language' => 27,
             ),
+            
             'DEU' => array(
                 'currency' => 2,
                 'country'  => 81,
                 'language' => 28,
             ),
+            
             'NLD' => array(
                 'currency' => 2,
                 'country'  => 154,
@@ -268,17 +274,24 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
             $responseString = curl_exec($ch);
             
-            $xmlResponse = simplexml_load_string($responseString);
+            $responseXml = new DOMDocument();
+            $responseXml->loadXML($responseString);
             
-            if (!isset($xmlResponse->params->param->value)) {
+            $xpath = new DOMXPath($responseXml);
+            
+            $nodes = $xpath->query('//methodResponse/params/param/value');
+            
+            if ($nodes->length == 0) {
                 $log = new Log('klarna_account.log');
-                $log->write(sprintf($this->language->get('error_retrive_pclass'), $countryCode));
+                $log->write(sprintf($this->language->get('error_retrieve_pclass'), $countryCode));
                 continue;
             }
             
-            $pclasses = $this->parseResponse($xmlResponse->params->param->value);
+            $pclasses = $this->parseResponse($nodes->item(0)->firstChild, $responseXml);
             
-            foreach($pclasses as $pclass) {
+            while($pclasses) {
+                $pclass = array_slice($pclasses, 0, 10);
+                $pclasses = array_slice($pclasses, 10);
                 
                 $pclass[3] /= 100;
                 $pclass[4] /= 100;
@@ -310,17 +323,16 @@ class ControllerPaymentKlarnaAccount extends Controller {
         $this->model_setting_setting->editSetting('klarna_account', $settings);
     }
     
-    private function parseResponse($xml) {
-        $child = $xml->children();
-        $child = $child[0];
+    private function parseResponse($node, $document) {
+        $child = $node;
 
-        switch ($child->getName()) {
+        switch ($child->nodeName) {
             case 'string':
-                $value = (string) $child;
+                $value = $child->nodeValue;
                 break;
 
             case 'boolean':
-                $value = (string) $child;
+                $value = (string) $child->nodeValue;
 
                 if ($value == '0') {
                     $value = false;
@@ -336,14 +348,19 @@ class ControllerPaymentKlarnaAccount extends Controller {
             case 'int':
             case 'i4':
             case 'i8':
-                $value = (int) $child;
+                $value = (int) $child->nodeValue;
                 break;
 
             case 'array':
                 $value = array();
-
-                foreach ($child->data->value as $val) {
-                    $value[] = $this->parseResponse($val);
+                
+                $xpath = new DOMXPath($document);
+                $entries = $xpath->query('.//array/data/value', $child);
+                
+                for ($i = 0; $i < $entries->length; $i++) {
+                    $entry = $entries->item($i)->firstChild;
+                    
+                    $value[] = $this->parseResponse($entry, $document);
                 }
 
                 break;

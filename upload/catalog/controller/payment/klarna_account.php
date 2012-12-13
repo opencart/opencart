@@ -462,14 +462,15 @@ class ControllerPaymentKlarnaAccount extends Controller {
                 $log->write('Failed to create an invoice for order #' . $orderInfo['order_id'] . '. Message: ' . utf8_encode($match[1]) . ' Code: ' . $match2[1]);
                 $json['error'] = utf8_encode($match[1]); 
             } else {
-                $xml = simplexml_load_string($response);
+                $responseXml = new DOMDocument();
+                $responseXml->loadXML($response);
                 
-                $invoiceNumber = (string) $xml->params->param->value->array->data->value[0]->string;
-                $klarnaOrderStatus = (int) $xml->params->param->value->array->data->value[1]->int;
+                $invoiceNumber = $responseXml->getElementsByTagName('string')->item(0)->nodeValue;
+                $klarnaOrderStatus = $responseXml->getElementsByTagName('int')->item(0)->nodeValue;
 
-                if ($klarnaOrderStatus == 1) {
+                if ($klarnaOrderStatus == '1') {
                     $orderStatus = $this->config->get('klarna_account_accepted_order_status_id');
-                } elseif ($klarnaOrderStatus == 2) {
+                } elseif ($klarnaOrderStatus == '2') {
                     $orderStatus = $this->config->get('klarna_account_pending_order_status_id');
                 } else {
                     $orderStatus = $this->config->get('config_order_status_id');

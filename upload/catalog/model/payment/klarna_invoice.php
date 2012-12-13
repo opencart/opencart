@@ -37,7 +37,7 @@ class ModelPaymentKlarnaInvoice extends Model {
         
         if(!isset($countryToCurrency[$address['iso_code_3']]) || !$this->currency->has($countryToCurrency[$address['iso_code_3']])) {
             $klarnaInvoiceStatus = false;
-        }        
+        }
         
         $method = array();
         

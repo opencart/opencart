@@ -268,17 +268,24 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
             $responseString = curl_exec($ch);
             
-            $xmlResponse = simplexml_load_string($responseString);
+            $responseXml = new DOMDocument();
+            $responseXml->loadXML($responseString);
             
-            if (!isset($xmlResponse->params->param->value)) {
+            $xpath = new DOMXPath($responseXml);
+            
+            $nodes = $xpath->query('//methodResponse/params/param/value');
+            
+            if ($nodes->length == 0) {
                 $log = new Log('klarna_invoice.log');
-                $log->write(sprintf($this->language->get('error_retrive_pclass'), $countryCode));
+                $log->write(sprintf($this->language->get('error_retrieve_pclass'), $countryCode));
                 continue;
             }
             
-            $pclasses = $this->parseResponse($xmlResponse->params->param->value);
+            $pclasses = $this->parseResponse($nodes->item(0)->firstChild, $responseXml);
             
-            foreach($pclasses as $pclass) {
+            while($pclasses) {
+                $pclass = array_slice($pclasses, 0, 10);
+                $pclasses = array_slice($pclasses, 10);
                 
                 $pclass[3] /= 100;
                 $pclass[4] /= 100;
@@ -310,17 +317,16 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         $this->model_setting_setting->editSetting('klarna_invoice', $settings);
     }
     
-    private function parseResponse($xml) {
-        $child = $xml->children();
-        $child = $child[0];
+    private function parseResponse($node, $document) {
+        $child = $node;
 
-        switch ($child->getName()) {
+        switch ($child->nodeName) {
             case 'string':
-                $value = (string) $child;
+                $value = $child->nodeValue;
                 break;
 
             case 'boolean':
-                $value = (string) $child;
+                $value = (string) $child->nodeValue;
 
                 if ($value == '0') {
                     $value = false;
@@ -336,14 +342,19 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             case 'int':
             case 'i4':
             case 'i8':
-                $value = (int) $child;
+                $value = (int) $child->nodeValue;
                 break;
 
             case 'array':
                 $value = array();
-
-                foreach ($child->data->value as $val) {
-                    $value[] = $this->parseResponse($val);
+                
+                $xpath = new DOMXPath($document);
+                $entries = $xpath->query('.//array/data/value', $child);
+                
+                for ($i = 0; $i < $entries->length; $i++) {
+                    $entry = $entries->item($i)->firstChild;
+                    
+                    $value[] = $this->parseResponse($entry, $document);
                 }
 
                 break;

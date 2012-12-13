@@ -45,5 +45,5 @@ $_['help_secret'] = 'Shared secret to use with the Klarna service (provided by K
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify payment Klarna Part Payment!';
-$_['error_retrive_pclass'] = 'Could not retrieve pClass for %s. Please check your credentials for that country';
+$_['error_retrieve_pclass'] = 'Could not retrieve pClass for %s. Please check your credentials for that country';
 $_['error_log_clear'] = 'Error: Log file was not cleared. Please check write permissions for the file';

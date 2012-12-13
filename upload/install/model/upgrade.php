@@ -29,8 +29,6 @@ class ModelUpgrade extends Model {
 				$field_query = $db->query("SHOW COLUMNS FROM `" . $table['Tables_in_' . DB_DATABASE] . "`");
 				
 				foreach ($field_query->rows as $field) {
-					
-					
 					$field_data[$field['Field']] = array(
 						'type' => $field['Field'],
 						'size' => $field['Field']
@@ -41,6 +39,12 @@ class ModelUpgrade extends Model {
 			}
 		}
 		
+		SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE table_name = 'tbl_name'
+AND table_schema = 'db_name'
+AND column_name = 'column_name'
+
 		// Address
 		if (!isset($table_data[DB_PREFIX . 'address']['company_id'])) {
 			$db->query("ALTER TABLE " . DB_PREFIX . "address ADD company_id varchar(32) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER company");

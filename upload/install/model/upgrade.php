@@ -39,11 +39,71 @@ class ModelUpgrade extends Model {
 			}
 		}
 		
-		SELECT COLUMN_NAME
-FROM INFORMATION_SCHEMA.COLUMNS
-WHERE table_name = 'tbl_name'
-AND table_schema = 'db_name'
-AND column_name = 'column_name'
+		
+		// Get all the tables, fields, type and size
+		$table_data = array();
+		
+		$table_query = $db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
+		
+		foreach ($table_query->rows as $table) {
+			if (utf8_substr($table['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+				$field_data = array(); 
+				
+				$field_query = $db->query("SHOW COLUMNS FROM `" . $table['Tables_in_' . DB_DATABASE] . "`");
+				
+				foreach ($field_query->rows as $field) {
+					$start = strpos($field['Type'], '(') + 1;
+					$end = strrpos($field['Type'], ')');
+					
+					if ($start && $end) {  
+						$type = substr($field['Type'], 0, strpos($field['Type'], '('));
+						$size = substr($field['Type'], $start, $end - $start);
+					} else {
+						$type = $field['Type'];
+						$size = '';
+					}	
+							
+					$field_data[$field['Field']] = array(
+						'type' => $type,
+						'size' => $size
+					);
+				}
+				
+				$table_data[$table['Tables_in_' . DB_DATABASE]] = $field_data;
+			}
+		}
+		
+		print_r($table_data);
+
+
+		$tables = array(); 
+		
+		$tables[] = array(
+			'name'  => 'affiliate',
+			'field' => array(
+				array(
+					'name'    => 'affiliate_id',
+					'type'    => 'int',
+					'size'    => 11,
+					'default' => '',
+					'charset' => 'utf8_bin'
+				),
+				array(
+					'name'    => 'firstname',
+					'type'    => 'int',
+					'size'    => 11,
+					'default' => '',
+					'charset' => 'utf8_bin'
+				)
+			),
+			'primary' => array(
+				'affiliate_id'
+			)
+		);
+		
+		foreach ($tables as $table) {
+			
+		}
 
 		// Address
 		if (!isset($table_data[DB_PREFIX . 'address']['company_id'])) {

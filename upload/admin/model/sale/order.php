@@ -755,8 +755,8 @@ class ModelSaleOrder extends Model {
 			$implode[] = "op.product_id = '" . $product_id . "'";
 		}
 				
-		$query = $this->db->query("SELECT COUNT(DISTINCT email) AS total FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_product op ON (o.order_id = op.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0'");
-	
+		$query = $this->db->query("SELECT DISTINCT email FROM " . DB_PREFIX . "order o LEFT JOIN " . DB_PREFIX . "order_product op ON (o.order_id = op.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0' LIMIT " . $start . "," . $end);	
+		
 		return $query->row['total'];
 	}	
 }

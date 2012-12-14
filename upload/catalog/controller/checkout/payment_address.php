@@ -122,12 +122,6 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		}
 				
 		if (!$json) {
-			if (isset($this->request->post['payment_address'])) {
-				$payment_address = $this->request->post['payment_address'];
-			} else {
-				
-			}
-			
 			if (isset($this->request->post['payment_address']) && $this->request->post['payment_address'] == 'existing') {
 				$this->load->model('account/address');
 				

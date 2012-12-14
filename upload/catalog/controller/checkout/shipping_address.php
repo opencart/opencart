@@ -101,7 +101,7 @@ class ControllerCheckoutShippingAddress extends Controller {
 		}
 								
 		if (!$json) {
-			if ($this->request->post['shipping_address'] == 'existing') {
+			if (isset($this->request->post['shipping_address']) && $this->request->post['shipping_address'] == 'existing') {
 				$this->load->model('account/address');
 				
 				if (empty($this->request->post['address_id'])) {

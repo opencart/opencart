@@ -858,8 +858,15 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (240, 'Jersey', 'JE', 'JEY', '', 1, 1),
 (241, 'Guernsey', 'GG', 'GGY', '', 1, 1),
 (242, 'Montenegro', 'ME', 'MNE', '', 0, 1),
-(243, 'Serbia', 'RS', 'SRB', '', 0, 1);
-
+(243, 'Serbia', 'RS', 'SRB', '', 0, 1),
+(244, 'Aaland Islands', 'AX', 'ALA', '', 0, 1),
+(245, 'Bonaire, Sint Eustatius and Saba', 'BQ', 'BES', '', 0, 1),
+(246, 'Curacao', 'CW', 'CUW', '', 0, 1),
+(247, 'Palestinian Territory, Occupied', 'PS', 'PSE', '', 0, 1),
+(248, 'South Sudan', 'SS', 'SSD', '', 0, 1),
+(249, 'St. Barthelemy', 'BL', 'BLM', '', 0, 1),
+(250, 'St. Martin (French part)', 'MF', 'MAF', '', 0, 1),
+(251, 'Canary Islands', 'IC', 'ICA', '', 0, 1);
 -- --------------------------------------------------------
 
 --
@@ -4399,9 +4406,6 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (1088, 72, 'LS', 'Lansi-Suomen Laani', 1),
 (1089, 72, 'LA', 'Lapin Lanani', 1),
 (1090, 72, 'OU', 'Oulun Laani', 1),
-(1091, 73, 'AL', 'Alsace', 1),
-(1092, 73, 'AQ', 'Aquitaine', 1),
-(1093, 73, 'AU', 'Auvergne', 1),
 (1114, 74, '01', 'Ain', 1),
 (1115, 74, '02', 'Aisne', 1),
 (1116, 74, '03', 'Allier', 1),
@@ -6633,7 +6637,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3340, 215, 'DIY', 'Diyarbakir', 1),
 (3341, 215, 'DUZ', 'Düzce', 1),
 (3342, 215, 'EDI', 'Edirne', 1),
-(3343, 215, 'ELA', 'Elazig', 1),
+(3343, 215, 'ELA', 'Elazığ', 1),
 (3344, 215, 'EZC', 'Erzincan', 1),
 (3345, 215, 'EZR', 'Erzurum', 1),
 (3346, 215, 'ESK', 'Eskişehir', 1),
@@ -6653,9 +6657,9 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3360, 215, 'KAS', 'Kastamonu', 1),
 (3361, 215, 'KAY', 'Kayseri', 1),
 (3362, 215, 'KLS', 'Kilis', 1),
-(3363, 215, 'KRK', 'Kirikkale', 1),
-(3364, 215, 'KLR', 'Kirklareli', 1),
-(3365, 215, 'KRH', 'Kirsehir', 1),
+(3363, 215, 'KRK', 'Kırıkkale', 1),
+(3364, 215, 'KLR', 'Kırklareli', 1),
+(3365, 215, 'KRH', 'Kırşehir', 1),
 (3366, 215, 'KOC', 'Kocaeli', 1),
 (3367, 215, 'KON', 'Konya', 1),
 (3368, 215, 'KUT', 'Kütahya', 1),
@@ -7286,8 +7290,20 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (4016, 243, '22', 'Pirot', 1),
 (4017, 243, '23', 'Jablanica', 1),
 (4018, 243, '24', 'Pčinja', 1),
-(4019, 243, 'KM', 'Kosovo', 1);
-
+(4019, 243, 'KM', 'Kosovo', 1),
+(4020, 245, 'BO', 'Bonaire', 1),
+(4021, 245, 'SA', 'Saba', 1),
+(4022, 245, 'SE', 'Sint Eustatius', 1),
+(4023, 248, 'EC', 'Central Equatoria', 1),
+(4024, 248, 'EE', 'Eastern Equatoria', 1),
+(4025, 248, 'JG', 'Jonglei', 1),
+(4026, 248, 'LK', 'Lakes', 1),
+(4027, 248, 'BN', 'Northern Bahr el-Ghazal', 1),
+(4028, 248, 'UY', 'Unity', 1),
+(4029, 248, 'NU', 'Upper Nile', 1),
+(4030, 248, 'WR', 'Warrap', 1),
+(4031, 248, 'BW', 'Western Bahr el-Ghazal', 1),
+(4032, 248, 'EW', 'Western Equatoria', 1);
 -- --------------------------------------------------------
 
 --

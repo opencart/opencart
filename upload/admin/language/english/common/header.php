@@ -15,6 +15,7 @@ $_['text_country']                     = 'Countries';
 $_['text_coupon']                      = 'Coupons';
 $_['text_currency']                    = 'Currencies';
 $_['text_customer']                    = 'Customers';
+$_['text_customer_field']              = 'Customer Fields';
 $_['text_customer_group']              = 'Customer Groups';
 $_['text_customer_blacklist']          = 'IP Blacklist';
 $_['text_dashboard']                   = 'Dashboard';
@@ -22,6 +23,7 @@ $_['text_design']                      = 'Design';
 $_['text_download']                    = 'Downloads';
 $_['text_error_log']                   = 'Error Logs';
 $_['text_extension']                   = 'Extensions';
+
 $_['text_feed']                        = 'Product Feeds';
 $_['text_filter']                      = 'Filters';
 $_['text_front']                       = 'Store Front';

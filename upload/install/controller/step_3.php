@@ -210,7 +210,7 @@ class ControllerStep3 extends Controller {
 			$this->error['db_name'] = 'Database Name required!';
 		}
 		
-		if ($this->request->post['db_prefix'] && !preg_match('/![a-z0-9\_]/', $this->request->post['db_prefix'])) {
+		if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
 			$this->error['db_prefix'] = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and "_"!';
 		}
 				

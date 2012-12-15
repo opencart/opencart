@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']                = 'Settings';
+$_['heading_title']                = 'Stores';
 
 // Text
 $_['text_success']                 = 'Success: You have modified settings!';

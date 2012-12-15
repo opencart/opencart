@@ -303,7 +303,7 @@ class ControllerSaleCoupon extends Controller {
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
-		$this->data['tab_coupon_history'] = $this->language->get('tab_coupon_history');
+		$this->data['tab_history'] = $this->language->get('tab_history');
 
 		$this->data['token'] = $this->session->data['token'];
 	

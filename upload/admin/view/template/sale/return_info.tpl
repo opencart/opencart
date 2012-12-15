@@ -11,7 +11,7 @@
       <div class="buttons"><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <div class="vtabs"><a href="#tab-return"><?php echo $tab_return; ?></a><a href="#tab-product"><?php echo $tab_product; ?></a><a href="#tab-history"><?php echo $tab_return_history; ?></a></div>
+      <div class="vtabs"><a href="#tab-return"><?php echo $tab_return; ?></a><a href="#tab-product"><?php echo $tab_product; ?></a><a href="#tab-history"><?php echo $tab_history; ?></a></div>
       <div id="tab-return" class="vtabs-content">
         <table class="form">
           <tr>

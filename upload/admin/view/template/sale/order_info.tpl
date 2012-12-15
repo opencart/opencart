@@ -15,7 +15,7 @@
         <?php if ($shipping_method) { ?>
         <a href="#tab-shipping"><?php echo $tab_shipping; ?></a>
         <?php } ?>
-        <a href="#tab-product"><?php echo $tab_product; ?></a><a href="#tab-history"><?php echo $tab_order_history; ?></a>
+        <a href="#tab-product"><?php echo $tab_product; ?></a><a href="#tab-history"><?php echo $tab_history; ?></a>
         <?php if ($maxmind_id) { ?>
         <a href="#tab-fraud"><?php echo $tab_fraud; ?></a>
         <?php } ?>

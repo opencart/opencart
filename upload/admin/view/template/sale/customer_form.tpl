@@ -16,7 +16,7 @@
     <div class="content">
       <div id="htabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a>
         <?php if ($customer_id) { ?>
-        <a href="#tab-transaction"><?php echo $tab_transaction; ?></a><a href="#tab-reward"><?php echo $tab_reward; ?></a>
+        <a href="#tab-history"><?php echo $tab_history; ?></a><a href="#tab-transaction"><?php echo $tab_transaction; ?></a><a href="#tab-reward"><?php echo $tab_reward; ?></a>
         <?php } ?>
         <a href="#tab-ip"><?php echo $tab_ip; ?></a></div>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -210,6 +210,18 @@
           <?php } ?>
         </div>
         <?php if ($customer_id) { ?>
+        <div id="tab-history">
+          <div id="history"></div>
+          <table class="form">
+            <tr>
+              <td><?php echo $entry_comment; ?></td>
+              <td><textarea name="comment" cols="40" rows="8" style="width: 99%;"></textarea></td>
+            </tr>
+            <tr>
+              <td colspan="2" style="text-align: right;"><a id="button-history" class="button" onclick="addHistory();"><span><?php echo $button_add_history; ?></span></a></td>
+            </tr>
+          </table>
+        </div>
         <div id="tab-transaction">
           <table class="form">
             <tr>
@@ -429,6 +441,38 @@ function addAddress() {
 }
 //--></script> 
 <script type="text/javascript"><!--
+$('#history .pagination a').live('click', function() {
+	$('#history').load(this.href);
+	
+	return false;
+});			
+
+$('#history').load('index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
+
+$('#button-history').bind('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
+		type: 'post',
+		dataType: 'html',
+		data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
+		beforeSend: function() {
+			$('.success, .warning').remove();
+			$('#button-history').attr('disabled', true);
+			$('#history').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
+		},
+		complete: function() {
+			$('#button-history').attr('disabled', false);
+			$('.attention').remove();
+		},
+		success: function(html) {
+			$('#history').html(html);
+			
+			$('#tab-history input[name=\'comment\']').val('');
+		}
+	});
+});
+//--></script> 
+<script type="text/javascript"><!--
 $('#transaction .pagination a').live('click', function() {
 	$('#transaction').load(this.href);
 	
@@ -437,7 +481,7 @@ $('#transaction .pagination a').live('click', function() {
 
 $('#transaction').load('index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
-function addTransaction() {
+$('#button-transaction').bind('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
 		type: 'post',
@@ -459,7 +503,7 @@ function addTransaction() {
 			$('#tab-transaction input[name=\'description\']').val('');
 		}
 	});
-}
+});
 //--></script> 
 <script type="text/javascript"><!--
 $('#reward .pagination a').live('click', function() {

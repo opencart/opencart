@@ -1071,6 +1071,25 @@ INSERT INTO `oc_customer_group_description` (`customer_group_id`, `language_id`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `oc_customer_history`
+--
+
+DROP TABLE IF EXISTS `oc_customer_history`;
+CREATE TABLE `oc_customer_history` (
+  `customer_history_id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` int(11) NOT NULL,
+  `comment` text COLLATE utf8_bin NOT NULL,
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_history_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_customer_history`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_customer_ip`
 --
 

@@ -905,7 +905,7 @@ class ControllerSaleReturn extends Controller {
 			
 			$this->data['tab_return'] = $this->language->get('tab_return');
 			$this->data['tab_product'] = $this->language->get('tab_product');
-			$this->data['tab_return_history'] = $this->language->get('tab_return_history');
+			$this->data['tab_history'] = $this->language->get('tab_history');
 
 			
 			$url = '';

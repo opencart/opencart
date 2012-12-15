@@ -331,6 +331,30 @@ class ModelSaleCustomer extends Model {
 		
 		return $query->row['total'];
 	}
+
+	public function addHistory($customer_id, $comment) {
+      	$this->db->query("INSERT INTO " . DB_PREFIX . "customer_history SET customer_id = '" . (int)$customer_id . "', comment = '" . $this->db->escape(strip_tags($comment)) . "', date_added = NOW()");
+	}	
+	
+	public function getHistories($customer_id, $start = 0, $limit = 10) { 
+		if ($start < 0) {
+			$start = 0;
+		}
+		
+		if ($limit < 1) {
+			$limit = 10;
+		}	
+		
+		$query = $this->db->query("SELECT comment, date_added FROM " . DB_PREFIX . "customer_history WHERE customer_id = '" . (int)$customer_id . "' ORDER BY date_added DESC LIMIT " . (int)$start . "," . (int)$limit);
+	
+		return $query->rows;
+	}	
+
+	public function getTotalHistories($customer_id) {
+	  	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_history WHERE customer_id = '" . (int)$customer_id . "'");
+
+		return $query->row['total'];
+	}	
 			
 	public function addTransaction($customer_id, $description = '', $amount = '', $order_id = 0) {
 		$customer_info = $this->getCustomer($customer_id);

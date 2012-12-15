@@ -630,19 +630,22 @@ class ControllerSaleCustomer extends Controller {
 		$this->data['entry_zone'] = $this->language->get('entry_zone');
 		$this->data['entry_country'] = $this->language->get('entry_country');
 		$this->data['entry_default'] = $this->language->get('entry_default');
+		$this->data['entry_comment'] = $this->language->get('entry_comment');
+		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_amount'] = $this->language->get('entry_amount');
 		$this->data['entry_points'] = $this->language->get('entry_points');
- 		$this->data['entry_description'] = $this->language->get('entry_description');
  
 		$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
     	$this->data['button_add_address'] = $this->language->get('button_add_address');
+		$this->data['button_add_history'] = $this->language->get('button_add_history');
 		$this->data['button_add_transaction'] = $this->language->get('button_add_transaction');
 		$this->data['button_add_reward'] = $this->language->get('button_add_reward');
     	$this->data['button_remove'] = $this->language->get('button_remove');
 	
 		$this->data['tab_general'] = $this->language->get('tab_general');
 		$this->data['tab_address'] = $this->language->get('tab_address');
+		$this->data['tab_history'] = $this->language->get('tab_history');
 		$this->data['tab_transaction'] = $this->language->get('tab_transaction');
 		$this->data['tab_reward'] = $this->language->get('tab_reward');
 		$this->data['tab_ip'] = $this->language->get('tab_ip');
@@ -1113,6 +1116,63 @@ class ControllerSaleCustomer extends Controller {
 		}
 	}
 	
+	public function history() {
+    	$this->language->load('sale/customer');
+		
+		$this->load->model('sale/customer');
+		
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'sale/customer')) { 
+			$this->model_sale_customer->addHistory($this->request->get['customer_id'], $this->request->post['comment']);
+				
+			$this->data['success'] = $this->language->get('text_success');
+		} else {
+			$this->data['success'] = '';
+		}
+		
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !$this->user->hasPermission('modify', 'sale/customer')) {
+			$this->data['error_warning'] = $this->language->get('error_permission');
+		} else {
+			$this->data['error_warning'] = '';
+		}		
+		
+		$this->data['text_no_results'] = $this->language->get('text_no_results');
+		
+		$this->data['column_date_added'] = $this->language->get('column_date_added');
+		$this->data['column_comment'] = $this->language->get('column_comment');
+		
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}  
+		
+		$this->data['histories'] = array();
+			
+		$results = $this->model_sale_customer->getHistories($this->request->get['customer_id'], ($page - 1) * 10, 10);
+      		
+		foreach ($results as $result) {
+        	$this->data['histories'][] = array(
+				'comment'     => $result['comment'],
+        		'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+        	);
+      	}			
+		
+		$transaction_total = $this->model_sale_customer->getTotalHistories($this->request->get['customer_id']);
+			
+		$pagination = new Pagination();
+		$pagination->total = $transaction_total;
+		$pagination->page = $page;
+		$pagination->limit = 10; 
+		$pagination->text = $this->language->get('text_pagination');
+		$pagination->url = $this->url->link('sale/customer/history', 'token=' . $this->session->data['token'] . '&customer_id=' . $this->request->get['customer_id'] . '&page={page}', 'SSL');
+			
+		$this->data['pagination'] = $pagination->render();
+
+		$this->template = 'sale/customer_history.tpl';		
+		
+		$this->response->setOutput($this->render());
+	}
+		
 	public function transaction() {
     	$this->language->load('sale/customer');
 		

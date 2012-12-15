@@ -1020,6 +1020,26 @@ CREATE TABLE `oc_customer` (
 -- Dumping data for table `oc_customer`
 --
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_field`
+--
+
+DROP TABLE IF EXISTS `oc_customer_field`;
+CREATE TABLE `oc_customer_field` (
+  `customer_id` int(11) NOT NULL,
+  `custom_field_id` int(11) NOT NULL,
+  `custom_field_value_id` int(11) NOT NULL,
+  `name` int(128) NOT NULL,
+  `value` text COLLATE utf8_bin NOT NULL,
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`customer_id`,`custom_field_id`,`custom_field_value_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_customer_field`
+--
 
 -- --------------------------------------------------------
 
@@ -1177,6 +1197,98 @@ CREATE TABLE `oc_customer_transaction` (
 
 --
 -- Dumping data for table `oc_customer_transaction`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_custom_field`
+--
+
+DROP TABLE IF EXISTS `oc_custom_field`;
+CREATE TABLE `oc_custom_field` (
+  `custom_field_id` int(11) NOT NULL AUTO_INCREMENT,
+  `location` varchar(32) COLLATE utf8_bin NOT NULL,
+  `type` varchar(32) COLLATE utf8_bin NOT NULL,
+  `value` text COLLATE utf8_bin NOT NULL,
+  `required` tinyint(1) NOT NULL,
+  `position` int(3) NOT NULL,
+  PRIMARY KEY (`custom_field_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_custom_field`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_custom_field_description`
+--
+
+DROP TABLE IF EXISTS `oc_custom_field_description`;
+CREATE TABLE `oc_custom_field_description` (
+  `custom_field_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(128) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`custom_field_id`,`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_custom_field_description`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_custom_field_to_customer_group`
+--
+
+DROP TABLE IF EXISTS `oc_custom_field_to_customer_group`;
+CREATE TABLE `oc_custom_field_to_customer_group` (
+  `custom_field_id` int(11) NOT NULL,
+  `customer_group_id` int(11) NOT NULL,
+  PRIMARY KEY (`custom_field_id`,`customer_group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_custom_field_to_customer_group`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_custom_field_value`
+--
+
+DROP TABLE IF EXISTS `oc_custom_field_value`;
+CREATE TABLE `oc_custom_field_value` (
+  `custom_field_value_id` int(11) NOT NULL AUTO_INCREMENT,
+  `custom_field_id` int(11) NOT NULL,
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`custom_field_value_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_custom_field_value`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_custom_field_value_description`
+--
+
+DROP TABLE IF EXISTS `oc_custom_field_value_description`;
+CREATE TABLE `oc_custom_field_value_description` (
+  `custom_field_value_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `custom_field_id` int(11) NOT NULL,
+  `name` varchar(128) COLLATE utf8_bin NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_custom_field_value_description`
 --
 
 -- --------------------------------------------------------
@@ -1935,6 +2047,26 @@ CREATE TABLE `oc_order_fraud` (
   PRIMARY KEY (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_field`
+--
+
+DROP TABLE IF EXISTS `oc_order_field`;
+CREATE TABLE `oc_order_field` (
+  `order_id` int(11) NOT NULL,
+  `custom_field_id` int(11) NOT NULL,
+  `custom_field_value_id` int(11) NOT NULL,
+  `name` int(128) NOT NULL,
+  `value` text COLLATE utf8_bin NOT NULL,
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`order_id`,`custom_field_id`,`custom_field_value_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `oc_order_field`
+--
 
 -- --------------------------------------------------------
 

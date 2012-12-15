@@ -1221,7 +1221,7 @@ class ControllerSaleOrder extends Controller {
       		$this->error['payment_country'] = $this->language->get('error_country');
     	}
 		
-    	if ($this->request->post['payment_zone_id'] == '') {
+    	if (!isset($this->request->post['payment_zone_id']) || $this->request->post['payment_zone_id'] == '') {
       		$this->error['payment_zone'] = $this->language->get('error_zone');
     	}	
 		
@@ -1277,7 +1277,7 @@ class ControllerSaleOrder extends Controller {
 				$this->error['shipping_country'] = $this->language->get('error_country');
 			}
 			
-			if ($this->request->post['shipping_zone_id'] == '') {
+			if (!isset($this->request->post['shipping_zone_id']) || $this->request->post['shipping_zone_id'] == '') {
 				$this->error['shipping_zone'] = $this->language->get('error_zone');
 			}
 			

@@ -289,7 +289,7 @@ class ControllerCheckoutManual extends Controller {
 					$json['error']['shipping']['country'] = $this->language->get('error_country');
 				}
 				
-				if ($this->request->post['shipping_zone_id'] == '') {
+				if (!isset($this->request->post['shipping_zone_id']) || $this->request->post['shipping_zone_id'] == '') {
 					$json['error']['shipping']['zone'] = $this->language->get('error_zone');
 				}
 							
@@ -472,7 +472,7 @@ class ControllerCheckoutManual extends Controller {
 				$json['error']['payment']['country'] = $this->language->get('error_country');
 			}
 			
-			if ($this->request->post['payment_zone_id'] == '') {
+			if (!isset($this->request->post['payment_zone_id']) || $this->request->post['payment_zone_id'] == '') {
 				$json['error']['payment']['zone'] = $this->language->get('error_zone');
 			}		
 			

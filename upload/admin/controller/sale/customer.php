@@ -1021,7 +1021,7 @@ class ControllerSaleCustomer extends Controller {
 					$this->error['address_country'][$key] = $this->language->get('error_country');
 				}
 				
-				if ($value['zone_id'] == '') {
+				if (!isset($value['zone_id']) || $value['zone_id'] == '') {
 					$this->error['address_zone'][$key] = $this->language->get('error_zone');
 				}	
 			}

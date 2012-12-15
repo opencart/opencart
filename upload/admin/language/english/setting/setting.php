@@ -84,7 +84,7 @@ $_['entry_image_compare']          = 'Compare Image Size:';
 $_['entry_image_wishlist']         = 'Wish List Image Size:';
 $_['entry_image_cart']             = 'Cart Image Size:';
 $_['entry_ftp_host']               = 'FTP Host:';
-$_['entry_ftp_port']               = 'FTP Post:';
+$_['entry_ftp_port']               = 'FTP Port:';
 $_['entry_ftp_username']           = 'FTP Username:';
 $_['entry_ftp_password']           = 'FTP Password:';
 $_['entry_ftp_root']               = 'FTP Root:<span class="help">The directory your opencart installation is stored in normally \'public_html/\'.</span>';

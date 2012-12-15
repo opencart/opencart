@@ -296,7 +296,7 @@
                 <td class="left"><?php echo $order_product['model']; ?>
                   <input type="hidden" name="order_product[<?php echo $product_row; ?>][model]" value="<?php echo $order_product['model']; ?>" /></td>
                 <td class="right"><?php echo $order_product['quantity']; ?>
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
+                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>                 
                 <td class="right"><?php echo $order_product['price']; ?>
                   <input type="hidden" name="order_product[<?php echo $product_row; ?>][price]" value="<?php echo $order_product['price']; ?>" /></td>
                 <td class="right"><?php echo $order_product['total']; ?>
@@ -329,7 +329,7 @@
               <tr>
                 <td class="left"><?php echo $entry_quantity; ?></td>
                 <td class="left"><input type="text" name="quantity" value="1" /></td>
-              </tr>
+              </tr>             
             </tbody>
             <tfoot>
               <tr>
@@ -520,7 +520,7 @@
                   <?php if ($error_payment_method) { ?>
                   <span class="error"><?php echo $error_payment_method; ?></span>
                   <?php } ?></td>
-              </tr>
+              </tr>             
               <tr>
                 <td class="left"><?php echo $entry_coupon; ?></td>
                 <td class="left"><input type="text" name="coupon" value="" /></td>
@@ -1522,7 +1522,7 @@ $('#button-product, #button-voucher, #button-update').live('click', function() {
 				$('#total').html(html);
 			} else {
 				html  = '</tr>';
-				html += '  <td colspan="6" class="center"><?php echo $text_no_results; ?></td>';
+				html += '  <td colspan="5" class="center"><?php echo $text_no_results; ?></td>';
 				html += '</tr>';	
 
 				$('#total').html(html);					

@@ -75,7 +75,12 @@ class ModelUpgrade extends Model {
 		
 		print_r($table_data);
 
-
+		$contents = file_get_contents();
+		
+		explode('', $contents);
+		
+		foreach 
+		
 		$tables = array(); 
 		
 		$tables[] = array(
@@ -96,9 +101,8 @@ class ModelUpgrade extends Model {
 					'charset' => 'utf8_bin'
 				)
 			),
-			'primary' => array(
-				'affiliate_id'
-			)
+			'primary'       =>'affiliate_id',
+			'autoincrement' => true
 		);
 		
 		foreach ($tables as $table) {

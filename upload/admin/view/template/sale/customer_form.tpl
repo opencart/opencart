@@ -218,7 +218,7 @@
               <td><textarea name="comment" cols="40" rows="8" style="width: 99%;"></textarea></td>
             </tr>
             <tr>
-              <td colspan="2" style="text-align: right;"><a id="button-history" class="button" onclick="addHistory();"><span><?php echo $button_add_history; ?></span></a></td>
+              <td colspan="2" style="text-align: right;"><a id="button-history" class="button"><span><?php echo $button_add_history; ?></span></a></td>
             </tr>
           </table>
         </div>
@@ -463,6 +463,7 @@ $('#button-history').bind('click', function() {
 		complete: function() {
 			$('#button-history').attr('disabled', false);
 			$('.attention').remove();
+      $('#tab-history textarea[name=\'comment\']').val('');
 		},
 		success: function(html) {
 			$('#history').html(html);

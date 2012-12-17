@@ -121,15 +121,16 @@ label {
 	background-repeat:no-repeat;
 }
 #menu > ul li ul ul {
-	margin: -27px 0 0 157px;
+	margin: -29px 0 0 161px;
 }
 #menu > ul li li a {
 	padding: 5px;
+	margin: 1px;
 	color: #FFFFFF;	
-	width: 145px;
+	width: 147px;
 }
 #menu > ul li li > a:hover {
-	padding: 4px;
+	margin: 0px;
 	border: 1px solid #BD4C14;
 	background-color: #391706; 
 }

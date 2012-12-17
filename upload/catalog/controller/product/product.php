@@ -655,7 +655,58 @@ class ControllerProductProduct extends Controller {
 			if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 64)) {
         		$json['error'] = $this->language->get('error_filename');
 	  		}	  	
-			
+
+			// Allowed File types
+		    $allowed = array(
+				// Text files
+				'txt'  => 'text/plain',
+				
+				// Images
+				'png'  => 'image/png',
+				'jpe'  => 'image/jpeg',
+				'jpeg' => 'image/jpeg',
+				'jpg'  => 'image/jpeg',
+				'gif'  => 'image/gif',
+				'bmp'  => 'image/bmp',
+				'ico'  => 'image/vnd.microsoft.icon',
+				'tiff' => 'image/tiff',
+				'tif'  => 'image/tiff',
+				'svg'  => 'image/svg+xml',
+				'svgz' => 'image/svg+xml',
+	
+				// Archives
+				'zip'  => 'application/zip',
+				'rar'  => 'application/x-rar-compressed',
+				'msi'  => 'application/x-msdownload',
+				'cab'  => 'application/vnd.ms-cab-compressed',
+	
+				// Audio/Video
+				'mp3'  => 'audio/mpeg',
+				'qt'   => 'video/quicktime',
+				'mov'  => 'video/quicktime',
+	
+				// Adobe
+				'pdf'  => 'application/pdf',
+				'psd'  => 'image/vnd.adobe.photoshop',
+				'ai'   => 'application/postscript',
+				'eps'  => 'application/postscript',
+				'ps'   => 'application/postscript',
+	
+				// MS Office
+				'doc'  => 'application/msword',
+				'rtf'  => 'application/rtf',
+				'xls'  => 'application/vnd.ms-excel',
+				'ppt'  => 'application/vnd.ms-powerpoint',
+	
+				// Open Office
+				'odt'  => 'application/vnd.oasis.opendocument.text',
+				'ods'  => 'application/vnd.oasis.opendocument.spreadsheet'
+		    );
+				
+			if (!in_array($this->request->files['file']['type'], array_values($allowed))) {
+				$json['error'] = 'Incorrect file type!';
+			}
+						
 			$allowed = array();
 			
 			$filetypes = explode(',', $this->config->get('config_upload_allowed'));

@@ -3,48 +3,6 @@ class ModelUpgrade extends Model {
 	public function mysql() {
 		// Upgrade script to opgrade opencart to the latst version. 
 		// Oldest version supported is 1.3.2
-		$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-		
-		// Settings
-		$query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0' ORDER BY store_id ASC");
-
-		foreach ($query->rows as $setting) {
-			if (!$setting['serialized']) {
-				$settings[$setting['key']] = $setting['value'];
-			} else {
-				$settings[$setting['key']] = unserialize($setting['value']);
-			}
-		}
-		/*
-		// Get all current tables, fields, type, size, etc..
-		$table_data = array();
-		
-		$table_query = $db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
-		
-		foreach ($table_query->rows as $table) {
-			if (utf8_substr($table['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
-				$field_data = array(); 
-				
-				$field_query = $db->query("SHOW COLUMNS FROM `" . $table['Tables_in_' . DB_DATABASE] . "`");
-				
-				foreach ($field_query->rows as $field) {
-					preg_match('/\((.*)\)/', $field['Type'], $match);
-					
-					$field_data[$field['Field']] = array(
-						'name'    => $field['Field'],
-						'type'    => preg_replace('/\(.*\)/', '', $field['Type']),
-						'size'    => isset($match[1]) ? $match[1] : '',
-						'null'    => $field['Null'],
-						'key'     => $field['Key'],
-						'default' => $field['Default'],
-						'extra'   => $field['Extra']
-					);
-				}
-				
-				$table_data[$table['Tables_in_' . DB_DATABASE]] = $field_data;
-			}
-		}		
-		*/
 		
 		// Load the sql file
 		$file = DIR_APPLICATION . 'opencart.sql';
@@ -78,70 +36,76 @@ class ModelUpgrade extends Model {
 				$status = false;
 			}
 		}
+		
+		$table_new_data = array();
+				
+		// Trim any spaces
+		$string = trim($string);
+		
+		// Trim any ;
+		$string = trim($string, ';');
 			
 		// Start reading each create statement
-		$queries = explode(';', $string);
+		$statements = explode(';', $string);
 		
-		foreach ($queries as $query) {
-			//echo $query . "\n";
-			
+		foreach ($statements as $sql) {
 			// Get all fields		
 			$field_data = array();
 			
-			preg_match_all('#`(\w[\w\d]*)`\s+((tinyint|smallint|mediumint|int|bigint|tinytext|text|mediumtext|longtext|tinyblob|blob|mediumblob|longblob|varchar|char|date|datetime|float|double|decimal|timestamp|time|year|enum|set|binary|varbinary)(\((\d+)(,\s*(\d+))?\))?){1}\s*(collate (\w+)\s*)?(unsigned\s*)?((NOT\s*NULL\s*)|(NULL\s*))?(auto_increment\s*)?(default \'([^\']*)\'\s*)?#i', $query, $fields);
+			preg_match_all('#`(\w[\w\d]*)`\s+((tinyint|smallint|mediumint|bigint|int|tinytext|text|mediumtext|longtext|tinyblob|blob|mediumblob|longblob|varchar|char|datetime|date|float|double|decimal|timestamp|time|year|enum|set|binary|varbinary)(\((\d+)(,\s*(\d+))?\))?){1}\s*(collate (\w+)\s*)?(unsigned\s*)?((NOT\s*NULL\s*)|(NULL\s*))?(auto_increment\s*)?(default \'([^\']*)\'\s*)?#i', $sql, $match);
 
-			foreach($fields[0] as $key => $fielddata){
-				$field_data[$fields[1][$key]] = array(
-					'name'          => trim($fields[1][$key]),
-					'type'          => trim($fields[3][$key]),
-					'size'          => trim($fields[5][$key]),
-					'sizeext'       => trim($fields[8][$key]),
-					'collation'     => trim($fields[9][$key]),
-					'unsigned'      => trim($fields[10][$key]),
-					'notnull'       => trim($fields[11][$key]),
-					'autoincrement' => trim($fields[14][$key]),
-					'default'       => trim($fields[16][$key]),
+			foreach(array_keys($match[0]) as $key) {
+				$field_data[$match[1][$key]] = array(
+					'name'          => trim($match[1][$key]),
+					'type'          => trim($match[3][$key]),
+					'size'          => trim($match[5][$key]),
+					'sizeext'       => trim($match[8][$key]),
+					'collation'     => trim($match[9][$key]),
+					'unsigned'      => trim($match[10][$key]),
+					'notnull'       => trim($match[11][$key]),
+					'autoincrement' => trim($match[14][$key]),
+					'default'       => trim($match[16][$key]),
 				);
 			}
 						
 			// Get primary keys
 			$primary_data = array();
 			
-			preg_match('#primary\s*key\s*\([^)]+\)#i', $query, $primarykeydefinition);
+			preg_match('#primary\s*key\s*\([^)]+\)#i', $sql, $match);
 			
-			if (isset($primarykeydefinition[0])) { 
-				preg_match_all('#`(\w[\w\d]*)`#', $primarykeydefinition[0], $primarykeydefinition); 
+			if (isset($match[0])) { 
+				preg_match_all('#`(\w[\w\d]*)`#', $match[0], $match); 
 			} else{ 
-				$primarykeydefition = array();
+				$match = array();	
 			}
 			
-			if (count($primarykeydefinition) > 0){
-				foreach($primarykeydefinition[1] as $fieldkey => $field){
-					$primary_data[] = $field;
+			if ($match) {
+				foreach($match[1] as $primary){
+					$primary_data[] = $primary;
 				}
 			}
 			
 			// Get indexes
 			$index_data = array();
 			
-			$keys = array();
+			$indexes = array();
 			
-			preg_match_all('#key\s*`\w[\w\d]*`\s*\(.*\)#i', $query, $keydefinition);
+			preg_match_all('#key\s*`\w[\w\d]*`\s*\(.*\)#i', $sql, $match);
 
-			foreach($keydefinition[0] as $key){
-				preg_match_all('#`(\w[\w\d]*)`#', $key, $keydef);
+			foreach($match[0] as $key) {
+				preg_match_all('#`(\w[\w\d]*)`#', $key, $match);
 				
-				$keys[] = $keydef;
+				$indexes[] = $match;
 			}
 			
-			foreach($keys as $keycollection){
-				$indexkey = '';
+			foreach($indexes as $index){
+				$key = '';
 				
-				foreach($keycollection[1] as $key => $name){
-					if ($indexkey == ''){
-						$indexkey = $name;
+				foreach($index[1] as $field) {
+					if ($key == '') {
+						$key = $field;
 					} else{
-						$index_data[$indexkey][] = $name;
+						$index_data[$key][] = $field;
 					}
 				}
 			}			
@@ -149,30 +113,151 @@ class ModelUpgrade extends Model {
 			// Table options
 			$option_data = array();
 			
-			preg_match_all('#(\w+)=(\w+)#', $query, $option);
+			preg_match_all('#(\w+)=(\w+)#', $sql, $option);
 			
-			foreach($option[0] as $key => $optiondata){
+			foreach(array_keys($option[0]) as $key) {
 				$option_data[$option[1][$key]] = $option[2][$key];
 			}
 
 			// Get Table Name
-			preg_match_all('#create\s*table\s*`(\w[\w\d]*)`#i', $query, $tablename);
+			preg_match_all('#create\s*table\s*`(\w[\w\d]*)`#i', $sql, $table);
 			
-			if (isset($tablename[1][0])) {
-				$table_data[] = array(
-					'name'    => $tablename[1][0],
+			if (isset($table[1][0])) {
+				$table_new_data[] = array(
+					'sql'     => $sql,
+					'name'    => $table[1][0],
 					'field'   => $field_data,
 					'primary' => $primary_data,
 					'index'   => $index_data,
-					'option'  => $option_data,
+					'option'  => $option_data
 				);
 			}
 		}
+
+		//$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+		$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, 'opencart_test');
+
+		// Get all current tables, fields, type, size, etc..
+		$table_old_data = array();
 		
-		//print_r($table_data);
-			
+		$table_query = $db->query("SHOW TABLES FROM `" . 'opencart_test' . "`");
+				
+		foreach ($table_query->rows as $table) {
+			if (utf8_substr($table['Tables_in_' . 'opencart_test'], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+				$field_data = array(); 
+				
+				$field_query = $db->query("SHOW COLUMNS FROM `" . $table['Tables_in_' . 'opencart_test'] . "`");
+				
+				foreach ($field_query->rows as $field) {
+					preg_match('/\((.*)\)/', $field['Type'], $match);
+					
+					$field_data[$field['Field']] = array(
+						'name'    => $field['Field'],
+						'type'    => preg_replace('/\(.*\)/', '', $field['Type']),
+						'size'    => isset($match[1]) ? $match[1] : '',
+						'null'    => $field['Null'],
+						'key'     => $field['Key'],
+						'default' => $field['Default'],
+						'extra'   => $field['Extra']
+					);
+				}
+				
+				$table_old_data[$table['Tables_in_' . 'opencart_test']] = $field_data;
+			}
+		}
+						
+		foreach ($table_new_data as $table) {
+			// If table is not found create it
+			if (!isset($table_old_data[$table['name']])) {
+				//$db->query($table['sql']);
+				
+				echo $table['sql'] . "\n\n";
+			} else {
+				foreach ($table['field'] as $field) {
+					// If field is not found create it
+					if (!isset($table_old_data[$table['name']][$field['name']])) {
+						$sql = "ALTER TABLE `" . $table['name'] . "` ADD `" . $field['name'] . "` " . $field['type'];
+						
+						if ($field['size']) {
+							$sql .= "(" . $field['size'] . ")";
+						}
+						
+						if ($field['collation']) {
+							$sql .= " " . $field['collation'];
+						}
+						 
+						if ($field['notnull']) {
+							$sql .= " " . $field['notnull'];
+						}
+						
+						if ($field['default']) {
+							$sql .= " DEFAULT '" . $field['default'] . "'";
+						}
+						
+						if ($field['autoincrement']) {
+							$sql .= " AUTO_INCREMENT";
+						}
+						
+						//$db->query($sql);
+												
+						echo $sql . "\n";
+					} else {
+						$sql = "ALTER TABLE `" . $table['name'] . "` MODIFY `" . $field['name'] . "`";
+						
+						
+						
+						
+						if ($field['type'] != $table_old_data[$table['name']][$field['name']]['type'] || $field['size']) {
+							$sql .= " " . $field['type'];
+							
+							echo $field['type'];
+							
+							
+							print_r($table_old_data[$table['name']][$field['name']]);
+									
+							if ($field['size']) {
+								$sql .= "(" . $field['size'] . ")";
+							}	
+																			
+							//(1) NOT NULL DEFAULT '1' COMMENT '';
+						}
+						
+						
+
+						
+						/*
+						'name'          => trim($match[1][$key]),
+						'type'          => trim($match[3][$key]),
+						'size'          => trim($match[5][$key]),
+						'sizeext'       => trim($match[8][$key]),
+						'collation'     => trim($match[9][$key]),
+						'unsigned'      => trim($match[10][$key]),
+						'notnull'       => trim($match[11][$key]),
+						'autoincrement' => trim($match[14][$key]),
+						'default'       => trim($match[16][$key]),
+						*/						
+						
+						//$db->query($sql);
+												
+						echo $sql . "\n";
+					}
+				}
+			}
+		}
 		
-		
+		/*
+		// Settings
+		$query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0' ORDER BY store_id ASC");
+
+		foreach ($query->rows as $setting) {
+			if (!$setting['serialized']) {
+				$settings[$setting['key']] = $setting['value'];
+			} else {
+				$settings[$setting['key']] = unserialize($setting['value']);
+			}
+		}
+		*/
+				
 		// We can do all the SQL changes here
 		
 		// ALTER TABLE  `oc_custom_field_value_description` ADD PRIMARY KEY (`custom_field_value_id`, `language_id`);

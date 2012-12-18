@@ -34,7 +34,9 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_currency'] = $this->language->get('text_currency');			
 		$this->data['text_customer'] = $this->language->get('text_customer');
 		$this->data['text_customer_group'] = $this->language->get('text_customer_group');
+		$this->data['text_customer_field'] = $this->language->get('text_customer_field');
 		$this->data['text_customer_blacklist'] = $this->language->get('text_customer_blacklist');
+		$this->data['text_custom_field'] = $this->language->get('text_custom_field');
 		$this->data['text_sale'] = $this->language->get('text_sale');
 		$this->data['text_design'] = $this->language->get('text_design');
 		$this->data['text_documentation'] = $this->language->get('text_documentation');
@@ -119,8 +121,10 @@ class ControllerCommonHeader extends Controller {
 			$this->data['coupon'] = $this->url->link('sale/coupon', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['currency'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['customer'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['customer_fields'] = $this->url->link('sale/customer_field', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['customer_group'] = $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['customer_blacklist'] = $this->url->link('sale/customer_blacklist', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['custom_field'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['download'] = $this->url->link('catalog/download', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['error_log'] = $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['feed'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL');	

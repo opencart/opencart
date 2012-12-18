@@ -11,12 +11,12 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/customer.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <div id="htabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a>
         <?php if ($customer_id) { ?>
-        <a href="#tab-transaction"><?php echo $tab_transaction; ?></a><a href="#tab-reward"><?php echo $tab_reward; ?></a>
+        <a href="#tab-history"><?php echo $tab_history; ?></a><a href="#tab-transaction"><?php echo $tab_transaction; ?></a><a href="#tab-reward"><?php echo $tab_reward; ?></a>
         <?php } ?>
         <a href="#tab-ip"><?php echo $tab_ip; ?></a></div>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -210,6 +210,18 @@
           <?php } ?>
         </div>
         <?php if ($customer_id) { ?>
+        <div id="tab-history">
+          <div id="history"></div>
+          <table class="form">
+            <tr>
+              <td><?php echo $entry_comment; ?></td>
+              <td><textarea name="comment" cols="40" rows="8" style="width: 99%;"></textarea></td>
+            </tr>
+            <tr>
+              <td colspan="2" style="text-align: right;"><a id="button-history" class="button"><span><?php echo $button_add_history; ?></span></a></td>
+            </tr>
+          </table>
+        </div>
         <div id="tab-transaction">
           <table class="form">
             <tr>
@@ -257,8 +269,8 @@
               <?php if ($ips) { ?>
               <?php foreach ($ips as $ip) { ?>
               <tr>
-                <td class="left"><a onclick="window.open('http://www.geoiptool.com/en/?IP=<?php echo $ip['ip']; ?>');"><?php echo $ip['ip']; ?></a></td>
-                <td class="right"><a onclick="window.open('<?php echo $ip['filter_ip']; ?>');"><?php echo $ip['total']; ?></a></td>
+                <td class="left"><a href="http://www.geoiptool.com/en/?IP=<?php echo $ip['ip']; ?>" target="_blank"><?php echo $ip['ip']; ?></a></td>
+                <td class="right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
                 <td class="left"><?php echo $ip['date_added']; ?></td>
                 <td class="right"><?php if ($ip['blacklist']) { ?>
                   <b>[</b> <a id="<?php echo str_replace('.', '-', $ip['ip']); ?>" onclick="removeBlacklist('<?php echo $ip['ip']; ?>');"><?php echo $text_remove_blacklist; ?></a> <b>]</b>
@@ -308,44 +320,46 @@ $('select[name=\'customer_group_id\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 function country(element, index, zone_id) {
-	$.ajax({
-		url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('select[name=\'address[' + index + '][country_id]\']').after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
-		},
-		complete: function() {
-			$('.wait').remove();
-		},			
-		success: function(json) {
-			if (json['postcode_required'] == '1') {
-				$('#postcode-required' + index).show();
-			} else {
-				$('#postcode-required' + index).hide();
-			}
-			
-			html = '<option value=""><?php echo $text_select; ?></option>';
-			
-			if (json['zone'] != '') {
-				for (i = 0; i < json['zone'].length; i++) {
-        			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-	    			
-					if (json['zone'][i]['zone_id'] == zone_id) {
-	      				html += ' selected="selected"';
-	    			}
-	
-	    			html += '>' + json['zone'][i]['name'] + '</option>';
+  if (element.value != '') {
+		$.ajax({
+			url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
+			dataType: 'json',
+			beforeSend: function() {
+				$('select[name=\'address[' + index + '][country_id]\']').after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
+			},
+			complete: function() {
+				$('.wait').remove();
+			},			
+			success: function(json) {
+				if (json['postcode_required'] == '1') {
+					$('#postcode-required' + index).show();
+				} else {
+					$('#postcode-required' + index).hide();
 				}
-			} else {
-				html += '<option value="0"><?php echo $text_none; ?></option>';
+				
+				html = '<option value=""><?php echo $text_select; ?></option>';
+				
+				if (json['zone'] != '') {
+					for (i = 0; i < json['zone'].length; i++) {
+						html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+						
+						if (json['zone'][i]['zone_id'] == zone_id) {
+							html += ' selected="selected"';
+						}
+		
+						html += '>' + json['zone'][i]['name'] + '</option>';
+					}
+				} else {
+					html += '<option value="0"><?php echo $text_none; ?></option>';
+				}
+				
+				$('select[name=\'address[' + index + '][zone_id]\']').html(html);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-			
-			$('select[name=\'address[' + index + '][zone_id]\']').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+		});
+	}
 }
 
 $('select[name$=\'[country_id]\']').trigger('change');
@@ -427,6 +441,39 @@ function addAddress() {
 }
 //--></script> 
 <script type="text/javascript"><!--
+$('#history .pagination a').live('click', function() {
+	$('#history').load(this.href);
+	
+	return false;
+});			
+
+$('#history').load('index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
+
+$('#button-history').bind('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
+		type: 'post',
+		dataType: 'html',
+		data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
+		beforeSend: function() {
+			$('.success, .warning').remove();
+			$('#button-history').attr('disabled', true);
+			$('#history').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
+		},
+		complete: function() {
+			$('#button-history').attr('disabled', false);
+			$('.attention').remove();
+      $('#tab-history textarea[name=\'comment\']').val('');
+		},
+		success: function(html) {
+			$('#history').html(html);
+			
+			$('#tab-history input[name=\'comment\']').val('');
+		}
+	});
+});
+//--></script> 
+<script type="text/javascript"><!--
 $('#transaction .pagination a').live('click', function() {
 	$('#transaction').load(this.href);
 	
@@ -435,7 +482,7 @@ $('#transaction .pagination a').live('click', function() {
 
 $('#transaction').load('index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
-function addTransaction() {
+$('#button-transaction').bind('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
 		type: 'post',
@@ -457,7 +504,7 @@ function addTransaction() {
 			$('#tab-transaction input[name=\'description\']').val('');
 		}
 	});
-}
+});
 //--></script> 
 <script type="text/javascript"><!--
 $('#reward .pagination a').live('click', function() {

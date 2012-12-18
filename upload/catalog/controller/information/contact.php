@@ -172,7 +172,7 @@ class ControllerInformationContact extends Controller {
  		$this->response->setOutput($this->render()); 
 	}
 	
-  	private function validate() {
+  	protected function validate() {
     	if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
       		$this->error['name'] = $this->language->get('error_name');
     	}

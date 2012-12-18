@@ -609,7 +609,7 @@ class ControllerAccountReturn extends Controller {
  		$this->response->setOutput($this->render()); 
 	}
 		
-  	private function validate() {
+  	protected function validate() {
     	if (!$this->request->post['order_id']) {
       		$this->error['order_id'] = $this->language->get('error_order_id');
     	}

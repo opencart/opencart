@@ -110,7 +110,7 @@ class ControllerLocalisationTaxRate extends Controller {
 		$this->getList();
 	}
 
-	private function getList() {
+	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -273,7 +273,7 @@ class ControllerLocalisationTaxRate extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function getForm() {
+	protected function getForm() {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['text_percent'] = $this->language->get('text_percent');	
@@ -403,7 +403,7 @@ class ControllerLocalisationTaxRate extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validateForm() {
+	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'localisation/tax_rate')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -423,7 +423,7 @@ class ControllerLocalisationTaxRate extends Controller {
 		}
 	}
 
-	private function validateDelete() {
+	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'localisation/tax_rate')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

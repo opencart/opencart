@@ -147,7 +147,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 	 * 
 	 * @return String
 	 */
-	private function calculateFpHash() {
+	protected function calculateFpHash() {
 		$this->load->library('hash');
 		$hash = new Hash();
 		
@@ -163,7 +163,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		return $fp_hash;
 	}
 
-	private function calculateResponseHash() {
+	protected function calculateResponseHash() {
 		$this->load->library('hash');
 		$hash = new Hash();
 		

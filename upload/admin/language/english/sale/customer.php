@@ -19,6 +19,7 @@ $_['column_status']         = 'Status';
 $_['column_login']          = 'Login into Store';
 $_['column_approved']       = 'Approved';
 $_['column_date_added']     = 'Date Added';
+$_['column_comment']        = 'Comment';
 $_['column_description']    = 'Description';
 $_['column_amount']         = 'Amount';
 $_['column_points']         = 'Points';
@@ -47,9 +48,10 @@ $_['entry_postcode']        = 'Postcode:';
 $_['entry_country']         = 'Country:';
 $_['entry_zone']            = 'Region / State:';
 $_['entry_default']         = 'Default Address:';
+$_['entry_comment']         = 'Comment:';
+$_['entry_description']     = 'Description:';
 $_['entry_amount']          = 'Amount:';
 $_['entry_points']          = 'Points:<br /><span class="help">Use minus to remove points</span>';
-$_['entry_description']     = 'Description:';
 
 // Error
 $_['error_warning']         = 'Warning: Please check the form carefully for errors!';

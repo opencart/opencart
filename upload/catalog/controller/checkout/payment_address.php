@@ -122,7 +122,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		}
 				
 		if (!$json) {
-			if ($this->request->post['payment_address'] == 'existing') {
+			if (isset($this->request->post['payment_address']) && $this->request->post['payment_address'] == 'existing') {
 				$this->load->model('account/address');
 				
 				if (empty($this->request->post['address_id'])) {
@@ -166,9 +166,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 					unset($this->session->data['payment_method']);	
 					unset($this->session->data['payment_methods']);
 				}
-			} 
-			
-			if ($this->request->post['payment_address'] == 'new') {
+			} else {
 				if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 					$json['error']['firstname'] = $this->language->get('error_firstname');
 				}
@@ -223,7 +221,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 					$json['error']['country'] = $this->language->get('error_country');
 				}
 				
-				if ($this->request->post['zone_id'] == '') {
+				if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
 					$json['error']['zone'] = $this->language->get('error_zone');
 				}
 				

@@ -92,7 +92,7 @@ class ControllerPaymentFreeCheckout extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/free_checkout')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

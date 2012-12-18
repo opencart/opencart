@@ -61,7 +61,7 @@ $(document).ready(function(){
   </div>
   <?php if ($logged) { ?>
   <div id="menu">
-    <ul class="left" style="display: none;">
+    <ul class="left">
       <li id="dashboard"><a href="<?php echo $home; ?>" class="top"><?php echo $text_dashboard; ?></a></li>
       <li id="catalog"><a class="top"><?php echo $text_catalog; ?></a>
         <ul>
@@ -83,7 +83,6 @@ $(document).ready(function(){
       </li>
       <li id="extension"><a class="top"><?php echo $text_extension; ?></a>
         <ul>
-          <li><a href="<?php echo $manager; ?>"><?php echo $text_manager; ?></a></li>
           <li><a href="<?php echo $module; ?>"><?php echo $text_module; ?></a></li>
           <li><a href="<?php echo $shipping; ?>"><?php echo $text_shipping; ?></a></li>
           <li><a href="<?php echo $payment; ?>"><?php echo $text_payment; ?></a></li>
@@ -99,6 +98,7 @@ $(document).ready(function(){
             <ul>
               <li><a href="<?php echo $customer; ?>"><?php echo $text_customer; ?></a></li>
               <li><a href="<?php echo $customer_group; ?>"><?php echo $text_customer_group; ?></a></li>
+              <li><a href="<?php echo $custom_field; ?>"><?php echo $text_custom_field; ?></a></li>
               <li><a href="<?php echo $customer_blacklist; ?>"><?php echo $text_customer_blacklist; ?></a></li>
             </ul>
           </li>
@@ -192,17 +192,17 @@ $(document).ready(function(){
       </li>
       <li id="help"><a class="top"><?php echo $text_help; ?></a>
         <ul>
-          <li><a onClick="window.open('http://www.opencart.com');"><?php echo $text_opencart; ?></a></li>
-          <li><a onClick="window.open('http://www.opencart.com/index.php?route=documentation/introduction');"><?php echo $text_documentation; ?></a></li>
-          <li><a onClick="window.open('http://forum.opencart.com');"><?php echo $text_support; ?></a></li>
+          <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_opencart; ?></a></li>
+          <li><a href="http://www.opencart.com/index.php?route=documentation/introduction" target="_blank"><?php echo $text_documentation; ?></a></li>
+          <li><a href="http://forum.opencart.com" target="_blank"><?php echo $text_support; ?></a></li>
         </ul>
       </li>
     </ul>
     <ul class="right">
-      <li id="store"><a onClick="window.open('<?php echo $store; ?>');" class="top"><?php echo $text_front; ?></a>
+      <li id="store"><a href="<?php echo $store; ?>" target="_blank" class="top"><?php echo $text_front; ?></a>
         <ul>
           <?php foreach ($stores as $stores) { ?>
-          <li><a onClick="window.open('<?php echo $stores['href']; ?>');"><?php echo $stores['name']; ?></a></li>
+          <li><a href="<?php echo $stores['href']; ?>" target="_blank"><?php echo $stores['name']; ?></a></li>
           <?php } ?>
         </ul>
       </li>
@@ -211,7 +211,6 @@ $(document).ready(function(){
     <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('#menu > ul').superfish({
-		hoverClass	 : 'sfHover',
 		pathClass	 : 'overideThisToUse',
 		delay		 : 0,
 		animation	 : {height: 'show'},

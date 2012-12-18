@@ -118,6 +118,12 @@ class ModelCatalogOption extends Model {
 		return $option_data;
 	}
 	
+	public function getOptionValue($option_value_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_value ov LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE ov.option_value_id = '" . (int)$option_value_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		
+		return $query->row;
+	}
+	
 	public function getOptionValues($option_id) {
 		$option_value_data = array();
 		

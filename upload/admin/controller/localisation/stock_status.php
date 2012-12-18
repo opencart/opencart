@@ -110,7 +110,7 @@ class ControllerLocalisationStockStatus extends Controller {
     	$this->getList();
   	}
     
-  	private function getList() {
+  	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -258,7 +258,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		$this->response->setOutput($this->render());
   	}
   
-  	private function getForm() {
+  	protected function getForm() {
      	$this->data['heading_title'] = $this->language->get('heading_title');
 
     	$this->data['entry_name'] = $this->language->get('entry_name');
@@ -336,7 +336,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		$this->response->setOutput($this->render());	
   	}
   	
-	private function validateForm() {
+	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'localisation/stock_status')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -354,7 +354,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		}
   	}
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'localisation/stock_status')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}

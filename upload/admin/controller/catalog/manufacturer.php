@@ -110,7 +110,7 @@ class ControllerCatalogManufacturer extends Controller {
     	$this->getList();
   	}  
     
-  	private function getList() {
+  	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -261,7 +261,7 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->response->setOutput($this->render());
 	}
   
-  	private function getForm() {
+  	protected function getForm() {
     	$this->data['heading_title'] = $this->language->get('heading_title');
 
     	$this->data['text_enabled'] = $this->language->get('text_enabled');
@@ -404,7 +404,7 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->response->setOutput($this->render());
 	}  
 	 
-  	private function validateForm() {
+  	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -420,7 +420,7 @@ class ControllerCatalogManufacturer extends Controller {
 		}
   	}    
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
     	if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
 			$this->error['warning'] = $this->language->get('error_permission');
     	}	
@@ -441,5 +441,38 @@ class ControllerCatalogManufacturer extends Controller {
 	  		return false;
 		}  
   	}
+	
+	public function autocomplete() {
+		$json = array();
+		
+		if (isset($this->request->get['filter_name'])) {
+			$this->load->model('catalog/manufacturer');
+			
+			$data = array(
+				'filter_name' => $this->request->get['filter_name'],
+				'start'       => 0,
+				'limit'       => 20
+			);
+			
+			$results = $this->model_catalog_manufacturer->getManufacturers($data);
+				
+			foreach ($results as $result) {
+				$json[] = array(
+					'manufacturer_id' => $result['manufacturer_id'], 
+					'name'            => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
+				);
+			}		
+		}
+
+		$sort_order = array();
+	  
+		foreach ($json as $key => $value) {
+			$sort_order[$key] = $value['name'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $json);
+
+		$this->response->setOutput(json_encode($json));
+	}	
 }
 ?>

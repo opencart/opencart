@@ -88,54 +88,54 @@ label {
 }
 #menu > ul a {
 	display: block;
-	color: #FFFFFF;
 	text-decoration: none;
-	padding: 5px;
+}
+#menu > ul li {
+	float: left;
+	list-style: none;
 }
 #menu > ul > li + li {
 	background: url('../image/split.png') center left no-repeat;
 }
-#menu > ul .top, #menu > ul li li.sfhover {
+#menu > ul .top {
 	padding: 10px 15px 9px 17px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #FFFFFF;
 	text-align: center;
 }
+#menu > ul li ul {
+	position: absolute;
+}
 #menu > ul ul li {
 	padding: 2px;
+	clear: both;
 }
 #menu > ul .selected .top {
 	background: url('../image/selected.png') repeat-x;
 	color: #FFFFFF;
 }
-#menu > ul .selected:hover a.top, #menu > ul .sfhover a.top {
-}
 #menu > ul .parent {
-	background: url('../image/arrow-right.png') 95% center no-repeat;
-}
-#menu > ul li {
-	float: left;
-	list-style: none;
-}
-#menu > ul li ul {
-	position: absolute;
-}
-#menu > ul li li {
-	clear: both;
-}
-#menu > ul li ul a {
-	color: #FFFFFF;
-	height: 15px;
-	width: 145px;
+	background-image: url('../image/arrow-right.png'); 
+	background-position: 95% center;
+	background-repeat:no-repeat;
 }
 #menu > ul li ul ul {
-	margin: -27px 0 0 157px;
+	margin: -29px 0 0 161px;
 }
-#menu > ul li li:hover, #menu > ul li li.sfhover {
-	background: #C55B27;
-	color: #000000;
+#menu > ul li li a {
+	padding: 5px;
+	margin: 1px;
+	color: #FFFFFF;	
+	width: 147px;
 }
+#menu > ul li li > a:hover {
+	margin: 0px;
+	border: 1px solid #BD4C14;
+	background-color: #391706; 
+}
+
+
 #container {
 	height: 100%;
 }

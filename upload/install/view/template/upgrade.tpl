@@ -20,9 +20,11 @@
       <li>Goto Admin and Edit the main System Settings. Update all fields and click save, even if nothing changed.</li>
       <li>Load the store front & press Ctrl+F5 twice to force the browser to update the css changes.</li>
     </ol>
-    <div class="right">
-      <input type="submit" value="Continue" class="button" />
-    </div>
+    <div class="buttons">
+	  <div class="right">
+        <input type="submit" value="Continue" class="button" />
+      </div>
+	</div>
   </form>
 </div>
 <?php echo $footer; ?> 

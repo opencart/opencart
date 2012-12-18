@@ -11,7 +11,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/order.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <div id="vtabs" class="vtabs"><a href="#tab-customer"><?php echo $tab_customer; ?></a><a href="#tab-payment"><?php echo $tab_payment; ?></a><a href="#tab-shipping"><?php echo $tab_shipping; ?></a><a href="#tab-product"><?php echo $tab_product; ?></a><a href="#tab-voucher"><?php echo $tab_voucher; ?></a><a href="#tab-total"><?php echo $tab_total; ?></a></div>
@@ -296,7 +296,7 @@
                 <td class="left"><?php echo $order_product['model']; ?>
                   <input type="hidden" name="order_product[<?php echo $product_row; ?>][model]" value="<?php echo $order_product['model']; ?>" /></td>
                 <td class="right"><?php echo $order_product['quantity']; ?>
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
+                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>                 
                 <td class="right"><?php echo $order_product['price']; ?>
                   <input type="hidden" name="order_product[<?php echo $product_row; ?>][price]" value="<?php echo $order_product['price']; ?>" /></td>
                 <td class="right"><?php echo $order_product['total']; ?>
@@ -329,7 +329,7 @@
               <tr>
                 <td class="left"><?php echo $entry_quantity; ?></td>
                 <td class="left"><input type="text" name="quantity" value="1" /></td>
-              </tr>
+              </tr>             
             </tbody>
             <tfoot>
               <tr>
@@ -520,7 +520,7 @@
                   <?php if ($error_payment_method) { ?>
                   <span class="error"><?php echo $error_payment_method; ?></span>
                   <?php } ?></td>
-              </tr>
+              </tr>             
               <tr>
                 <td class="left"><?php echo $entry_coupon; ?></td>
                 <td class="left"><input type="text" name="coupon" value="" /></td>
@@ -585,7 +585,7 @@ $.widget('custom.catcomplete', $.ui.autocomplete, {
 });
 
 $('input[name=\'customer\']').catcomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
@@ -681,7 +681,7 @@ $('select[id=\'customer_group_id\']').live('change', function() {
 $('select[id=\'customer_group_id\']').trigger('change');
 
 $('input[name=\'affiliate\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
@@ -847,7 +847,7 @@ $('select[name=\'shipping_address\']').bind('change', function() {
 //--></script> 
 <script type="text/javascript"><!--
 $('input[name=\'product\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request.term),
@@ -1522,7 +1522,7 @@ $('#button-product, #button-voucher, #button-update').live('click', function() {
 				$('#total').html(html);
 			} else {
 				html  = '</tr>';
-				html += '  <td colspan="6" class="center"><?php echo $text_no_results; ?></td>';
+				html += '  <td colspan="5" class="center"><?php echo $text_no_results; ?></td>';
 				html += '</tr>';	
 
 				$('#total').html(html);					

@@ -110,7 +110,7 @@ class ControllerUserUser extends Controller {
     	$this->getList();
   	}
 
-  	private function getList() {
+  	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -264,7 +264,7 @@ class ControllerUserUser extends Controller {
 		$this->response->setOutput($this->render());
   	}
 	
-	private function getForm() {
+	protected function getForm() {
     	$this->data['heading_title'] = $this->language->get('heading_title');
 
     	$this->data['text_enabled'] = $this->language->get('text_enabled');
@@ -432,7 +432,7 @@ class ControllerUserUser extends Controller {
 		$this->response->setOutput($this->render());	
   	}
   	
-  	private function validateForm() {
+  	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'user/user')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -478,7 +478,7 @@ class ControllerUserUser extends Controller {
     	}
   	}
 
-  	private function validateDelete() { 
+  	protected function validateDelete() { 
     	if (!$this->user->hasPermission('modify', 'user/user')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	} 

@@ -250,7 +250,7 @@ class ControllerCheckoutGuest extends Controller {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 			
-			if ($this->request->post['zone_id'] == '') {
+			if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
 				$json['error']['zone'] = $this->language->get('error_zone');
 			}	
 		}

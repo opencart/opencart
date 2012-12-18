@@ -65,7 +65,6 @@
               <tr>
                 <td><?php echo $entry_password; ?></td>
                 <td><input type="password" name="password" value="<?php echo $password; ?>"  />
-                  <br />
                   <?php if ($error_password) { ?>
                   <span class="error"><?php echo $error_password; ?></span>
                   <?php  } ?></td>

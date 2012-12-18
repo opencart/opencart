@@ -78,36 +78,35 @@ class ModelUpgrade extends Model {
 				$status = false;
 			}
 		}
-		
-		$i = 0;		
+			
 		// Start reading each create statement
 		$queries = explode(';', $string);
 		
 		foreach ($queries as $query) {
-			echo $query . "\n";
-			
-
+			//echo $query . "\n";
 			
 			// Get all fields		
 			$field_data = array();
 			
 			preg_match_all('#`(\w[\w\d]*)`\s+((tinyint|smallint|mediumint|int|bigint|tinytext|text|mediumtext|longtext|tinyblob|blob|mediumblob|longblob|varchar|char|date|datetime|float|double|decimal|timestamp|time|year|enum|set|binary|varbinary)(\((\d+)(,\s*(\d+))?\))?){1}\s*(collate (\w+)\s*)?(unsigned\s*)?((NOT\s*NULL\s*)|(NULL\s*))?(auto_increment\s*)?(default \'([^\']*)\'\s*)?#i', $query, $fields);
 
-			foreach($fields[0] as $fieldkey => $fielddata){
-				$field_data[$fields[1][$fieldkey]] = array(
-					'name'          => trim($fields[1][$fieldkey]),
-					'type'          => trim($fields[3][$fieldkey]),
-					'size'          => trim($fields[5][$fieldkey]),
-					'sizeext'       => trim($fields[8][$fieldkey]),
-					'collation'     => trim($fields[9][$fieldkey]),
-					'unsigned'      => trim($fields[10][$fieldkey]),
-					'notnull'       => trim($fields[11][$fieldkey]),
-					'autoincrement' => trim($fields[14][$fieldkey]),
-					'default'       => trim($fields[16][$fieldkey]),
+			foreach($fields[0] as $key => $fielddata){
+				$field_data[$fields[1][$key]] = array(
+					'name'          => trim($fields[1][$key]),
+					'type'          => trim($fields[3][$key]),
+					'size'          => trim($fields[5][$key]),
+					'sizeext'       => trim($fields[8][$key]),
+					'collation'     => trim($fields[9][$key]),
+					'unsigned'      => trim($fields[10][$key]),
+					'notnull'       => trim($fields[11][$key]),
+					'autoincrement' => trim($fields[14][$key]),
+					'default'       => trim($fields[16][$key]),
 				);
 			}
 						
 			// Get primary keys
+			$primary_data = array();
+			
 			preg_match('#primary\s*key\s*\([^)]+\)#i', $query, $primarykeydefinition);
 			
 			if (isset($primarykeydefinition[0])) { 
@@ -118,14 +117,16 @@ class ModelUpgrade extends Model {
 			
 			if (count($primarykeydefinition) > 0){
 				foreach($primarykeydefinition[1] as $fieldkey => $field){
-					$table_data[$i]['primarykey'][] = $field;
+					$primary_data[] = $field;
 				}
 			}
 			
 			// Get indexes
-			preg_match_all('#key\s*`\w[\w\d]*`\s*\(.*\)#i', $query, $keydefinition);
+			$index_data = array();
 			
 			$keys = array();
+			
+			preg_match_all('#key\s*`\w[\w\d]*`\s*\(.*\)#i', $query, $keydefinition);
 
 			foreach($keydefinition[0] as $key){
 				preg_match_all('#`(\w[\w\d]*)`#', $key, $keydef);
@@ -140,40 +141,35 @@ class ModelUpgrade extends Model {
 					if ($indexkey == ''){
 						$indexkey = $name;
 					} else{
-						$table_data[$i]['indexes'][$indexkey][] = $name;
+						$index_data[$indexkey][] = $name;
 					}
 				}
 			}			
 			
 			// Table options
+			$option_data = array();
+			
 			preg_match_all('#(\w+)=(\w+)#', $query, $option);
 			
 			foreach($option[0] as $key => $optiondata){
-				$table_data[$i]['options'][$option[1][$key]] = $option[2][$key];
+				$option_data[$option[1][$key]] = $option[2][$key];
 			}
 
 			// Get Table Name
 			preg_match_all('#create\s*table\s*`(\w[\w\d]*)`#i', $query, $tablename);
 			
-			if (!isset($tablename[1][0])) {
-				print_r($tablename);
+			if (isset($tablename[1][0])) {
+				$table_data[] = array(
+					'name'    => $tablename[1][0],
+					'field'   => $field_data,
+					'primary' => $primary_data,
+					'index'   => $index_data,
+					'option'  => $option_data,
+				);
 			}
-															
-			//Analyse into an array of data
-			$table_data[$i] = array(
-				'name'       => $tablename[1][0],
-				'fields'     => array(),
-				'primarykey' => array(),
-				'indexes'    => array(),
-				'options'    => array(),
-			);
-			
-			//print_r($table_data[$i]);
-			
-			$i++;
 		}
 		
-		
+		//print_r($table_data);
 			
 		
 		

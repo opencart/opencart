@@ -9,8 +9,6 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         
         $orderInfo = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         
-        $this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = '" . $this->db->escape($this->language->get('text_payment_method_title')) . "' WHERE `order_id` = " . (int) $this->session->data['order_id']);
-        
         $countries = $this->config->get('klarna_invoice_country');
         $settings = $countries[$orderInfo['payment_iso_code_3']];
         
@@ -215,7 +213,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             SELECT '', `code`, `amount`, '1'
             FROM `" . DB_PREFIX . "order_voucher`
             WHERE `order_id` = " . (int) $orderInfo['order_id'])->rows;
-       
+
         foreach ($orderedProducts as $product) {
             
             $goodsList[] = array(
@@ -231,13 +229,13 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             );
         }
         
-        foreach($totals as $total) {
+        foreach ($totals as $total) {
             if ($total['code'] == 'shipping' || $total['code'] == 'klarna_fee') {
                 $flag = 8;
             } else {
                 $flag = 32;
             }
-            
+
             $goodsList[] = array(
                 'qty' => 1,
                 'goods' => array(

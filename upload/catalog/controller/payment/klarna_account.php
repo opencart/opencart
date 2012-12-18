@@ -9,8 +9,6 @@ class ControllerPaymentKlarnaAccount extends Controller {
         
         $orderInfo = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         
-        $this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = '" . $this->db->escape($this->language->get('text_payment_method_title')) . "' WHERE `order_id` = " . (int) $this->session->data['order_id']);
-        
         $countries = $this->config->get('klarna_account_country');
         $settings = $countries[$orderInfo['payment_iso_code_3']];
         
@@ -363,6 +361,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
                     'flags' => $flag,
                 )
             );
+            
         }
         
         $digest = '';
@@ -370,6 +369,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
         foreach ($goodsList as $goods) {
             $digest .= $goods['goods']['title'] . ':';
         }
+        
         
         $digest = base64_encode(pack('H*', hash('sha256', $digest . $settings['secret'])));
         

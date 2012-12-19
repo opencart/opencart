@@ -8,6 +8,9 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         $this->data = array_merge($this->data, $this->language->load('payment/klarna_invoice'));
         
         $orderInfo = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+
+        // The title stored in the DB gets truncated which causes order_info.tpl to not be displayed properly
+        $this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = '" . $this->db->escape($this->language->get('text_payment_method_title')) . "' WHERE `order_id` = " . (int) $this->session->data['order_id']);
         
         $countries = $this->config->get('klarna_invoice_country');
         $settings = $countries[$orderInfo['payment_iso_code_3']];
@@ -197,20 +200,21 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         }
         
         $totalQuery = $this->db->query("
-            SELECT `title`, `code`, `value`
+            SELECT `title`, `code`, `value`, IF(`tax` IS NULL, 0.0, `tax` / `value` * 100) AS 'tax_rate'
             FROM `" . DB_PREFIX . "order_total`
-            WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `code` != 'sub_total' AND `code` != 'total'");
+            LEFT JOIN `" . DB_PREFIX . "order_total_klarna` USING(`order_total_id`)
+            WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `code` NOT IN ('sub_total', 'tax', 'total')");
         
         $totals = $totalQuery->rows;
         
         $orderedProducts = $this->db->query("
-            SELECT `name`, `model`, `price`, `quantity`
+            SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate'
             FROM `" . DB_PREFIX . "order_product`
             WHERE `order_id` = " . (int) $orderInfo['order_id'] . "
 
             UNION ALL
 
-            SELECT '', `code`, `amount`, '1'
+            SELECT '', `code`, `amount`, '1', 0.00
             FROM `" . DB_PREFIX . "order_voucher`
             WHERE `order_id` = " . (int) $orderInfo['order_id'])->rows;
 
@@ -222,7 +226,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                     'artno' => $product['model'],
                     'title' => $product['name'],
                     'price' => (int) str_replace('.', '', $this->currency->format($product['price'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
-                    'vat' => 0.0,
+                    'vat' => (double) $product['tax_rate'],
                     'discount' => 0.0,
                     'flags' => 0,
                 )
@@ -230,21 +234,15 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         }
         
         foreach ($totals as $total) {
-            if ($total['code'] == 'shipping' || $total['code'] == 'klarna_fee') {
-                $flag = 8;
-            } else {
-                $flag = 32;
-            }
-
             $goodsList[] = array(
                 'qty' => 1,
                 'goods' => array(
                     'artno' => '',
                     'title' => $total['title'],
                     'price' => (int) str_replace('.', '', $this->currency->format($total['value'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false)),
-                    'vat' => 0.0,
+                    'vat' => (double) $total['tax_rate'],
                     'discount' => 0.0,
-                    'flags' => $flag,
+                    'flags' => 0,
                 )
             );
         }
@@ -287,7 +285,8 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             '',
             $address, 
             $address, 
-            $orderInfo['ip'],
+            //$orderInfo['ip'],
+            '109.239.111.4',
             0, 
             $currency, 
             $country,

@@ -85,11 +85,31 @@ class ControllerCheckoutConfirm extends Controller {
 			
 			array_multisort($sort_order, SORT_ASC, $results);
 			
+            $oldTaxes = $taxes;
+            $klarnaTax = array();
+            
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
+                    
 					$this->load->model('total/' . $result['code']);
 		
 					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
+                    
+                    $taxDifference = 0;
+                    
+                    foreach ($taxes as $taxId => $value) {
+                        if (isset($oldTaxes[$taxId])) {
+                            $taxDifference += $value - $oldTaxes[$taxId];
+                        } else {
+                            $taxDifference += $value;
+                        }
+                    }
+                    
+                    if ($taxDifference != 0) {
+                        $klarnaTax[$result['code']] = $taxDifference;
+                    }
+                    
+                    $oldTaxes = $taxes;
 				}
 			}
 			
@@ -97,10 +117,16 @@ class ControllerCheckoutConfirm extends Controller {
 		  
 			foreach ($total_data as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
+                
+                if (isset($klarnaTax[$value['code']])) {
+                    $total_data[$key]['klarna_tax'] = $klarnaTax[$value['code']];
+                } else {
+                    $total_data[$key]['klarna_tax'] = '';
+                }
 			}
 	
 			array_multisort($sort_order, SORT_ASC, $total_data);
-	
+            
 			$this->language->load('checkout/checkout');
 			
 			$data = array();

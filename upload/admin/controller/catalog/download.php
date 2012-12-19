@@ -465,7 +465,37 @@ class ControllerCatalogDownload extends Controller {
 				if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 128)) {
 					$json['error'] = $this->language->get('error_filename');
 				}	  	
-						
+				
+				// Allowed File types
+				$disallowed = array(
+				    'txt'  => 'text/plain',
+					'htm'  => 'text/html',
+					'html' => 'text/html',
+					'php'  => 'text/html',
+					'css'  => 'text/css',
+					'js'   => 'application/javascript',
+					'json' => 'application/json',
+					'xml'  => 'application/xml',
+					'swf'  => 'application/x-shockwave-flash',
+					'flv'  => 'video/x-flv'
+				);
+					
+				if (in_array($this->request->files['file']['type'], array_values($disallowed))) {
+					$json['error'] = $this->language->get('error_filetype');
+				}				
+				
+				$disallowed = array();
+				
+				$filetypes = explode(',', '.php');
+				
+				foreach ($filetypes as $filetype) {
+					$allowed[] = trim($filetype);
+				}
+			
+				if (!in_array(substr(strrchr($filename, '.'), 1), $disallowed)) {
+					$json['error'] = $this->language->get('error_filetype');
+				}	
+									
 				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
 				}

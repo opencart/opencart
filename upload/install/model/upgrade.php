@@ -135,18 +135,18 @@ class ModelUpgrade extends Model {
 		}
 
 		//$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-		$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, 'opencart_test');
+		$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, 'test');
 
 		// Get all current tables, fields, type, size, etc..
 		$table_old_data = array();
 		
-		$table_query = $db->query("SHOW TABLES FROM `" . 'opencart_test' . "`");
+		$table_query = $db->query("SHOW TABLES FROM `" . 'test' . "`");
 				
 		foreach ($table_query->rows as $table) {
-			if (utf8_substr($table['Tables_in_' . 'opencart_test'], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+			if (utf8_substr($table['Tables_in_' . 'test'], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
 				$field_data = array(); 
 				
-				$field_query = $db->query("SHOW COLUMNS FROM `" . $table['Tables_in_' . 'opencart_test'] . "`");
+				$field_query = $db->query("SHOW COLUMNS FROM `" . $table['Tables_in_' . 'test'] . "`");
 				
 				foreach ($field_query->rows as $field) {
 					preg_match('/\((.*)\)/', $field['Type'], $match);
@@ -162,16 +162,18 @@ class ModelUpgrade extends Model {
 					);
 				}
 				
-				$table_old_data[$table['Tables_in_' . 'opencart_test']] = $field_data;
+				$table_old_data[$table['Tables_in_' . 'test']] = $field_data;
 			}
 		}
+		
+		print_r($table_old_data);
 						
 		foreach ($table_new_data as $table) {
 			// If table is not found create it
 			if (!isset($table_old_data[$table['name']])) {
 				//$db->query($table['sql']);
 				
-				echo $table['sql'] . "\n\n";
+				//echo $table['sql'] . "\n\n";
 			} else {
 				foreach ($table['field'] as $field) {
 					// If field is not found create it
@@ -196,52 +198,98 @@ class ModelUpgrade extends Model {
 						
 						if ($field['autoincrement']) {
 							$sql .= " AUTO_INCREMENT";
+						} else {
+							
 						}
 						
 						//$db->query($sql);
 												
-						echo $sql . "\n";
+						//echo $sql . "\n";
 					} else {
-						$sql = "ALTER TABLE `" . $table['name'] . "` MODIFY `" . $field['name'] . "`";
+						// Remove auto_increment if not needed in new db
+						if ($table_old_data[$table['name']][$field['name']]['extra'] == 'auto_increment' && !$field['autoincrement']) {
+							$sql = "ALTER TABLE `" . $table['name'] . "` CHANGE `" . $field['name'] . "` `" . $field['name'] . "`";	
 						
-						
-						
-						
-						if ($field['type'] != $table_old_data[$table['name']][$field['name']]['type'] || $field['size']) {
 							$sql .= " " . $field['type'];
-							
-							echo $field['type'];
-							
-							
-							print_r($table_old_data[$table['name']][$field['name']]);
 									
 							if ($field['size']) {
 								$sql .= "(" . $field['size'] . ")";
-							}	
-																			
-							//(1) NOT NULL DEFAULT '1' COMMENT '';
+							}
+							
+							if ($field['notnull']) {
+								$sql .= " " . $field['notnull'];
+							}
+						
+							if ($field['default']) {
+								$sql .= " DEFAULT '" . $field['default'] . "'";
+							}
+							
+							if ($field['autoincrement']) {
+								$sql .= " AUTO_INCREMENT";
+							}
+													
+							//$db->query($sql);
+							
+							//echo $sql . "\n";							
+						}							
+						
+						$sql = "ALTER TABLE `" . $table['name'] . "` MODIFY `" . $field['name'] . "`";
+						
+						$sql .= " " . $field['type'];
+								
+						if ($field['size']) {
+							$sql .= "(" . $field['size'] . ")";
+						}
+							
+						if ($field['collation']) {
+							$sql .= " " . $field['collation'];
 						}
 						
+						if ($field['notnull']) {
+							$sql .= " " . $field['notnull'];
+						}
 						
-
+						if ($field['default']) {
+							$sql .= " DEFAULT '" . $field['default'] . "'";
+						}
 						
-						/*
-						'name'          => trim($match[1][$key]),
-						'type'          => trim($match[3][$key]),
-						'size'          => trim($match[5][$key]),
-						'sizeext'       => trim($match[8][$key]),
-						'collation'     => trim($match[9][$key]),
-						'unsigned'      => trim($match[10][$key]),
-						'notnull'       => trim($match[11][$key]),
-						'autoincrement' => trim($match[14][$key]),
-						'default'       => trim($match[16][$key]),
-						*/						
+						if ($field['autoincrement']) {
+							$sql .= " AUTO_INCREMENT";
+						}
 						
 						//$db->query($sql);
-												
-						echo $sql . "\n";
+						
+						//echo $sql . "\n";					
 					}
 				}
+				
+				// Just drop the curent primary key and add new ones.
+				$primary_data = array();
+
+				foreach ($table['primary'] as $primary) {
+					$primary_data[] = "`" . $primary . "`";
+				}
+
+				if ($primary_data) {
+					$sql = "ALTER TABLE `" . $table['name'] . "` DROP PRIMARY KEY, ADD PRIMARY KEY(" . implode(',', $primary_data) . ")";
+				}
+				
+				//echo $sql . "\n";
+				
+				print_r($table);
+				
+				// add the indexes
+				// ALTER TABLE `oc_product_description` DROP INDEX name
+				// ALTER TABLE  `oc_product_description` ADD INDEX (  `name` )				
+				
+				foreach ($table['index'] as $index) {
+					
+				}
+				
+				
+				// Change DB engine
+				// ALTER TABLE  `oc_coupon_description` ENGINE = INNODB
+				
 			}
 		}
 		
@@ -259,14 +307,6 @@ class ModelUpgrade extends Model {
 		*/
 				
 		// We can do all the SQL changes here
-		
-		// ALTER TABLE  `oc_custom_field_value_description` ADD PRIMARY KEY (`custom_field_value_id`, `language_id`);
-		// ALTER TABLE `oc_product` MODIFY `shipping` tinyint(1) NOT NULL DEFAULT '1' COMMENT '';
-		// ALTER TABLE oc_customer ADD token varchar(255) NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_bin AFTER approved;
-		// ALTER TABLE oc_product_tag ADD INDEX product_id (product_id);
-				
-		//preg_match_all('/`(.+)` (\w+)\(? ?(\d*) ?\)?/', $string, $match);
-		//preg_match_all('/CREATE\sTABLE\s`(.+)`\s^\((.+)\)\sENGINE\=MyISAM\sDEFAULT\sCHARSET\=utf8\sCOLLATE\=utf8_bin;/i', $string, $matches);
 				
 		// Sort the categories to take advantage of the nested set model
 		//$this->path(0, 0);

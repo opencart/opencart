@@ -89,7 +89,7 @@ class ModelAccountCustomer extends Model {
 	}
 	
 	public function getCustomerByEmail($email) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE email = '" . $this->db->escape($email) . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(strtolower($email)) . "'");
 		
 		return $query->row;
 	}
@@ -112,7 +112,7 @@ class ModelAccountCustomer extends Model {
 		}
 		
 		if (isset($data['filter_email']) && !is_null($data['filter_email'])) {
-			$implode[] = "c.email = '" . $this->db->escape($data['filter_email']) . "'";
+			$implode[] = "LOWER(c.email) = '" . $this->db->escape(strtolower($data['filter_email'])) . "'";
 		}
 		
 		if (isset($data['filter_customer_group_id']) && !is_null($data['filter_customer_group_id'])) {

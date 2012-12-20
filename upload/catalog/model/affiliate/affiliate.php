@@ -39,7 +39,7 @@ class ModelAffiliateAffiliate extends Model {
 	}
 	
 	public function editPassword($email, $password) {
-      	$this->db->query("UPDATE " . DB_PREFIX . "affiliate SET salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($password)))) . "' WHERE LOWER(email) = '" . $this->db->escape(strtolower($email)) . "'");
+      	$this->db->query("UPDATE " . DB_PREFIX . "affiliate SET salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($password)))) . "' WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 				
 	public function getAffiliate($affiliate_id) {
@@ -49,7 +49,7 @@ class ModelAffiliateAffiliate extends Model {
 	}
 	
 	public function getAffiliateByEmail($email) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "affiliate WHERE LOWER(email) = '" . $this->db->escape(strtolower($email)) . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "affiliate WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 		
 		return $query->row;
 	}
@@ -61,7 +61,7 @@ class ModelAffiliateAffiliate extends Model {
 	}
 			
 	public function getTotalAffiliatesByEmail($email) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "affiliate WHERE LOWER(email) = '" . $this->db->escape(strtolower($email)) . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "affiliate WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 		
 		return $query->row['total'];
 	}

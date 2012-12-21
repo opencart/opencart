@@ -50,4 +50,4 @@ $_['error_house_ext'] = 'House Extension Required!';
 $_['error_dob'] = 'Date of birth Required!';
 $_['error_address_match'] = 'Billing and Shipping addresses must match if you want to use Klarna Invoice';
 $_['error_network'] = 'Error occurred while connecting to Klarna. Please try again later.';
-$_['error_deu_toc'] = "You must agree with Klarna's Terms & Conditions";
+$_['error_deu_toc'] = "You must agree to Klarna's privacy policy (Datenschutz)";

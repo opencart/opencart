@@ -56,7 +56,11 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             
             $this->fetchPClasses($klarnaCountry);
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            if ($this->error) {
+                $this->session->data['error'] = $this->language->get('error_update');
+            } else {
+                $this->session->data['success'] = $this->language->get('text_success');
+            }
 
             $this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
         }
@@ -187,6 +191,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
     }
     
     private function fetchPClasses($klarnaCountries) {
+        $log = new Log('klarna_invoice.log');
         $countries = array(
             'NOR' => array(
                 'currency' => 1,
@@ -268,45 +273,54 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
             $responseString = curl_exec($ch);
             
-            $responseXml = new DOMDocument();
-            $responseXml->loadXML($responseString);
-            
-            $xpath = new DOMXPath($responseXml);
-            
-            $nodes = $xpath->query('//methodResponse/params/param/value');
-            
-            if ($nodes->length == 0) {
-                $log = new Log('klarna_invoice.log');
-                $log->write(sprintf($this->language->get('error_retrieve_pclass'), $countryCode));
-                continue;
-            }
-            
-            $pclasses = $this->parseResponse($nodes->item(0)->firstChild, $responseXml);
-            
-            while($pclasses) {
-                $pclass = array_slice($pclasses, 0, 10);
-                $pclasses = array_slice($pclasses, 10);
-                
-                $pclass[3] /= 100;
-                $pclass[4] /= 100;
-                $pclass[5] /= 100;
-                $pclass[6] /= 100;
-                $pclass[9] = ($pclass[9] != '-') ? strtotime($pclass[9]) : $pclass[9];
-                
-                array_unshift($pclass, $klarnaCountries[$countryCode]['merchant']);
-                
-                $result[$countryCode][] = array(
-                    'eid' => intval($pclass[0]),
-                    'id' => intval($pclass[1]),
-                    'description' => $pclass[2],
-                    'months' => intval($pclass[3]),
-                    'startfee' => floatval($pclass[4]),
-                    'invoicefee' => floatval($pclass[5]),
-                    'interestrate' => floatval($pclass[6]),
-                    'minamount' => floatval($pclass[7]),
-                    'country' => intval($pclass[8]),
-                    'type' => intval($pclass[9]),
-                );
+            if ($responseString !== False) {
+                $responseXml = new DOMDocument();
+                $responseXml->loadXML($responseString);
+
+                $xpath = new DOMXPath($responseXml);
+
+                $nodes = $xpath->query('//methodResponse/params/param/value');
+
+                if ($nodes->length == 0) {
+                    $errorCode = $xpath->query('//methodResponse/fault/value/struct/member/value/int')->item(0)->nodeValue;
+                    $errorMessage = $xpath->query('//methodResponse/fault/value/struct/member/value/string')->item(0)->nodeValue;
+
+                    $this->error['error_pclass'] = sprintf($this->language->get('error_retrieve_pclass'), $countryCode, $errorCode, $errorMessage);
+                    
+                    $log->write(sprintf($this->language->get('error_retrieve_pclass'), $countryCode, $errorCode, $errorMessage));
+                    continue;
+                }
+
+                $pclasses = $this->parseResponse($nodes->item(0)->firstChild, $responseXml);
+
+                while ($pclasses) {
+                    $pclass = array_slice($pclasses, 0, 10);
+                    $pclasses = array_slice($pclasses, 10);
+
+                    $pclass[3] /= 100;
+                    $pclass[4] /= 100;
+                    $pclass[5] /= 100;
+                    $pclass[6] /= 100;
+                    $pclass[9] = ($pclass[9] != '-') ? strtotime($pclass[9]) : $pclass[9];
+
+                    array_unshift($pclass, $klarnaCountries[$countryCode]['merchant']);
+
+                    $result[$countryCode][] = array(
+                        'eid' => intval($pclass[0]),
+                        'id' => intval($pclass[1]),
+                        'description' => $pclass[2],
+                        'months' => intval($pclass[3]),
+                        'startfee' => floatval($pclass[4]),
+                        'invoicefee' => floatval($pclass[5]),
+                        'interestrate' => floatval($pclass[6]),
+                        'minamount' => floatval($pclass[7]),
+                        'country' => intval($pclass[8]),
+                        'type' => intval($pclass[9]),
+                    );
+                }
+            } else {
+                $this->error['errro_http'] = sprintf($this->language->get('error_http_error'), curl_errno($ch), curl_error($ch));
+                $log->write(sprintf($this->language->get('error_http_error'), curl_errno($ch), curl_error($ch)));
             }
 
             curl_close($ch);

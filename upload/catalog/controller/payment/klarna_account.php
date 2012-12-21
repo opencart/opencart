@@ -163,6 +163,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
                 $partPaymentOptions[$pclass['id']]['monthly_cost'] = $monthlyCost;
                 $partPaymentOptions[$pclass['id']]['pclass_id'] = $pclass['id'];
                 $partPaymentOptions[$pclass['id']]['months'] = $pclass['months'];
+                $partPaymentOptions[$pclass['id']]['title'] = $pclass['description'];
             }
             
         }
@@ -172,7 +173,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
         $this->data['part_payment_options'] = array();
         
         foreach ($partPaymentOptions as $paymentOption) {
-            $this->data['part_payment_options'][$paymentOption['pclass_id']] = sprintf($this->language->get('text_monthly_payment'), $paymentOption['months'], $this->currency->format($this->currency->convert($paymentOption['monthly_cost'], $countryToCurrency[$orderInfo['payment_iso_code_3']], $this->currency->getCode()), 1, 1));
+            $this->data['part_payment_options'][$paymentOption['pclass_id']] = sprintf($this->language->get('text_monthly_payment'), $paymentOption['title'], $this->currency->format($this->currency->convert($paymentOption['monthly_cost'], $countryToCurrency[$orderInfo['payment_iso_code_3']], $this->currency->getCode()), 1, 1));
         }
         
         $this->data['merchant'] = $settings['merchant'];
@@ -658,7 +659,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
     }
     
     private function sortPaymentPlans($a, $b) {
-        return $a['months'] - $b['months'];
+        return $a['pclass_id'] - $b['pclass_id'];
     }
 
 }

@@ -382,10 +382,14 @@ class ControllerPaymentKlarnaAccount extends Controller {
         
         $pclass = (int) $this->request->post['payment_plan'];
         
-        $gender = 0;
+        $gender = '';
         
         if ($orderInfo['payment_iso_code_3'] == 'DEU' || $orderInfo['payment_iso_code_3'] == 'NLD') {
-            $gender = (int) $this->request->post['gender'];
+            if (isset($this->request->post['gender'])) {
+                $gender = (int) $this->request->post['gender'];
+            } else {
+                $gender = '';
+            }
         }
         
         $transaction = array(
@@ -399,8 +403,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
             '',
             $address, 
             $address, 
-            //$orderInfo['ip'],
-            '109.239.111.4',
+            $orderInfo['ip'],
             0, 
             $currency, 
             $country,

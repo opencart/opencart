@@ -80,7 +80,7 @@
                 <tr>
                     <td><?php echo $entry_gender ?></td>
                     <td>
-                        <input type="radio" name="gender" value="1" id="male" checked="checked" />
+                        <input type="radio" name="gender" value="1" id="male" />
                         <label for="male"><?php echo $text_male; ?></label>
                         <input type="radio" name="gender" value="0" id="female" />
                         <label for="female"><?php echo $text_female; ?></label>

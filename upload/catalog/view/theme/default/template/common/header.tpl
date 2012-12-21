@@ -55,11 +55,7 @@ DD_belatedPNG.fix('#logo img');
   <?php echo $cart; ?>
   <div id="search">
     <div class="button-search"></div>
-    <?php if ($search) { ?>
-    <input type="text" name="search" value="<?php echo $search; ?>" />
-    <?php } else { ?>
-    <input type="text" name="search" value="<?php echo $text_search; ?>" onclick="this.value = '';" onkeydown="this.style.color = '#000000';" />
-    <?php } ?>
+    <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" />
   </div>
   <div id="welcome">
     <?php if (!$logged) { ?>

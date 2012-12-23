@@ -46,7 +46,7 @@ $_['entry_product_count']          = 'Category Product Count:<br /><span class="
 $_['entry_review']       	       = 'Allow Reviews:<br /><span class="help">Enable/Disable new review entry and display of existing reviews</span>';
 $_['entry_download']               = 'Allow Downloads:';
 $_['entry_file_extension_allowed'] = 'Allowed File Extensions:<br /><span class="help">Add which file extensions are allowed to be uploaded. Use a new line for each value.</span>';
-$_['entry_file_mime_allowed']      = 'Allowed File Mimie Types:<br /><span class="help">Add which file mime types are allowed to be uploaded. Use a new line for each value.</span>';
+$_['entry_file_mime_allowed']      = 'Allowed File Mime Types:<br /><span class="help">Add which file mime types are allowed to be uploaded. Use a new line for each value.</span>';
 $_['entry_voucher_min']            = 'Voucher Min:<br /><span class="help">Minimum amount a customer can purchase a voucher for.</span>';
 $_['entry_voucher_max']            = 'Voucher Max:<br /><span class="help">Maximum amount a customer can purchase a voucher for.</span>';
 $_['entry_tax']                    = 'Display Prices With Tax:';

@@ -197,7 +197,7 @@ class ModelUpgrade extends Model {
 						}
 						
 						if ($field['autoincrement']) {
-							$sql .= " AUTO_INCREMENT";
+							//$sql .= " AUTO_INCREMENT";
 						}
 						
 						if (isset($table['field'][$i - 1])) {
@@ -265,9 +265,7 @@ class ModelUpgrade extends Model {
 					$i++;
 				}
 				
-				foreach ($table['field'] as $field) {
-				
-				}
+
 				
 				// Drop primary keys and indexes.
 				$query = $db->query("SHOW INDEXES FROM `" . $table['name'] . "`");
@@ -291,8 +289,13 @@ class ModelUpgrade extends Model {
 				}
 
 				if ($primary_data) {
-					//$db->query("ALTER TABLE `" . $table['name'] . "` DROP PRIMARY KEY, ADD PRIMARY KEY(" . implode(',', $primary_data) . ")");
+					$db->query("ALTER TABLE `" . $table['name'] . "` DROP PRIMARY KEY, ADD PRIMARY KEY(" . implode(',', $primary_data) . ")");
 				}
+				
+				foreach ($table['field'] as $field) {
+				
+				}				
+				
 				
 				//unset($table['sql']);
 								

@@ -17,7 +17,7 @@ class ModelUserUser extends Model {
 	}
 
 	public function editCode($email, $code) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET code = '" . $this->db->escape($code) . "' WHERE email = '" . $this->db->escape($email) . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET code = '" . $this->db->escape($code) . "' WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 			
 	public function deleteUser($user_id) {
@@ -93,7 +93,7 @@ class ModelUserUser extends Model {
 	}
 	
 	public function getTotalUsersByEmail($email) {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE email = '" . $this->db->escape($email) . "'");
+      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 		
 		return $query->row['total'];
 	}	

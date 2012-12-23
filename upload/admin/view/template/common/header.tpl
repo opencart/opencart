@@ -61,7 +61,7 @@ $(document).ready(function(){
   </div>
   <?php if ($logged) { ?>
   <div id="menu">
-    <ul class="left">
+    <ul class="left" style="display: none;">
       <li id="dashboard"><a href="<?php echo $home; ?>" class="top"><?php echo $text_dashboard; ?></a></li>
       <li id="catalog"><a class="top"><?php echo $text_catalog; ?></a>
         <ul>
@@ -198,7 +198,7 @@ $(document).ready(function(){
         </ul>
       </li>
     </ul>
-    <ul class="right">
+    <ul class="right" style="display: none;">
       <li id="store"><a href="<?php echo $store; ?>" target="_blank" class="top"><?php echo $text_front; ?></a>
         <ul>
           <?php foreach ($stores as $stores) { ?>

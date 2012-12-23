@@ -263,9 +263,13 @@
                 <?php } ?></td>
             </tr>
             <tr>
-              <td><?php echo $entry_upload_allowed; ?></td>
-              <td><textarea name="config_upload_allowed" cols="40" rows="5"><?php echo $config_upload_allowed; ?></textarea></td>
+              <td><?php echo $entry_file_extension_allowed; ?></td>
+              <td><textarea name="config_file_extension_allowed" cols="40" rows="5"><?php echo $config_file_extension_allowed; ?></textarea></td>
             </tr>
+            <tr>
+              <td><?php echo $entry_file_mime_allowed; ?></td>
+              <td><textarea name="config_file_mime_allowed" cols="40" rows="5"><?php echo $config_file_mime_allowed; ?></textarea></td>
+            </tr>            
           </table>
           <h2><?php echo $text_voucher; ?></h2>
           <table class="form">

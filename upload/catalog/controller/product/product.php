@@ -656,60 +656,10 @@ class ControllerProductProduct extends Controller {
         		$json['error'] = $this->language->get('error_filename');
 	  		}	  	
 
-			// Allowed File types
-		    $allowed = array(
-				// Text files
-				'txt'  => 'text/plain',
-				
-				// Images
-				'png'  => 'image/png',
-				'jpe'  => 'image/jpeg',
-				'jpeg' => 'image/jpeg',
-				'jpg'  => 'image/jpeg',
-				'gif'  => 'image/gif',
-				'bmp'  => 'image/bmp',
-				'ico'  => 'image/vnd.microsoft.icon',
-				'tiff' => 'image/tiff',
-				'tif'  => 'image/tiff',
-				'svg'  => 'image/svg+xml',
-				'svgz' => 'image/svg+xml',
-	
-				// Archives
-				'zip'  => 'application/zip',
-				'rar'  => 'application/x-rar-compressed',
-				'msi'  => 'application/x-msdownload',
-				'cab'  => 'application/vnd.ms-cab-compressed',
-	
-				// Audio/Video
-				'mp3'  => 'audio/mpeg',
-				'qt'   => 'video/quicktime',
-				'mov'  => 'video/quicktime',
-	
-				// Adobe
-				'pdf'  => 'application/pdf',
-				'psd'  => 'image/vnd.adobe.photoshop',
-				'ai'   => 'application/postscript',
-				'eps'  => 'application/postscript',
-				'ps'   => 'application/postscript',
-	
-				// MS Office
-				'doc'  => 'application/msword',
-				'rtf'  => 'application/rtf',
-				'xls'  => 'application/vnd.ms-excel',
-				'ppt'  => 'application/vnd.ms-powerpoint',
-	
-				// Open Office
-				'odt'  => 'application/vnd.oasis.opendocument.text',
-				'ods'  => 'application/vnd.oasis.opendocument.spreadsheet'
-		    );
-				
-			if (!in_array($this->request->files['file']['type'], array_values($allowed))) {
-				$json['error'] = 'Incorrect file type!';
-			}
-						
+			// Allowed file extension types
 			$allowed = array();
 			
-			$filetypes = explode(',', $this->config->get('config_upload_allowed'));
+			$filetypes = explode("\n", $this->config->get('config_file_extension_allowed'));
 			
 			foreach ($filetypes as $filetype) {
 				$allowed[] = trim($filetype);
@@ -718,6 +668,19 @@ class ControllerProductProduct extends Controller {
 			if (!in_array(substr(strrchr($filename, '.'), 1), $allowed)) {
 				$json['error'] = $this->language->get('error_filetype');
        		}	
+			
+			// Allowed file mime types		
+		    $allowed = array();
+			
+			$filetypes = explode("\n", $this->config->get('config_file_mime_allowed'));
+			
+			foreach ($filetypes as $filetype) {
+				$allowed[] = trim($filetype);
+			}
+							
+			if (!in_array($this->request->files['file']['type'], $filetypes)) {
+				$json['error'] = $this->language->get('error_filetype');
+			}
 						
 			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);

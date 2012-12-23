@@ -45,7 +45,8 @@ $_['entry_admin_limit']   	       = 'Default Items Per Page (Admin):<br /><span 
 $_['entry_product_count']          = 'Category Product Count:<br /><span class="help">Show the number of products inside the subcategories in the storefront header category menu. Be warned, this will cause an extreme performance hit for stores with a lot of subcategories!</span>';
 $_['entry_review']       	       = 'Allow Reviews:<br /><span class="help">Enable/Disable new review entry and display of existing reviews</span>';
 $_['entry_download']               = 'Allow Downloads:';
-$_['entry_upload_allowed']         = 'Allowed Upload File Extensions:<br /><span class="help">Add which file extensions are allowed to be uploaded. Use comma separated values.</span>';
+$_['entry_file_extension_allowed'] = 'Allowed File Extensions:<br /><span class="help">Add which file extensions are allowed to be uploaded. Use a new line for each value.</span>';
+$_['entry_file_mime_allowed']      = 'Allowed File Mimie Types:<br /><span class="help">Add which file mime types are allowed to be uploaded. Use a new line for each value.</span>';
 $_['entry_voucher_min']            = 'Voucher Min:<br /><span class="help">Minimum amount a customer can purchase a voucher for.</span>';
 $_['entry_voucher_max']            = 'Voucher Max:<br /><span class="help">Maximum amount a customer can purchase a voucher for.</span>';
 $_['entry_tax']                    = 'Display Prices With Tax:';

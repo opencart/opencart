@@ -55,10 +55,10 @@ class ModelUpgrade extends Model {
 			preg_match_all('#`(\w[\w\d]*)`\s+((tinyint|smallint|mediumint|bigint|int|tinytext|text|mediumtext|longtext|tinyblob|blob|mediumblob|longblob|varchar|char|datetime|date|float|double|decimal|timestamp|time|year|enum|set|binary|varbinary)(\((\d+)(,\s*(\d+))?\))?){1}\s*(collate (\w+)\s*)?(unsigned\s*)?((NOT\s*NULL\s*)|(NULL\s*))?(auto_increment\s*)?(default \'([^\']*)\'\s*)?#i', $sql, $match);
 
 			foreach(array_keys($match[0]) as $key) {
-				$field_data[$match[1][$key]] = array(
+				$field_data[] = array(
 					'name'          => trim($match[1][$key]),
-					'type'          => trim($match[3][$key]),
-					'size'          => trim($match[5][$key]),
+					'type'          => strtoupper(trim($match[3][$key])),
+					'size'          => str_replace(array('(', ')'), '', trim($match[4][$key])),
 					'sizeext'       => trim($match[8][$key]),
 					'collation'     => trim($match[9][$key]),
 					'unsigned'      => trim($match[10][$key]),
@@ -134,6 +134,8 @@ class ModelUpgrade extends Model {
 			}
 		}
 
+		//print_r($table_new_data);
+
 		//$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 		$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, 'test');
 
@@ -165,16 +167,14 @@ class ModelUpgrade extends Model {
 				$table_old_data[$table['Tables_in_' . 'test']] = $field_data;
 			}
 		}
-		
-		print_r($table_old_data);
 						
 		foreach ($table_new_data as $table) {
 			// If table is not found create it
 			if (!isset($table_old_data[$table['name']])) {
-				//$db->query($table['sql']);
-				
-				//echo $table['sql'] . "\n\n";
+				$db->query($table['sql']);
 			} else {
+				$i = 0;
+				
 				foreach ($table['field'] as $field) {
 					// If field is not found create it
 					if (!isset($table_old_data[$table['name']][$field['name']])) {
@@ -198,51 +198,47 @@ class ModelUpgrade extends Model {
 						
 						if ($field['autoincrement']) {
 							$sql .= " AUTO_INCREMENT";
-						} else {
-							
 						}
 						
-						//$db->query($sql);
-												
-						//echo $sql . "\n";
+						if (isset($table['field'][$i - 1])) {
+							$sql .= " AFTER `" . $table['field'][$i - 1]['name'] . "`";
+						} else {
+							$sql .= " FIRST";
+						}
+						
+						$db->query($sql);
 					} else {
-						// Remove auto_increment if not needed in new db
-						if ($table_old_data[$table['name']][$field['name']]['extra'] == 'auto_increment' && !$field['autoincrement']) {
-							$sql = "ALTER TABLE `" . $table['name'] . "` CHANGE `" . $field['name'] . "` `" . $field['name'] . "`";	
-						
-							$sql .= " " . $field['type'];
-									
-							if ($field['size']) {
-								$sql .= "(" . $field['size'] . ")";
-							}
-							
-							if ($field['notnull']) {
-								$sql .= " " . $field['notnull'];
-							}
-						
-							if ($field['default']) {
-								$sql .= " DEFAULT '" . $field['default'] . "'";
-							}
-							
-							if ($field['autoincrement']) {
-								$sql .= " AUTO_INCREMENT";
-							}
-													
-							//$db->query($sql);
-							
-							//echo $sql . "\n";							
-						}							
-						
-						$sql = "ALTER TABLE `" . $table['name'] . "` MODIFY `" . $field['name'] . "`";
-						
-						$sql .= " " . $field['type'];
+						$sql = "ALTER TABLE `" . $table['name'] . "` CHANGE `" . $field['name'] . "` `" . $field['name'] . "`";
+						//`telephone` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+						$sql .= " " . strtoupper($field['type']);
 								
 						if ($field['size']) {
 							$sql .= "(" . $field['size'] . ")";
 						}
 							
 						if ($field['collation']) {
-							$sql .= " " . $field['collation'];
+							//$sql .= " " . $field['collation'];
+						}
+						
+						$type_data = array(
+							'CHAR',
+							'VARCHAR',
+							'TINYTEXT',
+							'TEXT',
+							'MEDIUMTEXT',
+							'LONGTEXT',
+							'TINYBLOB',
+							'BLOB',
+							'MEDIUMBLOB',
+							'LONGBLOB',
+							'ENUM',
+							'SET',
+							'BINARY',
+							'VARBINARY'
+						);
+						
+						if (in_array($field['type'], $type_data)) {
+							$sql .= " CHARACTER SET utf8 COLLATE utf8_general_ci";
 						}
 						
 						if ($field['notnull']) {
@@ -257,12 +253,26 @@ class ModelUpgrade extends Model {
 							$sql .= " AUTO_INCREMENT";
 						}
 						
-						//$db->query($sql);
-						
-						//echo $sql . "\n";					
+						$db->query($sql);
 					}
+					
+					$i++;
 				}
 				
+				// Drop primary keys and indexes.
+				$query = $db->query("SHOW INDEXES FROM `" . $table['name'] . "`");
+				
+				foreach ($query->rows as $result) {
+					if ($result['Key_name'] != 'PRIMARY') {
+						$db->query("ALTER TABLE `" . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
+					} else {
+						
+					}
+				}				
+				
+				//$db->query("ALTER TABLE `" . $table['name'] . "` DROP PRIMARY KEY");
+				
+				//print_r($query->rows);
 				// Just drop the curent primary key and add new ones.
 				$primary_data = array();
 
@@ -271,25 +281,37 @@ class ModelUpgrade extends Model {
 				}
 
 				if ($primary_data) {
-					$sql = "ALTER TABLE `" . $table['name'] . "` DROP PRIMARY KEY, ADD PRIMARY KEY(" . implode(',', $primary_data) . ")";
+					//$db->query("ALTER TABLE `" . $table['name'] . "` DROP PRIMARY KEY, ADD PRIMARY KEY(" . implode(',', $primary_data) . ")");
 				}
 				
-				//echo $sql . "\n";
+				//unset($table['sql']);
+								
+				//echo 'New DB' . "\n";
 				
-				print_r($table);
 				
-				// add the indexes
-				// ALTER TABLE `oc_product_description` DROP INDEX name
-				// ALTER TABLE  `oc_product_description` ADD INDEX (  `name` )				
+				//echo 'Old DB' . "\n";
+				//print_r($table_old_data[$table['name']]);
 				
+				// Drop indexes
+
+				
+				// Add the new indexes				
 				foreach ($table['index'] as $index) {
+					$index_data = array();
 					
+					foreach ($index as $key) {
+						$index_data[] = '`' . $key . '`';
+					}
+					
+					if ($index_data) {
+						$db->query("ALTER TABLE `" . $table['name'] . "` ADD INDEX (" . implode(',', $index_data) . ")");			
+					}	
+					
+									
 				}
-				
-				
+
 				// Change DB engine
-				// ALTER TABLE  `oc_coupon_description` ENGINE = INNODB
-				
+				// ALTER TABLE  `oc_coupon_description` ENGINE = INNODB				
 			}
 		}
 		

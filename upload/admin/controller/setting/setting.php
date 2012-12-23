@@ -69,7 +69,8 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_product_count'] = $this->language->get('entry_product_count');
 		$this->data['entry_review'] = $this->language->get('entry_review');
 		$this->data['entry_download'] = $this->language->get('entry_download');
-		$this->data['entry_upload_allowed'] = $this->language->get('entry_upload_allowed');
+		$this->data['entry_file_extension_allowed'] = $this->language->get('entry_file_extension_allowed');
+		$this->data['entry_file_mime_allowed'] = $this->language->get('entry_file_mime_allowed');
 		$this->data['entry_voucher_min'] = $this->language->get('entry_voucher_min');
 		$this->data['entry_voucher_max'] = $this->language->get('entry_voucher_max');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
@@ -513,10 +514,16 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_download'] = $this->config->get('config_download');
 		}
 		
-		if (isset($this->request->post['config_upload_allowed'])) {
-			$this->data['config_upload_allowed'] = $this->request->post['config_upload_allowed'];
+		if (isset($this->request->post['config_file_extension_allowed'])) {
+			$this->data['config_file_extension_allowed'] = $this->request->post['config_file_extension_allowed'];
 		} else {
-			$this->data['config_upload_allowed'] = $this->config->get('config_upload_allowed');
+			$this->data['config_file_extension_allowed'] = $this->config->get('config_file_extension_allowed');
+		}
+		
+		if (isset($this->request->post['config_file_mime_allowed'])) {
+			$this->data['config_file_mime_allowed'] = $this->request->post['config_file_mime_allowed'];
+		} else {
+			$this->data['config_file_mime_allowed'] = $this->config->get('config_file_mime_allowed');
 		}		
 		
 		if (isset($this->request->post['config_voucher_min'])) {

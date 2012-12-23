@@ -466,35 +466,35 @@ class ControllerCatalogDownload extends Controller {
 					$json['error'] = $this->language->get('error_filename');
 				}	  	
 				
-				// Allowed File types
-				$disallowed = array(
-				    'txt'  => 'text/plain',
-					'htm'  => 'text/html',
-					'html' => 'text/html',
-					'php'  => 'text/html',
-					'css'  => 'text/css',
-					'js'   => 'application/javascript',
-					'json' => 'application/json',
-					'xml'  => 'application/xml',
-					'swf'  => 'application/x-shockwave-flash',
-					'flv'  => 'video/x-flv'
-				);
-					
-				if (in_array($this->request->files['file']['type'], array_values($disallowed))) {
-					$json['error'] = $this->language->get('error_filetype');
-				}				
+				// Allowed file extension types
+				$allowed = array();
 				
-				$disallowed = array();
-				
-				$filetypes = explode(',', '.php');
+				$filetypes = explode("\n", $this->config->get('config_file_extension_allowed'));
 				
 				foreach ($filetypes as $filetype) {
 					$allowed[] = trim($filetype);
 				}
-			
-				if (!in_array(substr(strrchr($filename, '.'), 1), $disallowed)) {
+				
+				if (!in_array(substr(strrchr($filename, '.'), 1), $allowed)) {
 					$json['error'] = $this->language->get('error_filetype');
 				}	
+				
+				// Allowed file mime types		
+				$allowed = array();
+				
+				$filetypes = explode("\n", $this->config->get('config_file_mime_allowed'));
+				
+				foreach ($filetypes as $filetype) {
+					$allowed[] = trim($filetype);
+				}
+								
+				if (!in_array($this->request->files['file']['type'], $filetypes)) {
+					$json['error'] = $this->language->get('error_filetype');
+				}
+							
+				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
+					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
+				}
 									
 				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);

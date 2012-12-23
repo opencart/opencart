@@ -253,10 +253,20 @@ class ModelUpgrade extends Model {
 							$sql .= " AUTO_INCREMENT";
 						}
 						
+						if (isset($table['field'][$i - 1])) {
+							$sql .= " AFTER `" . $table['field'][$i - 1]['name'] . "`";
+						} else {
+							$sql .= " FIRST";
+						}
+												
 						$db->query($sql);
 					}
 					
 					$i++;
+				}
+				
+				foreach ($table['field'] as $field) {
+				
 				}
 				
 				// Drop primary keys and indexes.

@@ -125,7 +125,7 @@ class ModelCatalogProduct extends Model {
 				}
 
 				if (!empty($data['filter_description'])) {
-					$sql .= " OR MATCH(pd.description) AGAINST('" . $this->db->escape($data['filter_name']) . "')";
+					$sql .= " OR pd.description LIKE '" . $this->db->escape($data['filter_name']) . "'";
 				}
 			}
 			
@@ -134,7 +134,7 @@ class ModelCatalogProduct extends Model {
 			}
 			
 			if (!empty($data['filter_tag'])) {
-				$sql .= "MATCH(pd.tag) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_tag'])) . "')";
+				$sql .= "pd.tag LIKE '" . $this->db->escape(utf8_strtolower($data['filter_tag'])) . "'";
 			}
 			
 			if (!empty($data['filter_name'])) {
@@ -526,7 +526,7 @@ class ModelCatalogProduct extends Model {
 				}
 
 				if (!empty($data['filter_description'])) {
-					$sql .= " OR MATCH(pd.description) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "')";
+					$sql .= " OR pd.description LIKE '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
 				}
 			}
 			
@@ -535,7 +535,7 @@ class ModelCatalogProduct extends Model {
 			}
 			
 			if (!empty($data['filter_tag'])) {
-				$sql .= "MATCH(pd.tag) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_tag'])) . "')";
+				$sql .= "pd.tag LIKE '" . $this->db->escape(utf8_strtolower($data['filter_tag'])) . "'";
 			}
 		
 			if (!empty($data['filter_name'])) {

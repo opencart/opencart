@@ -122,8 +122,8 @@ class ControllerCommonHeader extends Controller {
 		}
 		
 		$this->children = array(
-			'module/language',
-			'module/currency',
+			'module/language/module',
+			'module/currency/module',
 			'module/cart'
 		);
 				

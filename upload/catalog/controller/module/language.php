@@ -1,7 +1,7 @@
 <?php  
 class ControllerModuleLanguage extends Controller {
 	public function index() {
-    	if (isset($this->request->post['language_code'])) {
+		if (isset($this->request->post['language_code'])) {
 			$this->load->model('localisation/language');
 
 			$languages = array();

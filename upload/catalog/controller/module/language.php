@@ -1,16 +1,32 @@
 <?php  
 class ControllerModuleLanguage extends Controller {
-	protected function index() {
+	public function index() {
     	if (isset($this->request->post['language_code'])) {
-			$this->session->data['language'] = $this->request->post['language_code'];
-		
+			$languages = array();
+			$results = $this->model_localisation_language->getLanguages();
+			
+			foreach ($results as $result) {
+				if ($result['status']) {
+					$languages[] = $result['code'];
+				}
+			}
+			
+			if (in_array($this->request->post['language_code'], $languages)) {
+				$this->session->data['language'] = $this->request->post['language_code'];
+			}
+			
 			if (isset($this->request->post['redirect'])) {
 				$this->redirect($this->request->post['redirect']);
 			} else {
 				$this->redirect($this->url->link('common/home'));
 			}
-    	}		
-		
+			
+   		} else {
+			$this->redirect($this->url->link('common/home'));
+		}
+	}
+	
+	protected function module() {
 		$this->language->load('module/language');
 		
 		$this->data['text_language'] = $this->language->get('text_language');

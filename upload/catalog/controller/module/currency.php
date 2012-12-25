@@ -1,6 +1,6 @@
 <?php  
 class ControllerModuleCurrency extends Controller {
-	protected function index() {
+	public function index() {
 		if (isset($this->request->post['currency_code'])) {
       		$this->currency->set($this->request->post['currency_code']);
 			
@@ -12,8 +12,13 @@ class ControllerModuleCurrency extends Controller {
 			} else {
 				$this->redirect($this->url->link('common/home'));
 			}
-   		}
-		
+			
+   		} else {
+			$this->redirect($this->url->link('common/home'));
+		}
+	}
+	
+	protected function module() {
 		$this->language->load('module/currency');
 		
     	$this->data['text_currency'] = $this->language->get('text_currency');

@@ -134,19 +134,19 @@ class ModelUpgrade extends Model {
 			}
 		}
 
-		//$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-		$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, 'test');
+		//$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+		$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
 		// Get all current tables, fields, type, size, etc..
 		$table_old_data = array();
 		
-		$table_query = $db->query("SHOW TABLES FROM `" . 'test' . "`");
+		$table_query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
 				
 		foreach ($table_query->rows as $table) {
-			if (utf8_substr($table['Tables_in_' . 'test'], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+			if (utf8_substr($table['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
 				$field_data = array(); 
 				
-				$field_query = $db->query("SHOW COLUMNS FROM `" . $table['Tables_in_' . 'test'] . "`");
+				$field_query = $this->db->query("SHOW COLUMNS FROM `" . $table['Tables_in_' . DB_DATABASE] . "`");
 				
 				foreach ($field_query->rows as $field) {
 					preg_match('/\((.*)\)/', $field['Type'], $match);
@@ -162,14 +162,14 @@ class ModelUpgrade extends Model {
 					);
 				}
 				
-				$table_old_data[$table['Tables_in_' . 'test']] = $field_data;
+				$table_old_data[$table['Tables_in_' . DB_DATABASE]] = $field_data;
 			}
 		}
 						
 		foreach ($table_new_data as $table) {
 			// If table is not found create it
 			if (!isset($table_old_data[$table['name']])) {
-				$db->query($table['sql']);
+				$this->db->query($table['sql']);
 			} else {
 				$i = 0;
 				
@@ -204,7 +204,7 @@ class ModelUpgrade extends Model {
 							$sql .= " FIRST";
 						}
 						
-						$db->query($sql);
+						$this->db->query($sql);
 					} else {
 						$sql = "ALTER TABLE `" . $table['name'] . "` CHANGE `" . $field['name'] . "` `" . $field['name'] . "`";
 
@@ -257,7 +257,7 @@ class ModelUpgrade extends Model {
 							$sql .= " FIRST";
 						}
 												
-						$db->query($sql);
+						$this->db->query($sql);
 					}
 					
 					$i++;
@@ -266,18 +266,18 @@ class ModelUpgrade extends Model {
 				$status = false;
 				
 				// Drop primary keys and indexes.
-				$query = $db->query("SHOW INDEXES FROM `" . $table['name'] . "`");
+				$query = $this->db->query("SHOW INDEXES FROM `" . $table['name'] . "`");
 				
 				foreach ($query->rows as $result) {
 					if ($result['Key_name'] != 'PRIMARY') {
-						$db->query("ALTER TABLE `" . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
+						$this->db->query("ALTER TABLE `" . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
 					} else {
 						$status = true;
 					}
 				}
 				
 				if ($status) {
-					$db->query("ALTER TABLE `" . $table['name'] . "` DROP PRIMARY KEY");
+					$this->db->query("ALTER TABLE `" . $table['name'] . "` DROP PRIMARY KEY");
 				}
 				
 				// Add a new primary key.
@@ -288,7 +288,7 @@ class ModelUpgrade extends Model {
 				}
 
 				if ($primary_data) {
-					$db->query("ALTER TABLE `" . $table['name'] . "` ADD PRIMARY KEY(" . implode(',', $primary_data) . ")");
+					$this->db->query("ALTER TABLE `" . $table['name'] . "` ADD PRIMARY KEY(" . implode(',', $primary_data) . ")");
 				}
 				
 				// Add the new indexes				
@@ -300,7 +300,7 @@ class ModelUpgrade extends Model {
 					}
 					
 					if ($index_data) {
-						$db->query("ALTER TABLE `" . $table['name'] . "` ADD INDEX (" . implode(',', $index_data) . ")");			
+						$this->db->query("ALTER TABLE `" . $table['name'] . "` ADD INDEX (" . implode(',', $index_data) . ")");			
 					}	
 				}
 				
@@ -352,7 +352,7 @@ class ModelUpgrade extends Model {
 							$sql .= " AUTO_INCREMENT";
 						}
 												
-						$db->query($sql);
+						$this->db->query($sql);
 					
 					}
 				}
@@ -363,7 +363,7 @@ class ModelUpgrade extends Model {
 		}
 		
 		// Settings
-		$query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0' ORDER BY store_id ASC");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0' ORDER BY store_id ASC");
 
 		foreach ($query->rows as $setting) {
 			if (!$setting['serialized']) {
@@ -375,36 +375,34 @@ class ModelUpgrade extends Model {
 		
 		// Set defaults for new Voucher Min/Max fields if not set
 		if (empty($settings['config_voucher_min'])) {
-			$db->query("INSERT INTO " . DB_PREFIX . "setting SET value = '1', `key` = 'config_voucher_min', `group` = 'config', store_id = 0");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "setting SET value = '1', `key` = 'config_voucher_min', `group` = 'config', store_id = 0");
 		}
 		
 		if (empty($settings['config_voucher_max'])) {
-			$db->query("INSERT INTO " . DB_PREFIX . "setting SET value = '1000', `key` = 'config_voucher_max', `group` = 'config', store_id = 0");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "setting SET value = '1000', `key` = 'config_voucher_max', `group` = 'config', store_id = 0");
 		}
 		
 		if (isset($table_old_data[DB_PREFIX . 'customer_group']['name'])) {
 			// Customer Group 'name' field moved to new customer_group_description table. Need to loop through and move over.
-			$customer_group_query = $db->query("DESC " . DB_PREFIX . "customer_group `name`");
+			$customer_group_query = $this->db->query("DESC " . DB_PREFIX . "customer_group `name`");
 			
 			if ($customer_group_query->num_rows) {
-				$customer_group_query = $db->query("SELECT * FROM " . DB_PREFIX . "customer_group");
+				$customer_group_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_group");
 				
-				$default_language_query = $db->query("SELECT language_id FROM " . DB_PREFIX . "language WHERE code = '" . $settings['config_admin_language'] . "'");
+				$default_language_query = $this->db->query("SELECT language_id FROM " . DB_PREFIX . "language WHERE code = '" . $settings['config_admin_language'] . "'");
 				
 				$default_language_id = $default_language_query->row['language_id'];
 				
 				foreach ($customer_group_query->rows as $customer_group) {
-					$db->query("INSERT INTO " . DB_PREFIX . "customer_group_description SET customer_group_id = '" . (int)$customer_group['customer_group_id'] . "', language_id = '" . (int)$default_language_id . "', `name` = '" . $db->escape($customer_group['name']) . "' ON DUPLICATE KEY UPDATE customer_group_id = customer_group_id");
+					$this->db->query("INSERT INTO " . DB_PREFIX . "customer_group_description SET customer_group_id = '" . (int)$customer_group['customer_group_id'] . "', language_id = '" . (int)$default_language_id . "', `name` = '" . $this->db->escape($customer_group['name']) . "' ON DUPLICATE KEY UPDATE customer_group_id = customer_group_id");
 				}
 				
 				// Comment this for now in case people want to roll back to 1.5.2 from 1.5.3
 				// Uncomment it when 1.5.4 is out.
-				$db->query("ALTER TABLE `" . DB_PREFIX . "customer_group` DROP `name`");			
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_group` DROP `name`");			
 			}
 		}
 		
-		// We can do all the SQL changes here
-				
 		// Sort the categories to take advantage of the nested set model
 		$this->repairCategories(0);
 	}

@@ -35,7 +35,7 @@ class ModelSaleAffiliate extends Model {
 		$implode = array();
 		
 		if (!empty($data['filter_name'])) {
-			$implode[] = "LCASE(CONCAT(a.firstname, ' ', a.lastname)) LIKE '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "%'";
+			$implode[] = "CONCAT(a.firstname, ' ', a.lastname) LIKE '" . $this->db->escape($data['filter_name']) . "%'";
 		}
 
 		if (!empty($data['filter_email'])) {

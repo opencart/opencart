@@ -43,7 +43,7 @@ class ModelCatalogDownload extends Model {
 		$sql = "SELECT * FROM " . DB_PREFIX . "download d LEFT JOIN " . DB_PREFIX . "download_description dd ON (d.download_id = dd.download_id) WHERE dd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(dd.name) LIKE '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "%'";
+			$sql .= " AND dd.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
 		}
 		
 		$sort_data = array(

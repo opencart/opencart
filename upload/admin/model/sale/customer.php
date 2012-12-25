@@ -70,11 +70,11 @@ class ModelSaleCustomer extends Model {
 		$implode = array();
 		
 		if (!empty($data['filter_name'])) {
-			$implode[] = "LCASE(CONCAT(c.firstname, ' ', c.lastname)) LIKE '%" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "%'";
+			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
 		}
 		
 		if (!empty($data['filter_email'])) {
-			$implode[] = "LCASE(c.email) LIKE '" . $this->db->escape(utf8_strtolower($data['filter_email'])) . "%'";
+			$implode[] = "c.email LIKE '" . $this->db->escape($data['filter_email']) . "%'";
 		}
 
 		if (isset($data['filter_newsletter']) && !is_null($data['filter_newsletter'])) {
@@ -262,11 +262,11 @@ class ModelSaleCustomer extends Model {
 		$implode = array();
 		
 		if (!empty($data['filter_name'])) {
-			$implode[] = "LCASE(CONCAT(firstname, ' ', lastname)) LIKE '%" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "%'";
+			$implode[] = "CONCAT(firstname, ' ', lastname) LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
 		}
 		
 		if (!empty($data['filter_email'])) {
-			$implode[] = "LCASE(email) LIKE '" . $this->db->escape(utf8_strtolower($data['filter_email'])) . "%'";
+			$implode[] = "email LIKE '" . $this->db->escape($data['filter_email']) . "%'";
 		}
 		
 		if (isset($data['filter_newsletter']) && !is_null($data['filter_newsletter'])) {

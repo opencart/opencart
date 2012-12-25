@@ -134,8 +134,6 @@ class ModelUpgrade extends Model {
 			}
 		}
 
-		//print_r($table_new_data);
-
 		//$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 		$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, 'test');
 
@@ -209,7 +207,108 @@ class ModelUpgrade extends Model {
 						$db->query($sql);
 					} else {
 						$sql = "ALTER TABLE `" . $table['name'] . "` CHANGE `" . $field['name'] . "` `" . $field['name'] . "`";
-						//`telephone` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+
+						$sql .= " " . strtoupper($field['type']);
+													
+						if ($field['size']) {
+							$sql .= "(" . $field['size'] . ")";
+						}
+						
+						$type_data = array(
+							'CHAR',
+							'VARCHAR',
+							'TINYTEXT',
+							'TEXT',
+							'MEDIUMTEXT',
+							'LONGTEXT',
+							'TINYBLOB',
+							'BLOB',
+							'MEDIUMBLOB',
+							'LONGBLOB',
+							'ENUM',
+							'SET',
+							'BINARY',
+							'VARBINARY'
+						);
+											
+						if (in_array($field['type'], $type_data)) {
+							$sql .= " CHARACTER SET utf8 COLLATE utf8_general_ci";
+						}
+						
+						if ($field['collation']) {
+							//$sql .= " " . $field['collation'];
+						}
+												
+						if ($field['notnull']) {
+							$sql .= " " . $field['notnull'];
+						}
+						
+						if ($field['default']) {
+							$sql .= " DEFAULT '" . $field['default'] . "'";
+						}
+						
+						if ($field['autoincrement']) {
+							//$sql .= " AUTO_INCREMENT";
+						}
+						
+						if (isset($table['field'][$i - 1])) {
+							$sql .= " AFTER `" . $table['field'][$i - 1]['name'] . "`";
+						} else {
+							$sql .= " FIRST";
+						}
+												
+						$db->query($sql);
+					}
+					
+					$i++;
+				}
+
+				$status = false;
+				
+				// Drop primary keys and indexes.
+				$query = $db->query("SHOW INDEXES FROM `" . $table['name'] . "`");
+				
+				foreach ($query->rows as $result) {
+					if ($result['Key_name'] != 'PRIMARY') {
+						$db->query("ALTER TABLE `" . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
+					} else {
+						$status = true;
+					}
+				}
+				
+				if ($status) {
+					$db->query("ALTER TABLE `" . $table['name'] . "` DROP PRIMARY KEY");
+				}
+				
+				// Add a new primary key.
+				$primary_data = array();
+
+				foreach ($table['primary'] as $primary) {
+					$primary_data[] = "`" . $primary . "`";
+				}
+
+				if ($primary_data) {
+					$db->query("ALTER TABLE `" . $table['name'] . "` ADD PRIMARY KEY(" . implode(',', $primary_data) . ")");
+				}
+				
+				// Add the new indexes				
+				foreach ($table['index'] as $index) {
+					$index_data = array();
+					
+					foreach ($index as $key) {
+						$index_data[] = '`' . $key . '`';
+					}
+					
+					if ($index_data) {
+						$db->query("ALTER TABLE `" . $table['name'] . "` ADD INDEX (" . implode(',', $index_data) . ")");			
+					}	
+				}
+				
+				// Add auto increment to primary keys again 
+				foreach ($table['field'] as $field) {
+					if ($field['autoincrement']) {
+						$sql = "ALTER TABLE `" . $table['name'] . "` CHANGE `" . $field['name'] . "` `" . $field['name'] . "`";
+		
 						$sql .= " " . strtoupper($field['type']);
 								
 						if ($field['size']) {
@@ -252,83 +351,17 @@ class ModelUpgrade extends Model {
 						if ($field['autoincrement']) {
 							$sql .= " AUTO_INCREMENT";
 						}
-						
-						if (isset($table['field'][$i - 1])) {
-							$sql .= " AFTER `" . $table['field'][$i - 1]['name'] . "`";
-						} else {
-							$sql .= " FIRST";
-						}
 												
 						$db->query($sql);
+					
 					}
-					
-					$i++;
 				}
 				
-
-				
-				// Drop primary keys and indexes.
-				$query = $db->query("SHOW INDEXES FROM `" . $table['name'] . "`");
-				
-				foreach ($query->rows as $result) {
-					if ($result['Key_name'] != 'PRIMARY') {
-						$db->query("ALTER TABLE `" . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
-					} else {
-						
-					}
-				}				
-				
-				//$db->query("ALTER TABLE `" . $table['name'] . "` DROP PRIMARY KEY");
-				
-				//print_r($query->rows);
-				// Just drop the curent primary key and add new ones.
-				$primary_data = array();
-
-				foreach ($table['primary'] as $primary) {
-					$primary_data[] = "`" . $primary . "`";
-				}
-
-				if ($primary_data) {
-					$db->query("ALTER TABLE `" . $table['name'] . "` DROP PRIMARY KEY, ADD PRIMARY KEY(" . implode(',', $primary_data) . ")");
-				}
-				
-				foreach ($table['field'] as $field) {
-				
-				}				
-				
-				
-				//unset($table['sql']);
-								
-				//echo 'New DB' . "\n";
-				
-				
-				//echo 'Old DB' . "\n";
-				//print_r($table_old_data[$table['name']]);
-				
-				// Drop indexes
-
-				
-				// Add the new indexes				
-				foreach ($table['index'] as $index) {
-					$index_data = array();
-					
-					foreach ($index as $key) {
-						$index_data[] = '`' . $key . '`';
-					}
-					
-					if ($index_data) {
-						$db->query("ALTER TABLE `" . $table['name'] . "` ADD INDEX (" . implode(',', $index_data) . ")");			
-					}	
-					
-									
-				}
-
 				// Change DB engine
 				// ALTER TABLE  `oc_coupon_description` ENGINE = INNODB				
 			}
 		}
 		
-		/*
 		// Settings
 		$query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0' ORDER BY store_id ASC");
 
@@ -339,26 +372,66 @@ class ModelUpgrade extends Model {
 				$settings[$setting['key']] = unserialize($setting['value']);
 			}
 		}
-		*/
+		
+		// Set defaults for new Voucher Min/Max fields if not set
+		if (empty($settings['config_voucher_min'])) {
+			$db->query("INSERT INTO " . DB_PREFIX . "setting SET value = '1', `key` = 'config_voucher_min', `group` = 'config', store_id = 0");
+		}
+		
+		if (empty($settings['config_voucher_max'])) {
+			$db->query("INSERT INTO " . DB_PREFIX . "setting SET value = '1000', `key` = 'config_voucher_max', `group` = 'config', store_id = 0");
+		}
+		
+		if (isset($table_old_data[DB_PREFIX . 'customer_group']['name'])) {
+			// Customer Group 'name' field moved to new customer_group_description table. Need to loop through and move over.
+			$customer_group_query = $db->query("DESC " . DB_PREFIX . "customer_group `name`");
+			
+			if ($customer_group_query->num_rows) {
+				$customer_group_query = $db->query("SELECT * FROM " . DB_PREFIX . "customer_group");
 				
+				$default_language_query = $db->query("SELECT language_id FROM " . DB_PREFIX . "language WHERE code = '" . $settings['config_admin_language'] . "'");
+				
+				$default_language_id = $default_language_query->row['language_id'];
+				
+				foreach ($customer_group_query->rows as $customer_group) {
+					$db->query("INSERT INTO " . DB_PREFIX . "customer_group_description SET customer_group_id = '" . (int)$customer_group['customer_group_id'] . "', language_id = '" . (int)$default_language_id . "', `name` = '" . $db->escape($customer_group['name']) . "' ON DUPLICATE KEY UPDATE customer_group_id = customer_group_id");
+				}
+				
+				// Comment this for now in case people want to roll back to 1.5.2 from 1.5.3
+				// Uncomment it when 1.5.4 is out.
+				$db->query("ALTER TABLE `" . DB_PREFIX . "customer_group` DROP `name`");			
+			}
+		}
+		
 		// We can do all the SQL changes here
 				
 		// Sort the categories to take advantage of the nested set model
-		//$this->path(0, 0);
+		$this->repairCategories(0);
 	}
 	
-	protected function path($category_id = 0, $level) {
-		$this->db->query("UPDATE " . DB_PREFIX . "category SET `left` = '" . (int)$level++ . "' WHERE category_id = '" . (int)$category_id . "'");
+	// Function to repair any erroneous categories that are not in the category path table.
+	public function repairCategories($parent_id = 0) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category WHERE parent_id = '" . (int)$parent_id . "'");
 		
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category WHERE parent_id = '" . (int)$category_id . "' ORDER BY sort_order");
-		
-		foreach ($query->rows as $result) {
-			$level = $this->path($result['category_id'], $level);
+		foreach ($query->rows as $category) {
+			// Delete the path below the current one
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "category_path` WHERE category_id = '" . (int)$category['category_id'] . "'");
+			
+			// Fix for records with no paths
+			$level = 0;
+			
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE category_id = '" . (int)$parent_id . "' ORDER BY level ASC");
+			
+			foreach ($query->rows as $result) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET category_id = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$result['path_id'] . "', level = '" . (int)$level . "'");
+				
+				$level++;
+			}
+			
+			$this->db->query("REPLACE INTO `" . DB_PREFIX . "category_path` SET category_id = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$category['category_id'] . "', level = '" . (int)$level . "'");
+						
+			$this->repairCategories($category['category_id']);
 		}
-		
-		$this->db->query("UPDATE " . DB_PREFIX . "category SET `right` = '" . (int)$level++ . "' WHERE category_id = '" . (int)$category_id . "'");
-	
-		return $level;
-	}	
+	}
 }
 ?>

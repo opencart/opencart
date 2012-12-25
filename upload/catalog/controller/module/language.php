@@ -2,6 +2,8 @@
 class ControllerModuleLanguage extends Controller {
 	public function index() {
     	if (isset($this->request->post['language_code'])) {
+			$this->load->model('localisation/language');
+
 			$languages = array();
 			$results = $this->model_localisation_language->getLanguages();
 			
@@ -21,7 +23,7 @@ class ControllerModuleLanguage extends Controller {
 				$this->redirect($this->url->link('common/home'));
 			}
 			
-   		} else {
+		} else {
 			$this->redirect($this->url->link('common/home'));
 		}
 	}

@@ -13,7 +13,7 @@ class ControllerModuleCurrency extends Controller {
 				$this->redirect($this->url->link('common/home'));
 			}
 			
-   		} else {
+		} else {
 			$this->redirect($this->url->link('common/home'));
 		}
 	}

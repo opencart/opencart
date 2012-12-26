@@ -65,9 +65,8 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 
 There are many all-in-one webservers out there and most of them should work with OpenCart out of the box. Some examples...
 
+http://www.apachefriends.org/en/xampp.html
 http://www.ampps.com/
 http://www.usbwebserver.net
-http://www.apachefriends.org/en/xampp.html
-
 
 EOF

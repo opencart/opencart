@@ -3,6 +3,41 @@ class ModelUpgrade extends Model {
 	public function mysql() {
 		// Upgrade script to opgrade opencart to the latst version. 
 		// Oldest version supported is 1.3.2
+			
+		//$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+		$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+
+		$this->db->query("RENAME TABLE `" . DB_PREFIX . "customer_ip_blacklist` TO `" . DB_PREFIX . "customer_ban_ip`");
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_ban_ip` CHANGE `customer_ip_blacklist_id`  `customer_ban_ip_id` INT(11) NOT NULL AUTO_INCREMENT");
+
+		// Get all current tables, fields, type, size, etc..
+		$table_old_data = array();
+		
+		$table_query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
+				
+		foreach ($table_query->rows as $table) {
+			if (utf8_substr($table['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+				$field_data = array(); 
+				
+				$field_query = $this->db->query("SHOW COLUMNS FROM `" . $table['Tables_in_' . DB_DATABASE] . "`");
+				
+				foreach ($field_query->rows as $field) {
+					preg_match('/\((.*)\)/', $field['Type'], $match);
+					
+					$field_data[$field['Field']] = array(
+						'name'    => $field['Field'],
+						'type'    => preg_replace('/\(.*\)/', '', $field['Type']),
+						'size'    => isset($match[1]) ? $match[1] : '',
+						'null'    => $field['Null'],
+						'key'     => $field['Key'],
+						'default' => $field['Default'],
+						'extra'   => $field['Extra']
+					);
+				}
+				
+				$table_old_data[$table['Tables_in_' . DB_DATABASE]] = $field_data;
+			}
+		}		
 		
 		// Load the sql file
 		$file = DIR_APPLICATION . 'opencart.sql';
@@ -131,38 +166,6 @@ class ModelUpgrade extends Model {
 					'index'   => $index_data,
 					'option'  => $option_data
 				);
-			}
-		}
-
-		//$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-		$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-
-		// Get all current tables, fields, type, size, etc..
-		$table_old_data = array();
-		
-		$table_query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
-				
-		foreach ($table_query->rows as $table) {
-			if (utf8_substr($table['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
-				$field_data = array(); 
-				
-				$field_query = $this->db->query("SHOW COLUMNS FROM `" . $table['Tables_in_' . DB_DATABASE] . "`");
-				
-				foreach ($field_query->rows as $field) {
-					preg_match('/\((.*)\)/', $field['Type'], $match);
-					
-					$field_data[$field['Field']] = array(
-						'name'    => $field['Field'],
-						'type'    => preg_replace('/\(.*\)/', '', $field['Type']),
-						'size'    => isset($match[1]) ? $match[1] : '',
-						'null'    => $field['Null'],
-						'key'     => $field['Key'],
-						'default' => $field['Default'],
-						'extra'   => $field['Extra']
-					);
-				}
-				
-				$table_old_data[$table['Tables_in_' . DB_DATABASE]] = $field_data;
 			}
 		}
 						

@@ -271,10 +271,10 @@
                 <td class="left"><a href="http://www.geoiptool.com/en/?IP=<?php echo $ip['ip']; ?>" target="_blank"><?php echo $ip['ip']; ?></a></td>
                 <td class="right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
                 <td class="left"><?php echo $ip['date_added']; ?></td>
-                <td class="right"><?php if ($ip['blacklist']) { ?>
-                  <b>[</b> <a id="<?php echo str_replace('.', '-', $ip['ip']); ?>" onclick="removeBlacklist('<?php echo $ip['ip']; ?>');"><?php echo $text_remove_blacklist; ?></a> <b>]</b>
+                <td class="right"><?php if ($ip['ban_ip']) { ?>
+                  <b>[</b> <a id="<?php echo str_replace('.', '-', $ip['ip']); ?>" onclick="removeBanIP('<?php echo $ip['ip']; ?>');"><?php echo $text_remove_ban_ip; ?></a> <b>]</b>
                   <?php } else { ?>
-                  <b>[</b> <a id="<?php echo str_replace('.', '-', $ip['ip']); ?>" onclick="addBlacklist('<?php echo $ip['ip']; ?>');"><?php echo $text_add_blacklist; ?></a> <b>]</b>
+                  <b>[</b> <a id="<?php echo str_replace('.', '-', $ip['ip']); ?>" onclick="addBanIP('<?php echo $ip['ip']; ?>');"><?php echo $text_add_ban_ip; ?></a> <b>]</b>
                   <?php } ?></td>
               </tr>
               <?php } ?>
@@ -462,7 +462,7 @@ $('#button-history').bind('click', function() {
 		complete: function() {
 			$('#button-history').attr('disabled', false);
 			$('.attention').remove();
-      $('#tab-history textarea[name=\'comment\']').val('');
+      		$('#tab-history textarea[name=\'comment\']').val('');
 		},
 		success: function(html) {
 			$('#history').html(html);
@@ -538,21 +538,25 @@ function addRewardPoints() {
 	});
 }
 
-function addBlacklist(ip) {
+function addBanIP(ip) {
+	var id = ip.replace(/\./g, '-');
+	
 	$.ajax({
-		url: 'index.php?route=sale/customer/addblacklist&token=<?php echo $token; ?>',
+		url: 'index.php?route=sale/customer/addbanip&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent(ip),
 		beforeSend: function() {
 			$('.success, .warning').remove();
 			
-			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> Please wait!</div>');			
+			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');		
 		},
 		complete: function() {
-			$('.attention').remove();
+			
 		},			
 		success: function(json) {
+			$('.attention').remove();
+			
 			if (json['error']) {
 				 $('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
 				
@@ -564,27 +568,28 @@ function addBlacklist(ip) {
 				
 				$('.success').fadeIn('slow');
 				
-				$('#' + ip.replace(/\./g, '-')).replaceWith('<a id="' + ip.replace(/\./g, '-') + '" onclick="removeBlacklist(\'' + ip + '\');"><?php echo $text_remove_blacklist; ?></a>');
+				$('#' + id).replaceWith('<a id="' + id + '" onclick="removeBanIP(\'' + ip + '\');"><?php echo $text_remove_ban_ip; ?></a>');
 			}
 		}
 	});	
 }
 
-function removeBlacklist(ip) {
+function removeBanIP(ip) {
+	var id = ip.replace(/\./g, '-');
+	
 	$.ajax({
-		url: 'index.php?route=sale/customer/removeblacklist&token=<?php echo $token; ?>',
+		url: 'index.php?route=sale/customer/removebanip&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent(ip),
 		beforeSend: function() {
 			$('.success, .warning').remove();
 			
-			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> Please wait!</div>');				
-		},
-		complete: function() {
-			$('.attention').remove();
-		},			
+			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');					
+		},	
 		success: function(json) {
+			$('.attention').remove();
+			
 			if (json['error']) {
 				 $('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
 				
@@ -596,7 +601,7 @@ function removeBlacklist(ip) {
 				
 				$('.success').fadeIn('slow');
 				
-				$('#' + ip.replace(/\./g, '-')).replaceWith('<a id="' + ip.replace(/\./g, '-') + '" onclick="addBlacklist(\'' + ip + '\');"><?php echo $text_add_blacklist; ?></a>');
+				$('#' + id).replaceWith('<a id="' + id + '" onclick="addBanIP(\'' + ip + '\');"><?php echo $text_add_ban_ip; ?></a>');
 			}
 		}
 	});	

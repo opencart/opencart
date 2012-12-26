@@ -1127,11 +1127,11 @@ CREATE TABLE `oc_customer_ip` (
 -- Table structure for table `oc_customer_ip_blacklist`
 --
 
-DROP TABLE IF EXISTS `oc_customer_ip_blacklist`;
-CREATE TABLE `oc_customer_ip_blacklist` (
-  `customer_ip_blacklist_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `oc_customer_ban_ip`;
+CREATE TABLE `oc_customer_ban_ip` (
+  `customer_ban_ip_id` int(11) NOT NULL AUTO_INCREMENT,
   `ip` varchar(40) NOT NULL,
-  PRIMARY KEY (`customer_ip_blacklist_id`),
+  PRIMARY KEY (`customer_ban_ip_id`),
   KEY `ip` (`ip`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

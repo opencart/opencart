@@ -107,7 +107,7 @@
           <td><?php if (!file_exists($config_catalog)) { ?>
             <span class="bad">Missing</span>
             <?php } elseif (!is_writable($config_catalog)) { ?>
-            <span class="bad">Unwritable</span></td>
+            <span class="bad">Unwritable</span>
           <?php } else { ?>
           <span class="good">Writable</span>
           <?php } ?>
@@ -118,10 +118,11 @@
           <td><?php if (!file_exists($config_admin)) { ?>
             <span class="bad">Missing</span>
             <?php } elseif (!is_writable($config_admin)) { ?>
-            <span class="bad">Unwritable</span></td>
+            <span class="bad">Unwritable</span>
           <?php } else { ?>
           <span class="good">Writable</span>
           <?php } ?>
+             </td>
         </tr>
       </table>
     </fieldset>

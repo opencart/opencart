@@ -134,7 +134,6 @@ class ModelUpgrade extends Model {
 			}
 		}
 		
-		//$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 		$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
 		// Get all current tables, fields, type, size, etc..
@@ -154,7 +153,7 @@ class ModelUpgrade extends Model {
 				
 				$table_old_data[$table['Tables_in_' . DB_DATABASE]] = $field_data;
 			}
-		}	
+		}
 								
 		foreach ($table_new_data as $table) {
 			// If table is not found create it
@@ -175,7 +174,7 @@ class ModelUpgrade extends Model {
 				
 				foreach ($table['field'] as $field) {
 					// If field is not found create it
-					if (in_array($table['name'], $table_old_data[$table['name']])) {
+					if (!in_array($field['name'], $table_old_data[$table['name']])) {
 						$sql = "ALTER TABLE `" . $table['name'] . "` ADD `" . $field['name'] . "` " . $field['type'];
 						
 						if ($field['size']) {
@@ -305,10 +304,10 @@ class ModelUpgrade extends Model {
 			}
 		}
 		
-		// Update any additional work
+		// Update any additional sql thats required
 		
 		// Settings
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0' ORDER BY store_id ASC");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' ORDER BY `store_id` ASC");
 
 		foreach ($query->rows as $setting) {
 			if (!$setting['serialized']) {
@@ -318,39 +317,36 @@ class ModelUpgrade extends Model {
 			}
 		}
 		
-		// Set defaults for new Voucher Min/Max fields if not set
+		// Set defaults for new voucher min/max fields if not set
 		if (empty($settings['config_voucher_min'])) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "setting SET value = '1', `key` = 'config_voucher_min', `group` = 'config', store_id = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '1', `key` = 'config_voucher_min', `group` = 'config', `store_id` = 0");
 		}
 		
 		if (empty($settings['config_voucher_max'])) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "setting SET value = '1000', `key` = 'config_voucher_max', `group` = 'config', store_id = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '1000', `key` = 'config_voucher_max', `group` = 'config', `store_id` = 0");
 		}
 		
-		if (isset($table_old_data[DB_PREFIX . 'customer_group']['name'])) {
+		// Update the customer group table
+		if (in_array('name', $table_old_data[DB_PREFIX . 'customer_group'])) {
 			// Customer Group 'name' field moved to new customer_group_description table. Need to loop through and move over.
-			$customer_group_query = $this->db->query("DESC " . DB_PREFIX . "customer_group `name`");
+			$customer_group_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_group`");
 			
-			if ($customer_group_query->num_rows) {
-				$customer_group_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_group");
-				
-				$default_language_query = $this->db->query("SELECT language_id FROM " . DB_PREFIX . "language WHERE code = '" . $settings['config_admin_language'] . "'");
-				
-				$default_language_id = $default_language_query->row['language_id'];
-				
-				foreach ($customer_group_query->rows as $customer_group) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "customer_group_description SET customer_group_id = '" . (int)$customer_group['customer_group_id'] . "', language_id = '" . (int)$default_language_id . "', `name` = '" . $this->db->escape($customer_group['name']) . "' ON DUPLICATE KEY UPDATE customer_group_id = customer_group_id");
+			foreach ($customer_group_query->rows as $customer_group) {
+				$language_query = $this->db->query("SELECT `language_id` FROM `" . DB_PREFIX . "language`");
+			
+				foreach ($language_query->rows as $language) {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group_description` SET `customer_group_id` = '" . (int)$customer_group['customer_group_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `name` = '" . $this->db->escape($customer_group['name']) . "'");
 				}
-				
-				// Comment this for now in case people want to roll back to 1.5.2 from 1.5.3
-				// Uncomment it when 1.5.4 is out.
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_group` DROP `name`");			
 			}
+			
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_group` DROP `name`");	
 		}
 		
-		//$this->db->query("RENAME TABLE `" . DB_PREFIX . "customer_ip_blacklist` TO `" . DB_PREFIX . "customer_ban_ip`");
-		//$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_ban_ip` CHANGE `customer_ip_blacklist_id`  `customer_ban_ip_id` INT(11) NOT NULL AUTO_INCREMENT");
-
+		// Customer blacklist table rename to ban ip
+		if (isset($table_old_data[DB_PREFIX . 'customer_ip_blacklist'])) {
+			$this->db->query("RENAME TABLE `" . DB_PREFIX . "customer_ip_blacklist` TO `" . DB_PREFIX . "customer_ban_ip`");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_ban_ip` CHANGE `customer_ip_blacklist_id`  `customer_ban_ip_id` INT(11) NOT NULL AUTO_INCREMENT");
+		}
 
 		// Sort the categories to take advantage of the nested set model
 		$this->repairCategories(0);
@@ -358,24 +354,24 @@ class ModelUpgrade extends Model {
 	
 	// Function to repair any erroneous categories that are not in the category path table.
 	public function repairCategories($parent_id = 0) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category WHERE parent_id = '" . (int)$parent_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` WHERE `parent_id` = '" . (int)$parent_id . "'");
 		
 		foreach ($query->rows as $category) {
 			// Delete the path below the current one
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "category_path` WHERE category_id = '" . (int)$category['category_id'] . "'");
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category['category_id'] . "'");
 			
 			// Fix for records with no paths
 			$level = 0;
 			
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE category_id = '" . (int)$parent_id . "' ORDER BY level ASC");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$parent_id . "' ORDER BY `level` ASC");
 			
 			foreach ($query->rows as $result) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET category_id = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$result['path_id'] . "', level = '" . (int)$level . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$result['path_id'] . "', `level` = '" . (int)$level . "'");
 				
 				$level++;
 			}
 			
-			$this->db->query("REPLACE INTO `" . DB_PREFIX . "category_path` SET category_id = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$category['category_id'] . "', level = '" . (int)$level . "'");
+			$this->db->query("REPLACE INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$category['category_id'] . "', `level` = '" . (int)$level . "'");
 						
 			$this->repairCategories($category['category_id']);
 		}

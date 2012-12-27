@@ -189,8 +189,8 @@ class ModelAccountCustomer extends Model {
 		return $query->rows;
 	}	
 	
-	public function isBlacklisted($ip) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_ip_blacklist` WHERE ip = '" . $this->db->escape($ip) . "'");
+	public function isBanIp($ip) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_ban_ip` WHERE ip = '" . $this->db->escape($ip) . "'");
 		
 		return $query->num_rows;
 	}	

@@ -36,9 +36,9 @@
             <?php foreach ($customer_ban_ips as $customer_ban_ip) { ?>
             <tr>
               <td style="text-align: center;"><?php if ($customer_ban_ip['selected']) { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $customer_ban_ip['customer_ip_blacklist_id']; ?>" checked="checked" />
+                <input type="checkbox" name="selected[]" value="<?php echo $customer_ban_ip['customer_ban_ip_id']; ?>" checked="checked" />
                 <?php } else { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $customer_ban_ip['customer_ip_blacklist_id']; ?>" />
+                <input type="checkbox" name="selected[]" value="<?php echo $customer_ban_ip['customer_ban_ip_id']; ?>" />
                 <?php } ?></td>
               <td class="left"><?php echo $customer_ban_ip['ip']; ?></td>
               <td class="right"><?php if ($customer_ban_ip['total']) { ?>

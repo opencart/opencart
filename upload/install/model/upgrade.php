@@ -1,44 +1,9 @@
 <?php
 class ModelUpgrade extends Model {
 	public function mysql() {
-		// Upgrade script to opgrade opencart to the latst version. 
+		// Upgrade script to opgrade opencart to the latest version. 
 		// Oldest version supported is 1.3.2
 			
-		//$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-		$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-
-		$this->db->query("RENAME TABLE `" . DB_PREFIX . "customer_ip_blacklist` TO `" . DB_PREFIX . "customer_ban_ip`");
-		$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_ban_ip` CHANGE `customer_ip_blacklist_id`  `customer_ban_ip_id` INT(11) NOT NULL AUTO_INCREMENT");
-
-		// Get all current tables, fields, type, size, etc..
-		$table_old_data = array();
-		
-		$table_query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
-				
-		foreach ($table_query->rows as $table) {
-			if (utf8_substr($table['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
-				$field_data = array(); 
-				
-				$field_query = $this->db->query("SHOW COLUMNS FROM `" . $table['Tables_in_' . DB_DATABASE] . "`");
-				
-				foreach ($field_query->rows as $field) {
-					preg_match('/\((.*)\)/', $field['Type'], $match);
-					
-					$field_data[$field['Field']] = array(
-						'name'    => $field['Field'],
-						'type'    => preg_replace('/\(.*\)/', '', $field['Type']),
-						'size'    => isset($match[1]) ? $match[1] : '',
-						'null'    => $field['Null'],
-						'key'     => $field['Key'],
-						'default' => $field['Default'],
-						'extra'   => $field['Extra']
-					);
-				}
-				
-				$table_old_data[$table['Tables_in_' . DB_DATABASE]] = $field_data;
-			}
-		}		
-		
 		// Load the sql file
 		$file = DIR_APPLICATION . 'opencart.sql';
 		
@@ -168,17 +133,49 @@ class ModelUpgrade extends Model {
 				);
 			}
 		}
-						
+		
+		//$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+		$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+
+		// Get all current tables, fields, type, size, etc..
+		$table_old_data = array();
+		
+		$table_query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
+				
+		foreach ($table_query->rows as $table) {
+			if (utf8_substr($table['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+				$field_data = array(); 
+				
+				$field_query = $this->db->query("SHOW COLUMNS FROM `" . $table['Tables_in_' . DB_DATABASE] . "`");
+				
+				foreach ($field_query->rows as $field) {
+					$field_data[] = $field['Field'];
+				}
+				
+				$table_old_data[$table['Tables_in_' . DB_DATABASE]] = $field_data;
+			}
+		}	
+								
 		foreach ($table_new_data as $table) {
 			// If table is not found create it
 			if (!isset($table_old_data[$table['name']])) {
 				$this->db->query($table['sql']);
 			} else {
+				// DB Engine
+				if (isset($table['option']['ENGINE'])) {
+					$this->db->query("ALTER TABLE `" . $table['name'] . "` ENGINE = `" . $table['option']['ENGINE'] . "`");	
+				}
+				
+				// Charset
+				if (isset($table['option']['CHARSET']) && isset($table['option']['COLLATE'])) {
+					$this->db->query("ALTER TABLE `" . $table['name'] . "` DEFAULT CHARACTER SET `" . $table['option']['CHARSET'] . "` COLLATE `" . $table['option']['COLLATE'] . "`");
+				}
+							
 				$i = 0;
 				
 				foreach ($table['field'] as $field) {
 					// If field is not found create it
-					if (!isset($table_old_data[$table['name']][$field['name']])) {
+					if (in_array($table['name'], $table_old_data[$table['name']])) {
 						$sql = "ALTER TABLE `" . $table['name'] . "` ADD `" . $field['name'] . "` " . $field['type'];
 						
 						if ($field['size']) {
@@ -197,10 +194,6 @@ class ModelUpgrade extends Model {
 							$sql .= " DEFAULT '" . $field['default'] . "'";
 						}
 						
-						if ($field['autoincrement']) {
-							//$sql .= " AUTO_INCREMENT";
-						}
-						
 						if (isset($table['field'][$i - 1])) {
 							$sql .= " AFTER `" . $table['field'][$i - 1]['name'] . "`";
 						} else {
@@ -209,37 +202,15 @@ class ModelUpgrade extends Model {
 						
 						$this->db->query($sql);
 					} else {
-						$sql = "ALTER TABLE `" . $table['name'] . "` CHANGE `" . $field['name'] . "` `" . $field['name'] . "`";
-
-						$sql .= " " . strtoupper($field['type']);
+						// Remove auto increment from all fields
+						$sql = "ALTER TABLE `" . $table['name'] . "` CHANGE `" . $field['name'] . "` `" . $field['name'] . "` " . strtoupper($field['type']);
 													
 						if ($field['size']) {
 							$sql .= "(" . $field['size'] . ")";
 						}
 						
-						$type_data = array(
-							'CHAR',
-							'VARCHAR',
-							'TINYTEXT',
-							'TEXT',
-							'MEDIUMTEXT',
-							'LONGTEXT',
-							'TINYBLOB',
-							'BLOB',
-							'MEDIUMBLOB',
-							'LONGBLOB',
-							'ENUM',
-							'SET',
-							'BINARY',
-							'VARBINARY'
-						);
-											
-						if (in_array($field['type'], $type_data)) {
-							$sql .= " CHARACTER SET utf8 COLLATE utf8_general_ci";
-						}
-						
 						if ($field['collation']) {
-							//$sql .= " " . $field['collation'];
+							$sql .= " " . $field['collation'];
 						}
 												
 						if ($field['notnull']) {
@@ -248,10 +219,6 @@ class ModelUpgrade extends Model {
 						
 						if ($field['default']) {
 							$sql .= " DEFAULT '" . $field['default'] . "'";
-						}
-						
-						if ($field['autoincrement']) {
-							//$sql .= " AUTO_INCREMENT";
 						}
 						
 						if (isset($table['field'][$i - 1])) {
@@ -310,39 +277,16 @@ class ModelUpgrade extends Model {
 				// Add auto increment to primary keys again 
 				foreach ($table['field'] as $field) {
 					if ($field['autoincrement']) {
-						$sql = "ALTER TABLE `" . $table['name'] . "` CHANGE `" . $field['name'] . "` `" . $field['name'] . "`";
-		
-						$sql .= " " . strtoupper($field['type']);
+						$sql = "ALTER TABLE `" . $table['name'] . "` CHANGE `" . $field['name'] . "` `" . $field['name'] . "` " . strtoupper($field['type']);
 								
 						if ($field['size']) {
 							$sql .= "(" . $field['size'] . ")";
 						}
 							
 						if ($field['collation']) {
-							//$sql .= " " . $field['collation'];
+							$sql .= " " . $field['collation'];
 						}
-						
-						$type_data = array(
-							'CHAR',
-							'VARCHAR',
-							'TINYTEXT',
-							'TEXT',
-							'MEDIUMTEXT',
-							'LONGTEXT',
-							'TINYBLOB',
-							'BLOB',
-							'MEDIUMBLOB',
-							'LONGBLOB',
-							'ENUM',
-							'SET',
-							'BINARY',
-							'VARBINARY'
-						);
-						
-						if (in_array($field['type'], $type_data)) {
-							$sql .= " CHARACTER SET utf8 COLLATE utf8_general_ci";
-						}
-						
+												
 						if ($field['notnull']) {
 							$sql .= " " . $field['notnull'];
 						}
@@ -356,14 +300,12 @@ class ModelUpgrade extends Model {
 						}
 												
 						$this->db->query($sql);
-					
 					}
 				}
-				
-				// Change DB engine
-				// ALTER TABLE  `oc_coupon_description` ENGINE = INNODB				
 			}
 		}
+		
+		// Update any additional work
 		
 		// Settings
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0' ORDER BY store_id ASC");
@@ -406,6 +348,10 @@ class ModelUpgrade extends Model {
 			}
 		}
 		
+		//$this->db->query("RENAME TABLE `" . DB_PREFIX . "customer_ip_blacklist` TO `" . DB_PREFIX . "customer_ban_ip`");
+		//$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_ban_ip` CHANGE `customer_ip_blacklist_id`  `customer_ban_ip_id` INT(11) NOT NULL AUTO_INCREMENT");
+
+
 		// Sort the categories to take advantage of the nested set model
 		$this->repairCategories(0);
 	}

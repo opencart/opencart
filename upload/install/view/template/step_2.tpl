@@ -104,11 +104,24 @@
         </tr>
         <tr>
           <td><?php echo $config_catalog; ?></td>
-          <td><?php echo is_writable($config_catalog) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
+          <td><?php if (!file_exists($config_catalog)) { ?>
+            <span class="bad">Missing</span>
+            <?php } elseif (!is_writable($config_catalog)) { ?>
+            <span class="bad">Unwritable</span></td>
+          <?php } else { ?>
+          <span class="good">Writable</span>
+          <?php } ?>
+            </td>
         </tr>
         <tr>
           <td><?php echo $config_admin; ?></td>
-          <td><?php echo is_writable($config_admin) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
+          <td><?php if (!file_exists($config_admin)) { ?>
+            <span class="bad">Missing</span>
+            <?php } elseif (!is_writable($config_admin)) { ?>
+            <span class="bad">Unwritable</span></td>
+          <?php } else { ?>
+          <span class="good">Writable</span>
+          <?php } ?>
         </tr>
       </table>
     </fieldset>

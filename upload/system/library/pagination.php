@@ -14,16 +14,15 @@ class Pagination {
 	public $style_results = 'results';
 	 
 	public function render() {
-		$total = $this->total;
+		$total = (int)$this->total;
+		$page = (int)$this->page;
+		$limit = (int)$this->limit;
 		
-		$this->page = (int)$this->page;
-		$this->limit = (int)$this->limit;
-		
-		if ($this->page < 1) {
+		if ($page < 1) {
 			$page = 1;
 		}
 		
-		if ($this->limit < 1) {
+		if ($limit < 1) {
 			$limit = 10;
 		}
 		

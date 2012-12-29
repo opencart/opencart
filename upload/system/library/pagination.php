@@ -14,18 +14,16 @@ class Pagination {
 	public $style_results = 'results';
 	 
 	public function render() {
-		$total = $this->total;
+		$total = (int)$this->total;
+		$page = (int)$this->page;
+		$limit = (int)$this->limit;
 		
-		if ($this->page < 1) {
+		if ($page < 1) {
 			$page = 1;
-		} else {
-			$page = $this->page;
 		}
 		
-		if (!(int)$this->limit) {
+		if ($limit < 1) {
 			$limit = 10;
-		} else {
-			$limit = $this->limit;
 		}
 		
 		$num_links = $this->num_links;

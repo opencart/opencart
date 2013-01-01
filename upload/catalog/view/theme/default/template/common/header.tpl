@@ -43,6 +43,11 @@ DD_belatedPNG.fix('#logo img');
 </script>
 <![endif]-->
 <?php echo $google_analytics; ?>
+<script type="text/javascript">
+<?php foreach ($stores as $store) { ?>
+$().load('<?php echo $store; ?>');
+<?php } ?>
+</script>
 </head>
 <body>
 <div id="container">

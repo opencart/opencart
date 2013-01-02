@@ -1,9 +1,9 @@
 <?php
 
 // Heading
-$_['heading_title'] = 'Klarna Invoice';
+$_['heading_title'] = 'Klarna Account';
 
-$_['text_klarna_invoice'] = '<a onclick="window.open(\'https://merchants.klarna.com/signup?locale=en&partner_id=d5c87110cebc383a826364769047042e777da5e8&utm_campaign=Platform&utm_medium=Partners&utm_source=Opencart\');"><img src="https://cdn.klarna.com/public/images/global/logos/v1/basic/global_basic_logo_std_blue-black.png?width=60&eid=opencart" alt="Klarna Invoice" title="Klarna Invoice" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_klarna_account'] = '<a onclick="window.open(\'https://merchants.klarna.com/signup?locale=en&partner_id=d5c87110cebc383a826364769047042e777da5e8&utm_campaign=Platform&utm_medium=Partners&utm_source=Opencart\');"><img src="https://cdn.klarna.com/public/images/global/logos/v1/basic/global_basic_logo_std_blue-black.png?width=60&eid=opencart" alt="Klarna Account" title="Klarna Account" style="border: 1px solid #EEEEEE;" /></a>';
 
 // Text
 $_['text_payment'] = 'Payment';

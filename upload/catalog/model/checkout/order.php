@@ -25,6 +25,12 @@ class ModelCheckoutOrder extends Model {
 			
 		foreach ($data['totals'] as $total) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_total SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($total['code']) . "', title = '" . $this->db->escape($total['title']) . "', text = '" . $this->db->escape($total['text']) . "', `value` = '" . (float)$total['value'] . "', sort_order = '" . (int)$total['sort_order'] . "'");
+            
+            if ($total['klarna_tax'] != '') {
+                $order_total_id = $this->db->getLastId();
+                
+                $this->db->query("INSERT INTO `" . DB_PREFIX . "order_total_klarna` SET `order_total_id` = " . (int) $order_total_id . ", `tax` = '" . (float) $total['klarna_tax'] . "'");
+            }
 		}	
 
 		return $order_id;
@@ -97,6 +103,9 @@ class ModelCheckoutOrder extends Model {
 				'telephone'               => $order_query->row['telephone'],
 				'fax'                     => $order_query->row['fax'],
 				'email'                   => $order_query->row['email'],
+				'payment_company'         => $order_query->row['payment_company'],
+				'payment_company_id'      => $order_query->row['payment_company_id'],
+				'payment_tax_id'          => $order_query->row['payment_tax_id'],
 				'payment_firstname'       => $order_query->row['payment_firstname'],
 				'payment_lastname'        => $order_query->row['payment_lastname'],				
 				'payment_company'         => $order_query->row['payment_company'],

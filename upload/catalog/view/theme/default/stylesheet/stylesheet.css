@@ -1643,3 +1643,58 @@ ul.box-filter > li ul {
 .banner div img {
 	margin-bottom: 20px;
 }
+
+/* Klarna's branding */
+
+#klarna-payment-form #payment > table {
+    width: 580px;
+    float: left;
+}
+#klarna-payment-form #payment > .payment-options {
+    float: left;
+    width: 370px;
+}
+
+#klarna-payment-form input[type="text"] {
+    width: 99%;
+}
+
+.klarna_baloon {
+    width: 210px;
+    position: absolute;
+    z-index: 100;
+}
+
+.klarna_baloon_top {
+    width: 100%;
+    height: 14px;
+    background-image: url('../image/klarna_green_full.png');
+    background-repeat: no-repeat;
+    background-position: 0 top;
+}
+
+.klarna_baloon_middle {
+    width: 100%;
+    min-height: 30px;
+    background-image: url('../image/klarna_green_middle.png');
+    background-repeat: repeat-y;
+}
+
+.klarna_baloon_middle div {
+    color: #FFF;
+    font-size: 11px;
+    margin: 0px 24px 0px 5px;
+    padding-bottom: 5px;
+    position: relative;
+    font-family: Arial, Verdana, Helvetica;
+}
+
+.klarna_baloon_bottom {
+    width: 100%;
+    height: 25px;
+    background-image: url('../image/klarna_green_full.png');
+    background-repeat: no-repeat;
+    background-position: 0 bottom;
+}
+
+/* End of Klarna's Branding */

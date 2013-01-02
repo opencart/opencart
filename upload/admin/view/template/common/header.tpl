@@ -61,7 +61,7 @@ $(document).ready(function(){
   </div>
   <?php if ($logged) { ?>
   <div id="menu">
-    <ul class="left">
+    <ul class="left" style="display: none;">
       <li id="dashboard"><a href="<?php echo $home; ?>" class="top"><?php echo $text_dashboard; ?></a></li>
       <li id="catalog"><a class="top"><?php echo $text_catalog; ?></a>
         <ul>
@@ -99,7 +99,7 @@ $(document).ready(function(){
               <li><a href="<?php echo $customer; ?>"><?php echo $text_customer; ?></a></li>
               <li><a href="<?php echo $customer_group; ?>"><?php echo $text_customer_group; ?></a></li>
               <li><a href="<?php echo $custom_field; ?>"><?php echo $text_custom_field; ?></a></li>
-              <li><a href="<?php echo $customer_blacklist; ?>"><?php echo $text_customer_blacklist; ?></a></li>
+              <li><a href="<?php echo $customer_ban_ip; ?>"><?php echo $text_customer_ban_ip; ?></a></li>
             </ul>
           </li>
           <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
@@ -198,7 +198,7 @@ $(document).ready(function(){
         </ul>
       </li>
     </ul>
-    <ul class="right">
+    <ul class="right" style="display: none;">
       <li id="store"><a href="<?php echo $store; ?>" target="_blank" class="top"><?php echo $text_front; ?></a>
         <ul>
           <?php foreach ($stores as $stores) { ?>

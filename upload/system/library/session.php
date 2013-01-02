@@ -14,9 +14,6 @@ class Session {
 			session_set_cookie_params(0, '/');
 			session_start();
 			
-			// Regenerate the session ID on each request so it can not be hijacked.
-			session_regenerate_id();
-			
 			$this->data =& $_SESSION;
 		}
 	}

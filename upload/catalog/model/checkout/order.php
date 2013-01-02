@@ -178,7 +178,7 @@ class ModelCheckoutOrder extends Model {
 				}
 			}
 
-			// Blacklist
+			// Ban IP
 			$status = false;
 			
 			$this->load->model('account/customer');
@@ -187,14 +187,14 @@ class ModelCheckoutOrder extends Model {
 				$results = $this->model_account_customer->getIps($order_info['customer_id']);
 				
 				foreach ($results as $result) {
-					if ($this->model_account_customer->isBlacklisted($result['ip'])) {
+					if ($this->model_account_customer->isBanIp($result['ip'])) {
 						$status = true;
 						
 						break;
 					}
 				}
 			} else {
-				$status = $this->model_account_customer->isBlacklisted($order_info['ip']);
+				$status = $this->model_account_customer->isBanIp($order_info['ip']);
 			}
 			
 			if ($status) {
@@ -595,7 +595,7 @@ class ModelCheckoutOrder extends Model {
 				}
 			}			
 
-			// Blacklist
+			// Ban IP
 			$status = false;
 			
 			$this->load->model('account/customer');
@@ -605,14 +605,14 @@ class ModelCheckoutOrder extends Model {
 				$results = $this->model_account_customer->getIps($order_info['customer_id']);
 				
 				foreach ($results as $result) {
-					if ($this->model_account_customer->isBlacklisted($result['ip'])) {
+					if ($this->model_account_customer->isBanIp($result['ip'])) {
 						$status = true;
 						
 						break;
 					}
 				}
 			} else {
-				$status = $this->model_account_customer->isBlacklisted($order_info['ip']);
+				$status = $this->model_account_customer->isBanIp($order_info['ip']);
 			}
 			
 			if ($status) {

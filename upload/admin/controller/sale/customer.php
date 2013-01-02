@@ -602,8 +602,8 @@ class ControllerSaleCustomer extends Controller {
 		$this->data['text_none'] = $this->language->get('text_none');
     	$this->data['text_wait'] = $this->language->get('text_wait');
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_add_blacklist'] = $this->language->get('text_add_blacklist');
-		$this->data['text_remove_blacklist'] = $this->language->get('text_remove_blacklist');
+		$this->data['text_add_ban_ip'] = $this->language->get('text_add_ban_ip');
+		$this->data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
 		
 		$this->data['column_ip'] = $this->language->get('column_ip');
 		$this->data['column_total'] = $this->language->get('column_total');
@@ -918,14 +918,14 @@ class ControllerSaleCustomer extends Controller {
 			$results = $this->model_sale_customer->getIpsByCustomerId($this->request->get['customer_id']);
 		
 			foreach ($results as $result) {
-				$blacklist_total = $this->model_sale_customer->getTotalBlacklistsByIp($result['ip']);
+				$ban_ip_total = $this->model_sale_customer->getTotalBanIpsByIp($result['ip']);
 				
 				$this->data['ips'][] = array(
 					'ip'         => $result['ip'],
 					'total'      => $this->model_sale_customer->getTotalCustomersByIp($result['ip']),
 					'date_added' => date('d/m/y', strtotime($result['date_added'])),
 					'filter_ip'  => $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . '&filter_ip=' . $result['ip'], 'SSL'),
-					'blacklist'  => $blacklist_total
+					'ban_ip'     => $ban_ip_total
 				);
 			}
 		}		
@@ -1297,7 +1297,7 @@ class ControllerSaleCustomer extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	public function addBlacklist() {
+	public function addBanIP() {
 		$this->language->load('sale/customer');
 		
 		$json = array();
@@ -1308,7 +1308,7 @@ class ControllerSaleCustomer extends Controller {
 			} else {
 				$this->load->model('sale/customer');
 				
-				$this->model_sale_customer->addBlacklist($this->request->post['ip']);
+				$this->model_sale_customer->addBanIP($this->request->post['ip']);
 				
 				$json['success'] = $this->language->get('text_success');
 			}
@@ -1317,7 +1317,7 @@ class ControllerSaleCustomer extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 	
-	public function removeBlacklist() {
+	public function removeBanIP() {
 		$this->language->load('sale/customer');
 		
 		$json = array();
@@ -1328,7 +1328,7 @@ class ControllerSaleCustomer extends Controller {
 			} else {
 				$this->load->model('sale/customer');
 				
-				$this->model_sale_customer->deleteBlacklist($this->request->post['ip']);
+				$this->model_sale_customer->removeBanIP($this->request->post['ip']);
 				
 				$json['success'] = $this->language->get('text_success');
 			}

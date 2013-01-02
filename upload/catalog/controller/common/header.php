@@ -56,7 +56,17 @@ class ControllerCommonHeader extends Controller {
 						
 			$this->model_tool_online->whosonline($ip, $this->customer->getId(), $url, $referer);
 		}
+		
+		$this->load->model('setting/store');
+		
+		$this->data['stores'] = array();
+		
+		$stores = $this->model_setting_store->getStores();
 				
+		foreach ($stores as $store) {
+			$this->data['stores'][] = $store['url'] . 'test.php?session_id=' . $this->session->getId();
+		}		
+		
 		$this->language->load('common/header');
 		
 		$this->data['text_home'] = $this->language->get('text_home');

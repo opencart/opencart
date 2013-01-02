@@ -55,7 +55,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 					}
 				}
 			}
-						 
+					 
 			$sort_order = array(); 
 		  
 			foreach ($method_data as $key => $value) {
@@ -64,7 +64,8 @@ class ControllerCheckoutPaymentMethod extends Controller {
 	
 			array_multisort($sort_order, SORT_ASC, $method_data);			
 			
-			$this->session->data['payment_methods'] = $method_data;			
+			$this->session->data['payment_methods'] = $method_data;	
+			
 		}			
 		
 		$this->data['text_payment_method'] = $this->language->get('text_payment_method');
@@ -170,10 +171,8 @@ class ControllerCheckoutPaymentMethod extends Controller {
 		if (!$json) {
 			if (!isset($this->request->post['payment_method'])) {
 				$json['error']['warning'] = $this->language->get('error_payment');
-			} else {
-				if (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
-					$json['error']['warning'] = $this->language->get('error_payment');
-				}
+			} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
+				$json['error']['warning'] = $this->language->get('error_payment');
 			}	
 							
 			if ($this->config->get('config_checkout_id')) {

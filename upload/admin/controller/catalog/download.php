@@ -465,7 +465,37 @@ class ControllerCatalogDownload extends Controller {
 				if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 128)) {
 					$json['error'] = $this->language->get('error_filename');
 				}	  	
-						
+				
+				// Allowed file extension types
+				$allowed = array();
+				
+				$filetypes = explode("\n", $this->config->get('config_file_extension_allowed'));
+				
+				foreach ($filetypes as $filetype) {
+					$allowed[] = trim($filetype);
+				}
+				
+				if (!in_array(substr(strrchr($filename, '.'), 1), $allowed)) {
+					$json['error'] = $this->language->get('error_filetype');
+				}	
+				
+				// Allowed file mime types		
+				$allowed = array();
+				
+				$filetypes = explode("\n", $this->config->get('config_file_mime_allowed'));
+				
+				foreach ($filetypes as $filetype) {
+					$allowed[] = trim($filetype);
+				}
+								
+				if (!in_array($this->request->files['file']['type'], $filetypes)) {
+					$json['error'] = $this->language->get('error_filetype');
+				}
+							
+				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
+					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
+				}
+									
 				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
 				}

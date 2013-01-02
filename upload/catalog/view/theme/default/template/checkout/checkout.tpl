@@ -907,7 +907,7 @@ $('#button-payment-method').live('click', function() {
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
-				});					
+				});	
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

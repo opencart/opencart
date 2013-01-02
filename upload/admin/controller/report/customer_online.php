@@ -40,13 +40,13 @@ class ControllerReportCustomerOnline extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token']),
+       		'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
        		'text'      => $this->language->get('text_home'),
       		'separator' => false
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'href'      => $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url),
+       		'href'      => $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url, 'SSL'),
        		'text'      => $this->language->get('heading_title'),
       		'separator' => ' :: '
    		);
@@ -73,7 +73,7 @@ class ControllerReportCustomerOnline extends Controller {
 			if ($result['customer_id']) {
 				$action[] = array(
 					'text' => 'Edit',
-					'href' => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'])
+					'href' => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'], 'SSL')
 				);
 			}
 			
@@ -124,7 +124,7 @@ class ControllerReportCustomerOnline extends Controller {
 		$pagination->total = $customer_total;
 		$pagination->page = $page;
 		$pagination->limit = 20; 
-		$pagination->url = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url . '&page={page}');
+		$pagination->url = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
 		

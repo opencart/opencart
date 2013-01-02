@@ -3,8 +3,10 @@
 define('VERSION', '1.5.5');
 
 // Configuration
-require_once('config.php');
-   
+if (file_exists('config.php')) {
+	require_once('config.php');
+}  
+
 // Install 
 if (!defined('DIR_APPLICATION')) {
 	header('Location: install/index.php');
@@ -145,7 +147,7 @@ foreach ($query->rows as $result) {
 
 $detect = '';
 
-if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && ($request->server['HTTP_ACCEPT_LANGUAGE'])) { 
+if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_ACCEPT_LANGUAGE']) { 
 	$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
 	
 	foreach ($browser_languages as $browser_language) {
@@ -224,9 +226,6 @@ $controller = new Front($registry);
 // SEO URL's
 $controller->addPreAction(new Action('common/seo_url'));	
 
-// Shared Cookies
-$controller->addPreAction(new Action('common/shared'));
-
 // Maintenance Mode
 $controller->addPreAction(new Action('common/maintenance'));
 	
@@ -242,4 +241,6 @@ $controller->dispatch($action, new Action('error/not_found'));
 
 // Output
 $response->output();
+
+print_r($_COOKIE);
 ?>

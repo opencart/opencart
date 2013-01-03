@@ -2192,6 +2192,13 @@ CREATE TABLE `oc_order_total` (
 -- Dumping data for table `oc_order_total`
 --
 
+DROP TABLE IF EXISTS `oc_order_total_klarna`
+CREATE TABLE `oc_order_total_klarna` (
+    `order_total_id` INT,
+    `tax` decimal(10, 4) NOT NULL,
+    PRIMARY KEY (`order_total_id`)
+);
+
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `oc_order_voucher`;

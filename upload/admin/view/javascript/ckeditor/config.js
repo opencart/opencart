@@ -7,26 +7,25 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here.
 	// For the complete reference:
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
+	config.filebrowserWindowWidth = '800';
+	config.filebrowserWindowHeight = '500';
+	config.resize_enabled = false;
+	config.htmlEncodeOutput = false;
+	config.entities = false;
+	config.toolbar = 'Custom';
 
-	// The toolbar groups arrangement, optimized for two toolbar rows.
-	config.toolbarGroups = [
-		{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
-		{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
-		{ name: 'links' },
-		{ name: 'insert' },
-		{ name: 'forms' },
-		{ name: 'tools' },
-		{ name: 'document',	   groups: [ 'mode', 'document', 'doctools' ] },
-		{ name: 'others' },
+	config.toolbar_Custom = [
+		['Source'],
+		['Maximize'],
+		['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+		['NumberedList','BulletedList','-','Outdent','Indent'],
+		['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
+		['SpecialChar'],
 		'/',
-		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align' ] },
-		{ name: 'styles' },
-		{ name: 'colors' },
-		{ name: 'about' }
+		['Undo','Redo'],
+		['Font','FontSize'],
+		['TextColor','BGColor'],
+		['Link','Unlink','Anchor'],
+		['Image','Table','HorizontalRule']
 	];
-
-	// Remove some buttons, provided by the standard plugins, which we don't
-	// need to have in the Standard(s) toolbar.
-	config.removeButtons = 'Underline,Subscript,Superscript';
 };

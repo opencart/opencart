@@ -32,41 +32,6 @@ class ControllerCommonHeader extends Controller {
 			$this->data['logo'] = '';
 		}		
 		
-		// Whos Online
-		if ($this->config->get('config_customer_online')) {
-			$this->load->model('tool/online');
-	
-			if (isset($this->request->server['REMOTE_ADDR'])) {
-				$ip = $this->request->server['REMOTE_ADDR'];	
-			} else {
-				$ip = ''; 
-			}
-			
-			if (isset($this->request->server['HTTP_HOST']) && isset($this->request->server['REQUEST_URI'])) {
-				$url = 'http://' . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI'];	
-			} else {
-				$url = '';
-			}
-			
-			if (isset($this->request->server['HTTP_REFERER'])) {
-				$referer = $this->request->server['HTTP_REFERER'];	
-			} else {
-				$referer = '';
-			}
-						
-			$this->model_tool_online->whosonline($ip, $this->customer->getId(), $url, $referer);
-		}
-		
-		$this->load->model('setting/store');
-		
-		$this->data['stores'] = array();
-		
-		$stores = $this->model_setting_store->getStores();
-				
-		foreach ($stores as $store) {
-			$this->data['stores'][] = $store['url'] . 'test.php?session_id=' . $this->session->getId();
-		}		
-		
 		$this->language->load('common/header');
 		
 		$this->data['text_home'] = $this->language->get('text_home');
@@ -85,6 +50,35 @@ class ControllerCommonHeader extends Controller {
 		$this->data['shopping_cart'] = $this->url->link('checkout/cart');
 		$this->data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
 		
+		// Daniel's robot detector
+		$status = true;
+		
+		if (isset($this->request->server['HTTP_USER_AGENT'])) {
+			$robots = explode("\n", trim($this->config->get('config_robots')));
+
+			foreach ($robots as $robot) {
+				if (strpos($this->request->server['HTTP_USER_AGENT'], trim($robot)) !== false) {
+					$status = false;
+
+					break;
+				}
+			}
+		}
+		
+		// A dirty hack to try to set a cookie for the multi-store feature
+		$this->load->model('setting/store');
+		
+		$this->data['stores'] = array();
+		
+		if ($this->config->get('config_shared') && $status) {
+			$stores = $this->model_setting_store->getStores();
+					
+			foreach ($stores as $store) {
+				$this->data['stores'][] = $store['url'] . 'catalog/view/javascript/crossdomain.html?session_id=' . $this->session->getId();
+			}
+		}
+				
+		// Search		
 		if (isset($this->request->get['search'])) {
 			$this->data['search'] = $this->request->get['search'];
 		} else {

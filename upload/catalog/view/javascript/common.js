@@ -86,25 +86,28 @@ $(document).ready(function() {
 	});	
 });
 
-function getURLVar(urlVarName) {
-	var urlHalves = String(document.location).toLowerCase().split('?');
-	var urlVarValue = '';
+function getURLVar(key) {
+	var value = [];
 	
-	if (urlHalves[1]) {
-		var urlVars = urlHalves[1].split('&');
+	var query = String(document.location).split('?');
+	
+	if (query[1]) {
+		var part = query[1].split('&');
 
-		for (var i = 0; i <= (urlVars.length); i++) {
-			if (urlVars[i]) {
-				var urlVarPair = urlVars[i].split('=');
-				
-				if (urlVarPair[0] && urlVarPair[0] == urlVarName.toLowerCase()) {
-					urlVarValue = urlVarPair[1];
-				}
+		for (i = 0; i < part.length; i++) {
+			var data = part[i].split('=');
+			
+			if (data[0] && data[1]) {
+				value[data[0]] = data[1];
 			}
 		}
+		
+		if (value[key]) {
+			return value[key];
+		} else {
+			return '';
+		}
 	}
-	
-	return urlVarValue;
 } 
 
 function addToCart(product_id, quantity) {

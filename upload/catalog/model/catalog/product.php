@@ -48,7 +48,7 @@ class ModelCatalogProduct extends Model {
 				'length_class_id'  => $query->row['length_class_id'],
 				'subtract'         => $query->row['subtract'],
 				'rating'           => round($query->row['rating']),
-				'reviews'          => $query->row['reviews'],
+				'reviews'          => $query->row['reviews'] ? $query->row['reviews'] : 0,
 				'minimum'          => $query->row['minimum'],
 				'sort_order'       => $query->row['sort_order'],
 				'status'           => $query->row['status'],

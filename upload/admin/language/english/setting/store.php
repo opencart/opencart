@@ -10,8 +10,8 @@ $_['text_account']                 = 'Account';
 $_['text_checkout']                = 'Checkout';
 $_['text_stock']                   = 'Stock';
 $_['text_image_manager']           = 'Image Manager';
-$_['text_browse']                  = 'Browse Files';
-$_['text_clear']                   = 'Clear Image';
+$_['text_browse']                  = 'Browse';
+$_['text_clear']                   = 'Clear';
 $_['text_shipping']                = 'Shipping Address';
 $_['text_payment']                 = 'Payment Address';
 

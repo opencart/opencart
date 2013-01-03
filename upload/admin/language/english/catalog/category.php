@@ -6,8 +6,8 @@ $_['heading_title']          = 'Category';
 $_['text_success']           = 'Success: You have modified categories!';
 $_['text_default']           = 'Default';
 $_['text_image_manager']     = 'Image Manager';
-$_['text_browse']            = 'Browse Files';
-$_['text_clear']             = 'Clear Image';
+$_['text_browse']            = 'Browse';
+$_['text_clear']             = 'Clear';
 
 // Column
 $_['column_name']            = 'Category Name';

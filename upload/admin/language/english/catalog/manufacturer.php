@@ -6,8 +6,8 @@ $_['heading_title']      = 'Manufacturer';
 $_['text_success']       = 'Success: You have modified manufacturers!';
 $_['text_default']       = 'Default';
 $_['text_image_manager'] = 'Image Manager';
-$_['text_browse']        = 'Browse Files';
-$_['text_clear']         = 'Clear Image';
+$_['text_browse']        = 'Browse';
+$_['text_clear']         = 'Clear';
 $_['text_percent']       = 'Percentage';
 $_['text_amount']        = 'Fixed Amount';
 

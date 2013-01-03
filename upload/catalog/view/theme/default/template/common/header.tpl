@@ -23,16 +23,11 @@
 <script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
 <link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" />
-<script type="text/javascript" src="catalog/view/javascript/jquery/ui/external/jquery.cookie.js"></script>
-<script type="text/javascript" src="catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js"></script>
-<link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/colorbox/colorbox.css" media="screen" />
-<script type="text/javascript" src="catalog/view/javascript/jquery/tabs.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/common.js"></script>
-<script type="text/javascript" src="catalog/view/javascript/jquery/jquery.total-storage.min.js"></script>
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
-<!--[if IE 7]>
+<!--[if IE 7]> 
 <link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/ie7.css" />
 <![endif]-->
 <!--[if lt IE 7]>
@@ -42,12 +37,16 @@
 DD_belatedPNG.fix('#logo img');
 </script>
 <![endif]-->
-<?php echo $google_analytics; ?>
-<script type="text/javascript">
+<?php if ($stores) { ?>
+<script type="text/javascript"><!--
+$(document).ready(function() {
 <?php foreach ($stores as $store) { ?>
-$().load('<?php echo $store; ?>');
+$('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></iframe>');
 <?php } ?>
-</script>
+});
+//--></script>
+<?php } ?>
+<?php echo $google_analytics; ?>
 </head>
 <body>
 <div id="container">

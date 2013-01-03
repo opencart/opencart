@@ -70,6 +70,8 @@ class ControllerProductSearch extends Controller {
 		} else {
 			$this->document->setTitle($this->language->get('heading_title'));
 		}
+		
+		$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 
 		$this->data['breadcrumbs'] = array();
 

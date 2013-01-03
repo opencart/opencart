@@ -1,6 +1,4 @@
 <?php
-header('P3P: CP="CAO COR CURa ADMa DEVa OUR IND ONL COM DEM PRE"');
-
 // Version
 define('VERSION', '1.5.5');
 
@@ -237,6 +235,4 @@ $controller->dispatch($action, new Action('error/not_found'));
 
 // Output
 $response->output();
-
-print_r($_COOKIE);
 ?>

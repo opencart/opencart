@@ -55,7 +55,22 @@ class ModelAccountCustomer extends Model {
 		
 		// Send to main admin email if new account email is enabled
 		if ($this->config->get('config_account_mail')) {
+			$message  = $this->language->get('text_signup') . "\n\n";
+			$message .= $this->language->get('text_website') . ' ' . $this->config->get('config_name') . "\n";
+			$message .= $this->language->get('text_firstname') . ' ' . $data['firstname'] . "\n";
+			$message .= $this->language->get('text_lastname') . ' ' . $data['lastname'] . "\n";
+			$message .= $this->language->get('text_customer_group') . ' ' . $customer_group_info['name'] . "\n";
+			
+			if ($data['company']) {
+				$message .= $this->language->get('text_company') . ' '  . $data['company'] . "\n";
+			}
+			
+			$message .= $this->language->get('text_email') . ' '  .  $data['email'] . "\n";
+			$message .= $this->language->get('text_telephone') . ' ' . $data['telephone'] . "\n";
+			
 			$mail->setTo($this->config->get('config_email'));
+			$mail->setSubject(html_entity_decode($this->language->get('text_new_customer'), ENT_QUOTES, 'UTF-8'));
+			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
 			
 			// Send to additional alert emails if new account email is enabled

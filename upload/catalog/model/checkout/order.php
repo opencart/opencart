@@ -478,7 +478,7 @@ class ModelCheckoutOrder extends Model {
 				$text .= $language->get('text_new_comment') . "\n\n";
 				$text .= $order_info['comment'] . "\n\n";
 			}
-			
+
 			$text .= $language->get('text_new_footer') . "\n\n";
 		
 			$mail = new Mail(); 

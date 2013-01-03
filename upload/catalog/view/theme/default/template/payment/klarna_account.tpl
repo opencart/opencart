@@ -1,10 +1,30 @@
 <?php if ($address_match) { ?>
 <form id="klarna-payment-form" method="POST" action="<?php echo html_entity_decode($klarna_send) ?>">
     <div id="payment" class="content">
-        <div>
-            <img src="https://cdn.klarna.com/public/images/<?php echo $klarna_country_code ?>/badges/v1/invoice/<?php echo $klarna_country_code ?>_invoice_badge_std_blue.png?width=150&eid=<?php echo $merchant ?>"/>
-        </div>
         
+        <div class="payment-options">
+            
+            <div>
+                <img src="https://cdn.klarna.com/public/images/<?php echo $klarna_country_code ?>/badges/v1/account/<?php echo $klarna_country_code ?>_account_badge_std_blue.png?width=150&eid=<?php echo $merchant ?>"/>
+            </div>
+            
+            <b><?php echo $text_payment_options ?></b><br />
+
+            <?php $checked = false; ?>
+            <?php foreach ($part_payment_options as $plan_id => $payment) { ?>
+                <?php if ($checked) { ?>
+                    <input name="payment_plan" type="radio" value="<?php echo $plan_id ?>" id="plan_id_<?php echo $plan_id ?>" /><label for="plan_id_<?php echo $plan_id ?>"><?php echo $payment ?></label><br />
+                <?php } else {?>
+                    <?php $checked = true; ?>
+                    <input checked="checked" name="payment_plan" type="radio" value="<?php echo $plan_id ?>" id="plan_id_<?php echo $plan_id ?>" /><label for="plan_id_<?php echo $plan_id ?>"><?php echo $payment ?></label><br />
+                <?php } ?>
+            <?php } ?>
+
+            <?php if ($country_code == 'NLD') { ?>
+                <img src="catalog/view/theme/default/image/klarna_nld_banner.png" />
+            <?php } ?>
+        </div>
+
         <table class="form">
             <tr>
                 <td colspan="2"><b><?php echo $text_additional; ?></b></td>
@@ -51,7 +71,7 @@
             <?php } elseif (empty($company_id)) { ?>
                 <tr>
                     <td><?php echo $entry_company ?></td>
-                    <td><input type="text" name="pno" alt="<?php echo $help_company_id ?>" value="<?php $company_id ?>" /></td>
+                    <td><input type="text" name="pno" alt="<?php echo $help_company_id ?>" /></td>
                 </tr>
             <?php } ?>
 
@@ -103,6 +123,7 @@
                     </td> 
                 </tr>
             <?php } ?>
+                
         </table>
         
     </div>
@@ -164,6 +185,16 @@ $(document).ready(function(){
     }).focusout(function () {
         hideBaloon();
     });
+
+<?php if ($country_code == 'DNK') { ?>
+    $('input[name="payment_plan"]').change(function(){
+        if ($(this).attr('value') == '-1') {
+            $('input[name="yearly_salary"]').prop('disabled', true);
+        } else {
+            $('input[name="yearly_salary"]').prop('disabled', false);
+        }
+    });
+<?php } ?>
     
     $('#button-confirm').bind('click', function() {
 
@@ -174,11 +205,10 @@ $(document).ready(function(){
             $('#payment').before("<div class=\"warning\"><?php echo $error_deu_toc ?></div>");
             return;
         }
-        
         <?php } ?>
 
         $.ajax({
-            url: 'index.php?route=payment/klarna_invoice/send',
+            url: '<?php echo $klarna_send ?>',
             type: 'post',
             data: $('#klarna-payment-form').serialize(),
             dataType: 'json',		
@@ -202,6 +232,14 @@ $(document).ready(function(){
                     location = json['redirect'];
                 }
             }
+        });
+    });
+
+    $.getScript('http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js', function(){
+        var terms = new Klarna.Terms.Account({  
+            el: 'klarna_toc_link', 
+            eid: <?php echo $merchant ?>,             
+            country: '<?php echo strtolower($klarna_country_code) ?>',
         });
     });
 

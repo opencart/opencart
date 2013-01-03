@@ -1,4 +1,6 @@
 <?php
+header('P3P: CP="CAO COR CURa ADMa DEVa OUR IND ONL COM DEM PRE"');
+
 // Version
 define('VERSION', '1.5.5');
 
@@ -127,13 +129,7 @@ $cache = new Cache();
 $registry->set('cache', $cache); 
 
 // Session
-if (isset($request->get['session_id'])) {
-	$session_id = $request->get['session_id'];
-} else {
-	$session_id = '';
-}
-
-$session = new Session($session_id);
+$session = new Session();
 $registry->set('session', $session);
 
 // Language Detection

@@ -1,18 +1,18 @@
 <?php
 
-class ControllerPaymentKlarnaInvoice extends Controller {
+class ControllerPaymentKlarnaAccount extends Controller {
 
     protected function index() {
         $this->load->model('checkout/order');
         $this->load->model('tool/image');
-        $this->data = array_merge($this->data, $this->language->load('payment/klarna_invoice'));
+        $this->data = array_merge($this->data, $this->language->load('payment/klarna_account'));
         
         $orderInfo = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-
+        
         // The title stored in the DB gets truncated which causes order_info.tpl to not be displayed properly
         $this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = '" . $this->db->escape($this->language->get('text_payment_method_title')) . "' WHERE `order_id` = " . (int) $this->session->data['order_id']);
         
-        $countries = $this->config->get('klarna_invoice_country');
+        $countries = $this->config->get('klarna_account_country');
         $settings = $countries[$orderInfo['payment_iso_code_3']];
         
         $addressMatch = false;
@@ -23,6 +23,15 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         } else {
             $addressMatch = false;
         }
+        
+        $countryToCurrency = array(
+            'NOR' => 'NOK',
+            'SWE' => 'SEK',
+            'FIN' => 'EUR',
+            'DNK' => 'DKK',
+            'DEU' => 'EUR',
+            'NLD' => 'EUR',
+        );
         
         if (empty($orderInfo['payment_company']) && empty($orderInfo['payment_company_id'])) {
             $this->data['is_company'] = false;
@@ -50,24 +59,129 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         $this->data['address_match'] = $addressMatch;
         $this->data['country_code'] = $orderInfo['payment_iso_code_3'];
         $this->data['klarna_country_code'] = $orderInfo['payment_iso_code_2'];
-        $this->data['klarna_send'] = $this->url->link('payment/klarna_invoice/send');
+        $this->data['klarna_send'] = $this->url->link('payment/klarna_account/send');
         
-        // Get the invoice fee
-        $result = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $orderInfo['order_id'] . " AND `code` = 'klarna_fee'")->row;
+        $partPaymentOptions = array();
         
-        if (isset($result['value']) && !empty($result['value'])) {
-            $this->data['klarna_fee'] = $result['value'];
-        } else {
-            $this->data['klarna_fee'] = '';
+        // Show part payment options?
+        if ($this->showPartPaymentOptions($orderInfo, $settings)) {
+
+            $pclasses = $this->config->get('klarna_account_pclasses');
+            
+            if (isset($pclasses[$country])) {
+                $pclasses = $pclasses[$country];
+            } else {
+                $pclasses = array();
+            }
+
+            $orderTotal = $this->currency->format($orderInfo['total'], $countryToCurrency[$orderInfo['payment_iso_code_3']], '', false);
+
+            foreach ($pclasses as $pclass) {                
+                // 0 - Campaign
+                // 1 - Account
+                // 2 - Special
+                // 3 - Fixed
+                if (!in_array($pclass['type'], array(0, 1, 3))) {
+                    continue;
+                }
+
+                if ($pclass['type'] == 2) {
+                    $monthlyCost = -1;
+                } else {
+                    if ($orderTotal < $pclass['minamount']) {
+                        continue;
+                    }
+
+                    if ($pclass['type'] == 3) {
+                        continue;
+                    } else {
+                        $sum = $orderTotal;
+
+                        $lowestPayment = $this->getLowestPaymentAccount($country);
+                        $monthlyCost = 0;
+
+                        $monthsFee = $pclass['invoicefee'];
+                        $startFee = $pclass['startfee'];
+
+                        $sum += $startFee;
+
+                        $base = ($pclass['type'] == 1);
+
+                        $minpay = ($pclass['type'] === 1) ? $this->getLowestPaymentAccount($country) : 0;
+
+                        if ($pclass['months'] == 0) {
+                            $payment = $sum;
+                        } elseif ($pclass['interestrate'] == 0) {
+                            $payment = $sum / $pclass['months'];
+                        } else {
+                            $p = $pclass['interestrate'] / (100.0 * 12);
+                            $payment = $sum * $p / (1 - pow((1 + $p), -$pclass['months']));
+                        }
+
+                        $payment += $monthsFee;
+
+                        $bal = $sum;
+                        $payarray = array();
+
+                        $months = $pclass['months'];
+                        while (($months != 0) && ($bal > 0.01)) {
+                            $interest = $bal * $pclass['interestrate'] / (100.0 * 12);
+                            $newbal = $bal + $interest + $monthsFee;
+
+                            if ($minpay >= $newbal || $payment >= $newbal) {
+                                $payarray[] = $newbal;
+                                $payarray = $payarray;
+                                break;
+                            }
+
+                            $newpay = max($payment, $minpay);
+                            if ($base) {
+                                $newpay = max($newpay, $bal / 24.0 + $monthsFee + $interest);
+                            }
+
+                            $bal = $newbal - $newpay;
+                            $payarray[] = $newpay;
+                            $months -= 1;
+                        }
+
+                        $monthlyCost = round(isset($payarray[0]) ? ($payarray[0]) : 0, 2);
+
+                        if ($monthlyCost < 0.01) {
+                            continue;
+                        }
+
+                        if ($pclass['type'] == 1 && $monthlyCost < $lowestPayment) {
+                            $monthlyCost = $lowestPayment;
+                        }
+
+                        if ($pclass['type'] == 0 && $monthlyCost < $lowestPayment) {
+                            continue;
+                        }
+                    }
+                }
+                
+                $partPaymentOptions[$pclass['id']]['monthly_cost'] = $monthlyCost;
+                $partPaymentOptions[$pclass['id']]['pclass_id'] = $pclass['id'];
+                $partPaymentOptions[$pclass['id']]['months'] = $pclass['months'];
+                $partPaymentOptions[$pclass['id']]['title'] = $pclass['description'];
+            }
+            
+        }
+        
+        usort($partPaymentOptions, array($this, 'sortPaymentPlans'));
+        
+        $this->data['part_payment_options'] = array();
+        
+        foreach ($partPaymentOptions as $paymentOption) {
+            $this->data['part_payment_options'][$paymentOption['pclass_id']] = sprintf($this->language->get('text_monthly_payment'), $paymentOption['title'], $this->currency->format($this->currency->convert($paymentOption['monthly_cost'], $countryToCurrency[$orderInfo['payment_iso_code_3']], $this->currency->getCode()), 1, 1));
         }
         
         $this->data['merchant'] = $settings['merchant'];
         
-
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/klarna_invoice.tpl')) {
-            $this->template = $this->config->get('config_template') . '/template/payment/klarna_invoice.tpl';
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/klarna_account.tpl')) {
+            $this->template = $this->config->get('config_template') . '/template/payment/klarna_account.tpl';
         } else {
-            $this->template = 'default/template/payment/klarna_invoice.tpl';
+            $this->template = 'default/template/payment/klarna_account.tpl';
         }
 
         $this->render();
@@ -76,13 +190,13 @@ class ControllerPaymentKlarnaInvoice extends Controller {
     public function send() {
         $this->load->model('checkout/order');
         $this->load->model('checkout/coupon');
-        $this->language->load('payment/klarna_invoice');
+        $this->language->load('payment/klarna_account');
         
         $json = array();
 
         $orderInfo = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         
-        $countries = $this->config->get('klarna_invoice_country');
+        $countries = $this->config->get('klarna_account_country');
         $settings = $countries[$orderInfo['payment_iso_code_3']];
         
         if (!$orderInfo) {
@@ -253,6 +367,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             $digest .= $goods['goods']['title'] . ':';
         }
         
+        
         $digest = base64_encode(pack('H*', hash('sha256', $digest . $settings['secret'])));
         
         if (isset($this->request->post['pno'])) {
@@ -266,7 +381,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             $pno = $day . $month . $year;
         }
         
-        $pclass = -1;
+        $pclass = (int) $this->request->post['payment_plan'];
         
         $gender = '';
         
@@ -336,7 +451,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
         $response = curl_exec($ch);
         
-        $log = new Log('klarna_invoice.log');
+        $log = new Log('klarna_account.log');
         if (curl_errno($ch)) {
             $log->write('HTTP Error for order #' . $orderInfo['order_id'] . '. Code: ' . curl_errno($ch) . ' message: ' . curl_error($ch));
             $json['error'] = $this->language->get('error_network');
@@ -355,9 +470,9 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 $klarnaOrderStatus = $responseXml->getElementsByTagName('int')->item(0)->nodeValue;
 
                 if ($klarnaOrderStatus == '1') {
-                    $orderStatus = $this->config->get('klarna_invoice_accepted_order_status_id');
+                    $orderStatus = $this->config->get('klarna_account_accepted_order_status_id');
                 } elseif ($klarnaOrderStatus == '2') {
-                    $orderStatus = $this->config->get('klarna_invoice_pending_order_status_id');
+                    $orderStatus = $this->config->get('klarna_account_pending_order_status_id');
                 } else {
                     $orderStatus = $this->config->get('config_order_status_id');
                 }
@@ -492,6 +607,59 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         }
         
         return $defpos;
+    }
+
+    private function getLowestPaymentAccount($country) {
+        switch ($country) {
+            case 'SWE':
+                $lowestPayment = 50.0;
+                break;
+            case 'NOR':
+                $lowestPayment = 95.0;
+                break;
+            case 'FIN':
+                $lowestPayment = 8.95;
+                break;
+            case 'DNK':
+                $lowestPayment = 89.0;
+                break;
+            case 'DEU':
+            case 'NLD':
+                $lowestPayment = 6.95;
+                break;
+
+            default:
+                $log = new Log('klarna.log');
+                $log->write('Unknown country ' . $country);
+                $this->redirect($this->url->link('checkout/checkout', 'SSL'));
+                break;
+}
+        
+        return $lowestPayment;
+    }
+    
+    private function showPartPaymentOptions($orderInfo, $settings) {        
+        $status = $settings['status'] == '1';        
+        
+        $countAcc = $this->db->query("SELECT COUNT(*) AS `count` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int) $settings['geo_zone_id'] . "' AND `country_id` = '" . (int) $orderInfo['payment_country_id'] . "' AND (`zone_id` = '" . (int)$orderInfo['payment_zone_id'] . "' OR `zone_id` = 0)")->row['count'];
+        
+        if ($settings['geo_zone_id'] != 0 && $countAcc == 0) {
+            $status = false;
+        }
+        
+        if (!empty($orderInfo['payment_company']) || !empty($orderInfo['payment_company_id'])) {
+            $status = false;
+        }
+        
+        if ($orderInfo['payment_iso_code_3'] == 'NLD' && $this->currency->has('EUR') && $this->currency->format($orderInfo['total'], 'EUR', '', false) > 250.00) {
+            $status = false;
+        }
+
+        return $status;
+    }
+    
+    private function sortPaymentPlans($a, $b) {
+        return $a['pclass_id'] - $b['pclass_id'];
     }
 
 }

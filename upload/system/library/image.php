@@ -53,18 +53,17 @@ class Image {
 		}
     }
 
-
 	/**
 	*	
 	*	@param width 
 	*	@param height
-	*	@param type char [default, w, h]
-	*				default = scale with white space, 
-	*				w = fill according to width, 
-	*				h = fill according to height
+	*	@param default char [default, w, h]
+	*				   default = scale with white space, 
+	*				   w = fill according to width, 
+	*				   h = fill according to height
 	*	
 	*/
-    public function resize($width = 0, $height = 0, $type = "") {
+    public function resize($width = 0, $height = 0, $default = '') {
     	if (!$this->info['width'] || !$this->info['height']) {
 			return;
 		}
@@ -76,21 +75,15 @@ class Image {
 		$scale_w = $width / $this->info['width'];
 		$scale_h = $height / $this->info['height'];
 
-		if ($type == "w"){
-
+		if ($default == 'w') {
 			$scale = $scale_w;
-
-		}else if ($type == "h"){
-			
+		} elseif ($default == 'h'){
 			$scale = $scale_h;
-			
-		}else{
-
+		} else {
 			$scale = min($scale_w, $scale_h);
-			
 		}
 
-		if ( $scale == 1 && $scale_h == $scale_w && $this->info['mime'] != 'image/png' ) {
+		if ($scale == 1 && $scale_h == $scale_w && $this->info['mime'] != 'image/png') {
 			return;
 		}
 

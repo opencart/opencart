@@ -36,8 +36,8 @@ class ModelSaleCustomField extends Model {
 		
 		if (isset($data['custom_field_value'])) {
 			foreach ($data['custom_field_value'] as $custom_field_value) {
-				if ($custom_field_value['option_value_id']) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_value SET custom_field_value_id = '" . (int)$custom_field_value['custom_field_value_id'] . "', custom_field_id = '" . (int)$custom_field_id . "', image = '" . $this->db->escape(html_entity_decode($custom_field_value['image'], ENT_QUOTES, 'UTF-8')) . "', sort_order = '" . (int)$custom_field_value['sort_order'] . "'");
+				if ($custom_field_value['custom_field_value_id']) {
+					$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_value SET custom_field_value_id = '" . (int)$custom_field_value['custom_field_value_id'] . "', custom_field_id = '" . (int)$custom_field_id . "', sort_order = '" . (int)$custom_field_value['sort_order'] . "'");
 				} else {
 					$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_value SET custom_field_id = '" . (int)$custom_field_id . "', sort_order = '" . (int)$custom_field_value['sort_order'] . "'");
 				}
@@ -128,13 +128,13 @@ class ModelSaleCustomField extends Model {
 	public function getCustomFieldValues($custom_field_id) {
 		$custom_field_value_data = array();
 		
-		$custom_field_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value cfv LEFT JOIN " . DB_PREFIX . "custom_field_value_description cfvd ON (cfv.option_value_id = cfvd.option_value_id) WHERE cfv.custom_field_id = '" . (int)$custom_field_id . "' AND cfvd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY cfv.sort_order ASC");
+		$custom_field_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value cfv LEFT JOIN " . DB_PREFIX . "custom_field_value_description cfvd ON (cfv.custom_field_value_id = cfvd.custom_field_value_id) WHERE cfv.custom_field_id = '" . (int)$custom_field_id . "' AND cfvd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY cfv.sort_order ASC");
 				
 		foreach ($custom_field_value_query->rows as $custom_field_value) {
 			$custom_field_value_data[] = array(
-				'custom_field_value_id' => $option_value['custom_field_value_id'],
-				'name'                  => $option_value['name'],
-				'sort_order'            => $option_value['sort_order']
+				'custom_field_value_id' => $custom_field_value['custom_field_value_id'],
+				'name'                  => $custom_field_value['name'],
+				'sort_order'            => $custom_field_value['sort_order']
 			);
 		}
 		

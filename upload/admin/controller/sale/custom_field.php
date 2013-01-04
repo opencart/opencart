@@ -180,12 +180,64 @@ class ControllerSaleCustomField extends Controller {
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('sale/custom_field/update', 'token=' . $this->session->data['token'] . '&custom_field_id=' . $result['custom_field_id'] . $url, 'SSL')
 			);
-
+			
+			$type = '';
+			
+			switch ($result['type']) {
+				case 'select':
+					$type = $this->language->get('text_select');
+					break;
+				case 'radio':
+					$type = $this->language->get('text_radio');
+					break;
+				case 'checkbox':
+					$type = $this->language->get('text_checkbox');
+					break;
+				case 'input':
+					$type = $this->language->get('text_input');
+					break;
+				case 'text':
+					$type = $this->language->get('text_text');
+					break;
+				case 'textarea':
+					$type = $this->language->get('text_textarea');
+					break;
+				case 'file':
+					$type = $this->language->get('text_file');
+					break;
+				case 'date':
+					$type = $this->language->get('text_date');
+					break;																														
+				case 'datetime':
+					$type = $this->language->get('text_datetime');
+					break;	
+				case 'time':
+					$type = $this->language->get('text_time');
+					break;																	
+			}
+			
+			$location = '';
+			
+			switch ($result['location']) {
+				case 'customer':
+					$location = $this->language->get('text_customer');
+					break;
+				case 'address':
+					$location = $this->language->get('text_address');
+					break;
+				case 'payment_address':
+					$location = $this->language->get('text_payment_address');
+					break;
+				case 'shipping_address':
+					$location = $this->language->get('text_shipping_address');
+					break;										
+			}			
+		
 			$this->data['custom_fields'][] = array(
 				'custom_field_id' => $result['custom_field_id'],
 				'name'            => $result['name'],
-				'type'            => $result['type'],
-				'location'        => $result['location'],
+				'type'            => $type,
+				'location'        => $location,
 				'sort_order'      => $result['sort_order'],
 				'selected'        => isset($this->request->post['selected']) && in_array($result['custom_field_id'], $this->request->post['selected']),
 				'action'          => $action
@@ -281,6 +333,12 @@ class ControllerSaleCustomField extends Controller {
 		$this->data['text_date'] = $this->language->get('text_date');
 		$this->data['text_datetime'] = $this->language->get('text_datetime');
 		$this->data['text_time'] = $this->language->get('text_time');
+		$this->data['text_customer'] = $this->language->get('text_customer');
+		$this->data['text_address'] = $this->language->get('text_address');
+		$this->data['text_payment_address'] = $this->language->get('text_payment_address');
+		$this->data['text_shipping_address'] = $this->language->get('text_shipping_address');
+		$this->data['text_yes'] = $this->language->get('text_yes');
+		$this->data['text_no'] = $this->language->get('text_no');
 		
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_type'] = $this->language->get('entry_type');

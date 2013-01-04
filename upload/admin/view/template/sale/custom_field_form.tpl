@@ -10,7 +10,7 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><img src="view/image/information.png" alt="" /> <?php echo $heading_title; ?></h1>
+      <h1><img src="view/image/option.png" alt="" /> <?php echo $heading_title; ?></h1>
       <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
@@ -84,13 +84,48 @@
                 </optgroup>
               </select></td>
           </tr>
-          <tr>
+          <tr id="display-value">
             <td><?php echo $entry_value; ?></td>
             <td><input type="text" name="value" value="<?php echo $value; ?>" /></td>
-          </tr>    
+          </tr> 
+          <tr>
+            <td><?php echo $entry_required; ?></td>
+            <td><?php if ($required) { ?>
+                <input type="radio" name="required" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="required" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="required" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="required" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?></td>
+          </tr>              
           <tr>
             <td><?php echo $entry_location; ?></td>
-            <td><input type="text" name="location" value="<?php echo $location; ?>" /></td>
+            <td><select name="location">
+                <?php if ($location == 'customer') { ?>
+                <option value="customer" selected><?php echo $text_customer; ?></option>
+                <?php } else { ?>
+                <option value="customer"><?php echo $text_customer; ?></option>
+                <?php } ?>
+                <?php if ($location == 'address') { ?>
+                <option value="address" selected><?php echo $text_address; ?></option>
+                <?php } else { ?>
+                <option value="address"><?php echo $text_address; ?></option>
+                <?php } ?>
+                <?php if ($location == 'payment_address') { ?>
+                <option value="payment_address" selected><?php echo $text_payment_address; ?></option>
+                <?php } else { ?>
+                <option value="payment_address"><?php echo $text_payment_address; ?></option>
+                <?php } ?>  
+                <?php if ($location == 'shipping_address') { ?>
+                <option value="shipping_address" selected><?php echo $text_shipping_address; ?></option>
+                <?php } else { ?>
+                <option value="shipping_address"><?php echo $text_shipping_address; ?></option>
+                <?php } ?>                                
+              </select></td>
           </tr>    
           <tr>
             <td><?php echo $entry_position; ?></td>
@@ -142,10 +177,14 @@
 $('select[name=\'type\']').bind('change', function() {
 	if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox') {
 		$('#custom-field-value').show();
+		$('#display-value').hide();
 	} else {
 		$('#custom-field-value').hide();
+		$('#display-value').show();
 	}
 });
+
+$('select[name=\'type\']').trigger('change');
 
 var custom_field_value_row = <?php echo $custom_field_value_row; ?>;
 

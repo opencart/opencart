@@ -13,7 +13,7 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><img src="view/image/order.png" alt="" /> <?php echo $heading_title; ?></h1>
+      <h1><img src="view/image/option.png" alt="" /> <?php echo $heading_title; ?></h1>
       <div class="buttons"><a href="<?php echo $insert; ?>" class="button"><?php echo $button_insert; ?></a><a onclick="$('form').submit();" class="button"><?php echo $button_delete; ?></a></div>
     </div>
     <div class="content">
@@ -27,19 +27,16 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
                 <?php } ?></td>
-                
               <td class="left"><?php if ($sort == 'cf.type') { ?>
                 <a href="<?php echo $sort_type; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_type; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_type; ?>"><?php echo $column_type; ?></a>
                 <?php } ?></td>
-              
               <td class="left"><?php if ($sort == 'cf.location') { ?>
                 <a href="<?php echo $sort_location; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_location; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_location; ?>"><?php echo $column_location; ?></a>
                 <?php } ?></td>
-                                                
               <td class="right"><?php if ($sort == 'cf.sort_order') { ?>
                 <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
                 <?php } else { ?>

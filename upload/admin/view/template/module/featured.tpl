@@ -178,7 +178,7 @@ function addModule() {
 	html += '    <td class="left"><input type="text" name="featured_module[' + module_row + '][limit]" value="5" size="1" /></td>';
 	html += '    <td class="left"><input type="text" name="featured_module[' + module_row + '][image_width]" value="80" size="3" /> <input type="text" name="featured_module[' + module_row + '][image_height]" value="80" size="3" />';
   html += '      <select name="featured_module[' + module_row + '][resize_type]">';
-  html += '       <option value=""><?php echo $img_resize_type_d; ?></option>';
+  html += '       <option value="default"><?php echo $img_resize_type_d; ?></option>';
   html += '        <option value="w"><?php echo $img_resize_type_w; ?></option>';
   html += '        <option value="h"><?php echo $img_resize_type_h; ?></option>';
   html += '      </select></td>';	

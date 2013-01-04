@@ -12,7 +12,7 @@ $_['text_column_right']   = 'Column Right';
 
 // Entry
 $_['entry_banner']        = 'Banner:';
-$_['entry_dimension']     = 'Dimension (W x H):';
+$_['entry_dimension']     = 'Dimension (W x H) and Resize Type:';
 $_['entry_layout']        = 'Layout:';
 $_['entry_position']      = 'Position:';
 $_['entry_status']        = 'Status:';

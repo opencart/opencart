@@ -42,6 +42,11 @@
                 </select></td>
               <td class="left"><input type="text" name="banner_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" size="3" />
                 <input type="text" name="banner_module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" size="3" />
+                <select name="banner_module[<?php echo $module_row; ?>][resize_type]">
+                  <option value="default"<?php echo ( (isset($module['resize_type']) && $module['resize_type'] == 'default')?(' selected'):('') ); ?>><?php echo $img_resize_type_d; ?></option>
+                  <option value="w"<?php echo ( (isset($module['resize_type']) && $module['resize_type'] == 'w')?(' selected'):('') ); ?>><?php echo $img_resize_type_w; ?></option>
+                  <option value="h"<?php echo ( (isset($module['resize_type']) && $module['resize_type'] == 'h')?(' selected'):('') ); ?>><?php echo $img_resize_type_h; ?></option>
+                </select>
                 <?php if (isset($error_dimension[$module_row])) { ?>
                 <span class="error"><?php echo $error_dimension[$module_row]; ?></span>
                 <?php } ?></td>
@@ -113,7 +118,12 @@ function addModule() {
 	html += '      <option value="<?php echo $banner['banner_id']; ?>"><?php echo addslashes($banner['name']); ?></option>';
 	<?php } ?>
 	html += '    </select></td>';
-	html += '    <td class="left"><input type="text" name="banner_module[' + module_row + '][width]" value="" size="3" /> <input type="text" name="banner_module[' + module_row + '][height]" value="" size="3" /></td>';
+	html += '    <td class="left"><input type="text" name="banner_module[' + module_row + '][width]" value="" size="3" /> <input type="text" name="banner_module[' + module_row + '][height]" value="" size="3" />';
+  html += '      <select name="banner_module[' + module_row + '][resize_type]">';
+  html += '       <option value="default"><?php echo $img_resize_type_d; ?></option>';
+  html += '        <option value="w"><?php echo $img_resize_type_w; ?></option>';
+  html += '        <option value="h"><?php echo $img_resize_type_h; ?></option>';
+  html += '      </select></td>'; 
 	html += '    <td class="left"><select name="banner_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>
 	html += '      <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';

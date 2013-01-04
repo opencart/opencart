@@ -1,7 +1,7 @@
 <?php
 class ModelSaleCustomField extends Model {
 	public function addCustomField($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', location = '" . $this->db->escape($data['location']) . "', value = '" . $this->db->escape($data['value']) . "', required = '" . (int)$data['required'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', value = '" . $this->db->escape($data['value']) . "', required = '" . (int)$data['required'] . "', location = '" . $this->db->escape($data['location']) . "', position = '" . $this->db->escape($data['position']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
 		
 		$custom_field_id = $this->db->getLastId();
 		
@@ -23,7 +23,7 @@ class ModelSaleCustomField extends Model {
 	}
 	
 	public function editCustomField($custom_field_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', location = '" . $this->db->escape($data['location']) . "', value = '" . $this->db->escape($data['value']) . "', required = '" . (int)$data['required'] . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE custom_field_id = '" . (int)$custom_field_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', value = '" . $this->db->escape($data['value']) . "', required = '" . (int)$data['required'] . "', location = '" . $this->db->escape($data['location']) . "', position = '" . $this->db->escape($data['position']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "custom_field_description WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 
@@ -59,28 +59,29 @@ class ModelSaleCustomField extends Model {
 	}
 	
 	public function getCustomField($custom_field_id) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` o LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE o.option_id = '" . (int)$option_id . "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` cf LEFT JOIN " . DB_PREFIX . "custom_field_description cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cf.custom_field_id = '" . (int)$custom_field_id . "' AND cfd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 		
 		return $query->row;
 	}
 		
 	public function getCustomFields($data = array()) {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "option` o LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE od.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field` cf LEFT JOIN " . DB_PREFIX . "custom_field_description cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cfd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 		
 		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
-			$sql .= " AND od.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+			$sql .= " AND cfd.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
 		}
 
 		$sort_data = array(
-			'od.name',
-			'o.type',
-			'o.sort_order'
+			'cfd.name',
+			'cf.type',
+			'cf.location',
+			'cf.sort_order'
 		);	
 		
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];	
 		} else {
-			$sql .= " ORDER BY od.name";	
+			$sql .= " ORDER BY cfd.name";	
 		}
 		
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -106,68 +107,66 @@ class ModelSaleCustomField extends Model {
 		return $query->rows;
 	}
 	
-	public function getCustomFieldDescriptions($option_id) {
-		$option_data = array();
+	public function getCustomFieldDescriptions($custom_field_id) {
+		$custom_field_data = array();
 		
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_description WHERE option_id = '" . (int)$option_id . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_description WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 				
 		foreach ($query->rows as $result) {
-			$option_data[$result['language_id']] = array('name' => $result['name']);
+			$custom_field_data[$result['language_id']] = array('name' => $result['name']);
 		}
 		
-		return $option_data;
+		return $custom_field_data;
 	}
 	
-	public function getCustomFieldValue($option_value_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_value ov LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE ov.option_value_id = '" . (int)$option_value_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+	public function getCustomFieldValue($custom_field_value_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value cfv LEFT JOIN " . DB_PREFIX . "custom_field_value_description cfvd ON (cfv.custom_field_value_id = cfvd.custom_field_value_id) WHERE cfv.custom_field_value_id = '" . (int)$custom_field_value_id . "' AND cfvd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 		
 		return $query->row;
 	}
 	
-	public function getCustomFieldValues($option_id) {
-		$option_value_data = array();
+	public function getCustomFieldValues($custom_field_id) {
+		$custom_field_value_data = array();
 		
-		$option_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_value ov LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE ov.option_id = '" . (int)$option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY ov.sort_order ASC");
+		$custom_field_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value cfv LEFT JOIN " . DB_PREFIX . "custom_field_value_description cfvd ON (cfv.option_value_id = cfvd.option_value_id) WHERE cfv.custom_field_id = '" . (int)$custom_field_id . "' AND cfvd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY cfv.sort_order ASC");
 				
-		foreach ($option_value_query->rows as $option_value) {
-			$option_value_data[] = array(
-				'option_value_id' => $option_value['option_value_id'],
-				'name'            => $option_value['name'],
-				'image'           => $option_value['image'],
-				'sort_order'      => $option_value['sort_order']
+		foreach ($custom_field_value_query->rows as $custom_field_value) {
+			$custom_field_value_data[] = array(
+				'custom_field_value_id' => $option_value['custom_field_value_id'],
+				'name'                  => $option_value['name'],
+				'sort_order'            => $option_value['sort_order']
 			);
 		}
 		
-		return $option_value_data;
+		return $custom_field_value_data;
 	}
 	
-	public function getCustomFieldValueDescriptions($option_id) {
-		$option_value_data = array();
+	public function getCustomFieldValueDescriptions($custom_field_id) {
+		$custom_field_value_data = array();
 		
-		$option_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_value WHERE option_id = '" . (int)$option_id . "'");
+		$custom_field_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 				
-		foreach ($option_value_query->rows as $option_value) {
-			$option_value_description_data = array();
+		foreach ($custom_field_value_query->rows as $custom_field_value) {
+			$custom_field_value_description_data = array();
 			
-			$option_value_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_value_description WHERE option_value_id = '" . (int)$option_value['option_value_id'] . "'");			
+			$custom_field_value_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value_description WHERE custom_field_value_id = '" . (int)$custom_field_value['custom_field_value_id'] . "'");			
 			
-			foreach ($option_value_description_query->rows as $option_value_description) {
-				$option_value_description_data[$option_value_description['language_id']] = array('name' => $option_value_description['name']);
+			foreach ($custom_field_value_description_query->rows as $custom_field_value_description) {
+				$custom_field_value_description_data[$custom_field_value_description['language_id']] = array('name' => $custom_field_value_description['name']);
 			}
 			
-			$option_value_data[] = array(
-				'option_value_id'          => $option_value['option_value_id'],
-				'option_value_description' => $option_value_description_data,
-				'image'                    => $option_value['image'],
-				'sort_order'               => $option_value['sort_order']
+			$custom_field_value_data[] = array(
+				'custom_field_value_id'          => $custom_field_value['custom_field_value_id'],
+				'custom_field_value_description' => $custom_field_value_description_data,
+				'sort_order'                     => $custom_field_value['sort_order']
 			);
 		}
 		
-		return $option_value_data;
+		return $custom_field_value_data;
 	}
 
 	public function getTotalCustomFields() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "option`"); 
+      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "custom_field`"); 
 		
 		return $query->row['total'];
 	}		

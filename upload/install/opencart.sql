@@ -1202,11 +1202,12 @@ CREATE TABLE `oc_customer_transaction` (
 DROP TABLE IF EXISTS `oc_custom_field`;
 CREATE TABLE `oc_custom_field` (
   `custom_field_id` int(11) NOT NULL AUTO_INCREMENT,
-  `location` varchar(32) NOT NULL,
   `type` varchar(32) NOT NULL,
   `value` text NOT NULL,
   `required` tinyint(1) NOT NULL,
+  `location` varchar(32) NOT NULL,
   `position` int(3) NOT NULL,
+  `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`custom_field_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

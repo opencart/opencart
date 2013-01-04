@@ -97,7 +97,7 @@
         <table id="option-value" class="list">
           <thead>
             <tr>
-              <td class="left"><span class="required">*</span> <?php echo $entry_value; ?></td>
+              <td class="left"><span class="required">*</span> <?php echo $entry_option_value; ?></td>
               <td class="left"><?php echo $entry_image; ?></td>
               <td class="right"><?php echo $entry_sort_order; ?></td>
               <td></td>
@@ -149,16 +149,16 @@ var option_value_row = <?php echo $option_value_row; ?>;
 
 function addOptionValue() {
 	html  = '<tbody id="option-value-row' + option_value_row + '">';
-	html += '<tr>';	
-    html += '<td class="left"><input type="hidden" name="option_value[' + option_value_row + '][option_value_id]" value="" />';
+	html += '  <tr>';	
+    html += '    <td class="left"><input type="hidden" name="option_value[' + option_value_row + '][option_value_id]" value="" />';
 	<?php foreach ($languages as $language) { ?>
 	html += '<input type="text" name="option_value[' + option_value_row + '][option_value_description][<?php echo $language['language_id']; ?>][name]" value="" /> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
     <?php } ?>
-	html += '</td>';
-    html += '<td class="left"><div class="image"><img src="<?php echo $no_image; ?>" alt="" id="thumb' + option_value_row + '" /><input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="image' + option_value_row + '" /><br /><a onclick="image_upload(\'image' + option_value_row + '\', \'thumb' + option_value_row + '\');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$(\'#thumb' + option_value_row + '\').attr(\'src\', \'<?php echo $no_image; ?>\'); $(\'#image' + option_value_row + '\').attr(\'value\', \'\');"><?php echo $text_clear; ?></a></div></td>';
-	html += '<td class="right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" size="1" /></td>';
-	html += '<td class="left"><a onclick="$(\'#option-value-row' + option_value_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
-	html += '</tr>';	
+	html += '    </td>';
+    html += '    <td class="left"><div class="image"><img src="<?php echo $no_image; ?>" alt="" id="thumb' + option_value_row + '" /><input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="image' + option_value_row + '" /><br /><a onclick="image_upload(\'image' + option_value_row + '\', \'thumb' + option_value_row + '\');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$(\'#thumb' + option_value_row + '\').attr(\'src\', \'<?php echo $no_image; ?>\'); $(\'#image' + option_value_row + '\').attr(\'value\', \'\');"><?php echo $text_clear; ?></a></div></td>';
+	html += '    <td class="right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" size="1" /></td>';
+	html += '    <td class="left"><a onclick="$(\'#option-value-row' + option_value_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
+	html += '  </tr>';	
     html += '</tbody>';
 	
 	$('#option-value tfoot').before(html);

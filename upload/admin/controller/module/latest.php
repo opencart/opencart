@@ -27,6 +27,10 @@ class ControllerModuleLatest extends Controller {
 		$this->data['text_content_bottom'] = $this->language->get('text_content_bottom');		
 		$this->data['text_column_left'] = $this->language->get('text_column_left');
 		$this->data['text_column_right'] = $this->language->get('text_column_right');
+
+		$this->data['img_resize_type_d'] = $this->language->get('img_resize_type_d');
+		$this->data['img_resize_type_w'] = $this->language->get('img_resize_type_w');
+		$this->data['img_resize_type_h'] = $this->language->get('img_resize_type_h');
 		
 		$this->data['entry_limit'] = $this->language->get('entry_limit');
 		$this->data['entry_image'] = $this->language->get('entry_image');

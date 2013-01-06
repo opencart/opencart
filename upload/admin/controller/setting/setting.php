@@ -45,6 +45,10 @@ class ControllerSettingSetting extends Controller {
 		$this->data['text_payment'] = $this->language->get('text_payment');					
 		$this->data['text_mail'] = $this->language->get('text_mail');
 		$this->data['text_smtp'] = $this->language->get('text_smtp');
+
+		$this->data['img_resize_type_d'] = $this->language->get('img_resize_type_d');
+		$this->data['img_resize_type_w'] = $this->language->get('img_resize_type_w');
+		$this->data['img_resize_type_h'] = $this->language->get('img_resize_type_h');
 		
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_owner'] = $this->language->get('entry_owner');
@@ -103,6 +107,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_image_product'] = $this->language->get('entry_image_product');
 		$this->data['entry_image_additional'] = $this->language->get('entry_image_additional');
 		$this->data['entry_image_related'] = $this->language->get('entry_image_related');
+		$this->data['entry_image_option'] = $this->language->get('entry_image_option');
 		$this->data['entry_image_compare'] = $this->language->get('entry_image_compare');
 		$this->data['entry_image_wishlist'] = $this->language->get('entry_image_wishlist');
 		$this->data['entry_image_cart'] = $this->language->get('entry_image_cart');	
@@ -272,6 +277,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['error_image_related'] = $this->error['image_related'];
 		} else {
 			$this->data['error_image_related'] = '';
+		}
+		
+ 		if (isset($this->error['image_option'])) {
+			$this->data['error_image_option'] = $this->error['image_option'];
+		} else {
+			$this->data['error_image_option'] = '';
 		}
 		
  		if (isset($this->error['image_compare'])) {
@@ -737,6 +748,12 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_image_category_height'] = $this->config->get('config_image_category_height');
 		}
+		
+		if (isset($this->request->post['config_image_category_resize_type'])) {
+			$this->data['config_image_category_resize_type'] = $this->request->post['config_image_category_resize_type'];
+		} else {
+			$this->data['config_image_category_resize_type'] = $this->config->get('config_image_category_resize_type');
+		}
 				
 		if (isset($this->request->post['config_image_thumb_width'])) {
 			$this->data['config_image_thumb_width'] = $this->request->post['config_image_thumb_width'];
@@ -748,6 +765,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_image_thumb_height'] = $this->request->post['config_image_thumb_height'];
 		} else {
 			$this->data['config_image_thumb_height'] = $this->config->get('config_image_thumb_height');
+		}
+		
+		if (isset($this->request->post['config_image_thumb_resize_type'])) {
+			$this->data['config_image_thumb_resize_type'] = $this->request->post['config_image_thumb_resize_type'];
+		} else {
+			$this->data['config_image_thumb_resize_type'] = $this->config->get('config_image_thumb_resize_type');
 		}
 		
 		if (isset($this->request->post['config_image_popup_width'])) {
@@ -762,6 +785,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_image_popup_height'] = $this->config->get('config_image_popup_height');
 		}
 		
+		if (isset($this->request->post['config_image_popup_resize_type'])) {
+			$this->data['config_image_popup_resize_type'] = $this->request->post['config_image_popup_resize_type'];
+		} else {
+			$this->data['config_image_popup_resize_type'] = $this->config->get('config_image_popup_resize_type');
+		}
+		
 		if (isset($this->request->post['config_image_product_width'])) {
 			$this->data['config_image_product_width'] = $this->request->post['config_image_product_width'];
 		} else {
@@ -772,6 +801,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_image_product_height'] = $this->request->post['config_image_product_height'];
 		} else {
 			$this->data['config_image_product_height'] = $this->config->get('config_image_product_height');
+		}
+		
+		if (isset($this->request->post['config_image_product_resize_type'])) {
+			$this->data['config_image_product_resize_type'] = $this->request->post['config_image_product_resize_type'];
+		} else {
+			$this->data['config_image_product_resize_type'] = $this->config->get('config_image_product_resize_type');
 		}
 
 		if (isset($this->request->post['config_image_additional_width'])) {
@@ -786,6 +821,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_image_additional_height'] = $this->config->get('config_image_additional_height');
 		}
 		
+		if (isset($this->request->post['config_image_additional_resize_type'])) {
+			$this->data['config_image_additional_resize_type'] = $this->request->post['config_image_additional_resize_type'];
+		} else {
+			$this->data['config_image_additional_resize_type'] = $this->config->get('config_image_additional_resize_type');
+		}
+		
 		if (isset($this->request->post['config_image_related_width'])) {
 			$this->data['config_image_related_width'] = $this->request->post['config_image_related_width'];
 		} else {
@@ -796,6 +837,30 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_image_related_height'] = $this->request->post['config_image_related_height'];
 		} else {
 			$this->data['config_image_related_height'] = $this->config->get('config_image_related_height');
+		}
+		
+		if (isset($this->request->post['config_image_related_resize_type'])) {
+			$this->data['config_image_related_resize_type'] = $this->request->post['config_image_related_resize_type'];
+		} else {
+			$this->data['config_image_related_resize_type'] = $this->config->get('config_image_related_resize_type');
+		}
+		
+		if (isset($this->request->post['config_image_option_width'])) {
+			$this->data['config_image_option_width'] = $this->request->post['config_image_option_width'];
+		} else {
+			$this->data['config_image_option_width'] = $this->config->get('config_image_option_width');
+		}
+		
+		if (isset($this->request->post['config_image_option_height'])) {
+			$this->data['config_image_option_height'] = $this->request->post['config_image_option_height'];
+		} else {
+			$this->data['config_image_option_height'] = $this->config->get('config_image_option_height');
+		}
+		
+		if (isset($this->request->post['config_image_option_resize_type'])) {
+			$this->data['config_image_option_resize_type'] = $this->request->post['config_image_option_resize_type'];
+		} else {
+			$this->data['config_image_option_resize_type'] = $this->config->get('config_image_option_resize_type');
 		}
 		
 		if (isset($this->request->post['config_image_compare_width'])) {
@@ -810,6 +875,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_image_compare_height'] = $this->config->get('config_image_compare_height');
 		}	
 		
+		if (isset($this->request->post['config_image_compare_resize_type'])) {
+			$this->data['config_image_compare_resize_type'] = $this->request->post['config_image_compare_resize_type'];
+		} else {
+			$this->data['config_image_compare_resize_type'] = $this->config->get('config_image_compare_resize_type');
+		}	
+		
 		if (isset($this->request->post['config_image_wishlist_width'])) {
 			$this->data['config_image_wishlist_width'] = $this->request->post['config_image_wishlist_width'];
 		} else {
@@ -821,6 +892,12 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_image_wishlist_height'] = $this->config->get('config_image_wishlist_height');
 		}	
+		
+		if (isset($this->request->post['config_image_wishlist_resize_type'])) {
+			$this->data['config_image_wishlist_resize_type'] = $this->request->post['config_image_wishlist_resize_type'];
+		} else {
+			$this->data['config_image_wishlist_resize_type'] = $this->config->get('config_image_wishlist_resize_type');
+		}
 						
 		if (isset($this->request->post['config_image_cart_width'])) {
 			$this->data['config_image_cart_width'] = $this->request->post['config_image_cart_width'];
@@ -832,6 +909,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_image_cart_height'] = $this->request->post['config_image_cart_height'];
 		} else {
 			$this->data['config_image_cart_height'] = $this->config->get('config_image_cart_height');
+		}	
+		
+		if (isset($this->request->post['config_image_cart_resize_type'])) {
+			$this->data['config_image_cart_resize_type'] = $this->request->post['config_image_cart_resize_type'];
+		} else {
+			$this->data['config_image_cart_resize_type'] = $this->config->get('config_image_cart_resize_type');
 		}		
 				
 		if (isset($this->request->post['config_ftp_host'])) {
@@ -1118,6 +1201,10 @@ class ControllerSettingSetting extends Controller {
 		
 		if (!$this->request->post['config_image_related_width'] || !$this->request->post['config_image_related_height']) {
 			$this->error['image_related'] = $this->language->get('error_image_related');
+		}
+		
+		if (!$this->request->post['config_image_related_width'] || !$this->request->post['config_image_option_height']) {
+			$this->error['image_option'] = $this->language->get('error_image_option');
 		}
 		
 		if (!$this->request->post['config_image_compare_width'] || !$this->request->post['config_image_compare_height']) {

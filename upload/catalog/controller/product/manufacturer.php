@@ -193,7 +193,7 @@ class ControllerProductManufacturer extends Controller {
 					
 			foreach ($results as $result) {
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'), $this->config->get('config_image_product_resize_type'));
 				} else {
 					$image = false;
 				}

@@ -289,13 +289,13 @@ class ControllerProductProduct extends Controller {
 			$this->load->model('tool/image');
 
 			if ($product_info['image']) {
-				$this->data['popup'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+				$this->data['popup'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'), $this->config->get('config_image_popup_resize_type'));
 			} else {
 				$this->data['popup'] = '';
 			}
 			
 			if ($product_info['image']) {
-				$this->data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+				$this->data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'), $this->config->get('config_image_thumb_resize_type'));
 			} else {
 				$this->data['thumb'] = '';
 			}
@@ -306,8 +306,8 @@ class ControllerProductProduct extends Controller {
 			
 			foreach ($results as $result) {
 				$this->data['images'][] = array(
-					'popup' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
-					'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height'))
+					'popup' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'), $this->config->get('config_image_popup_resize_type')),
+					'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height'), $this->config->get('config_image_additional_resize_type'))
 				);
 			}	
 						
@@ -358,7 +358,7 @@ class ControllerProductProduct extends Controller {
 								'product_option_value_id' => $option_value['product_option_value_id'],
 								'option_value_id'         => $option_value['option_value_id'],
 								'name'                    => $option_value['name'],
-								'image'                   => $this->model_tool_image->resize($option_value['image'], 50, 50),
+								'image'                   => $this->model_tool_image->resize($option_value['image'], $this->config->get('config_image_option_width'), $this->config->get('config_image_option_height'), $this->config->get('config_image_option_resize_type')),
 								'price'                   => $price,
 								'price_prefix'            => $option_value['price_prefix']
 							);
@@ -403,7 +403,7 @@ class ControllerProductProduct extends Controller {
 			
 			foreach ($results as $result) {
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'), $this->config->get('config_image_related_resize_type'));
 				} else {
 					$image = false;
 				}

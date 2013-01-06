@@ -145,7 +145,7 @@ class ControllerProductCategory extends Controller {
 			);
 								
 			if ($category_info['image']) {
-				$this->data['thumb'] = $this->model_tool_image->resize($category_info['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
+				$this->data['thumb'] = $this->model_tool_image->resize($category_info['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'), $this->config->get('config_image_category_resize_type'));
 			} else {
 				$this->data['thumb'] = '';
 			}
@@ -206,7 +206,7 @@ class ControllerProductCategory extends Controller {
 			
 			foreach ($results as $result) {
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'), $this->config->get('config_image_product_resize_type'));
 				} else {
 					$image = false;
 				}

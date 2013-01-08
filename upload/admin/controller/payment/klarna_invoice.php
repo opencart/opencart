@@ -1,6 +1,7 @@
 <?php
 class ControllerPaymentKlarnaInvoice extends Controller {
     private $error = array();
+	private $pclasses = array();
 
     public function index() {
 		$this->language->load('payment/klarna_invoice');
@@ -8,55 +9,26 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/setting');
-        
-        $this->data['country_names'] = array(
-            'DEU' => $this->language->get('text_germany'),
-            'NLD' => $this->language->get('text_netherlands'),
-            'DNK' => $this->language->get('text_denmark'),
-            'SWE' => $this->language->get('text_sweden'),
-            'NOR' => $this->language->get('text_norway'),
-            'FIN' => $this->language->get('text_finland'),
-        );
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-            $this->model_setting_setting->editSetting('klarna_invoice', $this->request->post);
+			$status = false;
 			
-            $klarnaCountry = array();
-            $status = false;
-            
-            foreach (array_keys($this->data['country_names']) as $iso3) {
-				if (isset($this->request->post['klarna_invoice_country'][$iso3]['status']) && $this->request->post['klarna_invoice_country'][$iso3]['status'] == 1) {
-                    $klarnaCountry[$iso3] = $this->request->post['klarna_invoice_country'][$iso3];
-                    $status = true;
-                } else {
-                    $klarnaCountry[$iso3] = array(
-                        'merchant' => '',
-                        'secret' => '',
-                        'server' => '',
-                        'minimum' => '',
-                        'status' => '',
-                        'sort_order' => '',
-                        'geo_zone_id' => '',
-                    );
-                }
-            }
-            
-            $settings = array(
-                'klarna_invoice_country' => $klarnaCountry,
-                'klarna_invoice_status' => $status,
-                'klarna_invoice_pending_order_status_id' => (int) $this->request->post['klarna_invoice_pending_order_status_id'],
-                'klarna_invoice_accepted_order_status_id' => (int) $this->request->post['klarna_invoice_accepted_order_status_id'],
-            );
-            
-            
-            
-            $this->fetchPClasses($klarnaCountry);
-
-            if ($this->error) {
-                $this->session->data['error'] = $this->language->get('error_update');
-            } else {
-                $this->session->data['success'] = $this->language->get('text_success');
-            }
+			foreach ($this->request->post['klarna_invoice'] as $klarna_invoice) {
+				if ($klarna_invoice['status']) {
+					$status = true;
+					
+					break;
+				}
+			}			
+			
+			$data = array(
+				'klarna_invoice_pclasses' => $this->pclasses,
+				'klarna_invoice_status'   => $status
+			);
+			
+			$this->model_setting_setting->editSetting('klarna_invoice', array_merge($this->request->post, $data));
+			
+			$this->session->data['success'] = $this->language->get('text_success');
 
             $this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
         }
@@ -97,18 +69,6 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         } else {
             $this->data['error_warning'] = '';
         }
-
-        if (isset($this->error['merchant'])) {
-            $this->data['error_merchant'] = $this->error['merchant'];
-        } else {
-            $this->data['error_merchant'] = '';
-        }
-
-        if (isset($this->error['secret'])) {
-            $this->data['error_secret'] = $this->error['secret'];
-        } else {
-            $this->data['error_secret'] = '';
-        }
         
         $this->data['breadcrumbs'] = array();
 
@@ -142,38 +102,51 @@ class ControllerPaymentKlarnaInvoice extends Controller {
        
 	    $this->data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
-
-
-
-
-        if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-            $this->data['klarna_invoice_country'] = $klarnaCountry;
-        } else {
-            $this->data['klarna_invoice_country'] = $this->config->get('klarna_invoice_country');
-        }
-
-
-        if (isset($this->request->post['klarna_invoice_pending_status_id'])) {
-            $this->data['klarna_invoice_pending_status_id'] = $this->request->post['klarna_invoice_pending_status_id'];
-        } else {
-            $this->data['klarna_invoice_pending_status_id'] = $this->config->get('klarna_invoice_pending_status_id');
-        }
-
-        if (isset($this->request->post['klarna_invoice_accepted_status_id'])) {
-            $this->data['klarna_invoice_accepted_status_id'] = $this->request->post['klarna_invoice_accepted_status_id'];
-        } else {
-            $this->data['klarna_invoice_accepted_status_id'] = $this->config->get('klarna_invoice_accepted_status_id');
-        }
+		$this->data['countries'] = array();
 		
-        $this->load->model('localisation/order_status');
-        
-		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-        
+		$this->data['countries'][] = array(
+			'name' => $this->language->get('text_germany'),
+			'code' => 'DEU'
+		);
 		
+		$this->data['countries'][] = array(
+			'name' => $this->language->get('text_netherlands'),
+			'code' => 'NLD'
+		);
+		
+		$this->data['countries'][] = array(
+			'name' => $this->language->get('text_denmark'),
+			'code' => 'DNK'
+		);
+		
+		$this->data['countries'][] = array(
+			'name' => $this->language->get('text_sweden'),
+			'code' => 'SWE'
+		);
+		
+		$this->data['countries'][] = array(
+			'name' => $this->language->get('text_norway'),
+			'code' => 'NOR'
+		);
+		
+		$this->data['countries'][] = array(
+			'name' => $this->language->get('text_finland'),
+			'code' => 'FIN'
+		);
+
+		if (isset($this->request->post['klarna_invoice'])) {
+			$this->data['klarna_invoice'] = $this->request->post['klarna_invoice'];
+		} else {
+			$this->data['klarna_invoice'] = $this->config->get('klarna_invoice');
+		}
 		
 		$this->load->model('localisation/geo_zone');
-		
+			
 		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+
+		$this->load->model('localisation/order_status');
+			
+		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
         
 		$file = DIR_LOGS . 'klarna_invoice.log';
         
@@ -198,32 +171,10 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         if (!$this->user->hasPermission('modify', 'payment/klarna_invoice')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
-
-        if (!$this->error) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    public function clear() {
-        $this->language->load('payment/klarna_invoice');
 		
-		$file = DIR_LOGS . 'klarna_invoice.log';
-		
-		$handle = fopen($file, 'w+'); 
-				
-		fclose($handle); 
-				
-		$this->session->data['success'] = $this->language->get('text_success');
-        
-        $this->redirect($this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], 'SSL'));
-    }
-    
-    private function fetchPClasses($klarnaCountries) {
         $log = new Log('klarna_invoice.log');
         
-		$countries = array(
+		$country = array(
             'NOR' => array(
                 'currency' => 1,
                 'country'  => 164,
@@ -256,109 +207,105 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             ),
         );
         
-        $log = new Log('klarna_invoice.log');
-        
-        $result = array();
-        
-        foreach ($countries as $code => $country) {
-            if ($klarnaCountries[$code]['status'] != 1) {
-                continue;
-            }
-            
-            $digest = base64_encode(pack("H*", hash('sha256', $klarnaCountries[$code]['merchant']  . ':' . $country['currency'] . ':' . $klarnaCountries[$code]['secret'])));
-            
-            $xml  = "<methodCall>";
-            $xml .= "  <methodName>get_pclasses</methodName>";
-            $xml .= '  <params>';
-            $xml .= ' <param><value><string>4.1</string></value></param>';
-            $xml .= ' <param><value><string>API:OPENCART:' . VERSION . '</string></value></param>';
-            $xml .= ' <param><value><int>' . (int) $klarnaCountries[$code]['merchant'] . '</int></value></param>';
-            $xml .= ' <param><value><int>' . $country['currency'] . '</int></value></param>';
-            $xml .= ' <param><value><string>' . $digest . '</string></value></param>';
-            $xml .= ' <param><value><int>' . $country['country'] . '</int></value></param>';
-            $xml .= ' <param><value><int>' . $country['language'] . '</int></value></param>';
-            $xml .= "  </params>";
-            $xml .= "</methodCall>";
-            
-            if ($klarnaCountries[$code]['server'] == 'live') {
-                $server = 'https://payment.klarna.com';
-            } else {
-                $server = 'https://payment-beta.klarna.com';
-            }
-            
-            $ch = curl_init($server);
-
-            $headers = array(
-                'Content-Type: text/xml',
-                'Content-Length: ' . strlen($xml),
-            );
-
-            curl_setopt($ch, CURLOPT_URL, $server);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
-
-            $responseString = curl_exec($ch);
-            
-            if ($responseString !== False) {
-                $responseXml = new DOMDocument();
-                $responseXml->loadXML($responseString);
-
-                $xpath = new DOMXPath($responseXml);
-
-                $nodes = $xpath->query('//methodResponse/params/param/value');
-
-                if ($nodes->length == 0) {
-                    $errorCode = $xpath->query('//methodResponse/fault/value/struct/member/value/int')->item(0)->nodeValue;
-                    $errorMessage = $xpath->query('//methodResponse/fault/value/struct/member/value/string')->item(0)->nodeValue;
-
-                    $this->error['error_pclass'] = sprintf($this->language->get('error_retrieve_pclass'), $code, $errorCode, $errorMessage);
-                    
-                    $log->write(sprintf($this->language->get('error_retrieve_pclass'), $countryCode, $errorCode, $errorMessage));
-                    continue;
-                }
-
-                $pclasses = $this->parseResponse($nodes->item(0)->firstChild, $responseXml);
-
-                while ($pclasses) {
-                    $pclass = array_slice($pclasses, 0, 10);
-                    $pclasses = array_slice($pclasses, 10);
-
-                    $pclass[3] /= 100;
-                    $pclass[4] /= 100;
-                    $pclass[5] /= 100;
-                    $pclass[6] /= 100;
-                    $pclass[9] = ($pclass[9] != '-') ? strtotime($pclass[9]) : $pclass[9];
-
-                    array_unshift($pclass, $klarnaCountries[$countryCode]['merchant']);
-
-                    $result[$countryCode][] = array(
-                        'eid' => intval($pclass[0]),
-                        'id' => intval($pclass[1]),
-                        'description' => $pclass[2],
-                        'months' => intval($pclass[3]),
-                        'startfee' => floatval($pclass[4]),
-                        'invoicefee' => floatval($pclass[5]),
-                        'interestrate' => floatval($pclass[6]),
-                        'minamount' => floatval($pclass[7]),
-                        'country' => intval($pclass[8]),
-                        'type' => intval($pclass[9]),
-                    );
-                }
-            } else {
-                $this->error['errro_http'] = sprintf($this->language->get('error_http_error'), curl_errno($ch), curl_error($ch));
-                $log->write(sprintf($this->language->get('error_http_error'), curl_errno($ch), curl_error($ch)));
-            }
-
-            curl_close($ch);
+        foreach ($this->request->post['klarna_invoice'] as $key => $klarna_invoice) {
+			if ($klarna_invoice['status']) {
+				$digest = base64_encode(pack("H*", hash('sha256', $klarna_invoice['merchant']  . ':' . $country[$key]['currency'] . ':' . $klarna_invoice['secret'])));
+				
+				$xml  = '<methodCall>';
+				$xml .= '  <methodName>get_pclasses</methodName>';
+				$xml .= '  <params>';
+				$xml .= '    <param><value><string>4.1</string></value></param>';
+				$xml .= '    <param><value><string>API:OPENCART:' . VERSION . '</string></value></param>';
+				$xml .= '    <param><value><int>' . (int)$klarna_invoice['merchant'] . '</int></value></param>';
+				$xml .= '    <param><value><int>' . $country[$key]['currency'] . '</int></value></param>';
+				$xml .= '    <param><value><string>' . $digest . '</string></value></param>';
+				$xml .= '    <param><value><int>' . $country[$key]['country'] . '</int></value></param>';
+				$xml .= '    <param><value><int>' . $country[$key]['language'] . '</int></value></param>';
+				$xml .= '  </params>';
+				$xml .= '</methodCall>';
+				
+				if ($klarna_invoice['server'] == 'live') {
+					$url = 'https://payment.klarna.com';
+				} else {
+					$url = 'https://payment-beta.klarna.com';
+				}
+				
+				$curl = curl_init();
+	
+				$header  = 'Content-Type: text/xml' . "\n";
+				$header .= 'Content-Length: ' . strlen($xml) . "\n";
+				
+				curl_setopt($curl, CURLOPT_URL, $url);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($curl, CURLOPT_HEADER, $header);
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $xml);
+	
+				$response = curl_exec($curl);
+				
+				if ($response !== False) {
+					$xml = new DOMDocument();
+					$xml->loadXML($response);
+	
+					$xpath = new DOMXPath($xml);
+	
+					$nodes = $xpath->query('//methodResponse/params/param/value');
+	
+					if ($nodes->length == 0) {
+						$this->error['warning'] = $this->language->get('error_log');
+						
+						$error_code = $xpath->query('//methodResponse/fault/value/struct/member/value/int')->item(0)->nodeValue;
+						$error_message = $xpath->query('//methodResponse/fault/value/struct/member/value/string')->item(0)->nodeValue;
+	
+						$log->write(sprintf($this->language->get('error_pclass'), $key, $error_code, $error_message));
+						
+						continue;
+					}
+	
+					$pclasses = $this->parseResponse($nodes->item(0)->firstChild, $xml);
+	
+					while ($pclasses) {
+						$pclass = array_slice($pclasses, 0, 10);
+						$pclasses = array_slice($pclasses, 10);
+	
+						$pclass[3] /= 100;
+						$pclass[4] /= 100;
+						$pclass[5] /= 100;
+						$pclass[6] /= 100;
+						$pclass[9] = ($pclass[9] != '-') ? strtotime($pclass[9]) : $pclass[9];
+	
+						array_unshift($pclass, $klarna_invoice['merchant']);
+	
+						$this->pclasses[$key][] = array(
+							'eid'          => intval($pclass[0]),
+							'id'           => intval($pclass[1]),
+							'description'  => $pclass[2],
+							'months'       => intval($pclass[3]),
+							'startfee'     => floatval($pclass[4]),
+							'invoicefee'   => floatval($pclass[5]),
+							'interestrate' => floatval($pclass[6]),
+							'minamount'    => floatval($pclass[7]),
+							'country'      => intval($pclass[8]),
+							'type'         => intval($pclass[9]),
+						);
+					}
+				} else {
+					$this->error['warning'] = $this->language->get('error_log');
+					
+					$log->write(sprintf($this->language->get('error_curl'), curl_errno($curl), curl_error($curl)));
+				}
+	
+				curl_close($curl);
+			}
+		}
+		
+        if (!$this->error) {
+            return true;
+        } else {
+            return false;
         }
-        
-        $settings = $this->model_setting_setting->getSetting('klarna_invoice');
-        $settings['klarna_invoice_pclasses'] = $result;
-        $this->model_setting_setting->editSetting('klarna_invoice', $settings);
     }
     
     private function parseResponse($node, $document) {
@@ -407,5 +354,18 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
         return $value;
     }
-    
+	
+    public function clear() {
+        $this->language->load('payment/klarna_invoice');
+		
+		$file = DIR_LOGS . 'klarna_invoice.log';
+		
+		$handle = fopen($file, 'w+'); 
+				
+		fclose($handle); 
+				
+		$this->session->data['success'] = $this->language->get('text_success');
+        
+        $this->redirect($this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], 'SSL'));
+    }    
 }

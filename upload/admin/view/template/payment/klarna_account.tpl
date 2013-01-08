@@ -19,7 +19,7 @@
     <div class="content">
       <div id="htabs" class="htabs"><a href="#tab-general"><?php echo $tab_general ?></a><a href="#tab-log"><?php echo $tab_log ?></a></div>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <div id="tab-general"> <a onclick="window.open('https://merchants.klarna.com/signup?locale=en&partner_id=d5c87110cebc383a826364769047042e777da5e8&utm_campaign=Platform&utm_medium=Partners&utm_source=Opencart');" style="float: right;"><img src="view/image/payment/klarna_banner.gif" /></a>
+        <div id="tab-general"><a href="https://merchants.klarna.com/signup?locale=en&partner_id=d5c87110cebc383a826364769047042e777da5e8&utm_campaign=Platform&utm_medium=Partners&utm_source=Opencart" target="_blank" style="float: right;"><img src="view/image/payment/klarna_banner.gif" /></a>
           <div id="vtabs" class="vtabs">
             <?php foreach ($countries as $country) { ?>
             <a href="#tab-<?php echo $country['code']; ?>"><?php echo $country['name']; ?></a>

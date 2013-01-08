@@ -30,7 +30,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
             
 			$this->session->data['success'] = $this->language->get('text_success');
 
-           $this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
         }
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -104,32 +104,32 @@ class ControllerPaymentKlarnaAccount extends Controller {
 		
 		$this->data['countries'] = array();
 		
-		$this->data['countries']['DEU'] = array(
+		$this->data['countries'][] = array(
 			'name' => $this->language->get('text_germany'),
 			'code' => 'DEU'
 		);
 		
-		$this->data['countries']['NLD'] = array(
+		$this->data['countries'][] = array(
 			'name' => $this->language->get('text_netherlands'),
 			'code' => 'NLD'
 		);
 		
-		$this->data['countries']['DNK'] = array(
+		$this->data['countries'][] = array(
 			'name' => $this->language->get('text_denmark'),
 			'code' => 'DNK'
 		);
 		
-		$this->data['countries']['SWE'] = array(
+		$this->data['countries'][] = array(
 			'name' => $this->language->get('text_sweden'),
 			'code' => 'SWE'
 		);
 		
-		$this->data['countries']['NOR'] = array(
+		$this->data['countries'][] = array(
 			'name' => $this->language->get('text_norway'),
 			'code' => 'NOR'
 		);
 		
-		$this->data['countries']['FIN'] = array(
+		$this->data['countries'][] = array(
 			'name' => $this->language->get('text_finland'),
 			'code' => 'FIN'
 		);
@@ -207,8 +207,6 @@ class ControllerPaymentKlarnaAccount extends Controller {
             ),
         );
         
-        $result = array();
-        
         foreach ($this->request->post['klarna_account'] as $key => $klarna_account) {
             if ($klarna_account['status']) {
 				$digest = base64_encode(pack("H*", hash('sha256', $klarna_account['merchant']  . ':' . $country[$key]['currency'] . ':' . $klarna_account['secret'])));
@@ -218,7 +216,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				$xml .= '  <params>';
 				$xml .= '    <param><value><string>4.1</string></value></param>';
 				$xml .= '    <param><value><string>API:OPENCART:' . VERSION . '</string></value></param>';
-				$xml .= '    <param><value><int>' . (int) $klarna_account['merchant'] . '</int></value></param>';
+				$xml .= '    <param><value><int>' . (int)$klarna_account['merchant'] . '</int></value></param>';
 				$xml .= '    <param><value><int>' . $country[$key]['currency'] . '</int></value></param>';
 				$xml .= '    <param><value><string>' . $digest . '</string></value></param>';
 				$xml .= '    <param><value><int>' . $country[$key]['country'] . '</int></value></param>';

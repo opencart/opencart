@@ -1,7 +1,5 @@
 <?php
-
 class ControllerPaymentKlarnaAccount extends Controller {
-
     protected function index() {
         $this->load->model('checkout/order');
         $this->load->model('tool/image');

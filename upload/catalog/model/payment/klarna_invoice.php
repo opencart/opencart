@@ -1,7 +1,5 @@
 <?php
-
 class ModelPaymentKlarnaInvoice extends Model {
-
     public function getMethod($address, $total) {        
         $this->language->load('payment/klarna_invoice');
         
@@ -57,8 +55,8 @@ class ModelPaymentKlarnaInvoice extends Model {
             }
             
             $method = array(
-                'code' => 'klarna_invoice',
-                'title' => $title,
+                'code'       => 'klarna_invoice',
+                'title'      => $title,
                 'sort_order' => $settings['sort_order'],
             );
         }

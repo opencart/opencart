@@ -150,7 +150,7 @@ class ModelSaleCustomer extends Model {
 		if ($customer_info) {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET approved = '1' WHERE customer_id = '" . (int)$customer_id . "'");
 
-			$this->load->language('mail/customer');
+			$this->language->load('mail/customer');
 			
 			$this->load->model('setting/store');
 						

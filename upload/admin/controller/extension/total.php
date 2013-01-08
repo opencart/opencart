@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionTotal extends Controller {
 	public function index() {
-		$this->load->language('extension/total');
+		$this->language->load('extension/total');
 		 
 		$this->document->setTitle($this->language->get('heading_title')); 
 
@@ -65,7 +65,7 @@ class ControllerExtensionTotal extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 				
-				$this->load->language('total/' . $extension);
+				$this->language->load('total/' . $extension);
 	
 				$action = array();
 				
@@ -105,7 +105,7 @@ class ControllerExtensionTotal extends Controller {
 	}
 	
 	public function install() {
-		$this->load->language('extension/total');
+		$this->language->load('extension/total');
 			
 		if (!$this->user->hasPermission('modify', 'extension/total')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 
@@ -135,7 +135,7 @@ class ControllerExtensionTotal extends Controller {
 	}
 	
 	public function uninstall() {
-		$this->load->language('extension/total');
+		$this->language->load('extension/total');
 		
 		if (!$this->user->hasPermission('modify', 'extension/total')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 

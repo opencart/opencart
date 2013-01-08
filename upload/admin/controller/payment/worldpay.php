@@ -3,7 +3,7 @@ class ControllerPaymentWorldPay extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('payment/worldpay');
+		$this->language->load('payment/worldpay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		

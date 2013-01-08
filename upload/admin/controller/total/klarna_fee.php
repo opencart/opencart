@@ -8,7 +8,7 @@ class ControllerTotalKlarnaFee extends Controller {
         $this->load->model('setting/setting');
         $this->load->model('localisation/tax_class');
         
-        $this->data = array_merge($this->data, $this->load->language('total/klarna_fee'));
+        $this->data = array_merge($this->data, $this->language->load('total/klarna_fee'));
 
         $this->document->setTitle($this->language->get('heading_title'));
 

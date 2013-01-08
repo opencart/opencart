@@ -3,7 +3,7 @@
 class ModelTotalKlarnaFee extends Model {
 
     public function getTotal(&$total_data, &$total, &$taxes) {
-        $this->load->language('total/klarna_fee');
+        $this->language->load('total/klarna_fee');
         
         if (isset($this->session->data['payment_method']['code']) && $this->session->data['payment_method']['code'] == 'klarna_invoice') {
             $iso3 = $this->db->query("SELECT `iso_code_3` FROM `" . DB_PREFIX . "country` WHERE `country_id` = " . (int) $this->session->data['payment_country_id'])->row['iso_code_3'];

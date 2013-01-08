@@ -1,7 +1,7 @@
 <?php   
 class ControllerCommonHome extends Controller {   
 	public function index() {
-    	$this->load->language('common/home');
+    	$this->language->load('common/home');
 	 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -203,7 +203,7 @@ class ControllerCommonHome extends Controller {
   	}
 	
 	public function chart() {
-		$this->load->language('common/home');
+		$this->language->load('common/home');
 		
 		$data = array();
 		

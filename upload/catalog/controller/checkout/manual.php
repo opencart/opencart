@@ -1,7 +1,7 @@
 <?php 
 class ControllerCheckoutManual extends Controller {
 	public function index() {
-		$this->load->language('checkout/manual');
+		$this->language->load('checkout/manual');
 		
 		$json = array();
 			

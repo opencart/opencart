@@ -1,17 +1,13 @@
 <?php
-
 class ControllerPaymentKlarnaInvoice extends Controller {
-
     private $error = array();
 
     public function index() {
-        $this->load->model('setting/setting');
-        $this->load->model('localisation/order_status');
-        $this->load->model('localisation/geo_zone');
+		$this->language->load('payment/klarna_invoice');
         
-        $this->data = array_merge($this->data, $this->load->language('payment/klarna_invoice'));
-
-        $this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->load->model('setting/setting');
         
         $this->data['country_names'] = array(
             'DEU' => $this->language->get('text_germany'),
@@ -23,13 +19,13 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         );
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-            
+            $this->model_setting_setting->editSetting('klarna_invoice', $this->request->post);
+			
             $klarnaCountry = array();
             $status = false;
             
             foreach (array_keys($this->data['country_names']) as $iso3) {
-
-                if (isset($this->request->post['klarna_invoice_country'][$iso3]['status']) && $this->request->post['klarna_invoice_country'][$iso3]['status'] == 1) {
+				if (isset($this->request->post['klarna_invoice_country'][$iso3]['status']) && $this->request->post['klarna_invoice_country'][$iso3]['status'] == 1) {
                     $klarnaCountry[$iso3] = $this->request->post['klarna_invoice_country'][$iso3];
                     $status = true;
                 } else {
@@ -52,7 +48,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 'klarna_invoice_accepted_order_status_id' => (int) $this->request->post['klarna_invoice_accepted_order_status_id'],
             );
             
-            $this->model_setting_setting->editSetting('klarna_invoice', $settings);
+            
             
             $this->fetchPClasses($klarnaCountry);
 
@@ -64,7 +60,38 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
             $this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
         }
-        
+		
+ 		$this->data['heading_title'] = $this->language->get('heading_title');
+
+		$this->data['text_enabled'] = $this->language->get('text_enabled');
+		$this->data['text_disabled'] = $this->language->get('text_disabled');
+		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
+		$this->data['text_live'] = $this->language->get('text_live');
+		$this->data['text_beta'] = $this->language->get('text_beta');
+		$this->data['text_sweden'] = $this->language->get('text_sweden');
+		$this->data['text_norway'] = $this->language->get('text_norway');
+		$this->data['text_finland'] = $this->language->get('text_finland');
+		$this->data['text_denmark'] = $this->language->get('text_denmark');
+		$this->data['text_germany'] = $this->language->get('text_germany');
+		$this->data['text_netherlands'] = $this->language->get('text_netherlands');
+				
+		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
+		$this->data['entry_secret'] = $this->language->get('entry_secret');
+		$this->data['entry_server'] = $this->language->get('entry_server');
+		$this->data['entry_total'] = $this->language->get('entry_total');	
+		$this->data['entry_pending_status'] = $this->language->get('entry_pending_status');
+		$this->data['entry_accepted_status'] = $this->language->get('entry_accepted_status');		
+		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$this->data['entry_status'] = $this->language->get('entry_status');
+		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		
+		$this->data['button_save'] = $this->language->get('button_save');
+		$this->data['button_cancel'] = $this->language->get('button_cancel');
+		$this->data['button_clear'] = $this->language->get('button_clear');
+		
+		$this->data['tab_general'] = $this->language->get('tab_general');
+		$this->data['tab_log'] = $this->language->get('tab_log');
+				       
         if (isset($this->error['warning'])) {
             $this->data['error_warning'] = $this->error['warning'];
         } else {
@@ -82,78 +109,81 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         } else {
             $this->data['error_secret'] = '';
         }
-
-        if (isset($this->error['minimum_amount'])) {
-            $this->data['error_minimum_amount'] = $this->error['minimum_amount'];
-        } else {
-            $this->data['error_minimum_amount'] = '';
-        }
         
         $this->data['breadcrumbs'] = array();
 
         $this->data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+            'text'      => $this->language->get('text_home'),
+            'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
             'separator' => false
         );
 
         $this->data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_payment'),
-            'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
+            'text'      => $this->language->get('text_payment'),
+            'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
             'separator' => ' :: '
         );
 
         $this->data['breadcrumbs'][] = array(
-            'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], 'SSL'),
+            'text'      => $this->language->get('heading_title'),
+            'href'      => $this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], 'SSL'),
             'separator' => ' :: '
         );
-
+		
+		if (isset($this->session->data['success'])) {
+			$this->data['success'] = $this->session->data['success'];
+		
+			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
+		}
+		
         $this->data['action'] = $this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+       
+	    $this->data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
-        if (isset($this->request->post['klarna_invoice_pending_order_status_id'])) {
-            $this->data['klarna_invoice_pending_order_status_id'] = $this->request->post['klarna_invoice_pending_order_status_id'];
-        } else {
-            $this->data['klarna_invoice_pending_order_status_id'] = $this->config->get('klarna_invoice_pending_order_status_id');
-        }
 
-        if (isset($this->request->post['klarna_invoice_accepted_order_status_id'])) {
-            $this->data['klarna_invoice_accepted_order_status_id'] = $this->request->post['klarna_invoice_accepted_order_status_id'];
-        } else {
-            $this->data['klarna_invoice_accepted_order_status_id'] = $this->config->get('klarna_invoice_accepted_order_status_id');
-        }
 
-        $this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-        $this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-        
-        if (isset($this->session->data['success'])) {
-            $this->data['message_success'] = $this->session->data['success'];
-            unset($this->session->data['success']);
-        } else {
-            $this->data['message_success'] = '';
-        }
-        
-        if (isset($this->session->data['error'])) {
-            $this->data['error_warning'] = $this->session->data['error'];
-            unset($this->session->data['error']);
-        }
-        
+
+
         if ($this->request->server['REQUEST_METHOD'] == 'POST') {
             $this->data['klarna_invoice_country'] = $klarnaCountry;
         } else {
             $this->data['klarna_invoice_country'] = $this->config->get('klarna_invoice_country');
         }
-        
-        /* Getting the Log contents */
-        
-        if (file_exists(DIR_LOGS . 'klarna_invoice.log') && is_readable(DIR_LOGS . 'klarna_invoice.log')) {
-            $this->data['klarna_invoice_log'] = file_get_contents(DIR_LOGS . 'klarna_invoice.log');
+
+
+        if (isset($this->request->post['klarna_invoice_pending_status_id'])) {
+            $this->data['klarna_invoice_pending_status_id'] = $this->request->post['klarna_invoice_pending_status_id'];
         } else {
-            $this->data['klarna_invoice_log'] = '';
+            $this->data['klarna_invoice_pending_status_id'] = $this->config->get('klarna_invoice_pending_status_id');
+        }
+
+        if (isset($this->request->post['klarna_invoice_accepted_status_id'])) {
+            $this->data['klarna_invoice_accepted_status_id'] = $this->request->post['klarna_invoice_accepted_status_id'];
+        } else {
+            $this->data['klarna_invoice_accepted_status_id'] = $this->config->get('klarna_invoice_accepted_status_id');
+        }
+		
+        $this->load->model('localisation/order_status');
+        
+		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+        
+		
+		
+		$this->load->model('localisation/geo_zone');
+		
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+        
+		$file = DIR_LOGS . 'klarna_invoice.log';
+        
+        if (file_exists($file)) {
+            $this->data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
+        } else {
+            $this->data['log'] = '';
         }
         
-        $this->data['clear_log'] = $this->url->link('payment/klarna_invoice/clearLog', 'token=' . $this->session->data['token'], 'SSL'); 
+        $this->data['clear'] = $this->url->link('payment/klarna_invoice/clear', 'token=' . $this->session->data['token'], 'SSL'); 
 
         $this->template = 'payment/klarna_invoice.tpl';
         $this->children = array(
@@ -176,23 +206,24 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         }
     }
     
-    public function clearLog() {
-        $this->load->language('payment/klarna_invoice');
-        
-        $success = file_put_contents(DIR_LOGS . 'klarna_invoice.log', '') !== false;
-        
-        if ($success) {
-            $this->session->data['success'] = $this->language->get('text_log_clear');
-        } else {
-            $this->session->data['error'] = $this->language->get('error_log_clear');
-        }
+    public function clear() {
+        $this->language->load('payment/klarna_invoice');
+		
+		$file = DIR_LOGS . 'klarna_invoice.log';
+		
+		$handle = fopen($file, 'w+'); 
+				
+		fclose($handle); 
+				
+		$this->session->data['success'] = $this->language->get('text_success');
         
         $this->redirect($this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], 'SSL'));
     }
     
     private function fetchPClasses($klarnaCountries) {
         $log = new Log('klarna_invoice.log');
-        $countries = array(
+        
+		$countries = array(
             'NOR' => array(
                 'currency' => 1,
                 'country'  => 164,
@@ -229,20 +260,19 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         
         $result = array();
         
-        foreach ($countries as $countryCode => $country) {
-            
-            if ($klarnaCountries[$countryCode]['status'] != 1) {
+        foreach ($countries as $code => $country) {
+            if ($klarnaCountries[$code]['status'] != 1) {
                 continue;
             }
             
-            $digest = base64_encode(pack("H*", hash('sha256', $klarnaCountries[$countryCode]['merchant']  . ':' . $country['currency'] . ':' . $klarnaCountries[$countryCode]['secret'])));
+            $digest = base64_encode(pack("H*", hash('sha256', $klarnaCountries[$code]['merchant']  . ':' . $country['currency'] . ':' . $klarnaCountries[$code]['secret'])));
             
             $xml  = "<methodCall>";
             $xml .= "  <methodName>get_pclasses</methodName>";
             $xml .= '  <params>';
             $xml .= ' <param><value><string>4.1</string></value></param>';
             $xml .= ' <param><value><string>API:OPENCART:' . VERSION . '</string></value></param>';
-            $xml .= ' <param><value><int>' . (int) $klarnaCountries[$countryCode]['merchant'] . '</int></value></param>';
+            $xml .= ' <param><value><int>' . (int) $klarnaCountries[$code]['merchant'] . '</int></value></param>';
             $xml .= ' <param><value><int>' . $country['currency'] . '</int></value></param>';
             $xml .= ' <param><value><string>' . $digest . '</string></value></param>';
             $xml .= ' <param><value><int>' . $country['country'] . '</int></value></param>';
@@ -250,7 +280,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
             $xml .= "  </params>";
             $xml .= "</methodCall>";
             
-            if ($klarnaCountries[$countryCode]['server'] == 'live') {
+            if ($klarnaCountries[$code]['server'] == 'live') {
                 $server = 'https://payment.klarna.com';
             } else {
                 $server = 'https://payment-beta.klarna.com';
@@ -285,7 +315,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                     $errorCode = $xpath->query('//methodResponse/fault/value/struct/member/value/int')->item(0)->nodeValue;
                     $errorMessage = $xpath->query('//methodResponse/fault/value/struct/member/value/string')->item(0)->nodeValue;
 
-                    $this->error['error_pclass'] = sprintf($this->language->get('error_retrieve_pclass'), $countryCode, $errorCode, $errorMessage);
+                    $this->error['error_pclass'] = sprintf($this->language->get('error_retrieve_pclass'), $code, $errorCode, $errorMessage);
                     
                     $log->write(sprintf($this->language->get('error_retrieve_pclass'), $countryCode, $errorCode, $errorMessage));
                     continue;
@@ -366,9 +396,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 $entries = $xpath->query('.//array/data/value', $child);
                 
                 for ($i = 0; $i < $entries->length; $i++) {
-                    $entry = $entries->item($i)->firstChild;
-                    
-                    $value[] = $this->parseResponse($entry, $document);
+                    $value[] = $this->parseResponse($entries->item($i)->firstChild, $document);
                 }
 
                 break;

@@ -3,7 +3,7 @@ class ControllerSaleOrder extends Controller {
 	private $error = array();
 
   	public function index() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerSaleOrder extends Controller {
   	}
 	
   	public function insert() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -69,7 +69,7 @@ class ControllerSaleOrder extends Controller {
   	}
 	
   	public function update() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -125,7 +125,7 @@ class ControllerSaleOrder extends Controller {
   	}
 	
   	public function delete() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -1346,7 +1346,7 @@ class ControllerSaleOrder extends Controller {
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
 		if ($order_info) {
-			$this->load->language('sale/order');
+			$this->language->load('sale/order');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
@@ -1920,7 +1920,7 @@ class ControllerSaleOrder extends Controller {
 			
 			$this->response->setOutput($this->render());
 		} else {
-			$this->load->language('error/not_found');
+			$this->language->load('error/not_found');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
@@ -2243,7 +2243,7 @@ class ControllerSaleOrder extends Controller {
 				exit('Error: Headers already sent out!');
 			}
 		} else {
-			$this->load->language('error/not_found');
+			$this->language->load('error/not_found');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
@@ -2324,7 +2324,7 @@ class ControllerSaleOrder extends Controller {
 	}
 			
   	public function invoice() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$this->data['title'] = $this->language->get('heading_title');
 

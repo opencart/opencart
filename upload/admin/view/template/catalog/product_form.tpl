@@ -841,13 +841,6 @@ $('#product-filter div img').live('click', function() {
 	$('#product-filter div:even').attr('class', 'even');	
 });
 
-$('#product-filter div img').live('click', function() {
-	$(this).parent().remove();
-	
-	$('#product-filter div:odd').attr('class', 'odd');
-	$('#product-filter div:even').attr('class', 'even');	
-});
-
 // Downloads
 $('input[name=\'download\']').autocomplete({
 	delay: 500,

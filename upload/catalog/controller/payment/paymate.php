@@ -43,7 +43,7 @@ class ControllerPaymentPaymate extends Controller {
 	}
 	
 	public function callback() {
-		$this->load->language('payment/paymate');
+		$this->language->load('payment/paymate');
 		
 		if (isset($this->request->post['ref'])) {
 			$order_id = $this->request->post['ref'];

@@ -3,7 +3,7 @@ class ControllerSaleAffiliate extends Controller {
 	private $error = array();
   
   	public function index() {
-		$this->load->language('sale/affiliate');
+		$this->language->load('sale/affiliate');
 		 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -13,7 +13,7 @@ class ControllerSaleAffiliate extends Controller {
   	}
   
   	public function insert() {
-		$this->load->language('sale/affiliate');
+		$this->language->load('sale/affiliate');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -65,7 +65,7 @@ class ControllerSaleAffiliate extends Controller {
   	} 
    
   	public function update() {
-		$this->load->language('sale/affiliate');
+		$this->language->load('sale/affiliate');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -117,7 +117,7 @@ class ControllerSaleAffiliate extends Controller {
   	}   
 
   	public function delete() {
-		$this->load->language('sale/affiliate');
+		$this->language->load('sale/affiliate');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -171,7 +171,7 @@ class ControllerSaleAffiliate extends Controller {
   	}  
 		 
 	public function approve() {
-		$this->load->language('sale/affiliate');
+		$this->language->load('sale/affiliate');
     	
 		$this->document->setTitle($this->language->get('heading_title'));
 		

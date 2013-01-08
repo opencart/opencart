@@ -106,7 +106,7 @@ class ModelSaleAffiliate extends Model {
 		if ($affiliate_info) {
 			$this->db->query("UPDATE " . DB_PREFIX . "affiliate SET approved = '1' WHERE affiliate_id = '" . (int)$affiliate_id . "'");
 			
-			$this->load->language('mail/affiliate');
+			$this->language->load('mail/affiliate');
 	
 			$message  = sprintf($this->language->get('text_approve_welcome'), $this->config->get('config_name')) . "\n\n";
 			$message .= $this->language->get('text_approve_login') . "\n";

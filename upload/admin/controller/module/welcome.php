@@ -3,7 +3,7 @@ class ControllerModuleWelcome extends Controller {
 	private $error = array(); 
 	 
 	public function index() {   
-		$this->load->language('module/welcome');
+		$this->language->load('module/welcome');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		

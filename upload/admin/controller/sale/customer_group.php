@@ -3,7 +3,7 @@ class ControllerSaleCustomerGroup extends Controller {
 	private $error = array();
  
 	public function index() {
-		$this->load->language('sale/customer_group');
+		$this->language->load('sale/customer_group');
  
 		$this->document->setTitle($this->language->get('heading_title'));
  		
@@ -13,7 +13,7 @@ class ControllerSaleCustomerGroup extends Controller {
 	}
 
 	public function insert() {
-		$this->load->language('sale/customer_group');
+		$this->language->load('sale/customer_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -45,7 +45,7 @@ class ControllerSaleCustomerGroup extends Controller {
 	}
 
 	public function update() {
-		$this->load->language('sale/customer_group');
+		$this->language->load('sale/customer_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -77,7 +77,7 @@ class ControllerSaleCustomerGroup extends Controller {
 	}
 
 	public function delete() { 
-		$this->load->language('sale/customer_group');
+		$this->language->load('sale/customer_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		

@@ -3,7 +3,7 @@ class ControllerSaleCustomer extends Controller {
 	private $error = array();
   
   	public function index() {
-		$this->load->language('sale/customer');
+		$this->language->load('sale/customer');
 		 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -13,7 +13,7 @@ class ControllerSaleCustomer extends Controller {
   	}
   
   	public function insert() {
-		$this->load->language('sale/customer');
+		$this->language->load('sale/customer');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -73,7 +73,7 @@ class ControllerSaleCustomer extends Controller {
   	} 
    
   	public function update() {
-		$this->load->language('sale/customer');
+		$this->language->load('sale/customer');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -133,7 +133,7 @@ class ControllerSaleCustomer extends Controller {
   	}   
 
   	public function delete() {
-		$this->load->language('sale/customer');
+		$this->language->load('sale/customer');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -195,7 +195,7 @@ class ControllerSaleCustomer extends Controller {
   	}  
 	
 	public function approve() {
-		$this->load->language('sale/customer');
+		$this->language->load('sale/customer');
     	
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -1084,7 +1084,7 @@ class ControllerSaleCustomer extends Controller {
 				$this->redirect(HTTP_CATALOG . 'index.php?route=account/login&token=' . $token);
 			}
 		} else {
-			$this->load->language('error/not_found');
+			$this->language->load('error/not_found');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 

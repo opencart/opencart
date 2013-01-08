@@ -85,6 +85,7 @@ $_['tab_fraud']                     = 'Fraud';
 $_['tab_ftp']                       = 'FTP';
 $_['tab_ip']                        = 'IP Addresses';
 $_['tab_links']                     = 'Links';
+$_['tab_log']                       = 'Log';
 $_['tab_image']                     = 'Image';
 $_['tab_option']                    = 'Option';
 $_['tab_server']                    = 'Server';
@@ -96,26 +97,26 @@ $_['tab_module']                    = 'Module';
 $_['tab_order']                     = 'Order Details';
 $_['tab_payment']                   = 'Payment Details';
 $_['tab_product']                   = 'Products';
-$_['tab_return']              = 'Return Details';
-$_['tab_reward']              = 'Reward Points';
-$_['tab_shipping']            = 'Shipping Details';
-$_['tab_total']               = 'Totals';
-$_['tab_transaction']         = 'Transactions';
-$_['tab_voucher']             = 'Vouchers';
-$_['tab_voucher_history']     = 'Voucher History';
+$_['tab_return']                    = 'Return Details';
+$_['tab_reward']                    = 'Reward Points';
+$_['tab_shipping']                  = 'Shipping Details';
+$_['tab_total']                     = 'Totals';
+$_['tab_transaction']               = 'Transactions';
+$_['tab_voucher']                   = 'Vouchers';
+$_['tab_voucher_history']           = 'Voucher History';
 
 // Image Resize Type
-$_['img_resize_type_d'] 	  = 'Resize according to default'; 
-$_['img_resize_type_w'] 	  = 'Resize according to width'; 		 
-$_['img_resize_type_h'] 	  = 'Resize according to height'; 		 
+$_['img_resize_type_d'] 	        = 'Resize according to default'; 
+$_['img_resize_type_w'] 	        = 'Resize according to width'; 		 
+$_['img_resize_type_h'] 	        = 'Resize according to height'; 		 
 
 // Error
-$_['error_upload_1']          = 'Warning: The uploaded file exceeds the upload_max_filesize directive in php.ini!';
-$_['error_upload_2']          = 'Warning: The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form!';
-$_['error_upload_3']          = 'Warning: The uploaded file was only partially uploaded!';
-$_['error_upload_4']          = 'Warning: No file was uploaded!';
-$_['error_upload_6']          = 'Warning: Missing a temporary folder!';
-$_['error_upload_7']          = 'Warning: Failed to write file to disk!';
-$_['error_upload_8']          = 'Warning: File upload stopped by extension!';
-$_['error_upload_999']        = 'Warning: No error code available!';
+$_['error_upload_1']                = 'Warning: The uploaded file exceeds the upload_max_filesize directive in php.ini!';
+$_['error_upload_2']                = 'Warning: The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form!';
+$_['error_upload_3']                = 'Warning: The uploaded file was only partially uploaded!';
+$_['error_upload_4']                = 'Warning: No file was uploaded!';
+$_['error_upload_6']                = 'Warning: Missing a temporary folder!';
+$_['error_upload_7']                = 'Warning: Failed to write file to disk!';
+$_['error_upload_8']                = 'Warning: File upload stopped by extension!';
+$_['error_upload_999']              = 'Warning: No error code available!';
 ?>

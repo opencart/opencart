@@ -7,7 +7,7 @@ class ControllerModulespecial extends Controller {
 	private $error = array(); 
 	
 	public function index() {   
-		$this->load->language('module/special');
+		$this->language->load('module/special');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		

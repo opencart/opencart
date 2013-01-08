@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionManager extends Controller {
 	public function index() {
-		$this->load->language('extension/manager');
+		$this->language->load('extension/manager');
 		 
 		$this->document->setTitle($this->language->get('heading_title')); 
 

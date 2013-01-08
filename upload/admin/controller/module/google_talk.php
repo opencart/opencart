@@ -3,7 +3,7 @@ class ControllerModuleGoogleTalk extends Controller {
 	private $error = array(); 
 	
 	public function index() {   
-		$this->load->language('module/google_talk');
+		$this->language->load('module/google_talk');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		

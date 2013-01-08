@@ -3,7 +3,7 @@ class ControllerCommonFileManager extends Controller {
 	private $error = array();
 	
 	public function index() {
-		$this->load->language('common/filemanager');
+		$this->language->load('common/filemanager');
 		
 		$this->data['title'] = $this->language->get('heading_title');
 		
@@ -151,7 +151,7 @@ class ControllerCommonFileManager extends Controller {
 	}	
 	
 	public function create() {
-		$this->load->language('common/filemanager');
+		$this->language->load('common/filemanager');
 				
 		$json = array();
 		
@@ -187,7 +187,7 @@ class ControllerCommonFileManager extends Controller {
 	}
 	
 	public function delete() {
-		$this->load->language('common/filemanager');
+		$this->language->load('common/filemanager');
 		
 		$json = array();
 		
@@ -247,7 +247,7 @@ class ControllerCommonFileManager extends Controller {
 	}
 
 	public function move() {
-		$this->load->language('common/filemanager');
+		$this->language->load('common/filemanager');
 		
 		$json = array();
 		
@@ -289,7 +289,7 @@ class ControllerCommonFileManager extends Controller {
 	}	
 	
 	public function copy() {
-		$this->load->language('common/filemanager');
+		$this->language->load('common/filemanager');
 		
 		$json = array();
 		
@@ -373,7 +373,7 @@ class ControllerCommonFileManager extends Controller {
 	}
 	
 	public function rename() {
-		$this->load->language('common/filemanager');
+		$this->language->load('common/filemanager');
 		
 		$json = array();
 		
@@ -415,7 +415,7 @@ class ControllerCommonFileManager extends Controller {
 	}
 	
 	public function upload() {
-		$this->load->language('common/filemanager');
+		$this->language->load('common/filemanager');
 		
 		$json = array();
 		

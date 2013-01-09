@@ -488,7 +488,7 @@ class ControllerCatalogDownload extends Controller {
 					$allowed[] = trim($filetype);
 				}
 								
-				if (!in_array($this->request->files['file']['type'], $filetypes)) {
+				if (!in_array($this->request->files['file']['type'], $allowed)) {
 					$json['error'] = $this->language->get('error_filetype');
 				}
 							

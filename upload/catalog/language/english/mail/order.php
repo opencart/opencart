@@ -34,4 +34,7 @@ $_['text_update_order_status']  = 'Your order has been updated to the following 
 $_['text_update_comment']       = 'The comments for your order are:';
 $_['text_update_link']          = 'To view your order click on the link below:';
 $_['text_update_footer']        = 'Please reply to this email if you have any questions.';
+$_['text_tricky_order']         = 'Warning! This order may be tricky! Check the user transactions!';
+$_['text_tricky']         		= 'Warning! This order may be tricky!';
+$_['text_user_balance']         = 'User balance:';
 ?>

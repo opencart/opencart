@@ -501,20 +501,15 @@ class ControllerPaymentKlarnaAccount extends Controller {
                 
                 $xml = '<boolean>' . $value . '</boolean>';
                 break;
-
-                
             case 'integer':
-                $xml = '<int>' . (int) $data . '</int>';
+                $xml = '<int>' . (int)$data . '</int>';
                 break;
-            
             case 'double':
-                $xml = '<double>' . (double) $data . '</double>';
+                $xml = '<double>' . (float)$data . '</double>';
                 break;
-            
             case 'string':
                 $xml = '<string>' . htmlspecialchars($data) . '</string>';
                 break;
-                
             case 'array':
                 // is numeric ?
                 if ($data === array_values($data)) {
@@ -539,9 +534,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
                     
                     $xml .= '</struct>';
                 }
-                
                 break;
-            
             default:
                 $xml = '<nil/>';
                 break;

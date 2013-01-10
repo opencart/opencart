@@ -322,6 +322,9 @@ a.button, .list a.button {
 	padding: 0px 5px;
 	background: #FFFFFF;
 }
+.list tbody tr:hover td {
+	background-color: #FFFFCB;
+}
 .list .left {
 	text-align: left;
 	padding: 7px;

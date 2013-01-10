@@ -3,6 +3,9 @@ class ModelPaymentKlarnaInvoice extends Model {
     public function getMethod($address, $total) {        
         $this->language->load('payment/klarna_invoice');
         
+		
+		
+		
         $klarnaCountry = $this->config->get('klarna_invoice_country');
         
         if (isset($klarnaCountry[$address['iso_code_3']])) {

@@ -89,6 +89,10 @@ class ControllerShippingWeight extends Controller {
 			$this->data['weight_tax_class_id'] = $this->config->get('weight_tax_class_id');
 		}
 		
+		$this->load->model('localisation/tax_class');
+				
+		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
+		
 		if (isset($this->request->post['weight_status'])) {
 			$this->data['weight_status'] = $this->request->post['weight_status'];
 		} else {
@@ -100,10 +104,6 @@ class ControllerShippingWeight extends Controller {
 		} else {
 			$this->data['weight_sort_order'] = $this->config->get('weight_sort_order');
 		}	
-		
-		$this->load->model('localisation/tax_class');
-				
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
 		$this->template = 'shipping/weight.tpl';
 		$this->children = array(

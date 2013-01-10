@@ -9,7 +9,7 @@ class ControllerTotalHandling extends Controller {
 		
 		$this->load->model('setting/setting');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('handling', $this->request->post);
 		
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -79,7 +79,11 @@ class ControllerTotalHandling extends Controller {
 		} else {
 			$this->data['handling_tax_class_id'] = $this->config->get('handling_tax_class_id');
 		}
-
+		
+		$this->load->model('localisation/tax_class');
+		
+		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
+		
 		if (isset($this->request->post['handling_status'])) {
 			$this->data['handling_status'] = $this->request->post['handling_status'];
 		} else {
@@ -91,10 +95,6 @@ class ControllerTotalHandling extends Controller {
 		} else {
 			$this->data['handling_sort_order'] = $this->config->get('handling_sort_order');
 		}
-		
-		$this->load->model('localisation/tax_class');
-		
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
 		$this->template = 'total/handling.tpl';
 		$this->children = array(

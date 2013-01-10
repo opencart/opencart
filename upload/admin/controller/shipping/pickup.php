@@ -67,6 +67,10 @@ class ControllerShippingPickup extends Controller {
 			$this->data['pickup_geo_zone_id'] = $this->config->get('pickup_geo_zone_id');
 		}
 		
+		$this->load->model('localisation/geo_zone');
+		
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
 		if (isset($this->request->post['pickup_status'])) {
 			$this->data['pickup_status'] = $this->request->post['pickup_status'];
 		} else {
@@ -79,10 +83,6 @@ class ControllerShippingPickup extends Controller {
 			$this->data['pickup_sort_order'] = $this->config->get('pickup_sort_order');
 		}				
 		
-		$this->load->model('localisation/geo_zone');
-		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-						
 		$this->template = 'shipping/pickup.tpl';
 		$this->children = array(
 			'common/header',

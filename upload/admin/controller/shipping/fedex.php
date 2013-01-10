@@ -327,11 +327,19 @@ class ControllerShippingFedex extends Controller {
 			$this->data['fedex_tax_class_id'] = $this->config->get('fedex_tax_class_id');
 		}
 		
+		$this->load->model('localisation/tax_class');
+		
+		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
+		
 		if (isset($this->request->post['fedex_geo_zone_id'])) {
 			$this->data['fedex_geo_zone_id'] = $this->request->post['fedex_geo_zone_id'];
 		} else {
 			$this->data['fedex_geo_zone_id'] = $this->config->get('fedex_geo_zone_id');
 		}
+		
+		$this->load->model('localisation/geo_zone');
+		
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 		
 		if (isset($this->request->post['fedex_status'])) {
 			$this->data['fedex_status'] = $this->request->post['fedex_status'];
@@ -344,14 +352,6 @@ class ControllerShippingFedex extends Controller {
 		} else {
 			$this->data['fedex_sort_order'] = $this->config->get('fedex_sort_order');
 		}				
-
-		$this->load->model('localisation/tax_class');
-		
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
-		
-		$this->load->model('localisation/geo_zone');
-		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 								
 		$this->template = 'shipping/fedex.tpl';
 		$this->children = array(

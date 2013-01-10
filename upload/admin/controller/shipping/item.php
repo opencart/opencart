@@ -74,12 +74,20 @@ class ControllerShippingItem extends Controller {
 		} else {
 			$this->data['item_tax_class_id'] = $this->config->get('item_tax_class_id');
 		}
+		
+		$this->load->model('localisation/tax_class');
+		
+		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 				
 		if (isset($this->request->post['item_geo_zone_id'])) {
 			$this->data['item_geo_zone_id'] = $this->request->post['item_geo_zone_id'];
 		} else {
 			$this->data['item_geo_zone_id'] = $this->config->get('item_geo_zone_id');
 		}
+		
+		$this->load->model('localisation/geo_zone');
+		
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 		
 		if (isset($this->request->post['item_status'])) {
 			$this->data['item_status'] = $this->request->post['item_status'];
@@ -92,14 +100,6 @@ class ControllerShippingItem extends Controller {
 		} else {
 			$this->data['item_sort_order'] = $this->config->get('item_sort_order');
 		}	
-		
-		$this->load->model('localisation/tax_class');
-		
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
-		
-		$this->load->model('localisation/geo_zone');
-		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		$this->template = 'shipping/item.tpl';
 		$this->children = array(

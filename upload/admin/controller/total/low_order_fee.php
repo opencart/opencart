@@ -9,7 +9,7 @@ class ControllerTotalLowOrderFee extends Controller {
 		
 		$this->load->model('setting/setting');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('low_order_fee', $this->request->post);
 		
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -80,6 +80,10 @@ class ControllerTotalLowOrderFee extends Controller {
 			$this->data['low_order_fee_tax_class_id'] = $this->config->get('low_order_fee_tax_class_id');
 		}
 		
+		$this->load->model('localisation/tax_class');
+		
+		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
+		
 		if (isset($this->request->post['low_order_fee_status'])) {
 			$this->data['low_order_fee_status'] = $this->request->post['low_order_fee_status'];
 		} else {
@@ -91,10 +95,6 @@ class ControllerTotalLowOrderFee extends Controller {
 		} else {
 			$this->data['low_order_fee_sort_order'] = $this->config->get('low_order_fee_sort_order');
 		}
-		
-		$this->load->model('localisation/tax_class');
-		
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
 		$this->template = 'total/low_order_fee.tpl';
 		$this->children = array(

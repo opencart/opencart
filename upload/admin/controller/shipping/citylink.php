@@ -76,12 +76,20 @@ class ControllerShippingCitylink extends Controller {
 		} else {
 			$this->data['citylink_tax_class_id'] = $this->config->get('citylink_tax_class_id');
 		}
+		
+		$this->load->model('localisation/tax_class');
+		
+		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
 		if (isset($this->request->post['citylink_geo_zone_id'])) {
 			$this->data['citylink_geo_zone_id'] = $this->request->post['citylink_geo_zone_id'];
 		} else {
 			$this->data['citylink_geo_zone_id'] = $this->config->get('citylink_geo_zone_id');
 		}
+		
+		$this->load->model('localisation/geo_zone');
+		
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 		
 		if (isset($this->request->post['citylink_status'])) {
 			$this->data['citylink_status'] = $this->request->post['citylink_status'];
@@ -94,14 +102,6 @@ class ControllerShippingCitylink extends Controller {
 		} else {
 			$this->data['citylink_sort_order'] = $this->config->get('citylink_sort_order');
 		}				
-
-		$this->load->model('localisation/tax_class');
-		
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
-		
-		$this->load->model('localisation/geo_zone');
-		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		$this->template = 'shipping/citylink.tpl';
 		$this->children = array(

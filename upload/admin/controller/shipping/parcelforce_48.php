@@ -110,12 +110,20 @@ class ControllerShippingParcelforce48 extends Controller {
 		} else {
 			$this->data['parcelforce_48_tax_class_id'] = $this->config->get('parcelforce_48_tax_class_id');
 		}
+		
+		$this->load->model('localisation/tax_class');
+		
+		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
 		if (isset($this->request->post['parcelforce_48_geo_zone_id'])) {
 			$this->data['parcelforce_48_geo_zone_id'] = $this->request->post['parcelforce_48_geo_zone_id'];
 		} else {
 			$this->data['parcelforce_48_geo_zone_id'] = $this->config->get('parcelforce_48_geo_zone_id');
 		}
+		
+		$this->load->model('localisation/geo_zone');
+		
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 		
 		if (isset($this->request->post['parcelforce_48_status'])) {
 			$this->data['parcelforce_48_status'] = $this->request->post['parcelforce_48_status'];
@@ -128,14 +136,6 @@ class ControllerShippingParcelforce48 extends Controller {
 		} else {
 			$this->data['parcelforce_48_sort_order'] = $this->config->get('parcelforce_48_sort_order');
 		}				
-
-		$this->load->model('localisation/tax_class');
-		
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
-		
-		$this->load->model('localisation/geo_zone');
-		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		$this->template = 'shipping/parcelforce_48.tpl';
 		$this->children = array(

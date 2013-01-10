@@ -16,7 +16,7 @@ class ModelPaymentKlarnaAccount extends Model {
 		if ($status) {
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$klarna_account[$address['iso_code_3']]['geo_zone_id'] . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 			
-			if ($klarna_account[$address['iso_code_3']]['total'] > $total) {
+			if ($klarna_account[$address['iso_code_3']]['total'] > 0 && $klarna_account[$address['iso_code_3']]['total'] > $total) {
 				$status = false;
 			} elseif (!$klarna_account[$address['iso_code_3']]['geo_zone_id']) {
 				$status = true;
@@ -104,7 +104,7 @@ class ModelPaymentKlarnaAccount extends Model {
 						$payment += $months_fee;
 
 						$balance = $sum;
-						$payarray = array();
+						$pay_data = array();
 
 						$months = $pclass['months'];
 						
@@ -113,8 +113,8 @@ class ModelPaymentKlarnaAccount extends Model {
 							$new_balance = $balance + $interest + $months_fee;
 
 							if ($minimum_payment >= $new_balance || $payment >= $new_balance) {
-								$payarray[] = $new_balance;
-								$payarray = $payarray;
+								$pay_data[] = $new_balance;
+								$pay_data = $pay_data;
 								break;
 							}
 
@@ -125,11 +125,11 @@ class ModelPaymentKlarnaAccount extends Model {
 							}
 
 							$balance = $new_balance - $new_payment;
-							$payarray[] = $new_payment;
+							$pay_data[] = $new_payment;
 							$months -= 1;
 						}
 
-						$monthly_cost = round(isset($payarray[0]) ? ($payarray[0]) : 0, 2);
+						$monthly_cost = round(isset($pay_data[0]) ? ($pay_data[0]) : 0, 2);
 
 						if ($monthly_cost < 0.01) {
 							continue;

@@ -21,6 +21,8 @@ class Language {
 			require($file);
 		
 			$this->data = array_merge($this->data, $_);
+			
+			return;
 		}
 		
 		$file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';

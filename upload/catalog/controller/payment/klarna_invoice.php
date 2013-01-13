@@ -2,7 +2,7 @@
 class ControllerPaymentKlarnaInvoice extends Controller {
     protected function index() {
         $this->load->model('checkout/order');
-        $this->load->model('tool/image');
+        
         $this->data = array_merge($this->data, $this->language->load('payment/klarna_invoice'));
         
         $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);

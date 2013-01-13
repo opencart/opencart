@@ -393,6 +393,11 @@
               <td><input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" size="3" />
+                <select name="config_image_category_resize_type">
+                  <option value="default"<?php echo ( ($config_image_category_resize_type == 'default')?(' selected'):('') ); ?>><?php echo $img_resize_type_d; ?></option>
+                  <option value="w"<?php echo ( ($config_image_category_resize_type == 'w')?(' selected'):('') ); ?>><?php echo $img_resize_type_w; ?></option>
+                  <option value="h"<?php echo ( ($config_image_category_resize_type == 'h')?(' selected'):('') ); ?>><?php echo $img_resize_type_h; ?></option>
+                </select>
                 <?php if ($error_image_category) { ?>
                 <span class="error"><?php echo $error_image_category; ?></span>
                 <?php } ?></td>
@@ -402,6 +407,11 @@
               <td><input type="text" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" size="3" />
+                <select name="config_image_thumb_resize_type">
+                  <option value="default"<?php echo ( ($config_image_thumb_resize_type == 'default')?(' selected'):('') ); ?>><?php echo $img_resize_type_d; ?></option>
+                  <option value="w"<?php echo ( ($config_image_thumb_resize_type == 'w')?(' selected'):('') ); ?>><?php echo $img_resize_type_w; ?></option>
+                  <option value="h"<?php echo ( ($config_image_thumb_resize_type == 'h')?(' selected'):('') ); ?>><?php echo $img_resize_type_h; ?></option>
+                </select>
                 <?php if ($error_image_thumb) { ?>
                 <span class="error"><?php echo $error_image_thumb; ?></span>
                 <?php } ?></td>
@@ -411,6 +421,11 @@
               <td><input type="text" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" size="3" />
+                <select name="config_image_popup_resize_type">
+                  <option value="default"<?php echo ( ($config_image_popup_resize_type == 'default')?(' selected'):('') ); ?>><?php echo $img_resize_type_d; ?></option>
+                  <option value="w"<?php echo ( ($config_image_popup_resize_type == 'w')?(' selected'):('') ); ?>><?php echo $img_resize_type_w; ?></option>
+                  <option value="h"<?php echo ( ($config_image_popup_resize_type == 'h')?(' selected'):('') ); ?>><?php echo $img_resize_type_h; ?></option>
+                </select>
                 <?php if ($error_image_popup) { ?>
                 <span class="error"><?php echo $error_image_popup; ?></span>
                 <?php } ?></td>
@@ -420,6 +435,11 @@
               <td><input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" size="3" />
+                <select name="config_image_product_resize_type">
+                  <option value="default"<?php echo ( ($config_image_product_resize_type == 'default')?(' selected'):('') ); ?>><?php echo $img_resize_type_d; ?></option>
+                  <option value="w"<?php echo ( ($config_image_product_resize_type == 'w')?(' selected'):('') ); ?>><?php echo $img_resize_type_w; ?></option>
+                  <option value="h"<?php echo ( ($config_image_product_resize_type == 'h')?(' selected'):('') ); ?>><?php echo $img_resize_type_h; ?></option>
+                </select>
                 <?php if ($error_image_product) { ?>
                 <span class="error"><?php echo $error_image_product; ?></span>
                 <?php } ?></td>
@@ -429,6 +449,11 @@
               <td><input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" size="3" />
+                <select name="config_image_additional_resize_type">
+                  <option value="default"<?php echo ( ($config_image_additional_resize_type == 'default')?(' selected'):('') ); ?>><?php echo $img_resize_type_d; ?></option>
+                  <option value="w"<?php echo ( ($config_image_additional_resize_type == 'w')?(' selected'):('') ); ?>><?php echo $img_resize_type_w; ?></option>
+                  <option value="h"<?php echo ( ($config_image_additional_resize_type == 'h')?(' selected'):('') ); ?>><?php echo $img_resize_type_h; ?></option>
+                </select>
                 <?php if ($error_image_additional) { ?>
                 <span class="error"><?php echo $error_image_additional; ?></span>
                 <?php } ?></td>
@@ -438,8 +463,27 @@
               <td><input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" size="3" />
+                <select name="config_image_related_resize_type">
+                  <option value="default"<?php echo ( ($config_image_related_resize_type == 'default')?(' selected'):('') ); ?>><?php echo $img_resize_type_d; ?></option>
+                  <option value="w"<?php echo ( ($config_image_related_resize_type == 'w')?(' selected'):('') ); ?>><?php echo $img_resize_type_w; ?></option>
+                  <option value="h"<?php echo ( ($config_image_related_resize_type == 'h')?(' selected'):('') ); ?>><?php echo $img_resize_type_h; ?></option>
+                </select>
                 <?php if ($error_image_related) { ?>
                 <span class="error"><?php echo $error_image_related; ?></span>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> <?php echo $entry_image_option; ?></td>
+              <td><input type="text" name="config_image_option_width" value="<?php echo $config_image_option_width; ?>" size="3" />
+                x
+                <input type="text" name="config_image_option_height" value="<?php echo $config_image_option_height; ?>" size="3" />
+                <select name="config_image_option_resize_type">
+                  <option value="default"<?php echo ( ($config_image_option_resize_type == 'default')?(' selected'):('') ); ?>><?php echo $img_resize_type_d; ?></option>
+                  <option value="w"<?php echo ( ($config_image_option_resize_type == 'w')?(' selected'):('') ); ?>><?php echo $img_resize_type_w; ?></option>
+                  <option value="h"<?php echo ( ($config_image_option_resize_type == 'h')?(' selected'):('') ); ?>><?php echo $img_resize_type_h; ?></option>
+                </select>
+                <?php if ($error_image_option) { ?>
+                <span class="error"><?php echo $error_image_option; ?></span>
                 <?php } ?></td>
             </tr>
             <tr>
@@ -447,6 +491,11 @@
               <td><input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_compare_height" value="<?php echo $config_image_compare_height; ?>" size="3" />
+                <select name="config_image_compare_resize_type">
+                  <option value="default"<?php echo ( ($config_image_compare_resize_type == 'default')?(' selected'):('') ); ?>><?php echo $img_resize_type_d; ?></option>
+                  <option value="w"<?php echo ( ($config_image_compare_resize_type == 'w')?(' selected'):('') ); ?>><?php echo $img_resize_type_w; ?></option>
+                  <option value="h"<?php echo ( ($config_image_compare_resize_type == 'h')?(' selected'):('') ); ?>><?php echo $img_resize_type_h; ?></option>
+                </select>
                 <?php if ($error_image_compare) { ?>
                 <span class="error"><?php echo $error_image_compare; ?></span>
                 <?php } ?></td>
@@ -456,6 +505,11 @@
               <td><input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_wishlist_height" value="<?php echo $config_image_wishlist_height; ?>" size="3" />
+                <select name="config_image_wishlist_resize_type">
+                  <option value="default"<?php echo ( ($config_image_wishlist_resize_type == 'default')?(' selected'):('') ); ?>><?php echo $img_resize_type_d; ?></option>
+                  <option value="w"<?php echo ( ($config_image_wishlist_resize_type == 'w')?(' selected'):('') ); ?>><?php echo $img_resize_type_w; ?></option>
+                  <option value="h"<?php echo ( ($config_image_wishlist_resize_type == 'h')?(' selected'):('') ); ?>><?php echo $img_resize_type_h; ?></option>
+                </select>
                 <?php if ($error_image_wishlist) { ?>
                 <span class="error"><?php echo $error_image_wishlist; ?></span>
                 <?php } ?></td>
@@ -465,6 +519,11 @@
               <td><input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" size="3" />
+                <select name="config_image_cart_resize_type">
+                  <option value="default"<?php echo ( ($config_image_cart_resize_type == 'default')?(' selected'):('') ); ?>><?php echo $img_resize_type_d; ?></option>
+                  <option value="w"<?php echo ( ($config_image_cart_resize_type == 'w')?(' selected'):('') ); ?>><?php echo $img_resize_type_w; ?></option>
+                  <option value="h"<?php echo ( ($config_image_cart_resize_type == 'h')?(' selected'):('') ); ?>><?php echo $img_resize_type_h; ?></option>
+                </select>
                 <?php if ($error_image_cart) { ?>
                 <span class="error"><?php echo $error_image_cart; ?></span>
                 <?php } ?></td>

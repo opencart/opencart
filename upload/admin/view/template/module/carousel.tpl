@@ -46,11 +46,6 @@
               <td class="left"><input type="text" name="carousel_module[<?php echo $module_row; ?>][scroll]" value="<?php echo $module['scroll']; ?>" size="3" /></td>
               <td class="left"><input type="text" name="carousel_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" size="3" />
                 <input type="text" name="carousel_module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" size="3" />
-                <select name="carousel_module[<?php echo $module_row; ?>][resize_type]">
-                  <option value="default"<?php echo ( (isset($module['resize_type']) && $module['resize_type'] == 'default')?(' selected'):('') ); ?>><?php echo $img_resize_type_d; ?></option>
-                  <option value="w"<?php echo ( (isset($module['resize_type']) && $module['resize_type'] == 'w')?(' selected'):('') ); ?>><?php echo $img_resize_type_w; ?></option>
-                  <option value="h"<?php echo ( (isset($module['resize_type']) && $module['resize_type'] == 'h')?(' selected'):('') ); ?>><?php echo $img_resize_type_h; ?></option>
-                </select>
                 <?php if (isset($error_image[$module_row])) { ?>
                 <span class="error"><?php echo $error_image[$module_row]; ?></span>
                 <?php } ?></td>
@@ -124,12 +119,7 @@ function addModule() {
 	html += '    </select></td>';	
 	html += '    <td class="left"><input type="text" name="carousel_module[' + module_row + '][limit]" value="5" size="1" /></td>';
 	html += '    <td class="left"><input type="text" name="carousel_module[' + module_row + '][scroll]" value="3" size="1" /></td>';
-	html += '    <td class="left"><input type="text" name="carousel_module[' + module_row + '][width]" value="80" size="3" /> <input type="text" name="carousel_module[' + module_row + '][height]" value="80" size="3" />';	
-  html += '      <select name="carousel_module[' + module_row + '][resize_type]">';
-  html += '       <option value="default"><?php echo $img_resize_type_d; ?></option>';
-  html += '        <option value="w"><?php echo $img_resize_type_w; ?></option>';
-  html += '        <option value="h"><?php echo $img_resize_type_h; ?></option>';
-  html += '      </select></td>'; 
+	html += '    <td class="left"><input type="text" name="carousel_module[' + module_row + '][width]" value="80" size="3" /> <input type="text" name="carousel_module[' + module_row + '][height]" value="80" size="3" /></td>'; 
 	html += '    <td class="left"><select name="carousel_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>
 	html += '      <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';

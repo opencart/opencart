@@ -24,7 +24,7 @@ class ControllerModuleLatest extends Controller {
 
 		foreach ($results as $result) {
 			if ($result['image']) {
-				$image = $this->model_tool_image->resize($result['image'], $setting['image_width'], $setting['image_height'], $setting['resize_type']);
+				$image = $this->model_tool_image->resize($result['image'], $setting['image_width'], $setting['image_height']);
 			} else {
 				$image = false;
 			}

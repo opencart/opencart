@@ -1,38 +1,55 @@
 <?php
-
 class ModelTotalKlarnaFee extends Model {
-
     public function getTotal(&$total_data, &$total, &$taxes) {
         $this->language->load('total/klarna_fee');
-        
-        if (isset($this->session->data['payment_method']['code']) && $this->session->data['payment_method']['code'] == 'klarna_invoice') {
-            $iso3 = $this->db->query("SELECT `iso_code_3` FROM `" . DB_PREFIX . "country` WHERE `country_id` = " . (int) $this->session->data['payment_country_id'])->row['iso_code_3'];
 
-            $countries = $this->config->get('klarna_fee_country');            
-            $country = $countries[$iso3];
-            
-            if ($country['status'] == 1 && $this->cart->getSubTotal() < $country['total']) {
-                $total_data[] = array(
-                    'code' => 'klarna_fee',
-                    'title' => $this->language->get('text_klarna_fee'),
-                    'text' => $this->currency->format($country['fee']),
-                    'value' => $country['fee'],
-                    'sort_order' => $country['sort_order'],
-                );
-                
-                $total += $country['fee'];
-                
-                $taxRates = $this->tax->getRates($country['fee'], $country['tax_class_id']);
-                
-                foreach ($taxRates as $taxRate) {
-                    if (!isset($taxes[$taxRate['tax_rate_id']])) {
-                        $taxes[$taxRate['tax_rate_id']] = $taxRate['amount'];
-                    } else {
-                        $taxes[$taxRate['tax_rate_id']] += $taxRate['amount'];
-                    }
-                }
-            }
+		$status = true;
+		
+		$klarna_fee = $this->config->get('klarna_fee');
+		
+		if (isset($this->session->data['payment_address_id'])) {
+			$this->load->model('account/address');
+			
+			$address = $this->model_account_address->getAddress($this->session->data['payment_address_id']);
+		} elseif (isset($this->session->data['guest']['payment'])) {
+			$address = $this->session->data['guest']['payment'];
+		}
+		
+		if (!isset($address)) {
+			$status = false;
+		} elseif (!isset($this->session->data['payment_method']['code'])) {
+			$status = false;
+		} elseif ($this->session->data['payment_method']['code'] != 'klarna_invoice') {
+			$status = false;
+		} elseif (!isset($klarna_fee[$address['iso_code_3']])) {
+			$status = false;
+		} elseif (!$klarna_fee[$address['iso_code_3']]['status']) {
+			$status = false;
+		} elseif ($this->cart->getSubTotal() < $klarna_fee[$address['iso_code_3']]['total']) {
+			$status = false;
+		}
+		
+        if ($status) {
+			$total_data[] = array(
+				'code'       => 'klarna_fee',
+				'title'      => $this->language->get('text_klarna_fee'),
+				'text'       => $this->currency->format($klarna_fee[$address['iso_code_3']]['fee']),
+				'value'      => $klarna_fee[$address['iso_code_3']]['fee'],
+				'sort_order' => $klarna_fee[$address['iso_code_3']]['sort_order']
+			);
+			
+			$tax_rates = $this->tax->getRates($klarna_fee[$address['iso_code_3']]['fee'], $klarna_fee[$address['iso_code_3']]['tax_class_id']);
+			
+			foreach ($tax_rates as $tax_rate) {
+				if (!isset($taxes[$tax_rate['tax_rate_id']])) {
+					$taxes[$tax_rate['tax_rate_id']] = $tax_rate['amount'];
+				} else {
+					$taxes[$tax_rate['tax_rate_id']] += $tax_rate['amount'];
+				}
+			}
+			
+			$total += $country['fee'];
         }
     }
-
 }
+?>

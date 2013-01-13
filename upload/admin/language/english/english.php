@@ -105,11 +105,6 @@ $_['tab_transaction']               = 'Transactions';
 $_['tab_voucher']                   = 'Vouchers';
 $_['tab_voucher_history']           = 'Voucher History';
 
-// Image Resize Type
-$_['img_resize_type_d'] 	        = 'Resize according to default'; 
-$_['img_resize_type_w'] 	        = 'Resize according to width'; 		 
-$_['img_resize_type_h'] 	        = 'Resize according to height'; 		 
-
 // Error
 $_['error_upload_1']                = 'Warning: The uploaded file exceeds the upload_max_filesize directive in php.ini!';
 $_['error_upload_2']                = 'Warning: The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form!';

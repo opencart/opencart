@@ -48,24 +48,18 @@ class ModelPaymentKlarnaInvoice extends Model {
         $method = array();
         
         if ($status) {
-            $iso3 = $this->db->query("SELECT `iso_code_3` FROM `" . DB_PREFIX . "country` WHERE `country_id` = " . (int) $this->session->data['payment_country_id'])->row['iso_code_3'];
+            $klarna_fee = $this->config->get('klarna_fee');
 
-            $countries = $this->config->get('klarna_fee_country');
-            $country = $countries[$iso3];
-
-            if ($country['status'] == 1 && $this->cart->getSubTotal() < $country['total']) {
-                $klarnaFee = $this->currency->format($this->tax->calculate($country['fee'], $country['tax_class_id']), $countryToCurrency[$address['iso_code_3']], '', false);
-                $klarnaFeeText = $this->currency->format($this->tax->calculate($country['fee'], $country['tax_class_id']), '', '');
-                
-                $title = sprintf($this->language->get('text_title'), $klarnaFeeText, $settings['merchant'], strtolower($address['iso_code_2']), $klarnaFee);
+            if ($klarna_fee[$address['iso_code_3']]['status'] && $this->cart->getSubTotal() < $klarna_fee[$address['iso_code_3']]['total']) {
+                $title = sprintf($this->language->get('text_fee'), $this->currency->format($this->tax->calculate($klarna_fee[$address['iso_code_3']]['fee'], $klarna_fee[$address['iso_code_3']]['tax_class_id']), '', ''), $klarna_invoice[$address['iso_code_3']]['merchant'], strtolower($address['iso_code_2']), $this->currency->format($this->tax->calculate($klarna_fee[$address['iso_code_3']]['fee'], $klarna_fee[$address['iso_code_3']]['tax_class_id']), $country_to_currency[$address['iso_code_3']], '', false));
             } else {
-                $title = sprintf($this->language->get('text_title_no_fee'), $settings['merchant'], strtolower($address['iso_code_2']));
+                $title = sprintf($this->language->get('text_no_fee'), $klarna_invoice[$address['iso_code_3']]['merchant'], strtolower($address['iso_code_2']));
             }
             
             $method = array(
                 'code'       => 'klarna_invoice',
                 'title'      => $title,
-                'sort_order' => $settings['sort_order'],
+                'sort_order' => $klarna_invoice[$address['iso_code_3']]['sort_order']
             );
         }
         

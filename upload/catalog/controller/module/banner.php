@@ -17,7 +17,7 @@ class ControllerModuleBanner extends Controller {
 				$this->data['banners'][] = array(
 					'title' => $result['title'],
 					'link'  => $result['link'],
-					'image' => $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height'], $setting['resize_type'])
+					'image' => $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height'])
 				);
 			}
 		}

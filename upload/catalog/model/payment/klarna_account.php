@@ -114,7 +114,6 @@ class ModelPaymentKlarnaAccount extends Model {
 
 							if ($minimum_payment >= $new_balance || $payment >= $new_balance) {
 								$pay_data[] = $new_balance;
-								$pay_data = $pay_data;
 								break;
 							}
 
@@ -125,7 +124,9 @@ class ModelPaymentKlarnaAccount extends Model {
 							}
 
 							$balance = $new_balance - $new_payment;
+							
 							$pay_data[] = $new_payment;
+							
 							$months -= 1;
 						}
 
@@ -172,7 +173,7 @@ class ModelPaymentKlarnaAccount extends Model {
 		if ($status) {
 			$method = array(
 				'code'       => 'klarna_account',
-				'title'      => sprintf($this->language->get('text_title'), $this->currency->format($this->currency->convert($payment_option[0]['monthly_cost'], $country_to_currency[$address['iso_code_3']], $this->currency->getCode()), 1, 1), $klarna_account[$address['iso_code_3']]['merchant'], strtolower($address['iso_code_2'])),
+				'title'      => sprintf($this->language->get('text_pay_month'), $this->currency->format($this->currency->convert($payment_option[0]['monthly_cost'], $country_to_currency[$address['iso_code_3']], $this->currency->getCode()), 1, 1), $klarna_account[$address['iso_code_3']]['merchant'], strtolower($address['iso_code_2'])),
 				'sort_order' => $klarna_account[$address['iso_code_3']]['sort_order']
 			);
 		}

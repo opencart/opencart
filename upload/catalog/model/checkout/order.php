@@ -100,6 +100,8 @@ class ModelCheckoutOrder extends Model {
 				'payment_firstname'       => $order_query->row['payment_firstname'],
 				'payment_lastname'        => $order_query->row['payment_lastname'],				
 				'payment_company'         => $order_query->row['payment_company'],
+				'payment_company_id'      => $order_query->row['payment_company_id'],
+				'payment_tax_id'          => $order_query->row['payment_tax_id'],
 				'payment_address_1'       => $order_query->row['payment_address_1'],
 				'payment_address_2'       => $order_query->row['payment_address_2'],
 				'payment_postcode'        => $order_query->row['payment_postcode'],

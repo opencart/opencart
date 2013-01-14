@@ -2,7 +2,6 @@
 // Text
 $_['text_title']           = 'Klarna Account';
 $_['text_pay_month']       = 'Klarna Account - Pay from %s/month <span id="klarna_account_toc_link"></span><script text="javascript">$.getScript(\'http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js\', function(){ var terms = new Klarna.Terms.Account({ el: \'klarna_account_toc_link\', eid: \'%s\',   country: \'%s\'});})</script>';
-
 $_['text_information']     = 'Klarna Account Information';
 $_['text_additional']      = 'Klarna Account requires some additional information before they can proccess your order.';
 $_['text_wait']            = 'Please wait!';

@@ -30,7 +30,7 @@ $_['entry_yearly_salary']  = 'Yearly salary:';
 
 // Error
 $_['error_gender']         = 'Gender Required!';
-$_['error_deu_toc']        = 'You must agree to Klarna\'s privacy policy (Datenschutz)';
+$_['error_deu_terms']      = 'You must agree to Klarna\'s privacy policy (Datenschutz)';
 $_['error_dob']            = 'Date of birth Required!';
 $_['error_house_no']       = 'House No. Required!';
 $_['error_house_ext']      = 'House Extension Required!';

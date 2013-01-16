@@ -29,12 +29,7 @@ $_['entry_company']        = 'Company Registration Number:<br /><span class="hel
 $_['entry_yearly_salary']  = 'Yearly salary:';
 
 // Error
-$_['error_gender']         = 'Gender Required!';
 $_['error_deu_terms']      = 'You must agree to Klarna\'s privacy policy (Datenschutz)';
-$_['error_dob']            = 'Date of birth Required!';
-$_['error_house_no']       = 'House No. Required!';
-$_['error_house_ext']      = 'House Extension Required!';
-$_['error_dob']            = 'Date of birth Required!';
 $_['error_address_match']  = 'Billing and Shipping addresses must match if you want to use Klarna Payments';
 $_['error_network']        = 'Error occurred while connecting to Klarna. Please try again later.';
 ?>

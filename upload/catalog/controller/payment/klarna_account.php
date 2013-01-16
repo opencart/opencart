@@ -114,7 +114,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				
 			
 			// Order must have identical shipping and billing address or have no shipping address at all
-			if (empty($order_info['shipping_firstname']) || $order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3']) {
+			if ($order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3']) {
 				$this->data['error_warning'] = $this->language->get('error_address_match');
 			} else {
 				$this->data['error_warning'] = '';
@@ -137,16 +137,30 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				'NLD' => 'EUR',
 			);
 					
-			if ($order_info['payment_iso_code_3'] == 'DEU' || $order_info['payment_iso_code_3'] == 'NLD') {
-				$address = $this->splitAddress($order_info['payment_address_1']);
-				
-				$this->data['street'] = $address[0];
-				$this->data['street_number'] = $address[1];
-				$this->data['street_extension'] = $address[2];
-				
-				if ($order_info['payment_iso_code_3'] == 'DEU') {
-					$this->data['street_number'] = trim($address[1] . ' ' . $address[2]);
-				}
+			preg_match('/^(.+) *(\d+[a-z]?)$/', $order_info['payment_address_1'], $match);
+			
+			print_r($match);
+			
+			if (isset($match[0])) {
+				$this->data['street'] = $match[0];
+			} else {
+				$this->data['street'] = '';
+			}
+			
+			if (isset($match[1])) {
+				$this->data['street_number'] = $match[1];
+			} else {
+				$this->data['street_number'] = '';
+			}
+			
+			if (isset($match[2])) {
+				$this->data['street_extension'] = $match[2];
+			} else {
+				$this->data['street_extension'] = '';
+			}
+			
+			if (isset($match[1]) && isset($match[2]) && $order_info['payment_iso_code_3'] == 'DEU') {
+				$this->data['street_number'] = trim($match[1] . ' ' . $match[2]);
 			}
 			
 			$this->data['company'] = $order_info['payment_company'];
@@ -295,22 +309,11 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
         $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         
-		if ($order_info) {
-			// Order must have identical shipping and billing address or have no shipping address at all
-			if (empty($order_info['shipping_firstname']) || $order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3']) {
-				$json['error'] = $this->language->get('error_address_match');
-			} else {
-				$json['error'] = '';
-			}			
-			
-			if (!isset($json['error'])) {
-				
-			}
+		// Order must have identical shipping and billing address or have no shipping address at all
+		if ($order_info && $order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3']) {
 			$klarna_account = $this->config->get('klarna_account');
 			
-			$settings = $countries[$order_info['payment_iso_code_3']];
-			
-			if ($settings['server'] == 'live') {
+			if ($klarna_account[$order_info['payment_iso_code_3']]['server'] == 'live') {
 				$url = 'https://payment.klarna.com/';
 			} else {
 				$url = 'https://payment-beta.klarna.com/';
@@ -404,36 +407,10 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				'country'         => $country,
 			);
 			
-			if ($order_info['payment_iso_code_3'] == 'DEU' || $order_info['payment_iso_code_3'] == 'NLD') {
-				$address['street'] = $this->request->post['street'];
-				$address['house_number'] = $this->request->post['house_no'];
-			}
-			
-			if ($order_info['payment_iso_code_3'] == 'NLD') {
-				$address['house_extension'] = $this->request->post['house_ext'];
-			}
-			
-			$totalQuery = $this->db->query("
-				SELECT `title`, `code`, `value`, IF(`tax` IS NULL, 0.0, `tax` / `value` * 100) AS 'tax_rate'
-				FROM `" . DB_PREFIX . "order_total`
-				LEFT JOIN `" . DB_PREFIX . "order_total_klarna` USING(`order_total_id`)
-				WHERE `order_id` = " . (int) $order_info['order_id'] . " AND `code` NOT IN ('sub_total', 'tax', 'total')");
-			
-			$totals = $totalQuery->rows;
-			
-			$orderedProducts = $this->db->query("
-				SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate'
-				FROM `" . DB_PREFIX . "order_product`
-				WHERE `order_id` = " . (int) $order_info['order_id'] . "
+			$product_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = " . (int) $order_info['order_id'] . " UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = " . (int) $order_info['order_id']);
 	
-				UNION ALL
-	
-				SELECT '', `code`, `amount`, '1', 0.00
-				FROM `" . DB_PREFIX . "order_voucher`
-				WHERE `order_id` = " . (int) $order_info['order_id'])->rows;
-	
-			foreach ($orderedProducts as $product) {
-				$goodsList[] = array(
+			foreach ($product_query->rows as $product) {
+				$goods_list[] = array(
 					'qty'   => (int)$product['quantity'],
 					'goods' => array(
 						'artno'    => $product['model'],
@@ -446,13 +423,19 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				);
 			}
 			
-			foreach ($totals as $total) {
-				$goodsList[] = array(
+			$total_query = $this->db->query("
+				SELECT `title`, `code`, `value`, IF(`tax` IS NULL, 0.0, `tax` / `value` * 100) AS 'tax_rate'
+				FROM `" . DB_PREFIX . "order_total`
+				LEFT JOIN `" . DB_PREFIX . "order_total_klarna` USING(`order_total_id`)
+				WHERE `order_id` = " . (int) $order_info['order_id'] . " AND `code` NOT IN ('sub_total', 'tax', 'total')");
+			
+			foreach ($total_query->rows as $total) {
+				$goods_list[] = array(
 					'qty'   => 1,
 					'goods' => array(
 						'artno'    => '',
 						'title'    => $total['title'],
-						'price'    => (int) str_replace('.', '', $this->currency->format($total['value'], $country_to_currency[$order_info['payment_iso_code_3']], '', false)),
+						'price'    => (int)str_replace('.', '', $this->currency->format($total['value'], $country_to_currency[$order_info['payment_iso_code_3']], '', false)),
 						'vat'      => (float)$total['tax_rate'],
 						'discount' => 0.0,
 						'flags'    => 0,
@@ -462,30 +445,26 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			
 			$digest = '';
 			
-			foreach ($goodsList as $goods) {
+			foreach ($goods_list as $goods) {
 				$digest .= $goods['goods']['title'] . ':';
 			}
 			
-			$digest = base64_encode(pack('H*', hash('sha256', $digest . $settings['secret'])));
+			$digest = base64_encode(pack('H*', hash('sha256', $digest . $klarna_account[$order_info['payment_iso_code_3']]['secret'])));
 			
 			if (isset($this->request->post['pno'])) {
 				$pno = $this->request->post['pno'];
 			} elseif ($order_info['payment_company_id']) {
 				$pno = $order_info['payment_company_id'];
 			} else {
-				$pno = sprintf("%02d", (int)$this->request->post['pno_day']) . sprintf("%02d", (int)$this->request->post['pno_month']) . (int)$this->request->post['pno_year'];
+				$pno = sprintf('%02d', (int)$this->request->post['pno_day']) . sprintf('%02d', (int)$this->request->post['pno_month']) . (int)$this->request->post['pno_year'];
 			}
 			
 			$pclass = (int)$this->request->post['code'];
 			
-			$gender = '';
-			
-			if ($order_info['payment_iso_code_3'] == 'DEU' || $order_info['payment_iso_code_3'] == 'NLD') {
-				if (isset($this->request->post['gender'])) {
-					$gender = (int) $this->request->post['gender'];
-				} else {
-					$gender = '';
-				}
+			if (isset($this->request->post['gender']) && ($order_info['payment_iso_code_3'] == 'DEU' || $order_info['payment_iso_code_3'] == 'NLD')) {
+				$gender = (int)$this->request->post['gender'];
+			} else {
+				$gender = '';
 			}
 			
 			$transaction = array(
@@ -495,7 +474,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				$gender,
 				'',
 				'', 
-				(string) $order_info['order_id'], 
+				(string)$order_info['order_id'], 
 				'',
 				$address, 
 				$address, 
@@ -504,11 +483,11 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				$currency, 
 				$country,
 				$language, 
-				(int) $settings['merchant'],
+				(int)$klarna_account[$order_info['payment_iso_code_3']]['merchant'],
 				$digest, 
 				$encoding,
 				$pclass, 
-				$goodsList,
+				$goods_list,
 				$order_info['comment'],
 				array('delay_adjust' => 1),
 				array(),
@@ -544,9 +523,9 @@ class ControllerPaymentKlarnaAccount extends Controller {
 	
 			$response = curl_exec($curl);
 			
-			$log = new Log('klarna_account.log');
-			
 			if (curl_errno($curl)) {
+				$log = new Log('klarna_account.log');
+				
 				$log->write('HTTP Error for order #' . $order_info['order_id'] . '. Code: ' . curl_errno($curl) . ' message: ' . curl_error($curl));
 				
 				$json['error'] = $this->language->get('error_network');
@@ -555,6 +534,8 @@ class ControllerPaymentKlarnaAccount extends Controller {
 	
 				if (isset($match[1])) {
 					preg_match('/<member><name>faultCode<\/name><value><int>([0-9]+)<\/int><\/value><\/member>/', $response, $match2);
+					
+					$log = new Log('klarna_account.log');
 					
 					$log->write('Failed to create an invoice for order #' . $order_info['order_id'] . '. Message: ' . utf8_encode($match[1]) . ' Code: ' . $match2[1]);
 					
@@ -574,16 +555,18 @@ class ControllerPaymentKlarnaAccount extends Controller {
 						$order_status = $this->config->get('config_order_status_id');
 					}
 					
-					$order_comment = sprintf($this->language->get('text_order_comment'), $invoice_number, $this->config->get('config_currency'), $country_to_currency[$order_info['payment_iso_code_3']], $this->currency->getValue($country_to_currency[$order_info['payment_iso_code_3']]));
+					$comment = sprintf($this->language->get('text_order_comment'), $invoice_number, $this->config->get('config_currency'), $country_to_currency[$order_info['payment_iso_code_3']], $this->currency->getValue($country_to_currency[$order_info['payment_iso_code_3']]));
 					
-					$this->model_checkout_order->confirm($this->session->data['order_id'], $order_status, $order_comment, 1);
+					$this->model_checkout_order->confirm($this->session->data['order_id'], $order_status, $comment, 1);
 					
 					$json['redirect'] = $this->url->link('checkout/success');
 				}
 			}
 			
 			curl_close($curl);
-		}
+		} else {
+			$json['error'] = $this->language->get('error_address_match');
+		}	
 		
         $this->response->setOutput(json_encode($json));
     }
@@ -649,7 +632,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
                 $amount = 95.0;
                 break;
             case 'FIN':
-                $lowestPayment = 8.95;
+                $amount = 8.95;
                 break;
             case 'DNK':
                 $amount = 89.0;

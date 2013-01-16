@@ -1,7 +1,7 @@
-<?php if (!$error_warning) { ?>
+<?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
-<div id="payment"> <b><?php echo $text_payment_option; ?></b>
+<div id="payment"><b><?php echo $text_payment_option; ?></b>
   <div class="content">
     <table class="radio">
       <?php foreach ($payment_options as $payment_option) { ?>
@@ -16,7 +16,7 @@
       <?php } ?>
     </table>
   </div>
-  <p><b><?php echo $text_additional; ?></b></p>
+  <b><?php echo $text_additional; ?></b>
   <div class="content">
     <div style="float: right;"><img src="https://cdn.klarna.com/public/images/<?php echo $iso_code_2; ?>/badges/v1/account/<?php echo $iso_code_2; ?>_account_badge_std_blue.png?width=150&eid=<?php echo $merchant; ?>" /></div>
     <table class="form">
@@ -104,6 +104,7 @@
   </div>
   <div class="klarna_baloon_bottom"></div>
 </div>
+<a id="klarna_toc_link">test</a>
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
 	$.ajax({
@@ -174,33 +175,36 @@ $(document).ready(function(){
     }).focusout(function () {
         hideBaloon();
     });
+	
+	function hideBaloon (callback) {
+		if ($('#klarna_baloon').is(":visible")) {
+			$('#klarna_baloon').fadeOut('fast', function (){
+				if (callback) {
+					callback();
+				}
+				return true;
+			});
+		} else {
+			if(callback) {
+				callback();
+			}
+			
+			return true;
+		}
+	}
+
 
 <?php if ($iso_code_3 == 'DNK') { ?>
-    $('input[name="payment_plan"]').change(function(){
-        if ($(this).attr('value') == '-1') {
-            $('input[name="yearly_salary"]').prop('disabled', true);
-        } else {
-            $('input[name="yearly_salary"]').prop('disabled', false);
-        }
-    });
+$('#payment input[name=\'code\']').change(function(){
+	if ($(this).attr('value') == '-1') {
+		$('input[name="yearly_salary"]').prop('disabled', true);
+	} else {
+		$('input[name="yearly_salary"]').prop('disabled', false);
+	}
+});
 <?php } ?>
     
 
-function hideBaloon (callback) {
-    if ($('#klarna_baloon').is(":visible")) {
-        $('#klarna_baloon').fadeOut('fast', function (){
-            if (callback) {
-                callback();
-            }
-            return true;
-        });
-    } else {
-        if(callback) {
-            callback();
-        }
-        
-        return true;
-    }
-}
+
 });
 //--></script>

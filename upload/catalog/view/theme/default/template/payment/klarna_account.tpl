@@ -1,7 +1,9 @@
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
-<div id="payment"><b><?php echo $text_payment_option; ?></b>
+<div style="float: right;"><img src="https://cdn.klarna.com/public/images/<?php echo $iso_code_2; ?>/badges/v1/account/<?php echo $iso_code_2; ?>_account_badge_std_blue.png?width=150&eid=<?php echo $merchant; ?>" /></div>
+<div id="payment">
+  <div style="margin-bottom: 3px;"><b><?php echo $text_payment_option; ?></b></div>
   <div class="content">
     <table class="radio">
       <?php foreach ($payment_options as $payment_option) { ?>
@@ -16,14 +18,13 @@
       <?php } ?>
     </table>
   </div>
-  <b><?php echo $text_additional; ?></b>
+  <div style="margin-bottom: 3px;"><b><?php echo $text_additional; ?></b></div>
   <div class="content">
-    <div style="float: right;"><img src="https://cdn.klarna.com/public/images/<?php echo $iso_code_2; ?>/badges/v1/account/<?php echo $iso_code_2; ?>_account_badge_std_blue.png?width=150&eid=<?php echo $merchant; ?>" /></div>
     <table class="form">
       <?php if (!$company) { ?>
       <?php if ($iso_code_3 == 'DEU' || $iso_code_3 == 'NLD') { ?>
       <tr>
-        <td><?php echo $entry_birthday; ?></td>
+        <td><?php echo $entry_dob; ?></td>
         <td><select name="pno_day">
             <option value=""><?php echo $text_day; ?></option>
             <?php foreach ($days as $day) { ?>
@@ -104,7 +105,7 @@
   </div>
   <div class="klarna_baloon_bottom"></div>
 </div>
-<a id="klarna_toc_link">test</a>
+<a id="klarna_toc_link">test</a> 
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
 	$.ajax({

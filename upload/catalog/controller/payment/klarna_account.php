@@ -1,58 +1,60 @@
 <?php
 class ControllerPaymentKlarnaAccount extends Controller {
     protected function index() {
-		$this->language->load('payment/klarna_account');
-       
-	   	$this->data['text_information'] = $this->language->get('text_information');
-		$this->data['text_additional'] = $this->language->get('text_additional');
-		$this->data['text_payment_option'] = $this->language->get('text_payment_option');	
-		$this->data['text_wait'] = $this->language->get('text_wait');
-		$this->data['text_day'] = $this->language->get('text_day');	
-		$this->data['text_month'] = $this->language->get('text_month');	
-		$this->data['text_year'] = $this->language->get('text_year');	
-		$this->data['text_male'] = $this->language->get('text_male');	
-		$this->data['text_female'] = $this->language->get('text_female');		
-				
-		$this->data['entry_birthday'] = $this->language->get('entry_birthday');	
-		$this->data['entry_gender'] = $this->language->get('entry_gender');	
-		$this->data['entry_street'] = $this->language->get('entry_street');	
-		$this->data['entry_house_no'] = $this->language->get('entry_house_no');	
-		$this->data['entry_phone_no'] = $this->language->get('entry_phone_no');	
-		
-		$this->data['button_confirm'] = $this->language->get('button_confirm');
-		
-		$this->data['days'] = array();
-		
-		for ($i = 1; $i <= 31; $i++) {
-			$this->data['days'][] = array(
-				'text'  => sprintf('%02d', $i), 
-				'value' => $i
-			);
-		}
-				
-		$this->data['months'] = array();
-		
-		for ($i = 1; $i <= 12; $i++) {
-			$this->data['months'][] = array(
-				'text'  => sprintf('%02d', $i), 
-				'value' => $i
-			);
-		}			
-			
-		$this->data['years'] = array();
-
-		for ($i = date('Y'); $i >= 1900; $i--) {
-			$this->data['years'][] = array(
-				'text'  => $i,
-				'value' => $i
-			);
-		}			
-			
 		$this->load->model('checkout/order');
                 
         $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		
 		if ($order_info) {
+			$this->language->load('payment/klarna_account');
+		   
+			$this->data['text_information'] = $this->language->get('text_information');
+			$this->data['text_additional'] = $this->language->get('text_additional');
+			$this->data['text_payment_option'] = $this->language->get('text_payment_option');	
+			$this->data['text_wait'] = $this->language->get('text_wait');
+			$this->data['text_day'] = $this->language->get('text_day');	
+			$this->data['text_month'] = $this->language->get('text_month');	
+			$this->data['text_year'] = $this->language->get('text_year');	
+			$this->data['text_male'] = $this->language->get('text_male');	
+			$this->data['text_female'] = $this->language->get('text_female');		
+			
+			$this->data['entry_pno'] = $this->language->get('entry_pno');		
+			$this->data['entry_dob'] = $this->language->get('entry_dob');	
+			$this->data['entry_gender'] = $this->language->get('entry_gender');	
+			$this->data['entry_street'] = $this->language->get('entry_street');	
+			$this->data['entry_house_no'] = $this->language->get('entry_house_no');	
+			$this->data['entry_phone_no'] = $this->language->get('entry_phone_no');	
+			$this->data['entry_company'] = $this->language->get('entry_company');	
+			
+			$this->data['button_confirm'] = $this->language->get('button_confirm');
+			
+			$this->data['days'] = array();
+			
+			for ($i = 1; $i <= 31; $i++) {
+				$this->data['days'][] = array(
+					'text'  => sprintf('%02d', $i), 
+					'value' => $i
+				);
+			}
+					
+			$this->data['months'] = array();
+			
+			for ($i = 1; $i <= 12; $i++) {
+				$this->data['months'][] = array(
+					'text'  => sprintf('%02d', $i), 
+					'value' => $i
+				);
+			}			
+				
+			$this->data['years'] = array();
+	
+			for ($i = date('Y'); $i >= 1900; $i--) {
+				$this->data['years'][] = array(
+					'text'  => $i,
+					'value' => $i
+				);
+			}			
+
 			// Store Taxes to send to Klarna
 			$total_data = array();
 			$total = 0;
@@ -507,11 +509,11 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			
 			$xml .= '  </params>';
 			$xml .= '</methodCall>';        
-	
-			$curl = curl_init();
-	
+			
 			$header  = 'Content-Type: text/xml' . "\n";
 			$header .= 'Content-Length: ' . strlen($xml) . "\n";
+				
+			$curl = curl_init();
 	
 			curl_setopt($curl, CURLOPT_URL, $url);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -525,7 +527,6 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			
 			if (curl_errno($curl)) {
 				$log = new Log('klarna_account.log');
-				
 				$log->write('HTTP Error for order #' . $order_info['order_id'] . '. Code: ' . curl_errno($curl) . ' message: ' . curl_error($curl));
 				
 				$json['error'] = $this->language->get('error_network');
@@ -536,7 +537,6 @@ class ControllerPaymentKlarnaAccount extends Controller {
 					preg_match('/<member><name>faultCode<\/name><value><int>([0-9]+)<\/int><\/value><\/member>/', $response, $match2);
 					
 					$log = new Log('klarna_account.log');
-					
 					$log->write('Failed to create an invoice for order #' . $order_info['order_id'] . '. Message: ' . utf8_encode($match[1]) . ' Code: ' . $match2[1]);
 					
 					$json['error'] = utf8_encode($match[1]); 
@@ -555,7 +555,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 						$order_status = $this->config->get('config_order_status_id');
 					}
 					
-					$comment = sprintf($this->language->get('text_order_comment'), $invoice_number, $this->config->get('config_currency'), $country_to_currency[$order_info['payment_iso_code_3']], $this->currency->getValue($country_to_currency[$order_info['payment_iso_code_3']]));
+					$comment = sprintf($this->language->get('text_comment'), $invoice_number, $this->config->get('config_currency'), $country_to_currency[$order_info['payment_iso_code_3']], $this->currency->getValue($country_to_currency[$order_info['payment_iso_code_3']]));
 					
 					$this->model_checkout_order->confirm($this->session->data['order_id'], $order_status, $comment, 1);
 					
@@ -644,7 +644,6 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
             default:
                 $log = new Log('klarna.log');
-               
 			    $log->write('Unknown country ' . $country);
                 
 				$amount = NULL;

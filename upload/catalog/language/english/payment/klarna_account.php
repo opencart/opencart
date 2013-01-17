@@ -13,20 +13,17 @@ $_['text_day']             = 'Day';
 $_['text_payment_option']  = 'Payment options';
 $_['text_single_payment']  = 'Single Payment';
 $_['text_monthly_payment'] = '%s - %s per month';
-$_['text_order_comment']   = 'Klarna\'s Invoice ID: %s\n%s/%s: %.4f';
-$_['text_other']           = 'Handling / Tax / Discount';
+$_['text_comment']         = 'Klarna\'s Invoice ID: %s\n%s/%s: %.4f';
 
 // Entry
 $_['entry_gender']         = 'Gender:';
 $_['entry_pno']            = 'Personal Number:<br /><span class="help">Please enter your Social Security number here.</span>';
-$_['entry_birthday']       = 'Date of Birth:';
+$_['entry_dob']            = 'Date of Birth:';
 $_['entry_phone_no']       = 'Phone number:<br /><span class="help">Please enter your phone number.</span>';
 $_['entry_street']         = 'Street:<br /><span class="help">Please note that delivery can only take place to the registered address when paying with Klarna.</span>';
 $_['entry_house_no']       = 'House No.:<br /><span class="help">Please enter your house number.</span>';
 $_['entry_house_ext']      = 'House Ext.:<br /><span class="help">Please submit your house extension here. E.g. A, B, C, Red, Blue ect.</span>';
-$_['entry_cellno']         = 'Cell Phone:';
 $_['entry_company']        = 'Company Registration Number:<br /><span class="help">Please enter your Company\'s registration number</span>';
-$_['entry_yearly_salary']  = 'Yearly salary:';
 
 // Error
 $_['error_deu_terms']      = 'You must agree to Klarna\'s privacy policy (Datenschutz)';

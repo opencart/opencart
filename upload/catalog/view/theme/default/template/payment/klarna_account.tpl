@@ -1,7 +1,7 @@
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
-<div style="float: right;"><img src="https://cdn.klarna.com/public/images/<?php echo $iso_code_2; ?>/badges/v1/account/<?php echo $iso_code_2; ?>_account_badge_std_blue.png?width=150&eid=<?php echo $merchant; ?>" /></div>
+<div style="margin-bottom: 10px;"><img src="https://cdn.klarna.com/public/images/<?php echo $iso_code_2; ?>/badges/v1/account/<?php echo $iso_code_2; ?>_account_badge_std_blue.png?width=150&eid=<?php echo $merchant; ?>" /></div>
 <div id="payment">
   <div style="margin-bottom: 3px;"><b><?php echo $text_payment_option; ?></b></div>
   <div class="content">
@@ -9,11 +9,10 @@
       <?php foreach ($payment_options as $payment_option) { ?>
       <tr class="highlight">
         <td><input type="radio" name="code" value="<?php echo $payment_option['code']; ?>" id="plan-id<?php echo $payment_option['code']; ?>" /></td>
-        <td><label for="plan-id<?php echo $payment_option['code']; ?>"><?php echo $payment_option['title']; ?>
-            <?php if ($iso_code_3 == 'NLD') { ?>
-            <img src="catalog/view/theme/default/image/klarna_nld_banner.png" />
-            <?php } ?>
-          </label></td>
+        <td><label for="plan-id<?php echo $payment_option['code']; ?>"><?php echo $payment_option['title']; ?></label></td>
+        <td style="width: 1%;"><?php if ($iso_code_3 == 'NLD') { ?>
+          <img src="catalog/view/theme/default/image/klarna_nld_banner.png" />
+          <?php } ?></td>
       </tr>
       <?php } ?>
     </table>

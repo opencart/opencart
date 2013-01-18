@@ -22,6 +22,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 			$this->data['entry_gender'] = $this->language->get('entry_gender');	
 			$this->data['entry_street'] = $this->language->get('entry_street');	
 			$this->data['entry_house_no'] = $this->language->get('entry_house_no');	
+			$this->data['entry_house_ext'] = $this->language->get('entry_house_ext');
 			$this->data['entry_phone_no'] = $this->language->get('entry_phone_no');	
 			$this->data['entry_company'] = $this->language->get('entry_company');
 			
@@ -70,7 +71,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 			$this->data['phone_number'] = $order_info['telephone'];
 						
 			if ($order_info['payment_iso_code_3'] == 'DEU' || $order_info['payment_iso_code_3'] == 'NLD') {
-				$address = $this->splitAddress($orderInfo['payment_address_1']);
+				$address = $this->splitAddress($order_info['payment_address_1']);
 				
 				$this->data['street'] = $address[0];
 				$this->data['street_number'] = $address[1];
@@ -87,8 +88,8 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
 			$this->data['company'] = $order_info['payment_company'];
 			$this->data['company_id'] = $order_info['payment_company_id'];
-			$this->data['iso_code_3'] = $order_info['payment_iso_code_3'];
 			$this->data['iso_code_2'] = $order_info['payment_iso_code_2'];
+			$this->data['iso_code_3'] = $order_info['payment_iso_code_3'];
 			
 			// Get the invoice fee
 			$result = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $order_info['order_id'] . " AND `code` = 'klarna_fee'")->row;

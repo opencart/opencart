@@ -23,6 +23,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			$this->data['entry_gender'] = $this->language->get('entry_gender');	
 			$this->data['entry_street'] = $this->language->get('entry_street');	
 			$this->data['entry_house_no'] = $this->language->get('entry_house_no');	
+			$this->data['entry_house_ext'] = $this->language->get('entry_house_ext');	
 			$this->data['entry_phone_no'] = $this->language->get('entry_phone_no');	
 			$this->data['entry_company'] = $this->language->get('entry_company');	
 			
@@ -112,6 +113,10 @@ class ControllerPaymentKlarnaAccount extends Controller {
                 }
 			}
 			
+			echo '<pre>';
+			print_r($total_data);
+			echo '</pre>';
+			
 			// Order must have identical shipping and billing address or have no shipping address at all
 			if ($this->cart->hasShipping() && !($order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3'])) {
 				$this->data['error_warning'] = $this->language->get('error_address_match');
@@ -137,7 +142,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			);
 						
 			if ($order_info['payment_iso_code_3'] == 'DEU' || $order_info['payment_iso_code_3'] == 'NLD') {
-				$address = $this->splitAddress($orderInfo['payment_address_1']);
+				$address = $this->splitAddress($order_info['payment_address_1']);
 				
 				$this->data['street'] = $address[0];
 				$this->data['street_number'] = $address[1];
@@ -154,8 +159,8 @@ class ControllerPaymentKlarnaAccount extends Controller {
 						
 			$this->data['company'] = $order_info['payment_company'];
 			$this->data['company_id'] = $order_info['payment_company_id'];
-			$this->data['iso_code_3'] = $order_info['payment_iso_code_3'];
 			$this->data['iso_code_2'] = $order_info['payment_iso_code_2'];
+			$this->data['iso_code_3'] = $order_info['payment_iso_code_3'];
 			
 			$payment_option = array();
 

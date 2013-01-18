@@ -2193,13 +2193,6 @@ CREATE TABLE `oc_order_total` (
 -- Dumping data for table `oc_order_total`
 --
 
-DROP TABLE IF EXISTS `oc_order_total_klarna`;
-CREATE TABLE `oc_order_total_klarna` (
-    `order_total_id` INT(11) NOT NULL,
-    `tax` decimal(10,4) NOT NULL,
-    PRIMARY KEY (`order_total_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `oc_order_voucher`;

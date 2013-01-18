@@ -70,7 +70,7 @@
       </tr>
       <?php if ($iso_code_3 == 'DEU') { ?>
       <tr>
-        <td colspan="2"><input type="checkbox" name="deu_toc" value="1" />
+        <td colspan="2"><input type="checkbox" name="deu_terms" value="1" />
           Mit der Übermittlung der für die Abwicklung des Rechnungskaufes und einer Identitäts - und Bonitätsprüfung erforderlichen 
           Daten an Klarna bin ich einverstanden. Meine <a href="https://online.klarna.com/consent_de.yaws" target="_blank">Einwilligung</a> kann ich jederzeit mit Wirkung für die Zukunft widerrufen. </td>
       </tr>
@@ -83,23 +83,18 @@
     <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="button" />
   </div>
 </div>
-<div class="klarna_baloon" id="klarna_baloon" style="display: none">
-  <div class="klarna_baloon_top"></div>
-  <div class="klarna_baloon_middle" id="klarna_baloon_content">
-    <div></div>
-  </div>
-  <div class="klarna_baloon_bottom"></div>
-</div>
-<a id="klarna_toc_link">test</a> 
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
 	$.ajax({
 		url: 'index.php?route=payment/klarna_invoice/send',
 		type: 'post',
-		data: $('#payment :input'),
+		data: $('#payment input[type=\'text\'], #payment input[type=\'checkbox\']:checked, #payment input[type=\'radio\']:checked, #payment select'),
 		dataType: 'json',		
 		beforeSend: function() {
 			$('#button-confirm').attr('disabled', true);
+			
+			$('.warning, .error').remove();
+			
 			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
@@ -107,8 +102,6 @@ $('#button-confirm').bind('click', function() {
 			$('.attention').remove();
 		},		
 		success: function(json) {	
-			$('.warning, .error').remove();
-				
 			if (json['error']) {
 				$('#payment').before('<div class="warning">' + json['error'] + '</div>');
 			}
@@ -119,56 +112,4 @@ $('#button-confirm').bind('click', function() {
 		}
 	});
 });
-	
-$(document).ready(function(){
-    $('#payment table.form input[type="text"]').focusin(function () {
-        var field = $(this);
-        hideBaloon(function (){
-            var position = field.offset();
-            var value = field.attr('alt');
-
-            if (!value) {
-                return false;
-            }
-
-            $('#klarna_baloon_content div').html(value);
-
-            var top = position.top - $('#klarna_baloon').height();
-
-            if (top < 0) {
-                top = 10;
-            } 
-
-            position.top = top;
-
-            var left = (position.left + field.width()) - ($('#klarna_baloon').width());
-
-            position.left = left;
-
-            $('#klarna_baloon').css(position);
-
-            $('#klarna_baloon').fadeIn('fast');
-        });
-
-    }).focusout(function () {
-        hideBaloon();
-    });
-});
-
-function hideBaloon (callback) {
-    if ($('#klarna_baloon').is(":visible")) {
-        $('#klarna_baloon').fadeOut('fast', function (){
-            if (callback) {
-                callback();
-            }
-            return true;
-        });
-    } else {
-        if(callback) {
-            callback();
-        }
-        
-        return true;
-    }
-}
 //--></script>

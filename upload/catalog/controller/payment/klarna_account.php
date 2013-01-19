@@ -73,31 +73,28 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			
 			array_multisort($sort_order, SORT_ASC, $results);
 						
-			$oldTaxes = $taxes;
-            $klarnaTax = array();
+			$product_taxes = $taxes;
+            $klarna_tax = array();
             
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
-                    
 					$this->load->model('total/' . $result['code']);
 		
 					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
                     
-                    $taxDifference = 0;
+                    $amount = 0;
                     
-                    foreach ($taxes as $taxId => $value) {
-                        if (isset($oldTaxes[$taxId])) {
-                            $taxDifference += $value - $oldTaxes[$taxId];
+                    foreach ($taxes as $tax_id => $value) {
+                        if (isset($product_taxes[$tax_id])) {
+                            $amount += $value - $product_taxes[$tax_id];
                         } else {
-                            $taxDifference += $value;
+                            $amount += $value;
                         }
                     }
                     
-                    if ($taxDifference != 0) {
-                        $klarnaTax[$result['code']] = $taxDifference;
+                    if ($amount) {
+                        $klarna_tax[$result['code']] = $amount;
                     }
-                    
-                    $oldTaxes = $taxes;
 				}
 			}
 			
@@ -106,16 +103,12 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			foreach ($total_data as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
                 
-                if (isset($klarnaTax[$value['code']])) {
-                    $total_data[$key]['klarna_tax'] = $klarnaTax[$value['code']];
+                if (isset($klarna_tax[$value['code']])) {
+                    $total_data[$key]['klarna_tax'] = $klarna_tax[$value['code']];
                 } else {
                     $total_data[$key]['klarna_tax'] = '';
                 }
 			}
-			
-			echo '<pre>';
-			print_r($total_data);
-			echo '</pre>';
 			
 			$this->session->data['klarna'][$this->session->data['order_id']] = $total_data;
 			

@@ -117,6 +117,8 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			print_r($total_data);
 			echo '</pre>';
 			
+			$this->session->data['klarna'][$this->session->data['order_id']] = $total_data;
+			
 			// Order must have identical shipping and billing address or have no shipping address at all
 			if ($this->cart->hasShipping() && !($order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3'])) {
 				$this->data['error_warning'] = $this->language->get('error_address_match');
@@ -410,7 +412,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 					'country'         => $country,
 				);
 				
-				$product_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = " . (int) $order_info['order_id'] . " UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = " . (int) $order_info['order_id']);
+				$product_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = " . (int) $order_info['order_id'] . " UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = " . (int)$order_info['order_id']);
 		
 				foreach ($product_query->rows as $product) {
 					$goods_list[] = array(
@@ -426,24 +428,26 @@ class ControllerPaymentKlarnaAccount extends Controller {
 					);
 				}
 				
-				$total_query = $this->db->query("
-					SELECT `title`, `code`, `value`, IF(`tax` IS NULL, 0.0, `tax` / `value` * 100) AS 'tax_rate'
-					FROM `" . DB_PREFIX . "order_total`
-					LEFT JOIN `" . DB_PREFIX . "order_total_klarna` USING(`order_total_id`)
-					WHERE `order_id` = " . (int) $order_info['order_id'] . " AND `code` NOT IN ('sub_total', 'tax', 'total')");
+				if (isset($this->session->data['klarna'][$this->session->data['order_id']])) {
+					$totals = $this->session->data['klarna'][$this->session->data['order_id']];
+				} else {
+					$totals = array();
+				}
 				
-				foreach ($total_query->rows as $total) {
-					$goods_list[] = array(
-						'qty'   => 1,
-						'goods' => array(
-							'artno'    => '',
-							'title'    => $total['title'],
-							'price'    => (int)str_replace('.', '', $this->currency->format($total['value'], $country_to_currency[$order_info['payment_iso_code_3']], '', false)),
-							'vat'      => (float)$total['tax_rate'],
-							'discount' => 0.0,
-							'flags'    => 0,
-						)
-					);
+				foreach ($totals as $total) {
+					if ($total['code'] != 'sub_total' && $total['code'] != 'tax' && $total['code'] != 'total') {
+						$goods_list[] = array(
+							'qty'   => 1,
+							'goods' => array(
+								'artno'    => '',
+								'title'    => $total['title'],
+								'price'    => (int)str_replace('.', '', $this->currency->format($total['value'], $country_to_currency[$order_info['payment_iso_code_3']], '', false)),
+								'vat'      => (float)$total['klarna_tax'],
+								'discount' => 0.0,
+								'flags'    => 0,
+							)
+						);
+					}
 				}
 				
 				$digest = '';

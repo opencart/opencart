@@ -25,23 +25,7 @@
               <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
               <?php } ?>
               <?php } ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_category; ?></td>
-            <td><input type="text" name="category" value="" /></td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td><div id="filter-category" class="scrollbox">
-                <?php $class = 'odd'; ?>
-                <?php foreach ($filter_categories as $filter_category) { ?>
-                <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                <div id="filter-category<?php echo $filter_category['category_id']; ?>" class="<?php echo $class; ?>"><?php echo $filter_category['name']; ?><img src="view/image/delete.png" alt="" />
-                  <input type="hidden" name="filter_category[]" value="<?php echo $filter_category['category_id']; ?>" />
-                </div>
-                <?php } ?>
-            </div></td>
-          </tr> 		  
+          </tr>		  
           <tr>
             <td><?php echo $entry_sort_order; ?></td>
             <td><input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" /></td>
@@ -85,45 +69,6 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-// Category
-$('input[name=\'category\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
-		$.ajax({
-			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {		
-				response($.map(json, function(item) {
-					return {
-						label: item.name,
-						value: item.category_id
-					}
-				}));
-			}
-		});
-	}, 
-	select: function(event, ui) {
-		$('#filter-category' + ui.item.value).remove();
-		
-		$('#filter-category').append('<div id="filter-category' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="filter_category[]" value="' + ui.item.value + '" /></div>');
-
-		$('#filter-category div:odd').attr('class', 'odd');
-		$('#filter-category div:even').attr('class', 'even');
-				
-		return false;
-	},
-	focus: function(event, ui) {
-      return false;
-   }
-});
-
-$('#filter-category div img').live('click', function() {
-	$(this).parent().remove();
-	
-	$('#filter-category div:odd').attr('class', 'odd');
-	$('#filter-category div:even').attr('class', 'even');	
-});
-
 var filter_row = <?php echo $filter_row; ?>;
 
 function addFilter() {

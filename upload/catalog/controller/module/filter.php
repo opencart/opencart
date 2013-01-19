@@ -48,7 +48,13 @@ class ControllerModuleFilter extends Controller {
 
 			$this->data['filter_groups'] = array();
 
-			$filter_groups = $this->model_catalog_filter->getFilterGroupsByCategoryId($category_id);
+			$filters = $this->model_catalog_category->getFilters($category_id);
+			
+			foreach ($filters as $filter) {
+				
+			}
+			
+
 
 			foreach ($filter_groups as $filter_group) {
 				$filter_data = array();

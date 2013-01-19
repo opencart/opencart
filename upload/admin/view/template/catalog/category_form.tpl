@@ -56,6 +56,22 @@
                 <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" /></td>
             </tr>
             <tr>
+              <td><?php echo $entry_filter; ?></td>
+              <td><input type="text" name="filter" value="" /></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><div id="category-filter" class="scrollbox">
+                  <?php $class = 'odd'; ?>
+                  <?php foreach ($category_filters as $category_filter) { ?>
+                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                  <div id="category-filter<?php echo $category_filter['filter_id']; ?>" class="<?php echo $class; ?>"><?php echo $category_filter['name']; ?><img src="view/image/delete.png" alt="" />
+                    <input type="hidden" name="category_filter[]" value="<?php echo $category_filter['filter_id']; ?>" />
+                  </div>
+                  <?php } ?>
+                </div></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_store; ?></td>
               <td><div class="scrollbox">
                   <?php $class = 'even'; ?>
@@ -213,6 +229,46 @@ $('input[name=\'path\']').autocomplete({
 	focus: function(event, ui) {
       	return false;
    	}
+});
+//--></script> 
+<script type="text/javascript"><!--
+// Filter
+$('input[name=\'filter\']').autocomplete({
+	delay: 500,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {		
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.filter_id
+					}
+				}));
+			}
+		});
+	}, 
+	select: function(event, ui) {
+		$('#category-filter' + ui.item.value).remove();
+		
+		$('#category-filter').append('<div id="category-filter' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="category_filter[]" value="' + ui.item.value + '" /></div>');
+
+		$('#category-filter div:odd').attr('class', 'odd');
+		$('#category-filter div:even').attr('class', 'even');
+				
+		return false;
+	},
+	focus: function(event, ui) {
+      return false;
+   }
+});
+
+$('#category-filter div img').live('click', function() {
+	$(this).parent().remove();
+	
+	$('#category-filter div:odd').attr('class', 'odd');
+	$('#category-filter div:even').attr('class', 'even');	
 });
 //--></script> 
 <script type="text/javascript"><!--

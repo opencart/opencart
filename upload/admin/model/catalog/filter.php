@@ -19,12 +19,6 @@ class ModelCatalogFilter extends Model {
 					$this->db->query("INSERT INTO " . DB_PREFIX . "filter_description SET filter_id = '" . (int)$filter_id . "', language_id = '" . (int)$language_id . "', filter_group_id = '" . (int)$filter_group_id . "', name = '" . $this->db->escape($filter_description['name']) . "'");
 				}
 			}
-		}
-		
-		if (isset($data['filter_category'])) {
-			foreach ($data['filter_category'] as $category_id) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "filter_group_to_category SET filter_group_id = '" . (int)$filter_group_id . "', category_id = '" . (int)$category_id . "'");
-			}
 		}		
 	}
 	
@@ -54,14 +48,6 @@ class ModelCatalogFilter extends Model {
 					$this->db->query("INSERT INTO " . DB_PREFIX . "filter_description SET filter_id = '" . (int)$filter_id . "', language_id = '" . (int)$language_id . "', filter_group_id = '" . (int)$filter_group_id . "', name = '" . $this->db->escape($filter_description['name']) . "'");
 				}
 			}
-		}
-		
-		$this->db->query("DELETE FROM " . DB_PREFIX . "filter_group_to_category WHERE filter_group_id = '" . (int)$filter_group_id . "'");
-		
-		if (isset($data['filter_category'])) {
-			foreach ($data['filter_category'] as $category_id) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "filter_group_to_category SET filter_group_id = '" . (int)$filter_group_id . "', category_id = '" . (int)$category_id . "'");
-			}		
 		}		
 	}
 	
@@ -70,7 +56,6 @@ class ModelCatalogFilter extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group_description` WHERE filter_group_id = '" . (int)$filter_group_id . "'");	
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group_to_category` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 	}
 	
 	public function getFilterGroup($filter_group_id) {
@@ -126,18 +111,6 @@ class ModelCatalogFilter extends Model {
 		}
 		
 		return $filter_group_data;
-	}
-	
-	public function getFilterGroupCategories($filter_group_id) {
-		$filter_group_category_data = array();
-		
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "filter_group_to_category WHERE filter_group_id = '" . (int)$filter_group_id . "'");
-		
-		foreach ($query->rows as $result) {
-			$filter_group_category_data[] = $result['category_id'];
-		}
-
-		return $filter_group_category_data;
 	}
 	
 	public function getFilter($filter_id) {

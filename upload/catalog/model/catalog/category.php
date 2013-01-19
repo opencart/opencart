@@ -11,7 +11,17 @@ class ModelCatalogCategory extends Model {
 
 		return $query->rows;
 	}
-			
+	
+	public function getCategoryFilters($category_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category_filter WHERE category_id = '" . (int)$category_id . "'");
+		
+		if ($query->num_rows) {
+			return $query->row['layout_id'];
+		} else {
+			return $this->config->get('config_layout_category');
+		}
+	}
+				
 	public function getCategoryLayoutId($category_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category_to_layout WHERE category_id = '" . (int)$category_id . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 		

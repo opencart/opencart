@@ -82,7 +82,7 @@ class ModelCatalogProduct extends Model {
 		}
 		
 		if (isset($data['product_filter'])) {
-			foreach ($data['product_filter'] as $filter_value_id) {
+			foreach ($data['product_filter'] as $filter_id) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_filter SET product_id = '" . (int)$product_id . "', filter_id = '" . (int)$filter_id . "'");
 			}
 		}
@@ -430,9 +430,15 @@ class ModelCatalogProduct extends Model {
 	}
 	
 	public function getProductFilters($product_id) {
+		$product_filter_data = array();
+		
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_filter WHERE product_id = '" . (int)$product_id . "'");
 		
-		return $query->rows;
+		foreach ($query->rows as $result) {
+			$product_filter_data[] = $result['filter_id'];
+		}
+				
+		return $product_filter_data;
 	}
 	
 	public function getProductAttributes($product_id) {

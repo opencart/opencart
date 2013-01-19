@@ -265,7 +265,6 @@ class ControllerCatalogFilter extends Controller {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 				
 		$this->data['entry_group'] = $this->language->get('entry_group');
-		$this->data['entry_category'] = $this->language->get('entry_category');
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
@@ -345,30 +344,7 @@ class ControllerCatalogFilter extends Controller {
 		} else {
 			$this->data['filter_group_description'] = array();
 		}	
-		
-		$this->load->model('catalog/category');
-		
-		if (isset($this->request->post['filter_category'])) {
-			$categories = $this->request->post['filter_category'];
-		} elseif (isset($this->request->get['filter_group_id'])) {		
-			$categories = $this->model_catalog_filter->getFilterGroupCategories($this->request->get['filter_group_id']);
-		} else {
-			$categories = array();
-		}
-	
-		$this->data['filter_categories'] = array();
-		
-		foreach ($categories as $category_id) {
-			$category_info = $this->model_catalog_category->getCategory($category_id);
-			
-			if ($category_info) {
-				$this->data['filter_categories'][] = array(
-					'category_id' => $category_info['category_id'],
-					'name'        => ($category_info['path'] ? $category_info['path'] . ' &gt; ' : '') . $category_info['name']
-				);
-			}
-		}		
-		
+				
 		if (isset($this->request->post['sort_order'])) {
 			$this->data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($filter_group_info)) {

@@ -46,7 +46,7 @@ class ModelTotalKlarnaFee extends Model {
 				}
 			}
 			
-			$total += $country['fee'];
+			$total += $klarna_fee[$address['iso_code_3']]['fee'];
         }
     }
 }

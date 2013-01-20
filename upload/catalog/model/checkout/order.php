@@ -304,8 +304,8 @@ class ModelCheckoutOrder extends Model {
 			$template->data['telephone'] = $order_info['telephone'];
 			$template->data['ip'] = $order_info['ip'];
 			
-			if ($comment && $notify) {
-				$template->data['comment'] = nl2br($comment);
+			if ($order_info['comment']) {
+				$template->data['comment'] = nl2br($order_info['comment']);
 			} else {
 				$template->data['comment'] = '';
 			}

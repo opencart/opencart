@@ -1,6 +1,8 @@
 <?php
 class ControllerPaymentGoogleCheckout extends Controller {
 	public function index() {
+		$this->language->load('payment/google_checkout');
+		
 		$this->data['button_confirm'] = $this->language->get('button_confirm');
 				
 		if (!$this->config->get('google_checkout_test')) {
@@ -8,12 +10,26 @@ class ControllerPaymentGoogleCheckout extends Controller {
 		} else {
 			$this->data['action'] = 'https://sandbox.google.com/checkout/api/checkout/v2/checkout/Merchant/' . $this->config->get('google_checkout_merchant_id');
 		}
+			
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/google_checkout.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/payment/google_checkout.tpl';
+		} else {
+			$this->template = 'default/template/payment/google_checkout.tpl';
+		}	
 		
-		$this->load->model('checkout/order');
+		$this->render();
+	}
 
-		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+	public function send() {
+		$this->language->load('payment/google_checkout');
 		
-		if ($order_info) {		
+		$json = array();
+		
+		if ($this->cart->hasShipping() && !isset($this->session->data['shipping_method'])) {
+			$json['error'] = $this->language->get('error_shipping');	
+		}
+		
+		if (!$json) {
 			$xml  = '<?xml version="1.0" encoding="UTF-8"?>';
 			$xml .= '<checkout-shopping-cart xmlns="http://checkout.google.com/schema/2">';
 			$xml .= '	<shopping-cart>';
@@ -77,17 +93,11 @@ class ControllerPaymentGoogleCheckout extends Controller {
 			$opad = str_repeat(chr(0x5c), $blocksize);
 			$hmac = pack('H*', $hash(($key ^ $opad) . pack('H*', $hash(($key ^ $ipad) . $xml))));
 	
-			$this->data['cart'] = base64_encode($xml);
-			$this->data['signature'] = base64_encode($hmac);
-			
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/google_checkout.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/payment/google_checkout.tpl';
-			} else {
-				$this->template = 'default/template/payment/google_checkout.tpl';
-			}	
-			
-			$this->render();
+			$json['cart'] = base64_encode($xml);
+			$json['signature'] = base64_encode($hmac);	
 		}
+
+		$this->response->setOutput(json_encode($json));			
 	}
 
 	public function callback() {

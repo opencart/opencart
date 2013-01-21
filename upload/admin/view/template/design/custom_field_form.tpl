@@ -10,7 +10,7 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><img src="view/image/option.png" alt="" /> <?php echo $heading_title; ?></h1>
+      <h1><img src="view/image/layout.png" alt="" /> <?php echo $heading_title; ?></h1>
       <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
@@ -173,6 +173,7 @@
     </div>
   </div>
 </div>
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
 <script type="text/javascript"><!--
 $('select[name=\'type\']').bind('change', function() {
 	if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox') {
@@ -182,6 +183,25 @@ $('select[name=\'type\']').bind('change', function() {
 		$('#custom-field-value').hide();
 		$('#display-value').show();
 	}
+	
+	if (this.value == 'date') {
+		$('input[name=\'value\']').attr('class', '.date');
+	} else if (this.value == 'time') {
+		$('input[name=\'value\']').attr('class', '.time');
+	} else if (this.value == 'datetime') {
+		$('input[name=\'value\']').attr('class', '.datetime');
+	} else {
+		$('input[name=\'value\']').attr('class', '');
+	}
+	
+	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+
+	$('.datetime').datetimepicker({
+		dateFormat: 'yy-mm-dd',
+		timeFormat: 'h:m'
+	});	
+	
+	$('.time').timepicker({timeFormat: 'h:m'});	
 });
 
 $('select[name=\'type\']').trigger('change');
@@ -205,5 +225,5 @@ function addCustomFieldValue() {
 	
 	custom_field_value_row++;
 }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

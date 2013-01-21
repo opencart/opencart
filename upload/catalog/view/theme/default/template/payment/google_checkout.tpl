@@ -1,9 +1,9 @@
-<form action="<?php echo $action; ?>" method="post">
+<form action="<?php echo $action; ?>" method="post" id="google-checkout">
   <input type="hidden" name="cart" value="<?php echo $cart; ?>">
   <input type="hidden" name="signature" value="<?php echo $signature; ?>">
   <div class="buttons">
     <div class="right">
-      <input type="button" value="<?php echo $button_confirm; ?>" id="button-paypal" class="button" />
+       <img alt="Fast checkout through Google" src="http://sandbox.google.com/checkout/buttons/checkout.gif?merchant_id=<?php echo $merchant; ?>&w=180&h=46&style=white&variant=text&loc=en_US" height="46" width="180" id="button-paypal" />
     </div>
   </div>
 </form>
@@ -30,6 +30,9 @@ $('#button-paypal').bind('click', function() {
 			if (json['cart']) {
 				$('input[name=\'cart\']').attr('value', json['cart']);
 				$('input[name=\'signature\']').attr('value', json['signature']);
+				
+				$('#google-checkout').submit();
+				
 			}
 		}
 	});

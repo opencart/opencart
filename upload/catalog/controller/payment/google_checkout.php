@@ -11,6 +11,8 @@ class ControllerPaymentGoogleCheckout extends Controller {
 			$this->data['action'] = 'https://sandbox.google.com/checkout/api/checkout/v2/checkout/Merchant/' . $this->config->get('google_checkout_merchant_id');
 		}
 			
+		$this->data['merchant'] = $this->config->get('google_checkout_merchant_id');
+			
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/google_checkout.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/google_checkout.tpl';
 		} else {
@@ -33,16 +35,16 @@ class ControllerPaymentGoogleCheckout extends Controller {
 			$xml  = '<?xml version="1.0" encoding="UTF-8"?>';
 			$xml .= '<checkout-shopping-cart xmlns="http://checkout.google.com/schema/2">';
 			$xml .= '	<shopping-cart>';
-			$xml .= '   	<merchant-private-data>';
-			$xml .= '			<order_id>' . $this->session->data['order_id'] . '</order_id>';
-			$xml .= '   	</merchant-private-data>'; 
+		//	$xml .= '   	<merchant-private-data>';
+		//	$xml .= '			<order_id>' . $this->session->data['order_id'] . '</order_id>';
+		//	$xml .= '   	</merchant-private-data>'; 
 			$xml .= '		<items>';
 			
 			$products = $this->cart->getProducts();
 			
 			foreach ($products as $product) { 
 				$xml .= '			<item>';
-				$xml .= '				<merchant-item-id>' . $product['product_id'] . '</merchant-item-id>';
+				$xml .= '				<merchant-item-id>' . $product['key'] . '</merchant-item-id>';
 				
 				$option_data = array();
 				
@@ -66,6 +68,18 @@ class ControllerPaymentGoogleCheckout extends Controller {
 			$xml .= '		</items>';
 			$xml .= '	</shopping-cart>';
 			
+			if ($this->cart->hasShipping()) {
+				$xml .= '	<checkout-flow-support>';  
+				$xml .= '		<merchant-checkout-flow-support>';
+				$xml .= '			<shipping-methods>';
+				$xml .= '				<flat-rate-shipping name="' . $this->session->data['shipping_method']['title'] . '">';
+				$xml .= '					<price currency="' . $this->currency->getCode() . '">' . $this->currency->format($this->session->data['shipping_method']['cost'], $this->currency->getCode(), false, false) . '</price>';
+				$xml .= '				</flat-rate-shipping>';
+				$xml .= '			</shipping-methods>';
+				$xml .= '		</merchant-checkout-flow-support>';
+				$xml .= '	</checkout-flow-support>';
+			}
+						
 			if ($this->cart->hasShipping()) {
 				$xml .= '	<checkout-flow-support>';  
 				$xml .= '		<merchant-checkout-flow-support>';
@@ -101,7 +115,8 @@ class ControllerPaymentGoogleCheckout extends Controller {
 	}
 
 	public function callback() {
-		$this->log->write($_SERVER['REQUEST_URI']);
+		$this->log->write(http_build_query($this->request->get));
+		$this->log->write(http_build_query($this->request->post));
 		/*	
 		order-summary.google-order-number=923823874108605
 		

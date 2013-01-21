@@ -31,6 +31,8 @@ class Language {
 			require($file);
 		
 			$this->data = array_merge($this->data, $_);
+			
+			return $this->data;
 		} else {
 			trigger_error('Error: Could not load language ' . $filename . '!');
 			exit();

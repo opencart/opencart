@@ -57,7 +57,7 @@ class ControllerCommonHeader extends Controller {
 			$robots = explode("\n", trim($this->config->get('config_robots')));
 
 			foreach ($robots as $robot) {
-				if (strpos($this->request->server['HTTP_USER_AGENT'], trim($robot)) !== false) {
+				if ($robot && strpos($this->request->server['HTTP_USER_AGENT'], trim($robot)) !== false) {
 					$status = false;
 
 					break;

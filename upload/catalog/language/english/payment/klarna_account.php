@@ -13,7 +13,7 @@ $_['text_day']             = 'Day';
 $_['text_payment_option']  = 'Payment options';
 $_['text_single_payment']  = 'Single Payment';
 $_['text_monthly_payment'] = '%s - %s per month';
-$_['text_comment']         = 'Klarna\'s Invoice ID: %s\n%s/%s: %.4f';
+$_['text_comment']         = "Klarna's Invoice ID: %s\n%s/%s: %.4f";
 
 // Entry
 $_['entry_gender']         = 'Gender:';

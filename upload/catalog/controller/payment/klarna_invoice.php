@@ -58,7 +58,6 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 			// Store Taxes to send to Klarna
 			$total_data = array();
 			$total = 0;
-			$taxes = $this->cart->getTaxes();
 			 
 			$this->load->model('setting/extension');
 			
@@ -72,42 +71,44 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 			
 			array_multisort($sort_order, SORT_ASC, $results);
 						
-			$product_taxes = $taxes;
             $klarna_tax = array();
             
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
 					$this->load->model('total/' . $result['code']);
-		
+		                    
+                    $taxes = array();
+                    
 					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
                     
                     $amount = 0;
                     
                     foreach ($taxes as $tax_id => $value) {
-                        if (isset($product_taxes[$tax_id])) {
-                            $amount += $value - $product_taxes[$tax_id];
-                        } else {
-                            $amount += $value;
-                        }
+                        $amount += $value;
                     }
                     
-                    if ($amount) {
-                        $klarna_tax[$result['code']] = $amount;
-                    }
+                    $klarna_tax[$result['code']] = $amount;
 				}
 			}
-			
-			$sort_order = array(); 
-		  
+						
 			foreach ($total_data as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
                 
                 if (isset($klarna_tax[$value['code']])) {
                     $total_data[$key]['klarna_tax'] = $klarna_tax[$value['code']];
+                    
+                    if ($klarna_tax[$value['code']]) {
+                        $total_data[$key]['tax_rate'] = abs($klarna_tax[$value['code']] / $value['value'] * 100);
+                    } else {
+                        $total_data[$key]['tax_rate'] = 0;
+                    }
                 } else {
                     $total_data[$key]['klarna_tax'] = '';
+                    $total_data[$key]['tax_rate'] = '0';
                 }
 			}
+            
+            $this->session->data['klarna'][$this->session->data['order_id']] = $total_data;
 						
 			// Order must have identical shipping and billing address or have no shipping address at all
 			if ($this->cart->hasShipping() && !($order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3'])) {
@@ -179,7 +180,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				$json['error'] =  $this->language->get('error_deu_terms');
 			}
 						
-			if ($this->cart->hasShipping() && !($order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3'])) {
+			if (!($order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3'])) {
 				$json['error'] = $this->language->get('error_address_match');
 			}
 			
@@ -301,7 +302,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				} else {
 					$totals = array();
 				}
-				
+                
 				foreach ($totals as $total) {
 					if ($total['code'] != 'sub_total' && $total['code'] != 'tax' && $total['code'] != 'total') {
 						$goods_list[] = array(
@@ -317,7 +318,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 						);
 					}
 				}
-				
+                
 				$digest = '';
 				
 				foreach ($goods_list as $goods) {
@@ -421,9 +422,9 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 						$klarna_order_status = $xml->getElementsByTagName('int')->item(0)->nodeValue;
 		
 						if ($klarna_order_status == '1') {
-							$order_status = $this->config->get('klarna_invoice_accepted_status_id');
+                            $order_status = $klarna_invoice[$order_info['payment_iso_code_3']]['accepted_status_id'];
 						} elseif ($klarna_order_status == '2') {
-							$order_status = $this->config->get('klarna_invoice_pending_status_id');
+                            $order_status = $klarna_invoice[$order_info['payment_iso_code_3']]['pending_status_id'];
 						} else {
 							$order_status = $this->config->get('config_order_status_id');
 						}

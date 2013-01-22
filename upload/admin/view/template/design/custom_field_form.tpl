@@ -184,24 +184,23 @@ $('select[name=\'type\']').bind('change', function() {
 		$('#display-value').show();
 	}
 	
+	$('input[name=\'value\']').removeClass();
+	
 	if (this.value == 'date') {
-		$('input[name=\'value\']').attr('class', '.date');
+		$('input[name=\'value\']').datepicker({dateFormat: 'yy-mm-dd'});
 	} else if (this.value == 'time') {
-		$('input[name=\'value\']').attr('class', '.time');
+		$('input[name=\'value\']').timepicker({timeFormat: 'h:m'});	
 	} else if (this.value == 'datetime') {
-		$('input[name=\'value\']').attr('class', '.datetime');
+		$('input[name=\'value\']').datetimepicker({
+			dateFormat: 'yy-mm-dd',
+			timeFormat: 'h:m'
+		});	
 	} else {
-		$('input[name=\'value\']').attr('class', '');
+		alert('hi');
+		$('input[name=\'value\']').datepicker('remove');
+		$('input[name=\'value\']').timepicker('remove');
+		$('input[name=\'value\']').datetimepicker('remove');
 	}
-	
-	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
-
-	$('.datetime').datetimepicker({
-		dateFormat: 'yy-mm-dd',
-		timeFormat: 'h:m'
-	});	
-	
-	$('.time').timepicker({timeFormat: 'h:m'});	
 });
 
 $('select[name=\'type\']').trigger('change');

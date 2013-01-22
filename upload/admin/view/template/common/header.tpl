@@ -120,7 +120,6 @@ $(document).ready(function(){
             <ul>
               <li><a href="<?php echo $layout; ?>"><?php echo $text_layout; ?></a></li>
               <li><a href="<?php echo $banner; ?>"><?php echo $text_banner; ?></a></li>
-              <li><a href="<?php echo $custom_field; ?>"><?php echo $text_custom_field; ?></a></li>
             </ul>
           </li>
           <li><a class="parent"><?php echo $text_users; ?></a>

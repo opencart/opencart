@@ -109,10 +109,8 @@ class ControllerCommonHeader extends Controller {
 						'filter_sub_category' => true
 					);
 					
-					$product_total = $this->model_catalog_product->getTotalProducts($data);
-									
 					$children_data[] = array(
-						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),
+						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($data) . ')' : ''),
 						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
 					);						
 				}

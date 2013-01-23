@@ -341,12 +341,6 @@ class ModelUpgrade extends Model {
 			
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_group` DROP `name`");	
 		}
-		
-		// Customer blacklist table rename to ban ip
-		if (isset($table_old_data[DB_PREFIX . 'customer_ip_blacklist']) && !isset($table_old_data[DB_PREFIX . 'customer_ip_ban'])) {
-			$this->db->query("RENAME TABLE `" . DB_PREFIX . "customer_ip_blacklist` TO `" . DB_PREFIX . "customer_ban_ip`");
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_ban_ip` CHANGE `customer_ip_blacklist_id`  `customer_ban_ip_id` INT(11) NOT NULL AUTO_INCREMENT");
-		}
 
 		// Sort the categories to take advantage of the nested set model
 		$this->repairCategories(0);

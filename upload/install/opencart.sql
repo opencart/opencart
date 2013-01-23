@@ -3047,7 +3047,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (94, 0, 'voucher', 'voucher_sort_order', '8', 0),
 (95, 0, 'voucher', 'voucher_status', '1', 0),
 (96, 0, 'config', 'config_length_class_id', '1', 0),
-(97, 0, 'config', 'config_invoice_prefix', 'INV-2012-00', 0),
+(97, 0, 'config', 'config_invoice_prefix', 'INV-2013-00', 0),
 (98, 0, 'config', 'config_tax', '1', 0),
 (99, 0, 'config', 'config_tax_customer', 'shipping', 0),
 (100, 0, 'config', 'config_tax_default', 'shipping', 0),

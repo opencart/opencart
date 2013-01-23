@@ -14,7 +14,7 @@ class ModelTotalKlarnaFee extends Model {
 		} elseif (isset($this->session->data['guest']['payment'])) {
 			$address = $this->session->data['guest']['payment'];
 		}
-		
+        
 		if (!isset($address)) {
 			$status = false;
 		} elseif (!isset($this->session->data['payment_method']['code']) || $this->session->data['payment_method']['code'] != 'klarna_invoice') {
@@ -23,7 +23,7 @@ class ModelTotalKlarnaFee extends Model {
 			$status = false;
 		} elseif (!$klarna_fee[$address['iso_code_3']]['status']) {
 			$status = false;
-		} elseif ($this->cart->getSubTotal() < $klarna_fee[$address['iso_code_3']]['total']) {
+		} elseif ($this->cart->getSubTotal() > $klarna_fee[$address['iso_code_3']]['total']) {
 			$status = false;
 		}
 		

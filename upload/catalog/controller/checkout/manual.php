@@ -22,7 +22,6 @@ class ControllerCheckoutManual extends Controller {
 			unset($this->session->data['reward']);
 			unset($this->session->data['voucher']);
 			unset($this->session->data['vouchers']);
-            unset($this->session->data['klarna']);
 
 			// Settings
 			$this->load->model('setting/setting');
@@ -575,7 +574,6 @@ class ControllerCheckoutManual extends Controller {
 			unset($this->session->data['reward']);
 			unset($this->session->data['voucher']);
 			unset($this->session->data['vouchers']);
-            unset($this->session->data['klarna']);
 		} else {
       		$json['error']['warning'] = $this->language->get('error_permission');
 		}

@@ -3,7 +3,7 @@ class ControllerPaymentGoogleCheckout extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('payment/google_checkout');
+		$this->language->load('payment/google_checkout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		

@@ -24,7 +24,7 @@ textarea {
 	padding: 2px;
 }
 a, a:visited {
-	color: #016FA7;
+	color: #003366;
 	text-decoration: underline;
 	cursor: pointer;
 }
@@ -345,7 +345,7 @@ a.button, .list a.button {
 	padding-right: 15px;
 	background: url('../image/desc.png') right center no-repeat;
 }
-.list tr.filter td {
+.list tr.filter td, .list tr:hover.filter td {
 	padding: 5px;
 	background: #E7EFEF;
 }

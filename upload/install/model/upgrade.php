@@ -335,17 +335,11 @@ class ModelUpgrade extends Model {
 				$language_query = $this->db->query("SELECT `language_id` FROM `" . DB_PREFIX . "language`");
 			
 				foreach ($language_query->rows as $language) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group_description` SET `customer_group_id` = '" . (int)$customer_group['customer_group_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `name` = '" . $this->db->escape($customer_group['name']) . "'");
+					$this->db->query("REPLACE INTO `" . DB_PREFIX . "customer_group_description` SET `customer_group_id` = '" . (int)$customer_group['customer_group_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `name` = '" . $this->db->escape($customer_group['name']) . "'");
 				}
 			}
 			
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_group` DROP `name`");	
-		}
-		
-		// Customer blacklist table rename to ban ip
-		if (isset($table_old_data[DB_PREFIX . 'customer_ip_blacklist'])) {
-			$this->db->query("RENAME TABLE `" . DB_PREFIX . "customer_ip_blacklist` TO `" . DB_PREFIX . "customer_ban_ip`");
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_ban_ip` CHANGE `customer_ip_blacklist_id`  `customer_ban_ip_id` INT(11) NOT NULL AUTO_INCREMENT");
 		}
 
 		// Sort the categories to take advantage of the nested set model

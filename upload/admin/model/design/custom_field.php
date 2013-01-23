@@ -1,5 +1,5 @@
 <?php
-class ModelSaleCustomField extends Model {
+class ModelDesignCustomField extends Model {
 	public function addCustomField($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', value = '" . $this->db->escape($data['value']) . "', required = '" . (int)$data['required'] . "', location = '" . $this->db->escape($data['location']) . "', position = '" . $this->db->escape($data['position']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
 		

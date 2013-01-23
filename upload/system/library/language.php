@@ -37,7 +37,7 @@ class Language {
 			return $this->data;
 		} else {
 			trigger_error('Error: Could not load language ' . $filename . '!');
-			exit();
+		//	exit();
 		}
   	}
 }

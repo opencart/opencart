@@ -335,7 +335,7 @@ class ModelUpgrade extends Model {
 				$language_query = $this->db->query("SELECT `language_id` FROM `" . DB_PREFIX . "language`");
 			
 				foreach ($language_query->rows as $language) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group_description` SET `customer_group_id` = '" . (int)$customer_group['customer_group_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `name` = '" . $this->db->escape($customer_group['name']) . "'");
+					$this->db->query("REPLACE INTO `" . DB_PREFIX . "customer_group_description` SET `customer_group_id` = '" . (int)$customer_group['customer_group_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `name` = '" . $this->db->escape($customer_group['name']) . "'");
 				}
 			}
 			

@@ -8,7 +8,7 @@ class ControllerUpgrade extends Controller {
 
 			$this->model_upgrade->mysql();
 			
-			//$this->redirect($this->url->link('upgrade/success'));
+			$this->redirect($this->url->link('upgrade/success'));
 		}		
 		
 		if (isset($this->error['warning'])) {

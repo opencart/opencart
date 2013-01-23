@@ -95,15 +95,12 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				$sort_order[$key] = $value['sort_order'];
                 
                 if (isset($klarna_tax[$value['code']])) {
-                    $total_data[$key]['klarna_tax'] = $klarna_tax[$value['code']];
-                    
                     if ($klarna_tax[$value['code']]) {
                         $total_data[$key]['tax_rate'] = abs($klarna_tax[$value['code']] / $value['value'] * 100);
                     } else {
                         $total_data[$key]['tax_rate'] = 0;
                     }
                 } else {
-                    $total_data[$key]['klarna_tax'] = '';
                     $total_data[$key]['tax_rate'] = '0';
                 }
 			}

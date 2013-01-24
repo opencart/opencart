@@ -338,6 +338,21 @@ class ControllerSaleCustomField extends Controller {
 		$this->data['text_payment_address'] = $this->language->get('text_payment_address');
 		$this->data['text_shipping_address'] = $this->language->get('text_shipping_address');
 		
+		$this->data['text_begining'] = $this->language->get('text_begining');
+		$this->data['text_firstname'] = $this->language->get('text_firstname');
+		$this->data['text_lastname'] = $this->language->get('text_lastname');
+		$this->data['text_email'] = $this->language->get('text_email');
+		$this->data['text_telephone'] = $this->language->get('text_telephone');
+		$this->data['text_fax'] = $this->language->get('text_fax');
+		$this->data['text_company'] = $this->language->get('text_company');
+		$this->data['text_customer_group'] = $this->language->get('text_customer_group');
+		$this->data['text_address_1'] = $this->language->get('text_address_1');
+		$this->data['text_address_2'] = $this->language->get('text_address_2');
+		$this->data['text_city'] = $this->language->get('text_city');
+		$this->data['text_postcode'] = $this->language->get('text_postcode');
+		$this->data['text_country'] = $this->language->get('text_country');
+		$this->data['text_zone'] = $this->language->get('text_zone');	
+		
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_type'] = $this->language->get('entry_type');
 		$this->data['entry_value'] = $this->language->get('entry_value');
@@ -440,27 +455,19 @@ class ControllerSaleCustomField extends Controller {
 		} else {
 			$this->data['value'] = '';
 		}
-		
-		if (isset($this->request->post['customer_group'])) {
-			$this->data['customer_group'] = $this->request->post['customer_group'];
-		} elseif ($this->config->get('config_customer_group_display')) {
-			$this->data['customer_group'] = $this->config->get('config_customer_group');	
+				
+		if (isset($this->request->post['custom_field_customer_group'])) {
+			$this->data['custom_field_customer_group'] = $this->request->post['custom_field_customer_group'];
+		} elseif (isset($this->request->get['custom_field_id'])) {
+			$this->data['custom_field_customer_group'] = $this->model_sale_custom_field->getCustomFieldCustomerGroups($this->request->get['custom_field_id']);
 		} else {
-			$this->data['customer_group'] = array();			
+			$this->data['custom_field_customer_group'] = array();
 		}
 		
 		$this->load->model('sale/customer_group');
 		
-		$this->data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();		
-				
-		if (isset($this->request->post['required'])) {
-			$this->data['required'] = $this->request->post['required'];
-		} elseif (!empty($custom_field_info)) {
-			$this->data['required'] = $custom_field_info['required'];
-		} else {
-			$this->data['required'] = '';
-		}
-						
+		$this->data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();	
+								
 		if (isset($this->request->post['location'])) {
 			$this->data['location'] = $this->request->post['location'];
 		} elseif (!empty($custom_field_info)) {

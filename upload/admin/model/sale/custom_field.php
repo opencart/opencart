@@ -8,7 +8,11 @@ class ModelSaleCustomField extends Model {
 		foreach ($data['custom_field_description'] as $language_id => $value) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_description SET custom_field_id = '" . (int)$custom_field_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
-
+		
+		foreach ($data['custom_field_description'] as $language_id => $value) {
+		//	$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_description SET custom_field_id = '" . (int)$custom_field_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+		}
+		
 		if (isset($data['custom_field_value'])) {
 			foreach ($data['custom_field_value'] as $custom_field_value) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_value SET custom_field_id = '" . (int)$custom_field_id . "', sort_order = '" . (int)$custom_field_value['sort_order'] . "'");
@@ -54,6 +58,7 @@ class ModelSaleCustomField extends Model {
 	public function deleteCustomField($custom_field_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field` WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_description` WHERE custom_field_id = '" . (int)$custom_field_id . "'");	
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_to_customer_group` WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_value` WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_value_description` WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 	}
@@ -119,6 +124,12 @@ class ModelSaleCustomField extends Model {
 		return $custom_field_data;
 	}
 	
+	public function getCustomFieldCustomerGroups($custom_field_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE custom_field_id = '" . (int)$custom_field_id . "'");
+		
+		return $query->rows;
+	}
+		
 	public function getCustomFieldValue($custom_field_value_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value cfv LEFT JOIN " . DB_PREFIX . "custom_field_value_description cfvd ON (cfv.custom_field_value_id = cfvd.custom_field_value_id) WHERE cfv.custom_field_value_id = '" . (int)$custom_field_value_id . "' AND cfvd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 		

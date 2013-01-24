@@ -1062,10 +1062,6 @@ DROP TABLE IF EXISTS `oc_customer_group`;
 CREATE TABLE `oc_customer_group` (
   `customer_group_id` int(11) NOT NULL AUTO_INCREMENT,
   `approval` int(1) NOT NULL,
-  `company_id_display` int(1) NOT NULL,
-  `company_id_required` int(1) NOT NULL,
-  `tax_id_display` int(1) NOT NULL,
-  `tax_id_required` int(1) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`customer_group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -1074,8 +1070,8 @@ CREATE TABLE `oc_customer_group` (
 -- Dumping data for table `oc_customer_group`
 --
 
-INSERT INTO `oc_customer_group` (`customer_group_id`, `approval`, `company_id_display`, `company_id_required`, `tax_id_display`, `tax_id_required`, `sort_order`) VALUES
-(1, 0, 1, 0, 0, 1, 1);
+INSERT INTO `oc_customer_group` (`customer_group_id`, `approval`, `sort_order`) VALUES
+(1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1221,7 +1217,6 @@ CREATE TABLE `oc_custom_field` (
   `custom_field_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(32) NOT NULL,
   `value` text NOT NULL,
-  `required` tinyint(1) NOT NULL,
   `location` varchar(32) NOT NULL,
   `position` int(3) NOT NULL,
   `sort_order` int(3) NOT NULL,
@@ -1230,6 +1225,24 @@ CREATE TABLE `oc_custom_field` (
 
 --
 -- Dumping data for table `oc_custom_field`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_custom_field_customer_group`
+--
+
+DROP TABLE IF EXISTS `oc_custom_field_customer_group`;
+CREATE TABLE `oc_custom_field_customer_group` (
+  `custom_field_id` int(11) NOT NULL,
+  `customer_group_id` int(11) NOT NULL,
+  `required` tinyint(1) NOT NULL,
+  PRIMARY KEY (`custom_field_id`,`customer_group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_custom_field_customer_group`
 --
 
 -- --------------------------------------------------------

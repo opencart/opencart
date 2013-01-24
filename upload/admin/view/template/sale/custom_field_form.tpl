@@ -25,7 +25,7 @@
               <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
               <?php } ?>
               <?php } ?></td>
-          </tr>       
+          </tr>
           <tr>
             <td><?php echo $entry_type; ?></td>
             <td><select name="type">
@@ -87,21 +87,63 @@
           <tr id="display-value">
             <td><?php echo $entry_value; ?></td>
             <td><input type="text" name="value" value="<?php echo $value; ?>" /></td>
-          </tr> 
+          </tr>
           <tr>
             <td><?php echo $entry_required; ?></td>
             <td><?php if ($required) { ?>
-                <input type="radio" name="required" value="1" checked="checked" />
-                <?php echo $text_yes; ?>
-                <input type="radio" name="required" value="0" />
-                <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="required" value="1" />
-                <?php echo $text_yes; ?>
-                <input type="radio" name="required" value="0" checked="checked" />
-                <?php echo $text_no; ?>
+              <input type="radio" name="required" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="required" value="0" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="required" value="1" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="required" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } ?></td>
+          </tr>
+            <tr>
+              <td><?php echo $entry_customer_group; ?></td>
+              <td><div class="scrollbox">
+                  <?php $class = 'odd'; ?>
+                  <?php foreach ($customer_groups as $customer_group) { ?>
+                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                  <div class="<?php echo $class; ?>">
+                    <?php if (in_array($customer_group['customer_group_id'], $customer_group)) { ?>
+                    <input type="checkbox" name="config_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+                    <?php echo $customer_group['name']; ?>
+                    <?php } else { ?>
+                    <input type="checkbox" name="config_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
+                    <?php echo $customer_group['name']; ?>
+                    <?php } ?>
+                  </div>
+                  <?php } ?>
+                </div>
+                <?php if ($error_customer_group_display) { ?>
+                <span class="error"><?php echo $error_customer_group_display; ?></span>
                 <?php } ?></td>
-          </tr>              
+            </tr> 
+            <tr>
+              <td><?php echo $entry_required; ?></td>
+              <td><div class="scrollbox">
+                  <?php $class = 'odd'; ?>
+                  <?php foreach ($customer_groups as $customer_group) { ?>
+                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                  <div class="<?php echo $class; ?>">
+                    <?php if (in_array($customer_group['customer_group_id'], $customer_group)) { ?>
+                    <input type="checkbox" name="config_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+                    <?php echo $customer_group['name']; ?>
+                    <?php } else { ?>
+                    <input type="checkbox" name="config_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
+                    <?php echo $customer_group['name']; ?>
+                    <?php } ?>
+                  </div>
+                  <?php } ?>
+                </div>
+                <?php if ($error_customer_group_display) { ?>
+                <span class="error"><?php echo $error_customer_group_display; ?></span>
+                <?php } ?></td>
+            </tr>                     
           <tr>
             <td><?php echo $entry_location; ?></td>
             <td><select name="location">
@@ -119,18 +161,39 @@
                 <option value="payment_address" selected><?php echo $text_payment_address; ?></option>
                 <?php } else { ?>
                 <option value="payment_address"><?php echo $text_payment_address; ?></option>
-                <?php } ?>  
+                <?php } ?>
                 <?php if ($location == 'shipping_address') { ?>
                 <option value="shipping_address" selected><?php echo $text_shipping_address; ?></option>
                 <?php } else { ?>
                 <option value="shipping_address"><?php echo $text_shipping_address; ?></option>
-                <?php } ?>                                
+                <?php } ?>
               </select></td>
-          </tr>    
+          </tr>
           <tr>
             <td><?php echo $entry_position; ?></td>
-            <td><input type="text" name="position" value="<?php echo $position; ?>" /></td>
-          </tr>                              
+            <td><select name="position">
+                <?php if ($position == 'customer') { ?>
+                <option value="customer" selected><?php echo $text_customer; ?></option>
+                <?php } else { ?>
+                <option value="customer"><?php echo $text_customer; ?></option>
+                <?php } ?>
+                <?php if ($position == 'address') { ?>
+                <option value="address" selected><?php echo $text_address; ?></option>
+                <?php } else { ?>
+                <option value="address"><?php echo $text_address; ?></option>
+                <?php } ?>
+                <?php if ($position == 'payment_address') { ?>
+                <option value="payment_address" selected><?php echo $text_payment_address; ?></option>
+                <?php } else { ?>
+                <option value="payment_address"><?php echo $text_payment_address; ?></option>
+                <?php } ?>
+                <?php if ($position == 'shipping_address') { ?>
+                <option value="shipping_address" selected><?php echo $text_shipping_address; ?></option>
+                <?php } else { ?>
+                <option value="shipping_address"><?php echo $text_shipping_address; ?></option>
+                <?php } ?>
+              </select></td>
+          </tr>
           <tr>
             <td><?php echo $entry_sort_order; ?></td>
             <td><input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" /></td>
@@ -219,5 +282,5 @@ function addCustomFieldValue() {
 	
 	custom_field_value_row++;
 }
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

@@ -27,18 +27,17 @@
   <input type="text" name="company" value="<?php echo $company; ?>" class="large-field" />
   <br />
   <br />
-  <div style="display: <?php echo (count($customer_groups) > 1 ? 'table-row' : 'none'); ?>;"> <?php echo $entry_customer_group; ?><br />
-    <?php foreach ($customer_groups as $customer_group) { ?>
-    <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
-    <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" id="customer_group_id<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-    <label for="customer_group_id<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></label>
+  <div style="display: <?php echo (count($customer_groups) > 1 ? 'table-row' : 'none'); ?>;"><?php echo $entry_customer_group; ?><br />
+    <select name="customer_group_id" class="large-field">
+      <?php foreach ($customer_groups as $customer_group) { ?>
+      <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+      <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+      <?php } else { ?>
+      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+      <?php } ?>
+      <?php } ?>
+    </select>
     <br />
-    <?php } else { ?>
-    <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" id="customer_group_id<?php echo $customer_group['customer_group_id']; ?>" />
-    <label for="customer_group_id<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></label>
-    <br />
-    <?php } ?>
-    <?php } ?>
     <br />
   </div>
   <div id="company-id-display"><span id="company-id-required" class="required">*</span> <?php echo $entry_company_id; ?><br />
@@ -106,7 +105,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#payment-address input[name=\'customer_group_id\']:checked').live('change', function() {
+$('#payment-address select[name=\'customer_group_id\']').live('change', function() {
 	var customer_group = [];
 	
 <?php foreach ($customer_groups as $customer_group) { ?>

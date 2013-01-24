@@ -99,6 +99,7 @@ $(document).ready(function(){
             <ul>
               <li><a href="<?php echo $customer; ?>"><?php echo $text_customer; ?></a></li>
               <li><a href="<?php echo $customer_group; ?>"><?php echo $text_customer_group; ?></a></li>
+              <li><a href="<?php echo $custom_field; ?>"><?php echo $text_custom_field; ?></a></li>              
               <li><a href="<?php echo $customer_ban_ip; ?>"><?php echo $text_customer_ban_ip; ?></a></li>
             </ul>
           </li>
@@ -120,7 +121,6 @@ $(document).ready(function(){
             <ul>
               <li><a href="<?php echo $layout; ?>"><?php echo $text_layout; ?></a></li>
               <li><a href="<?php echo $banner; ?>"><?php echo $text_banner; ?></a></li>
-              <li><a href="<?php echo $custom_field; ?>"><?php echo $text_custom_field; ?></a></li>
             </ul>
           </li>
           <li><a class="parent"><?php echo $text_users; ?></a>

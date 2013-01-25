@@ -456,7 +456,11 @@ class ControllerPaymentKlarnaAccount extends Controller {
 					$pno = sprintf('%02d', (int)$this->request->post['pno_day']) . sprintf('%02d', (int)$this->request->post['pno_month']) . (int)$this->request->post['pno_year'];
 				}
 				
-				$pclass = (int)$this->request->post['code'];
+                if (isset($this->request->post['code'])) {
+                    $pclass = (int) $this->request->post['code'];
+                } else {
+                    $pclass = '';
+                }
 				
 				if (isset($this->request->post['gender']) && ($order_info['payment_iso_code_3'] == 'DEU' || $order_info['payment_iso_code_3'] == 'NLD')) {
 					$gender = (int)$this->request->post['gender'];

@@ -8,7 +8,12 @@
     <table class="radio">
       <?php foreach ($payment_options as $payment_option) { ?>
       <tr class="highlight">
-        <td><input type="radio" name="code" value="<?php echo $payment_option['code']; ?>" id="plan-id<?php echo $payment_option['code']; ?>" /></td>
+        <td><?php if (!isset($code)) { ?>
+          <?php $code = $payment_option['code']; ?>
+          <input type="radio" name="code" value="<?php echo $payment_option['code']; ?>" id="plan-id<?php echo $payment_option['code']; ?>" checked="checked" />
+          <?php } else { ?>
+          <input type="radio" name="code" value="<?php echo $payment_option['code']; ?>" id="plan-id<?php echo $payment_option['code']; ?>" />
+          <?php } ?></td>
         <td><label for="plan-id<?php echo $payment_option['code']; ?>"><?php echo $payment_option['title']; ?></label></td>
         <td style="width: 1%;"><?php if ($iso_code_3 == 'NLD') { ?>
           <img src="catalog/view/theme/default/image/klarna_nld_banner.png" />

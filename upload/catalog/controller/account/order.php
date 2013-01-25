@@ -25,7 +25,7 @@ class ControllerAccountOrder extends Controller {
 					$order_options = $this->model_account_order->getOrderOptions($this->request->get['order_id'], $order_product['order_product_id']);
 							
 					foreach ($order_options as $order_option) {
-						if ($order_option['type'] == 'select' || $order_option['type'] == 'radio') {
+						if ($order_option['type'] == 'select' || $order_option['type'] == 'radio' || $order_option['type'] == 'image') {
 							$option_data[$order_option['product_option_id']] = $order_option['product_option_value_id'];
 						} elseif ($order_option['type'] == 'checkbox') {
 							$option_data[$order_option['product_option_id']][] = $order_option['product_option_value_id'];

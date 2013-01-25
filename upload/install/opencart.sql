@@ -7464,7 +7464,10 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (4029, 248, 'NU', 'Upper Nile', 1),
 (4030, 248, 'WR', 'Warrap', 1),
 (4031, 248, 'BW', 'Western Bahr el-Ghazal', 1),
-(4032, 248, 'EW', 'Western Equatoria', 1);
+(4032, 248, 'EW', 'Western Equatoria', 1),
+(4033, 222, 'GGY', 'Guernsey', 1),
+(4034, 222, 'JEY', 'Jersey', 1);
+
 -- --------------------------------------------------------
 
 --

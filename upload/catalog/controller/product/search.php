@@ -22,7 +22,7 @@ class ControllerProductSearch extends Controller {
 		} else {
 			$tag = '';
 		} 
-				
+			
 		if (isset($this->request->get['description'])) {
 			$description = $this->request->get['description'];
 		} else {
@@ -200,7 +200,7 @@ class ControllerProductSearch extends Controller {
 		
 		$this->data['products'] = array();
 		
-		if (isset($this->request->get['search']) || isset($this->request->get['filter_tag'])) {
+		if (isset($this->request->get['search']) || isset($this->request->get['tag'])) {
 			$data = array(
 				'filter_name'         => $search, 
 				'filter_tag'          => $tag, 
@@ -397,7 +397,7 @@ class ControllerProductSearch extends Controller {
 			}
 			
 			if (isset($this->request->get['tag'])) {
-				$url .= '&tag=' . urlencode(html_entity_decode($this->request->get['filter_tag'], ENT_QUOTES, 'UTF-8'));
+				$url .= '&tag=' . urlencode(html_entity_decode($this->request->get['tag'], ENT_QUOTES, 'UTF-8'));
 			}
 					
 			if (isset($this->request->get['description'])) {

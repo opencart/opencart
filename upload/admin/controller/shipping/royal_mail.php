@@ -3,7 +3,7 @@ class ControllerShippingRoyalMail extends Controller {
 	private $error = array(); 
 	
 	public function index() {   
-		$this->load->language('shipping/royal_mail');
+		$this->language->load('shipping/royal_mail');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -414,12 +414,20 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$this->data['royal_mail_tax_class_id'] = $this->config->get('royal_mail_tax_class_id');
 		}
+		
+		$this->load->model('localisation/tax_class');
+		
+		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
 		if (isset($this->request->post['royal_mail_geo_zone_id'])) {
 			$this->data['royal_mail_geo_zone_id'] = $this->request->post['royal_mail_geo_zone_id'];
 		} else {
 			$this->data['royal_mail_geo_zone_id'] = $this->config->get('royal_mail_geo_zone_id');
 		}
+		
+		$this->load->model('localisation/geo_zone');
+		
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 		
 		if (isset($this->request->post['royal_mail_status'])) {
 			$this->data['royal_mail_status'] = $this->request->post['royal_mail_status'];
@@ -433,14 +441,6 @@ class ControllerShippingRoyalMail extends Controller {
 			$this->data['royal_mail_sort_order'] = $this->config->get('royal_mail_sort_order');
 		}				
 
-		$this->load->model('localisation/tax_class');
-		
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
-		
-		$this->load->model('localisation/geo_zone');
-		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-
 		$this->template = 'shipping/royal_mail.tpl';
 		$this->children = array(
 			'common/header',
@@ -450,7 +450,7 @@ class ControllerShippingRoyalMail extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'shipping/royal_mail')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

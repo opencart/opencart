@@ -3,7 +3,7 @@ class ControllerPaymentTwoCheckout extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('payment/twocheckout');
+		$this->language->load('payment/twocheckout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -144,7 +144,7 @@ class ControllerPaymentTwoCheckout extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/twocheckout')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

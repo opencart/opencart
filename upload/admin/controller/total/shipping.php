@@ -3,13 +3,13 @@ class ControllerTotalShipping extends Controller {
 	private $error = array(); 
 	 
 	public function index() { 
-		$this->load->language('total/shipping');
+		$this->language->load('total/shipping');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/setting');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('shipping', $this->request->post);
 		
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -86,7 +86,7 @@ class ControllerTotalShipping extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'total/shipping')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

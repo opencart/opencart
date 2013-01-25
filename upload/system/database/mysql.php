@@ -47,7 +47,11 @@ final class MySQL {
 					return true;
 				}
 			} else {
-				trigger_error('Error: ' . mysql_error($this->link) . '<br />Error No: ' . mysql_errno($this->link) . '<br />' . $sql);
+        		$trace = debug_backtrace();
+    			$caller = array_shift($trace);
+    			$caller = array_shift($trace);
+    			
+    			trigger_error('Error: ' . mysql_error($this->link) . '<br />Error No: ' . mysql_errno($this->link) . '<br /> Error in: <b>' . $caller['file'] . '</b> line <b>' . $caller['line'] . '</b> <br/>' . $sql);
 				exit();
 			}
 		}

@@ -6,7 +6,11 @@ class ControllerCommonForgotten extends Controller {
 		if ($this->user->isLogged()) {
 			$this->redirect($this->url->link('common/home', '', 'SSL'));
 		}
-
+		
+		if (!$this->config->get('config_password')) {
+			$this->redirect($this->url->link('common/login', '', 'SSL'));
+		}
+		
 		$this->language->load('common/forgotten');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -96,7 +100,7 @@ class ControllerCommonForgotten extends Controller {
 		$this->response->setOutput($this->render());		
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!isset($this->request->post['email'])) {
 			$this->error['warning'] = $this->language->get('error_email');
 		} elseif (!$this->model_user_user->getTotalUsersByEmail($this->request->post['email'])) {

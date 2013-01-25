@@ -1,9 +1,9 @@
 <?php
-class ControllerModulespecial extends Controller {
+class ControllerModuleSpecial extends Controller {
 	private $error = array(); 
 	
 	public function index() {   
-		$this->load->language('module/special');
+		$this->language->load('module/special');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -97,7 +97,7 @@ class ControllerModulespecial extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'module/special')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

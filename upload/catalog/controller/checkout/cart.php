@@ -80,7 +80,9 @@ class ControllerCheckoutCart extends Controller {
 		}
 		
 		$this->document->setTitle($this->language->get('heading_title'));
-
+		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
+		$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
+			
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
@@ -382,6 +384,7 @@ class ControllerCheckoutCart extends Controller {
 			}
 			
 			$this->children = array(
+				'payment/google_checkout',
 				'common/column_left',
 				'common/column_right',
 				'common/content_bottom',
@@ -421,7 +424,7 @@ class ControllerCheckoutCart extends Controller {
     	}
   	}
 	
-	private function validateCoupon() {
+	protected function validateCoupon() {
 		$this->load->model('checkout/coupon');
 				
 		$coupon_info = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);			
@@ -437,7 +440,7 @@ class ControllerCheckoutCart extends Controller {
 		}		
 	}
 	
-	private function validateVoucher() {
+	protected function validateVoucher() {
 		$this->load->model('checkout/voucher');
 				
 		$voucher_info = $this->model_checkout_voucher->getVoucher($this->request->post['voucher']);			
@@ -453,7 +456,7 @@ class ControllerCheckoutCart extends Controller {
 		}		
 	}
 	
-	private function validateReward() {
+	protected function validateReward() {
 		$points = $this->customer->getRewardPoints();
 		
 		$points_total = 0;
@@ -483,7 +486,7 @@ class ControllerCheckoutCart extends Controller {
 		}		
 	}
 	
-	private function validateShipping() {
+	protected function validateShipping() {
 		if (!empty($this->request->post['shipping_method'])) {
 			$shipping = explode('.', $this->request->post['shipping_method']);
 					
@@ -536,10 +539,6 @@ class ControllerCheckoutCart extends Controller {
 					$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
 			}
-			
-			//if ($product_info['minimum'] > $this->request->post['quantity']) {
-			//	$json['error']['option'] = sprintf($this->language->get('error_minimum'), $product_info['name']);
-			//}
 			
 			if (!$json) {
 				$this->cart->add($this->request->post['product_id'], $quantity, $option);
@@ -613,7 +612,7 @@ class ControllerCheckoutCart extends Controller {
 			$json['error']['country'] = $this->language->get('error_country');
 		}
 		
-		if ($this->request->post['zone_id'] == '') {
+		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
 			$json['error']['zone'] = $this->language->get('error_zone');
 		}
 			

@@ -3,7 +3,7 @@ class ControllerPaymentPPPro extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('payment/pp_pro');
+		$this->language->load('payment/pp_pro');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -166,7 +166,7 @@ class ControllerPaymentPPPro extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/pp_pro')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

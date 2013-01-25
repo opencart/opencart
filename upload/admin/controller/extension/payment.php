@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPayment extends Controller {
 	public function index() {
-		$this->load->language('extension/payment');
+		$this->language->load('extension/payment');
 		 
 		$this->document->setTitle($this->language->get('heading_title')); 
 
@@ -65,7 +65,7 @@ class ControllerExtensionPayment extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 				
-				$this->load->language('payment/' . $extension);
+				$this->language->load('payment/' . $extension);
 	
 				$action = array();
 				
@@ -114,7 +114,7 @@ class ControllerExtensionPayment extends Controller {
 	}
 	
 	public function install() {
-		$this->load->language('extension/payment');
+		$this->language->load('extension/payment');
 		
 		if (!$this->user->hasPermission('modify', 'extension/payment')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 
@@ -144,7 +144,7 @@ class ControllerExtensionPayment extends Controller {
 	}
 	
 	public function uninstall() {
-		$this->load->language('extension/payment');
+		$this->language->load('extension/payment');
 		
 		if (!$this->user->hasPermission('modify', 'extension/payment')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 

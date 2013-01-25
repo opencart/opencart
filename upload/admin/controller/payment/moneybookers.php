@@ -3,7 +3,7 @@ class ControllerPaymentMoneyBookers extends Controller {
 	private $error = array(); 
 	
 	public function index() {
-		$this->load->language('payment/moneybookers');
+		$this->language->load('payment/moneybookers');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -171,7 +171,7 @@ class ControllerPaymentMoneyBookers extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/moneybookers')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

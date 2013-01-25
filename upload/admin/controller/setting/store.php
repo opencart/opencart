@@ -3,7 +3,7 @@ class ControllerSettingStore extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('setting/store');
+		$this->language->load('setting/store');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		 
@@ -13,7 +13,7 @@ class ControllerSettingStore extends Controller {
 	}
 	      
   	public function insert() {
-    	$this->load->language('setting/store');
+    	$this->language->load('setting/store');
 
     	$this->document->setTitle($this->language->get('heading_title')); 
 		
@@ -35,7 +35,7 @@ class ControllerSettingStore extends Controller {
   	}
 
   	public function update() {
-    	$this->load->language('setting/store');
+    	$this->language->load('setting/store');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -57,7 +57,7 @@ class ControllerSettingStore extends Controller {
   	}
 
   	public function delete() {
-    	$this->load->language('setting/store');
+    	$this->language->load('setting/store');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -80,7 +80,7 @@ class ControllerSettingStore extends Controller {
     	$this->getList();
   	}
 	
-	private function getList() {
+	protected function getList() {
 		$url = '';
 			
 		if (isset($this->request->get['page'])) {
@@ -869,7 +869,7 @@ class ControllerSettingStore extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validateForm() {
+	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'setting/store')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -957,7 +957,7 @@ class ControllerSettingStore extends Controller {
 		}
 	}
 
-	private function validateDelete() {
+	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'setting/store')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

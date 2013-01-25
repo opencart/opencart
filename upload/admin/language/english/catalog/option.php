@@ -17,8 +17,8 @@ $_['text_date']           = 'Date';
 $_['text_datetime']       = 'Date &amp; Time';
 $_['text_time']           = 'Time';
 $_['text_image_manager']  = 'Image Manager';
-$_['text_browse']         = 'Browse Files';
-$_['text_clear']          = 'Clear Image';
+$_['text_browse']         = 'Browse';
+$_['text_clear']          = 'Clear';
 
 // Column
 $_['column_name']         = 'Option Name';
@@ -28,7 +28,7 @@ $_['column_action']       = 'Action';
 // Entry
 $_['entry_name']         = 'Option Name:';
 $_['entry_type']         = 'Type:';
-$_['entry_value']        = 'Option Value Name:';
+$_['entry_option_value'] = 'Option Value Name:';
 $_['entry_image']        = 'Image:';
 $_['entry_sort_order']   = 'Sort Order:';
 

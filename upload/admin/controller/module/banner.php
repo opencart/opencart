@@ -3,7 +3,7 @@ class ControllerModuleBanner extends Controller {
 	private $error = array(); 
 	
 	public function index() {   
-		$this->load->language('module/banner');
+		$this->language->load('module/banner');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -25,7 +25,7 @@ class ControllerModuleBanner extends Controller {
 		$this->data['text_content_bottom'] = $this->language->get('text_content_bottom');		
 		$this->data['text_column_left'] = $this->language->get('text_column_left');
 		$this->data['text_column_right'] = $this->language->get('text_column_right');
-		
+
 		$this->data['entry_banner'] = $this->language->get('entry_banner');
 		$this->data['entry_dimension'] = $this->language->get('entry_dimension'); 
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
@@ -99,7 +99,7 @@ class ControllerModuleBanner extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'module/banner')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

@@ -24,7 +24,7 @@ class ControllerCommonMaintenance extends Controller {
     }
 		
 	public function info() {
-        $this->load->language('common/maintenance');
+        $this->language->load('common/maintenance');
         
         $this->document->setTitle($this->language->get('heading_title'));
         

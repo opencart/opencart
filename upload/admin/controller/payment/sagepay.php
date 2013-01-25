@@ -3,7 +3,7 @@ class ControllerPaymentSagepay extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('payment/sagepay');
+		$this->language->load('payment/sagepay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -155,7 +155,7 @@ class ControllerPaymentSagepay extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/sagepay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

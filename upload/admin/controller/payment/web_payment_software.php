@@ -3,13 +3,13 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('payment/web_payment_software');
+		$this->language->load('payment/web_payment_software');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/setting');
 			
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('web_payment_software', $this->request->post);				
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -153,7 +153,7 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/web_payment_software')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

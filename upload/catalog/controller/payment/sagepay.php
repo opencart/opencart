@@ -186,7 +186,7 @@ class ControllerPaymentSagepay extends Controller {
 		}
 	}	 
 	
-	private function simpleXor($string, $password) {
+	protected function simpleXor($string, $password) {
 		$data = array();
 
 		for ($i = 0; $i < strlen($password); $i++) {
@@ -202,7 +202,7 @@ class ControllerPaymentSagepay extends Controller {
 		return $output;		
 	}
 	
-	private function getToken($string) {
+	protected function getToken($string) {
   		$tokens = array(
    			'Status',
     		'StatusDetail',

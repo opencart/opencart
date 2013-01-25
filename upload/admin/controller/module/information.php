@@ -3,7 +3,7 @@ class ControllerModuleInformation extends Controller {
 	private $error = array(); 
 	
 	public function index() {   
-		$this->load->language('module/information');
+		$this->language->load('module/information');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -87,7 +87,7 @@ class ControllerModuleInformation extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'module/information')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

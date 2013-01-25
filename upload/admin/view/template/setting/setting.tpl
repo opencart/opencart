@@ -14,7 +14,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/setting.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-store"><?php echo $tab_store; ?></a><a href="#tab-local"><?php echo $tab_local; ?></a><a href="#tab-option"><?php echo $tab_option; ?></a><a href="#tab-image"><?php echo $tab_image; ?></a><a href="#tab-ftp"><?php echo $tab_ftp; ?></a><a href="#tab-mail"><?php echo $tab_mail; ?></a><a href="#tab-fraud"><?php echo $tab_fraud; ?></a><a href="#tab-server"><?php echo $tab_server; ?></a></div>
@@ -261,11 +261,7 @@
                 <input type="radio" name="config_download" value="0" checked="checked" />
                 <?php echo $text_no; ?>
                 <?php } ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_upload_allowed; ?></td>
-              <td><textarea name="config_upload_allowed" cols="40" rows="5"><?php echo $config_upload_allowed; ?></textarea></td>
-            </tr>
+            </tr>          
           </table>
           <h2><?php echo $text_voucher; ?></h2>
           <table class="form">
@@ -901,7 +897,7 @@
             <tr>
               <td><?php echo $entry_robots; ?></td>
               <td><textarea name="config_robots" cols="40" rows="5"><?php echo $config_robots; ?></textarea></td>
-            </tr>                        
+            </tr>                    
             <tr>
               <td><?php echo $entry_seo_url; ?></td>
               <td><?php if ($config_seo_url) { ?>
@@ -917,6 +913,14 @@
                 <?php } ?></td>
             </tr>
             <tr>
+              <td><?php echo $entry_file_extension_allowed; ?></td>
+              <td><textarea name="config_file_extension_allowed" cols="40" rows="5"><?php echo $config_file_extension_allowed; ?></textarea></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_file_mime_allowed; ?></td>
+              <td><textarea name="config_file_mime_allowed" cols="60" rows="5"><?php echo $config_file_mime_allowed; ?></textarea></td>
+            </tr>              
+            <tr>
               <td><?php echo $entry_maintenance; ?></td>
               <td><?php if ($config_maintenance) { ?>
                 <input type="radio" name="config_maintenance" value="1" checked="checked" />
@@ -930,6 +934,20 @@
                 <?php echo $text_no; ?>
                 <?php } ?></td>
             </tr>
+            <tr>
+              <td><?php echo $entry_password; ?></td>
+              <td><?php if ($config_password) { ?>
+                <input type="radio" name="config_password" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_password" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_password" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_password" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?></td>
+            </tr>            
             <tr>
               <td><?php echo $entry_encryption; ?></td>
               <td><input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" />
@@ -995,7 +1013,7 @@ $('select[name=\'config_country_id\']').bind('change', function() {
 		url: 'index.php?route=setting/setting/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
 		},		
 		complete: function() {
 			$('.wait').remove();

@@ -3,7 +3,7 @@ class ControllerFeedGoogleBase extends Controller {
 	private $error = array(); 
 	
 	public function index() {
-		$this->load->language('feed/google_base');
+		$this->language->load('feed/google_base');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -77,7 +77,7 @@ class ControllerFeedGoogleBase extends Controller {
 		$this->response->setOutput($this->render());
 	} 
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'feed/google_base')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

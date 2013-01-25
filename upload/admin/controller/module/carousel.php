@@ -3,7 +3,7 @@ class ControllerModuleCarousel extends Controller {
 	private $error = array(); 
 
 	public function index() {   
-		$this->load->language('module/carousel');
+		$this->language->load('module/carousel');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -101,7 +101,7 @@ class ControllerModuleCarousel extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'module/carousel')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

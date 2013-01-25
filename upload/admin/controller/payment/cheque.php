@@ -3,7 +3,7 @@ class ControllerPaymentCheque extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('payment/cheque');
+		$this->language->load('payment/cheque');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -122,7 +122,7 @@ class ControllerPaymentCheque extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/cheque')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

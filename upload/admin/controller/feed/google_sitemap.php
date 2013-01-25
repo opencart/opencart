@@ -3,7 +3,7 @@ class ControllerFeedGoogleSitemap extends Controller {
 	private $error = array(); 
 	
 	public function index() {
-		$this->load->language('feed/google_sitemap');
+		$this->language->load('feed/google_sitemap');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -77,7 +77,7 @@ class ControllerFeedGoogleSitemap extends Controller {
 		$this->response->setOutput($this->render());
 	} 
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'feed/google_sitemap')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

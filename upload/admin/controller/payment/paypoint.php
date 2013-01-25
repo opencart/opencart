@@ -3,7 +3,7 @@ class ControllerPaymentPayPoint extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/paypoint');
+		$this->language->load('payment/paypoint');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -141,7 +141,7 @@ class ControllerPaymentPayPoint extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/paypoint')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

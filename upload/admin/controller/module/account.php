@@ -3,7 +3,7 @@ class ControllerModuleAccount extends Controller {
 	private $error = array(); 
 	
 	public function index() {   
-		$this->load->language('module/account');
+		$this->language->load('module/account');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -87,7 +87,7 @@ class ControllerModuleAccount extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'module/account')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

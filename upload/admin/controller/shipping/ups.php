@@ -3,7 +3,7 @@ class ControllerShippingUPS extends Controller {
 	private $error = array(); 
 	
 	public function index() {
-		$this->load->language('shipping/ups');
+		$this->language->load('shipping/ups');
 			
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -765,7 +765,7 @@ class ControllerShippingUPS extends Controller {
  		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'shipping/ups')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

@@ -3,14 +3,13 @@ class ControllerSettingSetting extends Controller {
 	private $error = array();
  
 	public function index() {
-		$this->load->language('setting/setting'); 
+		$this->language->load('setting/setting'); 
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/setting');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			
 			$this->model_setting_setting->editSetting('config', $this->request->post);
 
 			if ($this->config->get('config_currency_auto')) {
@@ -70,7 +69,6 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_product_count'] = $this->language->get('entry_product_count');
 		$this->data['entry_review'] = $this->language->get('entry_review');
 		$this->data['entry_download'] = $this->language->get('entry_download');
-		$this->data['entry_upload_allowed'] = $this->language->get('entry_upload_allowed');
 		$this->data['entry_voucher_min'] = $this->language->get('entry_voucher_min');
 		$this->data['entry_voucher_max'] = $this->language->get('entry_voucher_max');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
@@ -131,7 +129,10 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_secure'] = $this->language->get('entry_secure');
 		$this->data['entry_shared'] = $this->language->get('entry_shared');
 		$this->data['entry_robots'] = $this->language->get('entry_robots');
+		$this->data['entry_file_extension_allowed'] = $this->language->get('entry_file_extension_allowed');
+		$this->data['entry_file_mime_allowed'] = $this->language->get('entry_file_mime_allowed');		
 		$this->data['entry_maintenance'] = $this->language->get('entry_maintenance');
+		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_encryption'] = $this->language->get('entry_encryption');
 		$this->data['entry_seo_url'] = $this->language->get('entry_seo_url');
 		$this->data['entry_compression'] = $this->language->get('entry_compression');
@@ -512,12 +513,6 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_download'] = $this->config->get('config_download');
 		}
-		
-		if (isset($this->request->post['config_upload_allowed'])) {
-			$this->data['config_upload_allowed'] = $this->request->post['config_upload_allowed'];
-		} else {
-			$this->data['config_upload_allowed'] = $this->config->get('config_upload_allowed');
-		}		
 		
 		if (isset($this->request->post['config_voucher_min'])) {
 			$this->data['config_voucher_min'] = $this->request->post['config_voucher_min'];
@@ -991,12 +986,30 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_seo_url'] = $this->config->get('config_seo_url');
 		}
 		
+		if (isset($this->request->post['config_file_extension_allowed'])) {
+			$this->data['config_file_extension_allowed'] = $this->request->post['config_file_extension_allowed'];
+		} else {
+			$this->data['config_file_extension_allowed'] = $this->config->get('config_file_extension_allowed');
+		}
+		
+		if (isset($this->request->post['config_file_mime_allowed'])) {
+			$this->data['config_file_mime_allowed'] = $this->request->post['config_file_mime_allowed'];
+		} else {
+			$this->data['config_file_mime_allowed'] = $this->config->get('config_file_mime_allowed');
+		}		
+				
 		if (isset($this->request->post['config_maintenance'])) {
 			$this->data['config_maintenance'] = $this->request->post['config_maintenance'];
 		} else {
 			$this->data['config_maintenance'] = $this->config->get('config_maintenance');
 		}
 		
+		if (isset($this->request->post['config_password'])) {
+			$this->data['config_password'] = $this->request->post['config_password'];
+		} else {
+			$this->data['config_password'] = $this->config->get('config_password');
+		}
+				
 		if (isset($this->request->post['config_encryption'])) {
 			$this->data['config_encryption'] = $this->request->post['config_encryption'];
 		} else {
@@ -1042,7 +1055,7 @@ class ControllerSettingSetting extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'setting/setting')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

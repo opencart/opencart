@@ -22,7 +22,7 @@
   <?php echo $content_bottom; ?></div>
 <script type="text/javascript"><!--
 $('input[name=\'product\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=affiliate/tracking/autocomplete&filter_name=' +  encodeURIComponent(request.term),

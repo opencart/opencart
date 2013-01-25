@@ -3,7 +3,7 @@ class ControllerToolErrorLog extends Controller {
 	private $error = array();
 	
 	public function index() {		
-		$this->load->language('tool/error_log');
+		$this->language->load('tool/error_log');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -53,7 +53,7 @@ class ControllerToolErrorLog extends Controller {
 	}
 	
 	public function clear() {
-		$this->load->language('tool/error_log');
+		$this->language->load('tool/error_log');
 		
 		$file = DIR_LOGS . $this->config->get('config_error_filename');
 		

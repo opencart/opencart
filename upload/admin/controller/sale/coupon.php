@@ -3,7 +3,7 @@ class ControllerSaleCoupon extends Controller {
 	private $error = array();
      
   	public function index() {
-		$this->load->language('sale/coupon');
+		$this->language->load('sale/coupon');
     	
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -13,7 +13,7 @@ class ControllerSaleCoupon extends Controller {
   	}
   
   	public function insert() {
-    	$this->load->language('sale/coupon');
+    	$this->language->load('sale/coupon');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -45,7 +45,7 @@ class ControllerSaleCoupon extends Controller {
   	}
 
   	public function update() {
-    	$this->load->language('sale/coupon');
+    	$this->language->load('sale/coupon');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -77,7 +77,7 @@ class ControllerSaleCoupon extends Controller {
   	}
 
   	public function delete() {
-    	$this->load->language('sale/coupon');
+    	$this->language->load('sale/coupon');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -110,7 +110,7 @@ class ControllerSaleCoupon extends Controller {
     	$this->getList();
   	}
 
-  	private function getList() {
+  	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -273,7 +273,7 @@ class ControllerSaleCoupon extends Controller {
 		$this->response->setOutput($this->render());
   	}
 
-  	private function getForm() {
+  	protected function getForm() {
     	$this->data['heading_title'] = $this->language->get('heading_title');
 
     	$this->data['text_enabled'] = $this->language->get('text_enabled');
@@ -303,7 +303,7 @@ class ControllerSaleCoupon extends Controller {
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
-		$this->data['tab_coupon_history'] = $this->language->get('tab_coupon_history');
+		$this->data['tab_history'] = $this->language->get('tab_history');
 
 		$this->data['token'] = $this->session->data['token'];
 	
@@ -478,23 +478,9 @@ class ControllerSaleCoupon extends Controller {
 			$category_info = $this->model_catalog_category->getCategory($category_id);
 			
 			if ($category_info) {
-				$path_data = array();
-				
-				$parts = $this->model_catalog_category->getPath($category_info['parent_id']);
-				
-				foreach ($parts as $part) {
-					$path_data[] = $part['name'];
-				}
-	
-				if ($path_data) {
-					$name = implode(' > ', $path_data) . ' > ' .  $category_info['name'];
-				} else {
-					$name = $category_info['name'];
-				}				
-				
 				$this->data['coupon_category'][] = array(
 					'category_id' => $category_info['category_id'],
-					'name'        => $name
+					'name'        => ($category_info['path'] ? $category_info['path'] . ' &gt; ' : '') . $category_info['name']
 				);
 			}
 		}
@@ -548,7 +534,7 @@ class ControllerSaleCoupon extends Controller {
 		$this->response->setOutput($this->render());		
   	}
 	
-  	private function validateForm() {
+  	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'sale/coupon')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -578,7 +564,7 @@ class ControllerSaleCoupon extends Controller {
     	}
   	}
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
     	if (!$this->user->hasPermission('modify', 'sale/coupon')) {
       		$this->error['warning'] = $this->language->get('error_permission');  
     	}

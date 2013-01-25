@@ -3,7 +3,7 @@ class ControllerPaymentPayza extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('payment/payza');
+		$this->language->load('payment/payza');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -138,7 +138,7 @@ class ControllerPaymentPayza extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/payza')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

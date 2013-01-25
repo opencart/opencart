@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionManager extends Controller {
 	public function index() {
-		$this->load->language('extension/manager');
+		$this->language->load('extension/manager');
 		 
 		$this->document->setTitle($this->language->get('heading_title')); 
 
@@ -35,6 +35,7 @@ class ControllerExtensionManager extends Controller {
 	}
 	
 	public function upload() {
+		/*
 		$this->language->load('extension/manager');
 		
 		$json = array();
@@ -155,6 +156,7 @@ class ControllerExtensionManager extends Controller {
 		}	
 		
 		$this->response->setOutput(json_encode($json));
+		*/
 	}			
 }
 ?>

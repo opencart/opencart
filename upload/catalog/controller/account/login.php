@@ -197,7 +197,7 @@ class ControllerAccountLogin extends Controller {
 		$this->response->setOutput($this->render());
   	}
   
-  	private function validate() {
+  	protected function validate() {
     	if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
       		$this->error['warning'] = $this->language->get('error_login');
     	}

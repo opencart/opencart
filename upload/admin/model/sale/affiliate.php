@@ -24,7 +24,7 @@ class ModelSaleAffiliate extends Model {
 	}
 	
 	public function getAffiliateByEmail($email) {
-		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "affiliate WHERE LCASE(email) = '" . $this->db->escape(strtolower($email)) . "'");
+		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "affiliate WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	
 		return $query->row;
 	}
@@ -35,11 +35,11 @@ class ModelSaleAffiliate extends Model {
 		$implode = array();
 		
 		if (!empty($data['filter_name'])) {
-			$implode[] = "LCASE(CONCAT(a.firstname, ' ', a.lastname)) LIKE '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "%'";
+			$implode[] = "CONCAT(a.firstname, ' ', a.lastname) LIKE '" . $this->db->escape($data['filter_name']) . "%'";
 		}
 
 		if (!empty($data['filter_email'])) {
-			$implode[] = "a.email = '" . $this->db->escape($data['filter_email']) . "'";
+			$implode[] = "LCASE(a.email) = '" . $this->db->escape(utf8_strtolower($data['filter_email'])) . "'";
 		}
 		
 		if (!empty($data['filter_code'])) {
@@ -106,7 +106,7 @@ class ModelSaleAffiliate extends Model {
 		if ($affiliate_info) {
 			$this->db->query("UPDATE " . DB_PREFIX . "affiliate SET approved = '1' WHERE affiliate_id = '" . (int)$affiliate_id . "'");
 			
-			$this->load->language('mail/affiliate');
+			$this->language->load('mail/affiliate');
 	
 			$message  = sprintf($this->language->get('text_approve_welcome'), $this->config->get('config_name')) . "\n\n";
 			$message .= $this->language->get('text_approve_login') . "\n";
@@ -147,7 +147,7 @@ class ModelSaleAffiliate extends Model {
 		}
 		
 		if (!empty($data['filter_email'])) {
-			$implode[] = "email = '" . $this->db->escape($data['filter_email']) . "'";
+			$implode[] = "LCASE(email) = '" . $this->db->escape(utf8_strtolower($data['filter_email'])) . "'";
 		}	
 				
 		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {

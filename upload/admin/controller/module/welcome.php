@@ -3,7 +3,7 @@ class ControllerModuleWelcome extends Controller {
 	private $error = array(); 
 	 
 	public function index() {   
-		$this->load->language('module/welcome');
+		$this->language->load('module/welcome');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -96,7 +96,7 @@ class ControllerModuleWelcome extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'module/welcome')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

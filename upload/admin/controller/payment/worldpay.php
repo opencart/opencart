@@ -3,7 +3,7 @@ class ControllerPaymentWorldPay extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('payment/worldpay');
+		$this->language->load('payment/worldpay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -150,7 +150,7 @@ class ControllerPaymentWorldPay extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/worldpay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

@@ -3,7 +3,7 @@ class ControllerPaymentBankTransfer extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('payment/bank_transfer');
+		$this->language->load('payment/bank_transfer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -135,7 +135,7 @@ class ControllerPaymentBankTransfer extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/bank_transfer')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

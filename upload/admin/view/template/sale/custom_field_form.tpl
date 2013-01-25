@@ -96,7 +96,7 @@
                 <?php foreach ($customer_groups as $customer_group) { ?>
                 <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
                 <div class="<?php echo $class; ?>">
-                  <?php if (in_array($customer_group['customer_group_id'], $custom_field_customer_group['customer_group_id'])) { ?>
+                  <?php if (in_array($customer_group['customer_group_id'], $custom_field_customer_group)) { ?>
                   <input type="checkbox" name="custom_field_customer_group[<?php echo $customer_group_row; ?>][customer_group_id]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
                   <?php echo $customer_group['name']; ?>
                   <?php } else { ?>
@@ -104,6 +104,7 @@
                   <?php echo $customer_group['name']; ?>
                   <?php } ?>
                 </div>
+                <?php $customer_group_row++; ?>
                 <?php } ?>
               </div></td>
           </tr>
@@ -115,7 +116,7 @@
                 <?php foreach ($customer_groups as $customer_group) { ?>
                 <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
                 <div class="<?php echo $class; ?>">
-                  <?php if (in_array($customer_group['customer_group_id'], $custom_field_customer_group['required'])) { ?>
+                  <?php if (in_array($customer_group['customer_group_id'], $custom_field_required)) { ?>
                   <input type="checkbox" name="custom_field_customer_group[<?php echo $customer_group_row; ?>][required]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
                   <?php echo $customer_group['name']; ?>
                   <?php } else { ?>
@@ -123,6 +124,7 @@
                   <?php echo $customer_group['name']; ?>
                   <?php } ?>
                 </div>
+                <?php $customer_group_row++; ?>
                 <?php } ?>
               </div></td>
           </tr>
@@ -155,7 +157,7 @@
             <td><?php echo $entry_position; ?></td>
             <td><select name="position">
                 <?php if ($position == 'begining') { ?>
-                <option value="begining" selected><?php echo $text_beginingr; ?></option>
+                <option value="begining" selected><?php echo $text_begining; ?></option>
                 <?php } else { ?>
                 <option value="begining"><?php echo $text_begining; ?></option>
                 <?php } ?>

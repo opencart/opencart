@@ -439,7 +439,7 @@ class ControllerSaleCustomField extends Controller {
 		} else {
 			$this->data['custom_field_description'] = array();
 		}	
-		
+						
 		if (isset($this->request->post['type'])) {
 			$this->data['type'] = $this->request->post['type'];
 		} elseif (!empty($custom_field_info)) {
@@ -457,11 +457,27 @@ class ControllerSaleCustomField extends Controller {
 		}
 				
 		if (isset($this->request->post['custom_field_customer_group'])) {
-			$this->data['custom_field_customer_group'] = $this->request->post['custom_field_customer_group'];
+			$custom_field_customer_groups = $this->request->post['custom_field_customer_group'];
 		} elseif (isset($this->request->get['custom_field_id'])) {
-			$this->data['custom_field_customer_group'] = $this->model_sale_custom_field->getCustomFieldCustomerGroups($this->request->get['custom_field_id']);
+			$custom_field_customer_groups = $this->model_sale_custom_field->getCustomFieldCustomerGroups($this->request->get['custom_field_id']);
 		} else {
-			$this->data['custom_field_customer_group'] = array();
+			$custom_field_customer_groups = array();
+		}
+		
+		$this->data['custom_field_customer_group'] = array();
+		
+		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
+			if (isset($custom_field_customer_group['customer_group_id'])) {
+				$this->data['custom_field_customer_group'][] = $custom_field_customer_group['customer_group_id'];
+			}
+		}
+		
+		$this->data['custom_field_required'] = array();
+		
+		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
+			if (isset($custom_field_customer_group['required'])) {
+				$this->data['custom_field_required'][] = $custom_field_customer_group['required'];
+			}
 		}
 		
 		$this->load->model('sale/customer_group');

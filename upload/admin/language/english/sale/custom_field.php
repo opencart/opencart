@@ -24,15 +24,15 @@ $_['text_firstname']        = 'First Name';
 $_['text_lastname']         = 'Last Name';
 $_['text_email']            = 'E-Mail';
 $_['text_telephone']        = 'Telephone';
-$_['text_fax']              = 'Fax:';
-$_['text_company']          = 'Company:';
-$_['text_customer_group']   = 'Customer Group:';
-$_['text_address_1']        = 'Address 1:';
-$_['text_address_2']        = 'Address 2:';
-$_['text_city']             = 'City:';
-$_['text_postcode']         = 'Post Code:';
-$_['text_country']          = 'Country:';
-$_['text_zone']             = 'Region / State:';
+$_['text_fax']              = 'Fax';
+$_['text_company']          = 'Company';
+$_['text_customer_group']   = 'Customer Group';
+$_['text_address_1']        = 'Address 1';
+$_['text_address_2']        = 'Address 2';
+$_['text_city']             = 'City';
+$_['text_postcode']         = 'Post Code';
+$_['text_country']          = 'Country';
+$_['text_zone']             = 'Region / State';
 
 // Column
 $_['column_name']           = 'Custom Field Name';
@@ -54,8 +54,7 @@ $_['entry_sort_order']      = 'Sort Order:';
 
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify custom fields!';
-$_['error_name']            = 'Option Name must be between 1 and 128 characters!';
-$_['error_type']            = 'Warning: Option Values required!';
+$_['error_name']            = 'Customer Field Name must be between 1 and 128 characters!';
+$_['error_type']            = 'Warning: Custom Field Values required!';
 $_['error_custom_value']    = 'Custom Value Name must be between 1 and 128 characters!';
-$_['error_product']         = 'Warning: This custom cannot be deleted as it is currently assigned to %s products!';
 ?>

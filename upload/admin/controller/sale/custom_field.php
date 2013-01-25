@@ -572,16 +572,6 @@ class ControllerSaleCustomField extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		$this->load->model('sale/product');
-		
-		foreach ($this->request->post['selected'] as $custom_field_id) {
-			$product_total = $this->model_sale_product->getTotalProductsByCustomFieldId($custom_field_id);
-
-			if ($product_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
-			}
-		}
-
 		if (!$this->error) {
 			return true;
 		} else {

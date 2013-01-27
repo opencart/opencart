@@ -20,7 +20,7 @@ class ModelShippingRoyalMail extends Model {
 			$sub_total = $this->cart->getSubTotal();
 			
 			// 1st Class Standard
-			if ($this->config->get('royal_mail_1st_class_standard_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('royal_mail_1st_class_standard_status') && ($address['iso_code_2'] == 'GB' || $address['iso_code_2'] == 'GG' || $address['iso_code_2'] == 'JE')) {
 				$cost = 0;
 				$insurance = 0;
 				
@@ -74,7 +74,7 @@ class ModelShippingRoyalMail extends Model {
 			}
 			
 			// 1st Class Recorded	 
-			if ($this->config->get('royal_mail_1st_class_recorded_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('royal_mail_1st_class_recorded_status') && ($address['iso_code_2'] == 'GB' || $address['iso_code_2'] == 'GG' || $address['iso_code_2'] == 'JE')) {
 				$cost = 0;
 				$insurance = 0;
 				
@@ -128,7 +128,7 @@ class ModelShippingRoyalMail extends Model {
 			}
 			
 			// 2nd Class Standard	
-			if ($this->config->get('royal_mail_2nd_class_standard_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('royal_mail_2nd_class_standard_status') && ($address['iso_code_2'] == 'GB' || $address['iso_code_2'] == 'GG' || $address['iso_code_2'] == 'JE')) {
 				$cost = 0;
 				
 				$rates = explode(',', $this->config->get('royal_mail_2nd_class_standard_rate'));
@@ -163,7 +163,7 @@ class ModelShippingRoyalMail extends Model {
 			}
 			
 			// 2nd Class Recorded
-			if ($this->config->get('royal_mail_2nd_class_recorded_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('royal_mail_2nd_class_recorded_status') && ($address['iso_code_2'] == 'GB' || $address['iso_code_2'] == 'GG' || $address['iso_code_2'] == 'JE')) {
 				$cost = 0;
 				$insurance = 0;
 				
@@ -217,7 +217,7 @@ class ModelShippingRoyalMail extends Model {
 			}
 			
 			// Special Delivery > 500
-			if ($this->config->get('royal_mail_special_delivery_500_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('royal_mail_special_delivery_500_status') && ($address['iso_code_2'] == 'GB' || $address['iso_code_2'] == 'GG' || $address['iso_code_2'] == 'JE')) {
 				$cost = 0;
 				$insurance = 0;
 				
@@ -271,7 +271,7 @@ class ModelShippingRoyalMail extends Model {
 			}
 						
 			// Special Delivery > 1000
-			if ($this->config->get('royal_mail_special_delivery_1000_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('royal_mail_special_delivery_1000_status') && ($address['iso_code_2'] == 'GB' || $address['iso_code_2'] == 'GG' || $address['iso_code_2'] == 'JE')) {
 				$cost = 0;
 				$insurance = 0;
 				
@@ -325,7 +325,7 @@ class ModelShippingRoyalMail extends Model {
 			}
 						
 			// Special Delivery > 2500
-			if ($this->config->get('royal_mail_special_delivery_2500_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('royal_mail_special_delivery_2500_status') && ($address['iso_code_2'] == 'GB' || $address['iso_code_2'] == 'GG' || $address['iso_code_2'] == 'JE')) {
 				$cost = 0;
 				$insurance = 0;
 				

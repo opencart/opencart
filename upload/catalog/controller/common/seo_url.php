@@ -51,7 +51,9 @@ class ControllerCommonSeoUrl extends Controller {
 				} elseif (isset($this->request->get['information_id'])) {
 					$this->request->get['route'] = 'information/information';
 				}
-			}else{
+			}
+			
+			if(isset($this->request->get['route'])){
 				return $this->forward($this->request->get['route']);
 			}
 		}

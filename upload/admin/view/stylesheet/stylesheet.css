@@ -105,7 +105,11 @@ label {
 	text-align: center;
 }
 #menu > ul li ul {
+	display: none;	
 	position: absolute;
+}
+#menu > ul li:hover > ul {
+	display: block;
 }
 #menu > ul ul li {
 	padding: 2px;
@@ -121,10 +125,10 @@ label {
 	background-repeat:no-repeat;
 }
 #menu > ul li ul ul {
-	margin: -29px 0 0 161px;
+	margin: -31px 0 0 163px;
 }
 #menu > ul li li a {
-	padding: 5px;
+	padding: 6px;
 	margin: 1px;
 	color: #FFFFFF;	
 	width: 147px;

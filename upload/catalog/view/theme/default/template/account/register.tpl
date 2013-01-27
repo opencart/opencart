@@ -68,20 +68,6 @@
               <?php } ?>
             </select></td>
         </tr>
-        <tr id="company-id-display">
-          <td><span id="company-id-required" class="required"> * </span> <?php echo $entry_company_id; ?></td>
-          <td><input type="text" name="company_id" value="<?php echo $company_id; ?>" />
-            <?php if ($error_company_id) { ?>
-            <span class="error"> <?php echo $error_company_id; ?> </span>
-            <?php } ?></td>
-        </tr>
-        <tr id="tax-id-display">
-          <td><span id="tax-id-required" class="required"> * </span> <?php echo $entry_tax_id; ?></td>
-          <td><input type="text" name="tax_id" value="<?php echo $tax_id; ?>" />
-            <?php if ($error_tax_id) { ?>
-            <span class="error"> <?php echo $error_tax_id; ?> </span>
-            <?php } ?></td>
-        </tr>
         <tr>
           <td><span class="required"> * </span> <?php echo $entry_address_1; ?></td>
           <td><input type="text" name="address_1" value="<?php echo $address_1; ?>" />
@@ -191,8 +177,62 @@
     <?php } ?>
   </form>
   <?php echo $content_bottom; ?></div>
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script>  
 <script type="text/javascript"><!--
 $('select[name=\'customer_group_id\']').live('change', function() {
+	<?php foreach ($custom_fields as $custom_field) { ?>
+	
+	html = '';
+	html += '<tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>">';
+	html += '  <td><?php echo $custom_field['name']; ?>:</td>';
+	html += '  <td>';
+	
+	<?php if ($custom_field['type'] == 'text') { ?>
+	html += '<input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" />';
+	<?php } ?>
+	
+	<?php if ($custom_field['type'] == 'textarea') { ?>
+	html += '<textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" cols="40" rows="5"><?php echo $custom_field['value']; ?></textarea>';
+	<?php } ?>
+	
+	<?php if ($custom_field['type'] == 'date') { ?>
+	html += '<input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" class="date" />';
+	<?php } ?>
+	
+	<?php if ($custom_field['type'] == 'time') { ?>
+	html += '<input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" class="time" />';
+	<?php } ?>
+	
+	<?php if ($custom_field['type'] == 'datetime') { ?>
+	html += '<input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" class="datetime" />';
+	<?php } ?>
+				
+	html += '  </td>';		
+	html += '</tr>';
+	
+	
+	<?php if ($custom_field['position'] == 'begining') { ?>
+	$('input[name=\'firstname\']').parent().parent().before(html);
+	<?php } else { ?>
+	$('input[name=\'<?php echo $custom_field['position']; ?>\']').parent().parent().after(html);
+	<?php } ?>
+	
+	
+	
+	<?php } ?>	
+	
+	if ($.browser.msie && $.browser.version == 6) {
+		$('.date, .datetime, .time').bgIframe();
+	}
+
+	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+	$('.datetime').datetimepicker({
+		dateFormat: 'yy-mm-dd',
+		timeFormat: 'h:m'
+	});
+	$('.time').timepicker({timeFormat: 'h:m'});
+		
+	
 	var customer_group = [];
 	
 <?php foreach ($customer_groups as $customer_group) { ?>
@@ -202,6 +242,12 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_display'] = '<?php echo $customer_group['tax_id_display']; ?>';
 	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_required'] = '<?php echo $customer_group['tax_id_required']; ?>';
 <?php } ?>	
+
+
+	
+
+
+
 
 	if (customer_group[this.value]) {
 		if (customer_group[this.value]['company_id_display'] == '1') {
@@ -230,7 +276,7 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 	}
 });
 
-$('input[name=\'customer_group_id\']:checked').trigger('change');
+$('select[name=\'customer_group_id\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 $('select[name=\'country_id\']').bind('change', function() {

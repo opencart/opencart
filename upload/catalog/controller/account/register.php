@@ -77,8 +77,6 @@ class ControllerAccountRegister extends Controller {
     	$this->data['entry_fax'] = $this->language->get('entry_fax');
 		$this->data['entry_company'] = $this->language->get('entry_company');
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$this->data['entry_company_id'] = $this->language->get('entry_company_id');
-		$this->data['entry_tax_id'] = $this->language->get('entry_tax_id');
     	$this->data['entry_address_1'] = $this->language->get('entry_address_1');
     	$this->data['entry_address_2'] = $this->language->get('entry_address_2');
     	$this->data['entry_postcode'] = $this->language->get('entry_postcode');
@@ -131,18 +129,6 @@ class ControllerAccountRegister extends Controller {
 			$this->data['error_confirm'] = $this->error['confirm'];
 		} else {
 			$this->data['error_confirm'] = '';
-		}
-		
-  		if (isset($this->error['company_id'])) {
-			$this->data['error_company_id'] = $this->error['company_id'];
-		} else {
-			$this->data['error_company_id'] = '';
-		}
-		
-  		if (isset($this->error['tax_id'])) {
-			$this->data['error_tax_id'] = $this->error['tax_id'];
-		} else {
-			$this->data['error_tax_id'] = '';
 		}
 								
   		if (isset($this->error['address_1'])) {
@@ -233,6 +219,26 @@ class ControllerAccountRegister extends Controller {
 			$this->data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
 		
+		$this->data['custom_fields'] = array();
+		
+		$this->load->model('account/custom_field');
+		 
+		$custom_fields = $this->model_account_custom_field->getCustomFields();
+		 
+		foreach ($custom_fields as $custom_field) {
+			if (isset($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+				$value = $this->request->post['custom_field'][$custom_field['custom_field_id']];
+			} else {
+				$value = $custom_field['value'];
+			}
+			
+			$this->data['custom_fields'][] = array(
+				'custom_field_id' => $custom_field['custom_field_id'],
+				'name'            => $custom_field['name'],
+				'value'           => $value
+			);
+		} 
+		 
 		// Company ID
 		if (isset($this->request->post['company_id'])) {
     		$this->data['company_id'] = $this->request->post['company_id'];

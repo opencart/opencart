@@ -62,7 +62,7 @@ $(document).ready(function(){
   </div>
   <?php if ($logged) { ?>
   <div id="menu">
-    <ul class="left" style="display: none;">
+    <ul class="left">
       <li id="dashboard"><a href="<?php echo $home; ?>" class="top"><?php echo $text_dashboard; ?></a></li>
       <li id="catalog"><a class="top"><?php echo $text_catalog; ?></a>
         <ul>
@@ -84,6 +84,7 @@ $(document).ready(function(){
       </li>
       <li id="extension"><a class="top"><?php echo $text_extension; ?></a>
         <ul>
+          <li><a href="<?php echo $manager; ?>"><?php echo $text_manager; ?></a></li>
           <li><a href="<?php echo $module; ?>"><?php echo $text_module; ?></a></li>
           <li><a href="<?php echo $shipping; ?>"><?php echo $text_shipping; ?></a></li>
           <li><a href="<?php echo $payment; ?>"><?php echo $text_payment; ?></a></li>
@@ -199,7 +200,7 @@ $(document).ready(function(){
         </ul>
       </li>
     </ul>
-    <ul class="right" style="display: none;">
+    <ul class="right">
       <li id="store"><a href="<?php echo $store; ?>" target="_blank" class="top"><?php echo $text_front; ?></a>
         <ul>
           <?php foreach ($stores as $stores) { ?>

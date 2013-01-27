@@ -467,7 +467,7 @@ class ModelCatalogProduct extends Model {
 	public function getProductOptions($product_id) {
 		$product_option_data = array();
 		
-		$product_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_option WHERE product_id = '" . (int)$product_id . "'");
+		$product_option_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option` po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.option_id = o.option_id) LEFT JOIN `" . DB_PREFIX . "option_description` od ON (o.option_id = od.option_id) WHERE po.product_id = '" . (int)$product_id . "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 		
 		foreach ($product_option_query->rows as $product_option) {
 			$product_option_value_data = array();	
@@ -492,6 +492,8 @@ class ModelCatalogProduct extends Model {
 			$product_option_data[] = array(
 				'product_option_id'    => $product_option['product_option_id'],
 				'option_id'            => $product_option['option_id'],
+				'name'                 => $product_option['name'],
+				'type'                 => $product_option['type'],				
 				'product_option_value' => $product_option_value_data,
 				'option_value'         => $product_option['option_value'],
 				'required'             => $product_option['required']				

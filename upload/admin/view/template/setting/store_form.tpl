@@ -171,6 +171,13 @@
                 <span class="error"><?php echo $error_catalog_limit; ?></span>
                 <?php } ?></td>
             </tr>
+            <tr>
+              <td><span class="required">*</span> <?php echo $entry_catalog_desc_limit; ?></td>
+              <td><input type="text" name="config_catalog_desc_limit" value="<?php echo $config_catalog_desc_limit; ?>" size="3" />
+                <?php if ($error_catalog_desc_limit) { ?>
+                <span class="error"><?php echo $error_catalog_desc_limit; ?></span>
+                <?php } ?></td>
+            </tr>
           </table>
           <h2><?php echo $text_tax; ?></h2>
           <table class="form">

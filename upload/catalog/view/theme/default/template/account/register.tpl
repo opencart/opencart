@@ -218,7 +218,33 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 	<?php } ?>
 	
 	
-	
+	new AjaxUpload('#button-option-<?php echo $option['product_option_id']; ?>', {
+		action: 'index.php?route=product/product/upload',
+		name: 'file',
+		autoSubmit: true,
+		responseType: 'json',
+		onSubmit: function(file, extension) {
+			$('#button-option-<?php echo $option['product_option_id']; ?>').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('#button-option-<?php echo $option['product_option_id']; ?>').attr('disabled', true);
+		},
+		onComplete: function(file, json) {
+			$('#button-option-<?php echo $option['product_option_id']; ?>').attr('disabled', false);
+			
+			$('.error').remove();
+			
+			if (json['success']) {
+				alert(json['success']);
+				
+				$('input[name=\'option[<?php echo $option['product_option_id']; ?>]\']').attr('value', json['file']);
+			}
+			
+			if (json['error']) {
+				$('#option-<?php echo $option['product_option_id']; ?>').after('<span class="error">' + json['error'] + '</span>');
+			}
+			
+			$('.loading').remove();	
+		}
+	});
 	<?php } ?>	
 	
 	if ($.browser.msie && $.browser.version == 6) {

@@ -287,16 +287,18 @@ body > #container {
 	min-height: 300px;
 	overflow: auto;
 }
-a.button, .list a.button {
+a.button, input.button, .list a.button {
 	text-decoration: none;
 	color: #FFF;
 	display: inline-block;
 	padding: 5px 15px 5px 15px;
 	background: #003A88;
+	border: 0px;
 	-webkit-border-radius: 10px 10px 10px 10px;
 	-moz-border-radius: 10px 10px 10px 10px;
 	-khtml-border-radius: 10px 10px 10px 10px;
 	border-radius: 10px 10px 10px 10px;
+	cursor: pointer;
 }
 .list {
 	border-collapse: collapse;

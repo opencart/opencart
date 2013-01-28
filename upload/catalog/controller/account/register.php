@@ -235,7 +235,10 @@ class ControllerAccountRegister extends Controller {
 			$this->data['custom_fields'][] = array(
 				'custom_field_id' => $custom_field['custom_field_id'],
 				'name'            => $custom_field['name'],
-				'value'           => $value
+				'type'            => $custom_field['type'],
+				'value'           => $value,
+				'location'        => $custom_field['location'],
+				'position'        => $custom_field['position']
 			);
 		} 
 		 

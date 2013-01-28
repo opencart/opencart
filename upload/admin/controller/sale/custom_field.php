@@ -554,7 +554,7 @@ class ControllerSaleCustomField extends Controller {
 			foreach ($this->request->post['custom_field_value'] as $custom_field_value_id => $custom_field_value) {
 				foreach ($custom_field_value['custom_field_value_description'] as $language_id => $custom_field_value_description) {
 					if ((utf8_strlen($custom_field_value_description['name']) < 1) || (utf8_strlen($custom_field_value_description['name']) > 128)) {
-						$this->error['custom_field_value'][$custom_field_value_id][$language_id] = $this->language->get('error_custom_field_value'); 
+						$this->error['custom_field_value'][$custom_field_value_id][$language_id] = $this->language->get('error_custom_value'); 
 					}					
 				}
 			}	

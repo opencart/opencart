@@ -379,7 +379,7 @@ class ModelShippingRoyalMail extends Model {
 			}
 						
 			// Standard Parcels
-			if ($this->config->get('royal_mail_standard_parcels_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('royal_mail_standard_parcels_status') && $address['iso_code_2'] == 'GB' && $address['zone_code'] != 'GGY' && $address['zone_code'] != 'JEY' ) {
 				$cost = 0;
 				$insurance = 0;
 				

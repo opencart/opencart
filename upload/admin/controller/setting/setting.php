@@ -65,7 +65,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_length_class'] = $this->language->get('entry_length_class');
 		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$this->data['entry_catalog_limit'] = $this->language->get('entry_catalog_limit');
-		$this->data['entry_catalog_desc_limit'] = $this->language->get('entry_catalog_desc_limit');
+		$this->data['entry_list_description_limit'] = $this->language->get('entry_list_description_limit');
 		$this->data['entry_admin_limit'] = $this->language->get('entry_admin_limit');
 		$this->data['entry_product_count'] = $this->language->get('entry_product_count');
 		$this->data['entry_review'] = $this->language->get('entry_review');
@@ -305,10 +305,10 @@ class ControllerSettingSetting extends Controller {
 			$this->data['error_catalog_limit'] = '';
 		}
 		
-		if (isset($this->error['catalog_desc_limit'])) {
-			$this->data['error_catalog_desc_limit'] = $this->error['catalog_desc_limit'];
+		if (isset($this->error['list_description_limit'])) {
+			$this->data['error_list_description_limit'] = $this->error['list_description_limit'];
 		} else {
-			$this->data['error_catalog_desc_limit'] = '';
+			$this->data['error_list_description_limit'] = '';
 		}
 		
 		if (isset($this->error['admin_limit'])) {
@@ -497,10 +497,10 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_catalog_limit'] = $this->config->get('config_catalog_limit');
 		}	
 	
-		if (isset($this->request->post['config_catalog_desc_limit'])) {
-			$this->data['config_catalog_desc_limit'] = $this->request->post['config_catalog_desc_limit'];
+		if (isset($this->request->post['config_list_description_limit'])) {
+			$this->data['config_list_description_limit'] = $this->request->post['config_list_description_limit'];
 		} else {
-			$this->data['config_catalog_desc_limit'] = $this->config->get('config_catalog_desc_limit');
+			$this->data['config_list_description_limit'] = $this->config->get('config_list_description_limit');
 		}	
 						
 		if (isset($this->request->post['config_admin_limit'])) {
@@ -1171,8 +1171,8 @@ class ControllerSettingSetting extends Controller {
 			$this->error['catalog_limit'] = $this->language->get('error_limit');
 		}
 		
-		if (!$this->request->post['config_catalog_desc_limit']) {
-			$this->error['catalog_desc_limit'] = $this->language->get('error_limit');
+		if (!$this->request->post['config_list_description_limit']) {
+			$this->error['list_description_limit'] = $this->language->get('error_limit');
 		}
 		
 		if (!$this->request->post['config_admin_limit']) {

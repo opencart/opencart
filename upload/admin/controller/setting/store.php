@@ -211,6 +211,7 @@ class ControllerSettingStore extends Controller {
 		$this->data['entry_language'] = $this->language->get('entry_language');
 		$this->data['entry_currency'] = $this->language->get('entry_currency');
 		$this->data['entry_catalog_limit'] = $this->language->get('entry_catalog_limit');
+		$this->data['entry_list_description_limit'] = $this->language->get('entry_list_description_limit');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
 		$this->data['entry_tax_default'] = $this->language->get('entry_tax_default');
 		$this->data['entry_tax_customer'] = $this->language->get('entry_tax_customer');		
@@ -360,6 +361,12 @@ class ControllerSettingStore extends Controller {
 			$this->data['error_catalog_limit'] = $this->error['catalog_limit'];
 		} else {
 			$this->data['error_catalog_limit'] = '';
+		}
+		
+		if (isset($this->error['list_description_limit'])) {
+			$this->data['error_list_description_limit'] = $this->error['list_description_limit'];
+		} else {
+			$this->data['error_list_description_limit'] = '';
 		}
 		
   		$this->data['breadcrumbs'] = array();
@@ -557,7 +564,15 @@ class ControllerSettingStore extends Controller {
 		} elseif (isset($store_info['config_catalog_limit'])) {
 			$this->data['config_catalog_limit'] = $store_info['config_catalog_limit'];	
 		} else {
-			$this->data['config_catalog_limit'] = '12';
+			$this->data['config_catalog_limit'] = '15';
+		}	
+		
+		if (isset($this->request->post['config_list_description_limit'])) {
+			$this->data['config_list_description_limit'] = $this->request->post['config_list_description_limit'];
+		} elseif (isset($store_info['config_list_description_limit'])) {
+			$this->data['config_list_description_limit'] = $store_info['config_list_description_limit'];	
+		} else {
+			$this->data['config_list_description_limit'] = '100';
 		}		
 		
 		if (isset($this->request->post['config_tax'])) {
@@ -944,6 +959,10 @@ class ControllerSettingStore extends Controller {
 		
 		if (!$this->request->post['config_catalog_limit']) {
 			$this->error['catalog_limit'] = $this->language->get('error_limit');
+		}
+		
+		if (!$this->request->post['config_list_description_limit']) {
+			$this->error['list_description_limit'] = $this->language->get('error_desc_limit');
 		}
 		
 		if ($this->error && !isset($this->error['warning'])) {

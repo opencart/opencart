@@ -1032,7 +1032,7 @@ CREATE TABLE `oc_customer` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer_field`
+-- Table structure for table `oc_customer_field`
 --
 
 DROP TABLE IF EXISTS `oc_customer_field`;

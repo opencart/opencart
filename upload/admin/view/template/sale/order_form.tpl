@@ -567,6 +567,11 @@
     </div>
   </div>
 </div>
+<div style="display: none;">
+  <form enctype="multipart/form-data">
+    <input type="file" name="file" id="file" />
+  </form>
+</div>
 <script type="text/javascript"><!--
 $.widget('custom.catcomplete', $.ui.autocomplete, {
 	_renderMenu: function(ul, items) {
@@ -886,8 +891,8 @@ $('input[name=\'product\']').autocomplete({
 					html += '<select name="option[' + option['product_option_id'] + ']">';
 					html += '<option value=""><?php echo $text_select; ?></option>';
 				
-					for (j = 0; j < option['option_value'].length; j++) {
-						option_value = option['option_value'][j];
+					for (j = 0; j < option['product_option_value'].length; j++) {
+						option_value = option['product_option_value'][j];
 						
 						html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
 						
@@ -914,8 +919,8 @@ $('input[name=\'product\']').autocomplete({
 					html += '<select name="option[' + option['product_option_id'] + ']">';
 					html += '<option value=""><?php echo $text_select; ?></option>';
 				
-					for (j = 0; j < option['option_value'].length; j++) {
-						option_value = option['option_value'][j];
+					for (j = 0; j < option['product_option_value'].length; j++) {
+						option_value = option['product_option_value'][j];
 						
 						html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
 						
@@ -940,8 +945,8 @@ $('input[name=\'product\']').autocomplete({
 					
 					html += option['name'] + '<br />';
 					
-					for (j = 0; j < option['option_value'].length; j++) {
-						option_value = option['option_value'][j];
+					for (j = 0; j < option['product_option_value'].length; j++) {
+						option_value = option['product_option_value'][j];
 						
 						html += '<input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="option-value-' + option_value['product_option_value_id'] + '" />';
 						html += '<label for="option-value-' + option_value['product_option_value_id'] + '">' + option_value['name'];
@@ -969,8 +974,8 @@ $('input[name=\'product\']').autocomplete({
 					html += '<select name="option[' + option['product_option_id'] + ']">';
 					html += '<option value=""><?php echo $text_select; ?></option>';
 				
-					for (j = 0; j < option['option_value'].length; j++) {
-						option_value = option['option_value'][j];
+					for (j = 0; j < option['product_option_value'].length; j++) {
+						option_value = option['product_option_value'][j];
 						
 						html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
 						
@@ -994,7 +999,7 @@ $('input[name=\'product\']').autocomplete({
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['option_value'] + '" />';
+					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
 					html += '</div>';
 					html += '<br />';
 				}
@@ -1007,7 +1012,7 @@ $('input[name=\'product\']').autocomplete({
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<textarea name="option[' + option['product_option_id'] + ']" cols="40" rows="5">' + option['option_value'] + '</textarea>';
+					html += '<textarea name="option[' + option['product_option_id'] + ']" cols="40" rows="5">' + option['value'] + '</textarea>';
 					html += '</div>';
 					html += '<br />';
 				}
@@ -1020,8 +1025,8 @@ $('input[name=\'product\']').autocomplete({
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<a id="button-option-' + option['product_option_id'] + '" class="button"><?php echo $button_upload; ?></a>';
-					html += '<input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['option_value'] + '" />';
+					html += '<a id="button-option-' + option['product_option_id'] + '" class="button" onclick="upload(\'' + option['product_option_id'] + '\');"><?php echo $button_upload; ?></a>';
+					html += '<input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
 					html += '</div>';
 					html += '<br />';
 				}
@@ -1034,7 +1039,7 @@ $('input[name=\'product\']').autocomplete({
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['option_value'] + '" class="date" />';
+					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" class="date" />';
 					html += '</div>';
 					html += '<br />';
 				}
@@ -1047,7 +1052,7 @@ $('input[name=\'product\']').autocomplete({
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['option_value'] + '" class="datetime" />';
+					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" class="datetime" />';
 					html += '</div>';
 					html += '<br />';						
 				}
@@ -1060,52 +1065,20 @@ $('input[name=\'product\']').autocomplete({
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['option_value'] + '" class="time" />';
+					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" class="time" />';
 					html += '</div>';
 					html += '<br />';						
 				}
 			}
 			
 			$('#option').html('<td class="left"><?php echo $entry_option; ?></td><td class="left">' + html + '</td>');
-
-			for (i = 0; i < ui.item.option.length; i++) {
-				option = ui.item.option[i];
-				
-				if (option['type'] == 'file') {		
-					new AjaxUpload('#button-option-' + option['product_option_id'], {
-						action: 'index.php?route=sale/order/upload&token=<?php echo $token; ?>',
-						name: 'file',
-						autoSubmit: true,
-						responseType: 'json',
-						data: option,
-						onSubmit: function(file, extension) {
-							$('#button-option-' + (this._settings.data['product_option_id'] + '-' + this._settings.data['product_option_id'])).after('<img src="view/image/loading.gif" class="loading" />');
-						},
-						onComplete: function(file, json) {
-
-							$('.error').remove();
-							
-							if (json['success']) {
-								alert(json['success']);
-								
-								$('input[name=\'option[' + this._settings.data['product_option_id'] + ']\']').attr('value', json['file']);
-							}
-							
-							if (json.error) {
-								$('#option-' + this._settings.data['product_option_id']).after('<span class="error">' + json['error'] + '</span>');
-							}
-							
-							$('.loading').remove();	
-						}
-					});
-				}
-			}
 			
 			$('.date').datepicker({dateFormat: 'yy-mm-dd'});
 			$('.datetime').datetimepicker({
 				dateFormat: 'yy-mm-dd',
 				timeFormat: 'h:m'
 			});
+			
 			$('.time').timepicker({timeFormat: 'h:m'});				
 		} else {
 			$('#option td').remove();
@@ -1117,6 +1090,47 @@ $('input[name=\'product\']').autocomplete({
       	return false;
    	}
 });	
+
+function upload(product_option_id) {
+	$('#file').off();
+	
+	$('#file').on('change', function() {
+		$.ajax({
+			url: 'index.php?route=sale/order/upload&token=<?php echo $token; ?>',
+			type: 'post',		
+			dataType: 'json',
+			data: new FormData($(this).parent()[0]),
+			beforeSend: function() {
+				$('#button-option-' + product_option_id).after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+				$('#button-option-' + product_option_id).attr('disabled', true);
+				$('#option-' + product_option_id + ' + .error').remove();
+			},	
+			complete: function() {
+				$('.loading').remove();
+				$('#button-option-' + product_option_id).attr('disabled', false);
+			},		
+			success: function(json) {
+				if (json['error']) {
+					$('#option-' + product_option_id).after('<span class="error">' + json['error'] + '</span>');
+				}
+							
+				if (json['success']) {
+					alert(json['success']);
+					
+					$('input[name=\'option[' + product_option_id + ']\']').attr('value', json['file']);
+				}
+			},			
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			},
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+	});		
+	
+	$('input[name=\'file\']').click();
+}
 //--></script> 
 <script type="text/javascript"><!--
 $('select[name=\'payment\']').bind('change', function() {

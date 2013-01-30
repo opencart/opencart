@@ -592,7 +592,7 @@ class ModelSaleOrder extends Model {
 		}
 		
 		if (!empty($data['filter_date_modified'])) {
-			$sql .= " AND DATE(o.date_modified) = DATE('" . $this->db->escape($data['filter_date_modified']) . "')";
+			$sql .= " AND DATE(date_modified) = DATE('" . $this->db->escape($data['filter_date_modified']) . "')";
 		}
 		
 		if (!empty($data['filter_total'])) {

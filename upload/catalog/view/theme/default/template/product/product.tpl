@@ -68,7 +68,7 @@
           <b><?php echo $option['name']; ?>:</b><br />
           <select name="option[<?php echo $option['product_option_id']; ?>]">
             <option value=""><?php echo $text_select; ?></option>
-            <?php foreach ($option['option_value'] as $option_value) { ?>
+            <?php foreach ($option['product_option_value'] as $option_value) { ?>
             <option value="<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
             <?php if ($option_value['price']) { ?>
             (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
@@ -85,7 +85,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <?php foreach ($option['option_value'] as $option_value) { ?>
+          <?php foreach ($option['product_option_value'] as $option_value) { ?>
           <input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-value-<?php echo $option_value['product_option_value_id']; ?>" />
           <label for="option-value-<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
             <?php if ($option_value['price']) { ?>
@@ -103,7 +103,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <?php foreach ($option['option_value'] as $option_value) { ?>
+          <?php foreach ($option['product_option_value'] as $option_value) { ?>
           <input type="checkbox" name="option[<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-value-<?php echo $option_value['product_option_value_id']; ?>" />
           <label for="option-value-<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
             <?php if ($option_value['price']) { ?>
@@ -122,7 +122,7 @@
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
           <table class="option-image">
-            <?php foreach ($option['option_value'] as $option_value) { ?>
+            <?php foreach ($option['product_option_value'] as $option_value) { ?>
             <tr>
               <td style="width: 1px;"><input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-value-<?php echo $option_value['product_option_value_id']; ?>" /></td>
               <td><label for="option-value-<?php echo $option_value['product_option_value_id']; ?>"><img src="<?php echo $option_value['image']; ?>" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" /></label></td>
@@ -143,7 +143,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['option_value']; ?>" />
+          <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
         </div>
         <br />
         <?php } ?>
@@ -153,7 +153,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <textarea name="option[<?php echo $option['product_option_id']; ?>]" cols="40" rows="5"><?php echo $option['option_value']; ?></textarea>
+          <textarea name="option[<?php echo $option['product_option_id']; ?>]" cols="40" rows="5"><?php echo $option['value']; ?></textarea>
         </div>
         <br />
         <?php } ?>
@@ -163,7 +163,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <input type="button" value="<?php echo $button_upload; ?>" id="button-option-<?php echo $option['product_option_id']; ?>" class="button">
+          <input type="button" value="<?php echo $button_upload; ?>" id="button-option-<?php echo $option['product_option_id']; ?>" class="button" onclick="$('input[name=\'file\']').click();" />
           <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="" />
         </div>
         <br />
@@ -174,7 +174,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['option_value']; ?>" class="date" />
+          <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" class="date" />
         </div>
         <br />
         <?php } ?>
@@ -184,7 +184,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['option_value']; ?>" class="datetime" />
+          <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" class="datetime" />
         </div>
         <br />
         <?php } ?>
@@ -194,7 +194,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['option_value']; ?>" class="time" />
+          <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" class="time" />
         </div>
         <br />
         <?php } ?>
@@ -207,10 +207,8 @@
           <input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
           &nbsp;
           <input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="button" />
-          <span>&nbsp;&nbsp;<?php echo $text_or; ?>&nbsp;&nbsp;</span>
-          <span class="links"><a onclick="addToWishList('<?php echo $product_id; ?>');"><?php echo $button_wishlist; ?></a><br />
-            <a onclick="addToCompare('<?php echo $product_id; ?>');"><?php echo $button_compare; ?></a></span>
-        </div>
+          <span>&nbsp;&nbsp;<?php echo $text_or; ?>&nbsp;&nbsp;</span> <span class="links"><a onclick="addToWishList('<?php echo $product_id; ?>');"><?php echo $button_wishlist; ?></a><br />
+          <a onclick="addToCompare('<?php echo $product_id; ?>');"><?php echo $button_compare; ?></a></span> </div>
         <?php if ($minimum > 1) { ?>
         <div class="minimum"><?php echo $text_minimum; ?></div>
         <?php } ?>
@@ -332,6 +330,11 @@
   </div>
   <?php } ?>
   <?php echo $content_bottom; ?></div>
+<div style="display: none;">
+  <form enctype="multipart/form-data">
+    <input type="file" name="file" id="file" />
+  </form>
+</div>
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('.colorbox').colorbox({
@@ -373,36 +376,41 @@ $('#button-cart').bind('click', function() {
 });
 //--></script>
 <?php if ($options) { ?>
-<script type="text/javascript" src="catalog/view/javascript/jquery/ajaxupload.js"></script>
 <?php foreach ($options as $option) { ?>
 <?php if ($option['type'] == 'file') { ?>
 <script type="text/javascript"><!--
-new AjaxUpload('#button-option-<?php echo $option['product_option_id']; ?>', {
-	action: 'index.php?route=product/product/upload',
-	name: 'file',
-	autoSubmit: true,
-	responseType: 'json',
-	onSubmit: function(file, extension) {
-		$('#button-option-<?php echo $option['product_option_id']; ?>').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-		$('#button-option-<?php echo $option['product_option_id']; ?>').attr('disabled', true);
-	},
-	onComplete: function(file, json) {
-		$('#button-option-<?php echo $option['product_option_id']; ?>').attr('disabled', false);
-		
-		$('.error').remove();
-		
-		if (json['success']) {
-			alert(json['success']);
-			
-			$('input[name=\'option[<?php echo $option['product_option_id']; ?>]\']').attr('value', json['file']);
-		}
-		
-		if (json['error']) {
-			$('#option-<?php echo $option['product_option_id']; ?>').after('<span class="error">' + json['error'] + '</span>');
-		}
-		
-		$('.loading').remove();	
-	}
+$('#file').on('change', function() {
+    $.ajax({
+        url: 'index.php?route=product/product/upload',
+        type: 'post',		
+		dataType: 'json',
+		data: new FormData($(this).parent()[0]),
+		beforeSend: function() {
+			$('#button-option-<?php echo $option['product_option_id']; ?>').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('#button-option-<?php echo $option['product_option_id']; ?>').attr('disabled', true);
+		},	
+		complete: function() {
+			$('.loading').remove();
+			$('#button-option-<?php echo $option['product_option_id']; ?>').attr('disabled', false);
+		},		
+		success: function(json) {
+			if (json['error']) {
+				$('#option-<?php echo $option['product_option_id']; ?>').after('<span class="error">' + json['error'] + '</span>');
+			}
+						
+			if (json['success']) {
+				alert(json['success']);
+				
+				$('input[name=\'option[<?php echo $option['product_option_id']; ?>]\']').attr('value', json['file']);
+			}
+		},			
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		},
+        cache: false,
+        contentType: false,
+        processData: false
+    });
 });
 //--></script>
 <?php } ?>

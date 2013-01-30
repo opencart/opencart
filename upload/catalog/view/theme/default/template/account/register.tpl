@@ -55,40 +55,24 @@
         <tr>
           <td><?php echo $entry_company; ?></td>
           <td><input type="text" name="company" value="<?php echo $company; ?>" /></td>
-        </tr>        
+        </tr>
         <tr style="display: <?php echo (count($customer_groups) > 1 ? 'table-row' : 'none'); ?>;">
           <td><?php echo $entry_customer_group; ?></td>
-          <td><?php foreach ($customer_groups as $customer_group) { ?>
-            <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
-            <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" id="customer_group_id<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-            <label for="customer_group_id<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></label>
-            <br />
-            <?php } else { ?>
-            <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" id="customer_group_id<?php echo $customer_group['customer_group_id']; ?>" />
-            <label for="customer_group_id<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></label>
-            <br />
-            <?php } ?>
-            <?php } ?></td>
-        </tr>      
-        <tr id="company-id-display">
-          <td><span id="company-id-required" class="required">*</span> <?php echo $entry_company_id; ?></td>
-          <td><input type="text" name="company_id" value="<?php echo $company_id; ?>" />
-            <?php if ($error_company_id) { ?>
-            <span class="error"><?php echo $error_company_id; ?></span>
-            <?php } ?></td>
-        </tr>
-        <tr id="tax-id-display">
-          <td><span id="tax-id-required" class="required">*</span> <?php echo $entry_tax_id; ?></td>
-          <td><input type="text" name="tax_id" value="<?php echo $tax_id; ?>" />
-            <?php if ($error_tax_id) { ?>
-            <span class="error"><?php echo $error_tax_id; ?></span>
-            <?php } ?></td>
+          <td><select name="customer_group_id">
+              <?php foreach ($customer_groups as $customer_group) { ?>
+              <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+              <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select></td>
         </tr>
         <tr>
-          <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
+          <td><span class="required"> * </span> <?php echo $entry_address_1; ?></td>
           <td><input type="text" name="address_1" value="<?php echo $address_1; ?>" />
             <?php if ($error_address_1) { ?>
-            <span class="error"><?php echo $error_address_1; ?></span>
+            <span class="error"> <?php echo $error_address_1; ?> </span>
             <?php } ?></td>
         </tr>
         <tr>
@@ -96,21 +80,21 @@
           <td><input type="text" name="address_2" value="<?php echo $address_2; ?>" /></td>
         </tr>
         <tr>
-          <td><span class="required">*</span> <?php echo $entry_city; ?></td>
+          <td><span class="required"> * </span> <?php echo $entry_city; ?></td>
           <td><input type="text" name="city" value="<?php echo $city; ?>" />
             <?php if ($error_city) { ?>
-            <span class="error"><?php echo $error_city; ?></span>
+            <span class="error"> <?php echo $error_city; ?> </span>
             <?php } ?></td>
         </tr>
         <tr>
-          <td><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
+          <td><span id="postcode-required" class="required"> * </span> <?php echo $entry_postcode; ?></td>
           <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" />
             <?php if ($error_postcode) { ?>
-            <span class="error"><?php echo $error_postcode; ?></span>
+            <span class="error"> <?php echo $error_postcode; ?> </span>
             <?php } ?></td>
         </tr>
         <tr>
-          <td><span class="required">*</span> <?php echo $entry_country; ?></td>
+          <td><span class="required"> * </span> <?php echo $entry_country; ?></td>
           <td><select name="country_id">
               <option value=""><?php echo $text_select; ?></option>
               <?php foreach ($countries as $country) { ?>
@@ -193,8 +177,53 @@
     <?php } ?>
   </form>
   <?php echo $content_bottom; ?></div>
+<table style="dsiplay: none;">
+  <?php foreach ($custom_fields as $custom_field) { ?>
+  <?php if ($custom_field['type'] == 'text') { ?>
+  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
+    <td id="custom-field<?php echo $custom_field['custom_field_id']; ?>"></td>
+    <td><?php echo $custom_field['name']; ?>:</td>
+    <td><input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" /></td>
+  </tr>
+  <?php } ?>
+  <?php if ($custom_field['type'] == 'textarea') { ?>
+  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
+    <td id="custom-field<?php echo $custom_field['custom_field_id']; ?>"></td>
+    <td><?php echo $custom_field['name']; ?>:</td>
+    <td><textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" cols="40" rows="5"><?php echo $custom_field['value']; ?></textarea></td>
+  </tr>
+  <?php } ?>
+  <?php if ($custom_field['type'] == 'date') { ?>
+  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
+    <td id="custom-field<?php echo $custom_field['custom_field_id']; ?>"></td>
+    <td><?php echo $custom_field['name']; ?>:</td>
+    <td><input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" class="date" /></td>
+  </tr>
+  <?php } ?>
+  <?php if ($custom_field['type'] == 'time') { ?>
+  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
+    <td id="custom-field<?php echo $custom_field['custom_field_id']; ?>"></td>
+    <td><?php echo $custom_field['name']; ?>:</td>
+    <td><input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" class="time" /></td>
+  </tr>
+  <?php } ?>
+  <?php if ($custom_field['type'] == 'datetime') { ?>
+  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
+    <td id="custom-field<?php echo $custom_field['custom_field_id']; ?>"></td>
+    <td><?php echo $custom_field['name']; ?>:</td>
+    <td><input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" class="datetime" /></td>
+  </tr>
+  <?php } ?>
+  
+  
+    
+  <?php } ?>
+</table>
 <script type="text/javascript"><!--
-$('input[name=\'customer_group_id\']:checked').live('change', function() {
+
+
+
+$('select[name=\'customer_group_id\']').live('change', function() {
 	var customer_group = [];
 	
 <?php foreach ($customer_groups as $customer_group) { ?>
@@ -204,7 +233,16 @@ $('input[name=\'customer_group_id\']:checked').live('change', function() {
 	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_display'] = '<?php echo $customer_group['tax_id_display']; ?>';
 	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_required'] = '<?php echo $customer_group['tax_id_required']; ?>';
 <?php } ?>	
+	
+	<?php if ($custom_field['position'] == 'begining') { ?>
+	$('input[name=\'firstname\']').parent().parent().before(html);
+	<?php } else { ?>
+	$('input[name=\'<?php echo $custom_field['position']; ?>\']').parent().parent().after(html);
+	<?php } ?>
+		
+	
 
+	
 	if (customer_group[this.value]) {
 		if (customer_group[this.value]['company_id_display'] == '1') {
 			$('#company-id-display').show();
@@ -230,9 +268,11 @@ $('input[name=\'customer_group_id\']:checked').live('change', function() {
 			$('#tax-id-required').hide();
 		}	
 	}
+	
+
 });
 
-$('input[name=\'customer_group_id\']:checked').trigger('change');
+$('select[name=\'customer_group_id\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 $('select[name=\'country_id\']').bind('change', function() {
@@ -278,6 +318,7 @@ $('select[name=\'country_id\']').bind('change', function() {
 
 $('select[name=\'country_id\']').trigger('change');
 //--></script> 
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('.colorbox').colorbox({
@@ -285,5 +326,16 @@ $(document).ready(function() {
 		height: 480
 	});
 });
+
+if ($.browser.msie && $.browser.version == 6) {
+	$('.date, .datetime, .time').bgIframe();
+}
+
+$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+$('.datetime').datetimepicker({
+	dateFormat: 'yy-mm-dd',
+	timeFormat: 'h:m'
+});
+$('.time').timepicker({timeFormat: 'h:m'});
 //--></script> 
 <?php echo $footer; ?>

@@ -270,10 +270,6 @@ class ControllerSaleCustomerGroup extends Controller {
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_approval'] = $this->language->get('entry_approval');
-		$this->data['entry_company_id_display'] = $this->language->get('entry_company_id_display');
-		$this->data['entry_company_id_required'] = $this->language->get('entry_company_id_required');
-		$this->data['entry_tax_id_display'] = $this->language->get('entry_tax_id_display');
-		$this->data['entry_tax_id_required'] = $this->language->get('entry_tax_id_required');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -350,39 +346,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		} else {
 			$this->data['approval'] = '';
 		}	
-					
-		if (isset($this->request->post['company_id_display'])) {
-			$this->data['company_id_display'] = $this->request->post['company_id_display'];
-		} elseif (!empty($customer_group_info)) {
-			$this->data['company_id_display'] = $customer_group_info['company_id_display'];
-		} else {
-			$this->data['company_id_display'] = '';
-		}			
-			
-		if (isset($this->request->post['company_id_required'])) {
-			$this->data['company_id_required'] = $this->request->post['company_id_required'];
-		} elseif (!empty($customer_group_info)) {
-			$this->data['company_id_required'] = $customer_group_info['company_id_required'];
-		} else {
-			$this->data['company_id_required'] = '';
-		}		
-		
-		if (isset($this->request->post['tax_id_display'])) {
-			$this->data['tax_id_display'] = $this->request->post['tax_id_display'];
-		} elseif (!empty($customer_group_info)) {
-			$this->data['tax_id_display'] = $customer_group_info['tax_id_display'];
-		} else {
-			$this->data['tax_id_display'] = '';
-		}			
-			
-		if (isset($this->request->post['tax_id_required'])) {
-			$this->data['tax_id_required'] = $this->request->post['tax_id_required'];
-		} elseif (!empty($customer_group_info)) {
-			$this->data['tax_id_required'] = $customer_group_info['tax_id_required'];
-		} else {
-			$this->data['tax_id_required'] = '';
-		}	
-		
+				
 		if (isset($this->request->post['sort_order'])) {
 			$this->data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($customer_group_info)) {

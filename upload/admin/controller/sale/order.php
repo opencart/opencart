@@ -1098,8 +1098,6 @@ class ControllerSaleOrder extends Controller {
 		
 		$this->load->model('catalog/product');
 		
-		$this->document->addScript('view/javascript/jquery/ajaxupload.js');
-		
 		$this->data['order_products'] = array();		
 		
 		foreach ($order_products as $order_product) {
@@ -2288,15 +2286,29 @@ class ControllerSaleOrder extends Controller {
 					$json['error'] = $this->language->get('error_filename');
 				}	  	
 				
+				// Allowed file extension types
 				$allowed = array();
 				
-				$filetypes = explode(',', $this->config->get('config_upload_allowed'));
+				$filetypes = explode("\n", $this->config->get('config_file_extension_allowed'));
 				
 				foreach ($filetypes as $filetype) {
 					$allowed[] = trim($filetype);
 				}
 				
-				if (!in_array(utf8_substr(strrchr($filename, '.'), 1), $allowed)) {
+				if (!in_array(substr(strrchr($filename, '.'), 1), $allowed)) {
+					$json['error'] = $this->language->get('error_filetype');
+				}	
+				
+				// Allowed file mime types		
+				$allowed = array();
+				
+				$filetypes = explode("\n", $this->config->get('config_file_mime_allowed'));
+				
+				foreach ($filetypes as $filetype) {
+					$allowed[] = trim($filetype);
+				}
+								
+				if (!in_array($this->request->files['file']['type'], $allowed)) {
 					$json['error'] = $this->language->get('error_filetype');
 				}
 							

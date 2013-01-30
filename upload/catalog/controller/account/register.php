@@ -77,8 +77,6 @@ class ControllerAccountRegister extends Controller {
     	$this->data['entry_fax'] = $this->language->get('entry_fax');
 		$this->data['entry_company'] = $this->language->get('entry_company');
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$this->data['entry_company_id'] = $this->language->get('entry_company_id');
-		$this->data['entry_tax_id'] = $this->language->get('entry_tax_id');
     	$this->data['entry_address_1'] = $this->language->get('entry_address_1');
     	$this->data['entry_address_2'] = $this->language->get('entry_address_2');
     	$this->data['entry_postcode'] = $this->language->get('entry_postcode');
@@ -131,18 +129,6 @@ class ControllerAccountRegister extends Controller {
 			$this->data['error_confirm'] = $this->error['confirm'];
 		} else {
 			$this->data['error_confirm'] = '';
-		}
-		
-  		if (isset($this->error['company_id'])) {
-			$this->data['error_company_id'] = $this->error['company_id'];
-		} else {
-			$this->data['error_company_id'] = '';
-		}
-		
-  		if (isset($this->error['tax_id'])) {
-			$this->data['error_tax_id'] = $this->error['tax_id'];
-		} else {
-			$this->data['error_tax_id'] = '';
 		}
 								
   		if (isset($this->error['address_1'])) {
@@ -233,19 +219,36 @@ class ControllerAccountRegister extends Controller {
 			$this->data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
 		
-		// Company ID
-		if (isset($this->request->post['company_id'])) {
-    		$this->data['company_id'] = $this->request->post['company_id'];
-		} else {
-			$this->data['company_id'] = '';
-		}
+		$this->data['custom_fields'] = array();
 		
-		// Tax ID
-		if (isset($this->request->post['tax_id'])) {
-    		$this->data['tax_id'] = $this->request->post['tax_id'];
-		} else {
-			$this->data['tax_id'] = '';
-		}
+		$this->load->model('account/custom_field');
+		 
+		$custom_fields = $this->model_account_custom_field->getCustomFields();
+		 
+		foreach ($custom_fields as $custom_field) {
+			foreach ($option['option_value'] as $option_value) {
+					$option_value_data[] = array(
+						'product_option_value_id' => $option_value['product_option_value_id'],
+						'option_value_id'         => $option_value['option_value_id'],
+						'name'                    => $option_value['name'],
+					);
+			}			
+			
+			if (isset($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+				$value = $this->request->post['custom_field'][$custom_field['custom_field_id']];
+			} else {
+				$value = $custom_field['value'];
+			}
+			
+			$this->data['custom_fields'][] = array(
+				'custom_field_id' => $custom_field['custom_field_id'],
+				'name'            => $custom_field['name'],
+				'type'            => $custom_field['type'],
+				'value'           => $value,
+				'location'        => $custom_field['location'],
+				'position'        => $custom_field['position']
+			);
+		} 
 						
 		if (isset($this->request->post['address_1'])) {
     		$this->data['address_1'] = $this->request->post['address_1'];

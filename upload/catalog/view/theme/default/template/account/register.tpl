@@ -177,7 +177,7 @@
     <?php } ?>
   </form>
   <?php echo $content_bottom; ?></div>
-<table>
+<table style="dsiplay: none;">
   <?php foreach ($custom_fields as $custom_field) { ?>
   <?php if ($custom_field['type'] == 'text') { ?>
   <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
@@ -213,11 +213,16 @@
     <td><?php echo $custom_field['name']; ?>:</td>
     <td><input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" class="datetime" /></td>
   </tr>
-  <?php } ?>    
+  <?php } ?>
+  
+  
+    
   <?php } ?>
 </table>
-<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
 <script type="text/javascript"><!--
+
+
+
 $('select[name=\'customer_group_id\']').live('change', function() {
 	var customer_group = [];
 	
@@ -236,16 +241,7 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 	<?php } ?>
 		
 	
-	if ($.browser.msie && $.browser.version == 6) {
-		$('.date, .datetime, .time').bgIframe();
-	}
 
-	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
-	$('.datetime').datetimepicker({
-		dateFormat: 'yy-mm-dd',
-		timeFormat: 'h:m'
-	});
-	$('.time').timepicker({timeFormat: 'h:m'});
 	
 	if (customer_group[this.value]) {
 		if (customer_group[this.value]['company_id_display'] == '1') {
@@ -272,6 +268,8 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 			$('#tax-id-required').hide();
 		}	
 	}
+	
+
 });
 
 $('select[name=\'customer_group_id\']').trigger('change');
@@ -320,6 +318,7 @@ $('select[name=\'country_id\']').bind('change', function() {
 
 $('select[name=\'country_id\']').trigger('change');
 //--></script> 
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('.colorbox').colorbox({
@@ -327,5 +326,16 @@ $(document).ready(function() {
 		height: 480
 	});
 });
+
+if ($.browser.msie && $.browser.version == 6) {
+	$('.date, .datetime, .time').bgIframe();
+}
+
+$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+$('.datetime').datetimepicker({
+	dateFormat: 'yy-mm-dd',
+	timeFormat: 'h:m'
+});
+$('.time').timepicker({timeFormat: 'h:m'});
 //--></script> 
 <?php echo $footer; ?>

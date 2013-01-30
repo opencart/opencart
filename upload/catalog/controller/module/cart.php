@@ -71,9 +71,9 @@ class ControllerModuleCart extends Controller {
 			
 			foreach ($product['option'] as $option) {
 				if ($option['type'] != 'file') {
-					$value = $option['option_value'];	
+					$value = $option['value'];	
 				} else {
-					$filename = $this->encryption->decrypt($option['option_value']);
+					$filename = $this->encryption->decrypt($option['value']);
 					
 					$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
 				}				

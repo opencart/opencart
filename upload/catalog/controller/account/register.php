@@ -226,6 +226,14 @@ class ControllerAccountRegister extends Controller {
 		$custom_fields = $this->model_account_custom_field->getCustomFields();
 		 
 		foreach ($custom_fields as $custom_field) {
+			foreach ($option['option_value'] as $option_value) {
+					$option_value_data[] = array(
+						'product_option_value_id' => $option_value['product_option_value_id'],
+						'option_value_id'         => $option_value['option_value_id'],
+						'name'                    => $option_value['name'],
+					);
+			}			
+			
 			if (isset($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
 				$value = $this->request->post['custom_field'][$custom_field['custom_field_id']];
 			} else {
@@ -241,20 +249,6 @@ class ControllerAccountRegister extends Controller {
 				'position'        => $custom_field['position']
 			);
 		} 
-		 
-		// Company ID
-		if (isset($this->request->post['company_id'])) {
-    		$this->data['company_id'] = $this->request->post['company_id'];
-		} else {
-			$this->data['company_id'] = '';
-		}
-		
-		// Tax ID
-		if (isset($this->request->post['tax_id'])) {
-    		$this->data['tax_id'] = $this->request->post['tax_id'];
-		} else {
-			$this->data['tax_id'] = '';
-		}
 						
 		if (isset($this->request->post['address_1'])) {
     		$this->data['address_1'] = $this->request->post['address_1'];

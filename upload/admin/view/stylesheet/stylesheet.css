@@ -112,7 +112,7 @@ label {
 	display: block;
 }
 #menu > ul ul li {
-	padding: 2px;
+	padding: 0px;
 	clear: both;
 }
 #menu > ul .selected .top {
@@ -125,18 +125,15 @@ label {
 	background-repeat:no-repeat;
 }
 #menu > ul li ul ul {
-	margin: -31px 0 0 163px;
+	margin: -29px 0 0 161px;
 }
 #menu > ul li li a {
-	padding: 6px;
-	margin: 1px;
+	padding: 7px;
 	color: #FFFFFF;	
 	width: 147px;
 }
 #menu > ul li li > a:hover {
-	margin: 0px;
-	border: 1px solid #BD4C14;
-	background-color: #391706; 
+	background-color: #C15C2A; 
 }
 
 

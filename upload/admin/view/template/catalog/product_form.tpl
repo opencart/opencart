@@ -383,37 +383,37 @@
               <?php if ($product_option['type'] == 'text') { ?>
               <tr>
                 <td><?php echo $entry_option_value; ?></td>
-                <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" /></td>
+                <td><input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" /></td>
               </tr>
               <?php } ?>
               <?php if ($product_option['type'] == 'textarea') { ?>
               <tr>
                 <td><?php echo $entry_option_value; ?></td>
-                <td><textarea name="product_option[<?php echo $option_row; ?>][option_value]" cols="40" rows="5"><?php echo $product_option['option_value']; ?></textarea></td>
+                <td><textarea name="product_option[<?php echo $option_row; ?>][value]" cols="40" rows="5"><?php echo $product_option['value']; ?></textarea></td>
               </tr>
               <?php } ?>
               <?php if ($product_option['type'] == 'file') { ?>
               <tr style="display: none;">
                 <td><?php echo $entry_option_value; ?></td>
-                <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" /></td>
+                <td><input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" /></td>
               </tr>
               <?php } ?>
               <?php if ($product_option['type'] == 'date') { ?>
               <tr>
                 <td><?php echo $entry_option_value; ?></td>
-                <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" class="date" /></td>
+                <td><input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" class="date" /></td>
               </tr>
               <?php } ?>
               <?php if ($product_option['type'] == 'datetime') { ?>
               <tr>
                 <td><?php echo $entry_option_value; ?></td>
-                <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" class="datetime" /></td>
+                <td><input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" class="datetime" /></td>
               </tr>
               <?php } ?>
               <?php if ($product_option['type'] == 'time') { ?>
               <tr>
                 <td><?php echo $entry_option_value; ?></td>
-                <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" class="time" /></td>
+                <td><input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" class="time" /></td>
               </tr>
               <?php } ?>
             </table>
@@ -1016,42 +1016,42 @@ $('input[name=\'option\']').catcomplete({
 		if (ui.item.type == 'text') {
 			html += '     <tr>';
 			html += '       <td><?php echo $entry_option_value; ?></td>';
-			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" /></td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][value]" value="" /></td>';
 			html += '     </tr>';
 		}
 		
 		if (ui.item.type == 'textarea') {
 			html += '     <tr>';
 			html += '       <td><?php echo $entry_option_value; ?></td>';
-			html += '       <td><textarea name="product_option[' + option_row + '][option_value]" cols="40" rows="5"></textarea></td>';
+			html += '       <td><textarea name="product_option[' + option_row + '][value]" cols="40" rows="5"></textarea></td>';
 			html += '     </tr>';						
 		}
 		 
 		if (ui.item.type == 'file') {
 			html += '     <tr style="display: none;">';
 			html += '       <td><?php echo $entry_option_value; ?></td>';
-			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" /></td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][value]" value="" /></td>';
 			html += '     </tr>';			
 		}
 						
 		if (ui.item.type == 'date') {
 			html += '     <tr>';
 			html += '       <td><?php echo $entry_option_value; ?></td>';
-			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" class="date" /></td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][value]" value="" class="date" /></td>';
 			html += '     </tr>';			
 		}
 		
 		if (ui.item.type == 'datetime') {
 			html += '     <tr>';
 			html += '       <td><?php echo $entry_option_value; ?></td>';
-			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" class="datetime" /></td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][value]" value="" class="datetime" /></td>';
 			html += '     </tr>';			
 		}
 		
 		if (ui.item.type == 'time') {
 			html += '     <tr>';
 			html += '       <td><?php echo $entry_option_value; ?></td>';
-			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" class="time" /></td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][value]" value="" class="time" /></td>';
 			html += '     </tr>';			
 		}
 		

@@ -891,8 +891,8 @@ $('input[name=\'product\']').autocomplete({
 					html += '<select name="option[' + option['product_option_id'] + ']">';
 					html += '<option value=""><?php echo $text_select; ?></option>';
 				
-					for (j = 0; j < option['option_value'].length; j++) {
-						option_value = option['option_value'][j];
+					for (j = 0; j < option['product_option_value'].length; j++) {
+						option_value = option['product_option_value'][j];
 						
 						html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
 						
@@ -919,8 +919,8 @@ $('input[name=\'product\']').autocomplete({
 					html += '<select name="option[' + option['product_option_id'] + ']">';
 					html += '<option value=""><?php echo $text_select; ?></option>';
 				
-					for (j = 0; j < option['option_value'].length; j++) {
-						option_value = option['option_value'][j];
+					for (j = 0; j < option['product_option_value'].length; j++) {
+						option_value = option['product_option_value'][j];
 						
 						html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
 						
@@ -945,8 +945,8 @@ $('input[name=\'product\']').autocomplete({
 					
 					html += option['name'] + '<br />';
 					
-					for (j = 0; j < option['option_value'].length; j++) {
-						option_value = option['option_value'][j];
+					for (j = 0; j < option['product_option_value'].length; j++) {
+						option_value = option['product_option_value'][j];
 						
 						html += '<input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="option-value-' + option_value['product_option_value_id'] + '" />';
 						html += '<label for="option-value-' + option_value['product_option_value_id'] + '">' + option_value['name'];
@@ -974,8 +974,8 @@ $('input[name=\'product\']').autocomplete({
 					html += '<select name="option[' + option['product_option_id'] + ']">';
 					html += '<option value=""><?php echo $text_select; ?></option>';
 				
-					for (j = 0; j < option['option_value'].length; j++) {
-						option_value = option['option_value'][j];
+					for (j = 0; j < option['product_option_value'].length; j++) {
+						option_value = option['product_option_value'][j];
 						
 						html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
 						
@@ -999,7 +999,7 @@ $('input[name=\'product\']').autocomplete({
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['option_value'] + '" />';
+					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
 					html += '</div>';
 					html += '<br />';
 				}
@@ -1012,7 +1012,7 @@ $('input[name=\'product\']').autocomplete({
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<textarea name="option[' + option['product_option_id'] + ']" cols="40" rows="5">' + option['option_value'] + '</textarea>';
+					html += '<textarea name="option[' + option['product_option_id'] + ']" cols="40" rows="5">' + option['value'] + '</textarea>';
 					html += '</div>';
 					html += '<br />';
 				}
@@ -1026,7 +1026,7 @@ $('input[name=\'product\']').autocomplete({
 					
 					html += option['name'] + '<br />';
 					html += '<a id="button-option-' + option['product_option_id'] + '" class="button" onclick="upload(\'' + option['product_option_id'] + '\');"><?php echo $button_upload; ?></a>';
-					html += '<input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['option_value'] + '" />';
+					html += '<input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
 					html += '</div>';
 					html += '<br />';
 				}
@@ -1039,7 +1039,7 @@ $('input[name=\'product\']').autocomplete({
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['option_value'] + '" class="date" />';
+					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" class="date" />';
 					html += '</div>';
 					html += '<br />';
 				}
@@ -1052,7 +1052,7 @@ $('input[name=\'product\']').autocomplete({
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['option_value'] + '" class="datetime" />';
+					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" class="datetime" />';
 					html += '</div>';
 					html += '<br />';						
 				}
@@ -1065,7 +1065,7 @@ $('input[name=\'product\']').autocomplete({
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['option_value'] + '" class="time" />';
+					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" class="time" />';
 					html += '</div>';
 					html += '<br />';						
 				}
@@ -1078,6 +1078,7 @@ $('input[name=\'product\']').autocomplete({
 				dateFormat: 'yy-mm-dd',
 				timeFormat: 'h:m'
 			});
+			
 			$('.time').timepicker({timeFormat: 'h:m'});				
 		} else {
 			$('#option td').remove();
@@ -1102,6 +1103,7 @@ function upload(product_option_id) {
 			beforeSend: function() {
 				$('#button-option-' + product_option_id).after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 				$('#button-option-' + product_option_id).attr('disabled', true);
+				$('#option-' + product_option_id + ' + .error').remove();
 			},	
 			complete: function() {
 				$('.loading').remove();
@@ -1129,7 +1131,6 @@ function upload(product_option_id) {
 	
 	$('input[name=\'file\']').click();
 }
-
 //--></script> 
 <script type="text/javascript"><!--
 $('select[name=\'payment\']').bind('change', function() {

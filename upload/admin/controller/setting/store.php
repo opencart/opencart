@@ -962,7 +962,7 @@ class ControllerSettingStore extends Controller {
 		}
 		
 		if (!$this->request->post['config_list_description_limit']) {
-			$this->error['list_description_limit'] = $this->language->get('error_desc_limit');
+			$this->error['list_description_limit'] = $this->language->get('error_limit');
 		}
 		
 		if ($this->error && !isset($this->error['warning'])) {

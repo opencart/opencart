@@ -76,7 +76,7 @@ class Pagination {
 		if ($page < $num_pages) {
 			$output .= ' <a href="' . str_replace('{page}', $page + 1, $this->url) . '">' . $this->text_next . '</a> <a href="' . str_replace('{page}', $num_pages, $this->url) . '">' . $this->text_last . '</a> ';
 		}
-		
+
 		$find = array(
 			'{start}',
 			'{end}',

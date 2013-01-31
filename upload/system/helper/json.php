@@ -38,7 +38,7 @@ if (!function_exists('json_encode')) {
 
 					# Triple 
 					$c3 = ord($string[++$i]);
-					
+
 					if (($c1 & 16) === 0) {
 						$json .= sprintf("\\u%04x", (($c1 - 224) <<12) + (($c2 - 128) << 6) + ($c3 - 128));
 
@@ -107,7 +107,7 @@ if (!function_exists('json_decode')) {
 		$json = strtr($json, $s2m);
 
 		$a = ($assoc) ? '' : '(object) ';
-		
+
 		$data = array(
 			':' => '=>',
 			'[' => 'array(',

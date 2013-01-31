@@ -19,7 +19,7 @@ abstract class Controller {
 	public function __set($key, $value) {
 		$this->registry->set($key, $value);
 	}
-	
+
 	protected function forward($route, $args = array()) {
 		return new Action($route, $args);
 	}

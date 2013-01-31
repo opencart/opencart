@@ -11,7 +11,7 @@ final class Registry {
 	}
 
 	public function has($key) {
-    	return isset($this->data[$key]);
-  	}
+		return isset($this->data[$key]);
+	}
 }
 ?>

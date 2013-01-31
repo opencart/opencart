@@ -33,7 +33,7 @@ class Cache {
 
 		fwrite($handle, serialize($value));
 
-		close($handle);
+		fclose($handle);
 	}
 
 	public function delete($key) {

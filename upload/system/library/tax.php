@@ -46,9 +46,9 @@ final class Tax {
 		);
 	}
 							
-  	public function calculate($value, $tax_class_id, $calculate = true) {
+  	public function calculate($value, $tax_class_id, $calculate = true, $include_fixed_type = true) {
 		if ($tax_class_id && $calculate) {
-			$amount = $this->getTax($value, $tax_class_id);
+			$amount = $this->getTax($value, $tax_class_id, $include_fixed_type);
 				
 			return $value + $amount;
 		} else {
@@ -56,12 +56,13 @@ final class Tax {
     	}
   	}
 	
-  	public function getTax($value, $tax_class_id) {
+  	public function getTax($value, $tax_class_id, $include_fixed_type = true) {
 		$amount = 0;
 			
 		$tax_rates = $this->getRates($value, $tax_class_id);
 		
 		foreach ($tax_rates as $tax_rate) {
+			if ($tax_rate['type'] == 'F' && !$include_fixed_type) continue;
 			$amount += $tax_rate['amount'];
 		}
 				

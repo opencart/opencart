@@ -357,7 +357,7 @@ $('#button-cart').bind('click', function() {
 			if (json['error']) {
 				if (json['error']['option']) {
 					for (i in json['error']['option']) {
-						$('#option-' + i).after('<span class="error">' + json['error']['option'][i] + '</span>');
+						$('#option' + i).after('<span class="error">' + json['error']['option'][i] + '</span>');
 					}
 				}
 			} 

@@ -88,7 +88,8 @@ class ControllerAccountRegister extends Controller {
     	$this->data['entry_confirm'] = $this->language->get('entry_confirm');
 
 		$this->data['button_continue'] = $this->language->get('button_continue');
-    
+    	$this->data['button_upload'] = $this->language->get('button_upload');
+	
 		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -230,7 +231,7 @@ class ControllerAccountRegister extends Controller {
 			
 			foreach ($custom_field['custom_field_value'] as $option_value) {
 					$custom_field_value_data[] = array(
-						'custom_field_id' => $option_value['custom_field_id'],
+						'custom_field_value_id' => $option_value['custom_field_value_id'],
 						'name'            => $option_value['name']
 					);
 			}			

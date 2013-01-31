@@ -177,52 +177,79 @@
     <?php } ?>
   </form>
   <?php echo $content_bottom; ?></div>
-<table style="dsiplay: none;">
+<table>
   <?php foreach ($custom_fields as $custom_field) { ?>
+  <?php if ($custom_field['type'] == 'select') { ?>
+  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
+    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
+    <td><select name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]">
+        <option value=""><?php echo $text_select; ?></option>
+        <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+        <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></option>
+        <?php } ?>
+      </select></td>
+  </tr>
+  <?php } ?>
+  <?php if ($custom_field['type'] == 'radio') { ?>
+  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
+    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
+    <td><?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+      <input type="radio" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['custom_field_value_id']; ?>" id="custom-field-value<?php echo $custom_field_value['custom_field_value_id']; ?>" />
+      <label for="custom-field-value<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field['name']; ?></label>
+      <br />
+      <?php } ?></td>
+  </tr>
+  <?php } ?>
+  <?php if ($custom_field['type'] == 'checkbox') { ?>
+  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
+    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
+    <td><?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+      <input type="checkbox" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" id="custom-field-value<?php echo $custom_field_value['custom_field_value_id']; ?>" />
+      <label for="custom-field-value<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></label>
+      <br />
+      <?php } ?></td>
+  </tr>
+  <?php } ?>
   <?php if ($custom_field['type'] == 'text') { ?>
   <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
-    <td id="custom-field<?php echo $custom_field['custom_field_id']; ?>"></td>
-    <td><?php echo $custom_field['name']; ?>:</td>
+    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
     <td><input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" /></td>
   </tr>
   <?php } ?>
   <?php if ($custom_field['type'] == 'textarea') { ?>
   <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
-    <td id="custom-field<?php echo $custom_field['custom_field_id']; ?>"></td>
-    <td><?php echo $custom_field['name']; ?>:</td>
+    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
     <td><textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" cols="40" rows="5"><?php echo $custom_field['value']; ?></textarea></td>
+  </tr>
+  <?php } ?>
+  <?php if ($custom_field['type'] == 'file') { ?>
+  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
+    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
+    <td><input type="button" value="<?php echo $button_upload; ?>" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="button" onclick="$('input[name=\'file\']').click();" />
+      <input type="hidden" name="custom_field[<?php echo $option['custom_field_id']; ?>]" value="" /></td>
   </tr>
   <?php } ?>
   <?php if ($custom_field['type'] == 'date') { ?>
   <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
-    <td id="custom-field<?php echo $custom_field['custom_field_id']; ?>"></td>
-    <td><?php echo $custom_field['name']; ?>:</td>
+    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
     <td><input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" class="date" /></td>
   </tr>
   <?php } ?>
   <?php if ($custom_field['type'] == 'time') { ?>
   <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
-    <td id="custom-field<?php echo $custom_field['custom_field_id']; ?>"></td>
-    <td><?php echo $custom_field['name']; ?>:</td>
+    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
     <td><input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" class="time" /></td>
   </tr>
   <?php } ?>
   <?php if ($custom_field['type'] == 'datetime') { ?>
   <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
-    <td id="custom-field<?php echo $custom_field['custom_field_id']; ?>"></td>
-    <td><?php echo $custom_field['name']; ?>:</td>
+    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
     <td><input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" class="datetime" /></td>
   </tr>
   <?php } ?>
-  
-  
-    
   <?php } ?>
 </table>
 <script type="text/javascript"><!--
-
-
-
 $('select[name=\'customer_group_id\']').live('change', function() {
 	var customer_group = [];
 	
@@ -336,6 +363,7 @@ $('.datetime').datetimepicker({
 	dateFormat: 'yy-mm-dd',
 	timeFormat: 'h:m'
 });
+
 $('.time').timepicker({timeFormat: 'h:m'});
 //--></script> 
 <?php echo $footer; ?>

@@ -226,11 +226,12 @@ class ControllerAccountRegister extends Controller {
 		$custom_fields = $this->model_account_custom_field->getCustomFields();
 		 
 		foreach ($custom_fields as $custom_field) {
-			foreach ($option['option_value'] as $option_value) {
-					$option_value_data[] = array(
-						'product_option_value_id' => $option_value['product_option_value_id'],
-						'option_value_id'         => $option_value['option_value_id'],
-						'name'                    => $option_value['name'],
+			$custom_field_value_data = array();
+			
+			foreach ($custom_field['custom_field_value'] as $option_value) {
+					$custom_field_value_data[] = array(
+						'custom_field_id' => $option_value['custom_field_id'],
+						'name'            => $option_value['name']
 					);
 			}			
 			
@@ -241,12 +242,13 @@ class ControllerAccountRegister extends Controller {
 			}
 			
 			$this->data['custom_fields'][] = array(
-				'custom_field_id' => $custom_field['custom_field_id'],
-				'name'            => $custom_field['name'],
-				'type'            => $custom_field['type'],
-				'value'           => $value,
-				'location'        => $custom_field['location'],
-				'position'        => $custom_field['position']
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $custom_field_value_data,
+				'name'               => $custom_field['name'],
+				'type'               => $custom_field['type'],
+				'value'              => $value,
+				'location'           => $custom_field['location'],
+				'position'           => $custom_field['position']
 			);
 		} 
 						

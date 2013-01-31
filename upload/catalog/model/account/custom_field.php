@@ -20,11 +20,13 @@ class ModelAccountCustomField extends Model {
 			}
 			
 			$custom_field_data[] = array(
-				'custom_field_id' => $custom_field['custom_field_id'],
-				'name'            => $custom_field['name'],
-				'value'           => $value,
-				'location'        => $custom_field['location'],
-				'position'        => $custom_field['position']
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $custom_field_value_data,
+				'name'               => $custom_field['name'],
+				'type'               => $custom_field['type'],
+				'value'              => $custom_field['value'],
+				'location'           => $custom_field['location'],
+				'position'           => $custom_field['position']
 			);			
 		}
 		

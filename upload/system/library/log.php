@@ -13,7 +13,7 @@ class Log {
 
 		fwrite($handle, date('Y-m-d G:i:s') . ' - ' . $message . "\n");
 
-		fclose($handle); 
+		fclose($handle);
 	}
 }
 ?>

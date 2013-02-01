@@ -3,7 +3,7 @@ class Cart {
 	private $config;
 	private $db;
 	private $data = array();
-	
+
 	public function __construct($registry) {
 		$this->config = $registry->get('config');
 		$this->customer = $registry->get('customer');
@@ -83,7 +83,7 @@ class Cart {
 										'price'                   => $option_value_query->row['price'],
 										'price_prefix'            => $option_value_query->row['price_prefix'],
 										'points'                  => $option_value_query->row['points'],
-										'points_prefix'           => $option_value_query->row['points_prefix'],									
+										'points_prefix'           => $option_value_query->row['points_prefix'],
 										'weight'                  => $option_value_query->row['weight'],
 										'weight_prefix'           => $option_value_query->row['weight_prefix']
 									);
@@ -197,7 +197,7 @@ class Cart {
 						$reward = 0;
 					}
 
-					// Downloads		
+					// Downloads
 					$download_data = array();
 
 					$download_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_download p2d LEFT JOIN " . DB_PREFIX . "download d ON (p2d.download_id = d.download_id) LEFT JOIN " . DB_PREFIX . "download_description dd ON (d.download_id = dd.download_id) WHERE p2d.product_id = '" . (int)$product_id . "' AND dd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
@@ -362,33 +362,33 @@ class Cart {
 
 	public function hasStock() {
 		$stock = true;
-		
+
 		foreach ($this->getProducts() as $product) {
 			if (!$product['stock']) {
 				$stock = false;
 			}
 		}
-		
+
 		return $stock;
 	}
 
 	public function hasShipping() {
 		$shipping = false;
-		
+
 		foreach ($this->getProducts() as $product) {
 			if ($product['shipping']) {
 				$shipping = true;
-				
+
 				break;
 			}
 		}
-		
+
 		return $shipping;
 	}
 
 	public function hasDownload() {
 		$download = false;
-		
+
 		foreach ($this->getProducts() as $product) {
 			if ($product['download']) {
 				$download = true;

@@ -509,8 +509,6 @@ class ControllerSaleOrder extends Controller {
 		$this->data['entry_affiliate'] = $this->language->get('entry_affiliate');
 		$this->data['entry_address'] = $this->language->get('entry_address');
 		$this->data['entry_company'] = $this->language->get('entry_company');
-		$this->data['entry_company_id'] = $this->language->get('entry_company_id');
-		$this->data['entry_tax_id'] = $this->language->get('entry_tax_id');
 		$this->data['entry_address_1'] = $this->language->get('entry_address_1');
 		$this->data['entry_address_2'] = $this->language->get('entry_address_2');
 		$this->data['entry_city'] = $this->language->get('entry_city');
@@ -914,22 +912,6 @@ class ControllerSaleOrder extends Controller {
 			$this->data['payment_company'] = $order_info['payment_company'];
 		} else {
       		$this->data['payment_company'] = '';
-    	}
-		
-    	if (isset($this->request->post['payment_company_id'])) {
-      		$this->data['payment_company_id'] = $this->request->post['payment_company_id'];
-    	} elseif (!empty($order_info)) { 
-			$this->data['payment_company_id'] = $order_info['payment_company_id'];
-		} else {
-      		$this->data['payment_company_id'] = '';
-    	}
-		
-    	if (isset($this->request->post['payment_tax_id'])) {
-      		$this->data['payment_tax_id'] = $this->request->post['payment_tax_id'];
-    	} elseif (!empty($order_info)) { 
-			$this->data['payment_tax_id'] = $order_info['payment_tax_id'];
-		} else {
-      		$this->data['payment_tax_id'] = '';
     	}
 				
     	if (isset($this->request->post['payment_address_1'])) {
@@ -1375,8 +1357,6 @@ class ControllerSaleOrder extends Controller {
 			$this->data['text_firstname'] = $this->language->get('text_firstname');
 			$this->data['text_lastname'] = $this->language->get('text_lastname');
 			$this->data['text_company'] = $this->language->get('text_company');
-			$this->data['text_company_id'] = $this->language->get('text_company_id');
-			$this->data['text_tax_id'] = $this->language->get('text_tax_id');
 			$this->data['text_address_1'] = $this->language->get('text_address_1');
 			$this->data['text_address_2'] = $this->language->get('text_address_2');
 			$this->data['text_city'] = $this->language->get('text_city');
@@ -1612,8 +1592,6 @@ class ControllerSaleOrder extends Controller {
 			$this->data['payment_firstname'] = $order_info['payment_firstname'];
 			$this->data['payment_lastname'] = $order_info['payment_lastname'];
 			$this->data['payment_company'] = $order_info['payment_company'];
-			$this->data['payment_company_id'] = $order_info['payment_company_id'];
-			$this->data['payment_tax_id'] = $order_info['payment_tax_id'];
 			$this->data['payment_address_1'] = $order_info['payment_address_1'];
 			$this->data['payment_address_2'] = $order_info['payment_address_2'];
 			$this->data['payment_city'] = $order_info['payment_city'];
@@ -2358,8 +2336,6 @@ class ControllerSaleOrder extends Controller {
 		$this->data['text_telephone'] = $this->language->get('text_telephone');
 		$this->data['text_fax'] = $this->language->get('text_fax');
 		$this->data['text_to'] = $this->language->get('text_to');
-		$this->data['text_company_id'] = $this->language->get('text_company_id');
-		$this->data['text_tax_id'] = $this->language->get('text_tax_id');		
 		$this->data['text_ship_to'] = $this->language->get('text_ship_to');
 		$this->data['text_payment_method'] = $this->language->get('text_payment_method');
 		$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
@@ -2537,8 +2513,6 @@ class ControllerSaleOrder extends Controller {
 					'shipping_address'   => $shipping_address,
 					'shipping_method'    => $order_info['shipping_method'],
 					'payment_address'    => $payment_address,
-					'payment_company_id' => $order_info['payment_company_id'],
-					'payment_tax_id'     => $order_info['payment_tax_id'],
 					'payment_method'     => $order_info['payment_method'],
 					'product'            => $product_data,
 					'voucher'            => $voucher_data,

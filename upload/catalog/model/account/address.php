@@ -53,6 +53,7 @@ class ModelAccountAddress extends Model {
 			}		
 			
 			$address_data = array(
+				'address_id'     => $address_query->row['address_id'],
 				'firstname'      => $address_query->row['firstname'],
 				'lastname'       => $address_query->row['lastname'],
 				'company'        => $address_query->row['company'],

@@ -171,18 +171,6 @@
             <td><?php echo $text_company; ?></td>
             <td><?php echo $payment_company; ?></td>
           </tr>
-          <?php } ?>
-          <?php if ($payment_company_id) { ?>
-          <tr>
-            <td><?php echo $text_company_id; ?></td>
-            <td><?php echo $payment_company_id; ?></td>
-          </tr>
-          <?php } ?>          
-          <?php if ($payment_tax_id) { ?>
-          <tr>
-            <td><?php echo $text_tax_id; ?></td>
-            <td><?php echo $payment_tax_id; ?></td>
-          </tr>
           <?php } ?>            
           <tr>
             <td><?php echo $text_address_1; ?></td>

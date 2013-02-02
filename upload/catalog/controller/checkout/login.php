@@ -67,30 +67,18 @@ class ControllerCheckoutLogin extends Controller {
 		if (!$json) {
 			unset($this->session->data['guest']);
 				
-			// Default Addresses
 			$this->load->model('account/address');
 				
-			$address_info = $this->model_account_address->getAddress($this->customer->getAddressId());
-									
-			if ($address_info) {
-				if ($this->config->get('config_tax_customer') == 'shipping') {
-					$this->session->data['shipping_country_id'] = $address_info['country_id'];
-					$this->session->data['shipping_zone_id'] = $address_info['zone_id'];
-					$this->session->data['shipping_postcode'] = $address_info['postcode'];	
-				}
-				
+			if ($address_info) {				
 				if ($this->config->get('config_tax_customer') == 'payment') {
-					$this->session->data['payment_country_id'] = $address_info['country_id'];
-					$this->session->data['payment_zone_id'] = $address_info['zone_id'];
+					$this->session->data['payment_addess'] = $this->model_account_address->getAddress($this->customer->getAddressId());						
 				}
-			} else {
-				unset($this->session->data['shipping_country_id']);	
-				unset($this->session->data['shipping_zone_id']);	
-				unset($this->session->data['shipping_postcode']);
-				unset($this->session->data['payment_country_id']);	
-				unset($this->session->data['payment_zone_id']);	
-			}					
 				
+				if ($this->config->get('config_tax_customer') == 'shipping') {
+					$this->session->data['shipping_addess'] = $this->model_account_address->getAddress($this->customer->getAddressId());	
+				}	
+			}	
+			
 			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		}
 					

@@ -55,7 +55,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_localisation'] = $this->language->get('text_localisation');
 		$this->data['text_logout'] = $this->language->get('text_logout');
 		$this->data['text_contact'] = $this->language->get('text_contact');
-		$this->data['text_manager'] = $this->language->get('text_manager');
+		$this->data['text_modification'] = $this->language->get('text_modification');
 		$this->data['text_manufacturer'] = $this->language->get('text_manufacturer');
 		$this->data['text_module'] = $this->language->get('text_module');
 		$this->data['text_option'] = $this->language->get('text_option');
@@ -93,6 +93,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_tax'] = $this->language->get('text_tax');
 		$this->data['text_tax_class'] = $this->language->get('text_tax_class');
 		$this->data['text_tax_rate'] = $this->language->get('text_tax_rate');
+		$this->data['text_template'] = $this->language->get('text_template');
 		$this->data['text_total'] = $this->language->get('text_total');
 		$this->data['text_user'] = $this->language->get('text_user');
 		$this->data['text_user_group'] = $this->language->get('text_user_group');

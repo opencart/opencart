@@ -112,17 +112,6 @@
               <td><?php echo $entry_company; ?></td>
               <td><input type="text" name="payment_company" value="<?php echo $payment_company; ?>" /></td>
             </tr>
-            <tr id="company-id-display">
-              <td><span id="company-id-required" class="required">*</span> <?php echo $entry_company_id; ?></td>
-              <td><input type="text" name="payment_company_id" value="<?php echo $payment_company_id; ?>" /></td>
-            </tr>
-            <tr id="tax-id-display">
-              <td><span id="tax-id-required" class="required">*</span> <?php echo $entry_tax_id; ?></td>
-              <td><input type="text" name="payment_tax_id" value="<?php echo $payment_tax_id; ?>" />
-                <?php if ($error_payment_tax_id) { ?>
-                <span class="error"><?php echo $error_payment_tax_id; ?></span>
-                <?php } ?></td>
-            </tr>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
               <td><input type="text" name="payment_address_1" value="<?php echo $payment_address_1; ?>" />
@@ -766,8 +755,6 @@ $('select[name=\'payment_address\']').bind('change', function() {
 				$('input[name=\'payment_firstname\']').attr('value', json['firstname']);
 				$('input[name=\'payment_lastname\']').attr('value', json['lastname']);
 				$('input[name=\'payment_company\']').attr('value', json['company']);
-				$('input[name=\'payment_company_id\']').attr('value', json['company_id']);
-				$('input[name=\'payment_tax_id\']').attr('value', json['tax_id']);
 				$('input[name=\'payment_address_1\']').attr('value', json['address_1']);
 				$('input[name=\'payment_address_2\']').attr('value', json['address_2']);
 				$('input[name=\'payment_city\']').attr('value', json['city']);

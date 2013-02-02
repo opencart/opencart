@@ -40,16 +40,6 @@
     <br />
     <br />
   </div>
-  <div id="company-id-display"><span id="company-id-required" class="required">*</span> <?php echo $entry_company_id; ?><br />
-    <input type="text" name="company_id" value="<?php echo $company_id; ?>" class="large-field" />
-    <br />
-    <br />
-  </div>
-  <div id="tax-id-display"><span id="tax-id-required" class="required">*</span> <?php echo $entry_tax_id; ?><br />
-    <input type="text" name="tax_id" value="<?php echo $tax_id; ?>" class="large-field" />
-    <br />
-    <br />
-  </div>
   <span class="required">*</span> <?php echo $entry_address_1; ?><br />
   <input type="text" name="address_1" value="<?php echo $address_1; ?>" class="large-field" />
   <br />

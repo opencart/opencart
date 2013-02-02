@@ -122,31 +122,31 @@ class ModelAccountCustomer extends Model {
 
 		$implode = array();
 		
-		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
+		if (isset($data['filter_name']) && $data['filter_name'] !== null) {
 			$implode[] = "LCASE(CONCAT(c.firstname, ' ', c.lastname)) LIKE '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "%'";
 		}
 		
-		if (isset($data['filter_email']) && !is_null($data['filter_email'])) {
+		if (isset($data['filter_email']) && $data['filter_email'] !== null) {
 			$implode[] = "LCASE(c.email) = '" . $this->db->escape(utf8_strtolower($data['filter_email'])) . "'";
 		}
 		
-		if (isset($data['filter_customer_group_id']) && !is_null($data['filter_customer_group_id'])) {
+		if (isset($data['filter_customer_group_id']) && $data['filter_customer_group_id'] !== null) {
 			$implode[] = "cg.customer_group_id = '" . $this->db->escape($data['filter_customer_group_id']) . "'";
 		}	
 		
-		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+		if (isset($data['filter_status']) && $data['filter_status'] !== null) {
 			$implode[] = "c.status = '" . (int)$data['filter_status'] . "'";
 		}	
 		
-		if (isset($data['filter_approved']) && !is_null($data['filter_approved'])) {
+		if (isset($data['filter_approved']) && $data['filter_approved'] !== null) {
 			$implode[] = "c.approved = '" . (int)$data['filter_approved'] . "'";
 		}	
 			
-		if (isset($data['filter_ip']) && !is_null($data['filter_ip'])) {
+		if (isset($data['filter_ip']) && $data['filter_ip'] !== null) {
 			$implode[] = "c.customer_id IN (SELECT customer_id FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape($data['filter_ip']) . "')";
 		}	
 				
-		if (isset($data['filter_date_added']) && !is_null($data['filter_date_added'])) {
+		if (isset($data['filter_date_added']) && $data['filter_date_added'] !== null) {
 			$implode[] = "DATE(c.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 		

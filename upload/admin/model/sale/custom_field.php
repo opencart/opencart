@@ -86,7 +86,7 @@ class ModelSaleCustomField extends Model {
 	public function getCustomFields($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field` cf LEFT JOIN " . DB_PREFIX . "custom_field_description cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cfd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 		
-		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
+		if (isset($data['filter_name']) && $data['filter_name'] !== null) {
 			$sql .= " AND cfd.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
 		}
 

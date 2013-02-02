@@ -4,7 +4,7 @@ function utf8_strlen($string) {
 }
 
 function utf8_strpos($string, $needle, $offset = NULL) {
-	if (is_null($offset)) {
+	if ($offset === null) {
 		$data = explode($needle, $string, 2);
 
 		if (count($data) > 1) {
@@ -30,7 +30,7 @@ function utf8_strpos($string, $needle, $offset = NULL) {
 }
 
 function utf8_strrpos($string, $needle, $offset = NULL) {
-	if (is_null($offset)) {
+	if ($offset === null) {
 		$data = explode($needle, $string);
 
 		if (count($data) > 1) {
@@ -65,7 +65,7 @@ function utf8_substr($string, $offset, $length = null) {
 	$string = (string)$string;
 	$offset = (int)$offset;
 
-	if (!is_null($length)) {
+	if ($length !== null) {
 		$length = (int)$length;
 	}
 
@@ -108,7 +108,7 @@ function utf8_substr($string, $offset, $length = null) {
 	}
 
 	// establish a pattern for length
-	if (is_null($length)) {
+	if ($length === null) {
 		$Lp = '(.*)$';
 	} else {
 		if (!isset($strlen)) {
@@ -162,7 +162,7 @@ function utf8_substr($string, $offset, $length = null) {
 function utf8_strtolower($string) {
 	static $UTF8_UPPER_TO_LOWER = NULL;
 
-	if (is_null($UTF8_UPPER_TO_LOWER)) {
+	if ($UTF8_UPPER_TO_LOWER === null) {
 		$UTF8_UPPER_TO_LOWER = array(
 			0x0041 => 0x0061, 
 			0x03A6 => 0x03C6, 
@@ -400,7 +400,7 @@ function utf8_strtolower($string) {
 function utf8_strtoupper($string) {
 	static $UTF8_LOWER_TO_UPPER = NULL;
 
-	if (is_null($UTF8_LOWER_TO_UPPER)) {
+	if ($UTF8_LOWER_TO_UPPER === null) {
 		$UTF8_LOWER_TO_UPPER = array(
 			0x0061 => 0x0041, 
 			0x03C6 => 0x03A6, 

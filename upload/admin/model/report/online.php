@@ -5,11 +5,11 @@ class ModelReportOnline extends Model {
 
 		$implode = array();
 				
-		if (isset($data['filter_ip']) && !is_null($data['filter_ip'])) {
+		if (isset($data['filter_ip']) && $data['filter_ip'] !== null) {
 			$implode[] = "co.ip LIKE '" . $this->db->escape($data['filter_ip']) . "'";
 		}
 		
-		if (isset($data['filter_customer']) && !is_null($data['filter_customer'])) {
+		if (isset($data['filter_customer']) && $data['filter_customer'] !== null) {
 			$implode[] = "co.customer_id > 0 AND CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "'";
 		}
 				
@@ -41,11 +41,11 @@ class ModelReportOnline extends Model {
 		
 		$implode = array();
 		
-		if (isset($data['filter_ip']) && !is_null($data['filter_ip'])) {
+		if (isset($data['filter_ip']) && $data['filter_ip'] !== null) {
 			$implode[] = "co.ip LIKE '" . $this->db->escape($data['filter_ip']) . "'";
 		}
 		
-		if (isset($data['filter_customer']) && !is_null($data['filter_customer'])) {
+		if (isset($data['filter_customer']) && $data['filter_customer'] !== null) {
 			$implode[] = "co.customer_id > 0 AND CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "'";
 		}
 		

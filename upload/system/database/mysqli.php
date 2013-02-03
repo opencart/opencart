@@ -19,7 +19,8 @@ final class MySQLi {
 		$result = $this->mysqli->query($sql);
 
 		if ($this->mysqli->errno) {
-		//$mysqli->errno
+			trigger_error('Error: ' . $this->mysqli->error . '<br />Error No: ' . $this->mysqli->errno . '<br />' . $sql);
+			exit();
 		}
 
 		if (is_resource($resource)) {
@@ -45,10 +46,6 @@ final class MySQLi {
 			return $query;	
 		} else {
 			return true;
-		}
-		} else {
-			trigger_error('Error: ' . mysql_error($this->link) . '<br />Error No: ' . mysql_errno($this->link) . '<br />' . $sql);
-			exit();
 		}
 	}
 	

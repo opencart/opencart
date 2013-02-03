@@ -75,15 +75,11 @@ class ControllerReportProductPurchased extends Controller {
 				
 		$product_total = $this->model_report_product->getTotalPurchased($data);
 
-		$results = $this->model_report_product->getPurchased($data);
-		
-		foreach ($results as $result) {
-			$this->data['products'][] = array(
-				'name'       => $result['name'],
-				'model'      => $result['model'],
-				'quantity'   => $result['quantity'],
-				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency'))
-			);
+		$this->data['products'] = $this->model_report_product->getPurchased($data);
+
+		foreach ($this->data['products'] as $key => $result) {
+			$this->data['products'][$key]['total'] = 
+				$this->currency->format($result['total'], $this->config->get('config_currency'));
 		}
 				
 		$this->data['heading_title'] = $this->language->get('heading_title');

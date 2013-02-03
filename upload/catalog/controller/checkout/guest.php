@@ -231,6 +231,8 @@ class ControllerCheckoutGuest extends Controller {
 		}
 			
 		if (!$json) {
+			$this->session->data['account'] = 'guest';
+			
 			$this->session->data['guest']['customer_group_id'] = $customer_group_id;
 			$this->session->data['guest']['firstname'] = $this->request->post['firstname'];
 			$this->session->data['guest']['lastname'] = $this->request->post['lastname'];
@@ -316,8 +318,6 @@ class ControllerCheckoutGuest extends Controller {
 					$this->session->data['shipping_address']['zone_code'] = '';
 				}
 			}
-			
-			$this->session->data['account'] = 'guest';
 			
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);

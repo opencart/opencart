@@ -335,11 +335,11 @@ class ModelCatalogProduct extends Model {
 			$sql .= " AND p.price LIKE '" . $this->db->escape($data['filter_price']) . "%'";
 		}
 		
-		if (isset($data['filter_quantity']) && !is_null($data['filter_quantity'])) {
+		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== null) {
 			$sql .= " AND p.quantity = '" . $this->db->escape($data['filter_quantity']) . "'";
 		}
 		
-		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+		if (isset($data['filter_status']) && $data['filter_status'] !== null) {
 			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
 		}
 		
@@ -588,11 +588,11 @@ class ModelCatalogProduct extends Model {
 			$sql .= " AND p.price LIKE '" . $this->db->escape($data['filter_price']) . "%'";
 		}
 		
-		if (isset($data['filter_quantity']) && !is_null($data['filter_quantity'])) {
+		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== null) {
 			$sql .= " AND p.quantity = '" . $this->db->escape($data['filter_quantity']) . "'";
 		}
 		
-		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+		if (isset($data['filter_status']) && $data['filter_status'] !== null) {
 			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
 		}
 		

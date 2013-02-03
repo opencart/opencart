@@ -5,13 +5,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 		
 		$this->load->model('account/address');
 		
-		if ($this->customer->isLogged() && isset($this->session->data['payment_address_id'])) {
-			$payment_address = $this->model_account_address->getAddress($this->session->data['payment_address_id']);		
-		} elseif (isset($this->session->data['guest'])) {
-			$payment_address = $this->session->data['guest']['payment'];
-		}	
-		
-		if (!empty($payment_address)) {
+		if (!empty($this->session->data['payment_address'])) {
 			// Totals
 			$total_data = array();					
 			$total = 0;
@@ -48,7 +42,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 				if ($this->config->get($result['code'] . '_status')) {
 					$this->load->model('payment/' . $result['code']);
 					
-					$method = $this->{'model_payment_' . $result['code']}->getMethod($payment_address, $total); 
+					$method = $this->{'model_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total); 
 					
 					if ($method) {
 						$method_data[$result['code']] = $method;
@@ -133,14 +127,8 @@ class ControllerCheckoutPaymentMethod extends Controller {
 		
 		// Validate if payment address has been set.
 		$this->load->model('account/address');
-		
-		if ($this->customer->isLogged() && isset($this->session->data['payment_address_id'])) {
-			$payment_address = $this->model_account_address->getAddress($this->session->data['payment_address_id']);		
-		} elseif (isset($this->session->data['guest'])) {
-			$payment_address = $this->session->data['guest']['payment'];
-		}	
 				
-		if (empty($payment_address)) {
+		if (empty($this->session->data['shipping_address'])) {
 			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		}		
 		

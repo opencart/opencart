@@ -21,7 +21,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		$this->data['button_continue'] = $this->language->get('button_continue');
 
 		if (isset($this->session->data['payment_address']['address_id'])) {
-			$this->data['address_id'] = $this->session->data['payment_address_id']['address_id'];
+			$this->data['address_id'] = $this->session->data['payment_address']['address_id'];
 		} else {
 			$this->data['address_id'] = $this->customer->getAddressId();
 		}

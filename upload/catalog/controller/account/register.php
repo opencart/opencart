@@ -22,12 +22,13 @@ class ControllerAccountRegister extends Controller {
 			
 			unset($this->session->data['guest']);
 			
-			// Default Payment Address
+			// Default Addresses
+			$this->load->model('account/address');
+				
 			if ($this->config->get('config_tax_customer') == 'payment') {
 				$this->session->data['payment_addess'] = $this->model_account_address->getAddress($this->customer->getAddressId());				
 			}
 						
-			// Default Shipping Address
 			if ($this->config->get('config_tax_customer') == 'shipping') {
 				$this->session->data['shipping_addess'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 			}
@@ -372,30 +373,7 @@ class ControllerAccountRegister extends Controller {
     	if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
       		$this->error['telephone'] = $this->language->get('error_telephone');
     	}
-		
-		// Customer Group
-		$this->load->model('account/customer_group');
-		
-		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-			$customer_group_id = $this->request->post['customer_group_id'];
-		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
-		}
-
-		$customer_group = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
-			
-		if ($customer_group) {	
-			// Company ID
-			if ($customer_group['company_id_display'] && $customer_group['company_id_required'] && empty($this->request->post['company_id'])) {
-				$this->error['company_id'] = $this->language->get('error_company_id');
-			}
-			
-			// Tax ID 
-			if ($customer_group['tax_id_display'] && $customer_group['tax_id_required'] && empty($this->request->post['tax_id'])) {
-				$this->error['tax_id'] = $this->language->get('error_tax_id');
-			}						
-		}
-		
+				
     	if ((utf8_strlen($this->request->post['address_1']) < 3) || (utf8_strlen($this->request->post['address_1']) > 128)) {
       		$this->error['address_1'] = $this->language->get('error_address_1');
     	}

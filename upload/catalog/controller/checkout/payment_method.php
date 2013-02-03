@@ -3,9 +3,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
   	public function index() {
 		$this->language->load('checkout/checkout');
 		
-		$this->load->model('account/address');
-		
-		if (!empty($this->session->data['payment_address'])) {
+		if (isset($this->session->data['payment_address'])) {
 			// Totals
 			$total_data = array();					
 			$total = 0;
@@ -126,9 +124,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 		$json = array();
 		
 		// Validate if payment address has been set.
-		$this->load->model('account/address');
-				
-		if (empty($this->session->data['shipping_address'])) {
+		if (!isset($this->session->data['payment_address'])) {
 			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		}		
 		

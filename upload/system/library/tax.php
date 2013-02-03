@@ -10,14 +10,14 @@ final class Tax {
 		$this->db = $registry->get('db');	
 		$this->session = $registry->get('session');
 
-		if (isset($this->session->data['shipping_country_id']) || isset($this->session->data['shipping_zone_id'])) {
-			$this->setShippingAddress($this->session->data['shipping_country_id'], $this->session->data['shipping_zone_id']);
+		if (isset($this->session->data['shipping_addess'])) {
+			$this->setShippingAddress($this->session->data['shipping_addess']['country_id'], $this->session->data['shipping_addess']['zone_id']);
 		} elseif ($this->config->get('config_tax_default') == 'shipping') {
 			$this->setShippingAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}
 
-		if (isset($this->session->data['payment_country_id']) || isset($this->session->data['payment_zone_id'])) {
-			$this->setPaymentAddress($this->session->data['payment_country_id'], $this->session->data['payment_zone_id']);
+		if (isset($this->session->data['payment_addess'])) {
+			$this->setPaymentAddress($this->session->data['payment_addess']['country_id'], $this->session->data['payment_addess']['zone_id']);
 		} elseif ($this->config->get('config_tax_default') == 'payment') {
 			$this->setPaymentAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}

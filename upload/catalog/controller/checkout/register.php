@@ -16,8 +16,6 @@ class ControllerCheckoutRegister extends Controller {
 		$this->data['entry_fax'] = $this->language->get('entry_fax');
 		$this->data['entry_company'] = $this->language->get('entry_company');
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$this->data['entry_company_id'] = $this->language->get('entry_company_id');
-		$this->data['entry_tax_id'] = $this->language->get('entry_tax_id');		
 		$this->data['entry_address_1'] = $this->language->get('entry_address_1');
 		$this->data['entry_address_2'] = $this->language->get('entry_address_2');
 		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
@@ -150,30 +148,7 @@ class ControllerCheckoutRegister extends Controller {
 			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
-	
-			// Customer Group
-			$this->load->model('account/customer_group');
-			
-			if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-				$customer_group_id = $this->request->post['customer_group_id'];
-			} else {
-				$customer_group_id = $this->config->get('config_customer_group_id');
-			}
-			
-			$customer_group = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
 				
-			if ($customer_group) {	
-				// Company ID
-				if ($customer_group['company_id_display'] && $customer_group['company_id_required'] && empty($this->request->post['company_id'])) {
-					$json['error']['company_id'] = $this->language->get('error_company_id');
-				}
-				
-				// Tax ID
-				if ($customer_group['tax_id_display'] && $customer_group['tax_id_required'] && empty($this->request->post['tax_id'])) {
-					$json['error']['tax_id'] = $this->language->get('error_tax_id');
-				}						
-			}
-			
 			if ((utf8_strlen($this->request->post['address_1']) < 3) || (utf8_strlen($this->request->post['address_1']) > 128)) {
 				$json['error']['address_1'] = $this->language->get('error_address_1');
 			}

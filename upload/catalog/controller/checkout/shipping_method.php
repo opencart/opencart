@@ -3,9 +3,7 @@ class ControllerCheckoutShippingMethod extends Controller {
   	public function index() {
 		$this->language->load('checkout/checkout');
 		
-		$this->load->model('account/address');
-		
-		if (!empty($this->session->data['shipping_address'])) {
+		if (isset($this->session->data['shipping_address'])) {
 			// Shipping Methods
 			$quote_data = array();
 			
@@ -90,9 +88,7 @@ class ControllerCheckoutShippingMethod extends Controller {
 		}
 		
 		// Validate if shipping address has been set.		
-		$this->load->model('account/address');
-
-		if (empty($this->session->data['shipping_address'])) {								
+		if (!isset($this->session->data['shipping_address'])) {								
 			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		}
 		

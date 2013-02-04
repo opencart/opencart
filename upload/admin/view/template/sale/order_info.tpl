@@ -76,7 +76,7 @@
           <tr>
             <td><?php echo $text_total; ?></td>
             <td><?php echo $total; ?>
-              <?php if ($credit && $customer) { ?>
+              <?php if ($customer && $credit) { ?>
               <?php if (!$credit_total) { ?>
               <span id="credit"><b>[</b> <a id="credit-add"><?php echo $text_credit_add; ?></a> <b>]</b></span>
               <?php } else { ?>
@@ -84,7 +84,7 @@
               <?php } ?>
               <?php } ?></td>
           </tr>
-          <?php if ($reward && $customer) { ?>
+          <?php if ($customer && $reward) { ?>
           <tr>
             <td><?php echo $text_reward; ?></td>
             <td><?php echo $reward; ?>

@@ -302,7 +302,7 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 					html += '<td>';
 					
 					for (j = 0; j < custom_field['custom_field_value'].length; j++) {
-						html += '<input type="radio" name="custom_field[' + custom_field['custom_field_value'][j]['custom_field_value_id'] + ']"> <label for="' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '">' + custom_field['custom_field_value'][j]['name'] + '</label><br />';
+						html += '<input type="radio" name="custom_field[' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '][]"> <label for="' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '">' + custom_field['custom_field_value'][j]['name'] + '</label><br />';
 					}
 
 					html += '</td>';
@@ -318,6 +318,26 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 					html += '<td><textarea name="custom_field[' + custom_field['custom_field_id'] + ']" cols="40" rows="5">' + custom_field['value'] + '</textarea></td>'
 				}
 				
+				// File
+				if (custom_field['type'] == 'file') {
+					html += '<input type="button" value="<?php echo $button_upload; ?>" id="button-custom-field' + custom_field['custom_field_id'] + '" class="button" onclick="$(\'input[name=\\\'file\\\']\').click();" /><input type="hidden" name="option[' + custom_field['custom_field_id'] + ']" value="" />';
+				}
+				
+				// Date
+				if (custom_field['type'] == 'date') {
+					html += '<td><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" class="date" /></td>'
+				}			
+				
+				// Datetime
+				if (custom_field['type'] == 'date') {
+					html += '<td><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" class="datetime" /></td>'
+				}		
+							
+				// Time
+				if (custom_field['type'] == 'date') {
+					html += '<td><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" class="time" /></td>'
+				}	
+								
 				html += '<tr>';
 			}
 			

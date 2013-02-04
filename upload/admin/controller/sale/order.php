@@ -2018,7 +2018,7 @@ class ControllerSaleOrder extends Controller {
 						
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 			
-			if ($order_info && $order_info['customer_id']) {
+			if ($order_info && $order_info['customer_id'] && ($order_info['reward'] > 0)) {
 				$this->load->model('sale/customer');
 
 				$reward_total = $this->model_sale_customer->getTotalCustomerRewardsByOrderId($this->request->get['order_id']);

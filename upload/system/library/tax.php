@@ -48,14 +48,24 @@ final class Tax {
 
 	public function calculate($value, $tax_class_id, $calculate = true) {
 		if ($tax_class_id && $calculate) {
-			$amount = $this->getTax($value, $tax_class_id);
+			$amount = 0;
+
+			$tax_rates = $this->getRates($value, $tax_class_id);
+	
+			foreach ($tax_rates as $tax_rate) {
+				if ($calculate != 'P' && $calculate != 'F') {
+					$amount += $tax_rate['amount'];
+				} elseif ($tax_rate['type'] == $calculate) {
+					$amount += $tax_rate['amount'];	
+				}
+			}
 
 			return $value + $amount;
 		} else {
 			return $value;
 		}
 	}
-
+	
 	public function getTax($value, $tax_class_id) {
 		$amount = 0;
 

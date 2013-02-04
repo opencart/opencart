@@ -251,7 +251,95 @@
 </table>
 <script type="text/javascript"><!--
 $('select[name=\'customer_group_id\']').live('change', function() {
-	var customer_group = [];
+	
+	$.ajax({
+		url: 'index.php?route=account/register/custom_field&customer_group_id=' + this.value,
+		dataType: 'json',
+		beforeSend: function() {
+			$('select[name=\'customer_group_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+		},
+		complete: function() {
+			$('.wait').remove();
+		},			
+		success: function(json) {
+			for (i = 0; i < json.length; i++) {
+				custom_field = json[i];
+				
+				html  = '<tr id="custom-field' + custom_field['custom_field_id'] + '" class="custom-field">';
+				html += '  <td>';
+				
+				if (custom_field['required'] == 1) {
+					html += '<span id="customer-field-required' + custom_field['custom_field_id'] + '" class="required">*</span> ';
+				}
+				
+				html += custom_field['name'] += '</td>';
+				
+				// Select
+				if (custom_field['type'] == 'select') {
+					html += '<td><select name="custom_field[' + custom_field['custom_field_id'] + ']">';
+					html += '<option value=""><?php echo $text_select; ?></option>';
+					
+					for (j = 0; j < custom_field['custom_field_value'].length; j++) {
+						html += '<option value="' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '">' + custom_field['custom_field_value'][j]['name'] + '</option>';
+					}
+
+					html += '</select></td>';
+				}
+								
+				// Radio
+				if (custom_field['type'] == 'radio') {
+					html += '<td>';
+					
+					for (j = 0; j < custom_field['custom_field_value'].length; j++) {
+						html += '<input type="radio" name="custom_field[' + custom_field['custom_field_value'][j]['custom_field_value_id'] + ']"><label for="' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '">' + custom_field['custom_field_value'][j]['name'] + '</label><br />';
+					}
+
+					html += '</td>';
+				}
+				
+				// Checkbox
+				if (custom_field['type'] == 'checkbox') {
+					html += '<td>';
+					
+					for (j = 0; j < custom_field['custom_field_value'].length; j++) {
+						html += '<input type="radio" name="custom_field[' + custom_field['custom_field_value'][j]['custom_field_value_id'] + ']"> <label for="' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '">' + custom_field['custom_field_value'][j]['name'] + '</label><br />';
+					}
+
+					html += '</td>';
+				}
+						  				
+				// Text
+				if (custom_field['type'] == 'text') {
+					html += '<td><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" /></td>'
+				}
+				
+				// Textarea
+				if (custom_field['type'] == 'textarea') {
+					html += '<td><textarea name="custom_field[' + custom_field['custom_field_id'] + ']" cols="40" rows="5">' + custom_field['value'] + '</textarea></td>'
+				}
+				
+				html += '<tr>';
+			}
+			
+
+			$('select[name=\'zone_id\']').html(html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+	
+	/*
+	
+	<?php if ($custom_field['position'] == 'begining') { ?>
+	$('input[name=\'firstname\']').parent().parent().before(html);
+	<?php } else { ?>
+	$('input[name=\'<?php echo $custom_field['position']; ?>\']').parent().parent().after(html);
+	<?php } ?>	
+	
+	
+	
+	
 	
 <?php foreach ($customer_groups as $customer_group) { ?>
 	customer_group[<?php echo $customer_group['customer_group_id']; ?>] = [];
@@ -260,15 +348,13 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_display'] = '<?php echo $customer_group['tax_id_display']; ?>';
 	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_required'] = '<?php echo $customer_group['tax_id_required']; ?>';
 <?php } ?>	
-	
-	<?php if ($custom_field['position'] == 'begining') { ?>
-	$('input[name=\'firstname\']').parent().parent().before(html);
-	<?php } else { ?>
-	$('input[name=\'<?php echo $custom_field['position']; ?>\']').parent().parent().after(html);
-	<?php } ?>
-		
-	
+	*/
 
+	var customer_group = [];
+
+	<?php foreach ($custom_fields as $custom_field) { ?>
+	var customer_group[]['name'] = ;
+    <?php } ?>	
 	
 	if (customer_group[this.value]) {
 		if (customer_group[this.value]['company_id_display'] == '1') {

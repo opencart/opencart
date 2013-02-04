@@ -1657,8 +1657,8 @@ CREATE TABLE `oc_layout_route` (
 --
 
 INSERT INTO `oc_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `route`) VALUES
-(30, 6, 0, 'account'),
-(17, 10, 0, 'affiliate/'),
+(30, 6, 0, 'account/%'),
+(17, 10, 0, 'affiliate/%'),
 (29, 3, 0, 'product/category'),
 (26, 1, 0, 'common/home'),
 (20, 2, 0, 'product/product'),

@@ -868,7 +868,7 @@ $('input[name=\'product\']').autocomplete({
 				option = ui.item['option'][i];
 				
 				if (option['type'] == 'select') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -896,7 +896,7 @@ $('input[name=\'product\']').autocomplete({
 				}
 				
 				if (option['type'] == 'radio') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -924,7 +924,7 @@ $('input[name=\'product\']').autocomplete({
 				}
 					
 				if (option['type'] == 'checkbox') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -935,8 +935,8 @@ $('input[name=\'product\']').autocomplete({
 					for (j = 0; j < option['product_option_value'].length; j++) {
 						option_value = option['product_option_value'][j];
 						
-						html += '<input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="option-value-' + option_value['product_option_value_id'] + '" />';
-						html += '<label for="option-value-' + option_value['product_option_value_id'] + '">' + option_value['name'];
+						html += '<input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="option-value' + option_value['product_option_value_id'] + '" />';
+						html += '<label for="option-value' + option_value['product_option_value_id'] + '">' + option_value['name'];
 						
 						if (option_value['price']) {
 							html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
@@ -951,7 +951,7 @@ $('input[name=\'product\']').autocomplete({
 				}
 			
 				if (option['type'] == 'image') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -979,7 +979,7 @@ $('input[name=\'product\']').autocomplete({
 				}
 						
 				if (option['type'] == 'text') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -992,7 +992,7 @@ $('input[name=\'product\']').autocomplete({
 				}
 				
 				if (option['type'] == 'textarea') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -1005,21 +1005,21 @@ $('input[name=\'product\']').autocomplete({
 				}
 				
 				if (option['type'] == 'file') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<a id="button-option-' + option['product_option_id'] + '" class="button" onclick="upload(\'' + option['product_option_id'] + '\');"><?php echo $button_upload; ?></a>';
+					html += '<a id="button-option' + option['product_option_id'] + '" class="button" onclick="upload(\'' + option['product_option_id'] + '\');"><?php echo $button_upload; ?></a>';
 					html += '<input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
 					html += '</div>';
 					html += '<br />';
 				}
 				
 				if (option['type'] == 'date') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -1032,7 +1032,7 @@ $('input[name=\'product\']').autocomplete({
 				}
 				
 				if (option['type'] == 'datetime') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -1045,7 +1045,7 @@ $('input[name=\'product\']').autocomplete({
 				}
 				
 				if (option['type'] == 'time') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -1088,17 +1088,17 @@ function upload(product_option_id) {
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
 			beforeSend: function() {
-				$('#button-option-' + product_option_id).after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-				$('#button-option-' + product_option_id).attr('disabled', true);
-				$('#option-' + product_option_id + ' + .error').remove();
+				$('#button-option' + product_option_id).after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+				$('#button-option' + product_option_id).attr('disabled', true);
+				$('#option' + product_option_id + ' + .error').remove();
 			},	
 			complete: function() {
 				$('.loading').remove();
-				$('#button-option-' + product_option_id).attr('disabled', false);
+				$('#button-option' + product_option_id).attr('disabled', false);
 			},		
 			success: function(json) {
 				if (json['error']) {
-					$('#option-' + product_option_id).after('<span class="error">' + json['error'] + '</span>');
+					$('#option' + product_option_id).after('<span class="error">' + json['error'] + '</span>');
 				}
 							
 				if (json['success']) {
@@ -1266,7 +1266,7 @@ $('#button-product, #button-voucher, #button-update').live('click', function() {
 				if (json['error']['product']) {
 					if (json['error']['product']['option']) {	
 						for (i in json['error']['product']['option']) {
-							$('#option-' + i).after('<span class="error">' + json['error']['product']['option'][i] + '</span>');
+							$('#option' + i).after('<span class="error">' + json['error']['product']['option'][i] + '</span>');
 						}						
 					}
 					

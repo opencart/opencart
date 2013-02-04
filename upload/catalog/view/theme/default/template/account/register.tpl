@@ -69,7 +69,7 @@
             </select></td>
         </tr>
         <tr>
-          <td><span class="required"> * </span> <?php echo $entry_address_1; ?></td>
+          <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
           <td><input type="text" name="address_1" value="<?php echo $address_1; ?>" />
             <?php if ($error_address_1) { ?>
             <span class="error"> <?php echo $error_address_1; ?> </span>
@@ -80,21 +80,21 @@
           <td><input type="text" name="address_2" value="<?php echo $address_2; ?>" /></td>
         </tr>
         <tr>
-          <td><span class="required"> * </span> <?php echo $entry_city; ?></td>
+          <td><span class="required">*</span> <?php echo $entry_city; ?></td>
           <td><input type="text" name="city" value="<?php echo $city; ?>" />
             <?php if ($error_city) { ?>
             <span class="error"> <?php echo $error_city; ?> </span>
             <?php } ?></td>
         </tr>
         <tr>
-          <td><span id="postcode-required" class="required"> * </span> <?php echo $entry_postcode; ?></td>
+          <td><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
           <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" />
             <?php if ($error_postcode) { ?>
             <span class="error"> <?php echo $error_postcode; ?> </span>
             <?php } ?></td>
         </tr>
         <tr>
-          <td><span class="required"> * </span> <?php echo $entry_country; ?></td>
+          <td><span class="required">*</span> <?php echo $entry_country; ?></td>
           <td><select name="country_id">
               <option value=""><?php echo $text_select; ?></option>
               <?php foreach ($countries as $country) { ?>

@@ -228,10 +228,10 @@ class ControllerAccountRegister extends Controller {
 			$custom_field_value_data = array();
 			
 			foreach ($custom_field['custom_field_value'] as $option_value) {
-					$custom_field_value_data[] = array(
-						'custom_field_value_id' => $option_value['custom_field_value_id'],
-						'name'            => $option_value['name']
-					);
+				$custom_field_value_data[] = array(
+					'custom_field_value_id' => $option_value['custom_field_value_id'],
+					'name'                  => $option_value['name']
+				);
 			}			
 			
 			if (isset($this->request->post['custom_field'][$custom_field['custom_field_id']])) {

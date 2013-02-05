@@ -281,27 +281,7 @@
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'customer_group_id\']').live('change', function() {
-	var customer_group = [];
-	
-<?php foreach ($customer_groups as $customer_group) { ?>
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>] = [];
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_display'] = '<?php echo $customer_group['company_id_display']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_display'] = '<?php echo $customer_group['tax_id_display']; ?>';
-<?php } ?>	
 
-	if (customer_group[this.value]) {
-		if (customer_group[this.value]['company_id_display'] == '1') {
-			$('.company-id-display').show();
-		} else {
-			$('.company-id-display').hide();
-		}
-		
-		if (customer_group[this.value]['tax_id_display'] == '1') {
-			$('.tax-id-display').show();
-		} else {
-			$('.tax-id-display').hide();
-		}
-	}
 });
 
 $('select[name=\'customer_group_id\']').trigger('change');

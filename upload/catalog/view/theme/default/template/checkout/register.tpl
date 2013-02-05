@@ -113,48 +113,191 @@
 </div>
 <?php } ?>
 <script type="text/javascript"><!--
-$('#payment-address select[name=\'customer_group_id\']').live('change', function() {
-	var customer_group = [];
-	
-<?php foreach ($customer_groups as $customer_group) { ?>
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>] = [];
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_display'] = '<?php echo $customer_group['company_id_display']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_required'] = '<?php echo $customer_group['company_id_required']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_display'] = '<?php echo $customer_group['tax_id_display']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_required'] = '<?php echo $customer_group['tax_id_required']; ?>';
-<?php } ?>	
+// Register
+$('#button-register').off().on('click', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/register/save',
+		type: 'post',
+		data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'password\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-register').attr('disabled', true);
+			$('#button-register').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+		},	
+		complete: function() {
+			$('#button-register').attr('disabled', false); 
+			$('.loading').remove();
+		},			
+		success: function(json) {
+			$('.warning, .error').remove();
+						
+			if (json['redirect']) {
+				location = json['redirect'];				
+			} else if (json['error']) {
+				if (json['error']['warning']) {
+					$('#payment-address .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+					
+					$('.warning').fadeIn('slow');
+				}
+				
+				if (json['error']['firstname']) {
+					$('#payment-address input[name=\'firstname\'] + br').after('<span class="error">' + json['error']['firstname'] + '</span>');
+				}
+				
+				if (json['error']['lastname']) {
+					$('#payment-address input[name=\'lastname\'] + br').after('<span class="error">' + json['error']['lastname'] + '</span>');
+				}	
+				
+				if (json['error']['email']) {
+					$('#payment-address input[name=\'email\'] + br').after('<span class="error">' + json['error']['email'] + '</span>');
+				}
+				
+				if (json['error']['telephone']) {
+					$('#payment-address input[name=\'telephone\'] + br').after('<span class="error">' + json['error']['telephone'] + '</span>');
+				}	
+																		
+				if (json['error']['address_1']) {
+					$('#payment-address input[name=\'address_1\'] + br').after('<span class="error">' + json['error']['address_1'] + '</span>');
+				}	
+				
+				if (json['error']['city']) {
+					$('#payment-address input[name=\'city\'] + br').after('<span class="error">' + json['error']['city'] + '</span>');
+				}	
+				
+				if (json['error']['postcode']) {
+					$('#payment-address input[name=\'postcode\'] + br').after('<span class="error">' + json['error']['postcode'] + '</span>');
+				}	
+				
+				if (json['error']['country']) {
+					$('#payment-address select[name=\'country_id\'] + br').after('<span class="error">' + json['error']['country'] + '</span>');
+				}	
+				
+				if (json['error']['zone']) {
+					$('#payment-address select[name=\'zone_id\'] + br').after('<span class="error">' + json['error']['zone'] + '</span>');
+				}
+				
+				if (json['error']['password']) {
+					$('#payment-address input[name=\'password\'] + br').after('<span class="error">' + json['error']['password'] + '</span>');
+				}	
+				
+				if (json['error']['confirm']) {
+					$('#payment-address input[name=\'confirm\'] + br').after('<span class="error">' + json['error']['confirm'] + '</span>');
+				}																																	
+			} else {
+				<?php if ($shipping_required) { ?>				
+				var shipping_address = $('#payment-address input[name=\'shipping_address\']:checked').attr('value');
+				
+				if (shipping_address) {
+					$.ajax({
+						url: 'index.php?route=checkout/shipping_method',
+						dataType: 'html',
+						success: function(html) {
+							$('#shipping-method .checkout-content').html(html);
+							
+							$('#payment-address .checkout-content').slideUp('slow');
+							
+							$('#shipping-method .checkout-content').slideDown('slow');
+							
+							$('#checkout .checkout-heading a').remove();
+							$('#payment-address .checkout-heading a').remove();
+							$('#shipping-address .checkout-heading a').remove();
+							$('#shipping-method .checkout-heading a').remove();
+							$('#payment-method .checkout-heading a').remove();											
+							
+							$('#shipping-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');									
+							$('#payment-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
 
-	if (customer_group[this.value]) {
-		if (customer_group[this.value]['company_id_display'] == '1') {
-			$('#company-id-display').show();
-		} else {
-			$('#company-id-display').hide();
+							$.ajax({
+								url: 'index.php?route=checkout/shipping_address',
+								dataType: 'html',
+								success: function(html) {
+									$('#shipping-address .checkout-content').html(html);
+								},
+								error: function(xhr, ajaxOptions, thrownError) {
+									alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+								}
+							});	
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});	
+				} else {
+					$.ajax({
+						url: 'index.php?route=checkout/shipping_address',
+						dataType: 'html',
+						success: function(html) {
+							$('#shipping-address .checkout-content').html(html);
+							
+							$('#payment-address .checkout-content').slideUp('slow');
+							
+							$('#shipping-address .checkout-content').slideDown('slow');
+							
+							$('#checkout .checkout-heading a').remove();
+							$('#payment-address .checkout-heading a').remove();
+							$('#shipping-address .checkout-heading a').remove();
+							$('#shipping-method .checkout-heading a').remove();
+							$('#payment-method .checkout-heading a').remove();							
+
+							$('#payment-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});			
+				}
+				<?php } else { ?>
+				$.ajax({
+					url: 'index.php?route=checkout/payment_method',
+					dataType: 'html',
+					success: function(html) {
+						$('#payment-method .checkout-content').html(html);
+						
+						$('#payment-address .checkout-content').slideUp('slow');
+						
+						$('#payment-method .checkout-content').slideDown('slow');
+						
+						$('#checkout .checkout-heading a').remove();
+						$('#payment-address .checkout-heading a').remove();
+						$('#payment-method .checkout-heading a').remove();								
+						
+						$('#payment-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});					
+				<?php } ?>
+
+				$.ajax({
+					url: 'index.php?route=checkout/payment_address',
+					dataType: 'html',
+					success: function(html) {
+						$('#payment-address .checkout-content').html(html);
+							
+						$('#payment-address .checkout-heading span').html('<?php echo $text_checkout_payment_address; ?>');
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});
+			}	 
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-		
-		if (customer_group[this.value]['company_id_required'] == '1') {
-			$('#company-id-required').show();
-		} else {
-			$('#company-id-required').hide();
-		}
-		
-		if (customer_group[this.value]['tax_id_display'] == '1') {
-			$('#tax-id-display').show();
-		} else {
-			$('#tax-id-display').hide();
-		}
-		
-		if (customer_group[this.value]['tax_id_required'] == '1') {
-			$('#tax-id-required').show();
-		} else {
-			$('#tax-id-required').hide();
-		}	
-	}
+	});	
+});
+
+
+$('#payment-address select[name=\'customer_group_id\']').off().on('change', function() {
+
 });
 
 $('#payment-address input[name=\'customer_group_id\']:checked').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
-$('#payment-address select[name=\'country_id\']').bind('change', function() {
+$('#payment-address select[name=\'country_id\']').off().on('change', function() {
 	if (this.value == '') return;
 	$.ajax({
 		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,

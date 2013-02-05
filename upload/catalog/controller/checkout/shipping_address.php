@@ -7,6 +7,7 @@ class ControllerCheckoutShippingAddress extends Controller {
 		$this->data['text_address_new'] = $this->language->get('text_address_new');
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
+		$this->data['text_modify'] = $this->language->get('text_modify');
 
 		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
@@ -61,7 +62,7 @@ class ControllerCheckoutShippingAddress extends Controller {
 		$this->response->setOutput($this->render());
   	}	
 	
-	public function validate() {
+	public function save() {
 		$this->language->load('checkout/checkout');
 		
 		$json = array();

@@ -449,8 +449,6 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				
 				if (isset($this->request->post['pno'])) {
 					$pno = $this->request->post['pno'];
-				} elseif ($order_info['payment_company_id']) {
-					$pno = $order_info['payment_company_id'];
 				} else {
 					$pno = sprintf('%02d', (int)$this->request->post['pno_day']) . sprintf('%02d', (int)$this->request->post['pno_month']) . (int)$this->request->post['pno_year'];
 				}

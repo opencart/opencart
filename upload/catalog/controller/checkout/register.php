@@ -3,11 +3,13 @@ class ControllerCheckoutRegister extends Controller {
   	public function index() {
 		$this->language->load('checkout/checkout');
 		
+		$this->data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');
 		$this->data['text_your_details'] = $this->language->get('text_your_details');
 		$this->data['text_your_address'] = $this->language->get('text_your_address');
 		$this->data['text_your_password'] = $this->language->get('text_your_password');
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
+ 		$this->data['text_modify'] = $this->language->get('text_modify');
 						
 		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
@@ -92,7 +94,7 @@ class ControllerCheckoutRegister extends Controller {
 		$this->response->setOutput($this->render());		
   	}
 	
-	public function validate() {
+	public function save() {
 		$this->language->load('checkout/checkout');
 		
 		$this->load->model('account/customer');
@@ -148,7 +150,22 @@ class ControllerCheckoutRegister extends Controller {
 			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
-				
+			
+			// Customer Group
+			$this->load->model('account/customer_group');
+ 	
+			if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+				$customer_group_id = $this->request->post['customer_group_id'];
+			} else {
+				$customer_group_id = $this->config->get('config_customer_group_id');
+			}
+			
+			$customer_group = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
+
+			if ($customer_group) {  
+			
+			}
+			 
 			if ((utf8_strlen($this->request->post['address_1']) < 3) || (utf8_strlen($this->request->post['address_1']) > 128)) {
 				$json['error']['address_1'] = $this->language->get('error_address_1');
 			}
@@ -199,7 +216,10 @@ class ControllerCheckoutRegister extends Controller {
 			
 			if ($customer_group && !$customer_group['approval']) {
 				$this->customer->login($this->request->post['email'], $this->request->post['password']);
-
+				
+				// Default Payment Address
+				$this->load->model('account/address');
+					
 				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 										
 				if (!empty($this->request->post['shipping_address'])) {

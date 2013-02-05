@@ -199,7 +199,7 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 			for (i = 0; i < json.length; i++) {
 				custom_field = json[i];
 				
-				html  = '<tr id="custom-field' + custom_field['custom_field_id'] + '" class="custom-field">';
+				html  = '<tr>';
 				html += '  <td>';
 				
 				if (custom_field['required'] == 1) {
@@ -303,33 +303,33 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 
 $('select[name=\'customer_group_id\']').trigger('change');
 
-function upload(product_option_id) {
+function upload(custom_field_id) {
 	$('#file').off();
 	
 	$('#file').on('change', function() {
 		$.ajax({
-			url: 'index.php?route=sale/order/upload',
+			url: 'index.php?route=account/register/upload',
 			type: 'post',		
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
 			beforeSend: function() {
-				$('#button-option' + product_option_id).after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-				$('#button-option' + product_option_id).attr('disabled', true);
-				$('#option' + product_option_id + ' + .error').remove();
+				$('#button-custom-field' + custom_field_id).after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+				$('#button-custom-field' + custom_field_id).attr('disabled', true);
+				$('#custom-field' + custom_field_id + ' + .error').remove();
 			},	
 			complete: function() {
 				$('.loading').remove();
-				$('#button-option' + product_option_id).attr('disabled', false);
+				$('#button-custom-field' + custom_field_id).attr('disabled', false);
 			},		
 			success: function(json) {
 				if (json['error']) {
-					$('#option' + product_option_id).after('<span class="error">' + json['error'] + '</span>');
+					$('#custom-field' + custom_field_id).after('<span class="error">' + json['error'] + '</span>');
 				}
 							
 				if (json['success']) {
 					alert(json['success']);
 					
-					$('input[name=\'option[' + product_option_id + ']\']').attr('value', json['file']);
+					$('input[name=\'custom_field[' + custom_field_id + ']\']').attr('value', json['file']);
 				}
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {

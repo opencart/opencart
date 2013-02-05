@@ -41,6 +41,7 @@ class ControllerCheckoutShippingMethod extends Controller {
 					
 		$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
 		$this->data['text_comments'] = $this->language->get('text_comments');
+		$this->data['text_modify'] = $this->language->get('text_modify');
 	
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		
@@ -77,7 +78,7 @@ class ControllerCheckoutShippingMethod extends Controller {
 		$this->response->setOutput($this->render());
   	}
 	
-	public function validate() {
+	public function save() {
 		$this->language->load('checkout/checkout');
 		
 		$json = array();		

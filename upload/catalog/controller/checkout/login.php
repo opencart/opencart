@@ -3,6 +3,8 @@ class ControllerCheckoutLogin extends Controller {
 	public function index() {
 		$this->language->load('checkout/checkout');
 		
+		$this->data['text_checkout_account'] = $this->language->get('text_checkout_account');
+		$this->data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');
 		$this->data['text_new_customer'] = $this->language->get('text_new_customer');
 		$this->data['text_returning_customer'] = $this->language->get('text_returning_customer');
 		$this->data['text_checkout'] = $this->language->get('text_checkout');
@@ -11,7 +13,8 @@ class ControllerCheckoutLogin extends Controller {
 		$this->data['text_i_am_returning_customer'] = $this->language->get('text_i_am_returning_customer');
 		$this->data['text_register_account'] = $this->language->get('text_register_account');
 		$this->data['text_forgotten'] = $this->language->get('text_forgotten');
- 
+ 		$this->data['text_modify'] = $this->language->get('text_modify');
+ 		
 		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_password'] = $this->language->get('entry_password');
 		
@@ -37,7 +40,7 @@ class ControllerCheckoutLogin extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	public function validate() {
+	public function save() {
 		$this->language->load('checkout/checkout');
 		
 		$json = array();

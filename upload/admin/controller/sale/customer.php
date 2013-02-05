@@ -709,12 +709,6 @@ class ControllerSaleCustomer extends Controller {
 		} else {
 			$this->data['error_address_lastname'] = '';
 		}
-		
-  		if (isset($this->error['address_tax_id'])) {
-			$this->data['error_address_tax_id'] = $this->error['address_tax_id'];
-		} else {
-			$this->data['error_address_tax_id'] = '';
-		}
 				
 		if (isset($this->error['address_address_1'])) {
 			$this->data['error_address_address_1'] = $this->error['address_address_1'];
@@ -1001,18 +995,9 @@ class ControllerSaleCustomer extends Controller {
 				$this->load->model('localisation/country');
 				
 				$country_info = $this->model_localisation_country->getCountry($value['country_id']);
-						
-				if ($country_info) {
-					if ($country_info['postcode_required'] && (utf8_strlen($value['postcode']) < 2) || (utf8_strlen($value['postcode']) > 10)) {
-						$this->error['address_postcode'][$key] = $this->language->get('error_postcode');
-					}
-					
-					// VAT Validation
-					$this->load->helper('vat');
-					
-					if ($this->config->get('config_vat') && $value['tax_id'] && (vat_validation($country_info['iso_code_2'], $value['tax_id']) == 'invalid')) {
-						$this->error['address_tax_id'][$key] = $this->language->get('error_vat');
-					}
+
+				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($value['postcode']) < 2) || (utf8_strlen($value['postcode']) > 10)) {
+					$this->error['address_postcode'][$key] = $this->language->get('error_postcode');
 				}
 			
 				if ($value['country_id'] == '') {

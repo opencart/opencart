@@ -8,6 +8,7 @@ class ControllerCheckoutGuest extends Controller {
 		$this->data['text_your_details'] = $this->language->get('text_your_details');
 		$this->data['text_your_account'] = $this->language->get('text_your_account');
 		$this->data['text_your_address'] = $this->language->get('text_your_address');
+		$this->data['text_modify'] = $this->language->get('text_modify');
 		
 		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
@@ -145,7 +146,7 @@ class ControllerCheckoutGuest extends Controller {
 		$this->response->setOutput($this->render());		
   	}
 	
-	public function validate() {
+	public function save() {
     	$this->language->load('checkout/checkout');
 
 		$json = array();
@@ -181,7 +182,22 @@ class ControllerCheckoutGuest extends Controller {
 			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
-						
+			
+			// Customer Group
+			$this->load->model('account/customer_group');
+ 	
+			if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+				$customer_group_id = $this->request->post['customer_group_id'];
+			} else {
+				$customer_group_id = $this->config->get('config_customer_group_id');
+			}
+			
+			$customer_group = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
+
+			if ($customer_group) {  
+			
+			}
+									
 			if ((utf8_strlen($this->request->post['address_1']) < 3) || (utf8_strlen($this->request->post['address_1']) > 128)) {
 				$json['error']['address_1'] = $this->language->get('error_address_1');
 			}

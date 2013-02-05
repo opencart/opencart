@@ -51,7 +51,90 @@
   <div class="right"><input type="button" value="<?php echo $button_continue; ?>" id="button-guest-shipping" class="button" /></div>
 </div>
 <script type="text/javascript"><!--
-$('#shipping-address select[name=\'country_id\']').bind('change', function() {
+// Guest Shipping
+$('#button-guest-shipping').off().on('click', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/guest_shipping/save',
+		type: 'post',
+		data: $('#shipping-address input[type=\'text\'], #shipping-address select'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-guest-shipping').attr('disabled', true);
+			$('#button-guest-shipping').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+		},	
+		complete: function() {
+			$('#button-guest-shipping').attr('disabled', false); 
+			$('.loading').remove();
+		},			
+		success: function(json) {
+			$('.warning, .error').remove();
+			
+			if (json['redirect']) {
+				location = json['redirect'];
+			} else if (json['error']) {
+				if (json['error']['warning']) {
+					$('#shipping-address .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+					
+					$('.warning').fadeIn('slow');
+				}
+								
+				if (json['error']['firstname']) {
+					$('#shipping-address input[name=\'firstname\']').after('<span class="error">' + json['error']['firstname'] + '</span>');
+				}
+				
+				if (json['error']['lastname']) {
+					$('#shipping-address input[name=\'lastname\']').after('<span class="error">' + json['error']['lastname'] + '</span>');
+				}	
+										
+				if (json['error']['address_1']) {
+					$('#shipping-address input[name=\'address_1\']').after('<span class="error">' + json['error']['address_1'] + '</span>');
+				}	
+				
+				if (json['error']['city']) {
+					$('#shipping-address input[name=\'city\']').after('<span class="error">' + json['error']['city'] + '</span>');
+				}	
+				
+				if (json['error']['postcode']) {
+					$('#shipping-address input[name=\'postcode\']').after('<span class="error">' + json['error']['postcode'] + '</span>');
+				}	
+				
+				if (json['error']['country']) {
+					$('#shipping-address select[name=\'country_id\']').after('<span class="error">' + json['error']['country'] + '</span>');
+				}	
+				
+				if (json['error']['zone']) {
+					$('#shipping-address select[name=\'zone_id\']').after('<span class="error">' + json['error']['zone'] + '</span>');
+				}
+			} else {
+				$.ajax({
+					url: 'index.php?route=checkout/shipping_method',
+					dataType: 'html',
+					success: function(html) {
+						$('#shipping-method .checkout-content').html(html);
+						
+						$('#shipping-address .checkout-content').slideUp('slow');
+						
+						$('#shipping-method .checkout-content').slideDown('slow');
+						
+						$('#shipping-address .checkout-heading a').remove();
+						$('#shipping-method .checkout-heading a').remove();
+						$('#payment-method .checkout-heading a').remove();
+							
+						$('#shipping-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});				
+			}	 
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});	
+});
+
+$('#shipping-address select[name=\'country_id\']').off().on('change', function() {
 	if (this.value == '') return;
 	$.ajax({
 		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,

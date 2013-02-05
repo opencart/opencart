@@ -163,7 +163,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <input type="button" value="<?php echo $button_upload; ?>" id="button-option<?php echo $option['product_option_id']; ?>" class="button" onclick="test('<?php echo $option['product_option_id']; ?>');" />
+          <input type="button" value="<?php echo $button_upload; ?>" id="button-option<?php echo $option['product_option_id']; ?>" class="button" onclick="upload('<?php echo $option['product_option_id']; ?>');" />
           <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="" />
         </div>
         <br />
@@ -379,9 +379,7 @@ $('#button-cart').bind('click', function() {
 <?php foreach ($options as $option) { ?>
 <?php if ($option['type'] == 'file') { ?>
 <script type="text/javascript"><!--
-function test(product_option_id) {
-	//alert(product_option_id);
-	
+function upload(product_option_id) {
 	$('#file').off();
 	
 	$('#file').on('change', function() {

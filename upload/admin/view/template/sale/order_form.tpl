@@ -708,10 +708,10 @@ $('select[name=\'payment_country_id\']').bind('change', function() {
 		url: 'index.php?route=sale/order/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'payment_country_id\']').after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
+			$('select[name=\'payment_country_id\']').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -776,10 +776,10 @@ $('select[name=\'shipping_country_id\']').bind('change', function() {
 		url: 'index.php?route=sale/order/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'payment_country_id\']').after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
+			$('select[name=\'payment_country_id\']').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

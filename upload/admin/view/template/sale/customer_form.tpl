@@ -313,10 +313,10 @@ function country(element, index, zone_id) {
 			url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
 			dataType: 'json',
 			beforeSend: function() {
-				$('select[name=\'address[' + index + '][country_id]\']').after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
+				$('select[name=\'address[' + index + '][country_id]\']').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 			},
 			complete: function() {
-				$('.wait').remove();
+				$('.loading').remove();
 			},			
 			success: function(json) {
 				if (json['postcode_required'] == '1') {

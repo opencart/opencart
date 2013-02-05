@@ -250,11 +250,11 @@ function send(url) {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-send').attr('disabled', true);
-			$('#button-send').before('<span class="wait"><img src="view/image/loading.gif" alt="" />&nbsp;</span>');
+			$('#button-send').before('<img src="view/image/loading.gif" class="loading" style="padding-right: 5px;" />');
 		},
 		complete: function() {
 			$('#button-send').attr('disabled', false);
-			$('.wait').remove();
+			$('.loading').remove();
 		},				
 		success: function(json) {
 			$('.success, .warning, .error').remove();

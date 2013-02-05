@@ -95,11 +95,11 @@ $('#button-account').live('click', function() {
 		dataType: 'html',
 		beforeSend: function() {
 			$('#button-account').attr('disabled', true);
-			$('#button-account').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-account').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},		
 		complete: function() {
 			$('#button-account').attr('disabled', false);
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(html) {
 			$('.warning, .error').remove();
@@ -129,11 +129,11 @@ $('#button-login').live('click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-login').attr('disabled', true);
-			$('#button-login').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-login').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
 			$('#button-login').attr('disabled', false);
-			$('.wait').remove();
+			$('.loading').remove();
 		},				
 		success: function(json) {
 			$('.warning, .error').remove();
@@ -161,11 +161,11 @@ $('#button-register').live('click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-register').attr('disabled', true);
-			$('#button-register').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-register').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
 			$('#button-register').attr('disabled', false); 
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			$('.warning, .error').remove();
@@ -345,11 +345,11 @@ $('#button-payment-address').live('click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-payment-address').attr('disabled', true);
-			$('#button-payment-address').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-payment-address').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
 			$('#button-payment-address').attr('disabled', false);
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			$('.warning, .error').remove();
@@ -474,11 +474,11 @@ $('#button-shipping-address').live('click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-shipping-address').attr('disabled', true);
-			$('#button-shipping-address').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-shipping-address').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
 			$('#button-shipping-address').attr('disabled', false);
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			$('.warning, .error').remove();
@@ -587,11 +587,11 @@ $('#button-guest').live('click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-guest').attr('disabled', true);
-			$('#button-guest').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-guest').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
 			$('#button-guest').attr('disabled', false); 
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			$('.warning, .error').remove();
@@ -747,11 +747,11 @@ $('#button-guest-shipping').live('click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-guest-shipping').attr('disabled', true);
-			$('#button-guest-shipping').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-guest-shipping').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
 			$('#button-guest-shipping').attr('disabled', false); 
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			$('.warning, .error').remove();
@@ -829,11 +829,11 @@ $('#button-shipping-method').live('click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-shipping-method').attr('disabled', true);
-			$('#button-shipping-method').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-shipping-method').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
 			$('#button-shipping-method').attr('disabled', false);
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			$('.warning, .error').remove();
@@ -882,11 +882,11 @@ $('#button-payment-method').live('click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-payment-method').attr('disabled', true);
-			$('#button-payment-method').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-payment-method').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
 			$('#button-payment-method').attr('disabled', false);
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			$('.warning, .error').remove();

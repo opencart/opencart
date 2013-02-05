@@ -188,10 +188,10 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 		url: 'index.php?route=account/register/custom_field&customer_group_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'customer_group_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('select[name=\'customer_group_id\']').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			$('.custom-field').remove();
@@ -282,7 +282,6 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 					$('input[name=\'' + custom_field['position'] + '\']').parent().parent().after(html);
 				}
 			}
-
 			
 			if ($.browser.msie && $.browser.version == 6) {
 				$('.date, .datetime, .time').bgIframe();
@@ -309,12 +308,12 @@ function upload(product_option_id) {
 	
 	$('#file').on('change', function() {
 		$.ajax({
-			url: 'index.php?route=sale/order/upload&token=<?php echo $token; ?>',
+			url: 'index.php?route=sale/order/upload',
 			type: 'post',		
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
 			beforeSend: function() {
-				$('#button-option' + product_option_id).after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+				$('#button-option' + product_option_id).after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 				$('#button-option' + product_option_id).attr('disabled', true);
 				$('#option' + product_option_id + ' + .error').remove();
 			},	
@@ -351,10 +350,10 @@ $('select[name=\'country_id\']').bind('change', function() {
 		url: 'index.php?route=account/register/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('select[name=\'country_id\']').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

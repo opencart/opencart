@@ -1012,7 +1012,7 @@ $('input[name=\'product\']').autocomplete({
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<a id="button-option' + option['product_option_id'] + '" class="button" onclick="upload(\'' + option['product_option_id'] + '\');"><?php echo $button_upload; ?></a>';
+					html += '<input type="button" value="<?php echo $button_upload; ?>" id="button-option' + option['product_option_id'] + '" class="button" onclick="upload(\'' + option['product_option_id'] + '\');" />';
 					html += '<input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
 					html += '</div>';
 					html += '<br />';

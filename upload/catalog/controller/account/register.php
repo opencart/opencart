@@ -218,39 +218,6 @@ class ControllerAccountRegister extends Controller {
 		} else {
 			$this->data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
-		
-		$this->data['custom_fields'] = array();
-		
-		$this->load->model('account/custom_field');
-		 
-		$custom_fields = $this->model_account_custom_field->getCustomFields();
-		 
-		foreach ($custom_fields as $custom_field) {
-			$custom_field_value_data = array();
-			
-			foreach ($custom_field['custom_field_value'] as $option_value) {
-				$custom_field_value_data[] = array(
-					'custom_field_value_id' => $option_value['custom_field_value_id'],
-					'name'                  => $option_value['name']
-				);
-			}			
-			
-			if (isset($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-				$value = $this->request->post['custom_field'][$custom_field['custom_field_id']];
-			} else {
-				$value = $custom_field['value'];
-			}
-			
-			$this->data['custom_fields'][] = array(
-				'custom_field_id'    => $custom_field['custom_field_id'],
-				'custom_field_value' => $custom_field_value_data,
-				'name'               => $custom_field['name'],
-				'type'               => $custom_field['type'],
-				'value'              => $value,
-				'location'           => $custom_field['location'],
-				'position'           => $custom_field['position']
-			);
-		} 
 						
 		if (isset($this->request->post['address_1'])) {
     		$this->data['address_1'] = $this->request->post['address_1'];
@@ -424,6 +391,40 @@ class ControllerAccountRegister extends Controller {
     	}
   	}
 	
+	public function custom_field() {
+		$json = array();
+		
+		$this->data['custom_fields'] = array();
+		
+		$this->load->model('account/custom_field');
+		 
+		$custom_fields = $this->model_account_custom_field->getCustomFields('customer', $this->request->get['customer_group_id']);
+		 
+		foreach ($custom_fields as $custom_field) {
+			$custom_field_value_data = array();
+			
+			foreach ($custom_field['custom_field_value'] as $option_value) {
+				$custom_field_value_data[] = array(
+					'custom_field_value_id' => $option_value['custom_field_value_id'],
+					'name'                  => $option_value['name']
+				);
+			}			
+			
+			$json[] = array(
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $custom_field_value_data,
+				'name'               => $custom_field['name'],
+				'type'               => $custom_field['type'],
+				'value'              => $custom_field['value'],
+				'required'           => $custom_field['required'],
+				'location'           => $custom_field['location'],
+				'position'           => $custom_field['position']
+			);
+		} 
+		
+		$this->response->setOutput(json_encode($json));
+	}
+		
 	public function country() {
 		$json = array();
 		

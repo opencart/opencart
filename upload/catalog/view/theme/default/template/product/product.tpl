@@ -163,7 +163,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <input type="button" value="<?php echo $button_upload; ?>" id="button-option<?php echo $option['product_option_id']; ?>" class="button" onclick="$('input[name=\'file\']').click();" />
+          <input type="button" value="<?php echo $button_upload; ?>" id="button-option<?php echo $option['product_option_id']; ?>" class="button" onclick="upload('<?php echo $option['product_option_id']; ?>');" />
           <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="" />
         </div>
         <br />
@@ -379,39 +379,46 @@ $('#button-cart').bind('click', function() {
 <?php foreach ($options as $option) { ?>
 <?php if ($option['type'] == 'file') { ?>
 <script type="text/javascript"><!--
-$('#file').on('change', function() {
-    $.ajax({
-        url: 'index.php?route=product/product/upload',
-        type: 'post',		
-		dataType: 'json',
-		data: new FormData($(this).parent()[0]),
-		beforeSend: function() {
-			$('#button-option<?php echo $option['product_option_id']; ?>').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-			$('#button-option<?php echo $option['product_option_id']; ?>').attr('disabled', true);
-		},	
-		complete: function() {
-			$('.loading').remove();
-			$('#button-option<?php echo $option['product_option_id']; ?>').attr('disabled', false);
-		},		
-		success: function(json) {
-			if (json['error']) {
-				$('#option<?php echo $option['product_option_id']; ?>').after('<span class="error">' + json['error'] + '</span>');
-			}
-						
-			if (json['success']) {
-				alert(json['success']);
-				
-				$('input[name=\'option[<?php echo $option['product_option_id']; ?>]\']').attr('value', json['file']);
-			}
-		},			
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		},
-        cache: false,
-        contentType: false,
-        processData: false
-    });
-});
+function upload(product_option_id) {
+	$('#file').off();
+	
+	$('#file').on('change', function() {
+		$.ajax({
+			url: 'index.php?route=sale/order/upload&token=<?php echo $token; ?>',
+			type: 'post',		
+			dataType: 'json',
+			data: new FormData($(this).parent()[0]),
+			beforeSend: function() {
+				$('#button-option' + product_option_id).after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+				$('#button-option' + product_option_id).attr('disabled', true);
+				$('#option' + product_option_id + ' + .error').remove();
+			},	
+			complete: function() {
+				$('.loading').remove();
+				$('#button-option' + product_option_id).attr('disabled', false);
+			},		
+			success: function(json) {
+				if (json['error']) {
+					$('#option' + product_option_id).after('<span class="error">' + json['error'] + '</span>');
+				}
+							
+				if (json['success']) {
+					alert(json['success']);
+					
+					$('input[name=\'option[' + product_option_id + ']\']').attr('value', json['file']);
+				}
+			},			
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			},
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+	});		
+	
+	$('input[name=\'file\']').click();
+}
 //--></script>
 <?php } ?>
 <?php } ?>

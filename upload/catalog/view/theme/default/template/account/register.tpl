@@ -177,81 +177,13 @@
     <?php } ?>
   </form>
   <?php echo $content_bottom; ?></div>
-<table>
-  <?php foreach ($custom_fields as $custom_field) { ?>
-  <?php if ($custom_field['type'] == 'select') { ?>
-  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
-    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
-    <td><select name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]">
-        <option value=""><?php echo $text_select; ?></option>
-        <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-        <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></option>
-        <?php } ?>
-      </select></td>
-  </tr>
-  <?php } ?>
-  <?php if ($custom_field['type'] == 'radio') { ?>
-  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
-    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
-    <td><?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-      <input type="radio" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['custom_field_value_id']; ?>" id="custom-field-value<?php echo $custom_field_value['custom_field_value_id']; ?>" />
-      <label for="custom-field-value<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field['name']; ?></label>
-      <br />
-      <?php } ?></td>
-  </tr>
-  <?php } ?>
-  <?php if ($custom_field['type'] == 'checkbox') { ?>
-  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
-    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
-    <td><?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-      <input type="checkbox" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" id="custom-field-value<?php echo $custom_field_value['custom_field_value_id']; ?>" />
-      <label for="custom-field-value<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></label>
-      <br />
-      <?php } ?></td>
-  </tr>
-  <?php } ?>
-  <?php if ($custom_field['type'] == 'text') { ?>
-  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
-    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
-    <td><input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" /></td>
-  </tr>
-  <?php } ?>
-  <?php if ($custom_field['type'] == 'textarea') { ?>
-  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
-    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
-    <td><textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" cols="40" rows="5"><?php echo $custom_field['value']; ?></textarea></td>
-  </tr>
-  <?php } ?>
-  <?php if ($custom_field['type'] == 'file') { ?>
-  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
-    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
-    <td><input type="button" value="<?php echo $button_upload; ?>" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="button" onclick="$('input[name=\'file\']').click();" />
-      <input type="hidden" name="custom_field[<?php echo $option['custom_field_id']; ?>]" value="" /></td>
-  </tr>
-  <?php } ?>
-  <?php if ($custom_field['type'] == 'date') { ?>
-  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
-    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
-    <td><input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" class="date" /></td>
-  </tr>
-  <?php } ?>
-  <?php if ($custom_field['type'] == 'time') { ?>
-  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
-    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
-    <td><input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" class="time" /></td>
-  </tr>
-  <?php } ?>
-  <?php if ($custom_field['type'] == 'datetime') { ?>
-  <tr id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="<?php echo $custom_field['position']; ?>">
-    <td><span class="required">*</span> <?php echo $custom_field['name']; ?>:</td>
-    <td><input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" class="datetime" /></td>
-  </tr>
-  <?php } ?>
-  <?php } ?>
-</table>
+<div style="display: none;">
+  <form enctype="multipart/form-data">
+    <input type="file" name="file" id="file" />
+  </form>
+</div>  
 <script type="text/javascript"><!--
 $('select[name=\'customer_group_id\']').live('change', function() {
-	
 	$.ajax({
 		url: 'index.php?route=account/register/custom_field&customer_group_id=' + this.value,
 		dataType: 'json',
@@ -262,6 +194,8 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 			$('.wait').remove();
 		},			
 		success: function(json) {
+			$('.custom-field').remove();
+			
 			for (i = 0; i < json.length; i++) {
 				custom_field = json[i];
 				
@@ -291,7 +225,7 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 					html += '<td>';
 					
 					for (j = 0; j < custom_field['custom_field_value'].length; j++) {
-						html += '<input type="radio" name="custom_field[' + custom_field['custom_field_value'][j]['custom_field_value_id'] + ']"><label for="' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '">' + custom_field['custom_field_value'][j]['name'] + '</label><br />';
+						html += '<input type="radio" name="custom_field[' + custom_field['custom_field_value'][j]['custom_field_value_id'] + ']" id="custom-field-value' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '"><label for="custom-field-value' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '">' + custom_field['custom_field_value'][j]['name'] + '</label><br />';
 					}
 
 					html += '</td>';
@@ -302,12 +236,12 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 					html += '<td>';
 					
 					for (j = 0; j < custom_field['custom_field_value'].length; j++) {
-						html += '<input type="radio" name="custom_field[' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '][]"> <label for="' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '">' + custom_field['custom_field_value'][j]['name'] + '</label><br />';
+						html += '<input type="checkbox" name="custom_field[' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '][]" id="custom-field-value' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '"> <label for="custom-field-value' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '">' + custom_field['custom_field_value'][j]['name'] + '</label><br />';
 					}
 
 					html += '</td>';
 				}
-						  				
+
 				// Text
 				if (custom_field['type'] == 'text') {
 					html += '<td><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" /></td>'
@@ -320,92 +254,96 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 				
 				// File
 				if (custom_field['type'] == 'file') {
-					html += '<input type="button" value="<?php echo $button_upload; ?>" id="button-custom-field' + custom_field['custom_field_id'] + '" class="button" onclick="$(\'input[name=\\\'file\\\']\').click();" /><input type="hidden" name="option[' + custom_field['custom_field_id'] + ']" value="" />';
+					html += '<td><input type="button" value="<?php echo $button_upload; ?>" id="button-custom-field' + custom_field['custom_field_id'] + '" class="button" onclick="upload(\'' + custom_field['custom_field_id'] + '\');" /><input type="hidden" name="custom_field[' + custom_field['custom_field_id'] + ']" value="" /></td>';
 				}
 				
 				// Date
 				if (custom_field['type'] == 'date') {
-					html += '<td><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" class="date" /></td>'
+					html += '<td><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" class="date" /></td>';
 				}			
 				
 				// Datetime
-				if (custom_field['type'] == 'date') {
-					html += '<td><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" class="datetime" /></td>'
+				if (custom_field['type'] == 'datetime') {
+					html += '<td><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" class="datetime" /></td>';
 				}		
 							
 				// Time
-				if (custom_field['type'] == 'date') {
-					html += '<td><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" class="time" /></td>'
+				if (custom_field['type'] == 'time') {
+					html += '<td><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" class="time" /></td>';
 				}	
 								
 				html += '<tr>';
+				
+				if (custom_field['position'] == 'begining') {
+					$('input[name=\'firstname\']').parent().parent().before(html);
+				} else if (custom_field['position'] == 'customer_group_id' || custom_field['position'] == 'country_id' || custom_field['position'] == 'zone_id') {
+					$('select[name=\'' + custom_field['position'] + '\']').parent().parent().after(html)
+				} else {
+					$('input[name=\'' + custom_field['position'] + '\']').parent().parent().after(html);
+				}
+			}
+
+			
+			if ($.browser.msie && $.browser.version == 6) {
+				$('.date, .datetime, .time').bgIframe();
 			}
 			
-
-			$('select[name=\'zone_id\']').html(html);
+			$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+			$('.datetime').datetimepicker({
+				dateFormat: 'yy-mm-dd',
+				timeFormat: 'h:m'
+			});
+			
+			$('.time').timepicker({timeFormat: 'h:m'});		
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-	
-	/*
-	
-	<?php if ($custom_field['position'] == 'begining') { ?>
-	$('input[name=\'firstname\']').parent().parent().before(html);
-	<?php } else { ?>
-	$('input[name=\'<?php echo $custom_field['position']; ?>\']').parent().parent().after(html);
-	<?php } ?>	
-	
-	
-	
-	
-	
-<?php foreach ($customer_groups as $customer_group) { ?>
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>] = [];
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_display'] = '<?php echo $customer_group['company_id_display']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_required'] = '<?php echo $customer_group['company_id_required']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_display'] = '<?php echo $customer_group['tax_id_display']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_required'] = '<?php echo $customer_group['tax_id_required']; ?>';
-<?php } ?>	
-	*/
-
-	var customer_group = [];
-
-	<?php foreach ($custom_fields as $custom_field) { ?>
-	var customer_group[]['name'] = ;
-    <?php } ?>	
-	
-	if (customer_group[this.value]) {
-		if (customer_group[this.value]['company_id_display'] == '1') {
-			$('#company-id-display').show();
-		} else {
-			$('#company-id-display').hide();
-		}
-		
-		if (customer_group[this.value]['company_id_required'] == '1') {
-			$('#company-id-required').show();
-		} else {
-			$('#company-id-required').hide();
-		}
-		
-		if (customer_group[this.value]['tax_id_display'] == '1') {
-			$('#tax-id-display').show();
-		} else {
-			$('#tax-id-display').hide();
-		}
-		
-		if (customer_group[this.value]['tax_id_required'] == '1') {
-			$('#tax-id-required').show();
-		} else {
-			$('#tax-id-required').hide();
-		}	
-	}
-	
-
 });
 
 $('select[name=\'customer_group_id\']').trigger('change');
+
+function upload(product_option_id) {
+	$('#file').off();
+	
+	$('#file').on('change', function() {
+		$.ajax({
+			url: 'index.php?route=sale/order/upload&token=<?php echo $token; ?>',
+			type: 'post',		
+			dataType: 'json',
+			data: new FormData($(this).parent()[0]),
+			beforeSend: function() {
+				$('#button-option' + product_option_id).after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+				$('#button-option' + product_option_id).attr('disabled', true);
+				$('#option' + product_option_id + ' + .error').remove();
+			},	
+			complete: function() {
+				$('.loading').remove();
+				$('#button-option' + product_option_id).attr('disabled', false);
+			},		
+			success: function(json) {
+				if (json['error']) {
+					$('#option' + product_option_id).after('<span class="error">' + json['error'] + '</span>');
+				}
+							
+				if (json['success']) {
+					alert(json['success']);
+					
+					$('input[name=\'option[' + product_option_id + ']\']').attr('value', json['file']);
+				}
+			},			
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			},
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+	});		
+	
+	$('input[name=\'file\']').click();
+}
 //--></script> 
 <script type="text/javascript"><!--
 $('select[name=\'country_id\']').bind('change', function() {
@@ -459,17 +397,5 @@ $(document).ready(function() {
 		height: 480
 	});
 });
-
-if ($.browser.msie && $.browser.version == 6) {
-	$('.date, .datetime, .time').bgIframe();
-}
-
-$('.date').datepicker({dateFormat: 'yy-mm-dd'});
-$('.datetime').datetimepicker({
-	dateFormat: 'yy-mm-dd',
-	timeFormat: 'h:m'
-});
-
-$('.time').timepicker({timeFormat: 'h:m'});
 //--></script> 
 <?php echo $footer; ?>

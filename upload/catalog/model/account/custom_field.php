@@ -1,9 +1,9 @@
 <?php
 class ModelAccountCustomField extends Model {
-	public function getCustomFields() {
+	public function getCustomFields($location, $customer_group_id) {
 		$custom_field_data = array();
 		
-		$custom_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` cf LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cfd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY cf.sort_order ASC");
+		$custom_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` cfcg LEFT JOIN `" . DB_PREFIX . "custom_field` cf ON (cfcg.custom_field_id = cf.custom_field_id) LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cfcg.customer_group_id = '" . (int)$customer_group_id . "' AND cf.location = '" . $this->db->escape($location) . "' AND cfd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY cf.sort_order ASC");
 		
 		foreach ($custom_field_query->rows as $custom_field) {
 			$custom_field_value_data = array();
@@ -25,6 +25,7 @@ class ModelAccountCustomField extends Model {
 				'name'               => $custom_field['name'],
 				'type'               => $custom_field['type'],
 				'value'              => $custom_field['value'],
+				'required'           => $custom_field['required'],
 				'location'           => $custom_field['location'],
 				'position'           => $custom_field['position']
 			);			

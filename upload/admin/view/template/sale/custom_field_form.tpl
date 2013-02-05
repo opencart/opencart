@@ -31,53 +31,53 @@
             <td><select name="type">
                 <optgroup label="<?php echo $text_choose; ?>">
                 <?php if ($type == 'select') { ?>
-                <option value="select" selected><?php echo $text_select; ?></option>
+                <option value="select" selected="selected"><?php echo $text_select; ?></option>
                 <?php } else { ?>
                 <option value="select"><?php echo $text_select; ?></option>
                 <?php } ?>
                 <?php if ($type == 'radio') { ?>
-                <option value="radio" selected><?php echo $text_radio; ?></option>
+                <option value="radio" selected="selected"><?php echo $text_radio; ?></option>
                 <?php } else { ?>
                 <option value="radio"><?php echo $text_radio; ?></option>
                 <?php } ?>
                 <?php if ($type == 'checkbox') { ?>
-                <option value="checkbox" selected><?php echo $text_checkbox; ?></option>
+                <option value="checkbox" selected="selected"><?php echo $text_checkbox; ?></option>
                 <?php } else { ?>
                 <option value="checkbox"><?php echo $text_checkbox; ?></option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="<?php echo $text_input; ?>">
                 <?php if ($type == 'text') { ?>
-                <option value="text" selected><?php echo $text_text; ?></option>
+                <option value="text" selected="selected"><?php echo $text_text; ?></option>
                 <?php } else { ?>
                 <option value="text"><?php echo $text_text; ?></option>
                 <?php } ?>
                 <?php if ($type == 'textarea') { ?>
-                <option value="textarea" selected><?php echo $text_textarea; ?></option>
+                <option value="textarea" selected="selected"><?php echo $text_textarea; ?></option>
                 <?php } else { ?>
                 <option value="textarea"><?php echo $text_textarea; ?></option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="<?php echo $text_file; ?>">
                 <?php if ($type == 'file') { ?>
-                <option value="file" selected><?php echo $text_file; ?></option>
+                <option value="file" selected="selected"><?php echo $text_file; ?></option>
                 <?php } else { ?>
                 <option value="file"><?php echo $text_file; ?></option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="<?php echo $text_date; ?>">
                 <?php if ($type == 'date') { ?>
-                <option value="date" selected><?php echo $text_date; ?></option>
+                <option value="date" selected="selected"><?php echo $text_date; ?></option>
                 <?php } else { ?>
                 <option value="date"><?php echo $text_date; ?></option>
                 <?php } ?>
                 <?php if ($type == 'time') { ?>
-                <option value="time" selected><?php echo $text_time; ?></option>
+                <option value="time" selected="selected"><?php echo $text_time; ?></option>
                 <?php } else { ?>
                 <option value="time"><?php echo $text_time; ?></option>
                 <?php } ?>
                 <?php if ($type == 'datetime') { ?>
-                <option value="datetime" selected><?php echo $text_datetime; ?></option>
+                <option value="datetime" selected="selected"><?php echo $text_datetime; ?></option>
                 <?php } else { ?>
                 <option value="datetime"><?php echo $text_datetime; ?></option>
                 <?php } ?>
@@ -132,22 +132,22 @@
             <td><?php echo $entry_location; ?></td>
             <td><select name="location">
                 <?php if ($location == 'customer') { ?>
-                <option value="customer" selected><?php echo $text_customer; ?></option>
+                <option value="customer" selected="selected"><?php echo $text_customer; ?></option>
                 <?php } else { ?>
                 <option value="customer"><?php echo $text_customer; ?></option>
                 <?php } ?>
                 <?php if ($location == 'address') { ?>
-                <option value="address" selected><?php echo $text_address; ?></option>
+                <option value="address" selected="selected"><?php echo $text_address; ?></option>
                 <?php } else { ?>
                 <option value="address"><?php echo $text_address; ?></option>
                 <?php } ?>
                 <?php if ($location == 'payment_address') { ?>
-                <option value="payment_address" selected><?php echo $text_payment_address; ?></option>
+                <option value="payment_address" selected="selected"><?php echo $text_payment_address; ?></option>
                 <?php } else { ?>
                 <option value="payment_address"><?php echo $text_payment_address; ?></option>
                 <?php } ?>
                 <?php if ($location == 'shipping_address') { ?>
-                <option value="shipping_address" selected><?php echo $text_shipping_address; ?></option>
+                <option value="shipping_address" selected="selected"><?php echo $text_shipping_address; ?></option>
                 <?php } else { ?>
                 <option value="shipping_address"><?php echo $text_shipping_address; ?></option>
                 <?php } ?>
@@ -157,74 +157,74 @@
             <td><?php echo $entry_position; ?></td>
             <td><select name="position">
                 <?php if ($position == 'begining') { ?>
-                <option value="begining" selected><?php echo $text_begining; ?></option>
+                <option value="begining" selected="selected"><?php echo $text_begining; ?></option>
                 <?php } else { ?>
                 <option value="begining"><?php echo $text_begining; ?></option>
                 <?php } ?>
                 <?php if ($position == 'firstname') { ?>
-                <option value="firstname" selected><?php echo $text_firstname; ?></option>
+                <option value="firstname" selected="selected"><?php echo $text_firstname; ?></option>
                 <?php } else { ?>
                 <option value="firstname"><?php echo $text_firstname; ?></option>
                 <?php } ?>
                 <?php if ($position == 'lastname') { ?>
-                <option value="lastname" selected><?php echo $text_lastname; ?></option>
+                <option value="lastname" selected="selected"><?php echo $text_lastname; ?></option>
                 <?php } else { ?>
                 <option value="lastname"><?php echo $text_lastname; ?></option>
                 <?php } ?>
                 <?php if ($position == 'email') { ?>
-                <option value="email" selected><?php echo $text_email; ?></option>
+                <option value="email" selected="selected"><?php echo $text_email; ?></option>
                 <?php } else { ?>
                 <option value="email"><?php echo $text_email; ?></option>
                 <?php } ?>
                 <?php if ($position == 'telephone') { ?>
-                <option value="telephone" selected><?php echo $text_telephone; ?></option>
+                <option value="telephone" selected="selected"><?php echo $text_telephone; ?></option>
                 <?php } else { ?>
                 <option value="telephone"><?php echo $text_telephone; ?></option>
                 <?php } ?>
                 <?php if ($position == 'fax') { ?>
-                <option value="fax" selected><?php echo $text_fax; ?></option>
+                <option value="fax" selected="selected"><?php echo $text_fax; ?></option>
                 <?php } else { ?>
                 <option value="fax"><?php echo $text_fax; ?></option>
                 <?php } ?>
                 <?php if ($position == 'company') { ?>
-                <option value="company" selected><?php echo $text_company; ?></option>
+                <option value="company" selected="selected"><?php echo $text_company; ?></option>
                 <?php } else { ?>
                 <option value="company"><?php echo $text_company; ?></option>
                 <?php } ?>
-                <?php if ($position == 'customer_group') { ?>
-                <option value="customer_group" selected><?php echo $text_customer_group; ?></option>
+                <?php if ($position == 'customer_group_id') { ?>
+                <option value="customer_group_id" selected="selected"><?php echo $text_customer_group; ?></option>
                 <?php } else { ?>
-                <option value="customer_group"><?php echo $text_customer_group; ?></option>
+                <option value="customer_group_id"><?php echo $text_customer_group; ?></option>
                 <?php } ?>
                 <?php if ($position == 'address_1') { ?>
-                <option value="address_1" selected><?php echo $text_address_1; ?></option>
+                <option value="address_1" selected="selected"><?php echo $text_address_1; ?></option>
                 <?php } else { ?>
                 <option value="address_1"><?php echo $text_address_1; ?></option>
                 <?php } ?>
                 <?php if ($position == 'address_2') { ?>
-                <option value="address_2" selected><?php echo $text_address_2; ?></option>
+                <option value="address_2" selected="selected"><?php echo $text_address_2; ?></option>
                 <?php } else { ?>
                 <option value="address_2"><?php echo $text_address_2; ?></option>
                 <?php } ?>
                 <?php if ($position == 'city') { ?>
-                <option value="city" selected><?php echo $text_city; ?></option>
+                <option value="city" selected="selected"><?php echo $text_city; ?></option>
                 <?php } else { ?>
                 <option value="city"><?php echo $text_city; ?></option>
                 <?php } ?>
                 <?php if ($position == 'postcode') { ?>
-                <option value="postcode" selected><?php echo $text_postcode; ?></option>
+                <option value="postcode" selected="selected"><?php echo $text_postcode; ?></option>
                 <?php } else { ?>
                 <option value="postcode"><?php echo $text_postcode; ?></option>
                 <?php } ?>
-                <?php if ($position == 'country') { ?>
-                <option value="country" selected><?php echo $text_country; ?></option>
+                <?php if ($position == 'country_id') { ?>
+                <option value="country_id" selected="selected"><?php echo $text_country; ?></option>
                 <?php } else { ?>
-                <option value="country"><?php echo $text_country; ?></option>
+                <option value="country_id"><?php echo $text_country; ?></option>
                 <?php } ?>
-                <?php if ($position == 'zone') { ?>
-                <option value="zone" selected><?php echo $text_zone; ?></option>
+                <?php if ($position == 'zone_id') { ?>
+                <option value="zone_id" selected="selected"><?php echo $text_zone; ?></option>
                 <?php } else { ?>
-                <option value="zone"><?php echo $text_zone; ?></option>
+                <option value="zone_id"><?php echo $text_zone; ?></option>
                 <?php } ?>
               </select></td>
           </tr>

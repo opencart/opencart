@@ -358,6 +358,12 @@ a.button, input.button, .list a.button {
 	width: 100%;
 	padding-top: 6px;
 }
+.pagination.top {
+	padding:0px 0px 10px;
+	margin-bottom:5px;
+	border-top:none;
+	border-bottom: 1px solid #DDD;
+}
 .pagination .links {
 	float: left;
 	padding-top: 6px;

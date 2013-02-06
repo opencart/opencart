@@ -97,8 +97,6 @@ class ControllerCheckoutRegister extends Controller {
 	public function save() {
 		$this->language->load('checkout/checkout');
 		
-		$this->load->model('account/customer');
-		
 		$json = array();
 		
 		// Validate if customer is already logged out.
@@ -130,7 +128,9 @@ class ControllerCheckoutRegister extends Controller {
 			}				
 		}
 						
-		if (!$json) {					
+		if (!$json) {
+			$this->load->model('account/customer');					
+			
 			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}

@@ -137,7 +137,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'type\']').bind('change', function() {
+$('select[name=\'type\']').on('change', function() {
 	if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox' || this.value == 'image') {
 		$('#option-value').show();
 	} else {

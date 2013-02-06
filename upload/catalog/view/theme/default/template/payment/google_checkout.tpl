@@ -8,7 +8,7 @@
   </div>
 </form>
 <script type="text/javascript"><!--
-$('#button-paypal').bind('click', function() {
+$('#button-paypal').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=payment/google_checkout/send',
 		type: 'post',

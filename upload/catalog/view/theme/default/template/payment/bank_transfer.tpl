@@ -10,7 +10,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-confirm').bind('click', function() {
+$('#button-confirm').on('click', function() {
 	$.ajax({ 
 		type: 'get',
 		url: 'index.php?route=payment/bank_transfer/confirm',

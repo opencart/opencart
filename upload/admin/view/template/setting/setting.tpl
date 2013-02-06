@@ -1015,7 +1015,7 @@
 $('#template').load('index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
 //--></script> 
 <script type="text/javascript"><!--
-$('select[name=\'config_country_id\']').bind('change', function() {
+$('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=setting/setting/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',

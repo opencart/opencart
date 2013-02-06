@@ -97,7 +97,7 @@ CKEDITOR.replace('message', {
 });
 //--></script> 
 <script type="text/javascript"><!--	
-$('select[name=\'to\']').bind('change', function() {
+$('select[name=\'to\']').on('change', function() {
 	$('#mail .to').hide();
 	
 	$('#mail #to-' + $(this).attr('value').replace('_', '-')).show();

@@ -667,7 +667,7 @@ $('input[name=\'affiliate\']').autocomplete({
 
 var payment_zone_id = '<?php echo $payment_zone_id; ?>';
 
-$('select[name=\'payment_country_id\']').bind('change', function() {
+$('select[name=\'payment_country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
@@ -710,7 +710,7 @@ $('select[name=\'payment_country_id\']').bind('change', function() {
 
 $('select[name=\'payment_country_id\']').trigger('change');
 
-$('select[name=\'payment_address\']').bind('change', function() {
+$('select[name=\'payment_address\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
 		dataType: 'json',
@@ -735,7 +735,7 @@ $('select[name=\'payment_address\']').bind('change', function() {
 
 var shipping_zone_id = '<?php echo $shipping_zone_id; ?>';
 
-$('select[name=\'shipping_country_id\']').bind('change', function() {
+$('select[name=\'shipping_country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
@@ -778,7 +778,7 @@ $('select[name=\'shipping_country_id\']').bind('change', function() {
 
 $('select[name=\'shipping_country_id\']').trigger('change');
 
-$('select[name=\'shipping_address\']').bind('change', function() {
+$('select[name=\'shipping_address\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
 		dataType: 'json',
@@ -1084,7 +1084,7 @@ function upload(product_option_id) {
 }
 //--></script> 
 <script type="text/javascript"><!--
-$('select[name=\'payment\']').bind('change', function() {
+$('select[name=\'payment\']').on('change', function() {
 	if (this.value) {
 		$('input[name=\'payment_method\']').attr('value', $('select[name=\'payment\'] option:selected').text());
 	} else {
@@ -1094,7 +1094,7 @@ $('select[name=\'payment\']').bind('change', function() {
 	$('input[name=\'payment_code\']').attr('value', this.value);
 });
 
-$('select[name=\'shipping\']').bind('change', function() {
+$('select[name=\'shipping\']').on('change', function() {
 	if (this.value) {
 		$('input[name=\'shipping_method\']').attr('value', $('select[name=\'shipping\'] option:selected').text());
 	} else {

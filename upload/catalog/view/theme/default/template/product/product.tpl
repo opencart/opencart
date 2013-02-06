@@ -345,7 +345,7 @@ $(document).ready(function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
-$('#button-cart').bind('click', function() {
+$('#button-cart').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/cart/add',
 		type: 'post',
@@ -436,7 +436,7 @@ $('#review .pagination a').live('click', function() {
 
 $('#review').load('index.php?route=product/product/review&product_id=<?php echo $product_id; ?>');
 
-$('#button-review').bind('click', function() {
+$('#button-review').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
 		type: 'post',

@@ -17,6 +17,7 @@
       <div class="buttons"><a href="<?php echo $insert; ?>" class="button"><?php echo $button_insert; ?></a><a onclick="$('form').submit();" class="button"><?php echo $button_delete; ?></a></div>
     </div>
     <div class="content">
+    <div class="pagination top"><?php echo $pagination; ?></div>
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
         <table class="list">
           <thead>

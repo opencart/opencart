@@ -30,13 +30,6 @@
 <!--[if IE 7]> 
 <link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/ie7.css" />
 <![endif]-->
-<!--[if lt IE 7]>
-<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/ie6.css" />
-<script type="text/javascript" src="catalog/view/javascript/DD_belatedPNG_0.0.8a-min.js"></script>
-<script type="text/javascript">
-DD_belatedPNG.fix('#logo img');
-</script>
-<![endif]-->
 <?php if ($stores) { ?>
 <script type="text/javascript"><!--
 $(document).ready(function() {

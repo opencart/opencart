@@ -1,7 +1,7 @@
 <?php
-class ControllerExtensionManager extends Controller {
+class ControllerExtensionModification extends Controller {
 	public function index() {
-		$this->language->load('extension/manager');
+		$this->language->load('extension/modification');
 		 
 		$this->document->setTitle($this->language->get('heading_title')); 
 
@@ -15,7 +15,7 @@ class ControllerExtensionManager extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('extension/manager', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('extension/modification', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => ' :: '
    		);
 		
@@ -25,7 +25,7 @@ class ControllerExtensionManager extends Controller {
 		
 		$this->data['token'] = $this->session->data['token'];
 		
-		$this->template = 'extension/manager.tpl';
+		$this->template = 'extension/modification.tpl';
 		$this->children = array(
 			'common/header',
 			'common/footer'

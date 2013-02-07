@@ -26,7 +26,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-filter').bind('click', function() {
+$('#button-filter').on('click', function() {
 	filter = [];
 	
 	$('.box-filter input[type=\'checkbox\']:checked').each(function(element) {

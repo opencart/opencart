@@ -97,7 +97,7 @@ CKEDITOR.replace('message', {
 });
 //--></script> 
 <script type="text/javascript"><!--	
-$('select[name=\'to\']').bind('change', function() {
+$('select[name=\'to\']').on('change', function() {
 	$('#mail .to').hide();
 	
 	$('#mail #to-' + $(this).attr('value').replace('_', '-')).show();
@@ -241,7 +241,7 @@ $('#product div img').live('click', function() {
 });
 
 function send(url) { 
-	$('textarea[name=\'message\']').html($('textarea[name=\'message\']').val());
+	$('textarea[name=\'message\']').html(CKEDITOR.instances.message.getData());
 	
 	$.ajax({
 		url: url,
@@ -250,11 +250,11 @@ function send(url) {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-send').attr('disabled', true);
-			$('#button-send').before('<span class="wait"><img src="view/image/loading.gif" alt="" />&nbsp;</span>');
+			$('#button-send').before('<img src="view/image/loading.gif" class="loading" style="padding-right: 5px;" />');
 		},
 		complete: function() {
 			$('#button-send').attr('disabled', false);
-			$('.wait').remove();
+			$('.loading').remove();
 		},				
 		success: function(json) {
 			$('.success, .warning, .error').remove();

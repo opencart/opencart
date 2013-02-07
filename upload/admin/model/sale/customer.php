@@ -7,7 +7,7 @@ class ModelSaleCustomer extends Model {
       	
       	if (isset($data['address'])) {		
       		foreach ($data['address'] as $address) {	
-      			$this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '" . (int)$customer_id . "', firstname = '" . $this->db->escape($address['firstname']) . "', lastname = '" . $this->db->escape($address['lastname']) . "', company = '" . $this->db->escape($address['company']) . "', company_id = '" . $this->db->escape($address['company_id']) . "', tax_id = '" . $this->db->escape($address['tax_id']) . "', address_1 = '" . $this->db->escape($address['address_1']) . "', address_2 = '" . $this->db->escape($address['address_2']) . "', city = '" . $this->db->escape($address['city']) . "', postcode = '" . $this->db->escape($address['postcode']) . "', country_id = '" . (int)$address['country_id'] . "', zone_id = '" . (int)$address['zone_id'] . "'");
+      			$this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '" . (int)$customer_id . "', firstname = '" . $this->db->escape($address['firstname']) . "', lastname = '" . $this->db->escape($address['lastname']) . "', company = '" . $this->db->escape($address['company']) . "', address_1 = '" . $this->db->escape($address['address_1']) . "', address_2 = '" . $this->db->escape($address['address_2']) . "', city = '" . $this->db->escape($address['city']) . "', postcode = '" . $this->db->escape($address['postcode']) . "', country_id = '" . (int)$address['country_id'] . "', zone_id = '" . (int)$address['zone_id'] . "'");
 				
 				if (isset($address['default'])) {
 					$address_id = $this->db->getLastId();
@@ -29,7 +29,7 @@ class ModelSaleCustomer extends Model {
       	
       	if (isset($data['address'])) {
       		foreach ($data['address'] as $address) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "address SET address_id = '" . (int)$address['address_id'] . "', customer_id = '" . (int)$customer_id . "', firstname = '" . $this->db->escape($address['firstname']) . "', lastname = '" . $this->db->escape($address['lastname']) . "', company = '" . $this->db->escape($address['company']) . "', company_id = '" . $this->db->escape($address['company_id']) . "', tax_id = '" . $this->db->escape($address['tax_id']) . "', address_1 = '" . $this->db->escape($address['address_1']) . "', address_2 = '" . $this->db->escape($address['address_2']) . "', city = '" . $this->db->escape($address['city']) . "', postcode = '" . $this->db->escape($address['postcode']) . "', country_id = '" . (int)$address['country_id'] . "', zone_id = '" . (int)$address['zone_id'] . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "address SET address_id = '" . (int)$address['address_id'] . "', customer_id = '" . (int)$customer_id . "', firstname = '" . $this->db->escape($address['firstname']) . "', lastname = '" . $this->db->escape($address['lastname']) . "', company = '" . $this->db->escape($address['company']) . "', address_1 = '" . $this->db->escape($address['address_1']) . "', address_2 = '" . $this->db->escape($address['address_2']) . "', city = '" . $this->db->escape($address['city']) . "', postcode = '" . $this->db->escape($address['postcode']) . "', country_id = '" . (int)$address['country_id'] . "', zone_id = '" . (int)$address['zone_id'] . "'");
 					
 				if (isset($address['default'])) {
 					$address_id = $this->db->getLastId();
@@ -77,7 +77,7 @@ class ModelSaleCustomer extends Model {
 			$implode[] = "c.email LIKE '" . $this->db->escape($data['filter_email']) . "%'";
 		}
 
-		if (isset($data['filter_newsletter']) && !is_null($data['filter_newsletter'])) {
+		if (isset($data['filter_newsletter']) && $data['filter_newsletter'] !== null) {
 			$implode[] = "c.newsletter = '" . (int)$data['filter_newsletter'] . "'";
 		}	
 				
@@ -89,11 +89,11 @@ class ModelSaleCustomer extends Model {
 			$implode[] = "c.customer_id IN (SELECT customer_id FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape($data['filter_ip']) . "')";
 		}	
 				
-		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+		if (isset($data['filter_status']) && $data['filter_status'] !== null) {
 			$implode[] = "c.status = '" . (int)$data['filter_status'] . "'";
 		}	
 		
-		if (isset($data['filter_approved']) && !is_null($data['filter_approved'])) {
+		if (isset($data['filter_approved']) && $data['filter_approved'] !== null) {
 			$implode[] = "c.approved = '" . (int)$data['filter_approved'] . "'";
 		}	
 				
@@ -222,8 +222,6 @@ class ModelSaleCustomer extends Model {
 				'firstname'      => $address_query->row['firstname'],
 				'lastname'       => $address_query->row['lastname'],
 				'company'        => $address_query->row['company'],
-				'company_id'     => $address_query->row['company_id'],
-				'tax_id'         => $address_query->row['tax_id'],
 				'address_1'      => $address_query->row['address_1'],
 				'address_2'      => $address_query->row['address_2'],
 				'postcode'       => $address_query->row['postcode'],
@@ -269,7 +267,7 @@ class ModelSaleCustomer extends Model {
 			$implode[] = "email LIKE '" . $this->db->escape($data['filter_email']) . "%'";
 		}
 		
-		if (isset($data['filter_newsletter']) && !is_null($data['filter_newsletter'])) {
+		if (isset($data['filter_newsletter']) && $data['filter_newsletter'] !== null) {
 			$implode[] = "newsletter = '" . (int)$data['filter_newsletter'] . "'";
 		}
 				
@@ -281,11 +279,11 @@ class ModelSaleCustomer extends Model {
 			$implode[] = "customer_id IN (SELECT customer_id FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape($data['filter_ip']) . "')";
 		}	
 						
-		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+		if (isset($data['filter_status']) && $data['filter_status'] !== null) {
 			$implode[] = "status = '" . (int)$data['filter_status'] . "'";
 		}			
 		
-		if (isset($data['filter_approved']) && !is_null($data['filter_approved'])) {
+		if (isset($data['filter_approved']) && $data['filter_approved'] !== null) {
 			$implode[] = "approved = '" . (int)$data['filter_approved'] . "'";
 		}		
 				

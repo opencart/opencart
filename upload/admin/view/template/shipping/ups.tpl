@@ -726,7 +726,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'ups_origin\']').bind('change', function() {
+$('select[name=\'ups_origin\']').on('change', function() {
 	$('#service > div').hide();	
 										 
 	$('#' + this.value).show();	

@@ -112,17 +112,6 @@
               <td><?php echo $entry_company; ?></td>
               <td><input type="text" name="payment_company" value="<?php echo $payment_company; ?>" /></td>
             </tr>
-            <tr id="company-id-display">
-              <td><span id="company-id-required" class="required">*</span> <?php echo $entry_company_id; ?></td>
-              <td><input type="text" name="payment_company_id" value="<?php echo $payment_company_id; ?>" /></td>
-            </tr>
-            <tr id="tax-id-display">
-              <td><span id="tax-id-required" class="required">*</span> <?php echo $entry_tax_id; ?></td>
-              <td><input type="text" name="payment_tax_id" value="<?php echo $payment_tax_id; ?>" />
-                <?php if ($error_payment_tax_id) { ?>
-                <span class="error"><?php echo $error_payment_tax_id; ?></span>
-                <?php } ?></td>
-            </tr>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
               <td><input type="text" name="payment_address_1" value="<?php echo $payment_address_1; ?>" />
@@ -644,43 +633,7 @@ $('input[name=\'customer\']').catcomplete({
 });
 
 $('select[id=\'customer_group_id\']').live('change', function() {
-	$('input[name=\'customer_group_id\']').attr('value', this.value);
-	
-	var customer_group = [];
-	
-<?php foreach ($customer_groups as $customer_group) { ?>
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>] = [];
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_display'] = '<?php echo $customer_group['company_id_display']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_required'] = '<?php echo $customer_group['company_id_required']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_display'] = '<?php echo $customer_group['tax_id_display']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_required'] = '<?php echo $customer_group['tax_id_required']; ?>';
-<?php } ?>	
 
-	if (customer_group[this.value]) {
-		if (customer_group[this.value]['company_id_display'] == '1') {
-			$('#company-id-display').show();
-		} else {
-			$('#company-id-display').hide();
-		}
-		
-		if (customer_group[this.value]['company_id_required'] == '1') {
-			$('#company-id-required').show();
-		} else {
-			$('#company-id-required').hide();
-		}
-		
-		if (customer_group[this.value]['tax_id_display'] == '1') {
-			$('#tax-id-display').show();
-		} else {
-			$('#tax-id-display').hide();
-		}
-		
-		if (customer_group[this.value]['tax_id_required'] == '1') {
-			$('#tax-id-required').show();
-		} else {
-			$('#tax-id-required').hide();
-		}	
-	}
 });
 
 $('select[id=\'customer_group_id\']').trigger('change');
@@ -714,15 +667,15 @@ $('input[name=\'affiliate\']').autocomplete({
 
 var payment_zone_id = '<?php echo $payment_zone_id; ?>';
 
-$('select[name=\'payment_country_id\']').bind('change', function() {
+$('select[name=\'payment_country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'payment_country_id\']').after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
+			$('select[name=\'payment_country_id\']').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -757,7 +710,7 @@ $('select[name=\'payment_country_id\']').bind('change', function() {
 
 $('select[name=\'payment_country_id\']').trigger('change');
 
-$('select[name=\'payment_address\']').bind('change', function() {
+$('select[name=\'payment_address\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
 		dataType: 'json',
@@ -766,8 +719,6 @@ $('select[name=\'payment_address\']').bind('change', function() {
 				$('input[name=\'payment_firstname\']').attr('value', json['firstname']);
 				$('input[name=\'payment_lastname\']').attr('value', json['lastname']);
 				$('input[name=\'payment_company\']').attr('value', json['company']);
-				$('input[name=\'payment_company_id\']').attr('value', json['company_id']);
-				$('input[name=\'payment_tax_id\']').attr('value', json['tax_id']);
 				$('input[name=\'payment_address_1\']').attr('value', json['address_1']);
 				$('input[name=\'payment_address_2\']').attr('value', json['address_2']);
 				$('input[name=\'payment_city\']').attr('value', json['city']);
@@ -784,15 +735,15 @@ $('select[name=\'payment_address\']').bind('change', function() {
 
 var shipping_zone_id = '<?php echo $shipping_zone_id; ?>';
 
-$('select[name=\'shipping_country_id\']').bind('change', function() {
+$('select[name=\'shipping_country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'payment_country_id\']').after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
+			$('select[name=\'payment_country_id\']').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -827,7 +778,7 @@ $('select[name=\'shipping_country_id\']').bind('change', function() {
 
 $('select[name=\'shipping_country_id\']').trigger('change');
 
-$('select[name=\'shipping_address\']').bind('change', function() {
+$('select[name=\'shipping_address\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
 		dataType: 'json',
@@ -881,7 +832,7 @@ $('input[name=\'product\']').autocomplete({
 				option = ui.item['option'][i];
 				
 				if (option['type'] == 'select') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -909,7 +860,7 @@ $('input[name=\'product\']').autocomplete({
 				}
 				
 				if (option['type'] == 'radio') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -937,7 +888,7 @@ $('input[name=\'product\']').autocomplete({
 				}
 					
 				if (option['type'] == 'checkbox') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -948,8 +899,8 @@ $('input[name=\'product\']').autocomplete({
 					for (j = 0; j < option['product_option_value'].length; j++) {
 						option_value = option['product_option_value'][j];
 						
-						html += '<input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="option-value-' + option_value['product_option_value_id'] + '" />';
-						html += '<label for="option-value-' + option_value['product_option_value_id'] + '">' + option_value['name'];
+						html += '<input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="option-value' + option_value['product_option_value_id'] + '" />';
+						html += '<label for="option-value' + option_value['product_option_value_id'] + '">' + option_value['name'];
 						
 						if (option_value['price']) {
 							html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
@@ -964,7 +915,7 @@ $('input[name=\'product\']').autocomplete({
 				}
 			
 				if (option['type'] == 'image') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -992,7 +943,7 @@ $('input[name=\'product\']').autocomplete({
 				}
 						
 				if (option['type'] == 'text') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -1005,7 +956,7 @@ $('input[name=\'product\']').autocomplete({
 				}
 				
 				if (option['type'] == 'textarea') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -1018,21 +969,21 @@ $('input[name=\'product\']').autocomplete({
 				}
 				
 				if (option['type'] == 'file') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<a id="button-option-' + option['product_option_id'] + '" class="button" onclick="upload(\'' + option['product_option_id'] + '\');"><?php echo $button_upload; ?></a>';
+					html += '<input type="button" value="<?php echo $button_upload; ?>" id="button-option' + option['product_option_id'] + '" class="button" onclick="upload(\'' + option['product_option_id'] + '\');" />';
 					html += '<input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
 					html += '</div>';
 					html += '<br />';
 				}
 				
 				if (option['type'] == 'date') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -1045,7 +996,7 @@ $('input[name=\'product\']').autocomplete({
 				}
 				
 				if (option['type'] == 'datetime') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -1058,7 +1009,7 @@ $('input[name=\'product\']').autocomplete({
 				}
 				
 				if (option['type'] == 'time') {
-					html += '<div id="option-' + option['product_option_id'] + '">';
+					html += '<div id="option' + option['product_option_id'] + '">';
 					
 					if (option['required']) {
 						html += '<span class="required">*</span> ';
@@ -1101,17 +1052,17 @@ function upload(product_option_id) {
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
 			beforeSend: function() {
-				$('#button-option-' + product_option_id).after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-				$('#button-option-' + product_option_id).attr('disabled', true);
-				$('#option-' + product_option_id + ' + .error').remove();
+				$('#button-option' + product_option_id).after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+				$('#button-option' + product_option_id).attr('disabled', true);
+				$('#option' + product_option_id + ' + .error').remove();
 			},	
 			complete: function() {
 				$('.loading').remove();
-				$('#button-option-' + product_option_id).attr('disabled', false);
+				$('#button-option' + product_option_id).attr('disabled', false);
 			},		
 			success: function(json) {
 				if (json['error']) {
-					$('#option-' + product_option_id).after('<span class="error">' + json['error'] + '</span>');
+					$('#option' + product_option_id).after('<span class="error">' + json['error'] + '</span>');
 				}
 							
 				if (json['success']) {
@@ -1133,7 +1084,7 @@ function upload(product_option_id) {
 }
 //--></script> 
 <script type="text/javascript"><!--
-$('select[name=\'payment\']').bind('change', function() {
+$('select[name=\'payment\']').on('change', function() {
 	if (this.value) {
 		$('input[name=\'payment_method\']').attr('value', $('select[name=\'payment\'] option:selected').text());
 	} else {
@@ -1143,7 +1094,7 @@ $('select[name=\'payment\']').bind('change', function() {
 	$('input[name=\'payment_code\']').attr('value', this.value);
 });
 
-$('select[name=\'shipping\']').bind('change', function() {
+$('select[name=\'shipping\']').on('change', function() {
 	if (this.value) {
 		$('input[name=\'shipping_method\']').attr('value', $('select[name=\'shipping\'] option:selected').text());
 	} else {
@@ -1279,7 +1230,7 @@ $('#button-product, #button-voucher, #button-update').live('click', function() {
 				if (json['error']['product']) {
 					if (json['error']['product']['option']) {	
 						for (i in json['error']['product']['option']) {
-							$('#option-' + i).after('<span class="error">' + json['error']['product']['option'][i] + '</span>');
+							$('#option' + i).after('<span class="error">' + json['error']['product']['option'][i] + '</span>');
 						}						
 					}
 					

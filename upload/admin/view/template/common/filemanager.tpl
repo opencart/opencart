@@ -131,10 +131,10 @@ $(document).ready(function() {
 	 
 					};
 	 
-				jQuery(this).bind('scroll', handler).data(uid1, handler);
+				jQuery(this).on('scroll', handler).data(uid1, handler);
 			},
 			teardown: function(){
-				jQuery(this).unbind( 'scroll', jQuery(this).data(uid1) );
+				jQuery(this).off( 'scroll', jQuery(this).data(uid1) );
 			}
 		};
 	 
@@ -161,16 +161,16 @@ $(document).ready(function() {
 	 
 					};
 	 
-				jQuery(this).bind('scroll', handler).data(uid2, handler);
+				jQuery(this).on('scroll', handler).data(uid2, handler);
 	 
 			},
 			teardown: function() {
-				jQuery(this).unbind('scroll', jQuery(this).data(uid2));
+				jQuery(this).off('scroll', jQuery(this).data(uid2));
 			}
 		};
 	})();
 	
-	$('#column-right').bind('scrollstop', function() {
+	$('#column-right').on('scrollstop', function() {
 		$('#column-right a').each(function(index, element) {
 			var height = $('#column-right').height();
 			var offset = $(element).offset();
@@ -286,7 +286,7 @@ $(document).ready(function() {
 		<?php } ?>
 	});		
 						
-	$('#button-create').bind('click', function() {
+	$('#button-create').on('click', function() {
 		var tree = $.tree.focused();
 		
 		if (tree.selected) {
@@ -303,7 +303,7 @@ $(document).ready(function() {
 				resizable: false
 			});	
 			
-			$('#dialog input[type=\'button\']').bind('click', function() {
+			$('#dialog input[type=\'button\']').on('click', function() {
 				$.ajax({
 					url: 'index.php?route=common/filemanager/create&token=<?php echo $token; ?>',
 					type: 'post',
@@ -330,7 +330,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('#button-delete').bind('click', function() {
+	$('#button-delete').on('click', function() {
 		path = $('#column-right a.selected').find('input[name=\'image\']').attr('value');
 							 
 		if (path) {
@@ -388,7 +388,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('#button-move').bind('click', function() {
+	$('#button-move').on('click', function() {
 		$('#dialog').remove();
 		
 		html  = '<div id="dialog">';
@@ -404,7 +404,7 @@ $(document).ready(function() {
 
 		$('#dialog select[name=\'to\']').load('index.php?route=common/filemanager/folders&token=<?php echo $token; ?>');
 		
-		$('#dialog input[type=\'button\']').bind('click', function() {
+		$('#dialog input[type=\'button\']').on('click', function() {
 			path = $('#column-right a.selected').find('input[name=\'image\']').attr('value');
 							 
 			if (path) {																
@@ -463,7 +463,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#button-copy').bind('click', function() {
+	$('#button-copy').on('click', function() {
 		$('#dialog').remove();
 		
 		html  = '<div id="dialog">';
@@ -479,7 +479,7 @@ $(document).ready(function() {
 		
 		$('#dialog select[name=\'to\']').load('index.php?route=common/filemanager/folders&token=<?php echo $token; ?>');
 		
-		$('#dialog input[type=\'button\']').bind('click', function() {
+		$('#dialog input[type=\'button\']').on('click', function() {
 			path = $('#column-right a.selected').find('input[name=\'image\']').attr('value');
 							 
 			if (path) {																
@@ -538,7 +538,7 @@ $(document).ready(function() {
 		});	
 	});
 	
-	$('#button-rename').bind('click', function() {
+	$('#button-rename').on('click', function() {
 		$('#dialog').remove();
 		
 		html  = '<div id="dialog">';
@@ -552,7 +552,7 @@ $(document).ready(function() {
 			resizable: false
 		});
 		
-		$('#dialog input[type=\'button\']').bind('click', function() {
+		$('#dialog input[type=\'button\']').on('click', function() {
 			path = $('#column-right a.selected').find('input[name=\'image\']').attr('value');
 							 
 			if (path) {		
@@ -651,7 +651,7 @@ $(document).ready(function() {
 		});
 	});
 	
-	$('#button-refresh').bind('click', function() {
+	$('#button-refresh').on('click', function() {
 		var tree = $.tree.focused();
 		
 		tree.refresh(tree.selected);

@@ -353,7 +353,7 @@
           <div id="vtab-option" class="vtabs">
             <?php $option_row = 0; ?>
             <?php foreach ($product_options as $product_option) { ?>
-            <a href="#tab-option-<?php echo $option_row; ?>" id="option-<?php echo $option_row; ?>"><?php echo $product_option['name']; ?>&nbsp;<img src="view/image/delete.png" alt="" onclick="$('#option-<?php echo $option_row; ?>').remove(); $('#tab-option-<?php echo $option_row; ?>').remove(); $('#vtabs a:first').trigger('click'); return false;" /></a>
+            <a href="#tab-option<?php echo $option_row; ?>" id="option<?php echo $option_row; ?>"><?php echo $product_option['name']; ?>&nbsp;<img src="view/image/delete.png" alt="" onclick="$('#option<?php echo $option_row; ?>').remove(); $('#tab-option<?php echo $option_row; ?>').remove(); $('#vtabs a:first').trigger('click'); return false;" /></a>
             <?php $option_row++; ?>
             <?php } ?>
             <span id="option-add">
@@ -362,7 +362,7 @@
           <?php $option_row = 0; ?>
           <?php $option_value_row = 0; ?>
           <?php foreach ($product_options as $product_option) { ?>
-          <div id="tab-option-<?php echo $option_row; ?>" class="vtabs-content">
+          <div id="tab-option<?php echo $option_row; ?>" class="vtabs-content">
             <input type="hidden" name="product_option[<?php echo $option_row; ?>][product_option_id]" value="<?php echo $product_option['product_option_id']; ?>" />
             <input type="hidden" name="product_option[<?php echo $option_row; ?>][name]" value="<?php echo $product_option['name']; ?>" />
             <input type="hidden" name="product_option[<?php echo $option_row; ?>][option_id]" value="<?php echo $product_option['option_id']; ?>" />
@@ -999,7 +999,7 @@ $('input[name=\'option\']').catcomplete({
 		});
 	}, 
 	select: function(event, ui) {
-		html  = '<div id="tab-option-' + option_row + '" class="vtabs-content">';
+		html  = '<div id="tab-option' + option_row + '" class="vtabs-content">';
 		html += '	<input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
 		html += '	<input type="hidden" name="product_option[' + option_row + '][name]" value="' + ui.item.label + '" />';
 		html += '	<input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + ui.item.value + '" />';
@@ -1089,11 +1089,11 @@ $('input[name=\'option\']').catcomplete({
 		
 		$('#tab-option').append(html);
 		
-		$('#option-add').before('<a href="#tab-option-' + option_row + '" id="option-' + option_row + '">' + ui.item.label + '&nbsp;<img src="view/image/delete.png" alt="" onclick="$(\'#option-' + option_row + '\').remove(); $(\'#tab-option-' + option_row + '\').remove(); $(\'#vtab-option a:first\').trigger(\'click\'); return false;" /></a>');
+		$('#option-add').before('<a href="#tab-option' + option_row + '" id="option' + option_row + '">' + ui.item.label + '&nbsp;<img src="view/image/delete.png" alt="" onclick="$(\'#option' + option_row + '\').remove(); $(\'#tab-option' + option_row + '\').remove(); $(\'#vtab-option a:first\').trigger(\'click\'); return false;" /></a>');
 		
 		$('#vtab-option a').tabs();
 		
-		$('#option-' + option_row).trigger('click');		
+		$('#option' + option_row).trigger('click');		
 		
 		$('.date').datepicker({dateFormat: 'yy-mm-dd'});
 		$('.datetime').datetimepicker({

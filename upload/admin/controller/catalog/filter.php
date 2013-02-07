@@ -353,7 +353,7 @@ class ControllerCatalogFilter extends Controller {
 			$this->data['sort_order'] = '';
 		}
 		
-		if (isset($this->request->post['filters'])) {
+		if (isset($this->request->post['filter'])) {
 			$this->data['filters'] = $this->request->post['filter'];
 		} elseif (isset($this->request->get['filter_group_id'])) {
 			$this->data['filters'] = $this->model_catalog_filter->getFilterDescriptions($this->request->get['filter_group_id']);

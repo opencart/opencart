@@ -33,7 +33,7 @@
   <div class="right"><input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="button" /></div>
 </div>
 <script type="text/javascript"><!--
-$('#button-confirm').bind('click', function() {
+$('#button-confirm').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=payment/authorizenet_aim/send',
 		type: 'post',

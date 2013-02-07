@@ -137,17 +137,6 @@
                 <td><?php echo $entry_company; ?></td>
                 <td><input type="text" name="address[<?php echo $address_row; ?>][company]" value="<?php echo $address['company']; ?>" /></td>
               </tr>
-              <tr class="company-id-display">
-                <td><?php echo $entry_company_id; ?></td>
-                <td><input type="text" name="address[<?php echo $address_row; ?>][company_id]" value="<?php echo $address['company_id']; ?>" /></td>
-              </tr>
-              <tr class="tax-id-display">
-                <td><?php echo $entry_tax_id; ?></td>
-                <td><input type="text" name="address[<?php echo $address_row; ?>][tax_id]" value="<?php echo $address['tax_id']; ?>" />
-                  <?php if (isset($error_address_tax_id[$address_row])) { ?>
-                  <span class="error"><?php echo $error_address_tax_id[$address_row]; ?></span>
-                  <?php } ?></td>
-              </tr>
               <tr>
                 <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
                 <td><input type="text" name="address[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" />
@@ -292,27 +281,7 @@
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'customer_group_id\']').live('change', function() {
-	var customer_group = [];
-	
-<?php foreach ($customer_groups as $customer_group) { ?>
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>] = [];
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_display'] = '<?php echo $customer_group['company_id_display']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_display'] = '<?php echo $customer_group['tax_id_display']; ?>';
-<?php } ?>	
 
-	if (customer_group[this.value]) {
-		if (customer_group[this.value]['company_id_display'] == '1') {
-			$('.company-id-display').show();
-		} else {
-			$('.company-id-display').hide();
-		}
-		
-		if (customer_group[this.value]['tax_id_display'] == '1') {
-			$('.tax-id-display').show();
-		} else {
-			$('.tax-id-display').hide();
-		}
-	}
 });
 
 $('select[name=\'customer_group_id\']').trigger('change');
@@ -324,10 +293,10 @@ function country(element, index, zone_id) {
 			url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
 			dataType: 'json',
 			beforeSend: function() {
-				$('select[name=\'address[' + index + '][country_id]\']').after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
+				$('select[name=\'address[' + index + '][country_id]\']').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 			},
 			complete: function() {
-				$('.wait').remove();
+				$('.loading').remove();
 			},			
 			success: function(json) {
 				if (json['postcode_required'] == '1') {
@@ -381,14 +350,6 @@ function addAddress() {
     html += '    <tr>';
     html += '      <td><?php echo $entry_company; ?></td>';
     html += '      <td><input type="text" name="address[' + address_row + '][company]" value="" /></td>';
-    html += '    </tr>';	
-    html += '    <tr class="company-id-display">';
-    html += '      <td><?php echo $entry_company_id; ?></td>';
-    html += '      <td><input type="text" name="address[' + address_row + '][company_id]" value="" /></td>';
-    html += '    </tr>';
-    html += '    <tr class="tax-id-display">';
-    html += '      <td><?php echo $entry_tax_id; ?></td>';
-    html += '      <td><input type="text" name="address[' + address_row + '][tax_id]" value="" /></td>';
     html += '    </tr>';			
     html += '    <tr>';
     html += '      <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>';
@@ -448,7 +409,7 @@ $('#history .pagination a').live('click', function() {
 
 $('#history').load('index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
-$('#button-history').bind('click', function() {
+$('#button-history').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
 		type: 'post',
@@ -481,7 +442,7 @@ $('#transaction .pagination a').live('click', function() {
 
 $('#transaction').load('index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
-$('#button-transaction').bind('click', function() {
+$('#button-transaction').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
 		type: 'post',

@@ -218,15 +218,15 @@
   </form>
   <?php echo $content_bottom; ?></div>
 <script type="text/javascript"><!--
-$('select[name=\'country_id\']').bind('change', function() {
+$('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=affiliate/register/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('select[name=\'country_id\']').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -262,7 +262,7 @@ $('select[name=\'country_id\']').bind('change', function() {
 $('select[name=\'country_id\']').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
-$('input[name=\'payment\']').bind('change', function() {
+$('input[name=\'payment\']').on('change', function() {
 	$('.payment').hide();
 	
 	$('#payment-' + this.value).show();

@@ -3,15 +3,7 @@ class ControllerCheckoutShippingMethod extends Controller {
   	public function index() {
 		$this->language->load('checkout/checkout');
 		
-		$this->load->model('account/address');
-		
-		if ($this->customer->isLogged() && isset($this->session->data['shipping_address_id'])) {					
-			$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);		
-		} elseif (isset($this->session->data['guest'])) {
-			$shipping_address = $this->session->data['guest']['shipping'];
-		}
-		
-		if (!empty($shipping_address)) {
+		if (isset($this->session->data['shipping_address'])) {
 			// Shipping Methods
 			$quote_data = array();
 			
@@ -23,7 +15,7 @@ class ControllerCheckoutShippingMethod extends Controller {
 				if ($this->config->get($result['code'] . '_status')) {
 					$this->load->model('shipping/' . $result['code']);
 					
-					$quote = $this->{'model_shipping_' . $result['code']}->getQuote($shipping_address); 
+					$quote = $this->{'model_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']); 
 		
 					if ($quote) {
 						$quote_data[$result['code']] = array( 
@@ -49,6 +41,7 @@ class ControllerCheckoutShippingMethod extends Controller {
 					
 		$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
 		$this->data['text_comments'] = $this->language->get('text_comments');
+		$this->data['text_modify'] = $this->language->get('text_modify');
 	
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		
@@ -85,7 +78,7 @@ class ControllerCheckoutShippingMethod extends Controller {
 		$this->response->setOutput($this->render());
   	}
 	
-	public function validate() {
+	public function save() {
 		$this->language->load('checkout/checkout');
 		
 		$json = array();		
@@ -96,15 +89,7 @@ class ControllerCheckoutShippingMethod extends Controller {
 		}
 		
 		// Validate if shipping address has been set.		
-		$this->load->model('account/address');
-
-		if ($this->customer->isLogged() && isset($this->session->data['shipping_address_id'])) {					
-			$shipping_address = $this->model_account_address->getAddress($this->session->data['shipping_address_id']);		
-		} elseif (isset($this->session->data['guest'])) {
-			$shipping_address = $this->session->data['guest']['shipping'];
-		}
-		
-		if (empty($shipping_address)) {								
+		if (!isset($this->session->data['shipping_address'])) {								
 			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		}
 		

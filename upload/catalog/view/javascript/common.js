@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	/* Search */
-	$('.button-search').bind('click', function() {
+	$('.button-search').on('click', function() {
 		url = $('base').attr('href') + 'index.php?route=product/search';
 				 
 		var search = $('input[name=\'search\']').attr('value');
@@ -12,7 +12,7 @@ $(document).ready(function() {
 		location = url;
 	});
 	
-	$('#header input[name=\'search\']').bind('keydown', function(e) {
+	$('#header input[name=\'search\']').on('keydown', function(e) {
 		if (e.keyCode == 13) {
 			url = $('base').attr('href') + 'index.php?route=product/search';
 			 
@@ -69,11 +69,11 @@ $(document).ready(function() {
 		}
 		
 		if ($.browser.version <= 7) {
-			$('#menu > ul > li').bind('mouseover', function() {
+			$('#menu > ul > li').on('mouseover', function() {
 				$(this).addClass('active');
 			});
 				
-			$('#menu > ul > li').bind('mouseout', function() {
+			$('#menu > ul > li').on('mouseout', function() {
 				$(this).removeClass('active');
 			});	
 		}

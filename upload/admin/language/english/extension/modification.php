@@ -1,6 +1,6 @@
 <?php
 // Heading 
-$_['heading_title']    = 'Extension Manager';
+$_['heading_title']    = 'Extension Modification';
 
 // Text
 $_['text_success']     = 'Success: You have installed your extension!';

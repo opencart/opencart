@@ -9,19 +9,14 @@ class ControllerAccountLogin extends Controller {
 		if (!empty($this->request->get['token'])) {
 			$this->customer->logout();
 			$this->cart->clear();
-
+			
 			unset($this->session->data['wishlist']);
-			unset($this->session->data['shipping_address_id']);
-			unset($this->session->data['shipping_country_id']);
-			unset($this->session->data['shipping_zone_id']);
-			unset($this->session->data['shipping_postcode']);
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_address_id']);
-			unset($this->session->data['payment_country_id']);
-			unset($this->session->data['payment_zone_id']);
+			unset($this->session->data['payment_address']);
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
+			unset($this->session->data['shipping_address']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['comment']);
 			unset($this->session->data['order_id']);
 			unset($this->session->data['coupon']);
@@ -35,27 +30,14 @@ class ControllerAccountLogin extends Controller {
 				// Default Addresses
 				$this->load->model('account/address');
 					
-				$address_info = $this->model_account_address->getAddress($this->customer->getAddressId());
-										
-				if ($address_info) {
-					if ($this->config->get('config_tax_customer') == 'shipping') {
-						$this->session->data['shipping_country_id'] = $address_info['country_id'];
-						$this->session->data['shipping_zone_id'] = $address_info['zone_id'];
-						$this->session->data['shipping_postcode'] = $address_info['postcode'];	
-					}
-					
-					if ($this->config->get('config_tax_customer') == 'payment') {
-						$this->session->data['payment_country_id'] = $address_info['country_id'];
-						$this->session->data['payment_zone_id'] = $address_info['zone_id'];
-					}
-				} else {
-					unset($this->session->data['shipping_country_id']);	
-					unset($this->session->data['shipping_zone_id']);	
-					unset($this->session->data['shipping_postcode']);
-					unset($this->session->data['payment_country_id']);	
-					unset($this->session->data['payment_zone_id']);	
+				if ($this->config->get('config_tax_customer') == 'payment') {
+					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 				}
-									
+				
+				if ($this->config->get('config_tax_customer') == 'shipping') {
+					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+				}					
+				
 				$this->redirect($this->url->link('account/account', '', 'SSL')); 
 			}
 		}		
@@ -74,25 +56,12 @@ class ControllerAccountLogin extends Controller {
 			// Default Shipping Address
 			$this->load->model('account/address');
 				
-			$address_info = $this->model_account_address->getAddress($this->customer->getAddressId());
-									
-			if ($address_info) {
-				if ($this->config->get('config_tax_customer') == 'shipping') {
-					$this->session->data['shipping_country_id'] = $address_info['country_id'];
-					$this->session->data['shipping_zone_id'] = $address_info['zone_id'];
-					$this->session->data['shipping_postcode'] = $address_info['postcode'];	
-				}
-				
-				if ($this->config->get('config_tax_customer') == 'payment') {
-					$this->session->data['payment_country_id'] = $address_info['country_id'];
-					$this->session->data['payment_zone_id'] = $address_info['zone_id'];
-				}
-			} else {
-				unset($this->session->data['shipping_country_id']);	
-				unset($this->session->data['shipping_zone_id']);	
-				unset($this->session->data['shipping_postcode']);
-				unset($this->session->data['payment_country_id']);	
-				unset($this->session->data['payment_zone_id']);	
+			if ($this->config->get('config_tax_customer') == 'payment') {
+				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+			} 
+			
+			if ($this->config->get('config_tax_customer') == 'shipping') {
+				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 			}
 							
 			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)

@@ -8,7 +8,7 @@
   </div>
 </form>
 <script type="text/javascript"><!--
-$('#button-paypal').bind('click', function() {
+$('#button-paypal').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=payment/google_checkout/send',
 		type: 'post',
@@ -16,11 +16,11 @@ $('#button-paypal').bind('click', function() {
 		dataType: 'json',		
 		beforeSend: function() {
 			$('#button-paypal').attr('disabled', true);
-			$('#button-paypal').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-paypal').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
 			$('#button-paypal').attr('disabled', false); 
-			$('.wait').remove();
+			$('.loading').remove();
 		},				
 		success: function(json) {
 			if (json['error']) {

@@ -54,7 +54,7 @@
         <td><input type="text" name="pno" value="" /></td>
       </tr>
       <?php } ?>
-      <?php } elseif (!$company_id) { ?>
+      <?php } else { ?>
       <tr>
         <td><?php echo $entry_company; ?></td>
         <td><input type="text" name="pno" value="" /></td>
@@ -103,7 +103,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-confirm').bind('click', function() {
+$('#button-confirm').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=payment/klarna_account/send',
 		type: 'post',

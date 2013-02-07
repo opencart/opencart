@@ -10,7 +10,7 @@ $_['text_female']         = 'Female';
 $_['text_year']           = 'Year';
 $_['text_month']          = 'Month';
 $_['text_day']            = 'Day';
-$_['text_comment']        = 'Klarna\'s Invoice ID: %s\n%s/%s: %.4f';
+$_['text_comment']        = "Klarna's Invoice ID: %s\n%s/%s: %.4f";
 
 // Entry
 $_['entry_gender']         = 'Gender:';

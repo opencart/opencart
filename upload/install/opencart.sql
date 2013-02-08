@@ -1215,6 +1215,7 @@ CREATE TABLE `oc_custom_field` (
   `value` text NOT NULL,
   `location` varchar(32) NOT NULL,
   `position` varchar(15) NOT NULL,
+  `status` tinyint(1) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`custom_field_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

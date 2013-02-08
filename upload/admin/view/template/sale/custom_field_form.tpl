@@ -151,7 +151,24 @@
                 <?php } else { ?>
                 <option value="shipping_address"><?php echo $text_shipping_address; ?></option>
                 <?php } ?>
-              </select></td>
+              </select>
+              <div class="scrollbox">
+                <?php $customer_group_row = 0; ?>
+                <?php $class = 'odd'; ?>
+                <?php foreach ($customer_groups as $customer_group) { ?>
+                <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                <div class="<?php echo $class; ?>">
+                  <?php if (in_array($customer_group['customer_group_id'], $custom_field_required)) { ?>
+                  <input type="checkbox" name="custom_field_location[<?php echo $customer_group_row; ?>]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+                  <?php echo $customer_group['name']; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="custom_field_location[<?php echo $customer_group_row; ?>]" value="<?php echo $customer_group['customer_group_id']; ?>" />
+                  <?php echo $customer_group['name']; ?>
+                  <?php } ?>
+                </div>
+                <?php $customer_group_row++; ?>
+                <?php } ?>
+              </div></td>
           </tr>
           <tr>
             <td><?php echo $entry_position; ?></td>
@@ -225,6 +242,18 @@
                 <option value="zone_id" selected="selected"><?php echo $text_zone; ?></option>
                 <?php } else { ?>
                 <option value="zone_id"><?php echo $text_zone; ?></option>
+                <?php } ?>
+              </select></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_status; ?></td>
+            <td><select name="status">
+                <?php if ($status) { ?>
+                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                <option value="0"><?php echo $text_disabled; ?></option>
+                <?php } else { ?>
+                <option value="1"><?php echo $text_enabled; ?></option>
+                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                 <?php } ?>
               </select></td>
           </tr>

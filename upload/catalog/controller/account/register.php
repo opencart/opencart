@@ -199,6 +199,17 @@ class ControllerAccountRegister extends Controller {
 				$json['error']['confirm'] = $this->language->get('error_confirm');
 			}
 			
+			// Custom Fields
+			$this->load->model('account/custom_field');
+			 
+			$custom_fields = $this->model_account_custom_field->getCustomFields('customer', $this->request->get['customer_group_id']);
+			 
+			foreach ($custom_fields as $custom_field) {
+				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+					$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_required'), $custom_field['name']);
+				}
+			}
+			
 			if ($this->config->get('config_account_id')) {
 				$this->load->model('catalog/information');
 				

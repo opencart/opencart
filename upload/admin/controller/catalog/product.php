@@ -1193,13 +1193,13 @@ class ControllerCatalogProduct extends Controller {
 			$products = array();
 		}
 	
-		$this->data['product_related'] = array();
+		$this->data['product_relateds'] = array();
 		
 		foreach ($products as $product_id) {
 			$related_info = $this->model_catalog_product->getProduct($product_id);
 			
 			if ($related_info) {
-				$this->data['product_related'][] = array(
+				$this->data['product_relateds'][] = array(
 					'product_id' => $related_info['product_id'],
 					'name'       => $related_info['name']
 				);

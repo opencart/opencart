@@ -433,7 +433,7 @@ class ControllerCommonFileManager extends Controller {
 					$json['error'] = $this->language->get('error_directory');
 				}
 				
-				if ($this->request->files['image']['size'] > 300000) {
+				if ($this->request->files['image']['size'] > $this->config->get('config_image_file_size')) {
 					$json['error'] = $this->language->get('error_file_size');
 				}
 				

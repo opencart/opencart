@@ -920,6 +920,10 @@
                 <?php } ?></td>
             </tr>
             <tr>
+              <td><?php echo $entry_image_file_size; ?></td>
+              <td><input type="text" name="config_image_file_size" value="<?php echo $config_image_file_size; ?>" /></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_file_extension_allowed; ?></td>
               <td><textarea name="config_file_extension_allowed" cols="40" rows="5"><?php echo $config_file_extension_allowed; ?></textarea></td>
             </tr>

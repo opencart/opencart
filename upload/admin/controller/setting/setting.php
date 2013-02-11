@@ -130,6 +130,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_secure'] = $this->language->get('entry_secure');
 		$this->data['entry_shared'] = $this->language->get('entry_shared');
 		$this->data['entry_robots'] = $this->language->get('entry_robots');
+		$this->data['entry_image_file_size'] = $this->language->get('entry_image_file_size');
 		$this->data['entry_file_extension_allowed'] = $this->language->get('entry_file_extension_allowed');
 		$this->data['entry_file_mime_allowed'] = $this->language->get('entry_file_mime_allowed');		
 		$this->data['entry_maintenance'] = $this->language->get('entry_maintenance');
@@ -997,6 +998,14 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_seo_url'] = $this->request->post['config_seo_url'];
 		} else {
 			$this->data['config_seo_url'] = $this->config->get('config_seo_url');
+		}
+		
+		if (isset($this->request->post['config_image_file_size'])) {
+			$this->data['config_image_file_size'] = $this->request->post['config_image_file_size'];
+		} elseif ($this->config->get('config_image_file_size')) {
+			$this->data['config_image_file_size'] = $this->config->get('config_image_file_size');
+		} else {
+			$this->data['config_image_file_size'] = 300000;	
 		}
 		
 		if (isset($this->request->post['config_file_extension_allowed'])) {

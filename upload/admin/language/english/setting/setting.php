@@ -70,8 +70,8 @@ $_['entry_stock_checkout']         = 'Stock Checkout:<br /><span class="help">Al
 $_['entry_stock_status']           = 'Out of Stock Status:<br /><span class="help">Set the default out of stock status selected in product edit.</span>';
 $_['entry_affiliate']              = 'Affiliate Terms:<br /><span class="help">Forces people to agree to terms before an affiliate account can be created.</span>';
 $_['entry_commission']             = 'Affiliate Commission (%):<br /><span class="help">The default affiliate commission percentage.</span>';
-$_['entry_return']                 = 'Return Terms:<br /><span class="help">Forces people to agree to terms before an return account can be created.</span>';
-$_['entry_return_status']          = 'Return Status:<br /><span class="help">Set the default return status when an returns request is submitted.</span>';
+$_['entry_return']                 = 'Return Terms:<br /><span class="help">Forces people to agree to terms before a return can be created.</span>';
+$_['entry_return_status']          = 'Return Status:<br /><span class="help">Set the default return status when a return request is submitted.</span>';
 $_['entry_logo']                   = 'Store Logo:';
 $_['entry_icon']                   = 'Icon:<br /><span class="help">The icon should be a PNG that is 16px x 16px.</span>';
 $_['entry_image_category']         = 'Category Image Size:';

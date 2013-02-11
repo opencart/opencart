@@ -27,14 +27,12 @@ class ModelCheckoutCoupon extends Model {
 					$status = false;
 				}
 			}
-		
-			$product_data = array();
-		
+	
 			// Products
 			$coupon_product_data = array();
-		
-			$coupon_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_product` WHERE coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "'");
 			
+			$coupon_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_product` WHERE coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "'");
+		
 			foreach ($coupon_product_query->rows as $product) {
 				$coupon_product_data[] = $product['product_id'];
 			}
@@ -42,10 +40,10 @@ class ModelCheckoutCoupon extends Model {
 			// Categories
 			$coupon_category_data = array();
 			
-			$coupon_category_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_category` cc LEFT JOIN `" . DB_PREFIX . "category` c ON (cc.category_id = c.category_id) WHERE coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "'");
+			$coupon_category_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_category` cc LEFT JOIN `" . DB_PREFIX . "category_path` cp ON (cc.category_id = cp.path_id) WHERE cc.coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "'");
 			
 			foreach ($coupon_category_query->rows as $category) {
-				$coupon_category_data[] = $category;
+				$coupon_category_data[] = $category['category_id'];
 			}			
 			
 			if ($coupon_product_data || $coupon_category_data) {
@@ -56,8 +54,8 @@ class ModelCheckoutCoupon extends Model {
 						continue;
 					}
 					
-					foreach ($coupon_category_data as $category) {
-						$coupon_category_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "product_to_category` p2c LEFT JOIN `" . DB_PREFIX . "category` c ON (p2c.category_id = c.category_id) WHERE p2c.`product_id` = '" . (int)$product['product_id'] . "' AND c.`left` BETWEEN '" . (int)$category['left'] . "' AND '" . (int)$category['right'] . "'");
+					foreach ($coupon_category_data as $category_id) {
+						$coupon_category_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product['product_id'] . "' AND category_id = '" . (int)$category_id . "'");
 						
 						if ($coupon_category_query->row['total']) {
 							$product_data[] = $product['product_id'];

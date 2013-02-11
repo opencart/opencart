@@ -12,9 +12,7 @@ class ControllerAccountReturn extends Controller {
     	$this->language->load('account/return');
 
     	$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
-						
+								
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
@@ -308,6 +306,9 @@ class ControllerAccountReturn extends Controller {
     	} 
 							
 		$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
+		$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
 		
       	$this->data['breadcrumbs'] = array();
 

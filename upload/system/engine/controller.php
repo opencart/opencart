@@ -20,7 +20,6 @@
  * @property Encryption $encryption Encription helper
  */
 abstract class Controller {
-    /** @var Registry */
 	protected $registry;	
 	protected $id;
 	protected $layout;
@@ -28,8 +27,6 @@ abstract class Controller {
 	protected $children = array();
 	protected $data = array();
 	protected $output;
-    /** @var DB */
-    protected $db;
 
 	public function __construct($registry) {
 		$this->registry = $registry;

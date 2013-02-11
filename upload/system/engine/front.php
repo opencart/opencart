@@ -20,7 +20,6 @@
  * @property Encryption $encryption Encription helper
  */
 final class Front {
-    /** @var Registry */
 	protected $registry;
 	protected $pre_action = array();
 	protected $error;

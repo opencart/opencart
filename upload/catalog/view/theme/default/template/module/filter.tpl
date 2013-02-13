@@ -33,6 +33,6 @@ $('#button-filter').on('click', function() {
 		filter.push(this.value);
 	});
 	
-	location = '<?php echo $action; ?>&filter=' + filter.join(',');
+	location = '<?php echo $action; ?>&filter=' + filter.join(' and ');
 });
 //--></script> 

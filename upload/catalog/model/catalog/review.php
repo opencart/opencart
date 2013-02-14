@@ -3,33 +3,47 @@ class ModelCatalogReview extends Model {
 	public function addReview($product_id, $data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['name']) . "', customer_id = '" . (int)$this->customer->getId() . "', product_id = '" . (int)$product_id . "', text = '" . $this->db->escape($data['text']) . "', rating = '" . (int)$data['rating'] . "', date_added = NOW()");
 		
-		$this->language->load('mail/review');
-		$this->load->model('catalog/product');
-		$product_info = $this->model_catalog_product->getProduct($product_id);
-		
-		$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
+		// Send to main admin email if new account email is enabled
+		if ($this->config->get('config_review_mail')) {
 
-		$message  = $this->language->get('text_waiting') . "\n";
-		$message .= sprintf($this->language->get('text_product'), $this->db->escape(strip_tags($product_info['name']))) . "\n";
-		$message .= sprintf($this->language->get('text_reviewer'), $this->db->escape(strip_tags($data['name']))) . "\n";
-		$message .= sprintf($this->language->get('text_rating'), $this->db->escape(strip_tags($data['rating']))) . "\n";
-		$message .= $this->language->get('text_review') . "\n";
-		$message .= $this->db->escape(strip_tags($data['text'])) . "\n\n";
+			$this->language->load('mail/review');
+			$this->load->model('catalog/product');
+			$product_info = $this->model_catalog_product->getProduct($product_id);
+			
+			$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
 
-		$mail = new Mail();
-		$mail->protocol = $this->config->get('config_mail_protocol');
-		$mail->parameter = $this->config->get('config_mail_parameter');
-		$mail->hostname = $this->config->get('config_smtp_host');
-		$mail->username = $this->config->get('config_smtp_username');
-		$mail->password = $this->config->get('config_smtp_password');
-		$mail->port = $this->config->get('config_smtp_port');
-		$mail->timeout = $this->config->get('config_smtp_timeout');	
-		$mail->setTo(array($this->config->get('config_email')));
-		$mail->setFrom($this->config->get('config_email'));
-		$mail->setSender($this->config->get('config_name'));
-		$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-		$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
-		$mail->send();
+			$message  = $this->language->get('text_waiting') . "\n";
+			$message .= sprintf($this->language->get('text_product'), $this->db->escape(strip_tags($product_info['name']))) . "\n";
+			$message .= sprintf($this->language->get('text_reviewer'), $this->db->escape(strip_tags($data['name']))) . "\n";
+			$message .= sprintf($this->language->get('text_rating'), $this->db->escape(strip_tags($data['rating']))) . "\n";
+			$message .= $this->language->get('text_review') . "\n";
+			$message .= $this->db->escape(strip_tags($data['text'])) . "\n\n";
+
+			$mail = new Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->hostname = $this->config->get('config_smtp_host');
+			$mail->username = $this->config->get('config_smtp_username');
+			$mail->password = $this->config->get('config_smtp_password');
+			$mail->port = $this->config->get('config_smtp_port');
+			$mail->timeout = $this->config->get('config_smtp_timeout');	
+			$mail->setTo(array($this->config->get('config_email')));
+			$mail->setFrom($this->config->get('config_email'));
+			$mail->setSender($this->config->get('config_name'));
+			$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+			$mail->send();
+
+			// Send to additional alert emails
+			$emails = explode(',', $this->config->get('config_alert_emails'));
+			
+			foreach ($emails as $email) {
+				if ($email && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
+					$mail->setTo($email);
+					$mail->send();
+				}
+			}
+		}
 	}
 		
 	public function getReviewsByProductId($product_id, $start = 0, $limit = 20) {

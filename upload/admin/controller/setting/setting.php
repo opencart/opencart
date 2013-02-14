@@ -122,6 +122,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_smtp_timeout'] = $this->language->get('entry_smtp_timeout');
 		$this->data['entry_alert_mail'] = $this->language->get('entry_alert_mail');
 		$this->data['entry_account_mail'] = $this->language->get('entry_account_mail');
+		$this->data['entry_review_mail'] = $this->language->get('entry_review_mail');
 		$this->data['entry_alert_emails'] = $this->language->get('entry_alert_emails');
 		$this->data['entry_fraud_detection'] = $this->language->get('entry_fraud_detection');
 		$this->data['entry_fraud_key'] = $this->language->get('entry_fraud_key');
@@ -944,6 +945,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_account_mail'] = $this->request->post['config_account_mail'];
 		} else {
 			$this->data['config_account_mail'] = $this->config->get('config_account_mail');
+		}
+
+		if (isset($this->request->post['config_review_mail'])) {
+			$this->data['config_review_mail'] = $this->request->post['config_review_mail'];
+		} else {
+			$this->data['config_review_mail'] = $this->config->get('config_review_mail');
 		}
 		
 		if (isset($this->request->post['config_alert_emails'])) {

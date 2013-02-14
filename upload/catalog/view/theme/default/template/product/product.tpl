@@ -463,6 +463,9 @@ $('#button-review').on('click', function() {
 				$('textarea[name=\'text\']').val('');
 				$('input[name=\'rating\']:checked').attr('checked', '');
 				$('input[name=\'captcha\']').val('');
+                var img_src = $("img#captcha").attr("src").replace(/\&rnd=\d*/gi,"");
+                var d = Math.floor((Math.random()*10000)+1);
+                $("img#captcha").attr("src", img_src+"&rnd="+d);
 			}
 		}
 	});

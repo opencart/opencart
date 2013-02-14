@@ -98,6 +98,7 @@ $_['entry_smtp_port']              = 'SMTP Port:';
 $_['entry_smtp_timeout']           = 'SMTP Timeout:';
 $_['entry_account_mail']           = 'New Account Alert Mail:<br /><span class="help">Send a email to the store owner when a new account is registered.</span>';
 $_['entry_alert_mail']             = 'New Order Alert Mail:<br /><span class="help">Send a email to the store owner when a new order is created.</span>';
+$_['entry_review_mail']            = 'New Review Alert Mail:<br /><span class="help">Send a email to the store owner when a new review is created.</span>';
 $_['entry_alert_emails']           = 'Additional Alert E-Mails:<br /><span class="help">Any additional emails you want to receive the alert email, in addition to the main store email. (comma separated)</span>';
 $_['entry_fraud_detection']        = 'Use MaxMind Fraud Detection System:<br /><span class="help">MaxMind is a fraud detections service. If you don\'t have a license key you can <a href="http://www.maxmind.com/?rId=opencart" target="_blank"><u>sign up here</u></a>. Once you have obtained a key copy and paste it into the field below.</span>';
 $_['entry_fraud_key']              = 'MaxMind License Key:</span>';

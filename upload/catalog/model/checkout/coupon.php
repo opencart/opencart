@@ -46,6 +46,8 @@ class ModelCheckoutCoupon extends Model {
 				$coupon_category_data[] = $category['category_id'];
 			}			
 			
+			$product_data = array();
+			
 			if ($coupon_product_data || $coupon_category_data) {
 				foreach ($this->cart->getProducts() as $product) {
 					if (in_array($product['product_id'], $coupon_product_data)) {

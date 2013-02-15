@@ -38,6 +38,13 @@ form {
 label {
 	cursor: pointer;
 }
+#container {
+	height: 100%;
+}
+body > #container {
+	height: auto;
+	min-height: 100%;
+}
 #header .div1 {
 	height: 56px;
 	padding: 0px 30px;
@@ -135,18 +142,9 @@ label {
 #menu > ul li li > a:hover {
 	background-color: #C15C2A; 
 }
-
-
-#container {
-	height: 100%;
-}
-body > #container {
-	height: auto;
-	min-height: 100%;
-}
 #content {
 	background: #FFFFFF url('../image/background.png') 0px 1px repeat-x;
-	padding: 10px 30px 0px 30px;
+	padding: 15px 30px 0px 30px;
 	min-width: 900px;
 	padding-bottom: 128px;
 }
@@ -165,10 +163,30 @@ body > #container {
 	color: #333;
 	text-decoration: underline;
 }
-.breadcrumb, .breadcrumb a {
+.breadcrumb {
+	border: 1px solid #E5E5E5;
+	-webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	-khtml-border-radius: 7px;
+	border-radius: 7px;		
+	margin-bottom: 15px;
+	overflow: auto;
+	padding: 10px;
+
+}
+
+.breadcrumb a {
 	font-size: 12px;
 	color: #666;
-	margin-bottom: 15px;
+	border: 1px solid #E5E5E5;
+	border-radius: 5px 0 0 5px;
+	background: #FFFFFF;
+	box-shadow: 0 0 2px rgba(0,0,0,.2);
+	height: 50px;
+	width: 150px;
+	display: block;
+	float: left;
+	 
 }
 .success {
 	padding: 10px 10px 10px 33px;

@@ -248,6 +248,7 @@ class ControllerProductProduct extends Controller {
 			$this->data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
 			$this->data['text_or'] = $this->language->get('text_or');
 			$this->data['text_write'] = $this->language->get('text_write');
+			$this->data['text_login_write'] = sprintf($this->language->get('text_login_write'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
 			$this->data['text_note'] = $this->language->get('text_note');
 			$this->data['text_share'] = $this->language->get('text_share');
 			$this->data['text_wait'] = $this->language->get('text_wait');
@@ -384,6 +385,11 @@ class ControllerProductProduct extends Controller {
 			}
 			
 			$this->data['review_status'] = $this->config->get('config_review_status');
+			if ($this->config->get('config_guest_review') || $this->customer->isLogged()) {
+				$this->data['guest_review'] = true;
+			} else {
+				$this->data['guest_review'] = false;
+			}
 			$this->data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
 			$this->data['rating'] = (int)$product_info['rating'];
 			$this->data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');

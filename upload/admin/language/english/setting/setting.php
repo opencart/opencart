@@ -45,6 +45,7 @@ $_['entry_list_description_limit'] = 'List Description Limit (Catalog):<br /><sp
 $_['entry_admin_limit']   	       = 'Default Items Per Page (Admin):<br /><span class="help">Determines how many admin items are shown per page (orders, customers, etc)</span>';
 $_['entry_product_count']          = 'Category Product Count:<br /><span class="help">Show the number of products inside the subcategories in the storefront header category menu. Be warned, this will cause an extreme performance hit for stores with a lot of subcategories!</span>';
 $_['entry_review']       	       = 'Allow Reviews:<br /><span class="help">Enable/Disable new review entry and display of existing reviews</span>';
+$_['entry_guest_review']       	   = 'Allow Guest Reviews:<br /><span class="help">Allow guests to post reviews</span>';
 $_['entry_download']               = 'Allow Downloads:';
 $_['entry_voucher_min']            = 'Voucher Min:<br /><span class="help">Minimum amount a customer can purchase a voucher for.</span>';
 $_['entry_voucher_max']            = 'Voucher Max:<br /><span class="help">Maximum amount a customer can purchase a voucher for.</span>';

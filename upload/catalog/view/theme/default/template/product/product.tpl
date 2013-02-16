@@ -264,7 +264,7 @@
     <h2 id="review-title"><?php echo $text_write; ?></h2>
     <?php if ($guest_review) { ?>
     <b><?php echo $entry_name; ?></b><br />
-    <input type="text" name="name" value="" />
+    <input type="text" name="name" value="<?php echo $customer_name; ?>" />
     <br />
     <br />
     <b><?php echo $entry_review; ?></b>

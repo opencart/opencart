@@ -390,6 +390,13 @@ class ControllerProductProduct extends Controller {
 			} else {
 				$this->data['guest_review'] = false;
 			}
+			
+			if ($this->customer->isLogged()) {
+				$this->data['customer_name'] = $this->customer->getFirstName() . '&nbsp;' . $this->customer->getLastName();
+			} else {
+				$this->data['customer_name'] = '';
+			}
+
 			$this->data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
 			$this->data['rating'] = (int)$product_info['rating'];
 			$this->data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');

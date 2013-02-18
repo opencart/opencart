@@ -178,15 +178,14 @@ body > #container {
 .breadcrumb a {
 	font-size: 12px;
 	color: #666;
-	border: 1px solid #E5E5E5;
-	border-radius: 5px 0 0 5px;
+	
+
+	border-top: 1.5em solid transparent;
+	border-bottom: 1.5em solid transparent;
+	border-left: 1em solid #ddd;
+	border-width: 1.5em 0 1.5em 1em;
 	background: #FFFFFF;
-	box-shadow: 0 0 2px rgba(0,0,0,.2);
-	height: 50px;
-	width: 150px;
-	display: block;
-	float: left;
-	 
+	padding-left: 10px;	 
 }
 .success {
 	padding: 10px 10px 10px 33px;

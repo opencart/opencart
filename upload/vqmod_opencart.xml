@@ -5,7 +5,7 @@
 	<author><![CDATA[http://www.opencart.com]]></author>
 	<file name="catalog/controller/product/product.php" error="log|skip|abort">
 		<operation error="log|skip|abort">
-			<ignoreif regex="true|false"><![CDATA[/*]]></ignoreif>
+			<ignoreif regex="false"><![CDATA[/*]]></ignoreif>
 			<search position="replace|before|after|top|bottom|all" offset="1" index="1" regex="true|false" trim="true|false"><![CDATA[]]></search>
 			<add trim="true|false"><![CDATA[/*]]></add>
 		</operation>

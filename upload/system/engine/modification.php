@@ -46,10 +46,14 @@ final class Modification {
 				}
 			}
 
+			//log|skip|abort = $file->getAttribute('error');
+
 			$operations = $file->getElementsByTagName('operation');
 					
 			foreach ($operations as $operation) {
-				if ($operation->getElementsByTagName('ignoreif')) {
+				//log|skip|abort = $operation->getAttribute('error');
+				
+				if ($operation->getElementsByTagName('ignoreif')->length) {
 					if ($operation->getElementsByTagName('ignoreif')->item(0)->getAttribute('regex') == 'true') {
 						if (preg_match($operation->getElementsByTagName('ignoreif')->item(0)->nodeValue, $content)) {
 							continue;
@@ -65,7 +69,17 @@ final class Modification {
 			
 				$line = explode("\n", $content);
 	
-				switch($file->getElementsByTagName('operation')->item(0)->getAttribute('position')) {
+				$search = $operation->getElementsByTagName('search')->item(0)->nodeValue;
+				
+				$position = $operation->getElementsByTagName('search')->item(0)->getAttribute('position');
+				$offset = $operation->getElementsByTagName('search')->item(0)->getAttribute('offset');
+				$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
+				$regex = $operation->getElementsByTagName('search')->item(0)->getAttribute('regex');
+				$trim = $operation->getElementsByTagName('search')->item(0)->getAttribute('trim');
+				
+				$add = $operation->getElementsByTagName('add')->item(0)->nodeValue;
+				 
+				switch($position) {
 					case 'top':
 						$line[$mod['search']['offset']] = $mod['add']->getContent() . $tmp[$mod['search']->offset];
 						break;
@@ -99,7 +113,7 @@ final class Modification {
 				}
 				
 				
-				
+				/*
 				$changed = false;
 				foreach($tmp as $lineNum => $line) {
 					if(strlen($mod['search']->getContent()) == 0) {
@@ -159,7 +173,7 @@ final class Modification {
 						}
 					}
 				}
-				
+				*/
 				
 				
 			}

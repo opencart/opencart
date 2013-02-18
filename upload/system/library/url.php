@@ -1,23 +1,21 @@
 <?php
 class Url {
-	private $url;
-	private $ssl;
+	private $host;
 	private $rewrite = array();
 
-	public function __construct($url, $ssl = '') {
-		$this->url = $url;
-		$this->ssl = $ssl;
+	public function __construct($host) {
+		$this->host = $host;
 	}
 
 	public function addRewrite($rewrite) {
 		$this->rewrite[] = $rewrite;
 	}
 
-	public function link($route, $args = '', $connection = 'NONSSL') {
-		if ($connection ==  'NONSSL') {
-			$url = $this->url;
+	public function link($route, $args = '', $secure = false) {
+		if (!$secure) {
+			$url = 'http://' . $this->host;
 		} else {
-			$url = $this->ssl;
+			$url = 'https://' . $this->host;
 		}
 
 		$url .= 'index.php?route=' . $route;

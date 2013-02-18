@@ -38,13 +38,40 @@ final class Modification {
 		$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');		
 		
 		foreach ($files as $file) {
-			if (isset($this->data[$file->getAttribute('name')])) {
-				$content = $this->data[$file->getAttribute('name')];
-			} else {
+			if (!isset($this->data[$file->getAttribute('name')])) {
 				if (file_exists($file->getAttribute('name'))) {
-					$content = file_get_contents($file->getAttribute('name'));
+					$this->data[$file->getAttribute('name')] = file_get_contents($file->getAttribute('name'));
+					
+					$handle = fopen($this->file, 'rb');
+					
+					while (!feof($handle)) {
+						$buffer = fgets($handle);
+						$data = $this->applyFilters($this->format_line($buffer));
+						if($data)
+						{
+							$lines[] = $data;
+						}
+		 
+						if($limit && $count == $limit)
+						{
+							break;
+						}
+						
+					$count++;
 				}
+			
+		    fclose($handle);
+			
+			
+			
+			
+								
+				} else {
+					exit();	
+				}			
 			}
+
+			$content = $this->data[$file->getAttribute('name')];
 
 			//log|skip|abort = $file->getAttribute('error');
 
@@ -54,20 +81,16 @@ final class Modification {
 				//log|skip|abort = $operation->getAttribute('error');
 				
 				if ($operation->getElementsByTagName('ignoreif')->length) {
-					if ($operation->getElementsByTagName('ignoreif')->item(0)->getAttribute('regex') == 'true') {
-						if (preg_match($operation->getElementsByTagName('ignoreif')->item(0)->nodeValue, $content)) {
-							continue;
-						}
-					} else {
-						if (strpos($content, $operation->getElementsByTagName('ignoreif')->item(0)->nodeValue) !== false) {
-							continue;
-						}
+
+					if (strpos($content, $operation->getElementsByTagName('ignoreif')->item(0)->nodeValue) !== false) {
+						continue;
 					}
+
 				}
 				
 				$index = 0;
 			
-				$line = explode("\n", $content);
+				$lines = explode("\n", $content);
 	
 				$search = $operation->getElementsByTagName('search')->item(0)->nodeValue;
 				
@@ -77,7 +100,27 @@ final class Modification {
 				$regex = $operation->getElementsByTagName('search')->item(0)->getAttribute('regex');
 				$trim = $operation->getElementsByTagName('search')->item(0)->getAttribute('trim');
 				
+				if (!$offset) {
+					$offset = 1;
+				}
+				
+				
+				/*
+				 
+				foreach ($lines as $line) {
+					$pos = strpos($content, $operation->getElementsByTagName('search')->item(0)->nodeValue);
+					
+					if ($pos !== false) {
+						$position == 'after'
+						
+						($pos + $offset)
+						
+						break;
+					}
+				}
+				 
 				$add = $operation->getElementsByTagName('add')->item(0)->nodeValue;
+				 
 				 
 				switch($position) {
 					case 'top':
@@ -112,6 +155,7 @@ final class Modification {
 
 				}
 				
+				$line = implode("\n", $content);
 				
 				/*
 				$changed = false;

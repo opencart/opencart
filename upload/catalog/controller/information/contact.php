@@ -47,6 +47,7 @@ class ControllerInformationContact extends Controller {
 		$this->data['text_address'] = $this->language->get('text_address');
     	$this->data['text_telephone'] = $this->language->get('text_telephone');
     	$this->data['text_fax'] = $this->language->get('text_fax');
+        $this->data['text_time']= $this->language->get('text_time');
 
     	$this->data['entry_name'] = $this->language->get('entry_name');
     	$this->data['entry_email'] = $this->language->get('entry_email');
@@ -115,6 +116,32 @@ class ControllerInformationContact extends Controller {
 			$this->template = 'default/template/information/contact.tpl';
 		}
 		
+        /*
+         *  Retrieving information for our Location v1
+         */
+        
+        $this->data['location'] =   array();
+        
+        $this->load->model('location/location');    //  Load up our model file
+        
+        $result     =   $this->model_location_location->getLocations();     //  Execute function to get data (stored in $LocationList)
+        
+        //  Data extraction
+        foreach($result as $results)
+        {
+             $this->data['location'][]   =   array(
+                  'location_id'   =>      $results['location_id'],
+                  'name'          =>      $results['name'],
+                  'address_1'     =>      $results['address_1'],
+                  'address_2'     =>      $results['address_2'],
+                  'city'          =>      $results['city'],
+                  'postcode'      =>      $results['postcode'],   
+                  'times'         =>      $results['times'],   
+                  'comment'       =>      $results['comment'],   
+                  'geocode'       =>      $results['geocode']
+             );
+        }        
+        
 		$this->children = array(
 			'common/column_left',
 			'common/column_right',
@@ -173,6 +200,10 @@ class ControllerInformationContact extends Controller {
 	}
 	
   	protected function validate() {
+  	    /*
+         *  Validate Enquiry Form on the Contact Page
+         */
+        
     	if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
       		$this->error['name'] = $this->language->get('error_name');
     	}
@@ -197,6 +228,10 @@ class ControllerInformationContact extends Controller {
   	}
 
 	public function captcha() {
+	    /*
+         *  Captcha used on the Enquiry form
+         */
+        
 		$this->load->library('captcha');
 		
 		$captcha = new Captcha();
@@ -204,6 +239,6 @@ class ControllerInformationContact extends Controller {
 		$this->session->data['captcha'] = $captcha->getCode();
 		
 		$captcha->showImage();
-	}	
+	}
 }
 ?>

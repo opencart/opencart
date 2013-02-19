@@ -1,23 +1,11 @@
 <modification>
-	<id><![CDATA[Test VQMOD]]></id>
-	<version><![CDATA[1.5.6]]></version>
-	<vqmver><![CDATA[1.0]]></vqmver>
+	<id><![CDATA[Test]]></id>
+	<version><![CDATA[1.0]]></version>
 	<author><![CDATA[http://www.opencart.com]]></author>
 	<file name="catalog/controller/product/product.php" error="log|skip|abort">
-		<operation error="log|skip|abort">
-			<ignoreif regex="false"><![CDATA[/*]]></ignoreif>
-			<search position="replace|before|after|top|bottom|all" offset="1" index="1" regex="true|false" trim="true|false"><![CDATA[]]></search>
-			<add trim="true|false"><![CDATA[/*]]></add>
-		</operation>
-	</file>
-	<file name="catalog/view/theme/default/template/product/product.tpl">
 		<operation>
-			<search position="before"><![CDATA[&nbsp; <span><?php echo $entry_good; ?></span><br />]]></search>
-			<add><![CDATA[<!--]]></add>
+			<search index="1" error="log|abort"><![CDATA[$this->load->model('catalog/category');]]></search>
+			<add position="replace|before|after"><![CDATA[$this->load->model('catalog/category1');]]></add>
 		</operation>
-		<operation>
-			<search position="after"><![CDATA[<img src="index.php?route=product/product/captcha" alt="" id="captcha" /><br />]]></search>
-			<add><![CDATA[-->]]></add>
-		</operation>
-	</file>
+	</file>	
 </modification>

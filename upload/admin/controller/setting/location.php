@@ -427,8 +427,8 @@ class ControllerSettingLocation extends Controller {
 		
 		if (isset($this->request->post['country_id'])) {
       		$this->data['country_id'] = $this->request->post['country_id'];
-    	} elseif (!empty($affiliate_info)) { 
-			$this->data['country_id'] = $affiliate_info['country_id'];
+    	} elseif (!empty($location_info)) { 
+			$this->data['country_id'] = $location_info['country_id'];
 		} else {
       		$this->data['country_id'] = '';
     	}
@@ -439,8 +439,8 @@ class ControllerSettingLocation extends Controller {
 				
 		if (isset($this->request->post['zone_id'])) {
       		$this->data['zone_id'] = $this->request->post['zone_id'];
-    	} elseif (!empty($affiliate_info)) { 
-			$this->data['zone_id'] = $affiliate_info['zone_id'];
+    	} elseif (!empty($location_info)) { 
+			$this->data['zone_id'] = $location_info['zone_id'];
 		} else {
       		$this->data['zone_id'] = '';
     	}

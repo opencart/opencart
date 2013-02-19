@@ -100,22 +100,24 @@
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> 
 <script type="text/javascript"><!--
-function getGeoCode() {  
-	address  = '';
-	address += $('input[name=\'address_1\']').attr('value');
-	document.getElementById('address_2').value && document.getElementById('city').value && document.getElementById('postcode').value;
+function getGeoCode() { 
+	var address = new Array();
+	
+	address[0] = $('input[name=\'address_1\']').attr('value');
+	address[1] = $('input[name=\'address_2\']').attr('value');
+	address[2] = $('input[name=\'city\']').attr('value');
+	address[3] = $('input[name=\'postcode\']').attr('value');
+	address[4] = $('select[name=\'country_id\'] option:selected').text();
 	
 	geocoder = new google.maps.Geocoder();
 	
-	geocoder.geocode({'address': address}, function(results, status) {
+	geocoder.geocode({'address': address.join(', ')}, function(results, status) {
 		// Make sure google returns a geocode for us  
 		if (status == google.maps.GeocoderStatus.OK) {
 			//  Save our geocode to variable  
-			var geoCode = results[0].geometry.location;
-			//  replace the () with spaces for saving
-			geoCodeFilter = geoCode.toString().replace('(','').replace(')','');
+			var location = results[0].geometry.location;
 			
-			$('#geocode').val(geoCodeFilter);
+			$('input[name=\'geocode\']').val(location.toString().replace('(','').replace(')',''));
 		} else {
 			alert('<?php echo addslashes($text_geocode); ?> ' + status);
 		}

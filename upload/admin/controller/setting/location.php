@@ -269,31 +269,31 @@ class ControllerSettingLocation extends Controller {
 	}
 	
 	protected function getForm() {
-		$this->data['heading_title']    = $this->language->get('heading_title');
+		$this->data['heading_title'] = $this->language->get('heading_title');
 		
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
     	$this->data['text_wait'] = $this->language->get('text_wait');		
-		$this->data['text_geocode']     = $this->language->get('text_geocode'); 
+		$this->data['text_geocode'] = $this->language->get('text_geocode'); 
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
-		$this->data['text_browse']      = $this->language->get('text_browse');
-		$this->data['text_clear']       = $this->language->get('text_clear'); 
+		$this->data['text_browse'] = $this->language->get('text_browse');
+		$this->data['text_clear'] = $this->language->get('text_clear'); 
 				
-		$this->data['entry_name']       = $this->language->get('entry_name');
-		$this->data['entry_address_1']  = $this->language->get('entry_address_1');
-		$this->data['entry_address_2']  = $this->language->get('entry_address_2');
-		$this->data['entry_city']       = $this->language->get('entry_city');
-		$this->data['entry_postcode']   = $this->language->get('entry_postcode');
-		$this->data['entry_country']    = $this->language->get('entry_country');
-		$this->data['entry_zone']       = $this->language->get('entry_zone');
-		$this->data['entry_image']      = $this->language->get('entry_image');
-		$this->data['entry_geocode']    = $this->language->get('entry_geocode');
-		$this->data['entry_times']      = $this->language->get('entry_times');        
-		$this->data['entry_comment']    = $this->language->get('entry_comment');
+		$this->data['entry_name'] = $this->language->get('entry_name');
+		$this->data['entry_address_1'] = $this->language->get('entry_address_1');
+		$this->data['entry_address_2'] = $this->language->get('entry_address_2');
+		$this->data['entry_city'] = $this->language->get('entry_city');
+		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
+		$this->data['entry_country'] = $this->language->get('entry_country');
+		$this->data['entry_zone'] = $this->language->get('entry_zone');
+		$this->data['entry_image'] = $this->language->get('entry_image');
+		$this->data['entry_geocode'] = $this->language->get('entry_geocode');
+		$this->data['entry_open'] = $this->language->get('entry_open');        
+		$this->data['entry_comment'] = $this->language->get('entry_comment');
 	
-		$this->data['button_save']      = $this->language->get('button_save');
-		$this->data['button_cancel']    = $this->language->get('button_cancel');        
-		$this->data['button_geocode']   = $this->language->get('button_geocode');
+		$this->data['button_save'] = $this->language->get('button_save');
+		$this->data['button_cancel'] = $this->language->get('button_cancel');        
+		$this->data['button_geocode'] = $this->language->get('button_geocode');
 		
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];

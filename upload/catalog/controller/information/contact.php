@@ -47,7 +47,7 @@ class ControllerInformationContact extends Controller {
 		$this->data['text_address'] = $this->language->get('text_address');
     	$this->data['text_telephone'] = $this->language->get('text_telephone');
     	$this->data['text_fax'] = $this->language->get('text_fax');
-        $this->data['text_time']= $this->language->get('text_time');
+        $this->data['text_open']= $this->language->get('text_open');
 
     	$this->data['entry_name'] = $this->language->get('entry_name');
     	$this->data['entry_email'] = $this->language->get('entry_email');
@@ -81,6 +81,7 @@ class ControllerInformationContact extends Controller {
     	$this->data['button_continue'] = $this->language->get('button_continue');
     
 		$this->data['action'] = $this->url->link('information/contact');
+		
 		$this->data['store'] = $this->config->get('config_name');
     	$this->data['address'] = nl2br($this->config->get('config_address'));
     	$this->data['telephone'] = $this->config->get('config_telephone');
@@ -110,23 +111,23 @@ class ControllerInformationContact extends Controller {
 			$this->data['captcha'] = '';
 		}		
 
-        $this->data['location'] = array();
+        $this->data['locations'] = array();
         
-        $this->load->model('location/location');
+        $this->load->model('setting/location');
         
-        $result = $this->model_location_location->getLocations();
+		$results = $this->model_setting_location->getLocations();
         
-        foreach($result as $results) {
-             $this->data['location'][] = array(
-                  'location_id' => $results['location_id'],
-                  'name'        => $results['name'],
-                  'address_1'   => $results['address_1'],
-                  'address_2'   => $results['address_2'],
-                  'city'        => $results['city'],
-                  'postcode'    => $results['postcode'],   
-                  'times'       => $results['times'],   
-                  'comment'     => $results['comment'],   
-                  'geocode'     => $results['geocode']
+        foreach($results as $result) {
+             $this->data['locations'][] = array(
+                  'location_id' => $result['location_id'],
+                  'name'        => $result['name'],
+                  'address_1'   => $result['address_1'],
+                  'address_2'   => $result['address_2'],
+                  'city'        => $result['city'],
+                  'postcode'    => $result['postcode'],   
+                  'geocode'     => $result['geocode'],
+				  'open'        => $result['open'],   
+                  'comment'     => $result['comment']   
              );
         }        
         

@@ -1,7 +1,11 @@
 <?php
 class Cache { 
 	private $expire = 3600; 
-
+	
+	public function __construct() {
+	
+	}
+	
 	public function get($key) {
 		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 

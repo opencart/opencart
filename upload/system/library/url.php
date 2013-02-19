@@ -3,8 +3,9 @@ class Url {
 	private $host;
 	private $rewrite = array();
 
-	public function __construct($host) {
+	public function __construct($host, $ssl) {
 		$this->host = $host;
+		$this->ssl = $ssl;
 	}
 
 	public function addRewrite($rewrite) {
@@ -13,9 +14,9 @@ class Url {
 
 	public function link($route, $args = '', $secure = false) {
 		if (!$secure) {
-			$url = 'http://' . $this->host;
+			$url = $this->host;
 		} else {
-			$url = 'https://' . $this->host;
+			$url = $this->ssl;
 		}
 
 		$url .= 'index.php?route=' . $route;

@@ -100,6 +100,13 @@ final class Modification {
 				$regex = $operation->getElementsByTagName('search')->item(0)->getAttribute('regex');
 				$trim = $operation->getElementsByTagName('search')->item(0)->getAttribute('trim');
 				
+				/*
+				search
+				replace
+				offset 
+				limit
+				*/
+				
 				if (!$offset) {
 					$offset = 1;
 				}

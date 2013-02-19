@@ -473,12 +473,12 @@ class ControllerSettingLocation extends Controller {
 		
 		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 				
-		if (isset($this->request->post['times'])) {
-			$this->data['times'] = $this->request->post['times'];
+		if (isset($this->request->post['open'])) {
+			$this->data['open'] = $this->request->post['open'];
 		} elseif (!empty($location_info)) {
-			$this->data['times']  =   $location_info['times'];        
+			$this->data['open']  =   $location_info['open'];        
 		} else {
-			$this->data['times']    =   '';
+			$this->data['open']    =   '';
 		}
 		
 		if (isset($this->request->post['comment'])) {

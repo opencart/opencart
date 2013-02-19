@@ -86,8 +86,8 @@
                 <a onclick="image_upload('image', 'thumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
           </tr>
           <tr>
-            <td><?php echo $entry_times; ?></td>
-            <td><textarea name="times" cols="40" rows="5"><?php echo $times; ?></textarea></td>
+            <td><?php echo $entry_open; ?></td>
+            <td><textarea name="open" cols="40" rows="5"><?php echo $open; ?></textarea></td>
           </tr>
           <tr>
             <td><?php echo $entry_comment; ?></td>

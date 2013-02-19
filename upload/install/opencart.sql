@@ -1732,11 +1732,11 @@ CREATE TABLE IF NOT EXISTS `oc_location` (
   `zone_id` int(11) NOT NULL DEFAULT '0',  
   `geocode` varchar(32) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `times` text NOT NULL,
+  `open` text NOT NULL,
   `comment` text NOT NULL
   PRIMARY KEY (`location_id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_location`

@@ -110,38 +110,32 @@ class ControllerInformationContact extends Controller {
 			$this->data['captcha'] = '';
 		}		
 
+        $this->data['location'] = array();
+        
+        $this->load->model('location/location');
+        
+        $result = $this->model_location_location->getLocations();
+        
+        foreach($result as $results) {
+             $this->data['location'][] = array(
+                  'location_id' => $results['location_id'],
+                  'name'        => $results['name'],
+                  'address_1'   => $results['address_1'],
+                  'address_2'   => $results['address_2'],
+                  'city'        => $results['city'],
+                  'postcode'    => $results['postcode'],   
+                  'times'       => $results['times'],   
+                  'comment'     => $results['comment'],   
+                  'geocode'     => $results['geocode']
+             );
+        }        
+        
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/information/contact.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/information/contact.tpl';
 		} else {
 			$this->template = 'default/template/information/contact.tpl';
 		}
 		
-        /*
-         *  Retrieving information for our Location v1
-         */
-        
-        $this->data['location'] =   array();
-        
-        $this->load->model('location/location');    //  Load up our model file
-        
-        $result     =   $this->model_location_location->getLocations();     //  Execute function to get data (stored in $LocationList)
-        
-        //  Data extraction
-        foreach($result as $results)
-        {
-             $this->data['location'][]   =   array(
-                  'location_id'   =>      $results['location_id'],
-                  'name'          =>      $results['name'],
-                  'address_1'     =>      $results['address_1'],
-                  'address_2'     =>      $results['address_2'],
-                  'city'          =>      $results['city'],
-                  'postcode'      =>      $results['postcode'],   
-                  'times'         =>      $results['times'],   
-                  'comment'       =>      $results['comment'],   
-                  'geocode'       =>      $results['geocode']
-             );
-        }        
-        
 		$this->children = array(
 			'common/column_left',
 			'common/column_right',
@@ -200,10 +194,6 @@ class ControllerInformationContact extends Controller {
 	}
 	
   	protected function validate() {
-  	    /*
-         *  Validate Enquiry Form on the Contact Page
-         */
-        
     	if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
       		$this->error['name'] = $this->language->get('error_name');
     	}
@@ -228,17 +218,37 @@ class ControllerInformationContact extends Controller {
   	}
 
 	public function captcha() {
-	    /*
-         *  Captcha used on the Enquiry form
-         */
-        
-		$this->load->library('captcha');
+		$this->session->data['captcha'] = substr(sha1(mt_rand()), 17, 6);
 		
-		$captcha = new Captcha();
-		
-		$this->session->data['captcha'] = $captcha->getCode();
-		
-		$captcha->showImage();
+		$image = imagecreatetruecolor(150, 35);
+
+		$width = imagesx($image); 
+		$height = imagesy($image);
+
+		$black = imagecolorallocate($image, 0, 0, 0); 
+		$white = imagecolorallocate($image, 255, 255, 255); 
+		$red = imagecolorallocatealpha($image, 255, 0, 0, 75); 
+		$green = imagecolorallocatealpha($image, 0, 255, 0, 75); 
+		$blue = imagecolorallocatealpha($image, 0, 0, 255, 75); 
+
+		imagefilledrectangle($image, 0, 0, $width, $height, $white); 
+
+		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $red); 
+		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $green); 
+		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $blue); 
+
+		imagefilledrectangle($image, 0, 0, $width, 0, $black); 
+		imagefilledrectangle($image, $width - 1, 0, $width - 1, $height - 1, $black); 
+		imagefilledrectangle($image, 0, 0, 0, $height - 1, $black); 
+		imagefilledrectangle($image, 0, $height - 1, $width, $height - 1, $black); 
+
+		imagestring($image, 10, intval(($width - (strlen($this->session->data['captcha']) * 9)) / 2),  intval(($height - 15) / 2), $this->session->data['captcha'], $black);
+
+		header('Content-type: image/jpeg');
+
+		imagejpeg($image);
+
+		imagedestroy($image);
 	}
 }
 ?>

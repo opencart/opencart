@@ -117,6 +117,7 @@ $(document).ready(function(){
       <li id="system"><a class="top"><?php echo $text_system; ?></a>
         <ul>
           <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
+          <li><a href="<?php echo $location; ?>"><?php echo $text_location; ?></a></li>
           <li><a class="parent"><?php echo $text_design; ?></a>
             <ul>
               <li><a href="<?php echo $layout; ?>"><?php echo $text_layout; ?></a></li>

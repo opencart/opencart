@@ -47,8 +47,8 @@ final class Modification {
 					while (!feof($handle)) {
 						$buffer = fgets($handle);
 						$data = $this->applyFilters($this->format_line($buffer));
-						if($data)
-						{
+						
+						if($data) {
 							$lines[] = $data;
 						}
 		 

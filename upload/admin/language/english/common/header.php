@@ -32,6 +32,7 @@ $_['text_information']                 = 'Information';
 $_['text_language']                    = 'Languages';
 $_['text_layout']                      = 'Layouts';
 $_['text_localisation']                = 'Localisation';
+$_['text_location']                    = 'Store Location';
 $_['text_logged']                      = 'You are logged in as <span>%s</span>';
 $_['text_logout']                      = 'Logout';
 $_['text_contact']                     = 'Mail';

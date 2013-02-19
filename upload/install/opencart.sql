@@ -1718,6 +1718,40 @@ INSERT INTO `oc_length_class_description` (`length_class_id`, `language_id`, `ti
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `oc_location`
+--
+
+CREATE TABLE IF NOT EXISTS `oc_location` (
+  `location_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `address_1` varchar(128) NOT NULL,
+  `address_2` varchar(128) NOT NULL,
+  `city` varchar(128) NOT NULL,
+  `postcode` varchar(10) NOT NULL,
+  `times` text NOT NULL,
+  `comment` text NOT NULL,
+  `sort_order` int(3) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL,
+  `geocode` varchar(32) NOT NULL,
+  PRIMARY KEY (`location_id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+
+--
+-- Dumping data for table `oc_location`
+--
+
+INSERT INTO `oc_location` (`location_id`, `name`, `image`, `address_1`, `address_2`, `city`, `postcode`, `times`, `comment`, `sort_order`, `status`, `geocode`) VALUES
+(15, 'Open Cart London', NULL, '2500 University Drive Northwest', 'Lemmington Estate', 'London', 'LN12WEE', '', '', 0, 0, '51.507335, -0.127683'),
+(23, 'Open Cart Manchester', NULL, '19 Linen Court', 'Trinity Riverside', 'Manchester', 'M36JG', '', '', 0, 1, '53.4881932,-2.2644565'),
+(24, 'Open Cart HK', NULL, '22 Hoi Wing Rd', 'Tuen Mun Central Plaza', 'Tuen Mun', 'Tuen Mun', '9am - 5pm', 'addsasd', 0, 1, '22.381238,113.971933'),
+(26, 'Open Cart Birmingham', NULL, 'The University of Birmingham', 'Edgbaston', 'Birmingham', 'B15 2TT', '', '', 0, 1, '52.44897169999999, -1.930860199'),
+(27, 'Open Cart Cheshire', NULL, 'guy lane', 'waverton', 'chester', 'CH3 7PH', '', '', 0, 1, '53.171819, -2.802143699999988');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_manufacturer`
 --
 

@@ -1,6 +1,5 @@
 <?php echo $header; ?>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-<!---->
+<div id="content">
   <div class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
@@ -25,13 +24,13 @@
               <?php } ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_store_img; ?></td>
-            <td><div class="image"><img src="<?php echo $store_img; ?>" alt="" id="thumb-logo" />
-              <input type="hidden" name="store_img" value="<?php echo $store_img; ?>" id="logo" />
-              <br />
-              <a onclick="image_upload('logo', 'thumb-logo');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-logo').attr('src', '<?php echo $no_image; ?>'); $('#logo').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
+            <td><?php echo $entry_image; ?></td>
+            <td><div class="image"><img src="<?php echo $image; ?>" alt="" id="thumb-logo" />
+                <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
+                <br />
+                <a onclick="image_upload('image', 'thumb-image');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-image').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
           </tr>
-          <tr>          
+          <tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
             <td><input id="address_1" type="text" name="address_1" value="<?php echo $address_1; ?>" />
@@ -55,54 +54,25 @@
           </tr>
           <tr>
             <td><span class="required">*</span> <?php echo $entry_postcode; ?></td>
-            <td><input id="postcode" type="text" name="postcode" value="<?php echo $postcode; ?>" />
-              <?php if ($error_name) { ?>
-              <span class="error"><?php echo $error_postcode; ?></span>
-              <?php } ?></td>
-          </tr>          
+            <td><input id="postcode" type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
+          </tr>
           <tr>
-            <td><span class="required">*</span><?php echo $entry_geocode; ?></td>
+            <td><span class="required">*</span> <?php echo $entry_geocode; ?></td>
             <td><input id="geocode" type="text" name="geocode" value="<?php echo $geocode; ?>" />
-              <!-- Geocode button -->
               <button type="button" onclick="getGeocode()">Get Geocode</button>
               <?php if ($error_name) { ?>
               <span class="error"><?php echo $error_geocode; ?></span><br />
-              <!-- This is for error status' from Google Code -->
               <div id="geocode_error"></div>
               <?php } ?></td>
-          </tr>  
-<script>
-        
-      function getGeocode() {  
-          
-        //  Put our address isnt a string
-        var address =   document.getElementById('address_1').value && document.getElementById('address_2').value && document.getElementById('city').value && document.getElementById('postcode').value;
-        //address.toString();
-        geocoder = new google.maps.Geocoder();
-        
-        geocoder.geocode( { 'address': address}, function(results, status) {
-          //    Make sure google returns a geocode for us  
-          if (status == google.maps.GeocoderStatus.OK) {
-            //  Save our geocode to variable  
-            var geoCode =   results[0].geometry.location;
-            //  replace the () with spaces for saving
-            geoCodeFilter = geoCode.toString().replace('(','').replace(')','');
-            $("#geocode").val(geoCodeFilter);
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-      }    
-    
-</script>          
+          </tr>
           <tr>
             <td><?php echo $entry_times; ?></td>
             <td><input type="text" name="times" value="<?php echo $times; ?>" /></td>
-          </tr>    
+          </tr>
           <tr>
             <td><?php echo $entry_comment; ?></td>
             <td><input type="text" name="comment" value="<?php echo $comment; ?>" /></td>
-          </tr>           
+          </tr>
           <tr>
             <td><?php echo $entry_status; ?></td>
             <td><select name="status">
@@ -124,6 +94,29 @@
     </div>
   </div>
 </div>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> 
+<script type="text/javascript"><!--
+function getGeocode() {  
+	//  Put our address isnt a string
+	var address = document.getElementById('address_1').value && document.getElementById('address_2').value && document.getElementById('city').value && document.getElementById('postcode').value;
+	//address.toString();
+	geocoder = new google.maps.Geocoder();
+	
+	geocoder.geocode({'address': address}, function(results, status) {
+	//    Make sure google returns a geocode for us  
+	if (status == google.maps.GeocoderStatus.OK) {
+		//  Save our geocode to variable  
+		var geoCode =   results[0].geometry.location;
+		//  replace the () with spaces for saving
+		geoCodeFilter = geoCode.toString().replace('(','').replace(')','');
+		
+		$('#geocode').val(geoCodeFilter);
+	} else {
+		alert('Geocode was not successful for the following reason: ' + status);
+	}
+	});
+}    
+//--></script> 
 <script type="text/javascript"><!--
 function image_upload(field, thumb) {
     $('#dialog').remove();
@@ -151,5 +144,4 @@ function image_upload(field, thumb) {
     });
 };
 //--></script> 
-<div id="content">
 <?php echo $footer; ?>

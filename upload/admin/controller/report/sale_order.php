@@ -68,7 +68,7 @@ class ControllerReportSaleOrder extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('report/sale_order', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrump_seperator')
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 		
 		$this->load->model('report/sale');

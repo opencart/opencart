@@ -45,13 +45,13 @@ class ControllerTotalReward extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_total'),
 			'href'      => $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => $this->language->get('breadcrump_seperator')
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('total/reward', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => $this->language->get('breadcrump_seperator')
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 		
 		$this->data['action'] = $this->url->link('total/reward', 'token=' . $this->session->data['token'], 'SSL');

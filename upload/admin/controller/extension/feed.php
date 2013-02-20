@@ -16,7 +16,7 @@ class ControllerExtensionFeed extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => $this->language->get('breadcrump_seperator')
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');

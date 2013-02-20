@@ -154,7 +154,7 @@ class ControllerLocalisationWeightClass extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrump_seperator')
    		);
 		
 		$this->data['insert'] = $this->url->link('localisation/weight_class/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -317,7 +317,7 @@ class ControllerLocalisationWeightClass extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrump_seperator')
    		);
 		
 		if (!isset($this->request->get['weight_class_id'])) {

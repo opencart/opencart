@@ -368,7 +368,7 @@ class ControllerSettingLocation extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('setting/location', 'token=' . $this->session->data['token'] . $url, 'SSL'),           
-			'separator' => ' :: '
+			'separator' => $this->language->get('breadcrump_seperator')
 		);
 		
 		if (!isset($this->request->get['location_id'])) {

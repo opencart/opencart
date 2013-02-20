@@ -154,7 +154,7 @@ class ControllerLocalisationReturnAction extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrump_seperator')
    		);
 							
 		$this->data['insert'] = $this->url->link('localisation/return_action/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -303,7 +303,7 @@ class ControllerLocalisationReturnAction extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrump_seperator')
    		);
 		
 		if (!isset($this->request->get['return_action_id'])) {

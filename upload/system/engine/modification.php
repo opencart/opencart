@@ -1,4 +1,6 @@
 <?php
+
+
 final class Modification {
 	private $data = array();
 	private $error = array();
@@ -50,22 +52,12 @@ New XML Modifcation Standard
 			if (!isset($this->data[$filename])) {
 				if (file_exists($filename)) {
 					$content = file_get_contents($filename);
-					
 				} else {
-					$errror = $file->getAttribute('error');
-					
-					if ($errror == 'log') {
-						$this->error[] = 'File could not be found';
-						
-						continue;
-					}
-					
-					if ($errror == 'abort') {
-						$this->error[] = 'File could not be found';
-						
-						break;
-					}
+					trigger_error('Error: Could not load language ' . $filename . '!');
+					exit();
 				}			
+			} else {
+				$content = $this->data[$filename];
 			}
 
 			$operations = $file->getElementsByTagName('operation');
@@ -91,22 +83,25 @@ New XML Modifcation Standard
 					case 'after':
 						$replace = $search . $add;
 						break;
-							
+				}
+
+				$i = 0;
+				$pos = -1;
+				$result = array();
+
+				while (($pos = strpos($content, $search, $pos + 1)) !== false) {
+					$result[$i++] = $pos; 
 				}
 				
-				$pos = 0;
-				
-				for ($i = 0; $i <= $index; $i++) {
-					$pos = strpos($content, $search, $pos);
+				// Only replace the occurance of the string that is equal to the index					
+				if (isset($result[$index - 1])) {
+					$content = substr_replace($content, $replace, $result[$index - 1], strlen($search));
 				}
-   
-				$content = substr_replace($content, $replace, $pos, strlen($search));
 			}
-			
-			eval($content);
-			
+
 			echo '<pre>';
-			print_r($content);
+			print_r($result);
+			echo $content;
 			echo '</pre>';			
 		}
 	}

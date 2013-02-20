@@ -154,7 +154,7 @@ class ControllerUserUser extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrump_seperator')
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 			
 		$this->data['insert'] = $this->url->link('user/user/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -343,7 +343,7 @@ class ControllerUserUser extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrump_seperator')
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 		
 		if (!isset($this->request->get['user_id'])) {

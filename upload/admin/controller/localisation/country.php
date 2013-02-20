@@ -154,7 +154,7 @@ class ControllerLocalisationCountry extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrump_seperator')
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 		
 		$this->data['insert'] = $this->url->link('localisation/country/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -319,7 +319,7 @@ class ControllerLocalisationCountry extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrump_seperator')
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 							
 		if (!isset($this->request->get['country_id'])) { 

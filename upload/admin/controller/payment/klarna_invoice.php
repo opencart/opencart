@@ -80,13 +80,13 @@ class ControllerPaymentKlarnaInvoice extends Controller {
         $this->data['breadcrumbs'][] = array(
             'text'      => $this->language->get('text_payment'),
             'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
-            'separator' => $this->language->get('breadcrump_seperator')
+            'separator' => $this->language->get('breadcrumb_seperator')
         );
 
         $this->data['breadcrumbs'][] = array(
             'text'      => $this->language->get('heading_title'),
             'href'      => $this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], 'SSL'),
-            'separator' => $this->language->get('breadcrump_seperator')
+            'separator' => $this->language->get('breadcrumb_seperator')
         );
 		
 		if (isset($this->session->data['success'])) {

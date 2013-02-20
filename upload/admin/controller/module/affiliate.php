@@ -53,13 +53,13 @@ class ControllerModuleAffiliate extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_module'),
 			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => $this->language->get('breadcrump_seperator')
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('module/affiliate', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => $this->language->get('breadcrump_seperator')
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 		
 		$this->data['action'] = $this->url->link('module/affiliate', 'token=' . $this->session->data['token'], 'SSL');

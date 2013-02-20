@@ -48,7 +48,7 @@ class ControllerReportAffiliateCommission extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('report/affiliate_commission', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrump_seperator')
    		);		
 		
 		$this->load->model('report/affiliate');

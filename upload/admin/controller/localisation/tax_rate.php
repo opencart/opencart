@@ -154,7 +154,7 @@ class ControllerLocalisationTaxRate extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrump_seperator')
    		);		
 		
 		$this->data['insert'] = $this->url->link('localisation/tax_rate/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -331,7 +331,7 @@ class ControllerLocalisationTaxRate extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrump_seperator')
    		);
 		
 		if (!isset($this->request->get['tax_rate_id'])) {

@@ -23,7 +23,7 @@ class ModelTotalKlarnaFee extends Model {
 			$status = false;
 		} elseif (!$klarna_fee[$address['iso_code_3']]['status']) {
 			$status = false;
-		} elseif ($this->cart->getSubTotal() > $klarna_fee[$address['iso_code_3']]['total']) {
+		} elseif ($this->cart->getSubTotal() >= $klarna_fee[$address['iso_code_3']]['total']) {
 			$status = false;
 		}
 		

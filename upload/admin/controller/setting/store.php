@@ -98,7 +98,7 @@ class ControllerSettingStore extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 							
 		$this->data['insert'] = $this->url->link('setting/store/insert', 'token=' . $this->session->data['token'], 'SSL');
@@ -380,7 +380,7 @@ class ControllerSettingStore extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 		
 		if (isset($this->session->data['success'])) {

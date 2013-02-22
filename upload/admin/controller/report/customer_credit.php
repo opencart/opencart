@@ -48,7 +48,7 @@ class ControllerReportCustomerCredit extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('report/customer_credit', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);		
 		
 		$this->load->model('report/customer');

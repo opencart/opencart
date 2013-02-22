@@ -29,6 +29,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_catalog'] = $this->language->get('text_catalog');
 		$this->data['text_category'] = $this->language->get('text_category');
 		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$this->data['text_contact'] = $this->language->get('text_contact');
 		$this->data['text_country'] = $this->language->get('text_country');
 		$this->data['text_coupon'] = $this->language->get('text_coupon');
 		$this->data['text_currency'] = $this->language->get('text_currency');			
@@ -53,8 +54,8 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_language'] = $this->language->get('text_language');
 		$this->data['text_layout'] = $this->language->get('text_layout');
 		$this->data['text_localisation'] = $this->language->get('text_localisation');
+		$this->data['text_location'] = $this->language->get('text_location');
 		$this->data['text_logout'] = $this->language->get('text_logout');
-		$this->data['text_contact'] = $this->language->get('text_contact');
 		$this->data['text_modification'] = $this->language->get('text_modification');
 		$this->data['text_manufacturer'] = $this->language->get('text_manufacturer');
 		$this->data['text_module'] = $this->language->get('text_module');
@@ -118,6 +119,7 @@ class ControllerCommonHeader extends Controller {
 			$this->data['banner'] = $this->url->link('design/banner', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['category'] = $this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['country'] = $this->url->link('localisation/country', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['contact'] = $this->url->link('sale/contact', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['coupon'] = $this->url->link('sale/coupon', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['currency'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['customer'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL');
@@ -133,8 +135,8 @@ class ControllerCommonHeader extends Controller {
 			$this->data['information'] = $this->url->link('catalog/information', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['language'] = $this->url->link('localisation/language', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['layout'] = $this->url->link('design/layout', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['location'] = $this->url->link('setting/location', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->data['token'], 'SSL');
-			$this->data['contact'] = $this->url->link('sale/contact', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['modification'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['manufacturer'] = $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['module'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');

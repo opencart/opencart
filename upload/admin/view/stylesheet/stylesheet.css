@@ -174,19 +174,17 @@ body > #container {
 	padding: 10px;
 
 }
-
+.breadcrumb a, .breadcrumb span{
+	display:block;
+	float:left;
+}
 .breadcrumb a {
 	font-size: 12px;
 	color: #666;
-	border: 1px solid #E5E5E5;
-	border-radius: 5px 0 0 5px;
 	background: #FFFFFF;
-	box-shadow: 0 0 2px rgba(0,0,0,.2);
-	height: 50px;
-	width: 150px;
-	display: block;
-	float: left;
-	 
+	padding-left: 5px;	 
+	margin-right: 5px;
+	text-decoration: none;
 }
 .success {
 	padding: 10px 10px 10px 33px;

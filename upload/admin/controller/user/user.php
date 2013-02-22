@@ -154,7 +154,7 @@ class ControllerUserUser extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 			
 		$this->data['insert'] = $this->url->link('user/user/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -278,7 +278,6 @@ class ControllerUserUser extends Controller {
     	$this->data['entry_email'] = $this->language->get('entry_email');
     	$this->data['entry_user_group'] = $this->language->get('entry_user_group');
 		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_captcha'] = $this->language->get('entry_captcha');
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -344,7 +343,7 @@ class ControllerUserUser extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 		
 		if (!isset($this->request->get['user_id'])) {

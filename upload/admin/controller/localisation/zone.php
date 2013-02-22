@@ -154,7 +154,7 @@ class ControllerLocalisationZone extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 							
 		$this->data['insert'] = $this->url->link('localisation/zone/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -315,7 +315,7 @@ class ControllerLocalisationZone extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 							
 		if (!isset($this->request->get['zone_id'])) {

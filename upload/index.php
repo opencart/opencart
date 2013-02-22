@@ -235,4 +235,9 @@ $controller->dispatch($action, new Action('error/not_found'));
 
 // Output
 $response->output();
+
+
+$mod = new Modification();
+
+$mod->load('C:\xampp\htdocs\opencart\upload\vqmod_opencart.xml');
 ?>

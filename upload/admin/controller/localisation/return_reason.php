@@ -154,7 +154,7 @@ class ControllerLocalisationReturnReason extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/return_reason', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 							
 		$this->data['insert'] = $this->url->link('localisation/return_reason/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -303,7 +303,7 @@ class ControllerLocalisationReturnReason extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/return_reason', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 		
 		if (!isset($this->request->get['return_reason_id'])) {

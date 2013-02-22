@@ -154,7 +154,7 @@ class ControllerLocalisationTaxClass extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);		
 		
 		$this->data['insert'] = $this->url->link('localisation/tax_class/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -319,7 +319,7 @@ class ControllerLocalisationTaxClass extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 		
 		if (!isset($this->request->get['tax_class_id'])) {

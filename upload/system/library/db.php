@@ -1,31 +1,31 @@
 <?php
 class DB {
-	private $driver;
+	private $db;
 
-	public function __construct($driver, $hostname, $username, $password, $database) {
-		if (file_exists(DIR_DATABASE . $driver . '.php')) {
-			require_once(DIR_DATABASE . $driver . '.php');
+	public function __construct($type, $hostname, $username, $password, $database) {
+		if (file_exists(DIR_DATABASE . $type . '.php')) {
+			require_once(DIR_DATABASE . $type . '.php');
 		} else {
 			exit('Error: Could not load database file ' . $driver . '!');
 		}
 
-		$this->driver = new $driver($hostname, $username, $password, $database);
+		$this->db = new $type($hostname, $username, $password, $database);
 	}
 
 	public function query($sql) {
-		return $this->driver->query($sql);
+		return $this->db->query($sql);
 	}
 
 	public function escape($value) {
-		return $this->driver->escape($value);
+		return $this->db->escape($value);
 	}
 
 	public function countAffected() {
-		return $this->driver->countAffected();
+		return $this->db->countAffected();
 	}
 
 	public function getLastId() {
-		return $this->driver->getLastId();
+		return $this->db->getLastId();
 	}
 }
 ?>

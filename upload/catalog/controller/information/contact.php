@@ -47,6 +47,7 @@ class ControllerInformationContact extends Controller {
 		$this->data['text_address'] = $this->language->get('text_address');
     	$this->data['text_telephone'] = $this->language->get('text_telephone');
     	$this->data['text_fax'] = $this->language->get('text_fax');
+        $this->data['text_open']= $this->language->get('text_open');
 
     	$this->data['entry_name'] = $this->language->get('entry_name');
     	$this->data['entry_email'] = $this->language->get('entry_email');
@@ -80,6 +81,7 @@ class ControllerInformationContact extends Controller {
     	$this->data['button_continue'] = $this->language->get('button_continue');
     
 		$this->data['action'] = $this->url->link('information/contact');
+		
 		$this->data['store'] = $this->config->get('config_name');
     	$this->data['address'] = nl2br($this->config->get('config_address'));
     	$this->data['telephone'] = $this->config->get('config_telephone');
@@ -109,6 +111,26 @@ class ControllerInformationContact extends Controller {
 			$this->data['captcha'] = '';
 		}		
 
+        $this->data['locations'] = array();
+        
+        $this->load->model('setting/location');
+        
+		$results = $this->model_setting_location->getLocations();
+        
+        foreach($results as $result) {
+             $this->data['locations'][] = array(
+                  'location_id' => $result['location_id'],
+                  'name'        => $result['name'],
+                  'address_1'   => $result['address_1'],
+                  'address_2'   => $result['address_2'],
+                  'city'        => $result['city'],
+                  'postcode'    => $result['postcode'],   
+                  'geocode'     => $result['geocode'],
+				  'open'        => $result['open'],   
+                  'comment'     => $result['comment']   
+             );
+        }        
+        
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/information/contact.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/information/contact.tpl';
 		} else {
@@ -197,13 +219,37 @@ class ControllerInformationContact extends Controller {
   	}
 
 	public function captcha() {
-		$this->load->library('captcha');
+		$this->session->data['captcha'] = substr(sha1(mt_rand()), 17, 6);
 		
-		$captcha = new Captcha();
-		
-		$this->session->data['captcha'] = $captcha->getCode();
-		
-		$captcha->showImage();
-	}	
+		$image = imagecreatetruecolor(150, 35);
+
+		$width = imagesx($image); 
+		$height = imagesy($image);
+
+		$black = imagecolorallocate($image, 0, 0, 0); 
+		$white = imagecolorallocate($image, 255, 255, 255); 
+		$red = imagecolorallocatealpha($image, 255, 0, 0, 75); 
+		$green = imagecolorallocatealpha($image, 0, 255, 0, 75); 
+		$blue = imagecolorallocatealpha($image, 0, 0, 255, 75); 
+
+		imagefilledrectangle($image, 0, 0, $width, $height, $white); 
+
+		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $red); 
+		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $green); 
+		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $blue); 
+
+		imagefilledrectangle($image, 0, 0, $width, 0, $black); 
+		imagefilledrectangle($image, $width - 1, 0, $width - 1, $height - 1, $black); 
+		imagefilledrectangle($image, 0, 0, 0, $height - 1, $black); 
+		imagefilledrectangle($image, 0, $height - 1, $width, $height - 1, $black); 
+
+		imagestring($image, 10, intval(($width - (strlen($this->session->data['captcha']) * 9)) / 2),  intval(($height - 15) / 2), $this->session->data['captcha'], $black);
+
+		header('Content-type: image/jpeg');
+
+		imagejpeg($image);
+
+		imagedestroy($image);
+	}
 }
 ?>

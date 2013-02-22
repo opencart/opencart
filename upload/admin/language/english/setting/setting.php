@@ -88,7 +88,7 @@ $_['entry_ftp_host']               = 'FTP Host:';
 $_['entry_ftp_port']               = 'FTP Port:';
 $_['entry_ftp_username']           = 'FTP Username:';
 $_['entry_ftp_password']           = 'FTP Password:';
-$_['entry_ftp_root']               = 'FTP Root:<span class="help">The directory your opencart installation is stored in normally \'public_html/\'.</span>';
+$_['entry_ftp_root']               = 'FTP Root:<span class="help">The directory your OpenCart installation is stored in normally \'public_html/\'.</span>';
 $_['entry_ftp_status']             = 'Enable FTP:';
 $_['entry_mail_protocol']          = 'Mail Protocol:<span class="help">Only choose \'Mail\' unless your host has disabled the php mail function.</span>';
 $_['entry_mail_parameter']         = 'Mail Parameters:<span class="help">When using \'Mail\', additional mail parameters can be added here (e.g. "-femail@storeaddress.com").</span>';
@@ -103,7 +103,7 @@ $_['entry_review_mail']            = 'New Review Alert Mail:<br /><span class="h
 $_['entry_alert_emails']           = 'Additional Alert E-Mails:<br /><span class="help">Any additional emails you want to receive the alert email, in addition to the main store email. (comma separated)</span>';
 $_['entry_fraud_detection']        = 'Use MaxMind Fraud Detection System:<br /><span class="help">MaxMind is a fraud detections service. If you don\'t have a license key you can <a href="http://www.maxmind.com/?rId=opencart" target="_blank"><u>sign up here</u></a>. Once you have obtained a key copy and paste it into the field below.</span>';
 $_['entry_fraud_key']              = 'MaxMind License Key:</span>';
-$_['entry_fraud_score']            = 'MaxMind Risk Score:<br /><span class="help">The higher the score the more likly the order is fraudulent. Set a score between 0 - 100.</span>';
+$_['entry_fraud_score']            = 'MaxMind Risk Score:<br /><span class="help">The higher the score the more likely the order is fraudulent. Set a score between 0 - 100.</span>';
 $_['entry_fraud_status']           = 'MaxMind Fraud Order Status:<br /><span class="help">Orders over your set score will be assigned this order status and will not be allowed to reach the complete status automatically.</span>';
 $_['entry_secure']                 = 'Use SSL:<br /><span class="help">To use SSL check with your host if a SSL certificate is installed and added the SSL URL to the catalog and admin config files.</span>';
 $_['entry_shared']                 = 'Use Shared Sessions:<br /><span class="help">Try to share the session cookie between stores so the cart can be passed between different domains.</span>';
@@ -148,5 +148,5 @@ $_['error_ftp_port']               = 'FTP Port required!';
 $_['error_ftp_username']           = 'FTP Username required!';
 $_['error_ftp_password']           = 'FTP Password required!';
 $_['error_error_filename']         = 'Error Log Filename required!';
-$_['error_encryption']             = 'Encryption must be between 3 and 32 characters!';
+$_['error_encryption']             = 'Encryption Key must be between 3 and 32 characters!';
 ?>

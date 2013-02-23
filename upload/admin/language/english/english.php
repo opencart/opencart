@@ -116,7 +116,7 @@ $_['error_upload_7']                = 'Warning: Failed to write file to disk!';
 $_['error_upload_8']                = 'Warning: File upload stopped by extension!';
 $_['error_upload_999']              = 'Warning: No error code available!';
 
-// Breadcrump Seperator
-$_['breadcrumb_seperator']			= '<span class="breadcrumb-seperator">&rsaquo;&rsaquo;</span>';
+// Breadcrumb Separator
+$_['breadcrumb_separator']			= '<span class="breadcrumb-seperator">&rsaquo;&rsaquo;</span>';
 
 ?>

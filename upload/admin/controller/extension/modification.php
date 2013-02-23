@@ -16,7 +16,7 @@ class ControllerExtensionModification extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('extension/modification', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => $this->language->get('breadcrumb_seperator')
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');

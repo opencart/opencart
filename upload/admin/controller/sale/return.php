@@ -330,7 +330,7 @@ class ControllerSaleReturn extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrumb_seperator')
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->data['insert'] = $this->url->link('sale/return/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -687,7 +687,7 @@ class ControllerSaleReturn extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrumb_seperator')
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 
 		if (!isset($this->request->get['return_id'])) {
@@ -965,7 +965,7 @@ class ControllerSaleReturn extends Controller {
 			$this->data['breadcrumbs'][] = array(
 				'text'      => $this->language->get('heading_title'),
 				'href'      => $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-				'separator' => $this->language->get('breadcrumb_seperator')
+				'separator' => $this->language->get('breadcrumb_separator')
 			);
 			  
 			$this->data['cancel'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, 'SSL');			
@@ -1064,7 +1064,7 @@ class ControllerSaleReturn extends Controller {
 			$this->data['breadcrumbs'][] = array(
 				'text'      => $this->language->get('heading_title'),
 				'href'      => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => $this->language->get('breadcrumb_seperator')
+				'separator' => $this->language->get('breadcrumb_separator')
 			);
 		
 			$this->template = 'error/not_found.tpl';

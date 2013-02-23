@@ -328,7 +328,7 @@ class ControllerSaleAffiliate extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('sale/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrumb_seperator')
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->data['approve'] = $this->url->link('sale/affiliate/approve', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -679,7 +679,7 @@ class ControllerSaleAffiliate extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('sale/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrumb_seperator')
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 
 		if (!isset($this->request->get['affiliate_id'])) {

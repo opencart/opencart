@@ -154,7 +154,7 @@ class ControllerUserUserPermission extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('user/user_permission', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrumb_seperator')
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 							
 		$this->data['insert'] = $this->url->link('user/user_permission/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -308,7 +308,7 @@ class ControllerUserUserPermission extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('user/user_permission', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrumb_seperator')
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 			
 		if (!isset($this->request->get['user_group_id'])) {

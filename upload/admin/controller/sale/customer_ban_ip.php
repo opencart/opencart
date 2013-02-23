@@ -154,7 +154,7 @@ class ControllerSaleCustomerBanIp extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrumb_seperator')
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->data['insert'] = $this->url->link('sale/customer_ban_ip/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -306,7 +306,7 @@ class ControllerSaleCustomerBanIp extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrumb_seperator')
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 
 		if (!isset($this->request->get['customer_ban_ip_id'])) {

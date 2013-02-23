@@ -48,7 +48,7 @@ class ControllerReportCustomerOnline extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'href'      => $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url, 'SSL'),
        		'text'      => $this->language->get('heading_title'),
-      		'separator' => $this->language->get('breadcrumb_seperator')
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->load->model('report/online');

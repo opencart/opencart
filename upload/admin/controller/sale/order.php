@@ -286,7 +286,7 @@ class ControllerSaleOrder extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrumb_seperator')
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 
 		$this->data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'], 'SSL');
@@ -729,7 +729,7 @@ class ControllerSaleOrder extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'),				
-			'separator' => $this->language->get('breadcrumb_seperator')
+			'separator' => $this->language->get('breadcrumb_separator')
 		);
 
 		if (!isset($this->request->get['order_id'])) {
@@ -1486,7 +1486,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['breadcrumbs'][] = array(
 				'text'      => $this->language->get('heading_title'),
 				'href'      => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'),				
-				'separator' => $this->language->get('breadcrumb_seperator')
+				'separator' => $this->language->get('breadcrumb_separator')
 			);
 
 			$this->data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
@@ -1900,7 +1900,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['breadcrumbs'][] = array(
 				'text'      => $this->language->get('heading_title'),
 				'href'      => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => $this->language->get('breadcrumb_seperator')
+				'separator' => $this->language->get('breadcrumb_separator')
 			);
 		
 			$this->template = 'error/not_found.tpl';
@@ -2223,7 +2223,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['breadcrumbs'][] = array(
 				'text'      => $this->language->get('heading_title'),
 				'href'      => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => $this->language->get('breadcrumb_seperator')
+				'separator' => $this->language->get('breadcrumb_separator')
 			);
 		
 			$this->template = 'error/not_found.tpl';

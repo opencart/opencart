@@ -144,7 +144,7 @@ body > #container {
 }
 #content {
 	background: #FFFFFF url('../image/background.png') 0px 1px repeat-x;
-	padding: 15px 30px 0px 30px;
+	padding: 20px 30px 0px 30px;
 	min-width: 900px;
 	padding-bottom: 128px;
 }

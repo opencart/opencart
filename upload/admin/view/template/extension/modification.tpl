@@ -14,7 +14,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/module.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="" class="button">Clear VQMOD Cache</a></div>
+      <div class="buttons"><a href="" class="button">Upload</a> <a href="" class="button">Resync</a> <a href="" class="button">Clear Modifcation Cache</a><a href="" class="button">Insert</a><a href="" class="button">Delete</a></div>
     </div>
     <div class="content">
       <div style="padding: 10px; border: 1px solid #CCCCCC; background: #EEEEEE; margin-bottom: 20px;">

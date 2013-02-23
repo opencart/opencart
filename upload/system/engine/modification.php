@@ -1,21 +1,4 @@
 <?php
-
-
-final class Modification {
-	private $data = array();
-	private $error = array();
-	
-	public function load($file) {
-		if (file_exists($file)) { 
-			$xml = file_get_contents($file);
-			
-			$this->parse($xml);
-		} else {
-			trigger_error('Error: Could not load modification ' . $file . '!');
-			exit();
-		}
-	}
-	
 /* 
 New XML Modifcation Standard 
 
@@ -40,6 +23,22 @@ New XML Modifcation Standard
 	</file>	
 </modification>
 */	
+
+final class Modification {
+	private $data = array();
+	private $error = array();
+	
+	public function load($file) {
+		if (file_exists($file)) { 
+			$xml = file_get_contents($file);
+			
+			$this->parse($xml);
+		} else {
+			trigger_error('Error: Could not load modification ' . $file . '!');
+			exit();
+		}
+	}
+
 	public function parse($xml) {
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->loadXml($xml);
@@ -47,6 +46,8 @@ New XML Modifcation Standard
 		$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');		
 		
 		foreach ($files as $file) {
+			glob($file);
+			
 			$filename = $file->getAttribute('name');
 		
 			if (!isset($this->data[$filename])) {
@@ -63,9 +64,9 @@ New XML Modifcation Standard
 			$operations = $file->getElementsByTagName('operation');
 		
 			foreach ($operations as $operation) {
-				$search = $operation->getElementsByTagName('search')->item(0)->nodeValue;
-				$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
-				$add = $operation->getElementsByTagName('add')->item(0)->nodeValue;
+				$search   = $operation->getElementsByTagName('search')->item(0)->nodeValue;
+				$index    = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
+				$add      = $operation->getElementsByTagName('add')->item(0)->nodeValue;
 				$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
 					
 				if (!$index) {

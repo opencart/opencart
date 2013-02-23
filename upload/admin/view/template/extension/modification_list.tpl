@@ -17,9 +17,6 @@
       <div class="buttons"><a href="" class="button">Upload</a> <a href="" class="button">Resync</a> <a href="" class="button">Clear Modifcation Cache</a><a href="" class="button">Insert</a><a href="" class="button">Delete</a></div>
     </div>
     <div class="content">
-      <div style="padding: 10px; border: 1px solid #CCCCCC; background: #EEEEEE; margin-bottom: 20px;">
-        <input type="button" value="<?php echo $button_upload; ?>" id="button-upload" class="button" onclick="$('input[name=\'file\']').click();" />
-      </div>
       <table class="list">
         <thead>
           <tr>

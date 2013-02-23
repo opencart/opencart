@@ -144,7 +144,7 @@ body > #container {
 }
 #content {
 	background: #FFFFFF url('../image/background.png') 0px 1px repeat-x;
-	padding: 20px 30px 0px 30px;
+	padding: 24px 30px 0px 30px;
 	min-width: 900px;
 	padding-bottom: 128px;
 }
@@ -169,18 +169,16 @@ body > #container {
 	-moz-border-radius: 7px;
 	-khtml-border-radius: 7px;
 	border-radius: 7px;		
+	line-height: 30px;
 	margin-bottom: 15px;
-	overflow: auto;
-	padding: 10px;
+}
+.breadcrumb a, .breadcrumb span {
 
 }
-.breadcrumb a, .breadcrumb span{
-	display:block;
-	float:left;
-}
 .breadcrumb a {
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	color: #666;
+	color: #464646;
 	background: #FFFFFF;
 	padding-left: 5px;	 
 	margin-right: 5px;

@@ -84,7 +84,6 @@ require_once(DIR_SYSTEM . 'engine/front.php');
 require_once(DIR_SYSTEM . 'engine/loader.php'); 
 require_once(DIR_SYSTEM . 'engine/model.php');
 require_once(DIR_SYSTEM . 'engine/registry.php');
-require_once(DIR_SYSTEM . 'engine/modification.php');
 
 // Common
 require_once(DIR_SYSTEM . 'library/cache.php');

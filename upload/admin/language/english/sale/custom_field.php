@@ -50,6 +50,7 @@ $_['entry_customer_group']  = 'Customer Group:';
 $_['entry_required']        = 'Required:';
 $_['entry_location']        = 'Location:';
 $_['entry_position']        = 'Position:<br /><span class="help">Select which field you want the new field to appear after.</span>';
+$_['entry_status']          = 'Status:';
 $_['entry_sort_order']      = 'Sort Order:';
 
 // Error

@@ -307,7 +307,7 @@
               <td>&nbsp;</td>
               <td><div id="product-related" class="scrollbox">
                   <?php $class = 'odd'; ?>
-                  <?php foreach ($product_related as $product_related) { ?>
+                  <?php foreach ($product_relateds as $product_related) { ?>
                   <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
                   <div id="product-related<?php echo $product_related['product_id']; ?>" class="<?php echo $class; ?>"> <?php echo $product_related['name']; ?><img src="view/image/delete.png" alt="" />
                     <input type="hidden" name="product_related[]" value="<?php echo $product_related['product_id']; ?>" />

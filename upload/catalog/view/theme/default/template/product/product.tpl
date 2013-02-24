@@ -215,7 +215,7 @@
       </div>
       <?php if ($review_status) { ?>
       <div class="review">
-        <div><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" />&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $reviews; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $text_write; ?></a></div>
+        <div><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" />&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $reviews; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<?php if ($guest_review) { ?><a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $text_write; ?></a><?php } else { echo $text_login_write; } ?></div>
         <div class="share"><!-- AddThis Button BEGIN -->
           <div class="addthis_default_style"><a class="addthis_button_compact"><?php echo $text_share; ?></a> <a class="addthis_button_email"></a><a class="addthis_button_print"></a> <a class="addthis_button_facebook"></a> <a class="addthis_button_twitter"></a></div>
           <script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js"></script> 
@@ -262,8 +262,9 @@
   <div id="tab-review" class="tab-content">
     <div id="review"></div>
     <h2 id="review-title"><?php echo $text_write; ?></h2>
+    <?php if ($guest_review) { ?>
     <b><?php echo $entry_name; ?></b><br />
-    <input type="text" name="name" value="" />
+    <input type="text" name="name" value="<?php echo $customer_name; ?>" />
     <br />
     <br />
     <b><?php echo $entry_review; ?></b>
@@ -290,6 +291,7 @@
     <div class="buttons">
       <div class="right"><a id="button-review" class="button"><?php echo $button_continue; ?></a></div>
     </div>
+    <?php } else { echo $text_login_write; } ?>
   </div>
   <?php } ?>
   <?php if ($products) { ?>
@@ -463,6 +465,9 @@ $('#button-review').on('click', function() {
 				$('textarea[name=\'text\']').val('');
 				$('input[name=\'rating\']:checked').attr('checked', '');
 				$('input[name=\'captcha\']').val('');
+                var img_src = $("img#captcha").attr("src").replace(/\&rnd=\d*/gi,"");
+                var d = Math.floor((Math.random()*10000)+1);
+                $("img#captcha").attr("src", img_src+"&rnd="+d);
 			}
 		}
 	});

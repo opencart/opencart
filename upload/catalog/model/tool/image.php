@@ -1,17 +1,6 @@
 <?php
 class ModelToolImage extends Model {
-	/**
-	*	
-	*	@param filename string
-	*	@param width 
-	*	@param height
-	*	@param type char [default, w, h]
-	*				default = scale with white space, 
-	*				w = fill according to width, 
-	*				h = fill according to height
-	*	
-	*/
-	public function resize($filename, $width, $height, $type = "") {
+	public function resize($filename, $width, $height) {
 		if (!file_exists(DIR_IMAGE . $filename) || !is_file(DIR_IMAGE . $filename)) {
 			return;
 		} 
@@ -21,7 +10,7 @@ class ModelToolImage extends Model {
 		$extension = $info['extension'];
 		
 		$old_image = $filename;
-		$new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height . $type .'.' . $extension;
+		$new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height .'.' . $extension;
 		
 		if (!file_exists(DIR_IMAGE . $new_image) || (filemtime(DIR_IMAGE . $old_image) > filemtime(DIR_IMAGE . $new_image))) {
 			$path = '';
@@ -40,7 +29,7 @@ class ModelToolImage extends Model {
 
 			if ($width_orig != $width || $height_orig != $height) {
 				$image = new Image(DIR_IMAGE . $old_image);
-				$image->resize($width, $height, $type);
+				$image->resize($width, $height);
 				$image->save(DIR_IMAGE . $new_image);
 			} else {
 				copy(DIR_IMAGE . $old_image, DIR_IMAGE . $new_image);

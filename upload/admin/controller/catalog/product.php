@@ -318,7 +318,7 @@ class ControllerCatalogProduct extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL'),       		
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->data['insert'] = $this->url->link('catalog/product/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -690,7 +690,7 @@ class ControllerCatalogProduct extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 									
 		if (!isset($this->request->get['product_id'])) {
@@ -1193,13 +1193,13 @@ class ControllerCatalogProduct extends Controller {
 			$products = array();
 		}
 	
-		$this->data['product_related'] = array();
+		$this->data['product_relateds'] = array();
 		
 		foreach ($products as $product_id) {
 			$related_info = $this->model_catalog_product->getProduct($product_id);
 			
 			if ($related_info) {
-				$this->data['product_related'][] = array(
+				$this->data['product_relateds'][] = array(
 					'product_id' => $related_info['product_id'],
 					'name'       => $related_info['name']
 				);

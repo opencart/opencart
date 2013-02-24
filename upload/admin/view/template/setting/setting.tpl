@@ -256,6 +256,20 @@
                 <?php } ?></td>
             </tr>
             <tr>
+              <td><?php echo $entry_guest_review; ?></td>
+              <td><?php if ($config_guest_review) { ?>
+                <input type="radio" name="config_guest_review" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_guest_review" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_guest_review" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_guest_review" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_download; ?></td>
               <td><?php if ($config_download) { ?>
                 <input type="radio" name="config_download" value="1" checked="checked" />
@@ -828,6 +842,20 @@
                 <?php } ?></td>
             </tr>
             <tr>
+              <td><?php echo $entry_review_mail; ?></td>
+              <td><?php if ($config_review_mail) { ?>
+                <input type="radio" name="config_review_mail" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_review_mail" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_review_mail" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_review_mail" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_alert_emails; ?></td>
               <td><textarea name="config_alert_emails" cols="40" rows="5"><?php echo $config_alert_emails; ?></textarea></td>
             </tr>
@@ -918,6 +946,10 @@
                 <input type="radio" name="config_seo_url" value="0" checked="checked" />
                 <?php echo $text_no; ?>
                 <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_image_file_size; ?></td>
+              <td><input type="text" name="config_image_file_size" value="<?php echo $config_image_file_size; ?>" /></td>
             </tr>
             <tr>
               <td><?php echo $entry_file_extension_allowed; ?></td>

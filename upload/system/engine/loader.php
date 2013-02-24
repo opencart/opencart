@@ -1,24 +1,4 @@
 <?php
-/**
- * @property Loader $load Loads whatever you want
- * @property Config $config Access to congiguration
- * @property Url $url Helpes to generate links
- * @property Log $log Log helper
- * @property Request $request Access to request data (POST, GET, COOKIE, FILES, SERVER)
- * @property Response $response Some functionality to work with response
- * @property Cache $cache Access to cache
- * @property Session $session Access to Session
- * @property Language $language Language helper
- * @property Document $document Helper to work with html DOM document
- * @property Customer $customer Access to customers data
- * @property Affiliate $affiliate 
- * @property Currency $currency 
- * @property Tax $tax Tax helper
- * @property Weight $weight Weight helper
- * @property Length $length Length helper
- * @property Cart $cart Access to cart data
- * @property Encryption $encryption Encription helper
- */
 final class Loader {
 	protected $registry;
 
@@ -59,7 +39,7 @@ final class Loader {
 	public function model($model) {
 		$file  = DIR_APPLICATION . 'model/' . $model . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
-
+				
 		if (file_exists($file)) { 
 			include_once($file);
 

@@ -44,9 +44,9 @@ function utf8_strrpos($string, $needle, $offset = NULL) {
 		return false;
 	} else {
 		if (!is_int($offset)) {
-		trigger_error('utf8_strrpos expects parameter 3 to be long', E_USER_WARNING);
+			trigger_error('utf8_strrpos expects parameter 3 to be long', E_USER_WARNING);
 
-		return false;
+			return false;
 		}
 
 		$string = utf8_substr($string, $offset);

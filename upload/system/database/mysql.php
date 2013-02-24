@@ -48,6 +48,7 @@ final class MySQL {
 				}
 			} else {
 				$trace = debug_backtrace();
+				
 				$caller = array_shift($trace);
 				$caller = array_shift($trace);
 

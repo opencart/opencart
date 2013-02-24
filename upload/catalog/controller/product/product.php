@@ -248,6 +248,7 @@ class ControllerProductProduct extends Controller {
 			$this->data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
 			$this->data['text_or'] = $this->language->get('text_or');
 			$this->data['text_write'] = $this->language->get('text_write');
+			$this->data['text_login_write'] = sprintf($this->language->get('text_login_write'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
 			$this->data['text_note'] = $this->language->get('text_note');
 			$this->data['text_share'] = $this->language->get('text_share');
 			$this->data['text_wait'] = $this->language->get('text_wait');
@@ -384,6 +385,18 @@ class ControllerProductProduct extends Controller {
 			}
 			
 			$this->data['review_status'] = $this->config->get('config_review_status');
+			if ($this->config->get('config_guest_review') || $this->customer->isLogged()) {
+				$this->data['guest_review'] = true;
+			} else {
+				$this->data['guest_review'] = false;
+			}
+			
+			if ($this->customer->isLogged()) {
+				$this->data['customer_name'] = $this->customer->getFirstName() . '&nbsp;' . $this->customer->getLastName();
+			} else {
+				$this->data['customer_name'] = '';
+			}
+
 			$this->data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
 			$this->data['rating'] = (int)$product_info['rating'];
 			$this->data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
@@ -630,13 +643,37 @@ class ControllerProductProduct extends Controller {
 	}
 	
 	public function captcha() {
-		$this->load->library('captcha');
+		$this->session->data['captcha'] = substr(sha1(mt_rand()), 17, 6);
 		
-		$captcha = new Captcha();
-		
-		$this->session->data['captcha'] = $captcha->getCode();
-		
-		$captcha->showImage();
+		$image = imagecreatetruecolor(150, 35);
+
+		$width = imagesx($image); 
+		$height = imagesy($image);
+
+		$black = imagecolorallocate($image, 0, 0, 0); 
+		$white = imagecolorallocate($image, 255, 255, 255); 
+		$red = imagecolorallocatealpha($image, 255, 0, 0, 75); 
+		$green = imagecolorallocatealpha($image, 0, 255, 0, 75); 
+		$blue = imagecolorallocatealpha($image, 0, 0, 255, 75); 
+
+		imagefilledrectangle($image, 0, 0, $width, $height, $white); 
+
+		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $red); 
+		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $green); 
+		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $blue); 
+
+		imagefilledrectangle($image, 0, 0, $width, 0, $black); 
+		imagefilledrectangle($image, $width - 1, 0, $width - 1, $height - 1, $black); 
+		imagefilledrectangle($image, 0, 0, 0, $height - 1, $black); 
+		imagefilledrectangle($image, 0, $height - 1, $width, $height - 1, $black); 
+
+		imagestring($image, 10, intval(($width - (strlen($this->session->data['captcha']) * 9)) / 2),  intval(($height - 15) / 2), $this->session->data['captcha'], $black);
+
+		header('Content-type: image/jpeg');
+
+		imagejpeg($image);
+
+		imagedestroy($image);
 	}
 	
 	public function upload() {

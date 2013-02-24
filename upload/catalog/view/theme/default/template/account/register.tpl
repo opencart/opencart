@@ -133,7 +133,6 @@
   </form>
 </div>
 <script type="text/javascript"><!--
-// Register
 $('#button-register').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=account/register/save',

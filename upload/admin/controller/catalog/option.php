@@ -505,7 +505,7 @@ class ControllerCatalogOption extends Controller {
 													
 						$option_value_data[] = array(
 							'option_value_id' => $option_value['option_value_id'],
-							'name'            => html_entity_decode($option_value['name'], ENT_QUOTES, 'UTF-8'),
+							'name'            => strip_tags(html_entity_decode($option_value['name'], ENT_QUOTES, 'UTF-8')),
 							'image'           => $image					
 						);
 					}

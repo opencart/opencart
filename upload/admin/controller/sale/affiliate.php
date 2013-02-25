@@ -1113,7 +1113,7 @@ class ControllerSaleAffiliate extends Controller {
 			foreach ($results as $result) {
 				$affiliate_data[] = array(
 					'affiliate_id' => $result['affiliate_id'],
-					'name'         => html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')
+					'name'         => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
 				);
 			}
 		}

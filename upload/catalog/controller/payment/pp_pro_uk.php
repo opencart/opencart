@@ -22,7 +22,7 @@ class ControllerPaymentPPProUK extends Controller {
 		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		
-		$this->data['owner'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
+		$this->data['owner'] = strip_tags(html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8')) . ' ' . strip_tags(html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8'));
 		
 		$this->data['cards'] = array();
 
@@ -97,22 +97,22 @@ class ControllerPaymentPPProUK extends Controller {
 			$payment_type = 'S';
 		}
 		
-		$request  = 'USER=' . urlencode($this->config->get('pp_pro_uk_user'));
-		$request .= '&VENDOR=' . urlencode($this->config->get('pp_pro_uk_vendor'));
-		$request .= '&PARTNER=' . urlencode($this->config->get('pp_pro_uk_partner'));
-		$request .= '&PWD=' . urlencode($this->config->get('pp_pro_uk_password'));
+		$request  = 'USER=' . urlencode(html_entity_decode($this->config->get('pp_pro_uk_user'), ENT_QUOTES, 'UTF-8'));
+		$request .= '&VENDOR=' . urlencode(html_entity_decode($this->config->get('pp_pro_uk_vendor'), ENT_QUOTES, 'UTF-8'));
+		$request .= '&PARTNER=' . urlencode(html_entity_decode($this->config->get('pp_pro_uk_partner'), ENT_QUOTES, 'UTF-8'));
+		$request .= '&PWD=' . urlencode(html_entity_decode($this->config->get('pp_pro_uk_password'), ENT_QUOTES, 'UTF-8'));
 		$request .= '&TENDER=C';
 		$request .= '&TRXTYPE=' . $payment_type;
 		$request .= '&AMT=' . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
 		$request .= '&CURRENCY=' . urlencode($order_info['currency_code']);
-		$request .= '&NAME=' . urlencode($this->request->post['cc_owner']);
-		$request .= '&STREET=' . urlencode($order_info['payment_address_1']);
-		$request .= '&CITY=' . urlencode($order_info['payment_city']);
+		$request .= '&NAME=' . urlencode(html_entity_decode($this->request->post['cc_owner'], ENT_QUOTES, 'UTF-8'));
+		$request .= '&STREET=' . urlencode(html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8'));
+		$request .= '&CITY=' . urlencode(html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8'));
 		$request .= '&STATE=' . urlencode(($order_info['payment_iso_code_2'] != 'US') ? $order_info['payment_zone'] : $order_info['payment_zone_code']);
 		$request .= '&COUNTRY=' . urlencode($order_info['payment_iso_code_2']);
-		$request .= '&ZIP=' . urlencode(str_replace(' ', '', $order_info['payment_postcode']));
+		$request .= '&ZIP=' . urlencode(str_replace(' ', '', html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8')));
 		$request .= '&CLIENTIP=' . urlencode($this->request->server['REMOTE_ADDR']);
-		$request .= '&EMAIL=' . urlencode($order_info['email']);
+		$request .= '&EMAIL=' . urlencode(html_entity_decode($order_info['email'], ENT_QUOTES, 'UTF-8'));
 		$request .= '&ACCT=' . urlencode(str_replace(' ', '', $this->request->post['cc_number']));
 		$request .= '&ACCTTYPE=' . urlencode($this->request->post['cc_type']);
 		$request .= '&CARDSTART=' . urlencode($this->request->post['cc_start_date_month'] . substr($this->request->post['cc_start_date_year'], - 2, 2));

@@ -100,9 +100,9 @@ class ControllerPaymentPPPro extends Controller {
 		
 		$request  = 'METHOD=DoDirectPayment';
 		$request .= '&VERSION=51.0';
-		$request .= '&USER=' . urlencode($this->config->get('pp_pro_username'));
-		$request .= '&PWD=' . urlencode($this->config->get('pp_pro_password'));
-		$request .= '&SIGNATURE=' . urlencode($this->config->get('pp_pro_signature'));
+		$request .= '&USER=' . urlencode(html_entity_decode($this->config->get('pp_pro_username'), ENT_QUOTES, 'UTF-8'));
+		$request .= '&PWD=' . urlencode(html_entity_decode($this->config->get('pp_pro_password'), ENT_QUOTES, 'UTF-8'));
+		$request .= '&SIGNATURE=' . urlencode(html_entity_decode($this->config->get('pp_pro_signature'), ENT_QUOTES, 'UTF-8'));
 		$request .= '&CUSTREF=' . (int)$order_info['order_id'];
 		$request .= '&PAYMENTACTION=' . $payment_type;
 		$request .= '&AMT=' . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
@@ -116,32 +116,32 @@ class ControllerPaymentPPPro extends Controller {
 			$request .= '&CARDISSUE=' . urlencode($this->request->post['cc_issue']);
 		}
 		
-		$request .= '&FIRSTNAME=' . urlencode($order_info['payment_firstname']);
-		$request .= '&LASTNAME=' . urlencode($order_info['payment_lastname']);
-		$request .= '&EMAIL=' . urlencode($order_info['email']);
-		$request .= '&PHONENUM=' . urlencode($order_info['telephone']);
+		$request .= '&FIRSTNAME=' . urlencode(html_entity_decode($order_info['payment_firstname']), ENT_QUOTES, 'UTF-8');
+		$request .= '&LASTNAME=' . urlencode(html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8'));
+		$request .= '&EMAIL=' . urlencode(html_entity_decode($order_info['email'], ENT_QUOTES, 'UTF-8'));
+		$request .= '&PHONENUM=' . urlencode(html_entity_decode($order_info['telephone'], ENT_QUOTES, 'UTF-8'));
 		$request .= '&IPADDRESS=' . urlencode($this->request->server['REMOTE_ADDR']);
-		$request .= '&STREET=' . urlencode($order_info['payment_address_1']);
-		$request .= '&CITY=' . urlencode($order_info['payment_city']);
+		$request .= '&STREET=' . urlencode(html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8'));
+		$request .= '&CITY=' . urlencode(html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8'));
 		$request .= '&STATE=' . urlencode(($order_info['payment_iso_code_2'] != 'US') ? $order_info['payment_zone'] : $order_info['payment_zone_code']);
-		$request .= '&ZIP=' . urlencode($order_info['payment_postcode']);
+		$request .= '&ZIP=' . urlencode(html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8'));
 		$request .= '&COUNTRYCODE=' . urlencode($order_info['payment_iso_code_2']);
 		$request .= '&CURRENCYCODE=' . urlencode($order_info['currency_code']);
 		
         if ($this->cart->hasShipping()) {
-			$request .= '&SHIPTONAME=' . urlencode($order_info['shipping_firstname'] . ' ' . $order_info['shipping_lastname']);
-			$request .= '&SHIPTOSTREET=' . urlencode($order_info['shipping_address_1']);
-			$request .= '&SHIPTOCITY=' . urlencode($order_info['shipping_city']);
+			$request .= '&SHIPTONAME=' . urlencode(html_entity_decode($order_info['shipping_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['shipping_lastname'], ENT_QUOTES, 'UTF-8'));
+			$request .= '&SHIPTOSTREET=' . urlencode(html_entity_decode($order_info['shipping_address_1'], ENT_QUOTES, 'UTF-8'));
+			$request .= '&SHIPTOCITY=' . urlencode(html_entity_decode($order_info['shipping_city'], ENT_QUOTES, 'UTF-8'));
 			$request .= '&SHIPTOSTATE=' . urlencode(($order_info['shipping_iso_code_2'] != 'US') ? $order_info['shipping_zone'] : $order_info['shipping_zone_code']);
 			$request .= '&SHIPTOCOUNTRYCODE=' . urlencode($order_info['shipping_iso_code_2']);
-			$request .= '&SHIPTOZIP=' . urlencode($order_info['shipping_postcode']);
+			$request .= '&SHIPTOZIP=' . urlencode(html_entity_decode($order_info['shipping_postcode'], ENT_QUOTES, 'UTF-8'));
         } else {
-			$request .= '&SHIPTONAME=' . urlencode($order_info['payment_firstname'] . ' ' . $order_info['payment_lastname']);
-			$request .= '&SHIPTOSTREET=' . urlencode($order_info['payment_address_1']);
-			$request .= '&SHIPTOCITY=' . urlencode($order_info['payment_city']);
+			$request .= '&SHIPTONAME=' . urlencode(html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8'));
+			$request .= '&SHIPTOSTREET=' . urlencode(html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8'));
+			$request .= '&SHIPTOCITY=' . urlencode(html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8'));
 			$request .= '&SHIPTOSTATE=' . urlencode(($order_info['payment_iso_code_2'] != 'US') ? $order_info['payment_zone'] : $order_info['payment_zone_code']);
 			$request .= '&SHIPTOCOUNTRYCODE=' . urlencode($order_info['payment_iso_code_2']);
-			$request .= '&SHIPTOZIP=' . urlencode($order_info['payment_postcode']);			
+			$request .= '&SHIPTOZIP=' . urlencode(html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8'));			
 		}		
 		
 		if (!$this->config->get('pp_pro_test')) {

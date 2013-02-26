@@ -117,7 +117,7 @@ function getGeoCode() {
 			//  Save our geocode to variable  
 			var location = results[0].geometry.location;
 			
-			$('input[name=\'geocode\']').val(location.toString().replace('(','').replace(')',''));
+			$('input[name=\'geocode\']').val(location.toString().replace('(', '').replace(')', ''));
 		} else {
 			alert('<?php echo addslashes($text_geocode); ?> ' + status);
 		}

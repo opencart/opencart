@@ -30,9 +30,9 @@ class ControllerPaymentPPStandard extends Controller {
 	
 				foreach ($product['option'] as $option) {
 					if ($option['type'] != 'file') {
-						$value = $option['option_value'];	
+						$value = $option['value'];	
 					} else {
-						$filename = $this->encryption->decrypt($option['option_value']);
+						$filename = $this->encryption->decrypt($option['value']);
 						
 						$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
 					}
@@ -115,6 +115,12 @@ class ControllerPaymentPPStandard extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 		
 		if ($order_info) {
+			// post back to PayPal system to validate
+			$header  = 'POST /cgi-bin/webscr HTTP/1.1' . "\r\n";
+			$header .= 'Content-Type: application/x-www-form-urlencoded' . "\r\n";
+			$header .= 'Host: www.paypal.com' . "\r\n";
+			$header .= 'Connection: close' . "\r\n\r\n";			
+			
 			$request = 'cmd=_notify-validate';
 		
 			foreach ($this->request->post as $key => $value) {
@@ -130,7 +136,7 @@ class ControllerPaymentPPStandard extends Controller {
 			curl_setopt($curl, CURLOPT_POST, true);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl, CURLOPT_HEADER, false);
+			curl_setopt($curl, CURLOPT_HEADER, $header);
 			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 					

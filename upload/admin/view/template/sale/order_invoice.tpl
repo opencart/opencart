@@ -56,16 +56,7 @@
     <tr>
       <td><?php echo $order['payment_address']; ?><br/>
         <?php echo $order['email']; ?><br/>
-        <?php echo $order['telephone']; ?>
-        <?php if ($order['payment_company_id']) { ?>
-        <br/>
-        <br/>
-        <?php echo $text_company_id; ?> <?php echo $order['payment_company_id']; ?>
-        <?php } ?>
-        <?php if ($order['payment_tax_id']) { ?>
-        <br/>
-        <?php echo $text_tax_id; ?> <?php echo $order['payment_tax_id']; ?>
-        <?php } ?></td>
+        <?php echo $order['telephone']; ?></td>
       <td><?php echo $order['shipping_address']; ?></td>
     </tr>
   </table>

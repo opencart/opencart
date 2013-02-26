@@ -3,7 +3,7 @@ class ControllerCommonLogin extends Controller {
 	private $error = array();
 	          
 	public function index() { 
-    	$this->load->language('common/login');
+    	$this->language->load('common/login');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -98,7 +98,7 @@ class ControllerCommonLogin extends Controller {
 		$this->response->setOutput($this->render());
   	}
 		
-	private function validate() {
+	protected function validate() {
 		if (isset($this->request->post['username']) && isset($this->request->post['password']) && !$this->user->login($this->request->post['username'], $this->request->post['password'])) {
 			$this->error['warning'] = $this->language->get('error_login');
 		}

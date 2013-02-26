@@ -3,7 +3,7 @@ class ControllerPaymentPerpetualPayments extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('payment/perpetual_payments');
+		$this->language->load('payment/perpetual_payments');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -66,13 +66,13 @@ class ControllerPaymentPerpetualPayments extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_payment'),
 			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('payment/perpetual_payments', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 				
 		$this->data['action'] = $this->url->link('payment/perpetual_payments', 'token=' . $this->session->data['token'], 'SSL');
@@ -144,7 +144,7 @@ class ControllerPaymentPerpetualPayments extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/perpetual_payments')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

@@ -3,7 +3,7 @@ class ControllerCatalogReview extends Controller {
 	private $error = array();
  
 	public function index() {
-		$this->load->language('catalog/review');
+		$this->language->load('catalog/review');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -13,7 +13,7 @@ class ControllerCatalogReview extends Controller {
 	} 
 
 	public function insert() {
-		$this->load->language('catalog/review');
+		$this->language->load('catalog/review');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -45,7 +45,7 @@ class ControllerCatalogReview extends Controller {
 	}
 
 	public function update() {
-		$this->load->language('catalog/review');
+		$this->language->load('catalog/review');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -77,7 +77,7 @@ class ControllerCatalogReview extends Controller {
 	}
 
 	public function delete() { 
-		$this->load->language('catalog/review');
+		$this->language->load('catalog/review');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -110,7 +110,7 @@ class ControllerCatalogReview extends Controller {
 		$this->getList();
 	}
 
-	private function getList() {
+	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -154,7 +154,7 @@ class ControllerCatalogReview extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 							
 		$this->data['insert'] = $this->url->link('catalog/review/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -270,7 +270,7 @@ class ControllerCatalogReview extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function getForm() {
+	protected function getForm() {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
@@ -344,7 +344,7 @@ class ControllerCatalogReview extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 										
 		if (!isset($this->request->get['review_id'])) { 
@@ -420,7 +420,7 @@ class ControllerCatalogReview extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validateForm() {
+	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'catalog/review')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -448,7 +448,7 @@ class ControllerCatalogReview extends Controller {
 		}
 	}
 
-	private function validateDelete() {
+	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'catalog/review')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

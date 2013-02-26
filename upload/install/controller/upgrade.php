@@ -16,8 +16,8 @@ class ControllerUpgrade extends Controller {
 		} else {
 			$this->data['error_warning'] = '';
 		}
-
-		$this->data['action'] = $this->url->link('upgrade/upgrade');
+		
+		$this->data['action'] = $this->url->link('upgrade');
 
 		$this->template = 'upgrade.tpl';
 		$this->children = array(

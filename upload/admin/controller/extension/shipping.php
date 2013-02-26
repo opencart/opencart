@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionShipping extends Controller {
 	public function index() {
-		$this->load->language('extension/shipping');
+		$this->language->load('extension/shipping');
 		 
 		$this->document->setTitle($this->language->get('heading_title')); 
   		
@@ -16,7 +16,7 @@ class ControllerExtensionShipping extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);		
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -65,7 +65,7 @@ class ControllerExtensionShipping extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 				
-				$this->load->language('shipping/' . $extension);
+				$this->language->load('shipping/' . $extension);
 	
 				$action = array();
 				
@@ -105,7 +105,7 @@ class ControllerExtensionShipping extends Controller {
 	}
 	
 	public function install() {
-		$this->load->language('extension/shipping');
+		$this->language->load('extension/shipping');
 		
 		if (!$this->user->hasPermission('modify', 'extension/shipping')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 
@@ -135,7 +135,7 @@ class ControllerExtensionShipping extends Controller {
 	}
 	
 	public function uninstall() {
-		$this->load->language('extension/shipping');
+		$this->language->load('extension/shipping');
 		
 		if (!$this->user->hasPermission('modify', 'extension/shipping')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 

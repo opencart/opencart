@@ -19,29 +19,5 @@ class ModelSettingExtension extends Model {
 	public function uninstall($type, $code) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "extension WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
 	}
-	
-	public function sql($sql) {
-			$query = '';
-
-			foreach($lines as $line) {
-				if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
-					$query .= $line;
-  
-					if (preg_match('/;\s*$/', $line)) {
-						$query = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $query);
-						$query = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $query);
-						$query = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $query);
-						
-						$result = mysql_query($query, $connection); 
-  
-						if (!$result) {
-							die(mysql_error());
-						}
-	
-						$query = '';
-					}
-				}
-			}		
-	}
 }
 ?>

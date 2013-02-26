@@ -224,7 +224,7 @@ class ControllerAccountVoucher extends Controller {
  		$this->response->setOutput($this->render()); 
 	}
 	
-	private function validate() {
+	protected function validate() {
     	if ((utf8_strlen($this->request->post['to_name']) < 1) || (utf8_strlen($this->request->post['to_name']) > 64)) {
       		$this->error['to_name'] = $this->language->get('error_to_name');
     	}    	

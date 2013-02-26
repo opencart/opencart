@@ -41,6 +41,59 @@
 </div>
 <?php } ?>
 <script type="text/javascript"><!--
+$('#button-payment-method').off().on('click', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/payment_method/save', 
+		type: 'post',
+		data: $('#payment-method input[type=\'radio\']:checked, #payment-method input[type=\'checkbox\']:checked, #payment-method textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-payment-method').attr('disabled', true);
+			$('#button-payment-method').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+		},	
+		complete: function() {
+			$('#button-payment-method').attr('disabled', false);
+			$('.loading').remove();
+		},			
+		success: function(json) {
+			$('.warning, .error').remove();
+			
+			if (json['redirect']) {
+				location = json['redirect'];
+			} else if (json['error']) {
+				if (json['error']['warning']) {
+					$('#payment-method .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+					
+					$('.warning').fadeIn('slow');
+				}			
+			} else {
+				$.ajax({
+					url: 'index.php?route=checkout/confirm',
+					dataType: 'html',
+					success: function(html) {
+						$('#confirm .checkout-content').html(html);
+						
+						$('#payment-method .checkout-content').slideUp('slow');
+						
+						$('#confirm .checkout-content').slideDown('slow');
+						
+						$('#payment-method .checkout-heading a').remove();
+						
+						$('#payment-method .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});	
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});	
+});
+//--></script>
+<script type="text/javascript"><!--
 $('.colorbox').colorbox({
 	width: 640,
 	height: 480

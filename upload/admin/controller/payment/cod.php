@@ -3,7 +3,7 @@ class ControllerPaymentCod extends Controller {
 	private $error = array(); 
 	 
 	public function index() { 
-		$this->load->language('payment/cod');
+		$this->language->load('payment/cod');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -49,13 +49,13 @@ class ControllerPaymentCod extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_payment'),
 			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('payment/cod', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->data['action'] = $this->url->link('payment/cod', 'token=' . $this->session->data['token'], 'SSL');
@@ -109,7 +109,7 @@ class ControllerPaymentCod extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/cod')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

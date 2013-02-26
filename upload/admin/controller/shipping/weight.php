@@ -3,7 +3,7 @@ class ControllerShippingWeight extends Controller {
 	private $error = array();
 	
 	public function index() {  
-		$this->load->language('shipping/weight');
+		$this->language->load('shipping/weight');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -50,13 +50,13 @@ class ControllerShippingWeight extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_shipping'),
 			'href'      => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('shipping/weight', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->data['action'] = $this->url->link('shipping/weight', 'token=' . $this->session->data['token'], 'SSL');
@@ -89,6 +89,10 @@ class ControllerShippingWeight extends Controller {
 			$this->data['weight_tax_class_id'] = $this->config->get('weight_tax_class_id');
 		}
 		
+		$this->load->model('localisation/tax_class');
+				
+		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
+		
 		if (isset($this->request->post['weight_status'])) {
 			$this->data['weight_status'] = $this->request->post['weight_status'];
 		} else {
@@ -100,10 +104,6 @@ class ControllerShippingWeight extends Controller {
 		} else {
 			$this->data['weight_sort_order'] = $this->config->get('weight_sort_order');
 		}	
-		
-		$this->load->model('localisation/tax_class');
-				
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
 		$this->template = 'shipping/weight.tpl';
 		$this->children = array(
@@ -114,7 +114,7 @@ class ControllerShippingWeight extends Controller {
 		$this->response->setOutput($this->render());
 	}
 		
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'shipping/weight')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

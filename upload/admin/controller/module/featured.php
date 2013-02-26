@@ -3,7 +3,7 @@ class ControllerModuleFeatured extends Controller {
 	private $error = array(); 
 	
 	public function index() {   
-		$this->load->language('module/featured');
+		$this->language->load('module/featured');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -25,7 +25,7 @@ class ControllerModuleFeatured extends Controller {
 		$this->data['text_content_bottom'] = $this->language->get('text_content_bottom');		
 		$this->data['text_column_left'] = $this->language->get('text_column_left');
 		$this->data['text_column_right'] = $this->language->get('text_column_right');
-		
+
 		$this->data['entry_product'] = $this->language->get('entry_product');
 		$this->data['entry_limit'] = $this->language->get('entry_limit');
 		$this->data['entry_image'] = $this->language->get('entry_image');
@@ -62,13 +62,13 @@ class ControllerModuleFeatured extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_module'),
 			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('module/featured', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->data['action'] = $this->url->link('module/featured', 'token=' . $this->session->data['token'], 'SSL');
@@ -125,7 +125,7 @@ class ControllerModuleFeatured extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'module/featured')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

@@ -3,7 +3,7 @@ class ControllerShippingUPS extends Controller {
 	private $error = array(); 
 	
 	public function index() {
-		$this->load->language('shipping/ups');
+		$this->language->load('shipping/ups');
 			
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -138,13 +138,13 @@ class ControllerShippingUPS extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_shipping'),
 			'href'      => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('shipping/ups', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->data['action'] = $this->url->link('shipping/ups', 'token=' . $this->session->data['token'], 'SSL');
@@ -765,7 +765,7 @@ class ControllerShippingUPS extends Controller {
  		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'shipping/ups')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

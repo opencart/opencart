@@ -3,7 +3,7 @@ class ControllerPaymentWorldPay extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('payment/worldpay');
+		$this->language->load('payment/worldpay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -70,13 +70,13 @@ class ControllerPaymentWorldPay extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_payment'),
 			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('payment/worldpay', 'token=' . $this->session->data['token'], 'SSL'),      		
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 				
 		$this->data['action'] = $this->url->link('payment/worldpay', 'token=' . $this->session->data['token'], 'SSL');
@@ -150,7 +150,7 @@ class ControllerPaymentWorldPay extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/worldpay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

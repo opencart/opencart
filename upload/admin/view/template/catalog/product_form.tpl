@@ -307,7 +307,7 @@
               <td>&nbsp;</td>
               <td><div id="product-related" class="scrollbox">
                   <?php $class = 'odd'; ?>
-                  <?php foreach ($product_related as $product_related) { ?>
+                  <?php foreach ($product_relateds as $product_related) { ?>
                   <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
                   <div id="product-related<?php echo $product_related['product_id']; ?>" class="<?php echo $class; ?>"> <?php echo $product_related['name']; ?><img src="view/image/delete.png" alt="" />
                     <input type="hidden" name="product_related[]" value="<?php echo $product_related['product_id']; ?>" />
@@ -353,7 +353,7 @@
           <div id="vtab-option" class="vtabs">
             <?php $option_row = 0; ?>
             <?php foreach ($product_options as $product_option) { ?>
-            <a href="#tab-option-<?php echo $option_row; ?>" id="option-<?php echo $option_row; ?>"><?php echo $product_option['name']; ?>&nbsp;<img src="view/image/delete.png" alt="" onclick="$('#option-<?php echo $option_row; ?>').remove(); $('#tab-option-<?php echo $option_row; ?>').remove(); $('#vtabs a:first').trigger('click'); return false;" /></a>
+            <a href="#tab-option<?php echo $option_row; ?>" id="option<?php echo $option_row; ?>"><?php echo $product_option['name']; ?>&nbsp;<img src="view/image/delete.png" alt="" onclick="$('#option<?php echo $option_row; ?>').remove(); $('#tab-option<?php echo $option_row; ?>').remove(); $('#vtabs a:first').trigger('click'); return false;" /></a>
             <?php $option_row++; ?>
             <?php } ?>
             <span id="option-add">
@@ -362,7 +362,7 @@
           <?php $option_row = 0; ?>
           <?php $option_value_row = 0; ?>
           <?php foreach ($product_options as $product_option) { ?>
-          <div id="tab-option-<?php echo $option_row; ?>" class="vtabs-content">
+          <div id="tab-option<?php echo $option_row; ?>" class="vtabs-content">
             <input type="hidden" name="product_option[<?php echo $option_row; ?>][product_option_id]" value="<?php echo $product_option['product_option_id']; ?>" />
             <input type="hidden" name="product_option[<?php echo $option_row; ?>][name]" value="<?php echo $product_option['name']; ?>" />
             <input type="hidden" name="product_option[<?php echo $option_row; ?>][option_id]" value="<?php echo $product_option['option_id']; ?>" />
@@ -383,37 +383,37 @@
               <?php if ($product_option['type'] == 'text') { ?>
               <tr>
                 <td><?php echo $entry_option_value; ?></td>
-                <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" /></td>
+                <td><input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" /></td>
               </tr>
               <?php } ?>
               <?php if ($product_option['type'] == 'textarea') { ?>
               <tr>
                 <td><?php echo $entry_option_value; ?></td>
-                <td><textarea name="product_option[<?php echo $option_row; ?>][option_value]" cols="40" rows="5"><?php echo $product_option['option_value']; ?></textarea></td>
+                <td><textarea name="product_option[<?php echo $option_row; ?>][value]" cols="40" rows="5"><?php echo $product_option['value']; ?></textarea></td>
               </tr>
               <?php } ?>
               <?php if ($product_option['type'] == 'file') { ?>
               <tr style="display: none;">
                 <td><?php echo $entry_option_value; ?></td>
-                <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" /></td>
+                <td><input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" /></td>
               </tr>
               <?php } ?>
               <?php if ($product_option['type'] == 'date') { ?>
               <tr>
                 <td><?php echo $entry_option_value; ?></td>
-                <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" class="date" /></td>
+                <td><input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" class="date" /></td>
               </tr>
               <?php } ?>
               <?php if ($product_option['type'] == 'datetime') { ?>
               <tr>
                 <td><?php echo $entry_option_value; ?></td>
-                <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" class="datetime" /></td>
+                <td><input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" class="datetime" /></td>
               </tr>
               <?php } ?>
               <?php if ($product_option['type'] == 'time') { ?>
               <tr>
                 <td><?php echo $entry_option_value; ?></td>
-                <td><input type="text" name="product_option[<?php echo $option_row; ?>][option_value]" value="<?php echo $product_option['option_value']; ?>" class="time" /></td>
+                <td><input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" class="time" /></td>
               </tr>
               <?php } ?>
             </table>
@@ -803,7 +803,7 @@ $('#product-category div img').live('click', function() {
 });
 
 // Filter
-$('input[name=\'filter\']').catcomplete({
+$('input[name=\'filter\']').autocomplete({
 	delay: 500,
 	source: function(request, response) {
 		$.ajax({
@@ -812,9 +812,8 @@ $('input[name=\'filter\']').catcomplete({
 			success: function(json) {		
 				response($.map(json, function(item) {
 					return {
-						category: item.category,
 						label: item.name,
-						value: item.attribute_id
+						value: item.filter_id
 					}
 				}));
 			}
@@ -1000,7 +999,7 @@ $('input[name=\'option\']').catcomplete({
 		});
 	}, 
 	select: function(event, ui) {
-		html  = '<div id="tab-option-' + option_row + '" class="vtabs-content">';
+		html  = '<div id="tab-option' + option_row + '" class="vtabs-content">';
 		html += '	<input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
 		html += '	<input type="hidden" name="product_option[' + option_row + '][name]" value="' + ui.item.label + '" />';
 		html += '	<input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + ui.item.value + '" />';
@@ -1017,42 +1016,42 @@ $('input[name=\'option\']').catcomplete({
 		if (ui.item.type == 'text') {
 			html += '     <tr>';
 			html += '       <td><?php echo $entry_option_value; ?></td>';
-			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" /></td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][value]" value="" /></td>';
 			html += '     </tr>';
 		}
 		
 		if (ui.item.type == 'textarea') {
 			html += '     <tr>';
 			html += '       <td><?php echo $entry_option_value; ?></td>';
-			html += '       <td><textarea name="product_option[' + option_row + '][option_value]" cols="40" rows="5"></textarea></td>';
+			html += '       <td><textarea name="product_option[' + option_row + '][value]" cols="40" rows="5"></textarea></td>';
 			html += '     </tr>';						
 		}
 		 
 		if (ui.item.type == 'file') {
 			html += '     <tr style="display: none;">';
 			html += '       <td><?php echo $entry_option_value; ?></td>';
-			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" /></td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][value]" value="" /></td>';
 			html += '     </tr>';			
 		}
 						
 		if (ui.item.type == 'date') {
 			html += '     <tr>';
 			html += '       <td><?php echo $entry_option_value; ?></td>';
-			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" class="date" /></td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][value]" value="" class="date" /></td>';
 			html += '     </tr>';			
 		}
 		
 		if (ui.item.type == 'datetime') {
 			html += '     <tr>';
 			html += '       <td><?php echo $entry_option_value; ?></td>';
-			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" class="datetime" /></td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][value]" value="" class="datetime" /></td>';
 			html += '     </tr>';			
 		}
 		
 		if (ui.item.type == 'time') {
 			html += '     <tr>';
 			html += '       <td><?php echo $entry_option_value; ?></td>';
-			html += '       <td><input type="text" name="product_option[' + option_row + '][option_value]" value="" class="time" /></td>';
+			html += '       <td><input type="text" name="product_option[' + option_row + '][value]" value="" class="time" /></td>';
 			html += '     </tr>';			
 		}
 		
@@ -1090,11 +1089,11 @@ $('input[name=\'option\']').catcomplete({
 		
 		$('#tab-option').append(html);
 		
-		$('#option-add').before('<a href="#tab-option-' + option_row + '" id="option-' + option_row + '">' + ui.item.label + '&nbsp;<img src="view/image/delete.png" alt="" onclick="$(\'#option-' + option_row + '\').remove(); $(\'#tab-option-' + option_row + '\').remove(); $(\'#vtab-option a:first\').trigger(\'click\'); return false;" /></a>');
+		$('#option-add').before('<a href="#tab-option' + option_row + '" id="option' + option_row + '">' + ui.item.label + '&nbsp;<img src="view/image/delete.png" alt="" onclick="$(\'#option' + option_row + '\').remove(); $(\'#tab-option' + option_row + '\').remove(); $(\'#vtab-option a:first\').trigger(\'click\'); return false;" /></a>');
 		
 		$('#vtab-option a').tabs();
 		
-		$('#option-' + option_row).trigger('click');		
+		$('#option' + option_row).trigger('click');		
 		
 		$('.date').datepicker({dateFormat: 'yy-mm-dd'});
 		$('.datetime').datetimepicker({

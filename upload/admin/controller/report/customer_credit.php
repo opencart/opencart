@@ -1,7 +1,7 @@
 <?php
 class ControllerReportCustomerCredit extends Controller {
 	public function index() {     
-		$this->load->language('report/customer_credit');
+		$this->language->load('report/customer_credit');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -48,7 +48,7 @@ class ControllerReportCustomerCredit extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('report/customer_credit', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);		
 		
 		$this->load->model('report/customer');

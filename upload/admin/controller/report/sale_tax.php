@@ -1,7 +1,7 @@
 <?php
 class ControllerReportSaleTax extends Controller {
 	public function index() {     
-		$this->load->language('report/sale_tax');
+		$this->language->load('report/sale_tax');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -68,7 +68,7 @@ class ControllerReportSaleTax extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);		
 		
 		$this->load->model('report/sale');

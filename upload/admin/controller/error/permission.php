@@ -1,7 +1,7 @@
 <?php    
 class ControllerErrorPermission extends Controller {    
 	public function index() { 
-    	$this->load->language('error/permission');
+    	$this->language->load('error/permission');
   
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -20,7 +20,7 @@ class ControllerErrorPermission extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('error/permission', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 
 		$this->template = 'error/permission.tpl';

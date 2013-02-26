@@ -3,7 +3,7 @@ class ControllerModuleGoogleTalk extends Controller {
 	private $error = array(); 
 	
 	public function index() {   
-		$this->load->language('module/google_talk');
+		$this->language->load('module/google_talk');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -60,13 +60,13 @@ class ControllerModuleGoogleTalk extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_module'),
 			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('module/google_talk', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->data['action'] = $this->url->link('module/google_talk', 'token=' . $this->session->data['token'], 'SSL');
@@ -100,7 +100,7 @@ class ControllerModuleGoogleTalk extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'module/google_talk')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

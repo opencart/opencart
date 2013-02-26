@@ -1,7 +1,7 @@
 <?php
 class ControllerReportProductViewed extends Controller {
 	public function index() {     
-		$this->load->language('report/product_viewed');
+		$this->language->load('report/product_viewed');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -28,7 +28,7 @@ class ControllerReportProductViewed extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);		
 		
 		$this->load->model('report/product');
@@ -107,7 +107,7 @@ class ControllerReportProductViewed extends Controller {
 	}
 	
 	public function reset() {
-		$this->load->language('report/product_viewed');
+		$this->language->load('report/product_viewed');
 		
 		$this->load->model('report/product');
 		

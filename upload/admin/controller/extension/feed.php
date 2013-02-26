@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionFeed extends Controller {
 	public function index() {
-		$this->load->language('extension/feed');
+		$this->language->load('extension/feed');
 		 
 		$this->document->setTitle($this->language->get('heading_title')); 
 
@@ -16,7 +16,7 @@ class ControllerExtensionFeed extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -64,7 +64,7 @@ class ControllerExtensionFeed extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 			
-				$this->load->language('feed/' . $extension);
+				$this->language->load('feed/' . $extension);
 
 				$action = array();
 			
@@ -103,7 +103,7 @@ class ControllerExtensionFeed extends Controller {
 	}
 	
 	public function install() {
-		$this->load->language('extension/feed');
+		$this->language->load('extension/feed');
 		
     	if (!$this->user->hasPermission('modify', 'extension/feed')) {
       		$this->session->data['error'] = $this->language->get('error_permission'); 
@@ -133,7 +133,7 @@ class ControllerExtensionFeed extends Controller {
 	}
 	
 	public function uninstall() {
-		$this->load->language('extension/feed');
+		$this->language->load('extension/feed');
 		
     	if (!$this->user->hasPermission('modify', 'extension/feed')) {
       		$this->session->data['error'] = $this->language->get('error_permission'); 

@@ -3,7 +3,7 @@ class ControllerCatalogManufacturer extends Controller {
 	private $error = array();
   
   	public function index() {
-		$this->load->language('catalog/manufacturer');
+		$this->language->load('catalog/manufacturer');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		 
@@ -13,7 +13,7 @@ class ControllerCatalogManufacturer extends Controller {
   	}
   
   	public function insert() {
-		$this->load->language('catalog/manufacturer');
+		$this->language->load('catalog/manufacturer');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -45,7 +45,7 @@ class ControllerCatalogManufacturer extends Controller {
   	} 
    
   	public function update() {
-		$this->load->language('catalog/manufacturer');
+		$this->language->load('catalog/manufacturer');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -77,7 +77,7 @@ class ControllerCatalogManufacturer extends Controller {
   	}   
 
   	public function delete() {
-		$this->load->language('catalog/manufacturer');
+		$this->language->load('catalog/manufacturer');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -110,7 +110,7 @@ class ControllerCatalogManufacturer extends Controller {
     	$this->getList();
   	}  
     
-  	private function getList() {
+  	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -154,7 +154,7 @@ class ControllerCatalogManufacturer extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 							
 		$this->data['insert'] = $this->url->link('catalog/manufacturer/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -261,7 +261,7 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->response->setOutput($this->render());
 	}
   
-  	private function getForm() {
+  	protected function getForm() {
     	$this->data['heading_title'] = $this->language->get('heading_title');
 
     	$this->data['text_enabled'] = $this->language->get('text_enabled');
@@ -322,7 +322,7 @@ class ControllerCatalogManufacturer extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 							
 		if (!isset($this->request->get['manufacturer_id'])) {
@@ -404,7 +404,7 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->response->setOutput($this->render());
 	}  
 	 
-  	private function validateForm() {
+  	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -420,7 +420,7 @@ class ControllerCatalogManufacturer extends Controller {
 		}
   	}    
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
     	if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
 			$this->error['warning'] = $this->language->get('error_permission');
     	}	

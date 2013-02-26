@@ -128,6 +128,8 @@ class ControllerProductManufacturer extends Controller {
 	
 		if ($manufacturer_info) {
 			$this->document->setTitle($manufacturer_info['name']);
+			$this->document->addScript('catalog/view/javascript/jquery/jquery.cookie.js');
+			$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 			
 			$url = '';
 			
@@ -225,13 +227,13 @@ class ControllerProductManufacturer extends Controller {
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
+					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_list_description_limit')) . '..',
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
 					'rating'      => $result['rating'],
 					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-					'href'        => $this->url->link('product/product', $url . '&manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'])
+					'href'        => $this->url->link('product/product', '&manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'] . $url)
 				);
 			}
 					
@@ -315,11 +317,11 @@ class ControllerProductManufacturer extends Controller {
 			
 			sort($limits);
 	
-			foreach($limits as $limit){
+			foreach($limits as $limits){
 				$this->data['limits'][] = array(
-					'text'  => $limit,
-					'value' => $limit,
-					'href'  => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&limit=' . $limit)
+					'text'  => $limits,
+					'value' => $limits,
+					'href'  => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&limit=' . $limits)
 				);
 			}
 			

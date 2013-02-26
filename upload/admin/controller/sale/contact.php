@@ -3,7 +3,7 @@ class ControllerSaleContact extends Controller {
 	private $error = array();
 	 
 	public function index() {
-		$this->load->language('sale/contact');
+		$this->language->load('sale/contact');
  
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -43,7 +43,7 @@ class ControllerSaleContact extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('sale/contact', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 				
     	$this->data['cancel'] = $this->url->link('sale/contact', 'token=' . $this->session->data['token'], 'SSL');
@@ -66,7 +66,7 @@ class ControllerSaleContact extends Controller {
 	}
 	
 	public function send() {
-		$this->load->language('sale/contact');
+		$this->language->load('sale/contact');
 		
 		$json = array();
 		

@@ -68,12 +68,16 @@ class ControllerStep2 extends Controller {
 		if (!extension_loaded('zlib')) {
 			$this->error['warning'] = 'Warning: ZLIB extension needs to be loaded for OpenCart to work!';
 		}
-	
-		if (!is_writable(DIR_OPENCART . 'config.php')) {
+		
+		if (!file_exists(DIR_OPENCART . 'config.php')) {
+			$this->error['warning'] = 'Warning: config.php does not exist. You need to rename config-dist.php to config.php!';
+		} elseif (!is_writable(DIR_OPENCART . 'config.php')) {
 			$this->error['warning'] = 'Warning: config.php needs to be writable for OpenCart to be installed!';
 		}
-				
-		if (!is_writable(DIR_OPENCART . 'admin/config.php')) {
+		
+		if (!file_exists(DIR_OPENCART . 'admin/config.php')) {
+			$this->error['warning'] = 'Warning: admin/config.php does not exist. You need to rename admin/config-dist.php to admin/config.php!';
+		} elseif (!is_writable(DIR_OPENCART . 'admin/config.php')) {
 			$this->error['warning'] = 'Warning: admin/config.php needs to be writable for OpenCart to be installed!';
 		}
 

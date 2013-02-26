@@ -22,7 +22,7 @@ class ControllerCommonReset extends Controller {
 		$user_info = $this->model_user_user->getUserByCode($code);
 		
 		if ($user_info) {
-			$this->load->language('common/reset');
+			$this->language->load('common/reset');
 			
 			if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 				$this->model_user_user->editPassword($user_info['user_id'], $this->request->post['password']);
@@ -98,7 +98,7 @@ class ControllerCommonReset extends Controller {
 		}
 	}
 
-	private function validate() {
+	protected function validate() {
     	if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
       		$this->error['password'] = $this->language->get('error_password');
     	}

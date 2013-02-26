@@ -1,7 +1,7 @@
 <?php
 class ControllerReportSaleOrder extends Controller { 
 	public function index() {  
-		$this->load->language('report/sale_order');
+		$this->language->load('report/sale_order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -68,7 +68,7 @@ class ControllerReportSaleOrder extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('report/sale_order', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->load->model('report/sale');

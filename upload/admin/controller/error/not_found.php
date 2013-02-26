@@ -1,7 +1,7 @@
 <?php    
 class ControllerErrorNotFound extends Controller {    
 	public function index() { 
-    	$this->load->language('error/not_found');
+    	$this->language->load('error/not_found');
  
     	$this->document->setTitle($this->language->get('heading_title'));
 
@@ -20,7 +20,7 @@ class ControllerErrorNotFound extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 
 		$this->template = 'error/not_found.tpl';

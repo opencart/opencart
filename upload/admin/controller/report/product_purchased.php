@@ -1,7 +1,7 @@
 <?php
 class ControllerReportProductPurchased extends Controller { 
 	public function index() {   
-		$this->load->language('report/product_purchased');
+		$this->language->load('report/product_purchased');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -58,7 +58,7 @@ class ControllerReportProductPurchased extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('report/product_purchased', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);		
 		
 		$this->load->model('report/product');

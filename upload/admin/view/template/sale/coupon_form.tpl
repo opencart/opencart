@@ -16,7 +16,7 @@
     <div class="content">
       <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a>
         <?php if ($coupon_id) { ?>
-        <a href="#tab-history"><?php echo $tab_coupon_history; ?></a>
+        <a href="#tab-history"><?php echo $tab_history; ?></a>
         <?php } ?>
       </div>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -159,29 +159,6 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('input[name=\'category[]\']').bind('change', function() {
-	var filter_category_id = this;
-	
-	$.ajax({
-		url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_category_id=' +  filter_category_id.value + '&limit=10000',
-		dataType: 'json',
-		success: function(json) {
-			for (i = 0; i < json.length; i++) {
-				if ($(filter_category_id).attr('checked') == 'checked') {
-					$('#coupon-product' + json[i]['product_id']).remove();
-					
-					$('#coupon-product').append('<div id="coupon-product' + json[i]['product_id'] + '">' + json[i]['name'] + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="coupon_product[]" value="' + json[i]['product_id'] + '" /></div>');
-				} else {
-					$('#coupon-product' + json[i]['product_id']).remove();
-				}			
-			}
-			
-			$('#coupon-product div:odd').attr('class', 'odd');
-			$('#coupon-product div:even').attr('class', 'even');			
-		}
-	});
-});
-
 $('input[name=\'product\']').autocomplete({
 	delay: 500,
 	source: function(request, response) {

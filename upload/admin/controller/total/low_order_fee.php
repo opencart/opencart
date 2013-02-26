@@ -3,13 +3,13 @@ class ControllerTotalLowOrderFee extends Controller {
 	private $error = array(); 
 	 
 	public function index() { 
-		$this->load->language('total/low_order_fee');
+		$this->language->load('total/low_order_fee');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/setting');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('low_order_fee', $this->request->post);
 		
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -49,13 +49,13 @@ class ControllerTotalLowOrderFee extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_total'),
 			'href'      => $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('total/low_order_fee', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->data['action'] = $this->url->link('total/low_order_fee', 'token=' . $this->session->data['token'], 'SSL');
@@ -80,6 +80,10 @@ class ControllerTotalLowOrderFee extends Controller {
 			$this->data['low_order_fee_tax_class_id'] = $this->config->get('low_order_fee_tax_class_id');
 		}
 		
+		$this->load->model('localisation/tax_class');
+		
+		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
+		
 		if (isset($this->request->post['low_order_fee_status'])) {
 			$this->data['low_order_fee_status'] = $this->request->post['low_order_fee_status'];
 		} else {
@@ -91,10 +95,6 @@ class ControllerTotalLowOrderFee extends Controller {
 		} else {
 			$this->data['low_order_fee_sort_order'] = $this->config->get('low_order_fee_sort_order');
 		}
-		
-		$this->load->model('localisation/tax_class');
-		
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
 		$this->template = 'total/low_order_fee.tpl';
 		$this->children = array(
@@ -105,7 +105,7 @@ class ControllerTotalLowOrderFee extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'total/low_order_fee')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

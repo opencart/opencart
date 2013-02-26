@@ -143,7 +143,6 @@ function display(view) {
 			}
 				
 			html += '</div>';
-
 						
 			$(element).html(html);
 		});		

@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionModule extends Controller {
 	public function index() {
-		$this->load->language('extension/module');
+		$this->language->load('extension/module');
 		 
 		$this->document->setTitle($this->language->get('heading_title')); 
 
@@ -16,7 +16,7 @@ class ControllerExtensionModule extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -63,7 +63,7 @@ class ControllerExtensionModule extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 				
-				$this->load->language('module/' . $extension);
+				$this->language->load('module/' . $extension);
 	
 				$action = array();
 				
@@ -101,7 +101,7 @@ class ControllerExtensionModule extends Controller {
 	}
 	
 	public function install() {
-		$this->load->language('extension/module');
+		$this->language->load('extension/module');
 		
 		if (!$this->user->hasPermission('modify', 'extension/module')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 
@@ -131,7 +131,7 @@ class ControllerExtensionModule extends Controller {
 	}
 	
 	public function uninstall() {
-		$this->load->language('extension/module');
+		$this->language->load('extension/module');
 		
 		if (!$this->user->hasPermission('modify', 'extension/module')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 

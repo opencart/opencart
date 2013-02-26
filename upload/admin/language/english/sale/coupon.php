@@ -22,8 +22,8 @@ $_['column_action']       = 'Action';
 
 // Entry
 $_['entry_name']          = 'Coupon Name:';
-$_['entry_code']          = 'Code:<br /><span class="help">The code the customer enters to get the discount</span>';
-$_['entry_type']          = 'Type:<br /><span class="help">Percentage or Fixed Amount</span>';
+$_['entry_code']          = 'Code:<br /><span class="help">The code the customer enters to get the discount.</span>';
+$_['entry_type']          = 'Type:<br /><span class="help">Percentage or Fixed Amount.</span>';
 $_['entry_discount']      = 'Discount:';
 $_['entry_logged']        = 'Customer Login:<br /><span class="help">Customer must be logged in to use the coupon.</span>';
 $_['entry_shipping']      = 'Free Shipping:';

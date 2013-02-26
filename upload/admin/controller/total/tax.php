@@ -3,13 +3,13 @@ class ControllerTotalTax extends Controller {
 	private $error = array();
 	 
 	public function index() { 
-		$this->load->language('total/tax');
+		$this->language->load('total/tax');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/setting');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('tax', $this->request->post);
 		
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -45,13 +45,13 @@ class ControllerTotalTax extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_total'),
 			'href'      => $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('total/tax', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_separator')
    		);
 		
 		$this->data['action'] = $this->url->link('total/tax', 'token=' . $this->session->data['token'], 'SSL');
@@ -79,7 +79,7 @@ class ControllerTotalTax extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'total/tax')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

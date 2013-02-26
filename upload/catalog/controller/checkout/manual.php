@@ -1,7 +1,7 @@
 <?php 
 class ControllerCheckoutManual extends Controller {
 	public function index() {
-		$this->load->language('checkout/manual');
+		$this->language->load('checkout/manual');
 		
 		$json = array();
 			
@@ -40,6 +40,7 @@ class ControllerCheckoutManual extends Controller {
 
 				if ($customer_info) {
 					$this->customer->login($customer_info['email'], '', true);
+					$this->cart->clear();
 				} else {
 					$json['error']['customer'] = $this->language->get('error_customer');
 				}
@@ -47,7 +48,7 @@ class ControllerCheckoutManual extends Controller {
 				// Customer Group
 				$this->config->set('config_customer_group_id', $this->request->post['customer_group_id']);
 			}
-				
+	
 			// Product
 			$this->load->model('catalog/product');
 			
@@ -105,10 +106,11 @@ class ControllerCheckoutManual extends Controller {
 				}
 			}
 			
+			// Stock
 			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
 				$json['error']['product']['stock'] = $this->language->get('error_stock');
-			}
-		
+			}		
+			
 			// Tax
 			if ($this->cart->hasShipping()) {
 				$this->tax->setShippingAddress($this->request->post['shipping_country_id'], $this->request->post['shipping_zone_id']);
@@ -118,7 +120,7 @@ class ControllerCheckoutManual extends Controller {
 			
 			$this->tax->setPaymentAddress($this->request->post['payment_country_id'], $this->request->post['payment_zone_id']);				
 			$this->tax->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));	
-			
+						
 			// Products
 			$json['order_product'] = array();
 			
@@ -144,7 +146,7 @@ class ControllerCheckoutManual extends Controller {
 						'product_option_id'       => $option['product_option_id'],
 						'product_option_value_id' => $option['product_option_value_id'],
 						'name'                    => $option['name'],
-						'value'                   => $option['option_value'],
+						'value'                   => $option['value'],
 						'type'                    => $option['type']
 					);
 				}
@@ -167,13 +169,14 @@ class ControllerCheckoutManual extends Controller {
 					'option'     => $option_data,
 					'download'   => $download_data,
 					'quantity'   => $product['quantity'],
+					'stock'      => $product['stock'],
 					'price'      => $product['price'],	
 					'total'      => $product['total'],	
 					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
 					'reward'     => $product['reward']				
 				);
 			}
-
+			
 			// Voucher
 			$this->session->data['vouchers'] = array();
 			
@@ -288,7 +291,7 @@ class ControllerCheckoutManual extends Controller {
 					$json['error']['shipping']['country'] = $this->language->get('error_country');
 				}
 				
-				if ($this->request->post['shipping_zone_id'] == '') {
+				if (!isset($this->request->post['shipping_zone_id']) || $this->request->post['shipping_zone_id'] == '') {
 					$json['error']['shipping']['zone'] = $this->language->get('error_zone');
 				}
 							
@@ -471,7 +474,7 @@ class ControllerCheckoutManual extends Controller {
 				$json['error']['payment']['country'] = $this->language->get('error_country');
 			}
 			
-			if ($this->request->post['payment_zone_id'] == '') {
+			if (!isset($this->request->post['payment_zone_id']) || $this->request->post['payment_zone_id'] == '') {
 				$json['error']['payment']['zone'] = $this->language->get('error_zone');
 			}		
 			

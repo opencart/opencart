@@ -60,7 +60,7 @@
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td class="left"><a onclick="addFilter();" class="button"><?php echo $button_add_filter; ?></a></td>
+              <td class="left"><a onclick="addFilterRow();" class="button"><?php echo $button_add_filter; ?></a></td>
             </tr>
           </tfoot>
         </table>
@@ -71,7 +71,7 @@
 <script type="text/javascript"><!--
 var filter_row = <?php echo $filter_row; ?>;
 
-function addFilter() {
+function addFilterRow() {
 	html  = '<tbody id="filter-row' + filter_row + '">';
 	html += '  <tr>';	
     html += '    <td class="left"><input type="hidden" name="filter[' + filter_row + '][filter_id]" value="" />';

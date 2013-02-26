@@ -71,15 +71,15 @@ class ControllerPaymentPPStandard extends Controller {
 			}
 			
 			$this->data['currency_code'] = $order_info['currency_code'];
-			$this->data['first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');	
-			$this->data['last_name'] = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');	
-			$this->data['address1'] = html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');	
-			$this->data['address2'] = html_entity_decode($order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');	
-			$this->data['city'] = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');	
-			$this->data['zip'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');	
+			$this->data['first_name'] = strip_tags(html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8'));	
+			$this->data['last_name'] = strip_tags(html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8'));	
+			$this->data['address1'] = strip_tags(html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8'));	
+			$this->data['address2'] = strip_tags(html_entity_decode($order_info['payment_address_2'], ENT_QUOTES, 'UTF-8'));	
+			$this->data['city'] = strip_tags(html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8'));	
+			$this->data['zip'] = strip_tags(html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8'));	
 			$this->data['country'] = $order_info['payment_iso_code_2'];
-			$this->data['email'] = $order_info['email'];
-			$this->data['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
+			$this->data['email'] = strip_tags(html_entity_decode($order_info['email'], ENT_QUOTES, 'UTF-8'));
+			$this->data['invoice'] = $this->session->data['order_id'] . ' - ' . strip_tags(html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8')) . ' ' . strip_tags(html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8'));
 			$this->data['lc'] = $this->session->data['language'];
 			$this->data['return'] = $this->url->link('checkout/success');
 			$this->data['notify_url'] = $this->url->link('payment/pp_standard/callback', '', 'SSL');

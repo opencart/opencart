@@ -12,7 +12,7 @@ class ModelToolImage extends Model {
 		$old_image = $filename;
 		$new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;
 		
-		if (!file_exists(DIR_IMAGE . $new_image) || (filemtime(DIR_IMAGE . $old_image) > filemtime(DIR_IMAGE . $new_image))) {
+		if (!file_exists(DIR_IMAGE . $new_image) || (filectime(DIR_IMAGE . $old_image) > filectime(DIR_IMAGE . $new_image))) {
 			$path = '';
 			
 			$directories = explode('/', dirname(str_replace('../', '', $new_image)));

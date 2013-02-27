@@ -14,6 +14,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.entities = false;
 	config.extraPlugins = 'codemirror';
 	config.codemirror_theme = 'rubyblue';
+	/*
 	config.toolbar = 'Custom';
 
 	config.toolbar_Custom = [
@@ -30,4 +31,5 @@ CKEDITOR.editorConfig = function( config ) {
 		['Link','Unlink','Anchor'],
 		['Image','Table','HorizontalRule']
 	];
+	*/
 };

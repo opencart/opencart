@@ -217,11 +217,11 @@ $registry->set('encryption', new Encryption($config->get('config_encryption')));
 // Front Controller 
 $controller = new Front($registry);
 
-// SEO URL's
-$controller->addPreAction(new Action('common/seo_url'));	
-
 // Maintenance Mode
 $controller->addPreAction(new Action('common/maintenance'));
+
+// SEO URL's
+$controller->addPreAction(new Action('common/seo_url'));	
 	
 // Router
 if (isset($request->get['route'])) {
@@ -235,9 +235,4 @@ $controller->dispatch($action, new Action('error/not_found'));
 
 // Output
 $response->output();
-
-
-$mod = new Modification();
-
-$mod->load('C:\xampp\htdocs\opencart\upload\vqmod_opencart.xml');
 ?>

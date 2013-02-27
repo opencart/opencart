@@ -110,6 +110,50 @@ class ControllerExtensionModification extends Controller {
     	$this->getList();
   	}
 	
+	public function install() {
+		$this->language->load('extension/payment');
+		
+		if (!$this->user->hasPermission('modify', 'extension/payment')) {
+			$this->session->data['error'] = $this->language->get('error_permission'); 
+			
+			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+		} else {
+			$this->load->model('setting/extension');
+		
+			$this->model_setting_extension->install('payment', $this->request->get['extension']);
+
+			$this->load->model('user/user_group');
+		
+			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'payment/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'payment/' . $this->request->get['extension']);
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+		}
+	}
+	
+	public function uninstall() {
+		$this->language->load('extension/payment');
+		
+		if (!$this->user->hasPermission('modify', 'extension/payment')) {
+			$this->session->data['error'] = $this->language->get('error_permission'); 
+			
+			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+		} else {		
+			$this->load->model('setting/extension');
+			$this->load->model('setting/setting');
+				
+			$this->model_setting_extension->uninstall('payment', $this->request->get['extension']);
+		
+			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
+		
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));	
+		}			
+	}
+	
 	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -150,15 +194,13 @@ class ControllerExtensionModification extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrumb_separator')
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 				
 		$this->data['insert'] = $this->url->link('extension/modification/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -311,15 +353,13 @@ class ControllerExtensionModification extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrumb_separator')
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		if (!isset($this->request->get['modification_id'])) {
@@ -368,66 +408,7 @@ class ControllerExtensionModification extends Controller {
 	  		return false;
 		}
   	}
-	
-	
-	public function install() {
-		$this->language->load('extension/payment');
-		
-		if (!$this->user->hasPermission('modify', 'extension/payment')) {
-			$this->session->data['error'] = $this->language->get('error_permission'); 
 			
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {
-			$this->load->model('setting/extension');
-		
-			$this->model_setting_extension->install('payment', $this->request->get['extension']);
-
-			$this->load->model('user/user_group');
-		
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'payment/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'payment/' . $this->request->get['extension']);
-
-			require_once(DIR_APPLICATION . 'controller/payment/' . $this->request->get['extension'] . '.php');
-			
-			$class = 'ControllerPayment' . str_replace('_', '', $this->request->get['extension']);
-			$class = new $class($this->registry);
-			
-			if (method_exists($class, 'install')) {
-				$class->install();
-			}
-			
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
-		}
-	}
-	
-	public function uninstall() {
-		$this->language->load('extension/payment');
-		
-		if (!$this->user->hasPermission('modify', 'extension/payment')) {
-			$this->session->data['error'] = $this->language->get('error_permission'); 
-			
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {		
-			$this->load->model('setting/extension');
-			$this->load->model('setting/setting');
-				
-			$this->model_setting_extension->uninstall('payment', $this->request->get['extension']);
-		
-			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
-		
-			require_once(DIR_APPLICATION . 'controller/payment/' . $this->request->get['extension'] . '.php');
-			
-			$class = 'ControllerPayment' . str_replace('_', '', $this->request->get['extension']);
-			$class = new $class($this->registry);
-			
-			if (method_exists($class, 'uninstall')) {
-				$class->uninstall();
-			}
-		
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));	
-		}			
-	}
-		
 	public function upload() {
 /* 
 New XML Modifcation Standard 

@@ -1798,6 +1798,28 @@ INSERT INTO `oc_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `oc_modification`
+--
+
+DROP TABLE IF EXISTS `oc_modification`;
+CREATE TABLE `oc_modification` (
+  `modification_id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(32) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `author` varchar(64) NOT NULL,
+  `xml` text NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`modification_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_modification`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_option`
 --
 

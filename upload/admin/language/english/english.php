@@ -22,7 +22,6 @@ $_['text_default']                  = ' <b>(Default)</b>';
 $_['text_close']                    = 'Close';
 $_['text_pagination']               = 'Showing {start} to {end} of {total} ({pages} Pages)';
 $_['text_no_results']               = 'No results!';
-$_['text_separator']                = ' &gt; ';
 $_['text_edit']                     = 'Edit';
 $_['text_view']                     = 'View';
 $_['text_home']                     = 'Home';
@@ -115,8 +114,4 @@ $_['error_upload_6']                = 'Warning: Missing a temporary folder!';
 $_['error_upload_7']                = 'Warning: Failed to write file to disk!';
 $_['error_upload_8']                = 'Warning: File upload stopped by extension!';
 $_['error_upload_999']              = 'Warning: No error code available!';
-
-// Breadcrumb Separator
-$_['breadcrumb_separator']			= '<span class="breadcrumb-seperator">&rsaquo;&rsaquo;</span>';
-
 ?>

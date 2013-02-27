@@ -86,15 +86,13 @@ class ControllerCheckoutCart extends Controller {
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'href'      => $this->url->link('common/home'),
-        	'text'      => $this->language->get('text_home'),
-        	'separator' => false
+        	'href' => $this->url->link('common/home'),
+        	'text' => $this->language->get('text_home')
       	); 
 
       	$this->data['breadcrumbs'][] = array(
-        	'href'      => $this->url->link('checkout/cart'),
-        	'text'      => $this->language->get('heading_title'),
-        	'separator' => $this->language->get('text_separator')
+        	'href' => $this->url->link('checkout/cart'),
+        	'text' => $this->language->get('heading_title')
       	);
 			
     	if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {

@@ -1,6 +1,148 @@
 <?php
 class ControllerExtensionModification extends Controller {
-	public function index() {
+	private $error = array();
+   
+  	public function index() {
+		$this->language->load('extension/modification');
+	
+    	$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->load->model('setting/modification');
+		
+    	$this->getList();
+  	}
+		
+  	public function insert() {
+		$this->language->load('extension/modification');
+	
+    	$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->load->model('setting/modification');
+			
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+      		$this->model_setting_modification->addAttribute($this->request->post);
+		  	
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+			
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+						
+      		$this->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+		}
+	
+    	$this->getForm();
+  	}
+
+  	public function update() {
+		$this->language->load('extension/modification');
+	
+    	$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->load->model('setting/modification');
+		
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+	  		$this->model_setting_modification->editAttribute($this->request->get['attribute_id'], $this->request->post);
+			
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+			
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+			
+			$this->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+    	}
+	
+    	$this->getForm();
+  	}
+
+  	public function delete() {
+		$this->language->load('extension/modification');
+	
+    	$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->load->model('setting/modification');
+		
+    	if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $attribute_id) {
+				$this->model_setting_modification->deleteAttribute($attribute_id);
+			}
+			      		
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+			
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+			
+			$this->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+   		}
+	
+    	$this->getList();
+  	}
+	
+	protected function getList() {
+		if (isset($this->request->get['sort'])) {
+			$sort = $this->request->get['sort'];
+		} else {
+			$sort = 'name';
+		}
+		
+		if (isset($this->request->get['order'])) {
+			$order = $this->request->get['order'];
+		} else {
+			$order = 'ASC';
+		}
+		
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+				
+		$url = '';
+			
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+		
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+						
 		$this->language->load('extension/modification');
 		 
 		$this->document->setTitle($this->language->get('heading_title')); 
@@ -15,9 +157,44 @@ class ControllerExtensionModification extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('extension/modification', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'),
       		'separator' => $this->language->get('breadcrumb_separator')
    		);
+				
+		$this->data['insert'] = $this->url->link('extension/modification/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$this->data['delete'] = $this->url->link('extension/modification/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
+
+		$this->data['modifications'] = array();
+
+		$data = array(
+			'sort'  => $sort,
+			'order' => $order,
+			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
+			'limit' => $this->config->get('config_admin_limit')
+		);
+		
+		$modification_total = $this->model_setting_modification->getTotalModifications();
+	
+		$results = $this->model_setting_modification->getModifications($data);
+ 
+    	foreach ($results as $result) {
+			$action = array();
+			
+			$action[] = array(
+				'text' => $this->language->get('text_edit'),
+				'href' => $this->url->link('extension/modification/update', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'] . $url, 'SSL')
+			);
+						
+			$this->data['modifications'][] = array(
+				'modification_id' => $result['modification_id'],
+				'name'            => $result['name'],
+				'author'          => $result['author'],
+				'date_added'      => $result['date_added'],
+				'date_modified'   => $result['date_modified'],
+				'selected'        => isset($this->request->post['selected']) && in_array($result['modification_id'], $this->request->post['selected']),
+				'action'          => $action
+			);
+		}			
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		
@@ -25,11 +202,13 @@ class ControllerExtensionModification extends Controller {
 		$this->data['text_confirm'] = $this->language->get('text_confirm');
 
 		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_status'] = $this->language->get('column_status');
-		$this->data['column_sort_order'] = $this->language->get('column_sort_order');
+		$this->data['column_author'] = $this->language->get('column_author');
+		$this->data['column_date_added'] = $this->language->get('column_date_added');
+		$this->data['column_date_modified'] = $this->language->get('column_date_modified');
 		$this->data['column_action'] = $this->language->get('column_action');
 		
-		$this->data['button_upload'] = $this->language->get('button_upload');
+		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_delete'] = $this->language->get('button_delete');
 		
 		if (isset($this->session->data['success'])) {
 			$this->data['success'] = $this->session->data['success'];
@@ -47,57 +226,46 @@ class ControllerExtensionModification extends Controller {
 			$this->data['error'] = '';
 		}
 		
-		$this->load->model('setting/extension');
+		$url = '';
 
-		$extensions = $this->model_setting_extension->getInstalled('modification');
-		
-		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/modification/' . $value . '.php')) {
-				$this->model_setting_extension->uninstall('modification', $value);
-				
-				unset($extensions[$key]);
-			}
+		if ($order == 'ASC') {
+			$url .= '&order=DESC';
+		} else {
+			$url .= '&order=ASC';
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['extensions'] = array();
-						
-		$files = glob(DIR_APPLICATION . 'controller/modification/*.php');
+		$this->data['sort_name'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
+		$this->data['sort_author'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=author' . $url, 'SSL');
+		$this->data['sort_date_added'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, 'SSL');
+		$this->data['sort_date_modified'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=date_modified' . $url, 'SSL');
 		
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
-				
-				$this->language->load('modification/' . $extension);
-	
-				$action = array();
-				
-				if (!in_array($extension, $extensions)) {
-					$action[] = array(
-						'text' => $this->language->get('text_install'),
-						'href' => $this->url->link('extension/modification/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-					);
-				} else {
-					$action[] = array(
-						'text' => $this->language->get('text_edit'),
-						'href' => $this->url->link('modification/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
-					);
-								
-					$action[] = array(
-						'text' => $this->language->get('text_uninstall'),
-						'href' => $this->url->link('extension/modification/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-					);
-				}
-				
-				$this->data['extensions'][] = array(
-					'name'       => $this->language->get('heading_title'),
-					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'action'     => $action
-				);
-			}
-		}		
+		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+												
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		$pagination = new Pagination();
+		$pagination->total = $modification_total;
+		$pagination->page = $page;
+		$pagination->limit = $this->config->get('config_admin_limit');
+		$pagination->text = $this->language->get('text_pagination');
+		$pagination->url = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+			
+		$this->data['pagination'] = $pagination->render();
+
+		$this->data['sort'] = $sort;
+		$this->data['order'] = $order;
 		
-		$this->template = 'extension/modification.tpl';
+		$this->template = 'extension/modification_list.tpl';
 		$this->children = array(
 			'common/header',
 			'common/footer'
@@ -105,6 +273,102 @@ class ControllerExtensionModification extends Controller {
 				
 		$this->response->setOutput($this->render());
 	}
+	
+  	protected function getForm() {
+     	$this->data['heading_title'] = $this->language->get('heading_title');
+
+    	$this->data['entry_name'] = $this->language->get('entry_name');
+
+    	$this->data['button_save'] = $this->language->get('button_save');
+    	$this->data['button_cancel'] = $this->language->get('button_cancel');
+    
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+
+ 		if (isset($this->error['name'])) {
+			$this->data['error_name'] = $this->error['name'];
+		} else {
+			$this->data['error_name'] = array();
+		}
+		
+		$url = '';
+			
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+		
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+  		$this->data['breadcrumbs'] = array();
+
+   		$this->data['breadcrumbs'][] = array(
+       		'text'      => $this->language->get('text_home'),
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
+   		);
+
+   		$this->data['breadcrumbs'][] = array(
+       		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+      		'separator' => $this->language->get('breadcrumb_separator')
+   		);
+		
+		if (!isset($this->request->get['modification_id'])) {
+			$this->data['action'] = $this->url->link('extension/modification/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		} else {
+			$this->data['action'] = $this->url->link('extension/modification/update', 'token=' . $this->session->data['token'] . '&modification_id=' . $this->request->get['modification_id'] . $url, 'SSL');
+		}
+			
+		$this->data['cancel'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL');
+
+		if (isset($this->request->get['modification_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+			$modification_info = $this->model_extension_modification->getModification($this->request->get['modification_id']);
+		}
+		
+		$this->data['token'] = $this->session->data['token'];
+		
+		$this->template = 'extension/modification_form.tpl';
+		$this->children = array(
+			'common/header',
+			'common/footer'
+		);
+				
+		$this->response->setOutput($this->render());	
+  	}
+	
+	protected function validateForm() {
+    	if (!$this->user->hasPermission('modify', 'extension/modification')) {
+      		$this->error['warning'] = $this->language->get('error_permission');
+    	}
+		
+		if (!$this->error) {
+	  		return true;
+		} else {
+	  		return false;
+		}
+  	}
+
+  	protected function validateDelete() {
+		if (!$this->user->hasPermission('modify', 'extension/modification')) {
+      		$this->error['warning'] = $this->language->get('error_permission');
+    	}
+		
+		if (!$this->error) { 
+	  		return true;
+		} else {
+	  		return false;
+		}
+  	}
+	
 	
 	public function install() {
 		$this->language->load('extension/payment');
@@ -284,9 +548,12 @@ New XML Modifcation Standard
 						}
 					}
 				} elseif (strrchr(basename($file), '.') == '.sql') {
-					//file_get_contents($file);
+					$sql = file_get_contents($file);
+				
+				
 				} elseif (strrchr(basename($file), '.') == '.xml') {
-					//file_get_contents($file);
+					$xml = file_get_contents($file);
+					
 				}
 			}
 			
@@ -352,11 +619,21 @@ New XML Modifcation Standard
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->loadXml($xml);
 		
+		$files = array();
+		
 		$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');		
 		
+
+		
 		foreach ($files as $file) {
-			glob($file);
+		//	foreach () {
+		//		$files = glob($file);
 			
+		//		if ($files) {
+			
+		//		}			
+		//	}
+
 			$filename = $file->getAttribute('name');
 		
 			if (!isset($this->data[$filename])) {

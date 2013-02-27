@@ -74,6 +74,8 @@
     </div>
   </form>
   <?php echo $content_bottom; ?></div>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initialize"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script type="text/javascript"><!--
 var openedInfoWindow = null;
 
@@ -95,8 +97,8 @@ function initialize() {
 	
 	<?php foreach($locations as $location) { ?>
 	//  Loop through our Array and place all the markers onto the map
-	var contentString7 = '<div id="address">'+
-		'<h2><?php echo $location['name']; ?></h2>'+
+	var contentString<?php echo $location['location_id']; ?> = '<div id="address">' +
+		'<h2><?php echo $location['name']; ?></h2>' +
 		'<div id="bodyContent">'+
 		'<p> <?php echo $location['address_1'] .   "<br />"; ?>' +
 		'<?php echo $location['address_2'] .   "<br />"; ?> '+
@@ -106,7 +108,7 @@ function initialize() {
 		'</div>';
 	
 	var infowindow<?php echo $location['location_id']; ?> = new google.maps.InfoWindow({
-		content: contentString7,
+		content: contentString<?php echo $location['location_id']; ?>,
 		maxWidth: 100
 	});
 	
@@ -114,7 +116,7 @@ function initialize() {
 		position: myLatlng<?php echo $location['location_id']; ?>,
 		map: map,
 		animation: google.maps.Animation.DROP,
-		title: '<?php echo $location['name']; ?>'
+		title: '<?php echo addslashes($location['name']); ?>'
 	});
 	
 	google.maps.event.addListener(marker<?php echo $location['location_id']; ?>, 'click', function() {
@@ -136,16 +138,5 @@ function initialize() {
 	//  Fit map to bounds so you can see all the markers
 	map.fitBounds(bound);    
 }
-		
-function loadScript() {
-	//  Script for loading up within document  
-	var script = document.createElement('script');
-	script.type = 'text/javascript';
-	script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initialize';
-	
-	document.body.appendChild(script);
-}
-
-window.onload = loadScript;
 //--></script> 
 <?php echo $footer; ?>

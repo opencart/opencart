@@ -20,7 +20,7 @@ class ControllerExtensionModification extends Controller {
 		$this->load->model('setting/modification');
 			
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-      		$this->model_setting_modification->addAttribute($this->request->post);
+      		$this->model_setting_modification->addModification($this->request->post);
 		  	
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -52,7 +52,7 @@ class ControllerExtensionModification extends Controller {
 		$this->load->model('setting/modification');
 		
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-	  		$this->model_setting_modification->editAttribute($this->request->get['attribute_id'], $this->request->post);
+	  		$this->model_setting_modification->editModification($this->request->get['modification_id'], $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -84,8 +84,8 @@ class ControllerExtensionModification extends Controller {
 		$this->load->model('setting/modification');
 		
     	if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $attribute_id) {
-				$this->model_setting_modification->deleteAttribute($attribute_id);
+			foreach ($this->request->post['selected'] as $modification_id) {
+				$this->model_setting_modification->deleteModification($modification_id);
 			}
 			      		
 			$this->session->data['success'] = $this->language->get('text_success');

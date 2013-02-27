@@ -526,6 +526,38 @@ class ModelSaleCustomer extends Model {
       	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_ban_ip` WHERE `ip` = '" . $this->db->escape($ip) . "'");
 				 
 		return $query->row['total'];
-	}	
+	}
+
+	public function getOrdersByCustomerId($customer_id) {
+		$query = $this->db->query("SELECT o.order_id, (SELECT os.name FROM " . DB_PREFIX . "order_status os WHERE os.order_status_id = o.order_status_id AND os.language_id = '" . (int)$this->config->get('config_language_id') . "') AS status, o.total, o.currency_code, o.currency_value, o.date_added, o.date_modified FROM `" . DB_PREFIX . "order` o WHERE o.customer_id = '" . (int)$customer_id . "'");
+		
+		return $query->rows;
+	}
+	
+	public function getProductPurchasesByCustomerId($customer_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.order_id = o.order_id) LEFT JOIN " . DB_PREFIX . "customer c ON (o.customer_id = c.customer_id) LEFT JOIN " . DB_PREFIX . "product p ON (op.product_id = p.product_id) WHERE o.order_status_id > '0' AND c.customer_id = '" . (int)$customer_id . "' GROUP BY op.product_id");
+		
+		return $query->rows;
+	}
+
+	public function getTotalProductPurchasesByCustomerId($product_id, $customer_id) {
+		$query = $this->db->query("SELECT SUM(op.quantity) AS total FROM " . DB_PREFIX . "order_product op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.order_id = o.order_id) LEFT JOIN " . DB_PREFIX . "customer c ON (o.customer_id = c.customer_id) WHERE o.order_status_id > '0' AND op.product_id = '" . (int)$product_id . "' AND c.customer_id = '" . (int)$customer_id . "'");
+
+		if ($query->row) {
+			return $query->row['total'];
+		} else {
+			return false;
+		}
+	}
+
+	public function getTotalProductsPurchasedByCustomerId($customer_id) {
+		$query = $this->db->query("SELECT SUM(op.quantity) AS total FROM " . DB_PREFIX . "order_product op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.order_id = o.order_id) LEFT JOIN " . DB_PREFIX . "customer c ON (o.customer_id = c.customer_id) WHERE o.order_status_id > '0' AND c.customer_id = '" . (int)$customer_id . "'");
+
+		if ($query->row) {
+			return $query->row['total'];
+		} else {
+			return false;
+		}
+	}
 }
 ?>

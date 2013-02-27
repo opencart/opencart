@@ -98,6 +98,7 @@ $_['tab_module']                    = 'Module';
 $_['tab_order']                     = 'Order Details';
 $_['tab_payment']                   = 'Payment Details';
 $_['tab_product']                   = 'Products';
+$_['tab_orders']                    = 'Orders';
 $_['tab_return']                    = 'Return Details';
 $_['tab_reward']                    = 'Reward Points';
 $_['tab_shipping']                  = 'Shipping Details';

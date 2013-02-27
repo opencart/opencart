@@ -25,6 +25,12 @@ $_['column_amount']         = 'Amount';
 $_['column_points']         = 'Points';
 $_['column_ip']             = 'IP';
 $_['column_total']          = 'Total Accounts';
+$_['column_image']          = 'Image';
+$_['column_product_name']   = 'Product Name';
+$_['column_quantity']       = 'Quantity';
+$_['column_order_id']       = 'Order ID';
+$_['column_total']         	= 'Total';
+$_['column_date_modified']	= 'Date Modified';
 $_['column_action']         = 'Action';
 
 // Entry

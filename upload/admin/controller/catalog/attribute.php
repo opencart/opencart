@@ -1,16 +1,16 @@
 <?php 
 class ControllerCatalogAttribute extends Controller { 
-	private $error = array();
-   
-  	public function index() {
-		$this->language->load('catalog/attribute');
-	
-    	$this->document->setTitle($this->language->get('heading_title'));
-		
-		$this->load->model('catalog/attribute');
-		
-    	$this->getList();
-  	}
+	  private $error = array();
+	 
+	  public function index() {
+		  $this->language->load('catalog/attribute');
+	  
+		  $this->document->setTitle($this->language->get('heading_title'));
+		  
+		  $this->load->model('catalog/attribute');
+		  
+		  $this->getList();
+	  }
               
   	public function insert() {
 		$this->language->load('catalog/attribute');

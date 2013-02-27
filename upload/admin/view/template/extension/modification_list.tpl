@@ -14,72 +14,49 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/module.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="" class="button">Upload</a> <a href="" class="button">Resync</a> <a href="" class="button">Clear Modifcation Cache</a><a href="" class="button">Insert</a><a href="" class="button">Delete</a></div>
+      <div class="buttons"><a href="<?php echo $insert; ?>" class="button"><?php echo $button_insert; ?></a><a onclick="$('#form').submit();" class="button"><?php echo $button_delete; ?></a><a href="" class="button">Resync</a> <a href="" class="button">Clear Modifcation Cache</a></div>
     </div>
     <div class="content">
-      <table class="list">
-        <thead>
-          <tr>
-            <td class="left"><?php echo $column_name; ?></td>
-            <td class="right"><?php echo $column_action; ?></td>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if ($extensions) { ?>
-          <?php foreach ($extensions as $extension) { ?>
-          <tr>
-            <td class="left"><?php echo $extension['name']; ?></td>
-            <td class="right"><?php foreach ($extension['action'] as $action) { ?>
-              [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-              <?php } ?></td>
-          </tr>
-          <?php } ?>
-          <?php } else { ?>
-          <tr>
-            <td class="center" colspan="8"><?php echo $text_no_results; ?></td>
-          </tr>
-          <?php } ?>
-        </tbody>
-      </table>
+      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
+        <table class="list">
+          <thead>
+            <tr>
+              <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+              <td class="left"><?php echo $column_name; ?></td>
+              <td class="left"><?php echo $column_author; ?></td>
+              <td class="left"><?php echo $column_date_added; ?></td>
+              <td class="left"><?php echo $column_date_modified; ?></td>
+              <td class="right"><?php echo $column_action; ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if ($modifications) { ?>
+            <?php foreach ($modifications as $modification) { ?>
+            <tr>
+              <td style="text-align: center;"><?php if ($modification['selected']) { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $modification['modification_id']; ?>" checked="checked" />
+                <?php } else { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $modification['modification_id']; ?>" />
+                <?php } ?></td>
+              <td class="left"><?php echo $modification['name']; ?></td>
+              <td class="left"><?php echo $modification['author']; ?></td>
+              <td class="left"><?php echo $modification['date_added']; ?></td>
+              <td class="left"><?php echo $modification['date_modified']; ?></td>
+              <td class="right"><?php foreach ($modification['action'] as $action) { ?>
+                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                <?php } ?></td>
+            </tr>
+            <?php } ?>
+            <?php } else { ?>
+            <tr>
+              <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </form>
+      <div class="pagination"><?php echo $pagination; ?></div>
     </div>
   </div>
 </div>
-<div style="display: none;">
-  <form enctype="multipart/form-data">
-    <input type="file" name="file" id="file" />
-  </form>
-</div>
-<script type="text/javascript"><!--
-$('#file').on('change', function() {
-    $.ajax({
-        url: 'index.php?route=extension/manage/upload&token=<?php echo $token; ?>',
-        type: 'post',		
-		dataType: 'json',
-		data: new FormData($(this).parent()[0]),
-		beforeSend: function() {
-			$('#button-upload').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-			$('#button-upload').attr('disabled', true);
-		},	
-		complete: function() {
-			$('.loading').remove();
-			$('#button-upload').attr('disabled', false);
-		},		
-		success: function(json) {
-			if (json['error']) {
-				alert(json['error']);
-			}
-						
-			if (json['success']) {
-				alert(json['success']);
-			}
-		},			
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		},
-        cache: false,
-        contentType: false,
-        processData: false
-    });
-});
-//--></script> 
 <?php echo $footer; ?>

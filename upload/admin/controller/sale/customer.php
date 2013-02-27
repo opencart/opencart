@@ -609,6 +609,14 @@ class ControllerSaleCustomer extends Controller {
 		$this->data['column_total'] = $this->language->get('column_total');
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
 		$this->data['column_action'] = $this->language->get('column_action');
+		$this->data['column_image'] = $this->language->get('column_image');
+		$this->data['column_product_name'] = $this->language->get('column_product_name');
+		$this->data['column_quantity'] = $this->language->get('column_quantity');
+		$this->data['column_order_id'] = $this->language->get('column_order_id');
+		$this->data['column_status'] = $this->language->get('column_status');
+		$this->data['column_total'] = $this->language->get('column_total');
+		$this->data['column_date_modified'] = $this->language->get('column_date_modified');
+		$this->data['column_action'] = $this->language->get('column_action');
 		
     	$this->data['entry_firstname'] = $this->language->get('entry_firstname');
     	$this->data['entry_lastname'] = $this->language->get('entry_lastname');
@@ -647,6 +655,8 @@ class ControllerSaleCustomer extends Controller {
 		$this->data['tab_transaction'] = $this->language->get('tab_transaction');
 		$this->data['tab_reward'] = $this->language->get('tab_reward');
 		$this->data['tab_ip'] = $this->language->get('tab_ip');
+		$this->data['tab_product'] = $this->language->get('tab_product');
+		$this->data['tab_orders'] = $this->language->get('tab_orders');
 
 		$this->data['token'] = $this->session->data['token'];
 
@@ -920,8 +930,59 @@ class ControllerSaleCustomer extends Controller {
 					'ban_ip'     => $ban_ip_total
 				);
 			}
-		}		
-		
+		}
+
+		$this->load->model('tool/image');
+
+		$this->data['products'] = array();
+
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = $this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
+		$products = $this->model_sale_customer->getProductPurchasesByCustomerId($customer_id);
+
+		if ($products) {
+			foreach ($products as $product) {
+				if ($product['image'] && file_exists(DIR_IMAGE . $product['image'])) {
+					$image = $this->model_tool_image->resize($product['image'], 40, 40);
+				} else {
+					$image = $this->model_tool_image->resize('no_image.jpg', 40, 40);
+				}
+				$this->data['products'][] = array(
+					'image'    => $image,
+					'name'     => $product['name'],
+					'quantity' => $this->model_sale_customer->getTotalProductPurchasesByCustomerId($product['product_id'], $customer_id)
+				);
+			}
+		}
+
+		$orders = $this->model_sale_customer->getOrdersByCustomerId($customer_id);
+
+		if ($orders) {
+			foreach ($orders as $order) {
+				$action = array();
+
+				$action[] = array(
+					'text' => $this->language->get('text_view'),
+					'href' => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $order['order_id'], 'SSL')
+				);
+
+				$this->data['orders'][] = array(
+					'order_id'      => $order['order_id'],
+					'status'        => $order['status'],
+					'total'         => $this->currency->format($order['total'], $order['currency_code'], $order['currency_value']),
+					'date_added'    => date($this->language->get('date_format_short'), strtotime($order['date_added'])),
+					'date_modified' => date($this->language->get('date_format_short'), strtotime($order['date_modified'])),
+					'action'        => $action
+				);
+			}
+		} else {
+			$this->data['orders'] = false;
+		}
+
 		$this->template = 'sale/customer_form.tpl';
 		$this->children = array(
 			'common/header',

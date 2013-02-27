@@ -18,7 +18,13 @@
         <?php if ($customer_id) { ?>
         <a href="#tab-history"><?php echo $tab_history; ?></a><a href="#tab-transaction"><?php echo $tab_transaction; ?></a><a href="#tab-reward"><?php echo $tab_reward; ?></a>
         <?php } ?>
-        <a href="#tab-ip"><?php echo $tab_ip; ?></a></div>
+        <a href="#tab-ip"><?php echo $tab_ip; ?></a>
+        <?php if ($orders) { ?>
+        <a href="#tab-orders"><?php echo $tab_orders; ?></a>
+        <?php } ?>
+        <?php if ($products) { ?>
+        <a href="#tab-product"><?php echo $tab_product; ?></a>
+        <?php } ?></div>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <div id="tab-general">
           <div id="vtabs" class="vtabs"><a href="#tab-customer"><?php echo $tab_general; ?></a>
@@ -275,6 +281,70 @@
             </tbody>
           </table>
         </div>
+        <?php if ($orders) { ?>
+        <div id="tab-orders">
+          <table class="list">
+            <thead>
+              <tr>
+                <td class="right"><?php echo $column_order_id; ?></td>
+                <td class="left"><?php echo $column_status; ?></td>
+                <td class="right"><?php echo $column_total; ?></td>
+                <td class="left"><?php echo $column_date_added; ?></td>
+                <td class="left"><?php echo $column_date_modified; ?></td>
+                <td class="right"><?php echo $column_action; ?></td>
+              </tr>
+            </thead>
+            <tbody>
+              <?php if ($orders) { ?>
+              <?php foreach ($orders as $order) { ?>
+              <tr>
+                <td class="right"><?php echo $order['order_id']; ?></td>
+                <td class="left"><?php echo $order['status']; ?></td>
+                <td class="right"><?php echo $order['total']; ?></td>
+                <td class="left"><?php echo $order['date_added']; ?></td>
+                <td class="left"><?php echo $order['date_modified']; ?></td>
+                <td class="right"><?php foreach ($order['action'] as $action) { ?>
+                  [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                  <?php } ?></td>
+              </tr>
+              <?php } ?>
+              <?php } else { ?>
+              <tr>
+                <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>
+        </div>
+        <?php } ?>
+        <?php if ($products) { ?>
+        <div id="tab-product">
+          <table class="list">
+            <thead>
+              <tr>
+                <td class="center" style="width: 60px;"><?php echo $column_image; ?></td>
+                <td class="left"><?php echo $column_product_name; ?></td>
+                <td class="right" style="width: 15%;"><?php echo $column_quantity; ?></td>
+              </tr>
+            </thead>
+            <tbody>
+              <?php if ($products) { ?>
+              <?php foreach ($products as $product) { ?>
+              <tr>
+                <td class="center"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" style="padding: 1px; border: 1px solid #DDDDDD;" /></td>
+                <td class="left"><?php echo $product['name']; ?></td>
+                <td class="right"><?php echo $product['quantity']; ?></td>
+              </tr>
+              <?php } ?>
+              <?php } else { ?>
+              <tr>
+                <td class="center" colspan="3"><?php echo $text_no_results; ?></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>
+        </div>
+        <?php } ?>
       </form>
     </div>
   </div>

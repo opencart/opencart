@@ -5,9 +5,7 @@ class ModelToolImage extends Model {
 			return;
 		} 
 		
-		$info = pathinfo($filename);
-		
-		$extension = $info['extension'];
+		$extension = pathinfo($filename, PATHINFO_EXTENSION);
 		
 		$old_image = $filename;
 		$new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height .'.' . $extension;

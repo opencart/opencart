@@ -3,6 +3,7 @@
 $_['heading_title']        = 'Modifications';
 
 // Text
+$_['text_success']         = 'Success: You have modified modifications!';
 $_['text_install']         = 'Install';
 $_['text_uninstall']       = 'Uninstall';
 
@@ -19,7 +20,7 @@ $_['entry_author']         = 'Attribute Group:';
 $_['entry_sort_order']     = 'Sort Order:';
 
 // Error
-$_['error_permission']     = 'Warning: You do not have permission to modify extension manager!';
+$_['error_permission']     = 'Warning: You do not have permission to modify modifications!';
 $_['error_upload']         = 'Upload required!';
 $_['error_filetype']       = 'Invalid file type!';
 ?>

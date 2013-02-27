@@ -384,7 +384,6 @@ class ControllerCheckoutCart extends Controller {
 			}
 			
 			$this->children = array(
-				'payment/google_checkout',
 				'common/column_left',
 				'common/column_right',
 				'common/content_bottom',

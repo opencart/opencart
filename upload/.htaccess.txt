@@ -10,7 +10,7 @@ Options +FollowSymlinks
 Options -Indexes
 
 # Prevent Direct Access to files
-<FilesMatch "\.(tpl|ini|log)">
+<FilesMatch "(?i)((\.tpl|\.ini|\.log|(?<!robots)\.txt))">
  Order deny,allow
  Deny from all
 </FilesMatch>

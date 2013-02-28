@@ -3,13 +3,13 @@ class ControllerTotalHandling extends Controller {
 	private $error = array(); 
 	 
 	public function index() { 
-		$this->load->language('total/handling');
+		$this->language->load('total/handling');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/setting');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('handling', $this->request->post);
 		
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -41,21 +41,18 @@ class ControllerTotalHandling extends Controller {
    		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_total'),
-			'href'      => $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('text_total'),
+			'href' => $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('total/handling', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('total/handling', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
 		$this->data['action'] = $this->url->link('total/handling', 'token=' . $this->session->data['token'], 'SSL');
@@ -79,7 +76,11 @@ class ControllerTotalHandling extends Controller {
 		} else {
 			$this->data['handling_tax_class_id'] = $this->config->get('handling_tax_class_id');
 		}
-
+		
+		$this->load->model('localisation/tax_class');
+		
+		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
+		
 		if (isset($this->request->post['handling_status'])) {
 			$this->data['handling_status'] = $this->request->post['handling_status'];
 		} else {
@@ -91,10 +92,6 @@ class ControllerTotalHandling extends Controller {
 		} else {
 			$this->data['handling_sort_order'] = $this->config->get('handling_sort_order');
 		}
-		
-		$this->load->model('localisation/tax_class');
-		
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
 		$this->template = 'total/handling.tpl';
 		$this->children = array(
@@ -105,7 +102,7 @@ class ControllerTotalHandling extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'total/handling')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

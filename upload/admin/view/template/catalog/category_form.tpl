@@ -1,17 +1,17 @@
 <?php echo $header; ?>
 <div id="content">
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <?php if ($error_warning) { ?>
   <div class="warning"><?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/category.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-data"><?php echo $tab_data; ?></a><a href="#tab-design"><?php echo $tab_design; ?></a></div>
@@ -52,8 +52,24 @@
           <table class="form">
             <tr>
               <td><?php echo $entry_parent; ?></td>
-              <td><input type="text" name="parent" value="<?php echo $parent; ?>" size="100" />
+              <td><input type="text" name="path" value="<?php echo $path; ?>" size="100" />
                 <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" /></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_filter; ?></td>
+              <td><input type="text" name="filter" value="" /></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><div id="category-filter" class="scrollbox">
+                  <?php $class = 'odd'; ?>
+                  <?php foreach ($category_filters as $category_filter) { ?>
+                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                  <div id="category-filter<?php echo $category_filter['filter_id']; ?>" class="<?php echo $class; ?>"><?php echo $category_filter['name']; ?><img src="view/image/delete.png" alt="" />
+                    <input type="hidden" name="category_filter[]" value="<?php echo $category_filter['filter_id']; ?>" />
+                  </div>
+                  <?php } ?>
+                </div></td>
             </tr>
             <tr>
               <td><?php echo $entry_store; ?></td>
@@ -183,13 +199,18 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
 <?php } ?>
 //--></script> 
 <script type="text/javascript"><!--
-$('input[name=\'parent\']').autocomplete({
-	delay: 0,
-	source: function(request, response) {
+$('input[name=\'path\']').autocomplete({
+	delay: 500,
+	source: function(request, response) {		
 		$.ajax({
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {		
+			success: function(json) {
+				json.unshift({
+					'category_id':  0,
+					'name':  '<?php echo $text_none; ?>'
+				});
+				
 				response($.map(json, function(item) {
 					return {
 						label: item.name,
@@ -200,7 +221,7 @@ $('input[name=\'parent\']').autocomplete({
 		});
 	},
 	select: function(event, ui) {
-		$('input[name=\'parent\']').val(ui.item.label);
+		$('input[name=\'path\']').val(ui.item.label);
 		$('input[name=\'parent_id\']').val(ui.item.value);
 		
 		return false;
@@ -208,6 +229,46 @@ $('input[name=\'parent\']').autocomplete({
 	focus: function(event, ui) {
       	return false;
    	}
+});
+//--></script> 
+<script type="text/javascript"><!--
+// Filter
+$('input[name=\'filter\']').autocomplete({
+	delay: 500,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {		
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.filter_id
+					}
+				}));
+			}
+		});
+	}, 
+	select: function(event, ui) {
+		$('#category-filter' + ui.item.value).remove();
+		
+		$('#category-filter').append('<div id="category-filter' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="category_filter[]" value="' + ui.item.value + '" /></div>');
+
+		$('#category-filter div:odd').attr('class', 'odd');
+		$('#category-filter div:even').attr('class', 'even');
+				
+		return false;
+	},
+	focus: function(event, ui) {
+      return false;
+   }
+});
+
+$('#category-filter div img').live('click', function() {
+	$(this).parent().remove();
+	
+	$('#category-filter div:odd').attr('class', 'odd');
+	$('#category-filter div:even').attr('class', 'even');	
 });
 //--></script> 
 <script type="text/javascript"><!--

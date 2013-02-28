@@ -1,6 +1,6 @@
 <?php  
 class ControllerCommonColumnRight extends Controller {
-	public function index() {
+	protected function index() {
 		$this->load->model('design/layout');
 		$this->load->model('catalog/category');
 		$this->load->model('catalog/product');

@@ -1,11 +1,11 @@
 <?php 
 class ModelPaymentSagePayUS extends Model {
   	public function getMethod($address, $total) {
-		$this->load->language('payment/sagepay_us');
+		$this->language->load('payment/sagepay_us');
 		
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('sagepay_us_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 		
-		if ($this->config->get('sagepay_us_total') > $total) {
+		if ($this->config->get('sagepay_us_total') > 0 && $this->config->get('sagepay_us_total') > $total) {
 			$status = false;
 		} elseif (!$this->config->get('sagepay_us_geo_zone_id')) {
 			$status = true;

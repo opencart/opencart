@@ -80,19 +80,19 @@ class ControllerCheckoutCart extends Controller {
 		}
 		
 		$this->document->setTitle($this->language->get('heading_title'));
-
+		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
+		$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
+			
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'href'      => $this->url->link('common/home'),
-        	'text'      => $this->language->get('text_home'),
-        	'separator' => false
+        	'href' => $this->url->link('common/home'),
+        	'text' => $this->language->get('text_home')
       	); 
 
       	$this->data['breadcrumbs'][] = array(
-        	'href'      => $this->url->link('checkout/cart'),
-        	'text'      => $this->language->get('heading_title'),
-        	'separator' => $this->language->get('text_separator')
+        	'href' => $this->url->link('checkout/cart'),
+        	'text' => $this->language->get('heading_title')
       	);
 			
     	if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
@@ -202,9 +202,9 @@ class ControllerCheckoutCart extends Controller {
 
         		foreach ($product['option'] as $option) {
 					if ($option['type'] != 'file') {
-						$value = $option['option_value'];	
+						$value = $option['value'];	
 					} else {
-						$filename = $this->encryption->decrypt($option['option_value']);
+						$filename = $this->encryption->decrypt($option['value']);
 						
 						$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
 					}
@@ -299,8 +299,8 @@ class ControllerCheckoutCart extends Controller {
 								
 			if (isset($this->request->post['country_id'])) {
 				$this->data['country_id'] = $this->request->post['country_id'];				
-			} elseif (isset($this->session->data['shipping_country_id'])) {
-				$this->data['country_id'] = $this->session->data['shipping_country_id'];			  	
+			} elseif (isset($this->session->data['shipping_address']['country_id'])) {
+				$this->data['country_id'] = $this->session->data['shipping_address']['country_id'];			  	
 			} else {
 				$this->data['country_id'] = $this->config->get('config_country_id');
 			}
@@ -311,16 +311,16 @@ class ControllerCheckoutCart extends Controller {
 						
 			if (isset($this->request->post['zone_id'])) {
 				$this->data['zone_id'] = $this->request->post['zone_id'];				
-			} elseif (isset($this->session->data['shipping_zone_id'])) {
-				$this->data['zone_id'] = $this->session->data['shipping_zone_id'];			
+			} elseif (isset($this->session->data['shipping_address']['zone_id'])) {
+				$this->data['zone_id'] = $this->session->data['shipping_address']['zone_id'];			
 			} else {
 				$this->data['zone_id'] = '';
 			}
 			
 			if (isset($this->request->post['postcode'])) {
 				$this->data['postcode'] = $this->request->post['postcode'];				
-			} elseif (isset($this->session->data['shipping_postcode'])) {
-				$this->data['postcode'] = $this->session->data['shipping_postcode'];					
+			} elseif (isset($this->session->data['shipping_address']['postcode'])) {
+				$this->data['postcode'] = $this->session->data['shipping_address']['postcode'];					
 			} else {
 				$this->data['postcode'] = '';
 			}
@@ -373,7 +373,7 @@ class ControllerCheckoutCart extends Controller {
 						
 			$this->data['continue'] = $this->url->link('common/home');
 						
-			$this->data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
+			$this->data['checkout'] = $this->url->link('checkout/checkout');
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/cart.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/checkout/cart.tpl';
@@ -421,7 +421,7 @@ class ControllerCheckoutCart extends Controller {
     	}
   	}
 	
-	private function validateCoupon() {
+	protected function validateCoupon() {
 		$this->load->model('checkout/coupon');
 				
 		$coupon_info = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);			
@@ -437,7 +437,7 @@ class ControllerCheckoutCart extends Controller {
 		}		
 	}
 	
-	private function validateVoucher() {
+	protected function validateVoucher() {
 		$this->load->model('checkout/voucher');
 				
 		$voucher_info = $this->model_checkout_voucher->getVoucher($this->request->post['voucher']);			
@@ -453,7 +453,7 @@ class ControllerCheckoutCart extends Controller {
 		}		
 	}
 	
-	private function validateReward() {
+	protected function validateReward() {
 		$points = $this->customer->getRewardPoints();
 		
 		$points_total = 0;
@@ -483,7 +483,7 @@ class ControllerCheckoutCart extends Controller {
 		}		
 	}
 	
-	private function validateShipping() {
+	protected function validateShipping() {
 		if (!empty($this->request->post['shipping_method'])) {
 			$shipping = explode('.', $this->request->post['shipping_method']);
 					
@@ -536,10 +536,6 @@ class ControllerCheckoutCart extends Controller {
 					$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
 			}
-			
-			//if ($product_info['minimum'] > $this->request->post['quantity']) {
-			//	$json['error']['option'] = sprintf($this->language->get('error_minimum'), $product_info['name']);
-			//}
 			
 			if (!$json) {
 				$this->cart->add($this->request->post['product_id'], $quantity, $option);
@@ -613,7 +609,7 @@ class ControllerCheckoutCart extends Controller {
 			$json['error']['country'] = $this->language->get('error_country');
 		}
 		
-		if ($this->request->post['zone_id'] == '') {
+		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
 			$json['error']['zone'] = $this->language->get('error_zone');
 		}
 			
@@ -627,11 +623,6 @@ class ControllerCheckoutCart extends Controller {
 						
 		if (!$json) {		
 			$this->tax->setShippingAddress($this->request->post['country_id'], $this->request->post['zone_id']);
-		
-			// Default Shipping Address
-			$this->session->data['shipping_country_id'] = $this->request->post['country_id'];
-			$this->session->data['shipping_zone_id'] = $this->request->post['zone_id'];
-			$this->session->data['shipping_postcode'] = $this->request->post['postcode'];
 		
 			if ($country_info) {
 				$country = $country_info['name'];
@@ -657,7 +648,7 @@ class ControllerCheckoutCart extends Controller {
 				$zone_code = '';
 			}	
 		 
-			$address_data = array(
+			$this->session->data['shipping_address'] = array(
 				'firstname'      => '',
 				'lastname'       => '',
 				'company'        => '',
@@ -685,7 +676,7 @@ class ControllerCheckoutCart extends Controller {
 				if ($this->config->get($result['code'] . '_status')) {
 					$this->load->model('shipping/' . $result['code']);
 					
-					$quote = $this->{'model_shipping_' . $result['code']}->getQuote($address_data); 
+					$quote = $this->{'model_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']); 
 		
 					if ($quote) {
 						$quote_data[$result['code']] = array( 

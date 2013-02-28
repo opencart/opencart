@@ -3,7 +3,7 @@ class ControllerLocalisationReturnReason extends Controller {
 	private $error = array();
    
   	public function index() {
-		$this->load->language('localisation/return_reason');
+		$this->language->load('localisation/return_reason');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -13,7 +13,7 @@ class ControllerLocalisationReturnReason extends Controller {
   	}
               
   	public function insert() {
-		$this->load->language('localisation/return_reason');
+		$this->language->load('localisation/return_reason');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -45,7 +45,7 @@ class ControllerLocalisationReturnReason extends Controller {
   	}
 
   	public function update() {
-		$this->load->language('localisation/return_reason');
+		$this->language->load('localisation/return_reason');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -77,7 +77,7 @@ class ControllerLocalisationReturnReason extends Controller {
   	}
 
   	public function delete() {
-		$this->load->language('localisation/return_reason');
+		$this->language->load('localisation/return_reason');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -110,7 +110,7 @@ class ControllerLocalisationReturnReason extends Controller {
     	$this->getList();
   	}
     
-  	private function getList() {
+  	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -146,15 +146,13 @@ class ControllerLocalisationReturnReason extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('localisation/return_reason', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('localisation/return_reason', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 							
 		$this->data['insert'] = $this->url->link('localisation/return_reason/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -258,7 +256,7 @@ class ControllerLocalisationReturnReason extends Controller {
 		$this->response->setOutput($this->render());
   	}
   
-  	private function getForm() {
+  	protected function getForm() {
      	$this->data['heading_title'] = $this->language->get('heading_title');
 
     	$this->data['entry_name'] = $this->language->get('entry_name');
@@ -295,15 +293,13 @@ class ControllerLocalisationReturnReason extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('localisation/return_reason', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('localisation/return_reason', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		if (!isset($this->request->get['return_reason_id'])) {
@@ -335,13 +331,13 @@ class ControllerLocalisationReturnReason extends Controller {
 		$this->response->setOutput($this->render());	
   	}
   	
-	private function validateForm() {
+	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'localisation/return_reason')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
 	
     	foreach ($this->request->post['return_reason'] as $language_id => $value) {
-      		if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
+      		if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 128)) {
         		$this->error['name'][$language_id] = $this->language->get('error_name');
       		}
     	}
@@ -353,7 +349,7 @@ class ControllerLocalisationReturnReason extends Controller {
 		}
   	}
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'localisation/return_reason')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}

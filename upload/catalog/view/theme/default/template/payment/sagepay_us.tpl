@@ -35,7 +35,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-confirm').bind('click', function() {
+$('#button-confirm').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=payment/sagepay_us/send',
 		type: 'post',

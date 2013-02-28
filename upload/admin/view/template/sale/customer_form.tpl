@@ -1,22 +1,22 @@
 <?php echo $header; ?>
 <div id="content">
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <?php if ($error_warning) { ?>
   <div class="warning"><?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/customer.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <div id="htabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a>
         <?php if ($customer_id) { ?>
-        <a href="#tab-transaction"><?php echo $tab_transaction; ?></a><a href="#tab-reward"><?php echo $tab_reward; ?></a>
+        <a href="#tab-history"><?php echo $tab_history; ?></a><a href="#tab-transaction"><?php echo $tab_transaction; ?></a><a href="#tab-reward"><?php echo $tab_reward; ?></a>
         <?php } ?>
         <a href="#tab-ip"><?php echo $tab_ip; ?></a></div>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -65,7 +65,6 @@
               <tr>
                 <td><?php echo $entry_password; ?></td>
                 <td><input type="password" name="password" value="<?php echo $password; ?>"  />
-                  <br />
                   <?php if ($error_password) { ?>
                   <span class="error"><?php echo $error_password; ?></span>
                   <?php  } ?></td>
@@ -138,17 +137,6 @@
                 <td><?php echo $entry_company; ?></td>
                 <td><input type="text" name="address[<?php echo $address_row; ?>][company]" value="<?php echo $address['company']; ?>" /></td>
               </tr>
-              <tr class="company-id-display">
-                <td><?php echo $entry_company_id; ?></td>
-                <td><input type="text" name="address[<?php echo $address_row; ?>][company_id]" value="<?php echo $address['company_id']; ?>" /></td>
-              </tr>
-              <tr class="tax-id-display">
-                <td><?php echo $entry_tax_id; ?></td>
-                <td><input type="text" name="address[<?php echo $address_row; ?>][tax_id]" value="<?php echo $address['tax_id']; ?>" />
-                  <?php if (isset($error_address_tax_id[$address_row])) { ?>
-                  <span class="error"><?php echo $error_address_tax_id[$address_row]; ?></span>
-                  <?php } ?></td>
-              </tr>
               <tr>
                 <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
                 <td><input type="text" name="address[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" />
@@ -210,6 +198,18 @@
           <?php } ?>
         </div>
         <?php if ($customer_id) { ?>
+        <div id="tab-history">
+          <div id="history"></div>
+          <table class="form">
+            <tr>
+              <td><?php echo $entry_comment; ?></td>
+              <td><textarea name="comment" cols="40" rows="8" style="width: 99%;"></textarea></td>
+            </tr>
+            <tr>
+              <td colspan="2" style="text-align: right;"><a id="button-history" class="button"><span><?php echo $button_add_history; ?></span></a></td>
+            </tr>
+          </table>
+        </div>
         <div id="tab-transaction">
           <table class="form">
             <tr>
@@ -257,13 +257,13 @@
               <?php if ($ips) { ?>
               <?php foreach ($ips as $ip) { ?>
               <tr>
-                <td class="left"><a onclick="window.open('http://www.geoiptool.com/en/?IP=<?php echo $ip['ip']; ?>');"><?php echo $ip['ip']; ?></a></td>
-                <td class="right"><a onclick="window.open('<?php echo $ip['filter_ip']; ?>');"><?php echo $ip['total']; ?></a></td>
+                <td class="left"><a href="http://www.geoiptool.com/en/?IP=<?php echo $ip['ip']; ?>" target="_blank"><?php echo $ip['ip']; ?></a></td>
+                <td class="right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
                 <td class="left"><?php echo $ip['date_added']; ?></td>
-                <td class="right"><?php if ($ip['blacklist']) { ?>
-                  <b>[</b> <a id="<?php echo str_replace('.', '-', $ip['ip']); ?>" onclick="removeBlacklist('<?php echo $ip['ip']; ?>');"><?php echo $text_remove_blacklist; ?></a> <b>]</b>
+                <td class="right"><?php if ($ip['ban_ip']) { ?>
+                  <b>[</b> <a id="<?php echo str_replace('.', '-', $ip['ip']); ?>" onclick="removeBanIP('<?php echo $ip['ip']; ?>');"><?php echo $text_remove_ban_ip; ?></a> <b>]</b>
                   <?php } else { ?>
-                  <b>[</b> <a id="<?php echo str_replace('.', '-', $ip['ip']); ?>" onclick="addBlacklist('<?php echo $ip['ip']; ?>');"><?php echo $text_add_blacklist; ?></a> <b>]</b>
+                  <b>[</b> <a id="<?php echo str_replace('.', '-', $ip['ip']); ?>" onclick="addBanIP('<?php echo $ip['ip']; ?>');"><?php echo $text_add_ban_ip; ?></a> <b>]</b>
                   <?php } ?></td>
               </tr>
               <?php } ?>
@@ -281,71 +281,53 @@
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'customer_group_id\']').live('change', function() {
-	var customer_group = [];
-	
-<?php foreach ($customer_groups as $customer_group) { ?>
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>] = [];
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_display'] = '<?php echo $customer_group['company_id_display']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_display'] = '<?php echo $customer_group['tax_id_display']; ?>';
-<?php } ?>	
 
-	if (customer_group[this.value]) {
-		if (customer_group[this.value]['company_id_display'] == '1') {
-			$('.company-id-display').show();
-		} else {
-			$('.company-id-display').hide();
-		}
-		
-		if (customer_group[this.value]['tax_id_display'] == '1') {
-			$('.tax-id-display').show();
-		} else {
-			$('.tax-id-display').hide();
-		}
-	}
 });
 
 $('select[name=\'customer_group_id\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 function country(element, index, zone_id) {
-	$.ajax({
-		url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('select[name=\'address[' + index + '][country_id]\']').after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
-		},
-		complete: function() {
-			$('.wait').remove();
-		},			
-		success: function(json) {
-			if (json['postcode_required'] == '1') {
-				$('#postcode-required' + index).show();
-			} else {
-				$('#postcode-required' + index).hide();
-			}
-			
-			html = '<option value=""><?php echo $text_select; ?></option>';
-			
-			if (json['zone'] != '') {
-				for (i = 0; i < json['zone'].length; i++) {
-        			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-	    			
-					if (json['zone'][i]['zone_id'] == zone_id) {
-	      				html += ' selected="selected"';
-	    			}
-	
-	    			html += '>' + json['zone'][i]['name'] + '</option>';
+  if (element.value != '') {
+		$.ajax({
+			url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
+			dataType: 'json',
+			beforeSend: function() {
+				$('select[name=\'address[' + index + '][country_id]\']').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			},
+			complete: function() {
+				$('.loading').remove();
+			},			
+			success: function(json) {
+				if (json['postcode_required'] == '1') {
+					$('#postcode-required' + index).show();
+				} else {
+					$('#postcode-required' + index).hide();
 				}
-			} else {
-				html += '<option value="0"><?php echo $text_none; ?></option>';
+				
+				html = '<option value=""><?php echo $text_select; ?></option>';
+				
+				if (json['zone'] != '') {
+					for (i = 0; i < json['zone'].length; i++) {
+						html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+						
+						if (json['zone'][i]['zone_id'] == zone_id) {
+							html += ' selected="selected"';
+						}
+		
+						html += '>' + json['zone'][i]['name'] + '</option>';
+					}
+				} else {
+					html += '<option value="0"><?php echo $text_none; ?></option>';
+				}
+				
+				$('select[name=\'address[' + index + '][zone_id]\']').html(html);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-			
-			$('select[name=\'address[' + index + '][zone_id]\']').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+		});
+	}
 }
 
 $('select[name$=\'[country_id]\']').trigger('change');
@@ -368,14 +350,6 @@ function addAddress() {
     html += '    <tr>';
     html += '      <td><?php echo $entry_company; ?></td>';
     html += '      <td><input type="text" name="address[' + address_row + '][company]" value="" /></td>';
-    html += '    </tr>';	
-    html += '    <tr class="company-id-display">';
-    html += '      <td><?php echo $entry_company_id; ?></td>';
-    html += '      <td><input type="text" name="address[' + address_row + '][company_id]" value="" /></td>';
-    html += '    </tr>';
-    html += '    <tr class="tax-id-display">';
-    html += '      <td><?php echo $entry_tax_id; ?></td>';
-    html += '      <td><input type="text" name="address[' + address_row + '][tax_id]" value="" /></td>';
     html += '    </tr>';			
     html += '    <tr>';
     html += '      <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>';
@@ -427,6 +401,39 @@ function addAddress() {
 }
 //--></script> 
 <script type="text/javascript"><!--
+$('#history .pagination a').live('click', function() {
+	$('#history').load(this.href);
+	
+	return false;
+});			
+
+$('#history').load('index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
+
+$('#button-history').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
+		type: 'post',
+		dataType: 'html',
+		data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
+		beforeSend: function() {
+			$('.success, .warning').remove();
+			$('#button-history').attr('disabled', true);
+			$('#history').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
+		},
+		complete: function() {
+			$('#button-history').attr('disabled', false);
+			$('.attention').remove();
+      		$('#tab-history textarea[name=\'comment\']').val('');
+		},
+		success: function(html) {
+			$('#history').html(html);
+			
+			$('#tab-history input[name=\'comment\']').val('');
+		}
+	});
+});
+//--></script> 
+<script type="text/javascript"><!--
 $('#transaction .pagination a').live('click', function() {
 	$('#transaction').load(this.href);
 	
@@ -435,7 +442,7 @@ $('#transaction .pagination a').live('click', function() {
 
 $('#transaction').load('index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
-function addTransaction() {
+$('#button-transaction').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
 		type: 'post',
@@ -457,7 +464,7 @@ function addTransaction() {
 			$('#tab-transaction input[name=\'description\']').val('');
 		}
 	});
-}
+});
 //--></script> 
 <script type="text/javascript"><!--
 $('#reward .pagination a').live('click', function() {
@@ -492,21 +499,25 @@ function addRewardPoints() {
 	});
 }
 
-function addBlacklist(ip) {
+function addBanIP(ip) {
+	var id = ip.replace(/\./g, '-');
+	
 	$.ajax({
-		url: 'index.php?route=sale/customer/addblacklist&token=<?php echo $token; ?>',
+		url: 'index.php?route=sale/customer/addbanip&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent(ip),
 		beforeSend: function() {
 			$('.success, .warning').remove();
 			
-			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> Please wait!</div>');			
+			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');		
 		},
 		complete: function() {
-			$('.attention').remove();
+			
 		},			
 		success: function(json) {
+			$('.attention').remove();
+			
 			if (json['error']) {
 				 $('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
 				
@@ -518,27 +529,28 @@ function addBlacklist(ip) {
 				
 				$('.success').fadeIn('slow');
 				
-				$('#' + ip.replace(/\./g, '-')).replaceWith('<a id="' + ip.replace(/\./g, '-') + '" onclick="removeBlacklist(\'' + ip + '\');"><?php echo $text_remove_blacklist; ?></a>');
+				$('#' + id).replaceWith('<a id="' + id + '" onclick="removeBanIP(\'' + ip + '\');"><?php echo $text_remove_ban_ip; ?></a>');
 			}
 		}
 	});	
 }
 
-function removeBlacklist(ip) {
+function removeBanIP(ip) {
+	var id = ip.replace(/\./g, '-');
+	
 	$.ajax({
-		url: 'index.php?route=sale/customer/removeblacklist&token=<?php echo $token; ?>',
+		url: 'index.php?route=sale/customer/removebanip&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent(ip),
 		beforeSend: function() {
 			$('.success, .warning').remove();
 			
-			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> Please wait!</div>');				
-		},
-		complete: function() {
-			$('.attention').remove();
-		},			
+			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');					
+		},	
 		success: function(json) {
+			$('.attention').remove();
+			
 			if (json['error']) {
 				 $('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
 				
@@ -550,7 +562,7 @@ function removeBlacklist(ip) {
 				
 				$('.success').fadeIn('slow');
 				
-				$('#' + ip.replace(/\./g, '-')).replaceWith('<a id="' + ip.replace(/\./g, '-') + '" onclick="addBlacklist(\'' + ip + '\');"><?php echo $text_add_blacklist; ?></a>');
+				$('#' + id).replaceWith('<a id="' + id + '" onclick="addBanIP(\'' + ip + '\');"><?php echo $text_add_ban_ip; ?></a>');
 			}
 		}
 	});	

@@ -4,11 +4,11 @@
 <?php } ?>
 <?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <h1><?php echo $heading_title; ?></h1>
   <?php if ($products) { ?>
   <table class="compare-info">
@@ -62,6 +62,7 @@
         <td><?php echo $products[$product['product_id']]['availability']; ?></td>
         <?php } ?>
       </tr>
+	  <?php if ($review_status) { ?>
       <tr>
         <td><?php echo $text_rating; ?></td>
         <?php foreach ($products as $product) { ?>
@@ -69,7 +70,8 @@
           <?php echo $products[$product['product_id']]['reviews']; ?></td>
         <?php } ?>
       </tr>
-      <tr>
+      <?php } ?>
+	  <tr>
         <td><?php echo $text_summary; ?></td>
         <?php foreach ($products as $product) { ?>
         <td class="description"><?php echo $products[$product['product_id']]['description']; ?></td>

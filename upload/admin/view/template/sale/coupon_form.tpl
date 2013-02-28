@@ -1,22 +1,22 @@
 <?php echo $header; ?>
 <div id="content">
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <?php if ($error_warning) { ?>
   <div class="warning"><?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/customer.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a>
         <?php if ($coupon_id) { ?>
-        <a href="#tab-history"><?php echo $tab_coupon_history; ?></a>
+        <a href="#tab-history"><?php echo $tab_history; ?></a>
         <?php } ?>
       </div>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -97,7 +97,7 @@
                   <?php $class = 'odd'; ?>
                   <?php foreach ($coupon_product as $coupon_product) { ?>
                   <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div id="coupon-product<?php echo $coupon_product['product_id']; ?>" class="<?php echo $class; ?>"> <?php echo $coupon_product['name']; ?><img src="view/image/delete.png" />
+                  <div id="coupon-product<?php echo $coupon_product['product_id']; ?>" class="<?php echo $class; ?>"> <?php echo $coupon_product['name']; ?><img src="view/image/delete.png" alt="" />
                     <input type="hidden" name="coupon_product[]" value="<?php echo $coupon_product['product_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -113,7 +113,7 @@
                   <?php $class = 'odd'; ?>
                   <?php foreach ($coupon_category as $coupon_category) { ?>
                   <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div id="coupon-category<?php echo $coupon_category['category_id']; ?>" class="<?php echo $class; ?>"> <?php echo $coupon_category['name']; ?><img src="view/image/delete.png" />
+                  <div id="coupon-category<?php echo $coupon_category['category_id']; ?>" class="<?php echo $class; ?>"> <?php echo $coupon_category['name']; ?><img src="view/image/delete.png" alt="" />
                     <input type="hidden" name="coupon_category[]" value="<?php echo $coupon_category['category_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -159,31 +159,8 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('input[name=\'category[]\']').bind('change', function() {
-	var filter_category_id = this;
-	
-	$.ajax({
-		url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_category_id=' +  filter_category_id.value + '&limit=10000',
-		dataType: 'json',
-		success: function(json) {
-			for (i = 0; i < json.length; i++) {
-				if ($(filter_category_id).attr('checked') == 'checked') {
-					$('#coupon-product' + json[i]['product_id']).remove();
-					
-					$('#coupon-product').append('<div id="coupon-product' + json[i]['product_id'] + '">' + json[i]['name'] + '<img src="view/image/delete.png" /><input type="hidden" name="coupon_product[]" value="' + json[i]['product_id'] + '" /></div>');
-				} else {
-					$('#coupon-product' + json[i]['product_id']).remove();
-				}			
-			}
-			
-			$('#coupon-product div:odd').attr('class', 'odd');
-			$('#coupon-product div:even').attr('class', 'even');			
-		}
-	});
-});
-
 $('input[name=\'product\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
@@ -201,7 +178,7 @@ $('input[name=\'product\']').autocomplete({
 	select: function(event, ui) {
 		$('#coupon-product' + ui.item.value).remove();
 		
-		$('#coupon-product').append('<div id="coupon-product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="coupon_product[]" value="' + ui.item.value + '" /></div>');
+		$('#coupon-product').append('<div id="coupon-product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="coupon_product[]" value="' + ui.item.value + '" /></div>');
 
 		$('#coupon-product div:odd').attr('class', 'odd');
 		$('#coupon-product div:even').attr('class', 'even');
@@ -224,7 +201,7 @@ $('#coupon-product div img').live('click', function() {
 
 
 $('input[name=\'category\']').autocomplete({
-	delay: 0,
+	delay: 500,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
@@ -243,7 +220,7 @@ $('input[name=\'category\']').autocomplete({
 	select: function(event, ui) {
 		$('#coupon-category' + ui.item.value).remove();
 		
-		$('#coupon-category').append('<div id="product-category' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="coupon_category[]" value="' + ui.item.value + '" /></div>');
+		$('#coupon-category').append('<div id="product-category' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="coupon_category[]" value="' + ui.item.value + '" /></div>');
 
 		$('#coupon-category div:odd').attr('class', 'odd');
 		$('#coupon-category div:even').attr('class', 'even');

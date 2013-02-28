@@ -1,10 +1,10 @@
 <?php echo $header; ?>
 <div id="content">
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <?php if ($error_warning) { ?>
   <div class="warning"><?php echo $error_warning; ?></div>
   <?php } ?>
@@ -14,7 +14,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/customer.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('form').attr('action', '<?php echo $approve; ?>'); $('form').submit();" class="button"><?php echo $button_approve; ?></a><a onclick="location = '<?php echo $insert; ?>'" class="button"><?php echo $button_insert; ?></a><a onclick="$('form').attr('action', '<?php echo $delete; ?>'); $('form').submit();" class="button"><?php echo $button_delete; ?></a></div>
+      <div class="buttons"><a onclick="$('#form').attr('action', '<?php echo $approve; ?>'); $('#form').submit();" class="button"><?php echo $button_approve; ?></a><a href="<?php echo $insert; ?>" class="button"><?php echo $button_insert; ?></a><a onclick="$('#form').attr('action', '<?php echo $delete; ?>'); $('#form').submit();" class="button"><?php echo $button_delete; ?></a></div>
     </div>
     <div class="content">
       <form action="" method="post" enctype="multipart/form-data" id="form">
@@ -83,7 +83,7 @@
                   <?php } else { ?>
                   <option value="1"><?php echo $text_enabled; ?></option>
                   <?php } ?>
-                  <?php if (!is_null($filter_status) && !$filter_status) { ?>
+                  <?php if (($filter_status !== null) && !$filter_status) { ?>
                   <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } else { ?>
                   <option value="0"><?php echo $text_disabled; ?></option>
@@ -96,7 +96,7 @@
                   <?php } else { ?>
                   <option value="1"><?php echo $text_yes; ?></option>
                   <?php } ?>
-                  <?php if (!is_null($filter_approved) && !$filter_approved) { ?>
+                  <?php if (($filter_approved !== null) && !$filter_approved) { ?>
                   <option value="0" selected="selected"><?php echo $text_no; ?></option>
                   <?php } else { ?>
                   <option value="0"><?php echo $text_no; ?></option>

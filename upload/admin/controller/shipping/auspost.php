@@ -3,13 +3,13 @@ class ControllerShippingAusPost extends Controller {
 	private $error = array(); 
 	
 	public function index() {   
-		$this->load->language('shipping/auspost');
+		$this->language->load('shipping/auspost');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/setting');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('auspost', $this->request->post);             
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -52,21 +52,18 @@ class ControllerShippingAusPost extends Controller {
 		$this->data['breadcrumbs'] = array();
 		
 		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 		);
 		
 		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_shipping'),
-			'href'      => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('text_shipping'),
+			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
 		);
 		
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('shipping/auspost', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('shipping/auspost', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
 		$this->data['action'] = $this->url->link('shipping/auspost', 'token=' . $this->session->data['token'], 'SSL');
@@ -113,11 +110,19 @@ class ControllerShippingAusPost extends Controller {
 			$this->data['auspost_tax_class_id'] = $this->config->get('auspost_tax_class_id');
 		}
 		
+		$this->load->model('localisation/tax_class');
+		
+		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
+		
 		if (isset($this->request->post['auspost_geo_zone_id'])) {
 			$this->data['auspost_geo_zone_id'] = $this->request->post['auspost_geo_zone_id'];
 		} else {
 			$this->data['auspost_geo_zone_id'] = $this->config->get('auspost_geo_zone_id');
 		}
+		
+		$this->load->model('localisation/geo_zone');
+		
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 		
 		if (isset($this->request->post['auspost_status'])) {
 			$this->data['auspost_status'] = $this->request->post['auspost_status'];
@@ -131,14 +136,6 @@ class ControllerShippingAusPost extends Controller {
 			$this->data['auspost_sort_order'] = $this->config->get('auspost_sort_order');
 		}                               
 		
-		$this->load->model('localisation/tax_class');
-		
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
-		
-		$this->load->model('localisation/geo_zone');
-		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-		
 		$this->template = 'shipping/auspost.tpl';
 		$this->children = array(
 			'common/header',        
@@ -148,7 +145,7 @@ class ControllerShippingAusPost extends Controller {
 		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'shipping/auspost')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

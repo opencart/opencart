@@ -3,7 +3,7 @@ class ControllerShippingItem extends Controller {
 	private $error = array(); 
 	
 	public function index() {  
-		$this->load->language('shipping/item');
+		$this->language->load('shipping/item');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -42,21 +42,18 @@ class ControllerShippingItem extends Controller {
 		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_shipping'),
-			'href'      => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('text_shipping'),
+			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('shipping/item', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('shipping/item', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
 		$this->data['action'] = $this->url->link('shipping/item', 'token=' . $this->session->data['token'], 'SSL');
@@ -74,12 +71,20 @@ class ControllerShippingItem extends Controller {
 		} else {
 			$this->data['item_tax_class_id'] = $this->config->get('item_tax_class_id');
 		}
+		
+		$this->load->model('localisation/tax_class');
+		
+		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 				
 		if (isset($this->request->post['item_geo_zone_id'])) {
 			$this->data['item_geo_zone_id'] = $this->request->post['item_geo_zone_id'];
 		} else {
 			$this->data['item_geo_zone_id'] = $this->config->get('item_geo_zone_id');
 		}
+		
+		$this->load->model('localisation/geo_zone');
+		
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 		
 		if (isset($this->request->post['item_status'])) {
 			$this->data['item_status'] = $this->request->post['item_status'];
@@ -92,14 +97,6 @@ class ControllerShippingItem extends Controller {
 		} else {
 			$this->data['item_sort_order'] = $this->config->get('item_sort_order');
 		}	
-		
-		$this->load->model('localisation/tax_class');
-		
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
-		
-		$this->load->model('localisation/geo_zone');
-		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		$this->template = 'shipping/item.tpl';
 		$this->children = array(
@@ -110,7 +107,7 @@ class ControllerShippingItem extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'shipping/item')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

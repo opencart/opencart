@@ -4,11 +4,11 @@
 <?php } ?>
 <?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <h1><?php echo $heading_title; ?></h1>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <h2><?php echo $text_your_details; ?></h2>
@@ -119,15 +119,15 @@
   </form>
   <?php echo $content_bottom; ?></div>
 <script type="text/javascript"><!--
-$('select[name=\'country_id\']').bind('change', function() {
+$('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=affiliate/edit/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('select[name=\'country_id\']').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

@@ -3,7 +3,7 @@ class ControllerToolErrorLog extends Controller {
 	private $error = array();
 	
 	public function index() {		
-		$this->load->language('tool/error_log');
+		$this->language->load('tool/error_log');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -22,15 +22,13 @@ class ControllerToolErrorLog extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),       		
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
 		$this->data['clear'] = $this->url->link('tool/error_log/clear', 'token=' . $this->session->data['token'], 'SSL');
@@ -53,7 +51,7 @@ class ControllerToolErrorLog extends Controller {
 	}
 	
 	public function clear() {
-		$this->load->language('tool/error_log');
+		$this->language->load('tool/error_log');
 		
 		$file = DIR_LOGS . $this->config->get('config_error_filename');
 		

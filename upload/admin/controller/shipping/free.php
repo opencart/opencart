@@ -3,7 +3,7 @@ class ControllerShippingFree extends Controller {
 	private $error = array(); 
 	
 	public function index() {   
-		$this->load->language('shipping/free');
+		$this->language->load('shipping/free');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -41,21 +41,18 @@ class ControllerShippingFree extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_shipping'),
-			'href'      => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('text_shipping'),
+			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('shipping/free', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('shipping/free', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
 		$this->data['action'] = $this->url->link('shipping/free', 'token=' . $this->session->data['token'], 'SSL');
@@ -74,6 +71,10 @@ class ControllerShippingFree extends Controller {
 			$this->data['free_geo_zone_id'] = $this->config->get('free_geo_zone_id');
 		}
 		
+		$this->load->model('localisation/geo_zone');
+		
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
 		if (isset($this->request->post['free_status'])) {
 			$this->data['free_status'] = $this->request->post['free_status'];
 		} else {
@@ -85,10 +86,6 @@ class ControllerShippingFree extends Controller {
 		} else {
 			$this->data['free_sort_order'] = $this->config->get('free_sort_order');
 		}				
-		
-		$this->load->model('localisation/geo_zone');
-		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 								
 		$this->template = 'shipping/free.tpl';
 		$this->children = array(
@@ -99,7 +96,7 @@ class ControllerShippingFree extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'shipping/free')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

@@ -6,8 +6,8 @@ $_['heading_title']          = 'Category';
 $_['text_success']           = 'Success: You have modified categories!';
 $_['text_default']           = 'Default';
 $_['text_image_manager']     = 'Image Manager';
-$_['text_browse']            = 'Browse Files';
-$_['text_clear']             = 'Clear Image';
+$_['text_browse']            = 'Browse';
+$_['text_clear']             = 'Clear';
 
 // Column
 $_['column_name']            = 'Category Name';
@@ -20,6 +20,7 @@ $_['entry_meta_keyword'] 	 = 'Meta Tag Keywords:';
 $_['entry_meta_description'] = 'Meta Tag Description:';
 $_['entry_description']      = 'Description:';
 $_['entry_parent']           = 'Parent:';
+$_['entry_filter']           = 'Filters:<br /><span class="help">(Autocomplete)</span>';
 $_['entry_store']            = 'Stores:';
 $_['entry_keyword']          = 'SEO Keyword:<br /><span class="help">Do not use spaces instead replace spaces with - and make sure the keyword is globally unique.</span>';
 $_['entry_image']            = 'Image:';

@@ -1,7 +1,7 @@
 <?php  
 class ControllerReportCustomerOnline extends Controller {  
   	public function index() {
-		$this->load->language('report/customer_online');
+		$this->language->load('report/customer_online');
 		
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -40,15 +40,13 @@ class ControllerReportCustomerOnline extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token']),
-       		'text'      => $this->language->get('text_home'),
-      		'separator' => false
+       		'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+       		'text' => $this->language->get('text_home')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'href'      => $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url),
-       		'text'      => $this->language->get('heading_title'),
-      		'separator' => ' :: '
+       		'href' => $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+       		'text' => $this->language->get('heading_title')
    		);
 		
 		$this->load->model('report/online');
@@ -73,7 +71,7 @@ class ControllerReportCustomerOnline extends Controller {
 			if ($result['customer_id']) {
 				$action[] = array(
 					'text' => 'Edit',
-					'href' => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'])
+					'href' => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'], 'SSL')
 				);
 			}
 			
@@ -124,7 +122,7 @@ class ControllerReportCustomerOnline extends Controller {
 		$pagination->total = $customer_total;
 		$pagination->page = $page;
 		$pagination->limit = 20; 
-		$pagination->url = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url . '&page={page}');
+		$pagination->url = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
 		

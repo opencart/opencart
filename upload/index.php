@@ -1,10 +1,12 @@
 <?php
 // Version
-define('VERSION', '1.5.5');
+define('VERSION', '1.6.0');
 
 // Configuration
-require_once('config.php');
-   
+if (file_exists('config.php')) {
+	require_once('config.php');
+}  
+
 // Install 
 if (!defined('DIR_APPLICATION')) {
 	header('Location: install/index.php');
@@ -125,13 +127,7 @@ $cache = new Cache();
 $registry->set('cache', $cache); 
 
 // Session
-if (isset($request->get['session_id'])) {
-	$session_id = $request->get['session_id'];
-} else {
-	$session_id = '';
-}
-
-$session = new Session($session_id);
+$session = new Session();
 $registry->set('session', $session);
 
 // Language Detection
@@ -145,7 +141,7 @@ foreach ($query->rows as $result) {
 
 $detect = '';
 
-if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && ($request->server['HTTP_ACCEPT_LANGUAGE'])) { 
+if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_ACCEPT_LANGUAGE']) { 
 	$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
 	
 	foreach ($browser_languages as $browser_language) {
@@ -221,14 +217,11 @@ $registry->set('encryption', new Encryption($config->get('config_encryption')));
 // Front Controller 
 $controller = new Front($registry);
 
-// SEO URL's
-$controller->addPreAction(new Action('common/seo_url'));	
-
-// Shared Cookies
-$controller->addPreAction(new Action('common/shared'));
-
 // Maintenance Mode
 $controller->addPreAction(new Action('common/maintenance'));
+
+// SEO URL's
+$controller->addPreAction(new Action('common/seo_url'));	
 	
 // Router
 if (isset($request->get['route'])) {

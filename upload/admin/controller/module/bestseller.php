@@ -3,7 +3,7 @@ class ControllerModuleBestSeller extends Controller {
 	private $error = array(); 
 	
 	public function index() {   
-		$this->load->language('module/bestseller');
+		$this->language->load('module/bestseller');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -27,7 +27,7 @@ class ControllerModuleBestSeller extends Controller {
 		$this->data['text_content_bottom'] = $this->language->get('text_content_bottom');		
 		$this->data['text_column_left'] = $this->language->get('text_column_left');
 		$this->data['text_column_right'] = $this->language->get('text_column_right');
-		
+
 		$this->data['entry_limit'] = $this->language->get('entry_limit');
 		$this->data['entry_image'] = $this->language->get('entry_image');
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
@@ -55,21 +55,18 @@ class ControllerModuleBestSeller extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_module'),
-			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('text_module'),
+			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('module/bestseller', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('module/bestseller', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
 		$this->data['action'] = $this->url->link('module/bestseller', 'token=' . $this->session->data['token'], 'SSL');
@@ -97,7 +94,7 @@ class ControllerModuleBestSeller extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'module/bestseller')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

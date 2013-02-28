@@ -3,7 +3,7 @@ class ControllerUserUserPermission extends Controller {
 	private $error = array();
  
 	public function index() {
-		$this->load->language('user/user_group');
+		$this->language->load('user/user_group');
  
 		$this->document->setTitle($this->language->get('heading_title'));
  		
@@ -13,7 +13,7 @@ class ControllerUserUserPermission extends Controller {
 	}
 
 	public function insert() {
-		$this->load->language('user/user_group');
+		$this->language->load('user/user_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -45,7 +45,7 @@ class ControllerUserUserPermission extends Controller {
 	}
 
 	public function update() {
-		$this->load->language('user/user_group');
+		$this->language->load('user/user_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -77,7 +77,7 @@ class ControllerUserUserPermission extends Controller {
 	}
 
 	public function delete() { 
-		$this->load->language('user/user_group');
+		$this->language->load('user/user_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -110,7 +110,7 @@ class ControllerUserUserPermission extends Controller {
 		$this->getList();
 	}
 
-	private function getList() {
+	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -146,15 +146,13 @@ class ControllerUserUserPermission extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('user/user_permission', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('user/user_permission', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 							
 		$this->data['insert'] = $this->url->link('user/user_permission/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -258,7 +256,7 @@ class ControllerUserUserPermission extends Controller {
 		$this->response->setOutput($this->render());
  	}
 
-	private function getForm() {
+	protected function getForm() {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		
 		$this->data['text_select_all'] = $this->language->get('text_select_all');
@@ -300,15 +298,13 @@ class ControllerUserUserPermission extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('user/user_permission', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('user/user_permission', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 			
 		if (!isset($this->request->get['user_group_id'])) {
@@ -383,7 +379,7 @@ class ControllerUserUserPermission extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validateForm() {
+	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'user/user_permission')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -399,7 +395,7 @@ class ControllerUserUserPermission extends Controller {
 		}
 	}
 
-	private function validateDelete() {
+	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'user/user_permission')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

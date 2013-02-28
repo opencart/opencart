@@ -1,17 +1,17 @@
 <?php echo $header; ?>
 <div id="content">
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <?php if ($error_warning) { ?>
   <div class="warning"><?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/shipping.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <div class="vtabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-1st-class-standard"><?php echo $tab_1st_class_standard; ?></a><a href="#tab-1st-class-recorded"><?php echo $tab_1st_class_recorded; ?></a><a href="#tab-2nd-class-standard"><?php echo $tab_2nd_class_standard; ?></a><a href="#tab-2nd-class-recorded"><?php echo $tab_2nd_class_recorded; ?></a><a href="#tab-special-delivery-500"><?php echo $tab_special_delivery_500; ?></a><a href="#tab-special-delivery-1000"><?php echo $tab_special_delivery_1000; ?></a><a href="#tab-special-delivery-2500"><?php echo $tab_special_delivery_2500; ?></a><a href="#tab-standard-parcels"><?php echo $tab_standard_parcels; ?></a><a href="#tab-airmail"><?php echo $tab_airmail; ?></a><a href="#tab-international-signed"><?php echo $tab_international_signed; ?></a><a href="#tab-airsure"><?php echo $tab_airsure; ?></a><a href="#tab-surface"><?php echo $tab_surface; ?></a></div>

@@ -26,21 +26,18 @@ class ControllerAccountPassword extends Controller {
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),       	
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	); 
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', 'SSL')
       	);
 		
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('account/password', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('account/password', '', 'SSL')
       	);
 			
     	$this->data['heading_title'] = $this->language->get('heading_title');
@@ -99,7 +96,7 @@ class ControllerAccountPassword extends Controller {
 		$this->response->setOutput($this->render());			
   	}
   
-  	private function validate() {
+  	protected function validate() {
     	if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
       		$this->error['password'] = $this->language->get('error_password');
     	}

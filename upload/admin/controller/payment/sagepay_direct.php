@@ -3,7 +3,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('payment/sagepay_direct');
+		$this->language->load('payment/sagepay_direct');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -56,21 +56,18 @@ class ControllerPaymentSagepayDirect extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),      		
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_payment'),
-			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('text_payment'),
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('payment/sagepay_direct', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('payment/sagepay_direct', 'token=' . $this->session->data['token'], 'SSL')
    		);
 				
 		$this->data['action'] = $this->url->link('payment/sagepay_direct', 'token=' . $this->session->data['token'], 'SSL');
@@ -149,7 +146,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/sagepay_direct')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

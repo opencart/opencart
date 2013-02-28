@@ -1,10 +1,10 @@
 <?php echo $header; ?>
 <div id="content">
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/report.png" alt="" /> <?php echo $heading_title; ?></h1>
@@ -33,11 +33,11 @@
           <?php if ($customers) { ?>
           <?php foreach ($customers as $customer) { ?>
           <tr>
-            <td class="left"><a onclick="window.open('http://whatismyipaddress.com/ip/<?php echo $customer['ip']; ?>');"><?php echo $customer['ip']; ?></a></td>
+            <td class="left"><a href="http://whatismyipaddress.com/ip/<?php echo $customer['ip']; ?>" target="_blank"><?php echo $customer['ip']; ?></a></td>
             <td class="left"><?php echo $customer['customer']; ?></td>
-            <td class="left"><a onclick="window.open('<?php echo $customer['url']; ?>');"><?php echo implode('<br/>', str_split($customer['url'], 30)); ?></a></td>
+            <td class="left"><a href="<?php echo $customer['url']; ?>" target="_blank"><?php echo implode('<br/>', str_split($customer['url'], 30)); ?></a></td>
             <td class="left"><?php if ($customer['referer']) { ?>
-              <a onclick="window.open('<?php echo $customer['referer']; ?>');"><?php echo implode('<br/>', str_split($customer['referer'], 30)); ?></a>
+              <a href="<?php echo $customer['referer']; ?>" target="_blank"><?php echo implode('<br/>', str_split($customer['referer'], 30)); ?></a>
               <?php } ?></td>
             <td class="left"><?php echo $customer['date_added']; ?></td>
             <td class="right"><?php foreach ($customer['action'] as $action) { ?>

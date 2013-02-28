@@ -1,4 +1,4 @@
-<?php  
+<?php
 class ControllerCheckoutCheckout extends Controller { 
 	public function index() {
 		// Validate cart has products and has stock.
@@ -27,24 +27,24 @@ class ControllerCheckoutCheckout extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title')); 
 		
+		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
+		$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
+					
 		$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	); 
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_cart'),
-			'href'      => $this->url->link('checkout/cart'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('text_cart'),
+			'href' => $this->url->link('checkout/cart')
       	);
 		
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('checkout/checkout', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('checkout/checkout', '', 'SSL')
       	);
 					
 	    $this->data['heading_title'] = $this->language->get('heading_title');
@@ -56,7 +56,6 @@ class ControllerCheckoutCheckout extends Controller {
 		$this->data['text_checkout_shipping_method'] = $this->language->get('text_checkout_shipping_method');
 		$this->data['text_checkout_payment_method'] = $this->language->get('text_checkout_payment_method');		
 		$this->data['text_checkout_confirm'] = $this->language->get('text_checkout_confirm');
-		$this->data['text_modify'] = $this->language->get('text_modify');
 		
 		$this->data['logged'] = $this->customer->isLogged();
 		$this->data['shipping_required'] = $this->cart->hasShipping();	

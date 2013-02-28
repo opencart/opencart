@@ -38,6 +38,13 @@ form {
 label {
 	cursor: pointer;
 }
+#container {
+	height: 100%;
+}
+body > #container {
+	height: auto;
+	min-height: 100%;
+}
 #header .div1 {
 	height: 56px;
 	padding: 0px 30px;
@@ -88,64 +95,56 @@ label {
 }
 #menu > ul a {
 	display: block;
-	color: #FFFFFF;
 	text-decoration: none;
-	padding: 5px;
+}
+#menu > ul li {
+	float: left;
+	list-style: none;
 }
 #menu > ul > li + li {
 	background: url('../image/split.png') center left no-repeat;
 }
-#menu > ul .top, #menu > ul li li.sfhover {
+#menu > ul .top {
 	padding: 10px 15px 9px 17px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #FFFFFF;
 	text-align: center;
 }
+#menu > ul li ul {
+	display: none;
+	position: absolute;
+}
+#menu > ul li:hover > ul {
+	display: block;
+}
 #menu > ul ul li {
-	padding: 2px;
+	padding: 0px;
+	clear: both;
 }
 #menu > ul .selected .top {
 	background: url('../image/selected.png') repeat-x;
 	color: #FFFFFF;
 }
-#menu > ul .selected:hover a.top, #menu > ul .sfhover a.top {
-}
 #menu > ul .parent {
-	background: url('../image/arrow-right.png') 95% center no-repeat;
-}
-#menu > ul li {
-	float: left;
-	list-style: none;
-}
-#menu > ul li ul {
-	position: absolute;
-}
-#menu > ul li li {
-	clear: both;
-}
-#menu > ul li ul a {
-	color: #FFFFFF;
-	height: 15px;
-	width: 145px;
+	background-image: url('../image/arrow-right.png');
+	background-position: 95% center;
+	background-repeat: no-repeat;
 }
 #menu > ul li ul ul {
-	margin: -27px 0 0 157px;
+	margin: -29px 0 0 161px;
 }
-#menu > ul li li:hover, #menu > ul li li.sfhover {
-	background: #C55B27;
-	color: #000000;
+#menu > ul li li a {
+	padding: 7px;
+	color: #FFFFFF;
+	width: 147px;
 }
-#container {
-	height: 100%;
-}
-body > #container {
-	height: auto;
-	min-height: 100%;
+#menu > ul li li > a:hover {
+	background-color: #C15C2A;
 }
 #content {
 	background: #FFFFFF url('../image/background.png') 0px 1px repeat-x;
-	padding: 10px 30px 0px 30px;
+	padding: 24px 30px 0px 30px;
 	min-width: 900px;
 	padding-bottom: 128px;
 }
@@ -164,10 +163,36 @@ body > #container {
 	color: #333;
 	text-decoration: underline;
 }
-.breadcrumb, .breadcrumb a {
-	font-size: 12px;
-	color: #666;
-	margin-bottom: 15px;
+.breadcrumb {
+	list-style: none;
+	overflow: hidden;
+	border: 1px solid #E5E5E5;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	border-radius: 4px;
+	margin: 0px 0px 17px 0px;
+	padding: 0;
+}
+.breadcrumb li {
+	float: left;
+	line-height: 30px;
+	background: url('../image/breadcrumb.png') top right no-repeat;
+}
+.breadcrumb li:first-child {
+	padding: 0px 15px 0px 5px;
+}
+.breadcrumb li + li {
+	padding: 0px 25px 0px 15px;
+}
+.breadcrumb li a {
+	font-weight: bold;
+	color: #464646;
+	text-decoration: none;
+}
+.breadcrumb li:first-child a {
+	color: transparent;
+	background: url('../image/glyphicons.png') 8px -65px no-repeat;
 }
 .success {
 	padding: 10px 10px 10px 33px;
@@ -267,13 +292,13 @@ body > #container {
 .box > .heading .buttons .button {
 	margin-left: 5px;
 }
-.box > .content h2 { 
+.box > .content h2 {
 	text-transform: uppercase;
 	color: #FF802B;
 	font-size: 15px;
 	font-weight: bold;
 	padding-bottom: 3px;
-	border-bottom: 1px dotted #000000;	
+	border-bottom: 1px dotted #000000;
 }
 .box > .content {
 	padding: 10px;
@@ -283,16 +308,18 @@ body > #container {
 	min-height: 300px;
 	overflow: auto;
 }
-a.button, .list a.button {
+a.button, input.button, .list a.button {
 	text-decoration: none;
 	color: #FFF;
 	display: inline-block;
 	padding: 5px 15px 5px 15px;
 	background: #003A88;
+	border: 0px;
 	-webkit-border-radius: 10px 10px 10px 10px;
 	-moz-border-radius: 10px 10px 10px 10px;
 	-khtml-border-radius: 10px 10px 10px 10px;
 	border-radius: 10px 10px 10px 10px;
+	cursor: pointer;
 }
 .list {
 	border-collapse: collapse;
@@ -322,6 +349,9 @@ a.button, .list a.button {
 	padding: 0px 5px;
 	background: #FFFFFF;
 }
+.list tbody tr:hover td {
+	background-color: #FFFFCB;
+}
 .list .left {
 	text-align: left;
 	padding: 7px;
@@ -342,7 +372,7 @@ a.button, .list a.button {
 	padding-right: 15px;
 	background: url('../image/desc.png') right center no-repeat;
 }
-.list tr.filter td {
+.list tr.filter td, .list tr:hover.filter td {
 	padding: 5px;
 	background: #E7EFEF;
 }

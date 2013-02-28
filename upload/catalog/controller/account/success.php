@@ -8,21 +8,18 @@ class ControllerAccountSuccess extends Controller {
 		$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),       	
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	); 
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', 'SSL')
       	);
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_success'),
-			'href'      => $this->url->link('account/success'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('text_success'),
+			'href' => $this->url->link('account/success')
       	);
 
     	$this->data['heading_title'] = $this->language->get('heading_title');
@@ -40,7 +37,7 @@ class ControllerAccountSuccess extends Controller {
     	$this->data['button_continue'] = $this->language->get('button_continue');
 		
 		if ($this->cart->hasProducts()) {
-			$this->data['continue'] = $this->url->link('checkout/cart', '', 'SSL');
+			$this->data['continue'] = $this->url->link('checkout/cart');
 		} else {
 			$this->data['continue'] = $this->url->link('account/account', '', 'SSL');
 		}

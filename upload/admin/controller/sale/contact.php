@@ -3,7 +3,7 @@ class ControllerSaleContact extends Controller {
 	private $error = array();
 	 
 	public function index() {
-		$this->load->language('sale/contact');
+		$this->language->load('sale/contact');
  
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -35,15 +35,13 @@ class ControllerSaleContact extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/contact', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/contact', 'token=' . $this->session->data['token'], 'SSL')
    		);
 				
     	$this->data['cancel'] = $this->url->link('sale/contact', 'token=' . $this->session->data['token'], 'SSL');
@@ -66,7 +64,7 @@ class ControllerSaleContact extends Controller {
 	}
 	
 	public function send() {
-		$this->load->language('sale/contact');
+		$this->language->load('sale/contact');
 		
 		$json = array();
 		

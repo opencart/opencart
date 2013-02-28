@@ -1,7 +1,7 @@
 <?php
 class ModelShippingFedex extends Model {
 	function getQuote($address) {
-		$this->load->language('shipping/fedex');
+		$this->language->load('shipping/fedex');
 		
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('fedex_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 	
@@ -157,6 +157,8 @@ class ModelShippingFedex extends Model {
 	
 			if ($dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue == 'FAILURE' || $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue == 'ERROR') {
 				$error = $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue;
+				
+				$this->log->write('FEDEX :: ' . $response);
 			} else {
 				$rate_reply_details = $dom->getElementsByTagName('RateReplyDetails');
 				

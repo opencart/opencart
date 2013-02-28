@@ -1,17 +1,17 @@
 <?php echo $header; ?>
 <div id="content">
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <?php if ($error_warning) { ?>
   <div class="warning"><?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/download.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -28,7 +28,7 @@
           </tr>
           <tr>
             <td><?php echo $entry_filename; ?></td>
-            <td><input type="text" name="filename" value="<?php echo $filename; ?>" /> <a id="button-upload" class="button"><?php echo $button_upload; ?></a>
+            <td><input type="text" name="filename" value="<?php echo $filename; ?>" /> <input type="button" value="<?php echo $button_upload; ?>" id="button-upload" class="button" onclick="$('input[name=\'file\']').click();" />
               <?php if ($error_filename) { ?>
               <span class="error"><?php echo $error_filename; ?></span>
               <?php } ?></td>
@@ -59,33 +59,45 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/jquery/ajaxupload.js"></script> 
+<div style="display: none;">
+  <form enctype="multipart/form-data">
+    <input type="file" name="file" id="file" />
+  </form>
+</div>
 <script type="text/javascript"><!--
-new AjaxUpload('#button-upload', {
-	action: 'index.php?route=catalog/download/upload&token=<?php echo $token; ?>',
-	name: 'file',
-	autoSubmit: true,
-	responseType: 'json',
-	onSubmit: function(file, extension) {
-		$('#button-upload').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-		$('#button-upload').attr('disabled', true);
-	},
-	onComplete: function(file, json) {
-		$('#button-upload').attr('disabled', false);
-		
-		if (json['success']) {
-			alert(json['success']);
-			
-			$('input[name=\'filename\']').attr('value', json['filename']);
-			$('input[name=\'mask\']').attr('value', json['mask']);
-		}
-		
-		if (json['error']) {
-			alert(json['error']);
-		}
-		
-		$('.loading').remove();	
-	}
+$('#file').on('change', function() {
+    $.ajax({
+        url: 'index.php?route=catalog/download/upload&token=<?php echo $token; ?>',
+        type: 'post',		
+		dataType: 'json',
+		data: new FormData($(this).parent()[0]),
+		beforeSend: function() {
+			$('#button-upload').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('#button-upload').attr('disabled', true);
+		},	
+		complete: function() {
+			$('.loading').remove();
+			$('#button-upload').attr('disabled', false);
+		},		
+		success: function(json) {
+			if (json['error']) {
+				alert(json['error']);
+			}
+						
+			if (json['success']) {
+				alert(json['success']);
+				
+				$('input[name=\'filename\']').attr('value', json['filename']);
+				$('input[name=\'mask\']').attr('value', json['mask']);
+			}
+		},			
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		},
+        cache: false,
+        contentType: false,
+        processData: false
+    });
 });
 //--></script> 
 <?php echo $footer; ?>

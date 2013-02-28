@@ -27,12 +27,12 @@ if (ini_get('register_globals')) {
 // Magic Quotes Fix
 if (ini_get('magic_quotes_gpc')) {
 	function clean($data) {
-   		if (is_array($data)) {
-  			foreach ($data as $key => $value) {
-    			$data[clean($key)] = clean($value);
-  			}
+		if (is_array($data)) {
+			foreach ($data as $key => $value) {
+				$data[clean($key)] = clean($value);
+			}
 		} else {
-  			$data = stripslashes($data);
+			$data = stripslashes($data);
 		}
 	
 		return $data;
@@ -67,6 +67,10 @@ if (!isset($_SERVER['REQUEST_URI'])) {
 	if (isset($_SERVER['QUERY_STRING'])) { 
 		$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING']; 
 	} 
+}
+
+if (!isset($_SERVER['HTTP_HOST'])) {
+	$_SERVER['HTTP_HOST'] = getenv('HTTP_HOST');
 }
 
 // Helper

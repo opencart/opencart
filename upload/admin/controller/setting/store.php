@@ -3,7 +3,7 @@ class ControllerSettingStore extends Controller {
 	private $error = array(); 
 
 	public function index() {
-		$this->load->language('setting/store');
+		$this->language->load('setting/store');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		 
@@ -13,7 +13,7 @@ class ControllerSettingStore extends Controller {
 	}
 	      
   	public function insert() {
-    	$this->load->language('setting/store');
+    	$this->language->load('setting/store');
 
     	$this->document->setTitle($this->language->get('heading_title')); 
 		
@@ -35,7 +35,7 @@ class ControllerSettingStore extends Controller {
   	}
 
   	public function update() {
-    	$this->load->language('setting/store');
+    	$this->language->load('setting/store');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -57,7 +57,7 @@ class ControllerSettingStore extends Controller {
   	}
 
   	public function delete() {
-    	$this->load->language('setting/store');
+    	$this->language->load('setting/store');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -80,7 +80,7 @@ class ControllerSettingStore extends Controller {
     	$this->getList();
   	}
 	
-	private function getList() {
+	protected function getList() {
 		$url = '';
 			
 		if (isset($this->request->get['page'])) {
@@ -90,15 +90,13 @@ class ControllerSettingStore extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL')
    		);
 							
 		$this->data['insert'] = $this->url->link('setting/store/insert', 'token=' . $this->session->data['token'], 'SSL');
@@ -211,6 +209,7 @@ class ControllerSettingStore extends Controller {
 		$this->data['entry_language'] = $this->language->get('entry_language');
 		$this->data['entry_currency'] = $this->language->get('entry_currency');
 		$this->data['entry_catalog_limit'] = $this->language->get('entry_catalog_limit');
+		$this->data['entry_list_description_limit'] = $this->language->get('entry_list_description_limit');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
 		$this->data['entry_tax_default'] = $this->language->get('entry_tax_default');
 		$this->data['entry_tax_customer'] = $this->language->get('entry_tax_customer');		
@@ -362,18 +361,22 @@ class ControllerSettingStore extends Controller {
 			$this->data['error_catalog_limit'] = '';
 		}
 		
+		if (isset($this->error['list_description_limit'])) {
+			$this->data['error_list_description_limit'] = $this->error['list_description_limit'];
+		} else {
+			$this->data['error_list_description_limit'] = '';
+		}
+		
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
 		if (isset($this->session->data['success'])) {
@@ -557,7 +560,15 @@ class ControllerSettingStore extends Controller {
 		} elseif (isset($store_info['config_catalog_limit'])) {
 			$this->data['config_catalog_limit'] = $store_info['config_catalog_limit'];	
 		} else {
-			$this->data['config_catalog_limit'] = '12';
+			$this->data['config_catalog_limit'] = '15';
+		}	
+		
+		if (isset($this->request->post['config_list_description_limit'])) {
+			$this->data['config_list_description_limit'] = $this->request->post['config_list_description_limit'];
+		} elseif (isset($store_info['config_list_description_limit'])) {
+			$this->data['config_list_description_limit'] = $store_info['config_list_description_limit'];	
+		} else {
+			$this->data['config_list_description_limit'] = '100';
 		}		
 		
 		if (isset($this->request->post['config_tax'])) {
@@ -869,7 +880,7 @@ class ControllerSettingStore extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validateForm() {
+	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'setting/store')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -946,6 +957,10 @@ class ControllerSettingStore extends Controller {
 			$this->error['catalog_limit'] = $this->language->get('error_limit');
 		}
 		
+		if (!$this->request->post['config_list_description_limit']) {
+			$this->error['list_description_limit'] = $this->language->get('error_limit');
+		}
+		
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
@@ -957,7 +972,7 @@ class ControllerSettingStore extends Controller {
 		}
 	}
 
-	private function validateDelete() {
+	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'setting/store')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

@@ -3,7 +3,7 @@ class ControllerLocalisationStockStatus extends Controller {
 	private $error = array(); 
    
   	public function index() {
-		$this->load->language('localisation/stock_status');
+		$this->language->load('localisation/stock_status');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -13,7 +13,7 @@ class ControllerLocalisationStockStatus extends Controller {
   	}
               
   	public function insert() {
-		$this->load->language('localisation/stock_status');
+		$this->language->load('localisation/stock_status');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -45,7 +45,7 @@ class ControllerLocalisationStockStatus extends Controller {
   	}
 
   	public function update() {
-		$this->load->language('localisation/stock_status');
+		$this->language->load('localisation/stock_status');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -77,7 +77,7 @@ class ControllerLocalisationStockStatus extends Controller {
   	}
 
   	public function delete() {
-		$this->load->language('localisation/stock_status');
+		$this->language->load('localisation/stock_status');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -110,7 +110,7 @@ class ControllerLocalisationStockStatus extends Controller {
     	$this->getList();
   	}
     
-  	private function getList() {
+  	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -146,15 +146,13 @@ class ControllerLocalisationStockStatus extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 							
 		$this->data['insert'] = $this->url->link('localisation/stock_status/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -258,7 +256,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		$this->response->setOutput($this->render());
   	}
   
-  	private function getForm() {
+  	protected function getForm() {
      	$this->data['heading_title'] = $this->language->get('heading_title');
 
     	$this->data['entry_name'] = $this->language->get('entry_name');
@@ -296,15 +294,13 @@ class ControllerLocalisationStockStatus extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		if (!isset($this->request->get['stock_status_id'])) {
@@ -336,7 +332,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		$this->response->setOutput($this->render());	
   	}
   	
-	private function validateForm() {
+	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'localisation/stock_status')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -354,7 +350,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		}
   	}
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'localisation/stock_status')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}

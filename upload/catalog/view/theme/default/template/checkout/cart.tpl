@@ -10,11 +10,11 @@
 <?php } ?>
 <?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <h1><?php echo $heading_title; ?>
     <?php if ($weight) { ?>
     &nbsp;(<?php echo $weight; ?>)
@@ -196,7 +196,7 @@
   </div>
   <?php echo $content_bottom; ?></div>
 <script type="text/javascript"><!--
-$('input[name=\'next\']').bind('change', function() {
+$('input[name=\'next\']').on('change', function() {
 	$('.cart-module > div').hide();
 	
 	$('#' + this.value).show();
@@ -212,11 +212,11 @@ $('#button-quote').live('click', function() {
 		dataType: 'json',		
 		beforeSend: function() {
 			$('#button-quote').attr('disabled', true);
-			$('#button-quote').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-quote').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
 			$('#button-quote').attr('disabled', false);
-			$('.wait').remove();
+			$('.loading').remove();
 		},		
 		success: function(json) {
 			$('.success, .warning, .attention, .error').remove();			
@@ -295,7 +295,7 @@ $('#button-quote').live('click', function() {
 					html: html
 				});
 				
-				$('input[name=\'shipping_method\']').bind('change', function() {
+				$('input[name=\'shipping_method\']').on('change', function() {
 					$('#button-shipping').attr('disabled', false);
 				});
 			}
@@ -304,15 +304,15 @@ $('#button-quote').live('click', function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
-$('select[name=\'country_id\']').bind('change', function() {
+$('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/cart/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('select[name=\'country_id\']').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

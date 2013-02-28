@@ -13,7 +13,7 @@ $_['text_column_right']   = 'Column Right';
 // Entry
 $_['entry_product']       = 'Products:<br /><span class="help">(Autocomplete)</span>';
 $_['entry_limit']         = 'Limit:';
-$_['entry_image']         = 'Image (W x H):';
+$_['entry_image']         = 'Image (W x H) and Resize Type:';
 $_['entry_layout']        = 'Layout:';
 $_['entry_position']      = 'Position:';
 $_['entry_status']        = 'Status:';

@@ -8,9 +8,8 @@ class ControllerInformationInformation extends Controller {
 		$this->data['breadcrumbs'] = array();
 		
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	);
 		
 		if (isset($this->request->get['information_id'])) {
@@ -26,8 +25,7 @@ class ControllerInformationInformation extends Controller {
 
       		$this->data['breadcrumbs'][] = array(
         		'text'      => $information_info['title'],
-				'href'      => $this->url->link('information/information', 'information_id=' .  $information_id),      		
-        		'separator' => $this->language->get('text_separator')
+				'href' => $this->url->link('information/information', 'information_id=' .  $information_id)
       		);		
 						
       		$this->data['heading_title'] = $information_info['title'];
@@ -56,9 +54,8 @@ class ControllerInformationInformation extends Controller {
 	  		$this->response->setOutput($this->render());
     	} else {
       		$this->data['breadcrumbs'][] = array(
-        		'text'      => $this->language->get('text_error'),
-				'href'      => $this->url->link('information/information', 'information_id=' . $information_id),
-        		'separator' => $this->language->get('text_separator')
+        		'text' => $this->language->get('text_error'),
+				'href' => $this->url->link('information/information', 'information_id=' . $information_id)
       		);
 				
 	  		$this->document->setTitle($this->language->get('text_error'));

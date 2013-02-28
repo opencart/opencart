@@ -3,7 +3,7 @@ class ControllerToolBackup extends Controller {
 	private $error = array();
 	
 	public function index() {		
-		$this->load->language('tool/backup');
+		$this->language->load('tool/backup');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -59,23 +59,19 @@ class ControllerToolBackup extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),     		
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
 		$this->data['restore'] = $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->data['backup'] = $this->url->link('tool/backup/backup', 'token=' . $this->session->data['token'], 'SSL');
 
-		$this->load->model('tool/backup');
-			
 		$this->data['tables'] = $this->model_tool_backup->getTables();
 
 		$this->template = 'tool/backup.tpl';
@@ -88,7 +84,7 @@ class ControllerToolBackup extends Controller {
 	}
 	
 	public function backup() {
-		$this->load->language('tool/backup');
+		$this->language->load('tool/backup');
 		
 		if (!isset($this->request->post['backup'])) {
 			$this->session->data['error'] = $this->language->get('error_backup');

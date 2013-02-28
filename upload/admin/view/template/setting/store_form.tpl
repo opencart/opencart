@@ -1,10 +1,10 @@
 <?php echo $header; ?>
 <div id="content">
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <?php if ($error_warning) { ?>
   <div class="warning"><?php echo $error_warning; ?></div>
   <?php } ?>
@@ -14,7 +14,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/setting.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-store"><?php echo $tab_store; ?></a><a href="#tab-local"><?php echo $tab_local; ?></a><a href="#tab-option"><?php echo $tab_option; ?></a><a href="#tab-image"><?php echo $tab_image; ?></a><a href="#tab-server"><?php echo $tab_server; ?></a></div>
@@ -169,6 +169,13 @@
               <td><input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" size="3" />
                 <?php if ($error_catalog_limit) { ?>
                 <span class="error"><?php echo $error_catalog_limit; ?></span>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> <?php echo $entry_list_description_limit; ?></td>
+              <td><input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" size="3" />
+                <?php if ($error_list_description_limit) { ?>
+                <span class="error"><?php echo $error_list_description_limit; ?></span>
                 <?php } ?></td>
             </tr>
           </table>
@@ -497,15 +504,15 @@
 $('#template').load('index.php?route=setting/store/template&token=<?php echo $token; ?>&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
 //--></script>
 <script type="text/javascript"><!--
-$('select[name=\'config_country_id\']').bind('change', function() {
+$('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=setting/store/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('select[name=\'country_id\']').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},		
 		complete: function() {
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

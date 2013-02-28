@@ -43,7 +43,7 @@ class ControllerPaymentPaymate extends Controller {
 	}
 	
 	public function callback() {
-		$this->load->language('payment/paymate');
+		$this->language->load('payment/paymate');
 		
 		if (isset($this->request->post['ref'])) {
 			$order_id = $this->request->post['ref'];
@@ -73,27 +73,23 @@ class ControllerPaymentPaymate extends Controller {
 			$this->data['breadcrumbs'] = array();
 
 			$this->data['breadcrumbs'][] = array(
-				'href'      => $this->url->link('common/home'),
-				'text'      => $this->language->get('text_home'),
-				'separator' => false
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/home')
 			);
 
 			$this->data['breadcrumbs'][] = array(
-				'href'      => $this->url->link('checkout/cart'),
-				'text'      => $this->language->get('text_basket'),
-				'separator' => $this->language->get('text_separator')
+				'text' => $this->language->get('text_basket'),
+				'href' => $this->url->link('checkout/cart')
 			);
 
 			$this->data['breadcrumbs'][] = array(
-				'href'      => $this->url->link('checkout/checkout', '', 'SSL'),
-				'text'      => $this->language->get('text_checkout'),
-				'separator' => $this->language->get('text_separator')
+				'text' => $this->language->get('text_checkout'),
+				'href' => $this->url->link('checkout/checkout', '', 'SSL')
 			);
 
 			$this->data['breadcrumbs'][] = array(
-				'href'      => $this->url->link('checkout/success'),
-				'text'      => $this->language->get('text_failed'),
-				'separator' => $this->language->get('text_separator')
+				'text' => $this->language->get('text_failed'),
+				'href' => $this->url->link('checkout/success')
 			);
 						
 			$this->data['heading_title'] = $this->language->get('text_failed');

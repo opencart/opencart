@@ -1,10 +1,10 @@
 <?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <h1><?php echo $heading_title; ?></h1>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <h2><?php echo $text_edit_address; ?></h2>
@@ -28,24 +28,6 @@
           <td><?php echo $entry_company; ?></td>
           <td><input type="text" name="company" value="<?php echo $company; ?>" /></td>
         </tr>
-        <?php if ($company_id_display) { ?>
-        <tr>
-          <td><?php echo $entry_company_id; ?></td>
-          <td><input type="text" name="company_id" value="<?php echo $company_id; ?>" />
-            <?php if ($error_company_id) { ?>
-            <span class="error"><?php echo $error_company_id; ?></span>
-            <?php } ?></td>
-        </tr>
-        <?php } ?>
-        <?php if ($tax_id_display) { ?>
-        <tr>
-          <td><?php echo $entry_tax_id; ?></td>
-          <td><input type="text" name="tax_id" value="<?php echo $tax_id; ?>" />
-            <?php if ($error_tax_id) { ?>
-            <span class="error"><?php echo $error_tax_id; ?></span>
-            <?php } ?></td>
-        </tr>
-        <?php } ?>
         <tr>
           <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
           <td><input type="text" name="address_1" value="<?php echo $address_1; ?>" />
@@ -120,15 +102,15 @@
   </form>
   <?php echo $content_bottom; ?></div>
 <script type="text/javascript"><!--
-$('select[name=\'country_id\']').bind('change', function() {
+$('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=account/address/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('select[name=\'country_id\']').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},		
 		complete: function() {
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

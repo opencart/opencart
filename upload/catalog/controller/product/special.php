@@ -32,13 +32,14 @@ class ControllerProductSpecial extends Controller {
 		}
 				    	
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->addScript('catalog/view/javascript/jquery/jquery.cookie.js');
+		$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 
 		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
    		);
 
 		$url = '';
@@ -60,9 +61,8 @@ class ControllerProductSpecial extends Controller {
 		}
 					
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('product/special', $url),
-      		'separator' => $this->language->get('text_separator')
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('product/special', $url)
    		);
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
@@ -135,13 +135,13 @@ class ControllerProductSpecial extends Controller {
 				'product_id'  => $result['product_id'],
 				'thumb'       => $image,
 				'name'        => $result['name'],
-				'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
+				'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_list_description_limit')) . '..',
 				'price'       => $price,
 				'special'     => $special,
 				'tax'         => $tax,
 				'rating'      => $result['rating'],
 				'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-				'href'        => $this->url->link('product/product', $url . '&product_id=' . $result['product_id'])
+				'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
 			);
 		}
 
@@ -218,39 +218,21 @@ class ControllerProductSpecial extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
-						
+									
 		$this->data['limits'] = array();
-		
-		$this->data['limits'][] = array(
-			'text'  => $this->config->get('config_catalog_limit'),
-			'value' => $this->config->get('config_catalog_limit'),
-			'href'  => $this->url->link('product/special', $url . '&limit=' . $this->config->get('config_catalog_limit'))
-		);
-					
-		$this->data['limits'][] = array(
-			'text'  => 25,
-			'value' => 25,
-			'href'  => $this->url->link('product/special', $url . '&limit=25')
-		);
-		
-		$this->data['limits'][] = array(
-			'text'  => 50,
-			'value' => 50,
-			'href'  => $this->url->link('product/special', $url . '&limit=50')
-		);
 
-		$this->data['limits'][] = array(
-			'text'  => 75,
-			'value' => 75,
-			'href'  => $this->url->link('product/special', $url . '&limit=75')
-		);
+		$limits = array_unique(array($this->config->get('config_catalog_limit'), 25, 50, 75, 100));
 		
-		$this->data['limits'][] = array(
-			'text'  => 100,
-			'value' => 100,
-			'href'  => $this->url->link('product/special', $url . '&limit=100')
-		);
+		sort($limits);
 
+		foreach($limits as $limits){
+			$this->data['limits'][] = array(
+				'text'  => $limits,
+				'value' => $limits,
+				'href'  => $this->url->link('product/special', $url . '&limit=' . $limits)
+			);
+		}
+			
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {

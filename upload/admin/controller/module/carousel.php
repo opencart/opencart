@@ -3,7 +3,7 @@ class ControllerModuleCarousel extends Controller {
 	private $error = array(); 
 
 	public function index() {   
-		$this->load->language('module/carousel');
+		$this->language->load('module/carousel');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -55,21 +55,18 @@ class ControllerModuleCarousel extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_module'),
-			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('text_module'),
+			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('module/carousel', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('module/carousel', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
 		$this->data['action'] = $this->url->link('module/carousel', 'token=' . $this->session->data['token'], 'SSL');
@@ -101,7 +98,7 @@ class ControllerModuleCarousel extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'module/carousel')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

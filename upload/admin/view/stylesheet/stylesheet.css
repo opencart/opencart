@@ -112,7 +112,7 @@ body > #container {
 	text-align: center;
 }
 #menu > ul li ul {
-	display: none;	
+	display: none;
 	position: absolute;
 }
 #menu > ul li:hover > ul {
@@ -127,20 +127,20 @@ body > #container {
 	color: #FFFFFF;
 }
 #menu > ul .parent {
-	background-image: url('../image/arrow-right.png'); 
+	background-image: url('../image/arrow-right.png');
 	background-position: 95% center;
-	background-repeat:no-repeat;
+	background-repeat: no-repeat;
 }
 #menu > ul li ul ul {
 	margin: -29px 0 0 161px;
 }
 #menu > ul li li a {
 	padding: 7px;
-	color: #FFFFFF;	
+	color: #FFFFFF;
 	width: 147px;
 }
 #menu > ul li li > a:hover {
-	background-color: #C15C2A; 
+	background-color: #C15C2A;
 }
 #content {
 	background: #FFFFFF url('../image/background.png') 0px 1px repeat-x;
@@ -164,54 +164,35 @@ body > #container {
 	text-decoration: underline;
 }
 .breadcrumb {
+	list-style: none;
+	overflow: hidden;
 	border: 1px solid #E5E5E5;
-	-webkit-border-radius: 7px;
-	-moz-border-radius: 7px;
-	-khtml-border-radius: 7px;
-	border-radius: 7px;		
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	border-radius: 4px;
+	margin: 0px 0px 17px 0px;
+	padding: 0;
+}
+.breadcrumb li {
+	float: left;
 	line-height: 30px;
-	margin-bottom: 15px;
+	background: url('../image/breadcrumb.png') top right no-repeat;
 }
-.breadcrumb a, .breadcrumb span {
-
+.breadcrumb li:first-child {
+	padding: 0px 15px 0px 5px;
 }
-.breadcrumb a {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
+.breadcrumb li + li {
+	padding: 0px 25px 0px 15px;
+}
+.breadcrumb li a {
+	font-weight: bold;
 	color: #464646;
-	background: #FFFFFF;
-	padding-left: 5px;	 
-	margin-right: 5px;
 	text-decoration: none;
 }
-.breadcrumb li a:after { 
-	content: " "; 
-	display: block; 
-	width: 0; 
-	height: 0;
-	border-top: 50px solid transparent;           /* Go big on the size, and let overflow hide */
-	border-bottom: 50px solid transparent;
-	border-left: 30px solid hsla(34,85%,35%,1);
-	position: absolute;
-	top: 50%;
-	margin-top: -50px; 
-	left: 100%;
-	z-index: 2; 
-}
-.breadcrumb li a:before { 
-	content: " "; 
-	display: block; 
-	width: 0; 
-	height: 0;
-	border-top: 50px solid transparent;       
-	border-bottom: 50px solid transparent;
-	border-left: 30px solid white;
-	position: absolute;
-	top: 50%;
-	margin-top: -50px; 
-	margin-left: 1px;
-	left: 100%;
-	z-index: 1; 
+.breadcrumb li:first-child a {
+	color: transparent;
+	background: url('../image/glyphicons.png') 8px -65px no-repeat;
 }
 .success {
 	padding: 10px 10px 10px 33px;
@@ -311,13 +292,13 @@ body > #container {
 .box > .heading .buttons .button {
 	margin-left: 5px;
 }
-.box > .content h2 { 
+.box > .content h2 {
 	text-transform: uppercase;
 	color: #FF802B;
 	font-size: 15px;
 	font-weight: bold;
 	padding-bottom: 3px;
-	border-bottom: 1px dotted #000000;	
+	border-bottom: 1px dotted #000000;
 }
 .box > .content {
 	padding: 10px;

@@ -1807,6 +1807,7 @@ CREATE TABLE `oc_modification` (
   `code` varchar(32) NOT NULL,
   `name` varchar(64) NOT NULL,
   `author` varchar(64) NOT NULL,
+  `version` varchar(32) NOT NULL,
   `xml` text NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,

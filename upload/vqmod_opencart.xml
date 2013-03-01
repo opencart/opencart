@@ -1,5 +1,6 @@
 <modification>
 	<id><![CDATA[Test]]></id>
+	<name><![CDATA[1.0]]></name>
 	<version><![CDATA[1.0]]></version>
 	<author><![CDATA[http://www.opencart.com]]></author>
 	<file name="catalog/controller/product/product.php">

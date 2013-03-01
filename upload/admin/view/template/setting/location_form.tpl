@@ -1,10 +1,10 @@
 <?php echo $header; ?>
 <div id="content">
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <?php if ($error_warning) { ?>
   <div class="warning"><?php echo $error_warning; ?></div>
   <?php } ?>
@@ -117,7 +117,7 @@ function getGeoCode() {
 			//  Save our geocode to variable  
 			var location = results[0].geometry.location;
 			
-			$('input[name=\'geocode\']').val(location.toString().replace('(','').replace(')',''));
+			$('input[name=\'geocode\']').val(location.toString().replace('(', '').replace(')', ''));
 		} else {
 			alert('<?php echo addslashes($text_geocode); ?> ' + status);
 		}

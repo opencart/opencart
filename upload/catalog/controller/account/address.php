@@ -122,21 +122,18 @@ class ControllerAccountAddress extends Controller {
 
   	protected function getList() {
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	); 
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', 'SSL')
       	);
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('account/address', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('account/address', '', 'SSL')
       	);
 			
     	$this->data['heading_title'] = $this->language->get('heading_title');
@@ -232,34 +229,29 @@ class ControllerAccountAddress extends Controller {
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),       	
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	); 
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', 'SSL')
       	);
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('account/address', '', 'SSL'),        	
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('account/address', '', 'SSL')
       	);
 		
 		if (!isset($this->request->get['address_id'])) {
       		$this->data['breadcrumbs'][] = array(
-        		'text'      => $this->language->get('text_edit_address'),
-				'href'      => $this->url->link('account/address/insert', '', 'SSL'),       		
-        		'separator' => $this->language->get('text_separator')
+        		'text' => $this->language->get('text_edit_address'),
+				'href' => $this->url->link('account/address/insert', '', 'SSL')
       		);
 		} else {
       		$this->data['breadcrumbs'][] = array(
-        		'text'      => $this->language->get('text_edit_address'),
-				'href'      => $this->url->link('account/address/update', 'address_id=' . $this->request->get['address_id'], 'SSL'),       		
-        		'separator' => $this->language->get('text_separator')
+        		'text' => $this->language->get('text_edit_address'),
+				'href' => $this->url->link('account/address/update', 'address_id=' . $this->request->get['address_id'], 'SSL')
       		);
 		}
 						

@@ -1,5 +1,5 @@
 ﻿/*
- Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+ Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 CKEDITOR.plugins.setLang("specialchar","ku",{euro:"نیشانه‌ی یۆرۆ",lsquo:"نیشانه‌ی فاریزه‌ی سه‌رووژێری تاکی چه‌پ",rsquo:"نیشانه‌ی فاریزه‌ی سه‌رووژێری تاکی ڕاست",ldquo:"نیشانه‌ی فاریزه‌ی سه‌رووژێری دووهێنده‌ی چه‌پ",rdquo:"نیشانه‌ی فاریزه‌ی سه‌رووژێری دووهێنده‌ی ڕاست",ndash:"ته‌قه‌ڵی کورت",mdash:"ته‌قه‌ڵی درێژ",iexcl:"نیشانه‌ی هه‌ڵه‌وگێڕی سه‌رسوڕمێنه‌ر",cent:"نیشانه‌ی سه‌نت",pound:"نیشانه‌ی پاوه‌ند",curren:"نیشانه‌ی دراو",yen:"نیشانه‌ی یه‌نی ژاپۆنی",brvbar:"شریتی ئه‌ستوونی پچڕاو",sect:"نیشانه‌ی دوو s له‌سه‌ریه‌ك",

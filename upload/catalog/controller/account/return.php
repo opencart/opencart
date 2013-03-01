@@ -16,15 +16,13 @@ class ControllerAccountReturn extends Controller {
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),        	
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	); 
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),        	
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', 'SSL')
       	);
 		
 		$url = '';
@@ -34,9 +32,8 @@ class ControllerAccountReturn extends Controller {
 		}
 				
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('account/return', $url, 'SSL'),        	
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('account/return', $url, 'SSL')
       	);
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -130,15 +127,13 @@ class ControllerAccountReturn extends Controller {
 			$this->data['breadcrumbs'] = array();
 	
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_home'),
-				'href'      => $this->url->link('common/home', '', 'SSL'),
-				'separator' => false
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/home', '', 'SSL')
 			);
 	
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_account'),
-				'href'      => $this->url->link('account/account', '', 'SSL'),
-				'separator' => $this->language->get('text_separator')
+				'text' => $this->language->get('text_account'),
+				'href' => $this->url->link('account/account', '', 'SSL')
 			);
 			
 			$url = '';
@@ -148,15 +143,13 @@ class ControllerAccountReturn extends Controller {
 			}	
 					
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('heading_title'),
-				'href'      => $this->url->link('account/return', $url, 'SSL'),
-				'separator' => $this->language->get('text_separator')
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('account/return', $url, 'SSL')
 			);
 						
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_return'),
-				'href'      => $this->url->link('account/return/info', 'return_id=' . $this->request->get['return_id'] . $url, 'SSL'),
-				'separator' => $this->language->get('text_separator')
+				'text' => $this->language->get('text_return'),
+				'href' => $this->url->link('account/return/info', 'return_id=' . $this->request->get['return_id'] . $url, 'SSL')
 			);			
 			
 			$this->data['heading_title'] = $this->language->get('text_return');
@@ -238,21 +231,18 @@ class ControllerAccountReturn extends Controller {
 			$this->data['breadcrumbs'] = array();
 
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_home'),
-				'href'      => $this->url->link('common/home'),
-				'separator' => false
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/home')
 			);
 
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_account'),
-				'href'      => $this->url->link('account/account', '', 'SSL'),
-				'separator' => $this->language->get('text_separator')
+				'text' => $this->language->get('text_account'),
+				'href' => $this->url->link('account/account', '', 'SSL')
 			);
 			
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('heading_title'),
-				'href'      => $this->url->link('account/return', '', 'SSL'),
-				'separator' => $this->language->get('text_separator')
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('account/return', '', 'SSL')
 			);
 			
 			$url = '';
@@ -262,9 +252,8 @@ class ControllerAccountReturn extends Controller {
 			}
 									
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_return'),
-				'href'      => $this->url->link('account/return/info', 'return_id=' . $return_id . $url, 'SSL'),
-				'separator' => $this->language->get('text_separator')
+				'text' => $this->language->get('text_return'),
+				'href' => $this->url->link('account/return/info', 'return_id=' . $return_id . $url, 'SSL')
 			);
 			
 			$this->data['heading_title'] = $this->language->get('text_return');
@@ -313,21 +302,18 @@ class ControllerAccountReturn extends Controller {
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	); 
 		
       	$this->data['breadcrumbs'][] = array(       	
-        	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', 'SSL')
       	);
 		
       	$this->data['breadcrumbs'][] = array(       	
-        	'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('account/return/insert', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('account/return/insert', '', 'SSL')
       	);
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
@@ -575,15 +561,13 @@ class ControllerAccountReturn extends Controller {
 	  	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	);
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('account/return', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('account/return', '', 'SSL')
       	);	
 				
     	$this->data['heading_title'] = $this->language->get('heading_title');

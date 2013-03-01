@@ -40,15 +40,13 @@ class ControllerReportCustomerOnline extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-       		'text'      => $this->language->get('text_home'),
-      		'separator' => false
+       		'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+       		'text' => $this->language->get('text_home')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'href'      => $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-       		'text'      => $this->language->get('heading_title'),
-      		'separator' => $this->language->get('breadcrumb_separator')
+       		'href' => $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+       		'text' => $this->language->get('heading_title')
    		);
 		
 		$this->load->model('report/online');

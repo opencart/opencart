@@ -8,15 +8,13 @@ class ControllerInformationSitemap extends Controller {
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	);
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('information/sitemap'),      	
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('information/sitemap')
       	);	
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');

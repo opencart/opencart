@@ -29,21 +29,18 @@ class ControllerAccountVoucher extends Controller {
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	); 
 		
       	$this->data['breadcrumbs'][] = array(       	
-        	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', 'SSL')
       	);
 		
       	$this->data['breadcrumbs'][] = array(       	
-        	'text'      => $this->language->get('text_voucher'),
-			'href'      => $this->url->link('account/voucher', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('text_voucher'),
+			'href' => $this->url->link('account/voucher', '', 'SSL')
       	);
 
     	$this->data['heading_title'] = $this->language->get('heading_title');
@@ -187,15 +184,13 @@ class ControllerAccountVoucher extends Controller {
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	);
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('account/voucher'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('account/voucher')
       	);	
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');

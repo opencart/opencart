@@ -1,11 +1,11 @@
 <?php
 class ModelSettingModification extends Model {
 	public function addModification($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', code = '" . $this->db->escape($data['code']) . "', date_added = NOW(), date_modified = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', code = '" . $this->db->escape($data['code']) . "', date_added = NOW(), date_modified = NOW()");
 	}
 	
 	public function editModification() {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', code = '" . $this->db->escape($data['code']) . "', date_added = NOW(), date_modified = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', code = '" . $this->db->escape($data['code']) . "', date_added = NOW(), date_modified = NOW()");
 	}
 	
 	public function deleteModification($modification_id) {

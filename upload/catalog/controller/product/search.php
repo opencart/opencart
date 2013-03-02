@@ -77,9 +77,8 @@ class ControllerProductSearch extends Controller {
 		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array( 
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
    		);
 		
 		$url = '';
@@ -121,9 +120,8 @@ class ControllerProductSearch extends Controller {
 		}
 						
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('product/search', $url),
-      		'separator' => $this->language->get('text_separator')
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('product/search', $url)
    		);
 		
 		if (isset($this->request->get['search'])) {

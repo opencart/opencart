@@ -40,15 +40,13 @@ class ControllerReportCustomerCredit extends Controller {
 		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('report/customer_credit', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => $this->language->get('breadcrumb_separator')
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('report/customer_credit', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);		
 		
 		$this->load->model('report/customer');

@@ -376,6 +376,8 @@ class ControllerExtensionModification extends Controller {
 		
 		$this->data['token'] = $this->session->data['token'];
 		
+		
+		
 		$this->template = 'extension/modification_form.tpl';
 		$this->children = array(
 			'common/header',
@@ -435,6 +437,7 @@ New XML Modifcation Standard
 	</file>	
 </modification>
 */	
+		$log = new Log('modification.log');
 		
 		$this->language->load('extension/modification');
 		
@@ -460,13 +463,10 @@ New XML Modifcation Standard
 		
 			$this->load->model('setting/modification');
 			
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-      		
-						
 			$file = $this->request->files['file']['tmp_name'];
 			$directory = dirname($this->request->files['file']['tmp_name']) . '/' . basename($this->request->files['file']['name'], '.zip') . '/';
 			
-			// If xml file just put it strght into the DB
+			// If xml file just put it straight into the DB
 			if (strrchr($this->request->files['file']['tmp_name'], '.') == '.xml') {
 				$xml = file_get_contents($this->request->files['file']['tmp_name']);
 				
@@ -555,12 +555,22 @@ New XML Modifcation Standard
 							}
 						}
 					} elseif (strrchr(basename($file), '.') == '.sql') {
-						$sql = file_get_contents($file);
-					
-					
+						$sql = file_get_contents($file);					
 					} elseif (strrchr(basename($file), '.') == '.xml') {
 						$xml = file_get_contents($file);
 						
+						$dom = new DOMDocument('1.0', 'UTF-8');
+						$dom->loadXml($xml);
+										
+						$data = array(
+							'code'    => $dom->getElementsByTagName('id')->item(0)->nodeValue,
+							'name'    => $dom->getElementsByTagName('name')->item(0)->nodeValue,
+							'version' => $dom->getElementsByTagName('version')->item(0)->nodeValue,
+							'author'  => $dom->getElementsByTagName('author')->item(0)->nodeValue,
+							'xml'     => $xml
+						);
+						
+						$this->model_setting_modification->addModification($data);
 					}
 				}
 				
@@ -581,16 +591,6 @@ New XML Modifcation Standard
 				}
 							
 				$json['success'] = $this->language->get('text_success');
-			}	
-			
-			
-			if (file_exists($file)) { 
-				$xml = file_get_contents($file);
-				
-				$this->parse($xml);
-			} else {
-				trigger_error('Error: Could not load modification ' . $file . '!');
-				exit();
 			}	
 		}
 					
@@ -620,83 +620,5 @@ New XML Modifcation Standard
 			}
 		}	
 	}
-	
-	public function xml() {
-		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXml($xml);
-		
-		$files = array();
-		
-		$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');		
-		
-
-		
-		foreach ($files as $file) {
-		//	foreach () {
-		//		$files = glob($file);
-			
-		//		if ($files) {
-			
-		//		}			
-		//	}
-
-			$filename = $file->getAttribute('name');
-		
-			if (!isset($this->data[$filename])) {
-				if (file_exists($filename)) {
-					$content = file_get_contents($filename);
-				} else {
-					trigger_error('Error: Could not load language ' . $filename . '!');
-					exit();
-				}			
-			} else {
-				$content = $this->data[$filename];
-			}
-
-			$operations = $file->getElementsByTagName('operation');
-		
-			foreach ($operations as $operation) {
-				$search = $operation->getElementsByTagName('search')->item(0)->nodeValue;
-				$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
-				$add = $operation->getElementsByTagName('add')->item(0)->nodeValue;
-				$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
-					
-				if (!$index) {
-					$index = 1;
-				}
-				
-				switch ($position) {
-					default:
-					case 'replace':
-						$replace = $add;
-						break;
-					case 'before':
-						$replace = $add . $search;
-						break;					
-					case 'after':
-						$replace = $search . $add;
-						break;
-				}
-
-				$i = 0;
-				$pos = -1;
-				$result = array();
-
-				while (($pos = strpos($content, $search, $pos + 1)) !== false) {
-					$result[$i++] = $pos; 
-				}
-				
-				// Only replace the occurance of the string that is equal to the index					
-				if (isset($result[$index - 1])) {
-					$content = substr_replace($content, $replace, $result[$index - 1], strlen($search));
-				}
-			}
-
-			echo '<pre>';
-			print_r($result);
-			echo $content;
-			echo '</pre>';
-		}
-	}			
 }
 ?>

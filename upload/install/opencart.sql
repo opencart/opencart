@@ -3026,7 +3026,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (14, 0, 'shipping', 'shipping_status', '1', 0),
 (15, 0, 'shipping', 'shipping_estimator', '1', 0),
 (16, 0, 'config', 'config_google_analytics', '', 0),
-(17, 0, 'config', 'config_error_filename', 'error.txt', 0),
+(17, 0, 'config', 'config_error_filename', 'error.log', 0),
 (18, 0, 'config', 'config_error_log', '1', 0),
 (19, 0, 'config', 'config_error_display', '1', 0),
 (20, 0, 'config', 'config_compression', '0', 0),

@@ -1,48 +1,51 @@
 <?php
 class Modification {
-	private $data = array();	
+	private $mod = array();
+	private $content = array();
 	
-	public function getFile() {
-		if (isset($this->data[$filename])) {
-			return $this->data[$filename];
+	public function addMod($modifcation) {
+		$this->mod[] = $modifcation;
+	}
+		
+	public function getFile($file) {
+		if (file_exists($file)) {
+			return DIR_MODIFICATION . str_replace('/', '_', $file);
 		} else {
-			return $filename;
+			return $file;
 		}		
 	}
-	
+		
 	public function load($filename) {
 		$file = DIR_MODIFICATION . '/' . $filename . '.php';
 
 		if (file_exists($file)) {
 			$xml = file_get_contents($file);
 
-			$this->write($xml);
+			$this->addMod($xml);
 		} else {
 			trigger_error('Error: Could not load modification ' . $filename . '!');
 		}
 	}
-	
-	public function read($filename) {
 
-	}
-
-	public function write($xml) {
-		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXml($xml);
-		
-		$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');		
-		
-		foreach ($files as $file) {
-			$operations = $file->getElementsByTagName('operation');
+	public function write() {
+		foreach ($this->mod as $xml) {
+			$dom = new DOMDocument('1.0', 'UTF-8');
+			$dom->loadXml($xml);
 			
-			$files = glob($file->getAttribute('name'));
+			$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');		
 			
-			if ($files) {	
-				foreach ($files as $file) {
-			
-					if (!isset($this->data[$filename])) {
-						$content = file_get_contents($filename);
-					
+			foreach ($files as $file) {
+				$files = glob($file->getAttribute('name'));
+				$operations = $file->getElementsByTagName('operation');
+				
+				if ($files) {	
+					foreach ($files as $file) {
+						if (!isset($this->content[$file])) {
+							$content = file_get_contents($file);
+						} else {
+							$content = $this->content[$file];
+						}
+						
 						foreach ($operations as $operation) {
 							$search = $operation->getElementsByTagName('search')->item(0)->nodeValue;
 							$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
@@ -80,11 +83,48 @@ class Modification {
 							}
 						}
 						
-						//$handle = fopen($filename);
+						$this->content[$file] = $content;
 					}
 				}
-			}	
+			}
 		}
+		
+		// Write all modifcation files
+		foreach ($this->content as $key => $value) {
+			$path = '';
+			
+			$directories = explode('/', dirname(str_replace('../', '', $new_image)));
+			
+			foreach ($directories as $directory) {
+				$path = $path . '/' . $directory;
+				
+				if (!file_exists(DIR_IMAGE . $path)) {
+					@mkdir(DIR_IMAGE . $path, 0777);
+				}		
+			}
+			
+			
+						
+			$file = DIR_MODIFICATION . $key . '.php';
+			
+			$handle = fopen($file, 'w');
+	
+			fwrite($handle, $value);
+	
+			fclose($handle);			
+		}
+	}
+	
+	public function clear() {
+		$files = glob(DIR_MODIFICATION . '.*');
+
+		if ($files) {
+			foreach ($files as $file) {
+				if (file_exists($file)) {
+					unlink($file);
+				}
+			}
+		}				
 	}
 }
 ?>

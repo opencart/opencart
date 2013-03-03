@@ -8,12 +8,12 @@ class Modification {
 		
 	public function getFile($file) {
 		if (file_exists($file)) {
-			return DIR_MODIFICATION . str_replace('/', '_', $file);
+			return DIR_MODIFICATION . str_replace(array('/', '..'), array('_', ''), $file);
 		} else {
 			return $file;
 		}		
 	}
-		
+			
 	public function load($filename) {
 		if (file_exists($filename)) {
 			$xml = file_get_contents($filename);
@@ -100,7 +100,7 @@ class Modification {
 			}
 			*/
 						
-			$file = DIR_MODIFICATION . str_replace('/', '_', str_replace('..', '', $key));
+			$file = DIR_MODIFICATION . str_replace(array('/', '..'), array('_', ''), $key);
 			
 			$handle = fopen($file, 'w');
 	
@@ -111,15 +111,15 @@ class Modification {
 	}
 	
 	public function clear() {
-		$files = glob(DIR_MODIFICATION . '.*');
+		$files = glob(DIR_MODIFICATION . '{*.php,*.tpl}', GLOB_BRACE);
 
 		if ($files) {
 			foreach ($files as $file) {
-				if (file_exists($file) && basename($file) != 'index.html') {
+				if (file_exists($file)) {
 					unlink($file);
 				}
 			}
-		}				
+		}
 	}
 }
 ?>

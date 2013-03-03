@@ -239,4 +239,5 @@ $response->output();
 $modifcation = new Modification();
 $modifcation->load('vqmod_opencart.xml');
 $modifcation->write();
+$modifcation->clear();
 ?>

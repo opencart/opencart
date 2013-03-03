@@ -14,6 +14,10 @@
 /upload/image/cache/*
 !/upload/image/cache/index.html
 
+# Modification Files
+/upload/image/modification/*
+!/upload/image/modification/index.html
+
 # Templates Files
 /upload/image/templates/*
 /upload/image/templates/default.jpg

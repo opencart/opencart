@@ -1,10 +1,9 @@
 <?php
 class Modification {
-	private $mod = array();
-	private $content = array();
+	private $data = array();
 	
-	public function addMod($modifcation) {
-		$this->mod[] = $modifcation;
+	public function addMod($xml) {
+		$this->data[] = $xml;
 	}
 		
 	public function getFile($file) {
@@ -16,10 +15,8 @@ class Modification {
 	}
 		
 	public function load($filename) {
-		$file = DIR_MODIFICATION . '/' . $filename . '.php';
-
-		if (file_exists($file)) {
-			$xml = file_get_contents($file);
+		if (file_exists($filename)) {
+			$xml = file_get_contents($filename);
 
 			$this->addMod($xml);
 		} else {
@@ -28,7 +25,9 @@ class Modification {
 	}
 
 	public function write() {
-		foreach ($this->mod as $xml) {
+		$modifcation = array();
+		
+		foreach ($this->data as $xml) {
 			$dom = new DOMDocument('1.0', 'UTF-8');
 			$dom->loadXml($xml);
 			
@@ -40,10 +39,8 @@ class Modification {
 				
 				if ($files) {	
 					foreach ($files as $file) {
-						if (!isset($this->content[$file])) {
-							$content = file_get_contents($file);
-						} else {
-							$content = $this->content[$file];
+						if (!isset($modifcation[$file])) {
+							$modifcation[$file] = file_get_contents($file);
 						}
 						
 						foreach ($operations as $operation) {
@@ -73,27 +70,26 @@ class Modification {
 							$pos = -1;
 							$result = array();
 			
-							while (($pos = strpos($content, $search, $pos + 1)) !== false) {
+							while (($pos = strpos($modifcation[$file], $search, $pos + 1)) !== false) {
 								$result[$i++] = $pos; 
 							}
 							
 							// Only replace the occurance of the string that is equal to the index					
 							if (isset($result[$index - 1])) {
-								$content = substr_replace($content, $replace, $result[$index - 1], strlen($search));
+								$modifcation[$file] = substr_replace($modifcation[$file], $replace, $result[$index - 1], strlen($search));
 							}
 						}
-						
-						$this->content[$file] = $content;
 					}
 				}
 			}
 		}
 		
 		// Write all modifcation files
-		foreach ($this->content as $key => $value) {
+		foreach ($modifcation as $key => $value) {
+			/*
 			$path = '';
 			
-			$directories = explode('/', dirname(str_replace('../', '', $new_image)));
+			$directories = explode('/', dirname(str_replace('../', '', $key)));
 			
 			foreach ($directories as $directory) {
 				$path = $path . '/' . $directory;
@@ -102,10 +98,9 @@ class Modification {
 					@mkdir(DIR_IMAGE . $path, 0777);
 				}		
 			}
-			
-			
+			*/
 						
-			$file = DIR_MODIFICATION . $key . '.php';
+			$file = DIR_MODIFICATION . str_replace('/', '_', str_replace('..', '', $key));
 			
 			$handle = fopen($file, 'w');
 	
@@ -120,7 +115,7 @@ class Modification {
 
 		if ($files) {
 			foreach ($files as $file) {
-				if (file_exists($file)) {
+				if (file_exists($file) && basename($file) != 'index.html') {
 					unlink($file);
 				}
 			}

@@ -97,8 +97,8 @@ class ControllerProductProduct extends Controller {
 
 			if ($manufacturer_info) {	
 				$this->data['breadcrumbs'][] = array(
-					'text'	    => $manufacturer_info['name'],
-					'href'	    => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)
+					'text' => $manufacturer_info['name'],
+					'href' => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)
 				);
 			}
 		}

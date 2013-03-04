@@ -21,11 +21,12 @@ class Modification {
 			$this->addMod($xml);
 		} else {
 			trigger_error('Error: Could not load modification ' . $filename . '!');
+			exit();
 		}
 	}
 
 	public function write() {
-		$modifcation = array();
+		$modification = array();
 		
 		foreach ($this->data as $xml) {
 			$dom = new DOMDocument('1.0', 'UTF-8');
@@ -39,8 +40,8 @@ class Modification {
 				
 				if ($files) {	
 					foreach ($files as $file) {
-						if (!isset($modifcation[$file])) {
-							$modifcation[$file] = file_get_contents($file);
+						if (!isset($modification[$file])) {
+							$modification[$file] = file_get_contents($file);
 						}
 						
 						foreach ($operations as $operation) {
@@ -70,13 +71,13 @@ class Modification {
 							$pos = -1;
 							$result = array();
 			
-							while (($pos = strpos($modifcation[$file], $search, $pos + 1)) !== false) {
+							while (($pos = strpos($modification[$file], $search, $pos + 1)) !== false) {
 								$result[$i++] = $pos; 
 							}
 							
 							// Only replace the occurance of the string that is equal to the index					
 							if (isset($result[$index - 1])) {
-								$modifcation[$file] = substr_replace($modifcation[$file], $replace, $result[$index - 1], strlen($search));
+								$modification[$file] = substr_replace($modification[$file], $replace, $result[$index - 1], strlen($search));
 							}
 						}
 					}
@@ -84,18 +85,18 @@ class Modification {
 			}
 		}
 		
-		// Write all modifcation files
-		foreach ($modifcation as $key => $value) {
+		// Write all modification files
+		foreach ($modification as $key => $value) {
 			/*
 			$path = '';
 			
 			$directories = explode('/', dirname(str_replace('../', '', $key)));
 			
 			foreach ($directories as $directory) {
-				$path = $path . '/' . $directory;
+				$path = $key . '/' . $directory;
 				
-				if (!file_exists(DIR_IMAGE . $path)) {
-					@mkdir(DIR_IMAGE . $path, 0777);
+				if (!file_exists(DIR_MODIFICATION . $path)) {
+					@mkdir(DIR_MODIFICATION . $path, 0777);
 				}		
 			}
 			*/

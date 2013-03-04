@@ -23,8 +23,8 @@
 /upload/image/templates/default.jpg
 
 # Download Files
-/upload/download/*
-!/upload/download/index.html
+/upload/system/download/*
+!/upload/system/download/index.html
 
 !/upload/data/index.html
 

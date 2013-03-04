@@ -17,6 +17,20 @@ final class Loader {
 		}
 	}
 	
+	public function controller($controller) {
+		$file  = DIR_APPLICATION . 'model/' . $controller . '.php';
+		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $controller);
+				
+		if (file_exists($file)) { 
+			include_once($file);
+
+			$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));
+		} else {
+			trigger_error('Error: Could not load controller ' . $model . '!');
+			exit();
+		}
+	}
+		
 	public function model($model) {
 		$file  = DIR_APPLICATION . 'model/' . $model . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
@@ -31,34 +45,20 @@ final class Loader {
 		}
 	}
 	
-	public function view($model) {
-		$file  = DIR_APPLICATION . 'model/' . $model . '.php';
-		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
+	public function view($view) {
+		$file  = DIR_APPLICATION . 'view/' . $view . '.php';
+		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $view);
 				
 		if (file_exists($file)) { 
 			include_once($file);
 
-			$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));
+			return;
 		} else {
-			trigger_error('Error: Could not load model ' . $model . '!');
+			trigger_error('Error: Could not load view ' . $view . '!');
 			exit();
 		}
 	}
-	
-	public function controller($model) {
-		$file  = DIR_APPLICATION . 'model/' . $model . '.php';
-		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
-				
-		if (file_exists($file)) { 
-			include_once($file);
 
-			$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));
-		} else {
-			trigger_error('Error: Could not load model ' . $model . '!');
-			exit();
-		}
-	}
-		
 	public function helper($helper) {
 		$file = DIR_SYSTEM . 'helper/' . $helper . '.php';
 

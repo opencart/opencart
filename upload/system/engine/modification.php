@@ -6,12 +6,14 @@ class Modification {
 		$this->data[] = $xml;
 	}
 		
-	public function getFile($file) {
+	public function getFile($filename) {
+		$file = DIR_MODIFICATION . str_replace('/', '_', $filename);
+		
 		if (file_exists($file)) {
-			return DIR_MODIFICATION . str_replace(array('/', '..'), array('_', ''), $file);
-		} else {
 			return $file;
-		}		
+		} else {
+			return $filename;
+		}
 	}
 			
 	public function load($filename) {
@@ -101,7 +103,7 @@ class Modification {
 			}
 			*/
 						
-			$file = DIR_MODIFICATION . str_replace(array('/', '..'), array('_', ''), $key);
+			$file = DIR_MODIFICATION . str_replace('/', '_', $key);
 			
 			$handle = fopen($file, 'w');
 	

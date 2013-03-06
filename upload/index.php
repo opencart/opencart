@@ -16,7 +16,16 @@ if (!defined('DIR_APPLICATION')) {
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
-// Application Classes
+// Engine
+require_once(DIR_SYSTEM . 'engine/action.php'); 
+require_once(DIR_SYSTEM . 'engine/controller.php');
+require_once(DIR_SYSTEM . 'engine/front.php');
+require_once(DIR_SYSTEM . 'engine/loader.php'); 
+require_once(DIR_SYSTEM . 'engine/model.php');
+require_once(DIR_SYSTEM . 'engine/modification.php');
+require_once(DIR_SYSTEM . 'engine/registry.php');
+
+// Application
 require_once(DIR_SYSTEM . 'library/customer.php');
 require_once(DIR_SYSTEM . 'library/affiliate.php');
 require_once(DIR_SYSTEM . 'library/currency.php');
@@ -30,7 +39,7 @@ $registry = new Registry();
 
 // Modification
 $modifcation = new Modification();
-$modifcation->load('vqmod_opencart.xml');
+$modifcation->load(DIR_SYSTEM . 'modification.xml');
 $modifcation->write();
 
 require_once($modifcation->getFile(DIR_SYSTEM . 'engine/loader.php'));
@@ -75,6 +84,12 @@ if (!$store_query->num_rows) {
 	$config->set('config_url', HTTP_SERVER);
 	$config->set('config_ssl', HTTPS_SERVER);	
 }
+
+
+
+
+
+
 
 // Url
 $url = new Url($config->get('config_url'), $config->get('config_secure') ? $config->get('config_ssl') : $config->get('config_url'));	

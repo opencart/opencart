@@ -1,10 +1,6 @@
 <?php
 class Modification {
 	private $data = array();
-	
-	public function addMod($xml) {
-		$this->data[] = $xml;
-	}
 		
 	public function getFile($filename) {
 		$file = DIR_MODIFICATION . str_replace('/', '_', $filename);
@@ -14,6 +10,10 @@ class Modification {
 		} else {
 			return $filename;
 		}
+	}
+		
+	public function addModification($xml) {
+		$this->data[] = $xml;
 	}
 			
 	public function load($filename) {

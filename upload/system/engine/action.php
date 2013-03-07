@@ -1,11 +1,14 @@
 <?php
 final class Action {
-	protected $file;
-	protected $class;
+	protected $route;
+	protected $args;
 	protected $method;
 	protected $args = array();
 
 	public function __construct($route, $args = array()) {
+		$this->route = $route;
+		$this->args = $args;
+		
 		$path = '';
 
 		$parts = explode('/', str_replace('../', '', (string)$route));
@@ -45,20 +48,25 @@ final class Action {
 		}
 	}
 
-	public function getFile() {
-		return $this->file;
-	}
+	public function execute($registry) {
+		
+		
+		
+		
+		
+		if (file_exists($this->getFile())) {
+			require_once($action->getFile());
 
-	public function getClass() {
-		return $this->class;
-	}
+			$class = $action->getClass();
 
-	public function getMethod() {
-		return $this->method;
-	}
+			$controller = new $class($registry);
 
-	public function getArgs() {
-		return $this->args;
+			$controller->{$action->getMethod()}($action->getArgs());
+
+			return $controller;
+		} else {
+			return false;
+		}
 	}
 }
 ?>

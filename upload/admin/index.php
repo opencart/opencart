@@ -13,21 +13,17 @@ if (!defined('DIR_APPLICATION')) {
 	exit;
 }
 
-// Startup
-require_once(DIR_SYSTEM . 'startup.php');
-
-// Application Classes
-require_once(DIR_SYSTEM . 'library/currency.php');
-require_once(DIR_SYSTEM . 'library/user.php');
-require_once(DIR_SYSTEM . 'library/weight.php');
-require_once(DIR_SYSTEM . 'library/length.php');
+// Application
+require_once($modification->getFile(DIR_SYSTEM . 'library/currency.php'));
+require_once($modification->getFile(DIR_SYSTEM . 'library/user.php'));
+require_once($modification->getFile(DIR_SYSTEM . 'library/weight.php'));
+require_once($modification->getFile(DIR_SYSTEM . 'library/length.php'));
 
 // Registry
 $registry = new Registry();
 
-// Loader
-$loader = new Loader($registry);
-$registry->set('load', $loader);
+// Modification
+$registry->set('modification', $modification);
 
 // Config
 $config = new Config();
@@ -47,6 +43,10 @@ foreach ($query->rows as $setting) {
 		$config->set($setting['key'], unserialize($setting['value']));
 	}
 }
+
+// Loader
+$loader = new Loader($registry);
+$registry->set('load', $loader);
 
 // Url
 $url = new Url(HTTP_SERVER, $config->get('config_secure') ? HTTPS_SERVER : HTTP_SERVER);	
@@ -138,7 +138,7 @@ $registry->set('length', new Length($registry));
 
 // User
 $registry->set('user', new User($registry));
-						
+
 // Front Controller
 $controller = new Front($registry);
 

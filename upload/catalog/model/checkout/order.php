@@ -592,7 +592,6 @@ class ModelCheckoutOrder extends Model {
 			$this->load->model('account/customer');
 			
 			if ($order_info['customer_id']) {
-								
 				$results = $this->model_account_customer->getIps($order_info['customer_id']);
 				
 				foreach ($results as $result) {

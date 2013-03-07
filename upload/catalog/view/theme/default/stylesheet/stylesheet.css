@@ -1,4 +1,10 @@
+/**
+reset
+**/
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{-webkit-user-select:none;-webkit-text-size-adjust:none;line-height:1;color:#454545}ol,ul{list-style:none}:focus{outline:0}
+/** 
+mainframe
+**/
 html{overflow-y:scroll;margin:0;padding:0}
 body{background-color:#fff;color:#000;font-family:Arial, Helvetica, sans-serif;margin:0px;padding:0px}
 body, td, th, input, textarea, select, a{font-size:12px}

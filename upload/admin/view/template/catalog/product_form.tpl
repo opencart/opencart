@@ -759,8 +759,13 @@ $('input[name=\'manufacturer\']').autocomplete({
 		return false;
 	},
 	focus: function(event, ui) {
-      return false;
-   }
+    return false;
+  },
+  change: function(event, ui){
+    if(!$(this).val()){
+      $('input[name=\'manufacturer_id\']').val('');
+    }
+  }
 });
 
 // Category

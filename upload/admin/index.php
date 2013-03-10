@@ -13,6 +13,10 @@ if (!defined('DIR_APPLICATION')) {
 	exit;
 }
 
+// Modification
+require(DIR_SYSTEM . 'engine/modification.php');
+$modification = new Modification();
+
 // Startup
 require(DIR_SYSTEM . 'startup.php');
 

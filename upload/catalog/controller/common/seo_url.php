@@ -112,6 +112,12 @@ class ControllerCommonSeoUrl extends Controller {
 
 			return $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . str_replace('/index.php', '', $url_info['path']) . $url . $query;
 		} else {
+			
+			// This removes the nasty variables on the index.php file when linking to home
+			// and improves flow for SEO
+			// Khaleel 15:58 7th Feb 2013
+			
+			$link = str_replace('index.php?route=common/home', '', $link);
 			return $link;
 		}
 	}	

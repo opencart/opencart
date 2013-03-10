@@ -45,9 +45,6 @@ class Modification {
 				$files = glob($this->path . $file->getAttribute('name'));
 				$operations = $file->getElementsByTagName('operation');
 				
-				//echo $this->path . $file->getAttribute('name') . '<br />';
-				//print_r($files);
-				
 				if ($files) {	
 					foreach ($files as $file) {
 						if (!isset($modification[$file])) {
@@ -111,9 +108,9 @@ class Modification {
 			}
 			*/
 						
-			$file = DIR_MODIFICATION . str_replace('/', '_', $key);
+			$file = DIR_MODIFICATION . str_replace('/', '_', substr($key, strlen($this->path)));
 			
-			echo $file . '<br />';
+			echo substr($key, strlen($this->path)) . '<br />';
 			
 			$handle = fopen($file, 'w');
 	

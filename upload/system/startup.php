@@ -76,7 +76,25 @@ if (!isset($_SERVER['HTTP_HOST'])) {
 // Modification
 require(DIR_SYSTEM . 'engine/modification.php');
 $modification = new Modification();
-
+/*
+function __autoload($class) {
+	static $file_data = array();
+	
+	$files = glob(DIR_SYSTEM . 'library/');
+	
+	if ($files) {
+		foreach ($files as $file) {
+			$class = preg_replace('/[^a-zA-Z0-9]/', '', ($file));
+			
+			$file_data[$class] = basename($file);
+		}
+	}
+	
+	if (file_exists(DIR_SYSTEM . 'library/' . $class . '.php')) {
+		
+	}
+}
+*/
 // Engine
 require_once($modification->getFile(DIR_SYSTEM . 'engine/action.php')); 
 require_once($modification->getFile(DIR_SYSTEM . 'engine/controller.php'));

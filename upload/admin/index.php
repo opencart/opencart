@@ -13,6 +13,9 @@ if (!defined('DIR_APPLICATION')) {
 	exit;
 }
 
+// Startup
+require(DIR_SYSTEM . 'startup.php');
+
 // Application
 require_once($modification->getFile(DIR_SYSTEM . 'library/currency.php'));
 require_once($modification->getFile(DIR_SYSTEM . 'library/user.php'));

@@ -24,7 +24,7 @@ final class Loader {
 		if (file_exists($file)) { 
 			include_once($file);
 
-			$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));
+			$this->registry->set('controller_' . str_replace('/', '_', $model), new $class($this->registry));
 		} else {
 			trigger_error('Error: Could not load controller ' . $model . '!');
 			exit();

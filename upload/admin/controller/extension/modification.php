@@ -110,50 +110,80 @@ class ControllerExtensionModification extends Controller {
     	$this->getList();
   	}
 	
-	public function install() {
-		$this->language->load('extension/payment');
+  	public function sync() {
+		$this->language->load('extension/modification');
+	
+    	$this->document->setTitle($this->language->get('heading_title'));
 		
-		if (!$this->user->hasPermission('modify', 'extension/payment')) {
-			$this->session->data['error'] = $this->language->get('error_permission'); 
+		$this->load->model('setting/modification');
+		
+    	if ($this->validateForm()) {
+			$this->modification->clear();
 			
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {
-			$this->load->model('setting/extension');
-		
-			$this->model_setting_extension->install('payment', $this->request->get['extension']);
+			$this->modification->load(DIR_SYSTEM . 'modification.xml');
+			
+			$results = $this->model_setting_modification->getModifications();
+			
+			foreach ($results as $result) {
+				$this->modification->addModification($result['code']);
+			}
+			
+			$this->modification->write();
+			
+			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->load->model('user/user_group');
+			$url = '';
+			
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+			
+			$this->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+   		}
+	
+    	$this->getList();
+  	}	
+	
+  	public function clear() {
+		$this->language->load('extension/modification');
+	
+    	$this->document->setTitle($this->language->get('heading_title'));
 		
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'payment/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'payment/' . $this->request->get['extension']);
+		$this->load->model('setting/modification');
+		
+    	if ($this->validateDelete()) {
+			$this->modification->clear();
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
-		}
-	}
-	
-	public function uninstall() {
-		$this->language->load('extension/payment');
-		
-		if (!$this->user->hasPermission('modify', 'extension/payment')) {
-			$this->session->data['error'] = $this->language->get('error_permission'); 
+			$url = '';
 			
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {		
-			$this->load->model('setting/extension');
-			$this->load->model('setting/setting');
-				
-			$this->model_setting_extension->uninstall('payment', $this->request->get['extension']);
-		
-			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
-		
-			$this->session->data['success'] = $this->language->get('text_success');
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
 
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));	
-		}			
-	}
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+			
+			$this->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+   		}
 	
+    	$this->getList();
+  	}	
+		
 	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -186,10 +216,6 @@ class ControllerExtensionModification extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-						
-		$this->language->load('extension/modification');
-		 
-		$this->document->setTitle($this->language->get('heading_title')); 
 
   		$this->data['breadcrumbs'] = array();
 
@@ -205,6 +231,8 @@ class ControllerExtensionModification extends Controller {
 				
 		$this->data['insert'] = $this->url->link('extension/modification/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$this->data['delete'] = $this->url->link('extension/modification/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
+		$this->data['sync'] = $this->url->link('extension/modification/sync', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$this->data['clear'] = $this->url->link('extension/modification/clear', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$this->data['modifications'] = array();
 

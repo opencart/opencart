@@ -16,12 +16,6 @@ if (!defined('DIR_APPLICATION')) {
 // Startup
 require(DIR_SYSTEM . 'startup.php');
 
-function __autoload($class) {
-	if (file_exists(DIR_SYSTEM . 'library/' . $class . '.php')) {
-		
-	}
-}
-
 // Application
 require_once($modification->getFile(DIR_SYSTEM . 'library/customer.php'));
 require_once($modification->getFile(DIR_SYSTEM . 'library/affiliate.php'));

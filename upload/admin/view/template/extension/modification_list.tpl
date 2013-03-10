@@ -15,7 +15,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/module.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $insert; ?>" class="button"><?php echo $button_insert; ?></a><a onclick="$('#form').submit();" class="button"><?php echo $button_delete; ?></a><a href="" class="button">Resync</a> <a href="" class="button">Clear Modifcation Cache</a></div>
+      <div class="buttons"><a href="<?php echo $insert; ?>" class="button"><?php echo $button_insert; ?></a><a onclick="$('#form').submit();" class="button"><?php echo $button_delete; ?></a><a href="<?php echo $sync; ?>" class="button">Resync</a> <a href="<?php echo $clear; ?>" class="button">Clear Modifcation Cache</a></div>
     </div>
     <div class="content">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">

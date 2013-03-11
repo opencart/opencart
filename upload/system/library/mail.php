@@ -86,7 +86,7 @@ class Mail {
 
 		if ($this->protocol != 'mail') {
 			$header .= 'To: ' . $to . $this->newline;
-			$header .= 'Subject: ' . $this->subject . $this->newline;
+			$header .= 'Subject: ' . '=?UTF-8?B?' . base64_encode($this->subject) . '?=' . $this->newline;
 		}
 
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . $this->newline;

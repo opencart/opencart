@@ -117,7 +117,6 @@
 		</operation>
 	</file>	
 	
-	
 	<file name="system/engine/loader.php">
 		<operation>
 			<search index="2"><![CDATA[$file]]></search>
@@ -127,17 +126,26 @@
 			<search index="4"><![CDATA[$file]]></search>
 			<add position="replace"><![CDATA[$this->modification->getFile($file)]]></add>
 		</operation>		
-	</file>		
+	</file>
+	
+	<file name="system/library/config.php">
+		<operation>
+			<search index="3"><![CDATA[$file]]></search>
+			<add position="replace"><![CDATA[$this->modification->getFile($file)]]></add>
+		</operation>
+	</file>
+				
 	<file name="system/library/language.php">
 		<operation>
-			<search><![CDATA[$url]]></search>
-			<add position="replace"><![CDATA[$url1]]></add>
+			<search index="3"><![CDATA[$file]]></search>
+			<add position="replace"><![CDATA[$this->modification->getFile($file)]]></add>
 		</operation>
 	</file>	
+	
 	<file name="system/library/template.php">
 		<operation>
-			<search><![CDATA[$url]]></search>
-			<add position="replace"><![CDATA[$url1]]></add>
+			<search index="3"><![CDATA[$file]]></search>
+			<add position="replace"><![CDATA[$this->modification->getFile($file)]]></add>
 		</operation>
 	</file>
 </modification>

@@ -18,13 +18,23 @@ final class Loader {
 	}
 	
 	public function controller($controller) {
-		$file  = DIR_APPLICATION . 'model/' . $controller . '.php';
-		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $controller);
+		$file  = DIR_APPLICATION . 'controller/' . $controller . '.php';
+		$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $controller);
 				
 		if (file_exists($file)) { 
 			include_once($file);
+			
+			$controller = new $class($this->registry);
 
-			$this->registry->set('controller_' . str_replace('/', '_', $model), new $class($this->registry));
+			if (is_callable(array($controller, $action->getMethod()))) {
+				$action = call_user_func_array(array($controller, $action->getMethod()), $action->getArgs());
+			} else {
+				$action = $this->error;
+			
+				$this->error = '';
+			}
+						
+			//$this->registry->set('controller_' . str_replace('/', '_', $controller
 		} else {
 			trigger_error('Error: Could not load controller ' . $model . '!');
 			exit();
@@ -45,16 +55,21 @@ final class Loader {
 		}
 	}
 	
-	public function view($view) {
-		$file  = DIR_APPLICATION . 'view/' . $view . '.php';
-		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $view);
-				
-		if (file_exists($file)) { 
-			include_once($file);
+	public function view($template, $data = array()) {
+		if (file_exists(DIR_TEMPLATE . $template)) {
+			extract($data);
 
-			return;
+			ob_start();
+
+			require(DIR_TEMPLATE . $template);
+
+			$output = ob_get_contents();
+
+			ob_end_clean();
+
+			return $output;
 		} else {
-			trigger_error('Error: Could not load view ' . $view . '!');
+			trigger_error('Error: Could not load template ' . DIR_TEMPLATE . $template . '!');
 			exit();
 		}
 	}

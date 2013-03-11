@@ -1,14 +1,14 @@
 <?php
 class Modification {
-	private $path;
+	private $directory;
 	private $data = array();
 	
 	public function __construct() {
-		$this->path = realpath(str_replace('\'', '/', dirname(__FILE__)) . '/../../') . '/';
+		$this->directory = realpath(str_replace('\'', '/', dirname(__FILE__)) . '/../../') . '/';
 	}
 	
 	public function getFile($filename) {
-		$file = DIR_MODIFICATION . str_replace('/', '_', substr($filename, strlen($this->path)));
+		$file = DIR_MODIFICATION . str_replace('/', '_', substr($filename, strlen($this->directory)));
 		
 		if (file_exists($file)) {
 			return $file;
@@ -42,7 +42,7 @@ class Modification {
 			$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');		
 			
 			foreach ($files as $file) {
-				$files = glob($this->path . $file->getAttribute('name'));
+				$files = glob($this->directory . $file->getAttribute('name'));
 				$operations = $file->getElementsByTagName('operation');
 				
 				if ($files) {
@@ -94,7 +94,7 @@ class Modification {
 		
 		// Write all modification files
 		foreach ($modification as $key => $value) {
-			$file = DIR_MODIFICATION . str_replace('/', '_', substr($key, strlen($this->path)));
+			$file = DIR_MODIFICATION . str_replace('/', '_', substr($key, strlen($this->directory)));
 			
 			$handle = fopen($file, 'w');
 	

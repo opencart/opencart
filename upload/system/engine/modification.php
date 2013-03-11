@@ -4,11 +4,11 @@ class Modification {
 	private $data = array();
 	
 	public function __construct() {
-		$this->path = realpath(str_replace('\'', '/', dirname(__FILE__)) . '/../') . '/';
+		$this->path = realpath(str_replace('\'', '/', dirname(__FILE__)) . '/../../') . '/';
 	}
 	
 	public function getFile($filename) {
-		$file = DIR_MODIFICATION . str_replace('/', '_', $filename);
+		$file = DIR_MODIFICATION . str_replace('/', '_', substr($filename, strlen($this->path)));
 		
 		if (file_exists($file)) {
 			return $file;
@@ -45,7 +45,7 @@ class Modification {
 				$files = glob($this->path . $file->getAttribute('name'));
 				$operations = $file->getElementsByTagName('operation');
 				
-				if ($files) {	
+				if ($files) {
 					foreach ($files as $file) {
 						if (!isset($modification[$file])) {
 							$modification[$file] = file_get_contents($file);
@@ -109,8 +109,6 @@ class Modification {
 			*/
 						
 			$file = DIR_MODIFICATION . str_replace('/', '_', substr($key, strlen($this->path)));
-			
-			echo substr($key, strlen($this->path)) . '<br />';
 			
 			$handle = fopen($file, 'w');
 	

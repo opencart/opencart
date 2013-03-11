@@ -14,11 +14,11 @@ if (!defined('DIR_APPLICATION')) {
 }
 
 // Modification
-require(DIR_SYSTEM . 'engine/modification.php');
+require_once(DIR_SYSTEM . 'engine/modification.php');
 $modification = new Modification();
 
 // Startup
-require(DIR_SYSTEM . 'startup.php');
+require_once($modification->getFile(DIR_SYSTEM . 'startup.php'));
 
 // Application
 require_once($modification->getFile(DIR_SYSTEM . 'library/currency.php'));

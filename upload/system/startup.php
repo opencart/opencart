@@ -74,31 +74,31 @@ if (!isset($_SERVER['HTTP_HOST'])) {
 }
 
 // Engine
-require_once($modification->getFile(DIR_SYSTEM . 'engine/action.php')); 
-require_once($modification->getFile(DIR_SYSTEM . 'engine/controller.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'engine/front.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'engine/loader.php')); 
-require_once($modification->getFile(DIR_SYSTEM . 'engine/model.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'engine/registry.php'));
+require_once(DIR_SYSTEM . 'engine/action.php'); 
+require_once(DIR_SYSTEM . 'engine/controller.php');
+require_once(DIR_SYSTEM . 'engine/front.php');
+require_once(DIR_SYSTEM . 'engine/loader.php'); 
+require_once(DIR_SYSTEM . 'engine/model.php');
+require_once(DIR_SYSTEM . 'engine/registry.php');
 
 // Library
-require_once($modification->getFile(DIR_SYSTEM . 'library/cache.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/url.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/config.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/db.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/document.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/encryption.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/image.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/language.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/log.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/mail.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/pagination.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/request.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/response.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/session.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/template.php'));
+require_once(DIR_SYSTEM . 'library/cache.php');
+require_once(DIR_SYSTEM . 'library/url.php');
+require_once(DIR_SYSTEM . 'library/config.php');
+require_once(DIR_SYSTEM . 'library/db.php');
+require_once(DIR_SYSTEM . 'library/document.php');
+require_once(DIR_SYSTEM . 'library/encryption.php');
+require_once(DIR_SYSTEM . 'library/image.php');
+require_once(DIR_SYSTEM . 'library/language.php');
+require_once(DIR_SYSTEM . 'library/log.php');
+require_once(DIR_SYSTEM . 'library/mail.php');
+require_once(DIR_SYSTEM . 'library/pagination.php');
+require_once(DIR_SYSTEM . 'library/request.php');
+require_once(DIR_SYSTEM . 'library/response.php');
+require_once(DIR_SYSTEM . 'library/session.php');
+require_once(DIR_SYSTEM . 'library/template.php');
 
 // Helper
-require_once($modification->getFile(DIR_SYSTEM . 'helper/json.php')); 
-require_once($modification->getFile(DIR_SYSTEM . 'helper/utf8.php')); 
+require_once(DIR_SYSTEM . 'helper/json.php'); 
+require_once(DIR_SYSTEM . 'helper/utf8.php'); 
 ?>

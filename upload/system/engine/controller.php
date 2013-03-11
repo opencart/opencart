@@ -40,8 +40,6 @@ abstract class Controller {
 
 			$controller->{$action->getMethod()}($action->getArgs());
 
-			//call_user_func_array(array($controller, $action->getMethod()), $action->getArgs());
-
 			return $controller->output;
 		} else {
 			trigger_error('Error: Could not load controller ' . $child . '!');

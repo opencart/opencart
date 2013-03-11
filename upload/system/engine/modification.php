@@ -94,20 +94,6 @@ class Modification {
 		
 		// Write all modification files
 		foreach ($modification as $key => $value) {
-			/*
-			$path = '';
-			
-			$directories = explode('/', dirname(str_replace('../', '', $key)));
-			
-			foreach ($directories as $directory) {
-				$path = $key . '/' . $directory;
-				
-				if (!file_exists(DIR_MODIFICATION . $path)) {
-					@mkdir(DIR_MODIFICATION . $path, 0777);
-				}		
-			}
-			*/
-						
 			$file = DIR_MODIFICATION . str_replace('/', '_', substr($key, strlen($this->path)));
 			
 			$handle = fopen($file, 'w');

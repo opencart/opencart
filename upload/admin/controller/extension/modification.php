@@ -451,7 +451,7 @@ New XML Modifcation Standard
 	<author><![CDATA[http://www.opencart.com]]></author>
 	<file name="catalog/controller/product/product.php" error="log|skip|abort">
 		<operation>
-			<search index="1" error="log|skip|abort"><![CDATA[
+			<search index="1"><![CDATA[
 			
 			code
 			
@@ -496,18 +496,26 @@ New XML Modifcation Standard
 			if (strrchr($this->request->files['file']['name'], '.') == '.xml') {
 				$xml = file_get_contents($this->request->files['file']['tmp_name']);
 				
-				$dom = new DOMDocument('1.0', 'UTF-8');
-				$dom->loadXml($xml);
-								
-				$data = array(
-					'code'    => $dom->getElementsByTagName('id')->item(0)->nodeValue,
-					'name'    => $dom->getElementsByTagName('name')->item(0)->nodeValue,
-					'version' => $dom->getElementsByTagName('version')->item(0)->nodeValue,
-					'author'  => $dom->getElementsByTagName('author')->item(0)->nodeValue,
-					'xml'     => $xml
-				);
-				
-				$this->model_setting_modification->addModification($data);
+				if ($xml) {
+					$dom = new DOMDocument('1.0', 'UTF-8');
+					$dom->loadXml($xml);
+
+					if (!$dom->schemaValidate(DIR_SYSTEM . 'modification.xsd')) {
+						print '<b>DOMDocument::schemaValidate() Generated Errors!</b>';
+						
+						//libxml_display_errors();
+					}
+									
+					$data = array(
+						'code'    => $dom->getElementsByTagName('id')->item(0)->nodeValue,
+						'name'    => $dom->getElementsByTagName('name')->item(0)->nodeValue,
+						'version' => $dom->getElementsByTagName('version')->item(0)->nodeValue,
+						'author'  => $dom->getElementsByTagName('author')->item(0)->nodeValue,
+						'xml'     => $xml
+					);
+					
+					$this->model_setting_modification->addModification($data);
+				}
 				
 				unset($this->request->files['file']['tmp_name']);
 			} 

@@ -33,11 +33,11 @@ abstract class Controller {
 
 		if (file_exists($action->getFile())) {
 			require_once($action->getFile());
-
+			
 			$class = $action->getClass();
 
 			$controller = new $class($this->registry);
-
+			
 			$controller->{$action->getMethod()}($action->getArgs());
 
 			return $controller->output;

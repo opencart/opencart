@@ -18,7 +18,7 @@
         <table class="form">
           <tr>
             <td>Your upload file:</td>
-            <td><input type="button" value="Upload" class="button"></td>
+            <td><input type="button" value="<?php echo $button_upload; ?>" id="button-upload" class="button" onclick="$('input[name=\'file\']').click();" /></td>
           </tr>
         </table>
          <textarea wrap="off" style="width: 98%; height: 300px; padding: 5px; border: 1px solid #CCCCCC; background: #FFFFFF; overflow: scroll;"><?php echo $log; ?></textarea>
@@ -34,7 +34,7 @@
 <script type="text/javascript"><!--
 $('#file').on('change', function() {
     $.ajax({
-        url: 'index.php?route=extension/manage/upload&token=<?php echo $token; ?>',
+        url: 'index.php?route=extension/modification/upload&token=<?php echo $token; ?>',
         type: 'post',		
 		dataType: 'json',
 		data: new FormData($(this).parent()[0]),

@@ -65,6 +65,11 @@ img {
 #column-right input {
 	display: none;
 }
+#upload {
+	visibility: hidden;
+	position: absolute;
+	top: 0px;
+}
 #dialog {
 	display: none;
 }
@@ -98,7 +103,7 @@ img {
   <div id="column-left"></div>
   <div id="column-right"></div>
 </div>
-<div style="display: none;">
+<div id="upload">
   <form enctype="multipart/form-data">
     <input type="file" name="image" id="image" />
     <input type="hidden" name="directory" />

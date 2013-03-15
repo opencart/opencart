@@ -80,6 +80,6 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('.vtabs a').tabs(); 
-//--></script> 
-<?php echo $footer; ?> 
+$('.vtabs a').tabs();
+//--></script>
+<?php echo $footer; ?>

@@ -76,7 +76,7 @@
           <tr>
             <td><?php echo $entry_total; ?></td>
             <td><input type="text" name="nochex_total" value="<?php echo $nochex_total; ?>" /></td>
-          </tr>          
+          </tr>
           <tr>
             <td><?php echo $entry_order_status; ?></td>
             <td><select name="nochex_order_status_id">
@@ -123,4 +123,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

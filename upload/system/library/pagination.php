@@ -65,7 +65,7 @@ class Pagination {
 					$output .= ' <b>' . $i . '</b> ';
 				} else {
 					$output .= ' <a href="' . str_replace('{page}', $i, $this->url) . '">' . $i . '</a> ';
-				}	
+				}
 			}
 
 			if ($end < $num_pages) {
@@ -76,7 +76,7 @@ class Pagination {
 		if ($page < $num_pages) {
 			$output .= ' <a href="' . str_replace('{page}', $page + 1, $this->url) . '">' . $this->text_next . '</a> <a href="' . str_replace('{page}', $num_pages, $this->url) . '">' . $this->text_last . '</a> ';
 		}
-		
+
 		$find = array(
 			'{start}',
 			'{end}',
@@ -87,7 +87,7 @@ class Pagination {
 		$replace = array(
 			($total) ? (($page - 1) * $limit) + 1 : 0,
 			((($page - 1) * $limit) > ($total - $limit)) ? $total : ((($page - 1) * $limit) + $limit),
-			$total, 
+			$total,
 			$num_pages
 		);
 

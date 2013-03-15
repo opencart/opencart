@@ -1,6 +1,6 @@
 <?php
 abstract class Controller {
-	protected $registry;	
+	protected $registry;
 	protected $template;
 	protected $children = array();
 	protected $data = array();
@@ -17,7 +17,7 @@ abstract class Controller {
 	public function __set($key, $value) {
 		$this->registry->set($key, $value);
 	}
-	
+
 	protected function forward($route, $args = array()) {
 		return new Action($route, $args);
 	}
@@ -33,11 +33,11 @@ abstract class Controller {
 
 		if (file_exists($action->getFile())) {
 			require_once($action->getFile());
-			
+
 			$class = $action->getClass();
 
 			$controller = new $class($this->registry);
-			
+
 			$controller->{$action->getMethod()}($action->getArgs());
 
 			return $controller->output;

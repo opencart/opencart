@@ -48,7 +48,7 @@
           <tr>
             <td><?php echo $entry_total; ?></td>
             <td><input type="text" name="liqpay_total" value="<?php echo $liqpay_total; ?>" /></td>
-          </tr>          
+          </tr>
           <tr>
             <td><?php echo $entry_order_status; ?></td>
             <td><select name="liqpay_order_status_id">

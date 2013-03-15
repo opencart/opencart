@@ -1,17 +1,17 @@
-<?php 
+<?php
 class ControllerPaymentLiqPay extends Controller {
-	private $error = array(); 
+	private $error = array();
 
 	public function index() {
 		$this->language->load('payment/liqpay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('setting/setting');
-			
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('liqpay', $this->request->post);				
-			
+			$this->model_setting_setting->editSetting('liqpay', $this->request->post);
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
@@ -24,16 +24,16 @@ class ControllerPaymentLiqPay extends Controller {
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_pay'] = $this->language->get('text_pay');
 		$this->data['text_card'] = $this->language->get('text_card');
-		
+
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
 		$this->data['entry_signature'] = $this->language->get('entry_signature');
-		$this->data['entry_type'] = $this->language->get('entry_type');				
-		$this->data['entry_total'] = $this->language->get('entry_total');	
+		$this->data['entry_type'] = $this->language->get('entry_type');
+		$this->data['entry_total'] = $this->language->get('entry_total');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		
+
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -43,19 +43,19 @@ class ControllerPaymentLiqPay extends Controller {
 			$this->data['error_warning'] = '';
 		}
 
-		if (isset($this->error['merchant'])) { 
+		if (isset($this->error['merchant'])) {
 			$this->data['error_merchant'] = $this->error['merchant'];
 		} else {
 			$this->data['error_merchant'] = '';
 		}
-		
-		if (isset($this->error['signature'])) { 
+
+		if (isset($this->error['signature'])) {
 			$this->data['error_signature'] = $this->error['signature'];
 		} else {
 			$this->data['error_signature'] = '';
 		}
-		
-		if (isset($this->error['type'])) { 
+
+		if (isset($this->error['type'])) {
 			$this->data['error_type'] = $this->error['type'];
 		} else {
 			$this->data['error_type'] = '';
@@ -77,11 +77,11 @@ class ControllerPaymentLiqPay extends Controller {
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('payment/liqpay', 'token=' . $this->session->data['token'], 'SSL')
    		);
-				
+
 		$this->data['action'] = $this->url->link('payment/liqpay', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		$this->data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		if (isset($this->request->post['liqpay_merchant'])) {
 			$this->data['liqpay_merchant'] = $this->request->post['liqpay_merchant'];
 		} else {
@@ -99,39 +99,39 @@ class ControllerPaymentLiqPay extends Controller {
 		} else {
 			$this->data['liqpay_type'] = $this->config->get('liqpay_type');
 		}
-		
+
 		if (isset($this->request->post['liqpay_total'])) {
 			$this->data['liqpay_total'] = $this->request->post['liqpay_total'];
 		} else {
-			$this->data['liqpay_total'] = $this->config->get('liqpay_total'); 
-		} 
-				
+			$this->data['liqpay_total'] = $this->config->get('liqpay_total');
+		}
+
 		if (isset($this->request->post['liqpay_order_status_id'])) {
 			$this->data['liqpay_order_status_id'] = $this->request->post['liqpay_order_status_id'];
 		} else {
-			$this->data['liqpay_order_status_id'] = $this->config->get('liqpay_order_status_id'); 
-		} 
+			$this->data['liqpay_order_status_id'] = $this->config->get('liqpay_order_status_id');
+		}
 
 		$this->load->model('localisation/order_status');
-		
+
 		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		
+
 		if (isset($this->request->post['liqpay_geo_zone_id'])) {
 			$this->data['liqpay_geo_zone_id'] = $this->request->post['liqpay_geo_zone_id'];
 		} else {
-			$this->data['liqpay_geo_zone_id'] = $this->config->get('liqpay_geo_zone_id'); 
-		} 		
-		
+			$this->data['liqpay_geo_zone_id'] = $this->config->get('liqpay_geo_zone_id');
+		}
+
 		$this->load->model('localisation/geo_zone');
-										
+
 		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-		
+
 		if (isset($this->request->post['liqpay_status'])) {
 			$this->data['liqpay_status'] = $this->request->post['liqpay_status'];
 		} else {
 			$this->data['liqpay_status'] = $this->config->get('liqpay_status');
 		}
-		
+
 		if (isset($this->request->post['liqpay_sort_order'])) {
 			$this->data['liqpay_sort_order'] = $this->request->post['liqpay_sort_order'];
 		} else {
@@ -143,7 +143,7 @@ class ControllerPaymentLiqPay extends Controller {
 			'common/header',
 			'common/footer'
 		);
-				
+
 		$this->response->setOutput($this->render());
 	}
 
@@ -151,7 +151,7 @@ class ControllerPaymentLiqPay extends Controller {
 		if (!$this->user->hasPermission('modify', 'payment/liqpay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-		
+
 		if (!$this->request->post['liqpay_merchant']) {
 			$this->error['merchant'] = $this->language->get('error_merchant');
 		}
@@ -159,12 +159,12 @@ class ControllerPaymentLiqPay extends Controller {
 		if (!$this->request->post['liqpay_signature']) {
 			$this->error['signature'] = $this->language->get('error_signature');
 		}
-		
+
 		if (!$this->error) {
 			return true;
 		} else {
 			return false;
-		}	
+		}
 	}
 }
 ?>

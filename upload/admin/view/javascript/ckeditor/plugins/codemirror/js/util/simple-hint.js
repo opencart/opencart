@@ -5,7 +5,7 @@
     for (var opt in defaults)
       if (defaults.hasOwnProperty(opt))
         options[opt] = (givenOptions && givenOptions.hasOwnProperty(opt) ? givenOptions : defaults)[opt];
-    
+
     function collectHints(previousToken) {
       // We want a single cursor position.
       if (editor.somethingSelected()) return;

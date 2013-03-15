@@ -65,12 +65,12 @@
                   <option value="payment" selected="selected"><?php echo $text_payment; ?></option>
                   <?php } else { ?>
                   <option value="payment"><?php echo $text_payment; ?></option>
-                  <?php } ?>  
+                  <?php } ?>
                   <?php  if ($tax_rule['based'] == 'store') { ?>
                   <option value="store" selected="selected"><?php echo $text_store; ?></option>
                   <?php } else { ?>
                   <option value="store"><?php echo $text_store; ?></option>
-                  <?php } ?>                                    
+                  <?php } ?>
                 </select></td>
               <td class="left"><input type="text" name="tax_rule[<?php echo $tax_rule_row; ?>][priority]" value="<?php echo $tax_rule['priority']; ?>" size="1" /></td>
               <td class="left"><a onclick="$('#tax-rule-row<?php echo $tax_rule_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
@@ -109,10 +109,10 @@ function addRule() {
 	html += '    <td class="left"><a onclick="$(\'#tax-rule-row' + tax_rule_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
 	html += '  </tr>';
 	html += '</tbody>';
-	
+
 	$('#tax-rule > tfoot').before(html);
-	
+
 	tax_rule_row++;
 }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

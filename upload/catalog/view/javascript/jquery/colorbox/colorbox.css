@@ -13,7 +13,7 @@
 .cboxPhoto{float:left; margin:auto; border:0; display:block;}
 .cboxIframe{width:100%; height:100%; display:block; border:0;}
 
-/* 
+/*
     User Style:
     Change the following styles to modify the appearance of ColorBox.  They are
     ordered & tabbed in a way that represents the nesting of the generated HTML.
@@ -36,7 +36,7 @@
         #cboxLoadingGraphic{background:url(images/loading.gif) no-repeat center center;}
         #cboxTitle{position:absolute; bottom:-25px; left:0; text-align:center; width:100%; font-weight:bold; color:#7C7C7C;}
         #cboxCurrent{position:absolute; bottom:-25px; left:58px; font-weight:bold; color:#7C7C7C;}
-        
+
         #cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{position:absolute; bottom:-29px; background:url(images/controls.png) no-repeat 0px 0px; width:23px; height:23px; text-indent:-9999px;}
         #cboxPrevious{left:0px; background-position: -51px -25px;}
         #cboxPrevious:hover{background-position:-51px 0px;}
@@ -44,7 +44,7 @@
         #cboxNext:hover{background-position:-75px 0px;}
         #cboxClose{right:0; background-position:-100px -25px;}
         #cboxClose:hover{background-position:-100px 0px;}
-        
+
         .cboxSlideshow_on #cboxSlideshow{background-position:-125px 0px; right:27px;}
         .cboxSlideshow_on #cboxSlideshow:hover{background-position:-150px 0px;}
         .cboxSlideshow_off #cboxSlideshow{background-position:-150px -25px; right:27px;}

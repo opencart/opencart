@@ -90,7 +90,7 @@
       <?php if ($iso_code_3 == 'DEU') { ?>
       <tr>
         <td colspan="2"><input type="checkbox" name="deu_terms" value="1" />
-          Mit der Übermittlung der für die Abwicklung des Rechnungskaufes und einer Identitäts - und Bonitätsprüfung erforderlichen 
+          Mit der Übermittlung der für die Abwicklung des Rechnungskaufes und einer Identitäts - und Bonitätsprüfung erforderlichen
           Daten an Klarna bin ich einverstanden. Meine <a href="https://online.klarna.com/consent_de.yaws" target="_blank">Einwilligung</a> kann ich jederzeit mit Wirkung für die Zukunft widerrufen.</td>
       </tr>
       <?php } ?>
@@ -108,18 +108,18 @@ $('#button-confirm').on('click', function() {
 		url: 'index.php?route=payment/klarna_account/send',
 		type: 'post',
 		data: $('#payment input[type=\'text\'], #payment input[type=\'checkbox\']:checked, #payment input[type=\'radio\']:checked, #payment select'),
-		dataType: 'json',		
+		dataType: 'json',
 		beforeSend: function() {
 			$('#button-confirm').attr('disabled', true);
-			
-			$('.warning, .error').remove();	
-			
+
+			$('.warning, .error').remove();
+
 			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
 			$('#button-confirm').attr('disabled', false);
 			$('.attention').remove();
-		},		
+		},
 		success: function(json) {
 			if (json['error']) {
 				$('#payment').before('<div class="warning">' + json['error'] + '</div>');

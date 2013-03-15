@@ -97,11 +97,11 @@
 <script type="text/javascript"><!--
 var module_row = <?php echo $module_row; ?>;
 
-function addModule() {	
+function addModule() {
 	html  = '<tbody id="module-row' + module_row + '">';
 	html += '  <tr>';
 	html += '    <td class="left"><input type="text" name="bestseller_module[' + module_row + '][limit]" value="5" size="1" /></td>';
-	html += '    <td class="left"><input type="text" name="bestseller_module[' + module_row + '][image_width]" value="80" size="3" /> <input type="text" name="bestseller_module[' + module_row + '][image_height]" value="80" size="3" /></td>'; 
+	html += '    <td class="left"><input type="text" name="bestseller_module[' + module_row + '][image_width]" value="80" size="3" /> <input type="text" name="bestseller_module[' + module_row + '][image_height]" value="80" size="3" /></td>';
 	html += '    <td class="left"><select name="bestseller_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>
 	html += '      <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
@@ -121,10 +121,10 @@ function addModule() {
 	html += '    <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
 	html += '  </tr>';
 	html += '</tbody>';
-	
+
 	$('#module tfoot').before(html);
-	
+
 	module_row++;
 }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

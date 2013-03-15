@@ -12,23 +12,23 @@
 				class_name : "hover",
 				items : {
 					create : {
-						label	: "Create", 
+						label	: "Create",
 						icon	: "create",
-						visible	: function (NODE, TREE_OBJ) { if(NODE.length != 1) return 0; return TREE_OBJ.check("creatable", NODE); }, 
+						visible	: function (NODE, TREE_OBJ) { if(NODE.length != 1) return 0; return TREE_OBJ.check("creatable", NODE); },
 						action	: function (NODE, TREE_OBJ) { TREE_OBJ.create(false, TREE_OBJ.get_node(NODE[0])); },
 						separator_after : true
 					},
 					rename : {
-						label	: "Rename", 
+						label	: "Rename",
 						icon	: "rename",
-						visible	: function (NODE, TREE_OBJ) { if(NODE.length != 1) return false; return TREE_OBJ.check("renameable", NODE); }, 
-						action	: function (NODE, TREE_OBJ) { TREE_OBJ.rename(NODE); } 
+						visible	: function (NODE, TREE_OBJ) { if(NODE.length != 1) return false; return TREE_OBJ.check("renameable", NODE); },
+						action	: function (NODE, TREE_OBJ) { TREE_OBJ.rename(NODE); }
 					},
 					remove : {
 						label	: "Delete",
 						icon	: "remove",
-						visible	: function (NODE, TREE_OBJ) { var ok = true; $.each(NODE, function () { if(TREE_OBJ.check("deletable", this) == false) ok = false; return false; }); return ok; }, 
-						action	: function (NODE, TREE_OBJ) { $.each(NODE, function () { TREE_OBJ.remove(this); }); } 
+						visible	: function (NODE, TREE_OBJ) { var ok = true; $.each(NODE, function () { if(TREE_OBJ.check("deletable", this) == false) ok = false; return false; }); return ok; },
+						action	: function (NODE, TREE_OBJ) { $.each(NODE, function () { TREE_OBJ.remove(this); }); }
 					}
 				}
 			},
@@ -97,12 +97,12 @@
 						n.children("a").addClass(opts.class_name);
 						e.target.blur();
 					}
-					else { 
-						$.tree.plugins.contextmenu.data.r = false; 
+					else {
+						$.tree.plugins.contextmenu.data.r = false;
 						$.tree.plugins.contextmenu.data.a = (t.selected_arr && t.selected_arr.length > 1) ? t.selected_arr : t.selected;
 					}
 					$.tree.plugins.contextmenu.show(n, t);
-					e.preventDefault(); 
+					e.preventDefault();
 					e.stopPropagation();
 					// return false; // commented out because you might want to do something in your own callback
 				},

@@ -33,7 +33,7 @@
           <tr>
             <td><?php echo $entry_total; ?></td>
             <td><input type="text" name="sagepay_us_total" value="<?php echo $sagepay_us_total; ?>" /></td>
-          </tr>          
+          </tr>
           <tr>
             <td><?php echo $entry_order_status; ?></td>
             <td><select name="sagepay_us_order_status_id">
@@ -80,4 +80,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

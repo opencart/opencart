@@ -4,9 +4,9 @@ class ControllerPaymentPayza extends Controller {
 		$this->data['button_confirm'] = $this->language->get('button_confirm');
 
 		$this->load->model('checkout/order');
-		
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-		
+
 		$this->data['action'] = 'https://www.payza.com/PayProcess.aspx';
 
 		$this->data['ap_merchant'] = $this->config->get('payza_merchant');
@@ -22,15 +22,15 @@ class ControllerPaymentPayza extends Controller {
 			$this->template = $this->config->get('config_template') . '/template/payment/payza.tpl';
 		} else {
 			$this->template = 'default/template/payment/payza.tpl';
-		}		
-		
+		}
+
 		$this->render();
 	}
-	
+
 	public function callback() {
 		if (isset($this->request->post['ap_securitycode']) && ($this->request->post['ap_securitycode'] == $this->config->get('payza_security'))) {
 			$this->load->model('checkout/order');
-			
+
 			$this->model_checkout_order->confirm($this->request->post['ap_itemcode'], $this->config->get('payza_order_status_id'));
 		}
 	}

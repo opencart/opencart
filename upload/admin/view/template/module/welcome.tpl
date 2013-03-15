@@ -102,7 +102,7 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php $module_row = 1; ?>
 <?php foreach ($modules as $module) { ?>
@@ -118,11 +118,11 @@ CKEDITOR.replace('description-<?php echo $module_row; ?>-<?php echo $language['l
 <?php } ?>
 <?php $module_row++; ?>
 <?php } ?>
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 var module_row = <?php echo $module_row; ?>;
 
-function addModule() {	
+function addModule() {
 	html  = '<div id="tab-module-' + module_row + '" class="vtabs-content">';
 	html += '  <div id="language-' + module_row + '" class="htabs">';
     <?php foreach ($languages as $language) { ?>
@@ -170,11 +170,11 @@ function addModule() {
 	html += '      <td><?php echo $entry_sort_order; ?></td>';
 	html += '      <td><input type="text" name="welcome_module[' + module_row + '][sort_order]" value="" size="3" /></td>';
 	html += '    </tr>';
-	html += '  </table>'; 
+	html += '  </table>';
 	html += '</div>';
-	
+
 	$('#form').append(html);
-	
+
 	<?php foreach ($languages as $language) { ?>
 	CKEDITOR.replace('description-' + module_row + '-<?php echo $language['language_id']; ?>', {
 		filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
@@ -183,28 +183,28 @@ function addModule() {
 		filebrowserUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 		filebrowserImageUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 		filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
-	});  
+	});
 	<?php } ?>
-	
+
 	$('#language-' + module_row + ' a').tabs();
-	
+
 	$('#module-add').before('<a href="#tab-module-' + module_row + '" id="module-' + module_row + '"><?php echo $tab_module; ?> ' + module_row + '&nbsp;<img src="view/image/delete.png" alt="" onclick="$(\'.vtabs a:first\').trigger(\'click\'); $(\'#module-' + module_row + '\').remove(); $(\'#tab-module-' + module_row + '\').remove(); return false;" /></a>');
-	
+
 	$('.vtabs a').tabs();
-	
+
 	$('#module-' + module_row).trigger('click');
-	
+
 	module_row++;
 }
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('.vtabs a').tabs();
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 <?php $module_row = 1; ?>
 <?php foreach ($modules as $module) { ?>
 $('#language-<?php echo $module_row; ?> a').tabs();
 <?php $module_row++; ?>
-<?php } ?> 
-//--></script> 
+<?php } ?>
+//--></script>
 <?php echo $footer; ?>

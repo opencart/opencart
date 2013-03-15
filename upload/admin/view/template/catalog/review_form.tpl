@@ -99,7 +99,7 @@ $('input[name=\'product\']').autocomplete({
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {		
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item.name,
@@ -112,12 +112,12 @@ $('input[name=\'product\']').autocomplete({
 	select: function(event, ui) {
 		$('input[name=\'product\']').val(ui.item.label);
 		$('input[name=\'product_id\']').val(ui.item.value);
-		
+
 		return false;
 	},
 	focus: function(event, ui) {
       	return false;
    	}
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

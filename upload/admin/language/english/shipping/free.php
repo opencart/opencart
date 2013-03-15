@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']    = 'Free Shipping';
 
-// Text 
+// Text
 $_['text_shipping']    = 'Shipping';
 $_['text_success']     = 'Success: You have modified free shipping!';
 

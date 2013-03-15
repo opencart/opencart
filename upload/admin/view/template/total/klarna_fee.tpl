@@ -69,5 +69,5 @@
 </div>
 <script type="text/javascript"><!--
 $('#vtabs a').tabs();
-//--></script> 
-<?php echo $footer; ?> 
+//--></script>
+<?php echo $footer; ?>

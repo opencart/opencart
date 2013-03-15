@@ -1,5 +1,5 @@
 <?php
-// Heading  
+// Heading
 $_['heading_title']          = 'Shopping Cart';
 
 // Text
@@ -40,12 +40,12 @@ $_['entry_postcode']         = 'Post Code:';
 
 // Error
 $_['error_stock']            = 'Products marked with *** are not available in the desired quantity or not in stock!';
-$_['error_minimum']          = 'Minimum order amount for %s is %s!';	
-$_['error_required']         = '%s required!';	
-$_['error_product']          = 'Warning: There are no products in your cart!';	
+$_['error_minimum']          = 'Minimum order amount for %s is %s!';
+$_['error_required']         = '%s required!';
+$_['error_product']          = 'Warning: There are no products in your cart!';
 $_['error_coupon']           = 'Warning: Coupon is either invalid, expired or reached it\'s usage limit!';
 $_['error_voucher']          = 'Warning: Gift Voucher is either invalid or the balance has been used up!';
-$_['error_reward']           = 'Warning: Please enter the amount of reward points to use!';	
+$_['error_reward']           = 'Warning: Please enter the amount of reward points to use!';
 $_['error_points']           = 'Warning: You don\'t have %s reward points!';
 $_['error_maximum']          = 'Warning: The maximum number of points that can be applied is %s!';
 $_['error_postcode']         = 'Postcode must be between 2 and 10 characters!';

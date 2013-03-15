@@ -29,4 +29,4 @@
 	</div>
   </form>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

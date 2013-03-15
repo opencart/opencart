@@ -111,81 +111,81 @@
 function display(view) {
 	if (view == 'list') {
 		$('.product-grid').attr('class', 'product-list');
-		
+
 		$('.product-list > div').each(function(index, element) {
 			html  = '<div class="right">';
 			html += '  <div class="cart">' + $(element).find('.cart').html() + '</div>';
 			html += '  <div class="wishlist">' + $(element).find('.wishlist').html() + '</div>';
 			html += '  <div class="compare">' + $(element).find('.compare').html() + '</div>';
-			html += '</div>';			
-			
-			html += '<div class="left">';
-			
-			var image = $(element).find('.image').html();
-			
-			if (image != null) { 
-				html += '<div class="image">' + image + '</div>';
-			}
-			
-			var price = $(element).find('.price').html();
-			
-			if (price != null) {
-				html += '<div class="price">' + price  + '</div>';
-			}
-					
-			html += '  <div class="name">' + $(element).find('.name').html() + '</div>';
-			html += '  <div class="description">' + $(element).find('.description').html() + '</div>';
-			
-			var rating = $(element).find('.rating').html();
-			
-			if (rating != null) {
-				html += '<div class="rating">' + rating + '</div>';
-			}
-				
 			html += '</div>';
-						
-			$(element).html(html);
-		});		
-		
-		$('.display').html('<b><?php echo $text_display; ?></b> <?php echo $text_list; ?> <b>/</b> <a onclick="display(\'grid\');"><?php echo $text_grid; ?></a>');
-		
-		$.totalStorage('display', 'list'); 
-	} else {
-		$('.product-list').attr('class', 'product-grid');
-		
-		$('.product-grid > div').each(function(index, element) {
-			html = '';
-			
+
+			html += '<div class="left">';
+
 			var image = $(element).find('.image').html();
-			
+
 			if (image != null) {
 				html += '<div class="image">' + image + '</div>';
 			}
-			
-			html += '<div class="name">' + $(element).find('.name').html() + '</div>';
-			html += '<div class="description">' + $(element).find('.description').html() + '</div>';
-			
+
 			var price = $(element).find('.price').html();
-			
+
 			if (price != null) {
 				html += '<div class="price">' + price  + '</div>';
 			}
-			
+
+			html += '  <div class="name">' + $(element).find('.name').html() + '</div>';
+			html += '  <div class="description">' + $(element).find('.description').html() + '</div>';
+
 			var rating = $(element).find('.rating').html();
-			
+
 			if (rating != null) {
 				html += '<div class="rating">' + rating + '</div>';
 			}
-						
+
+			html += '</div>';
+
+			$(element).html(html);
+		});
+
+		$('.display').html('<b><?php echo $text_display; ?></b> <?php echo $text_list; ?> <b>/</b> <a onclick="display(\'grid\');"><?php echo $text_grid; ?></a>');
+
+		$.totalStorage('display', 'list');
+	} else {
+		$('.product-list').attr('class', 'product-grid');
+
+		$('.product-grid > div').each(function(index, element) {
+			html = '';
+
+			var image = $(element).find('.image').html();
+
+			if (image != null) {
+				html += '<div class="image">' + image + '</div>';
+			}
+
+			html += '<div class="name">' + $(element).find('.name').html() + '</div>';
+			html += '<div class="description">' + $(element).find('.description').html() + '</div>';
+
+			var price = $(element).find('.price').html();
+
+			if (price != null) {
+				html += '<div class="price">' + price  + '</div>';
+			}
+
+			var rating = $(element).find('.rating').html();
+
+			if (rating != null) {
+				html += '<div class="rating">' + rating + '</div>';
+			}
+
 			html += '<div class="cart">' + $(element).find('.cart').html() + '</div>';
 			html += '<div class="wishlist">' + $(element).find('.wishlist').html() + '</div>';
 			html += '<div class="compare">' + $(element).find('.compare').html() + '</div>';
-			
+
 			$(element).html(html);
-		});	
-					
+		});
+
 		$('.display').html('<b><?php echo $text_display; ?></b> <a onclick="display(\'list\');"><?php echo $text_list; ?></a> <b>/</b> <?php echo $text_grid; ?>');
-		
+
 		$.totalStorage('display', 'grid');
 	}
 }
@@ -197,5 +197,5 @@ if (view) {
 } else {
 	display('list');
 }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

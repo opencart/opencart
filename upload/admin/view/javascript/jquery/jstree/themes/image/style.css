@@ -49,7 +49,7 @@
 /*
 .tree-image ins { background-image:url("icons.png"); background-position:0 0; background-repeat:no-repeat; }
 .tree-image ul li a.loading ins { background-image:url("throbber.gif") !important; background-position:0 0 !important; }
-.tree-image li.closed a ins, .tree-image li.leaf a ins { background-position:0 0px; } 
+.tree-image li.closed a ins, .tree-image li.leaf a ins { background-position:0 0px; }
 .tree-image ul li a.loading ins { background-image:url("throbber.gif"); background-position:0 0; }
 .tree-image li a ins.forbidden { background-position:-16px -16px; }
 .tree-image .locked li a ins { background-position:0 -48px; }

@@ -12,7 +12,7 @@
       <div class="content">
         <div id="map"></div>
         <br />
-        
+
         <?php foreach($locations as $location) { ?>
         <div class="left"><b><?php echo $location['name']; ?></b><br />
           <?php echo $location['address_1']; ?><br />
@@ -20,17 +20,17 @@
           <?php echo $location['city']; ?><br />
           <?php echo $location['postcode'];  ?><br />
           <br />
-          
+
           <?php if ($location['open']) { ?>
           <b><?php echo $text_open; ?></b><br/>
           <?php echo $location['open']; ?><br />
           <br />
           <?php } ?>
-          
+
           <?php if ($location['comment']) { ?>
           <?php echo $location['comment']; ?><br />
           <?php } ?>
-          
+
           <br />
           <br />
         </div>
@@ -84,17 +84,17 @@ function initialize() {
 	<?php foreach($locations as $location) { ?>
 	var myLatlng<?php echo $location['location_id']; ?> = new google.maps.LatLng(<?php echo $location['geocode']; ?>);
 	<?php } ?>
-	
+
 	var mapOptions = {
 	  zoom: 6,
 	  center: myLatlng<?php echo $location['location_id']; ?>,
 	  mapTypeId: google.maps.MapTypeId.ROADMAP
 	}
-	
+
 	var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-	
+
 	var bound = new google.maps.LatLngBounds();
-	
+
 	<?php foreach($locations as $location) { ?>
 	//  Loop through our Array and place all the markers onto the map
 	var contentString<?php echo $location['location_id']; ?> = '<div id="address">' +
@@ -106,37 +106,37 @@ function initialize() {
 		'<?php echo $location['postcode']  .   "<br />"; ?> '+
 		'</div>'+
 		'</div>';
-	
+
 	var infowindow<?php echo $location['location_id']; ?> = new google.maps.InfoWindow({
 		content: contentString<?php echo $location['location_id']; ?>,
 		maxWidth: 100
 	});
-	
+
 	var marker<?php echo $location['location_id']; ?> = new google.maps.Marker({
 		position: myLatlng<?php echo $location['location_id']; ?>,
 		map: map,
 		animation: google.maps.Animation.DROP,
 		title: '<?php echo addslashes($location['name']); ?>'
 	});
-	
+
 	google.maps.event.addListener(marker<?php echo $location['location_id']; ?>, 'click', function() {
 	  if (openedInfoWindow != null) openedInfoWindow.close();
-	  
+
 	  infowindow<?php echo $location['location_id']; ?>.open(map,marker<?php echo $location['location_id']; ?>);
-	  
+
 	  openedInfoWindow = infowindow<?php echo $location['location_id']; ?>;
-	  
+
 		google.maps.event.addListener(infowindow<?php echo $location['location_id']; ?>, 'closeclick', function() {
 			openedInfoWindow = null;
 		});
 	});
-	
+
 	//  Setting up bounds so that it extends the viewport
 	bound.extend(marker<?php echo $location['location_id']; ?>.getPosition());
-	<?php } ?>  
-  
+	<?php } ?>
+
 	//  Fit map to bounds so you can see all the markers
-	map.fitBounds(bound);    
+	map.fitBounds(bound);
 }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

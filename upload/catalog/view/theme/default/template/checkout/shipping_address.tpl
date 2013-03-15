@@ -83,9 +83,9 @@ $('#shipping-address input[name=\'shipping_address\']').live('change', function(
 		$('#shipping-new').hide();
 	}
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
-// Shipping Address			
+// Shipping Address
 $('#button-shipping-address').off().on('click', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/shipping_address/save',
@@ -95,55 +95,55 @@ $('#button-shipping-address').off().on('click', function() {
 		beforeSend: function() {
 			$('#button-shipping-address').attr('disabled', true);
 			$('#button-shipping-address').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-		},	
+		},
 		complete: function() {
 			$('#button-shipping-address').attr('disabled', false);
 			$('.loading').remove();
-		},			
+		},
 		success: function(json) {
 			$('.warning, .error').remove();
-			
+
 			if (json['redirect']) {
 				location = json['redirect'];
 			} else if (json['error']) {
 				if (json['error']['warning']) {
 					$('#shipping-address .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
-					
+
 					$('.warning').fadeIn('slow');
 				}
-								
+
 				if (json['error']['firstname']) {
 					$('#shipping-address input[name=\'firstname\']').after('<span class="error">' + json['error']['firstname'] + '</span>');
 				}
-				
+
 				if (json['error']['lastname']) {
 					$('#shipping-address input[name=\'lastname\']').after('<span class="error">' + json['error']['lastname'] + '</span>');
-				}	
-				
+				}
+
 				if (json['error']['email']) {
 					$('#shipping-address input[name=\'email\']').after('<span class="error">' + json['error']['email'] + '</span>');
 				}
-				
+
 				if (json['error']['telephone']) {
 					$('#shipping-address input[name=\'telephone\']').after('<span class="error">' + json['error']['telephone'] + '</span>');
-				}		
-										
+				}
+
 				if (json['error']['address_1']) {
 					$('#shipping-address input[name=\'address_1\']').after('<span class="error">' + json['error']['address_1'] + '</span>');
-				}	
-				
+				}
+
 				if (json['error']['city']) {
 					$('#shipping-address input[name=\'city\']').after('<span class="error">' + json['error']['city'] + '</span>');
-				}	
-				
+				}
+
 				if (json['error']['postcode']) {
 					$('#shipping-address input[name=\'postcode\']').after('<span class="error">' + json['error']['postcode'] + '</span>');
-				}	
-				
+				}
+
 				if (json['error']['country']) {
 					$('#shipping-address select[name=\'country_id\']').after('<span class="error">' + json['error']['country'] + '</span>');
-				}	
-				
+				}
+
 				if (json['error']['zone']) {
 					$('#shipping-address select[name=\'zone_id\']').after('<span class="error">' + json['error']['zone'] + '</span>');
 				}
@@ -153,17 +153,17 @@ $('#button-shipping-address').off().on('click', function() {
 					dataType: 'html',
 					success: function(html) {
 						$('#shipping-method .checkout-content').html(html);
-						
+
 						$('#shipping-address .checkout-content').slideUp('slow');
-						
+
 						$('#shipping-method .checkout-content').slideDown('slow');
-						
+
 						$('#shipping-address .checkout-heading a').remove();
 						$('#shipping-method .checkout-heading a').remove();
 						$('#payment-method .checkout-heading a').remove();
-						
-						$('#shipping-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');							
-						
+
+						$('#shipping-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');
+
 						$.ajax({
 							url: 'index.php?route=checkout/shipping_address',
 							dataType: 'html',
@@ -178,8 +178,8 @@ $('#button-shipping-address').off().on('click', function() {
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
-				});	
-				
+				});
+
 				$.ajax({
 					url: 'index.php?route=checkout/payment_address',
 					dataType: 'html',
@@ -189,13 +189,13 @@ $('#button-shipping-address').off().on('click', function() {
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
-				});					
+				});
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	});	
+	});
 });
 
 $('#shipping-address select[name=\'country_id\']').off().on('change', function() {
@@ -208,30 +208,30 @@ $('#shipping-address select[name=\'country_id\']').off().on('change', function()
 		},
 		complete: function() {
 			$('.loading').remove();
-		},			
+		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
 				$('#shipping-postcode-required').show();
 			} else {
 				$('#shipping-postcode-required').hide();
 			}
-			
+
 			html = '<option value=""><?php echo $text_select; ?></option>';
-			
+
 			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
         			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-	    			
+
 					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
 	      				html += ' selected="selected"';
 	    			}
-	
+
 	    			html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
-			
+
 			$('#shipping-address select[name=\'zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

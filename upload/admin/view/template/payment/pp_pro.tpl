@@ -69,7 +69,7 @@
           <tr>
             <td><?php echo $entry_total; ?></td>
             <td><input type="text" name="pp_pro_total" value="<?php echo $pp_pro_total; ?>" /></td>
-          </tr>          
+          </tr>
           <tr>
             <td><?php echo $entry_order_status; ?></td>
             <td><select name="pp_pro_order_status_id">

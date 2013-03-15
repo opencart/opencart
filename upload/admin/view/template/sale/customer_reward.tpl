@@ -25,7 +25,7 @@
       <td></td>
       <td class="right"><b><?php echo $text_balance; ?></b></td>
       <td class="right"><?php echo $balance; ?></td>
-    </tr>    
+    </tr>
     <?php } else { ?>
     <tr>
       <td class="center" colspan="3"><?php echo $text_no_results; ?></td>

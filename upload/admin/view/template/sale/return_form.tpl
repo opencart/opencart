@@ -145,14 +145,14 @@
 $.widget('custom.catcomplete', $.ui.autocomplete, {
 	_renderMenu: function(ul, items) {
 		var self = this, currentCategory = '';
-		
+
 		$.each(items, function(index, item) {
 			if (item.category != currentCategory) {
 				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
-				
+
 				currentCategory = item.category;
 			}
-			
+
 			self._renderItem(ul, item);
 		});
 	}
@@ -164,7 +164,7 @@ $('input[name=\'customer\']').catcomplete({
 		$.ajax({
 			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {	
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						category: item.customer_group,
@@ -178,8 +178,8 @@ $('input[name=\'customer\']').catcomplete({
 				}));
 			}
 		});
-		
-	}, 
+
+	},
 	select: function(event, ui) {
 		$('input[name=\'customer\']').attr('value', ui.item.label);
 		$('input[name=\'customer_id\']').attr('value', ui.item.value);
@@ -194,7 +194,7 @@ $('input[name=\'customer\']').catcomplete({
       	return false;
    	}
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('input[name=\'product\']').autocomplete({
 	delay: 500,
@@ -202,7 +202,7 @@ $('input[name=\'product\']').autocomplete({
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {	
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item.name,
@@ -212,25 +212,25 @@ $('input[name=\'product\']').autocomplete({
 				}));
 			}
 		});
-	}, 
+	},
 	select: function(event, ui) {
 		$('input[name=\'product_id\']').attr('value', ui.item.value);
 		$('input[name=\'product\']').attr('value', ui.item.label);
 		$('input[name=\'model\']').attr('value', ui.item.model);
-		
+
 		return false;
 	},
 	focus: function(event, ui) {
       	return false;
    	}
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
-$('.htabs a').tabs(); 
-//--></script> 
+$('.htabs a').tabs();
+//--></script>
 <?php echo $footer; ?>

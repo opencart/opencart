@@ -2,13 +2,13 @@
 // Heading
 $_['heading_title']      = 'WorldPay';
 
-// Text 
+// Text
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified WorldPay account details!';
 $_['text_successful']    = 'On - Always Successful';
 $_['text_declined']      = 'On - Always Declined';
 $_['text_off']           = 'Off';
-      
+
 // Entry
 $_['entry_merchant']     = 'Merchant ID:';
 $_['entry_password']     = 'Payment Response Password:<br /><span class="help">This has to be set in the WorldPay control panel.</span>';

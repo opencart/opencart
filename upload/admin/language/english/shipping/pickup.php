@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']    = 'Pickup From Store';
 
-// Text 
+// Text
 $_['text_shipping']    = 'Shipping';
 $_['text_success']     = 'Success: You have modified pickup from store!';
 

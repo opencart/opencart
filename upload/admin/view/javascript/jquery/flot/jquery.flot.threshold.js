@@ -27,12 +27,12 @@ events.
     var options = {
         series: { threshold: null } // or { below: number, color: color spec}
     };
-    
+
     function init(plot) {
         function thresholdData(plot, s, datapoints) {
             if (!s.threshold)
                 return;
-            
+
             var ps = datapoints.pointsize, i, x, y, p, prevp,
                 thresholded = $.extend({}, s); // note: shallow copy
 
@@ -67,7 +67,7 @@ events.
                     prevp.push(below);
                     for (m = 2; m < ps; ++m)
                         prevp.push(origpoints[i + m]);
-                    
+
                     p.push(null); // start new segment
                     p.push(null);
                     for (m = 2; m < ps; ++m)
@@ -84,16 +84,16 @@ events.
 
             datapoints.points = newpoints;
             thresholded.datapoints.points = threspoints;
-            
+
             if (thresholded.datapoints.points.length > 0)
                 plot.getData().push(thresholded);
-                
+
             // FIXME: there are probably some edge cases left in bars
         }
-        
+
         plot.hooks.processDatapoints.push(thresholdData);
     }
-    
+
     $.plot.plugins.push({
         init: init,
         options: options,

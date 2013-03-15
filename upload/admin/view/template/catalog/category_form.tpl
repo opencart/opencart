@@ -185,7 +185,7 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
 CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
@@ -197,11 +197,11 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
 	filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
 });
 <?php } ?>
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('input[name=\'path\']').autocomplete({
 	delay: 500,
-	source: function(request, response) {		
+	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
@@ -210,7 +210,7 @@ $('input[name=\'path\']').autocomplete({
 					'category_id':  0,
 					'name':  '<?php echo $text_none; ?>'
 				});
-				
+
 				response($.map(json, function(item) {
 					return {
 						label: item.name,
@@ -223,14 +223,14 @@ $('input[name=\'path\']').autocomplete({
 	select: function(event, ui) {
 		$('input[name=\'path\']').val(ui.item.label);
 		$('input[name=\'parent_id\']').val(ui.item.value);
-		
+
 		return false;
 	},
 	focus: function(event, ui) {
       	return false;
    	}
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 // Filter
 $('input[name=\'filter\']').autocomplete({
@@ -239,7 +239,7 @@ $('input[name=\'filter\']').autocomplete({
 		$.ajax({
 			url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {		
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item.name,
@@ -248,15 +248,15 @@ $('input[name=\'filter\']').autocomplete({
 				}));
 			}
 		});
-	}, 
+	},
 	select: function(event, ui) {
 		$('#category-filter' + ui.item.value).remove();
-		
+
 		$('#category-filter').append('<div id="category-filter' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="category_filter[]" value="' + ui.item.value + '" /></div>');
 
 		$('#category-filter div:odd').attr('class', 'odd');
 		$('#category-filter div:even').attr('class', 'even');
-				
+
 		return false;
 	},
 	focus: function(event, ui) {
@@ -266,17 +266,17 @@ $('input[name=\'filter\']').autocomplete({
 
 $('#category-filter div img').live('click', function() {
 	$(this).parent().remove();
-	
+
 	$('#category-filter div:odd').attr('class', 'odd');
-	$('#category-filter div:even').attr('class', 'even');	
+	$('#category-filter div:even').attr('class', 'even');
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 function image_upload(field, thumb) {
 	$('#dialog').remove();
-	
+
 	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
-	
+
 	$('#dialog').dialog({
 		title: '<?php echo $text_image_manager; ?>',
 		close: function (event, ui) {
@@ -289,7 +289,7 @@ function image_upload(field, thumb) {
 					}
 				});
 			}
-		},	
+		},
 		bgiframe: false,
 		width: 800,
 		height: 400,
@@ -297,9 +297,9 @@ function image_upload(field, thumb) {
 		modal: false
 	});
 };
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
-$('#tabs a').tabs(); 
+$('#tabs a').tabs();
 $('#languages a').tabs();
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

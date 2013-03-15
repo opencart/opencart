@@ -34,7 +34,7 @@ window.CodeMirror = (function() {
 
   function CodeMirror(place, options) {
     if (!(this instanceof CodeMirror)) return new CodeMirror(place, options);
-    
+
     this.options = options = options || {};
     // Determine effective options based on given values and defaults.
     for (var opt in defaults) if (!options.hasOwnProperty(opt) && defaults.hasOwnProperty(opt))
@@ -311,7 +311,7 @@ window.CodeMirror = (function() {
     if (needsV) {
       d.scrollbarV.style.display = "block";
       d.scrollbarV.style.bottom = needsH ? scrollbarWidth(d.measure) + "px" : "0";
-      d.scrollbarV.firstChild.style.height = 
+      d.scrollbarV.firstChild.style.height =
         (scrollHeight - d.scroller.clientHeight + d.scrollbarV.clientHeight) + "px";
     } else d.scrollbarV.style.display = "";
     if (needsH) {
@@ -834,7 +834,7 @@ window.CodeMirror = (function() {
   }
 
   // POSITION MEASUREMENT
-  
+
   function paddingTop(display) {return display.lineSpace.offsetTop;}
   function paddingLeft(display) {
     var e = removeChildrenAndAdd(display.measure, elt("pre")).appendChild(elt("span", "x"));
@@ -862,7 +862,7 @@ window.CodeMirror = (function() {
           display.scroller.clientWidth == memo.width)
         return memo.measure;
     }
-    
+
     var measure = measureLineInner(cm, line);
     // Store result in the cache
     var memo = {text: line.text, width: display.scroller.clientWidth,
@@ -1816,7 +1816,7 @@ window.CodeMirror = (function() {
       if (ie_lt9) display.scrollbarV.scrollTop = display.scroller.scrollTop = scrollPos;
       slowPoll(cm);
 
-      // Try to detect the user choosing select-all 
+      // Try to detect the user choosing select-all
       if (display.input.selectionStart != null) {
         clearTimeout(detectingSelectAll);
         var extval = display.input.value = " " + (posEq(sel.from, sel.to) ? "" : display.input.value), i = 0;
@@ -2382,7 +2382,7 @@ window.CodeMirror = (function() {
     },
 
     isClean: function () {return this.view.history.dirtyCounter == 0;},
-      
+
     getHistory: function() {
       var hist = this.view.history;
       function cp(arr) {
@@ -2818,7 +2818,7 @@ window.CodeMirror = (function() {
   option("firstLineNumber", 1, guttersChanged, true);
   option("lineNumberFormatter", function(integer) {return integer;}, guttersChanged, true);
   option("showCursorWhenSelecting", false, updateSelection, true);
-  
+
   option("readOnly", false, function(cm, val) {
     if (val == "nocursor") {onBlur(cm); cm.display.input.blur();}
     else if (!val) resetInput(cm, true);
@@ -3960,7 +3960,7 @@ window.CodeMirror = (function() {
     var history = cm.view.history;
     history.undone.length = 0;
     var time = +new Date, cur = lst(history.done);
-    
+
     if (cur &&
         (history.lastOp == cm.curOp.id ||
          history.lastOrigin == origin && (origin == "input" || origin == "delete") &&
@@ -3988,7 +3988,7 @@ window.CodeMirror = (function() {
       while (history.done.length > cm.options.undoDepth)
         history.done.shift();
       if (history.dirtyCounter < 0)
-          // The user has made a change after undoing past the last clean state. 
+          // The user has made a change after undoing past the last clean state.
           // We can never get back to a clean state now until markClean() is called.
           history.dirtyCounter = NaN;
       else

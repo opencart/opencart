@@ -1,11 +1,11 @@
 <?php
-class Cache { 
-	private $expire = 3600; 
-	
+class Cache {
+	private $expire = 3600;
+
 	public function __construct() {
 		$files = glob(DIR_CACHE . 'cache.*');
 
-		if ($files) {			
+		if ($files) {
 			foreach ($files as $file) {
 				$time = substr(strrchr($file, '.'), 1);
 
@@ -17,17 +17,17 @@ class Cache {
 			}
 		}
 	}
-	
+
 	public function get($key) {
 		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
 		if ($files) {
 			$handle = fopen($files[0], 'r');
-      		
+
 			$cache = fread($handle, filesize($files[0]));
-			
+
 			fclose($handle);
-		
+
 			return unserialize($cache);
 		}
 	}

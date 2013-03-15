@@ -11,7 +11,7 @@ $_['text_column_left']    = 'Column Left';
 $_['text_column_right']   = 'Column Right';
 
 // Entry
-$_['entry_limit']         = 'Limit:'; 
+$_['entry_limit']         = 'Limit:';
 $_['entry_image']         = 'Image (W x H) and Resize Type:';
 $_['entry_layout']        = 'Layout:';
 $_['entry_position']      = 'Position:';

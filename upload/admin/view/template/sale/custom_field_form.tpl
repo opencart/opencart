@@ -299,7 +299,7 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
+<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript"><!--
 $('select[name=\'type\']').on('change', function() {
 	if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox') {
@@ -309,18 +309,18 @@ $('select[name=\'type\']').on('change', function() {
 		$('#custom-field-value').hide();
 		$('#display-value').show();
 	}
-	
+
 	$('input[name=\'value\']').datepicker('destroy');
-	
+
 	if (this.value == 'date') {
 		 $('input[name=\'value\']').datepicker({dateFormat: 'yy-mm-dd'});
 	} else if (this.value == 'time') {
-		$('input[name=\'value\']').timepicker({timeFormat: 'h:m'});	
+		$('input[name=\'value\']').timepicker({timeFormat: 'h:m'});
 	} else if (this.value == 'datetime') {
 		$('input[name=\'value\']').datetimepicker({
 			dateFormat: 'yy-mm-dd',
 			timeFormat: 'h:m'
-		});	
+		});
 	}
 });
 
@@ -330,7 +330,7 @@ var custom_field_value_row = <?php echo $custom_field_value_row; ?>;
 
 function addCustomFieldValue() {
 	html  = '<tbody id="custom-field-value-row' + custom_field_value_row + '">';
-	html += '  <tr>';	
+	html += '  <tr>';
     html += '    <td class="left"><input type="hidden" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_id]" value="" />';
 	<?php foreach ($languages as $language) { ?>
 	html += '<input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][<?php echo $language['language_id']; ?>][name]" value="" /> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
@@ -338,12 +338,12 @@ function addCustomFieldValue() {
 	html += '    </td>';
 	html += '    <td class="right"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" size="1" /></td>';
 	html += '    <td class="left"><a onclick="$(\'#custom-field-value-row' + custom_field_value_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
-	html += '  </tr>';	
+	html += '  </tr>';
     html += '</tbody>';
-	
+
 	$('#custom-field-value tfoot').before(html);
-	
+
 	custom_field_value_row++;
 }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

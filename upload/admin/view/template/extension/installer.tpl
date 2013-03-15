@@ -37,30 +37,30 @@
 $('#file').on('change', function() {
     $.ajax({
         url: 'index.php?route=extension/modification/upload&token=<?php echo $token; ?>',
-        type: 'post',		
+        type: 'post',
 		dataType: 'html',
 		data: new FormData($(this).parent()[0]),
 		beforeSend: function() {
 			$('#button-upload').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 			$('#button-upload').attr('disabled', true);
-		},	
+		},
 		complete: function() {
 			$('.loading').remove();
 			$('#button-upload').attr('disabled', false);
-		},		
+		},
 		success: function(html) {
 			$('textarea').val(html);
-			
+
 			/*
 			if (json['error']) {
 				alert(json['error']);
 			}
-						
+
 			if (json['success']) {
 				alert(json['success']);
 			}
 			*/
-		},			
+		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		},
@@ -72,5 +72,5 @@ $('#file').on('change', function() {
 
 
 
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

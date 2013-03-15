@@ -68,29 +68,29 @@
 $('#file').on('change', function() {
     $.ajax({
         url: 'index.php?route=catalog/download/upload&token=<?php echo $token; ?>',
-        type: 'post',		
+        type: 'post',
 		dataType: 'json',
 		data: new FormData($(this).parent()[0]),
 		beforeSend: function() {
 			$('#button-upload').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 			$('#button-upload').attr('disabled', true);
-		},	
+		},
 		complete: function() {
 			$('.loading').remove();
 			$('#button-upload').attr('disabled', false);
-		},		
+		},
 		success: function(json) {
 			if (json['error']) {
 				alert(json['error']);
 			}
-						
+
 			if (json['success']) {
 				alert(json['success']);
-				
+
 				$('input[name=\'filename\']').attr('value', json['filename']);
 				$('input[name=\'mask\']').attr('value', json['mask']);
 			}
-		},			
+		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		},
@@ -99,5 +99,5 @@ $('#file').on('change', function() {
         processData: false
     });
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

@@ -2,17 +2,17 @@
 class ControllerModuleSpecial extends Controller {
 	protected function index($setting) {
 		$this->language->load('module/special');
- 
+
       	$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['button_cart'] = $this->language->get('button_cart');
-		
+
 		$this->load->model('catalog/product');
-		
+
 		$this->load->model('tool/image');
 
 		$this->data['products'] = array();
-		
+
 		$data = array(
 			'sort'  => 'pd.name',
 			'order' => 'ASC',
@@ -34,19 +34,19 @@ class ControllerModuleSpecial extends Controller {
 			} else {
 				$price = false;
 			}
-					
-			if ((float)$result['special']) { 
+
+			if ((float)$result['special']) {
 				$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
 			} else {
 				$special = false;
 			}
-			
+
 			if ($this->config->get('config_review_status')) {
 				$rating = $result['rating'];
 			} else {
 				$rating = false;
 			}
-			
+
 			$this->data['products'][] = array(
 				'product_id' => $result['product_id'],
 				'thumb'   	 => $image,

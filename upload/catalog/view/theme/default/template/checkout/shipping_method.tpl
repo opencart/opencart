@@ -49,47 +49,47 @@ $('#button-shipping-method').off().on('click', function() {
 		beforeSend: function() {
 			$('#button-shipping-method').attr('disabled', true);
 			$('#button-shipping-method').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-		},	
+		},
 		complete: function() {
 			$('#button-shipping-method').attr('disabled', false);
 			$('.loading').remove();
-		},			
+		},
 		success: function(json) {
 			$('.warning, .error').remove();
-			
+
 			if (json['redirect']) {
 				location = json['redirect'];
 			} else if (json['error']) {
 				if (json['error']['warning']) {
 					$('#shipping-method .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
-					
+
 					$('.warning').fadeIn('slow');
-				}			
+				}
 			} else {
 				$.ajax({
 					url: 'index.php?route=checkout/payment_method',
 					dataType: 'html',
 					success: function(html) {
 						$('#payment-method .checkout-content').html(html);
-						
+
 						$('#shipping-method .checkout-content').slideUp('slow');
-						
+
 						$('#payment-method .checkout-content').slideDown('slow');
 
 						$('#shipping-method .checkout-heading a').remove();
 						$('#payment-method .checkout-heading a').remove();
-						
-						$('#shipping-method .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
+
+						$('#shipping-method .checkout-heading').append('<a><?php echo $text_modify; ?></a>');
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
-				});					
+				});
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	});	
+	});
 });
-//--></script> 
+//--></script>

@@ -50,7 +50,7 @@
               <?php if ($error_postcode) { ?>
               <span class="error"><?php echo $error_postcode; ?></span>
               <?php } ?></td>
-          </tr>          
+          </tr>
           <tr>
             <td><?php echo $entry_test; ?></td>
             <td><?php if ($fedex_test) { ?>
@@ -151,9 +151,9 @@
                 <option value="YOUR_PACKAGING" selected="selected"><?php echo $text_your_packaging; ?></option>
                 <?php } else { ?>
                 <option value="YOUR_PACKAGING"><?php echo $text_your_packaging; ?></option>
-                <?php } ?>                                
+                <?php } ?>
               </select></td>
-          </tr> 
+          </tr>
           <tr>
             <td><?php echo $entry_rate_type; ?></td>
             <td><select name="fedex_rate_type">
@@ -168,7 +168,7 @@
                 <option value="ACCOUNT"><?php echo $text_account_rate; ?></option>
                 <?php } ?>
               </select></td>
-          </tr>    
+          </tr>
 		  <tr>
             <td><?php echo $entry_display_time; ?></td>
             <td><?php if ($fedex_display_time) { ?>
@@ -196,7 +196,7 @@
               <input type="radio" name="fedex_display_weight" value="0" checked="checked" />
               <?php echo $text_no; ?>
               <?php } ?></td>
-          </tr>              
+          </tr>
           <tr>
             <td><?php echo $entry_weight_class; ?></td>
             <td><select name="fedex_weight_class_id">
@@ -208,7 +208,7 @@
                 <?php } ?>
                 <?php } ?>
               </select></td>
-          </tr>                                
+          </tr>
           <tr>
             <td><?php echo $entry_tax_class; ?></td>
             <td><select name="fedex_tax_class_id">
@@ -221,7 +221,7 @@
                 <?php } ?>
                 <?php } ?>
               </select></td>
-          </tr>          
+          </tr>
           <tr>
             <td><?php echo $entry_geo_zone; ?></td>
             <td><select name="fedex_geo_zone_id">

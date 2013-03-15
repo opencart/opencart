@@ -285,7 +285,7 @@ $('select[name=\'customer_group_id\']').live('change', function() {
 });
 
 $('select[name=\'customer_group_id\']').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 function country(element, index, zone_id) {
   if (element.value != '') {
@@ -297,30 +297,30 @@ function country(element, index, zone_id) {
 			},
 			complete: function() {
 				$('.loading').remove();
-			},			
+			},
 			success: function(json) {
 				if (json['postcode_required'] == '1') {
 					$('#postcode-required' + index).show();
 				} else {
 					$('#postcode-required' + index).hide();
 				}
-				
+
 				html = '<option value=""><?php echo $text_select; ?></option>';
-				
+
 				if (json['zone'] != '') {
 					for (i = 0; i < json['zone'].length; i++) {
 						html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-						
+
 						if (json['zone'][i]['zone_id'] == zone_id) {
 							html += ' selected="selected"';
 						}
-		
+
 						html += '>' + json['zone'][i]['name'] + '</option>';
 					}
 				} else {
 					html += '<option value="0"><?php echo $text_none; ?></option>';
 				}
-				
+
 				$('select[name=\'address[' + index + '][zone_id]\']').html(html);
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -331,14 +331,14 @@ function country(element, index, zone_id) {
 }
 
 $('select[name$=\'[country_id]\']').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 var address_row = <?php echo $address_row; ?>;
 
-function addAddress() {	
+function addAddress() {
 	html  = '<div id="tab-address-' + address_row + '" class="vtabs-content" style="display: none;">';
 	html += '  <input type="hidden" name="address[' + address_row + '][address_id]" value="" />';
-	html += '  <table class="form">'; 
+	html += '  <table class="form">';
 	html += '    <tr>';
     html += '	   <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>';
     html += '	   <td><input type="text" name="address[' + address_row + '][firstname]" value="" /></td>';
@@ -350,7 +350,7 @@ function addAddress() {
     html += '    <tr>';
     html += '      <td><?php echo $entry_company; ?></td>';
     html += '      <td><input type="text" name="address[' + address_row + '][company]" value="" /></td>';
-    html += '    </tr>';			
+    html += '    </tr>';
     html += '    <tr>';
     html += '      <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>';
     html += '      <td><input type="text" name="address[' + address_row + '][address_1]" value="" /></td>';
@@ -386,26 +386,26 @@ function addAddress() {
     html += '    </tr>';
     html += '  </table>';
     html += '</div>';
-	
+
 	$('#tab-general').append(html);
-	
-	$('select[name=\'address[' + address_row + '][country_id]\']').trigger('change');	
-	
+
+	$('select[name=\'address[' + address_row + '][country_id]\']').trigger('change');
+
 	$('#address-add').before('<a href="#tab-address-' + address_row + '" id="address-' + address_row + '"><?php echo $tab_address; ?> ' + address_row + '&nbsp;<img src="view/image/delete.png" alt="" onclick="$(\'#vtabs a:first\').trigger(\'click\'); $(\'#address-' + address_row + '\').remove(); $(\'#tab-address-' + address_row + '\').remove(); return false;" /></a>');
-		 
+
 	$('.vtabs a').tabs();
-	
+
 	$('#address-' + address_row).trigger('click');
-	
+
 	address_row++;
 }
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#history .pagination a').live('click', function() {
 	$('#history').load(this.href);
-	
+
 	return false;
-});			
+});
 
 $('#history').load('index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
@@ -427,18 +427,18 @@ $('#button-history').on('click', function() {
 		},
 		success: function(html) {
 			$('#history').html(html);
-			
+
 			$('#tab-history input[name=\'comment\']').val('');
 		}
 	});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#transaction .pagination a').live('click', function() {
 	$('#transaction').load(this.href);
-	
+
 	return false;
-});			
+});
 
 $('#transaction').load('index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
@@ -459,19 +459,19 @@ $('#button-transaction').on('click', function() {
 		},
 		success: function(html) {
 			$('#transaction').html(html);
-			
+
 			$('#tab-transaction input[name=\'amount\']').val('');
 			$('#tab-transaction input[name=\'description\']').val('');
 		}
 	});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#reward .pagination a').live('click', function() {
 	$('#reward').load(this.href);
-	
+
 	return false;
-});			
+});
 
 $('#reward').load('index.php?route=sale/customer/reward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
@@ -492,7 +492,7 @@ function addRewardPoints() {
 		},
 		success: function(html) {
 			$('#reward').html(html);
-								
+
 			$('#tab-reward input[name=\'points\']').val('');
 			$('#tab-reward input[name=\'description\']').val('');
 		}
@@ -501,7 +501,7 @@ function addRewardPoints() {
 
 function addBanIP(ip) {
 	var id = ip.replace(/\./g, '-');
-	
+
 	$.ajax({
 		url: 'index.php?route=sale/customer/addbanip&token=<?php echo $token; ?>',
 		type: 'post',
@@ -509,35 +509,35 @@ function addBanIP(ip) {
 		data: 'ip=' + encodeURIComponent(ip),
 		beforeSend: function() {
 			$('.success, .warning').remove();
-			
-			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');		
+
+			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
-			
-		},			
+
+		},
 		success: function(json) {
 			$('.attention').remove();
-			
+
 			if (json['error']) {
 				 $('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
-				
+
 				$('.warning').fadeIn('slow');
 			}
-						
+
 			if (json['success']) {
                 $('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
-				
+
 				$('.success').fadeIn('slow');
-				
+
 				$('#' + id).replaceWith('<a id="' + id + '" onclick="removeBanIP(\'' + ip + '\');"><?php echo $text_remove_ban_ip; ?></a>');
 			}
 		}
-	});	
+	});
 }
 
 function removeBanIP(ip) {
 	var id = ip.replace(/\./g, '-');
-	
+
 	$.ajax({
 		url: 'index.php?route=sale/customer/removebanip&token=<?php echo $token; ?>',
 		type: 'post',
@@ -545,31 +545,31 @@ function removeBanIP(ip) {
 		data: 'ip=' + encodeURIComponent(ip),
 		beforeSend: function() {
 			$('.success, .warning').remove();
-			
-			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');					
-		},	
+
+			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
+		},
 		success: function(json) {
 			$('.attention').remove();
-			
+
 			if (json['error']) {
 				 $('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
-				
+
 				$('.warning').fadeIn('slow');
 			}
-			
+
 			if (json['success']) {
 				 $('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
-				
+
 				$('.success').fadeIn('slow');
-				
+
 				$('#' + id).replaceWith('<a id="' + id + '" onclick="addBanIP(\'' + ip + '\');"><?php echo $text_add_ban_ip; ?></a>');
 			}
 		}
-	});	
+	});
 };
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('.htabs a').tabs();
 $('.vtabs a').tabs();
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

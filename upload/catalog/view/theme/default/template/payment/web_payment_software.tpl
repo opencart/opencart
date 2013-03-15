@@ -40,7 +40,7 @@ $('#button-confirm').on('click', function() {
 		url: 'index.php?route=payment/web_payment_software/send',
 		type: 'post',
 		data: $('#payment :input'),
-		dataType: 'json',		
+		dataType: 'json',
 		beforeSend: function() {
 			$('#button-confirm').attr('disabled', true);
 			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
@@ -48,16 +48,16 @@ $('#button-confirm').on('click', function() {
 		complete: function() {
 			$('#button-confirm').attr('disabled', false);
 			$('.attention').remove();
-		},				
+		},
 		success: function(json) {
 			if (json['error']) {
 				alert(json['error']);
 			}
-			
+
 			if (json['success']) {
 				location = json['success'];
 			}
 		}
 	});
 });
-</script> 
+</script>

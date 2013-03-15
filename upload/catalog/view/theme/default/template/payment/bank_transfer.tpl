@@ -11,12 +11,12 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
-	$.ajax({ 
+	$.ajax({
 		type: 'get',
 		url: 'index.php?route=payment/bank_transfer/confirm',
 		success: function() {
 			location = '<?php echo $continue; ?>';
-		}		
+		}
 	});
 });
-//--></script> 
+//--></script>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 header('P3P: CP="CAO COR CURa ADMa DEVa OUR IND ONL COM DEM PRE"');
 
 if (isset($_GET['session_id'])) {

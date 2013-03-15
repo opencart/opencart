@@ -764,7 +764,7 @@ ul.box-filter, ul.box-filter ul {
 }
 ul.box-filter span {
 	font-weight: bold;
-	border-bottom: 1px solid #EEEEEE;	
+	border-bottom: 1px solid #EEEEEE;
 	display: block;
 	padding-bottom: 5px;
 	margin-bottom: 8px;
@@ -1591,7 +1591,7 @@ ul.box-filter > li ul {
 	float: left;
 	width: 48%;
 }
-/* footer */ 
+/* footer */
 #footer {
 	clear: both;
 	overflow: auto;

@@ -44,39 +44,39 @@
   <?php echo $content_bottom; ?></div>
 <script type="text/javascript"><!--
 $(document).ready(function() {
-	<?php if (!$logged) { ?> 
+	<?php if (!$logged) { ?>
 	$.ajax({
 		url: 'index.php?route=checkout/login',
 		dataType: 'html',
 		success: function(html) {
 			$('#checkout .checkout-content').html(html);
-			
+
 			$('#checkout .checkout-content').slideDown('slow');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	});	
+	});
 <?php } else { ?>
 	$.ajax({
 		url: 'index.php?route=checkout/payment_address',
 		dataType: 'html',
 		success: function(html) {
 			$('#payment-address .checkout-content').html(html);
-				
+
 			$('#payment-address .checkout-content').slideDown('slow');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	});	
+	});
 <?php } ?>
 });
 
 $('.checkout-heading a').live('click', function() {
 	$('.checkout-content').slideUp('slow');
-	
+
 	$(this).parent().parent().find('.checkout-content').slideDown('slow');
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

@@ -14,7 +14,7 @@ final class MSSQL {
 		mssql_query("SET NAMES 'utf8'", $this->link);
 		mssql_query("SET CHARACTER SET utf8", $this->link);
 	}
-		
+
 	public function query($sql) {
 		$resource = mssql_query($sql, $this->link);
 
@@ -61,18 +61,18 @@ final class MSSQL {
 
 	public function getLastId() {
 		$last_id = false;
-		
+
 		$resource = mssql_query("SELECT @@identity AS id", $this->link);
-		
+
 		if ($row = mssql_fetch_row($resource)) {
 			$last_id = trim($row[0]);
 		}
-		
+
 		mssql_free_result($resource);
-		
+
 		return $last_id;
 	}
-	
+
 	public function __destruct() {
 		mssql_close($this->link);
 	}

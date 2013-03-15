@@ -19,7 +19,7 @@
           <tr>
             <td><?php echo $entry_total; ?></td>
             <td><input type="text" name="cod_total" value="<?php echo $cod_total; ?>" /></td>
-          </tr>        
+          </tr>
           <tr>
             <td><?php echo $entry_order_status; ?></td>
             <td><select name="cod_order_status_id">
@@ -66,4 +66,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

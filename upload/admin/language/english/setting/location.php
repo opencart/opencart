@@ -1,9 +1,9 @@
 <?php
 // Heading
-$_['heading_title']      = 'Store Locations';  
+$_['heading_title']      = 'Store Locations';
 
 // Text
-$_['text_success']       = 'Success: You have modified store locations!'; 
+$_['text_success']       = 'Success: You have modified store locations!';
 $_['text_time']          = 'Opening Times';
 $_['text_browse']        = 'Browse';
 $_['text_clear']         = 'Clear';

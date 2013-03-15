@@ -98,38 +98,38 @@
     </div>
   </div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> 
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script type="text/javascript"><!--
-function getGeoCode() { 
+function getGeoCode() {
 	var address = new Array();
-	
+
 	address[0] = $('input[name=\'address_1\']').attr('value');
 	address[1] = $('input[name=\'address_2\']').attr('value');
 	address[2] = $('input[name=\'city\']').attr('value');
 	address[3] = $('input[name=\'postcode\']').attr('value');
 	address[4] = $('select[name=\'country_id\'] option:selected').text();
-	
+
 	geocoder = new google.maps.Geocoder();
-	
+
 	geocoder.geocode({'address': address.join(', ')}, function(results, status) {
-		// Make sure google returns a geocode for us  
+		// Make sure google returns a geocode for us
 		if (status == google.maps.GeocoderStatus.OK) {
-			//  Save our geocode to variable  
+			//  Save our geocode to variable
 			var location = results[0].geometry.location;
-			
+
 			$('input[name=\'geocode\']').val(location.toString().replace('(', '').replace(')', ''));
 		} else {
 			alert('<?php echo addslashes($text_geocode); ?> ' + status);
 		}
 	});
-}    
-//--></script> 
+}
+//--></script>
 <script type="text/javascript"><!--
 function image_upload(field, thumb) {
     $('#dialog').remove();
-    
+
     $('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
-    
+
     $('#dialog').dialog({
         title: '<?php echo $text_image_manager; ?>',
         close: function (event, ui) {
@@ -142,7 +142,7 @@ function image_upload(field, thumb) {
                     }
                 });
             }
-        },  
+        },
         bgiframe: false,
         width: 800,
         height: 400,
@@ -150,7 +150,7 @@ function image_upload(field, thumb) {
         modal: false
     });
 };
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
@@ -161,30 +161,30 @@ $('select[name=\'country_id\']').on('change', function() {
 		},
 		complete: function() {
 			$('.loading').remove();
-		},			
+		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
 				$('#postcode-required').show();
 			} else {
 				$('#postcode-required').hide();
 			}
-			
+
 			html = '<option value=""><?php echo $text_select; ?></option>';
-			
+
 			if (json != '' && json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
         			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-	    			
+
 					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
 	      				html += ' selected="selected"';
 	    			}
-	
+
 	    			html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
-			
+
 			$('select[name=\'zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -194,5 +194,5 @@ $('select[name=\'country_id\']').on('change', function() {
 });
 
 $('select[name=\'country_id\']').trigger('change');
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

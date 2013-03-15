@@ -47,7 +47,7 @@
           <tr>
             <td><?php echo $entry_total; ?></td>
             <td><input type="text" name="twocheckout_total" value="<?php echo $twocheckout_total; ?>" /></td>
-          </tr>          
+          </tr>
           <tr>
             <td><?php echo $entry_order_status; ?></td>
             <td><select name="twocheckout_order_status_id">

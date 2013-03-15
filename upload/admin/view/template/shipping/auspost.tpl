@@ -22,7 +22,7 @@
               <?php if ($error_postcode) { ?>
               <span class="error"><?php echo $error_postcode; ?></span>
               <?php } ?></td>
-          </tr>        
+          </tr>
           <tr>
             <td><?php echo $entry_standard ?></td>
             <td><select name="auspost_standard">
@@ -70,7 +70,7 @@
                 <?php } ?>
                 <?php } ?>
               </select></td>
-          </tr>          
+          </tr>
           <tr>
             <td><?php echo $entry_tax_class; ?></td>
             <td><select name="auspost_tax_class_id">

@@ -49,5 +49,5 @@ $('#form input').keydown(function(e) {
 		$('#form').submit();
 	}
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

@@ -118,7 +118,7 @@
                   </div>
                   <?php } ?>
                 </div></td>
-            </tr>           
+            </tr>
             <tr>
               <td><?php echo $entry_date_start; ?></td>
               <td><input type="text" name="date_start" value="<?php echo $date_start; ?>" size="12" id="date-start" /></td>
@@ -165,7 +165,7 @@ $('input[name=\'product\']').autocomplete({
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {		
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item.name,
@@ -174,17 +174,17 @@ $('input[name=\'product\']').autocomplete({
 				}));
 			}
 		});
-	}, 
+	},
 	select: function(event, ui) {
 		$('#coupon-product' + ui.item.value).remove();
-		
+
 		$('#coupon-product').append('<div id="coupon-product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="coupon_product[]" value="' + ui.item.value + '" /></div>');
 
 		$('#coupon-product div:odd').attr('class', 'odd');
 		$('#coupon-product div:even').attr('class', 'even');
-		
+
 		$('input[name=\'product\']').val('');
-		
+
 		return false;
 	},
 	focus: function(event, ui) {
@@ -194,9 +194,9 @@ $('input[name=\'product\']').autocomplete({
 
 $('#coupon-product div img').live('click', function() {
 	$(this).parent().remove();
-	
+
 	$('#coupon-product div:odd').attr('class', 'odd');
-	$('#coupon-product div:even').attr('class', 'even');	
+	$('#coupon-product div:even').attr('class', 'even');
 });
 
 
@@ -206,7 +206,7 @@ $('input[name=\'category\']').autocomplete({
 		$.ajax({
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {		
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item.name,
@@ -215,16 +215,16 @@ $('input[name=\'category\']').autocomplete({
 				}));
 			}
 		});
-		
-	}, 
+
+	},
 	select: function(event, ui) {
 		$('#coupon-category' + ui.item.value).remove();
-		
+
 		$('#coupon-category').append('<div id="product-category' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="coupon_category[]" value="' + ui.item.value + '" /></div>');
 
 		$('#coupon-category div:odd').attr('class', 'odd');
 		$('#coupon-category div:even').attr('class', 'even');
-				
+
 		return false;
 	},
 	focus: function(event, ui) {
@@ -234,11 +234,11 @@ $('input[name=\'category\']').autocomplete({
 
 $('#coupon-category div img').live('click', function() {
 	$(this).parent().remove();
-	
+
 	$('#coupon-category div:odd').attr('class', 'odd');
-	$('#coupon-category div:even').attr('class', 'even');	
+	$('#coupon-category div:even').attr('class', 'even');
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#date-start').datepicker({dateFormat: 'yy-mm-dd'});
 $('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
@@ -247,14 +247,14 @@ $('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
 <script type="text/javascript"><!--
 $('#history .pagination a').live('click', function() {
 	$('#history').load(this.href);
-	
+
 	return false;
-});			
+});
 
 $('#history').load('index.php?route=sale/coupon/history&token=<?php echo $token; ?>&coupon_id=<?php echo $coupon_id; ?>');
 //--></script>
 <?php } ?>
 <script type="text/javascript"><!--
-$('#tabs a').tabs(); 
-//--></script> 
+$('#tabs a').tabs();
+//--></script>
 <?php echo $footer; ?>

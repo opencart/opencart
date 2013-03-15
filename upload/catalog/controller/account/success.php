@@ -1,8 +1,8 @@
-<?php 
-class ControllerAccountSuccess extends Controller {  
+<?php
+class ControllerAccountSuccess extends Controller {
 	public function index() {
     	$this->language->load('account/success');
-  
+
     	$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->data['breadcrumbs'] = array();
@@ -10,7 +10,7 @@ class ControllerAccountSuccess extends Controller {
       	$this->data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
-      	); 
+      	);
 
       	$this->data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_account'),
@@ -25,7 +25,7 @@ class ControllerAccountSuccess extends Controller {
     	$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->load->model('account/customer_group');
-		
+
 		$customer_group = $this->model_account_customer_group->getCustomerGroup($this->customer->getCustomerGroupId());
 
 		if ($customer_group && !$customer_group['approval']) {
@@ -33,9 +33,9 @@ class ControllerAccountSuccess extends Controller {
 		} else {
 			$this->data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact'));
 		}
-		
+
     	$this->data['button_continue'] = $this->language->get('button_continue');
-		
+
 		if ($this->cart->hasProducts()) {
 			$this->data['continue'] = $this->url->link('checkout/cart');
 		} else {
@@ -47,17 +47,17 @@ class ControllerAccountSuccess extends Controller {
 		} else {
 			$this->template = 'default/template/common/success.tpl';
 		}
-		
+
 		$this->children = array(
 			'common/column_left',
 			'common/column_right',
 			'common/content_top',
 			'common/content_bottom',
 			'common/footer',
-			'common/header'	
+			'common/header'
 		);
-						
-		$this->response->setOutput($this->render());				
+
+		$this->response->setOutput($this->render());
   	}
 }
 ?>

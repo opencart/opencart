@@ -1,4 +1,4 @@
-<?php  
+<?php
 class ControllerModuleCarousel extends Controller {
 	protected function index($setting) {
 		static $module = 0;
@@ -31,7 +31,7 @@ class ControllerModuleCarousel extends Controller {
 			}
 		}
 
-		$this->data['module'] = $module++; 
+		$this->data['module'] = $module++;
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/carousel.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/module/carousel.tpl';
@@ -39,7 +39,7 @@ class ControllerModuleCarousel extends Controller {
 			$this->template = 'default/template/module/carousel.tpl';
 		}
 
-		$this->render(); 
+		$this->render();
 	}
 }
 ?>

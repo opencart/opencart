@@ -52,7 +52,7 @@ The plugin allso adds the following methods to the plot object:
   are using multiple axes, you can specify the ranges on any of those,
   e.g. as x2axis/x3axis/... instead of xaxis, the plugin picks the
   first one it sees.
-  
+
 - clearSelection(preventEvent)
 
   Clear the selection rectangle. Pass in true to avoid getting a
@@ -82,11 +82,11 @@ The plugin allso adds the following methods to the plot object:
         var savedhandlers = {};
 
         var mouseUpHandler = null;
-        
+
         function onMouseMove(e) {
             if (selection.active) {
                 updateSelection(e);
-                
+
                 plot.getPlaceholder().trigger("plotselecting", [ getSelection() ]);
             }
         }
@@ -94,7 +94,7 @@ The plugin allso adds the following methods to the plot object:
         function onMouseDown(e) {
             if (e.which != 1)  // only accept left-click
                 return;
-            
+
             // cancel out any text selections
             document.body.focus();
 
@@ -115,13 +115,13 @@ The plugin allso adds the following methods to the plot object:
             // this is a bit silly, but we have to use a closure to be
             // able to whack the same handler again
             mouseUpHandler = function (e) { onMouseUp(e); };
-            
+
             $(document).one("mouseup", mouseUpHandler);
         }
 
         function onMouseUp(e) {
             mouseUpHandler = null;
-            
+
             // revert drag stuff for old-school browsers
             if (document.onselectstart !== undefined)
                 document.onselectstart = savedhandlers.onselectstart;
@@ -150,7 +150,7 @@ The plugin allso adds the following methods to the plot object:
             var r = {}, c1 = selection.first, c2 = selection.second;
             $.each(plot.getAxes(), function (name, axis) {
                 if (axis.used) {
-                    var p1 = axis.c2p(c1[axis.direction]), p2 = axis.c2p(c2[axis.direction]); 
+                    var p1 = axis.c2p(c1[axis.direction]), p2 = axis.c2p(c2[axis.direction]);
                     r[name] = { from: Math.min(p1, p2), to: Math.max(p1, p2) };
                 }
             });
@@ -238,10 +238,10 @@ The plugin allso adds the following methods to the plot object:
                 from = to;
                 to = tmp;
             }
-            
+
             return { from: from, to: to, axis: axis };
         }
-        
+
         function setSelection(ranges, preventEvent) {
             var axis, range, o = plot.getOptions();
 
@@ -319,11 +319,11 @@ The plugin allso adds the following methods to the plot object:
                 ctx.restore();
             }
         });
-        
+
         plot.hooks.shutdown.push(function (plot, eventHolder) {
             eventHolder.unbind("mousemove", onMouseMove);
             eventHolder.unbind("mousedown", onMouseDown);
-            
+
             if (mouseUpHandler)
                 $(document).unbind("mouseup", mouseUpHandler);
         });

@@ -46,7 +46,7 @@
                 <a href="<?php echo $sort_model; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_model; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_model; ?>"><?php echo $column_model; ?></a>
-                <?php } ?></td>                
+                <?php } ?></td>
               <td class="left"><?php if ($sort == 'status') { ?>
                 <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                 <?php } else { ?>
@@ -123,70 +123,70 @@
 <script type="text/javascript"><!--
 function filter() {
 	url = 'index.php?route=sale/return&token=<?php echo $token; ?>';
-	
+
 	var filter_return_id = $('input[name=\'filter_return_id\']').attr('value');
-	
+
 	if (filter_return_id) {
 		url += '&filter_return_id=' + encodeURIComponent(filter_return_id);
 	}
-	
+
 	var filter_order_id = $('input[name=\'filter_order_id\']').attr('value');
-	
+
 	if (filter_order_id) {
 		url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
-	}	
-		
+	}
+
 	var filter_customer = $('input[name=\'filter_customer\']').attr('value');
-	
+
 	if (filter_customer) {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
-	
+
 	var filter_product = $('input[name=\'filter_product\']').attr('value');
-	
+
 	if (filter_product) {
 		url += '&filter_product=' + encodeURIComponent(filter_product);
 	}
 
 	var filter_model = $('input[name=\'filter_model\']').attr('value');
-	
+
 	if (filter_model) {
 		url += '&filter_model=' + encodeURIComponent(filter_model);
 	}
-		
+
 	var filter_return_status_id = $('select[name=\'filter_return_status_id\']').attr('value');
-	
+
 	if (filter_return_status_id != '*') {
 		url += '&filter_return_status_id=' + encodeURIComponent(filter_return_status_id);
-	}	
-	
+	}
+
 	var filter_date_added = $('input[name=\'filter_date_added\']').attr('value');
-	
+
 	if (filter_date_added) {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
 
 	var filter_date_modified = $('input[name=\'filter_date_modified\']').attr('value');
-	
+
 	if (filter_date_modified) {
 		url += '&filter_date_modified=' + encodeURIComponent(filter_date_modified);
 	}
-			
+
 	location = url;
 }
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $.widget('custom.catcomplete', $.ui.autocomplete, {
 	_renderMenu: function(ul, items) {
 		var self = this, currentCategory = '';
-		
+
 		$.each(items, function(index, item) {
 			if (item.category != currentCategory) {
 				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
-				
+
 				currentCategory = item.category;
 			}
-			
+
 			self._renderItem(ul, item);
 		});
 	}
@@ -198,7 +198,7 @@ $('input[name=\'filter_customer\']').catcomplete({
 		$.ajax({
 			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {		
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						category: item.customer_group,
@@ -208,20 +208,20 @@ $('input[name=\'filter_customer\']').catcomplete({
 				}));
 			}
 		});
-	}, 
+	},
 	select: function(event, ui) {
 		$('input[name=\'filter_customer\']').val(ui.item.label);
-						
+
 		return false;
 	},
 	focus: function(event, ui) {
       	return false;
    	}
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
 });
-//--></script> 
-<?php echo $footer; ?> 
+//--></script>
+<?php echo $footer; ?>

@@ -123,8 +123,8 @@
 </div>
 <!--[if IE]>
 <script type="text/javascript" src="view/javascript/jquery/flot/excanvas.js"></script>
-<![endif]--> 
-<script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
+<![endif]-->
+<script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script>
 <script type="text/javascript"><!--
 function getSalesChart(range) {
 	$.ajax({
@@ -133,16 +133,16 @@ function getSalesChart(range) {
 		dataType: 'json',
 		async: false,
 		success: function(json) {
-			var option = {	
+			var option = {
 				shadowSize: 0,
-				lines: { 
+				lines: {
 					show: true,
 					fill: true,
 					lineWidth: 1
 				},
 				grid: {
 					backgroundColor: '#FFFFFF'
-				},	
+				},
 				xaxis: {
             		ticks: json.xaxis
 				}
@@ -154,5 +154,5 @@ function getSalesChart(range) {
 }
 
 getSalesChart($('#range').val());
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

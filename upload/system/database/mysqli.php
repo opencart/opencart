@@ -35,7 +35,7 @@ final class MySQLi {
 			}
 
 			$result->close();
-			
+
 			$query = new stdClass();
 			$query->row = isset($data[0]) ? $data[0] : array();
 			$query->rows = $data;
@@ -43,12 +43,12 @@ final class MySQLi {
 
 			unset($data);
 
-			return $query;	
+			return $query;
 		} else {
 			return true;
 		}
 	}
-	
+
 	public function escape($value) {
 		return $this->mysqli->real_escape_string($value);
 	}

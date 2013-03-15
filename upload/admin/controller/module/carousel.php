@@ -1,8 +1,8 @@
 <?php
 class ControllerModuleCarousel extends Controller {
-	private $error = array(); 
+	private $error = array();
 
-	public function index() {   
+	public function index() {
 		$this->language->load('module/carousel');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -10,7 +10,7 @@ class ControllerModuleCarousel extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('carousel', $this->request->post);		
+			$this->model_setting_setting->editSetting('carousel', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -22,7 +22,7 @@ class ControllerModuleCarousel extends Controller {
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_content_top'] = $this->language->get('text_content_top');
-		$this->data['text_content_bottom'] = $this->language->get('text_content_bottom');		
+		$this->data['text_content_bottom'] = $this->language->get('text_content_bottom');
 		$this->data['text_column_left'] = $this->language->get('text_column_left');
 		$this->data['text_column_right'] = $this->language->get('text_column_right');
 
@@ -77,7 +77,7 @@ class ControllerModuleCarousel extends Controller {
 
 		if (isset($this->request->post['carousel_module'])) {
 			$this->data['modules'] = $this->request->post['carousel_module'];
-		} elseif ($this->config->get('carousel_module')) { 
+		} elseif ($this->config->get('carousel_module')) {
 			$this->data['modules'] = $this->config->get('carousel_module');
 		}
 
@@ -104,18 +104,18 @@ class ControllerModuleCarousel extends Controller {
 		}
 
 		if (isset($this->request->post['carousel_module'])) {
-			foreach ($this->request->post['carousel_module'] as $key => $value) {				
+			foreach ($this->request->post['carousel_module'] as $key => $value) {
 				if (!$value['width'] || !$value['height']) {
 					$this->error['image'][$key] = $this->language->get('error_image');
 				}
 			}
-		}	
+		}
 
 		if (!$this->error) {
 			return true;
 		} else {
 			return false;
-		}	
+		}
 	}
 }
 ?>

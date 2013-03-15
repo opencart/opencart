@@ -33,7 +33,7 @@
           <tr>
             <td><?php echo $entry_callback; ?></td>
             <td><textarea cols="40" rows="5"><?php echo $callback; ?></textarea></td>
-          </tr>         
+          </tr>
           <tr>
             <td><?php echo $entry_test; ?></td>
             <td><?php if ($google_checkout_test) { ?>
@@ -98,4 +98,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

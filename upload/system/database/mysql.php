@@ -10,7 +10,7 @@ final class MySQL {
 		if (!mysql_select_db($database, $this->link)) {
 			trigger_error('Error: Could not connect to database ' . $database);
 		}
-		
+
 		mysql_query("SET NAMES 'utf8'", $this->link);
 		mysql_query("SET CHARACTER SET utf8", $this->link);
 		mysql_query("SET CHARACTER_SET_CONNECTION=utf8", $this->link);
@@ -48,7 +48,7 @@ final class MySQL {
 				}
 			} else {
 				$trace = debug_backtrace();
-				
+
 				$caller = array_shift($trace);
 				$caller = array_shift($trace);
 

@@ -153,7 +153,7 @@
 $(document).ready(function() {
 	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('.colorbox').colorbox({
@@ -161,5 +161,5 @@ $(document).ready(function() {
 		height: 480
 	});
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

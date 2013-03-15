@@ -1,5 +1,5 @@
 <?php
-// Heading 
+// Heading
 $_['heading_title']     = 'Address Book';
 
 // Text

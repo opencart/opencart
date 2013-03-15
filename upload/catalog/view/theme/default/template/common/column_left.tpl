@@ -4,4 +4,4 @@
   <?php echo $module; ?>
   <?php } ?>
 </div>
-<?php } ?> 
+<?php } ?>

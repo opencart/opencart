@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']       = 'Filter'; 
+$_['heading_title']       = 'Filter';
 
 // Text
 $_['text_module']         = 'Modules';

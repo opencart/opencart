@@ -62,27 +62,27 @@
 <script type="text/javascript"><!--
 function filter() {
 	url = 'index.php?route=report/customer_reward&token=<?php echo $token; ?>';
-	
+
 	var filter_date_start = $('input[name=\'filter_date_start\']').attr('value');
-	
+
 	if (filter_date_start) {
 		url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
 	}
 
 	var filter_date_end = $('input[name=\'filter_date_end\']').attr('value');
-	
+
 	if (filter_date_end) {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
-	
+
 	location = url;
 }
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('#date-start').datepicker({dateFormat: 'yy-mm-dd'});
-	
+
 	$('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

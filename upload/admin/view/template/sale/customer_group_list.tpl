@@ -31,7 +31,7 @@
                 <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
-                <?php } ?></td>                
+                <?php } ?></td>
               <td class="right"><?php echo $column_action; ?></td>
             </tr>
           </thead>
@@ -63,4 +63,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

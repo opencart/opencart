@@ -28,7 +28,7 @@
 	padding: 1px 5px;
 	padding-left: 28px;
 	font-family: "Trebuchet MS", Sans-serif;
-	font-size: 10pt;	
+	font-size: 10pt;
 }
 
 .menu LI.hover A {
@@ -51,7 +51,7 @@
 
 /*
 	Adding Icons
-	
+
 	You can add icons to the context menu by adding
 	classes to the respective LI element(s)
 */

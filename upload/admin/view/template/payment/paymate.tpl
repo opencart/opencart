@@ -29,7 +29,7 @@
               <?php if ($error_password) { ?>
               <span class="error"><?php echo $error_password; ?></span>
               <?php } ?></td>
-          </tr>          
+          </tr>
           <tr>
             <td><?php echo $entry_test; ?></td>
             <td><?php if ($paymate_test) { ?>
@@ -97,4 +97,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

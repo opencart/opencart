@@ -29,6 +29,7 @@ $_['text_front']                       = 'Store Front';
 $_['text_geo_zone']                    = 'Geo Zones';
 $_['text_help']                        = 'Help';
 $_['text_information']                 = 'Information';
+$_['text_installer']                   = 'Extension Installer';
 $_['text_language']                    = 'Languages';
 $_['text_layout']                      = 'Layouts';
 $_['text_localisation']                = 'Localisation';

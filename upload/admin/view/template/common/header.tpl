@@ -83,6 +83,7 @@ $(document).ready(function(){
       </li>
       <li id="extension"><a class="top"><?php echo $text_extension; ?></a>
         <ul>
+          <li><a href="<?php echo $installer; ?>"><?php echo $text_installer; ?></a></li>
           <li><a href="<?php echo $modification; ?>"><?php echo $text_modification; ?></a></li>
           <li><a href="<?php echo $module; ?>"><?php echo $text_module; ?></a></li>
           <li><a href="<?php echo $shipping; ?>"><?php echo $text_shipping; ?></a></li>

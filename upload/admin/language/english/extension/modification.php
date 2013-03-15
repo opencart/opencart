@@ -15,12 +15,8 @@ $_['column_date_modified'] = 'Date Modified';
 $_['column_action']        = 'Action';
 
 // Entry
-$_['entry_name']           = 'Attribute Name:';
-$_['entry_author']         = 'Attribute Group:';
-$_['entry_sort_order']     = 'Sort Order:';
+$_['entry_code']           = 'Modification:';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify modifications!';
-$_['error_upload']         = 'Upload required!';
-$_['error_filetype']       = 'Invalid file type!';
 ?>

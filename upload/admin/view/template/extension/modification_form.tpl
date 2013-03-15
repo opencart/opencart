@@ -17,11 +17,10 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <table class="form">
           <tr>
-            <td>Your upload file:</td>
-            <td><input type="button" value="<?php echo $button_upload; ?>" id="button-upload" class="button" onclick="$('input[name=\'file\']').click();" /></td>
+            <td><?php echo $entry_code; ?></td>
+            <td><textarea name="code" cols="40" rows="15" style="width: 98%;"><?php echo $code; ?></textarea></td>
           </tr>
         </table>
-         <textarea wrap="off" style="width: 98%; height: 300px; padding: 5px; border: 1px solid #CCCCCC; background: #FFFFFF; overflow: scroll;"><?php echo $log; ?></textarea>
       </form>
     </div>
   </div>

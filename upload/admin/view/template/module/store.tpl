@@ -105,7 +105,7 @@
 <script type="text/javascript"><!--
 var module_row = <?php echo $module_row; ?>;
 
-function addModule() {	
+function addModule() {
 	html  = '<tbody id="module-row' + module_row + '">';
 	html += '  <tr>';
 	html += '    <td class="left"><select name="store_module[' + module_row + '][layout_id]">';
@@ -127,10 +127,10 @@ function addModule() {
 	html += '    <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
 	html += '  </tr>';
 	html += '</tbody>';
-	
+
 	$('#module tfoot').before(html);
-	
+
 	module_row++;
 }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

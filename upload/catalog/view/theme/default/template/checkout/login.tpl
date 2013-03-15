@@ -57,22 +57,22 @@ $('#button-account').off().on('click', function() {
 		beforeSend: function() {
 			$('#button-account').attr('disabled', true);
 			$('#button-account').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-		},		
+		},
 		complete: function() {
 			$('#button-account').attr('disabled', false);
 			$('.loading').remove();
-		},			
+		},
 		success: function(html) {
 			$('.warning, .error').remove();
-			
+
 			$('#payment-address .checkout-content').html(html);
-				
+
 			$('#checkout .checkout-content').slideUp('slow');
-				
+
 			$('#payment-address .checkout-content').slideDown('slow');
-				
+
 			$('.checkout-heading a').remove();
-				
+
 			$('#checkout .checkout-heading').append('<a><?php echo $text_modify; ?></a>');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -91,25 +91,25 @@ $('#button-login').off().on('click', function() {
 		beforeSend: function() {
 			$('#button-login').attr('disabled', true);
 			$('#button-login').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-		},	
+		},
 		complete: function() {
 			$('#button-login').attr('disabled', false);
 			$('.loading').remove();
-		},				
+		},
 		success: function(json) {
 			$('.warning, .error').remove();
-			
+
 			if (json['redirect']) {
 				location = json['redirect'];
 			} else if (json['error']) {
 				$('#checkout .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '</div>');
-				
+
 				$('.warning').fadeIn('slow');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	});	
+	});
 });
 //--></script>

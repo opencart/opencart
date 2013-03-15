@@ -5,11 +5,11 @@
 		"cookie" : {
 			defaults : {
 				prefix		: "",	// a prefix that will be used for all cookies for this tree
-				options		: { 
-					expires: false, 
-					path: false, 
-					domain: false, 
-					secure: false 
+				options		: {
+					expires: false,
+					path: false,
+					domain: false,
+					secure: false
 				},
 				types : {
 					selected	: true,		// should we set the selected cookie

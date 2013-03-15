@@ -1,8 +1,8 @@
 <?php
 // Heading
-$_['heading_title']          = 'Products'; 
+$_['heading_title']          = 'Products';
 
-// Text  
+// Text
 $_['text_success']           = 'Success: You have modified products!';
 $_['text_plus']              = '+';
 $_['text_minus']             = '-';
@@ -39,7 +39,7 @@ $_['entry_jan']              = 'JAN:<br/><span class="help">Japanese Article Num
 $_['entry_isbn']             = 'ISBN:<br/><span class="help">International Standard Book Number</span>';
 $_['entry_mpn']              = 'MPN:<br/><span class="help">Manufacturer Part Number</span>';
 $_['entry_location']         = 'Location:';
-$_['entry_shipping']         = 'Requires Shipping:'; 
+$_['entry_shipping']         = 'Requires Shipping:';
 $_['entry_manufacturer']     = 'Manufacturer:<br /><span class="help">(Autocomplete)</span>';
 $_['entry_date_available']   = 'Date Available:';
 $_['entry_quantity']         = 'Quantity:';

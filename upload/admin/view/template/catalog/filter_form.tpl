@@ -25,7 +25,7 @@
               <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
               <?php } ?>
               <?php } ?></td>
-          </tr>		  
+          </tr>
           <tr>
             <td><?php echo $entry_sort_order; ?></td>
             <td><input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" /></td>
@@ -73,7 +73,7 @@ var filter_row = <?php echo $filter_row; ?>;
 
 function addFilterRow() {
 	html  = '<tbody id="filter-row' + filter_row + '">';
-	html += '  <tr>';	
+	html += '  <tr>';
     html += '    <td class="left"><input type="hidden" name="filter[' + filter_row + '][filter_id]" value="" />';
 	<?php foreach ($languages as $language) { ?>
 	html += '    <input type="text" name="filter[' + filter_row + '][filter_description][<?php echo $language['language_id']; ?>][name]" value="" /> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
@@ -81,12 +81,12 @@ function addFilterRow() {
 	html += '    </td>';
 	html += '    <td class="right"><input type="text" name="filter[' + filter_row + '][sort_order]" value="" size="1" /></td>';
 	html += '     <td class="left"><a onclick="$(\'#filter-row' + filter_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
-	html += '  </tr>';	
+	html += '  </tr>';
     html += '</tbody>';
-	
+
 	$('#filter tfoot').before(html);
-	
+
 	filter_row++;
 }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

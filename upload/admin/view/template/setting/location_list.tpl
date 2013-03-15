@@ -41,7 +41,7 @@
                 <a href="<?php echo $sort_country; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_country; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_country; ?>"><?php echo $column_country; ?></a>
-                <?php } ?></td>                
+                <?php } ?></td>
               <td class="right"><?php echo $column_action; ?></td>
             </tr>
           </thead>

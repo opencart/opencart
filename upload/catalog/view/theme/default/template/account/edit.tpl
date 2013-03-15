@@ -48,44 +48,44 @@ $('#button-edit').on('click', function() {
 		beforeSend: function() {
 			$('#button-edit').attr('disabled', true);
 			$('#button-edit').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-		},	
+		},
 		complete: function() {
-			$('#button-edit').attr('disabled', false); 
+			$('#button-edit').attr('disabled', false);
 			$('.loading').remove();
-		},			
+		},
 		success: function(json) {
 			$('.warning, .error').remove();
-						
+
 			if (json['redirect']) {
-				location = json['redirect'];				
+				location = json['redirect'];
 			} else if (json['error']) {
 				if (json['error']['warning']) {
 					$('#notification').html('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
-					
+
 					$('.warning').fadeIn('slow');
 				}
-				
+
 				if (json['error']['firstname']) {
 					$('input[name=\'firstname\']').after('<span class="error">' + json['error']['firstname'] + '</span>');
 				}
-				
+
 				if (json['error']['lastname']) {
 					$('input[name=\'lastname\']').after('<span class="error">' + json['error']['lastname'] + '</span>');
-				}	
-				
+				}
+
 				if (json['error']['email']) {
 					$('input[name=\'email\']').after('<span class="error">' + json['error']['email'] + '</span>');
 				}
-				
+
 				if (json['error']['telephone']) {
 					$('input[name=\'telephone\']').after('<span class="error">' + json['error']['telephone'] + '</span>');
-				}	
+				}
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	});	
+	});
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

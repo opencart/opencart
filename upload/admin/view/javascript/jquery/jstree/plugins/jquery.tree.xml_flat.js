@@ -103,15 +103,15 @@
 					else {
 						$.ajax({
 							'type'		: opts.method,
-							'url'		: opts.url, 
-							'data'		: data, 
+							'url'		: opts.url,
+							'data'		: data,
 							'dataType'	: "xml",
 							'success'	: function (d, textStatus) {
 								callback.call(null, d);
 							},
-							'error'		: function (xhttp, textStatus, errorThrown) { 
+							'error'		: function (xhttp, textStatus, errorThrown) {
 								callback.call(null, false);
-								t.error(errorThrown + " " + textStatus); 
+								t.error(errorThrown + " " + textStatus);
 							}
 						});
 					}

@@ -1,9 +1,9 @@
 /*!
  * The following copyright notice may not be removed under any circumstances.
- * 
+ *
  * Copyright:
  * Copyright (c) 1996 Microsoft Corporation. All rights reserved.
- * 
+ *
  * Description:
  * Trebuchet, designed by Vincent Connare in 1996, is a humanist sans serif
  * designed for easy screen readability. Trebuchet takes its inspiration from the
@@ -13,13 +13,13 @@
  * of medieval catapult) to launch a person from the main campus to the consumer
  * campus, and how?" The Trebuchet fonts are intended to be the vehicle that fires
  * your messages across the Internet. "Launch your message with a Trebuchet page".
- * 
+ *
  * Manufacturer:
  * Microsoft Corp.
- * 
+ *
  * Designer:
  * Vincent Connare
- * 
+ *
  * Vendor URL:
  * http://www.microsoft.com
  */

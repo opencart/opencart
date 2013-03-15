@@ -75,39 +75,39 @@
 <script type="text/javascript"><!--
 function filter() {
 	url = 'index.php?route=report/sale_shipping&token=<?php echo $token; ?>';
-	
+
 	var filter_date_start = $('input[name=\'filter_date_start\']').attr('value');
-	
+
 	if (filter_date_start) {
 		url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
 	}
 
 	var filter_date_end = $('input[name=\'filter_date_end\']').attr('value');
-	
+
 	if (filter_date_end) {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
-		
+
 	var filter_group = $('select[name=\'filter_group\']').attr('value');
-	
+
 	if (filter_group) {
 		url += '&filter_group=' + encodeURIComponent(filter_group);
 	}
-	
+
 	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').attr('value');
-	
+
 	if (filter_order_status_id != 0) {
 		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
-	}	
+	}
 
 	location = url;
 }
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('#date-start').datepicker({dateFormat: 'yy-mm-dd'});
-	
+
 	$('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

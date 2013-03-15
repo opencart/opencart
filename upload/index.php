@@ -5,9 +5,9 @@ define('VERSION', '1.6.0');
 // Configuration
 if (file_exists('config.php')) {
 	require_once('config.php');
-}  
+}
 
-// Install 
+// Install
 if (!defined('DIR_APPLICATION')) {
 	header('Location: install/index.php');
 	exit;
@@ -43,7 +43,7 @@ $registry->set('load', $loader);
 $config = new Config();
 $registry->set('config', $config);
 
-// Database 
+// Database
 $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 $registry->set('db', $db);
 
@@ -59,7 +59,7 @@ if ($store_query->num_rows) {
 } else {
 	$config->set('config_store_id', 0);
 }
-		
+
 // Settings
 $query = $db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0' OR store_id = '" . (int)$config->get('config_store_id') . "' ORDER BY store_id ASC");
 
@@ -77,7 +77,7 @@ if (!$store_query->num_rows) {
 }
 
 // Url
-$url = new Url($config->get('config_url'), $config->get('config_secure') ? $config->get('config_ssl') : $config->get('config_url'));	
+$url = new Url($config->get('config_url'), $config->get('config_secure') ? $config->get('config_ssl') : $config->get('config_url'));
 $registry->set('url', $url);
 
 // Log
@@ -86,7 +86,7 @@ $registry->set('log', $log);
 
 function error_handler($errno, $errstr, $errfile, $errline) {
 	global $log, $config;
-	
+
 	switch ($errno) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
@@ -104,34 +104,34 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 			$error = 'Unknown';
 			break;
 	}
-		
+
 	if ($config->get('config_error_display')) {
 		echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
 	}
-	
+
 	if ($config->get('config_error_log')) {
 		$log->write('PHP ' . $error . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
 	}
 
 	return true;
 }
-	
+
 // Error Handler
 set_error_handler('error_handler');
 
 // Request
 $request = new Request();
 $registry->set('request', $request);
- 
+
 // Response
 $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
 $response->setCompression($config->get('config_compression'));
-$registry->set('response', $response); 
-		
+$registry->set('response', $response);
+
 // Cache
 $cache = new Cache();
-$registry->set('cache', $cache); 
+$registry->set('cache', $cache);
 
 // Session
 $session = new Session();
@@ -140,7 +140,7 @@ $registry->set('session', $session);
 // Language Detection
 $languages = array();
 
-$query = $db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE status = '1'"); 
+$query = $db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE status = '1'");
 
 foreach ($query->rows as $result) {
 	$languages[$result['code']] = $result;
@@ -148,9 +148,9 @@ foreach ($query->rows as $result) {
 
 $detect = '';
 
-if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_ACCEPT_LANGUAGE']) { 
+if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_ACCEPT_LANGUAGE']) {
 	$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
-	
+
 	foreach ($browser_languages as $browser_language) {
 		foreach ($languages as $key => $value) {
 			if ($value['status']) {
@@ -178,20 +178,20 @@ if (!isset($session->data['language']) || $session->data['language'] != $code) {
 	$session->data['language'] = $code;
 }
 
-if (!isset($request->cookie['language']) || $request->cookie['language'] != $code) {	  
+if (!isset($request->cookie['language']) || $request->cookie['language'] != $code) {
 	setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $request->server['HTTP_HOST']);
-}			
+}
 
 $config->set('config_language_id', $languages[$code]['language_id']);
 $config->set('config_language', $languages[$code]['code']);
 
 // Language
 $language = new Language($languages[$code]['directory']);
-$language->load($languages[$code]['filename']);	
-$registry->set('language', $language); 
+$language->load($languages[$code]['filename']);
+$registry->set('language', $language);
 
 // Document
-$registry->set('document', new Document()); 		
+$registry->set('document', new Document());
 
 // Customer
 $registry->set('customer', new Customer($registry));
@@ -202,7 +202,7 @@ $registry->set('affiliate', new Affiliate($registry));
 if (isset($request->get['tracking'])) {
 	setcookie('tracking', $request->get['tracking'], time() + 3600 * 24 * 1000, '/');
 }
-		
+
 // Currency
 $registry->set('currency', new Currency($registry));
 
@@ -220,7 +220,7 @@ $registry->set('cart', new Cart($registry));
 
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
-		
+
 // Front Controller
 $controller = new Front($registry);
 
@@ -228,8 +228,8 @@ $controller = new Front($registry);
 $controller->addPreAction(new Action('common/maintenance'));
 
 // SEO URL's
-$controller->addPreAction(new Action('common/seo_url'));	
-	
+$controller->addPreAction(new Action('common/seo_url'));
+
 // Router
 if (isset($request->get['route'])) {
 	$action = new Action($request->get['route']);

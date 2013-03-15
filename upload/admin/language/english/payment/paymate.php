@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']      = 'Paymate';
 
-// Text 
+// Text
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified Paymate account details!';
 

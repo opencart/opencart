@@ -129,5 +129,5 @@
 <script type="text/javascript"><!--
 $('#htabs a').tabs();
 $('#vtabs a').tabs();
-//--></script> 
-<?php echo $footer; ?> 
+//--></script>
+<?php echo $footer; ?>

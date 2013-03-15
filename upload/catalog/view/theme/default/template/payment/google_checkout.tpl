@@ -13,28 +13,28 @@ $('#button-paypal').on('click', function() {
 		url: 'index.php?route=payment/google_checkout/send',
 		type: 'post',
 		data: $('#payment :input'),
-		dataType: 'json',		
+		dataType: 'json',
 		beforeSend: function() {
 			$('#button-paypal').attr('disabled', true);
 			$('#button-paypal').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
-			$('#button-paypal').attr('disabled', false); 
+			$('#button-paypal').attr('disabled', false);
 			$('.loading').remove();
-		},				
+		},
 		success: function(json) {
 			if (json['error']) {
 				alert(json['error']);
 			}
-			
+
 			if (json['cart']) {
 				$('input[name=\'cart\']').attr('value', json['cart']);
 				$('input[name=\'signature\']').attr('value', json['signature']);
-				
+
 				$('#google-checkout').submit();
-				
+
 			}
 		}
 	});
 });
-//--></script> 
+//--></script>

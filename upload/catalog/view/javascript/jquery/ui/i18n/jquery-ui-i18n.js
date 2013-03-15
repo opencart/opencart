@@ -116,10 +116,10 @@ jQuery(function($){
 /* Written by Kenan Konjo. */
 jQuery(function($){
 	$.datepicker.regional['bs'] = {
-		closeText: 'Zatvori', 
-		prevText: '&#x3c;', 
-		nextText: '&#x3e;', 
-		currentText: 'Danas', 
+		closeText: 'Zatvori',
+		prevText: '&#x3c;',
+		nextText: '&#x3e;',
+		currentText: 'Danas',
 		monthNames: ['Januar','Februar','Mart','April','Maj','Juni',
 		'Juli','August','Septembar','Oktobar','Novembar','Decembar'],
 		monthNamesShort: ['Jan','Feb','Mar','Apr','Maj','Jun',
@@ -815,7 +815,7 @@ jQuery(function($){
 jQuery(function($){
 	$.datepicker.regional['ml'] = {
 		closeText: 'ശരി',
-		prevText: 'മുന്നത്തെ',  
+		prevText: 'മുന്നത്തെ',
 		nextText: 'അടുത്തത് ',
 		currentText: 'ഇന്ന്',
 		monthNames: ['ജനുവരി','ഫെബ്രുവരി','മാര്‍ച്ച്','ഏപ്രില്‍','മേയ്','ജൂണ്‍',

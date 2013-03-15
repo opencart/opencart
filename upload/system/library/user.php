@@ -63,7 +63,7 @@ class User {
 
 		$this->user_id = '';
 		$this->username = '';
-		
+
 		session_destroy();
 	}
 

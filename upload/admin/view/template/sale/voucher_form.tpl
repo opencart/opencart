@@ -107,14 +107,14 @@
 <script type="text/javascript"><!--
 $('#history .pagination a').live('click', function() {
 	$('#history').load(this.href);
-	
+
 	return false;
-});			
+});
 
 $('#history').load('index.php?route=sale/voucher/history&token=<?php echo $token; ?>&voucher_id=<?php echo $voucher_id; ?>');
 //--></script>
 <?php } ?>
 <script type="text/javascript"><!--
-$('#tabs a').tabs(); 
-//--></script> 
+$('#tabs a').tabs();
+//--></script>
 <?php echo $footer; ?>

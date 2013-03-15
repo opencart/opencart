@@ -1,24 +1,24 @@
 
 /* * ====================================================================
- * About: This a a compressed JS file from the Sarissa library. 
+ * About: This a a compressed JS file from the Sarissa library.
  * see http://dev.abiss.gr/sarissa
- * 
+ *
  * Copyright: Manos Batsis, http://dev.abiss.gr
- * 
+ *
  * Licence:
- * Sarissa is free software distributed under the GNU GPL version 2 
- * or higher, GNU LGPL version 2.1 or higher and Apache Software 
- * License 2.0 or higher. The licenses are available online see: 
- * http://www.gnu.org  
+ * Sarissa is free software distributed under the GNU GPL version 2
+ * or higher, GNU LGPL version 2.1 or higher and Apache Software
+ * License 2.0 or higher. The licenses are available online see:
+ * http://www.gnu.org
  * http://www.apache.org
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY 
- * KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
- * WARRANTIES OF MERCHANTABILITY,FITNESS FOR A PARTICULAR PURPOSE 
- * AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+ * KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY,FITNESS FOR A PARTICULAR PURPOSE
+ * AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ====================================================================*/
 

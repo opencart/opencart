@@ -349,12 +349,12 @@ class Mail {
 				// According to rfc 821 we should not send more than 1000 including the CRLF
 				$message = str_replace("\r\n", "\n",  $header . $message);
 				$message = str_replace("\r", "\n", $message);
-				
+
 				$lines = explode("\n", $message);
-				
+
 				foreach ($lines as $line) {
 					$results = str_split($line, 998);
-					
+
 					foreach ($results as $result) {
 						if (substr(PHP_OS, 0, 3) != 'WIN') {
 							fputs($handle, $result . $this->crlf);
@@ -380,7 +380,7 @@ class Mail {
 					trigger_error('Error: DATA not accepted from server!');
 					exit();
 				}
-				
+
 				fputs($handle, 'QUIT' . $this->crlf);
 
 				$reply = '';

@@ -7,23 +7,23 @@
  *
  * @version
  * 2.0.320 (May 03 2009)
- * 
+ *
  * @copyright
  * Copyright (C) 2004-2009 Alex Gorbatchev.
  *
  * @license
  * This file is part of SyntaxHighlighter.
- * 
+ *
  * SyntaxHighlighter is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * SyntaxHighlighter is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with SyntaxHighlighter.  If not, see <http://www.gnu.org/copyleft/lesser.html>.
  */
@@ -54,7 +54,7 @@
 	color: #B9BDB6 !important;
 }
 
-.syntaxhighlighter.printing .line .content 
+.syntaxhighlighter.printing .line .content
 {
 	border: 0 !important;
 }
@@ -121,73 +121,73 @@
  ************************************/
 .syntaxhighlighter .plain,
 .syntaxhighlighter .plain a
-{ 
+{
 	color: #FFFFFF !important;
 }
 
 .syntaxhighlighter .comments,
 .syntaxhighlighter .comments a
-{ 
+{
 	color: #696854 !important;
 }
 
 .syntaxhighlighter .string,
 .syntaxhighlighter .string a
 {
-	color: #E3E658 !important; 
+	color: #E3E658 !important;
 }
 
 .syntaxhighlighter .keyword
-{ 
-	color: #D01D33 !important; 
+{
+	color: #D01D33 !important;
 }
 
-.syntaxhighlighter .preprocessor 
-{ 
-	color: #435A5F !important; 
+.syntaxhighlighter .preprocessor
+{
+	color: #435A5F !important;
 }
 
-.syntaxhighlighter .variable 
-{ 
-	color: #898989 !important; 
+.syntaxhighlighter .variable
+{
+	color: #898989 !important;
 }
 
 .syntaxhighlighter .value
-{ 
-	color: #090 !important; 
+{
+	color: #090 !important;
 }
 
 .syntaxhighlighter .functions
-{ 
+{
 	color: #AAAAAA !important;
 	font-weight: bold !important;
 }
 
 .syntaxhighlighter .constants
-{ 
-	color: #96DAFF !important; 
+{
+	color: #96DAFF !important;
 }
 
 .syntaxhighlighter .script
-{ 
+{
 	background-color: #C3C3C3 !important;
 	color: #000 !important;
 }
 
 .syntaxhighlighter .color1,
 .syntaxhighlighter .color1 a
-{ 
-	color: #FFC074 !important; 
+{
+	color: #FFC074 !important;
 }
 
 .syntaxhighlighter .color2,
 .syntaxhighlighter .color2 a
-{ 
-	color: #4A8CDB !important; 
+{
+	color: #4A8CDB !important;
 }
 
 .syntaxhighlighter .color3,
 .syntaxhighlighter .color3 a
-{ 
-	color: #96DAFF !important; 
+{
+	color: #96DAFF !important;
 }

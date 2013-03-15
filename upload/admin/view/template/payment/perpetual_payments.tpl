@@ -47,7 +47,7 @@
           <tr>
             <td><?php echo $entry_total; ?></td>
             <td><input type="text" name="perpetual_payments_total" value="<?php echo $perpetual_payments_total; ?>" /></td>
-          </tr>          
+          </tr>
           <tr>
             <td><?php echo $entry_order_status; ?></td>
             <td><select name="perpetual_payments_order_status_id">
@@ -94,4 +94,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

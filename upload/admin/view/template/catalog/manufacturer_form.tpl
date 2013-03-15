@@ -75,9 +75,9 @@
 <script type="text/javascript"><!--
 function image_upload(field, thumb) {
 	$('#dialog').remove();
-	
+
 	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
-	
+
 	$('#dialog').dialog({
 		title: '<?php echo $text_image_manager; ?>',
 		close: function (event, ui) {
@@ -90,7 +90,7 @@ function image_upload(field, thumb) {
 					}
 				});
 			}
-		},	
+		},
 		bgiframe: false,
 		width: 800,
 		height: 400,
@@ -98,8 +98,8 @@ function image_upload(field, thumb) {
 		modal: false
 	});
 };
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
-$('#tabs a').tabs(); 
-//--></script> 
+$('#tabs a').tabs();
+//--></script>
 <?php echo $footer; ?>

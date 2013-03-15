@@ -149,35 +149,35 @@ $('select[name=\'return_action_id\']').on('change', function() {
 		data: 'return_action_id=' + this.value,
 		beforeSend: function() {
 			$('.success, .warning, .attention').remove();
-			
+
 			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		success: function(json) {
 			$('.success, .warning, .attention').remove();
-			
+
 			if (json['error']) {
 				$('.box').before('<div class="warning" style="display: none;">' + json['error'] + '</div>');
-				
+
 				$('.warning').fadeIn('slow');
 			}
-			
+
 			if (json['success']) {
 				$('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
-				
+
 				$('.success').fadeIn('slow');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	});	
+	});
 });
 
 $('#history .pagination a').live('click', function() {
 	$('#history').load(this.href);
-	
+
 	return false;
-});			
+});
 
 $('#history').load('index.php?route=sale/return/history&token=<?php echo $token; ?>&return_id=<?php echo $return_id; ?>');
 
@@ -198,15 +198,15 @@ function history() {
 		},
 		success: function(html) {
 			$('#history').html(html);
-			
-			$('textarea[name=\'comment\']').val(''); 
-			
+
+			$('textarea[name=\'comment\']').val('');
+
 			$('#return-status').html($('select[name=\'return_status_id\'] option:selected').text());
 		}
 	});
 }
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('.vtabs a').tabs();
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

@@ -111,12 +111,12 @@ function sendVoucher(voucher_id) {
 			if (json['error']) {
 				$('.box').before('<div class="warning">' + json['error'] + '</div>');
 			}
-			
+
 			if (json['success']) {
 				$('.box').before('<div class="success">' + json['success'] + '</div>');
-			}		
+			}
 		}
 	});
 }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

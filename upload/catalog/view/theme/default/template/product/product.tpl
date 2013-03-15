@@ -218,8 +218,8 @@
         <div><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" />&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $reviews; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<?php if ($guest_review) { ?><a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $text_write; ?></a><?php } else { echo $text_login_write; } ?></div>
         <div class="share"><!-- AddThis Button BEGIN -->
           <div class="addthis_default_style"><a class="addthis_button_compact"><?php echo $text_share; ?></a> <a class="addthis_button_email"></a><a class="addthis_button_print"></a> <a class="addthis_button_facebook"></a> <a class="addthis_button_twitter"></a></div>
-          <script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js"></script> 
-          <!-- AddThis Button END --> 
+          <script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js"></script>
+          <!-- AddThis Button END -->
         </div>
       </div>
       <?php } ?>
@@ -345,7 +345,7 @@ $(document).ready(function() {
 		rel: "colorbox"
 	});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#button-cart').on('click', function() {
 	$.ajax({
@@ -355,24 +355,24 @@ $('#button-cart').on('click', function() {
 		dataType: 'json',
 		success: function(json) {
 			$('.success, .warning, .attention, information, .error').remove();
-			
+
 			if (json['error']) {
 				if (json['error']['option']) {
 					for (i in json['error']['option']) {
 						$('#option' + i).after('<span class="error">' + json['error']['option'][i] + '</span>');
 					}
 				}
-			} 
-			
+			}
+
 			if (json['success']) {
 				$('#notification').html('<div class="success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
-					
+
 				$('.success').fadeIn('slow');
-					
+
 				$('#cart-total').html(json['total']);
-				
-				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
-			}	
+
+				$('html, body').animate({ scrollTop: 0 }, 'slow');
+			}
 		}
 	});
 });
@@ -383,33 +383,33 @@ $('#button-cart').on('click', function() {
 <script type="text/javascript"><!--
 function upload(product_option_id) {
 	$('#file').off();
-	
+
 	$('#file').on('change', function() {
 		$.ajax({
 			url: 'index.php?route=product/product/upload',
-			type: 'post',		
+			type: 'post',
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
 			beforeSend: function() {
 				$('#button-option' + product_option_id).after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 				$('#button-option' + product_option_id).attr('disabled', true);
 				$('#option' + product_option_id + ' + .error').remove();
-			},	
+			},
 			complete: function() {
 				$('.loading').remove();
 				$('#button-option' + product_option_id).attr('disabled', false);
-			},		
+			},
 			success: function(json) {
 				if (json['error']) {
 					$('#option' + product_option_id).after('<span class="error">' + json['error'] + '</span>');
 				}
-							
+
 				if (json['success']) {
 					alert(json['success']);
-					
+
 					$('input[name=\'option[' + product_option_id + ']\']').attr('value', json['file']);
 				}
-			},			
+			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			},
@@ -417,8 +417,8 @@ function upload(product_option_id) {
 			contentType: false,
 			processData: false
 		});
-	});		
-	
+	});
+
 	$('input[name=\'file\']').click();
 }
 //--></script>
@@ -428,13 +428,13 @@ function upload(product_option_id) {
 <script type="text/javascript"><!--
 $('#review .pagination a').live('click', function() {
 	$('#review').fadeOut('slow');
-		
+
 	$('#review').load(this.href);
-	
+
 	$('#review').fadeIn('slow');
-	
+
 	return false;
-});			
+});
 
 $('#review').load('index.php?route=product/product/review&product_id=<?php echo $product_id; ?>');
 
@@ -457,10 +457,10 @@ $('#button-review').on('click', function() {
 			if (data['error']) {
 				$('#review-title').after('<div class="warning">' + data['error'] + '</div>');
 			}
-			
+
 			if (data['success']) {
 				$('#review-title').after('<div class="success">' + data['success'] + '</div>');
-								
+
 				$('input[name=\'name\']').val('');
 				$('textarea[name=\'text\']').val('');
 				$('input[name=\'rating\']:checked').attr('checked', '');
@@ -472,11 +472,11 @@ $('#button-review').on('click', function() {
 		}
 	});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#tabs a').tabs();
-//--></script> 
-<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
+//--></script>
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	if ($.browser.msie && $.browser.version == 6) {
@@ -490,5 +490,5 @@ $(document).ready(function() {
 	});
 	$('.time').timepicker({timeFormat: 'h:m'});
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

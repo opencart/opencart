@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']      = 'Perpetual Payments';
 
-// Text 
+// Text
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified Perpetual Payments account details!';
 
@@ -18,6 +18,6 @@ $_['entry_sort_order']   = 'Sort Order:';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify payment Perpetual Payments!';
-$_['error_auth_id']      = 'Authorization ID Required!'; 
-$_['error_auth_pass']    = 'Authorization Password Required!'; 
+$_['error_auth_id']      = 'Authorization ID Required!';
+$_['error_auth_pass']    = 'Authorization Password Required!';
 ?>

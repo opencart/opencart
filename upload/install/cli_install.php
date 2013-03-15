@@ -9,14 +9,14 @@
 // Usage:
 //
 //   cd install
-//   php cli_install.php install --db_host localhost \
-//                               --db_user root \
-//                               --db_password pass \
-//                               --db_name opencart \
-//                               --username admin \
-//                               --password admin \
-//                               --email youremail@example.com \
-//                               --agree_tnc yes \
+//   php cli_install.php install --db_host localhost
+//                               --db_user root
+//                               --db_password pass
+//                               --db_name opencart
+//                               --username admin
+//                               --password admin
+//                               --email youremail@example.com
+//                               --agree_tnc yes
 //                               --http_server http://localhost/opencart
 //
 

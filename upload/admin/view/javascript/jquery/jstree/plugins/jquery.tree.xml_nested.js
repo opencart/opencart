@@ -83,7 +83,7 @@
 					str += '><![CDATA[' + tree.get_text(obj,lang) + ']]></name>';
 					return str;
 				},
-				parse	: function(data, tree, opts, callback) { 
+				parse	: function(data, tree, opts, callback) {
 					var processor = new XSLTProcessor();
 					processor.importStylesheet($.tree.datastores.xml_nested.xsl);
 
@@ -104,15 +104,15 @@
 					else {
 						$.ajax({
 							'type'		: opts.method,
-							'url'		: opts.url, 
-							'data'		: data, 
+							'url'		: opts.url,
+							'data'		: data,
 							'dataType'	: "xml",
 							'success'	: function (d, textStatus) {
 								callback.call(null, d);
 							},
-							'error'		: function (xhttp, textStatus, errorThrown) { 
+							'error'		: function (xhttp, textStatus, errorThrown) {
 								callback.call(null, false);
-								tree.error(errorThrown + " " + textStatus); 
+								tree.error(errorThrown + " " + textStatus);
 							}
 						});
 					}

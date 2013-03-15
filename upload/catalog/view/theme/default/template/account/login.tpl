@@ -50,5 +50,5 @@ $('#login input').keydown(function(e) {
 		$('#login').submit();
 	}
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

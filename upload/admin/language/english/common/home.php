@@ -21,7 +21,7 @@ $_['text_year']                     = 'This Year';
 $_['text_order']                    = 'Total Orders';
 $_['text_customer']                 = 'Total Customers';
 
-// Column 
+// Column
 $_['column_order']                  = 'Order ID';
 $_['column_customer']               = 'Customer';
 $_['column_status']                 = 'Status';

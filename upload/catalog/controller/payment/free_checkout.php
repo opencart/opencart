@@ -10,13 +10,13 @@ class ControllerPaymentFreeCheckout extends Controller {
 		} else {
             $this->template = 'default/template/payment/free_checkout.tpl';
         }
-		
-		$this->render();		 
+
+		$this->render();
 	}
-	
+
 	public function confirm() {
 		$this->load->model('checkout/order');
-		
+
 		$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('free_checkout_order_status_id'));
 	}
 }

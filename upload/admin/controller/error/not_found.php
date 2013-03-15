@@ -1,8 +1,8 @@
-<?php    
-class ControllerErrorNotFound extends Controller {    
-	public function index() { 
+<?php
+class ControllerErrorNotFound extends Controller {
+	public function index() {
     	$this->language->load('error/not_found');
- 
+
     	$this->document->setTitle($this->language->get('heading_title'));
 
     	$this->data['heading_title'] = $this->language->get('heading_title');
@@ -26,8 +26,8 @@ class ControllerErrorNotFound extends Controller {
 			'common/header',
 			'common/footer'
 		);
-				
-		$this->response->setOutput($this->render());	
+
+		$this->response->setOutput($this->render());
   	}
 }
 ?>

@@ -14,7 +14,7 @@
 .tree-themeroller li, .tree-themeroller li a, .tree-themeroller li a ins { line-height:16px !important; }
 .tree-themeroller li a .ui-icon { overflow:visible; }
 
-/* DEFAULT, HOVER, CLICKED, LOADING STATES 
+/* DEFAULT, HOVER, CLICKED, LOADING STATES
 .tree-themeroller li a, .tree-themeroller li span { border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; }
 .tree-themeroller li a:hover, .tree-themeroller li a.hover, .tree-themeroller li span { background: #e7f4f9; border:1px solid #d8f0fa; padding:0px 3px 0px 3px; }
 .tree-themeroller li a.clicked, .tree-themeroller li a.clicked:hover, .tree-themeroller li span.clicked { background: #beebff; border:1px solid #99defd; padding:0px 3px 0px 3px; }
@@ -31,7 +31,7 @@
 #jstree-dragged.tree-themeroller ins { background:url("icons.png") -16px -32px no-repeat; }
 #jstree-dragged.tree-themeroller ins.forbidden { background:url("icons.png") -16px -16px no-repeat; }
 
-/* CONTEXT MENU 
+/* CONTEXT MENU
 .tree-themeroller-context a ins { background-image:url("icons.png"); background-repeat:no-repeat; background-position:-64px -64px; }
 .tree-themeroller-context a ins.create { background-position:0 -16px; }
 .tree-themeroller-context a ins.rename { background-position:-16px 0px; }

@@ -1,9 +1,9 @@
 /*!
  * The following copyright notice may not be removed under any circumstances.
- * 
+ *
  * Copyright:
  * Typeface and data © 1996 Microsoft Corporation. All Rights Reserved
- * 
+ *
  * Trademark:
  * Verdana is a trademark of Microsoft Corporation
  */

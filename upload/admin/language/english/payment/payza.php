@@ -2,10 +2,10 @@
 // Heading
 $_['heading_title']      = 'Payza';
 
-// Text 
+// Text
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified Payza account details!';
-      
+
 // Entry
 $_['entry_merchant']     = 'Merchant ID:';
 $_['entry_security']     = 'Security Code:';

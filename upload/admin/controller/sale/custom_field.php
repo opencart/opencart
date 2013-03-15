@@ -1,14 +1,14 @@
 <?php
 class ControllerSaleCustomField extends Controller {
-	private $error = array();  
- 
+	private $error = array();
+
 	public function index() {
 		$this->language->load('sale/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('sale/custom_field');
-		
+
 		$this->getList();
 	}
 
@@ -16,16 +16,16 @@ class ControllerSaleCustomField extends Controller {
 		$this->language->load('sale/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('sale/custom_field');
-		
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_sale_custom_field->addCustomField($this->request->post);
-			
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -37,7 +37,7 @@ class ControllerSaleCustomField extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			
+
 			$this->redirect($this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
@@ -48,16 +48,16 @@ class ControllerSaleCustomField extends Controller {
 		$this->language->load('sale/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('sale/custom_field');
-		
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_sale_custom_field->editCustomField($this->request->get['custom_field_id'], $this->request->post);
-			
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -69,7 +69,7 @@ class ControllerSaleCustomField extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			
+
 			$this->redirect($this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
@@ -80,18 +80,18 @@ class ControllerSaleCustomField extends Controller {
 		$this->language->load('sale/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
- 		
+
 		$this->load->model('sale/custom_field');
-		
+
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $custom_field_id) {
 				$this->model_sale_custom_field->deleteCustomField($custom_field_id);
 			}
-			
+
 			$this->session->data['success'] = $this->language->get('text_success');
-			
+
 			$url = '';
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -103,7 +103,7 @@ class ControllerSaleCustomField extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			
+
 			$this->redirect($this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
@@ -116,21 +116,21 @@ class ControllerSaleCustomField extends Controller {
 		} else {
 			$sort = 'cfd.name';
 		}
-		
+
 		if (isset($this->request->get['order'])) {
 			$order = $this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}
-		
+
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
 		}
-			
+
 		$url = '';
-			
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -138,7 +138,7 @@ class ControllerSaleCustomField extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
-		
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
@@ -154,33 +154,33 @@ class ControllerSaleCustomField extends Controller {
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
-		
+
 		$this->data['insert'] = $this->url->link('sale/custom_field/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$this->data['delete'] = $this->url->link('sale/custom_field/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		 
+
 		$this->data['custom_fields'] = array();
-		
+
 		$data = array(
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
 			'limit' => $this->config->get('config_admin_limit')
 		);
-		
+
 		$custom_field_total = $this->model_sale_custom_field->getTotalCustomFields();
-		
+
 		$results = $this->model_sale_custom_field->getCustomFields($data);
-		
+
 		foreach ($results as $result) {
 			$action = array();
-			
+
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('sale/custom_field/update', 'token=' . $this->session->data['token'] . '&custom_field_id=' . $result['custom_field_id'] . $url, 'SSL')
 			);
-			
+
 			$type = '';
-			
+
 			switch ($result['type']) {
 				case 'select':
 					$type = $this->language->get('text_select');
@@ -205,17 +205,17 @@ class ControllerSaleCustomField extends Controller {
 					break;
 				case 'date':
 					$type = $this->language->get('text_date');
-					break;																														
+					break;
 				case 'datetime':
 					$type = $this->language->get('text_datetime');
-					break;	
+					break;
 				case 'time':
 					$type = $this->language->get('text_time');
-					break;																	
+					break;
 			}
-			
+
 			$location = '';
-			
+
 			switch ($result['location']) {
 				case 'customer':
 					$location = $this->language->get('text_customer');
@@ -228,9 +228,9 @@ class ControllerSaleCustomField extends Controller {
 					break;
 				case 'shipping_address':
 					$location = $this->language->get('text_shipping_address');
-					break;										
-			}			
-		
+					break;
+			}
+
 			$this->data['custom_fields'][] = array(
 				'custom_field_id' => $result['custom_field_id'],
 				'name'            => $result['name'],
@@ -244,28 +244,28 @@ class ControllerSaleCustomField extends Controller {
 		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		
+
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_type'] = $this->language->get('column_type');
 		$this->data['column_location'] = $this->language->get('column_location');
 		$this->data['column_status'] = $this->language->get('column_status');
 		$this->data['column_sort_order'] = $this->language->get('column_sort_order');
-		$this->data['column_action'] = $this->language->get('column_action');	
+		$this->data['column_action'] = $this->language->get('column_action');
 
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
- 
+
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
 			$this->data['error_warning'] = '';
 		}
-		
+
 		if (isset($this->session->data['success'])) {
 			$this->data['success'] = $this->session->data['success'];
-		
+
 			unset($this->session->data['success']);
 		} else {
 			$this->data['success'] = '';
@@ -282,19 +282,19 @@ class ControllerSaleCustomField extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		$this->data['sort_name'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . '&sort=cfd.name' . $url, 'SSL');
 		$this->data['sort_type'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.type' . $url, 'SSL');
 		$this->data['sort_location'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.name' . $url, 'SSL');
 		$this->data['sort_status'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.status' . $url, 'SSL');
 		$this->data['sort_sort_order'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.sort_order' . $url, 'SSL');
-		
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
-												
+
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
@@ -307,7 +307,7 @@ class ControllerSaleCustomField extends Controller {
 		$pagination->url = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
 		$this->data['pagination'] = $pagination->render();
-		
+
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 
@@ -316,13 +316,13 @@ class ControllerSaleCustomField extends Controller {
 			'common/header',
 			'common/footer'
 		);
-				
+
 		$this->response->setOutput($this->render());
 	}
 
 	protected function getForm() {
 		$this->data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$this->data['text_choose'] = $this->language->get('text_choose');
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_radio'] = $this->language->get('text_radio');
@@ -338,7 +338,7 @@ class ControllerSaleCustomField extends Controller {
 		$this->data['text_address'] = $this->language->get('text_address');
 		$this->data['text_payment_address'] = $this->language->get('text_payment_address');
 		$this->data['text_shipping_address'] = $this->language->get('text_shipping_address');
-		
+
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_begining'] = $this->language->get('text_begining');
@@ -354,8 +354,8 @@ class ControllerSaleCustomField extends Controller {
 		$this->data['text_city'] = $this->language->get('text_city');
 		$this->data['text_postcode'] = $this->language->get('text_postcode');
 		$this->data['text_country'] = $this->language->get('text_country');
-		$this->data['text_zone'] = $this->language->get('text_zone');	
-		
+		$this->data['text_zone'] = $this->language->get('text_zone');
+
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_type'] = $this->language->get('entry_type');
 		$this->data['entry_value'] = $this->language->get('entry_value');
@@ -377,18 +377,18 @@ class ControllerSaleCustomField extends Controller {
 		} else {
 			$this->data['error_warning'] = '';
 		}
-		
+
  		if (isset($this->error['name'])) {
 			$this->data['error_name'] = $this->error['name'];
 		} else {
 			$this->data['error_name'] = array();
-		}	
-				
+		}
+
  		if (isset($this->error['custom_field_value'])) {
 			$this->data['error_custom_field_value'] = $this->error['custom_field_value'];
 		} else {
 			$this->data['error_custom_field_value'] = array();
-		}	
+		}
 
 		$url = '';
 
@@ -399,7 +399,7 @@ class ControllerSaleCustomField extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
-		
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
@@ -415,10 +415,10 @@ class ControllerSaleCustomField extends Controller {
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
-		
+
 		if (!isset($this->request->get['custom_field_id'])) {
 			$this->data['action'] = $this->url->link('sale/custom_field/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		} else { 
+		} else {
 			$this->data['action'] = $this->url->link('sale/custom_field/update', 'token=' . $this->session->data['token'] . '&custom_field_id=' . $this->request->get['custom_field_id'] . $url, 'SSL');
 		}
 
@@ -427,21 +427,21 @@ class ControllerSaleCustomField extends Controller {
 		if (isset($this->request->get['custom_field_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$custom_field_info = $this->model_sale_custom_field->getCustomField($this->request->get['custom_field_id']);
     	}
-		
+
 		$this->data['token'] = $this->session->data['token'];
-		
+
 		$this->load->model('localisation/language');
-		
+
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();
-		
+
 		if (isset($this->request->post['custom_field_description'])) {
 			$this->data['custom_field_description'] = $this->request->post['custom_field_description'];
 		} elseif (isset($this->request->get['custom_field_id'])) {
 			$this->data['custom_field_description'] = $this->model_sale_custom_field->getCustomFieldDescriptions($this->request->get['custom_field_id']);
 		} else {
 			$this->data['custom_field_description'] = array();
-		}	
-						
+		}
+
 		if (isset($this->request->post['type'])) {
 			$this->data['type'] = $this->request->post['type'];
 		} elseif (!empty($custom_field_info)) {
@@ -449,7 +449,7 @@ class ControllerSaleCustomField extends Controller {
 		} else {
 			$this->data['type'] = '';
 		}
-		
+
 		if (isset($this->request->post['value'])) {
 			$this->data['value'] = $this->request->post['value'];
 		} elseif (!empty($custom_field_info)) {
@@ -457,7 +457,7 @@ class ControllerSaleCustomField extends Controller {
 		} else {
 			$this->data['value'] = '';
 		}
-				
+
 		if (isset($this->request->post['custom_field_customer_group'])) {
 			$custom_field_customer_groups = $this->request->post['custom_field_customer_group'];
 		} elseif (isset($this->request->get['custom_field_id'])) {
@@ -465,27 +465,27 @@ class ControllerSaleCustomField extends Controller {
 		} else {
 			$custom_field_customer_groups = array();
 		}
-		
+
 		$this->data['custom_field_customer_group'] = array();
-		
+
 		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
 			if (isset($custom_field_customer_group['customer_group_id'])) {
 				$this->data['custom_field_customer_group'][] = $custom_field_customer_group['customer_group_id'];
 			}
 		}
-		
+
 		$this->data['custom_field_required'] = array();
-		
+
 		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
 			if (isset($custom_field_customer_group['required'])) {
 				$this->data['custom_field_required'][] = $custom_field_customer_group['required'];
 			}
 		}
-		
+
 		$this->load->model('sale/customer_group');
-		
-		$this->data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();	
-								
+
+		$this->data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+
 		if (isset($this->request->post['location'])) {
 			$this->data['location'] = $this->request->post['location'];
 		} elseif (!empty($custom_field_info)) {
@@ -493,7 +493,7 @@ class ControllerSaleCustomField extends Controller {
 		} else {
 			$this->data['location'] = '';
 		}
-		
+
 		if (isset($this->request->post['position'])) {
 			$this->data['position'] = $this->request->post['position'];
 		} elseif (!empty($custom_field_info)) {
@@ -501,7 +501,7 @@ class ControllerSaleCustomField extends Controller {
 		} else {
 			$this->data['position'] = '';
 		}
-			
+
 		if (isset($this->request->post['status'])) {
 			$this->data['status'] = $this->request->post['status'];
 		} elseif (!empty($custom_field_info)) {
@@ -509,7 +509,7 @@ class ControllerSaleCustomField extends Controller {
 		} else {
 			$this->data['status'] = '';
 		}
-					
+
 		if (isset($this->request->post['sort_order'])) {
 			$this->data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($custom_field_info)) {
@@ -517,7 +517,7 @@ class ControllerSaleCustomField extends Controller {
 		} else {
 			$this->data['sort_order'] = '';
 		}
-		
+
 		if (isset($this->request->post['custom_field_value'])) {
 			$custom_field_values = $this->request->post['custom_field_value'];
 		} elseif (isset($this->request->get['custom_field_id'])) {
@@ -525,9 +525,9 @@ class ControllerSaleCustomField extends Controller {
 		} else {
 			$custom_field_values = array();
 		}
-		
+
 		$this->data['custom_field_values'] = array();
-		 
+
 		foreach ($custom_field_values as $custom_field_value) {
 			$this->data['custom_field_values'][] = array(
 				'custom_field_value_id'          => $custom_field_value['custom_field_value_id'],
@@ -541,7 +541,7 @@ class ControllerSaleCustomField extends Controller {
 			'common/header',
 			'common/footer'
 		);
-				
+
 		$this->response->setOutput($this->render());
 	}
 
@@ -564,10 +564,10 @@ class ControllerSaleCustomField extends Controller {
 			foreach ($this->request->post['custom_field_value'] as $custom_field_value_id => $custom_field_value) {
 				foreach ($custom_field_value['custom_field_value_description'] as $language_id => $custom_field_value_description) {
 					if ((utf8_strlen($custom_field_value_description['name']) < 1) || (utf8_strlen($custom_field_value_description['name']) > 128)) {
-						$this->error['custom_field_value'][$custom_field_value_id][$language_id] = $this->language->get('error_custom_value'); 
-					}					
+						$this->error['custom_field_value'][$custom_field_value_id][$language_id] = $this->language->get('error_custom_value');
+					}
 				}
-			}	
+			}
 		}
 
 		if (!$this->error) {
@@ -581,12 +581,12 @@ class ControllerSaleCustomField extends Controller {
 		if (!$this->user->hasPermission('modify', 'sale/custom_field')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-		
+
 		if (!$this->error) {
 			return true;
 		} else {
 			return false;
 		}
-	}	
+	}
 }
 ?>

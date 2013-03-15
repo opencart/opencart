@@ -42,7 +42,7 @@
             <td class="left"><?php echo $customer['date_added']; ?></td>
             <td class="right"><?php foreach ($customer['action'] as $action) { ?>
               [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-              <?php } ?></td>            
+              <?php } ?></td>
           </tr>
           <?php } ?>
           <?php } else { ?>
@@ -59,20 +59,20 @@
 <script type="text/javascript"><!--
 function filter() {
 	url = 'index.php?route=report/customer_online&token=<?php echo $token; ?>';
-	
+
 	var filter_customer = $('input[name=\'filter_customer\']').attr('value');
-	
+
 	if (filter_customer) {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
-		
+
 	var filter_ip = $('input[name=\'filter_ip\']').attr('value');
-	
+
 	if (filter_ip) {
 		url += '&filter_ip=' + encodeURIComponent(filter_ip);
 	}
-				
+
 	location = url;
 }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

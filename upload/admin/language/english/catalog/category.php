@@ -30,7 +30,7 @@ $_['entry_sort_order']       = 'Sort Order:';
 $_['entry_status']           = 'Status:';
 $_['entry_layout']           = 'Layout Override:';
 
-// Error 
+// Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']       = 'Warning: You do not have permission to modify categories!';
 $_['error_name']             = 'Category Name must be between 2 and 32 characters!';

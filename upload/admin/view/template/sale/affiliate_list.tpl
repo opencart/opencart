@@ -120,51 +120,51 @@
 <script type="text/javascript"><!--
 function filter() {
 	url = 'index.php?route=sale/affiliate&token=<?php echo $token; ?>';
-	
+
 	var filter_name = $('input[name=\'filter_name\']').attr('value');
-	
+
 	if (filter_name) {
 		url += '&filter_name=' + encodeURIComponent(filter_name);
 	}
-	
+
 	var filter_email = $('input[name=\'filter_email\']').attr('value');
-	
+
 	if (filter_email) {
 		url += '&filter_email=' + encodeURIComponent(filter_email);
 	}
-	
+
 	var filter_affiliate_group_id = $('select[name=\'filter_affiliate_group_id\']').attr('value');
-	
+
 	if (filter_affiliate_group_id != '*') {
 		url += '&filter_affiliate_group_id=' + encodeURIComponent(filter_affiliate_group_id);
-	}	
-	
+	}
+
 	var filter_status = $('select[name=\'filter_status\']').attr('value');
-	
+
 	if (filter_status != '*') {
-		url += '&filter_status=' + encodeURIComponent(filter_status); 
-	}	
-	
+		url += '&filter_status=' + encodeURIComponent(filter_status);
+	}
+
 	var filter_approved = $('select[name=\'filter_approved\']').attr('value');
-	
+
 	if (filter_approved != '*') {
 		url += '&filter_approved=' + encodeURIComponent(filter_approved);
-	}	
-	
+	}
+
 	var filter_date_added = $('input[name=\'filter_date_added\']').attr('value');
-	
+
 	if (filter_date_added) {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
-	
+
 	location = url;
 }
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('#date').datepicker({dateFormat: 'yy-mm-dd'});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('input[name=\'filter_name\']').autocomplete({
 	delay: 500,
@@ -172,7 +172,7 @@ $('input[name=\'filter_name\']').autocomplete({
 		$.ajax({
 			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {		
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item.name,
@@ -181,15 +181,15 @@ $('input[name=\'filter_name\']').autocomplete({
 				}));
 			}
 		});
-	}, 
+	},
 	select: function(event, ui) {
 		$('input[name=\'filter_name\']').val(ui.item.label);
-						
+
 		return false;
 	},
 	focus: function(event, ui) {
       	return false;
    	}
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

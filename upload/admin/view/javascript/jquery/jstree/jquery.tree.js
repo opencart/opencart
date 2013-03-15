@@ -73,10 +73,10 @@
 				beforechange: function(NODE,TREE_OBJ) { return true },
 				beforeopen	: function(NODE,TREE_OBJ) { return true },
 				beforeclose	: function(NODE,TREE_OBJ) { return true },
-				beforemove	: function(NODE,REF_NODE,TYPE,TREE_OBJ) { return true }, 
-				beforecreate: function(NODE,REF_NODE,TYPE,TREE_OBJ) { return true }, 
-				beforerename: function(NODE,LANG,TREE_OBJ) { return true }, 
-				beforedelete: function(NODE,TREE_OBJ) { return true }, 
+				beforemove	: function(NODE,REF_NODE,TYPE,TREE_OBJ) { return true },
+				beforecreate: function(NODE,REF_NODE,TYPE,TREE_OBJ) { return true },
+				beforerename: function(NODE,LANG,TREE_OBJ) { return true },
+				beforedelete: function(NODE,TREE_OBJ) { return true },
 				beforedata	: function(NODE,TREE_OBJ) { return { id : $(NODE).attr("id") || 0 } }, // PARAMETERS PASSED TO SERVER
 				ondata		: function(DATA,TREE_OBJ) { return DATA; },		// modify data before parsing it
 				onparse		: function(STR,TREE_OBJ) { return STR; },		// modify string before visualizing it
@@ -110,12 +110,12 @@
 
 		create		: function () { return new tree_component(); },
 		focused		: function () { return tree_component.inst[tree_component.focused]; },
-		reference	: function (obj) { 
-			var o = $(obj); 
+		reference	: function (obj) {
+			var o = $(obj);
 			if(!o.size()) o = $("#" + obj);
-			if(!o.size()) return null; 
-			o = (o.is(".tree")) ? o.attr("id") : o.parents(".tree:eq(0)").attr("id"); 
-			return tree_component.inst[o] || null; 
+			if(!o.size()) return null;
+			o = (o.is(".tree")) ? o.attr("id") : o.parents(".tree:eq(0)").attr("id");
+			return tree_component.inst[o] || null;
 		},
 		rollback	: function (data) {
 			for(var i in data) {
@@ -187,7 +187,7 @@
 				this.container = $(elem);
 				if(this.container.size == 0) return false;
 				tree_component.inst[this.cntr] = this;
-				if(!this.container.attr("id")) this.container.attr("id","jstree_" + this.cntr); 
+				if(!this.container.attr("id")) this.container.attr("id","jstree_" + this.cntr);
 				tree_component.inst[this.container.attr("id")] = tree_component.inst[this.cntr];
 				tree_component.focused = this.cntr;
 				this.settings = $.extend(true, {}, this.settings, conf);
@@ -207,7 +207,7 @@
 				this.container.addClass("tree");
 				if(this.settings.ui.theme_name !== false) {
 					if(this.settings.ui.theme_path === false) {
-						$("script").each(function () { 
+						$("script").each(function () {
 							if(this.src.toString().match(/jquery\.tree.*?js$/)) { _this.settings.ui.theme_path = this.src.toString().replace(/jquery\.tree.*?js$/, "") + "themes/" + _this.settings.ui.theme_name + "/style.css"; return false; }
 						});
 					}
@@ -343,7 +343,7 @@
 					if(this.settings.data.async && opn) return;
 					if(this.cl_count > 0) return;
 					delete this.opened;
-				} 
+				}
 				if(this.cl_count > 0) return;
 
 				// DOTS and RIGHT TO LEFT
@@ -388,8 +388,8 @@
 					.bind("mouseup.jstree", function (event) {
 						setTimeout( function() { _this.focus.apply(_this); }, 5);
 					})
-					.bind("click.jstree", function (event) { 
-						//event.stopPropagation(); 
+					.bind("click.jstree", function (event) {
+						//event.stopPropagation();
 						return true;
 					});
 				$("#" + this.container.attr("id") + " li")
@@ -405,25 +405,25 @@
 					.live("click.jstree", function (event) { // WHEN CLICK IS ON THE TEXT OR ICON
 						if(event.which && event.which == 3) return true;
 						if(_this.locked) {
-							event.preventDefault(); 
+							event.preventDefault();
 							event.target.blur();
 							return _this.error("LOCKED");
 						}
 						_this.select_branch.apply(_this, [event.target, event.ctrlKey || _this.settings.rules.multiple == "on"]);
 						if(_this.inp) { _this.inp.blur(); }
-						event.preventDefault(); 
+						event.preventDefault();
 						event.target.blur();
 						return false;
 					})
 					.live("dblclick.jstree", function (event) { // WHEN DOUBLECLICK ON TEXT OR ICON
 						if(_this.locked) {
-							event.preventDefault(); 
+							event.preventDefault();
 							event.stopPropagation();
 							event.target.blur();
 							return _this.error("LOCKED");
 						}
 						_this.callback("ondblclk", [_this.get_node(event.target).get(0), _this]);
-						event.preventDefault(); 
+						event.preventDefault();
 						event.stopPropagation();
 						event.target.blur();
 					})
@@ -496,7 +496,7 @@
 						tree_component.drag_drop.init_x = event.pageX;
 						tree_component.drag_drop.init_y = event.pageY;
 						obj.blur();
-						event.preventDefault(); 
+						event.preventDefault();
 						event.stopPropagation();
 						return false;
 					});
@@ -527,7 +527,7 @@
 					if(!this.li_height) this.li_height = 18;
 				}
 			},
-			scroll_check : function (x,y) { 
+			scroll_check : function (x,y) {
 				var _this = this;
 				var cnt = _this.container;
 				var off = _this.container.offset();
@@ -627,7 +627,7 @@
 				};
 				var nod_type = (typeof nod == "string") ? nod : this.get_type(nod);
 				if(typeof r.valid_children != "undefined" && (r.valid_children == "none" || (typeof r.valid_children == "object" && $.inArray(nod_type, $.makeArray(r.valid_children)) == -1))) return false;
-				
+
 				if(this.settings.rules.use_max_children) {
 					if(typeof r.max_children != "undefined" && r.max_children != -1) {
 						if(r.max_children == 0) return false;
@@ -656,7 +656,7 @@
 						if(mx !== false && mx <= 0) return this.error("MOVE: MAX-DEPTH REACHED");
 					}
 					if(mx !== false && mx <= 0) return this.error("MOVE: MAX-DEPTH REACHED");
-					if(mx !== false) { 
+					if(mx !== false) {
 						var incr = 1;
 						if(typeof nod != "string") {
 							var t = nod;
@@ -763,7 +763,7 @@
 				if(this.locked) return this.error("LOCKED");
 				var obj = this.get_node(obj);
 				if(obj.hasClass("closed"))	return this.open_branch(obj);
-				if(obj.hasClass("open"))	return this.close_branch(obj); 
+				if(obj.hasClass("open"))	return this.close_branch(obj);
 			},
 			open_branch : function (obj, disable_animation, callback) {
 				var _this = this;
@@ -773,7 +773,7 @@
 				if(!obj.size()) return this.error("OPEN: NO SUCH NODE");
 				if(obj.hasClass("leaf")) return this.error("OPEN: OPENING LEAF NODE");
 				if(this.settings.data.async && obj.find("li").size() == 0) {
-					
+
 					if(this.callback("beforeopen",[obj.get(0),this]) === false) return this.error("OPEN: STOPPED BY USER");
 
 					obj.children("ul:eq(0)").remove().end().append("<ul><li class='last'><a class='loading' href='#'><ins>&nbsp;</ins>" + (_this.settings.lang.loading || "Loading ...") + "</a></li></ul>");
@@ -789,7 +789,7 @@
 						}
 						_datastore.parse(data,_this,_this.settings.data.opts,function(str){
 							str = _this.callback("onparse", [str, _this]);
-							// if(obj.children('ul:eq(0)').children('li').size() > 1) obj.children("ul").find('.loaading').parent().replaceWith(str); else 
+							// if(obj.children('ul:eq(0)').children('li').size() > 1) obj.children("ul").find('.loaading').parent().replaceWith(str); else
 							obj.children("ul:eq(0)").replaceWith($("<ul>").html(str));
 							obj.find("li:last-child").addClass("last").end().find("li:has(ul)").not(".open").addClass("closed");
 							obj.find("li").not(".open").not(".closed").addClass("leaf");
@@ -829,7 +829,7 @@
 						if(obj.hasClass("open")) obj.removeClass("open").addClass("closed");
 						$(this).css("display","");
 					});
-				} 
+				}
 				else {
 					if(obj.hasClass("open")) obj.removeClass("open").addClass("closed");
 				}
@@ -865,7 +865,7 @@
 				this.callback("onclose_all",[this]);
 			},
 
-			set_lang : function (i) { 
+			set_lang : function (i) {
 				if(!$.isArray(this.settings.languages) || this.settings.languages.length == 0) return false;
 				if(this.locked) return this.error("LOCKED");
 				if(!$.inArray(i,this.settings.languages) && typeof this.settings.languages[i] != "undefined") i = this.settings.languages[i];
@@ -885,9 +885,9 @@
 				return this.current_lang;
 			},
 
-			create : function (obj, ref_node, position) { 
+			create : function (obj, ref_node, position) {
 				if(this.locked) return this.error("LOCKED");
-				
+
 				var root = false;
 				if(ref_node == -1) { root = true; ref_node = this.container; }
 				else ref_node = ref_node ? this.get_node(ref_node) : this.selected;
@@ -919,7 +919,7 @@
 				}
 
 				// creating new object to pass to parseJSON
-				var torename = false; 
+				var torename = false;
 				if(!obj)	obj = {};
 				else		obj = $.extend(true, {}, obj);
 				if(!obj.attributes) obj.attributes = {};
@@ -975,7 +975,7 @@
 						if(mx !== false && mx <= 0) return this.error("CREATE: MAX-DEPTH REACHED");
 					}
 					if(mx !== false && mx <= 0) return this.error("CREATE: MAX-DEPTH REACHED");
-					if(mx !== false) { 
+					if(mx !== false) {
 						var incr = 1;
 						var t = $li;
 						while(t.size() > 0) {
@@ -986,7 +986,7 @@
 					}
 				}
 
-				if((typeof position).toLowerCase() == "undefined" || position == "inside") 
+				if((typeof position).toLowerCase() == "undefined" || position == "inside")
 					position = (this.settings.rules.createat == "top") ? 0 : ref_node.children("ul:eq(0)").children("li").size();
 				if(ref_node.children("ul").size() == 0 || (root == true && ref_node.children("ul").children("li").size() == 0) ) {
 					if(!root)	var a = this.moved($li,ref_node.children("a:eq(0)"),"inside", true);
@@ -1022,7 +1022,7 @@
 				else					obj = obj.find("a:first");
 
 				// Rollback
-				var rb = {}; 
+				var rb = {};
 				rb[this.container.attr("id")] = this.get_rollback();
 
 				var icn = obj.children("ins").clone();
@@ -1041,16 +1041,16 @@
 						.bind("mousedown",		function (event) { event.stopPropagation(); })
 						.bind("mouseup",		function (event) { event.stopPropagation(); })
 						.bind("click",			function (event) { event.stopPropagation(); })
-						.bind("keyup",			function (event) { 
+						.bind("keyup",			function (event) {
 								var key = event.keyCode || event.which;
 								if(key == 27) { this.value = last_value; this.blur(); return }
 								if(key == 13) { this.blur(); return; }
 							});
 					_this.inp.blur(function(event) {
-							if(this.value == "") this.value = last_value; 
+							if(this.value == "") this.value = last_value;
 							obj.text(this.value).prepend(icn);
-							obj.get(0).style.display = ""; 
-							obj.prevAll("span").remove(); 
+							obj.get(0).style.display = "";
+							obj.prevAll("span").remove();
 							_this.inp = false;
 							_this.callback("onrename", [_this.get_node(obj).get(0), _this, rb]);
 						});
@@ -1067,7 +1067,7 @@
 				var _this = this;
 
 				// Rollback
-				var rb = {}; 
+				var rb = {};
 				rb[this.container.attr("id")] = this.get_rollback();
 
 				if(obj && (!this.selected || this.get_node(obj).get(0) != this.selected.get(0) )) {
@@ -1121,7 +1121,7 @@
 							this.remove();
 						}
 					}
-					if(stop && tmp) this.select_branch(tmp); 
+					if(stop && tmp) this.select_branch(tmp);
 					this.callback("ondelete", [obj.get(0), this, rb]);
 				}
 				else return this.error("DELETE: NO NODE SELECTED");
@@ -1201,7 +1201,7 @@
 
 				// Rollback
 				if(!rb) {
-					var rb = {}; 
+					var rb = {};
 					rb[this.container.attr("id")] = this.get_rollback();
 					if(!is_new) {
 						var tmp = what.size() > 1 ? what.eq(0).parents(".tree:eq(0)") : what.parents(".tree:eq(0)");
@@ -1458,13 +1458,13 @@
 						var dd = $.extend( { "search" : str } , this.callback("beforedata", [false, this] ) );
 						$.ajax({
 							type		: this.settings.data.opts.method,
-							url			: this.settings.data.opts.url, 
-							data		: dd, 
+							url			: this.settings.data.opts.url,
+							data		: dd,
 							dataType	: "text",
 							success		: function (data) {
 								_this.srch_opn = $.unique(data.split(","));
 								_this.search.apply(_this,[str, func]);
-							} 
+							}
 						});
 					}
 					else if(this.srch_opn.length) {
@@ -1600,7 +1600,7 @@
 		tmp.origin_tree	= false;
 		if(tmp.isdown) {
 			tmp.isdown = false;
-			event.preventDefault(); 
+			event.preventDefault();
 			event.stopPropagation();
 			return false;
 		}
@@ -1670,7 +1670,7 @@
 				}
 
 				var et_off = et.offset();
-				var goTo = { 
+				var goTo = {
 					x : (et_off.left - 1),
 					y : (event.pageY - et_off.top)
 				};
@@ -1704,7 +1704,7 @@
 						case "inside":
 							goTo.x -= 2;
 							goTo.y = et_off.top - 2 + tree2.li_height/2;
-							tree_component.drag_drop.marker.attr("class","marker_plus"); 
+							tree_component.drag_drop.marker.attr("class","marker_plus");
 							break;
 					}
 					tmp.move_type	= mov;
@@ -1734,13 +1734,13 @@
 		}
 		return true;
 	};
-	$(function () { 
-		$(document).bind("mousemove.jstree",	tree_component.mousemove); 
-		$(document).bind("mouseup.jstree",		tree_component.mouseup); 
+	$(function () {
+		$(document).bind("mousemove.jstree",	tree_component.mousemove);
+		$(document).bind("mouseup.jstree",		tree_component.mouseup);
 	});
 
 	// cut, copy, paste stuff
-	tree_component.cut_copy = { 
+	tree_component.cut_copy = {
 		copy_nodes : false,
 		cut_nodes : false
 	};
@@ -1770,8 +1770,8 @@
 		(tree_component.css.insertRule) ? tree_component.css.insertRule(rule_name + ' { }', 0) : tree_component.css.addRule(rule_name, null, 0);
 		return tree_component.get_css(rule_name);
 	};
-	tree_component.remove_css = function(rule_name) { 
-		return tree_component.get_css(rule_name, true); 
+	tree_component.remove_css = function(rule_name) {
+		return tree_component.get_css(rule_name, true);
 	};
 	tree_component.add_sheet = function(opts) {
 		if(opts.str) {
@@ -1803,7 +1803,7 @@
 		var u = navigator.userAgent.toLowerCase();
 		var v = (u.match( /.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/ ) || [0,'0'])[1];
 		var css = '/* TREE LAYOUT */ .tree ul { margin:0 0 0 5px; padding:0 0 0 0; list-style-type:none; } .tree li { display:block; min-height:18px; line-height:18px; padding:0 0 0 15px; margin:0 0 0 0; /* Background fix */ clear:both; } .tree li ul { display:none; } .tree li a, .tree li span { display:inline-block;line-height:16px;height:16px;color:black;white-space:nowrap;text-decoration:none;padding:1px 4px 1px 4px;margin:0; } .tree li a:focus { outline: none; } .tree li a input, .tree li span input { margin:0;padding:0 0;display:inline-block;height:12px !important;border:1px solid white;background:white;font-size:10px;font-family:Verdana; } .tree li a input:not([class="xxx"]), .tree li span input:not([class="xxx"]) { padding:1px 0; } /* FOR DOTS */ .tree .ltr li.last { float:left; } .tree > ul li.last { overflow:visible; } /* OPEN OR CLOSE */ .tree li.open ul { display:block; } .tree li.closed ul { display:none !important; } /* FOR DRAGGING */ #jstree-dragged { position:absolute; top:-10px; left:-10px; margin:0; padding:0; } #jstree-dragged ul ul ul { display:none; } #jstree-marker { padding:0; margin:0; line-height:5px; font-size:1px; overflow:hidden; height:5px; position:absolute; left:-45px; top:-30px; z-index:1000; background-color:transparent; background-repeat:no-repeat; display:none; } #jstree-marker.marker { width:45px; background-position:-32px top; } #jstree-marker.marker_plus { width:5px; background-position:right top; } /* BACKGROUND DOTS */ .tree li li { overflow:hidden; } .tree > .ltr > li { display:table; } /* ICONS */ .tree ul ins { display:inline-block; text-decoration:none; width:16px; height:16px; } .tree .ltr ins { margin:0 4px 0 0px; } ';
-		if(/msie/.test(u) && !/opera/.test(u)) { 
+		if(/msie/.test(u) && !/opera/.test(u)) {
 			if(parseInt(v) == 6) css += '.tree li { height:18px; zoom:1; } .tree li li { overflow:visible; } .tree .ltr li.last { margin-top: expression( (this.previousSibling && /open/.test(this.previousSibling.className) ) ? "-2px" : "0"); } .marker { width:45px; background-position:-32px top; } .marker_plus { width:5px; background-position:right top; }';
 			if(parseInt(v) == 7) css += '.tree li li { overflow:visible; } .tree .ltr li.last { margin-top: expression( (this.previousSibling && /open/.test(this.previousSibling.className) ) ? "-2px" : "0"); }';
 		}
@@ -1830,15 +1830,15 @@
 					if(opts.url) {
 						$.ajax({
 							'type'		: opts.method,
-							'url'		: opts.url, 
-							'data'		: data, 
+							'url'		: opts.url,
+							'data'		: data,
 							'dataType'	: "html",
 							'success'	: function (d, textStatus) {
 								callback.call(null, d);
 							},
-							'error'		: function (xhttp, textStatus, errorThrown) { 
+							'error'		: function (xhttp, textStatus, errorThrown) {
 								callback.call(null, false);
-								tree.error(errorThrown + " " + textStatus); 
+								tree.error(errorThrown + " " + textStatus);
 							}
 						});
 					}
@@ -1850,7 +1850,7 @@
 		},
 		"json" : function () {
 			return {
-				get		: function(obj, tree, opts) { 
+				get		: function(obj, tree, opts) {
 					var _this = this;
 					if(!obj || $(obj).size() == 0) obj = tree.container.children("ul").children("li");
 					else obj = $(obj);
@@ -1878,7 +1878,7 @@
 						if(typeof val != "undefined" && val.toString().replace(" ","").length > 0) json.attributes[opts.outer_attrib[i]] = val;
 						delete val;
 					}
-					
+
 					if(tree.settings.languages.length) {
 						for(var i in tree.settings.languages) {
 							if(!tree.settings.languages.hasOwnProperty(i)) continue;
@@ -1937,7 +1937,7 @@
 					}
 					return json;
 				},
-				parse	: function(data, tree, opts, callback) { 
+				parse	: function(data, tree, opts, callback) {
 					if(Object.prototype.toString.apply(data) === "[object Array]") {
 						var str = '';
 						for(var i = 0; i < data.length; i ++) {
@@ -2035,19 +2035,19 @@
 				load	: function(data, tree, opts, callback) {
 					if(opts.static) {
 						callback.call(null, opts.static);
-					} 
+					}
 					else {
 						$.ajax({
 							'type'		: opts.method,
-							'url'		: opts.url, 
-							'data'		: data, 
+							'url'		: opts.url,
+							'data'		: data,
 							'dataType'	: "json",
 							'success'	: function (d, textStatus) {
 								callback.call(null, d);
 							},
-							'error'		: function (xhttp, textStatus, errorThrown) { 
+							'error'		: function (xhttp, textStatus, errorThrown) {
 								callback.call(null, false);
-								tree.error(errorThrown + " " + textStatus); 
+								tree.error(errorThrown + " " + textStatus);
 							}
 						});
 					}

@@ -45,18 +45,29 @@ body > #container {
 	height: auto;
 	min-height: 100%;
 }
-#header .div1 {
+#header {
 	height: 56px;
 	padding: 0px 30px;
 	background: url('../image/header.png') repeat-x;
 	min-width: 900px;
 }
-#header .div2 {
+#header #logo {
 	color: #FFFFFF;
-	padding: 18px 0px 0px 0px;
+	padding: 15px 0px 0px 0px;
 	float: left;
+	vertical-align: middle;
+	font-size: 15px;
 }
-#header .div3 {
+#header #logo a {
+	color: #FFFFFF;
+	font-size: 22px;
+	text-decoration: none;
+}
+#header #logo span {
+	text-transform: uppercase;
+	font-weight: lighter;
+}
+#header #logged {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #FFF;
@@ -64,7 +75,7 @@ body > #container {
 	padding: 15px 0px 0px 0px;
 	float: right;
 }
-#header .div2 span {
+#header .#logged span {
 	font-weight: bold;
 }
 #menu {

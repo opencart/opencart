@@ -110,7 +110,7 @@ class ControllerExtensionModification extends Controller {
     	$this->getList();
   	}
 	
-  	public function sync() {
+  	public function refresh() {
 		$this->language->load('extension/modification');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
@@ -282,20 +282,18 @@ class ControllerExtensionModification extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		
+ 		if (isset($this->error['warning'])) {
+			$this->data['error_warning'] = $this->error['warning'];
+		} else {
+			$this->data['error_warning'] = '';
+		}
+				
 		if (isset($this->session->data['success'])) {
 			$this->data['success'] = $this->session->data['success'];
 		
 			unset($this->session->data['success']);
 		} else {
 			$this->data['success'] = '';
-		}
-
-		if (isset($this->session->data['error'])) {
-			$this->data['error'] = $this->session->data['error'];
-		
-			unset($this->session->data['error']);
-		} else {
-			$this->data['error'] = '';
 		}
 		
 		$url = '';
@@ -349,11 +347,14 @@ class ControllerExtensionModification extends Controller {
   	protected function getForm() {
      	$this->data['heading_title'] = $this->language->get('heading_title');
 
+		$this->data['text_enabled'] = $this->language->get('text_enabled');
+		$this->data['text_disabled'] = $this->language->get('text_disabled');
+
     	$this->data['entry_code'] = $this->language->get('entry_code');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
-    	$this->data['button_upload'] = $this->language->get('button_upload');
 	
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -390,7 +391,7 @@ class ControllerExtensionModification extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('catalog/modification', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		if (!isset($this->request->get['modification_id'])) {
@@ -407,14 +408,22 @@ class ControllerExtensionModification extends Controller {
 		
 		$this->data['token'] = $this->session->data['token'];
 		
-		if (isset($this->request->post['xml'])) {
-			$this->data['code'] = $this->request->post['xml'];
+		if (isset($this->request->post['code'])) {
+			$this->data['code'] = $this->request->post['code'];
 		} elseif (!empty($modification_info)) {
-			$this->data['code'] = $modification_info['xml'];
+			$this->data['code'] = $modification_info['code'];
 		} else {
 			$this->data['code'] = '';
-		}		
-		
+		}
+				
+		if (isset($this->request->post['status'])) {
+			$this->data['status'] = $this->request->post['status'];
+		} elseif (!empty($modification_info)) {
+			$this->data['status'] = $modification_info['status'];
+		} else {
+			$this->data['status'] = '';
+		}	
+				
 		$this->template = 'extension/modification_form.tpl';
 		$this->children = array(
 			'common/header',

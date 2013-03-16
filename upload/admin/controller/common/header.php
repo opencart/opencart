@@ -106,10 +106,14 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_zone'] = $this->language->get('text_zone');
 		
 		if (!$this->user->isLogged() || !isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
+			$this->data['name'] = $this->config->get('config_name');
+			
 			$this->data['logged'] = '';
 			
 			$this->data['home'] = $this->url->link('common/login', '', 'SSL');
 		} else {
+			$this->data['name'] = $this->config->get('config_name');
+			
 			$this->data['logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
 	
 			$this->data['home'] = $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL');

@@ -3,7 +3,7 @@
 define('VERSION', '1.6.0');
 
 // Configuration
-if (file_exists('config.php')) {
+if (is_file('config.php')) {
 	require_once('config.php');
 }  
 

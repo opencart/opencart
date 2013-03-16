@@ -5,11 +5,11 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
+  <?php if ($error_warning) { ?>
+  <div class="warning"><?php echo $error_warning; ?></div>
+  <?php } ?>
   <?php if ($success) { ?>
   <div class="success"><?php echo $success; ?></div>
-  <?php } ?>
-  <?php if ($error) { ?>
-  <div class="warning"><?php echo $error; ?></div>
   <?php } ?>
   <div class="box">
     <div class="heading">

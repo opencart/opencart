@@ -191,10 +191,10 @@ body > #container {
 	background: url('../image/breadcrumb.png') top right no-repeat;
 }
 .breadcrumb li:first-child {
-	padding: 0px 15px 0px 5px;
+	padding: 0px 13px 0px 5px;
 }
 .breadcrumb li + li {
-	padding: 0px 25px 0px 15px;
+	padding: 0px 22px 0px 10px;
 }
 .breadcrumb li a {
 	font-weight: bold;

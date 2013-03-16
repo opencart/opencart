@@ -408,7 +408,7 @@ class ControllerCatalogDownload extends Controller {
 			$this->error['filename'] = $this->language->get('error_filename');
 		}	
 		
-		if (!file_exists(DIR_DOWNLOAD . $this->request->post['filename']) && !is_file(DIR_DOWNLOAD . $this->request->post['filename'])) {
+		if (!is_file(DIR_DOWNLOAD . $this->request->post['filename'])) {
 			$this->error['filename'] = $this->language->get('error_exists');
 		}
 				

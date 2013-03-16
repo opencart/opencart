@@ -388,7 +388,7 @@ class ControllerCatalogOption extends Controller {
 		$this->data['option_values'] = array();
 		 
 		foreach ($option_values as $option_value) {
-			if ($option_value['image'] && file_exists(DIR_IMAGE . $option_value['image'])) {
+			if (is_file(DIR_IMAGE . $option_value['image'])) {
 				$image = $option_value['image'];
 			} else {
 				$image = 'no_image.jpg';

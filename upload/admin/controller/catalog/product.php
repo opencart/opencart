@@ -351,7 +351,7 @@ class ControllerCatalogProduct extends Controller {
 				'href' => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL')
 			);
 			
-			if ($result['image'] && file_exists(DIR_IMAGE . $result['image'])) {
+			if (is_file(DIR_IMAGE . $result['image'])) {
 				$image = $this->model_tool_image->resize($result['image'], 40, 40);
 			} else {
 				$image = $this->model_tool_image->resize('no_image.jpg', 40, 40);
@@ -809,9 +809,9 @@ class ControllerCatalogProduct extends Controller {
 		
 		$this->load->model('tool/image');
 		
-		if (isset($this->request->post['image']) && file_exists(DIR_IMAGE . $this->request->post['image'])) {
+		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
 			$this->data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
-		} elseif (!empty($product_info) && $product_info['image'] && file_exists(DIR_IMAGE . $product_info['image'])) {
+		} elseif (!empty($product_info) && $product_info['image'] && is_file(DIR_IMAGE . $product_info['image'])) {
 			$this->data['thumb'] = $this->model_tool_image->resize($product_info['image'], 100, 100);
 		} else {
 			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
@@ -1142,7 +1142,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['product_images'] = array();
 		
 		foreach ($product_images as $product_image) {
-			if ($product_image['image'] && file_exists(DIR_IMAGE . $product_image['image'])) {
+			if (is_file(DIR_IMAGE . $product_image['image'])) {
 				$image = $product_image['image'];
 			} else {
 				$image = 'no_image.jpg';

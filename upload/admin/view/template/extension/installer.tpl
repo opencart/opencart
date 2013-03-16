@@ -1,4 +1,3 @@
-
 <?php echo $header; ?>
 <div id="content">
   <ul class="breadcrumb">
@@ -12,18 +11,21 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/module.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table class="form">
-          <tr>
-            <td>Your upload file:</td>
-            <td><input type="button" value="<?php echo $button_upload; ?>" id="button-upload" class="button" onclick="$('input[name=\'file\']').click();" /></td>
-          </tr>
-        </table>
-         <textarea wrap="off" style="width: 98%; height: 300px; padding: 5px; border: 1px solid #CCCCCC; background: #FFFFFF; overflow: scroll;"><?php echo $log; ?></textarea>
-      </form>
+      <table class="form">
+        <tr>
+          <td>Your upload file:</td>
+          <td><input type="button" value="<?php echo $button_upload; ?>" id="button-upload" class="button" onclick="$('input[name=\'file\']').click();" /></td>
+        </tr>
+        <tr>
+          <td>Progress:</td>
+          <td><div id="progress" style="border: 1px solid #CCC; width: 100%;">
+              <div style="width: 50%; height: 20px; margin: 2px; background: #F00;"></div>
+            </div></td>
+        </tr>
+      </table>
+      <div id="output"></div>
     </div>
   </div>
 </div>
@@ -32,7 +34,6 @@
     <input type="file" name="file" id="file" />
   </form>
 </div>
-
 <script type="text/javascript"><!--
 $('#file').on('change', function() {
     $.ajax({
@@ -49,7 +50,7 @@ $('#file').on('change', function() {
 			$('#button-upload').attr('disabled', false);
 		},		
 		success: function(html) {
-			$('textarea').val(html);
+			$('#output').html(html);
 			
 			/*
 			if (json['error']) {
@@ -70,7 +71,8 @@ $('#file').on('change', function() {
     });
 });
 
-
-
+function refresh() {
+	
+}
 //--></script> 
 <?php echo $footer; ?>

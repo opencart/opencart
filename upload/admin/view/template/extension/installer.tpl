@@ -15,17 +15,16 @@
     <div class="content">
       <table class="form">
         <tr>
-          <td>Your upload file:</td>
+          <td><?php echo $text_upload_file ?></td>
           <td><input type="button" value="<?php echo $button_upload; ?>" id="button-upload" class="button" onclick="$('input[name=\'file\']').click();" /></td>
         </tr>
         <tr>
-          <td>Progress:</td>
-          <td><div id="progress" style="border: 1px solid #CCC; width: 100%;">
-              <div style="width: 50%; height: 20px; margin: 2px; background: #F00;"></div>
-            </div></td>
+          <td><?php echo $text_upload ?></td>
+          <td>
+		    <div class="progressbar"></div>
+		  </td>
         </tr>
       </table>
-      <div id="output"></div>
     </div>
   </div>
 </div>
@@ -35,13 +34,16 @@
   </form>
 </div>
 <script type="text/javascript"><!--
+
 $('#file').on('change', function() {
     $.ajax({
-        url: 'index.php?route=extension/modification/upload&token=<?php echo $token; ?>',
+        url: 'index.php?route=extension/installer/upload&token=<?php echo $token; ?>',
         type: 'post',		
-		dataType: 'html',
+		dataType: 'json',
 		data: new FormData($(this).parent()[0]),
 		beforeSend: function() {
+			$('.success').remove();
+			$('.progressbar').addClass('progressbar-animation');
 			$('#button-upload').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 			$('#button-upload').attr('disabled', true);
 		},	
@@ -49,18 +51,9 @@ $('#file').on('change', function() {
 			$('.loading').remove();
 			$('#button-upload').attr('disabled', false);
 		},		
-		success: function(html) {
-			$('#output').html(html);
-			
-			/*
-			if (json['error']) {
-				alert(json['error']);
-			}
-						
-			if (json['success']) {
-				alert(json['success']);
-			}
-			*/
+		success: function(data) {
+			$('.progressbar').removeClass('progressbar-animation');
+			$('.heading').before('<div class="success">' + data.success + '</div>');
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -70,9 +63,5 @@ $('#file').on('change', function() {
         processData: false
     });
 });
-
-function refresh() {
-	
-}
 //--></script> 
 <?php echo $footer; ?>

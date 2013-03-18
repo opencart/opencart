@@ -8,7 +8,9 @@ class ControllerExtensionInstaller extends Controller {
     	$this->document->setTitle($this->language->get('heading_title'));
 		
      	$this->data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$this->data['text_upload_file'] = $this->language->get('text_upload_file');
+		$this->data['text_upload'] = $this->language->get('text_upload');
 		$this->data['button_upload'] = $this->language->get('button_upload');
 		
   		$this->data['breadcrumbs'] = array();
@@ -67,38 +69,22 @@ class ControllerExtensionInstaller extends Controller {
 				$json['next'] = $this->request->files['file']['name']; 
 			} 
 			
-			if (strrchr($this->request->files['file']['name'], '.') == '.zip') {
-				// if no temp directory exsits create it
-				
-				//rmdir(DIR_DOWNLOAD . 'temp');
-				
+			if (strrchr($this->request->files['file']['name'], '.') == '.zip') {				
 				
 				$file = $this->request->files['file']['tmp_name'];
 				$directory = dirname($this->request->files['file']['tmp_name']) . '/' . basename($this->request->files['file']['name'], '.zip') . '/';
 				
-
-				
-				sort($files);
-						
-				
-				rsort($files);
-							
-				foreach ($files as $file) {
-					if (is_file($file)) {
-						unlink($file);
-					} elseif (is_dir($file)) {
-						rmdir($file);	
-					}
-				}
-				
 				if (file_exists($directory)) {
 					rmdir($directory);
 				}
+				
+				//Decompresses The File
+				$this->unzip($file, $directory);
 			}	
 			
 			$json['success'] = $this->language->get('text_success');
 		}
-					
+
 		$this->response->setOutput(json_encode($json));
 	}
 	
@@ -110,8 +96,6 @@ class ControllerExtensionInstaller extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/modification')) {
       		$json['error'] = $this->language->get('error_permission');
     	}
-		
-		
 		
 		if (!isset($json['error'])) {
 			
@@ -172,13 +156,17 @@ class ControllerExtensionInstaller extends Controller {
 			ftp_close($connection);
 		}
 		
-		
-		
-		
 		$this->response->setOutput(json_encode($json));		
 	}
 	
-	public function unzip() {
+	public function unzip($file, $directory = null) {
+		
+		// Checks whether the directory is empty
+		if (empty($directoty)){
+			// Capture the directory root
+			$directory = dirname(DIR_CATALOG);
+		}
+	
 		// Unzip the files
 		$zip = new ZipArchive();
 		$zip->open($file);
@@ -187,8 +175,6 @@ class ControllerExtensionInstaller extends Controller {
 		
 		// Remove Zip
 		unlink($file);
-		
-		
 	}
 	
 	public function sql() {

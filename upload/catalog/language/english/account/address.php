@@ -9,6 +9,7 @@ $_['text_edit_address'] = 'Edit Address';
 $_['text_insert']       = 'Your address has been successfully inserted';
 $_['text_update']       = 'Your address has been successfully updated';
 $_['text_delete']       = 'Your address has been successfully deleted';
+$_['text_empty']        = 'You have no addresses in your account.';
 
 // Entry
 $_['entry_firstname']   = 'First Name:';

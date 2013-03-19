@@ -1,9 +1,9 @@
 <?php echo $header; ?>
 <?php if ($success) { ?>
-<div class="success"><?php echo $success; ?></div>
+<div class="alert alert-success"><?php echo $success; ?></div>
 <?php } ?>
 <?php if ($error_warning) { ?>
-<div class="warning"><?php echo $error_warning; ?></div>
+<div class="alert alert-error"><?php echo $error_warning; ?></div>
 <?php } ?>
 <?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
@@ -13,16 +13,20 @@
     <?php } ?>
   </ul>
   <h1><?php echo $heading_title; ?></h1>
+  <?php if ($addresses) { ?>
   <h2><?php echo $text_address_book; ?></h2>
-  <?php foreach ($addresses as $result) { ?>
+  <?php foreach ($addresses as $address) { ?>
   <div class="content">
     <table style="width: 100%;">
       <tr>
-        <td><?php echo $result['address']; ?></td>
-        <td style="text-align: right;"><a href="<?php echo $result['update']; ?>" class="button"><?php echo $button_edit; ?></a> &nbsp; <a href="<?php echo $result['delete']; ?>" class="button"><?php echo $button_delete; ?></a></td>
+        <td><?php echo $address['address']; ?></td>
+        <td style="text-align: right;"><a href="<?php echo $address['update']; ?>" class="button"><?php echo $button_edit; ?></a> &nbsp; <a href="<?php echo $address['delete']; ?>" class="button"><?php echo $button_delete; ?></a></td>
       </tr>
     </table>
   </div>
+  <?php } ?>
+  <?php } else { ?>
+  <div class="content"><?php echo $text_empty; ?></div>
   <?php } ?>
   <div class="buttons">
     <div class="left"><a href="<?php echo $back; ?>" class="button"><?php echo $button_back; ?></a></div>

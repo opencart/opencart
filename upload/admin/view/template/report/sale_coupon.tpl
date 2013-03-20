@@ -7,7 +7,7 @@
   </ul>
   <div class="box">
     <div class="heading">
-      <h1><img src="view/image/report.png" alt="" /> <?php echo $heading_title; ?></h1>
+      <h1><?php echo $heading_title; ?></h1>
     </div>
     <div class="content">
       <table class="form">
@@ -19,7 +19,7 @@
           <td style="text-align: right;"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
         </tr>
       </table>
-      <table class="list">
+      <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
             <td class="left"><?php echo $column_name; ?></td>
@@ -39,7 +39,7 @@
             <td class="right"><?php echo $coupon['total']; ?></td>
             <td class="right"><?php foreach ($coupon['action'] as $action) { ?>
               [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-              <?php } ?></td>            
+              <?php } ?></td>
           </tr>
           <?php } ?>
           <?php } else { ?>
@@ -50,6 +50,7 @@
         </tbody>
       </table>
       <div class="pagination"><?php echo $pagination; ?></div>
+      <div class="results"><?php echo $results; ?></div>
     </div>
   </div>
 </div>

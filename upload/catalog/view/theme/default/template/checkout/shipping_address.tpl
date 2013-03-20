@@ -74,7 +74,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#shipping-address input[name=\'shipping_address\']').live('change', function() {
+$('#shipping-address input[name=\'shipping_address\']').on('change', function() {
 	if (this.value == 'new') {
 		$('#shipping-existing').hide();
 		$('#shipping-new').show();
@@ -107,7 +107,7 @@ $('#button-shipping-address').off().on('click', function() {
 				location = json['redirect'];
 			} else if (json['error']) {
 				if (json['error']['warning']) {
-					$('#shipping-address .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+					$('#shipping-address .checkout-content').prepend('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 					
 					$('.warning').fadeIn('slow');
 				}

@@ -102,7 +102,7 @@ $('#button-login').off().on('click', function() {
 			if (json['redirect']) {
 				location = json['redirect'];
 			} else if (json['error']) {
-				$('#checkout .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '</div>');
+				$('#checkout .checkout-content').prepend('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '</div>');
 				
 				$('.warning').fadeIn('slow');
 			}

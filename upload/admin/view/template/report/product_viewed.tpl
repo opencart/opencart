@@ -6,15 +6,15 @@
     <?php } ?>
   </ul>
   <?php if ($success) { ?>
-  <div class="success"><?php echo $success; ?></div>
+  <div class="alert alert-success"><?php echo $success; ?></div>
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><img src="view/image/report.png" alt="" /> <?php echo $heading_title; ?></h1>
+      <h1><?php echo $heading_title; ?></h1>
       <div class="buttons"><a href="<?php echo $reset; ?>" class="button"><?php echo $button_reset; ?></a></div>
     </div>
     <div class="content">
-      <table class="list">
+      <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
             <td class="left"><?php echo $column_name; ?></td>
@@ -41,6 +41,7 @@
         </tbody>
       </table>
       <div class="pagination"><?php echo $pagination; ?></div>
+      <div class="results"><?php echo $results; ?></div>
     </div>
   </div>
 </div>

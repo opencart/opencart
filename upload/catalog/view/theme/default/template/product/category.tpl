@@ -99,6 +99,7 @@
     <?php } ?>
   </div>
   <div class="pagination"><?php echo $pagination; ?></div>
+  <div class="results"><?php echo $results; ?></div>
   <?php } ?>
   <?php if (!$categories && !$products) { ?>
   <div class="content"><?php echo $text_empty; ?></div>

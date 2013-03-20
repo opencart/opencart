@@ -105,17 +105,11 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_length_class'] = $this->language->get('text_length_class');
 		$this->data['text_zone'] = $this->language->get('text_zone');
 		
-		if (!$this->user->isLogged() || !isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
-			$this->data['name'] = $this->config->get('config_name');
-			
-			$this->data['logged'] = '';
-			
-			$this->data['home'] = $this->url->link('common/login', '', 'SSL');
+		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token'])) {
+			$this->data['logged'] = false;
 		} else {
-			$this->data['name'] = $this->config->get('config_name');
+			$this->data['logged'] = $this->user->isLogged();
 			
-			$this->data['logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
-	
 			$this->data['home'] = $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['affiliate'] = $this->url->link('sale/affiliate', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['attribute'] = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'], 'SSL');
@@ -194,7 +188,7 @@ class ControllerCommonHeader extends Controller {
 					'name' => $result['name'],
 					'href' => $result['url']
 				);
-			}			
+			}
 		}
 		
 		$this->template = 'common/header.tpl';

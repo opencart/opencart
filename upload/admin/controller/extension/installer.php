@@ -9,12 +9,15 @@ class ControllerExtensionInstaller extends Controller {
 		
      	$this->data['heading_title'] = $this->language->get('heading_title');
 
+		$this->data['entry_upload'] = $this->language->get('entry_upload');
+		$this->data['entry_progress'] = $this->language->get('entry_progress');
+
 		$this->data['button_upload'] = $this->language->get('button_upload');
 		
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
@@ -61,47 +64,123 @@ class ControllerExtensionInstaller extends Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 	
-		if (!isset($json['error']) && is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
-			// If xml file just put it straight into the DB
-			if (strrchr($this->request->files['file']['name'], '.') == '.xml') {
-				$json['next'] = $this->request->files['file']['name']; 
-			} 
+		if (!isset($json['error']) && is_uploaded_file($this->request->files['file']['tmp_name'])) {
+			// if no temp directory exists create it
+			if (!is_dir(DIR_DOWNLOAD . 'temp')) {
+				mkdir(DIR_DOWNLOAD . 'temp', 0777);
+			}
 			
+			// Sanitize the filename	
+			$filename = basename(preg_replace('/[^a-zA-Z0-9\.\-\s+]/', '', html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8')));
+				
+			// If xml file copy it to the temp directory
+			if (strrchr($this->request->files['file']['name'], '.') == '.xml') {
+				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . 'temp/' . $filename);
+				
+				$json['xml'] = DIR_DOWNLOAD . 'temp/' . $filename; 
+			}
+			
+			// If zip file copy it to the temp directory
 			if (strrchr($this->request->files['file']['name'], '.') == '.zip') {
-				// if no temp directory exsits create it
+				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . 'temp/' . $filename);
 				
-				//rmdir(DIR_DOWNLOAD . 'temp');
+				if (is_file($filename)) {
+					
+				} else {
+					$json['error'] = $this->language->get('error_upload');
+				}
+		
+		
+		
+		
+				$zip_dir = "./import/";
+				$zip = zip_open($zip_dir . 'import.zip');
 				
-				
-				$file = $this->request->files['file']['tmp_name'];
-				$directory = dirname($this->request->files['file']['tmp_name']) . '/' . basename($this->request->files['file']['name'], '.zip') . '/';
-				
-
-				
-				sort($files);
+				if ($zip) {
+					while ($zip_entry = zip_read($zip)) {
+						$file = basename(zip_entry_name($zip_entry));
+						$fp = fopen($zip_dir.basename($file), "w+");
 						
-				
-				rsort($files);
+						if (zip_entry_open($zip, $zip_entry, "r")) {
+							$buf = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
 							
-				foreach ($files as $file) {
-					if (is_file($file)) {
-						unlink($file);
-					} elseif (is_dir($file)) {
-						rmdir($file);	
+							zip_entry_close($zip_entry);
+						}
+						
+						fwrite($fp, $buf);
+						fclose($fp);
+						
+						echo "The file ".$file." was extracted to dir ".$zip_dir."\n<br>";
 					}
+					
+					zip_close($zip);
+				}
+	
+				//$file = 
+				//$directory = dirname($this->request->files['file']['tmp_name']) . '/' . basename($this->request->files['file']['name'], '.zip') . '/';
+				
+				//$json['zip'] = 
+				/*
+				// SQL
+				if (strrchr($file, '.') == 'install.sql') {
+					$json['sql'] = $file;								
 				}
 				
-				if (file_exists($directory)) {
-					rmdir($directory);
+				// XML
+				if (strrchr(basename($file), '.') == 'install.xml') {
+					$json['xml'] = $file;
+				}	
+							
+				// PHP
+				if (strrchr(basename($file), '.') == 'install.php') {
+					$json['php'] = $file;
 				}
+				*/
+				
+				
 			}	
 			
-			$json['success'] = $this->language->get('text_success');
+			//unset($this->request->files['file']['tmp_name']);
+			
+			$json['success'] = $this->language->get('text_upload');
 		}
 					
 		$this->response->setOutput(json_encode($json));
 	}
 	
+	public function unzip() {
+		$this->language->load('extension/modification');
+		
+		$json = array();
+		
+		if (!$this->user->hasPermission('modify', 'extension/modification')) {
+      		$json['error'] = $this->language->get('error_permission');
+    	}
+
+		if (!is_file()) {
+			$json['error'] = $this->language->get('error_zip_mime');
+		}
+				
+		if (!mime_content_type()) {
+			$json['error'] = $this->language->get('error_zip_mime');
+		}
+		
+		// Unzip the files
+		$zip = new ZipArchive();
+		
+		if ($zip->open($file)) {
+			$zip->extractTo($directory);
+			$zip->close();				
+		} else {
+			$json['error'] = $this->language->get('error_zip_open');			
+		}
+		
+		// Remove Zip
+		unlink($file);
+		
+		$this->response->setOutput(json_encode($json));
+	}
+		
 	public function ftp() {
 		$this->language->load('extension/modification');
 		
@@ -115,24 +194,42 @@ class ControllerExtensionInstaller extends Controller {
 		
 		if (!isset($json['error'])) {
 			
+			// Get a list of files ready to upload
+			$files = array();
+			
+			$path = array($directory . '*');
+			
+			while(count($path) != 0) {
+				$next = array_shift($path);
+		
+				foreach(glob($next) as $file) {
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
+					}
+					
+					$files[] = $file;
+				}
+			}
+		
+					
 			// Connect to the site via FTP
 			$connection = ftp_connect($this->config->get('config_ftp_host'), $this->config->get('config_ftp_port'));
 	
 			if (!$connection) {
-				exit($this->language->get('error_ftp_connection') . $this->config->get('config_ftp_host') . ':' . $this->config->get('config_ftp_port')) ;
+				$json['error'] = $this->language->get('error_ftp_connection') . $this->config->get('config_ftp_host') . ':' . $this->config->get('config_ftp_port');
 			}
 			
 			$login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
 			
 			if (!$login) {
-				exit('Couldn\'t connect as ' . $this->config->get('config_ftp_username'));
+				$json['error'] = 'Couldn\'t connect as ' . $this->config->get('config_ftp_username');
 			}
 			
 			if ($this->config->get('config_ftp_root')) {
 				$root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
 				
 				if (!$root) {
-					exit('Couldn\'t change to directory ' . $this->config->get('config_ftp_root'));
+					$json['error'] = 'Couldn\'t change to directory ' . $this->config->get('config_ftp_root');
 				}
 			}
 		
@@ -146,27 +243,23 @@ class ControllerExtensionInstaller extends Controller {
 						
 						if (!in_array($destination, $list)) {
 							if (ftp_mkdir($connection, $destination)) {
-								echo 'Made directory ' . $destination . '<br />';
+								$json['error'] = 'Made directory ' . $destination;
+								
+								break;
 							}
 						}
 					}	
 					
 					if (is_file($file)) {
-						if (ftp_put($connection, $destination, $file, FTP_ASCII)) {		
-							echo 'Successfully uploaded ' . $file . '<br />';
+						if (!ftp_put($connection, $destination, $file, FTP_ASCII)) {		
+							$json['error'] = '';
+							
+							break;
 						}
 					}
 				}
 				
-				// SQL
-				if (strrchr(basename($file), '.') == '.sql') {
-					$json['sql'] = $file;								
-				}
-				
-				// XML
-				if (strrchr(basename($file), '.') == '.xml') {
-					$json['xml'] = $file;
-				}
+
 			}
 			
 			ftp_close($connection);
@@ -176,19 +269,6 @@ class ControllerExtensionInstaller extends Controller {
 		
 		
 		$this->response->setOutput(json_encode($json));		
-	}
-	
-	public function unzip() {
-		// Unzip the files
-		$zip = new ZipArchive();
-		$zip->open($file);
-		$zip->extractTo($directory);
-		$zip->close();
-		
-		// Remove Zip
-		unlink($file);
-		
-		
 	}
 	
 	public function sql() {
@@ -298,23 +378,47 @@ class ControllerExtensionInstaller extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/modification')) {
       		$json['error'] = $this->language->get('error_permission');
     	}
-				
-		// Get a list of files ready to upload
-		$files = array();
 		
-		$path = array($directory . '*');
+		if (!is_dir($json['error'])) {
+			
+		}
 		
-		while(count($path) != 0) {
-			$next = array_shift($path);
-	
-			foreach(glob($next) as $file) {
-				if (is_dir($file)) {
-					$path[] = $file . '/*';
+		if (!isset($directory)) {
+			// Get a list of files ready to upload
+			$files = array();
+			
+			$path = array($directory . '*');
+			
+			while(count($path) != 0) {
+				$next = array_shift($path);
+		
+				foreach(glob($next) as $file) {
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
+					}
+					
+					$files[] = $file;
 				}
-				
-				$files[] = $file;
 			}
-		}		
+						
+			sort($files);
+			
+			rsort($files);
+						
+			foreach ($files as $file) {
+				if (is_file($file)) {
+					unlink($file);
+				} elseif (is_dir($file)) {
+					rmdir($file);	
+				}
+			}
+				
+			if (file_exists($directory)) {
+				rmdir($directory);
+			}
+		}
+		
+		$this->response->setOutput(json_encode($json));
   	}	
 }
 ?>

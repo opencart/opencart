@@ -242,10 +242,11 @@ class ControllerSaleCustomerGroup extends Controller {
 		$pagination->total = $customer_group_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 		
 		$this->data['pagination'] = $pagination->render();				
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($customer_group_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($customer_group_total - $this->config->get('config_admin_limit'))) ? $customer_group_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $customer_group_total, ceil($customer_group_total / $this->config->get('config_admin_limit')));
 
 		$this->data['sort'] = $sort; 
 		$this->data['order'] = $order;

@@ -6,11 +6,11 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><img src="view/image/module.png" alt="" /> <?php echo $heading_title; ?></h1>
+      <h1><?php echo $heading_title; ?></h1>
       <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
@@ -26,7 +26,7 @@
                 <?php $class = 'odd'; ?>
                 <?php foreach ($products as $product) { ?>
                 <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                <div id="featured-product<?php echo $product['product_id']; ?>" class="<?php echo $class; ?>"><?php echo $product['name']; ?> <img src="view/image/delete.png" alt="" />
+                <div id="featured-product<?php echo $product['product_id']; ?>" class="<?php echo $class; ?>"><?php echo $product['name']; ?> <img src="view/image/icon-delete.png" alt="" />
                   <input type="hidden" value="<?php echo $product['product_id']; ?>" />
                 </div>
                 <?php } ?>
@@ -133,7 +133,7 @@ $('input[name=\'product\']').autocomplete({
 	select: function(event, ui) {
 		$('#featured-product' + ui.item.value).remove();
 		
-		$('#featured-product').append('<div id="featured-product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" value="' + ui.item.value + '" /></div>');
+		$('#featured-product').append('<div id="featured-product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" value="' + ui.item.value + '" /></div>');
 
 		$('#featured-product div:odd').attr('class', 'odd');
 		$('#featured-product div:even').attr('class', 'even');
@@ -151,7 +151,7 @@ $('input[name=\'product\']').autocomplete({
    	}
 });
 
-$('#featured-product div img').live('click', function() {
+$('#featured-product div img').on('click', function() {
 	$(this).parent().remove();
 	
 	$('#featured-product div:odd').attr('class', 'odd');

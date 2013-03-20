@@ -23,6 +23,7 @@
   </div>
   <?php } ?>
   <div class="pagination"><?php echo $pagination; ?></div>
+  <div class="results"><?php echo $results; ?></div>
   <div class="buttons">
     <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
   </div>

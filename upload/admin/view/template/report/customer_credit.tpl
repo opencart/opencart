@@ -7,16 +7,16 @@
   </ul>
   <div class="box">
     <div class="heading">
-      <h1><img src="view/image/report.png" alt="" /> <?php echo $heading_title; ?></h1>
+      <h1><?php echo $heading_title; ?></h1>
     </div>
     <div class="content">
-      <table class="list">
+      <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
             <td class="left"><?php echo $column_customer; ?></td>
             <td class="left"><?php echo $column_email; ?></td>
             <td class="left"><?php echo $column_customer_group; ?></td>
-            <td class="left"><?php echo $column_status; ?></td>            
+            <td class="left"><?php echo $column_status; ?></td>
             <td class="right"><?php echo $column_total; ?></td>
             <td class="right"><?php echo $column_action; ?></td>
           </tr>
@@ -32,7 +32,7 @@
             <td class="right"><?php echo $customer['total']; ?></td>
             <td class="right"><?php foreach ($customer['action'] as $action) { ?>
               [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-              <?php } ?></td>            
+              <?php } ?></td>
           </tr>
           <?php } ?>
           <?php } else { ?>
@@ -43,6 +43,7 @@
         </tbody>
       </table>
       <div class="pagination"><?php echo $pagination; ?></div>
+      <div class="results"><?php echo $results; ?></div>
     </div>
   </div>
 </div>

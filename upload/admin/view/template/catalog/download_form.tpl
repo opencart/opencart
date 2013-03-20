@@ -6,11 +6,11 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><img src="view/image/download.png" alt="" /> <?php echo $heading_title; ?></h1>
+      <h1><?php echo $heading_title; ?></h1>
       <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">

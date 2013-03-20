@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']                    = 'Administration';
+$_['heading_title']                    = 'OpenCart';
 
 // Text
 $_['text_affiliate']                   = 'Affiliates';
@@ -34,7 +34,6 @@ $_['text_language']                    = 'Languages';
 $_['text_layout']                      = 'Layouts';
 $_['text_localisation']                = 'Localisation';
 $_['text_location']                    = 'Store Location';
-$_['text_logged']                      = 'You are logged in as <span>%s</span>';
 $_['text_logout']                      = 'Logout';
 $_['text_contact']                     = 'Mail';
 $_['text_modification']                = 'Modifications';

@@ -4,7 +4,7 @@ class ModelSettingModification extends Model {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', code = '" . $this->db->escape($data['code']) . "', date_added = NOW(), date_modified = NOW()");
 	}
 	
-	public function editModification() {
+	public function editModification($modification_id, $data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', code = '" . $this->db->escape($data['code']) . "', date_modified = NOW()");
 	}
 	

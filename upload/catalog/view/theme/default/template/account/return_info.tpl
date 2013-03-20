@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <h1><?php echo $heading_title; ?></h1>
-  <table class="list">
+  <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
         <td class="left" colspan="2"><?php echo $text_return_detail; ?></td>
@@ -22,7 +22,7 @@
     </tbody>
   </table>
   <h2><?php echo $text_product; ?></h2>
-  <table class="list">
+  <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
         <td class="left" style="width: 33.3%;"><?php echo $column_product; ?></td>
@@ -38,7 +38,7 @@
       </tr>
     </tbody>
   </table>
-  <table class="list">
+  <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
         <td class="left" style="width: 33.3%;"><?php echo $column_reason; ?></td>
@@ -55,7 +55,7 @@
     </tbody>
   </table>
   <?php if ($comment) { ?>
-  <table class="list">
+  <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
         <td class="left"><?php echo $text_comment; ?></td>
@@ -70,7 +70,7 @@
   <?php } ?>
   <?php if ($histories) { ?>
   <h2><?php echo $text_history; ?></h2>
-  <table class="list">
+  <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
         <td class="left" style="width: 33.3%;"><?php echo $column_date_added; ?></td>

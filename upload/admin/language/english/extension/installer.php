@@ -1,17 +1,27 @@
 <?php
 // Heading 
-$_['heading_title']    = 'Extension Installer';
+$_['heading_title']        = 'Extension Installer';
 
 // Text
-$_['text_success']     = 'Success: You have installed your extension!';
-$_['text_unzip']       = 'Extracting files!';
-$_['text_ftp']         = 'Copying Files!';
-$_['text_sql']         = 'Running SQL!';
-$_['text_xml']         = 'Applying Modifcations!';
-$_['text_clear']       = 'Deleting installer files!';
-$_['text_overwrite']   = 'The listed files are going to be overwrite. Continue yes / No';
+$_['text_success']         = 'Success: You have installed your extension!';
+$_['text_unzip']           = 'Extracting files!';
+$_['text_ftp']             = 'Copying Files!';
+$_['text_sql']             = 'Running SQL!';
+$_['text_xml']             = 'Applying Modifications!';
+$_['text_clear']           = 'Deleting installer files!';
+$_['text_overwrite']       = 'The listed files are going to be overwrite. Continue yes / No';
+
+// Entry
+$_['entry_upload']         = 'Your upload file:<br/><span class="help">Requires a zip or xml modification file.</span>';
+$_['entry_progress']       = 'Progress:';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify extensions!';
-$_['error_directory']  = 'Warning: There are some temporary files that require deleting. Click <a href="">here</a> to remove them!';
+$_['error_permission']     = 'Warning: You do not have permission to modify extensions!';
+$_['error_exists']         = 'Warning: There are some temporary files that require deleting. Click <a href="">here</a> to remove them!';
+$_['error_filetype']       = 'Invalid file type!';
+$_['error_unzip']          = '';
+$_['error_ftp_connection'] = '';
+$_['error_ftp_login']      = '';
+$_['error_ftp_directory']  = '';
+$_['error_ftp_file']       = '';
 ?>

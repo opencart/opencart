@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
-<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/jquery.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
 <link rel="stylesheet" type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" />
 <script type="text/javascript" src="view/javascript/jquery/ui/external/jquery.bgiframe-2.1.2.js"></script>
@@ -268,7 +268,7 @@ $(document).ready(function() {
 		}
 	});	
 
-	$('#column-right a').live('click', function() {
+	$('#column-right a').on('click', function() {
 		if ($(this).attr('class') == 'selected') {
 			$(this).removeAttr('class');
 		} else {
@@ -278,7 +278,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('#column-right a').live('dblclick', function() {
+	$('#column-right a').on('dblclick', function() {
 		<?php if ($fckeditor) { ?>
 		window.opener.CKEDITOR.tools.callFunction(<?php echo $fckeditor; ?>, '<?php echo $directory; ?>' + $(this).find('input[name=\'image\']').attr('value'));
 		

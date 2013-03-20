@@ -7,7 +7,7 @@
   </ul>
   <h1><?php echo $heading_title; ?></h1>
   <p><?php echo $text_total; ?><b> <?php echo $total; ?></b>.</p>
-  <table class="list">
+  <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
         <td class="left"><?php echo $column_date_added; ?></td>
@@ -32,6 +32,7 @@
     </tbody>
   </table>
   <div class="pagination"><?php echo $pagination; ?></div>
+  <div class="results"><?php echo $results; ?></div>
   <div class="buttons">
     <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
   </div>

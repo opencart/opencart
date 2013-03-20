@@ -365,7 +365,7 @@ $('#button-cart').on('click', function() {
 			} 
 			
 			if (json['success']) {
-				$('#notification').html('<div class="success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+				$('#notification').html('<div class="alert alert-success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 					
 				$('.success').fadeIn('slow');
 					
@@ -426,7 +426,7 @@ function upload(product_option_id) {
 <?php } ?>
 <?php } ?>
 <script type="text/javascript"><!--
-$('#review .pagination a').live('click', function() {
+$('#review .pagination a').on('click', function() {
 	$('#review').fadeOut('slow');
 		
 	$('#review').load(this.href);
@@ -455,11 +455,11 @@ $('#button-review').on('click', function() {
 		},
 		success: function(data) {
 			if (data['error']) {
-				$('#review-title').after('<div class="warning">' + data['error'] + '</div>');
+				$('#review-title').after('<div class="alert alert-error">' + data['error'] + '</div>');
 			}
 			
 			if (data['success']) {
-				$('#review-title').after('<div class="success">' + data['success'] + '</div>');
+				$('#review-title').after('<div class="alert alert-success">' + data['success'] + '</div>');
 								
 				$('input[name=\'name\']').val('');
 				$('textarea[name=\'text\']').val('');
@@ -472,10 +472,7 @@ $('#button-review').on('click', function() {
 		}
 	});
 });
-//--></script> 
-<script type="text/javascript"><!--
-$('#tabs a').tabs();
-//--></script> 
+//--></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
 <script type="text/javascript"><!--
 $(document).ready(function() {

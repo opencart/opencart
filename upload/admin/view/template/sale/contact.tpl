@@ -7,7 +7,7 @@
   </ul>
   <div class="box">
     <div class="heading">
-      <h1><img src="view/image/mail.png" alt="" /> <?php echo $heading_title; ?></h1>
+      <h1><?php echo $heading_title; ?></h1>
       <div class="buttons"><a id="button-send" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');" class="button"><?php echo $button_send; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
@@ -143,7 +143,7 @@ $('input[name=\'customers\']').catcomplete({
 	select: function(event, ui) {
 		$('#customer' + ui.item.value).remove();
 		
-		$('#customer').append('<div id="customer' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="customer[]" value="' + ui.item.value + '" /></div>');
+		$('#customer').append('<div id="customer' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="customer[]" value="' + ui.item.value + '" /></div>');
 
 		$('#customer div:odd').attr('class', 'odd');
 		$('#customer div:even').attr('class', 'even');
@@ -155,7 +155,7 @@ $('input[name=\'customers\']').catcomplete({
    	}
 });
 
-$('#customer div img').live('click', function() {
+$('#customer div img').on('click', function() {
 	$(this).parent().remove();
 	
 	$('#customer div:odd').attr('class', 'odd');
@@ -183,7 +183,7 @@ $('input[name=\'affiliates\']').autocomplete({
 	select: function(event, ui) {
 		$('#affiliate' + ui.item.value).remove();
 		
-		$('#affiliate').append('<div id="affiliate' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="affiliate[]" value="' + ui.item.value + '" /></div>');
+		$('#affiliate').append('<div id="affiliate' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="affiliate[]" value="' + ui.item.value + '" /></div>');
 
 		$('#affiliate div:odd').attr('class', 'odd');
 		$('#affiliate div:even').attr('class', 'even');
@@ -195,7 +195,7 @@ $('input[name=\'affiliates\']').autocomplete({
    	}
 });
 
-$('#affiliate div img').live('click', function() {
+$('#affiliate div img').on('click', function() {
 	$(this).parent().remove();
 	
 	$('#affiliate div:odd').attr('class', 'odd');
@@ -221,7 +221,7 @@ $('input[name=\'products\']').autocomplete({
 	select: function(event, ui) {
 		$('#product' + ui.item.value).remove();
 		
-		$('#product').append('<div id="product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="product[]" value="' + ui.item.value + '" /></div>');
+		$('#product').append('<div id="product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="product[]" value="' + ui.item.value + '" /></div>');
 
 		$('#product div:odd').attr('class', 'odd');
 		$('#product div:even').attr('class', 'even');
@@ -233,7 +233,7 @@ $('input[name=\'products\']').autocomplete({
    	}
 });
 
-$('#product div img').live('click', function() {
+$('#product div img').on('click', function() {
 	$(this).parent().remove();
 	
 	$('#product div:odd').attr('class', 'odd');
@@ -261,7 +261,7 @@ function send(url) {
 			
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('.box').before('<div class="warning" style="display: none;">' + json['error']['warning'] + '</div>');
+					$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '</div>');
 			
 					$('.warning').fadeIn('slow');
 				}
@@ -277,13 +277,13 @@ function send(url) {
 			
 			if (json['next']) {
 				if (json['success']) {
-					$('.box').before('<div class="success">' + json['success'] + '</div>');
+					$('.box').before('<div class="alert alert-success">' + json['success'] + '</div>');
 					
 					send(json['next']);
 				}		
 			} else {
 				if (json['success']) {
-					$('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
+					$('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
 			
 					$('.success').fadeIn('slow');
 				}					

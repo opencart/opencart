@@ -25,7 +25,7 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><i class="icon-eye-open"></i><?php echo $heading_title; ?></h1>
+      <h1><i class="icon-eye-open"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="content">
       <div class="overview">

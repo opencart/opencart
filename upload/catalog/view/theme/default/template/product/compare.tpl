@@ -120,7 +120,7 @@
     <tr>
       <td></td>
       <?php foreach ($products as $product) { ?>
-      <td class="remove"><a href="<?php echo $product['remove']; ?>" class="btn"><i class="icon-minus-sign"></i><?php echo $button_remove; ?></a></td>
+      <td class="remove"><a href="<?php echo $product['remove']; ?>" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
       <?php } ?>
     </tr>
   </table>

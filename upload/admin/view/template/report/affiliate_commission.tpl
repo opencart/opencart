@@ -7,7 +7,7 @@
   </ul>
   <div class="box">
     <div class="heading">
-      <h1><i class=""></i><?php echo $heading_title; ?></h1>
+      <h1><i class=""></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="content">
       <table class="form">
@@ -16,7 +16,7 @@
             <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="date-start" size="12" /></td>
           <td><?php echo $entry_date_end; ?>
             <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="date-end" size="12" /></td>
-          <td style="text-align: right;"><a onclick="filter();" class="btn"><i class="icon-search"></i><?php echo $button_filter; ?></a></td>
+          <td style="text-align: right;"><a onclick="filter();" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></a></td>
         </tr>
       </table>
       <table class="table table-striped table-bordered table-hover">

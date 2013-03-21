@@ -10,8 +10,8 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><i class="icon-edit"></i><?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i><?php echo $button_cancel; ?></a></div>
+      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -86,7 +86,7 @@
                   <?php } ?>
                 </select></td>
               <td class="right"><input type="text" name="slideshow_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" /></td>
-              <td class="left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i><?php echo $button_remove; ?></a></td>
+              <td class="left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
             </tr>
             <?php $module_row++; ?>
             <?php } ?>
@@ -94,7 +94,7 @@
           <tfoot>
             <tr>
               <td colspan="6"></td>
-              <td class="left"><a onclick="addModule();" class="btn"><i class="icon-plus-sign"></i><?php echo $button_add_module; ?></a></td>
+              <td class="left"><a onclick="addModule();" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_module; ?></a></td>
             </tr>
           </tfoot>
         </table>
@@ -129,7 +129,7 @@ function addModule() {
     html += '    <option value="0"><?php echo $text_disabled; ?></option>';
     html += '  </select></td>';
 	html += '  <td class="right"><input type="text" name="slideshow_module[' + module_row + '][sort_order]" value="" size="3" /></td>';
-	html += '  <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i><?php echo $button_remove; ?></a></td>';
+	html += '  <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
 	html += '</tr>';
 	
 	$('#module tbody').append(html);

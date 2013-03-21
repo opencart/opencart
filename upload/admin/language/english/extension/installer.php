@@ -12,8 +12,11 @@ $_['text_clear']           = 'Deleting installer files!';
 $_['text_overwrite']       = 'The listed files are going to be overwrite. Continue yes / No';
 
 // Entry
-$_['entry_upload']         = 'Your upload file:<br/><span class="help">Requires a zip or xml modification file.</span>';
+$_['entry_upload']         = 'Your upload file:';
 $_['entry_progress']       = 'Progress:';
+
+// Help
+$_['help_keyword']         = 'Requires a zip or xml modification file.';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify extensions!';

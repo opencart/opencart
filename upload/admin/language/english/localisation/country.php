@@ -15,19 +15,12 @@ $_['column_action']           = 'Action';
 $_['entry_name']              = 'Country Name:';
 $_['entry_iso_code_2']        = 'ISO Code (2):';
 $_['entry_iso_code_3']        = 'ISO Code (3):';
-$_['entry_address_format']    = 'Address Format:<br /><span class="help">
-First Name = {firstname}<br />
-Last Name = {lastname}<br />
-Company = {company}<br />
-Address 1 = {address_1}<br />
-Address 2 = {address_2}<br />
-City = {city}<br />
-Postcode = {postcode}<br />
-Zone = {zone}<br />
-Zone Code = {zone_code}<br />
-Country = {country}</span>';
+$_['entry_address_format']    = 'Address Format:';
 $_['entry_postcode_required'] = 'Postcode Required:';
 $_['entry_status']            = 'Status:';
+
+// Help
+$_['help_address_format']     = 'First Name = {firstname}<br />Last Name = {lastname}<br />Company = {company}<br />Address 1 = {address_1}<br />Address 2 = {address_2}<br />City = {city}<br />Postcode = {postcode}<br />Zone = {zone}<br />Zone Code = {zone_code}<br />Country = {country}';
 
 // Error
 $_['error_permission']        = 'Warning: You do not have permission to modify countries!';

@@ -7,8 +7,8 @@
   </ul>
   <div class="box">
     <div class="heading">
-      <h1><i class=""></i><?php echo $heading_title; ?></h1>
-      <div class="buttons"><a id="button-send" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');" class="btn"><i class="icon-envelope"></i><?php echo $button_send; ?></a><a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i><?php echo $button_cancel; ?></a></div>
+      <h1><i class=""></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons"><a id="button-send" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');" class="btn"><i class="icon-envelope"></i> <?php echo $button_send; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
         <table id="mail" class="form">

@@ -20,7 +20,7 @@
     <table style="width: 100%;">
       <tr>
         <td><?php echo $address['address']; ?></td>
-        <td style="text-align: right;"><a href="<?php echo $address['update']; ?>" class="btn"><?php echo $button_edit; ?></a> &nbsp; <a href="<?php echo $address['delete']; ?>" class="btn"><i class="icon-trash"></i><?php echo $button_delete; ?></a></td>
+        <td style="text-align: right;"><a href="<?php echo $address['update']; ?>" class="btn"><?php echo $button_edit; ?></a> &nbsp; <a href="<?php echo $address['delete']; ?>" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></a></td>
       </tr>
     </table>
   </div>

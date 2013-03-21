@@ -7,7 +7,7 @@
   </ul>
   <div class="box">
     <div class="heading">
-      <h1><i class=""></i><?php echo $heading_title; ?></h1>
+      <h1><i class=""></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="content">
       <table class="table table-striped table-bordered table-hover">
@@ -28,7 +28,7 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td align="right"><a onclick="filter();" class="btn"><i class="icon-search"></i><?php echo $button_filter; ?></a></td>
+            <td align="right"><a onclick="filter();" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></a></td>
           </tr>
           <?php if ($customers) { ?>
           <?php foreach ($customers as $customer) { ?>

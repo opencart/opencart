@@ -13,7 +13,7 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><i class=""></i><?php echo $heading_title; ?></h1>
+      <h1><i class=""></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="content">
       <table class="table table-striped table-bordered table-hover">

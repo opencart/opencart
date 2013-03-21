@@ -10,8 +10,8 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><i class="icon-edit"></i><?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i><?php echo $button_cancel; ?></a></div>
+      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -55,7 +55,7 @@
                 </select></td>
               <td class="left"><select name="zone_to_geo_zone[<?php echo $zone_to_geo_zone_row; ?>][zone_id]" id="zone<?php echo $zone_to_geo_zone_row; ?>">
                 </select></td>
-              <td class="left"><a onclick="$('#zone-to-geo-zone-row<?php echo $zone_to_geo_zone_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i><?php echo $button_remove; ?></a></td>
+              <td class="left"><a onclick="$('#zone-to-geo-zone-row<?php echo $zone_to_geo_zone_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
             </tr>
           </tbody>
           <?php $zone_to_geo_zone_row++; ?>
@@ -63,7 +63,7 @@
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td class="left"><a onclick="addGeoZone();" class="btn"><i class="icon-plus-sign"></i><?php echo $button_add_geo_zone; ?></a></td>
+              <td class="left"><a onclick="addGeoZone();" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_geo_zone; ?></a></td>
             </tr>
           </tfoot>
         </table>
@@ -93,7 +93,7 @@ function addGeoZone() {
 	<?php } ?>   
 	html += '</select></td>';
 	html += '<td class="left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][zone_id]" id="zone' + zone_to_geo_zone_row + '"></select></td>';
-	html += '<td class="left"><a onclick="$(\'#zone-to-geo-zone-row' + zone_to_geo_zone_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i><?php echo $button_remove; ?></a></td>';
+	html += '<td class="left"><a onclick="$(\'#zone-to-geo-zone-row' + zone_to_geo_zone_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
 	html += '</tr>';
 	html += '</tbody>';
 	

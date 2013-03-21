@@ -69,7 +69,7 @@
     </div>
     <div class="buttons">
       <div class="right">
-        <input type="submit" value="<?php echo $button_continue; ?>" class="button" />
+        <input type="submit" value="<?php echo $button_continue; ?>" class="btn" />
       </div>
     </div>
   </form>

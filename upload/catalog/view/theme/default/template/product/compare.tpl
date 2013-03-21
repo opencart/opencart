@@ -114,23 +114,23 @@
     <tr>
       <td></td>
       <?php foreach ($products as $product) { ?>
-      <td><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></td>
+      <td><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="btn" /></td>
       <?php } ?>
     </tr>
     <tr>
       <td></td>
       <?php foreach ($products as $product) { ?>
-      <td class="remove"><a href="<?php echo $product['remove']; ?>" class="button"><?php echo $button_remove; ?></a></td>
+      <td class="remove"><a href="<?php echo $product['remove']; ?>" class="btn"><i class="icon-minus-sign"></i><?php echo $button_remove; ?></a></td>
       <?php } ?>
     </tr>
   </table>
   <div class="buttons">
-    <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
+    <div class="right"><a href="<?php echo $continue; ?>" class="btn"><?php echo $button_continue; ?></a></div>
   </div>
   <?php } else { ?>
   <div class="content"><?php echo $text_empty; ?></div>
   <div class="buttons">
-    <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
+    <div class="right"><a href="<?php echo $continue; ?>" class="btn"><?php echo $button_continue; ?></a></div>
   </div>
   <?php } ?>
   <?php echo $content_bottom; ?></div>

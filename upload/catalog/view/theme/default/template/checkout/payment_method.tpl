@@ -30,13 +30,13 @@
     <?php } else { ?>
     <input type="checkbox" name="agree" value="1" />
     <?php } ?>
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" class="button" />
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" class="btn" />
   </div>
 </div>
 <?php } else { ?>
 <div class="buttons">
   <div class="right">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" class="button" />
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" class="btn" />
   </div>
 </div>
 <?php } ?>

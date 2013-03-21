@@ -91,7 +91,7 @@
 <?php } ?>
 <div class="buttons">
   <div class="right">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" class="button" />
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" class="btn" />
   </div>
 </div>
 <script type="text/javascript"><!--

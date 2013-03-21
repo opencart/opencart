@@ -32,9 +32,9 @@
     </table>
   </div>
   <div class="buttons">
-    <div class="left"><a href="<?php echo $back; ?>" class="button"><?php echo $button_back; ?></a></div>
+    <div class="left"><a href="<?php echo $back; ?>" class="btn"><?php echo $button_back; ?></a></div>
     <div class="right">
-      <input type="button" value="<?php echo $button_continue; ?>" id="button-edit" class="button" />
+      <input type="button" value="<?php echo $button_continue; ?>" id="button-edit" class="btn" />
     </div>
   </div>
   <?php echo $content_bottom; ?></div>

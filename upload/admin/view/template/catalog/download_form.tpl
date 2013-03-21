@@ -10,8 +10,8 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
+      <h1><i class="icon-edit"></i><?php echo $heading_title; ?></h1>
+      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -28,7 +28,7 @@
           </tr>
           <tr>
             <td><?php echo $entry_filename; ?></td>
-            <td><input type="text" name="filename" value="<?php echo $filename; ?>" /> <input type="button" value="<?php echo $button_upload; ?>" id="button-upload" class="button" onclick="$('input[name=\'file\']').click();" />
+            <td><input type="text" name="filename" value="<?php echo $filename; ?>" /> <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i><?php echo $button_upload; ?></button>
               <?php if ($error_filename) { ?>
               <span class="error"><?php echo $error_filename; ?></span>
               <?php } ?></td>

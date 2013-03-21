@@ -10,8 +10,8 @@
 <?php } ?>
 <div class="box">
   <div class="heading">
-    <h1><?php echo $heading_title; ?></h1>
-    <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
+    <h1><i class="icon-edit"></i><?php echo $heading_title; ?></h1>
+    <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i><?php echo $button_cancel; ?></a></div>
   </div>
   <div class="content">
     <div class="tabbable tabs-left">
@@ -332,7 +332,7 @@
               <tfoot>
                 <tr>
                   <td class="left">&nbsp;</td>
-                  <td class="left"><a id="button-product" class="button"><?php echo $button_add_product; ?></a></td>
+                  <td class="left"><a id="button-product" class="btn"><i class="icon-plus-sign"></i><?php echo $button_add_product; ?></a></td>
                 </tr>
               </tfoot>
             </table>
@@ -424,7 +424,7 @@
               <tfoot>
                 <tr>
                   <td class="left">&nbsp;</td>
-                  <td class="left"><a id="button-voucher" class="button"><?php echo $button_add_voucher; ?></a></td>
+                  <td class="left"><a id="button-voucher" class="btn"><i class="icon-plus-sign"></i><?php echo $button_add_voucher; ?></a></td>
                 </tr>
               </tfoot>
             </table>
@@ -556,7 +556,7 @@
               <tfoot>
                 <tr>
                   <td class="left">&nbsp;</td>
-                  <td class="left"><a id="button-update" class="button"><?php echo $button_update_total; ?></a></td>
+                  <td class="left"><a id="button-update" class="btn"><?php echo $button_update_total; ?></a></td>
                 </tr>
               </tfoot>
             </table>
@@ -986,7 +986,7 @@ $('input[name=\'product\']').autocomplete({
 					}
 					
 					html += option['name'] + '<br />';
-					html += '<input type="button" value="<?php echo $button_upload; ?>" id="button-option' + option['product_option_id'] + '" class="button" onclick="upload(\'' + option['product_option_id'] + '\');" />';
+					html += '<button type="button" id="button-option' + option['product_option_id'] + '" class="btn" onclick="upload(\'' + option['product_option_id'] + '\');"><i class="icon-upload"></i><?php echo $button_upload; ?></button>';
 					html += '<input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
 					html += '</div>';
 					html += '<br />';

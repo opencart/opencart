@@ -40,6 +40,7 @@ body > #container {
 	padding: 24px 30px 0px 30px;
 	padding-bottom: 128px;
 }
+
 #footer {
 	background: #FFFFFF url('../image/footer.png') repeat-x;
 	height: 90px;
@@ -146,7 +147,7 @@ body > #container {
 }
 .box > .heading h1 {
 	margin: 0px;
-	padding: 0px 0px 0px 30px;
+	padding: 0px;
 	line-height: 35px;
 	color: #666666;
 	font-size: 15px;

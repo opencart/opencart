@@ -116,13 +116,13 @@
   <div class="buttons">
     <div class="right"><?php echo $text_agree; ?>
       <input type="checkbox" name="agree" value="1" />
-      <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="button" />
+      <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="btn" />
     </div>
   </div>
   <?php } else { ?>
   <div class="buttons">
     <div class="right">
-      <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="button" />
+      <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="btn" />
     </div>
   </div>
   <?php } ?>
@@ -281,7 +281,7 @@ $('select[name=\'customer_group_id\']').on('change', function() {
 				
 				// File
 				if (custom_field['type'] == 'file') {
-					html += '<td><input type="button" value="<?php echo $button_upload; ?>" id="button-custom-field' + custom_field['custom_field_id'] + '" class="button" onclick="upload(\'' + custom_field['custom_field_id'] + '\');" /><input type="hidden" name="custom_field[' + custom_field['custom_field_id'] + ']" value="" /></td>';
+					html += '<td><input type="button" value="<?php echo $button_upload; ?>" id="button-custom-field' + custom_field['custom_field_id'] + '" class="btn" onclick="upload(\'' + custom_field['custom_field_id'] + '\');" /><input type="hidden" name="custom_field[' + custom_field['custom_field_id'] + ']" value="" /></td>';
 				}
 				
 				// Date

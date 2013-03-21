@@ -10,8 +10,8 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
+      <h1><i class="icon-edit"></i><?php echo $heading_title; ?></h1>
+      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <ul class="nav nav-tabs">
@@ -226,7 +226,7 @@
                 <td><input type="text" name="amount" value="" /></td>
               </tr>
               <tr>
-                <td colspan="2" style="text-align: right;"><a id="button-reward" class="button" onclick="addTransaction();"><span><?php echo $button_add_transaction; ?></span></a></td>
+                <td colspan="2" style="text-align: right;"><a id="button-reward" class="btn" onclick="addTransaction();"><span><?php echo $button_add_transaction; ?></span></a></td>
               </tr>
             </table>
             <div id="transaction"></div>

@@ -62,7 +62,7 @@ class ControllerAccountAccount extends Controller {
 		} else {
 			$this->data['reward'] = '';
 		}
-		/*
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/account/account.tpl';
 		} else {
@@ -77,21 +77,8 @@ class ControllerAccountAccount extends Controller {
 			'common/footer',
 			'common/header'		
 		);
-		*/
-		$this->data['column_left'] = $this->load->controller('common/column_left');
-		$this->data['column_right'] = $this->load->controller('common/column_right');
-		$this->data['content_top'] = $this->load->controller('common/content_top');
-		$this->data['content_bottom'] = $this->load->controller('common/content_bottom');
-		$this->data['footer'] = $this->load->controller('common/footer');
-		$this->data['header'] = $this->load->controller('common/header');
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl')) {
-			$template = $this->config->get('config_template') . '/template/account/account.tpl';
-		} else {
-			$template = 'default/template/account/account.tpl';
-		}
 						
-		$this->response->setOutput($this->load->view($template, $this->data));
+		$this->response->setOutput($this->render());
   	}
 }
 ?>

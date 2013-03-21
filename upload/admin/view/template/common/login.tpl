@@ -33,7 +33,7 @@
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td style="text-align: right;"><a onclick="$('#form').submit();" class="button"><?php echo $button_login; ?></a></td>
+            <td style="text-align: right;"><a onclick="$('#form').submit();" class="btn"><i class="icon-lock"></i><?php echo $button_login; ?></a></td>
           </tr>
         </table>
         <?php if ($redirect) { ?>

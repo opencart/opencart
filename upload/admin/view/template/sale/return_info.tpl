@@ -7,8 +7,8 @@
 </ul>
 <div class="box">
   <div class="heading">
-    <h1><?php echo $heading_title; ?></h1>
-    <div class="buttons"><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
+    <h1><i class=""></i><?php echo $heading_title; ?></h1>
+    <div class="buttons"><a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i><?php echo $button_cancel; ?></a></div>
   </div>
   <div class="content">
     <div class="tabbable tabs-left">
@@ -139,7 +139,7 @@
             <tr>
               <td><?php echo $entry_comment; ?></td>
               <td><textarea name="comment" cols="40" rows="8" style="width: 99%"></textarea>
-                <div style="margin-top: 10px; text-align: right;"><a onclick="history();" id="button-history" class="button"><?php echo $button_add_history; ?></a></div></td>
+                <div style="margin-top: 10px; text-align: right;"><a onclick="history();" id="button-history" class="btn"><i class="icon-plus-sign"></i><?php echo $button_add_history; ?></a></div></td>
             </tr>
           </table>
         </div>

@@ -21,7 +21,7 @@
   <?php } ?>
   <br />
   <p><?php echo $text_register_account; ?></p>
-  <input type="button" value="<?php echo $button_continue; ?>" id="button-account" class="button" />
+  <input type="button" value="<?php echo $button_continue; ?>" id="button-account" class="btn" />
   <br />
   <br />
 </div>
@@ -37,7 +37,7 @@
   <br />
   <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a><br />
   <br />
-  <input type="button" value="<?php echo $button_login; ?>" id="button-login" class="button" /><br />
+  <input type="button" value="<?php echo $button_login; ?>" id="button-login" class="btn" /><br />
   <br />
 </div>
 <script type="text/javascript"><!--

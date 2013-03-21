@@ -13,8 +13,8 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').attr('action', '<?php echo $approve; ?>'); $('#form').submit();" class="button"><?php echo $button_approve; ?></a><a href="<?php echo $insert; ?>" class="button"><?php echo $button_insert; ?></a><a onclick="$('#form').attr('action', '<?php echo $delete; ?>'); $('#form').submit();" class="button"><?php echo $button_delete; ?></a></div>
+      <h1><i class="icon-list"></i><?php echo $heading_title; ?></h1>
+      <div class="buttons"><a onclick="$('#form').attr('action', '<?php echo $approve; ?>'); $('#form').submit();" class="btn"><?php echo $button_approve; ?></a><a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i><?php echo $button_insert; ?></a><a onclick="$('#form').attr('action', '<?php echo $delete; ?>'); $('#form').submit();" class="btn"><i class="icon-trash"></i><?php echo $button_delete; ?></a></div>
     </div>
     <div class="content">
       <form action="" method="post" enctype="multipart/form-data" id="form">
@@ -84,7 +84,7 @@
                   <?php } ?>
                 </select></td>
               <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" id="date" /></td>
-              <td align="right"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
+              <td align="right"><a onclick="filter();" class="btn"><i class="icon-search"></i><?php echo $button_filter; ?></a></td>
             </tr>
             <?php if ($affiliates) { ?>
             <?php foreach ($affiliates as $affiliate) { ?>

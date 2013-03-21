@@ -10,13 +10,13 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><?php echo $heading_title; ?></h1>
+      <h1><i class=""></i><?php echo $heading_title; ?></h1>
     </div>
     <div class="content">
       <table class="form">
         <tr>
           <td><?php echo $entry_upload; ?></td>
-          <td><input type="button" value="<?php echo $button_upload; ?>" id="button-upload" class="button" onclick="$('input[name=\'file\']').click();" /></td>
+          <td><button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i><?php echo $button_upload; ?></button></td>
         </tr>
         <tr>
           <td><?php echo $entry_progress; ?></td>

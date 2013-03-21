@@ -36,7 +36,7 @@
 <br />
 <div class="buttons">
   <div class="right">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-method" class="button" />
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-method" class="btn" />
   </div>
 </div>
 <script type="text/javascript"><!--

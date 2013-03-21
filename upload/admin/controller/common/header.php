@@ -107,6 +107,8 @@ class ControllerCommonHeader extends Controller {
 		
 		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token'])) {
 			$this->data['logged'] = false;
+			
+			$this->data['home'] = $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL');
 		} else {
 			$this->data['logged'] = $this->user->isLogged();
 			

@@ -10,8 +10,8 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
+      <h1><i class="icon-edit"></i><?php echo $heading_title; ?></h1>
+      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -25,7 +25,7 @@
           </tr>
         </table>
         <br />
-        <table id="route" class="list">
+        <table id="route" class="table">
           <thead>
             <tr>
               <td class="left"><?php echo $entry_store; ?></td>
@@ -48,7 +48,7 @@
                   <?php } ?>
                 </select></td>
               <td class="left"><input type="text" name="layout_route[<?php echo $route_row; ?>][route]" value="<?php echo $layout_route['route']; ?>" /></td>
-              <td class="left"><a onclick="$('#route-row<?php echo $route_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
+              <td class="left"><a onclick="$('#route-row<?php echo $route_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i><?php echo $button_remove; ?></a></td>
             </tr>
           </tbody>
           <?php $route_row++; ?>
@@ -56,7 +56,7 @@
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td class="left"><a onclick="addRoute();" class="button"><?php echo $button_add_route; ?></a></td>
+              <td class="left"><a onclick="addRoute();" class="btn"><i class="icon-plus-sign"></i><?php echo $button_add_route; ?></a></td>
             </tr>
           </tfoot>
         </table>
@@ -77,7 +77,7 @@ function addRoute() {
 	<?php } ?>   
 	html += '    </select></td>';
 	html += '    <td class="left"><input type="text" name="layout_route[' + route_row + '][route]" value="" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#route-row' + route_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
+	html += '    <td class="left"><a onclick="$(\'#route-row' + route_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i><?php echo $button_remove; ?></a></td>';
 	html += '  </tr>';
 	html += '</tbody>';
 	

@@ -10,8 +10,8 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $clear; ?>" class="button"><?php echo $button_clear; ?></a></div>
+      <h1><i class=""></i><?php echo $heading_title; ?></h1>
+      <div class="buttons"><a href="<?php echo $clear; ?>" class="btn"><?php echo $button_clear; ?></a></div>
     </div>
     <div class="content">
       <textarea wrap="off" style="width: 98%; height: 300px; padding: 5px; border: 1px solid #CCCCCC; background: #FFFFFF; overflow: scroll;"><?php echo $log; ?></textarea>

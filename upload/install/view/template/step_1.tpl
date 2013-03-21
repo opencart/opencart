@@ -582,7 +582,7 @@
     <div class="buttons">
       <div class="right">I agree to the license
         <input type="checkbox" name="agree" />&nbsp;
-        <input type="submit" value="Continue" class="button" />
+        <input type="submit" value="Continue" class="btn" />
       </div>
     </div>
   </form>

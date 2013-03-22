@@ -278,6 +278,8 @@ class ControllerLocalisationCountry extends Controller {
 		$this->data['entry_postcode_required'] = $this->language->get('entry_postcode_required');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		
+		$this->data['help_address_format'] = $this->language->get('help_address_format');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 

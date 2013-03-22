@@ -22,19 +22,29 @@ $_['column_action']       = 'Action';
 
 // Entry
 $_['entry_name']          = 'Coupon Name:';
-$_['entry_code']          = 'Code:<br /><span class="help">The code the customer enters to get the discount.</span>';
-$_['entry_type']          = 'Type:<br /><span class="help">Percentage or Fixed Amount.</span>';
+$_['entry_code']          = 'Code:';
+$_['entry_type']          = 'Type:';
 $_['entry_discount']      = 'Discount:';
-$_['entry_logged']        = 'Customer Login:<br /><span class="help">Customer must be logged in to use the coupon.</span>';
+$_['entry_logged']        = 'Customer Login:';
 $_['entry_shipping']      = 'Free Shipping:';
-$_['entry_total']         = 'Total Amount:<br /><span class="help">The total amount that must reached before the coupon is valid.</span>';
-$_['entry_category']      = 'Category:<br /><span class="help">Choose all products under selected category.</span>';
-$_['entry_product']       = 'Products:<br /><span class="help">Choose specific products the coupon will apply to. Select no products to apply coupon to entire cart.</span>';
+$_['entry_total']         = 'Total Amount:';
+$_['entry_category']      = 'Category:';
+$_['entry_product']       = 'Products:';
 $_['entry_date_start']    = 'Date Start:';
 $_['entry_date_end']      = 'Date End:';
-$_['entry_uses_total']    = 'Uses Per Coupon:<br /><span class="help">The maximum number of times the coupon can be used by any customer. Leave blank for unlimited</span>';
-$_['entry_uses_customer'] = 'Uses Per Customer:<br /><span class="help">The maximum number of times the coupon can be used by a single customer. Leave blank for unlimited</span>';
+$_['entry_uses_total']    = 'Uses Per Coupon:';
+$_['entry_uses_customer'] = 'Uses Per Customer:';
 $_['entry_status']        = 'Status:';
+
+// Help
+$_['entry_code']          = 'The code the customer enters to get the discount.';
+$_['entry_type']          = '>Percentage or Fixed Amount.';
+$_['entry_logged']        = 'Customer must be logged in to use the coupon.';
+$_['entry_total']         = 'The total amount that must reached before the coupon is valid.';
+$_['entry_category']      = 'Choose all products under selected category.';
+$_['entry_product']       = 'Choose specific products the coupon will apply to. Select no products to apply coupon to entire cart.';
+$_['entry_uses_total']    = 'The maximum number of times the coupon can be used by any customer. Leave blank for unlimited';
+$_['entry_uses_customer'] = 'The maximum number of times the coupon can be used by a single customer. Leave blank for unlimited';
 
 // Error
 $_['error_permission']    = 'Warning: You do not have permission to modify coupons!';

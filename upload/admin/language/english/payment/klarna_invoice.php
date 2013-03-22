@@ -27,8 +27,8 @@ $_['entry_status']          = 'Status:';
 $_['entry_sort_order']      = 'Sort Order:';
 
 // Help
-$_['help_merchant']         = 'Klarna Merchant ID:<br /><span class="help">(estore id) to use for the Klarna service (provided by Klarna).</span>';
-$_['help_secret']           = 'Klarna Secret:<br /><span class="help">Shared secret to use with the Klarna service (provided by Klarna).</span>';
+$_['help_merchant']         = '(estore id) to use for the Klarna service (provided by Klarna).';
+$_['help_secret']           = 'Shared secret to use with the Klarna service (provided by Klarna).';
 $_['help_total']            = 'The checkout total the order must reach before this payment method becomes active.';
 
 // Error

@@ -278,7 +278,9 @@ class ControllerCatalogManufacturer extends Controller {
     	$this->data['entry_image'] = $this->language->get('entry_image');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		  
+		
+		$this->data['help_keyword'] = $this->language->get('help_keyword');
+
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
 			  

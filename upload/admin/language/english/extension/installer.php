@@ -16,7 +16,7 @@ $_['entry_upload']         = 'Your upload file:';
 $_['entry_progress']       = 'Progress:';
 
 // Help
-$_['help_keyword']         = 'Requires a zip or xml modification file.';
+$_['help_upload']          = 'Requires a zip or xml modification file.';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify extensions!';

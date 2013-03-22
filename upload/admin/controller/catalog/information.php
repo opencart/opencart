@@ -276,6 +276,9 @@ class ControllerCatalogInformation extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
 		
+		$this->data['help_keyword'] = $this->language->get('help_keyword');
+		$this->data['help_bottom'] = $this->language->get('help_bottom');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
     	

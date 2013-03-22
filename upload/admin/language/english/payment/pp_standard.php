@@ -13,8 +13,8 @@ $_['text_sale']						 = 'Sale';
 $_['entry_email']					 = 'E-Mail:';
 $_['entry_test']					 = 'Sandbox Mode:';
 $_['entry_transaction']				 = 'Transaction Method:';
-$_['entry_debug']					 = 'Debug Mode:<br/><span class="help">Logs additional information to the system log.</span>';
-$_['entry_total']                    = 'Total:<br /><span class="help">The checkout total the order must reach before this payment method becomes active.</span>';
+$_['entry_debug']					 = 'Debug Mode:';
+$_['entry_total']                    = 'Total:';
 $_['entry_canceled_reversal_status'] = 'Canceled Reversal Status:';
 $_['entry_completed_status']         = 'Completed Status:';
 $_['entry_denied_status']			 = 'Denied Status:';
@@ -28,6 +28,10 @@ $_['entry_voided_status']		     = 'Voided Status:';
 $_['entry_geo_zone']				 = 'Geo Zone:';
 $_['entry_status']					 = 'Status:';
 $_['entry_sort_order']				 = 'Sort Order:';
+
+// Help
+$_['help_debug']					 = 'Logs additional information to the system log.';
+$_['help_total']                     = 'The checkout total the order must reach before this payment method becomes active.';
 
 // Error
 $_['error_permission']				 = 'Warning: You do not have permission to modify payment PayPal!';

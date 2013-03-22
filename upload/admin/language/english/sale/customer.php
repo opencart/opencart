@@ -49,7 +49,10 @@ $_['entry_default']         = 'Default Address:';
 $_['entry_comment']         = 'Comment:';
 $_['entry_description']     = 'Description:';
 $_['entry_amount']          = 'Amount:';
-$_['entry_points']          = 'Points:<br /><span class="help">Use minus to remove points</span>';
+$_['entry_points']          = 'Points:';
+
+// Help
+$_['help_points']           = 'Use minus to remove points';
 
 // Error
 $_['error_warning']         = 'Warning: Please check the form carefully for errors!';

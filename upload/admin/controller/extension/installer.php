@@ -12,6 +12,8 @@ class ControllerExtensionInstaller extends Controller {
 		$this->data['entry_upload'] = $this->language->get('entry_upload');
 		$this->data['entry_progress'] = $this->language->get('entry_progress');
 
+		$this->data['help_upload'] = $this->language->get('help_upload');
+
 		$this->data['button_upload'] = $this->language->get('button_upload');
 		
   		$this->data['breadcrumbs'] = array();

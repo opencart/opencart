@@ -52,13 +52,18 @@ $_['entry_service']                            = 'Services:';
 $_['entry_dropoff_type']                       = 'Drop Off Type:';
 $_['entry_packaging_type']                     = 'Packaging Type:';
 $_['entry_rate_type']                          = 'Rate Type:';
-$_['entry_display_time']                       = 'Display Delivery Time:<br /><span class="help">Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)</span>';
-$_['entry_display_weight']                     = 'Display Delivery Weight:<br /><span class="help">Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 Kg\'s)</span>';
-$_['entry_weight_class']                       = 'Weight Class:<span class="help">Set to kilograms or pounds.</span>';
+$_['entry_display_time']                       = 'Display Delivery Time:';
+$_['entry_display_weight']                     = 'Display Delivery Weight:';
+$_['entry_weight_class']                       = 'Weight Class:';
 $_['entry_tax_class']                          = 'Tax Class:';
 $_['entry_geo_zone']                           = 'Geo Zone:';
 $_['entry_status']                             = 'Status:';
 $_['entry_sort_order']                         = 'Sort Order:';
+
+// Help
+$_['help_display_time']                        = 'Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)';
+$_['help_display_weight']                      = 'Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 Kg\'s)';
+$_['help_weight_class']                        = 'Set to kilograms or pounds.';
 
 // Error
 $_['error_permission']                         = 'Warning: You do not have permission to modify Fedex shipping!';

@@ -280,6 +280,9 @@ class ControllerLocalisationCurrency extends Controller {
 		$this->data['entry_decimal_place'] = $this->language->get('entry_decimal_place');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 
+		$this->data['help_address_format'] = $this->language->get('help_address_format');
+		$this->data['help_value'] = $this->language->get('help_value');
+
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 

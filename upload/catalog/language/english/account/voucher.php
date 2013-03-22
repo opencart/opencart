@@ -16,8 +16,12 @@ $_['entry_to_email']   = 'Recipient\'s Email:';
 $_['entry_from_name']  = 'Your Name:';
 $_['entry_from_email'] = 'Your Email:';
 $_['entry_theme']      = 'Gift Certificate Theme:';
-$_['entry_message']    = 'Message:<br /><span class="help">(Optional)</span>';
-$_['entry_amount']     = 'Amount:<br /><span class="help">(Value must be between %s and %s)</span>';
+$_['entry_message']    = 'Message:';
+$_['entry_amount']     = 'Amount:';
+
+// Help
+$_['help_message']     = '(Optional)';
+$_['help_amount']      = '(Value must be between %s and %s)';
 
 // Error
 $_['error_to_name']    = 'Recipient\'s Name must be between 1 and 64 characters!';

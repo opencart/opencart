@@ -57,15 +57,22 @@ $_['entry_international']   = 'International Services:';
 $_['entry_size']            = 'Size:';
 $_['entry_container']       = 'Container:';
 $_['entry_machinable']      = 'Machinable:';
-$_['entry_dimension']       = 'Dimensions (L x W x H):<br/><span class="help">Average package dimensions for shipping package. Product dimensions are not used for shipping at this time.</span>';
-$_['entry_display_time']    = 'Display Delivery Time:<br /><span class="help">Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)</span>';
-$_['entry_display_weight']  = 'Display Delivery Weight:<br /><span class="help">Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 Kg\'s)</span>';
-$_['entry_weight_class']    = 'Weight Class:<br /><span class="help">Must be set to Pound.</span>';
+$_['entry_dimension']       = 'Dimensions (L x W x H):';
+$_['entry_display_time']    = 'Display Delivery Time:';
+$_['entry_display_weight']  = 'Display Delivery Weight:';
+$_['entry_weight_class']    = 'Weight Class:';
 $_['entry_tax']             = 'Tax Class:';
 $_['entry_geo_zone']        = 'Geo Zone:';
 $_['entry_status']          = 'Status:';
 $_['entry_sort_order']      = 'Sort Order:';
-$_['entry_debug']      		= 'Debug Mode:<br /><span class="help">Saves send/recv data to the system log</span>';
+$_['entry_debug']      		= 'Debug Mode:';
+
+// Help
+$_['help_dimension']        = 'Average package dimensions for shipping package. Product dimensions are not used for shipping at this time.';
+$_['help_display_time']     = 'Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)';
+$_['help_display_weight']   = 'Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 Kg\'s)';
+$_['help_weight_class']     = 'Must be set to Pound.';
+$_['help_debug']      		= 'Saves send/recv data to the system log';
 
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify United States Postal Service!';

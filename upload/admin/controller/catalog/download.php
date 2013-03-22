@@ -268,7 +268,10 @@ class ControllerCatalogDownload extends Controller {
 		$this->data['entry_mask'] = $this->language->get('entry_mask');
     	$this->data['entry_remaining'] = $this->language->get('entry_remaining');
     	$this->data['entry_update'] = $this->language->get('entry_update');
-  
+     
+	 	$this->data['help_filename'] = $this->language->get('help_filename');
+    	$this->data['help_update'] = $this->language->get('help_update');
+ 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
   		$this->data['button_upload'] = $this->language->get('button_upload');

@@ -20,6 +20,7 @@ $_['entry_title']        = 'Title:';
 $_['entry_link']         = 'Link:';
 $_['entry_image']        = 'Image:';
 $_['entry_status']       = 'Status:';
+$_['entry_sort_order']   = 'Sort Order:';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify banners!';

@@ -37,6 +37,8 @@ class ControllerPaymentMoneyBookers extends Controller {
 		$this->data['entry_secret'] = $this->language->get('entry_secret');
 		$this->data['entry_custnote'] = $this->language->get('entry_custnote');
 		
+		$this->data['help_total'] = $this->language->get('help_total');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 		

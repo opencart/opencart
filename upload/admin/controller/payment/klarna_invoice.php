@@ -56,6 +56,10 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
+		$this->data['help_merchant'] = $this->language->get('help_merchant');
+		$this->data['help_secret'] = $this->language->get('help_secret');
+		$this->data['help_total'] = $this->language->get('help_total');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 		$this->data['button_clear'] = $this->language->get('button_clear');

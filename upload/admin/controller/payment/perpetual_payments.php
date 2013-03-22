@@ -34,6 +34,9 @@ class ControllerPaymentPerpetualPayments extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
+		$this->data['help_test'] = $this->language->get('help_test');
+		$this->data['help_total'] = $this->language->get('help_total');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 

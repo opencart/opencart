@@ -83,6 +83,12 @@ class ControllerShippingUsps extends Controller {
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_debug'] = $this->language->get('entry_debug');
 
+		$this->data['help_dimension'] = $this->language->get('help_dimension');
+		$this->data['help_display_time'] = $this->language->get('help_display_time');
+		$this->data['help_display_weight'] = $this->language->get('help_display_weight');
+		$this->data['help_weight_class'] = $this->language->get('help_weight_class');
+		$this->data['help_debug'] = $this->language->get('help_debug');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 

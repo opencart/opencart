@@ -271,6 +271,8 @@ class ControllerSaleCustomerGroup extends Controller {
 		$this->data['entry_approval'] = $this->language->get('entry_approval');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
+		$this->data['help_approval'] = $this->language->get('help_approval');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 

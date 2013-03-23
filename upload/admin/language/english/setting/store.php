@@ -66,23 +66,23 @@ $_['entry_image_cart']             = 'Cart Image Size:';
 $_['entry_secure']                 = 'Use SSL:';
 
 // Help
-$_['entry_url']                    = 'Include the full URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
-$_['entry_ssl']                    = 'SSL URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
-$_['entry_catalog_limit'] 	       = 'Determines how many catalog items are shown per page (products, categories, etc)';
-$_['entry_list_description_limit'] = 'In the list view, short description character limit (categories, special etc)';
-$_['entry_tax_default']            = 'Use the store address to calculate taxes if no one is logged in. You can choose to use the store address for the customers shipping or payment address.';
-$_['entry_tax_customer']           = 'Use the customers default address when they login to calculate taxes. You can choose to use the default address for the customers shipping or payment address.';
-$_['entry_customer_group']         = 'Default customer group.';
-$_['entry_customer_group_display'] = 'Display customer groups that new customers can select to use such as wholesale and business when signing up.';
-$_['entry_customer_price']         = 'Only show prices when a customer is logged in.';
-$_['entry_account']                = 'Forces people to agree to terms before an account can be created.';
-$_['entry_guest_checkout']         = 'Allow customers to checkout without creating an account. This will not be available when a downloadable product is in the shopping cart.';
-$_['entry_checkout']               = 'Forces people to agree to terms before an a customer can checkout.';
-$_['entry_order_status']           = 'Set the default order status when an order is processed.';
-$_['entry_stock_display']          = 'Display stock quantity on the product page.';
-$_['entry_stock_checkout']         = 'Allow customers to still checkout if the products they are ordering are not in stock.';
-$_['entry_icon']                   = 'The icon should be a PNG that is 16px x 16px.';
-$_['entry_secure']                 = 'To use SSL check with your host if a SSL certificate is installed.';
+$_['help_url']                     = 'Include the full URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
+$_['help_ssl']                     = 'SSL URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
+$_['help_catalog_limit'] 	       = 'Determines how many catalog items are shown per page (products, categories, etc)';
+$_['help_list_description_limit']  = 'In the list view, short description character limit (categories, special etc)';
+$_['help_tax_default']             = 'Use the store address to calculate taxes if no one is logged in. You can choose to use the store address for the customers shipping or payment address.';
+$_['help_tax_customer']            = 'Use the customers default address when they login to calculate taxes. You can choose to use the default address for the customers shipping or payment address.';
+$_['help_customer_group']          = 'Default customer group.';
+$_['help_customer_group_display']  = 'Display customer groups that new customers can select to use such as wholesale and business when signing up.';
+$_['help_customer_price']          = 'Only show prices when a customer is logged in.';
+$_['help_account']                 = 'Forces people to agree to terms before an account can be created.';
+$_['help_guest_checkout']          = 'Allow customers to checkout without creating an account. This will not be available when a downloadable product is in the shopping cart.';
+$_['help_checkout']                = 'Forces people to agree to terms before an a customer can checkout.';
+$_['help_order_status']            = 'Set the default order status when an order is processed.';
+$_['help_stock_display']           = 'Display stock quantity on the product page.';
+$_['help_stock_checkout']          = 'Allow customers to still checkout if the products they are ordering are not in stock.';
+$_['help_icon']                    = 'The icon should be a PNG that is 16px x 16px.';
+$_['help_secure']                  = 'To use SSL check with your host if a SSL certificate is installed.';
 
 // Error
 $_['error_warning']                = 'Warning: Please check the form carefully for errors!';

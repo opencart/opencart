@@ -545,7 +545,10 @@ class ControllerSaleAffiliate extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_amount'] = $this->language->get('entry_amount');
  		$this->data['entry_description'] = $this->language->get('entry_description');
- 
+  		
+		$this->data['help_code'] = $this->language->get('help_code');
+		$this->data['help_commission'] = $this->language->get('help_commission');
+
 		$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
     	$this->data['button_add_transaction'] = $this->language->get('button_add_transaction');

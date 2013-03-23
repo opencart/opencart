@@ -5,7 +5,7 @@ class ControllerSettingLocation extends Controller {
 	public function index() {
 		$this->language->load('setting/location');
 		
-		$this->document->setTitle($this->language->get('heading_title'));  // Set the title and language
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/location');
 		
@@ -290,6 +290,10 @@ class ControllerSettingLocation extends Controller {
 		$this->data['entry_open'] = $this->language->get('entry_open');        
 		$this->data['entry_comment'] = $this->language->get('entry_comment');
 	
+		$this->data['help_geocode'] = $this->language->get('help_geocode');
+		$this->data['help_open'] = $this->language->get('help_open');
+		$this->data['help_comment'] = $this->language->get('help_comment');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');        
 		$this->data['button_geocode'] = $this->language->get('button_geocode');

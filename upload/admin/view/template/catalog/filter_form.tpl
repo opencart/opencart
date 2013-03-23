@@ -11,26 +11,27 @@
   <div class="box">
     <div class="heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table class="form">
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_group; ?></td>
-            <td><?php foreach ($languages as $language) { ?>
-              <input type="text" name="filter_group_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($filter_group_description[$language['language_id']]) ? $filter_group_description[$language['language_id']]['name'] : ''; ?>" />
-              <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-              <?php if (isset($error_name[$language['language_id']])) { ?>
-              <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
-              <?php } ?>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_sort_order; ?></td>
-            <td><input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" /></td>
-          </tr>
-        </table>
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_group; ?></label>
+          <div class="controls">
+            <?php foreach ($languages as $language) { ?>
+            <input type="text" name="filter_group_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($filter_group_description[$language['language_id']]) ? $filter_group_description[$language['language_id']]['name'] : ''; ?>" />
+            <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
+            <?php if (isset($error_name[$language['language_id']])) { ?>
+            <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+            <?php } ?>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+          <div class="controls">
+            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" />
+          </div>
+        </div>
         <table id="filter" class="table">
           <thead>
             <tr>
@@ -64,6 +65,7 @@
             </tr>
           </tfoot>
         </table>
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       </form>
     </div>
   </div>

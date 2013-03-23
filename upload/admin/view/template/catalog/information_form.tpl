@@ -11,7 +11,6 @@
   <div class="box">
     <div class="heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <ul class="nav nav-tabs">
@@ -19,7 +18,7 @@
         <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
         <li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
       </ul>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
             <ul class="nav nav-tabs" id="language">
@@ -30,84 +29,94 @@
             <div class="tab-content">
               <?php foreach ($languages as $language) { ?>
               <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
-                <table class="form">
-                  <tr>
-                    <td><span class="required">*</span> <?php echo $entry_title; ?></td>
-                    <td><input type="text" name="information_description[<?php echo $language['language_id']; ?>][title]" size="100" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" />
-                      <?php if (isset($error_title[$language['language_id']])) { ?>
-                      <span class="error"><?php echo $error_title[$language['language_id']]; ?></span>
-                      <?php } ?></td>
-                  </tr>
-                  <tr>
-                    <td><span class="required">*</span> <?php echo $entry_description; ?></td>
-                    <td><textarea name="information_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['description'] : ''; ?></textarea>
-                      <?php if (isset($error_description[$language['language_id']])) { ?>
-                      <span class="error"><?php echo $error_description[$language['language_id']]; ?></span>
-                      <?php } ?></td>
-                  </tr>
-                </table>
+                <div class="control-group">
+                  <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_title; ?></label>
+                  <div class="controls">
+                    <input type="text" name="information_description[<?php echo $language['language_id']; ?>][title]" size="100" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" />
+                    <?php if (isset($error_title[$language['language_id']])) { ?>
+                    <span class="error"><?php echo $error_title[$language['language_id']]; ?></span>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_description; ?></label>
+                  <div class="controls">
+                    <textarea name="information_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['description'] : ''; ?></textarea>
+                    <?php if (isset($error_description[$language['language_id']])) { ?>
+                    <span class="error"><?php echo $error_description[$language['language_id']]; ?></span>
+                    <?php } ?>
+                  </div>
+                </div>
               </div>
               <?php } ?>
             </div>
           </div>
           <div class="tab-pane" id="tab-data">
-            <table class="form">
-              <tr>
-                <td><?php echo $entry_store; ?></td>
-                <td><div class="scrollbox">
-                    <?php $class = 'even'; ?>
-                    <div class="<?php echo $class; ?>">
-                      <?php if (in_array(0, $information_store)) { ?>
-                      <input type="checkbox" name="information_store[]" value="0" checked="checked" />
-                      <?php echo $text_default; ?>
-                      <?php } else { ?>
-                      <input type="checkbox" name="information_store[]" value="0" />
-                      <?php echo $text_default; ?>
-                      <?php } ?>
-                    </div>
-                    <?php foreach ($stores as $store) { ?>
-                    <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                    <div class="<?php echo $class; ?>">
-                      <?php if (in_array($store['store_id'], $information_store)) { ?>
-                      <input type="checkbox" name="information_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-                      <?php echo $store['name']; ?>
-                      <?php } else { ?>
-                      <input type="checkbox" name="information_store[]" value="<?php echo $store['store_id']; ?>" />
-                      <?php echo $store['name']; ?>
-                      <?php } ?>
-                    </div>
-                    <?php } ?>
-                  </div></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_keyword; ?></td>
-                <td><input type="text" name="keyword" value="<?php echo $keyword; ?>" /></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_bottom; ?></td>
-                <td><?php if ($bottom) { ?>
-                  <input type="checkbox" name="bottom" value="1" checked="checked" />
-                  <?php } else { ?>
-                  <input type="checkbox" name="bottom" value="1" />
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_status; ?></td>
-                <td><select name="status">
-                    <?php if ($status) { ?>
-                    <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                    <option value="0"><?php echo $text_disabled; ?></option>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_store; ?></label>
+              <div class="controls">
+                <div class="scrollbox">
+                  <?php $class = 'even'; ?>
+                  <div class="<?php echo $class; ?>">
+                    <?php if (in_array(0, $information_store)) { ?>
+                    <input type="checkbox" name="information_store[]" value="0" checked="checked" />
+                    <?php echo $text_default; ?>
                     <?php } else { ?>
-                    <option value="1"><?php echo $text_enabled; ?></option>
-                    <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                    <input type="checkbox" name="information_store[]" value="0" />
+                    <?php echo $text_default; ?>
                     <?php } ?>
-                  </select></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_sort_order; ?></td>
-                <td><input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" /></td>
-              </tr>
-            </table>
+                  </div>
+                  <?php foreach ($stores as $store) { ?>
+                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                  <div class="<?php echo $class; ?>">
+                    <?php if (in_array($store['store_id'], $information_store)) { ?>
+                    <input type="checkbox" name="information_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
+                    <?php echo $store['name']; ?>
+                    <?php } else { ?>
+                    <input type="checkbox" name="information_store[]" value="<?php echo $store['store_id']; ?>" />
+                    <?php echo $store['name']; ?>
+                    <?php } ?>
+                  </div>
+                  <?php } ?>
+                </div>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_keyword; ?></label>
+              <div class="controls">
+                <input type="text" name="keyword" value="<?php echo $keyword; ?>" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_bottom; ?></label>
+              <div class="controls">
+                <?php if ($bottom) { ?>
+                <input type="checkbox" name="bottom" value="1" checked="checked" />
+                <?php } else { ?>
+                <input type="checkbox" name="bottom" value="1" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+              <div class="controls">
+                <select name="status">
+                  <?php if ($status) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+              <div class="controls">
+                <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" />
+              </div>
+            </div>
           </div>
           <div class="tab-pane" id="tab-design">
             <table class="table table-striped table-bordered table-hover">
@@ -152,6 +161,7 @@
             </table>
           </div>
         </div>
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       </form>
     </div>
   </div>

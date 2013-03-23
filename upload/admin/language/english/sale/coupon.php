@@ -37,14 +37,14 @@ $_['entry_uses_customer'] = 'Uses Per Customer:';
 $_['entry_status']        = 'Status:';
 
 // Help
-$_['entry_code']          = 'The code the customer enters to get the discount.';
-$_['entry_type']          = '>Percentage or Fixed Amount.';
-$_['entry_logged']        = 'Customer must be logged in to use the coupon.';
-$_['entry_total']         = 'The total amount that must reached before the coupon is valid.';
-$_['entry_category']      = 'Choose all products under selected category.';
-$_['entry_product']       = 'Choose specific products the coupon will apply to. Select no products to apply coupon to entire cart.';
-$_['entry_uses_total']    = 'The maximum number of times the coupon can be used by any customer. Leave blank for unlimited';
-$_['entry_uses_customer'] = 'The maximum number of times the coupon can be used by a single customer. Leave blank for unlimited';
+$_['help_code']           = 'The code the customer enters to get the discount.';
+$_['help_type']           = 'Percentage or Fixed Amount.';
+$_['help_logged']         = 'Customer must be logged in to use the coupon.';
+$_['help_total']          = 'The total amount that must reached before the coupon is valid.';
+$_['help_category']       = 'Choose all products under selected category.';
+$_['help_product']        = 'Choose specific products the coupon will apply to. Select no products to apply coupon to entire cart.';
+$_['help_uses_total']     = 'The maximum number of times the coupon can be used by any customer. Leave blank for unlimited';
+$_['help_uses_customer']  = 'The maximum number of times the coupon can be used by a single customer. Leave blank for unlimited';
 
 // Error
 $_['error_permission']    = 'Warning: You do not have permission to modify coupons!';

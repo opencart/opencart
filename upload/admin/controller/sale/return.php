@@ -572,6 +572,8 @@ class ControllerSaleReturn extends Controller {
  		$this->data['entry_reason'] = $this->language->get('entry_reason');
 		$this->data['entry_opened'] = $this->language->get('entry_opened');
 		$this->data['entry_action'] = $this->language->get('entry_action');
+		
+		$this->data['help_product'] = $this->language->get('help_product');
 			
 		$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');

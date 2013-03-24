@@ -502,9 +502,65 @@ class ControllerLocalisationSeoUrl extends Controller {
 
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();
 
+		if (isset($seo_url_info)) {
+			$config_language_id = $this->config->get('config_language_id');
+
+			$parts = explode('=', $seo_url_info['query']);
+
+			if ($parts[0] == 'product_id') {
+				$this->load->model('catalog/product');
+
+				$product = $this->model_catalog_product->getProduct($parts[1]);
+
+				if (!empty($product)) {
+					$name = $product['name'];
+				} else {
+					$name = '';
+				}
+			} elseif ($parts[0] == 'category_id') {
+				$this->load->model('catalog/category');
+
+				$category = $this->model_catalog_category->getCategory($parts[1]);
+
+				if (!empty($category)) {
+					$name = $category['name'];
+				} else {
+					$name = '';
+				}
+			} elseif ($parts[0] == 'information_id') {
+				$this->load->model('catalog/information');
+
+				$information_description = $this->model_catalog_information->getInformationDescriptions($parts[1]);
+
+				if (!empty($information_description) && isset($information_description[$config_language_id])) {
+					$name = $information_description[$config_language_id]['title'];
+				} else {
+					$name = '';
+				}
+			} elseif ($parts[0] == 'manufacturer_id') {
+				$this->load->model('catalog/manufacturer');
+
+				$manufacturer = $this->model_catalog_manufacturer->getManufacturer($parts[1]);
+
+				if (!empty($manufacturer)) {
+					$name = $manufacturer['name'];
+				} else {
+					$name = '';
+				}
+			} elseif ($parts[0] == 'route') {
+				$name = $parts[1];
+			} else {
+				$name = '';
+			}
+		} else {
+			$name = '';
+		}
+
 		if (isset($this->request->post['keyword'])) {
 			$this->data['keyword'] = $this->request->post['keyword'];
 		} elseif (isset($seo_url_info)) {
+			$parts = explode('=', $seo_url_info['query']);
+
 			$this->data['keyword'] = $seo_url_info['keyword'];
 		} else {
 			$this->data['keyword'] = '';
@@ -523,12 +579,12 @@ class ControllerLocalisationSeoUrl extends Controller {
 		if (isset($this->request->post['route'])) {
 			$this->data['route'] = $this->request->post['route'];
 		} elseif (isset($seo_url_info)) {
-			$parts = explode('=', $seo_url_info['query']);
-
 			$this->data['route'] = $parts[1];
 		} else {
 			$this->data['route'] = '';
 		}
+
+		$this->data['name'] = $name;
 
 		$this->template = 'localisation/seo_url_form.tpl';
 		$this->children = array(

@@ -39,11 +39,11 @@
               <td></td>
               <td class="left"><select name="filter_type">
                   <option value=""></option>
-                  <?php foreach($types as $value => $name) { ?>
+                  <?php foreach($types as $key => $value) { ?>
                   <?php if ($value == $filter_type) { ?>
-                  <option value="<?php echo $value; ?>" selected="selected"><?php echo $name; ?></option>
+                  <option value="<?php echo $key; ?>" selected="selected"><?php echo $value; ?></option>
                   <?php } else { ?>
-                  <option value="<?php echo $value; ?>"><?php echo $name; ?></option>
+                  <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
                   <?php } ?>
                   <?php } ?>
                 </select></td>

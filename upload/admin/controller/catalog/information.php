@@ -480,5 +480,38 @@ class ControllerCatalogInformation extends Controller {
 			return false;
 		}
 	}
+
+	public function autocomplete() {
+		$json = array();
+		
+		if (isset($this->request->get['filter_title'])) {
+			$this->load->model('catalog/information');
+			
+			$data = array(
+				'filter_title' => $this->request->get['filter_title'],
+				'start'        => 0,
+				'limit'        => 20
+			);
+			
+			$results = $this->model_catalog_information->getInformations($data);
+			
+			foreach ($results as $result) {
+				$json[] = array(
+					'information_id' => $result['information_id'], 
+					'title'          => strip_tags(html_entity_decode($result['title'], ENT_QUOTES, 'UTF-8'))
+				);
+			}
+		}
+
+		$sort_order = array();
+	  
+		foreach ($json as $key => $value) {
+			$sort_order[$key] = $value['title'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $json);
+
+		$this->response->setOutput(json_encode($json));
+	}
 }
 ?>

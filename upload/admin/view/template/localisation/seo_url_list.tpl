@@ -40,7 +40,7 @@
               <td class="left"><select name="filter_type">
                   <option value=""></option>
                   <?php foreach($types as $key => $value) { ?>
-                  <?php if ($value == $filter_type) { ?>
+                  <?php if ($key == $filter_type) { ?>
                   <option value="<?php echo $key; ?>" selected="selected"><?php echo $value; ?></option>
                   <?php } else { ?>
                   <option value="<?php echo $key; ?>"><?php echo $value; ?></option>

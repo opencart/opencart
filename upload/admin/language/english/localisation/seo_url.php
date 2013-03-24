@@ -23,6 +23,7 @@ $_['entry_route']          = 'Route:';
 $_['error_permission']     = 'Warning: You do not have permission to modify currencies!';
 $_['error_keyword']        = 'SEO URL keyword must be between 1 and 255 characters!';
 $_['error_type']           = 'SEO URL Type is invalid!';
-$_['error_route']          = 'SEO URL route must be between 1 and 200 characters!';
+$_['error_route_string']   = 'SEO URL route must be between 1 and 200 characters!';
+$_['error_route_integer']  = 'SEO URL route must be a valid ID!';
 $_['error_warning']        = 'Warning: Please check the form carefully for errors!';
 ?>

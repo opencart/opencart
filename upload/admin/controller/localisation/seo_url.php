@@ -552,8 +552,14 @@ class ControllerLocalisationSeoUrl extends Controller {
 			$this->error['type'] = $this->language->get('error_type');
 		}
 
-		if ((utf8_strlen($this->request->post['route']) < 1) || (utf8_strlen($this->request->post['route']) > 200)) {
-			$this->error['route'] = $this->language->get('error_route');
+		if (utf8_strtolower($this->request->post['type']) == 'route') {
+			if ((utf8_strlen($this->request->post['route']) < 1) || (utf8_strlen($this->request->post['route']) > 200)) {
+				$this->error['route'] = $this->language->get('error_route_string');
+			}
+		} else {
+			if (!($this->request->post['route'] > 0)) {
+				$this->error['route'] = $this->language->get('error_route_integer');
+			}
 		}
 
 		if ($this->error && !isset($this->error['warning'])) {

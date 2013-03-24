@@ -579,6 +579,8 @@ class ControllerLocalisationSeoUrl extends Controller {
 		if (isset($this->request->post['route'])) {
 			$this->data['route'] = $this->request->post['route'];
 		} elseif (isset($seo_url_info)) {
+			$parts = explode('=', $seo_url_info['query']);
+
 			$this->data['route'] = $parts[1];
 		} else {
 			$this->data['route'] = '';

@@ -9,10 +9,10 @@
   <div class="alert alert-error"><?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
+    <div class="box-heading">
       <h1><i class=""></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
+    <div class="box-content">
       <table class="form">
         <tr>
           <td><?php echo $entry_upload; ?></td>

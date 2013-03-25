@@ -12,11 +12,11 @@
   <div class="alert alert-success"><?php echo $success; ?></div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
+    <div class="box-heading">
       <h1><?php echo $heading_title; ?></h1>
       <div class="buttons"><a onclick="$('#form').attr('action', '<?php echo $invoice; ?>'); $('#form').attr('target', '_blank'); $('#form').submit();" class="btn"><i class="icon-print"></i> <?php echo $button_invoice; ?></a> <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a> <a onclick="$('#form').attr('action', '<?php echo $delete; ?>'); $('#form').attr('target', '_self'); $('#form').submit();" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></a></div>
     </div>
-    <div class="content">
+    <div class="box-content">
       <form action="" method="post" enctype="multipart/form-data" id="form">
         <table class="table table-striped table-bordered table-hover">
           <thead>

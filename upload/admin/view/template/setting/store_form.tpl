@@ -12,11 +12,11 @@
   <div class="alert alert-success"><?php echo $success; ?></div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
+    <div class="box-heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+    <div class="box-content">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
@@ -194,338 +194,378 @@
           </div>
           <div class="tab-pane" id="tab-option">
             <h2><?php echo $text_items; ?></h2>
-            <table class="form">
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_catalog_limit; ?></td>
-                <td><input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" size="3" />
-                  <?php if ($error_catalog_limit) { ?>
-                  <span class="error"><?php echo $error_catalog_limit; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_list_description_limit; ?></td>
-                <td><input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" size="3" />
-                  <?php if ($error_list_description_limit) { ?>
-                  <span class="error"><?php echo $error_list_description_limit; ?></span>
-                  <?php } ?></td>
-              </tr>
-            </table>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_catalog_limit; ?></label>
+              <div class="controls">
+                <input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" size="3" />
+                <?php if ($error_catalog_limit) { ?>
+                <span class="error"><?php echo $error_catalog_limit; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_list_description_limit; ?></label>
+              <div class="controls">
+                <input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" size="3" />
+                <?php if ($error_list_description_limit) { ?>
+                <span class="error"><?php echo $error_list_description_limit; ?></span>
+                <?php } ?>
+              </div>
+            </div>
             <h2><?php echo $text_tax; ?></h2>
-            <table class="form">
-              <tr>
-                <td><?php echo $entry_tax; ?></td>
-                <td><?php if ($config_tax) { ?>
-                  <input type="radio" name="config_tax" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="config_tax" value="0" />
-                  <?php echo $text_no; ?>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_tax; ?></label>
+              <div class="controls">
+                <?php if ($config_tax) { ?>
+                <input type="radio" name="config_tax" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_tax" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_tax" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_tax" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_tax_default; ?></label>
+              <div class="controls">
+                <select name="config_tax_default">
+                  <option value=""><?php echo $text_none; ?></option>
+                  <?php  if ($config_tax_default == 'shipping') { ?>
+                  <option value="shipping" selected="selected"><?php echo $text_shipping; ?></option>
                   <?php } else { ?>
-                  <input type="radio" name="config_tax" value="1" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="config_tax" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_tax_default; ?></td>
-                <td><select name="config_tax_default">
-                    <option value=""><?php echo $text_none; ?></option>
-                    <?php  if ($config_tax_default == 'shipping') { ?>
-                    <option value="shipping" selected="selected"><?php echo $text_shipping; ?></option>
-                    <?php } else { ?>
-                    <option value="shipping"><?php echo $text_shipping; ?></option>
-                    <?php } ?>
-                    <?php  if ($config_tax_default == 'payment') { ?>
-                    <option value="payment" selected="selected"><?php echo $text_payment; ?></option>
-                    <?php } else { ?>
-                    <option value="payment"><?php echo $text_payment; ?></option>
-                    <?php } ?>
-                  </select></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_tax_customer; ?></td>
-                <td><select name="config_tax_customer">
-                    <option value=""><?php echo $text_none; ?></option>
-                    <?php  if ($config_tax_customer == 'shipping') { ?>
-                    <option value="shipping" selected="selected"><?php echo $text_shipping; ?></option>
-                    <?php } else { ?>
-                    <option value="shipping"><?php echo $text_shipping; ?></option>
-                    <?php } ?>
-                    <?php  if ($config_tax_customer == 'payment') { ?>
-                    <option value="payment" selected="selected"><?php echo $text_payment; ?></option>
-                    <?php } else { ?>
-                    <option value="payment"><?php echo $text_payment; ?></option>
-                    <?php } ?>
-                  </select></td>
-              </tr>
-            </table>
+                  <option value="shipping"><?php echo $text_shipping; ?></option>
+                  <?php } ?>
+                  <?php  if ($config_tax_default == 'payment') { ?>
+                  <option value="payment" selected="selected"><?php echo $text_payment; ?></option>
+                  <?php } else { ?>
+                  <option value="payment"><?php echo $text_payment; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_tax_customer; ?></label>
+              <div class="controls">
+                <select name="config_tax_customer">
+                  <option value=""><?php echo $text_none; ?></option>
+                  <?php  if ($config_tax_customer == 'shipping') { ?>
+                  <option value="shipping" selected="selected"><?php echo $text_shipping; ?></option>
+                  <?php } else { ?>
+                  <option value="shipping"><?php echo $text_shipping; ?></option>
+                  <?php } ?>
+                  <?php  if ($config_tax_customer == 'payment') { ?>
+                  <option value="payment" selected="selected"><?php echo $text_payment; ?></option>
+                  <?php } else { ?>
+                  <option value="payment"><?php echo $text_payment; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
             <h2><?php echo $text_account; ?></h2>
-            <table class="form">
-              <tr>
-                <td><?php echo $entry_customer_group; ?></td>
-                <td><select name="config_customer_group_id">
-                    <?php foreach ($customer_groups as $customer_group) { ?>
-                    <?php if ($customer_group['customer_group_id'] == $config_customer_group_id) { ?>
-                    <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_customer_group; ?></label>
+              <div class="controls">
+                <select name="config_customer_group_id">
+                  <?php foreach ($customer_groups as $customer_group) { ?>
+                  <?php if ($customer_group['customer_group_id'] == $config_customer_group_id) { ?>
+                  <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_customer_group_display; ?></label>
+              <div class="controls">
+                <div class="scrollbox">
+                  <?php $class = 'odd'; ?>
+                  <?php foreach ($customer_groups as $customer_group) { ?>
+                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                  <div class="<?php echo $class; ?>">
+                    <?php if (in_array($customer_group['customer_group_id'], $config_customer_group_display)) { ?>
+                    <input type="checkbox" name="config_customer_group_display[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+                    <?php echo $customer_group['name']; ?>
                     <?php } else { ?>
-                    <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                  </select></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_customer_group_display; ?></td>
-                <td><div class="scrollbox">
-                    <?php $class = 'odd'; ?>
-                    <?php foreach ($customer_groups as $customer_group) { ?>
-                    <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                    <div class="<?php echo $class; ?>">
-                      <?php if (in_array($customer_group['customer_group_id'], $config_customer_group_display)) { ?>
-                      <input type="checkbox" name="config_customer_group_display[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-                      <?php echo $customer_group['name']; ?>
-                      <?php } else { ?>
-                      <input type="checkbox" name="config_customer_group_display[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
-                      <?php echo $customer_group['name']; ?>
-                      <?php } ?>
-                    </div>
+                    <input type="checkbox" name="config_customer_group_display[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
+                    <?php echo $customer_group['name']; ?>
                     <?php } ?>
                   </div>
-                  <?php if ($error_customer_group_display) { ?>
-                  <span class="error"><?php echo $error_customer_group_display; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_customer_price; ?></td>
-                <td><?php if ($config_customer_price) { ?>
-                  <input type="radio" name="config_customer_price" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="config_customer_price" value="0" />
-                  <?php echo $text_no; ?>
+                  <?php } ?>
+                </div>
+                <?php if ($error_customer_group_display) { ?>
+                <span class="error"><?php echo $error_customer_group_display; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_customer_price; ?></label>
+              <div class="controls">
+                <?php if ($config_customer_price) { ?>
+                <input type="radio" name="config_customer_price" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_customer_price" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_customer_price" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_customer_price" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_account; ?></label>
+              <div class="controls">
+                <select name="config_account_id">
+                  <option value="0"><?php echo $text_none; ?></option>
+                  <?php foreach ($informations as $information) { ?>
+                  <?php if ($information['information_id'] == $config_account_id) { ?>
+                  <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
                   <?php } else { ?>
-                  <input type="radio" name="config_customer_price" value="1" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="config_customer_price" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_account; ?></td>
-                <td><select name="config_account_id">
-                    <option value="0"><?php echo $text_none; ?></option>
-                    <?php foreach ($informations as $information) { ?>
-                    <?php if ($information['information_id'] == $config_account_id) { ?>
-                    <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                  </select></td>
-              </tr>
-            </table>
+                  <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
             <h2><?php echo $text_checkout; ?></h2>
-            <table class="form">
-              <tr>
-                <td><?php echo $entry_cart_weight; ?></td>
-                <td><?php if ($config_cart_weight) { ?>
-                  <input type="radio" name="config_cart_weight" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="config_cart_weight" value="0" />
-                  <?php echo $text_no; ?>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_cart_weight; ?></label>
+              <div class="controls">
+                <?php if ($config_cart_weight) { ?>
+                <input type="radio" name="config_cart_weight" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_cart_weight" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_cart_weight" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_cart_weight" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_guest_checkout; ?></label>
+              <div class="controls">
+                <?php if ($config_guest_checkout) { ?>
+                <input type="radio" name="config_guest_checkout" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_guest_checkout" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_guest_checkout" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_guest_checkout" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_checkout; ?></label>
+              <div class="controls">
+                <select name="config_checkout_id">
+                  <option value="0"><?php echo $text_none; ?></option>
+                  <?php foreach ($informations as $information) { ?>
+                  <?php if ($information['information_id'] == $config_checkout_id) { ?>
+                  <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
                   <?php } else { ?>
-                  <input type="radio" name="config_cart_weight" value="1" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="config_cart_weight" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_guest_checkout; ?></td>
-                <td><?php if ($config_guest_checkout) { ?>
-                  <input type="radio" name="config_guest_checkout" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="config_guest_checkout" value="0" />
-                  <?php echo $text_no; ?>
+                  <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
+              <div class="controls">
+                <select name="config_order_status_id">
+                  <?php foreach ($order_statuses as $order_status) { ?>
+                  <?php if ($order_status['order_status_id'] == $config_order_status_id) { ?>
+                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                   <?php } else { ?>
-                  <input type="radio" name="config_guest_checkout" value="1" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="config_guest_checkout" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_checkout; ?></td>
-                <td><select name="config_checkout_id">
-                    <option value="0"><?php echo $text_none; ?></option>
-                    <?php foreach ($informations as $information) { ?>
-                    <?php if ($information['information_id'] == $config_checkout_id) { ?>
-                    <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                  </select></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_order_status; ?></td>
-                <td><select name="config_order_status_id">
-                    <?php foreach ($order_statuses as $order_status) { ?>
-                    <?php if ($order_status['order_status_id'] == $config_order_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                  </select></td>
-              </tr>
-            </table>
+                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
             <h2><?php echo $text_stock; ?></h2>
-            <table class="form">
-              <tr>
-                <td><?php echo $entry_stock_display; ?></td>
-                <td><?php if ($config_stock_display) { ?>
-                  <input type="radio" name="config_stock_display" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="config_stock_display" value="0" />
-                  <?php echo $text_no; ?>
-                  <?php } else { ?>
-                  <input type="radio" name="config_stock_display" value="1" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="config_stock_display" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_stock_checkout; ?></td>
-                <td><?php if ($config_stock_checkout) { ?>
-                  <input type="radio" name="config_stock_checkout" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="config_stock_checkout" value="0" />
-                  <?php echo $text_no; ?>
-                  <?php } else { ?>
-                  <input type="radio" name="config_stock_checkout" value="1" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="config_stock_checkout" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } ?></td>
-              </tr>
-            </table>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_stock_display; ?></label>
+              <div class="controls">
+                <?php if ($config_stock_display) { ?>
+                <input type="radio" name="config_stock_display" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_stock_display" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_stock_display" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_stock_display" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_stock_checkout; ?></label>
+              <div class="controls">
+                <?php if ($config_stock_checkout) { ?>
+                <input type="radio" name="config_stock_checkout" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_stock_checkout" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_stock_checkout" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_stock_checkout" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?>
+              </div>
+            </div>
           </div>
           <div class="tab-pane" id="tab-image">
-            <table class="form">
-              <tr>
-                <td><?php echo $entry_logo; ?></td>
-                <td><div class="image"><img src="<?php echo $logo; ?>" alt="" id="thumb-logo" />
-                    <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="logo" />
-                    <br />
-                    <a onclick="image_upload('logo', 'thumb-logo');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-logo').attr('src', '<?php echo $no_image; ?>'); $('#logo').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_icon; ?></td>
-                <td><div class="image"><img src="<?php echo $icon; ?>" alt="" id="thumb-icon" />
-                    <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="icon" />
-                    <br />
-                    <a onclick="image_upload('icon', 'thumb-icon');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-icon').attr('src', '<?php echo $no_image; ?>'); $('#icon').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_image_category; ?></td>
-                <td><input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" size="3" />
-                  x
-                  <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" size="3" />
-                  <?php if ($error_image_category) { ?>
-                  <span class="error"><?php echo $error_image_category; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_image_thumb; ?></td>
-                <td><input type="text" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" size="3" />
-                  x
-                  <input type="text" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" size="3" />
-                  <?php if ($error_image_thumb) { ?>
-                  <span class="error"><?php echo $error_image_thumb; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_image_popup; ?></td>
-                <td><input type="text" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" size="3" />
-                  x
-                  <input type="text" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" size="3" />
-                  <?php if ($error_image_popup) { ?>
-                  <span class="error"><?php echo $error_image_popup; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_image_product; ?></td>
-                <td><input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" size="3" />
-                  x
-                  <input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" size="3" />
-                  <?php if ($error_image_product) { ?>
-                  <span class="error"><?php echo $error_image_product; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_image_additional; ?></td>
-                <td><input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" size="3" />
-                  x
-                  <input type="text" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" size="3" />
-                  <?php if ($error_image_additional) { ?>
-                  <span class="error"><?php echo $error_image_additional; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_image_related; ?></td>
-                <td><input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" size="3" />
-                  x
-                  <input type="text" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" size="3" />
-                  <?php if ($error_image_related) { ?>
-                  <span class="error"><?php echo $error_image_related; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_image_compare; ?></td>
-                <td><input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" size="3" />
-                  x
-                  <input type="text" name="config_image_compare_height" value="<?php echo $config_image_compare_height; ?>" size="3" />
-                  <?php if ($error_image_compare) { ?>
-                  <span class="error"><?php echo $error_image_compare; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_image_wishlist; ?></td>
-                <td><input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" size="3" />
-                  x
-                  <input type="text" name="config_image_wishlist_height" value="<?php echo $config_image_wishlist_height; ?>" size="3" />
-                  <?php if ($error_image_wishlist) { ?>
-                  <span class="error"><?php echo $error_image_wishlist; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_image_cart; ?></td>
-                <td><input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" size="3" />
-                  x
-                  <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" size="3" />
-                  <?php if ($error_image_cart) { ?>
-                  <span class="error"><?php echo $error_image_cart; ?></span>
-                  <?php } ?></td>
-              </tr>
-            </table>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_logo; ?></label>
+              <div class="controls">
+                <div class="image"><img src="<?php echo $logo; ?>" alt="" id="thumb-logo" />
+                  <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="logo" />
+                  <br />
+                  <a onclick="image_upload('logo', 'thumb-logo');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-logo').attr('src', '<?php echo $no_image; ?>'); $('#logo').attr('value', '');"><?php echo $text_clear; ?></a></div>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_icon; ?></label>
+              <div class="controls">
+                <div class="image"><img src="<?php echo $icon; ?>" alt="" id="thumb-icon" />
+                  <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="icon" />
+                  <br />
+                  <a onclick="image_upload('icon', 'thumb-icon');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-icon').attr('src', '<?php echo $no_image; ?>'); $('#icon').attr('value', '');"><?php echo $text_clear; ?></a></div>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_category; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" size="3" />
+                x
+                <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" size="3" />
+                <?php if ($error_image_category) { ?>
+                <span class="error"><?php echo $error_image_category; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_thumb; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" size="3" />
+                x
+                <input type="text" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" size="3" />
+                <?php if ($error_image_thumb) { ?>
+                <span class="error"><?php echo $error_image_thumb; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_popup; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" size="3" />
+                x
+                <input type="text" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" size="3" />
+                <?php if ($error_image_popup) { ?>
+                <span class="error"><?php echo $error_image_popup; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_product; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" size="3" />
+                x
+                <input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" size="3" />
+                <?php if ($error_image_product) { ?>
+                <span class="error"><?php echo $error_image_product; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_additional; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" size="3" />
+                x
+                <input type="text" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" size="3" />
+                <?php if ($error_image_additional) { ?>
+                <span class="error"><?php echo $error_image_additional; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_related; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" size="3" />
+                x
+                <input type="text" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" size="3" />
+                <?php if ($error_image_related) { ?>
+                <span class="error"><?php echo $error_image_related; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_compare; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" size="3" />
+                x
+                <input type="text" name="config_image_compare_height" value="<?php echo $config_image_compare_height; ?>" size="3" />
+                <?php if ($error_image_compare) { ?>
+                <span class="error"><?php echo $error_image_compare; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_wishlist; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" size="3" />
+                x
+                <input type="text" name="config_image_wishlist_height" value="<?php echo $config_image_wishlist_height; ?>" size="3" />
+                <?php if ($error_image_wishlist) { ?>
+                <span class="error"><?php echo $error_image_wishlist; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_cart; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" size="3" />
+                x
+                <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" size="3" />
+                <?php if ($error_image_cart) { ?>
+                <span class="error"><?php echo $error_image_cart; ?></span>
+                <?php } ?>
+              </div>
+            </div>
           </div>
           <div class="tab-pane" id="tab-server">
-            <table class="form">
-              <tr>
-                <td><?php echo $entry_secure; ?></td>
-                <td><?php if ($config_secure) { ?>
-                  <input type="radio" name="config_secure" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="config_secure" value="0" />
-                  <?php echo $text_no; ?>
-                  <?php } else { ?>
-                  <input type="radio" name="config_secure" value="1" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="config_secure" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } ?></td>
-              </tr>
-            </table>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_secure; ?></label>
+              <div class="controls">
+                <?php if ($config_secure) { ?>
+                <input type="radio" name="config_secure" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_secure" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_secure" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_secure" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?>
+              </div>
+            </div>
           </div>
         </div>
       </form>

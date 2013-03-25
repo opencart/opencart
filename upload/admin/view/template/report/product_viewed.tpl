@@ -13,7 +13,7 @@
       <h1><i class=""></i> <?php echo $heading_title; ?></h1>
       <div class="buttons"><a href="<?php echo $reset; ?>" class="btn"><?php echo $button_reset; ?></a></div>
     </div>
-    <div class="content">
+    <div class="box-content">
       <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>

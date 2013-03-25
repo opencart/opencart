@@ -9,10 +9,10 @@
   <div class="alert alert-error"><?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
+    <div class="box-heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
+    <div class="box-content">
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
         <li><a href="#tab-payment" data-toggle="tab"><?php echo $tab_payment; ?></a></li>

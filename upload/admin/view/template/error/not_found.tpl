@@ -6,10 +6,10 @@
     <?php } ?>
   </ul>
   <div class="box">
-    <div class="heading">
+    <div class="box-heading">
       <h1><i class=""></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
+    <div class="box-content">
       <div style="border: 1px solid #DDDDDD; background: #F7F7F7; text-align: center; padding: 15px;"><?php echo $text_not_found; ?></div>
     </div>
   </div>

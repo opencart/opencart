@@ -12,12 +12,12 @@
   <div class="alert alert-success"><?php echo $success; ?></div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
+    <div class="box-heading">
       <h1><i class=""></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#restore').submit();" class="btn"><i class="icon-upload"></i> <?php echo $button_restore; ?></a><a onclick="$('#backup').submit();" class="btn"><i class="icon-download"></i> <?php echo $button_backup; ?></a></div>
     </div>
-    <div class="content">
+    <div class="box-content">
       <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="restore">
+        <div class="buttons"><a onclick="$('#restore').submit();" class="btn"><i class="icon-upload"></i> <?php echo $button_restore; ?></a> <a onclick="$('#backup').submit();" class="btn"><i class="icon-download"></i> <?php echo $button_backup; ?></a></div>
         <table class="form">
           <tr>
             <td><?php echo $entry_restore; ?></td>

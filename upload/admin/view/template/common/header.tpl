@@ -54,7 +54,7 @@
               <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
             </ul>
           </li>
-          <li class="dropdown" id="extension"><a data-toggle="dropdown"><i class="icon-home icon-large"></i> <?php echo $text_extension; ?> <i class="icon-chevron-down"></i></a>
+          <li class="dropdown" id="extension"><a data-toggle="dropdown"><i class="icon-lightbulb icon-large"></i> <?php echo $text_extension; ?> <i class="icon-chevron-down"></i></a>
             <ul class="dropdown-menu">
               <li><a href="<?php echo $installer; ?>"><?php echo $text_installer; ?></a></li>
               <li><a href="<?php echo $modification; ?>"><?php echo $text_modification; ?></a></li>

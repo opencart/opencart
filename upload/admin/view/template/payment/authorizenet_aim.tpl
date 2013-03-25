@@ -9,7 +9,7 @@
   <div class="alert alert-error"><?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
+    <div class="box-heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="content">

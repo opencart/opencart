@@ -24,10 +24,10 @@
   <div class="alert alert-error"><?php echo $error_logs; ?></div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
+    <div class="box-heading">
       <h1><i class="icon-eye-open"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
+    <div class="box-content">
       <div class="overview">
         <div class="dashboard-heading"><?php echo $text_overview; ?></div>
         <div class="dashboard-content">

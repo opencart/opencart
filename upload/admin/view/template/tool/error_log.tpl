@@ -9,11 +9,11 @@
   <div class="alert alert-success"><?php echo $success; ?></div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
+    <div class="box-heading">
       <h1><i class=""></i> <?php echo $heading_title; ?></h1>
       <div class="buttons"><a href="<?php echo $clear; ?>" class="btn"><?php echo $button_clear; ?></a></div>
     </div>
-    <div class="content">
+    <div class="box-content">
       <textarea wrap="off" style="width: 98%; height: 300px; padding: 5px; border: 1px solid #CCCCCC; background: #FFFFFF; overflow: scroll;"><?php echo $log; ?></textarea>
     </div>
   </div>

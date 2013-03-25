@@ -11,26 +11,26 @@
   <div class="box">
     <div class="heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table class="form">
-          <tr>
-            <td><?php echo $entry_admin; ?></td>
-            <td><?php if ($store_admin) { ?>
-              <input type="radio" name="store_admin" value="1" checked="checked" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="store_admin" value="0" />
-              <?php echo $text_no; ?>
-              <?php } else { ?>
-              <input type="radio" name="store_admin" value="1" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="store_admin" value="0" checked="checked" />
-              <?php echo $text_no; ?>
-              <?php } ?></td>
-          </tr>
-        </table>
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_admin; ?></label>
+          <div class="controls">
+            <?php if ($store_admin) { ?>
+            <input type="radio" name="store_admin" value="1" checked="checked" />
+            <?php echo $text_yes; ?>
+            <input type="radio" name="store_admin" value="0" />
+            <?php echo $text_no; ?>
+            <?php } else { ?>
+            <input type="radio" name="store_admin" value="1" />
+            <?php echo $text_yes; ?>
+            <input type="radio" name="store_admin" value="0" checked="checked" />
+            <?php echo $text_no; ?>
+            <?php } ?>
+          </div>
+        </div>
         <table id="module" class="table">
           <thead>
             <tr>

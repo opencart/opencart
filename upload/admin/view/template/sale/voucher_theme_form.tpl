@@ -11,31 +11,34 @@
   <div class="box">
     <div class="heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table class="form">
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_name; ?></td>
-            <td><?php foreach ($languages as $language) { ?>
-              <input type="text" name="voucher_theme_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($voucher_theme_description[$language['language_id']]) ? $voucher_theme_description[$language['language_id']]['name'] : ''; ?>" />
-              <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-              <?php if (isset($error_name[$language['language_id']])) { ?>
-              <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
-              <?php } ?>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_image; ?></td>
-            <td valign="top"><div class="image"><img src="<?php echo $thumb; ?>" alt="" id="thumb" />
-                <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
-                <br /><a onclick="image_upload('image', 'thumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a></div>
-              <?php if ($error_image) { ?>
-              <span class="error"><?php echo $error_image; ?></span>
-              <?php } ?></td>
-          </tr>
-        </table>
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
+          <div class="controls">
+            <?php foreach ($languages as $language) { ?>
+            <input type="text" name="voucher_theme_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($voucher_theme_description[$language['language_id']]) ? $voucher_theme_description[$language['language_id']]['name'] : ''; ?>" />
+            <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
+            <?php if (isset($error_name[$language['language_id']])) { ?>
+            <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+            <?php } ?>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
+          <div class="controls">
+            <div class="image"><img src="<?php echo $thumb; ?>" alt="" id="thumb" />
+              <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
+              <br />
+              <a onclick="image_upload('image', 'thumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a></div>
+            <?php if ($error_image) { ?>
+            <span class="error"><?php echo $error_image; ?></span>
+            <?php } ?>
+          </div>
+        </div>
       </form>
     </div>
   </div>

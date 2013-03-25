@@ -11,10 +11,10 @@
   <div class="box">
     <div class="heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <table id="module" class="table">
           <thead>
             <tr>
@@ -90,7 +90,7 @@
 var module_row = <?php echo $module_row; ?>;
 
 function addModule() {	
-	html += '<tr id="module-row' + module_row + '">';
+	html  = '<tr id="module-row' + module_row + '">';
 	html += '  <td class="left"><select name="account_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>
 	html += '    <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';

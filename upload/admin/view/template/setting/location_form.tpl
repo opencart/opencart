@@ -11,89 +11,108 @@
   <div class="box">
     <div class="heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table class="form">
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_name; ?></td>
-            <td><input type="text" name="name" value="<?php echo $name; ?>" />
-              <?php if ($error_name) { ?>
-              <span class="error"><?php echo $error_name; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
-            <td><input type="text" name="address_1" value="<?php echo $address_1; ?>" />
-              <?php if ($error_address_1) { ?>
-              <span class="error"><?php echo $error_address_1; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_address_2; ?></td>
-            <td><input type="text" name="address_2" value="<?php echo $address_2; ?>" /></td>
-          </tr>
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_city; ?></td>
-            <td><input type="text" name="city" value="<?php echo $city; ?>" />
-              <?php if ($error_city) { ?>
-              <span class="error"><?php echo $error_city; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
-            <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
-          </tr>
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-            <td><select name="country_id">
-                <option value="false"><?php echo $text_select; ?></option>
-                <?php foreach ($countries as $country) { ?>
-                <?php if ($country['country_id'] == $country_id) { ?>
-                <option value="<?php echo $country['country_id']; ?>" selected="selected"> <?php echo $country['name']; ?> </option>
-                <?php } else { ?>
-                <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
-              <?php if ($error_country) { ?>
-              <span class="error"><?php echo $error_country; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
-            <td><select name="zone_id">
-              </select>
-              <?php if ($error_zone) { ?>
-              <span class="error"><?php echo $error_zone; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_geocode; ?></td>
-            <td><input id="geocode" type="text" name="geocode" value="<?php echo $geocode; ?>" />
-              <input type="button" onclick="getGeoCode()" value="<?php echo $button_geocode; ?>" class="btn" />
-              <?php if ($error_geocode) { ?>
-              <span class="error"><?php echo $error_geocode; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_image; ?></td>
-            <td valign="top"><div class="image"><img src="<?php echo $thumb; ?>" alt="" id="thumb" />
-                <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
-                <br />
-                <a onclick="image_upload('image', 'thumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_open; ?></td>
-            <td><textarea name="open" cols="40" rows="5"><?php echo $open; ?></textarea></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_comment; ?></td>
-            <td><textarea name="comment" cols="40" rows="5"><?php echo $comment; ?></textarea></td>
-          </tr>
-        </table>
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
+          <div class="controls">
+            <input type="text" name="name" value="<?php echo $name; ?>" />
+            <?php if ($error_name) { ?>
+            <span class="error"><?php echo $error_name; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_address_1; ?></label>
+          <div class="controls">
+            <input type="text" name="address_1" value="<?php echo $address_1; ?>" />
+            <?php if ($error_address_1) { ?>
+            <span class="error"><?php echo $error_address_1; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_address_2; ?></label>
+          <div class="controls">
+            <input type="text" name="address_2" value="<?php echo $address_2; ?>" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_city; ?></label>
+          <div class="controls">
+            <input type="text" name="city" value="<?php echo $city; ?>" />
+            <?php if ($error_city) { ?>
+            <span class="error"><?php echo $error_city; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></label>
+          <div class="controls">
+            <input type="text" name="postcode" value="<?php echo $postcode; ?>" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_country; ?></label>
+          <div class="controls">
+            <select name="country_id">
+              <option value="false"><?php echo $text_select; ?></option>
+              <?php foreach ($countries as $country) { ?>
+              <?php if ($country['country_id'] == $country_id) { ?>
+              <option value="<?php echo $country['country_id']; ?>" selected="selected"> <?php echo $country['name']; ?> </option>
+              <?php } else { ?>
+              <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select>
+            <?php if ($error_country) { ?>
+            <span class="error"><?php echo $error_country; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_zone; ?></label>
+          <div class="controls">
+            <select name="zone_id">
+            </select>
+            <?php if ($error_zone) { ?>
+            <span class="error"><?php echo $error_zone; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_geocode; ?></label>
+          <div class="controls">
+            <input id="geocode" type="text" name="geocode" value="<?php echo $geocode; ?>" />
+            <input type="button" onclick="getGeoCode()" value="<?php echo $button_geocode; ?>" class="btn" />
+            <?php if ($error_geocode) { ?>
+            <span class="error"><?php echo $error_geocode; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
+          <div class="controls">
+            <div class="image"><img src="<?php echo $thumb; ?>" alt="" id="thumb" />
+              <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
+              <br />
+              <a onclick="image_upload('image', 'thumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a></div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_open; ?></label>
+          <div class="controls">
+            <textarea name="open" cols="40" rows="5"><?php echo $open; ?></textarea>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_comment; ?></label>
+          <div class="controls">
+            <textarea name="comment" cols="40" rows="5"><?php echo $comment; ?></textarea>
+          </div>
+        </div>
       </form>
     </div>
   </div>

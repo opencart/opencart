@@ -11,145 +11,165 @@
   <div class="box">
     <div class="heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-        <?php if ($coupon_id) { ?>
-        <li><a href="#tab-history" data-toggle="tab"><?php echo $tab_history; ?></a></li>
-        <?php } ?>
-      </ul>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+          <?php if ($coupon_id) { ?>
+          <li><a href="#tab-history" data-toggle="tab"><?php echo $tab_history; ?></a></li>
+          <?php } ?>
+        </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
-            <table class="form">
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_name; ?></td>
-                <td><input name="name" value="<?php echo $name; ?>" />
-                  <?php if ($error_name) { ?>
-                  <span class="error"><?php echo $error_name; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_code; ?></td>
-                <td><input type="text" name="code" value="<?php echo $code; ?>" />
-                  <?php if ($error_code) { ?>
-                  <span class="error"><?php echo $error_code; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_type; ?></td>
-                <td><select name="type">
-                    <?php if ($type == 'P') { ?>
-                    <option value="P" selected="selected"><?php echo $text_percent; ?></option>
-                    <?php } else { ?>
-                    <option value="P"><?php echo $text_percent; ?></option>
-                    <?php } ?>
-                    <?php if ($type == 'F') { ?>
-                    <option value="F" selected="selected"><?php echo $text_amount; ?></option>
-                    <?php } else { ?>
-                    <option value="F"><?php echo $text_amount; ?></option>
-                    <?php } ?>
-                  </select></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_discount; ?></td>
-                <td><input type="text" name="discount" value="<?php echo $discount; ?>" /></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_total; ?></td>
-                <td><input type="text" name="total" value="<?php echo $total; ?>" /></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_logged; ?></td>
-                <td><?php if ($logged) { ?>
-                  <input type="radio" name="logged" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="logged" value="0" />
-                  <?php echo $text_no; ?>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
+              <div class="controls">
+                <input name="name" value="<?php echo $name; ?>" />
+                <?php if ($error_name) { ?>
+                <span class="error"><?php echo $error_name; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_code; ?></label>
+              <div class="controls">
+                <input type="text" name="code" value="<?php echo $code; ?>" />
+                <?php if ($error_code) { ?>
+                <span class="error"><?php echo $error_code; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_type; ?></label>
+              <div class="controls">
+                <select name="type">
+                  <?php if ($type == 'P') { ?>
+                  <option value="P" selected="selected"><?php echo $text_percent; ?></option>
                   <?php } else { ?>
-                  <input type="radio" name="logged" value="1" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="logged" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_shipping; ?></td>
-                <td><?php if ($shipping) { ?>
-                  <input type="radio" name="shipping" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="shipping" value="0" />
-                  <?php echo $text_no; ?>
+                  <option value="P"><?php echo $text_percent; ?></option>
+                  <?php } ?>
+                  <?php if ($type == 'F') { ?>
+                  <option value="F" selected="selected"><?php echo $text_amount; ?></option>
                   <?php } else { ?>
-                  <input type="radio" name="shipping" value="1" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="shipping" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_product; ?></td>
-                <td><input type="text" name="product" value="" /></td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td><div id="coupon-product" class="scrollbox">
-                    <?php $class = 'odd'; ?>
-                    <?php foreach ($coupon_product as $coupon_product) { ?>
-                    <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                    <div id="coupon-product<?php echo $coupon_product['product_id']; ?>" class="<?php echo $class; ?>"> <?php echo $coupon_product['name']; ?><img src="view/image/icon-delete.png" alt="" />
-                      <input type="hidden" name="coupon_product[]" value="<?php echo $coupon_product['product_id']; ?>" />
-                    </div>
-                    <?php } ?>
-                  </div></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_category; ?></td>
-                <td><input type="text" name="category" value="" /></td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td><div id="coupon-category" class="scrollbox">
-                    <?php $class = 'odd'; ?>
-                    <?php foreach ($coupon_category as $coupon_category) { ?>
-                    <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                    <div id="coupon-category<?php echo $coupon_category['category_id']; ?>" class="<?php echo $class; ?>"> <?php echo $coupon_category['name']; ?><img src="view/image/icon-delete.png" alt="" />
-                      <input type="hidden" name="coupon_category[]" value="<?php echo $coupon_category['category_id']; ?>" />
-                    </div>
-                    <?php } ?>
-                  </div></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_date_start; ?></td>
-                <td><input type="text" name="date_start" value="<?php echo $date_start; ?>" size="12" id="date-start" /></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_date_end; ?></td>
-                <td><input type="text" name="date_end" value="<?php echo $date_end; ?>" size="12" id="date-end" /></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_uses_total; ?></td>
-                <td><input type="text" name="uses_total" value="<?php echo $uses_total; ?>" /></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_uses_customer; ?></td>
-                <td><input type="text" name="uses_customer" value="<?php echo $uses_customer; ?>" /></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_status; ?></td>
-                <td><select name="status">
-                    <?php if ($status) { ?>
-                    <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                    <option value="0"><?php echo $text_disabled; ?></option>
-                    <?php } else { ?>
-                    <option value="1"><?php echo $text_enabled; ?></option>
-                    <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                    <?php } ?>
-                  </select></td>
-              </tr>
-            </table>
+                  <option value="F"><?php echo $text_amount; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_discount; ?></label>
+              <div class="controls">
+                <input type="text" name="discount" value="<?php echo $discount; ?>" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
+              <div class="controls">
+                <input type="text" name="total" value="<?php echo $total; ?>" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_logged; ?></label>
+              <div class="controls">
+                <?php if ($logged) { ?>
+                <input type="radio" name="logged" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="logged" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="logged" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="logged" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_shipping; ?></label>
+              <div class="controls">
+                <?php if ($shipping) { ?>
+                <input type="radio" name="shipping" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="shipping" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="shipping" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="shipping" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_product; ?></label>
+              <div class="controls">
+                <input type="text" name="product" value="" />
+                <div id="coupon-product" class="scrollbox">
+                  <?php $class = 'odd'; ?>
+                  <?php foreach ($coupon_product as $coupon_product) { ?>
+                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                  <div id="coupon-product<?php echo $coupon_product['product_id']; ?>" class="<?php echo $class; ?>"> <?php echo $coupon_product['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                    <input type="hidden" name="coupon_product[]" value="<?php echo $coupon_product['product_id']; ?>" />
+                  </div>
+                  <?php } ?>
+                </div>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_category; ?></label>
+              <div class="controls">
+                <input type="text" name="category" value="" />
+                <div id="coupon-category" class="scrollbox">
+                  <?php $class = 'odd'; ?>
+                  <?php foreach ($coupon_category as $coupon_category) { ?>
+                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                  <div id="coupon-category<?php echo $coupon_category['category_id']; ?>" class="<?php echo $class; ?>"> <?php echo $coupon_category['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                    <input type="hidden" name="coupon_category[]" value="<?php echo $coupon_category['category_id']; ?>" />
+                  </div>
+                  <?php } ?>
+                </div>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_date_start; ?></label>
+              <div class="controls">
+                <input type="text" name="date_start" value="<?php echo $date_start; ?>" size="12" id="date-start" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_date_end; ?></label>
+              <div class="controls">
+                <input type="text" name="date_end" value="<?php echo $date_end; ?>" size="12" id="date-end" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_uses_total; ?></label>
+              <div class="controls">
+                <input type="text" name="uses_total" value="<?php echo $uses_total; ?>" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_uses_customer; ?></label>
+              <div class="controls">
+                <input type="text" name="uses_customer" value="<?php echo $uses_customer; ?>" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+              <div class="controls">
+                <select name="status">
+                  <?php if ($status) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
           </div>
           <?php if ($coupon_id) { ?>
           <div class="tab-pane" id="tab-history">
@@ -157,9 +177,8 @@
           </div>
           <?php } ?>
         </div>
-       
       </form>
-     </div>
+    </div>
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -202,7 +221,6 @@ $('#coupon-product div img').on('click', function() {
 	$('#coupon-product div:odd').attr('class', 'odd');
 	$('#coupon-product div:even').attr('class', 'even');	
 });
-
 
 $('input[name=\'category\']').autocomplete({
 	delay: 500,

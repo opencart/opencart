@@ -11,19 +11,19 @@
   <div class="box">
     <div class="heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-        <?php if ($customer_id) { ?>
-        <li><a href="#tab-history" data-toggle="tab"><?php echo $tab_history; ?></a></li>
-        <li><a href="#tab-transaction" data-toggle="tab"><?php echo $tab_transaction; ?></a></li>
-        <li><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
-        <?php } ?>
-        <li><a href="#tab-ip" data-toggle="tab"><?php echo $tab_ip; ?></a></li>
-      </ul>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+          <?php if ($customer_id) { ?>
+          <li><a href="#tab-history" data-toggle="tab"><?php echo $tab_history; ?></a></li>
+          <li><a href="#tab-transaction" data-toggle="tab"><?php echo $tab_transaction; ?></a></li>
+          <li><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
+          <?php } ?>
+          <li><a href="#tab-ip" data-toggle="tab"><?php echo $tab_ip; ?></a></li>
+        </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
             <div class="tabbable tabs-left">
@@ -38,170 +38,210 @@
               </ul>
               <div class="tab-content">
                 <div class="tab-pane active" id="tab-customer">
-                  <table class="form">
-                    <tr>
-                      <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
-                      <td><input type="text" name="firstname" value="<?php echo $firstname; ?>" />
-                        <?php if ($error_firstname) { ?>
-                        <span class="error"><?php echo $error_firstname; ?></span>
-                        <?php } ?></td>
-                    </tr>
-                    <tr>
-                      <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
-                      <td><input type="text" name="lastname" value="<?php echo $lastname; ?>" />
-                        <?php if ($error_lastname) { ?>
-                        <span class="error"><?php echo $error_lastname; ?></span>
-                        <?php } ?></td>
-                    </tr>
-                    <tr>
-                      <td><span class="required">*</span> <?php echo $entry_email; ?></td>
-                      <td><input type="text" name="email" value="<?php echo $email; ?>" />
-                        <?php if ($error_email) { ?>
-                        <span class="error"><?php echo $error_email; ?></span>
-                        <?php  } ?></td>
-                    </tr>
-                    <tr>
-                      <td><span class="required">*</span> <?php echo $entry_telephone; ?></td>
-                      <td><input type="text" name="telephone" value="<?php echo $telephone; ?>" />
-                        <?php if ($error_telephone) { ?>
-                        <span class="error"><?php echo $error_telephone; ?></span>
-                        <?php  } ?></td>
-                    </tr>
-                    <tr>
-                      <td><?php echo $entry_fax; ?></td>
-                      <td><input type="text" name="fax" value="<?php echo $fax; ?>" /></td>
-                    </tr>
-                    <tr>
-                      <td><?php echo $entry_password; ?></td>
-                      <td><input type="password" name="password" value="<?php echo $password; ?>"  />
-                        <?php if ($error_password) { ?>
-                        <span class="error"><?php echo $error_password; ?></span>
-                        <?php  } ?></td>
-                    </tr>
-                    <tr>
-                      <td><?php echo $entry_confirm; ?></td>
-                      <td><input type="password" name="confirm" value="<?php echo $confirm; ?>" />
-                        <?php if ($error_confirm) { ?>
-                        <span class="error"><?php echo $error_confirm; ?></span>
-                        <?php  } ?></td>
-                    </tr>
-                    <tr>
-                      <td><?php echo $entry_newsletter; ?></td>
-                      <td><select name="newsletter">
-                          <?php if ($newsletter) { ?>
-                          <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                          <option value="0"><?php echo $text_disabled; ?></option>
-                          <?php } else { ?>
-                          <option value="1"><?php echo $text_enabled; ?></option>
-                          <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                          <?php } ?>
-                        </select></td>
-                    </tr>
-                    <tr>
-                      <td><?php echo $entry_customer_group; ?></td>
-                      <td><select name="customer_group_id">
-                          <?php foreach ($customer_groups as $customer_group) { ?>
-                          <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
-                          <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
-                          <?php } else { ?>
-                          <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
-                          <?php } ?>
-                          <?php } ?>
-                        </select></td>
-                    </tr>
-                    <tr>
-                      <td><?php echo $entry_status; ?></td>
-                      <td><select name="status">
-                          <?php if ($status) { ?>
-                          <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                          <option value="0"><?php echo $text_disabled; ?></option>
-                          <?php } else { ?>
-                          <option value="1"><?php echo $text_enabled; ?></option>
-                          <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                          <?php } ?>
-                        </select></td>
-                    </tr>
-                  </table>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
+                    <div class="controls">
+                      <input type="text" name="firstname" value="<?php echo $firstname; ?>" />
+                      <?php if ($error_firstname) { ?>
+                      <span class="error"><?php echo $error_firstname; ?></span>
+                      <?php } ?>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
+                    <div class="controls">
+                      <input type="text" name="lastname" value="<?php echo $lastname; ?>" />
+                      <?php if ($error_lastname) { ?>
+                      <span class="error"><?php echo $error_lastname; ?></span>
+                      <?php } ?>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_email; ?></label>
+                    <div class="controls">
+                      <input type="text" name="email" value="<?php echo $email; ?>" />
+                      <?php if ($error_email) { ?>
+                      <span class="error"><?php echo $error_email; ?></span>
+                      <?php  } ?>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_telephone; ?></label>
+                    <div class="controls">
+                      <input type="text" name="telephone" value="<?php echo $telephone; ?>" />
+                      <?php if ($error_telephone) { ?>
+                      <span class="error"><?php echo $error_telephone; ?></span>
+                      <?php  } ?>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><?php echo $entry_fax; ?></label>
+                    <div class="controls">
+                      <input type="text" name="fax" value="<?php echo $fax; ?>" />
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><?php echo $entry_password; ?></label>
+                    <div class="controls">
+                      <input type="password" name="password" value="<?php echo $password; ?>"  />
+                      <?php if ($error_password) { ?>
+                      <span class="error"><?php echo $error_password; ?></span>
+                      <?php  } ?>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><?php echo $entry_confirm; ?></label>
+                    <div class="controls">
+                      <input type="password" name="confirm" value="<?php echo $confirm; ?>" />
+                      <?php if ($error_confirm) { ?>
+                      <span class="error"><?php echo $error_confirm; ?></span>
+                      <?php  } ?>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><?php echo $entry_newsletter; ?></label>
+                    <div class="controls">
+                      <select name="newsletter">
+                        <?php if ($newsletter) { ?>
+                        <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                        <option value="0"><?php echo $text_disabled; ?></option>
+                        <?php } else { ?>
+                        <option value="1"><?php echo $text_enabled; ?></option>
+                        <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                        <?php } ?>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><?php echo $entry_customer_group; ?></label>
+                    <div class="controls">
+                      <select name="customer_group_id">
+                        <?php foreach ($customer_groups as $customer_group) { ?>
+                        <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+                        <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+                        <?php } else { ?>
+                        <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                        <?php } ?>
+                        <?php } ?>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                    <div class="controls">
+                      <select name="status">
+                        <?php if ($status) { ?>
+                        <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                        <option value="0"><?php echo $text_disabled; ?></option>
+                        <?php } else { ?>
+                        <option value="1"><?php echo $text_enabled; ?></option>
+                        <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                        <?php } ?>
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 <?php $address_row = 1; ?>
                 <?php foreach ($addresses as $address) { ?>
                 <div class="tab-pane" id="tab-address<?php echo $address_row; ?>">
                   <input type="hidden" name="address[<?php echo $address_row; ?>][address_id]" value="<?php echo $address['address_id']; ?>" />
-                  <table class="form">
-                    <tr>
-                      <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
-                      <td><input type="text" name="address[<?php echo $address_row; ?>][firstname]" value="<?php echo $address['firstname']; ?>" />
-                        <?php if (isset($error_address_firstname[$address_row])) { ?>
-                        <span class="error"><?php echo $error_address_firstname[$address_row]; ?></span>
-                        <?php } ?></td>
-                    </tr>
-                    <tr>
-                      <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
-                      <td><input type="text" name="address[<?php echo $address_row; ?>][lastname]" value="<?php echo $address['lastname']; ?>" />
-                        <?php if (isset($error_address_lastname[$address_row])) { ?>
-                        <span class="error"><?php echo $error_address_lastname[$address_row]; ?></span>
-                        <?php } ?></td>
-                    </tr>
-                    <tr>
-                      <td><?php echo $entry_company; ?></td>
-                      <td><input type="text" name="address[<?php echo $address_row; ?>][company]" value="<?php echo $address['company']; ?>" /></td>
-                    </tr>
-                    <tr>
-                      <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
-                      <td><input type="text" name="address[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" />
-                        <?php if (isset($error_address_address_1[$address_row])) { ?>
-                        <span class="error"><?php echo $error_address_address_1[$address_row]; ?></span>
-                        <?php } ?></td>
-                    </tr>
-                    <tr>
-                      <td><?php echo $entry_address_2; ?></td>
-                      <td><input type="text" name="address[<?php echo $address_row; ?>][address_2]" value="<?php echo $address['address_2']; ?>" /></td>
-                    </tr>
-                    <tr>
-                      <td><span class="required">*</span> <?php echo $entry_city; ?></td>
-                      <td><input type="text" name="address[<?php echo $address_row; ?>][city]" value="<?php echo $address['city']; ?>" />
-                        <?php if (isset($error_address_city[$address_row])) { ?>
-                        <span class="error"><?php echo $error_address_city[$address_row]; ?></span>
-                        <?php } ?></td>
-                    </tr>
-                    <tr>
-                      <td><span id="postcode-required<?php echo $address_row; ?>" class="required">*</span> <?php echo $entry_postcode; ?></td>
-                      <td><input type="text" name="address[<?php echo $address_row; ?>][postcode]" value="<?php echo $address['postcode']; ?>" /></td>
-                    </tr>
-                    <tr>
-                      <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-                      <td><select name="address[<?php echo $address_row; ?>][country_id]" onchange="country(this, '<?php echo $address_row; ?>', '<?php echo $address['zone_id']; ?>');">
-                          <option value=""><?php echo $text_select; ?></option>
-                          <?php foreach ($countries as $country) { ?>
-                          <?php if ($country['country_id'] == $address['country_id']) { ?>
-                          <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-                          <?php } else { ?>
-                          <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-                          <?php } ?>
-                          <?php } ?>
-                        </select>
-                        <?php if (isset($error_address_country[$address_row])) { ?>
-                        <span class="error"><?php echo $error_address_country[$address_row]; ?></span>
-                        <?php } ?></td>
-                    </tr>
-                    <tr>
-                      <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
-                      <td><select name="address[<?php echo $address_row; ?>][zone_id]">
-                        </select>
-                        <?php if (isset($error_address_zone[$address_row])) { ?>
-                        <span class="error"><?php echo $error_address_zone[$address_row]; ?></span>
-                        <?php } ?></td>
-                    </tr>
-                    <tr>
-                      <td><?php echo $entry_default; ?></td>
-                      <td><?php if (($address['address_id'] == $address_id) || !$addresses) { ?>
-                        <input type="radio" name="address[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" checked="checked" /></td>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
+                    <div class="controls">
+                      <input type="text" name="address[<?php echo $address_row; ?>][firstname]" value="<?php echo $address['firstname']; ?>" />
+                      <?php if (isset($error_address_firstname[$address_row])) { ?>
+                      <span class="error"><?php echo $error_address_firstname[$address_row]; ?></span>
+                      <?php } ?>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
+                    <div class="controls">
+                      <input type="text" name="address[<?php echo $address_row; ?>][lastname]" value="<?php echo $address['lastname']; ?>" />
+                      <?php if (isset($error_address_lastname[$address_row])) { ?>
+                      <span class="error"><?php echo $error_address_lastname[$address_row]; ?></span>
+                      <?php } ?>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><?php echo $entry_company; ?></label>
+                    <div class="controls">
+                      <input type="text" name="address[<?php echo $address_row; ?>][company]" value="<?php echo $address['company']; ?>" />
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_address_1; ?></label>
+                    <div class="controls">
+                      <input type="text" name="address[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" />
+                      <?php if (isset($error_address_address_1[$address_row])) { ?>
+                      <span class="error"><?php echo $error_address_address_1[$address_row]; ?></span>
+                      <?php } ?>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><?php echo $entry_address_2; ?></label>
+                    <div class="controls">
+                      <input type="text" name="address[<?php echo $address_row; ?>][address_2]" value="<?php echo $address['address_2']; ?>" />
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_city; ?></label>
+                    <div class="controls">
+                      <input type="text" name="address[<?php echo $address_row; ?>][city]" value="<?php echo $address['city']; ?>" />
+                      <?php if (isset($error_address_city[$address_row])) { ?>
+                      <span class="error"><?php echo $error_address_city[$address_row]; ?></span>
+                      <?php } ?>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name">
+                    <<span id="postcode-required<?php echo $address_row; ?>" class="required">*</span> <?php echo $entry_postcode; ?>/label>
+                    <div class="controls">
+                      <input type="text" name="address[<?php echo $address_row; ?>][postcode]" value="<?php echo $address['postcode']; ?>" />
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_country; ?></label>
+                    <div class="controls">
+                      <select name="address[<?php echo $address_row; ?>][country_id]" onchange="country(this, '<?php echo $address_row; ?>', '<?php echo $address['zone_id']; ?>');">
+                        <option value=""><?php echo $text_select; ?></option>
+                        <?php foreach ($countries as $country) { ?>
+                        <?php if ($country['country_id'] == $address['country_id']) { ?>
+                        <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+                        <?php } else { ?>
+                        <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                        <?php } ?>
+                        <?php } ?>
+                      </select>
+                      <?php if (isset($error_address_country[$address_row])) { ?>
+                      <span class="error"><?php echo $error_address_country[$address_row]; ?></span>
+                      <?php } ?>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_zone; ?></label>
+                    <div class="controls">
+                      <select name="address[<?php echo $address_row; ?>][zone_id]">
+                      </select>
+                      <?php if (isset($error_address_zone[$address_row])) { ?>
+                      <span class="error"><?php echo $error_address_zone[$address_row]; ?></span>
+                      <?php } ?>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"><?php echo $entry_default; ?></label>
+                    <div class="controls">
+                      <?php if (($address['address_id'] == $address_id) || !$addresses) { ?>
+                      <input type="radio" name="address[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" checked="checked" />
                       <?php } else { ?>
                       <input type="radio" name="address[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" />
-                        </td>
                       <?php } ?>
-                    </tr>
-                  </table>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="input-name"></label>
+                    <div class="controls"> </div>
+                  </div>
                 </div>
                 <?php $address_row++; ?>
                 <?php } ?>
@@ -211,46 +251,39 @@
           <?php if ($customer_id) { ?>
           <div class="tab-pane" id="tab-history">
             <div id="history"></div>
-            <table class="form">
-              <tr>
-                <td><?php echo $entry_comment; ?></td>
-                <td><textarea name="comment" cols="40" rows="8" style="width: 99%;"></textarea></td>
-              </tr>
-              <tr>
-                <td colspan="2" style="text-align: right;"><a id="button-history" class="btn"><span><?php echo $button_add_history; ?></span></a></td>
-              </tr>
-            </table>
-          </div>
+            <?php echo $entry_comment; ?>
+            <textarea name="comment" cols="40" rows="8" style="width: 99%;"></textarea>
+            <a id="button-history" class="btn"><span><?php echo $button_add_history; ?></span></a> </div>
           <div class="tab-pane" id="tab-transaction">
-            <table class="form">
-              <tr>
-                <td><?php echo $entry_description; ?></td>
-                <td><input type="text" name="description" value="" /></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_amount; ?></td>
-                <td><input type="text" name="amount" value="" /></td>
-              </tr>
-              <tr>
-                <td colspan="2" style="text-align: right;"><a id="button-transaction" class="btn" onclick="addTransaction();"><span><?php echo $button_add_transaction; ?></span></a></td>
-              </tr>
-            </table>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_description; ?></label>
+              <div class="controls">
+                <input type="text" name="description" value="" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_amount; ?></label>
+              <div class="controls">
+                <input type="text" name="amount" value="" />
+              </div>
+            </div>
+            <a id="button-transaction" class="btn" onclick="addTransaction();"><span><?php echo $button_add_transaction; ?></span></a>
             <div id="transaction"></div>
           </div>
           <div class="tab-pane" id="tab-reward">
-            <table class="form">
-              <tr>
-                <td><?php echo $entry_description; ?></td>
-                <td><input type="text" name="description" value="" /></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_points; ?></td>
-                <td><input type="text" name="points" value="" /></td>
-              </tr>
-              <tr>
-                <td colspan="2" style="text-align: right;"><a id="button-reward" class="btn" onclick="addRewardPoints();"><span><?php echo $button_add_reward; ?></span></a></td>
-              </tr>
-            </table>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_description; ?></label>
+              <div class="controls">
+                <input type="text" name="description" value="" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_points; ?></label>
+              <div class="controls">
+                <input type="text" name="points" value="" />
+              </div>
+            </div>
+            <a id="button-reward" class="btn" onclick="addRewardPoints();"><span><?php echo $button_add_reward; ?></span></a>
             <div id="reward"></div>
           </div>
           <?php } ?>
@@ -350,53 +383,62 @@ var address_row = <?php echo $address_row; ?>;
 function addAddress() {	
 	html  = '<div class="tab-pane" id="tab-address' + address_row + '">';
 	html += '  <input type="hidden" name="address[' + address_row + '][address_id]" value="" />';
-	html += '  <table class="form">'; 
-	html += '    <tr>';
-    html += '	   <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>';
-    html += '	   <td><input type="text" name="address[' + address_row + '][firstname]" value="" /></td>';
-    html += '    </tr>';
-    html += '    <tr>';
-    html += '      <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>';
-    html += '      <td><input type="text" name="address[' + address_row + '][lastname]" value="" /></td>';
-    html += '    </tr>';
-    html += '    <tr>';
-    html += '      <td><?php echo $entry_company; ?></td>';
-    html += '      <td><input type="text" name="address[' + address_row + '][company]" value="" /></td>';
-    html += '    </tr>';			
-    html += '    <tr>';
-    html += '      <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>';
-    html += '      <td><input type="text" name="address[' + address_row + '][address_1]" value="" /></td>';
-    html += '    </tr>';
-    html += '    <tr>';
-    html += '      <td><?php echo $entry_address_2; ?></td>';
-    html += '      <td><input type="text" name="address[' + address_row + '][address_2]" value="" /></td>';
-    html += '    </tr>';
-    html += '    <tr>';
-    html += '      <td><span class="required">*</span> <?php echo $entry_city; ?></td>';
-    html += '      <td><input type="text" name="address[' + address_row + '][city]" value="" /></td>';
-    html += '    </tr>';
-    html += '    <tr>';
-    html += '      <td><span id="postcode-required' + address_row + '" class="required">*</span> <?php echo $entry_postcode; ?></td>';
-    html += '      <td><input type="text" name="address[' + address_row + '][postcode]" value="" /></td>';
-    html += '    </tr>';
-	html += '    <tr>';
-    html += '      <td><span class="required">*</span> <?php echo $entry_country; ?></td>';
-    html += '      <td><select name="address[' + address_row + '][country_id]" onchange="country(this, \'' + address_row + '\', \'0\');">';
+
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_firstname; ?></label>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][firstname]" value="" /></div>';
+	html += '  </div>'; 
+	
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_lastname; ?></label>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][lastname]" value="" /></div>';
+	html += '  </div>'; 
+	
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-name"><?php echo $entry_company; ?></label>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][company]" value="" /></div>';
+	html += '  </div>'; 
+	
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_address_1; ?></label>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][address_1]" value="" /></div>';
+	html += '  </div>'; 		
+	
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-name"><?php echo $entry_address_2; ?></label>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][address_2]" value="" /></div>';
+	html += '  </div>'; 
+	
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_city; ?></label>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][city]" value="" /></div>';
+	html += '  </div>'; 
+	
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-name"><span id="postcode-required' + address_row + '" class="required">*</span> <?php echo $entry_postcode; ?></label>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][postcode]" value="" /></div>';
+	html += '  </div>'; 
+
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_country; ?></label>';
+	html += '    <div class="controls"><select name="address[' + address_row + '][country_id]" onchange="country(this, \'' + address_row + '\', \'0\');">';
     html += '         <option value=""><?php echo $text_select; ?></option>';
     <?php foreach ($countries as $country) { ?>
     html += '         <option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
     <?php } ?>
-    html += '      </select></td>';
-    html += '    </tr>';
-    html += '    <tr>';
-    html += '      <td><span class="required">*</span> <?php echo $entry_zone; ?></td>';
-    html += '      <td><select name="address[' + address_row + '][zone_id]"><option value="false"><?php echo $this->language->get('text_none'); ?></option></select></td>';
-    html += '    </tr>';
-	html += '    <tr>';
-    html += '      <td><?php echo $entry_default; ?></td>';
-    html += '      <td><input type="radio" name="address[' + address_row + '][default]" value="1" /></td>';
-    html += '    </tr>';
-    html += '  </table>';
+    html += '      </select></div>';
+	html += '  </div>'; 
+
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_zone; ?></label>';
+	html += '    <div class="controls"><select name="address[' + address_row + '][zone_id]"><option value="false"><?php echo $this->language->get('text_none'); ?></option></select></div>';
+	html += '  </div>'; 
+
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-name"><?php echo $entry_default; ?></label>';
+	html += '    <div class="controls"><input type="radio" name="address[' + address_row + '][default]" value="1" /></div>';
+	html += '  </div>'; 
+								
     html += '</div>';
 	
 	$('#tab-general .tab-content').append(html);

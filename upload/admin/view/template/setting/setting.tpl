@@ -14,113 +14,128 @@
   <div class="box">
     <div class="heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-        <li><a href="#tab-store" data-toggle="tab"><?php echo $tab_store; ?></a></li>
-        <li><a href="#tab-local" data-toggle="tab"><?php echo $tab_local; ?></a></li>
-        <li><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
-        <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
-        <li><a href="#tab-ftp" data-toggle="tab"><?php echo $tab_ftp; ?></a></li>
-        <li><a href="#tab-mail" data-toggle="tab"><?php echo $tab_mail; ?></a></li>
-        <li><a href="#tab-fraud" data-toggle="tab"><?php echo $tab_fraud; ?></a></li>
-        <li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>
-      </ul>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+          <li><a href="#tab-store" data-toggle="tab"><?php echo $tab_store; ?></a></li>
+          <li><a href="#tab-local" data-toggle="tab"><?php echo $tab_local; ?></a></li>
+          <li><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
+          <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
+          <li><a href="#tab-ftp" data-toggle="tab"><?php echo $tab_ftp; ?></a></li>
+          <li><a href="#tab-mail" data-toggle="tab"><?php echo $tab_mail; ?></a></li>
+          <li><a href="#tab-fraud" data-toggle="tab"><?php echo $tab_fraud; ?></a></li>
+          <li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>
+        </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
-            <table class="form">
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_name; ?></td>
-                <td><input type="text" name="config_name" value="<?php echo $config_name; ?>" size="40" />
-                  <?php if ($error_name) { ?>
-                  <span class="error"><?php echo $error_name; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_owner; ?></td>
-                <td><input type="text" name="config_owner" value="<?php echo $config_owner; ?>" size="40" />
-                  <?php if ($error_owner) { ?>
-                  <span class="error"><?php echo $error_owner; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_address; ?></td>
-                <td><textarea name="config_address" cols="40" rows="5"><?php echo $config_address; ?></textarea>
-                  <?php if ($error_address) { ?>
-                  <span class="error"><?php echo $error_address; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_email; ?></td>
-                <td><input type="text" name="config_email" value="<?php echo $config_email; ?>" size="40" />
-                  <?php if ($error_email) { ?>
-                  <span class="error"><?php echo $error_email; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_telephone; ?></td>
-                <td><input type="text" name="config_telephone" value="<?php echo $config_telephone; ?>" />
-                  <?php if ($error_telephone) { ?>
-                  <span class="error"><?php echo $error_telephone; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_fax; ?></td>
-                <td><input type="text" name="config_fax" value="<?php echo $config_fax; ?>" /></td>
-              </tr>
-            </table>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
+              <div class="controls">
+                <input type="text" name="config_name" value="<?php echo $config_name; ?>" size="40" />
+                <?php if ($error_name) { ?>
+                <span class="error"><?php echo $error_name; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_owner; ?></label>
+              <div class="controls">
+                <input type="text" name="config_owner" value="<?php echo $config_owner; ?>" size="40" />
+                <?php if ($error_owner) { ?>
+                <span class="error"><?php echo $error_owner; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_address; ?></label>
+              <div class="controls">
+                <textarea name="config_address" cols="40" rows="5"><?php echo $config_address; ?></textarea>
+                <?php if ($error_address) { ?>
+                <span class="error"><?php echo $error_address; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_email; ?></label>
+              <div class="controls">
+                <input type="text" name="config_email" value="<?php echo $config_email; ?>" size="40" />
+                <?php if ($error_email) { ?>
+                <span class="error"><?php echo $error_email; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_telephone; ?></label>
+              <div class="controls">
+                <input type="text" name="config_telephone" value="<?php echo $config_telephone; ?>" />
+                <?php if ($error_telephone) { ?>
+                <span class="error"><?php echo $error_telephone; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_fax; ?></label>
+              <div class="controls">
+                <input type="text" name="config_fax" value="<?php echo $config_fax; ?>" />
+              </div>
+            </div>
           </div>
           <div class="tab-pane" id="tab-store">
-            <table class="form">
-              <tr>
-                <td><span class="required">*</span> <?php echo $entry_title; ?></td>
-                <td><input type="text" name="config_title" value="<?php echo $config_title; ?>" />
-                  <?php if ($error_title) { ?>
-                  <span class="error"><?php echo $error_title; ?></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_meta_description; ?></td>
-                <td><textarea name="config_meta_description" cols="40" rows="5"><?php echo $config_meta_description; ?></textarea></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_template; ?></td>
-                <td><select name="config_template" onchange="$('#template').load('index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value));">
-                    <?php foreach ($templates as $template) { ?>
-                    <?php if ($template == $config_template) { ?>
-                    <option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $template; ?>"><?php echo $template; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                  </select></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td id="template"></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_layout; ?></td>
-                <td><select name="config_layout_id">
-                    <?php foreach ($layouts as $layout) { ?>
-                    <?php if ($layout['layout_id'] == $config_layout_id) { ?>
-                    <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                  </select></td>
-              </tr>
-            </table>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_title; ?></label>
+              <div class="controls">
+                <input type="text" name="config_title" value="<?php echo $config_title; ?>" />
+                <?php if ($error_title) { ?>
+                <span class="error"><?php echo $error_title; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_meta_description; ?></label>
+              <div class="controls">
+                <textarea name="config_meta_description" cols="40" rows="5"><?php echo $config_meta_description; ?></textarea>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_template; ?></label>
+              <div class="controls">
+                <select name="config_template" onchange="$('#template').load('index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value));">
+                  <?php foreach ($templates as $template) { ?>
+                  <?php if ($template == $config_template) { ?>
+                  <option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $template; ?>"><?php echo $template; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+                <div id="template"> </div>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_layout; ?></label>
+              <div class="controls">
+                <select name="config_layout_id">
+                  <?php foreach ($layouts as $layout) { ?>
+                  <?php if ($layout['layout_id'] == $config_layout_id) { ?>
+                  <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
           </div>
           <div class="tab-pane" id="tab-local">
-            <table class="form">
-              <tr>
-                <td><?php echo $entry_country; ?></td>
-                <td><select name="config_country_id">
+          
+<div class="control-group">
+  <label class="control-label" for="input-name"><?php echo $entry_country; ?></label>
+  <div class="controls">
+
+<select name="config_country_id">
                     <?php foreach ($countries as $country) { ?>
                     <?php if ($country['country_id'] == $config_country_id) { ?>
                     <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
@@ -128,16 +143,21 @@
                     <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
                     <?php } ?>
                     <?php } ?>
-                  </select></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_zone; ?></td>
-                <td><select name="config_zone_id">
-                  </select></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_language; ?></td>
-                <td><select name="config_language">
+                  </select>
+  </div>
+</div>   
+<div class="control-group">
+  <label class="control-label" for="input-name"><?php echo $entry_zone; ?></label>
+  <div class="controls">
+
+<select name="config_zone_id">
+                  </select>
+  </div>
+</div>   
+<div class="control-group">
+  <label class="control-label" for="input-name"><?php echo $entry_language; ?></label>
+  <div class="controls">
+<select name="config_language">
                     <?php foreach ($languages as $language) { ?>
                     <?php if ($language['code'] == $config_language) { ?>
                     <option value="<?php echo $language['code']; ?>" selected="selected"><?php echo $language['name']; ?></option>
@@ -145,11 +165,14 @@
                     <option value="<?php echo $language['code']; ?>"><?php echo $language['name']; ?></option>
                     <?php } ?>
                     <?php } ?>
-                  </select></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_admin_language; ?></td>
-                <td><select name="config_admin_language">
+                  </select>
+
+  </div>
+</div>   
+<div class="control-group">
+  <label class="control-label" for="input-name"><?php echo $entry_admin_language; ?></label>
+  <div class="controls">
+<select name="config_admin_language">
                     <?php foreach ($languages as $language) { ?>
                     <?php if ($language['code'] == $config_admin_language) { ?>
                     <option value="<?php echo $language['code']; ?>" selected="selected"><?php echo $language['name']; ?></option>
@@ -157,11 +180,14 @@
                     <option value="<?php echo $language['code']; ?>"><?php echo $language['name']; ?></option>
                     <?php } ?>
                     <?php } ?>
-                  </select></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_currency; ?></td>
-                <td><select name="config_currency">
+                  </select>
+
+  </div>
+</div>   
+<div class="control-group">
+  <label class="control-label" for="input-name"><?php echo $entry_currency; ?></label>
+  <div class="controls">
+<select name="config_currency">
                     <?php foreach ($currencies as $currency) { ?>
                     <?php if ($currency['code'] == $config_currency) { ?>
                     <option value="<?php echo $currency['code']; ?>" selected="selected"><?php echo $currency['title']; ?></option>
@@ -169,7 +195,39 @@
                     <option value="<?php echo $currency['code']; ?>"><?php echo $currency['title']; ?></option>
                     <?php } ?>
                     <?php } ?>
-                  </select></td>
+                  </select>
+
+  </div>
+</div>   
+<div class="control-group">
+  <label class="control-label" for="input-name"></label>
+  <div class="controls">
+
+
+  </div>
+</div>   
+<div class="control-group">
+  <label class="control-label" for="input-name"></label>
+  <div class="controls">
+
+
+  </div>
+</div>   
+<div class="control-group">
+  <label class="control-label" for="input-name"></label>
+  <div class="controls">
+
+
+  </div>
+</div>             
+
+              <tr>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td><?php echo $entry_currency_auto; ?></td>

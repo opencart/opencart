@@ -11,10 +11,11 @@
   <div class="box">
     <div class="heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <div class="tabbable tabs-left">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="tabbable tabs-left">
         <ul class="nav nav-tabs" id="module">
           <?php $module_row = 1; ?>
           <?php foreach ($modules as $module) { ?>
@@ -23,89 +24,93 @@
           <?php } ?>
           <li id="module-add"><?php echo $button_add_module; ?> <img src="view/image/icon-add.png" alt="" onclick="addModule();" /></li>
         </ul>
-        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-          <div class="tab-content">
-            <?php $module_row = 1; ?>
-            <?php foreach ($modules as $module) { ?>
-            <div class="tab-pane" id="tab-module<?php echo $module_row; ?>">
-              <ul class="nav nav-tabs" id="language<?php echo $module_row; ?>">
-                <?php foreach ($languages as $language) { ?>
-                <li><a href="#tab-module<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
-                <?php } ?>
-              </ul>
-              <div class="tab-content">
-                <?php foreach ($languages as $language) { ?>
-                <div class="tab-pane" id="tab-module<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>">
-                  <table class="form">
-                    <tr>
-                      <td><?php echo $entry_description; ?></td>
-                      <td><textarea name="welcome_module[<?php echo $module_row; ?>][description][<?php echo $language['language_id']; ?>]" id="description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>"><?php echo isset($module['description'][$language['language_id']]) ? $module['description'][$language['language_id']] : ''; ?></textarea></td>
-                    </tr>
-                  </table>
+        <div class="tab-content">
+          <?php $module_row = 1; ?>
+          <?php foreach ($modules as $module) { ?>
+          <div class="tab-pane" id="tab-module<?php echo $module_row; ?>">
+            <ul class="nav nav-tabs" id="language<?php echo $module_row; ?>">
+              <?php foreach ($languages as $language) { ?>
+              <li><a href="#tab-module<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
+              <?php } ?>
+            </ul>
+            <div class="tab-content">
+              <?php foreach ($languages as $language) { ?>
+              <div class="tab-pane" id="tab-module<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>">
+                <div class="control-group">
+                  <label class="control-label" for="input-name"><?php echo $entry_description; ?></label>
+                  <div class="controls">
+                    <textarea name="welcome_module[<?php echo $module_row; ?>][description][<?php echo $language['language_id']; ?>]" id="description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>"><?php echo isset($module['description'][$language['language_id']]) ? $module['description'][$language['language_id']] : ''; ?></textarea>
+                  </div>
                 </div>
-                <?php } ?>
               </div>
-              <table class="form">
-                <tr>
-                  <td><?php echo $entry_layout; ?></td>
-                  <td><select name="welcome_module[<?php echo $module_row; ?>][layout_id]">
-                      <?php foreach ($layouts as $layout) { ?>
-                      <?php if ($layout['layout_id'] == $module['layout_id']) { ?>
-                      <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
-                      <?php } else { ?>
-                      <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
-                      <?php } ?>
-                      <?php } ?>
-                    </select></td>
-                </tr>
-                <tr>
-                  <td><?php echo $entry_position; ?></td>
-                  <td><select name="welcome_module[<?php echo $module_row; ?>][position]">
-                      <?php if ($module['position'] == 'content_top') { ?>
-                      <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
-                      <?php } else { ?>
-                      <option value="content_top"><?php echo $text_content_top; ?></option>
-                      <?php } ?>
-                      <?php if ($module['position'] == 'content_bottom') { ?>
-                      <option value="content_bottom" selected="selected"><?php echo $text_content_bottom; ?></option>
-                      <?php } else { ?>
-                      <option value="content_bottom"><?php echo $text_content_bottom; ?></option>
-                      <?php } ?>
-                      <?php if ($module['position'] == 'column_left') { ?>
-                      <option value="column_left" selected="selected"><?php echo $text_column_left; ?></option>
-                      <?php } else { ?>
-                      <option value="column_left"><?php echo $text_column_left; ?></option>
-                      <?php } ?>
-                      <?php if ($module['position'] == 'column_right') { ?>
-                      <option value="column_right" selected="selected"><?php echo $text_column_right; ?></option>
-                      <?php } else { ?>
-                      <option value="column_right"><?php echo $text_column_right; ?></option>
-                      <?php } ?>
-                    </select></td>
-                </tr>
-                <tr>
-                  <td><?php echo $entry_status; ?></td>
-                  <td><select name="welcome_module[<?php echo $module_row; ?>][status]">
-                      <?php if ($module['status']) { ?>
-                      <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                      <option value="0"><?php echo $text_disabled; ?></option>
-                      <?php } else { ?>
-                      <option value="1"><?php echo $text_enabled; ?></option>
-                      <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                      <?php } ?>
-                    </select></td>
-                </tr>
-                <tr>
-                  <td><?php echo $entry_sort_order; ?></td>
-                  <td><input type="text" name="welcome_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" /></td>
-                </tr>
-              </table>
+              <?php } ?>
             </div>
-            <?php $module_row++; ?>
-            <?php } ?>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_layout; ?></label>
+              <div class="controls">
+                <select name="welcome_module[<?php echo $module_row; ?>][layout_id]">
+                  <?php foreach ($layouts as $layout) { ?>
+                  <?php if ($layout['layout_id'] == $module['layout_id']) { ?>
+                  <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_position; ?></label>
+              <div class="controls">
+                <select name="welcome_module[<?php echo $module_row; ?>][position]">
+                  <?php if ($module['position'] == 'content_top') { ?>
+                  <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
+                  <?php } else { ?>
+                  <option value="content_top"><?php echo $text_content_top; ?></option>
+                  <?php } ?>
+                  <?php if ($module['position'] == 'content_bottom') { ?>
+                  <option value="content_bottom" selected="selected"><?php echo $text_content_bottom; ?></option>
+                  <?php } else { ?>
+                  <option value="content_bottom"><?php echo $text_content_bottom; ?></option>
+                  <?php } ?>
+                  <?php if ($module['position'] == 'column_left') { ?>
+                  <option value="column_left" selected="selected"><?php echo $text_column_left; ?></option>
+                  <?php } else { ?>
+                  <option value="column_left"><?php echo $text_column_left; ?></option>
+                  <?php } ?>
+                  <?php if ($module['position'] == 'column_right') { ?>
+                  <option value="column_right" selected="selected"><?php echo $text_column_right; ?></option>
+                  <?php } else { ?>
+                  <option value="column_right"><?php echo $text_column_right; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+              <div class="controls">
+                <select name="welcome_module[<?php echo $module_row; ?>][status]">
+                  <?php if ($module['status']) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+              <div class="controls">
+                <input type="text" name="welcome_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" />
+              </div>
+            </div>
           </div>
-        </form>
-      </div>
+          <?php $module_row++; ?>
+          <?php } ?>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -141,51 +146,48 @@ function addModule() {
 	html += '  <div class="tab-content">';
 
 	<?php foreach ($languages as $language) { ?>
-	html += '    <div id="tab-language-'+ module_row + '-<?php echo $language['language_id']; ?>">';
-	html += '      <table class="tab-pane" class="form">';
-	html += '        <tr>';
-	html += '          <td><?php echo $entry_description; ?></td>';
-	html += '          <td><textarea name="welcome_module[' + module_row + '][description][<?php echo $language['language_id']; ?>]" id="description' + module_row + '-language<?php echo $language['language_id']; ?>"></textarea></td>';
-	html += '        </tr>';
-	html += '      </table>';
+	html += '    <div class="tab-pane" id="tab-module' + module_row + '-language<?php echo $language['language_id']; ?>">';
+	html += '      <div class="control-group">';
+	html += '        <label class="control-label" for="input-name"><?php echo $entry_description; ?></label>';
+	html += '        <div class="controls"><textarea name="welcome_module[' + module_row + '][description][<?php echo $language['language_id']; ?>]" id="description' + module_row + '-language<?php echo $language['language_id']; ?>"></textarea></div>';
+	html += '      </div>'; 	
 	html += '    </div>';
 	<?php } ?>
 
 	html += '  </div>';
 
-	html += '  <table class="form">';
-	html += '    <tr>';
-	html += '      <td><?php echo $entry_layout; ?></td>';
-	html += '      <td><select name="welcome_module[' + module_row + '][layout_id]">';
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-name"><?php echo $entry_layout; ?></label>';
+	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>
 	html += '           <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
 	<?php } ?>
-	html += '      </select></td>';
-	html += '    </tr>';
-	html += '    <tr>';
-	html += '      <td><?php echo $entry_position; ?></td>';
-	html += '      <td><select name="welcome_module[' + module_row + '][position]">';
+	html += '    </select></div>';
+	html += '  </div>';
+
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-name"><?php echo $entry_position; ?></label>';
+	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][position]">';
 	html += '        <option value="content_top"><?php echo $text_content_top; ?></option>';
 	html += '        <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
 	html += '        <option value="column_left"><?php echo $text_column_left; ?></option>';
 	html += '        <option value="column_right"><?php echo $text_column_right; ?></option>';
-	html += '      </select></td>';
-	html += '    </tr>';
-	html += '    <tr>';
-	html += '      <td><?php echo $entry_status; ?></td>';
-	html += '      <td><select name="welcome_module[' + module_row + '][status]">';
-	html += '        <option value="1"><?php echo $text_enabled; ?></option>';
-	html += '        <option value="0"><?php echo $text_disabled; ?></option>';
-	html += '      </select></td>';
-	html += '    </tr>';
-	html += '    <tr>';
-	html += '      <td><?php echo $entry_sort_order; ?></td>';
-	html += '      <td><input type="text" name="welcome_module[' + module_row + '][sort_order]" value="" size="3" /></td>';
-	html += '    </tr>';
-	html += '  </table>'; 
+	html += '      </select></div>';
+	html += '  </div>';
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>';
+	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][status]">';
+	html += '          <option value="1"><?php echo $text_enabled; ?></option>';
+	html += '          <option value="0"><?php echo $text_disabled; ?></option>';
+	html += '        </select></div>';
+	html += '  </div>';
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>';
+	html += '    <div class="controls"><input type="text" name="welcome_module[' + module_row + '][sort_order]" value="" size="3" /></div>';
+	html += '  </div>';
 	html += '</div>';
 	
-	$('.tabbable > form > .tab-content').append(html);
+	$('.tabbable > .form-horizontal > .tab-content').append(html);
 
 	<?php foreach ($languages as $language) { ?>
 	CKEDITOR.replace('description' + module_row + '-language<?php echo $language['language_id']; ?>', {

@@ -1,29 +1,29 @@
 <?php echo $header; ?>
 <div id="content">
-<ul class="breadcrumb">
-  <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-  <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <?php if ($error_warning) { ?>
+  <div class="alert alert-error"><?php echo $error_warning; ?></div>
   <?php } ?>
-</ul>
-<?php if ($error_warning) { ?>
-<div class="alert alert-error"><?php echo $error_warning; ?></div>
-<?php } ?>
-<div class="box">
-  <div class="heading">
-    <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
-    <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
-  </div>
-  <div class="content">
-    <div class="tabbable tabs-left">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab-customer" data-toggle="tab"><?php echo $tab_customer; ?></a></li>
-        <li><a href="#tab-payment" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
-        <li><a href="#tab-shipping" data-toggle="tab"><?php echo $tab_shipping; ?></a></li>
-        <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_product; ?></a></li>
-        <li><a href="#tab-voucher" data-toggle="tab"><?php echo $tab_voucher; ?></a></li>
-        <li><a href="#tab-total" data-toggle="tab"><?php echo $tab_total; ?></a></li>
-      </ul>
+  <div class="box">
+    <div class="heading">
+      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+    </div>
+    <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="tabbable tabs-left">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-customer" data-toggle="tab"><?php echo $tab_customer; ?></a></li>
+          <li><a href="#tab-payment" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
+          <li><a href="#tab-shipping" data-toggle="tab"><?php echo $tab_shipping; ?></a></li>
+          <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_product; ?></a></li>
+          <li><a href="#tab-voucher" data-toggle="tab"><?php echo $tab_voucher; ?></a></li>
+          <li><a href="#tab-total" data-toggle="tab"><?php echo $tab_total; ?></a></li>
+        </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-customer">
             <table class="form">

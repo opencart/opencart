@@ -13,35 +13,30 @@
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="content">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-      <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
-      <li><a href="#tab-links" data-toggle="tab"><?php echo $tab_links; ?></a></li>
-      <li><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
-      <li><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
-      <li><a href="#tab-discount" data-toggle="tab"><?php echo $tab_discount; ?></a></li>
-      <li><a href="#tab-special" data-toggle="tab"><?php echo $tab_special; ?></a></li>
-      <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
-      <li><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
-      <li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
-    </ul>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+        <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
+        <li><a href="#tab-links" data-toggle="tab"><?php echo $tab_links; ?></a></li>
+        <li><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
+        <li><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
+        <li><a href="#tab-discount" data-toggle="tab"><?php echo $tab_discount; ?></a></li>
+        <li><a href="#tab-special" data-toggle="tab"><?php echo $tab_special; ?></a></li>
+        <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
+        <li><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
+        <li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
+      </ul>
       <div class="tab-content">
-        
-        
         <div class="tab-pane active" id="tab-general">
-          
-          
           <ul class="nav nav-tabs" id="language">
             <?php foreach ($languages as $language) { ?>
             <li><a href="#language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
             <?php } ?>
           </ul>
-          
           <div class="tab-content">
             <?php foreach ($languages as $language) { ?>
             <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
-              
               <div class="control-group">
                 <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
                 <div class="controls">
@@ -51,46 +46,35 @@
                   <?php } ?>
                 </div>
               </div>
-              
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_meta_description; ?></label>
                 <div class="controls">
                   <textarea name="product_description[<?php echo $language['language_id']; ?>][meta_description]" cols="40" rows="5"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
                 </div>
               </div>
-              
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_meta_keyword; ?></label>
                 <div class="controls">
                   <textarea name="product_description[<?php echo $language['language_id']; ?>][meta_keyword]" cols="40" rows="5"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
                 </div>
               </div>
-              
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_description; ?></label>
                 <div class="controls">
                   <textarea name="product_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['description'] : ''; ?></textarea>
                 </div>
               </div>
-              
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_tag; ?></label>
                 <div class="controls">
                   <input type="text" name="product_description[<?php echo $language['language_id']; ?>][tag]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['tag'] : ''; ?>" size="80" />
                 </div>
               </div>
-            
             </div>
             <?php } ?>
           </div>
-          
-          
         </div>
-        
-        
-        
         <div class="tab-pane" id="tab-data">
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_model; ?></label>
             <div class="controls">
@@ -100,63 +84,54 @@
               <?php } ?>
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_sku; ?></label>
             <div class="controls">
               <input type="text" name="sku" value="<?php echo $sku; ?>" />
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_upc; ?></label>
             <div class="controls">
               <input type="text" name="upc" value="<?php echo $upc; ?>" />
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_ean; ?></label>
             <div class="controls">
               <input type="text" name="ean" value="<?php echo $ean; ?>" />
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_jan; ?></label>
             <div class="controls">
               <input type="text" name="jan" value="<?php echo $jan; ?>" />
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_isbn; ?></label>
             <div class="controls">
               <input type="text" name="isbn" value="<?php echo $isbn; ?>" />
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_mpn; ?></label>
             <div class="controls">
               <input type="text" name="mpn" value="<?php echo $mpn; ?>" />
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_location; ?></label>
             <div class="controls">
               <input type="text" name="location" value="<?php echo $location; ?>" />
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_price; ?></label>
             <div class="controls">
               <input type="text" name="price" value="<?php echo $price; ?>" />
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_tax_class; ?></label>
             <div class="controls">
@@ -172,21 +147,18 @@
               </select>
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_quantity; ?></label>
             <div class="controls">
               <input type="text" name="quantity" value="<?php echo $quantity; ?>" size="2" />
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_minimum; ?></label>
             <div class="controls">
               <input type="text" name="minimum" value="<?php echo $minimum; ?>" size="2" />
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_subtract; ?></label>
             <div class="controls">
@@ -201,7 +173,6 @@
               </select>
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_stock_status; ?></label>
             <div class="controls">
@@ -216,7 +187,6 @@
               </select>
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_shipping; ?></label>
             <div class="controls">
@@ -233,14 +203,12 @@
               <?php } ?>
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_keyword; ?></label>
             <div class="controls">
               <input type="text" name="keyword" value="<?php echo $keyword; ?>" />
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
             <div class="controls">
@@ -249,7 +217,6 @@
                 <a onclick="image_upload('image', 'thumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a></div>
             </div>
           </div>
-          
           <div class="control-group">
             <label class="control-label" for="input-name"><?php echo $entry_date_available; ?></label>
             <div class="controls">
@@ -319,10 +286,7 @@
             </div>
           </div>
         </div>
-      
       </div>
-      
-      
       <div class="tab-pane" id="tab-links">
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_manufacturer; ?></label>
@@ -811,7 +775,6 @@
         </table>
       </div>
       </div>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </form>
   </div>
 </div>

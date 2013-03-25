@@ -16,9 +16,10 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="//code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 <link type="text/css" href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="view/javascript/bootstrap/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="view/javascript/bootstrap/css/bootstrap-responsive.css" />
-<script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+<li<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="view/stylesheet/stylesheet.css" />
 <?php foreach ($styles as $style) { ?>
 <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
@@ -33,8 +34,8 @@
     <div class="container"><a href="<?php echo $home; ?>" id="logo" class="brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a>
       <?php if ($logged) { ?>
       <ul class="nav">
-        <li id="dashboard"><a href="<?php echo $home; ?>"><i class="icon-home icon-white"></i> <?php echo $text_dashboard; ?></a></li>
-        <li class="dropdown" id="catalog"><a data-toggle="dropdown"><i class="icon-tag icon-white"></i> <?php echo $text_catalog; ?> <i class="icon-chevron-down icon-white"></i></a>
+        <li id="dashboard"><a href="<?php echo $home; ?>"><i class="icon-home icon-large icon-white"></i> <?php echo $text_dashboard; ?></a></li>
+        <li class="dropdown" id="catalog"><a data-toggle="dropdown"><i class="icon-tag icon-large icon-white"></i> <?php echo $text_catalog; ?> <i class="icon-chevron-down icon-white"></i></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
             <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
@@ -52,7 +53,7 @@
             <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
           </ul>
         </li>
-        <li class="dropdown" id="extension"><a data-toggle="dropdown"><i class="icon-home icon-white"></i> <?php echo $text_extension; ?> <i class="icon-chevron-down icon-white"></i></a>
+        <li class="dropdown" id="extension"><a data-toggle="dropdown"><i class="icon-home icon-large icon-white"></i> <?php echo $text_extension; ?> <i class="icon-chevron-down icon-white"></i></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $installer; ?>"><?php echo $text_installer; ?></a></li>
             <li><a href="<?php echo $modification; ?>"><?php echo $text_modification; ?></a></li>
@@ -63,7 +64,7 @@
             <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
           </ul>
         </li>
-        <li class="dropdown" id="sale"><a data-toggle="dropdown"><i class="icon-shopping-cart icon-white"></i> <?php echo $text_sale; ?> <i class="icon-chevron-down icon-white"></i></a>
+        <li class="dropdown" id="sale"><a data-toggle="dropdown"><i class="icon-shopping-cart icon-large icon-white"></i> <?php echo $text_sale; ?> <i class="icon-chevron-down icon-white"></i></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
             <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li>
@@ -86,7 +87,7 @@
             <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
           </ul>
         </li>
-        <li class="dropdown" id="system"><a data-toggle="dropdown"><i class="icon-home icon-white"></i> <?php echo $text_system; ?> <i class="icon-chevron-down icon-white"></i></a>
+        <li class="dropdown" id="system"><a data-toggle="dropdown"><i class="icon-home icon-large icon-white"></i> <?php echo $text_system; ?> <i class="icon-chevron-down icon-white"></i></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
             <li><a href="<?php echo $location; ?>"><?php echo $text_location; ?></a></li>
@@ -132,7 +133,7 @@
             <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
           </ul>
         </li>
-        <li class="dropdown" id="reports"><a data-toggle="dropdown"><i class="icon-signal icon-white"></i> <?php echo $text_reports; ?> <i class="icon-chevron-down icon-white"></i></a>
+        <li class="dropdown" id="reports"><a data-toggle="dropdown"><i class="icon-signal icon-large icon-white"></i> <?php echo $text_reports; ?> <i class="icon-chevron-down icon-white"></i></a>
           <ul class="dropdown-menu">
             <li class="dropdown-submenu"><a><?php echo $text_sale; ?></a>
               <ul class="dropdown-menu">
@@ -164,7 +165,7 @@
             </li>
           </ul>
         </li>
-        <li class="dropdown" id="help"><a data-toggle="dropdown"><i class="icon-question-sign icon-white"></i> <?php echo $text_help; ?> <i class="icon-chevron-down icon-white"></i></a>
+        <li class="dropdown" id="help"><a data-toggle="dropdown"><i class="icon-question-sign icon-large icon-white"></i> <?php echo $text_help; ?> <i class="icon-chevron-down icon-white"></i></a>
           <ul class="dropdown-menu">
             <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_opencart; ?></a></li>
             <li><a href="http://doc.opencart.com" target="_blank"><?php echo $text_documentation; ?></a></li>
@@ -173,7 +174,7 @@
         </li>
       </ul>
       <ul class="nav pull-right">
-        <li class="dropdown" id="store"><a href="<?php echo $store; ?>" target="_blank" data-toggle="dropdown"><?php echo $text_front; ?> <i class="icon-chevron-down icon-white"></i></a>
+        <li class="dropdown" id="store"><a href="<?php echo $store; ?>" target="_blank" data-toggle="dropdown"><?php echo $text_front; ?> <i class="icon-chevron-down icon-large icon-white"></i></a>
           <?php if ($stores) { ?>
           <ul class="dropdown-menu">
             <?php foreach ($stores as $stores) { ?>

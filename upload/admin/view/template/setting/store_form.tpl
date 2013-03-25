@@ -14,18 +14,18 @@
   <div class="box">
     <div class="heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-        <li><a href="#tab-store" data-toggle="tab"><?php echo $tab_store; ?></a></li>
-        <li><a href="#tab-local" data-toggle="tab"><?php echo $tab_local; ?></a></li>
-        <li><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
-        <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
-        <li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>
-      </ul>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+          <li><a href="#tab-store" data-toggle="tab"><?php echo $tab_store; ?></a></li>
+          <li><a href="#tab-local" data-toggle="tab"><?php echo $tab_local; ?></a></li>
+          <li><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
+          <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
+          <li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>
+        </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
             <table class="form">

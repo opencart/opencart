@@ -11,29 +11,26 @@
   <div class="box">
     <div class="heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table class="form">
-          <tr>
-            <td><?php echo $entry_product; ?></td>
-            <td><input type="text" name="product" value="" /></td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td><div id="featured-product" class="scrollbox">
-                <?php $class = 'odd'; ?>
-                <?php foreach ($products as $product) { ?>
-                <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                <div id="featured-product<?php echo $product['product_id']; ?>" class="<?php echo $class; ?>"><?php echo $product['name']; ?> <img src="view/image/icon-delete.png" alt="" />
-                  <input type="hidden" value="<?php echo $product['product_id']; ?>" />
-                </div>
-                <?php } ?>
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_product; ?></label>
+          <div class="controls">
+            <input type="text" name="product" value="" />
+            <div id="featured-product" class="scrollbox">
+              <?php $class = 'odd'; ?>
+              <?php foreach ($products as $product) { ?>
+              <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+              <div id="featured-product<?php echo $product['product_id']; ?>" class="<?php echo $class; ?>"><?php echo $product['name']; ?> <img src="view/image/icon-delete.png" alt="" />
+                <input type="hidden" value="<?php echo $product['product_id']; ?>" />
               </div>
-              <input type="hidden" name="featured_product" value="<?php echo $featured_product; ?>" /></td>
-          </tr>
-        </table>
+              <?php } ?>
+            </div>
+            <input type="hidden" name="featured_product" value="<?php echo $featured_product; ?>" />
+          </div>
+        </div>
         <table id="module" class="table">
           <thead>
             <tr>

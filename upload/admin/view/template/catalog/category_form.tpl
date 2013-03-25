@@ -13,12 +13,13 @@
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="content">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-        <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
-        <li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
-      </ul>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+          <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
+          <li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
+        </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
             <ul class="nav nav-tabs" id="language">
@@ -207,8 +208,6 @@
             </table>
           </div>
         </div>
-             <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
- 
       </form>
     </div>
   </div>

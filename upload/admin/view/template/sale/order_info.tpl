@@ -8,9 +8,9 @@
   <div class="box">
     <div class="box-heading">
       <h1><i class=""></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $invoice; ?>" target="_blank" class="btn"><?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
+      <div class="buttons"><a href="<?php echo $invoice; ?>" target="_blank" class="btn"><?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       <div class="tabbable tabs-left">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-order" data-toggle="tab"><?php echo $tab_order; ?></a></li>

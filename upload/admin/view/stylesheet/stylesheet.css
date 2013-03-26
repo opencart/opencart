@@ -4,22 +4,22 @@
 	margin-bottom: 15px;
 	background: url('../image/header.png');
 }
-
-#header i {
-	color: #00C3F4;
-}
 #header a {
 	cursor: pointer;
 	text-shadow: 1px 0.1em 0.05em #000000;
 	color: #FFF;
 	font-size: 13px;
 }
+#header i {
+	font-size: 15px;
+	color: #00C3F4;
+	margin-right: 3px;
+}
 #header .icon-chevron-down {
 	font-size: 10px;
 }
 #content {
 	padding: 10px 30px 0px 30px;
-	min-width: 900px;
 	padding-bottom: 128px;
 }
 #footer {
@@ -54,9 +54,12 @@
 	padding: 0px;
 	color: #666666;
 	font-size: 15px;
-	line-height: 35px;
+	line-height: 32px;
+	padding-top: 3px;
 }
 .box-heading h1 i {
+	font-size: 17px;
+	font-weight: normal;
 	margin-right: 5px;
 }
 .box-content {
@@ -73,3 +76,14 @@
 	padding: 5px;
 	margin-bottom: 15px;
 }
+
+.table .left {
+	text-align: left;
+}
+.table .right {
+	text-align: right;
+}
+.table .center {
+	text-align: center;
+}
+

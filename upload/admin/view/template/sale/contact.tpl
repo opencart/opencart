@@ -7,7 +7,7 @@
 </ul>
 <div class="box">
   <div class="box-heading">
-    <h1><i class=""></i> <?php echo $heading_title; ?></h1>
+    <h1><i class="icon-envelope"></i> <?php echo $heading_title; ?></h1>
   </div>
   <div class="box-content">
     <form class="form-horizontal">

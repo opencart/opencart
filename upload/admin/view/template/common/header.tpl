@@ -19,7 +19,12 @@
 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
 <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<!--
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+//-->
+<link href="http://www.webhostinghub.com/glyphs/css/whhg.css" rel="stylesheet">
+
+
 <link rel="stylesheet" type="text/css" href="view/stylesheet/stylesheet.css" />
 <?php foreach ($styles as $style) { ?>
 <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
@@ -54,7 +59,7 @@
               <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
             </ul>
           </li>
-          <li class="dropdown" id="extension"><a data-toggle="dropdown"><i class="icon-lightbulb icon-large"></i> <?php echo $text_extension; ?> <i class="icon-chevron-down"></i></a>
+          <li class="dropdown" id="extension"><a data-toggle="dropdown"><i class="icon-puzzle-plugin icon-large"></i> <?php echo $text_extension; ?> <i class="icon-chevron-down"></i></a>
             <ul class="dropdown-menu">
               <li><a href="<?php echo $installer; ?>"><?php echo $text_installer; ?></a></li>
               <li><a href="<?php echo $modification; ?>"><?php echo $text_modification; ?></a></li>
@@ -65,7 +70,7 @@
               <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
             </ul>
           </li>
-          <li class="dropdown" id="sale"><a data-toggle="dropdown"><i class="icon-shopping-cart icon-large"></i> <?php echo $text_sale; ?> <i class="icon-chevron-down"></i></a>
+          <li class="dropdown" id="sale"><a data-toggle="dropdown"><i class="icon-shopping icon-large"></i> <?php echo $text_sale; ?> <i class="icon-chevron-down"></i></a>
             <ul class="dropdown-menu">
               <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
               <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li>
@@ -175,7 +180,7 @@
           </li>
         </ul>
         <ul class="nav pull-right">
-          <li class="dropdown" id="store"><a href="<?php echo $store; ?>" target="_blank" data-toggle="dropdown"><?php echo $text_front; ?> <i class="icon-chevron-down"></i></a>
+          <li class="dropdown" id="store"><a href="<?php echo $store; ?>" target="_blank" data-toggle="dropdown"><i class="icon-rocket-launch"></i> <?php echo $text_front; ?> <i class="icon-chevron-down"></i></a>
             <?php if ($stores) { ?>
             <ul class="dropdown-menu">
               <?php foreach ($stores as $stores) { ?>

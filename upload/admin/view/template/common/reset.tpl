@@ -8,10 +8,10 @@
   <div class="box">
     <div class="box-heading">
       <h1><i class=""></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#reset').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="reset">
+        <div class="buttons"><a onclick="$('#reset').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <p><?php echo $text_password; ?></p>
         <table class="form">
           <tr>

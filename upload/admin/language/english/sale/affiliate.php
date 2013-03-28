@@ -39,8 +39,8 @@ $_['entry_city']                = 'City:';
 $_['entry_postcode']            = 'Postcode:';
 $_['entry_country']             = 'Country:';
 $_['entry_zone']                = 'Region / State:';
-$_['entry_code']                = 'Tracking Code:<span class="help">The tracking code that will be used to track referrals.</span>';
-$_['entry_commission']          = 'Commission (%):<span class="help">Percentage the affiliate recieves on each order.</span>';
+$_['entry_code']                = 'Tracking Code:';
+$_['entry_commission']          = 'Commission (%):';
 $_['entry_tax']                 = 'Tax ID:';
 $_['entry_payment']             = 'Payment Method:';
 $_['entry_cheque']              = 'Cheque Payee Name:';
@@ -52,6 +52,10 @@ $_['entry_bank_account_name']   = 'Account Name:';
 $_['entry_bank_account_number'] = 'Account Number:';
 $_['entry_amount']              = 'Amount:';
 $_['entry_description']         = 'Description:';
+
+// Help
+$_['help_code']                = 'The tracking code that will be used to track referrals.';
+$_['help_commission']          = 'Percentage the affiliate recieves on each order.';
 
 // Error
 $_['error_permission']          = 'Warning: You do not have permission to modify affiliates!';

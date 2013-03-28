@@ -34,6 +34,9 @@ class ControllerShippingAusPost extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
+		$this->data['help_display_time'] = $this->language->get('help_display_time');
+		$this->data['help_weight_class'] = $this->language->get('help_weight_class');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 		

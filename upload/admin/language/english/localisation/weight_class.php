@@ -14,7 +14,10 @@ $_['column_action']    = 'Action';
 // Entry
 $_['entry_title']      = 'Weight Title:';
 $_['entry_unit']       = 'Weight Unit:';
-$_['entry_value']      = 'Value:<br /><span class="help">Set to 1.00000 if this is your default weight.</span>';
+$_['entry_value']      = 'Value:';
+
+// Help
+$_['help_value']       = 'Set to 1.00000 if this is your default weight.';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify weight classes!';

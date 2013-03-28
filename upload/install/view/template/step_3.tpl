@@ -10,7 +10,7 @@
 </div>
 <div id="content">
   <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><?php echo $error_warning; ?></div>
   <?php } ?>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <p>1. Please enter your database connection details.</p>
@@ -90,9 +90,9 @@
       </table>
     </fieldset>
     <div class="buttons">
-      <div class="left"><a href="<?php echo $back; ?>" class="button">Back</a></div>
+      <div class="left"><a href="<?php echo $back; ?>" class="btn">Back</a></div>
       <div class="right">
-        <input type="submit" value="Continue" class="button" />
+        <input type="submit" value="Continue" class="btn" />
       </div>
     </div>
   </form>

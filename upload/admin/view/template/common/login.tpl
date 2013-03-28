@@ -1,15 +1,15 @@
 <?php echo $header; ?>
 <div id="content">
   <div class="box" style="width: 400px; min-height: 300px; margin-top: 40px; margin-left: auto; margin-right: auto;">
-    <div class="heading">
-      <h1><img src="view/image/lockscreen.png" alt="" /> <?php echo $text_login; ?></h1>
+    <div class="box-heading">
+      <h1><?php echo $text_login; ?></h1>
     </div>
     <div class="content" style="min-height: 150px; overflow: hidden;">
       <?php if ($success) { ?>
-      <div class="success"><?php echo $success; ?></div>
+      <div class="alert alert-success"><?php echo $success; ?></div>
       <?php } ?>
       <?php if ($error_warning) { ?>
-      <div class="warning"><?php echo $error_warning; ?></div>
+      <div class="alert alert-error"><?php echo $error_warning; ?></div>
       <?php } ?>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <table style="width: 100%;">
@@ -33,7 +33,7 @@
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td style="text-align: right;"><a onclick="$('#form').submit();" class="button"><?php echo $button_login; ?></a></td>
+            <td style="text-align: right;"><a onclick="$('#form').submit();" class="btn"><i class="icon-lock"></i> <?php echo $button_login; ?></a></td>
           </tr>
         </table>
         <?php if ($redirect) { ?>

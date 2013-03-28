@@ -137,8 +137,9 @@ class ControllerAccountAddress extends Controller {
       	);
 			
     	$this->data['heading_title'] = $this->language->get('heading_title');
-
+		
     	$this->data['text_address_book'] = $this->language->get('text_address_book');
+   		$this->data['text_empty'] = $this->language->get('text_empty');
    
     	$this->data['button_new_address'] = $this->language->get('button_new_address');
     	$this->data['button_edit'] = $this->language->get('button_edit');

@@ -7,6 +7,7 @@
 </div>
 <?php } ?>
 <div class="pagination"><?php echo $pagination; ?></div>
+<div class="results"><?php echo $results; ?></div>
 <?php } else { ?>
 <div class="content"><?php echo $text_no_reviews; ?></div>
 <?php } ?>

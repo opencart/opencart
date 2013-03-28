@@ -48,6 +48,21 @@ class ControllerShippingRoyalMail extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
+		$this->data['help_rate'] = $this->language->get('help_rate');
+		$this->data['help_insurance'] = $this->language->get('help_insurance');
+		$this->data['help_airmail_rate_1'] = $this->language->get('help_airmail_rate_1');
+		$this->data['help_airmail_rate_2'] = $this->language->get('help_airmail_rate_2');
+		$this->data['help_international_signed_rate_1'] = $this->language->get('help_international_signed_rate_1');
+		$this->data['help_international_signed_insurance_1'] = $this->language->get('help_international_signed_insurance_1');
+		$this->data['help_international_signed_rate_2'] = $this->language->get('help_international_signed_rate_2');
+		$this->data['help_international_signed_insurance_2'] = $this->language->get('help_international_signed_insurance_2');
+		$this->data['help_airsure_rate_1'] = $this->language->get('help_airsure_rate_1');
+		$this->data['help_airsure_insurance_1'] = $this->language->get('help_airsure_insurance_1');
+		$this->data['help_airsure_rate_2'] = $this->language->get('help_airsure_rate_2');
+		$this->data['help_airsure_insurance_2'] = $this->language->get('help_airsure_insurance_2');
+		$this->data['help_display_weight'] = $this->language->get('help_display_weight');
+		$this->data['help_display_insurance'] = $this->language->get('help_display_insurance');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 

@@ -3,10 +3,10 @@
 <div class="attention"><?php echo $attention; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
 <?php } ?>
 <?php if ($success) { ?>
-<div class="success"><?php echo $success; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+<div class="alert alert-success"><?php echo $success; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
 <?php } ?>
 <?php if ($error_warning) { ?>
-<div class="warning"><?php echo $error_warning; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+<div class="alert alert-error"><?php echo $error_warning; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
 <?php } ?>
 <?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
@@ -129,7 +129,7 @@
         <input type="text" name="coupon" value="<?php echo $coupon; ?>" />
         <input type="hidden" name="next" value="coupon" />
         &nbsp;
-        <input type="submit" value="<?php echo $button_coupon; ?>" class="button" />
+        <input type="submit" value="<?php echo $button_coupon; ?>" class="btn" />
       </form>
     </div>
     <div id="voucher" class="content" style="display: <?php echo ($next == 'voucher' ? 'block' : 'none'); ?>;">
@@ -138,7 +138,7 @@
         <input type="text" name="voucher" value="<?php echo $voucher; ?>" />
         <input type="hidden" name="next" value="voucher" />
         &nbsp;
-        <input type="submit" value="<?php echo $button_voucher; ?>" class="button" />
+        <input type="submit" value="<?php echo $button_voucher; ?>" class="btn" />
       </form>
     </div>
     <div id="reward" class="content" style="display: <?php echo ($next == 'reward' ? 'block' : 'none'); ?>;">
@@ -147,7 +147,7 @@
         <input type="text" name="reward" value="<?php echo $reward; ?>" />
         <input type="hidden" name="next" value="reward" />
         &nbsp;
-        <input type="submit" value="<?php echo $button_reward; ?>" class="button" />
+        <input type="submit" value="<?php echo $button_reward; ?>" class="btn" />
       </form>
     </div>
     <div id="shipping" class="content" style="display: <?php echo ($next == 'shipping' ? 'block' : 'none'); ?>;">
@@ -176,7 +176,7 @@
           <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
         </tr>
       </table>
-      <input type="button" value="<?php echo $button_quote; ?>" id="button-quote" class="button" />
+      <input type="button" value="<?php echo $button_quote; ?>" id="button-quote" class="btn" />
     </div>
   </div>
   <?php } ?>
@@ -191,8 +191,8 @@
     </table>
   </div>
   <div class="buttons">
-    <div class="right"><a href="<?php echo $checkout; ?>" class="button"><?php echo $button_checkout; ?></a></div>
-    <div class="center"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_shopping; ?></a></div>
+    <div class="right"><a href="<?php echo $checkout; ?>" class="btn"><?php echo $button_checkout; ?></a></div>
+    <div class="center"><a href="<?php echo $continue; ?>" class="btn"><?php echo $button_shopping; ?></a></div>
   </div>
   <?php echo $content_bottom; ?></div>
 <script type="text/javascript"><!--
@@ -204,7 +204,7 @@ $('input[name=\'next\']').on('change', function() {
 //--></script>
 <?php if ($shipping_status) { ?>
 <script type="text/javascript"><!--
-$('#button-quote').live('click', function() {
+$('#button-quote').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/cart/quote',
 		type: 'post',
@@ -223,7 +223,7 @@ $('#button-quote').live('click', function() {
 						
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#notification').html('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+					$('#notification').html('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 					
 					$('.warning').fadeIn('slow');
 					
@@ -279,9 +279,9 @@ $('#button-quote').live('click', function() {
 				html += '  <input type="hidden" name="next" value="shipping" />';
 				
 				<?php if ($shipping_method) { ?>
-				html += '  <input type="submit" value="<?php echo $button_shipping; ?>" id="button-shipping" class="button" />';	
+				html += '  <input type="submit" value="<?php echo $button_shipping; ?>" id="button-shipping" class="btn" />';	
 				<?php } else { ?>
-				html += '  <input type="submit" value="<?php echo $button_shipping; ?>" id="button-shipping" class="button" disabled="disabled" />';	
+				html += '  <input type="submit" value="<?php echo $button_shipping; ?>" id="button-shipping" class="btn" disabled="disabled" />';	
 				<?php } ?>
 							
 				html += '</form>';

@@ -242,10 +242,11 @@ class ControllerCatalogDownload extends Controller {
 		$pagination->total = $download_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($download_total - $this->config->get('config_admin_limit'))) ? $download_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $download_total, ceil($download_total / $this->config->get('config_admin_limit')));
 
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
@@ -267,7 +268,10 @@ class ControllerCatalogDownload extends Controller {
 		$this->data['entry_mask'] = $this->language->get('entry_mask');
     	$this->data['entry_remaining'] = $this->language->get('entry_remaining');
     	$this->data['entry_update'] = $this->language->get('entry_update');
-  
+     
+	 	$this->data['help_filename'] = $this->language->get('help_filename');
+    	$this->data['help_update'] = $this->language->get('help_update');
+ 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
   		$this->data['button_upload'] = $this->language->get('button_upload');
@@ -408,7 +412,7 @@ class ControllerCatalogDownload extends Controller {
 			$this->error['filename'] = $this->language->get('error_filename');
 		}	
 		
-		if (!file_exists(DIR_DOWNLOAD . $this->request->post['filename']) && !is_file(DIR_DOWNLOAD . $this->request->post['filename'])) {
+		if (!is_file(DIR_DOWNLOAD . $this->request->post['filename'])) {
 			$this->error['filename'] = $this->language->get('error_exists');
 		}
 				

@@ -74,10 +74,11 @@ class ControllerAccountReward extends Controller {
 		$pagination->total = $reward_total;
 		$pagination->page = $page;
 		$pagination->limit = 10; 
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('account/reward', 'page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($reward_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($reward_total - 10)) ? $reward_total : ((($page - 1) * 10) + 10), $reward_total, ceil($reward_total / 10));
 		
 		$this->data['total'] = (int)$this->customer->getRewardPoints();
 		

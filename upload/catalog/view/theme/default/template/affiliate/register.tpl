@@ -1,6 +1,6 @@
 <?php echo $header; ?>
 <?php if ($error_warning) { ?>
-<div class="warning"><?php echo $error_warning; ?></div>
+<div class="alert alert-error"><?php echo $error_warning; ?></div>
 <?php } ?>
 <?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
@@ -205,13 +205,13 @@
         <?php } else { ?>
         <input type="checkbox" name="agree" value="1" />
         <?php } ?>
-        <input type="submit" value="<?php echo $button_continue; ?>" class="button" />
+        <input type="submit" value="<?php echo $button_continue; ?>" class="btn" />
       </div>
     </div>
     <?php } else { ?>
     <div class="buttons">
       <div class="right">
-        <input type="submit" value="<?php echo $button_continue; ?>" class="button" />
+        <input type="submit" value="<?php echo $button_continue; ?>" class="btn" />
       </div>
     </div>
     <?php } ?>

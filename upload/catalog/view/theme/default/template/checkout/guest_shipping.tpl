@@ -48,7 +48,7 @@
 </table>
 <br />
 <div class="buttons">
-  <div class="right"><input type="button" value="<?php echo $button_continue; ?>" id="button-guest-shipping" class="button" /></div>
+  <div class="right"><input type="button" value="<?php echo $button_continue; ?>" id="button-guest-shipping" class="btn" /></div>
 </div>
 <script type="text/javascript"><!--
 // Guest Shipping
@@ -73,7 +73,7 @@ $('#button-guest-shipping').off().on('click', function() {
 				location = json['redirect'];
 			} else if (json['error']) {
 				if (json['error']['warning']) {
-					$('#shipping-address .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+					$('#shipping-address .checkout-content').prepend('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 					
 					$('.warning').fadeIn('slow');
 				}

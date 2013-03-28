@@ -6,89 +6,115 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><?php echo $error_warning; ?></div>
   <?php } ?>
   <?php if ($success) { ?>
-  <div class="success"><?php echo $success; ?></div>
+  <div class="alert alert-success"><?php echo $success; ?></div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/setting.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
+    <div class="box-heading">
+      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
-      <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-store"><?php echo $tab_store; ?></a><a href="#tab-local"><?php echo $tab_local; ?></a><a href="#tab-option"><?php echo $tab_option; ?></a><a href="#tab-image"><?php echo $tab_image; ?></a><a href="#tab-server"><?php echo $tab_server; ?></a></div>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <div id="tab-general">
-          <table class="form">
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_url; ?></td>
-              <td><input type="text" name="config_url" value="<?php echo $config_url; ?>" size="40" />
+    <div class="box-content">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+          <li><a href="#tab-store" data-toggle="tab"><?php echo $tab_store; ?></a></li>
+          <li><a href="#tab-local" data-toggle="tab"><?php echo $tab_local; ?></a></li>
+          <li><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
+          <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
+          <li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab-general">
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_url; ?></label>
+              <div class="controls">
+                <input type="text" name="config_url" value="<?php echo $config_url; ?>" size="40" />
                 <?php if ($error_url) { ?>
                 <span class="error"><?php echo $error_url; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_ssl; ?></td>
-              <td><input type="text" name="config_ssl" value="<?php echo $config_ssl; ?>" size="40" /></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_name; ?></td>
-              <td><input type="text" name="config_name" value="<?php echo $config_name; ?>" size="40" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_ssl; ?></label>
+              <div class="controls">
+                <input type="text" name="config_ssl" value="<?php echo $config_ssl; ?>" size="40" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
+              <div class="controls">
+                <input type="text" name="config_name" value="<?php echo $config_name; ?>" size="40" />
                 <?php if ($error_name) { ?>
                 <span class="error"><?php echo $error_name; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_owner; ?></td>
-              <td><input type="text" name="config_owner" value="<?php echo $config_owner; ?>" size="40" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_owner; ?></label>
+              <div class="controls">
+                <input type="text" name="config_owner" value="<?php echo $config_owner; ?>" size="40" />
                 <?php if ($error_owner) { ?>
                 <span class="error"><?php echo $error_owner; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_address; ?></td>
-              <td><textarea name="config_address" cols="40" rows="5"><?php echo $config_address; ?></textarea>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_address; ?></label>
+              <div class="controls">
+                <textarea name="config_address" cols="40" rows="5"><?php echo $config_address; ?></textarea>
                 <?php if ($error_address) { ?>
                 <span class="error"><?php echo $error_address; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_email; ?></td>
-              <td><input type="text" name="config_email" value="<?php echo $config_email; ?>" size="40" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_email; ?></label>
+              <div class="controls">
+                <input type="text" name="config_email" value="<?php echo $config_email; ?>" size="40" />
                 <?php if ($error_email) { ?>
                 <span class="error"><?php echo $error_email; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_telephone; ?></td>
-              <td><input type="text" name="config_telephone" value="<?php echo $config_telephone; ?>" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_telephone; ?></label>
+              <div class="controls">
+                <input type="text" name="config_telephone" value="<?php echo $config_telephone; ?>" />
                 <?php if ($error_telephone) { ?>
                 <span class="error"><?php echo $error_telephone; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_fax; ?></td>
-              <td><input type="text" name="config_fax" value="<?php echo $config_fax; ?>" /></td>
-            </tr>
-          </table>
-        </div>
-        <div id="tab-store">
-          <table class="form">
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_title; ?></td>
-              <td><input type="text" name="config_title" value="<?php echo $config_title; ?>" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_fax; ?></label>
+              <div class="controls">
+                <input type="text" name="config_fax" value="<?php echo $config_fax; ?>" />
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab-store">
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_title; ?></label>
+              <div class="controls">
+                <input type="text" name="config_title" value="<?php echo $config_title; ?>" />
                 <?php if ($error_title) { ?>
                 <span class="error"><?php echo $error_title; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_meta_description; ?></td>
-              <td><textarea name="config_meta_description" cols="40" rows="5"><?php echo $config_meta_description; ?></textarea></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_template; ?></td>
-              <td><select name="config_template" onchange="$('#template').load('index.php?route=setting/store/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value));">
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_meta_description; ?></label>
+              <div class="controls">
+                <textarea name="config_meta_description" cols="40" rows="5"><?php echo $config_meta_description; ?></textarea>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_template; ?></label>
+              <div class="controls">
+                <select name="config_template" onchange="$('#template').load('index.php?route=setting/store/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value));">
                   <?php foreach ($templates as $template) { ?>
                   <?php if ($template == $config_template) { ?>
                   <option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
@@ -96,15 +122,14 @@
                   <option value="<?php echo $template; ?>"><?php echo $template; ?></option>
                   <?php } ?>
                   <?php } ?>
-                </select></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td id="template"></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_layout; ?></td>
-              <td><select name="config_layout_id">
+                </select>
+                <div id="template"> </div>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_layout; ?></label>
+              <div class="controls">
+                <select name="config_layout_id">
                   <?php foreach ($layouts as $layout) { ?>
                   <?php if ($layout['layout_id'] == $config_layout_id) { ?>
                   <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
@@ -112,15 +137,15 @@
                   <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
                   <?php } ?>
                   <?php } ?>
-                </select></td>
-            </tr>
-          </table>
-        </div>
-        <div id="tab-local">
-          <table class="form">
-            <tr>
-              <td><?php echo $entry_country; ?></td>
-              <td><select name="config_country_id">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab-local">
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_country; ?></label>
+              <div class="controls">
+                <select name="config_country_id">
                   <?php foreach ($countries as $country) { ?>
                   <?php if ($country['country_id'] == $config_country_id) { ?>
                   <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
@@ -128,16 +153,20 @@
                   <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
                   <?php } ?>
                   <?php } ?>
-                </select></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_zone; ?></td>
-              <td><select name="config_zone_id">
-                </select></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_language; ?></td>
-              <td><select name="config_language">
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_zone; ?></label>
+              <div class="controls">
+                <select name="config_zone_id">
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_language; ?></label>
+              <div class="controls">
+                <select name="config_language">
                   <?php foreach ($languages as $language) { ?>
                   <?php if ($language['code'] == $config_language) { ?>
                   <option value="<?php echo $language['code']; ?>" selected="selected"><?php echo $language['name']; ?></option>
@@ -145,11 +174,13 @@
                   <option value="<?php echo $language['code']; ?>"><?php echo $language['name']; ?></option>
                   <?php } ?>
                   <?php } ?>
-                </select></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_currency; ?></td>
-              <td><select name="config_currency">
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_currency; ?></label>
+              <div class="controls">
+                <select name="config_currency">
                   <?php foreach ($currencies as $currency) { ?>
                   <?php if ($currency['code'] == $config_currency) { ?>
                   <option value="<?php echo $currency['code']; ?>" selected="selected"><?php echo $currency['title']; ?></option>
@@ -157,33 +188,35 @@
                   <option value="<?php echo $currency['code']; ?>"><?php echo $currency['title']; ?></option>
                   <?php } ?>
                   <?php } ?>
-                </select></td>
-            </tr>
-          </table>
-        </div>
-        <div id="tab-option">
-          <h2><?php echo $text_items; ?></h2>
-          <table class="form">
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_catalog_limit; ?></td>
-              <td><input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" size="3" />
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab-option">
+            <h2><?php echo $text_items; ?></h2>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_catalog_limit; ?></label>
+              <div class="controls">
+                <input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" size="3" />
                 <?php if ($error_catalog_limit) { ?>
                 <span class="error"><?php echo $error_catalog_limit; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_list_description_limit; ?></td>
-              <td><input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" size="3" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_list_description_limit; ?></label>
+              <div class="controls">
+                <input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" size="3" />
                 <?php if ($error_list_description_limit) { ?>
                 <span class="error"><?php echo $error_list_description_limit; ?></span>
-                <?php } ?></td>
-            </tr>
-          </table>
-          <h2><?php echo $text_tax; ?></h2>
-          <table class="form">
-            <tr>
-              <td><?php echo $entry_tax; ?></td>
-              <td><?php if ($config_tax) { ?>
+                <?php } ?>
+              </div>
+            </div>
+            <h2><?php echo $text_tax; ?></h2>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_tax; ?></label>
+              <div class="controls">
+                <?php if ($config_tax) { ?>
                 <input type="radio" name="config_tax" value="1" checked="checked" />
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_tax" value="0" />
@@ -193,11 +226,13 @@
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_tax" value="0" checked="checked" />
                 <?php echo $text_no; ?>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_tax_default; ?></td>
-              <td><select name="config_tax_default">
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_tax_default; ?></label>
+              <div class="controls">
+                <select name="config_tax_default">
                   <option value=""><?php echo $text_none; ?></option>
                   <?php  if ($config_tax_default == 'shipping') { ?>
                   <option value="shipping" selected="selected"><?php echo $text_shipping; ?></option>
@@ -209,11 +244,13 @@
                   <?php } else { ?>
                   <option value="payment"><?php echo $text_payment; ?></option>
                   <?php } ?>
-                </select></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_tax_customer; ?></td>
-              <td><select name="config_tax_customer">
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_tax_customer; ?></label>
+              <div class="controls">
+                <select name="config_tax_customer">
                   <option value=""><?php echo $text_none; ?></option>
                   <?php  if ($config_tax_customer == 'shipping') { ?>
                   <option value="shipping" selected="selected"><?php echo $text_shipping; ?></option>
@@ -225,14 +262,14 @@
                   <?php } else { ?>
                   <option value="payment"><?php echo $text_payment; ?></option>
                   <?php } ?>
-                </select></td>
-            </tr>
-          </table>
-          <h2><?php echo $text_account; ?></h2>
-          <table class="form">
-            <tr>
-              <td><?php echo $entry_customer_group; ?></td>
-              <td><select name="config_customer_group_id">
+                </select>
+              </div>
+            </div>
+            <h2><?php echo $text_account; ?></h2>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_customer_group; ?></label>
+              <div class="controls">
+                <select name="config_customer_group_id">
                   <?php foreach ($customer_groups as $customer_group) { ?>
                   <?php if ($customer_group['customer_group_id'] == $config_customer_group_id) { ?>
                   <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
@@ -240,11 +277,13 @@
                   <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
                   <?php } ?>
                   <?php } ?>
-                </select></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_customer_group_display; ?></td>
-              <td><div class="scrollbox">
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_customer_group_display; ?></label>
+              <div class="controls">
+                <div class="scrollbox">
                   <?php $class = 'odd'; ?>
                   <?php foreach ($customer_groups as $customer_group) { ?>
                   <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
@@ -261,11 +300,13 @@
                 </div>
                 <?php if ($error_customer_group_display) { ?>
                 <span class="error"><?php echo $error_customer_group_display; ?></span>
-                <?php } ?></td>
-            </tr>            
-            <tr>
-              <td><?php echo $entry_customer_price; ?></td>
-              <td><?php if ($config_customer_price) { ?>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_customer_price; ?></label>
+              <div class="controls">
+                <?php if ($config_customer_price) { ?>
                 <input type="radio" name="config_customer_price" value="1" checked="checked" />
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_customer_price" value="0" />
@@ -275,11 +316,13 @@
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_customer_price" value="0" checked="checked" />
                 <?php echo $text_no; ?>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_account; ?></td>
-              <td><select name="config_account_id">
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_account; ?></label>
+              <div class="controls">
+                <select name="config_account_id">
                   <option value="0"><?php echo $text_none; ?></option>
                   <?php foreach ($informations as $information) { ?>
                   <?php if ($information['information_id'] == $config_account_id) { ?>
@@ -288,14 +331,14 @@
                   <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
                   <?php } ?>
                   <?php } ?>
-                </select></td>
-            </tr>
-          </table>
-          <h2><?php echo $text_checkout; ?></h2>
-          <table class="form">
-            <tr>
-              <td><?php echo $entry_cart_weight; ?></td>
-              <td><?php if ($config_cart_weight) { ?>
+                </select>
+              </div>
+            </div>
+            <h2><?php echo $text_checkout; ?></h2>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_cart_weight; ?></label>
+              <div class="controls">
+                <?php if ($config_cart_weight) { ?>
                 <input type="radio" name="config_cart_weight" value="1" checked="checked" />
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_cart_weight" value="0" />
@@ -305,11 +348,13 @@
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_cart_weight" value="0" checked="checked" />
                 <?php echo $text_no; ?>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_guest_checkout; ?></td>
-              <td><?php if ($config_guest_checkout) { ?>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_guest_checkout; ?></label>
+              <div class="controls">
+                <?php if ($config_guest_checkout) { ?>
                 <input type="radio" name="config_guest_checkout" value="1" checked="checked" />
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_guest_checkout" value="0" />
@@ -319,11 +364,13 @@
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_guest_checkout" value="0" checked="checked" />
                 <?php echo $text_no; ?>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_checkout; ?></td>
-              <td><select name="config_checkout_id">
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_checkout; ?></label>
+              <div class="controls">
+                <select name="config_checkout_id">
                   <option value="0"><?php echo $text_none; ?></option>
                   <?php foreach ($informations as $information) { ?>
                   <?php if ($information['information_id'] == $config_checkout_id) { ?>
@@ -332,11 +379,13 @@
                   <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
                   <?php } ?>
                   <?php } ?>
-                </select></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_order_status; ?></td>
-              <td><select name="config_order_status_id">
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
+              <div class="controls">
+                <select name="config_order_status_id">
                   <?php foreach ($order_statuses as $order_status) { ?>
                   <?php if ($order_status['order_status_id'] == $config_order_status_id) { ?>
                   <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
@@ -344,14 +393,14 @@
                   <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                   <?php } ?>
                   <?php } ?>
-                </select></td>
-            </tr>
-          </table>
-          <h2><?php echo $text_stock; ?></h2>
-          <table class="form">
-            <tr>
-              <td><?php echo $entry_stock_display; ?></td>
-              <td><?php if ($config_stock_display) { ?>
+                </select>
+              </div>
+            </div>
+            <h2><?php echo $text_stock; ?></h2>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_stock_display; ?></label>
+              <div class="controls">
+                <?php if ($config_stock_display) { ?>
                 <input type="radio" name="config_stock_display" value="1" checked="checked" />
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_stock_display" value="0" />
@@ -361,11 +410,13 @@
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_stock_display" value="0" checked="checked" />
                 <?php echo $text_no; ?>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_stock_checkout; ?></td>
-              <td><?php if ($config_stock_checkout) { ?>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_stock_checkout; ?></label>
+              <div class="controls">
+                <?php if ($config_stock_checkout) { ?>
                 <input type="radio" name="config_stock_checkout" value="1" checked="checked" />
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_stock_checkout" value="0" />
@@ -375,114 +426,134 @@
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_stock_checkout" value="0" checked="checked" />
                 <?php echo $text_no; ?>
-                <?php } ?></td>
-            </tr>
-          </table>
-        </div>
-        <div id="tab-image">
-          <table class="form">
-            <tr>
-              <td><?php echo $entry_logo; ?></td>
-              <td><div class="image"><img src="<?php echo $logo; ?>" alt="" id="thumb-logo" />
+                <?php } ?>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab-image">
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_logo; ?></label>
+              <div class="controls">
+                <div class="image"><img src="<?php echo $logo; ?>" alt="" id="thumb-logo" />
                   <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="logo" />
                   <br />
-                  <a onclick="image_upload('logo', 'thumb-logo');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-logo').attr('src', '<?php echo $no_image; ?>'); $('#logo').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_icon; ?></td>
-              <td><div class="image"><img src="<?php echo $icon; ?>" alt="" id="thumb-icon" />
+                  <a onclick="image_upload('logo', 'thumb-logo');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-logo').attr('src', '<?php echo $no_image; ?>'); $('#logo').attr('value', '');"><?php echo $text_clear; ?></a></div>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_icon; ?></label>
+              <div class="controls">
+                <div class="image"><img src="<?php echo $icon; ?>" alt="" id="thumb-icon" />
                   <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="icon" />
                   <br />
-                  <a onclick="image_upload('icon', 'thumb-icon');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-icon').attr('src', '<?php echo $no_image; ?>'); $('#icon').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_image_category; ?></td>
-              <td><input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" size="3" />
+                  <a onclick="image_upload('icon', 'thumb-icon');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-icon').attr('src', '<?php echo $no_image; ?>'); $('#icon').attr('value', '');"><?php echo $text_clear; ?></a></div>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_category; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" size="3" />
                 <?php if ($error_image_category) { ?>
                 <span class="error"><?php echo $error_image_category; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_image_thumb; ?></td>
-              <td><input type="text" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" size="3" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_thumb; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" size="3" />
                 <?php if ($error_image_thumb) { ?>
                 <span class="error"><?php echo $error_image_thumb; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_image_popup; ?></td>
-              <td><input type="text" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" size="3" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_popup; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" size="3" />
                 <?php if ($error_image_popup) { ?>
                 <span class="error"><?php echo $error_image_popup; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_image_product; ?></td>
-              <td><input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" size="3" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_product; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" size="3" />
                 <?php if ($error_image_product) { ?>
                 <span class="error"><?php echo $error_image_product; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_image_additional; ?></td>
-              <td><input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" size="3" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_additional; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" size="3" />
                 <?php if ($error_image_additional) { ?>
                 <span class="error"><?php echo $error_image_additional; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_image_related; ?></td>
-              <td><input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" size="3" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_related; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" size="3" />
                 <?php if ($error_image_related) { ?>
                 <span class="error"><?php echo $error_image_related; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_image_compare; ?></td>
-              <td><input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" size="3" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_compare; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_compare_height" value="<?php echo $config_image_compare_height; ?>" size="3" />
                 <?php if ($error_image_compare) { ?>
                 <span class="error"><?php echo $error_image_compare; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_image_wishlist; ?></td>
-              <td><input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" size="3" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_wishlist; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_wishlist_height" value="<?php echo $config_image_wishlist_height; ?>" size="3" />
                 <?php if ($error_image_wishlist) { ?>
                 <span class="error"><?php echo $error_image_wishlist; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_image_cart; ?></td>
-              <td><input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" size="3" />
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_cart; ?></label>
+              <div class="controls">
+                <input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" size="3" />
                 <?php if ($error_image_cart) { ?>
                 <span class="error"><?php echo $error_image_cart; ?></span>
-                <?php } ?></td>
-            </tr>
-          </table>
-        </div>
-        <div id="tab-server">
-          <table class="form">
-            <tr>
-              <td><?php echo $entry_secure; ?></td>
-              <td><?php if ($config_secure) { ?>
+                <?php } ?>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab-server">
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_secure; ?></label>
+              <div class="controls">
+                <?php if ($config_secure) { ?>
                 <input type="radio" name="config_secure" value="1" checked="checked" />
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_secure" value="0" />
@@ -492,9 +563,10 @@
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_secure" value="0" checked="checked" />
                 <?php echo $text_no; ?>
-                <?php } ?></td>
-            </tr>
-          </table>
+                <?php } ?>
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </div>
@@ -502,7 +574,7 @@
 </div>
 <script type="text/javascript"><!--
 $('#template').load('index.php?route=setting/store/template&token=<?php echo $token; ?>&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
@@ -573,8 +645,5 @@ function image_upload(field, thumb) {
 		modal: false
 	});
 };
-//--></script> 
-<script type="text/javascript"><!--
-$('#tabs a').tabs();
 //--></script> 
 <?php echo $footer; ?>

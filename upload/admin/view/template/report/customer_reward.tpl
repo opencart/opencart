@@ -6,20 +6,20 @@
     <?php } ?>
   </ul>
   <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/report.png" alt="" /> <?php echo $heading_title; ?></h1>
+    <div class="box-heading">
+      <h1><i class=""></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
+    <div class="box-content">
       <table class="form">
         <tr>
           <td><?php echo $entry_date_start; ?>
             <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="date-start" size="12" /></td>
           <td><?php echo $entry_date_end; ?>
             <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="date-end" size="12" /></td>
-          <td style="text-align: right;"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
+          <td style="text-align: right;"><a onclick="filter();" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></a></td>
         </tr>
       </table>
-      <table class="list">
+      <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
             <td class="left"><?php echo $column_customer; ?></td>
@@ -56,6 +56,7 @@
         </tbody>
       </table>
       <div class="pagination"><?php echo $pagination; ?></div>
+      <div class="results"><?php echo $results; ?></div>
     </div>
   </div>
 </div>

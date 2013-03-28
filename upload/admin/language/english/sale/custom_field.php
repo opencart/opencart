@@ -49,9 +49,12 @@ $_['entry_custom_value']    = 'Custom Field Value Name:';
 $_['entry_customer_group']  = 'Customer Group:';
 $_['entry_required']        = 'Required:';
 $_['entry_location']        = 'Location:';
-$_['entry_position']        = 'Position:<br /><span class="help">Select which field you want the new field to appear after.</span>';
+$_['entry_position']        = 'Position:';
 $_['entry_status']          = 'Status:';
 $_['entry_sort_order']      = 'Sort Order:';
+
+// Help
+$_['help_position']         = 'Select which field you want the new field to appear after.';
 
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify custom fields!';

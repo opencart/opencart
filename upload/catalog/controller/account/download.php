@@ -92,10 +92,11 @@ class ControllerAccountDownload extends Controller {
 			$pagination->total = $download_total;
 			$pagination->page = $page;
 			$pagination->limit = $this->config->get('config_catalog_limit');
-			$pagination->text = $this->language->get('text_pagination');
 			$pagination->url = $this->url->link('account/download', 'page={page}', 'SSL');
 			
 			$this->data['pagination'] = $pagination->render();
+			
+			$this->data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * $this->config->get('config_catalog_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_catalog_limit')) > ($download_total - $this->config->get('config_catalog_limit'))) ? $download_total : ((($page - 1) * $this->config->get('config_catalog_limit')) + $this->config->get('config_catalog_limit')), $download_total, ceil($download_total / $this->config->get('config_catalog_limit')));
 			
 			$this->data['continue'] = $this->url->link('account/account', '', 'SSL');
 

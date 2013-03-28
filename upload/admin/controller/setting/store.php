@@ -236,6 +236,24 @@ class ControllerSettingStore extends Controller {
 		$this->data['entry_image_wishlist'] = $this->language->get('entry_image_wishlist');
 		$this->data['entry_image_cart'] = $this->language->get('entry_image_cart');
 		$this->data['entry_secure'] = $this->language->get('entry_secure');
+		
+		$this->data['help_url'] = $this->language->get('help_url');
+		$this->data['help_ssl'] = $this->language->get('help_ssl');
+		$this->data['help_catalog_limit'] = $this->language->get('help_catalog_limit');
+		$this->data['help_list_description_limit'] = $this->language->get('help_list_description_limit');
+		$this->data['help_tax_default'] = $this->language->get('help_tax_default');
+		$this->data['help_tax_customer'] = $this->language->get('help_tax_customer');
+		$this->data['help_customer_group'] = $this->language->get('help_customer_group');
+		$this->data['help_customer_group_display'] = $this->language->get('help_customer_group_display');
+		$this->data['help_customer_price'] = $this->language->get('help_customer_price');
+		$this->data['help_account'] = $this->language->get('help_account');
+		$this->data['help_guest_checkout'] = $this->language->get('help_guest_checkout');
+		$this->data['help_checkout'] = $this->language->get('help_checkout');
+		$this->data['help_order_status'] = $this->language->get('help_order_status');
+		$this->data['help_stock_display'] = $this->language->get('help_stock_display');
+		$this->data['help_stock_checkout'] = $this->language->get('help_stock_checkout');
+		$this->data['help_icon'] = $this->language->get('help_icon');
+		$this->data['help_secure'] = $this->language->get('help_secure');
 				
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');

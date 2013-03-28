@@ -13,8 +13,11 @@ $_['column_action']     = 'Action';
 // Entry
 $_['entry_name']        = 'Customer Group Name:';
 $_['entry_description'] = 'Description:';
-$_['entry_approval']    = 'Approve New Customers:<br /><span class="help">Customers must be approved by an administrator before they can login.</span>';
+$_['entry_approval']    = 'Approve New Customers:';
 $_['entry_sort_order']  = 'Sort Order:';
+
+// Help
+$_['help_approval']     = 'Customers must be approved by an administrator before they can login.';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify customer groups!';

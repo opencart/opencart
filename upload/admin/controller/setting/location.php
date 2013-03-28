@@ -5,7 +5,7 @@ class ControllerSettingLocation extends Controller {
 	public function index() {
 		$this->language->load('setting/location');
 		
-		$this->document->setTitle($this->language->get('heading_title'));  // Set the title and language
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/location');
 		
@@ -249,10 +249,11 @@ class ControllerSettingLocation extends Controller {
 		$pagination->total = $location_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('setting/location', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 		
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($location_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($location_total - $this->config->get('config_admin_limit'))) ? $location_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $location_total, ceil($location_total / $this->config->get('config_admin_limit')));
 		
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
@@ -289,6 +290,10 @@ class ControllerSettingLocation extends Controller {
 		$this->data['entry_open'] = $this->language->get('entry_open');        
 		$this->data['entry_comment'] = $this->language->get('entry_comment');
 	
+		$this->data['help_geocode'] = $this->language->get('help_geocode');
+		$this->data['help_open'] = $this->language->get('help_open');
+		$this->data['help_comment'] = $this->language->get('help_comment');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');        
 		$this->data['button_geocode'] = $this->language->get('button_geocode');

@@ -75,6 +75,27 @@ class ControllerShippingUPS extends Controller {
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_debug'] = $this->language->get('entry_debug');
 		
+		$this->data['help_key'] = $this->language->get('help_key');
+		$this->data['help_username'] = $this->language->get('help_username');
+		$this->data['help_password'] = $this->language->get('help_password');
+		$this->data['help_pickup'] = $this->language->get('help_pickup');
+		$this->data['help_packaging'] = $this->language->get('help_packaging');
+		$this->data['help_classification'] = $this->language->get('help_classification');
+		$this->data['help_origin'] = $this->language->get('help_origin');
+		$this->data['help_city'] = $this->language->get('help_city');
+		$this->data['help_state'] = $this->language->get('help_state');
+		$this->data['help_country'] = $this->language->get('help_country');
+		$this->data['help_postcode'] = $this->language->get('help_postcode');
+		$this->data['help_test'] = $this->language->get('help_test');
+		$this->data['help_quote_type'] = $this->language->get('help_quote_type');
+		$this->data['help_service'] = $this->language->get('help_service');
+		$this->data['help_insurance'] = $this->language->get('help_insurance');
+		$this->data['help_display_weight'] = $this->language->get('help_display_weight');
+		$this->data['help_weight_class'] = $this->language->get('help_weight_class');
+		$this->data['help_length_class'] = $this->language->get('help_length_class');
+		$this->data['help_dimension'] = $this->language->get('help_dimension');
+		$this->data['help_debug'] = $this->language->get('help_debug');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 		

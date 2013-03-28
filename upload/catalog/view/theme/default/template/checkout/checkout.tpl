@@ -73,7 +73,7 @@ $(document).ready(function() {
 <?php } ?>
 });
 
-$('.checkout-heading a').live('click', function() {
+$('.checkout-heading a').on('click', function() {
 	$('.checkout-content').slideUp('slow');
 	
 	$(this).parent().parent().find('.checkout-content').slideDown('slow');

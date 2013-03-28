@@ -1,6 +1,6 @@
 <?php echo $header; ?>
 <?php if ($error_warning) { ?>
-<div class="warning"><?php echo $error_warning; ?></div>
+<div class="alert alert-error"><?php echo $error_warning; ?></div>
 <?php } ?>
 <?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
@@ -22,9 +22,9 @@
       </table>
     </div>
     <div class="buttons">
-      <div class="left"><a href="<?php echo $back; ?>" class="button"><?php echo $button_back; ?></a></div>
+      <div class="left"><a href="<?php echo $back; ?>" class="btn"><?php echo $button_back; ?></a></div>
       <div class="right">
-        <input type="submit" value="<?php echo $button_continue; ?>" class="button" />
+        <input type="submit" value="<?php echo $button_continue; ?>" class="btn" />
       </div>
     </div>
   </form>

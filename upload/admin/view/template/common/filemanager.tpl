@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
-<script type="text/javascript" src="view/javascript/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/jquery.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
 <link rel="stylesheet" type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" />
 <script type="text/javascript" src="view/javascript/jquery/ui/external/jquery.bgiframe-2.1.2.js"></script>
@@ -65,6 +65,11 @@ img {
 #column-right input {
 	display: none;
 }
+#upload {
+	visibility: hidden;
+	position: absolute;
+	top: 0px;
+}
 #dialog {
 	display: none;
 }
@@ -94,11 +99,11 @@ img {
 </head>
 <body>
 <div id="container">
-  <div id="menu"><a id="button-create" class="button" style="background-image: url('view/image/filemanager/folder.png');"><?php echo $button_folder; ?></a><a id="button-delete" class="button" style="background-image: url('view/image/filemanager/edit-delete.png');"><?php echo $button_delete; ?></a><a id="button-move" class="button" style="background-image: url('view/image/filemanager/edit-cut.png');"><?php echo $button_move; ?></a><a id="button-copy" class="button" style="background-image: url('view/image/filemanager/edit-copy.png');"><?php echo $button_copy; ?></a><a id="button-rename" class="button" style="background-image: url('view/image/filemanager/edit-rename.png');"><?php echo $button_rename; ?></a><a id="button-upload" class="button" onclick="$('input[name=\'image\']').click();" style="background-image: url('view/image/filemanager/upload.png');"><?php echo $button_upload; ?></a><a id="button-refresh" class="button" style="background-image: url('view/image/filemanager/refresh.png');"><?php echo $button_refresh; ?></a></div>
+  <div id="menu"><a id="button-create" class="btn" style="background-image: url('view/image/filemanager/folder.png');"><?php echo $button_folder; ?></a><a id="button-delete" class="btn" style="background-image: url('view/image/filemanager/edit-delete.png');"><?php echo $button_delete; ?></a><a id="button-move" class="btn" style="background-image: url('view/image/filemanager/edit-cut.png');"><?php echo $button_move; ?></a><a id="button-copy" class="btn" style="background-image: url('view/image/filemanager/edit-copy.png');"><?php echo $button_copy; ?></a><a id="button-rename" class="btn" style="background-image: url('view/image/filemanager/edit-rename.png');"><?php echo $button_rename; ?></a><a id="button-upload" class="btn" onclick="$('input[name=\'image\']').click();" style="background-image: url('view/image/filemanager/upload.png');"><?php echo $button_upload; ?></a><a id="button-refresh" class="btn" style="background-image: url('view/image/filemanager/refresh.png');"><?php echo $button_refresh; ?></a></div>
   <div id="column-left"></div>
   <div id="column-right"></div>
 </div>
-<div style="display: none;">
+<div id="upload">
   <form enctype="multipart/form-data">
     <input type="file" name="image" id="image" />
     <input type="hidden" name="directory" />
@@ -263,7 +268,7 @@ $(document).ready(function() {
 		}
 	});	
 
-	$('#column-right a').live('click', function() {
+	$('#column-right a').on('click', function() {
 		if ($(this).attr('class') == 'selected') {
 			$(this).removeAttr('class');
 		} else {
@@ -273,7 +278,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('#column-right a').live('dblclick', function() {
+	$('#column-right a').on('dblclick', function() {
 		<?php if ($fckeditor) { ?>
 		window.opener.CKEDITOR.tools.callFunction(<?php echo $fckeditor; ?>, '<?php echo $directory; ?>' + $(this).find('input[name=\'image\']').attr('value'));
 		

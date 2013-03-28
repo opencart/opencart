@@ -248,10 +248,11 @@ class ControllerLocalisationCurrency extends Controller {
 		$pagination->total = $currency_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($currency_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($currency_total - $this->config->get('config_admin_limit'))) ? $currency_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $currency_total, ceil($currency_total / $this->config->get('config_admin_limit')));
 		
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
@@ -278,6 +279,9 @@ class ControllerLocalisationCurrency extends Controller {
 		$this->data['entry_symbol_right'] = $this->language->get('entry_symbol_right');
 		$this->data['entry_decimal_place'] = $this->language->get('entry_decimal_place');
 		$this->data['entry_status'] = $this->language->get('entry_status');
+
+		$this->data['help_address_format'] = $this->language->get('help_address_format');
+		$this->data['help_value'] = $this->language->get('help_value');
 
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');

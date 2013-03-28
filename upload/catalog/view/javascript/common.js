@@ -27,12 +27,12 @@ $(document).ready(function() {
 	});
 	
 	/* Ajax Cart */
-	$('#cart > .heading a').live('click', function() {
+	$('#cart > .heading a').on('click', function() {
 		$('#cart').addClass('active');
 		
 		$('#cart').load('index.php?route=module/cart #cart > *');
 		
-		$('#cart').live('mouseleave', function() {
+		$('#cart').on('mouseleave', function() {
 			$(this).removeClass('active');
 		});
 	});
@@ -49,7 +49,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('.success img, .warning img, .attention img, .information img').live('click', function() {
+	$('.success img, .warning img, .attention img, .information img').on('click', function() {
 		$(this).parent().fadeOut('slow', function() {
 			$(this).remove();
 		});
@@ -96,7 +96,7 @@ function addToCart(product_id, quantity) {
 			}
 			
 			if (json['success']) {
-				$('#notification').html('<div class="success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+				$('#notification').html('<div class="alert alert-success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 				
 				$('.success').fadeIn('slow');
 				
@@ -117,7 +117,7 @@ function addToWishList(product_id) {
 			$('.success, .warning, .attention, .information').remove();
 						
 			if (json['success']) {
-				$('#notification').html('<div class="success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+				$('#notification').html('<div class="alert alert-success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 				
 				$('.success').fadeIn('slow');
 				
@@ -139,7 +139,7 @@ function addToCompare(product_id) {
 			$('.success, .warning, .attention, .information').remove();
 						
 			if (json['success']) {
-				$('#notification').html('<div class="success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+				$('#notification').html('<div class="alert alert-success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 				
 				$('.success').fadeIn('slow');
 				

@@ -3,7 +3,7 @@
   <input type="hidden" name="signature" value="<?php echo $signature; ?>">
   <div class="buttons">
     <div class="right">
-      <input type="submit" value="<?php echo $button_confirm; ?>" class="button" />
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn" />
     </div>
   </div>
 </form>

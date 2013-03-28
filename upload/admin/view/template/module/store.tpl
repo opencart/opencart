@@ -6,32 +6,32 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/module.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
+    <div class="box-heading">
+      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table class="form">
-          <tr>
-            <td><?php echo $entry_admin; ?></td>
-            <td><?php if ($store_admin) { ?>
-              <input type="radio" name="store_admin" value="1" checked="checked" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="store_admin" value="0" />
-              <?php echo $text_no; ?>
-              <?php } else { ?>
-              <input type="radio" name="store_admin" value="1" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="store_admin" value="0" checked="checked" />
-              <?php echo $text_no; ?>
-              <?php } ?></td>
-          </tr>
-        </table>
-        <table id="module" class="list">
+    <div class="box-content">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_admin; ?></label>
+          <div class="controls">
+            <?php if ($store_admin) { ?>
+            <input type="radio" name="store_admin" value="1" checked="checked" />
+            <?php echo $text_yes; ?>
+            <input type="radio" name="store_admin" value="0" />
+            <?php echo $text_no; ?>
+            <?php } else { ?>
+            <input type="radio" name="store_admin" value="1" />
+            <?php echo $text_yes; ?>
+            <input type="radio" name="store_admin" value="0" checked="checked" />
+            <?php echo $text_no; ?>
+            <?php } ?>
+          </div>
+        </div>
+        <table id="module" class="table">
           <thead>
             <tr>
               <td class="left"><?php echo $entry_layout; ?></td>
@@ -41,10 +41,10 @@
               <td></td>
             </tr>
           </thead>
-          <?php $module_row = 0; ?>
-          <?php foreach ($modules as $module) { ?>
-          <tbody id="module-row<?php echo $module_row; ?>">
-            <tr>
+          <tbody>
+            <?php $module_row = 0; ?>
+            <?php foreach ($modules as $module) { ?>
+            <tr id="module-row<?php echo $module_row; ?>">
               <td class="left"><select name="store_module[<?php echo $module_row; ?>][layout_id]">
                   <?php foreach ($layouts as $layout) { ?>
                   <?php if ($layout['layout_id'] == $module['layout_id']) { ?>
@@ -86,15 +86,15 @@
                   <?php } ?>
                 </select></td>
               <td class="right"><input type="text" name="store_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" /></td>
-              <td class="left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
+              <td class="left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
             </tr>
+            <?php $module_row++; ?>
+            <?php } ?>
           </tbody>
-          <?php $module_row++; ?>
-          <?php } ?>
           <tfoot>
             <tr>
               <td colspan="4"></td>
-              <td class="left"><a onclick="addModule();" class="button"><?php echo $button_add_module; ?></a></td>
+              <td class="left"><a onclick="addModule();" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_module; ?></a></td>
             </tr>
           </tfoot>
         </table>
@@ -106,29 +106,27 @@
 var module_row = <?php echo $module_row; ?>;
 
 function addModule() {	
-	html  = '<tbody id="module-row' + module_row + '">';
-	html += '  <tr>';
-	html += '    <td class="left"><select name="store_module[' + module_row + '][layout_id]">';
+	html  = '<tr id="module-row' + module_row + '">';
+	html += '  <td class="left"><select name="store_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>
-	html += '      <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
+	html += '    <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
 	<?php } ?>
-	html += '    </select></td>';
-	html += '    <td class="left"><select name="store_module[' + module_row + '][position]">';
-	html += '      <option value="content_top"><?php echo $text_content_top; ?></option>';
-	html += '      <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
-	html += '      <option value="column_left"><?php echo $text_column_left; ?></option>';
-	html += '      <option value="column_right"><?php echo $text_column_right; ?></option>';
-	html += '    </select></td>';
-	html += '    <td class="left"><select name="store_module[' + module_row + '][status]">';
-    html += '      <option value="1" selected="selected"><?php echo $text_enabled; ?></option>';
-    html += '      <option value="0"><?php echo $text_disabled; ?></option>';
-    html += '    </select></td>';
-	html += '    <td class="right"><input type="text" name="store_module[' + module_row + '][sort_order]" value="" size="3" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
-	html += '  </tr>';
-	html += '</tbody>';
+	html += '  </select></td>';
+	html += '  <td class="left"><select name="store_module[' + module_row + '][position]">';
+	html += '    <option value="content_top"><?php echo $text_content_top; ?></option>';
+	html += '    <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
+	html += '    <option value="column_left"><?php echo $text_column_left; ?></option>';
+	html += '    <option value="column_right"><?php echo $text_column_right; ?></option>';
+	html += '  </select></td>';
+	html += '  <td class="left"><select name="store_module[' + module_row + '][status]">';
+    html += '    <option value="1" selected="selected"><?php echo $text_enabled; ?></option>';
+    html += '    <option value="0"><?php echo $text_disabled; ?></option>';
+    html += '  </select></td>';
+	html += '  <td class="right"><input type="text" name="store_module[' + module_row + '][sort_order]" value="" size="3" /></td>';
+	html += '  <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
+	html += '</tr>';
 	
-	$('#module tfoot').before(html);
+	$('#module tbody').append(html);
 	
 	module_row++;
 }

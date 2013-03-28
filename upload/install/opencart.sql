@@ -254,6 +254,7 @@ CREATE TABLE `oc_banner_image` (
   `banner_id` int(11) NOT NULL,
   `link` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
+  `sort_order` int(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`banner_image_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -261,15 +262,15 @@ CREATE TABLE `oc_banner_image` (
 -- Dumping data for table `oc_banner_image`
 --
 
-INSERT INTO `oc_banner_image` (`banner_image_id`, `banner_id`, `link`, `image`) VALUES
-(54, 7, 'index.php?route=product/product&amp;path=57&amp;product_id=49', 'data/demo/samsung_banner.jpg'),
-(77, 6, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=7', 'data/demo/hp_banner.jpg'),
-(75, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=5', 'data/demo/htc_logo.jpg'),
-(73, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=8', 'data/demo/apple_logo.jpg'),
-(74, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=9', 'data/demo/canon_logo.jpg'),
-(71, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=10', 'data/demo/sony_logo.jpg'),
-(72, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=6', 'data/demo/palm_logo.jpg'),
-(76, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=7', 'data/demo/hp_logo.jpg');
+INSERT INTO `oc_banner_image` (`banner_image_id`, `banner_id`, `link`, `image`, `sort_order`) VALUES
+(54, 7, 'index.php?route=product/product&amp;path=57&amp;product_id=49', 'data/demo/samsung_banner.jpg', 0),
+(77, 6, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=7', 'data/demo/hp_banner.jpg', 0),
+(75, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=5', 'data/demo/htc_logo.jpg', 0),
+(73, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=8', 'data/demo/apple_logo.jpg', 1),
+(74, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=9', 'data/demo/canon_logo.jpg', 2),
+(71, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=10', 'data/demo/sony_logo.jpg', 3),
+(72, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=6', 'data/demo/palm_logo.jpg', 4),
+(76, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=7', 'data/demo/hp_logo.jpg', 5);
 
 -- --------------------------------------------------------
 
@@ -1804,11 +1805,11 @@ INSERT INTO `oc_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
 DROP TABLE IF EXISTS `oc_modification`;
 CREATE TABLE `oc_modification` (
   `modification_id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(32) NOT NULL,
   `name` varchar(64) NOT NULL,
   `author` varchar(64) NOT NULL,
   `version` varchar(32) NOT NULL,
-  `xml` text NOT NULL,
+  `code` text NOT NULL,
+  `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`modification_id`)
@@ -3030,7 +3031,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (18, 0, 'config', 'config_error_log', '1', 0),
 (19, 0, 'config', 'config_error_display', '1', 0),
 (20, 0, 'config', 'config_compression', '0', 0),
-(21, 0, 'config', 'config_encryption', '12345', 0),
+(21, 0, 'config', 'config_encryption', 'SUBSTRING(SHA1(RAND()) FROM 1 FOR 8)', 0),
 (22, 0, 'config', 'config_maintenance', '0', 0),
 (23, 0, 'config', 'config_account_mail', '0', 0),
 (24, 0, 'config', 'config_alert_emails', '', 0),
@@ -3106,7 +3107,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (94, 0, 'voucher', 'voucher_sort_order', '8', 0),
 (95, 0, 'voucher', 'voucher_status', '1', 0),
 (96, 0, 'config', 'config_length_class_id', '1', 0),
-(97, 0, 'config', 'config_invoice_prefix', 'INV-2012-00', 0),
+(97, 0, 'config', 'config_invoice_prefix', 'INV-2013-00', 0),
 (98, 0, 'config', 'config_tax', '1', 0),
 (99, 0, 'config', 'config_tax_customer', 'shipping', 0),
 (100, 0, 'config', 'config_tax_default', 'shipping', 0),
@@ -3305,15 +3306,73 @@ CREATE TABLE `oc_url_alias` (
 --
 
 INSERT INTO `oc_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
-(704, 'product_id=48', 'ipod_classic'),
-(773, 'category_id=20', 'desktops'),
-(503, 'category_id=26', 'pc'),
-(505, 'category_id=27', 'mac'),
+(824, 'product_id=48', 'ipod-classic'),
+(836, 'category_id=20', 'desktops'),
+(834, 'category_id=26', 'pc'),
+(835, 'category_id=27', 'mac'),
 (730, 'manufacturer_id=8', 'apple'),
 (772, 'information_id=4', 'about_us'),
 (768, 'product_id=42', 'test'),
-(767, 'category_id=34', 'mp3-players'),
-(536, 'category_id=36', 'Normal');
+(789, 'category_id=34', 'mp3-players'),
+(781, 'category_id=36', 'test2'),
+(774, 'category_id=18', 'laptop-notebook'),
+(775, 'category_id=46', 'macs'),
+(776, 'category_id=45', 'windows'),
+(777, 'category_id=25', 'component'),
+(778, 'category_id=29', 'mouse'),
+(779, 'category_id=28', 'monitor'),
+(780, 'category_id=35', 'test1'),
+(782, 'category_id=30', 'printer'),
+(783, 'category_id=31', 'scanner'),
+(784, 'category_id=32', 'web-camera'),
+(785, 'category_id=57', 'tablet'),
+(786, 'category_id=17', 'software'),
+(787, 'category_id=24', 'smartphone'),
+(788, 'category_id=33', 'camera'),
+(790, 'category_id=43', 'test11'),
+(791, 'category_id=44', 'test12'),
+(792, 'category_id=47', 'test15'),
+(793, 'category_id=48', 'test16'),
+(794, 'category_id=49', 'test17'),
+(795, 'category_id=50', 'test18'),
+(796, 'category_id=51', 'test19'),
+(797, 'category_id=52', 'test20'),
+(798, 'category_id=58', 'test25'),
+(799, 'category_id=53', 'test21'),
+(800, 'category_id=54', 'test22'),
+(801, 'category_id=55', 'test23'),
+(802, 'category_id=56', 'test24'),
+(803, 'category_id=38', 'test4'),
+(804, 'category_id=37', 'test5'),
+(805, 'category_id=39', 'test6'),
+(806, 'category_id=40', 'test7'),
+(807, 'category_id=41', 'test8'),
+(808, 'category_id=42', 'test9'),
+(809, 'product_id=30', 'canon-eos-5d'),
+(840, 'product_id=47', 'hp-lp3065'),
+(811, 'product_id=28', 'htc-touch-hd'),
+(812, 'product_id=43', 'macbook'),
+(813, 'product_id=44', 'macbook-air'),
+(814, 'product_id=45', 'macbook-pro'),
+(816, 'product_id=31', 'nikon-d300'),
+(817, 'product_id=29', 'palm-treo-pro'),
+(818, 'product_id=35', 'product-8'),
+(819, 'product_id=49', 'samsung-galaxy-tab-10-1'),
+(820, 'product_id=33', 'samsung-syncmaster-941bw'),
+(821, 'product_id=46', 'sony-vaio'),
+(837, 'product_id=41', 'imac'),
+(823, 'product_id=40', 'iphone'),
+(825, 'product_id=36', 'ipod-nano'),
+(826, 'product_id=34', 'ipod-shuffle'),
+(827, 'product_id=32', 'ipod-touch'),
+(828, 'manufacturer_id=9', 'canon'),
+(829, 'manufacturer_id=5', 'htc'),
+(830, 'manufacturer_id=7', 'hewlett-packard'),
+(831, 'manufacturer_id=6', 'palm'),
+(832, 'manufacturer_id=10', 'sony'),
+(841, 'information_id=6', 'delivery'),
+(842, 'information_id=3', 'privacy'),
+(843, 'information_id=5', 'terms');
 
 -- --------------------------------------------------------
 

@@ -62,7 +62,7 @@ class ControllerAccountAccount extends Controller {
 		} else {
 			$this->data['reward'] = '';
 		}
-		
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/account/account.tpl';
 		} else {
@@ -77,7 +77,7 @@ class ControllerAccountAccount extends Controller {
 			'common/footer',
 			'common/header'		
 		);
-				
+						
 		$this->response->setOutput($this->render());
   	}
 }

@@ -589,14 +589,14 @@ class ControllerCatalogProduct extends Controller {
 		
 		$this->data['help_keyword'] = $this->language->get('help_keyword');
 		$this->data['help_sku'] = $this->language->get('help_sku');
-		$this->data['help_upc'] = $this->language->get('entry_upc');
-		$this->data['help_ean'] = $this->language->get('entry_ean');
-		$this->data['help_jan'] = $this->language->get('entry_jan');
-		$this->data['help_isbn'] = $this->language->get('entry_isbn');
-		$this->data['help_mpn'] = $this->language->get('entry_mpn');
-		$this->data['help_minimum'] = $this->language->get('entry_minimum');
-		$this->data['help_manufacturer'] = $this->language->get('entry_manufacturer');
-		$this->data['help_stock_status'] = $this->language->get('entry_stock_status');
+		$this->data['help_upc'] = $this->language->get('help_upc');
+		$this->data['help_ean'] = $this->language->get('help_ean');
+		$this->data['help_jan'] = $this->language->get('help_jan');
+		$this->data['help_isbn'] = $this->language->get('help_isbn');
+		$this->data['help_mpn'] = $this->language->get('help_mpn');
+		$this->data['help_minimum'] = $this->language->get('help_minimum');
+		$this->data['help_manufacturer'] = $this->language->get('help_manufacturer');
+		$this->data['help_stock_status'] = $this->language->get('help_stock_status');
 		$this->data['help_points'] = $this->language->get('help_points');
 		$this->data['help_category'] = $this->language->get('help_category');
 		$this->data['help_filter'] = $this->language->get('help_filter');

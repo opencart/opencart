@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
           <div class="controls">
-            <textarea name="citylink_rate" cols="40" rows="5"><?php echo $citylink_rate; ?></textarea>
+            <textarea name="citylink_rate" cols="40" rows="5"><?php echo $citylink_rate; ?></textarea> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_rate; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
         <div class="control-group">

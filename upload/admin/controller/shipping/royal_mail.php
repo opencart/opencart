@@ -30,16 +30,6 @@ class ControllerShippingRoyalMail extends Controller {
 
 		$this->data['entry_rate'] = $this->language->get('entry_rate');
 		$this->data['entry_insurance'] = $this->language->get('entry_insurance');
-		$this->data['entry_airmail_rate_1'] = $this->language->get('entry_airmail_rate_1');
-		$this->data['entry_airmail_rate_2'] = $this->language->get('entry_airmail_rate_2');
-		$this->data['entry_international_signed_rate_1'] = $this->language->get('entry_international_signed_rate_1');
-		$this->data['entry_international_signed_insurance_1'] = $this->language->get('entry_international_signed_insurance_1');
-		$this->data['entry_international_signed_rate_2'] = $this->language->get('entry_international_signed_rate_2');
-		$this->data['entry_international_signed_insurance_2'] = $this->language->get('entry_international_signed_insurance_2');	
-		$this->data['entry_airsure_rate_1'] = $this->language->get('entry_airsure_rate_1');
-		$this->data['entry_airsure_insurance_1'] = $this->language->get('entry_airsure_insurance_1');
-		$this->data['entry_airsure_rate_2'] = $this->language->get('entry_airsure_rate_2');
-		$this->data['entry_airsure_insurance_2'] = $this->language->get('entry_airsure_insurance_2');	
 		$this->data['entry_display_weight'] = $this->language->get('entry_display_weight');
 		$this->data['entry_display_insurance'] = $this->language->get('entry_display_insurance');
 		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');

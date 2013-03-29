@@ -16,9 +16,9 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"></label>
-          <div class="controls"><span class="required">*</span> <?php echo $entry_code; ?>
-            <textarea name="google_talk_code" cols="40" rows="5"><?php echo $google_talk_code; ?></textarea>
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_code; ?></label>
+          <div class="controls">
+            <textarea name="google_talk_code" cols="40" rows="5"><?php echo $google_talk_code; ?></textarea> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_code; ?>" class="icon-question-sign"></i></span>
             <?php if ($error_code) { ?>
             <span class="error"><?php echo $error_code; ?></span>
             <?php } ?>

@@ -49,6 +49,7 @@
             <input type="radio" name="approval" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?>
+             <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_approval; ?>" class="icon-question-sign"></i></span>            
           </div>
         </div>
         <div class="control-group">

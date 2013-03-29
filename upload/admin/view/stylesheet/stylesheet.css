@@ -1,3 +1,8 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
 #header {
 	background: #363636;
 	border-bottom: 4px solid #00C3F4;
@@ -70,6 +75,33 @@
 	min-height: 300px;
 	overflow: auto;
 }
+.breadcrumb li a:before {
+    content: "\f105"; 
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    color: #000;
+    font-size: 16px;
+	padding-right: 5px;
+	text-decoration:none;
+}
+
+.breadcrumb li a:hover {
+	text-decoration:none;
+}
+
+.breadcrumb li:first-child a:before {
+    content: "\f015"; 
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    color: #000;
+    font-size: 16px;
+	padding-right: 5px;  
+	text-decoration:none;
+ }
 .buttons {
 	text-align: right;
 	border: 1px solid #DBDBDB;
@@ -86,4 +118,8 @@
 .table .center {
 	text-align: center;
 }
-
+.help-block .icon-question-sign, .help-inline .icon-question-sign {
+	font-size: 18px;
+	color: #00C3F4;
+	cursor: pointer;
+}

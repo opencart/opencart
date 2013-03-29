@@ -36,7 +36,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="sagepay_us_total" value="<?php echo $sagepay_us_total; ?>" />
+            <input type="text" name="sagepay_us_total" value="<?php echo $sagepay_us_total; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_total; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
         <div class="control-group">

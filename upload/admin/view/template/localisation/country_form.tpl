@@ -40,6 +40,7 @@
           <label class="control-label" for="input-name"><?php echo $entry_address_format; ?></label>
           <div class="controls">
             <textarea name="address_format" cols="40" rows="5"><?php echo $address_format; ?></textarea>
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_address_format; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
         <div class="control-group">

@@ -28,6 +28,8 @@
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_password; ?></label>
           <div class="controls">
             <input type="text" name="paymate_password" value="<?php echo $paymate_password; ?>" />
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_password; ?>" class="icon-question-sign"></i></span>
+            
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
             <?php } ?>
@@ -55,7 +57,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="paymate_total" value="<?php echo $paymate_total; ?>" />
+            <input type="text" name="paymate_total" value="<?php echo $paymate_total; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_total; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
         <div class="control-group">

@@ -86,7 +86,7 @@
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_geocode; ?></label>
           <div class="controls">
             <input id="geocode" type="text" name="geocode" value="<?php echo $geocode; ?>" />
-            <input type="button" onclick="getGeoCode()" value="<?php echo $button_geocode; ?>" class="btn" />
+            <input type="button" onclick="getGeoCode()" value="<?php echo $button_geocode; ?>" class="btn" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_geocode; ?>" class="icon-question-sign"></i></span>
             <?php if ($error_geocode) { ?>
             <span class="error"><?php echo $error_geocode; ?></span>
             <?php } ?>
@@ -104,13 +104,13 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_open; ?></label>
           <div class="controls">
-            <textarea name="open" cols="40" rows="5"><?php echo $open; ?></textarea>
+            <textarea name="open" cols="40" rows="5"><?php echo $open; ?></textarea> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_open; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_comment; ?></label>
           <div class="controls">
-            <textarea name="comment" cols="40" rows="5"><?php echo $comment; ?></textarea>
+            <textarea name="comment" cols="40" rows="5"><?php echo $comment; ?></textarea> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_comment; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
       </form>

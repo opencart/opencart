@@ -32,7 +32,7 @@ class ControllerPaymentPayza extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
-		$this->data['help_password'] = $this->language->get('help_password');
+		$this->data['help_callback'] = $this->language->get('help_callback');
 		$this->data['help_total'] = $this->language->get('help_total');
 
 		$this->data['button_save'] = $this->language->get('button_save');

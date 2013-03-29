@@ -63,7 +63,7 @@
               <option value="1"><?php echo $text_enabled; ?></option>
               <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
               <?php } ?>
-            </select>
+            </select> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_display_time; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
         <div class="control-group">
@@ -77,7 +77,7 @@
               <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
               <?php } ?>
               <?php } ?>
-            </select>
+            </select> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_weight_class; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
         <div class="control-group">

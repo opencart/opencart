@@ -32,6 +32,7 @@
           <div class="controls">
             <input type="text" name="filename" value="<?php echo $filename; ?>" />
             <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_filename; ?>" class="icon-question-sign"></i></span>
             <?php if ($error_filename) { ?>
             <span class="error"><?php echo $error_filename; ?></span>
             <?php } ?>
@@ -61,7 +62,7 @@
             <?php } else { ?>
             <input type="checkbox" name="update" value="1" />
             <?php } ?>
-          </div>
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_update; ?>" class="icon-question-sign"></i></span></div>
         </div>
         <?php } ?>
       </form>

@@ -82,7 +82,7 @@
                   </div>
                   <?php } ?>
                 </div>
-              </div>
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_filter; ?>" class="icon-question-sign"></i></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_store; ?></label>
@@ -117,7 +117,7 @@
               <label class="control-label" for="input-name"><?php echo $entry_keyword; ?></label>
               <div class="controls">
                 <input type="text" name="keyword" value="<?php echo $keyword; ?>" />
-              </div>
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_keyword; ?>" class="icon-question-sign"></i></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
@@ -136,13 +136,13 @@
                 <?php } else { ?>
                 <input type="checkbox" name="top" value="1" />
                 <?php } ?>
-              </div>
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_top; ?>" class="icon-question-sign"></i></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_column; ?></label>
               <div class="controls">
                 <input type="text" name="column" value="<?php echo $column; ?>" size="1" />
-              </div>
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_column; ?>" class="icon-question-sign"></i></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
@@ -212,6 +212,9 @@
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('.help-inline .icon-question-sign').tooltip();
+--></script> 
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>

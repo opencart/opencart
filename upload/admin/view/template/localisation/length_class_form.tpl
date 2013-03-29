@@ -42,7 +42,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_value; ?></label>
           <div class="controls">
-            <input type="text" name="value" value="<?php echo $value; ?>" />
+            <input type="text" name="value" value="<?php echo $value; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_value; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
       </form>

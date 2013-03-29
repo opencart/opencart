@@ -255,7 +255,7 @@
               <?php } else { ?>
               <option value="zone_id"><?php echo $text_zone; ?></option>
               <?php } ?>
-            </select>
+            </select> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_position; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
         <div class="control-group">

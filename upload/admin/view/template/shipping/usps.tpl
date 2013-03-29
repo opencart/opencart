@@ -438,6 +438,9 @@
             <input type="text" name="usps_length" value="<?php echo $usps_length; ?>" size="4" />
             <input type="text" name="usps_width" value="<?php echo $usps_width; ?>" size="4" />
             <input type="text" name="usps_height" value="<?php echo $usps_height; ?>" size="4" />
+            
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_dimension; ?>" class="icon-question-sign"></i></span>
+            
             <?php if ($error_width) { ?>
             <span class="error"><?php echo $error_width; ?></span>
             <?php } ?>
@@ -463,6 +466,8 @@
             <input type="radio" name="usps_display_time" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?>
+            
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_display_time; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
         <div class="control-group">
@@ -479,6 +484,8 @@
             <input type="radio" name="usps_display_weight" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?>
+            
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_display_weight; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
         <div class="control-group">
@@ -493,6 +500,8 @@
               <?php } ?>
               <?php } ?>
             </select>
+            
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_weight_class; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
         <div class="control-group">
@@ -557,6 +566,8 @@
               <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
               <?php } ?>
             </select>
+            
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_debug; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
       </form>

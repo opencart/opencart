@@ -56,7 +56,7 @@
                   <label class="control-label" for="input-name"><?php echo $entry_meta_keyword; ?></label>
                   <div class="controls">
                     <textarea name="product_description[<?php echo $language['language_id']; ?>][meta_keyword]" cols="40" rows="5"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
-                    <a rel="tooltip" data-toggle="tooltip" title="first tooltip" data-original-title="Tooltip on right"><i class="icon-question-sign"></i></a></div>
+                  </div>
                 </div>
                 <div class="control-group">
                   <label class="control-label" for="input-name"><?php echo $entry_description; ?></label>
@@ -67,7 +67,7 @@
                 <div class="control-group">
                   <label class="control-label" for="input-name"><?php echo $entry_tag; ?></label>
                   <div class="controls">
-                    <input type="text" name="product_description[<?php echo $language['language_id']; ?>][tag]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['tag'] : ''; ?>" size="80" />
+                    <input type="text" name="product_description[<?php echo $language['language_id']; ?>][tag]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['tag'] : ''; ?>" size="80" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_tag; ?>" class="icon-question-sign"></i></span>
                   </div>
                 </div>
               </div>
@@ -88,37 +88,37 @@
               <label class="control-label" for="input-name"><?php echo $entry_sku; ?></label>
               <div class="controls">
                 <input type="text" name="sku" value="<?php echo $sku; ?>" />
-              </div>
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_sku; ?>" class="icon-question-sign"></i></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_upc; ?></label>
               <div class="controls">
                 <input type="text" name="upc" value="<?php echo $upc; ?>" />
-              </div>
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_upc; ?>" class="icon-question-sign"></i></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_ean; ?></label>
               <div class="controls">
                 <input type="text" name="ean" value="<?php echo $ean; ?>" />
-              </div>
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_ean; ?>" class="icon-question-sign"></i></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_jan; ?></label>
               <div class="controls">
                 <input type="text" name="jan" value="<?php echo $jan; ?>" />
-              </div>
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_jan; ?>" class="icon-question-sign"></i></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_isbn; ?></label>
               <div class="controls">
                 <input type="text" name="isbn" value="<?php echo $isbn; ?>" />
-              </div>
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_isbn; ?>" class="icon-question-sign"></i></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_mpn; ?></label>
               <div class="controls">
                 <input type="text" name="mpn" value="<?php echo $mpn; ?>" />
-              </div>
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_mpn; ?>" class="icon-question-sign"></i></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_location; ?></label>
@@ -157,7 +157,7 @@
               <label class="control-label" for="input-name"><?php echo $entry_minimum; ?></label>
               <div class="controls">
                 <input type="text" name="minimum" value="<?php echo $minimum; ?>" size="2" />
-              </div>
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_minimum; ?>" class="icon-question-sign"></i></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_subtract; ?></label>
@@ -185,7 +185,7 @@
                   <?php } ?>
                   <?php } ?>
                 </select>
-              </div>
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_stock_status; ?>" class="icon-question-sign"></i></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_shipping; ?></label>
@@ -207,7 +207,7 @@
               <label class="control-label" for="input-name"><?php echo $entry_keyword; ?></label>
               <div class="controls">
                 <input type="text" name="keyword" value="<?php echo $keyword; ?>" />
-              </div>
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_keyword; ?>" class="icon-question-sign"></i></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
@@ -292,12 +292,12 @@
               <div class="controls">
                 <input type="text" name="manufacturer" value="<?php echo $manufacturer ?>" />
                 <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturer_id; ?>" />
-              </div>
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_manufacturer; ?>" class="icon-question-sign"></i></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_category; ?></label>
               <div class="controls">
-                <input type="text" name="category" value="" />
+                <input type="text" name="category" value="" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_category; ?>" class="icon-question-sign"></i></span>
                 <div id="product-category" class="scrollbox">
                   <?php $class = 'odd'; ?>
                   <?php foreach ($product_categories as $product_category) { ?>
@@ -312,7 +312,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_filter; ?></label>
               <div class="controls">
-                <input type="text" name="filter" value="" />
+                <input type="text" name="filter" value="" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_filter; ?>" class="icon-question-sign"></i></span>
                 <div id="product-filter" class="scrollbox">
                   <?php $class = 'odd'; ?>
                   <?php foreach ($product_filters as $product_filter) { ?>
@@ -356,7 +356,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_download; ?></label>
               <div class="controls">
-                <input type="text" name="download" value="" />
+                <input type="text" name="download" value="" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_download; ?>" class="icon-question-sign"></i></span>
                 <div id="product-download" class="scrollbox">
                   <?php $class = 'odd'; ?>
                   <?php foreach ($product_downloads as $product_download) { ?>
@@ -371,7 +371,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_related; ?></label>
               <div class="controls">
-                <input type="text" name="related" value="" />
+                <input type="text" name="related" value="" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_related; ?>" class="icon-question-sign"></i></span>
                 <div id="product-related" class="scrollbox">
                   <?php $class = 'odd'; ?>
                   <?php foreach ($product_relateds as $product_related) { ?>
@@ -708,12 +708,12 @@
             </table>
           </div>
           <div class="tab-pane" id="tab-reward">
-            <table class="form">
-              <tr>
-                <td><?php echo $entry_points; ?></td>
-                <td><input type="text" name="points" value="<?php echo $points; ?>" /></td>
-              </tr>
-            </table>
+            <div class="control-group">
+              <label class="control-label" for="input-name"></label>
+              <div class="controls"><?php echo $entry_points; ?>
+                <input type="text" name="points" value="<?php echo $points; ?>" />
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_stock_status; ?>" class="icon-question-sign"></i></span> </div>
+            </div>
             <table class="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
@@ -778,9 +778,6 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
- $('[rel=\'tooltip\']').tooltip();
---></script>
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
@@ -828,20 +825,11 @@ $('input[name=\'manufacturer\']').autocomplete({
 				}));
 			}
 		});
-	}, 
-	focus: function( event, ui ) {
-        $('input[name=\'manufacturer_id\']').attr('value', ui.item.value);
-        return false;
-      },	
+	},
 	select: function(event, ui) {
+		$('input[name=\'manufacturer\']').val(ui.item.label);
+		$('input[name=\'manufacturer_id\']').val(ui.item.value);
 		
-		
-		$('input[name=\'manufacturer\']').attr('value', ui.item.label);
-		$('input[name=\'manufacturer_id\']').attr('value', ui.item.value);
-	
-	//alert(ui.item.label);
-	//alert(ui.item.value);
-	
 		return false;
 	},
 	focus: function(event, ui) {
@@ -1045,13 +1033,16 @@ function attributeautocomplete(attribute_row) {
 			});
 		}, 
 		select: function(event, ui) {
-			$('input[name=\'product_attribute[' + attribute_row + '][name]\']').attr('value', ui.item.label);
-			$('input[name=\'product_attribute[' + attribute_row + '][attribute_id]\']').attr('value', ui.item.value);
 			
-			return false;
+			alert(ui.item);
+			
+			$('input[name=\'product_attribute[' + attribute_row + '][name]\']').val(ui.item.label);
+			$('input[name=\'product_attribute[' + attribute_row + '][attribute_id]\']').val(ui.item.value);
+			
+			//return false;
 		},
 		focus: function(event, ui) {
-      		return false;
+      		//return false;
    		}
 	});
 }

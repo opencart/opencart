@@ -234,7 +234,7 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
 		
-		$this->data['help_autocomplete'] = $this->language->get('help_autocomplete');
+		$this->data['help_filter'] = $this->language->get('help_filter');
 		$this->data['help_keyword'] = $this->language->get('help_keyword');
 		$this->data['help_top'] = $this->language->get('help_top');
 		$this->data['help_column'] = $this->language->get('help_column');

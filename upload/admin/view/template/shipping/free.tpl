@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="free_total" value="<?php echo $free_total; ?>" />
+            <input type="text" name="free_total" value="<?php echo $free_total; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_total; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
         <div class="control-group">

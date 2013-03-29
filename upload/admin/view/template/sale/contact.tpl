@@ -1,86 +1,90 @@
 <?php echo $header; ?>
 <div id="content">
-<ul class="breadcrumb">
-  <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-  <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-  <?php } ?>
-</ul>
-<div class="box">
-  <div class="box-heading">
-    <h1><i class="icon-envelope"></i> <?php echo $heading_title; ?></h1>
-  </div>
-  <div class="box-content">
-    <form class="form-horizontal">
-      <div class="buttons"><a id="button-send" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');" class="btn"><i class="icon-envelope"></i> <?php echo $button_send; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <div class="control-group">
-        <label class="control-label" for="input-name"><?php echo $entry_store; ?></label>
-        <div class="controls">
-          <select name="store_id">
-            <option value="0"><?php echo $text_default; ?></option>
-            <?php foreach ($stores as $store) { ?>
-            <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
-            <?php } ?>
-          </select>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="box">
+    <div class="box-heading">
+      <h1><i class="icon-envelope"></i> <?php echo $heading_title; ?></h1>
+    </div>
+    <div class="box-content">
+      <form class="form-horizontal">
+        <div class="buttons"><a id="button-send" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');" class="btn"><i class="icon-envelope"></i> <?php echo $button_send; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_store; ?></label>
+          <div class="controls">
+            <select name="store_id">
+              <option value="0"><?php echo $text_default; ?></option>
+              <?php foreach ($stores as $store) { ?>
+              <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+              <?php } ?>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="input-name"><?php echo $entry_to; ?></label>
-        <div class="controls">
-          <select name="to">
-            <option value="newsletter"><?php echo $text_newsletter; ?></option>
-            <option value="customer_all"><?php echo $text_customer_all; ?></option>
-            <option value="customer_group"><?php echo $text_customer_group; ?></option>
-            <option value="customer"><?php echo $text_customer; ?></option>
-            <option value="affiliate_all"><?php echo $text_affiliate_all; ?></option>
-            <option value="affiliate"><?php echo $text_affiliate; ?></option>
-            <option value="product"><?php echo $text_product; ?></option>
-          </select>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_to; ?></label>
+          <div class="controls">
+            <select name="to">
+              <option value="newsletter"><?php echo $text_newsletter; ?></option>
+              <option value="customer_all"><?php echo $text_customer_all; ?></option>
+              <option value="customer_group"><?php echo $text_customer_group; ?></option>
+              <option value="customer"><?php echo $text_customer; ?></option>
+              <option value="affiliate_all"><?php echo $text_affiliate_all; ?></option>
+              <option value="affiliate"><?php echo $text_affiliate; ?></option>
+              <option value="product"><?php echo $text_product; ?></option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="control-group to" id="to-customer-group">
-        <label class="control-label" for="input-name"><?php echo $entry_customer_group; ?></label>
-        <div class="controls">
-          <select name="customer_group_id">
-            <?php foreach ($customer_groups as $customer_group) { ?>
-            <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
-            <?php } ?>
-          </select>
+        <div class="control-group to" id="to-customer-group">
+          <label class="control-label" for="input-name"><?php echo $entry_customer_group; ?></label>
+          <div class="controls">
+            <select name="customer_group_id">
+              <?php foreach ($customer_groups as $customer_group) { ?>
+              <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+              <?php } ?>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="control-group to" id="to-customer">
-        <label class="control-label" for="input-name"><?php echo $entry_customer; ?></label>
-        <div class="controls">
-          <input type="text" name="customers" value="" />
-          <div id="customer" class="scrollbox"></div>
+        <div class="control-group to" id="to-customer">
+          <label class="control-label" for="input-name"><?php echo $entry_customer; ?></label>
+          <div class="controls">
+            <input type="text" name="customers" value="" />
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_customer; ?>" class="icon-question-sign"></i></span>
+            <div id="customer" class="scrollbox"></div>
+          </div>
         </div>
-      </div>
-      <div class="control-group to" id="to-affiliate">
-        <label class="control-label" for="input-name"><?php echo $entry_affiliate; ?></label>
-        <div class="controls">
-          <input type="text" name="affiliates" value="" />
-          <div id="affiliate" class="scrollbox"></div>
+        <div class="control-group to" id="to-affiliate">
+          <label class="control-label" for="input-name"><?php echo $entry_affiliate; ?></label>
+          <div class="controls">
+            <input type="text" name="affiliates" value="" />
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_affiliate; ?>" class="icon-question-sign"></i></span>
+            <div id="affiliate" class="scrollbox"></div>
+          </div>
         </div>
-      </div>
-      <div class="control-group to" id="to-product">
-        <label class="control-label" for="input-name"><?php echo $entry_product; ?></label>
-        <div class="controls">
-          <input type="text" name="products" value="" />
-          <div id="product" class="scrollbox"></div>
+        <div class="control-group to" id="to-product">
+          <label class="control-label" for="input-name"><?php echo $entry_product; ?></label>
+          <div class="controls">
+            <input type="text" name="products" value="" />
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_product; ?>" class="icon-question-sign"></i></span>
+            <div id="product" class="scrollbox"></div>
+          </div>
         </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_subject; ?></label>
-        <div class="controls">
-          <input type="text" name="subject" value="" />
+        <div class="control-group">
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_subject; ?></label>
+          <div class="controls">
+            <input type="text" name="subject" value="" />
+          </div>
         </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_message; ?></label>
-        <div class="controls">
-          <textarea name="message"></textarea>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_message; ?></label>
+          <div class="controls">
+            <textarea name="message"></textarea>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
@@ -98,7 +102,7 @@ CKEDITOR.replace('message', {
 $('select[name=\'to\']').on('change', function() {
 	$('.to').hide();
 	
-	$('#to-' + $(this).attr('value').replace('_', '-')).show();
+	$('#to-' + this.value.replace('_', '-')).show();
 });
 
 $('select[name=\'to\']').trigger('change');

@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_vendor; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_uk_vendor" value="<?php echo $pp_pro_uk_vendor; ?>" />
+            <input type="text" name="pp_pro_uk_vendor" value="<?php echo $pp_pro_uk_vendor; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_vendor; ?>" class="icon-question-sign"></i></span>
             <?php if ($error_vendor) { ?>
             <span class="error"><?php echo $error_vendor; ?></span>
             <?php } ?>
@@ -27,7 +27,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_user; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_uk_user" value="<?php echo $pp_pro_uk_user; ?>" />
+            <input type="text" name="pp_pro_uk_user" value="<?php echo $pp_pro_uk_user; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_user; ?>" class="icon-question-sign"></i></span>
             <?php if ($error_user) { ?>
             <span class="error"><?php echo $error_user; ?></span>
             <?php } ?>
@@ -36,7 +36,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_password; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_uk_password" value="<?php echo $pp_pro_uk_password; ?>" />
+            <input type="text" name="pp_pro_uk_password" value="<?php echo $pp_pro_uk_password; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_password; ?>" class="icon-question-sign"></i></span>
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
             <?php } ?>
@@ -45,7 +45,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_partner; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_uk_partner" value="<?php echo $pp_pro_uk_partner; ?>" />
+            <input type="text" name="pp_pro_uk_partner" value="<?php echo $pp_pro_uk_partner; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_partner; ?>" class="icon-question-sign"></i></span>
             <?php if ($error_partner) { ?>
             <span class="error"><?php echo $error_partner; ?></span>
             <?php } ?>
@@ -65,6 +65,7 @@
             <input type="radio" name="pp_pro_uk_test" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?>
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_test; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
         <div class="control-group">
@@ -87,7 +88,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_uk_total" value="<?php echo $pp_pro_uk_total; ?>" />
+            <input type="text" name="pp_pro_uk_total" value="<?php echo $pp_pro_uk_total; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_total; ?>" class="icon-question-sign"></i></span>
           </div>
         </div>
         <div class="control-group">

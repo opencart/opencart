@@ -16,7 +16,7 @@
       <table class="form">
         <tr>
           <td><?php echo $entry_upload; ?></td>
-          <td><button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button></td>
+          <td><button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button><span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_upload; ?>" class="icon-question-sign"></i></span></td>
         </tr>
         <tr>
           <td><?php echo $entry_progress; ?></td>

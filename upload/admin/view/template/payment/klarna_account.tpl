@@ -37,13 +37,15 @@
                     <label class="control-label" for="input-name"><?php echo $entry_merchant; ?></label>
                     <div class="controls">
                       <input type="text" name="klarna_account[<?php echo $country['code']; ?>][merchant]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['merchant'] : ''; ?>" />
+                      <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_merchant; ?>" class="icon-question-sign"></i></span>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="input-name"><?php echo $entry_secret; ?></label>
                     <div class="controls">
                       <input type="text" name="klarna_account[<?php echo $country['code']; ?>][secret]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['secret'] : ''; ?>" />
-                    </div>
+                      <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_secret; ?>" class="icon-question-sign"></i></span>
+                   </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="input-name"><?php echo $entry_server; ?></label>
@@ -65,7 +67,7 @@
                   <div class="control-group">
                     <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
                     <div class="controls">
-                      <input type="text" name="klarna_account[<?php echo $country['code']; ?>][total]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['total'] : ''; ?>" />
+                      <input type="text" name="klarna_account[<?php echo $country['code']; ?>][total]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['total'] : ''; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_total; ?>" class="icon-question-sign"></i></span>
                     </div>
                   </div>
                   <div class="control-group">

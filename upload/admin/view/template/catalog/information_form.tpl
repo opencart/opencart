@@ -86,6 +86,8 @@
               <label class="control-label" for="input-name"><?php echo $entry_keyword; ?></label>
               <div class="controls">
                 <input type="text" name="keyword" value="<?php echo $keyword; ?>" />
+                
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_keyword; ?>" class="icon-question-sign"></i></span>
               </div>
             </div>
             <div class="control-group">
@@ -96,6 +98,8 @@
                 <?php } else { ?>
                 <input type="checkbox" name="bottom" value="1" />
                 <?php } ?>
+                
+                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_bottom; ?>" class="icon-question-sign"></i></span>
               </div>
             </div>
             <div class="control-group">

@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_product; ?></label>
           <div class="controls">
-            <input type="text" name="product" value="" />
+            <input type="text" name="product" value="" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_product; ?>" class="icon-question-sign"></i></span>
             <div id="featured-product" class="scrollbox">
               <?php $class = 'odd'; ?>
               <?php foreach ($products as $product) { ?>

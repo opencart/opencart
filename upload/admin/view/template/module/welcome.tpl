@@ -39,7 +39,7 @@
                 <div class="control-group">
                   <label class="control-label" for="input-name"><?php echo $entry_description; ?></label>
                   <div class="controls">
-                    <textarea name="welcome_module[<?php echo $module_row; ?>][description][<?php echo $language['language_id']; ?>]" id="description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>"><?php echo isset($module['description'][$language['language_id']]) ? $module['description'][$language['language_id']] : ''; ?></textarea>
+                    <textarea name="welcome_module[<?php echo $module_row; ?>][description][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_description; ?>" id="description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>"><?php echo isset($module['description'][$language['language_id']]) ? $module['description'][$language['language_id']] : ''; ?></textarea>
                   </div>
                 </div>
               </div>
@@ -103,7 +103,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
               <div class="controls">
-                <input type="text" name="welcome_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" class="input-mini" />
+                <input type="text" name="welcome_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
               </div>
             </div>
           </div>
@@ -149,7 +149,7 @@ function addModule() {
 	html += '    <div class="tab-pane" id="tab-module' + module_row + '-language<?php echo $language['language_id']; ?>">';
 	html += '      <div class="control-group">';
 	html += '        <label class="control-label" for="input-name"><?php echo $entry_description; ?></label>';
-	html += '        <div class="controls"><textarea name="welcome_module[' + module_row + '][description][<?php echo $language['language_id']; ?>]" id="description' + module_row + '-language<?php echo $language['language_id']; ?>"></textarea></div>';
+	html += '        <div class="controls"><textarea name="welcome_module[' + module_row + '][description][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_description; ?>" id="description' + module_row + '-language<?php echo $language['language_id']; ?>"></textarea></div>';
 	html += '      </div>'; 	
 	html += '    </div>';
 	<?php } ?>
@@ -183,11 +183,11 @@ function addModule() {
 	html += '  </div>';
 	html += '  <div class="control-group">';
 	html += '    <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>';
-	html += '    <div class="controls"><input type="text" name="welcome_module[' + module_row + '][sort_order]" value="" class="input-mini" /></div>';
+	html += '    <div class="controls"><input type="text" name="welcome_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></div>';
 	html += '  </div>';
 	html += '</div>';
 	
-	$('.tabbable > .form-horizontal > .tab-content').append(html);
+	$('.form-horizontal > .tabbable > .tab-content').append(html);
 
 	<?php foreach ($languages as $language) { ?>
 	CKEDITOR.replace('description' + module_row + '-language<?php echo $language['language_id']; ?>', {

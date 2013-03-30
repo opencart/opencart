@@ -226,9 +226,9 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_dimension; ?></label>
               <div class="controls">
-                <input type="text" name="length" value="<?php echo $length; ?>" placeholder="<?php echo $text_length; ?>" class="input-mini" />
-                <input type="text" name="width" value="<?php echo $width; ?>" placeholder="<?php echo $text_width; ?>" class="input-mini" />
-                <input type="text" name="height" value="<?php echo $height; ?>" pattern="<?php echo $text_height; ?>" class="input-mini" />
+                <input type="text" name="length" value="<?php echo $length; ?>" placeholder="<?php echo $entry_length; ?>" class="input-mini" />
+                <input type="text" name="width" value="<?php echo $width; ?>" placeholder="<?php echo $entry_width; ?>" class="input-mini" />
+                <input type="text" name="height" value="<?php echo $height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               </div>
             </div>
             <div class="control-group">

@@ -30,6 +30,8 @@ class ControllerModuleLatest extends Controller {
 
 		$this->data['entry_limit'] = $this->language->get('entry_limit');
 		$this->data['entry_image'] = $this->language->get('entry_image');
+		$this->data['entry_width'] = $this->language->get('entry_width');
+		$this->data['entry_height'] = $this->language->get('entry_height');			
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
 		$this->data['entry_position'] = $this->language->get('entry_position');
 		$this->data['entry_status'] = $this->language->get('entry_status');

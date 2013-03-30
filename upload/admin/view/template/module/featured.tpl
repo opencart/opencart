@@ -14,11 +14,11 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_product; ?></label>
           <div class="controls">
-            <input type="text" name="product" value="" /> <span class="help-block"><?php echo $help_product; ?></span>
+            <input type="text" name="product" value="" />
+            <span class="help-block"><?php echo $help_product; ?></span>
             <div id="featured-product" class="scrollbox">
               <?php $class = 'odd'; ?>
               <?php foreach ($products as $product) { ?>
@@ -47,9 +47,9 @@
             <?php $module_row = 0; ?>
             <?php foreach ($modules as $module) { ?>
             <tr id="module-row<?php echo $module_row; ?>">
-              <td class="left"><input type="text" name="featured_module[<?php echo $module_row; ?>][limit]" value="<?php echo $module['limit']; ?>" class="input-mini" /></td>
-              <td class="left"><input type="text" name="featured_module[<?php echo $module_row; ?>][image_width]" value="<?php echo $module['image_width']; ?>" class="input-mini" />
-                <input type="text" name="featured_module[<?php echo $module_row; ?>][image_height]" value="<?php echo $module['image_height']; ?>" class="input-mini" />
+              <td class="left"><input type="text" name="featured_module[<?php echo $module_row; ?>][limit]" value="<?php echo $module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="input-mini" /></td>
+              <td class="left"><input type="text" name="featured_module[<?php echo $module_row; ?>][image_width]" value="<?php echo $module['image_width']; ?>" placeholder="<?php echo $entry_width; ?>" class="input-mini" />
+                <input type="text" name="featured_module[<?php echo $module_row; ?>][image_height]" value="<?php echo $module['image_height']; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
                 <?php if (isset($error_image[$module_row])) { ?>
                 <span class="error"><?php echo $error_image[$module_row]; ?></span>
                 <?php } ?></td>
@@ -93,7 +93,7 @@
                   <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } ?>
                 </select></td>
-              <td class="right"><input type="text" name="featured_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" class="input-mini" /></td>
+              <td class="right"><input type="text" name="featured_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>
               <td class="left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
             </tr>
             <?php $module_row++; ?>
@@ -106,6 +106,7 @@
             </tr>
           </tfoot>
         </table>
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       </form>
     </div>
   </div>
@@ -166,8 +167,8 @@ var module_row = <?php echo $module_row; ?>;
 
 function addModule() {	
 	html  = '<tr id="module-row' + module_row + '">';
-	html += '  <td class="left"><input type="text" name="featured_module[' + module_row + '][limit]" value="5" class="input-mini" /></td>';
-	html += '  <td class="left"><input type="text" name="featured_module[' + module_row + '][image_width]" value="80" class="input-mini" /> <input type="text" name="featured_module[' + module_row + '][image_height]" value="80" class="input-mini" /></td>';	
+	html += '  <td class="left"><input type="text" name="featured_module[' + module_row + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="input-mini" /></td>';
+	html += '  <td class="left"><input type="text" name="featured_module[' + module_row + '][image_width]" value="80" placeholder="<?php echo $entry_width; ?>" class="input-mini" /> <input type="text" name="featured_module[' + module_row + '][image_height]" value="80" placeholder="<?php echo $entry_height; ?>" class="input-mini" /></td>';	
 	html += '  <td class="left"><select name="featured_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>
 	html += '    <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
@@ -183,7 +184,7 @@ function addModule() {
     html += '    <option value="1" selected="selected"><?php echo $text_enabled; ?></option>';
     html += '    <option value="0"><?php echo $text_disabled; ?></option>';
     html += '  </select></td>';
-	html += '  <td class="right"><input type="text" name="featured_module[' + module_row + '][sort_order]" value="" class="input-mini" /></td>';
+	html += '  <td class="right"><input type="text" name="featured_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>';
 	html += '  <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
 	html += '</tr>';
 	

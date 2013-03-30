@@ -13,6 +13,8 @@ $_['text_column_right']   = 'Column Right';
 // Entry
 $_['entry_limit']         = 'Limit'; 
 $_['entry_image']         = 'Image (W x H) and Resize Type';
+$_['entry_width']         = 'Width';
+$_['entry_height']        = 'Height';
 $_['entry_layout']        = 'Layout';
 $_['entry_position']      = 'Position';
 $_['entry_status']        = 'Status';

@@ -40,8 +40,8 @@
                   <?php } ?>
                   <?php } ?>
                 </select></td>
-              <td class="left"><input type="text" name="slideshow_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" class="input-mini" />
-                <input type="text" name="slideshow_module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" class="input-mini"/>
+              <td class="left"><input type="text" name="slideshow_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="input-mini" />
+                <input type="text" name="slideshow_module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini"/>
                 <?php if (isset($error_dimension[$module_row])) { ?>
                 <span class="error"><?php echo $error_dimension[$module_row]; ?></span>
                 <?php } ?></td>
@@ -85,7 +85,7 @@
                   <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } ?>
                 </select></td>
-              <td class="right"><input type="text" name="slideshow_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" class="input-mini" /></td>
+              <td class="right"><input type="text" name="slideshow_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>
               <td class="left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
             </tr>
             <?php $module_row++; ?>
@@ -112,7 +112,7 @@ function addModule() {
 	html += '    <option value="<?php echo $banner['banner_id']; ?>"><?php echo addslashes($banner['name']); ?></option>';
 	<?php } ?>
 	html += '  </select></td>';
-	html += '  <td class="left"><input type="text" name="slideshow_module[' + module_row + '][width]" value="" class="input-mini" /> <input type="text" name="slideshow_module[' + module_row + '][height]" value="" class="input-mini" /></td>';
+	html += '  <td class="left"><input type="text" name="slideshow_module[' + module_row + '][width]" value="" placeholder="<?php echo $entry_width; ?>" class="input-mini" /> <input type="text" name="slideshow_module[' + module_row + '][height]" value="" placeholder="<?php echo $entry_height; ?>" class="input-mini" /></td>';
 	html += '  <td class="left"><select name="slideshow_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>
 	html += '    <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
@@ -128,7 +128,7 @@ function addModule() {
     html += '    <option value="1" selected="selected"><?php echo $text_enabled; ?></option>';
     html += '    <option value="0"><?php echo $text_disabled; ?></option>';
     html += '  </select></td>';
-	html += '  <td class="right"><input type="text" name="slideshow_module[' + module_row + '][sort_order]" value="" class="input-mini" /></td>';
+	html += '  <td class="right"><input type="text" name="slideshow_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>';
 	html += '  <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
 	html += '</tr>';
 	

@@ -14,11 +14,10 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_title; ?></label>
           <div class="controls">
-            <input type="text" name="title" value="<?php echo $title; ?>" />
+            <input type="text" name="title" value="<?php echo $title; ?>" placeholder="<?php echo $entry_title; ?>" />
             <?php if ($error_title) { ?>
             <span class="error"><?php echo $error_title; ?></span>
             <?php } ?>
@@ -27,7 +26,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_description; ?></label>
           <div class="controls">
-            <input type="text" name="description" value="<?php echo $description; ?>" />
+            <input type="text" name="description" value="<?php echo $description; ?>" placeholder="<?php echo $entry_description; ?>" />
             <?php if ($error_description) { ?>
             <br />
             <span class="error"><?php echo $error_description; ?></span>
@@ -73,7 +72,7 @@
                   <option value="store"><?php echo $text_store; ?></option>
                   <?php } ?>
                 </select></td>
-              <td class="left"><input type="text" name="tax_rule[<?php echo $tax_rule_row; ?>][priority]" value="<?php echo $tax_rule['priority']; ?>" class="input-mini" /></td>
+              <td class="left"><input type="text" name="tax_rule[<?php echo $tax_rule_row; ?>][priority]" value="<?php echo $tax_rule['priority']; ?>" placeholder="<?php echo $entry_priority; ?>" class="input-mini" /></td>
               <td class="left"><a onclick="$('#tax-rule-row<?php echo $tax_rule_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
             </tr>
             <?php $tax_rule_row++; ?>
@@ -86,6 +85,7 @@
             </tr>
           </tfoot>
         </table>
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       </form>
     </div>
   </div>
@@ -105,7 +105,7 @@ function addRule() {
     html += '    <option value="payment"><?php echo $text_payment; ?></option>';
     html += '    <option value="store"><?php echo $text_store; ?></option>';
     html += '  </select></td>';
-	html += '  <td class="left"><input type="text" name="tax_rule[' + tax_rule_row + '][priority]" value="" class="input-mini" /></td>';
+	html += '  <td class="left"><input type="text" name="tax_rule[' + tax_rule_row + '][priority]" value="" placeholder="<?php echo $entry_priority; ?>" class="input-mini" /></td>';
 	html += '  <td class="left"><a onclick="$(\'#tax-rule-row' + tax_rule_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
 	html += '</tr>';
 	

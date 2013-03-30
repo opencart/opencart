@@ -27,7 +27,9 @@ class ControllerModuleSlideshow extends Controller {
 		$this->data['text_column_right'] = $this->language->get('text_column_right');
 
 		$this->data['entry_banner'] = $this->language->get('entry_banner');
-		$this->data['entry_dimension'] = $this->language->get('entry_dimension'); 
+		$this->data['entry_dimension'] = $this->language->get('entry_dimension');
+		$this->data['entry_width'] = $this->language->get('entry_width');
+		$this->data['entry_height'] = $this->language->get('entry_height');			
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
 		$this->data['entry_position'] = $this->language->get('entry_position');
 		$this->data['entry_status'] = $this->language->get('entry_status');

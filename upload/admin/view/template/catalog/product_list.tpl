@@ -57,9 +57,9 @@
               <td></td>
               <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" /></td>
               <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" /></td>
-              <td align="left"><input type="text" name="filter_price" value="<?php echo $filter_price; ?>" size="8"/></td>
-              <td align="right"><input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" style="text-align: right;" /></td>
-              <td><select name="filter_status">
+              <td class="left"><input type="text" name="filter_price" value="<?php echo $filter_price; ?>" size="8"/></td>
+              <td class="right"><input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" style="text-align: right;" class="span1"/></td>
+              <td><select name="filter_status" class="span1">
                   <option value="*"></option>
                   <?php if ($filter_status) { ?>
                   <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -145,7 +145,7 @@ function filter() {
 		url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
 	}
 	
-	var filter_status = $('select[name=\'filter_status\']').attr('value');
+	var filter_status = $('select[name=\'filter_status\']').val();
 	
 	if (filter_status != '*') {
 		url += '&filter_status=' + encodeURIComponent(filter_status);

@@ -22,10 +22,12 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 
 3. For Linux/Unix make sure the following folders and files are writable.
 
+		chmod 0755 or 0777 system/cache/
+		chmod 0755 or 0777 system/logs/
+		chmod 0755 or 0777 system/download/
 		chmod 0755 or 0777 image/
 		chmod 0755 or 0777 image/cache/
-		chmod 0755 or 0777 cache/
-		chmod 0755 or 0777 download/
+		chmod 0755 or 0777 image/data/
 		chmod 0755 or 0777 config.php
 		chmod 0755 or 0777 admin/config.php
 
@@ -49,10 +51,12 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 
 3. For Windows make sure the following folders and files permissions allow Read and Write.
 
+		system/cache/
+		system/logs/
+		system/download/
 		image/
 		image/cache/
-		cache/
-		download/
+		image/data/
 		config.php
 		admin/config.php
 

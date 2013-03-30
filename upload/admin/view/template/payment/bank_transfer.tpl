@@ -14,12 +14,11 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <?php foreach ($languages as $language) { ?>
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_bank; ?></label>
           <div class="controls">
-            <textarea name="bank_transfer_bank_<?php echo $language['language_id']; ?>" cols="80" rows="10"><?php echo isset(${'bank_transfer_bank_' . $language['language_id']}) ? ${'bank_transfer_bank_' . $language['language_id']} : ''; ?></textarea>
+            <textarea name="bank_transfer_bank_<?php echo $language['language_id']; ?>" cols="80" rows="10" placeholder="<?php echo $entry_bank; ?>"><?php echo isset(${'bank_transfer_bank_' . $language['language_id']}) ? ${'bank_transfer_bank_' . $language['language_id']} : ''; ?></textarea>
             <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" style="vertical-align: top;" /><br />
             <?php if (isset(${'error_bank_' . $language['language_id']})) { ?>
             <span class="error"><?php echo ${'error_bank_' . $language['language_id']}; ?></span>
@@ -30,8 +29,8 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="bank_transfer_total" value="<?php echo $bank_transfer_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
-          </div>
+            <input type="text" name="bank_transfer_total" value="<?php echo $bank_transfer_total; ?>" placeholder="<?php echo $entry_total; ?>" />
+            <span class="help-block"><?php echo $help_total; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
@@ -79,9 +78,10 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="bank_transfer_sort_order" value="<?php echo $bank_transfer_sort_order; ?>" class="input-mini" />
+            <input type="text" name="bank_transfer_sort_order" value="<?php echo $bank_transfer_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       </form>
     </div>
   </div>

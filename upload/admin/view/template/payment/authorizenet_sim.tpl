@@ -18,16 +18,16 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_merchant; ?></label>
           <div class="controls">
-            <input type="text" name="authorizenet_merchant" value="<?php echo $authorizenet_merchant; ?>" />
+            <input type="text" name="authorizenet_merchant" value="<?php echo $authorizenet_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" />
             <?php if ($error_merchant) { ?>
             <span class="error"><?php echo $error_merchant; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_key ?></label>
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_key; ?></label>
           <div class="controls">
-            <input type="text" name="authorizenet_key" value="<?php echo $authorizenet_key; ?>" />
+            <input type="text" name="authorizenet_key" value="<?php echo $authorizenet_key; ?>" placeholder="<?php echo $entry_key; ?>" />
             <?php if ($error_key) { ?>
             <span class="error"><?php echo $error_key; ?></span>
             <?php } ?>
@@ -36,7 +36,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_callback; ?></label>
           <div class="controls">
-            <textarea cols="40" rows="5"><?php echo $callback; ?></textarea>
+            <textarea cols="40" rows="5" readonly="readonly"><?php echo $callback; ?></textarea>
           </div>
         </div>
         <div class="control-group">
@@ -58,8 +58,8 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="authorizenet_total" value="<?php echo $authorizenet_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
-          </div>
+            <input type="text" name="authorizenet_total" value="<?php echo $authorizenet_total; ?>" placeholder="<?php echo $entry_total; ?>" />
+            <span class="help-block"><?php echo $help_total; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
@@ -107,7 +107,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="authorizenet_sort_order" value="<?php echo $authorizenet_sort_order; ?>" class="input-mini" />
+            <input type="text" name="authorizenet_sort_order" value="<?php echo $authorizenet_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

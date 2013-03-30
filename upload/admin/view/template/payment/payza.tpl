@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_merchant; ?></label>
           <div class="controls">
-            <input type="text" name="payza_merchant" value="<?php echo $payza_merchant; ?>" />
+            <input type="text" name="payza_merchant" value="<?php echo $payza_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" />
             <?php if ($error_merchant) { ?>
             <span class="error"><?php echo $error_merchant; ?></span>
             <?php } ?>
@@ -27,7 +27,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_security; ?></label>
           <div class="controls">
-            <input type="text" name="payza_security" value="<?php echo $payza_security; ?>" />
+            <input type="text" name="payza_security" value="<?php echo $payza_security; ?>" placeholder="<?php echo $entry_security; ?>" />
             <?php if ($error_security) { ?>
             <span class="error"><?php echo $error_security; ?></span>
             <?php } ?>
@@ -36,15 +36,14 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_callback; ?></label>
           <div class="controls">
-            <textarea cols="40" rows="5"><?php echo $callback; ?></textarea>
-            <span class="help-block"><?php echo $help_callback; ?></span> 
-          </div>
+            <textarea cols="40" rows="5" readonly="readonly"><?php echo $callback; ?></textarea>
+            <span class="help-block"><?php echo $help_callback; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="payza_total" value="<?php echo $payza_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
-          </div>
+            <input type="text" name="payza_total" value="<?php echo $payza_total; ?>" placeholder="<?php echo $entry_total; ?>" />
+            <span class="help-block"><?php echo $help_total; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
@@ -92,7 +91,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="payza_sort_order" value="<?php echo $payza_sort_order; ?>" class="input-mini" />
+            <input type="text" name="payza_sort_order" value="<?php echo $payza_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

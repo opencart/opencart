@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_payable; ?></label>
           <div class="controls">
-            <input type="text" name="cheque_payable" value="<?php echo $cheque_payable; ?>" />
+            <input type="text" name="cheque_payable" value="<?php echo $cheque_payable; ?>" placeholder="<?php echo $entry_payable; ?>" />
             <?php if ($error_payable) { ?>
             <span class="error"><?php echo $error_payable; ?></span>
             <?php } ?>
@@ -27,8 +27,8 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="cheque_total" value="<?php echo $cheque_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
-          </div>
+            <input type="text" name="cheque_total" value="<?php echo $cheque_total; ?>" placeholder="<?php echo $entry_total; ?>" />
+            <span class="help-block"><?php echo $help_total; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
@@ -76,7 +76,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="cheque_sort_order" value="<?php echo $cheque_sort_order; ?>" class="input-mini" />
+            <input type="text" name="cheque_sort_order" value="<?php echo $cheque_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

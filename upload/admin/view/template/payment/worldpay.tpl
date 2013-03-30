@@ -27,7 +27,8 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_password; ?></label>
           <div class="controls">
-            <input type="text" name="worldpay_password" value="<?php echo $worldpay_password; ?>" /> <span class="help-block"><?php echo $help_password; ?></span>
+            <input type="text" name="worldpay_password" value="<?php echo $worldpay_password; ?>" />
+            <span class="help-block"><?php echo $help_password; ?></span>
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
             <?php } ?>
@@ -36,8 +37,8 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_callback; ?></label>
           <div class="controls">
-            <textarea cols="40" rows="5"><?php echo $callback; ?></textarea> <span class="help-block"><?php echo $help_callback; ?></span>
-          </div>
+            <textarea cols="40" rows="5" readonly="readonly"><?php echo $callback; ?></textarea>
+            <span class="help-block"><?php echo $help_callback; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_test; ?></label>
@@ -64,8 +65,8 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="worldpay_total" value="<?php echo $worldpay_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
-          </div>
+            <input type="text" name="worldpay_total" value="<?php echo $worldpay_total; ?>" />
+            <span class="help-block"><?php echo $help_total; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>

@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_email; ?></label>
           <div class="controls">
-            <input type="text" name="nochex_email" value="<?php echo $nochex_email; ?>" />
+            <input type="text" name="nochex_email" value="<?php echo $nochex_email; ?>" placeholder="<?php echo $entry_email; ?>" />
             <?php if ($error_email) { ?>
             <span class="error"><?php echo $error_email; ?></span>
             <?php } ?>
@@ -44,7 +44,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_merchant; ?></label>
           <div class="controls">
-            <input type="text" name="nochex_merchant" value="<?php echo $nochex_merchant; ?>" />
+            <input type="text" name="nochex_merchant" value="<?php echo $nochex_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" />
             <?php if ($error_merchant) { ?>
             <span class="error"><?php echo $error_merchant; ?></span>
             <?php } ?>
@@ -85,8 +85,8 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="nochex_total" value="<?php echo $nochex_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
-          </div>
+            <input type="text" name="nochex_total" value="<?php echo $nochex_total; ?>" placeholder="<?php echo $entry_total; ?>" />
+            <span class="help-block"><?php echo $help_total; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
@@ -134,7 +134,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="nochex_sort_order" value="<?php echo $nochex_sort_order; ?>" class="input-mini" />
+            <input type="text" name="nochex_sort_order" value="<?php echo $nochex_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

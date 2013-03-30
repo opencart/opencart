@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_username; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_username" value="<?php echo $pp_pro_username; ?>" />
+            <input type="text" name="pp_pro_username" value="<?php echo $pp_pro_username; ?>" placeholder="<?php echo $entry_username; ?>" />
             <?php if ($error_username) { ?>
             <span class="error"><?php echo $error_username; ?></span>
             <?php } ?>
@@ -27,7 +27,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_password; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_password" value="<?php echo $pp_pro_password; ?>" />
+            <input type="text" name="pp_pro_password" value="<?php echo $pp_pro_password; ?>" placeholder="<?php echo $entry_password; ?>" />
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
             <?php } ?>
@@ -36,7 +36,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_signature; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_signature" value="<?php echo $pp_pro_signature; ?>" />
+            <input type="text" name="pp_pro_signature" value="<?php echo $pp_pro_signature; ?>" placeholder="<?php echo $entry_signature; ?>" />
             <?php if ($error_signature) { ?>
             <span class="error"><?php echo $error_signature; ?></span>
             <?php } ?>
@@ -56,9 +56,7 @@
             <input type="radio" name="pp_pro_test" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?>
-            
-            <span class="help-block"><?php echo $help_test; ?></span>
-          </div>
+            <span class="help-block"><?php echo $help_test; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_transaction; ?></label>
@@ -80,8 +78,8 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_total" value="<?php echo $pp_pro_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
-          </div>
+            <input type="text" name="pp_pro_total" value="<?php echo $pp_pro_total; ?>" placeholder="<?php echo $entry_total; ?>" />
+            <span class="help-block"><?php echo $help_total; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
@@ -129,7 +127,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_sort_order" value="<?php echo $pp_pro_sort_order; ?>" class="input-mini" />
+            <input type="text" name="pp_pro_sort_order" value="<?php echo $pp_pro_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

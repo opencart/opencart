@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_auth_id; ?></label>
           <div class="controls">
-            <input type="text" name="perpetual_payments_auth_id" value="<?php echo $perpetual_payments_auth_id; ?>" />
+            <input type="text" name="perpetual_payments_auth_id" value="<?php echo $perpetual_payments_auth_id; ?>" placeholder="<?php echo $entry_auth_id; ?>" />
             <?php if ($error_auth_id) { ?>
             <span class="error"><?php echo $error_auth_id; ?></span>
             <?php } ?>
@@ -27,7 +27,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_auth_pass; ?></label>
           <div class="controls">
-            <input type="text" name="perpetual_payments_auth_pass" value="<?php echo $perpetual_payments_auth_pass; ?>" />
+            <input type="text" name="perpetual_payments_auth_pass" value="<?php echo $perpetual_payments_auth_pass; ?>" placeholder="<?php echo $entry_auth_pass; ?>" />
             <?php if ($error_auth_pass) { ?>
             <span class="error"><?php echo $error_auth_pass; ?></span>
             <?php } ?>
@@ -54,7 +54,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="perpetual_payments_total" value="<?php echo $perpetual_payments_total; ?>" />
+            <input type="text" name="perpetual_payments_total" value="<?php echo $perpetual_payments_total; ?>" placeholder="<?php echo $entry_total; ?>" />
           </div>
         </div>
         <div class="control-group">
@@ -103,7 +103,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="perpetual_payments_sort_order" value="<?php echo $perpetual_payments_sort_order; ?>" class="input-mini" />
+            <input type="text" name="perpetual_payments_sort_order" value="<?php echo $perpetual_payments_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

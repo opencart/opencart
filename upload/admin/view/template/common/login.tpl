@@ -5,42 +5,33 @@
       <h1><?php echo $text_login; ?></h1>
     </div>
     <div class="content" style="min-height: 150px; overflow: hidden;">
-      <?php if ($success) { ?>
-      <div class="alert alert-success"><?php echo $success; ?></div>
+    <?php if ($success) { ?>
+    <div class="alert alert-success"><?php echo $success; ?></div>
+    <?php } ?>
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-error"><?php echo $error_warning; ?></div>
+    <?php } ?>
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="input-usernam"><?php echo $entry_username; ?></label>
+        <div class="controls">
+          <input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" />
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
+        <div class="controls">
+          <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
+          <?php if ($forgotten) { ?>
+          <span class="help-block"> <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a></span>
+          <?php } ?>
+        </div>
+      </div>
+      <button type="submit" class="btn"><i class="icon-lock"></i> <?php echo $button_login; ?></button>
+      <?php if ($redirect) { ?>
+      <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
       <?php } ?>
-      <?php if ($error_warning) { ?>
-      <div class="alert alert-error"><?php echo $error_warning; ?></div>
-      <?php } ?>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table style="width: 100%;">
-          <tr>
-            <td style="text-align: center;" rowspan="4"><img src="view/image/login.png" alt="<?php echo $text_login; ?>" /></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_username; ?><br />
-              <input type="text" name="username" value="<?php echo $username; ?>" style="margin-top: 4px;" />
-              <br />
-              <br />
-              <?php echo $entry_password; ?><br />
-              <input type="password" name="password" value="<?php echo $password; ?>" style="margin-top: 4px;" />
-              <?php if ($forgotten) { ?>
-              <br />
-              <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a>
-              <?php } ?>
-              </td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td style="text-align: right;"><a onclick="$('#form').submit();" class="btn"><i class="icon-lock"></i> <?php echo $button_login; ?></a></td>
-          </tr>
-        </table>
-        <?php if ($redirect) { ?>
-        <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
-        <?php } ?>
-      </form>
-    </div>
+    </form>
   </div>
 </div>
 <script type="text/javascript"><!--

@@ -11,14 +11,14 @@ $_['text_successful']    = 'Always Successful';
 $_['text_fail']          = 'Always Fail';
 
 // Entry
-$_['entry_merchant']     = 'Merchant ID:';
-$_['entry_password']     = 'Remote Password:';
-$_['entry_test']         = 'Test Mode:';
-$_['entry_total']        = 'Total:';
-$_['entry_order_status'] = 'Order Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_status']       = 'Status:';
-$_['entry_sort_order']   = 'Sort Order:';
+$_['entry_merchant']     = 'Merchant ID';
+$_['entry_password']     = 'Remote Password';
+$_['entry_test']         = 'Test Mode';
+$_['entry_total']        = 'Total';
+$_['entry_order_status'] = 'Order Status';
+$_['entry_geo_zone']     = 'Geo Zone';
+$_['entry_status']       = 'Status';
+$_['entry_sort_order']   = 'Sort Order';
 
 // Help
 $_['help_password']      = 'Leave empty if you do not have "Digest Key Authentication" enabled on your account.';

@@ -12,9 +12,9 @@ $_['column_value']     = 'Value';
 $_['column_action']    = 'Action';
 
 // Entry
-$_['entry_title']      = 'Weight Title:';
-$_['entry_unit']       = 'Weight Unit:';
-$_['entry_value']      = 'Value:';
+$_['entry_title']      = 'Weight Title';
+$_['entry_unit']       = 'Weight Unit';
+$_['entry_value']      = 'Value';
 
 // Help
 $_['help_value']       = 'Set to 1.00000 if this is your default weight.';

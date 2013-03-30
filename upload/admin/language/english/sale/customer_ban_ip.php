@@ -11,7 +11,7 @@ $_['column_customer']  = 'Customers';
 $_['column_action']    = 'Action';
 
 // Entry
-$_['entry_ip']         = 'IP:';
+$_['entry_ip']         = 'IP';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify customer ban IP!';

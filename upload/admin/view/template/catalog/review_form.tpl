@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_author; ?></label>
           <div class="controls">
-            <input type="text" name="author" value="<?php echo $author; ?>" />
+            <input type="text" name="author" value="<?php echo $author; ?>" placeholder="<?php echo $entry_author; ?>" />
             <?php if ($error_author) { ?>
             <span class="error"><?php echo $error_author; ?></span>
             <?php } ?>
@@ -27,7 +27,8 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_product; ?></label>
           <div class="controls">
-            <input type="text" name="product" value="<?php echo $product; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_top; ?>" class="icon-question-sign"></i></span>
+            <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" />
+            <span class="help-block"><?php echo $help_product; ?></span>
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
             <?php if ($error_product) { ?>
             <span class="error"><?php echo $error_product; ?></span>
@@ -37,7 +38,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_text; ?></label>
           <div class="controls">
-            <textarea name="text" cols="60" rows="8"><?php echo $text; ?></textarea>
+            <textarea name="text" cols="60" rows="8" placeholder="<?php echo $entry_text; ?>"><?php echo $text; ?></textarea>
             <?php if ($error_text) { ?>
             <span class="error"><?php echo $error_text; ?></span>
             <?php } ?>

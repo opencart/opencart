@@ -19,7 +19,7 @@
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
           <div class="controls">
             <?php foreach ($languages as $language) { ?>
-            <input type="text" name="attribute_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($attribute_description[$language['language_id']]) ? $attribute_description[$language['language_id']]['name'] : ''; ?>" />
+            <input type="text" name="attribute_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($attribute_description[$language['language_id']]) ? $attribute_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
             <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
             <?php if (isset($error_name[$language['language_id']])) { ?>
             <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
@@ -44,7 +44,7 @@
         <div class="control-group">
           <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" id="input-sort-order" />
+            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" id="input-sort-order" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

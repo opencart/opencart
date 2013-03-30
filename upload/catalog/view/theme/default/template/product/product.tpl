@@ -203,8 +203,8 @@
       <?php } ?>
       <div class="cart">
         <div><?php echo $text_qty; ?>
-          <input type="text" name="quantity" size="2" value="<?php echo $minimum; ?>" />
-          <input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
+          <input type="text" name="quantity" class="input-mini" value="<?php echo $minimum; ?>" />
+          <input type="hidden" name="product_id" class="input-mini" value="<?php echo $product_id; ?>" />
           &nbsp;
           <input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="btn" />
           <span>&nbsp;&nbsp;<?php echo $text_or; ?>&nbsp;&nbsp;</span> <span class="links"><a onclick="addToWishList('<?php echo $product_id; ?>');"><?php echo $button_wishlist; ?></a><br />

@@ -12,9 +12,9 @@ $_['column_value']     = 'Value';
 $_['column_action']    = 'Action';
 
 // Entry
-$_['entry_title']      = 'Length Title:';
-$_['entry_unit']       = 'Length Unit:';
-$_['entry_value']      = 'Value:';
+$_['entry_title']      = 'Length Title';
+$_['entry_unit']       = 'Length Unit';
+$_['entry_value']      = 'Value';
 
 // Help
 $_['help_value']       = 'Set to 1.00000 if this is your default length.';

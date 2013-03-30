@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
           <div class="controls">
-            <input type="text" name="name" value="<?php echo $name; ?>" size="100" />
+            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" class="input-xxlarge" />
             <?php if ($error_name) { ?>
             <span class="error"><?php echo $error_name; ?></span>
             <?php } ?>
@@ -56,8 +56,8 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_keyword; ?></label>
           <div class="controls">
-            <input type="text" name="keyword" value="<?php echo $keyword; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_keyword; ?>" class="icon-question-sign"></i></span>
-          </div>
+            <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" />
+            <span class="help-block"><?php echo $help_keyword; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
@@ -71,13 +71,16 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" />
+            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" class="input-mini" placeholder="<?php echo $entry_sort_order; ?>" />
           </div>
         </div>
       </form>
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('.help-inline .icon-question-sign').tooltip();
+--></script> 
 <script type="text/javascript"><!--
 function image_upload(field, thumb) {
 	$('#dialog').remove();

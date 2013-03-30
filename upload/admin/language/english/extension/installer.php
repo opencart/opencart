@@ -12,8 +12,8 @@ $_['text_clear']           = 'Deleting installer files!';
 $_['text_overwrite']       = 'The listed files are going to be overwrite. Continue yes / No';
 
 // Entry
-$_['entry_upload']         = 'Your upload file:';
-$_['entry_progress']       = 'Progress:';
+$_['entry_upload']         = 'Your upload file';
+$_['entry_progress']       = 'Progress';
 
 // Help
 $_['help_upload']          = 'Requires a zip or xml modification file.';

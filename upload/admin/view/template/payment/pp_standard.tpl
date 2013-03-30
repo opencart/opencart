@@ -69,13 +69,13 @@
               <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
               <?php } ?>
             </select>
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_debug; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_debug; ?></span>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="pp_standard_total" value="<?php echo $pp_standard_total; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_total; ?>" class="icon-question-sign"></i></span>
+            <input type="text" name="pp_standard_total" value="<?php echo $pp_standard_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -250,7 +250,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="pp_standard_sort_order" value="<?php echo $pp_standard_sort_order; ?>" size="1" />
+            <input type="text" name="pp_standard_sort_order" value="<?php echo $pp_standard_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

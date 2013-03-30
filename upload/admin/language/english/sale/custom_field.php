@@ -42,16 +42,16 @@ $_['column_sort_order']     = 'Sort Order';
 $_['column_action']         = 'Action';
 
 // Entry
-$_['entry_name']            = 'Custom Field Name:';
-$_['entry_type']            = 'Type:';
-$_['entry_value']           = 'Value:';
-$_['entry_custom_value']    = 'Custom Field Value Name:';
-$_['entry_customer_group']  = 'Customer Group:';
-$_['entry_required']        = 'Required:';
-$_['entry_location']        = 'Location:';
-$_['entry_position']        = 'Position:';
-$_['entry_status']          = 'Status:';
-$_['entry_sort_order']      = 'Sort Order:';
+$_['entry_name']            = 'Custom Field Name';
+$_['entry_type']            = 'Type';
+$_['entry_value']           = 'Value';
+$_['entry_custom_value']    = 'Custom Field Value Name';
+$_['entry_customer_group']  = 'Customer Group';
+$_['entry_required']        = 'Required';
+$_['entry_location']        = 'Location';
+$_['entry_position']        = 'Position';
+$_['entry_status']          = 'Status';
+$_['entry_sort_order']      = 'Sort Order';
 
 // Help
 $_['help_position']         = 'Select which field you want the new field to appear after.';

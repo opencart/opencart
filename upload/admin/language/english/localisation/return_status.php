@@ -10,7 +10,7 @@ $_['column_name']      = 'Return Status Name';
 $_['column_action']    = 'Action';
 
 // Entry
-$_['entry_name']       = 'Return Status Name:';
+$_['entry_name']       = 'Return Status Name';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify return statues!';

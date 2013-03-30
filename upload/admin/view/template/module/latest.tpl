@@ -31,9 +31,9 @@
             <?php $module_row = 0; ?>
             <?php foreach ($modules as $module) { ?>
             <tr id="module-row<?php echo $module_row; ?>">
-              <td class="left"><input type="text" name="latest_module[<?php echo $module_row; ?>][limit]" value="<?php echo $module['limit']; ?>" size="1" /></td>
-              <td class="left"><input type="text" name="latest_module[<?php echo $module_row; ?>][image_width]" value="<?php echo $module['image_width']; ?>" size="3" />
-                <input type="text" name="latest_module[<?php echo $module_row; ?>][image_height]" value="<?php echo $module['image_height']; ?>" size="3" />
+              <td class="left"><input type="text" name="latest_module[<?php echo $module_row; ?>][limit]" value="<?php echo $module['limit']; ?>" class="input-mini" /></td>
+              <td class="left"><input type="text" name="latest_module[<?php echo $module_row; ?>][image_width]" value="<?php echo $module['image_width']; ?>" class="input-mini" />
+                <input type="text" name="latest_module[<?php echo $module_row; ?>][image_height]" value="<?php echo $module['image_height']; ?>" class="input-mini" />
                 <?php if (isset($error_image[$module_row])) { ?>
                 <span class="error"><?php echo $error_image[$module_row]; ?></span>
                 <?php } ?></td>
@@ -77,7 +77,7 @@
                   <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } ?>
                 </select></td>
-              <td class="right"><input type="text" name="latest_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" /></td>
+              <td class="right"><input type="text" name="latest_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" class="input-mini" /></td>
               <td class="left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
             </tr>
             <?php $module_row++; ?>
@@ -99,8 +99,8 @@ var module_row = <?php echo $module_row; ?>;
 
 function addModule() {	
 	html  = '<tr id="module-row' + module_row + '">';
-	html += '  <td class="left"><input type="text" name="latest_module[' + module_row + '][limit]" value="5" size="1" /></td>';
-	html += '  <td class="left"><input type="text" name="latest_module[' + module_row + '][image_width]" value="80" size="3" /> <input type="text" name="latest_module[' + module_row + '][image_height]" value="80" size="3" /></td>';
+	html += '  <td class="left"><input type="text" name="latest_module[' + module_row + '][limit]" value="5" class="input-mini" /></td>';
+	html += '  <td class="left"><input type="text" name="latest_module[' + module_row + '][image_width]" value="80" class="input-mini" /> <input type="text" name="latest_module[' + module_row + '][image_height]" value="80" class="input-mini" /></td>';
 	html += '  <td class="left"><select name="latest_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>
 	html += '    <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
@@ -116,7 +116,7 @@ function addModule() {
     html += '    <option value="1" selected="selected"><?php echo $text_enabled; ?></option>';
     html += '    <option value="0"><?php echo $text_disabled; ?></option>';
     html += '  </select></td>';
-	html += '  <td class="right"><input type="text" name="latest_module[' + module_row + '][sort_order]" value="" size="3" /></td>';
+	html += '  <td class="right"><input type="text" name="latest_module[' + module_row + '][sort_order]" value="" class="input-mini" /></td>';
 	html += '  <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
 	html += '</tr>';
 	

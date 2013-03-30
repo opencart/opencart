@@ -52,7 +52,7 @@
               <small><?php echo $product['reward']; ?></small>
               <?php } ?></td>
             <td class="model"><?php echo $product['model']; ?></td>
-            <td class="quantity"><input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" />
+            <td class="quantity"><input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" class="input-mini" />
               &nbsp;
               <input type="image" src="catalog/view/theme/default/image/update.png" alt="<?php echo $button_update; ?>" title="<?php echo $button_update; ?>" />
               &nbsp;<a href="<?php echo $product['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
@@ -65,7 +65,7 @@
             <td class="image"></td>
             <td class="name"><?php echo $vouchers['description']; ?></td>
             <td class="model"></td>
-            <td class="quantity"><input type="text" name="" value="1" size="1" disabled="disabled" />
+            <td class="quantity"><input type="text" name="" value="1" class="input-mini" disabled="disabled" />
               &nbsp;<a href="<?php echo $vouchers['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
             <td class="price"><?php echo $vouchers['amount']; ?></td>
             <td class="total"><?php echo $vouchers['amount']; ?></td>

@@ -6,14 +6,14 @@ $_['heading_title']                 = 'Dashboard';
 $_['text_overview']                 = 'Overview';
 $_['text_statistics']               = 'Statistics';
 $_['text_latest_10_orders']         = 'Latest 10 Orders';
-$_['text_total_sale']               = 'Total Sales:';
-$_['text_total_sale_year']          = 'Total Sales This Year:';
-$_['text_total_order']              = 'Total Orders:';
-$_['text_total_customer']           = 'No. of Customers:';
-$_['text_total_customer_approval']  = 'Customers Awaiting Approval:';
-$_['text_total_review_approval']    = 'Reviews Awaiting Approval:';
-$_['text_total_affiliate']          = 'No. of Affiliates:';
-$_['text_total_affiliate_approval'] = 'Affiliates Awaiting Approval:';
+$_['text_total_sale']               = 'Total Sales';
+$_['text_total_sale_year']          = 'Total Sales This Year';
+$_['text_total_order']              = 'Total Orders';
+$_['text_total_customer']           = 'No. of Customers';
+$_['text_total_customer_approval']  = 'Customers Awaiting Approval';
+$_['text_total_review_approval']    = 'Reviews Awaiting Approval';
+$_['text_total_affiliate']          = 'No. of Affiliates';
+$_['text_total_affiliate_approval'] = 'Affiliates Awaiting Approval';
 $_['text_day']                      = 'Today';
 $_['text_week']                     = 'This Week';
 $_['text_month']                    = 'This Month';
@@ -32,7 +32,7 @@ $_['column_lastname']               = 'Last Name';
 $_['column_action']                 = 'Action';
 
 // Entry
-$_['entry_range']                   = 'Select Range:';
+$_['entry_range']                   = 'Select Range';
 
 // Error
 $_['error_install']                 = 'Warning: Install folder still exists and should be deleted for security reasons!';

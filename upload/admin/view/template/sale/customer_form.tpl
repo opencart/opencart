@@ -280,7 +280,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_points; ?></label>
               <div class="controls">
-                <input type="text" name="points" value="" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_points; ?>" class="icon-question-sign"></i></span>
+                <input type="text" name="points" value="" /> <span class="help-block"><?php echo $help_points; ?></span>
               </div>
             </div>
             <a id="button-reward" class="btn" onclick="addRewardPoints();"><span><?php echo $button_add_reward; ?></span></a>

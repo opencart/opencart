@@ -26,7 +26,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_code; ?></label>
               <div class="controls">
-                <input type="text" name="code" value="<?php echo $code; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_code; ?>" class="icon-question-sign"></i></span>
+                <input type="text" name="code" value="<?php echo $code; ?>" /> <span class="help-block"><?php echo $help_code; ?></span>
                 <?php if ($error_code) { ?>
                 <span class="error"><?php echo $error_code; ?></span>
                 <?php } ?>

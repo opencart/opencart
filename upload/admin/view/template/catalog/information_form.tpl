@@ -33,7 +33,7 @@
                 <div class="control-group">
                   <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_title; ?></label>
                   <div class="controls">
-                    <input type="text" name="information_description[<?php echo $language['language_id']; ?>][title]" size="100" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" />
+                    <input type="text" name="information_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" class="input-xxlarge" />
                     <?php if (isset($error_title[$language['language_id']])) { ?>
                     <span class="error"><?php echo $error_title[$language['language_id']]; ?></span>
                     <?php } ?>
@@ -42,7 +42,7 @@
                 <div class="control-group">
                   <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_description; ?></label>
                   <div class="controls">
-                    <textarea name="information_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['description'] : ''; ?></textarea>
+                    <textarea name="information_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="description<?php echo $language['language_id']; ?>"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['description'] : ''; ?></textarea>
                     <?php if (isset($error_description[$language['language_id']])) { ?>
                     <span class="error"><?php echo $error_description[$language['language_id']]; ?></span>
                     <?php } ?>
@@ -85,10 +85,8 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_keyword; ?></label>
               <div class="controls">
-                <input type="text" name="keyword" value="<?php echo $keyword; ?>" />
-                
-                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_keyword; ?>" class="icon-question-sign"></i></span>
-              </div>
+                <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" />
+                <span class="help-block"><?php echo $help_keyword; ?></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_bottom; ?></label>
@@ -98,9 +96,7 @@
                 <?php } else { ?>
                 <input type="checkbox" name="bottom" value="1" />
                 <?php } ?>
-                
-                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_bottom; ?>" class="icon-question-sign"></i></span>
-              </div>
+                <span class="help-block"><?php echo $help_bottom; ?></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
@@ -119,7 +115,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
               <div class="controls">
-                <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" />
+                <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
               </div>
             </div>
           </div>

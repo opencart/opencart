@@ -19,7 +19,7 @@
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
           <div class="controls">
             <?php foreach ($languages as $language) { ?>
-            <input type="text" name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" />
+            <input type="text" name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
             <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
             <?php if (isset($error_name[$language['language_id']])) { ?>
             <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
@@ -30,9 +30,9 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_filename; ?></label>
           <div class="controls">
-            <input type="text" name="filename" value="<?php echo $filename; ?>" />
+            <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" />
             <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_filename; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_filename; ?></span>
             <?php if ($error_filename) { ?>
             <span class="error"><?php echo $error_filename; ?></span>
             <?php } ?>
@@ -41,7 +41,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_mask; ?></label>
           <div class="controls">
-            <input type="text" name="mask" value="<?php echo $mask; ?>" />
+            <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" />
             <?php if ($error_mask) { ?>
             <span class="error"><?php echo $error_mask; ?></span>
             <?php } ?>
@@ -50,7 +50,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_remaining; ?></label>
           <div class="controls">
-            <input type="text" name="remaining" value="<?php echo $remaining; ?>" size="6" />
+            <input type="text" name="remaining" value="<?php echo $remaining; ?>" class="input-small" />
           </div>
         </div>
         <?php if ($download_id) { ?>
@@ -62,7 +62,7 @@
             <?php } else { ?>
             <input type="checkbox" name="update" value="1" />
             <?php } ?>
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_update; ?>" class="icon-question-sign"></i></span></div>
+            <span class="help-block"><?php echo $help_update; ?></span></div>
         </div>
         <?php } ?>
       </form>

@@ -7,14 +7,14 @@ $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified Paymate account details!';
 
 // Entry
-$_['entry_username']     = 'Paymate Username:';
-$_['entry_password']     = 'Password:';
-$_['entry_test']         = 'Test Mode:';
-$_['entry_total']        = 'Total:';
-$_['entry_order_status'] = 'Order Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_status']       = 'Status:';
-$_['entry_sort_order']   = 'Sort Order:';
+$_['entry_username']     = 'Paymate Username';
+$_['entry_password']     = 'Password';
+$_['entry_test']         = 'Test Mode';
+$_['entry_total']        = 'Total';
+$_['entry_order_status'] = 'Order Status';
+$_['entry_geo_zone']     = 'Geo Zone';
+$_['entry_status']       = 'Status';
+$_['entry_sort_order']   = 'Sort Order';
 
 // Help
 $_['help_password']      = 'Just use some random password. This will be used to make sure the payment information is not interfered with after being sent to the payment gateway.';

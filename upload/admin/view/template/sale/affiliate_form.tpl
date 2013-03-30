@@ -136,7 +136,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_code; ?></label>
               <div class="controls">
-                <input type="code" name="code" value="<?php echo $code; ?>"  /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_code; ?>" class="icon-question-sign"></i></span>
+                <input type="code" name="code" value="<?php echo $code; ?>"  /> <span class="help-block"><?php echo $help_code; ?></span>
                 
                 
                 <?php if ($error_code) { ?>
@@ -181,7 +181,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_commission; ?></label>
               <div class="controls">
-                <input type="text" name="commission" value="<?php echo $commission; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_commission; ?>" class="icon-question-sign"></i></span>
+                <input type="text" name="commission" value="<?php echo $commission; ?>" /> <span class="help-block"><?php echo $help_commission; ?></span>
               </div>
             </div>
             <div class="control-group">

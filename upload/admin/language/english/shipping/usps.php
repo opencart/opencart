@@ -50,22 +50,22 @@ $_['text_non_rectangular']  = 'Non Rectangular';
 $_['text_variable']         = 'Variable';
 
 // Entry
-$_['entry_user_id']         = 'User ID:';
-$_['entry_postcode']        = 'Zip Code:';
-$_['entry_domestic']        = 'Domestic Services:';
-$_['entry_international']   = 'International Services:';
-$_['entry_size']            = 'Size:';
-$_['entry_container']       = 'Container:';
-$_['entry_machinable']      = 'Machinable:';
-$_['entry_dimension']       = 'Dimensions (L x W x H):';
-$_['entry_display_time']    = 'Display Delivery Time:';
-$_['entry_display_weight']  = 'Display Delivery Weight:';
-$_['entry_weight_class']    = 'Weight Class:';
-$_['entry_tax']             = 'Tax Class:';
-$_['entry_geo_zone']        = 'Geo Zone:';
-$_['entry_status']          = 'Status:';
-$_['entry_sort_order']      = 'Sort Order:';
-$_['entry_debug']      		= 'Debug Mode:';
+$_['entry_user_id']         = 'User ID';
+$_['entry_postcode']        = 'Zip Code';
+$_['entry_domestic']        = 'Domestic Services';
+$_['entry_international']   = 'International Services';
+$_['entry_size']            = 'Size';
+$_['entry_container']       = 'Container';
+$_['entry_machinable']      = 'Machinable';
+$_['entry_dimension']       = 'Dimensions (L x W x H)';
+$_['entry_display_time']    = 'Display Delivery Time';
+$_['entry_display_weight']  = 'Display Delivery Weight';
+$_['entry_weight_class']    = 'Weight Class';
+$_['entry_tax']             = 'Tax Class';
+$_['entry_geo_zone']        = 'Geo Zone';
+$_['entry_status']          = 'Status';
+$_['entry_sort_order']      = 'Sort Order';
+$_['entry_debug']      		= 'Debug Mode';
 
 // Help
 $_['help_dimension']        = 'Average package dimensions for shipping package. Product dimensions are not used for shipping at this time.';

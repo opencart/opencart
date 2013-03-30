@@ -13,19 +13,21 @@
       <h1><i class=""></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
-      <table class="form">
-        <tr>
-          <td><?php echo $entry_upload; ?></td>
-          <td><button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button><span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_upload; ?>" class="icon-question-sign"></i></span></td>
-        </tr>
-        <tr>
-          <td><?php echo $entry_progress; ?></td>
-          <td><div id="progress" style="border: 1px solid #CCC; width: 100%;">
-              <div style="width: 0%; height: 20px; margin: 2px; background: #F00;"></div>
-            </div>
-            <div id="output"></div></td>
-        </tr>
-      </table>
+      <div class="control-group">
+        <label class="control-label" for="input-name"><?php echo $entry_upload; ?></label>
+        <div class="controls">
+          <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
+          <span class="help-block"><?php echo $help_upload; ?></span> </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="input-name"><?php echo $entry_progress; ?></label>
+        <div class="controls">
+          <div id="progress" style="border: 1px solid #CCC; width: 100%;">
+            <div style="width: 0%; height: 20px; margin: 2px; background: #F00;"></div>
+          </div>
+          <div id="output"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

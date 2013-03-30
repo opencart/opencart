@@ -69,7 +69,7 @@
                   <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } ?>
                 </select></td>
-              <td class="right"><input type="text" name="affiliate_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" /></td>
+              <td class="right"><input type="text" name="affiliate_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" class="input-mini" /></td>
               <td class="left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
             </tr>
             <?php $module_row++; ?>
@@ -106,7 +106,7 @@ function addModule() {
     html += '    <option value="1" selected="selected"><?php echo $text_enabled; ?></option>';
     html += '    <option value="0"><?php echo $text_disabled; ?></option>';
     html += '  </select></td>';
-	html += '  <td class="right"><input type="text" name="affiliate_module[' + module_row + '][sort_order]" value="" size="3" /></td>';
+	html += '  <td class="right"><input type="text" name="affiliate_module[' + module_row + '][sort_order]" value="" class="input-mini" /></td>';
 	html += '  <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
 	html += '</tr>';
 	

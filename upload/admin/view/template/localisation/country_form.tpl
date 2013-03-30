@@ -14,11 +14,10 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
           <div class="controls">
-            <input type="text" name="name" value="<?php echo $name; ?>" />
+            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" />
             <?php if ($error_name) { ?>
             <span class="error"><?php echo $error_name; ?></span>
             <?php } ?>
@@ -27,21 +26,20 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_iso_code_2; ?></label>
           <div class="controls">
-            <input type="text" name="iso_code_2" value="<?php echo $iso_code_2; ?>" />
+            <input type="text" name="iso_code_2" value="<?php echo $iso_code_2; ?>" placeholder="<?php echo $entry_iso_code_2; ?>" />
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_iso_code_3; ?></label>
           <div class="controls">
-            <input type="text" name="iso_code_3" value="<?php echo $iso_code_3; ?>" />
+            <input type="text" name="iso_code_3" value="<?php echo $iso_code_3; ?>" placeholder="<?php echo $entry_iso_code_3; ?>" />
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_address_format; ?></label>
           <div class="controls">
-            <textarea name="address_format" cols="40" rows="5"><?php echo $address_format; ?></textarea>
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_address_format; ?>" class="icon-question-sign"></i></span>
-          </div>
+            <textarea name="address_format" cols="40" rows="5" placeholder="<?php echo $entry_address_format; ?>"><?php echo $address_format; ?></textarea>
+            <span class="help-block"><?php echo $help_address_format; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_postcode_required; ?></label>
@@ -73,6 +71,7 @@
             </select>
           </div>
         </div>
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       </form>
     </div>
   </div>

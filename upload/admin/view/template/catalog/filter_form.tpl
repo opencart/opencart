@@ -19,7 +19,7 @@
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_group; ?></label>
           <div class="controls">
             <?php foreach ($languages as $language) { ?>
-            <input type="text" name="filter_group_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($filter_group_description[$language['language_id']]) ? $filter_group_description[$language['language_id']]['name'] : ''; ?>" />
+            <input type="text" name="filter_group_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($filter_group_description[$language['language_id']]) ? $filter_group_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_group; ?>" />
             <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
             <?php if (isset($error_name[$language['language_id']])) { ?>
             <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
@@ -30,7 +30,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" />
+            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
         <table id="filter" class="table">
@@ -47,13 +47,13 @@
             <tr id="filter-row<?php echo $filter_row; ?>">
               <td class="left"><input type="hidden" name="filter[<?php echo $filter_row; ?>][filter_id]" value="<?php echo $filter['filter_id']; ?>" />
                 <?php foreach ($languages as $language) { ?>
-                <input type="text" name="filter[<?php echo $filter_row; ?>][filter_description][<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($filter['filter_description'][$language['language_id']]) ? $filter['filter_description'][$language['language_id']]['name'] : ''; ?>" />
+                <input type="text" name="filter[<?php echo $filter_row; ?>][filter_description][<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($filter['filter_description'][$language['language_id']]) ? $filter['filter_description'][$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name ?>" />
                 <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
                 <?php if (isset($error_filter[$filter_row][$language['language_id']])) { ?>
                 <span class="error"><?php echo $error_filter[$filter_row][$language['language_id']]; ?></span>
                 <?php } ?>
                 <?php } ?></td>
-              <td class="right"><input type="text" name="filter[<?php echo $filter_row; ?>][sort_order]" value="<?php echo $filter['sort_order']; ?>" size="1" /></td>
+              <td class="right"><input type="text" name="filter[<?php echo $filter_row; ?>][sort_order]" value="<?php echo $filter['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>
               <td class="left"><a onclick="$('#filter-row<?php echo $filter_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
             </tr>
             <?php $filter_row++; ?>
@@ -77,10 +77,10 @@ function addFilterRow() {
 	html  = '<tr id="filter-row' + filter_row + '">';	
     html += '  <td class="left"><input type="hidden" name="filter[' + filter_row + '][filter_id]" value="" />';
 	<?php foreach ($languages as $language) { ?>
-	html += '  <input type="text" name="filter[' + filter_row + '][filter_description][<?php echo $language['language_id']; ?>][name]" value="" /> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
+	html += '  <input type="text" name="filter[' + filter_row + '][filter_description][<?php echo $language['language_id']; ?>][name]" value="" placeholder="<?php echo $entry_name ?>" /> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
     <?php } ?>
 	html += '  </td>';
-	html += '  <td class="right"><input type="text" name="filter[' + filter_row + '][sort_order]" value="" size="1" /></td>';
+	html += '  <td class="right"><input type="text" name="filter[' + filter_row + '][sort_order]" value="" value="" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>';
 	html += '  <td class="left"><a onclick="$(\'#filter-row' + filter_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
 	html += '</tr>';	
 	

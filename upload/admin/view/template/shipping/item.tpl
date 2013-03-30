@@ -68,7 +68,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="item_sort_order" value="<?php echo $item_sort_order; ?>" size="1" />
+            <input type="text" name="item_sort_order" value="<?php echo $item_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

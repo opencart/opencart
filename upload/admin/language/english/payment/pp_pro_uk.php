@@ -10,17 +10,17 @@ $_['text_authorization'] = 'Authorization';
 $_['text_sale']          = 'Sale';
 
 // Entry
-$_['entry_vendor']       = 'Vendor:';
-$_['entry_user']         = 'User:';
-$_['entry_password']     = 'Password:';
-$_['entry_partner']      = 'Partner:';
-$_['entry_test']         = 'Test Mode:';
-$_['entry_transaction']  = 'Transaction Method:';
-$_['entry_total']        = 'Total:';
-$_['entry_order_status'] = 'Order Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_status']       = 'Status:';
-$_['entry_sort_order']   = 'Sort Order:';
+$_['entry_vendor']       = 'Vendor';
+$_['entry_user']         = 'User';
+$_['entry_password']     = 'Password';
+$_['entry_partner']      = 'Partner';
+$_['entry_test']         = 'Test Mode';
+$_['entry_transaction']  = 'Transaction Method';
+$_['entry_total']        = 'Total';
+$_['entry_order_status'] = 'Order Status';
+$_['entry_geo_zone']     = 'Geo Zone';
+$_['entry_status']       = 'Status';
+$_['entry_sort_order']   = 'Sort Order';
 
 // Help
 $_['help_vendor']        = 'Your merchant login ID that you created when you registered for the Website Payments Pro account.';

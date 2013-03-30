@@ -33,7 +33,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="moneybookers_total" value="<?php echo $moneybookers_total; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_total; ?>" class="icon-question-sign"></i></span>
+            <input type="text" name="moneybookers_total" value="<?php echo $moneybookers_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -138,7 +138,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="moneybookers_sort_order" value="<?php echo $moneybookers_sort_order; ?>" size="3" />
+            <input type="text" name="moneybookers_sort_order" value="<?php echo $moneybookers_sort_order; ?>" class="input-small" />
           </div>
         </div>
       </form>

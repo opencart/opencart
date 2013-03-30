@@ -10,15 +10,15 @@ $_['text_declined']      = 'On - Always Declined';
 $_['text_off']           = 'Off';
       
 // Entry
-$_['entry_merchant']     = 'Merchant ID:';
-$_['entry_password']     = 'Payment Response Password:';
-$_['entry_callback']     = 'Relay Response URL:';
-$_['entry_test']         = 'Test Mode:';
-$_['entry_total']        = 'Total:';
-$_['entry_order_status'] = 'Order Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_status']       = 'Status:';
-$_['entry_sort_order']   = 'Sort Order:';
+$_['entry_merchant']     = 'Merchant ID';
+$_['entry_password']     = 'Payment Response Password';
+$_['entry_callback']     = 'Relay Response URL';
+$_['entry_test']         = 'Test Mode';
+$_['entry_total']        = 'Total';
+$_['entry_order_status'] = 'Order Status';
+$_['entry_geo_zone']     = 'Geo Zone';
+$_['entry_status']       = 'Status';
+$_['entry_sort_order']   = 'Sort Order';
 
 // Help
 $_['help_password']      = 'This has to be set in the WorldPay control panel.';

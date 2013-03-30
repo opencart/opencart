@@ -103,7 +103,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
               <div class="controls">
-                <input type="text" name="welcome_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" />
+                <input type="text" name="welcome_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" class="input-mini" />
               </div>
             </div>
           </div>
@@ -183,7 +183,7 @@ function addModule() {
 	html += '  </div>';
 	html += '  <div class="control-group">';
 	html += '    <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>';
-	html += '    <div class="controls"><input type="text" name="welcome_module[' + module_row + '][sort_order]" value="" size="3" /></div>';
+	html += '    <div class="controls"><input type="text" name="welcome_module[' + module_row + '][sort_order]" value="" class="input-mini" /></div>';
 	html += '  </div>';
 	html += '</div>';
 	

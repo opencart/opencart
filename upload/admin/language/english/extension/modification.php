@@ -13,8 +13,8 @@ $_['column_date_modified'] = 'Date Modified';
 $_['column_action']        = 'Action';
 
 // Entry
-$_['entry_code']           = 'Modification:';
-$_['entry_status']         = 'Status:';
+$_['entry_code']           = 'Modification';
+$_['entry_status']         = 'Status';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify modifications!';

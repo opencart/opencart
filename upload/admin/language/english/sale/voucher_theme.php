@@ -13,9 +13,9 @@ $_['column_name']        = 'Voucher Theme Name';
 $_['column_action']      = 'Action';
 
 // Entry
-$_['entry_name']         = 'Voucher Theme Name:';
-$_['entry_description']  = 'Voucher Theme Description:';
-$_['entry_image']        = 'Image:';
+$_['entry_name']         = 'Voucher Theme Name';
+$_['entry_description']  = 'Voucher Theme Description';
+$_['entry_image']        = 'Image';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify voucher themes!';

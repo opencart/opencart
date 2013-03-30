@@ -31,7 +31,7 @@
             <?php if ($error_secret) { ?>
             <span class="error"><?php echo $error_secret; ?></span>
             <?php } ?>
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_secret; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_secret; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -53,7 +53,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="twocheckout_total" value="<?php echo $twocheckout_total; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_total; ?>" class="icon-question-sign"></i></span>
+            <input type="text" name="twocheckout_total" value="<?php echo $twocheckout_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -102,7 +102,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="twocheckout_sort_order" value="<?php echo $twocheckout_sort_order; ?>" size="1" />
+            <input type="text" name="twocheckout_sort_order" value="<?php echo $twocheckout_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

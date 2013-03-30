@@ -57,7 +57,7 @@
             <?php echo $text_no; ?>
             <?php } ?>
             
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_test; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_test; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -80,7 +80,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_total" value="<?php echo $pp_pro_total; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_total; ?>" class="icon-question-sign"></i></span>
+            <input type="text" name="pp_pro_total" value="<?php echo $pp_pro_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -129,7 +129,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_sort_order" value="<?php echo $pp_pro_sort_order; ?>" size="1" />
+            <input type="text" name="pp_pro_sort_order" value="<?php echo $pp_pro_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

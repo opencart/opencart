@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
           <div class="controls">
-            <textarea name="citylink_rate" cols="40" rows="5"><?php echo $citylink_rate; ?></textarea> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_rate; ?>" class="icon-question-sign"></i></span>
+            <textarea name="citylink_rate" cols="40" rows="5"><?php echo $citylink_rate; ?></textarea> <span class="help-block"><?php echo $help_rate; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -68,7 +68,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="citylink_sort_order" value="<?php echo $citylink_sort_order; ?>" size="1" />
+            <input type="text" name="citylink_sort_order" value="<?php echo $citylink_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

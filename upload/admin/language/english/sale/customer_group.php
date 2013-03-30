@@ -11,10 +11,10 @@ $_['column_sort_order'] = 'Sort Order';
 $_['column_action']     = 'Action';
 
 // Entry
-$_['entry_name']        = 'Customer Group Name:';
-$_['entry_description'] = 'Description:';
-$_['entry_approval']    = 'Approve New Customers:';
-$_['entry_sort_order']  = 'Sort Order:';
+$_['entry_name']        = 'Customer Group Name';
+$_['entry_description'] = 'Description';
+$_['entry_approval']    = 'Approve New Customers';
+$_['entry_sort_order']  = 'Sort Order';
 
 // Help
 $_['help_approval']     = 'Customers must be approved by an administrator before they can login.';

@@ -111,7 +111,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_total; ?></label> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_total; ?>" class="icon-question-sign"></i></span>
+          <label class="control-label" for="input-name"><?php echo $entry_total; ?></label> <span class="help-block"><?php echo $help_total; ?></span>
           <div class="controls">
             <input type="text" name="web_payment_software_total" value="<?php echo $web_payment_software_total; ?>" />
           </div>
@@ -119,7 +119,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="web_payment_software_sort_order" value="<?php echo $web_payment_software_sort_order; ?>" size="1" />
+            <input type="text" name="web_payment_software_sort_order" value="<?php echo $web_payment_software_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

@@ -73,7 +73,7 @@
                   <option value="store"><?php echo $text_store; ?></option>
                   <?php } ?>
                 </select></td>
-              <td class="left"><input type="text" name="tax_rule[<?php echo $tax_rule_row; ?>][priority]" value="<?php echo $tax_rule['priority']; ?>" size="1" /></td>
+              <td class="left"><input type="text" name="tax_rule[<?php echo $tax_rule_row; ?>][priority]" value="<?php echo $tax_rule['priority']; ?>" class="input-mini" /></td>
               <td class="left"><a onclick="$('#tax-rule-row<?php echo $tax_rule_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
             </tr>
             <?php $tax_rule_row++; ?>
@@ -105,7 +105,7 @@ function addRule() {
     html += '    <option value="payment"><?php echo $text_payment; ?></option>';
     html += '    <option value="store"><?php echo $text_store; ?></option>';
     html += '  </select></td>';
-	html += '  <td class="left"><input type="text" name="tax_rule[' + tax_rule_row + '][priority]" value="" size="1" /></td>';
+	html += '  <td class="left"><input type="text" name="tax_rule[' + tax_rule_row + '][priority]" value="" class="input-mini" /></td>';
 	html += '  <td class="left"><a onclick="$(\'#tax-rule-row' + tax_rule_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
 	html += '</tr>';
 	

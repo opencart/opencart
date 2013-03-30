@@ -14,7 +14,6 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
@@ -33,7 +32,7 @@
                 <div class="control-group">
                   <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
                   <div class="controls">
-                    <input type="text" name="category_description[<?php echo $language['language_id']; ?>][name]" size="100" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['name'] : ''; ?>" />
+                    <input type="text" name="category_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="input-xxlarge" />
                     <?php if (isset($error_name[$language['language_id']])) { ?>
                     <span class="error"><?php echo $error_name[$language['language_id']]; ?></span>
                     <?php } ?>
@@ -42,19 +41,19 @@
                 <div class="control-group">
                   <label class="control-label" for="input-name"><?php echo $entry_meta_description; ?></label>
                   <div class="controls">
-                    <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_description]" cols="40" rows="5"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
+                    <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_description]" cols="40" rows="5" placeholder="<?php echo $entry_meta_description; ?>"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
                   </div>
                 </div>
                 <div class="control-group">
                   <label class="control-label" for="input-name"><?php echo $entry_meta_keyword; ?></label>
                   <div class="controls">
-                    <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_keyword]" cols="40" rows="5"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
+                    <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_keyword]" cols="40" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
                   </div>
                 </div>
                 <div class="control-group">
                   <label class="control-label" for="input-name"><?php echo $entry_description; ?></label>
                   <div class="controls">
-                    <textarea name="category_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['description'] : ''; ?></textarea>
+                    <textarea name="category_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="description<?php echo $language['language_id']; ?>"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['description'] : ''; ?></textarea>
                   </div>
                 </div>
               </div>
@@ -63,16 +62,17 @@
           </div>
           <div class="tab-pane" id="tab-data">
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_parent; ?></label>
+              <label class="control-label" for="input-parent"><?php echo $entry_parent; ?></label>
               <div class="controls">
-                <input type="text" name="path" value="<?php echo $path; ?>" size="100" />
+                <input type="text" name="path" value="<?php echo $path; ?>" placeholder="<?php echo $entry_parent; ?>" id="input-parent" />
                 <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_filter; ?></label>
               <div class="controls">
-                <input type="text" name="filter" value="" />
+                <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" />
+                <span class="help-block"></span>
                 <div id="category-filter" class="scrollbox">
                   <?php $class = 'odd'; ?>
                   <?php foreach ($category_filters as $category_filter) { ?>
@@ -82,7 +82,7 @@
                   </div>
                   <?php } ?>
                 </div>
-                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_filter; ?>" class="icon-question-sign"></i></span></div>
+              </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_store; ?></label>
@@ -116,13 +116,13 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_keyword; ?></label>
               <div class="controls">
-                <input type="text" name="keyword" value="<?php echo $keyword; ?>" />
-                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_keyword; ?>" class="icon-question-sign"></i></span> </div>
+                <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" />
+                <span class="help-block"><?php echo $help_keyword; ?></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
               <div class="controls">
-                <div class="image"><img src="<?php echo $thumb; ?>" alt="" id="thumb" />
+                <div class="image"><img src="<?php echo $thumb; ?>" alt="" id="thumb" class="img-polaroid" />
                   <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
                   <br />
                   <a onclick="image_upload('image', 'thumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a></div>
@@ -136,18 +136,18 @@
                 <?php } else { ?>
                 <input type="checkbox" name="top" value="1" />
                 <?php } ?>
-                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_top; ?>" class="icon-question-sign"></i></span></div>
+                <span class="help-block"><?php echo $help_top; ?></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_column; ?></label>
               <div class="controls">
-                <input type="text" name="column" value="<?php echo $column; ?>" size="1" />
-                <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_column; ?>" class="icon-question-sign"></i></span> </div>
+                <input type="text" name="column" value="<?php echo $column; ?>" placeholder="<?php echo $entry_column; ?>" class="input-mini" />
+                <span class="help-block"><?php echo $help_column; ?></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
               <div class="controls">
-                <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" />
+                <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
               </div>
             </div>
             <div class="control-group">
@@ -208,13 +208,11 @@
             </table>
           </div>
         </div>
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       </form>
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('.help-inline .icon-question-sign').tooltip();
---></script> 
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
@@ -229,6 +227,51 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
 <?php } ?>
 //--></script> 
 <script type="text/javascript"><!--
+$('input[name=\'path\']').typeahead({
+	source: function(query, process) {
+		
+		
+		$.ajax({
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(this.value),
+			dataType: 'json',
+			success: function(json) {
+				json.unshift({
+					'category_id':  0,
+					'name':  '<?php echo $text_none; ?>'
+				});
+				
+				
+				process(json);	
+				/*
+					return {
+						label: item.name,
+						value: item.category_id
+					}
+					*/				
+			}
+		});		
+		
+		
+	}
+})
+/*
+$('input[name=\'path\']').on('keydown', function() {
+	$.ajax({
+		url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(this.value),
+		dataType: 'json',
+		success: function(json) {
+			json.unshift({
+				'category_id':  0,
+				'name':  '<?php echo $text_none; ?>'
+			});
+				
+			$('input[name=\'path\']').trigger("liszt:updated");
+		}
+	});
+
+});
+
+
 $('input[name=\'path\']').autocomplete({
 	delay: 500,
 	source: function(request, response) {		
@@ -260,8 +303,10 @@ $('input[name=\'path\']').autocomplete({
       	return false;
    	}
 });
+*/
 //--></script> 
 <script type="text/javascript"><!--
+/*
 // Filter
 $('input[name=\'filter\']').autocomplete({
 	delay: 500,
@@ -300,6 +345,7 @@ $('#category-filter div img').on('click', function() {
 	$('#category-filter div:odd').attr('class', 'odd');
 	$('#category-filter div:even').attr('class', 'even');	
 });
+*/
 //--></script> 
 <script type="text/javascript"><!--
 function image_upload(field, thumb) {

@@ -12,15 +12,15 @@ $_['column_date_added'] = 'Date Added';
 $_['column_action']     = 'Action';
 
 // Entry
-$_['entry_username']   = 'Username:';
-$_['entry_password']   = 'Password:';
-$_['entry_confirm']    = 'Confirm:';
-$_['entry_firstname']  = 'First Name:';
-$_['entry_lastname']   = 'Last Name:';
-$_['entry_email']      = 'E-Mail:';
-$_['entry_user_group'] = 'User Group:';
-$_['entry_status']     = 'Status:';
-$_['entry_captcha']    = 'Enter the code in the box below:';
+$_['entry_username']   = 'Username';
+$_['entry_password']   = 'Password';
+$_['entry_confirm']    = 'Confirm';
+$_['entry_firstname']  = 'First Name';
+$_['entry_lastname']   = 'Last Name';
+$_['entry_email']      = 'E-Mail';
+$_['entry_user_group'] = 'User Group';
+$_['entry_status']     = 'Status';
+$_['entry_captcha']    = 'Enter the code in the box below';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify users!';

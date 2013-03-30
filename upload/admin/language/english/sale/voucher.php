@@ -22,15 +22,15 @@ $_['column_date_added'] = 'Date Added';
 $_['column_action']     = 'Action';
 
 // Entry
-$_['entry_code']        = 'Code:';
-$_['entry_from_name']   = 'From Name:';
-$_['entry_from_email']  = 'From E-Mail:';
-$_['entry_to_name']     = 'To Name:';
-$_['entry_to_email']    = 'To E-Mail:';
-$_['entry_theme']       = 'Theme:';
-$_['entry_message']     = 'Message:';
-$_['entry_amount']      = 'Amount:';
-$_['entry_status']      = 'Status:';
+$_['entry_code']        = 'Code';
+$_['entry_from_name']   = 'From Name';
+$_['entry_from_email']  = 'From E-Mail';
+$_['entry_to_name']     = 'To Name';
+$_['entry_to_email']    = 'To E-Mail';
+$_['entry_theme']       = 'Theme';
+$_['entry_message']     = 'Message';
+$_['entry_amount']      = 'Amount';
+$_['entry_status']      = 'Status';
 
 // Help
 $_['help_code']         = 'The code the customer enters to activate the voucher.';

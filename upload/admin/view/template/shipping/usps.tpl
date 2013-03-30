@@ -439,7 +439,7 @@
             <input type="text" name="usps_width" value="<?php echo $usps_width; ?>" size="4" />
             <input type="text" name="usps_height" value="<?php echo $usps_height; ?>" size="4" />
             
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_dimension; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_dimension; ?></span>
             
             <?php if ($error_width) { ?>
             <span class="error"><?php echo $error_width; ?></span>
@@ -467,7 +467,7 @@
             <?php echo $text_no; ?>
             <?php } ?>
             
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_display_time; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_display_time; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -485,7 +485,7 @@
             <?php echo $text_no; ?>
             <?php } ?>
             
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_display_weight; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_display_weight; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -501,7 +501,7 @@
               <?php } ?>
             </select>
             
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_weight_class; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_weight_class; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -551,7 +551,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="usps_sort_order" value="<?php echo $usps_sort_order; ?>" size="1" />
+            <input type="text" name="usps_sort_order" value="<?php echo $usps_sort_order; ?>" class="input-mini" />
           </div>
         </div>
         <div class="control-group">
@@ -567,7 +567,7 @@
               <?php } ?>
             </select>
             
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_debug; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_debug; ?></span>
           </div>
         </div>
       </form>

@@ -26,11 +26,11 @@ $_['column_sort_order']   = 'Sort Order';
 $_['column_action']       = 'Action';
 
 // Entry
-$_['entry_name']          = 'Option Name:';
-$_['entry_type']          = 'Type:';
-$_['entry_option_value']  = 'Option Value Name:';
-$_['entry_image']         = 'Image:';
-$_['entry_sort_order']    = 'Sort Order:';
+$_['entry_name']          = 'Option Name';
+$_['entry_type']          = 'Type';
+$_['entry_option_value']  = 'Option Value Name';
+$_['entry_image']         = 'Image';
+$_['entry_sort_order']    = 'Sort Order';
 
 // Error
 $_['error_permission']    = 'Warning: You do not have permission to modify options!';

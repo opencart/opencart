@@ -12,14 +12,14 @@ $_['column_sort_order']	= 'Sort Order';
 $_['column_action']     = 'Action';
 
 // Entry
-$_['entry_title']       = 'Information Title:';
-$_['entry_description'] = 'Description:';
-$_['entry_store']       = 'Stores:';
-$_['entry_keyword']     = 'SEO Keyword:';
-$_['entry_bottom']      = 'Bottom:';
-$_['entry_status']      = 'Status:';
-$_['entry_sort_order']  = 'Sort Order:';
-$_['entry_layout']      = 'Layout Override:';
+$_['entry_title']       = 'Information Title';
+$_['entry_description'] = 'Description';
+$_['entry_store']       = 'Stores';
+$_['entry_keyword']     = 'SEO Keyword';
+$_['entry_bottom']      = 'Bottom';
+$_['entry_status']      = 'Status';
+$_['entry_sort_order']  = 'Sort Order';
+$_['entry_layout']      = 'Layout Override';
 
 // Help
 $_['help_keyword']      = 'Do not use spaces instead replace spaces with - and make sure the keyword is globally unique.';

@@ -201,7 +201,7 @@
             <input type="radio" name="fedex_display_time" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?>
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_display_time; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_display_time; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -218,7 +218,7 @@
             <input type="radio" name="fedex_display_weight" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?>
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_display_weight; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_display_weight; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -232,7 +232,7 @@
               <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
               <?php } ?>
               <?php } ?>
-            </select> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_weight_class; ?>" class="icon-question-sign"></i></span>
+            </select> <span class="help-block"><?php echo $help_weight_class; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -282,7 +282,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="fedex_sort_order" value="<?php echo $fedex_sort_order; ?>" size="1" />
+            <input type="text" name="fedex_sort_order" value="<?php echo $fedex_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

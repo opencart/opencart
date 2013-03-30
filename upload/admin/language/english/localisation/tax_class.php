@@ -13,12 +13,12 @@ $_['column_title']      = 'Tax Class Title';
 $_['column_action']     = 'Action';
 
 // Entry
-$_['entry_title']       = 'Tax Class Title:';
-$_['entry_description'] = 'Description:';
-$_['entry_rate']        = 'Tax Rate:';
-$_['entry_based']       = 'Based On:';
-$_['entry_geo_zone']    = 'Geo Zone:';
-$_['entry_priority']    = 'Priority:';
+$_['entry_title']       = 'Tax Class Title';
+$_['entry_description'] = 'Description';
+$_['entry_rate']        = 'Tax Rate';
+$_['entry_based']       = 'Based On';
+$_['entry_geo_zone']    = 'Geo Zone';
+$_['entry_priority']    = 'Priority';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify tax classes!';

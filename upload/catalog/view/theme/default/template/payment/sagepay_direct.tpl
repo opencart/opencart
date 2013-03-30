@@ -48,11 +48,11 @@
     </tr>
     <tr>
       <td><?php echo $entry_cc_cvv2; ?></td>
-      <td><input type="text" name="cc_cvv2" value="" size="3" /></td>
+      <td><input type="text" name="cc_cvv2" value="" class="input-small" /></td>
     </tr>
     <tr>
       <td><?php echo $entry_cc_issue; ?></td>
-      <td><input type="text" name="cc_issue" value="" size="1" />
+      <td><input type="text" name="cc_issue" value="" class="input-mini" />
         <?php echo $text_issue; ?></td>
     </tr>
   </table>

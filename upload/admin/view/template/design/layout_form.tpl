@@ -14,11 +14,10 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
           <div class="controls">
-            <input type="text" name="name" value="<?php echo $name; ?>" />
+            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" />
             <?php if ($error_name) { ?>
             <span class="error"><?php echo $error_name; ?></span>
             <?php } ?>
@@ -46,7 +45,7 @@
                   <?php } ?>
                   <?php } ?>
                 </select></td>
-              <td class="left"><input type="text" name="layout_route[<?php echo $route_row; ?>][route]" value="<?php echo $layout_route['route']; ?>" /></td>
+              <td class="left"><input type="text" name="layout_route[<?php echo $route_row; ?>][route]" value="<?php echo $layout_route['route']; ?>" placeholder="<?php echo $entry_route; ?>" /></td>
               <td class="left"><a onclick="$('#route-row<?php echo $route_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
             </tr>
             <?php $route_row++; ?>
@@ -59,6 +58,7 @@
             </tr>
           </tfoot>
         </table>
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       </form>
     </div>
   </div>
@@ -74,7 +74,7 @@ function addRoute() {
 	html += '<option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
 	<?php } ?>   
 	html += '  </select></td>';
-	html += '  <td class="left"><input type="text" name="layout_route[' + route_row + '][route]" value="" /></td>';
+	html += '  <td class="left"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="<?php echo $entry_route; ?>" /></td>';
 	html += '  <td class="left"><a onclick="$(\'#route-row' + route_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
 	html += '</tr>';
 	

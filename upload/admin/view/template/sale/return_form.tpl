@@ -84,7 +84,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_product; ?></label>
               <div class="controls">
-                <input type="text" name="product" value="<?php echo $product; ?>" /> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_product; ?>" class="icon-question-sign"></i></span>
+                <input type="text" name="product" value="<?php echo $product; ?>" /> <span class="help-block"><?php echo $help_product; ?></span>
                 <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
                 <?php if ($error_product) { ?>
                 <span class="error"><?php echo $error_product; ?></span>
@@ -100,7 +100,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_quantity; ?></label>
               <div class="controls">
-                <input type="text" name="quantity" value="<?php echo $quantity; ?>" size="3" />
+                <input type="text" name="quantity" value="<?php echo $quantity; ?>" class="input-small" />
               </div>
             </div>
             <div class="control-group">

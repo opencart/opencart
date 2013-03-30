@@ -51,7 +51,7 @@
           <label class="control-label" for="input-name"><?php echo $entry_customer; ?></label>
           <div class="controls">
             <input type="text" name="customers" value="" />
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_customer; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_customer; ?></span>
             <div id="customer" class="scrollbox"></div>
           </div>
         </div>
@@ -59,7 +59,7 @@
           <label class="control-label" for="input-name"><?php echo $entry_affiliate; ?></label>
           <div class="controls">
             <input type="text" name="affiliates" value="" />
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_affiliate; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_affiliate; ?></span>
             <div id="affiliate" class="scrollbox"></div>
           </div>
         </div>
@@ -67,7 +67,7 @@
           <label class="control-label" for="input-name"><?php echo $entry_product; ?></label>
           <div class="controls">
             <input type="text" name="products" value="" />
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_product; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_product; ?></span>
             <div id="product" class="scrollbox"></div>
           </div>
         </div>

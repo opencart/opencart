@@ -11,11 +11,11 @@ $_['text_column_left']    = 'Column Left';
 $_['text_column_right']   = 'Column Right';
 
 // Entry
-$_['entry_code']          = 'Google Talk Code:';
-$_['entry_layout']        = 'Layout:';
-$_['entry_position']      = 'Position:';
-$_['entry_status']        = 'Status:';
-$_['entry_sort_order']    = 'Sort Order:';
+$_['entry_code']          = 'Google Talk Code';
+$_['entry_layout']        = 'Layout';
+$_['entry_position']      = 'Position';
+$_['entry_status']        = 'Status';
+$_['entry_sort_order']    = 'Sort Order';
 
 // Help
 $_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy &amp; paste the generated code into the text box.';

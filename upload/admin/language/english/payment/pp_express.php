@@ -10,16 +10,16 @@ $_['text_authorization'] = 'Authorization';
 $_['text_sale']          = 'Sale';
 
 // Entry
-$_['entry_username']     = 'API Username:';
-$_['entry_password']     = 'API Password:';
-$_['entry_signature']    = 'API Signature:';
-$_['entry_test']         = 'Test Mode:';
-$_['entry_method']       = 'Transaction Method:';
-$_['entry_total']        = 'Total:';
-$_['entry_order_status'] = 'Order Status:';
-$_['entry_geo_zone']     = 'Geo Zone:';
-$_['entry_status']       = 'Status:';
-$_['entry_sort_order']   = 'Sort Order:';
+$_['entry_username']     = 'API Username';
+$_['entry_password']     = 'API Password';
+$_['entry_signature']    = 'API Signature';
+$_['entry_test']         = 'Test Mode';
+$_['entry_method']       = 'Transaction Method';
+$_['entry_total']        = 'Total';
+$_['entry_order_status'] = 'Order Status';
+$_['entry_geo_zone']     = 'Geo Zone';
+$_['entry_status']       = 'Status';
+$_['entry_sort_order']   = 'Sort Order';
 
 // Help
 $_['help_total']         = 'The checkout total the order must reach before this payment method becomes active.';

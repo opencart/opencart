@@ -13,12 +13,11 @@
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_code; ?></label>
           <div class="controls">
-            <textarea name="code" cols="40" rows="15" style="width: 98%;"><?php echo $code; ?></textarea>
+            <textarea name="code" cols="40" rows="15" class="input-xxlarge"><?php echo $code; ?></textarea>
           </div>
         </div>
         <div class="control-group">
@@ -35,6 +34,7 @@
             </select>
           </div>
         </div>
+        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       </form>
     </div>
   </div>

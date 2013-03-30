@@ -16,15 +16,15 @@ $_['text_germany']          = 'Germany';
 $_['text_netherlands']      = 'The Netherlands';
 
 // Entry
-$_['entry_merchant']        = 'Klarna Merchant ID:';
-$_['entry_secret']          = 'Klarna Secret:';
-$_['entry_server']          = 'Server:';
-$_['entry_total']           = 'Total:';
-$_['entry_pending_status']  = 'Pending Status:';
-$_['entry_accepted_status'] = 'Accepted Status:';
-$_['entry_geo_zone']        = 'Geo Zone:';
-$_['entry_status']          = 'Status:';
-$_['entry_sort_order']      = 'Sort Order:';
+$_['entry_merchant']        = 'Klarna Merchant ID';
+$_['entry_secret']          = 'Klarna Secret';
+$_['entry_server']          = 'Server';
+$_['entry_total']           = 'Total';
+$_['entry_pending_status']  = 'Pending Status';
+$_['entry_accepted_status'] = 'Accepted Status';
+$_['entry_geo_zone']        = 'Geo Zone';
+$_['entry_status']          = 'Status';
+$_['entry_sort_order']      = 'Sort Order';
 
 // Help
 $_['help_merchant']         = '(estore id) to use for the Klarna service (provided by Klarna).';

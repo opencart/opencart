@@ -255,7 +255,7 @@
               <?php } else { ?>
               <option value="zone_id"><?php echo $text_zone; ?></option>
               <?php } ?>
-            </select> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_position; ?>" class="icon-question-sign"></i></span>
+            </select> <span class="help-block"><?php echo $help_position; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -275,7 +275,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" />
+            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" class="input-mini" />
           </div>
         </div>
         <table id="custom-field-value" class="table">
@@ -298,7 +298,7 @@
                 <span class="error"><?php echo $error_custom_field_value[$custom_field_value_row][$language['language_id']]; ?></span>
                 <?php } ?>
                 <?php } ?></td>
-              <td class="right"><input type="text" name="custom_field_value[<?php echo $custom_field_value_row; ?>][sort_order]" value="<?php echo $custom_field_value['sort_order']; ?>" size="1" /></td>
+              <td class="right"><input type="text" name="custom_field_value[<?php echo $custom_field_value_row; ?>][sort_order]" value="<?php echo $custom_field_value['sort_order']; ?>" class="input-mini" /></td>
               <td class="left"><a onclick="$('#custom-field-value-row<?php echo $custom_field_value_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
             </tr>
             <?php $custom_field_value_row++; ?>
@@ -351,7 +351,7 @@ function addCustomFieldValue() {
 	html += '<input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][<?php echo $language['language_id']; ?>][name]" value="" /> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
     <?php } ?>
 	html += '  </td>';
-	html += '  <td class="right"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" size="1" /></td>';
+	html += '  <td class="right"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" class="input-mini" /></td>';
 	html += '  <td class="left"><a onclick="$(\'#custom-field-value-row' + custom_field_value_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
 	html += '</tr>';	
 	

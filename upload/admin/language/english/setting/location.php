@@ -18,17 +18,17 @@ $_['column_country']     = 'Country';
 $_['column_action']      = 'Action';
 
 // Entry
-$_['entry_name']         = 'Store Name:';
-$_['entry_address_1']    = 'Address 1:';
-$_['entry_address_2']    = 'Address 2:';
-$_['entry_city']         = 'City:';
-$_['entry_postcode']     = 'Postcode:';
-$_['entry_country']      = 'Country:';
-$_['entry_zone']         = 'Region / State:';
-$_['entry_geocode']      = 'Geocode:';
-$_['entry_image']        = 'Image:';
-$_['entry_open']         = 'Opening Times:';
-$_['entry_comment']      = 'Comment:';
+$_['entry_name']         = 'Store Name';
+$_['entry_address_1']    = 'Address 1';
+$_['entry_address_2']    = 'Address 2';
+$_['entry_city']         = 'City';
+$_['entry_postcode']     = 'Postcode';
+$_['entry_country']      = 'Country';
+$_['entry_zone']         = 'Region / State';
+$_['entry_geocode']      = 'Geocode';
+$_['entry_image']        = 'Image';
+$_['entry_open']         = 'Opening Times';
+$_['entry_comment']      = 'Comment';
 
 // Help
 $_['help_geocode']       = 'Please use the get Geocode button to generate your store location Geocode, you can also enter it in manually.';

@@ -12,16 +12,16 @@ $_['text_delete']       = 'Your address has been successfully deleted';
 $_['text_empty']        = 'You have no addresses in your account.';
 
 // Entry
-$_['entry_firstname']   = 'First Name:';
-$_['entry_lastname']    = 'Last Name:';
-$_['entry_company']     = 'Company:';
-$_['entry_address_1']   = 'Address 1:';
-$_['entry_address_2']   = 'Address 2:';
-$_['entry_postcode']    = 'Post Code:';
-$_['entry_city']        = 'City:';
-$_['entry_country']     = 'Country:';
-$_['entry_zone']        = 'Region / State:';
-$_['entry_default']     = 'Default Address:';
+$_['entry_firstname']   = 'First Name';
+$_['entry_lastname']    = 'Last Name';
+$_['entry_company']     = 'Company';
+$_['entry_address_1']   = 'Address 1';
+$_['entry_address_2']   = 'Address 2';
+$_['entry_postcode']    = 'Post Code';
+$_['entry_city']        = 'City';
+$_['entry_country']     = 'Country';
+$_['entry_zone']        = 'Region / State';
+$_['entry_default']     = 'Default Address';
 
 // Error
 $_['error_delete']      = 'Warning: You must have at least one address!';

@@ -25,7 +25,7 @@
     </tr>
     <tr>
       <td><?php echo $entry_cc_cvv2; ?></td>
-      <td><input type="text" name="cc_cvv2" value="" size="3" /></td>
+      <td><input type="text" name="cc_cvv2" value="" class="input-small" /></td>
     </tr>
   </table>
 </div>

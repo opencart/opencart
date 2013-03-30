@@ -19,7 +19,7 @@
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_key; ?></label>
           <div class="controls">
             <input type="text" name="ups_key" value="<?php echo $ups_key; ?>" />
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_key; ?>" class="icon-question-sign"></i></span>  
+            <span class="help-block"><?php echo $help_key; ?></span>  
             <?php if ($error_key) { ?>
             <span class="error"><?php echo $error_key; ?></span>
             <?php } ?>
@@ -29,7 +29,7 @@
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_username; ?></label>
           <div class="controls">
             <input type="text" name="ups_username" value="<?php echo $ups_username; ?>" />
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_username; ?>" class="icon-question-sign"></i></span> 
+            <span class="help-block"><?php echo $help_username; ?></span> 
             <?php if ($error_username) { ?>
             <span class="error"><?php echo $error_username; ?></span>
             <?php } ?>
@@ -39,7 +39,7 @@
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_password; ?></label>
           <div class="controls">
             <input type="text" name="ups_password" value="<?php echo $ups_password; ?>" />
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_password; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_password; ?></span>
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
             <?php } ?>
@@ -57,7 +57,7 @@
               <?php } ?>
               <?php } ?>
             </select>
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_pickup; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_pickup; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -72,7 +72,7 @@
               <?php } ?>
               <?php } ?>
             </select>
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_packaging; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_packaging; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -87,7 +87,7 @@
               <?php } ?>
               <?php } ?>
             </select>
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_classification; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_classification; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -102,14 +102,14 @@
               <?php } ?>
               <?php } ?>
             </select>
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_origin; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_origin; ?></span>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_city; ?></label>
           <div class="controls">
             <input type="text" name="ups_city" value="<?php echo $ups_city; ?>" />
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_city; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_city; ?></span>
             <?php if ($error_city) { ?>
             <span class="error"><?php echo $error_city; ?></span>
             <?php } ?>
@@ -119,7 +119,7 @@
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_state; ?></label>
           <div class="controls">
             <input type="text" name="ups_state" value="<?php echo $ups_state; ?>" maxlength="2" size="4" />
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_state; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_state; ?></span>
             <?php if ($error_state) { ?>
             <span class="error"><?php echo $error_state; ?></span>
             <?php } ?>
@@ -129,7 +129,7 @@
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_country; ?></label>
           <div class="controls">
             <input type="text" name="ups_country" value="<?php echo $ups_country; ?>" maxlength="2" size="4" />
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_country; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_country; ?></span>
             <?php if ($error_country) { ?>
             <span class="error"><?php echo $error_country; ?></span>
             <?php } ?>
@@ -139,7 +139,7 @@
           <label class="control-label" for="input-name"><?php echo $entry_postcode; ?></label>
           <div class="controls">
             <input type="text" name="ups_postcode" value="<?php echo $ups_postcode; ?>" />
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_postcode; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_postcode; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -156,7 +156,7 @@
             <input type="radio" name="ups_test" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?>
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_test; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_test; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -171,7 +171,7 @@
               <?php } ?>
               <?php } ?>
             </select>
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_quote_type; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_quote_type; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -646,7 +646,7 @@
               </div>
               <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a>
               
-              <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_service; ?>" class="icon-question-sign"></i></span></div>
+              <span class="help-block"><?php echo $help_service; ?></span></div>
           </div>
         </div>
         <div class="control-group">
@@ -664,7 +664,7 @@
             <?php echo $text_no; ?>
             <?php } ?>
             
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_insurance; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_insurance; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -696,7 +696,7 @@
               <?php } ?>
             </select>
             
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_weight_class; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_weight_class; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -712,7 +712,7 @@
               <?php } ?>
             </select>
             
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_length_class; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_length_class; ?></span>
           </div>
         </div>
         <div class="control-group">
@@ -722,7 +722,7 @@
             <input type="text" name="ups_width" value="<?php echo $ups_width; ?>" size="4" />
             <input type="text" name="ups_height" value="<?php echo $ups_height; ?>" size="4" />
             
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_dimension; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_dimension; ?></span>
             
             <?php if ($error_dimension) { ?>
             <span class="error"><?php echo $error_dimension; ?></span>
@@ -776,7 +776,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="ups_sort_order" value="<?php echo $ups_sort_order; ?>" size="1" />
+            <input type="text" name="ups_sort_order" value="<?php echo $ups_sort_order; ?>" class="input-mini" />
           </div>
         </div>
         <div class="control-group">
@@ -792,7 +792,7 @@
               <?php } ?>
             </select>
             
-            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_debug; ?>" class="icon-question-sign"></i></span>
+            <span class="help-block"><?php echo $help_debug; ?></span>
           </div>
         </div>
       </form>

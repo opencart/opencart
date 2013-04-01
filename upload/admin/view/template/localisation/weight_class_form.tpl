@@ -43,7 +43,7 @@
           <label class="control-label" for="input-name"><?php echo $entry_value; ?></label>
           <div class="controls">
             <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" />
-            <span class="help-block"><?php echo $help_value; ?></span> </div>
+            <span class="help-block"><?php echo $help_value; ?></span></div>
         </div>
       </form>
     </div>

@@ -69,7 +69,7 @@
             <input type="radio" name="pp_pro_uk_test" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?>
-            <span class="help-block"><?php echo $help_test; ?></span> </div>
+            <span class="help-block"><?php echo $help_test; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_transaction; ?></label>

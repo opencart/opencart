@@ -41,7 +41,7 @@
                   <div class="control-group">
                     <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
                     <div class="controls">
-                      <input type="text" name="firstname" value="<?php echo $firstname; ?>" />
+                      <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" />
                       <?php if ($error_firstname) { ?>
                       <span class="error"><?php echo $error_firstname; ?></span>
                       <?php } ?>
@@ -50,7 +50,7 @@
                   <div class="control-group">
                     <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
                     <div class="controls">
-                      <input type="text" name="lastname" value="<?php echo $lastname; ?>" />
+                      <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" />
                       <?php if ($error_lastname) { ?>
                       <span class="error"><?php echo $error_lastname; ?></span>
                       <?php } ?>
@@ -59,7 +59,7 @@
                   <div class="control-group">
                     <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_email; ?></label>
                     <div class="controls">
-                      <input type="text" name="email" value="<?php echo $email; ?>" />
+                      <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" />
                       <?php if ($error_email) { ?>
                       <span class="error"><?php echo $error_email; ?></span>
                       <?php  } ?>
@@ -68,7 +68,7 @@
                   <div class="control-group">
                     <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_telephone; ?></label>
                     <div class="controls">
-                      <input type="text" name="telephone" value="<?php echo $telephone; ?>" />
+                      <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" />
                       <?php if ($error_telephone) { ?>
                       <span class="error"><?php echo $error_telephone; ?></span>
                       <?php  } ?>
@@ -77,13 +77,13 @@
                   <div class="control-group">
                     <label class="control-label" for="input-name"><?php echo $entry_fax; ?></label>
                     <div class="controls">
-                      <input type="text" name="fax" value="<?php echo $fax; ?>" />
+                      <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" />
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="input-name"><?php echo $entry_password; ?></label>
                     <div class="controls">
-                      <input type="password" name="password" value="<?php echo $password; ?>"  />
+                      <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" />
                       <?php if ($error_password) { ?>
                       <span class="error"><?php echo $error_password; ?></span>
                       <?php  } ?>
@@ -92,7 +92,7 @@
                   <div class="control-group">
                     <label class="control-label" for="input-name"><?php echo $entry_confirm; ?></label>
                     <div class="controls">
-                      <input type="password" name="confirm" value="<?php echo $confirm; ?>" />
+                      <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" />
                       <?php if ($error_confirm) { ?>
                       <span class="error"><?php echo $error_confirm; ?></span>
                       <?php  } ?>
@@ -148,7 +148,7 @@
                   <div class="control-group">
                     <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
                     <div class="controls">
-                      <input type="text" name="address[<?php echo $address_row; ?>][firstname]" value="<?php echo $address['firstname']; ?>" />
+                      <input type="text" name="address[<?php echo $address_row; ?>][firstname]" value="<?php echo $address['firstname']; ?>" placeholder="<?php echo $entry_firstname; ?>" />
                       <?php if (isset($error_address_firstname[$address_row])) { ?>
                       <span class="error"><?php echo $error_address_firstname[$address_row]; ?></span>
                       <?php } ?>
@@ -157,7 +157,7 @@
                   <div class="control-group">
                     <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
                     <div class="controls">
-                      <input type="text" name="address[<?php echo $address_row; ?>][lastname]" value="<?php echo $address['lastname']; ?>" />
+                      <input type="text" name="address[<?php echo $address_row; ?>][lastname]" value="<?php echo $address['lastname']; ?>" placeholder="<?php echo $entry_lastname; ?>" />
                       <?php if (isset($error_address_lastname[$address_row])) { ?>
                       <span class="error"><?php echo $error_address_lastname[$address_row]; ?></span>
                       <?php } ?>
@@ -166,13 +166,13 @@
                   <div class="control-group">
                     <label class="control-label" for="input-name"><?php echo $entry_company; ?></label>
                     <div class="controls">
-                      <input type="text" name="address[<?php echo $address_row; ?>][company]" value="<?php echo $address['company']; ?>" />
+                      <input type="text" name="address[<?php echo $address_row; ?>][company]" value="<?php echo $address['company']; ?>" placeholder="<?php echo $entry_company; ?>" />
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_address_1; ?></label>
                     <div class="controls">
-                      <input type="text" name="address[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" />
+                      <input type="text" name="address[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" placeholder="<?php echo $entry_address_1; ?>" />
                       <?php if (isset($error_address_address_1[$address_row])) { ?>
                       <span class="error"><?php echo $error_address_address_1[$address_row]; ?></span>
                       <?php } ?>
@@ -181,13 +181,13 @@
                   <div class="control-group">
                     <label class="control-label" for="input-name"><?php echo $entry_address_2; ?></label>
                     <div class="controls">
-                      <input type="text" name="address[<?php echo $address_row; ?>][address_2]" value="<?php echo $address['address_2']; ?>" />
+                      <input type="text" name="address[<?php echo $address_row; ?>][address_2]" value="<?php echo $address['address_2']; ?>" placeholder="<?php echo $entry_address_2; ?>" />
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_city; ?></label>
                     <div class="controls">
-                      <input type="text" name="address[<?php echo $address_row; ?>][city]" value="<?php echo $address['city']; ?>" />
+                      <input type="text" name="address[<?php echo $address_row; ?>][city]" value="<?php echo $address['city']; ?>" placeholder="<?php echo $entry_city; ?>" />
                       <?php if (isset($error_address_city[$address_row])) { ?>
                       <span class="error"><?php echo $error_address_city[$address_row]; ?></span>
                       <?php } ?>
@@ -197,7 +197,7 @@
                     <label class="control-label" for="input-name">
                     <<span id="postcode-required<?php echo $address_row; ?>" class="required">*</span> <?php echo $entry_postcode; ?>/label>
                     <div class="controls">
-                      <input type="text" name="address[<?php echo $address_row; ?>][postcode]" value="<?php echo $address['postcode']; ?>" />
+                      <input type="text" name="address[<?php echo $address_row; ?>][postcode]" value="<?php echo $address['postcode']; ?>" placeholder="<?php echo $entry_postcode; ?>" />
                     </div>
                   </div>
                   <div class="control-group">
@@ -252,19 +252,19 @@
           <div class="tab-pane" id="tab-history">
             <div id="history"></div>
             <?php echo $entry_comment; ?>
-            <textarea name="comment" cols="40" rows="8" style="width: 99%;"></textarea>
+            <textarea name="comment" cols="40" rows="8" placeholder="<?php echo $entry_comment; ?>" style="width: 99%;"></textarea>
             <a id="button-history" class="btn"><span><?php echo $button_add_history; ?></span></a> </div>
           <div class="tab-pane" id="tab-transaction">
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_description; ?></label>
               <div class="controls">
-                <input type="text" name="description" value="" />
+                <input type="text" name="description" value="" placeholder="<?php echo $entry_description; ?>" />
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_amount; ?></label>
               <div class="controls">
-                <input type="text" name="amount" value="" />
+                <input type="text" name="amount" value="" placeholder="<?php echo $entry_amount; ?>" />
               </div>
             </div>
             <a id="button-transaction" class="btn" onclick="addTransaction();"><span><?php echo $button_add_transaction; ?></span></a>
@@ -274,14 +274,14 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_description; ?></label>
               <div class="controls">
-                <input type="text" name="description" value="" />
+                <input type="text" name="description" value="" placeholder="<?php echo $entry_description; ?>" />
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_points; ?></label>
               <div class="controls">
-                <input type="text" name="points" value="" /> <span class="help-block"><?php echo $help_points; ?></span>
-              </div>
+                <input type="text" name="points" value="" placeholder="<?php echo $entry_points; ?>" />
+                <span class="help-block"><?php echo $help_points; ?></span></div>
             </div>
             <a id="button-reward" class="btn" onclick="addRewardPoints();"><span><?php echo $button_add_reward; ?></span></a>
             <div id="reward"></div>
@@ -386,37 +386,37 @@ function addAddress() {
 
 	html += '  <div class="control-group">';
 	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_firstname; ?></label>';
-	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][firstname]" value="" /></div>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][firstname]" value="" placeholder="<?php echo $entry_firstname; ?>" /></div>';
 	html += '  </div>'; 
 	
 	html += '  <div class="control-group">';
 	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_lastname; ?></label>';
-	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][lastname]" value="" /></div>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][lastname]" value="" placeholder="<?php echo $entry_lastname; ?>" /></div>';
 	html += '  </div>'; 
 	
 	html += '  <div class="control-group">';
 	html += '    <label class="control-label" for="input-name"><?php echo $entry_company; ?></label>';
-	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][company]" value="" /></div>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][company]" value="" placeholder="<?php echo $entry_company; ?>" /></div>';
 	html += '  </div>'; 
 	
 	html += '  <div class="control-group">';
 	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_address_1; ?></label>';
-	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][address_1]" value="" /></div>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][address_1]" value="" placeholder="<?php echo $entry_address_1; ?>" /></div>';
 	html += '  </div>'; 		
 	
 	html += '  <div class="control-group">';
 	html += '    <label class="control-label" for="input-name"><?php echo $entry_address_2; ?></label>';
-	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][address_2]" value="" /></div>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][address_2]" value="" placeholder="<?php echo $entry_address_2; ?>" /></div>';
 	html += '  </div>'; 
 	
 	html += '  <div class="control-group">';
 	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_city; ?></label>';
-	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][city]" value="" /></div>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][city]" value="" placeholder="<?php echo $entry_city; ?>" /></div>';
 	html += '  </div>'; 
 	
 	html += '  <div class="control-group">';
 	html += '    <label class="control-label" for="input-name"><span id="postcode-required' + address_row + '" class="required">*</span> <?php echo $entry_postcode; ?></label>';
-	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][postcode]" value="" /></div>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][postcode]" value="" placeholder="<?php echo $entry_postcode; ?>" /></div>';
 	html += '  </div>'; 
 
 	html += '  <div class="control-group">';

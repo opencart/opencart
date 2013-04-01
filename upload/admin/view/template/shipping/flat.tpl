@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_cost; ?></label>
           <div class="controls">
-            <input type="text" name="flat_cost" value="<?php echo $flat_cost; ?>" class="input-small" />
+            <input type="text" name="flat_cost" value="<?php echo $flat_cost; ?>" placeholder="<?php echo $entry_cost; ?>" class="input-small" />
           </div>
         </div>
         <div class="control-group">
@@ -68,7 +68,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="flat_sort_order" value="<?php echo $flat_sort_order; ?>" class="input-mini" />
+            <input type="text" name="flat_sort_order" value="<?php echo $flat_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

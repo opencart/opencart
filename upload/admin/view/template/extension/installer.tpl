@@ -17,7 +17,7 @@
         <label class="control-label" for="input-name"><?php echo $entry_upload; ?></label>
         <div class="controls">
           <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
-          <span class="help-block"><?php echo $help_upload; ?></span> </div>
+          <span class="help-block"><?php echo $help_upload; ?></span></div>
       </div>
       <div class="control-group">
         <label class="control-label" for="input-name"><?php echo $entry_progress; ?></label>

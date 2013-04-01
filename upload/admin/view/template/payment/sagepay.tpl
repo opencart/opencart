@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_vendor; ?></label>
           <div class="controls">
-            <input type="text" name="sagepay_vendor" value="<?php echo $sagepay_vendor; ?>" />
+            <input type="text" name="sagepay_vendor" value="<?php echo $sagepay_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" />
             <?php if ($error_vendor) { ?>
             <span class="error"><?php echo $error_vendor; ?></span>
             <?php } ?>
@@ -27,7 +27,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_password; ?></label>
           <div class="controls">
-            <input type="text" name="sagepay_password" value="<?php echo $sagepay_password; ?>" />
+            <input type="text" name="sagepay_password" value="<?php echo $sagepay_password; ?>" placeholder="<?php echo $entry_password; ?>" />
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
             <?php } ?>
@@ -80,8 +80,8 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="sagepay_total" value="<?php echo $sagepay_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
-          </div>
+            <input type="text" name="sagepay_total" value="<?php echo $sagepay_total; ?>" placeholder="<?php echo $entry_total; ?>" />
+            <span class="help-block"><?php echo $help_total; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
@@ -129,7 +129,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="sagepay_sort_order" value="<?php echo $sagepay_sort_order; ?>" class="input-mini" />
+            <input type="text" name="sagepay_sort_order" value="<?php echo $sagepay_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

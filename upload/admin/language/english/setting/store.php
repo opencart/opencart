@@ -63,6 +63,8 @@ $_['entry_image_related']          = 'Related Product Image Size';
 $_['entry_image_compare']          = 'Compare Image Size';
 $_['entry_image_wishlist']         = 'Wish List Image Size';
 $_['entry_image_cart']             = 'Cart Image Size';
+$_['entry_width']                  = 'Width';
+$_['entry_height']                 = 'Height';
 $_['entry_secure']                 = 'Use SSL';
 
 // Help

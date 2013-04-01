@@ -56,7 +56,7 @@
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
                 <div class="controls">
-                  <input type="text" name="weight_sort_order" value="<?php echo $weight_sort_order; ?>" class="input-mini" />
+                  <input type="text" name="weight_sort_order" value="<?php echo $weight_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
                 </div>
               </div>
             </div>
@@ -65,7 +65,7 @@
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
-                  <textarea name="weight_<?php echo $geo_zone['geo_zone_id']; ?>_rate" cols="40" rows="5"><?php echo ${'weight_' . $geo_zone['geo_zone_id'] . '_rate'}; ?></textarea>
+                  <textarea name="weight_<?php echo $geo_zone['geo_zone_id']; ?>_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo ${'weight_' . $geo_zone['geo_zone_id'] . '_rate'}; ?></textarea>
                   <span class="help-block"><?php echo $help_rate; ?></span></div>
               </div>
               <div class="control-group">

@@ -13,12 +13,12 @@
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_user_id; ?></label>
           <div class="controls">
-            <input type="text" name="usps_user_id" value="<?php echo $usps_user_id; ?>" />
+            <input type="text" name="usps_user_id" value="<?php echo $usps_user_id; ?>" placeholder="<?php echo $entry_user_id; ?>" />
             <?php if ($error_user_id) { ?>
             <span class="error"><?php echo $error_user_id; ?></span>
             <?php } ?>
@@ -27,7 +27,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_postcode; ?></label>
           <div class="controls">
-            <input type="text" name="usps_postcode" value="<?php echo $usps_postcode; ?>" />
+            <input type="text" name="usps_postcode" value="<?php echo $usps_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" />
             <?php if ($error_postcode) { ?>
             <span class="error"><?php echo $error_postcode; ?></span>
             <?php } ?>
@@ -435,12 +435,10 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_dimension; ?></label>
           <div class="controls">
-            <input type="text" name="usps_length" value="<?php echo $usps_length; ?>" size="4" />
-            <input type="text" name="usps_width" value="<?php echo $usps_width; ?>" size="4" />
-            <input type="text" name="usps_height" value="<?php echo $usps_height; ?>" size="4" />
-            
+            <input type="text" name="usps_length" value="<?php echo $usps_length; ?>" placeholder="<?php echo $entry_length; ?>" class="input-mini"/>
+            <input type="text" name="usps_width" value="<?php echo $usps_width; ?>" placeholder="<?php echo $entry_width; ?>" class="input-mini" />
+            <input type="text" name="usps_height" value="<?php echo $usps_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
             <span class="help-block"><?php echo $help_dimension; ?></span>
-            
             <?php if ($error_width) { ?>
             <span class="error"><?php echo $error_width; ?></span>
             <?php } ?>
@@ -466,9 +464,7 @@
             <input type="radio" name="usps_display_time" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?>
-            
-            <span class="help-block"><?php echo $help_display_time; ?></span>
-          </div>
+            <span class="help-block"><?php echo $help_display_time; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_display_weight; ?></label>
@@ -484,9 +480,7 @@
             <input type="radio" name="usps_display_weight" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?>
-            
-            <span class="help-block"><?php echo $help_display_weight; ?></span>
-          </div>
+            <span class="help-block"><?php echo $help_display_weight; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_weight_class; ?></label>
@@ -500,9 +494,7 @@
               <?php } ?>
               <?php } ?>
             </select>
-            
-            <span class="help-block"><?php echo $help_weight_class; ?></span>
-          </div>
+            <span class="help-block"><?php echo $help_weight_class; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_tax; ?></label>
@@ -551,7 +543,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="usps_sort_order" value="<?php echo $usps_sort_order; ?>" class="input-mini" />
+            <input type="text" name="usps_sort_order" value="<?php echo $usps_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
         <div class="control-group">
@@ -566,9 +558,7 @@
               <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
               <?php } ?>
             </select>
-            
-            <span class="help-block"><?php echo $help_debug; ?></span>
-          </div>
+            <span class="help-block"><?php echo $help_debug; ?></span> </div>
         </div>
       </form>
     </div>

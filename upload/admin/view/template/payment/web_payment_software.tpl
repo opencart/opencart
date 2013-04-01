@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_login; ?></label>
           <div class="controls">
-            <input type="text" name="web_payment_software_merchant_name" value="<?php echo $web_payment_software_merchant_name; ?>" />
+            <input type="text" name="web_payment_software_merchant_name" value="<?php echo $web_payment_software_merchant_name; ?>" placeholder="<?php echo $entry_login; ?>" />
             <?php if ($error_login) { ?>
             <span class="error"><?php echo $error_login; ?></span>
             <?php } ?>
@@ -27,7 +27,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_key; ?></label>
           <div class="controls">
-            <input type="text" name="web_payment_software_merchant_key" value="<?php echo $web_payment_software_merchant_key; ?>" />
+            <input type="text" name="web_payment_software_merchant_key" value="<?php echo $web_payment_software_merchant_key; ?>" placeholder="<?php echo $entry_key; ?>" />
             <?php if ($error_key) { ?>
             <span class="error"><?php echo $error_key; ?></span>
             <?php } ?>
@@ -66,6 +66,12 @@
               <?php } ?>
             </select>
           </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
+          <div class="controls">
+            <input type="text" name="web_payment_software_total" value="<?php echo $web_payment_software_total; ?>" placeholder="<?php echo $entry_total; ?>" />
+            <span class="help-block"><?php echo $help_total; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
@@ -111,15 +117,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_total; ?></label> <span class="help-block"><?php echo $help_total; ?></span>
-          <div class="controls">
-            <input type="text" name="web_payment_software_total" value="<?php echo $web_payment_software_total; ?>" />
-          </div>
-        </div>
-        <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="web_payment_software_sort_order" value="<?php echo $web_payment_software_sort_order; ?>" class="input-mini" />
+            <input type="text" name="web_payment_software_sort_order" value="<?php echo $web_payment_software_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

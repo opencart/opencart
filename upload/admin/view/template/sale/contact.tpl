@@ -50,7 +50,7 @@
         <div class="control-group to" id="to-customer">
           <label class="control-label" for="input-name"><?php echo $entry_customer; ?></label>
           <div class="controls">
-            <input type="text" name="customers" value="" />
+            <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" />
             <span class="help-block"><?php echo $help_customer; ?></span>
             <div id="customer" class="scrollbox"></div>
           </div>
@@ -58,7 +58,7 @@
         <div class="control-group to" id="to-affiliate">
           <label class="control-label" for="input-name"><?php echo $entry_affiliate; ?></label>
           <div class="controls">
-            <input type="text" name="affiliates" value="" />
+            <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" />
             <span class="help-block"><?php echo $help_affiliate; ?></span>
             <div id="affiliate" class="scrollbox"></div>
           </div>
@@ -66,7 +66,7 @@
         <div class="control-group to" id="to-product">
           <label class="control-label" for="input-name"><?php echo $entry_product; ?></label>
           <div class="controls">
-            <input type="text" name="products" value="" />
+            <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" />
             <span class="help-block"><?php echo $help_product; ?></span>
             <div id="product" class="scrollbox"></div>
           </div>
@@ -74,13 +74,13 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_subject; ?></label>
           <div class="controls">
-            <input type="text" name="subject" value="" />
+            <input type="text" name="subject" value="" placeholder="<?php echo $entry_subject; ?>" />
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_message; ?></label>
           <div class="controls">
-            <textarea name="message"></textarea>
+            <textarea name="message" placeholder="<?php echo $entry_message; ?>"></textarea>
           </div>
         </div>
       </form>

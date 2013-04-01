@@ -18,13 +18,13 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="handling_total" value="<?php echo $handling_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
-          </div>
+            <input type="text" name="handling_total" value="<?php echo $handling_total; ?>" placeholder="<?php echo $entry_total; ?>" />
+            <span class="help-block"><?php echo $help_total; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_fee; ?></label>
           <div class="controls">
-            <input type="text" name="handling_fee" value="<?php echo $handling_fee; ?>" />
+            <input type="text" name="handling_fee" value="<?php echo $handling_fee; ?>" placeholder="<?php echo $entry_fee; ?>" />
           </div>
         </div>
         <div class="control-group">
@@ -59,7 +59,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="handling_sort_order" value="<?php echo $handling_sort_order; ?>" class="input-mini" />
+            <input type="text" name="handling_sort_order" value="<?php echo $handling_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

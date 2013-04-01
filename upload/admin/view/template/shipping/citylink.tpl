@@ -18,8 +18,8 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
           <div class="controls">
-            <textarea name="citylink_rate" cols="40" rows="5"><?php echo $citylink_rate; ?></textarea> <span class="help-block"><?php echo $help_rate; ?></span>
-          </div>
+            <textarea name="citylink_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $citylink_rate; ?></textarea>
+            <span class="help-block"><?php echo $help_rate; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_tax_class; ?></label>
@@ -68,7 +68,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="citylink_sort_order" value="<?php echo $citylink_sort_order; ?>" class="input-mini" />
+            <input type="text" name="citylink_sort_order" value="<?php echo $citylink_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

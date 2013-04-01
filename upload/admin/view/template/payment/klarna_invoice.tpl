@@ -36,13 +36,13 @@
                     <label class="control-label" for="input-name"><?php echo $entry_merchant; ?></label>
                     <div class="controls">
                       <input type="text" name="klarna_invoice[<?php echo $country['code']; ?>][merchant]" value="<?php echo isset($klarna_invoice[$country['code']]) ? $klarna_invoice[$country['code']]['merchant'] : ''; ?>" placeholder="<?php echo $entry_merchant; ?>" />
-                      <span class="help-block"><?php echo $help_merchant; ?></span> </div>
+                      <span class="help-block"><?php echo $help_merchant; ?></span></div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="input-name"><?php echo $entry_secret; ?></label>
                     <div class="controls">
                       <input type="text" name="klarna_invoice[<?php echo $country['code']; ?>][secret]" value="<?php echo isset($klarna_invoice[$country['code']]) ? $klarna_invoice[$country['code']]['secret'] : ''; ?>" placeholder="<?php echo $entry_secret; ?>" />
-                      <span class="help-block"><?php echo $help_secret; ?></span> </div>
+                      <span class="help-block"><?php echo $help_secret; ?></span></div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="input-name"><?php echo $entry_server; ?></label>
@@ -65,7 +65,7 @@
                     <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
                     <div class="controls">
                       <input type="text" name="klarna_invoice[<?php echo $country['code']; ?>][total]" value="<?php echo isset($klarna_invoice[$country['code']]) ? $klarna_invoice[$country['code']]['total'] : ''; ?>" placeholder="<?php echo $entry_total; ?>" />
-                      <span class="help-block"><?php echo $help_total; ?></span> </div>
+                      <span class="help-block"><?php echo $help_total; ?></span></div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="input-name"><?php echo $entry_pending_status; ?></label>

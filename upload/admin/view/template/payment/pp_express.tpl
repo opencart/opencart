@@ -79,7 +79,7 @@
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
             <input type="text" name="pp_express_total" value="<?php echo $pp_express_total; ?>" />
-            <span class="help-block"><?php echo $help_total; ?></span> </div>
+            <span class="help-block"><?php echo $help_total; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>

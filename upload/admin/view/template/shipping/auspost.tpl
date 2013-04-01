@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_postcode; ?></label>
           <div class="controls">
-            <input type="text" name="auspost_postcode" size="4" maxlength="4" value="<?php echo $auspost_postcode; ?>" />
+            <input type="text" name="auspost_postcode" value="<?php echo $auspost_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" maxlength="4" class="input-mini" />
             <?php if ($error_postcode) { ?>
             <span class="error"><?php echo $error_postcode; ?></span>
             <?php } ?>
@@ -127,7 +127,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="auspost_sort_order" value="<?php echo $auspost_sort_order; ?>" class="input-mini" />
+            <input type="text" name="auspost_sort_order" value="<?php echo $auspost_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

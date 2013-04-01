@@ -117,7 +117,7 @@
               <label class="control-label" for="input-name"><?php echo $entry_keyword; ?></label>
               <div class="controls">
                 <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" />
-                <span class="help-block"><?php echo $help_keyword; ?></span> </div>
+                <span class="help-block"><?php echo $help_keyword; ?></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
@@ -142,7 +142,7 @@
               <label class="control-label" for="input-name"><?php echo $entry_column; ?></label>
               <div class="controls">
                 <input type="text" name="column" value="<?php echo $column; ?>" placeholder="<?php echo $entry_column; ?>" class="input-mini" />
-                <span class="help-block"><?php echo $help_column; ?></span> </div>
+                <span class="help-block"><?php echo $help_column; ?></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>

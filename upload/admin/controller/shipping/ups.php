@@ -69,6 +69,9 @@ class ControllerShippingUPS extends Controller {
 		$this->data['entry_length_code'] = $this->language->get('entry_length_code');
 		$this->data['entry_length_class'] = $this->language->get('entry_length_class');
 		$this->data['entry_dimension'] = $this->language->get('entry_dimension');
+		$this->data['entry_length'] = $this->language->get('entry_length');
+		$this->data['entry_width'] = $this->language->get('entry_width');
+		$this->data['entry_height'] = $this->language->get('entry_height');			
 		$this->data['entry_tax_class'] = $this->language->get('entry_tax_class');
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');

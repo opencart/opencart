@@ -86,7 +86,7 @@
               <label class="control-label" for="input-name"><?php echo $entry_keyword; ?></label>
               <div class="controls">
                 <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" />
-                <span class="help-block"><?php echo $help_keyword; ?></span> </div>
+                <span class="help-block"><?php echo $help_keyword; ?></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_bottom; ?></label>
@@ -96,7 +96,7 @@
                 <?php } else { ?>
                 <input type="checkbox" name="bottom" value="1" />
                 <?php } ?>
-                <span class="help-block"><?php echo $help_bottom; ?></span> </div>
+                <span class="help-block"><?php echo $help_bottom; ?></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>

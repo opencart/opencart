@@ -74,6 +74,9 @@ class ControllerShippingUsps extends Controller {
 		$this->data['entry_container'] = $this->language->get('entry_container');
 		$this->data['entry_machinable'] = $this->language->get('entry_machinable');
 		$this->data['entry_dimension'] = $this->language->get('entry_dimension');
+		$this->data['entry_length'] = $this->language->get('entry_length');
+		$this->data['entry_width'] = $this->language->get('entry_width');
+		$this->data['entry_height'] = $this->language->get('entry_height');		
 		$this->data['entry_display_time'] = $this->language->get('entry_display_time');
 		$this->data['entry_display_weight'] = $this->language->get('entry_display_weight');
 		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');

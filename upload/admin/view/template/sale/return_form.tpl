@@ -24,7 +24,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_order_id; ?></label>
               <div class="controls">
-                <input type="text" name="order_id" value="<?php echo $order_id; ?>" />
+                <input type="text" name="order_id" value="<?php echo $order_id; ?>" placeholder="<?php echo $entry_order_id; ?>" />
                 <?php if ($error_order_id) { ?>
                 <span class="error"><?php echo $error_order_id; ?></span>
                 <?php } ?>
@@ -33,20 +33,20 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_date_ordered; ?></label>
               <div class="controls">
-                <input type="text" name="date_ordered" value="<?php echo $date_ordered; ?>" class="date" />
+                <input type="text" name="date_ordered" value="<?php echo $date_ordered; ?>" placeholder="<?php echo $entry_date_ordered; ?>" class="date" />
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_customer; ?></label>
               <div class="controls">
-                <input type="text" name="customer" value="<?php echo $customer; ?>" />
+                <input type="text" name="customer" value="<?php echo $customer; ?>" placeholder="<?php echo $entry_customer; ?>" />
                 <input type="hidden" name="customer_id" value="<?php echo $customer_id; ?>" />
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
               <div class="controls">
-                <input type="text" name="firstname" value="<?php echo $firstname; ?>" />
+                <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" />
                 <?php if ($error_firstname) { ?>
                 <span class="error"><?php echo $error_firstname; ?></span>
                 <?php } ?>
@@ -55,7 +55,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
               <div class="controls">
-                <input type="text" name="lastname" value="<?php echo $lastname; ?>" />
+                <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" />
                 <?php if ($error_lastname) { ?>
                 <span class="error"><?php echo $error_lastname; ?></span>
                 <?php } ?>
@@ -64,7 +64,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_email; ?></label>
               <div class="controls">
-                <input type="text" name="email" value="<?php echo $email; ?>" />
+                <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" />
                 <?php if ($error_email) { ?>
                 <span class="error"><?php echo $error_email; ?></span>
                 <?php  } ?>
@@ -73,7 +73,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_telephone; ?></label>
               <div class="controls">
-                <input type="text" name="telephone" value="<?php echo $telephone; ?>" />
+                <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" />
                 <?php if ($error_telephone) { ?>
                 <span class="error"><?php echo $error_telephone; ?></span>
                 <?php  } ?>
@@ -84,7 +84,8 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_product; ?></label>
               <div class="controls">
-                <input type="text" name="product" value="<?php echo $product; ?>" /> <span class="help-block"><?php echo $help_product; ?></span>
+                <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" />
+                <span class="help-block"><?php echo $help_product; ?></span>
                 <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
                 <?php if ($error_product) { ?>
                 <span class="error"><?php echo $error_product; ?></span>
@@ -94,13 +95,13 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_model; ?></label>
               <div class="controls">
-                <input type="text" name="model" value="<?php echo $model; ?>" />
+                <input type="text" name="model" value="<?php echo $model; ?>" placeholder="<?php echo $entry_model; ?>" />
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_quantity; ?></label>
               <div class="controls">
-                <input type="text" name="quantity" value="<?php echo $quantity; ?>" class="input-small" />
+                <input type="text" name="quantity" value="<?php echo $quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" class="input-small" />
               </div>
             </div>
             <div class="control-group">
@@ -134,7 +135,7 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_comment; ?></label>
               <div class="controls">
-                <textarea name="comment" cols="40" rows="5"><?php echo $comment; ?></textarea>
+                <textarea name="comment" cols="40" rows="5" placeholder="<?php echo $entry_comment; ?>"><?php echo $comment; ?></textarea>
               </div>
             </div>
             <div class="control-group">

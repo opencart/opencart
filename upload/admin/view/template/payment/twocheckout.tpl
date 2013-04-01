@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_account; ?></label>
           <div class="controls">
-            <input type="text" name="twocheckout_account" value="<?php echo $twocheckout_account; ?>" />
+            <input type="text" name="twocheckout_account" value="<?php echo $twocheckout_account; ?>" placeholder="<?php echo $entry_account; ?>" />
             <?php if ($error_account) { ?>
             <span class="error"><?php echo $error_account; ?></span>
             <?php } ?>
@@ -27,12 +27,11 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_secret; ?></label>
           <div class="controls">
-            <input type="text" name="twocheckout_secret" value="<?php echo $twocheckout_secret; ?>" />
+            <input type="text" name="twocheckout_secret" value="<?php echo $twocheckout_secret; ?>" placeholder="<?php echo $entry_secret; ?>" />
             <?php if ($error_secret) { ?>
             <span class="error"><?php echo $error_secret; ?></span>
             <?php } ?>
-            <span class="help-block"><?php echo $help_secret; ?></span>
-          </div>
+            <span class="help-block"><?php echo $help_secret; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_test; ?></label>
@@ -53,8 +52,8 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="twocheckout_total" value="<?php echo $twocheckout_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
-          </div>
+            <input type="text" name="twocheckout_total" value="<?php echo $twocheckout_total; ?>" placeholder="<?php echo $entry_total; ?>" />
+            <span class="help-block"><?php echo $help_total; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
@@ -102,7 +101,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="twocheckout_sort_order" value="<?php echo $twocheckout_sort_order; ?>" class="input-mini" />
+            <input type="text" name="twocheckout_sort_order" value="<?php echo $twocheckout_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_key; ?></label>
           <div class="controls">
-            <input type="text" name="fedex_key" value="<?php echo $fedex_key; ?>" />
+            <input type="text" name="fedex_key" value="<?php echo $fedex_key; ?>" placeholder="<?php echo $entry_key; ?>" />
             <?php if ($error_key) { ?>
             <span class="error"><?php echo $error_key; ?></span>
             <?php } ?>
@@ -27,7 +27,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_password; ?></label>
           <div class="controls">
-            <input type="text" name="fedex_password" value="<?php echo $fedex_password; ?>" />
+            <input type="text" name="fedex_password" value="<?php echo $fedex_password; ?>" placeholder="<?php echo $entry_password; ?>" />
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
             <?php } ?>
@@ -36,7 +36,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_account; ?></label>
           <div class="controls">
-            <input type="text" name="fedex_account" value="<?php echo $fedex_account; ?>" />
+            <input type="text" name="fedex_account" value="<?php echo $fedex_account; ?>" placeholder="<?php echo $entry_account; ?>" />
             <?php if ($error_account) { ?>
             <span class="error"><?php echo $error_account; ?></span>
             <?php } ?>
@@ -45,7 +45,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_meter; ?></label>
           <div class="controls">
-            <input type="text" name="fedex_meter" value="<?php echo $fedex_meter; ?>" />
+            <input type="text" name="fedex_meter" value="<?php echo $fedex_meter; ?>" placeholder="<?php echo $entry_meter; ?>" />
             <?php if ($error_meter) { ?>
             <span class="error"><?php echo $error_meter; ?></span>
             <?php } ?>
@@ -54,7 +54,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_postcode; ?></label>
           <div class="controls">
-            <input type="text" name="fedex_postcode" value="<?php echo $fedex_postcode; ?>" />
+            <input type="text" name="fedex_postcode" value="<?php echo $fedex_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" />
             <?php if ($error_postcode) { ?>
             <span class="error"><?php echo $error_postcode; ?></span>
             <?php } ?>
@@ -282,7 +282,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="fedex_sort_order" value="<?php echo $fedex_sort_order; ?>" class="input-mini" />
+            <input type="text" name="fedex_sort_order" value="<?php echo $fedex_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>
         </div>
       </form>

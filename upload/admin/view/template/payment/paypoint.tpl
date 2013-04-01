@@ -28,7 +28,7 @@
           <label class="control-label" for="input-name"><?php echo $entry_password; ?></label>
           <div class="controls">
             <input type="text" name="paypoint_password" value="<?php echo $paypoint_password; ?>" placeholder="<?php echo $entry_password; ?>" />
-            <span class="help-block"><?php echo $help_password; ?></span> </div>
+            <span class="help-block"><?php echo $help_password; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_test; ?></label>
@@ -56,7 +56,7 @@
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
             <input type="text" name="paypoint_total" value="<?php echo $paypoint_total; ?>" placeholder="<?php echo $entry_total; ?>" />
-            <span class="help-block"><?php echo $help_total; ?></span> </div>
+            <span class="help-block"><?php echo $help_total; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>

@@ -107,6 +107,8 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_image_compare'] = $this->language->get('entry_image_compare');
 		$this->data['entry_image_wishlist'] = $this->language->get('entry_image_wishlist');
 		$this->data['entry_image_cart'] = $this->language->get('entry_image_cart');	
+		$this->data['entry_width'] = $this->language->get('entry_width');
+		$this->data['entry_height'] = $this->language->get('entry_height');	
 		$this->data['entry_ftp_host'] = $this->language->get('entry_ftp_host');
 		$this->data['entry_ftp_port'] = $this->language->get('entry_ftp_port');
 		$this->data['entry_ftp_username'] = $this->language->get('entry_ftp_username');

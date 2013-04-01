@@ -34,7 +34,7 @@
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
             <input type="text" name="moneybookers_total" value="<?php echo $moneybookers_total; ?>" placeholder="<?php echo $entry_total; ?>" />
-            <span class="help-block"><?php echo $help_total; ?></span> </div>
+            <span class="help-block"><?php echo $help_total; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>

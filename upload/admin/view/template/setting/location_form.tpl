@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
           <div class="controls">
-            <input type="text" name="name" value="<?php echo $name; ?>" />
+            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" />
             <?php if ($error_name) { ?>
             <span class="error"><?php echo $error_name; ?></span>
             <?php } ?>
@@ -27,7 +27,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_address_1; ?></label>
           <div class="controls">
-            <input type="text" name="address_1" value="<?php echo $address_1; ?>" />
+            <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" />
             <?php if ($error_address_1) { ?>
             <span class="error"><?php echo $error_address_1; ?></span>
             <?php } ?>
@@ -36,13 +36,13 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_address_2; ?></label>
           <div class="controls">
-            <input type="text" name="address_2" value="<?php echo $address_2; ?>" />
+            <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="<?php echo $entry_address_2; ?>" />
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_city; ?></label>
           <div class="controls">
-            <input type="text" name="city" value="<?php echo $city; ?>" />
+            <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" />
             <?php if ($error_city) { ?>
             <span class="error"><?php echo $error_city; ?></span>
             <?php } ?>
@@ -51,7 +51,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></label>
           <div class="controls">
-            <input type="text" name="postcode" value="<?php echo $postcode; ?>" />
+            <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" />
           </div>
         </div>
         <div class="control-group">
@@ -85,8 +85,9 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_geocode; ?></label>
           <div class="controls">
-            <input id="geocode" type="text" name="geocode" value="<?php echo $geocode; ?>" />
-            <input type="button" onclick="getGeoCode()" value="<?php echo $button_geocode; ?>" class="btn" /> <span class="help-block"><?php echo $help_geocode; ?></span>
+            <input id="geocode" type="text" name="geocode" value="<?php echo $geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" />
+            <input type="button" onclick="getGeoCode()" value="<?php echo $button_geocode; ?>" class="btn" />
+            <span class="help-block"><?php echo $help_geocode; ?></span>
             <?php if ($error_geocode) { ?>
             <span class="error"><?php echo $error_geocode; ?></span>
             <?php } ?>
@@ -104,14 +105,14 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_open; ?></label>
           <div class="controls">
-            <textarea name="open" cols="40" rows="5"><?php echo $open; ?></textarea> <span class="help-block"><?php echo $help_open; ?></span>
-          </div>
+            <textarea name="open" cols="40" rows="5" placeholder="<?php echo $entry_open; ?>"><?php echo $open; ?></textarea>
+            <span class="help-block"><?php echo $help_open; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_comment; ?></label>
           <div class="controls">
-            <textarea name="comment" cols="40" rows="5"><?php echo $comment; ?></textarea> <span class="help-block"><?php echo $help_comment; ?></span>
-          </div>
+            <textarea name="comment" cols="40" rows="5" placeholder="<?php echo $entry_comment; ?>"><?php echo $comment; ?></textarea>
+            <span class="help-block"><?php echo $help_comment; ?></span></div>
         </div>
       </form>
     </div>

@@ -56,7 +56,7 @@
             <input type="radio" name="pp_pro_test" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?>
-            <span class="help-block"><?php echo $help_test; ?></span> </div>
+            <span class="help-block"><?php echo $help_test; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_transaction; ?></label>
@@ -79,7 +79,7 @@
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
             <input type="text" name="pp_pro_total" value="<?php echo $pp_pro_total; ?>" placeholder="<?php echo $entry_total; ?>" />
-            <span class="help-block"><?php echo $help_total; ?></span> </div>
+            <span class="help-block"><?php echo $help_total; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>

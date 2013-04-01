@@ -68,7 +68,7 @@
                   <label class="control-label" for="input-name"><?php echo $entry_tag; ?></label>
                   <div class="controls">
                     <input type="text" name="product_description[<?php echo $language['language_id']; ?>][tag]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['tag'] : ''; ?>" placeholder="<?php echo $entry_tag; ?>" class="input-xxlarge" />
-                    <span class="help-block"><?php echo $help_tag; ?></span> </div>
+                    <span class="help-block"><?php echo $help_tag; ?></span></div>
                 </div>
               </div>
               <?php } ?>
@@ -88,13 +88,13 @@
               <label class="control-label" for="input-name"><?php echo $entry_sku; ?></label>
               <div class="controls">
                 <input type="text" name="sku" value="<?php echo $sku; ?>" placeholder="<?php echo $entry_sku; ?>" />
-                <span class="help-block"><?php echo $help_sku; ?></span> </div>
+                <span class="help-block"><?php echo $help_sku; ?></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_upc; ?></label>
               <div class="controls">
                 <input type="text" name="upc" value="<?php echo $upc; ?>" placeholder="<?php echo $entry_upc; ?>" />
-                <span class="help-block"><?php echo $help_upc; ?></span> </div>
+                <span class="help-block"><?php echo $help_upc; ?></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_ean; ?></label>
@@ -157,7 +157,7 @@
               <label class="control-label" for="input-name"><?php echo $entry_minimum; ?></label>
               <div class="controls">
                 <input type="text" name="minimum" value="<?php echo $minimum; ?>" placeholder="<?php echo $entry_minimum; ?>" class="input-mini" />
-                <span class="help-block"><?php echo $help_minimum; ?></span> </div>
+                <span class="help-block"><?php echo $help_minimum; ?></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_subtract; ?></label>
@@ -185,7 +185,7 @@
                   <?php } ?>
                   <?php } ?>
                 </select>
-                <span class="help-block"><?php echo $help_stock_status; ?></span> </div>
+                <span class="help-block"><?php echo $help_stock_status; ?></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_shipping; ?></label>
@@ -292,7 +292,7 @@
               <div class="controls">
                 <input type="text" name="manufacturer" value="<?php echo $manufacturer ?>" placeholder="<?php echo $entry_manufacturer; ?>" />
                 <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturer_id; ?>" />
-                <span class="help-block"><?php echo $help_manufacturer; ?></span> </div>
+                <span class="help-block"><?php echo $help_manufacturer; ?></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_category; ?></label>
@@ -429,7 +429,7 @@
                 <?php $option_row++; ?>
                 <?php } ?>
                 <li id="option-add">
-                  <input name="option" value="" style="width: 130px;" />
+                  <input type="text" name="option" value="" style="width: 130px;" />
                   <i class="icon-plus"></i></li>
               </ul>
               <div class="tab-content">

@@ -38,17 +38,24 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_approval; ?></label>
           <div class="controls">
-            <?php if ($approval) { ?>
-            <input type="radio" name="approval" value="1" checked="checked" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="approval" value="0" />
-            <?php echo $text_no; ?>
-            <?php } else { ?>
-            <input type="radio" name="approval" value="1" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="approval" value="0" checked="checked" />
-            <?php echo $text_no; ?>
-            <?php } ?>
+            <label class="radio inline">
+              <?php if ($approval) { ?>
+              <input type="radio" name="approval" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <?php } else { ?>
+              <input type="radio" name="approval" value="1" />
+              <?php echo $text_yes; ?>
+              <?php } ?>
+            </label>
+            <label class="radio inline">
+              <?php if (!$approval) { ?>
+              <input type="radio" name="approval" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="approval" value="0" />
+              <?php echo $text_no; ?>
+              <?php } ?>
+            </label>
             <span class="help-block"><?php echo $help_approval; ?></span></div>
         </div>
         <div class="control-group">

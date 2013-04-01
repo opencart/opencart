@@ -36,38 +36,48 @@
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_display_weight; ?></label>
                 <div class="controls">
-                  <?php if ($royal_mail_display_weight) { ?>
-                  <input type="radio" name="royal_mail_display_weight" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="royal_mail_display_weight" value="0" />
-                  <?php echo $text_no; ?>
-                  <?php } else { ?>
-                  <input type="radio" name="royal_mail_display_weight" value="1" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="royal_mail_display_weight" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } ?>
-                  
-                  <span class="help-block"><?php echo $help_display_weight; ?></span>
-                </div>
+                  <label class="radio inline">
+                    <?php if ($royal_mail_display_weight) { ?>
+                    <input type="radio" name="royal_mail_display_weight" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="royal_mail_display_weight" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio inline">
+                    <?php if (!$royal_mail_display_weight) { ?>
+                    <input type="radio" name="royal_mail_display_weight" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="royal_mail_display_weight" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_display_weight; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_display_insurance; ?></label>
                 <div class="controls">
-                  <?php if ($royal_mail_display_insurance) { ?>
-                  <input type="radio" name="royal_mail_display_insurance" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="royal_mail_display_insurance" value="0" />
-                  <?php echo $text_no; ?>
-                  <?php } else { ?>
-                  <input type="radio" name="royal_mail_display_insurance" value="1" />
-                  <?php echo $text_yes; ?>
-                  <input type="radio" name="royal_mail_display_insurance" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } ?>
-                  
-                  <span class="help-block"><?php echo $help_display_insurance; ?></span>
-                </div>
+                  <label class="radio inline">
+                    <?php if ($royal_mail_display_insurance) { ?>
+                    <input type="radio" name="royal_mail_display_insurance" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="royal_mail_display_insurance" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio inline">
+                    <?php if (!$royal_mail_display_insurance) { ?>
+                    <input type="radio" name="royal_mail_display_insurance" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="royal_mail_display_insurance" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_display_insurance; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_weight_class; ?></label>
@@ -138,16 +148,14 @@
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
-                  <textarea name="royal_mail_1st_class_standard_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_1st_class_standard_rate; ?></textarea> 
-                  <span class="help-block"><?php echo $help_rate; ?></span>
-                </div>
+                  <textarea name="royal_mail_1st_class_standard_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_1st_class_standard_rate; ?></textarea>
+                  <span class="help-block"><?php echo $help_rate; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_insurance; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_1st_class_standard_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>"><?php echo $royal_mail_1st_class_standard_insurance; ?></textarea>
-                  <span class="help-block"><?php echo $help_insurance; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $help_insurance; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
@@ -168,16 +176,14 @@
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
-                  <textarea name="royal_mail_1st_class_recorded_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_1st_class_recorded_rate; ?></textarea> 
-                  <span class="help-block"><?php echo $help_rate; ?></span>
-                </div>
+                  <textarea name="royal_mail_1st_class_recorded_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_1st_class_recorded_rate; ?></textarea>
+                  <span class="help-block"><?php echo $help_rate; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_insurance; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_1st_class_recorded_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>"><?php echo $royal_mail_1st_class_recorded_insurance; ?></textarea>
-                  <span class="help-block"><?php echo $help_insurance; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $help_insurance; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
@@ -198,9 +204,8 @@
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
-                  <textarea name="royal_mail_2nd_class_standard_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_2nd_class_standard_rate; ?></textarea> 
-                  <span class="help-block"><?php echo $help_rate; ?></span>
-                </div>
+                  <textarea name="royal_mail_2nd_class_standard_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_2nd_class_standard_rate; ?></textarea>
+                  <span class="help-block"><?php echo $help_rate; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
@@ -221,16 +226,14 @@
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
-                  <textarea name="royal_mail_2nd_class_recorded_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_2nd_class_recorded_rate; ?></textarea> 
-                  <span class="help-block"><?php echo $help_rate; ?></span>
-                </div>
+                  <textarea name="royal_mail_2nd_class_recorded_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_2nd_class_recorded_rate; ?></textarea>
+                  <span class="help-block"><?php echo $help_rate; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_insurance; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_2nd_class_recorded_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>"><?php echo $royal_mail_2nd_class_recorded_insurance; ?></textarea>
-                  <span class="help-block"><?php echo $help_insurance; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $help_insurance; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
@@ -252,15 +255,13 @@
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_special_delivery_500_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_special_delivery_500_rate; ?></textarea>
-                  <span class="help-block"><?php echo $help_rate; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $help_rate; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_insurance; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_special_delivery_500_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>"><?php echo $royal_mail_special_delivery_500_insurance; ?></textarea>
-                  <span class="help-block"><?php echo $help_insurance; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $help_insurance; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
@@ -282,15 +283,13 @@
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_special_delivery_1000_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_special_delivery_1000_rate; ?></textarea>
-                  <span class="help-block"><?php echo $help_rate; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $help_rate; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_insurance; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_special_delivery_1000_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>"><?php echo $royal_mail_special_delivery_1000_insurance; ?></textarea>
-                  <span class="help-block"><?php echo $help_insurance; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $help_insurance; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
@@ -311,16 +310,14 @@
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
-                  <textarea name="royal_mail_special_delivery_2500_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_special_delivery_2500_rate; ?></textarea> 
-                  <span class="help-block"><?php echo $help_rate; ?></span>
-                </div>
+                  <textarea name="royal_mail_special_delivery_2500_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_special_delivery_2500_rate; ?></textarea>
+                  <span class="help-block"><?php echo $help_rate; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_insurance; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_special_delivery_2500_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>"><?php echo $royal_mail_special_delivery_2500_insurance; ?></textarea>
-                  <span class="help-block"><?php echo $help_insurance; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $help_insurance; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
@@ -342,15 +339,13 @@
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_standard_parcels_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_standard_parcels_rate; ?></textarea>
-                  <span class="help-block"><?php echo $help_rate; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $help_rate; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_insurance; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_standard_parcels_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>"><?php echo $royal_mail_standard_parcels_insurance; ?></textarea>
-                  <span class="help-block"><?php echo $help_insurance; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $help_insurance; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
@@ -372,15 +367,13 @@
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_airmail_rate_1" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_airmail_rate_1; ?></textarea>
-                  <span class="help-block"><?php echo $help_airmail_rate_1; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $help_airmail_rate_1; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
-                  <textarea name="royal_mail_airmail_rate_2" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_airmail_rate_2; ?></textarea> 
-                  <span class="help-block"><?php echo $help_airmail_rate_2; ?></span>
-                </div>
+                  <textarea name="royal_mail_airmail_rate_2" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_airmail_rate_2; ?></textarea>
+                  <span class="help-block"><?php echo $help_airmail_rate_2; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
@@ -401,30 +394,26 @@
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
-                  <textarea name="royal_mail_international_signed_rate_1" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_international_signed_rate_1; ?></textarea> 
-                  <span class="help-block"><?php echo $help_international_signed_rate_1; ?></span>
-                </div>
+                  <textarea name="royal_mail_international_signed_rate_1" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_international_signed_rate_1; ?></textarea>
+                  <span class="help-block"><?php echo $help_international_signed_rate_1; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_insurance; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_international_signed_insurance_1" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>"><?php echo $royal_mail_international_signed_insurance_1; ?></textarea>
-                  <span class="help-block"><?php echo $help_international_signed_insurance_1; ?></span>                  
-                </div>
+                  <span class="help-block"><?php echo $help_international_signed_insurance_1; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_international_signed_rate_2" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_international_signed_rate_2; ?></textarea>
-                  <span class="help-block"><?php echo $help_international_signed_rate_2; ?></span>                  
-                </div>
+                  <span class="help-block"><?php echo $help_international_signed_rate_2; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_insurance; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_international_signed_insurance_2" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>"><?php echo $royal_mail_international_signed_insurance_2; ?></textarea>
-                  <span class="help-block"><?php echo $help_international_signed_insurance_2; ?></span>                  
-                </div>
+                  <span class="help-block"><?php echo $help_international_signed_insurance_2; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
@@ -446,29 +435,25 @@
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_airsure_rate_1" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_airsure_rate_1; ?></textarea>
-                  <span class="help-block"><?php echo $help_airsure_rate_1; ?></span>                  
-                </div>
+                  <span class="help-block"><?php echo $help_airsure_rate_1; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_insurance; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_airsure_insurance_1" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>"><?php echo $royal_mail_airsure_insurance_1; ?></textarea>
-                  <span class="help-block"><?php echo $help_airsure_insurance_1; ?></span>                  
-                </div>
+                  <span class="help-block"><?php echo $help_airsure_insurance_1; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
-                  <textarea name="royal_mail_airsure_rate_2" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_airsure_rate_2; ?></textarea> 
-                  <span class="help-block"><?php echo $help_airsure_rate_2; ?></span>
-                </div>
+                  <textarea name="royal_mail_airsure_rate_2" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo $royal_mail_airsure_rate_2; ?></textarea>
+                  <span class="help-block"><?php echo $help_airsure_rate_2; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_insurance; ?></label>
                 <div class="controls">
                   <textarea name="royal_mail_airsure_insurance_2" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>"><?php echo $royal_mail_airsure_insurance_2; ?></textarea>
-                  <span class="help-block"><?php echo $help_airsure_insurance_2; ?></span>                                    
-                </div>
+                  <span class="help-block"><?php echo $help_airsure_insurance_2; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
@@ -489,8 +474,8 @@
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
                 <div class="controls">
-                  <textarea name="royal_mail_surface_rate" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>"><?php echo $royal_mail_surface_rate; ?></textarea> <span class="help-block"><?php echo $help_top; ?></span>
-                </div>
+                  <textarea name="royal_mail_surface_rate" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>"><?php echo $royal_mail_surface_rate; ?></textarea>
+                  <span class="help-block"><?php echo $help_top; ?></span> </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>

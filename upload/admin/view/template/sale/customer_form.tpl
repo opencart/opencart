@@ -231,16 +231,14 @@
                   <div class="control-group">
                     <label class="control-label" for="input-name"><?php echo $entry_default; ?></label>
                     <div class="controls">
-                      <?php if (($address['address_id'] == $address_id) || !$addresses) { ?>
-                      <input type="radio" name="address[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" checked="checked" />
-                      <?php } else { ?>
-                      <input type="radio" name="address[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" />
-                      <?php } ?>
+                      <label class="radio">
+                        <?php if (($address['address_id'] == $address_id) || !$addresses) { ?>
+                        <input type="radio" name="address[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" checked="checked" />
+                        <?php } else { ?>
+                        <input type="radio" name="address[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" />
+                        <?php } ?>
+                      </label>
                     </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-name"></label>
-                    <div class="controls"> </div>
                   </div>
                 </div>
                 <?php $address_row++; ?>
@@ -436,7 +434,7 @@ function addAddress() {
 
 	html += '  <div class="control-group">';
 	html += '    <label class="control-label" for="input-name"><?php echo $entry_default; ?></label>';
-	html += '    <div class="controls"><input type="radio" name="address[' + address_row + '][default]" value="1" /></div>';
+	html += '    <div class="controls"><label class="radio"><input type="radio" name="address[' + address_row + '][default]" value="1" /></label></div>';
 	html += '  </div>'; 
 								
     html += '</div>';

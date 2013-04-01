@@ -189,18 +189,25 @@
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_shipping; ?></label>
-              <div class="controls">
-                <?php if ($shipping) { ?>
-                <input type="radio" name="shipping" value="1" checked="checked" />
-                <?php echo $text_yes; ?>
-                <input type="radio" name="shipping" value="0" />
-                <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="shipping" value="1" />
-                <?php echo $text_yes; ?>
-                <input type="radio" name="shipping" value="0" checked="checked" />
-                <?php echo $text_no; ?>
-                <?php } ?>
+              <div class="controls inline">
+                <label class="radio inline">
+                  <?php if ($shipping) { ?>
+                  <input type="radio" name="shipping" value="1" checked="checked" />
+                  <?php echo $text_yes; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="shipping" value="1" />
+                  <?php echo $text_yes; ?>
+                  <?php } ?>
+                </label>
+                <label class="radio inline">
+                  <?php if (!$shipping) { ?>
+                  <input type="radio" name="shipping" value="0" checked="checked" />
+                  <?php echo $text_no; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="shipping" value="0" />
+                  <?php echo $text_no; ?>
+                  <?php } ?>
+                </label>
               </div>
             </div>
             <div class="control-group">
@@ -299,11 +306,15 @@
               <div class="controls">
                 <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" />
                 <span class="help-block"><?php echo $help_category; ?></span>
-                <?php foreach ($product_categories as $product_category) { ?>
-                <label id="product-category<?php echo $product_category['category_id']; ?>" class="checkbox"><?php echo $product_category['name']; ?><img src="view/image/icon-delete.png" alt="" />
-                  <input type="hidden" name="product_category[]" value="<?php echo $product_category['category_id']; ?>" />
-                </label>
-                <?php } ?>
+                <div id="product-category" class="scrollbox">
+                  <?php $class = 'odd'; ?>
+                  <?php foreach ($product_categories as $product_category) { ?>
+                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                  <div id="product-category<?php echo $product_category['category_id']; ?>" class="checkbox"><?php echo $product_category['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                    <input type="hidden" name="product_category[]" value="<?php echo $product_category['category_id']; ?>" />
+                  </div>
+                  <?php } ?>
+                </div>
               </div>
             </div>
             <div class="control-group">

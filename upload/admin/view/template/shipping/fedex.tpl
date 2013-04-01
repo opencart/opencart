@@ -63,17 +63,24 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_test; ?></label>
           <div class="controls">
-            <?php if ($fedex_test) { ?>
-            <input type="radio" name="fedex_test" value="1" checked="checked" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="fedex_test" value="0" />
-            <?php echo $text_no; ?>
-            <?php } else { ?>
-            <input type="radio" name="fedex_test" value="1" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="fedex_test" value="0" checked="checked" />
-            <?php echo $text_no; ?>
-            <?php } ?>
+            <label class="radio inline">
+              <?php if ($fedex_test) { ?>
+              <input type="radio" name="fedex_test" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <?php } else { ?>
+              <input type="radio" name="fedex_test" value="1" />
+              <?php echo $text_yes; ?>
+              <?php } ?>
+            </label>
+            <label class="radio inline">
+              <?php if (!$fedex_test) { ?>
+              <input type="radio" name="fedex_test" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="fedex_test" value="0" />
+              <?php echo $text_no; ?>
+              <?php } ?>
+            </label>
           </div>
         </div>
         <div class="control-group">
@@ -186,33 +193,47 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_display_time; ?></label>
           <div class="controls">
-            <?php if ($fedex_display_time) { ?>
-            <input type="radio" name="fedex_display_time" value="1" checked="checked" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="fedex_display_time" value="0" />
-            <?php echo $text_no; ?>
-            <?php } else { ?>
-            <input type="radio" name="fedex_display_time" value="1" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="fedex_display_time" value="0" checked="checked" />
-            <?php echo $text_no; ?>
-            <?php } ?>
+            <label class="radio inline">
+              <?php if ($fedex_display_time) { ?>
+              <input type="radio" name="fedex_display_time" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <?php } else { ?>
+              <input type="radio" name="fedex_display_time" value="1" />
+              <?php echo $text_yes; ?>
+              <?php } ?>
+            </label>
+            <label class="radio inline">
+              <?php if (!$fedex_display_time) { ?>
+              <input type="radio" name="fedex_display_time" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="fedex_display_time" value="0" />
+              <?php echo $text_no; ?>
+              <?php } ?>
+            </label>
             <span class="help-block"><?php echo $help_display_time; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_display_weight; ?></label>
           <div class="controls">
-            <?php if ($fedex_display_weight) { ?>
-            <input type="radio" name="fedex_display_weight" value="1" checked="checked" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="fedex_display_weight" value="0" />
-            <?php echo $text_no; ?>
-            <?php } else { ?>
-            <input type="radio" name="fedex_display_weight" value="1" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="fedex_display_weight" value="0" checked="checked" />
-            <?php echo $text_no; ?>
-            <?php } ?>
+            <label class="radio inline">
+              <?php if ($fedex_display_weight) { ?>
+              <input type="radio" name="fedex_display_weight" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <?php } else { ?>
+              <input type="radio" name="fedex_display_weight" value="1" />
+              <?php echo $text_yes; ?>
+              <?php } ?>
+            </label>
+            <label class="radio inline">
+              <?php if (!$fedex_display_weight) { ?>
+              <input type="radio" name="fedex_display_weight" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="fedex_display_weight" value="0" />
+              <?php echo $text_no; ?>
+              <?php } ?>
+            </label>
             <span class="help-block"><?php echo $help_display_weight; ?></span> </div>
         </div>
         <div class="control-group">

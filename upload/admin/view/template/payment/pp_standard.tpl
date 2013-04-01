@@ -27,17 +27,24 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_test; ?></label>
           <div class="controls">
-            <?php if ($pp_standard_test) { ?>
-            <input type="radio" name="pp_standard_test" value="1" checked="checked" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="pp_standard_test" value="0" />
-            <?php echo $text_no; ?>
-            <?php } else { ?>
-            <input type="radio" name="pp_standard_test" value="1" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="pp_standard_test" value="0" checked="checked" />
-            <?php echo $text_no; ?>
-            <?php } ?>
+            <label class="radio inline">
+              <?php if ($pp_standard_test) { ?>
+              <input type="radio" name="pp_standard_test" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <?php } else { ?>
+              <input type="radio" name="pp_standard_test" value="1" />
+              <?php echo $text_yes; ?>
+              <?php } ?>
+            </label>
+            <label class="radio inline">
+              <?php if (!$pp_standard_test) { ?>
+              <input type="radio" name="pp_standard_test" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="pp_standard_test" value="0" />
+              <?php echo $text_no; ?>
+              <?php } ?>
+            </label>
           </div>
         </div>
         <div class="control-group">
@@ -69,14 +76,13 @@
               <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
               <?php } ?>
             </select>
-            <span class="help-block"><?php echo $help_debug; ?></span>
-          </div>
+            <span class="help-block"><?php echo $help_debug; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="pp_standard_total" value="<?php echo $pp_standard_total; ?>" placeholder="<?php echo $entry_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
-          </div>
+            <input type="text" name="pp_standard_total" value="<?php echo $pp_standard_total; ?>" placeholder="<?php echo $entry_total; ?>" />
+            <span class="help-block"><?php echo $help_total; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_canceled_reversal_status; ?></label>

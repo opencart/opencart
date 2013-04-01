@@ -44,17 +44,24 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_postcode_required; ?></label>
           <div class="controls">
-            <?php if ($postcode_required) { ?>
-            <input type="radio" name="postcode_required" value="1" checked="checked" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="postcode_required" value="0" />
-            <?php echo $text_no; ?>
-            <?php } else { ?>
-            <input type="radio" name="postcode_required" value="1" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="postcode_required" value="0" checked="checked" />
-            <?php echo $text_no; ?>
-            <?php } ?>
+            <label class="radio inline">
+              <?php if ($postcode_required) { ?>
+              <input type="radio" name="postcode_required" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <?php } else { ?>
+              <input type="radio" name="postcode_required" value="1" />
+              <?php echo $text_yes; ?>
+              <?php } ?>
+            </label>
+            <label class="radio inline">
+              <?php if (!$postcode_required) { ?>
+              <input type="radio" name="postcode_required" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="postcode_required" value="0" />
+              <?php echo $text_no; ?>
+              <?php } ?>
+            </label>
           </div>
         </div>
         <div class="control-group">

@@ -140,17 +140,26 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_test; ?></label>
           <div class="controls">
-            <?php if ($ups_test) { ?>
-            <input type="radio" name="ups_test" value="1" checked="checked" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="ups_test" value="0" />
-            <?php echo $text_no; ?>
-            <?php } else { ?>
-            <input type="radio" name="ups_test" value="1" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="ups_test" value="0" checked="checked" />
-            <?php echo $text_no; ?>
-            <?php } ?>
+            
+            
+            
+
+                <label class="radio inline">
+                <?php if ($ups_test) { ?>
+                <input type="radio" name="ups_test" value="1" checked="checked" /> <?php echo $text_yes; ?>
+                 <?php } else { ?>
+                <input type="radio" name="ups_test" value="1" /> <?php echo $text_yes; ?>
+                <?php } ?>
+                </label>
+                
+                <label class="radio inline">
+                <?php if (!$ups_test) { ?>
+                <input type="radio" name="ups_test" value="0" checked="checked" /> <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="ups_test" value="0" /> <?php echo $text_no; ?>
+                <?php } ?>
+                </label>            
+            
             <span class="help-block"><?php echo $help_test; ?></span> </div>
         </div>
         <div class="control-group">
@@ -630,33 +639,47 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_insurance; ?></label>
           <div class="controls">
-            <?php if ($ups_insurance) { ?>
-            <input type="radio" name="ups_insurance" value="1" checked="checked" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="ups_insurance" value="0" />
-            <?php echo $text_no; ?>
-            <?php } else { ?>
-            <input type="radio" name="ups_insurance" value="1" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="ups_insurance" value="0" checked="checked" />
-            <?php echo $text_no; ?>
-            <?php } ?>
+                       
+
+                <label class="radio inline">
+                <?php if ($ups_insurance) { ?>
+                <input type="radio" name="ups_insurance" value="1" checked="checked" /> <?php echo $text_yes; ?>
+                 <?php } else { ?>
+                <input type="radio" name="ups_insurance" value="1" /> <?php echo $text_yes; ?>
+                <?php } ?>
+                </label>
+                
+                <label class="radio inline">
+                <?php if (!$ups_insurance) { ?>
+                <input type="radio" name="ups_insurance" value="0" checked="checked" /> <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="ups_insurance" value="0" /> <?php echo $text_no; ?>
+                <?php } ?>
+                </label>            
+            
+            
             <span class="help-block"><?php echo $help_insurance; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_display_weight; ?></label>
           <div class="controls">
-            <?php if ($ups_display_weight) { ?>
-            <input type="radio" name="ups_display_weight" value="1" checked="checked" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="ups_display_weight" value="0" />
-            <?php echo $text_no; ?>
-            <?php } else { ?>
-            <input type="radio" name="ups_display_weight" value="1" />
-            <?php echo $text_yes; ?>
-            <input type="radio" name="ups_display_weight" value="0" checked="checked" />
-            <?php echo $text_no; ?>
-            <?php } ?>
+
+                <label class="radio inline">
+                <?php if ($ups_display_weight) { ?>
+                <input type="radio" name="ups_display_weight" value="1" checked="checked" /> <?php echo $text_yes; ?>
+                 <?php } else { ?>
+                <input type="radio" name="ups_display_weight" value="1" /> <?php echo $text_yes; ?>
+                <?php } ?>
+                </label>
+                
+                <label class="radio inline">
+                <?php if (!$ups_display_weight) { ?>
+                <input type="radio" name="ups_display_weight" value="0" checked="checked" /> <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="ups_display_weight" value="0" /> <?php echo $text_no; ?>
+                <?php } ?>
+                </label>            
+            
           </div>
         </div>
         <div class="control-group">

@@ -1,4 +1,5 @@
 <?php echo $header; ?>
+
 <div id="content">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -26,21 +27,16 @@
         </table>
       </form>
       <form action="<?php echo $backup; ?>" method="post" enctype="multipart/form-data" id="backup">
-        <table class="form">
-          <tr>
-            <td><?php echo $entry_backup; ?></td>
-            <td><div class="scrollbox" style="margin-bottom: 5px;">
-                <?php $class = 'odd'; ?>
-                <?php foreach ($tables as $table) { ?>
-                <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                <div class="<?php echo $class; ?>">
-                  <input type="checkbox" name="backup[]" value="<?php echo $table; ?>" checked="checked" />
-                  <?php echo $table; ?></div>
-                <?php } ?>
-              </div>
-              <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a></td>
-          </tr>
-        </table>
+        <div class="control-group">
+          <label class="control-label"><?php echo $entry_backup; ?></label>
+          <div class="controls">
+            <?php foreach ($tables as $table) { ?>
+            <label class="checkbox">
+              <input type="checkbox" name="backup[]" value="<?php echo $table; ?>" checked="checked" />
+              <?php echo $table; ?></label>
+            <?php } ?>
+            <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a> </div>
+        </div>
       </form>
     </div>
   </div>

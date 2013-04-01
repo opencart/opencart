@@ -27,30 +27,26 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_store; ?></label>
           <div class="controls">
-            <div class="scrollbox">
-              <?php $class = 'even'; ?>
-              <div class="<?php echo $class; ?>">
-                <?php if (in_array(0, $manufacturer_store)) { ?>
-                <input type="checkbox" name="manufacturer_store[]" value="0" checked="checked" />
-                <?php echo $text_default; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="manufacturer_store[]" value="0" />
-                <?php echo $text_default; ?>
-                <?php } ?>
-              </div>
-              <?php foreach ($stores as $store) { ?>
-              <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-              <div class="<?php echo $class; ?>">
-                <?php if (in_array($store['store_id'], $manufacturer_store)) { ?>
-                <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-                <?php echo $store['name']; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" />
-                <?php echo $store['name']; ?>
-                <?php } ?>
-              </div>
+            <label class="checkbox">
+              <?php if (in_array(0, $manufacturer_store)) { ?>
+              <input type="checkbox" name="manufacturer_store[]" value="0" checked="checked" />
+              <?php echo $text_default; ?>
+              <?php } else { ?>
+              <input type="checkbox" name="manufacturer_store[]" value="0" />
+              <?php echo $text_default; ?>
               <?php } ?>
-            </div>
+            </label>
+            <?php foreach ($stores as $store) { ?>
+            <label class="checkbox">
+              <?php if (in_array($store['store_id'], $manufacturer_store)) { ?>
+              <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
+              <?php echo $store['name']; ?>
+              <?php } else { ?>
+              <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" />
+              <?php echo $store['name']; ?>
+              <?php } ?>
+            </label>
+            <?php } ?>
           </div>
         </div>
         <div class="control-group">

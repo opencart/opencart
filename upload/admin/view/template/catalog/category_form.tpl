@@ -29,7 +29,7 @@
             <div class="tab-content">
               <?php foreach ($languages as $language) { ?>
               <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
-                <div class="control-group">
+                <div class="control-group require">
                   <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
                   <div class="controls">
                     <input type="text" name="category_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="input-xxlarge" />
@@ -72,8 +72,8 @@
               <label class="control-label" for="input-name"><?php echo $entry_filter; ?></label>
               <div class="controls">
                 <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" />
-                <span class="help-block"></span>
-                <div id="category-filter" class="scrollbox">
+                <span class="help-block"><?php echo $help_filter; ?></span>
+                <div id="category-filter">
                   <?php $class = 'odd'; ?>
                   <?php foreach ($category_filters as $category_filter) { ?>
                   <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
@@ -87,30 +87,26 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_store; ?></label>
               <div class="controls">
-                <div class="scrollbox">
-                  <?php $class = 'even'; ?>
-                  <div class="<?php echo $class; ?>">
-                    <?php if (in_array(0, $category_store)) { ?>
-                    <input type="checkbox" name="category_store[]" value="0" checked="checked" />
-                    <?php echo $text_default; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="category_store[]" value="0" />
-                    <?php echo $text_default; ?>
-                    <?php } ?>
-                  </div>
-                  <?php foreach ($stores as $store) { ?>
-                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div class="<?php echo $class; ?>">
-                    <?php if (in_array($store['store_id'], $category_store)) { ?>
-                    <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-                    <?php echo $store['name']; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" />
-                    <?php echo $store['name']; ?>
-                    <?php } ?>
-                  </div>
+                <label class="checkbox">
+                  <?php if (in_array(0, $category_store)) { ?>
+                  <input type="checkbox" name="category_store[]" value="0" checked="checked" />
+                  <?php echo $text_default; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="category_store[]" value="0" />
+                  <?php echo $text_default; ?>
                   <?php } ?>
-                </div>
+                </label>
+                <?php foreach ($stores as $store) { ?>
+                <label class="checkbox">
+                  <?php if (in_array($store['store_id'], $category_store)) { ?>
+                  <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
+                  <?php echo $store['name']; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" />
+                  <?php echo $store['name']; ?>
+                  <?php } ?>
+                </label>
+                <?php } ?>
               </div>
             </div>
             <div class="control-group">
@@ -131,11 +127,13 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_top; ?></label>
               <div class="controls">
-                <?php if ($top) { ?>
-                <input type="checkbox" name="top" value="1" checked="checked" />
-                <?php } else { ?>
-                <input type="checkbox" name="top" value="1" />
-                <?php } ?>
+                <label class="checkbox">
+                  <?php if ($top) { ?>
+                  <input type="checkbox" name="top" value="1" checked="checked" />
+                  <?php } else { ?>
+                  <input type="checkbox" name="top" value="1" />
+                  <?php } ?>
+                </label>
                 <span class="help-block"><?php echo $help_top; ?></span></div>
             </div>
             <div class="control-group">

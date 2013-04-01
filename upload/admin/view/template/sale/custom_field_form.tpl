@@ -96,45 +96,37 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_customer_group; ?></label>
           <div class="controls">
-            <div class="scrollbox">
-              <?php $customer_group_row = 0; ?>
-              <?php $class = 'odd'; ?>
-              <?php foreach ($customer_groups as $customer_group) { ?>
-              <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-              <div class="<?php echo $class; ?>">
-                <?php if (in_array($customer_group['customer_group_id'], $custom_field_customer_group)) { ?>
-                <input type="checkbox" name="custom_field_customer_group[<?php echo $customer_group_row; ?>][customer_group_id]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-                <?php echo $customer_group['name']; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="custom_field_customer_group[<?php echo $customer_group_row; ?>][customer_group_id]" value="<?php echo $customer_group['customer_group_id']; ?>" />
-                <?php echo $customer_group['name']; ?>
-                <?php } ?>
-              </div>
-              <?php $customer_group_row++; ?>
+            <?php $customer_group_row = 0; ?>
+            <?php foreach ($customer_groups as $customer_group) { ?>
+            <label class="checkbox">
+              <?php if (in_array($customer_group['customer_group_id'], $custom_field_customer_group)) { ?>
+              <input type="checkbox" name="custom_field_customer_group[<?php echo $customer_group_row; ?>][customer_group_id]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+              <?php echo $customer_group['name']; ?>
+              <?php } else { ?>
+              <input type="checkbox" name="custom_field_customer_group[<?php echo $customer_group_row; ?>][customer_group_id]" value="<?php echo $customer_group['customer_group_id']; ?>" />
+              <?php echo $customer_group['name']; ?>
               <?php } ?>
-            </div>
+            </label>
+            <?php $customer_group_row++; ?>
+            <?php } ?>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_required; ?></label>
           <div class="controls">
-            <div class="scrollbox">
-              <?php $customer_group_row = 0; ?>
-              <?php $class = 'odd'; ?>
-              <?php foreach ($customer_groups as $customer_group) { ?>
-              <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-              <div class="<?php echo $class; ?>">
-                <?php if (in_array($customer_group['customer_group_id'], $custom_field_required)) { ?>
-                <input type="checkbox" name="custom_field_customer_group[<?php echo $customer_group_row; ?>][required]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-                <?php echo $customer_group['name']; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="custom_field_customer_group[<?php echo $customer_group_row; ?>][required]" value="<?php echo $customer_group['customer_group_id']; ?>" />
-                <?php echo $customer_group['name']; ?>
-                <?php } ?>
-              </div>
-              <?php $customer_group_row++; ?>
+            <?php $customer_group_row = 0; ?>
+            <?php foreach ($customer_groups as $customer_group) { ?>
+            <label class="checkbox">
+              <?php if (in_array($customer_group['customer_group_id'], $custom_field_required)) { ?>
+              <input type="checkbox" name="custom_field_customer_group[<?php echo $customer_group_row; ?>][required]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+              <?php echo $customer_group['name']; ?>
+              <?php } else { ?>
+              <input type="checkbox" name="custom_field_customer_group[<?php echo $customer_group_row; ?>][required]" value="<?php echo $customer_group['customer_group_id']; ?>" />
+              <?php echo $customer_group['name']; ?>
               <?php } ?>
-            </div>
+            </label>
+            <?php $customer_group_row++; ?>
+            <?php } ?>
           </div>
         </div>
         <div class="control-group">
@@ -162,23 +154,6 @@
               <option value="shipping_address"><?php echo $text_shipping_address; ?></option>
               <?php } ?>
             </select>
-            <div class="scrollbox">
-              <?php $customer_group_row = 0; ?>
-              <?php $class = 'odd'; ?>
-              <?php foreach ($customer_groups as $customer_group) { ?>
-              <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-              <div class="<?php echo $class; ?>">
-                <?php if (in_array($customer_group['customer_group_id'], $custom_field_required)) { ?>
-                <input type="checkbox" name="custom_field_location[<?php echo $customer_group_row; ?>]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-                <?php echo $customer_group['name']; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="custom_field_location[<?php echo $customer_group_row; ?>]" value="<?php echo $customer_group['customer_group_id']; ?>" />
-                <?php echo $customer_group['name']; ?>
-                <?php } ?>
-              </div>
-              <?php $customer_group_row++; ?>
-              <?php } ?>
-            </div>
           </div>
         </div>
         <div class="control-group">

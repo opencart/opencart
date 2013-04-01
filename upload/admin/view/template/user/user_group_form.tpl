@@ -15,8 +15,8 @@
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
-        <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
           <div class="controls">
             <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" />
             <?php if ($error_name) { ?>
@@ -25,44 +25,36 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_access; ?></label>
+          <label class="control-label"><?php echo $entry_access; ?></label>
           <div class="controls">
-            <div class="scrollbox">
-              <?php $class = 'odd'; ?>
-              <?php foreach ($permissions as $permission) { ?>
-              <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-              <div class="<?php echo $class; ?>">
-                <?php if (in_array($permission, $access)) { ?>
-                <input type="checkbox" name="permission[access][]" value="<?php echo $permission; ?>" checked="checked" />
-                <?php echo $permission; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="permission[access][]" value="<?php echo $permission; ?>" />
-                <?php echo $permission; ?>
-                <?php } ?>
-              </div>
+            <?php foreach ($permissions as $permission) { ?>
+            <label class="checkbox">
+              <?php if (in_array($permission, $access)) { ?>
+              <input type="checkbox" name="permission[access][]" value="<?php echo $permission; ?>" checked="checked" />
+              <?php echo $permission; ?>
+              <?php } else { ?>
+              <input type="checkbox" name="permission[access][]" value="<?php echo $permission; ?>" />
+              <?php echo $permission; ?>
               <?php } ?>
-            </div>
-            <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a> </div>
+            </label>
+            <?php } ?>
+            <a onclick="$(this).parent().find('[type=\'checkbox\']').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find('[type=\'checkbox\']').attr('checked', false);"><?php echo $text_unselect_all; ?></a></div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_modify; ?></label>
+          <label class="control-label"><?php echo $entry_modify; ?></label>
           <div class="controls">
-            <div class="scrollbox">
-              <?php $class = 'odd'; ?>
-              <?php foreach ($permissions as $permission) { ?>
-              <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-              <div class="<?php echo $class; ?>">
-                <?php if (in_array($permission, $modify)) { ?>
-                <input type="checkbox" name="permission[modify][]" value="<?php echo $permission; ?>" checked="checked" />
-                <?php echo $permission; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="permission[modify][]" value="<?php echo $permission; ?>" />
-                <?php echo $permission; ?>
-                <?php } ?>
-              </div>
+            <?php foreach ($permissions as $permission) { ?>
+            <label class="checkbox">
+              <?php if (in_array($permission, $modify)) { ?>
+              <input type="checkbox" name="permission[modify][]" value="<?php echo $permission; ?>" checked="checked" />
+              <?php echo $permission; ?>
+              <?php } else { ?>
+              <input type="checkbox" name="permission[modify][]" value="<?php echo $permission; ?>" />
+              <?php echo $permission; ?>
               <?php } ?>
-            </div>
-            <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a> </div>
+            </label>
+            <?php } ?>
+            <a onclick="$(this).parent().find('[type=\'checkbox\']').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find('[type=\'checkbox\']').attr('checked', false);"><?php echo $text_unselect_all; ?></a></div>
         </div>
       </form>
     </div>

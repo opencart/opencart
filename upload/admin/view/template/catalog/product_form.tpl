@@ -299,15 +299,11 @@
               <div class="controls">
                 <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" />
                 <span class="help-block"><?php echo $help_category; ?></span>
-                <div id="product-category" class="scrollbox">
-                  <?php $class = 'odd'; ?>
-                  <?php foreach ($product_categories as $product_category) { ?>
-                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div id="product-category<?php echo $product_category['category_id']; ?>" class="<?php echo $class; ?>"><?php echo $product_category['name']; ?><img src="view/image/icon-delete.png" alt="" />
-                    <input type="hidden" name="product_category[]" value="<?php echo $product_category['category_id']; ?>" />
-                  </div>
-                  <?php } ?>
-                </div>
+                <?php foreach ($product_categories as $product_category) { ?>
+                <label id="product-category<?php echo $product_category['category_id']; ?>" class="checkbox"><?php echo $product_category['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                  <input type="hidden" name="product_category[]" value="<?php echo $product_category['category_id']; ?>" />
+                </label>
+                <?php } ?>
               </div>
             </div>
             <div class="control-group">
@@ -329,30 +325,26 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_store; ?></label>
               <div class="controls">
-                <div class="scrollbox">
-                  <?php $class = 'even'; ?>
-                  <div class="<?php echo $class; ?>">
-                    <?php if (in_array(0, $product_store)) { ?>
-                    <input type="checkbox" name="product_store[]" value="0" checked="checked" />
-                    <?php echo $text_default; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="product_store[]" value="0" />
-                    <?php echo $text_default; ?>
-                    <?php } ?>
-                  </div>
-                  <?php foreach ($stores as $store) { ?>
-                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div class="<?php echo $class; ?>">
-                    <?php if (in_array($store['store_id'], $product_store)) { ?>
-                    <input type="checkbox" name="product_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-                    <?php echo $store['name']; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="product_store[]" value="<?php echo $store['store_id']; ?>" />
-                    <?php echo $store['name']; ?>
-                    <?php } ?>
-                  </div>
+                <label class="checkbox">
+                  <?php if (in_array(0, $product_store)) { ?>
+                  <input type="checkbox" name="product_store[]" value="0" checked="checked" />
+                  <?php echo $text_default; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="product_store[]" value="0" />
+                  <?php echo $text_default; ?>
                   <?php } ?>
-                </div>
+                </label>
+                <?php foreach ($stores as $store) { ?>
+                <label class="checkbox">
+                  <?php if (in_array($store['store_id'], $product_store)) { ?>
+                  <input type="checkbox" name="product_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
+                  <?php echo $store['name']; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="product_store[]" value="<?php echo $store['store_id']; ?>" />
+                  <?php echo $store['name']; ?>
+                  <?php } ?>
+                </label>
+                <?php } ?>
               </div>
             </div>
             <div class="control-group">

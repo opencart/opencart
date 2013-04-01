@@ -443,21 +443,17 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_customer_group_display; ?></label>
               <div class="controls">
-                <div class="scrollbox">
-                  <?php $class = 'odd'; ?>
-                  <?php foreach ($customer_groups as $customer_group) { ?>
-                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div class="<?php echo $class; ?>">
-                    <?php if (in_array($customer_group['customer_group_id'], $config_customer_group_display)) { ?>
-                    <input type="checkbox" name="config_customer_group_display[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-                    <?php echo $customer_group['name']; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="config_customer_group_display[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
-                    <?php echo $customer_group['name']; ?>
-                    <?php } ?>
-                  </div>
+                <?php foreach ($customer_groups as $customer_group) { ?>
+                <label class="checkbox">
+                  <?php if (in_array($customer_group['customer_group_id'], $config_customer_group_display)) { ?>
+                  <input type="checkbox" name="config_customer_group_display[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+                  <?php echo $customer_group['name']; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="config_customer_group_display[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
+                  <?php echo $customer_group['name']; ?>
                   <?php } ?>
-                </div>
+                </label>
+                <?php } ?>
                 <span class="help-block"><?php echo $help_customer_group_display; ?></span>
                 <?php if ($error_customer_group_display) { ?>
                 <span class="error"><?php echo $error_customer_group_display; ?></span>

@@ -79,21 +79,17 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_service; ?></label>
           <div class="controls">
-            <div class="scrollbox">
-              <?php $class = 'odd'; ?>
-              <?php foreach ($services as $service) { ?>
-              <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-              <div class="<?php echo $class; ?>">
-                <?php if (in_array($service['value'], $fedex_service)) { ?>
-                <input type="checkbox" name="fedex_service[]" value="<?php echo $service['value']; ?>" checked="checked" />
-                <?php echo $service['text']; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="fedex_service[]" value="<?php echo $service['value']; ?>" />
-                <?php echo $service['text']; ?>
-                <?php } ?>
-              </div>
+            <?php foreach ($services as $service) { ?>
+            <label class="checkbox">
+              <?php if (in_array($service['value'], $fedex_service)) { ?>
+              <input type="checkbox" name="fedex_service[]" value="<?php echo $service['value']; ?>" checked="checked" />
+              <?php echo $service['text']; ?>
+              <?php } else { ?>
+              <input type="checkbox" name="fedex_service[]" value="<?php echo $service['value']; ?>" />
+              <?php echo $service['text']; ?>
               <?php } ?>
-            </div>
+            </label>
+            <?php } ?>
             <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a> </div>
         </div>
         <div class="control-group">
@@ -201,8 +197,7 @@
             <input type="radio" name="fedex_display_time" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?>
-            <span class="help-block"><?php echo $help_display_time; ?></span>
-          </div>
+            <span class="help-block"><?php echo $help_display_time; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_display_weight; ?></label>
@@ -218,8 +213,7 @@
             <input type="radio" name="fedex_display_weight" value="0" checked="checked" />
             <?php echo $text_no; ?>
             <?php } ?>
-            <span class="help-block"><?php echo $help_display_weight; ?></span>
-          </div>
+            <span class="help-block"><?php echo $help_display_weight; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_weight_class; ?></label>
@@ -232,8 +226,8 @@
               <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
               <?php } ?>
               <?php } ?>
-            </select> <span class="help-block"><?php echo $help_weight_class; ?></span>
-          </div>
+            </select>
+            <span class="help-block"><?php echo $help_weight_class; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_tax_class; ?></label>

@@ -172,472 +172,460 @@
           <div class="controls">
             <div id="service">
               <div id="US">
-                <div class="scrollbox">
-                  <div class="even">
-                    <?php if ($ups_us_01) { ?>
-                    <input type="checkbox" name="ups_us_01" value="1" checked="checked" />
-                    <?php echo $text_next_day_air; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_us_01" value="1" />
-                    <?php echo $text_next_day_air; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_us_02) { ?>
-                    <input type="checkbox" name="ups_us_02" value="1" checked="checked" />
-                    <?php echo $text_2nd_day_air; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_us_02" value="1" />
-                    <?php echo $text_2nd_day_air; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_us_03) { ?>
-                    <input type="checkbox" name="ups_us_03" value="1" checked="checked" />
-                    <?php echo $text_ground; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_us_03" value="1" />
-                    <?php echo $text_ground; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_us_07) { ?>
-                    <input type="checkbox" name="ups_us_07" value="1" checked="checked" />
-                    <?php echo $text_worldwide_express; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_us_07" value="1" />
-                    <?php echo $text_worldwide_express; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_us_08) { ?>
-                    <input type="checkbox" name="ups_us_08" value="1" checked="checked" />
-                    <?php echo $text_worldwide_expedited; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_us_08" value="1" />
-                    <?php echo $text_worldwide_expedited; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_us_11) { ?>
-                    <input type="checkbox" name="ups_us_11" value="1" checked="checked" />
-                    <?php echo $text_standard; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_us_11" value="1" />
-                    <?php echo $text_standard; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_us_12) { ?>
-                    <input type="checkbox" name="ups_us_12" value="1" checked="checked" />
-                    <?php echo $text_3_day_select; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_us_12" value="1" />
-                    <?php echo $text_3_day_select; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_us_13) { ?>
-                    <input type="checkbox" name="ups_us_13" value="1" checked="checked" />
-                    <?php echo $text_next_day_air_saver; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_us_13" value="1" />
-                    <?php echo $text_next_day_air_saver; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_us_14) { ?>
-                    <input type="checkbox" name="ups_us_14" value="1" checked="checked" />
-                    <?php echo $text_next_day_air_early_am; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_us_14" value="1" />
-                    <?php echo $text_next_day_air_early_am; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_us_54) { ?>
-                    <input type="checkbox" name="ups_us_54" value="1" checked="checked" />
-                    <?php echo $text_worldwide_express_plus; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_us_54" value="1" />
-                    <?php echo $text_worldwide_express_plus; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_us_59) { ?>
-                    <input type="checkbox" name="ups_us_59" value="1" checked="checked" />
-                    <?php echo $text_2nd_day_air_am; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_us_59" value="1" />
-                    <?php echo $text_2nd_day_air_am; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_us_65) { ?>
-                    <input type="checkbox" name="ups_us_65" value="1" checked="checked" />
-                    <?php echo $text_saver; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_us_65" value="1" />
-                    <?php echo $text_saver; ?>
-                    <?php } ?>
-                  </div>
-                </div>
+                <label class="checkbox">
+                  <?php if ($ups_us_01) { ?>
+                  <input type="checkbox" name="ups_us_01" value="1" checked="checked" />
+                  <?php echo $text_next_day_air; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_us_01" value="1" />
+                  <?php echo $text_next_day_air; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_us_02) { ?>
+                  <input type="checkbox" name="ups_us_02" value="1" checked="checked" />
+                  <?php echo $text_2nd_day_air; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_us_02" value="1" />
+                  <?php echo $text_2nd_day_air; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_us_03) { ?>
+                  <input type="checkbox" name="ups_us_03" value="1" checked="checked" />
+                  <?php echo $text_ground; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_us_03" value="1" />
+                  <?php echo $text_ground; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_us_07) { ?>
+                  <input type="checkbox" name="ups_us_07" value="1" checked="checked" />
+                  <?php echo $text_worldwide_express; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_us_07" value="1" />
+                  <?php echo $text_worldwide_express; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_us_08) { ?>
+                  <input type="checkbox" name="ups_us_08" value="1" checked="checked" />
+                  <?php echo $text_worldwide_expedited; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_us_08" value="1" />
+                  <?php echo $text_worldwide_expedited; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_us_11) { ?>
+                  <input type="checkbox" name="ups_us_11" value="1" checked="checked" />
+                  <?php echo $text_standard; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_us_11" value="1" />
+                  <?php echo $text_standard; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_us_12) { ?>
+                  <input type="checkbox" name="ups_us_12" value="1" checked="checked" />
+                  <?php echo $text_3_day_select; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_us_12" value="1" />
+                  <?php echo $text_3_day_select; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_us_13) { ?>
+                  <input type="checkbox" name="ups_us_13" value="1" checked="checked" />
+                  <?php echo $text_next_day_air_saver; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_us_13" value="1" />
+                  <?php echo $text_next_day_air_saver; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_us_14) { ?>
+                  <input type="checkbox" name="ups_us_14" value="1" checked="checked" />
+                  <?php echo $text_next_day_air_early_am; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_us_14" value="1" />
+                  <?php echo $text_next_day_air_early_am; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_us_54) { ?>
+                  <input type="checkbox" name="ups_us_54" value="1" checked="checked" />
+                  <?php echo $text_worldwide_express_plus; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_us_54" value="1" />
+                  <?php echo $text_worldwide_express_plus; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_us_59) { ?>
+                  <input type="checkbox" name="ups_us_59" value="1" checked="checked" />
+                  <?php echo $text_2nd_day_air_am; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_us_59" value="1" />
+                  <?php echo $text_2nd_day_air_am; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_us_65) { ?>
+                  <input type="checkbox" name="ups_us_65" value="1" checked="checked" />
+                  <?php echo $text_saver; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_us_65" value="1" />
+                  <?php echo $text_saver; ?>
+                  <?php } ?>
+                </label>
               </div>
               <div id="PR">
-                <div class="scrollbox">
-                  <div class="even">
-                    <?php if ($ups_pr_01) { ?>
-                    <input type="checkbox" name="ups_pr_01" value="1" checked="checked" />
-                    <?php echo $text_next_day_air; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_pr_01" value="1" />
-                    <?php echo $text_next_day_air; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_pr_02) { ?>
-                    <input type="checkbox" name="ups_pr_02" value="1" checked="checked" />
-                    <?php echo $text_2nd_day_air; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_pr_02" value="1" />
-                    <?php echo $text_2nd_day_air; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_pr_03) { ?>
-                    <input type="checkbox" name="ups_pr_03" value="1" checked="checked" />
-                    <?php echo $text_ground; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_pr_03" value="1" />
-                    <?php echo $text_ground; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_pr_07) { ?>
-                    <input type="checkbox" name="ups_pr_07" value="1" checked="checked" />
-                    <?php echo $text_worldwide_express; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_pr_07" value="1" />
-                    <?php echo $text_worldwide_express; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_pr_08) { ?>
-                    <input type="checkbox" name="ups_pr_08" value="1" checked="checked" />
-                    <?php echo $text_worldwide_expedited; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_pr_08" value="1" />
-                    <?php echo $text_worldwide_expedited; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_pr_14) { ?>
-                    <input type="checkbox" name="ups_pr_14" value="1" checked="checked" />
-                    <?php echo $text_next_day_air_early_am; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_pr_14" value="1" />
-                    <?php echo $text_next_day_air_early_am; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_pr_54) { ?>
-                    <input type="checkbox" name="ups_pr_54" value="1" checked="checked" />
-                    <?php echo $text_worldwide_express_plus; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_pr_54" value="1" />
-                    <?php echo $text_worldwide_express_plus; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_pr_65) { ?>
-                    <input type="checkbox" name="ups_pr_65" value="1" checked="checked" />
-                    <?php echo $text_saver; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_pr_65" value="1" />
-                    <?php echo $text_saver; ?>
-                    <?php } ?>
-                  </div>
-                </div>
+                <label class="checkbox">
+                  <?php if ($ups_pr_01) { ?>
+                  <input type="checkbox" name="ups_pr_01" value="1" checked="checked" />
+                  <?php echo $text_next_day_air; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_pr_01" value="1" />
+                  <?php echo $text_next_day_air; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_pr_02) { ?>
+                  <input type="checkbox" name="ups_pr_02" value="1" checked="checked" />
+                  <?php echo $text_2nd_day_air; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_pr_02" value="1" />
+                  <?php echo $text_2nd_day_air; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_pr_03) { ?>
+                  <input type="checkbox" name="ups_pr_03" value="1" checked="checked" />
+                  <?php echo $text_ground; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_pr_03" value="1" />
+                  <?php echo $text_ground; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_pr_07) { ?>
+                  <input type="checkbox" name="ups_pr_07" value="1" checked="checked" />
+                  <?php echo $text_worldwide_express; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_pr_07" value="1" />
+                  <?php echo $text_worldwide_express; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_pr_08) { ?>
+                  <input type="checkbox" name="ups_pr_08" value="1" checked="checked" />
+                  <?php echo $text_worldwide_expedited; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_pr_08" value="1" />
+                  <?php echo $text_worldwide_expedited; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_pr_14) { ?>
+                  <input type="checkbox" name="ups_pr_14" value="1" checked="checked" />
+                  <?php echo $text_next_day_air_early_am; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_pr_14" value="1" />
+                  <?php echo $text_next_day_air_early_am; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_pr_54) { ?>
+                  <input type="checkbox" name="ups_pr_54" value="1" checked="checked" />
+                  <?php echo $text_worldwide_express_plus; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_pr_54" value="1" />
+                  <?php echo $text_worldwide_express_plus; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_pr_65) { ?>
+                  <input type="checkbox" name="ups_pr_65" value="1" checked="checked" />
+                  <?php echo $text_saver; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_pr_65" value="1" />
+                  <?php echo $text_saver; ?>
+                  <?php } ?>
+                </label>
               </div>
               <div id="CA">
-                <div class="scrollbox">
-                  <div class="even">
-                    <?php if ($ups_ca_01) { ?>
-                    <input type="checkbox" name="ups_ca_01" value="1" checked="checked" />
-                    <?php echo $text_express; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_ca_01" value="1" />
-                    <?php echo $text_express; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_ca_02) { ?>
-                    <input type="checkbox" name="ups_ca_02" value="1" checked="checked" />
-                    <?php echo $text_expedited; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_ca_02" value="1" />
-                    <?php echo $text_expedited; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_ca_07) { ?>
-                    <input type="checkbox" name="ups_ca_07" value="1" checked="checked" />
-                    <?php echo $text_worldwide_express; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_ca_07" value="1" />
-                    <?php echo $text_worldwide_express; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_ca_08) { ?>
-                    <input type="checkbox" name="ups_ca_08" value="1" checked="checked" />
-                    <?php echo $text_worldwide_expedited; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_ca_08" value="1" />
-                    <?php echo $text_worldwide_expedited; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_ca_11) { ?>
-                    <input type="checkbox" name="ups_ca_11" value="1" checked="checked" />
-                    <?php echo $text_standard; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_ca_11" value="1" />
-                    <?php echo $text_standard; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_ca_12) { ?>
-                    <input type="checkbox" name="ups_ca_12" value="1" checked="checked" />
-                    <?php echo $text_3_day_select; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_ca_12" value="1" />
-                    <?php echo $text_3_day_select; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_ca_13) { ?>
-                    <input type="checkbox" name="ups_ca_13" value="1" checked="checked" />
-                    <?php echo $text_saver; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_ca_13" value="1" />
-                    <?php echo $text_saver; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_ca_14) { ?>
-                    <input type="checkbox" name="ups_ca_14" value="1" checked="checked" />
-                    <?php echo $text_express_early_am; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_ca_14" value="1" />
-                    <?php echo $text_express_early_am; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_ca_54) { ?>
-                    <input type="checkbox" name="ups_ca_54" value="1" checked="checked" />
-                    <?php echo $text_worldwide_express_plus; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_ca_54" value="1" />
-                    <?php echo $text_worldwide_express_plus; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_ca_65) { ?>
-                    <input type="checkbox" name="ups_ca_65" value="1" checked="checked" />
-                    <?php echo $text_saver; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_ca_65" value="1" />
-                    <?php echo $text_saver; ?>
-                    <?php } ?>
-                  </div>
-                </div>
+                <label class="checkbox">
+                  <?php if ($ups_ca_01) { ?>
+                  <input type="checkbox" name="ups_ca_01" value="1" checked="checked" />
+                  <?php echo $text_express; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_ca_01" value="1" />
+                  <?php echo $text_express; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_ca_02) { ?>
+                  <input type="checkbox" name="ups_ca_02" value="1" checked="checked" />
+                  <?php echo $text_expedited; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_ca_02" value="1" />
+                  <?php echo $text_expedited; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_ca_07) { ?>
+                  <input type="checkbox" name="ups_ca_07" value="1" checked="checked" />
+                  <?php echo $text_worldwide_express; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_ca_07" value="1" />
+                  <?php echo $text_worldwide_express; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_ca_08) { ?>
+                  <input type="checkbox" name="ups_ca_08" value="1" checked="checked" />
+                  <?php echo $text_worldwide_expedited; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_ca_08" value="1" />
+                  <?php echo $text_worldwide_expedited; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_ca_11) { ?>
+                  <input type="checkbox" name="ups_ca_11" value="1" checked="checked" />
+                  <?php echo $text_standard; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_ca_11" value="1" />
+                  <?php echo $text_standard; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_ca_12) { ?>
+                  <input type="checkbox" name="ups_ca_12" value="1" checked="checked" />
+                  <?php echo $text_3_day_select; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_ca_12" value="1" />
+                  <?php echo $text_3_day_select; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_ca_13) { ?>
+                  <input type="checkbox" name="ups_ca_13" value="1" checked="checked" />
+                  <?php echo $text_saver; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_ca_13" value="1" />
+                  <?php echo $text_saver; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_ca_14) { ?>
+                  <input type="checkbox" name="ups_ca_14" value="1" checked="checked" />
+                  <?php echo $text_express_early_am; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_ca_14" value="1" />
+                  <?php echo $text_express_early_am; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_ca_54) { ?>
+                  <input type="checkbox" name="ups_ca_54" value="1" checked="checked" />
+                  <?php echo $text_worldwide_express_plus; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_ca_54" value="1" />
+                  <?php echo $text_worldwide_express_plus; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_ca_65) { ?>
+                  <input type="checkbox" name="ups_ca_65" value="1" checked="checked" />
+                  <?php echo $text_saver; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_ca_65" value="1" />
+                  <?php echo $text_saver; ?>
+                  <?php } ?>
+                </label>
               </div>
               <div id="MX">
-                <div class="scrollbox">
-                  <div class="even">
-                    <?php if ($ups_mx_07) { ?>
-                    <input type="checkbox" name="ups_mx_07" value="1" checked="checked" />
-                    <?php echo $text_worldwide_express; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_mx_07" value="1" />
-                    <?php echo $text_worldwide_express; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_mx_08) { ?>
-                    <input type="checkbox" name="ups_mx_08" value="1" checked="checked" />
-                    <?php echo $text_worldwide_expedited; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_mx_08" value="1" />
-                    <?php echo $text_worldwide_expedited; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_mx_54) { ?>
-                    <input type="checkbox" name="ups_mx_54" value="1" checked="checked" />
-                    <?php echo $text_worldwide_express_plus; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_mx_54" value="1" />
-                    <?php echo $text_worldwide_express_plus; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_mx_65) { ?>
-                    <input type="checkbox" name="ups_mx_65" value="1" checked="checked" />
-                    <?php echo $text_saver; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_mx_65" value="1" />
-                    <?php echo $text_saver; ?>
-                    <?php } ?>
-                  </div>
-                </div>
+                <label class="checkbox">
+                  <?php if ($ups_mx_07) { ?>
+                  <input type="checkbox" name="ups_mx_07" value="1" checked="checked" />
+                  <?php echo $text_worldwide_express; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_mx_07" value="1" />
+                  <?php echo $text_worldwide_express; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_mx_08) { ?>
+                  <input type="checkbox" name="ups_mx_08" value="1" checked="checked" />
+                  <?php echo $text_worldwide_expedited; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_mx_08" value="1" />
+                  <?php echo $text_worldwide_expedited; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_mx_54) { ?>
+                  <input type="checkbox" name="ups_mx_54" value="1" checked="checked" />
+                  <?php echo $text_worldwide_express_plus; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_mx_54" value="1" />
+                  <?php echo $text_worldwide_express_plus; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_mx_65) { ?>
+                  <input type="checkbox" name="ups_mx_65" value="1" checked="checked" />
+                  <?php echo $text_saver; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_mx_65" value="1" />
+                  <?php echo $text_saver; ?>
+                  <?php } ?>
+                </label>
               </div>
               <div id="EU">
-                <div class="scrollbox">
-                  <div class="even">
-                    <?php if ($ups_eu_07) { ?>
-                    <input type="checkbox" name="ups_eu_07" value="1" checked="checked" />
-                    <?php echo $text_express; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_eu_07" value="1" />
-                    <?php echo $text_express; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_eu_08) { ?>
-                    <input type="checkbox" name="ups_eu_08" value="1" checked="checked" />
-                    <?php echo $text_expedited; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_eu_08" value="1" />
-                    <?php echo $text_expedited; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_eu_11) { ?>
-                    <input type="checkbox" name="ups_eu_11" value="1" checked="checked" />
-                    <?php echo $text_standard; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_eu_11" value="1" />
-                    <?php echo $text_standard; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_eu_54) { ?>
-                    <input type="checkbox" name="ups_eu_54" value="1" checked="checked" />
-                    <?php echo $text_worldwide_express_plus; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_eu_54" value="1" />
-                    <?php echo $text_worldwide_express_plus; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_eu_65) { ?>
-                    <input type="checkbox" name="ups_eu_65" value="1" checked="checked" />
-                    <?php echo $text_saver; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_eu_65" value="1" />
-                    <?php echo $text_saver; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_eu_82) { ?>
-                    <input type="checkbox" name="ups_eu_82" value="1" checked="checked" />
-                    <?php echo $text_today_standard; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_eu_82" value="1" />
-                    <?php echo $text_today_standard; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_eu_83) { ?>
-                    <input type="checkbox" name="ups_eu_83" value="1" checked="checked" />
-                    <?php echo $text_today_dedicated_courier; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_eu_83" value="1" />
-                    <?php echo $text_today_dedicated_courier; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_eu_84) { ?>
-                    <input type="checkbox" name="ups_eu_84" value="1" checked="checked" />
-                    <?php echo $text_today_intercity; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_eu_84" value="1" />
-                    <?php echo $text_today_intercity; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_eu_85) { ?>
-                    <input type="checkbox" name="ups_eu_85" value="1" checked="checked" />
-                    <?php echo $text_today_express; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_eu_85" value="1" />
-                    <?php echo $text_today_express; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_eu_86) { ?>
-                    <input type="checkbox" name="ups_eu_86" value="1" checked="checked" />
-                    <?php echo $text_today_express_saver; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_eu_86" value="1" />
-                    <?php echo $text_today_express_saver; ?>
-                    <?php } ?>
-                  </div>
-                </div>
+                <label class="checkbox">
+                  <?php if ($ups_eu_07) { ?>
+                  <input type="checkbox" name="ups_eu_07" value="1" checked="checked" />
+                  <?php echo $text_express; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_eu_07" value="1" />
+                  <?php echo $text_express; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_eu_08) { ?>
+                  <input type="checkbox" name="ups_eu_08" value="1" checked="checked" />
+                  <?php echo $text_expedited; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_eu_08" value="1" />
+                  <?php echo $text_expedited; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_eu_11) { ?>
+                  <input type="checkbox" name="ups_eu_11" value="1" checked="checked" />
+                  <?php echo $text_standard; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_eu_11" value="1" />
+                  <?php echo $text_standard; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_eu_54) { ?>
+                  <input type="checkbox" name="ups_eu_54" value="1" checked="checked" />
+                  <?php echo $text_worldwide_express_plus; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_eu_54" value="1" />
+                  <?php echo $text_worldwide_express_plus; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_eu_65) { ?>
+                  <input type="checkbox" name="ups_eu_65" value="1" checked="checked" />
+                  <?php echo $text_saver; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_eu_65" value="1" />
+                  <?php echo $text_saver; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_eu_82) { ?>
+                  <input type="checkbox" name="ups_eu_82" value="1" checked="checked" />
+                  <?php echo $text_today_standard; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_eu_82" value="1" />
+                  <?php echo $text_today_standard; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_eu_83) { ?>
+                  <input type="checkbox" name="ups_eu_83" value="1" checked="checked" />
+                  <?php echo $text_today_dedicated_courier; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_eu_83" value="1" />
+                  <?php echo $text_today_dedicated_courier; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_eu_84) { ?>
+                  <input type="checkbox" name="ups_eu_84" value="1" checked="checked" />
+                  <?php echo $text_today_intercity; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_eu_84" value="1" />
+                  <?php echo $text_today_intercity; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_eu_85) { ?>
+                  <input type="checkbox" name="ups_eu_85" value="1" checked="checked" />
+                  <?php echo $text_today_express; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_eu_85" value="1" />
+                  <?php echo $text_today_express; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_eu_86) { ?>
+                  <input type="checkbox" name="ups_eu_86" value="1" checked="checked" />
+                  <?php echo $text_today_express_saver; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_eu_86" value="1" />
+                  <?php echo $text_today_express_saver; ?>
+                  <?php } ?>
+                </label>
               </div>
               <div id="other">
-                <div class="scrollbox">
-                  <div class="even">
-                    <?php if ($ups_other_07) { ?>
-                    <input type="checkbox" name="ups_other_07" value="1" checked="checked" />
-                    <?php echo $text_express; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_other_07" value="1" />
-                    <?php echo $text_express; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_other_08) { ?>
-                    <input type="checkbox" name="ups_other_08" value="1" checked="checked" />
-                    <?php echo $text_expedited; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_other_08" value="1" />
-                    <?php echo $text_expedited; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_other_11) { ?>
-                    <input type="checkbox" name="ups_other_11" value="1" checked="checked" />
-                    <?php echo $text_standard; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_other_11" value="1" />
-                    <?php echo $text_standard; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="odd">
-                    <?php if ($ups_other_54) { ?>
-                    <input type="checkbox" name="ups_other_54" value="1" checked="checked" />
-                    <?php echo $text_worldwide_express_plus; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_other_54" value="1" />
-                    <?php echo $text_worldwide_express_plus; ?>
-                    <?php } ?>
-                  </div>
-                  <div class="even">
-                    <?php if ($ups_other_65) { ?>
-                    <input type="checkbox" name="ups_other_65" value="1" checked="checked" />
-                    <?php echo $text_saver; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="ups_other_65" value="1" />
-                    <?php echo $text_saver; ?>
-                    <?php } ?>
-                  </div>
-                </div>
+                <label class="checkbox">
+                  <?php if ($ups_other_07) { ?>
+                  <input type="checkbox" name="ups_other_07" value="1" checked="checked" />
+                  <?php echo $text_express; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_other_07" value="1" />
+                  <?php echo $text_express; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_other_08) { ?>
+                  <input type="checkbox" name="ups_other_08" value="1" checked="checked" />
+                  <?php echo $text_expedited; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_other_08" value="1" />
+                  <?php echo $text_expedited; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_other_11) { ?>
+                  <input type="checkbox" name="ups_other_11" value="1" checked="checked" />
+                  <?php echo $text_standard; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_other_11" value="1" />
+                  <?php echo $text_standard; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_other_54) { ?>
+                  <input type="checkbox" name="ups_other_54" value="1" checked="checked" />
+                  <?php echo $text_worldwide_express_plus; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_other_54" value="1" />
+                  <?php echo $text_worldwide_express_plus; ?>
+                  <?php } ?>
+                </label>
+                <label class="checkbox">
+                  <?php if ($ups_other_65) { ?>
+                  <input type="checkbox" name="ups_other_65" value="1" checked="checked" />
+                  <?php echo $text_saver; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="ups_other_65" value="1" />
+                  <?php echo $text_saver; ?>
+                  <?php } ?>
+                </label>
               </div>
-              <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a> <span class="help-block"><?php echo $help_service; ?></span></div>
-          </div>
+            </div>
+            <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a> <span class="help-block"><?php echo $help_service; ?></span> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_insurance; ?></label>

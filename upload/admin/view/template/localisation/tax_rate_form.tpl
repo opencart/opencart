@@ -53,21 +53,17 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_customer_group; ?></label>
           <div class="controls">
-            <div class="scrollbox">
-              <?php $class = 'even'; ?>
-              <?php foreach ($customer_groups as $customer_group) { ?>
-              <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-              <div class="<?php echo $class; ?>">
-                <?php if (in_array($customer_group['customer_group_id'], $tax_rate_customer_group)) { ?>
-                <input type="checkbox" name="tax_rate_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-                <?php echo $customer_group['name']; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="tax_rate_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
-                <?php echo $customer_group['name']; ?>
-                <?php } ?>
-              </div>
+            <?php foreach ($customer_groups as $customer_group) { ?>
+            <label class="checkbox">
+              <?php if (in_array($customer_group['customer_group_id'], $tax_rate_customer_group)) { ?>
+              <input type="checkbox" name="tax_rate_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+              <?php echo $customer_group['name']; ?>
+              <?php } else { ?>
+              <input type="checkbox" name="tax_rate_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
+              <?php echo $customer_group['name']; ?>
               <?php } ?>
-            </div>
+            </label>
+            <?php } ?>
           </div>
         </div>
         <div class="control-group">

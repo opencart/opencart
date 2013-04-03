@@ -37,18 +37,18 @@
               <?php foreach ($languages as $language) { ?>
               <div class="tab-pane" id="tab-module<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>">
                 <div class="control-group">
-                  <label class="control-label" for="input-name"><?php echo $entry_description; ?></label>
+                  <label class="control-label" for="input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
                   <div class="controls">
-                    <textarea name="welcome_module[<?php echo $module_row; ?>][description][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_description; ?>" id="description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>"><?php echo isset($module['description'][$language['language_id']]) ? $module['description'][$language['language_id']] : ''; ?></textarea>
+                    <textarea name="welcome_module[<?php echo $module_row; ?>][description][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>"><?php echo isset($module['description'][$language['language_id']]) ? $module['description'][$language['language_id']] : ''; ?></textarea>
                   </div>
                 </div>
               </div>
               <?php } ?>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_layout; ?></label>
+              <label class="control-label" for="input-layout<?php echo $module_row; ?>"><?php echo $entry_layout; ?></label>
               <div class="controls">
-                <select name="welcome_module[<?php echo $module_row; ?>][layout_id]">
+                <select name="welcome_module[<?php echo $module_row; ?>][layout_id]" id="input-layout<?php echo $module_row; ?>">
                   <?php foreach ($layouts as $layout) { ?>
                   <?php if ($layout['layout_id'] == $module['layout_id']) { ?>
                   <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
@@ -60,9 +60,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_position; ?></label>
+              <label class="control-label" for="input-position<?php echo $module_row; ?>"><?php echo $entry_position; ?></label>
               <div class="controls">
-                <select name="welcome_module[<?php echo $module_row; ?>][position]">
+                <select name="welcome_module[<?php echo $module_row; ?>][position]" id="input-position<?php echo $module_row; ?>">
                   <?php if ($module['position'] == 'content_top') { ?>
                   <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
                   <?php } else { ?>
@@ -87,9 +87,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+              <label class="control-label" for="input-status<?php echo $module_row; ?>"><?php echo $entry_status; ?></label>
               <div class="controls">
-                <select name="welcome_module[<?php echo $module_row; ?>][status]">
+                <select name="welcome_module[<?php echo $module_row; ?>][status]" id="input-status<?php echo $module_row; ?>">
                   <?php if ($module['status']) { ?>
                   <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                   <option value="0"><?php echo $text_disabled; ?></option>
@@ -101,9 +101,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+              <label class="control-label" for="input-sort-order<?php echo $module_row; ?>"><?php echo $entry_sort_order; ?></label>
               <div class="controls">
-                <input type="text" name="welcome_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
+                <input type="text" name="welcome_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order<?php echo $module_row; ?>" class="input-mini" />
               </div>
             </div>
           </div>
@@ -119,7 +119,7 @@
 <?php $module_row = 1; ?>
 <?php foreach ($modules as $module) { ?>
 <?php foreach ($languages as $language) { ?>
-CKEDITOR.replace('description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>', {
+CKEDITOR.replace('input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>', {
 	filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 	filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 	filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',

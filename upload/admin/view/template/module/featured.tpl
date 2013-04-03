@@ -15,9 +15,9 @@
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_product; ?></label>
+          <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
           <div class="controls">
-            <input type="text" name="product" value="" />
+            <input type="text" name="product" value="" id="input-product" />
             <span class="help-block"><?php echo $help_product; ?></span>
             <div id="featured-product" class="scrollbox">
               <?php $class = 'odd'; ?>

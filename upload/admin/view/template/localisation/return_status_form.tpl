@@ -16,7 +16,7 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
+          <div class="control-label"><span class="required">*</span> <?php echo $entry_name; ?></div>
           <div class="controls">
             <?php foreach ($languages as $language) { ?>
             <input type="text" name="return_status[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($return_status[$language['language_id']]) ? $return_status[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />

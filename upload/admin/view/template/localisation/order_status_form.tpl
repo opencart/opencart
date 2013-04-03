@@ -15,7 +15,7 @@
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
+          <div class="control-label"><span class="required">*</span> <?php echo $entry_name; ?></div>
           <div class="controls">
             <?php foreach ($languages as $language) { ?>
             <input type="text" name="order_status[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($order_status[$language['language_id']]) ? $order_status[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />

@@ -14,13 +14,13 @@
     </div>
     <div class="box-content">
       <div class="control-group">
-        <label class="control-label" for="input-name"><?php echo $entry_upload; ?></label>
+        <label class="control-label" for="button-upload"><?php echo $entry_upload; ?></label>
         <div class="controls">
           <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
           <span class="help-block"><?php echo $help_upload; ?></span></div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="input-name"><?php echo $entry_progress; ?></label>
+        <div class="control-label"><?php echo $entry_progress; ?></div>
         <div class="controls">
           <div id="progress" style="border: 1px solid #CCC; width: 100%;">
             <div style="width: 0%; height: 20px; margin: 2px; background: #F00;"></div>

@@ -15,18 +15,18 @@
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_title; ?></label>
+          <label class="control-label" for="input-title"><span class="required">*</span> <?php echo $entry_title; ?></label>
           <div class="controls">
-            <input type="text" name="title" value="<?php echo $title; ?>" placeholder="<?php echo $entry_title; ?>" />
+            <input type="text" name="title" value="<?php echo $title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" />
             <?php if ($error_title) { ?>
             <span class="error"><?php echo $error_title; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_code; ?></label>
+          <label class="control-label" for="input-code"><span class="required">*</span> <?php echo $entry_code; ?></label>
           <div class="controls">
-            <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" />
+            <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
             <span class="help-block"><?php echo $help_code; ?></span>
             <?php if ($error_code) { ?>
             <span class="error"><?php echo $error_code; ?></span>
@@ -34,33 +34,33 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_symbol_left; ?></label>
+          <label class="control-label" for="input-symbol-left"><?php echo $entry_symbol_left; ?></label>
           <div class="controls">
-            <input type="text" name="symbol_left" value="<?php echo $symbol_left; ?>" placeholder="<?php echo $entry_symbol_left; ?>" />
+            <input type="text" name="symbol_left" value="<?php echo $symbol_left; ?>" placeholder="<?php echo $entry_symbol_left; ?>" id="input-symbol-left" />
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_symbol_right; ?></label>
+          <label class="control-label" for="input-symbol-right"><?php echo $entry_symbol_right; ?></label>
           <div class="controls">
-            <input type="text" name="symbol_right" value="<?php echo $symbol_right; ?>" placeholder="<?php echo $entry_symbol_right; ?>" />
+            <input type="text" name="symbol_right" value="<?php echo $symbol_right; ?>" placeholder="<?php echo $entry_symbol_right; ?>" id="input-symbol-right" />
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_decimal_place; ?></label>
+          <label class="control-label" for="input-decimal-place"><?php echo $entry_decimal_place; ?></label>
           <div class="controls">
-            <input type="text" name="decimal_place" value="<?php echo $decimal_place; ?>" placeholder="<?php echo $entry_decimal_place; ?>" />
+            <input type="text" name="decimal_place" value="<?php echo $decimal_place; ?>" placeholder="<?php echo $entry_decimal_place; ?>" id="input-decimal-place" />
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_value; ?></label>
+          <label class="control-label" for="input-value"><?php echo $entry_value; ?></label>
           <div class="controls">
-            <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" />
+            <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" />
             <span class="help-block"><?php echo $help_value; ?></span></div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+          <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="controls">
-            <select name="status">
+            <select name="status" id="input-status">
               <?php if ($status) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
               <option value="0"><?php echo $text_disabled; ?></option>

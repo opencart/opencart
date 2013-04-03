@@ -15,18 +15,18 @@
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_title; ?></label>
+          <label class="control-label" for="input-title"><span class="required">*</span> <?php echo $entry_title; ?></label>
           <div class="controls">
-            <input type="text" name="title" value="<?php echo $title; ?>" placeholder="<?php echo $entry_title; ?>" />
+            <input type="text" name="title" value="<?php echo $title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" />
             <?php if ($error_title) { ?>
             <span class="error"><?php echo $error_title; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_description; ?></label>
+          <label class="control-label" for="input-description"><span class="required">*</span> <?php echo $entry_description; ?></label>
           <div class="controls">
-            <input type="text" name="description" value="<?php echo $description; ?>" placeholder="<?php echo $entry_description; ?>" />
+            <input type="text" name="description" value="<?php echo $description; ?>" placeholder="<?php echo $entry_description; ?>" id="input-description" />
             <?php if ($error_description) { ?>
             <br />
             <span class="error"><?php echo $error_description; ?></span>

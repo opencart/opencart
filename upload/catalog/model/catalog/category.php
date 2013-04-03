@@ -67,5 +67,89 @@ class ModelCatalogCategory extends Model {
 		
 		return $query->row['total'];
 	}
+
+    /**
+     * Get categories as tree
+     *
+     * @return array
+     */
+    public function getCategoriesTree()
+    {
+        if (!$data = $this->cache->get('categories_tree')) {
+            $sql = "SELECT
+                    *
+                    FROM " . DB_PREFIX . "category c
+                    LEFT JOIN " . DB_PREFIX . "category_description cd
+                        ON (c.category_id = cd.category_id)
+                    LEFT JOIN " . DB_PREFIX . "category_to_store c2s
+                        ON (c.category_id = c2s.category_id)
+                    WHERE
+                        cd.language_id = '" . (int)$this->config->get('config_language_id') . "'
+                        AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "'
+                        AND c.status = '1' ORDER BY c.sort_order,
+                        LCASE(cd.name)";
+
+            // get categories list
+            $query = $this->db->query($sql);
+
+            // build tree from list
+            $categoryTree = $this->buildTree($query->rows, array('category_id' => 0));
+
+            // sort tree
+            $this->sortTree($categoryTree);
+
+            $data = $categoryTree['children'];
+
+            $this->cache->set('categories_tree', $data);
+        }
+
+        return $data;
+    }
+
+
+    /**
+     * Create tree from list
+     *
+     * @param array $categories
+     * @param array $thisCategory
+     *
+     * @return array
+     */
+    protected function buildTree(&$categories, $thisCategory)
+    {
+        foreach ($categories as $category) {
+            if ($category['parent_id'] == $thisCategory['category_id']) {
+                $thisCategory['children'][] = $this->buildTree($categories, $category);
+            }
+        }
+
+        return $thisCategory;
+    }
+
+    /**
+     * Sort category by sort_order field
+     *
+     * @param array $categories
+     */
+    protected function sortTree(&$categories)
+    {
+        $orders = array();
+
+        if (isset($categories['children'])) {
+            foreach ($categories['children'] as $key => $category) {
+                $this->sortTree($category);
+                $orders[$key] = $category['sort_order'];
+            }
+
+            asort($orders);
+
+            $sortedCategories = array();
+            foreach ($orders as $position => $orderItem) {
+                $sortedCategories[] = $categories['children'][$position];
+            }
+
+            $categories['children'] = $sortedCategories;
+        }
+    }
 }
 ?>

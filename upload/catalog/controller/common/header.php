@@ -94,37 +94,14 @@ class ControllerCommonHeader extends Controller {
 		
 		$this->data['categories'] = array();
 					
-		$categories = $this->model_catalog_category->getCategories(0);
-		
-		foreach ($categories as $category) {
-			if ($category['top']) {
-				// Level 2
-				$children_data = array();
-				
-				$children = $this->model_catalog_category->getCategories($category['category_id']);
-				
-				foreach ($children as $child) {
-					$data = array(
-						'filter_category_id'  => $child['category_id'],
-						'filter_sub_category' => true
-					);
-					
-					$children_data[] = array(
-						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($data) . ')' : ''),
-						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
-					);						
-				}
-				
-				// Level 1
-				$this->data['categories'][] = array(
-					'name'     => $category['name'],
-					'children' => $children_data,
-					'column'   => $category['column'] ? $category['column'] : 1,
-					'href'     => $this->url->link('product/category', 'path=' . $category['category_id'])
-				);
-			}
-		}
-		
+		//$categories = $this->model_catalog_category->getCategories(0);
+
+        //get categories as tree with any nesting
+        $categories = $this->model_catalog_category->getCategoriesTree();
+        $this->createCategoryLinks($categories);
+
+        $this->data['categories'] = $categories;
+
 		$this->children = array(
 			'module/language',
 			'module/currency',
@@ -138,6 +115,33 @@ class ControllerCommonHeader extends Controller {
 		}
 		
     	$this->render();
-	} 	
+	}
+
+    /**
+     * Add category link and products count to category data array
+     *
+     * @param array $categories
+     * @param string $path
+     */
+    protected function createCategoryLinks(&$categories, $path = '')
+    {
+        foreach ($categories as &$category) {
+            if (isset($category['children'])) {
+                $this->createCategoryLinks($category['children'], $path . $category['category_id'] . '_');
+            }
+
+            $data = array(
+                'filter_category_id'  => $category['category_id'],
+                'filter_sub_category' => true
+            );
+
+            // if $path empty (first level menu) do not adding products count
+            if ($path) {
+                $category['name'] = $category['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($data) . ')' : '');
+            }
+            $category['column'] = $category['column'] ? $category['column'] : 1;
+            $category['href'] = $this->url->link('product/category', 'path=' . $path . $category['category_id']);
+        }
+    }
 }
 ?>

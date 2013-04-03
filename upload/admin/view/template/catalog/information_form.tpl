@@ -14,7 +14,7 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
@@ -31,18 +31,18 @@
               <?php foreach ($languages as $language) { ?>
               <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
                 <div class="control-group">
-                  <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_title; ?></label>
+                  <label class="control-label" for="input-title<?php echo $language['language_id']; ?>"><span class="required">*</span> <?php echo $entry_title; ?></label>
                   <div class="controls">
-                    <input type="text" name="information_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" class="input-xxlarge" />
+                    <input type="text" name="information_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title<?php echo $language['language_id']; ?>" class="input-xxlarge" />
                     <?php if (isset($error_title[$language['language_id']])) { ?>
                     <span class="error"><?php echo $error_title[$language['language_id']]; ?></span>
                     <?php } ?>
                   </div>
                 </div>
                 <div class="control-group">
-                  <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_description; ?></label>
+                  <label class="control-label" for="input-description"><span class="required">*</span> <?php echo $entry_description; ?></label>
                   <div class="controls">
-                    <textarea name="information_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="description<?php echo $language['language_id']; ?>"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['description'] : ''; ?></textarea>
+                    <textarea name="information_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['description'] : ''; ?></textarea>
                     <?php if (isset($error_description[$language['language_id']])) { ?>
                     <span class="error"><?php echo $error_description[$language['language_id']]; ?></span>
                     <?php } ?>
@@ -54,7 +54,7 @@
           </div>
           <div class="tab-pane" id="tab-data">
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_store; ?></label>
+              <div class="control-label"><?php echo $entry_store; ?></div>
               <div class="controls">
                 <label class="checkbox">
                   <?php if (in_array(0, $information_store)) { ?>
@@ -79,27 +79,27 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_keyword; ?></label>
+              <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
               <div class="controls">
-                <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" />
+                <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
                 <span class="help-block"><?php echo $help_keyword; ?></span></div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_bottom; ?></label>
+              <label class="control-label" for="input-bottom"><?php echo $entry_bottom; ?></label>
               <div class="controls">
                 <label class="checkbox">
                   <?php if ($bottom) { ?>
-                  <input type="checkbox" name="bottom" value="1" checked="checked" />
+                  <input type="checkbox" name="bottom" value="1" checked="checked" id="input-bottom" />
                   <?php } else { ?>
-                  <input type="checkbox" name="bottom" value="1" />
+                  <input type="checkbox" name="bottom" value="1" id="input-bottom" />
                   <?php } ?>
                 </label>
                 <span class="help-block"><?php echo $help_bottom; ?></span></div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+              <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
               <div class="controls">
-                <select name="status">
+                <select name="status" id="input-status">
                   <?php if ($status) { ?>
                   <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                   <option value="0"><?php echo $text_disabled; ?></option>
@@ -111,9 +111,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+              <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
               <div class="controls">
-                <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
+                <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
               </div>
             </div>
           </div>
@@ -167,7 +167,7 @@
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
-CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
+CKEDITOR.replace('input-description<?php echo $language['language_id']; ?>', {
 	filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 	filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 	filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',

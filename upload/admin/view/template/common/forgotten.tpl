@@ -16,16 +16,12 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="forgotten">
         <div class="buttons"><a onclick="$('#forgotten').submit();" class="btn"><?php echo $button_reset; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <p><?php echo $text_email; ?></p>
-        
-        
-        <table class="form">
-          <tr>
-            <td><?php echo $entry_email; ?></td>
-            <td><input type="text" name="email" value="<?php echo $email; ?>" /></td>
-          </tr>
-        </table>
-        
-        
+        <div class="control-group">
+          <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
+          <div class="controls">
+            <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" />
+          </div>
+        </div>
       </form>
     </div>
   </div>

@@ -13,7 +13,7 @@
     <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
       <div class="control-group">
-        <label class="control-label" for="input-usernam"><?php echo $entry_username; ?></label>
+        <label class="control-label" for="input-username"><?php echo $entry_username; ?></label>
         <div class="controls">
           <input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" />
         </div>

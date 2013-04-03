@@ -13,22 +13,24 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="reset">
         <div class="buttons"><a onclick="$('#reset').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <p><?php echo $text_password; ?></p>
-        <table class="form">
-          <tr>
-            <td><?php echo $entry_password; ?></td>
-            <td><input type="password" name="password" value="<?php echo $password; ?>" />
-              <?php if ($error_password) { ?>
-              <span class="error"><?php echo $error_password; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_confirm; ?></td>
-            <td><input type="password" name="confirm" value="<?php echo $confirm; ?>" />
-              <?php if ($error_confirm) { ?>
-              <span class="error"><?php echo $error_confirm; ?></span>
-              <?php } ?></td>
-          </tr>
-        </table>
+        <div class="control-group">
+          <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
+          <div class="controls">
+            <input type="password" name="password" value="<?php echo $password; ?>" id="input-password" />
+            <?php if ($error_password) { ?>
+            <span class="error"><?php echo $error_password; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
+          <div class="controls">
+            <input type="password" name="confirm" value="<?php echo $confirm; ?>" id="input-confirm" />
+            <?php if ($error_confirm) { ?>
+            <span class="error"><?php echo $error_confirm; ?></span>
+            <?php } ?>
+          </div>
+        </div>
       </form>
     </div>
   </div>

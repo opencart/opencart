@@ -17,7 +17,7 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <li><a href="#tab-store" data-toggle="tab"><?php echo $tab_store; ?></a></li>
@@ -246,544 +246,563 @@
             </div>
           </div>
           <div class="tab-pane" id="tab-option">
-            <h2><?php echo $text_items; ?></h2>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_catalog_limit; ?></label>
-              <div class="controls">
-                <input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" placeholder="<?php echo $entry_catalog_limit; ?>" class="input-mini" />
-                <span class="help-block"><?php echo $help_catalog_limit; ?></span>
-                <?php if ($error_catalog_limit) { ?>
-                <span class="error"><?php echo $error_catalog_limit; ?></span>
-                <?php } ?>
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_list_description_limit; ?></label>
-              <div class="controls">
-                <input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" placeholder="<?php echo $entry_list_description_limit; ?>" class="input-mini" />
-                <span class="help-block"><?php echo $help_list_description_limit; ?></span>
-                <?php if ($error_list_description_limit) { ?>
-                <span class="error"><?php echo $error_list_description_limit; ?></span>
-                <?php } ?>
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_admin_limit; ?></label>
-              <div class="controls">
-                <input type="text" name="config_admin_limit" value="<?php echo $config_admin_limit; ?>" placeholder="<?php echo $entry_admin_limit; ?>" class="input-mini" />
-                <span class="help-block"><?php echo $help_admin_limit; ?></span>
-                <?php if ($error_admin_limit) { ?>
-                <span class="error"><?php echo $error_admin_limit; ?></span>
-                <?php } ?>
-              </div>
-            </div>
-            <h2><?php echo $text_product; ?></h2>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_product_count; ?></label>
-              <div class="controls">
-                <label class="radio inline">
-                  <?php if ($config_product_count) { ?>
-                  <input type="radio" name="config_product_count" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <?php } else { ?>
-                  <input type="radio" name="config_product_count" value="1" />
-                  <?php echo $text_yes; ?>
+            <fieldset>
+              <legend><?php echo $text_items; ?></legend>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_catalog_limit; ?></label>
+                <div class="controls">
+                  <input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" placeholder="<?php echo $entry_catalog_limit; ?>" class="input-mini" />
+                  <span class="help-block"><?php echo $help_catalog_limit; ?></span>
+                  <?php if ($error_catalog_limit) { ?>
+                  <span class="error"><?php echo $error_catalog_limit; ?></span>
                   <?php } ?>
-                </label>
-                <label class="radio inline">
-                  <?php if (!$config_product_count) { ?>
-                  <input type="radio" name="config_product_count" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } else { ?>
-                  <input type="radio" name="config_product_count" value="0" />
-                  <?php echo $text_no; ?>
-                  <?php } ?>
-                </label>
-                <span class="help-block"><?php echo $help_product_count; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_review; ?></label>
-              <div class="controls">                
-
-                <label class="radio inline">
-                <?php if ($config_review_status) { ?>
-                <input type="radio" name="config_review_status" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_review_status" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
-                </label>
-                
-                <label class="radio inline">
-                <?php if (!$config_review_status) { ?>
-                <input type="radio" name="config_review_status" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_review_status" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
-                <span class="help-block"><?php echo $help_review; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_guest_review; ?></label>
-              <div class="controls">
-
-                <label class="radio inline">
-                <?php if ($config_guest_review) { ?>
-                <input type="radio" name="config_guest_review" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_guest_review" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
-                </label>
-                
-                <label class="radio inline">
-                <?php if (!$config_guest_review) { ?>
-                <input type="radio" name="config_guest_review" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_guest_review" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
-                
-                <span class="help-block"><?php echo $help_guest_review; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_download; ?></label>
-              <div class="controls">
-
-                <label class="radio inline">
-                <?php if ($config_download) { ?>
-                <input type="radio" name="config_download" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_download" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
-                </label>
-                
-                <label class="radio inline">
-                <?php if (!$config_download) { ?>
-                <input type="radio" name="config_download" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_download" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
-                
+                </div>
               </div>
-            </div>
-            <h2><?php echo $text_voucher; ?></h2>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_voucher_min; ?></label>
-              <div class="controls">
-                <input type="text" name="config_voucher_min" value="<?php echo $config_voucher_min; ?>" placeholder="<?php echo $entry_voucher_min; ?>" />
-                <span class="help-block"><?php echo $help_voucher_min; ?></span>
-                <?php if ($error_voucher_min) { ?>
-                <span class="error"><?php echo $error_voucher_min; ?></span>
-                <?php } ?>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_list_description_limit; ?></label>
+                <div class="controls">
+                  <input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" placeholder="<?php echo $entry_list_description_limit; ?>" class="input-mini" />
+                  <span class="help-block"><?php echo $help_list_description_limit; ?></span>
+                  <?php if ($error_list_description_limit) { ?>
+                  <span class="error"><?php echo $error_list_description_limit; ?></span>
+                  <?php } ?>
+                </div>
               </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_voucher_max; ?></label>
-              <div class="controls">
-                <input type="text" name="config_voucher_max" value="<?php echo $config_voucher_max; ?>" placeholder="<?php echo $entry_voucher_max; ?>" />
-                <span class="help-block"><?php echo $help_voucher_max; ?></span>
-                <?php if ($error_voucher_max) { ?>
-                <span class="error"><?php echo $error_voucher_max; ?></span>
-                <?php } ?>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_admin_limit; ?></label>
+                <div class="controls">
+                  <input type="text" name="config_admin_limit" value="<?php echo $config_admin_limit; ?>" placeholder="<?php echo $entry_admin_limit; ?>" class="input-mini" />
+                  <span class="help-block"><?php echo $help_admin_limit; ?></span>
+                  <?php if ($error_admin_limit) { ?>
+                  <span class="error"><?php echo $error_admin_limit; ?></span>
+                  <?php } ?>
+                </div>
               </div>
-            </div>
-            <h2><?php echo $text_tax; ?></h2>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_tax; ?></label>
-              <div class="controls">
-                
-                <label class="radio inline">
-                <?php if ($config_tax) { ?>
-                <input type="radio" name="config_tax" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_tax" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
-                </label>
-                
-                <label class="radio inline">
-                <?php if (!$config_tax) { ?>
-                <input type="radio" name="config_tax" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_tax" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
+            </fieldset>
+            <fieldset>
+              <legend><?php echo $text_product; ?></legend>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_product_count; ?></label>
+                <div class="controls">
+                  <label class="radio inline">
+                    <?php if ($config_product_count) { ?>
+                    <input type="radio" name="config_product_count" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_product_count" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio inline">
+                    <?php if (!$config_product_count) { ?>
+                    <input type="radio" name="config_product_count" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_product_count" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_product_count; ?></span></div>
               </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_tax_default; ?></label>
-              <div class="controls">
-                <select name="config_tax_default">
-                  <option value=""><?php echo $text_none; ?></option>
-                  <?php  if ($config_tax_default == 'shipping') { ?>
-                  <option value="shipping" selected="selected"><?php echo $text_shipping; ?></option>
-                  <?php } else { ?>
-                  <option value="shipping"><?php echo $text_shipping; ?></option>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_review; ?></label>
+                <div class="controls">
+                  <label class="radio inline">
+                    <?php if ($config_review_status) { ?>
+                    <input type="radio" name="config_review_status" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_review_status" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio inline">
+                    <?php if (!$config_review_status) { ?>
+                    <input type="radio" name="config_review_status" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_review_status" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_review; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_guest_review; ?></label>
+                <div class="controls">
+                  <label class="radio inline">
+                    <?php if ($config_guest_review) { ?>
+                    <input type="radio" name="config_guest_review" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_guest_review" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio inline">
+                    <?php if (!$config_guest_review) { ?>
+                    <input type="radio" name="config_guest_review" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_guest_review" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_guest_review; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_download; ?></label>
+                <div class="controls">
+                  <label class="radio inline">
+                    <?php if ($config_download) { ?>
+                    <input type="radio" name="config_download" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_download" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio inline">
+                    <?php if (!$config_download) { ?>
+                    <input type="radio" name="config_download" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_download" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend><?php echo $text_voucher; ?></legend>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_voucher_min; ?></label>
+                <div class="controls">
+                  <input type="text" name="config_voucher_min" value="<?php echo $config_voucher_min; ?>" placeholder="<?php echo $entry_voucher_min; ?>" />
+                  <span class="help-block"><?php echo $help_voucher_min; ?></span>
+                  <?php if ($error_voucher_min) { ?>
+                  <span class="error"><?php echo $error_voucher_min; ?></span>
                   <?php } ?>
-                  <?php  if ($config_tax_default == 'payment') { ?>
-                  <option value="payment" selected="selected"><?php echo $text_payment; ?></option>
-                  <?php } else { ?>
-                  <option value="payment"><?php echo $text_payment; ?></option>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_voucher_max; ?></label>
+                <div class="controls">
+                  <input type="text" name="config_voucher_max" value="<?php echo $config_voucher_max; ?>" placeholder="<?php echo $entry_voucher_max; ?>" />
+                  <span class="help-block"><?php echo $help_voucher_max; ?></span>
+                  <?php if ($error_voucher_max) { ?>
+                  <span class="error"><?php echo $error_voucher_max; ?></span>
                   <?php } ?>
-                </select>
-                <span class="help-block"><?php echo $help_tax_default; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_tax_customer; ?></label>
-              <div class="controls">
-                <select name="config_tax_customer">
-                  <option value=""><?php echo $text_none; ?></option>
-                  <?php  if ($config_tax_customer == 'shipping') { ?>
-                  <option value="shipping" selected="selected"><?php echo $text_shipping; ?></option>
-                  <?php } else { ?>
-                  <option value="shipping"><?php echo $text_shipping; ?></option>
-                  <?php } ?>
-                  <?php  if ($config_tax_customer == 'payment') { ?>
-                  <option value="payment" selected="selected"><?php echo $text_payment; ?></option>
-                  <?php } else { ?>
-                  <option value="payment"><?php echo $text_payment; ?></option>
-                  <?php } ?>
-                </select>
-                <span class="help-block"><?php echo $help_tax_customer; ?></span></div>
-            </div>
-            <h2><?php echo $text_account; ?></h2>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_customer_online; ?></label>
-              <div class="controls">
-                
-
-                <label class="radio inline">
-                <?php if ($config_customer_online) { ?>
-                <input type="radio" name="config_customer_online" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_customer_online" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
-                </label>
-                
-                <label class="radio inline">
-                <?php if (!$config_customer_online) { ?>
-                <input type="radio" name="config_customer_online" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_customer_online" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
-                
-                
-                <span class="help-block"><?php echo $help_customer_online; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_customer_group; ?></label>
-              <div class="controls">
-                <select name="config_customer_group_id">
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend><?php echo $text_tax; ?></legend>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_tax; ?></label>
+                <div class="controls">
+                  <label class="radio inline">
+                    <?php if ($config_tax) { ?>
+                    <input type="radio" name="config_tax" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_tax" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio inline">
+                    <?php if (!$config_tax) { ?>
+                    <input type="radio" name="config_tax" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_tax" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_tax_default; ?></label>
+                <div class="controls">
+                  <select name="config_tax_default">
+                    <option value=""><?php echo $text_none; ?></option>
+                    <?php  if ($config_tax_default == 'shipping') { ?>
+                    <option value="shipping" selected="selected"><?php echo $text_shipping; ?></option>
+                    <?php } else { ?>
+                    <option value="shipping"><?php echo $text_shipping; ?></option>
+                    <?php } ?>
+                    <?php  if ($config_tax_default == 'payment') { ?>
+                    <option value="payment" selected="selected"><?php echo $text_payment; ?></option>
+                    <?php } else { ?>
+                    <option value="payment"><?php echo $text_payment; ?></option>
+                    <?php } ?>
+                  </select>
+                  <span class="help-block"><?php echo $help_tax_default; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_tax_customer; ?></label>
+                <div class="controls">
+                  <select name="config_tax_customer">
+                    <option value=""><?php echo $text_none; ?></option>
+                    <?php  if ($config_tax_customer == 'shipping') { ?>
+                    <option value="shipping" selected="selected"><?php echo $text_shipping; ?></option>
+                    <?php } else { ?>
+                    <option value="shipping"><?php echo $text_shipping; ?></option>
+                    <?php } ?>
+                    <?php  if ($config_tax_customer == 'payment') { ?>
+                    <option value="payment" selected="selected"><?php echo $text_payment; ?></option>
+                    <?php } else { ?>
+                    <option value="payment"><?php echo $text_payment; ?></option>
+                    <?php } ?>
+                  </select>
+                  <span class="help-block"><?php echo $help_tax_customer; ?></span></div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend><?php echo $text_account; ?></legend>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_customer_online; ?></label>
+                <div class="controls">
+                  <label class="radio inline">
+                    <?php if ($config_customer_online) { ?>
+                    <input type="radio" name="config_customer_online" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_customer_online" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio inline">
+                    <?php if (!$config_customer_online) { ?>
+                    <input type="radio" name="config_customer_online" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_customer_online" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_customer_online; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_customer_group; ?></label>
+                <div class="controls">
+                  <select name="config_customer_group_id">
+                    <?php foreach ($customer_groups as $customer_group) { ?>
+                    <?php if ($customer_group['customer_group_id'] == $config_customer_group_id) { ?>
+                    <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <span class="help-block"><?php echo $help_customer_group; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_customer_group_display; ?></label>
+                <div class="controls">
                   <?php foreach ($customer_groups as $customer_group) { ?>
-                  <?php if ($customer_group['customer_group_id'] == $config_customer_group_id) { ?>
-                  <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                  <label class="checkbox">
+                    <?php if (in_array($customer_group['customer_group_id'], $config_customer_group_display)) { ?>
+                    <input type="checkbox" name="config_customer_group_display[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+                    <?php echo $customer_group['name']; ?>
+                    <?php } else { ?>
+                    <input type="checkbox" name="config_customer_group_display[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
+                    <?php echo $customer_group['name']; ?>
+                    <?php } ?>
+                  </label>
                   <?php } ?>
+                  <span class="help-block"><?php echo $help_customer_group_display; ?></span>
+                  <?php if ($error_customer_group_display) { ?>
+                  <span class="error"><?php echo $error_customer_group_display; ?></span>
                   <?php } ?>
-                </select>
-                <span class="help-block"><?php echo $help_customer_group; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_customer_group_display; ?></label>
-              <div class="controls">
-                <?php foreach ($customer_groups as $customer_group) { ?>
-                <label class="checkbox">
-                  <?php if (in_array($customer_group['customer_group_id'], $config_customer_group_display)) { ?>
-                  <input type="checkbox" name="config_customer_group_display[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-                  <?php echo $customer_group['name']; ?>
-                  <?php } else { ?>
-                  <input type="checkbox" name="config_customer_group_display[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
-                  <?php echo $customer_group['name']; ?>
-                  <?php } ?>
-                </label>
-                <?php } ?>
-                <span class="help-block"><?php echo $help_customer_group_display; ?></span>
-                <?php if ($error_customer_group_display) { ?>
-                <span class="error"><?php echo $error_customer_group_display; ?></span>
-                <?php } ?>
+                </div>
               </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_customer_price; ?></label>
-              <div class="controls">
-
-                <label class="radio inline">
-                <?php if ($config_customer_price) { ?>
-                <input type="radio" name="config_customer_price" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_customer_price" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
-                </label>
-                
-                <label class="radio inline">
-                <?php if (!$config_customer_price) { ?>
-                <input type="radio" name="config_customer_price" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_customer_price" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
-                
-                
-                <span class="help-block"><?php echo $help_customer_price; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_account; ?></label>
-              <div class="controls">
-                <select name="config_account_id">
-                  <option value="0"><?php echo $text_none; ?></option>
-                  <?php foreach ($informations as $information) { ?>
-                  <?php if ($information['information_id'] == $config_account_id) { ?>
-                  <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-                <span class="help-block"><?php echo $help_account; ?></span></div>
-            </div>
-            <h2><?php echo $text_checkout; ?></h2>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_cart_weight; ?></label>
-              <div class="controls">
-                              
-                <label class="radio inline">
-                <?php if ($config_cart_weight) { ?>
-                <input type="radio" name="config_cart_weight" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_cart_weight" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
-                </label>
-                
-                <label class="radio inline">
-                <?php if (!$config_cart_weight) { ?>
-                <input type="radio" name="config_cart_weight" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_cart_weight" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
-                <span class="help-block"><?php echo $help_cart_weight; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_guest_checkout; ?></label>
-              <div class="controls">
-                
-
-                <label class="radio inline">
-                <?php if ($config_guest_checkout) { ?>
-                <input type="radio" name="config_guest_checkout" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_guest_checkout" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
-                </label>
-                
-                <label class="radio inline">
-                <?php if (!$config_guest_checkout) { ?>
-                <input type="radio" name="config_guest_checkout" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_guest_checkout" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
-                
-                <span class="help-block"><?php echo $help_guest_checkout; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_checkout; ?></label>
-              <div class="controls">
-                <select name="config_checkout_id">
-                  <option value="0"><?php echo $text_none; ?></option>
-                  <?php foreach ($informations as $information) { ?>
-                  <?php if ($information['information_id'] == $config_checkout_id) { ?>
-                  <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-                <span class="help-block"><?php echo $help_checkout; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_order_edit; ?></label>
-              <div class="controls">
-                <input type="text" name="config_order_edit" value="<?php echo $config_order_edit; ?>" placeholder="<?php echo $entry_order_edit; ?>" class="input-mini" />
-                <span class="help-block"><?php echo $help_order_edit; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_invoice_prefix; ?></label>
-              <div class="controls">
-                <input type="text" name="config_invoice_prefix" value="<?php echo $config_invoice_prefix; ?>" placeholder="<?php echo $entry_invoice_prefix; ?>" />
-                <span class="help-block"><?php echo $help_invoice_prefix; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
-              <div class="controls">
-                <select name="config_order_status_id">
-                  <?php foreach ($order_statuses as $order_status) { ?>
-                  <?php if ($order_status['order_status_id'] == $config_order_status_id) { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-                <span class="help-block"><?php echo $help_order_status; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_complete_status; ?></label>
-              <div class="controls">
-                <select name="config_complete_status_id">
-                  <?php foreach ($order_statuses as $order_status) { ?>
-                  <?php if ($order_status['order_status_id'] == $config_complete_status_id) { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-                <span class="help-block"><?php echo $help_complete_status; ?></span></div>
-            </div>
-            <h2><?php echo $text_stock; ?></h2>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_stock_display; ?></label>
-              <div class="controls">
-              
-                <label class="radio inline">
-                <?php if ($config_stock_display) { ?>
-                <input type="radio" name="config_stock_display" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_stock_display" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
-                </label>
-                
-                <label class="radio inline">
-                <?php if (!$config_stock_display) { ?>
-                <input type="radio" name="config_stock_display" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_stock_display" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
-                <span class="help-block"><?php echo $help_stock_display; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_stock_warning; ?></label>
-              <div class="controls">
-               
-                <label class="radio inline">
-                <?php if ($config_stock_warning) { ?>
-                <input type="radio" name="config_stock_warning" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_stock_warning" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
-                </label>
-                
-                <label class="radio inline">
-                <?php if (!$config_stock_warning) { ?>
-                <input type="radio" name="config_stock_warning" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_stock_warning" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
-                
-                <span class="help-block"><?php echo $help_stock_warning; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_stock_checkout; ?></label>
-              <div class="controls">                
-
-                <label class="radio inline">
-                <?php if ($config_stock_checkout) { ?>
-                <input type="radio" name="config_stock_checkout" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_stock_checkout" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
-                </label>
-                
-                <label class="radio inline">
-                <?php if (!$config_stock_checkout) { ?>
-                <input type="radio" name="config_stock_checkout" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_stock_checkout" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
-                <span class="help-block"><?php echo $help_stock_checkout; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_stock_status; ?></label>
-              <div class="controls">
-                <select name="config_stock_status_id">
-                  <?php foreach ($stock_statuses as $stock_status) { ?>
-                  <?php if ($stock_status['stock_status_id'] == $config_stock_status_id) { ?>
-                  <option value="<?php echo $stock_status['stock_status_id']; ?>" selected="selected"><?php echo $stock_status['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $stock_status['stock_status_id']; ?>"><?php echo $stock_status['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-                <span class="help-block"><?php echo $help_stock_status; ?></span></div>
-            </div>
-            <h2><?php echo $text_affiliate; ?></h2>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_affiliate; ?></label>
-              <div class="controls">
-                <select name="config_affiliate_id">
-                  <option value="0"><?php echo $text_none; ?></option>
-                  <?php foreach ($informations as $information) { ?>
-                  <?php if ($information['information_id'] == $config_affiliate_id) { ?>
-                  <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-                <span class="help-block"><?php echo $help_affiliate; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_commission; ?></label>
-              <div class="controls">
-                <input type="text" name="config_commission" value="<?php echo $config_commission; ?>" placeholder="<?php echo $entry_commission; ?>" class="input-small" />
-                <span class="help-block"><?php echo $help_commission; ?></span></div>
-            </div>
-            <h2><?php echo $text_return; ?></h2>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_return; ?></label>
-              <div class="controls">
-                <select name="config_return_id">
-                  <option value="0"><?php echo $text_none; ?></option>
-                  <?php foreach ($informations as $information) { ?>
-                  <?php if ($information['information_id'] == $config_return_id) { ?>
-                  <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-                <span class="help-block"><?php echo $help_return; ?></span></div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_return_status; ?></label>
-              <div class="controls">
-                <select name="config_return_status_id">
-                  <?php foreach ($return_statuses as $return_status) { ?>
-                  <?php if ($return_status['return_status_id'] == $config_return_status_id) { ?>
-                  <option value="<?php echo $return_status['return_status_id']; ?>" selected="selected"><?php echo $return_status['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $return_status['return_status_id']; ?>"><?php echo $return_status['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-                <span class="help-block"><?php echo $help_return_status; ?></span></div>
-            </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_customer_price; ?></label>
+                <div class="controls">
+                  <label class="radio inline">
+                    <?php if ($config_customer_price) { ?>
+                    <input type="radio" name="config_customer_price" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_customer_price" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio inline">
+                    <?php if (!$config_customer_price) { ?>
+                    <input type="radio" name="config_customer_price" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_customer_price" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_customer_price; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_account; ?></label>
+                <div class="controls">
+                  <select name="config_account_id">
+                    <option value="0"><?php echo $text_none; ?></option>
+                    <?php foreach ($informations as $information) { ?>
+                    <?php if ($information['information_id'] == $config_account_id) { ?>
+                    <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <span class="help-block"><?php echo $help_account; ?></span></div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend><?php echo $text_checkout; ?></legend>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_cart_weight; ?></label>
+                <div class="controls">
+                  <label class="radio inline">
+                    <?php if ($config_cart_weight) { ?>
+                    <input type="radio" name="config_cart_weight" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_cart_weight" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio inline">
+                    <?php if (!$config_cart_weight) { ?>
+                    <input type="radio" name="config_cart_weight" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_cart_weight" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_cart_weight; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_guest_checkout; ?></label>
+                <div class="controls">
+                  <label class="radio inline">
+                    <?php if ($config_guest_checkout) { ?>
+                    <input type="radio" name="config_guest_checkout" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_guest_checkout" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio inline">
+                    <?php if (!$config_guest_checkout) { ?>
+                    <input type="radio" name="config_guest_checkout" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_guest_checkout" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_guest_checkout; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_checkout; ?></label>
+                <div class="controls">
+                  <select name="config_checkout_id">
+                    <option value="0"><?php echo $text_none; ?></option>
+                    <?php foreach ($informations as $information) { ?>
+                    <?php if ($information['information_id'] == $config_checkout_id) { ?>
+                    <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <span class="help-block"><?php echo $help_checkout; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_order_edit; ?></label>
+                <div class="controls">
+                  <input type="text" name="config_order_edit" value="<?php echo $config_order_edit; ?>" placeholder="<?php echo $entry_order_edit; ?>" class="input-mini" />
+                  <span class="help-block"><?php echo $help_order_edit; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_invoice_prefix; ?></label>
+                <div class="controls">
+                  <input type="text" name="config_invoice_prefix" value="<?php echo $config_invoice_prefix; ?>" placeholder="<?php echo $entry_invoice_prefix; ?>" />
+                  <span class="help-block"><?php echo $help_invoice_prefix; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
+                <div class="controls">
+                  <select name="config_order_status_id">
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $config_order_status_id) { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <span class="help-block"><?php echo $help_order_status; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_complete_status; ?></label>
+                <div class="controls">
+                  <select name="config_complete_status_id">
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $config_complete_status_id) { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <span class="help-block"><?php echo $help_complete_status; ?></span></div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend><?php echo $text_stock; ?></legend>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_stock_display; ?></label>
+                <div class="controls">
+                  <label class="radio inline">
+                    <?php if ($config_stock_display) { ?>
+                    <input type="radio" name="config_stock_display" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_stock_display" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio inline">
+                    <?php if (!$config_stock_display) { ?>
+                    <input type="radio" name="config_stock_display" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_stock_display" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_stock_display; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_stock_warning; ?></label>
+                <div class="controls">
+                  <label class="radio inline">
+                    <?php if ($config_stock_warning) { ?>
+                    <input type="radio" name="config_stock_warning" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_stock_warning" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio inline">
+                    <?php if (!$config_stock_warning) { ?>
+                    <input type="radio" name="config_stock_warning" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_stock_warning" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_stock_warning; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_stock_checkout; ?></label>
+                <div class="controls">
+                  <label class="radio inline">
+                    <?php if ($config_stock_checkout) { ?>
+                    <input type="radio" name="config_stock_checkout" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_stock_checkout" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio inline">
+                    <?php if (!$config_stock_checkout) { ?>
+                    <input type="radio" name="config_stock_checkout" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_stock_checkout" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_stock_checkout; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_stock_status; ?></label>
+                <div class="controls">
+                  <select name="config_stock_status_id">
+                    <?php foreach ($stock_statuses as $stock_status) { ?>
+                    <?php if ($stock_status['stock_status_id'] == $config_stock_status_id) { ?>
+                    <option value="<?php echo $stock_status['stock_status_id']; ?>" selected="selected"><?php echo $stock_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $stock_status['stock_status_id']; ?>"><?php echo $stock_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <span class="help-block"><?php echo $help_stock_status; ?></span></div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend><?php echo $text_affiliate; ?></legend>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_affiliate; ?></label>
+                <div class="controls">
+                  <select name="config_affiliate_id">
+                    <option value="0"><?php echo $text_none; ?></option>
+                    <?php foreach ($informations as $information) { ?>
+                    <?php if ($information['information_id'] == $config_affiliate_id) { ?>
+                    <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <span class="help-block"><?php echo $help_affiliate; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_commission; ?></label>
+                <div class="controls">
+                  <input type="text" name="config_commission" value="<?php echo $config_commission; ?>" placeholder="<?php echo $entry_commission; ?>" class="input-small" />
+                  <span class="help-block"><?php echo $help_commission; ?></span></div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend><?php echo $text_return; ?></legend>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_return; ?></label>
+                <div class="controls">
+                  <select name="config_return_id">
+                    <option value="0"><?php echo $text_none; ?></option>
+                    <?php foreach ($informations as $information) { ?>
+                    <?php if ($information['information_id'] == $config_return_id) { ?>
+                    <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <span class="help-block"><?php echo $help_return; ?></span></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input-name"><?php echo $entry_return_status; ?></label>
+                <div class="controls">
+                  <select name="config_return_status_id">
+                    <?php foreach ($return_statuses as $return_status) { ?>
+                    <?php if ($return_status['return_status_id'] == $config_return_status_id) { ?>
+                    <option value="<?php echo $return_status['return_status_id']; ?>" selected="selected"><?php echo $return_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $return_status['return_status_id']; ?>"><?php echo $return_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <span class="help-block"><?php echo $help_return_status; ?></span></div>
+              </div>
+            </fieldset>
           </div>
           <div class="tab-pane" id="tab-image">
             <div class="control-group">
@@ -950,23 +969,24 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_ftp_status; ?></label>
               <div class="controls">
-
                 <label class="radio inline">
-                <?php if ($config_ftp_status) { ?>
-                <input type="radio" name="config_ftp_status" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_ftp_status" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
+                  <?php if ($config_ftp_status) { ?>
+                  <input type="radio" name="config_ftp_status" value="1" checked="checked" />
+                  <?php echo $text_yes; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_ftp_status" value="1" />
+                  <?php echo $text_yes; ?>
+                  <?php } ?>
                 </label>
-                
                 <label class="radio inline">
-                <?php if (!$config_ftp_status) { ?>
-                <input type="radio" name="config_ftp_status" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_ftp_status" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
+                  <?php if (!$config_ftp_status) { ?>
+                  <input type="radio" name="config_ftp_status" value="0" checked="checked" />
+                  <?php echo $text_no; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_ftp_status" value="0" />
+                  <?php echo $text_no; ?>
+                  <?php } ?>
+                </label>
               </div>
             </div>
           </div>
@@ -1027,68 +1047,70 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_alert_mail; ?></label>
               <div class="controls">
-                
                 <label class="radio inline">
-                <?php if ($config_alert_mail) { ?>
-                <input type="radio" name="config_alert_mail" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_alert_mail" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
+                  <?php if ($config_alert_mail) { ?>
+                  <input type="radio" name="config_alert_mail" value="1" checked="checked" />
+                  <?php echo $text_yes; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_alert_mail" value="1" />
+                  <?php echo $text_yes; ?>
+                  <?php } ?>
                 </label>
-                
                 <label class="radio inline">
-                <?php if (!$config_alert_mail) { ?>
-                <input type="radio" name="config_alert_mail" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_alert_mail" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
+                  <?php if (!$config_alert_mail) { ?>
+                  <input type="radio" name="config_alert_mail" value="0" checked="checked" />
+                  <?php echo $text_no; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_alert_mail" value="0" />
+                  <?php echo $text_no; ?>
+                  <?php } ?>
                 </label>
-                                
-                
                 <span class="help-block"><?php echo $help_alert_mail; ?></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_account_mail; ?></label>
-              <div class="controls">                
-
+              <div class="controls">
                 <label class="radio inline">
-                <?php if ($config_account_mail) { ?>
-                <input type="radio" name="config_account_mail" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_account_mail" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
+                  <?php if ($config_account_mail) { ?>
+                  <input type="radio" name="config_account_mail" value="1" checked="checked" />
+                  <?php echo $text_yes; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_account_mail" value="1" />
+                  <?php echo $text_yes; ?>
+                  <?php } ?>
                 </label>
-                
                 <label class="radio inline">
-                <?php if (!$config_account_mail) { ?>
-                <input type="radio" name="config_account_mail" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_account_mail" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
+                  <?php if (!$config_account_mail) { ?>
+                  <input type="radio" name="config_account_mail" value="0" checked="checked" />
+                  <?php echo $text_no; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_account_mail" value="0" />
+                  <?php echo $text_no; ?>
+                  <?php } ?>
+                </label>
                 <span class="help-block"><?php echo $help_account_mail; ?></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_review_mail; ?></label>
               <div class="controls">
-
                 <label class="radio inline">
-                <?php if ($config_review_mail) { ?>
-                <input type="radio" name="config_review_mail" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_review_mail" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
+                  <?php if ($config_review_mail) { ?>
+                  <input type="radio" name="config_review_mail" value="1" checked="checked" />
+                  <?php echo $text_yes; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_review_mail" value="1" />
+                  <?php echo $text_yes; ?>
+                  <?php } ?>
                 </label>
-                
                 <label class="radio inline">
-                <?php if (!$config_review_mail) { ?>
-                <input type="radio" name="config_review_mail" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_review_mail" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
+                  <?php if (!$config_review_mail) { ?>
+                  <input type="radio" name="config_review_mail" value="0" checked="checked" />
+                  <?php echo $text_no; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_review_mail" value="0" />
+                  <?php echo $text_no; ?>
+                  <?php } ?>
+                </label>
               </div>
             </div>
             <div class="control-group">
@@ -1101,24 +1123,25 @@
           <div class="tab-pane" id="tab-fraud">
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_fraud_detection; ?></label>
-              <div class="controls">              
-
+              <div class="controls">
                 <label class="radio inline">
-                <?php if ($config_fraud_detection) { ?>
-                <input type="radio" name="config_fraud_detection" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_fraud_detection" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
+                  <?php if ($config_fraud_detection) { ?>
+                  <input type="radio" name="config_fraud_detection" value="1" checked="checked" />
+                  <?php echo $text_yes; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_fraud_detection" value="1" />
+                  <?php echo $text_yes; ?>
+                  <?php } ?>
                 </label>
-                
                 <label class="radio inline">
-                <?php if (!$config_fraud_detection) { ?>
-                <input type="radio" name="config_fraud_detection" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_fraud_detection" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
+                  <?php if (!$config_fraud_detection) { ?>
+                  <input type="radio" name="config_fraud_detection" value="0" checked="checked" />
+                  <?php echo $text_no; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_fraud_detection" value="0" />
+                  <?php echo $text_no; ?>
+                  <?php } ?>
+                </label>
                 <span class="help-block"><?php echo $help_fraud_detection; ?></span></div>
             </div>
             <div class="control-group">
@@ -1151,47 +1174,48 @@
           <div class="tab-pane" id="tab-server">
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_secure; ?></label>
-              <div class="controls">              
-
+              <div class="controls">
                 <label class="radio inline">
-                <?php if ($config_secure) { ?>
-                <input type="radio" name="config_secure" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_secure" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
+                  <?php if ($config_secure) { ?>
+                  <input type="radio" name="config_secure" value="1" checked="checked" />
+                  <?php echo $text_yes; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_secure" value="1" />
+                  <?php echo $text_yes; ?>
+                  <?php } ?>
                 </label>
-                
                 <label class="radio inline">
-                <?php if (!$config_secure) { ?>
-                <input type="radio" name="config_secure" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_secure" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
+                  <?php if (!$config_secure) { ?>
+                  <input type="radio" name="config_secure" value="0" checked="checked" />
+                  <?php echo $text_no; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_secure" value="0" />
+                  <?php echo $text_no; ?>
+                  <?php } ?>
+                </label>
                 <span class="help-block"><?php echo $help_secure; ?></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_shared; ?></label>
               <div class="controls">
-               
                 <label class="radio inline">
-                <?php if ($config_shared) { ?>
-                <input type="radio" name="config_shared" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_shared" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
+                  <?php if ($config_shared) { ?>
+                  <input type="radio" name="config_shared" value="1" checked="checked" />
+                  <?php echo $text_yes; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_shared" value="1" />
+                  <?php echo $text_yes; ?>
+                  <?php } ?>
                 </label>
-                
                 <label class="radio inline">
-                <?php if (!$config_shared) { ?>
-                <input type="radio" name="config_shared" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_shared" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
-                
+                  <?php if (!$config_shared) { ?>
+                  <input type="radio" name="config_shared" value="0" checked="checked" />
+                  <?php echo $text_no; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_shared" value="0" />
+                  <?php echo $text_no; ?>
+                  <?php } ?>
+                </label>
                 <span class="help-block"><?php echo $help_shared; ?></span></div>
             </div>
             <div class="control-group">
@@ -1203,23 +1227,24 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_seo_url; ?></label>
               <div class="controls">
-              
                 <label class="radio inline">
-                <?php if ($config_seo_url) { ?>
-                <input type="radio" name="config_seo_url" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_seo_url" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
+                  <?php if ($config_seo_url) { ?>
+                  <input type="radio" name="config_seo_url" value="1" checked="checked" />
+                  <?php echo $text_yes; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_seo_url" value="1" />
+                  <?php echo $text_yes; ?>
+                  <?php } ?>
                 </label>
-                
                 <label class="radio inline">
-                <?php if (!$config_seo_url) { ?>
-                <input type="radio" name="config_seo_url" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_seo_url" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
+                  <?php if (!$config_seo_url) { ?>
+                  <input type="radio" name="config_seo_url" value="0" checked="checked" />
+                  <?php echo $text_no; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_seo_url" value="0" />
+                  <?php echo $text_no; ?>
+                  <?php } ?>
+                </label>
                 <span class="help-block"><?php echo $help_seo_url; ?></span></div>
             </div>
             <div class="control-group">
@@ -1243,45 +1268,47 @@
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_maintenance; ?></label>
               <div class="controls">
-
                 <label class="radio inline">
-                <?php if ($config_maintenance) { ?>
-                <input type="radio" name="config_maintenance" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_maintenance" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
+                  <?php if ($config_maintenance) { ?>
+                  <input type="radio" name="config_maintenance" value="1" checked="checked" />
+                  <?php echo $text_yes; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_maintenance" value="1" />
+                  <?php echo $text_yes; ?>
+                  <?php } ?>
                 </label>
-                
                 <label class="radio inline">
-                <?php if (!$config_maintenance) { ?>
-                <input type="radio" name="config_maintenance" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_maintenance" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
+                  <?php if (!$config_maintenance) { ?>
+                  <input type="radio" name="config_maintenance" value="0" checked="checked" />
+                  <?php echo $text_no; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_maintenance" value="0" />
+                  <?php echo $text_no; ?>
+                  <?php } ?>
+                </label>
                 <span class="help-block"><?php echo $help_maintenance; ?></span></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_password; ?></label>
               <div class="controls">
-
                 <label class="radio inline">
-                <?php if ($config_password) { ?>
-                <input type="radio" name="config_password" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_password" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
+                  <?php if ($config_password) { ?>
+                  <input type="radio" name="config_password" value="1" checked="checked" />
+                  <?php echo $text_yes; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_password" value="1" />
+                  <?php echo $text_yes; ?>
+                  <?php } ?>
                 </label>
-                
                 <label class="radio inline">
-                <?php if (!$config_password) { ?>
-                <input type="radio" name="config_password" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_password" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
+                  <?php if (!$config_password) { ?>
+                  <input type="radio" name="config_password" value="0" checked="checked" />
+                  <?php echo $text_no; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_password" value="0" />
+                  <?php echo $text_no; ?>
+                  <?php } ?>
+                </label>
                 <span class="help-block"><?php echo $help_password; ?></span></div>
             </div>
             <div class="control-group">
@@ -1302,46 +1329,48 @@
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_error_display; ?></label>
-              <div class="controls">               
- 
+              <div class="controls">
                 <label class="radio inline">
-                <?php if ($config_error_display) { ?>
-                <input type="radio" name="config_error_display" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_error_display" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
+                  <?php if ($config_error_display) { ?>
+                  <input type="radio" name="config_error_display" value="1" checked="checked" />
+                  <?php echo $text_yes; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_error_display" value="1" />
+                  <?php echo $text_yes; ?>
+                  <?php } ?>
                 </label>
-                
                 <label class="radio inline">
-                <?php if (!$config_error_display) { ?>
-                <input type="radio" name="config_error_display" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_error_display" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>               
-                
+                  <?php if (!$config_error_display) { ?>
+                  <input type="radio" name="config_error_display" value="0" checked="checked" />
+                  <?php echo $text_no; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_error_display" value="0" />
+                  <?php echo $text_no; ?>
+                  <?php } ?>
+                </label>
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_error_log; ?></label>
               <div class="controls">
-
                 <label class="radio inline">
-                <?php if ($config_error_log) { ?>
-                <input type="radio" name="config_error_log" value="1" checked="checked" /> <?php echo $text_yes; ?>
-                 <?php } else { ?>
-                <input type="radio" name="config_error_log" value="1" /> <?php echo $text_yes; ?>
-                <?php } ?>
+                  <?php if ($config_error_log) { ?>
+                  <input type="radio" name="config_error_log" value="1" checked="checked" />
+                  <?php echo $text_yes; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_error_log" value="1" />
+                  <?php echo $text_yes; ?>
+                  <?php } ?>
                 </label>
-                
                 <label class="radio inline">
-                <?php if (!$config_error_log) { ?>
-                <input type="radio" name="config_error_log" value="0" checked="checked" /> <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_error_log" value="0" /> <?php echo $text_no; ?>
-                <?php } ?>
-                </label>                
-                
+                  <?php if (!$config_error_log) { ?>
+                  <input type="radio" name="config_error_log" value="0" checked="checked" />
+                  <?php echo $text_no; ?>
+                  <?php } else { ?>
+                  <input type="radio" name="config_error_log" value="0" />
+                  <?php echo $text_no; ?>
+                  <?php } ?>
+                </label>
               </div>
             </div>
             <div class="control-group">

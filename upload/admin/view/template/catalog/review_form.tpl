@@ -14,9 +14,9 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_author; ?></label>
+          <label class="control-label" for="input-author"><span class="required">*</span> <?php echo $entry_author; ?></label>
           <div class="controls">
             <input type="text" name="author" value="<?php echo $author; ?>" placeholder="<?php echo $entry_author; ?>" />
             <?php if ($error_author) { ?>
@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_product; ?></label>
+          <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
           <div class="controls">
             <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" />
             <span class="help-block"><?php echo $help_product; ?></span>
@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_text; ?></label>
+          <label class="control-label" for="input-text"><span class="required">*</span> <?php echo $entry_text; ?></label>
           <div class="controls">
             <textarea name="text" cols="60" rows="8" placeholder="<?php echo $entry_text; ?>"><?php echo $text; ?></textarea>
             <?php if ($error_text) { ?>
@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_rating; ?></label>
+          <div class="control-label" for="input-name"><?php echo $entry_rating; ?></div>
           <div class="controls">
             <label class="radio inline">
               <?php if ($rating == 1) { ?>
@@ -88,9 +88,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+          <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="controls">
-            <select name="status">
+            <select name="status" id="input-status">
               <?php if ($status) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
               <option value="0"><?php echo $text_disabled; ?></option>

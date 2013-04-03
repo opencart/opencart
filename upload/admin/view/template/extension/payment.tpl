@@ -1,22 +1,22 @@
 <?php echo $header; ?>
 <div id="content">
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
-  <?php if ($success) { ?>
-  <div class="success"><?php echo $success; ?></div>
+  </ul>
+  <?php if ($error_warning) { ?>
+  <div class="alert alert-error"><?php echo $error_warning; ?></div>
   <?php } ?>
-  <?php if ($error) { ?>
-  <div class="warning"><?php echo $error; ?></div>
+  <?php if ($success) { ?>
+  <div class="alert alert-success"><?php echo $success; ?></div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/payment.png" alt="" /> <?php echo $heading_title; ?></h1>
+    <div class="box-heading">
+      <h1><i class=""></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
-      <table class="list">
+    <div class="box-content">
+      <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
             <td class="left"><?php echo $column_name; ?></td>

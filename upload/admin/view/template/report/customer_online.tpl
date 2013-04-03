@@ -1,16 +1,16 @@
 <?php echo $header; ?>
 <div id="content">
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/report.png" alt="" /> <?php echo $heading_title; ?></h1>
+    <div class="box-heading">
+      <h1><i class=""></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
-      <table class="list">
+    <div class="box-content">
+      <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
             <td class="left"><?php echo $column_ip; ?></td>
@@ -28,21 +28,21 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td align="right"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
+            <td align="right"><a onclick="filter();" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></a></td>
           </tr>
           <?php if ($customers) { ?>
           <?php foreach ($customers as $customer) { ?>
           <tr>
-            <td class="left"><a onclick="window.open('http://whatismyipaddress.com/ip/<?php echo $customer['ip']; ?>');"><?php echo $customer['ip']; ?></a></td>
+            <td class="left"><a href="http://whatismyipaddress.com/ip/<?php echo $customer['ip']; ?>" target="_blank"><?php echo $customer['ip']; ?></a></td>
             <td class="left"><?php echo $customer['customer']; ?></td>
-            <td class="left"><a onclick="window.open('<?php echo $customer['url']; ?>');"><?php echo implode('<br/>', str_split($customer['url'], 30)); ?></a></td>
+            <td class="left"><a href="<?php echo $customer['url']; ?>" target="_blank"><?php echo implode('<br/>', str_split($customer['url'], 30)); ?></a></td>
             <td class="left"><?php if ($customer['referer']) { ?>
-              <a onclick="window.open('<?php echo $customer['referer']; ?>');"><?php echo implode('<br/>', str_split($customer['referer'], 30)); ?></a>
+              <a href="<?php echo $customer['referer']; ?>" target="_blank"><?php echo implode('<br/>', str_split($customer['referer'], 30)); ?></a>
               <?php } ?></td>
             <td class="left"><?php echo $customer['date_added']; ?></td>
             <td class="right"><?php foreach ($customer['action'] as $action) { ?>
               [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-              <?php } ?></td>            
+              <?php } ?></td>
           </tr>
           <?php } ?>
           <?php } else { ?>
@@ -53,6 +53,7 @@
         </tbody>
       </table>
       <div class="pagination"><?php echo $pagination; ?></div>
+      <div class="results"><?php echo $results; ?></div>
     </div>
   </div>
 </div>

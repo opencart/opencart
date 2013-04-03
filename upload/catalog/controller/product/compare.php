@@ -28,15 +28,13 @@ class ControllerProductCompare extends Controller {
 		$this->data['breadcrumbs'] = array();
 
 		$this->data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),			
-			'separator' => false
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
 		);
 				
 		$this->data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('product/compare'),			
-			'separator' => $this->language->get('text_separator')
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('product/compare')
 		);	
 				
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -65,7 +63,9 @@ class ControllerProductCompare extends Controller {
 		} else {
 			$this->data['success'] = '';
 		}
-								
+		
+		$this->data['review_status'] = $this->config->get('config_review_status');
+		
 		$this->data['products'] = array();
 		
 		$this->data['attribute_groups'] = array();

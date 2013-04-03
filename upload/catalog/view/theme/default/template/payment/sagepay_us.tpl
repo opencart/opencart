@@ -25,17 +25,17 @@
     </tr>
     <tr>
       <td><?php echo $entry_cc_cvv2; ?></td>
-      <td><input type="text" name="cc_cvv2" value="" size="3" /></td>
+      <td><input type="text" name="cc_cvv2" value="" class="input-small" /></td>
     </tr>
   </table>
 </div>
 <div class="buttons">
   <div class="right">
-    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="button" />
+    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn" />
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-confirm').bind('click', function() {
+$('#button-confirm').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=payment/sagepay_us/send',
 		type: 'post',

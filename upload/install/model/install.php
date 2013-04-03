@@ -12,20 +12,20 @@ class ModelInstall extends Model {
 		$lines = file($file);
 		
 		if ($lines) {
-			$query = '';
+			$sql = '';
 
 			foreach($lines as $line) {
 				if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
-					$query .= $line;
+					$sql .= $line;
   
 					if (preg_match('/;\s*$/', $line)) {
-						$query = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $query);
-						$query = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $query);
-						$query = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $query);
+						$sql = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $sql);
+						$sql = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $sql);
+						$sql = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql);
 						
-						$db->query($query);
+						$db->query($sql);
 	
-						$query = '';
+						$sql = '';
 					}
 				}
 			}

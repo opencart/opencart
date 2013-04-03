@@ -3,16 +3,16 @@ final class Front {
 	protected $registry;
 	protected $pre_action = array();
 	protected $error;
-	
+
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
-	
+
 	public function addPreAction($pre_action) {
 		$this->pre_action[] = $pre_action;
 	}
-	
-  	public function dispatch($action, $error) {
+
+ 	public function dispatch($action, $error) {
 		$this->error = $error;
 			
 		foreach ($this->pre_action as $pre_action) {

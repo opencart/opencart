@@ -3,7 +3,7 @@ class ControllerSaleCoupon extends Controller {
 	private $error = array();
      
   	public function index() {
-		$this->load->language('sale/coupon');
+		$this->language->load('sale/coupon');
     	
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -13,7 +13,7 @@ class ControllerSaleCoupon extends Controller {
   	}
   
   	public function insert() {
-    	$this->load->language('sale/coupon');
+    	$this->language->load('sale/coupon');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -45,7 +45,7 @@ class ControllerSaleCoupon extends Controller {
   	}
 
   	public function update() {
-    	$this->load->language('sale/coupon');
+    	$this->language->load('sale/coupon');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -77,7 +77,7 @@ class ControllerSaleCoupon extends Controller {
   	}
 
   	public function delete() {
-    	$this->load->language('sale/coupon');
+    	$this->language->load('sale/coupon');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -110,7 +110,7 @@ class ControllerSaleCoupon extends Controller {
     	$this->getList();
   	}
 
-  	private function getList() {
+  	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -146,15 +146,13 @@ class ControllerSaleCoupon extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 							
 		$this->data['insert'] = $this->url->link('sale/coupon/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -256,10 +254,11 @@ class ControllerSaleCoupon extends Controller {
 		$pagination->total = $coupon_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = HTTPS_SERVER . 'index.php?route=sale/coupon&token=' . $this->session->data['token'] . $url . '&page={page}';
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($coupon_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($coupon_total - $this->config->get('config_admin_limit'))) ? $coupon_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $coupon_total, ceil($coupon_total / $this->config->get('config_admin_limit')));
 
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
@@ -273,7 +272,7 @@ class ControllerSaleCoupon extends Controller {
 		$this->response->setOutput($this->render());
   	}
 
-  	private function getForm() {
+  	protected function getForm() {
     	$this->data['heading_title'] = $this->language->get('heading_title');
 
     	$this->data['text_enabled'] = $this->language->get('text_enabled');
@@ -299,11 +298,20 @@ class ControllerSaleCoupon extends Controller {
 		$this->data['entry_uses_customer'] = $this->language->get('entry_uses_customer');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 
+		$this->data['help_code'] = $this->language->get('help_code');
+		$this->data['help_type'] = $this->language->get('help_type');
+		$this->data['help_logged'] = $this->language->get('help_logged');
+		$this->data['help_total'] = $this->language->get('help_total');
+		$this->data['help_category'] = $this->language->get('help_category');
+		$this->data['help_product'] = $this->language->get('help_product');
+		$this->data['help_uses_total'] = $this->language->get('help_uses_total');
+		$this->data['help_uses_customer'] = $this->language->get('help_uses_customer');
+		
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
-		$this->data['tab_coupon_history'] = $this->language->get('tab_coupon_history');
+		$this->data['tab_history'] = $this->language->get('tab_history');
 
 		$this->data['token'] = $this->session->data['token'];
 	
@@ -360,15 +368,13 @@ class ControllerSaleCoupon extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 									
 		if (!isset($this->request->get['coupon_id'])) {
@@ -478,23 +484,9 @@ class ControllerSaleCoupon extends Controller {
 			$category_info = $this->model_catalog_category->getCategory($category_id);
 			
 			if ($category_info) {
-				$path_data = array();
-				
-				$parts = $this->model_catalog_category->getPath($category_info['parent_id']);
-				
-				foreach ($parts as $part) {
-					$path_data[] = $part['name'];
-				}
-	
-				if ($path_data) {
-					$name = implode(' > ', $path_data) . ' > ' .  $category_info['name'];
-				} else {
-					$name = $category_info['name'];
-				}				
-				
 				$this->data['coupon_category'][] = array(
 					'category_id' => $category_info['category_id'],
-					'name'        => $name
+					'name'        => ($category_info['path'] ? $category_info['path'] . ' &gt; ' : '') . $category_info['name']
 				);
 			}
 		}
@@ -548,7 +540,7 @@ class ControllerSaleCoupon extends Controller {
 		$this->response->setOutput($this->render());		
   	}
 	
-  	private function validateForm() {
+  	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'sale/coupon')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -578,7 +570,7 @@ class ControllerSaleCoupon extends Controller {
     	}
   	}
 
-  	private function validateDelete() {
+  	protected function validateDelete() {
     	if (!$this->user->hasPermission('modify', 'sale/coupon')) {
       		$this->error['warning'] = $this->language->get('error_permission');  
     	}
@@ -630,6 +622,8 @@ class ControllerSaleCoupon extends Controller {
 		$pagination->url = $this->url->link('sale/coupon/history', 'token=' . $this->session->data['token'] . '&coupon_id=' . $this->request->get['coupon_id'] . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($history_total - $this->config->get('config_admin_limit'))) ? $history_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $history_total, ceil($history_total / $this->config->get('config_admin_limit')));
 		
 		$this->template = 'sale/coupon_history.tpl';		
 		

@@ -14,15 +14,13 @@ class ControllerAccountAccount extends Controller {
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	); 
 
       	$this->data['breadcrumbs'][] = array(       	
-        	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', 'SSL')
       	);
 		
 		if (isset($this->session->data['success'])) {
@@ -64,7 +62,7 @@ class ControllerAccountAccount extends Controller {
 		} else {
 			$this->data['reward'] = '';
 		}
-		
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/account/account.tpl';
 		} else {
@@ -79,7 +77,7 @@ class ControllerAccountAccount extends Controller {
 			'common/footer',
 			'common/header'		
 		);
-				
+						
 		$this->response->setOutput($this->render());
   	}
 }

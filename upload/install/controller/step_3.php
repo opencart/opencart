@@ -10,7 +10,7 @@ class ControllerStep3 extends Controller {
 			
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
-			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n";
+			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n\n";
 			
 			$output .= '// HTTPS' . "\n";
 			$output .= 'define(\'HTTPS_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n\n";
@@ -24,7 +24,8 @@ class ControllerStep3 extends Controller {
 			$output .= 'define(\'DIR_CONFIG\', \'' . DIR_OPENCART . 'system/config/\');' . "\n";
 			$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
 			$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
-			$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'download/\');' . "\n";
+			$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'system/download/\');' . "\n";
+			$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART. 'system/modification/\');' . "\n";
 			$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n\n";
 		
 			$output .= '// DB' . "\n";
@@ -60,8 +61,9 @@ class ControllerStep3 extends Controller {
 			$output .= 'define(\'DIR_CONFIG\', \'' . DIR_OPENCART . 'system/config/\');' . "\n";
 			$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
 			$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
-			$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'download/\');' . "\n";
+			$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'system/download/\');' . "\n";
 			$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n";
+			$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART. 'system/modification/\');' . "\n";
 			$output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
@@ -105,7 +107,13 @@ class ControllerStep3 extends Controller {
 		} else {
 			$this->data['error_db_name'] = '';
 		}
-
+		
+		if (isset($this->error['db_prefix'])) {
+			$this->data['error_db_prefix'] = $this->error['db_prefix'];
+		} else {
+			$this->data['error_db_prefix'] = '';
+		}
+		
 		if (isset($this->error['username'])) {
 			$this->data['error_username'] = $this->error['username'];
 		} else {
@@ -159,7 +167,7 @@ class ControllerStep3 extends Controller {
 		if (isset($this->request->post['db_prefix'])) {
 			$this->data['db_prefix'] = html_entity_decode($this->request->post['db_prefix']);
 		} else {
-			$this->data['db_prefix'] = '';
+			$this->data['db_prefix'] = 'oc_';
 		}
 		
 		if (isset($this->request->post['username'])) {
@@ -204,6 +212,10 @@ class ControllerStep3 extends Controller {
 			$this->error['db_name'] = 'Database Name required!';
 		}
 		
+		if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
+			$this->error['db_prefix'] = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and "_"!';
+		}
+				
 		if ($this->request->post['db_driver'] == 'mysql') {
 			if (!$connection = @mysql_connect($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'])) {
 				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';

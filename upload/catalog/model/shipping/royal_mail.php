@@ -1,7 +1,7 @@
 <?php
 class ModelShippingRoyalMail extends Model {
 	function getQuote($address) {
-		$this->load->language('shipping/royal_mail');
+		$this->language->load('shipping/royal_mail');
 		
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('royal_mail_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 	
@@ -379,7 +379,7 @@ class ModelShippingRoyalMail extends Model {
 			}
 						
 			// Standard Parcels
-			if ($this->config->get('royal_mail_standard_parcels_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('royal_mail_standard_parcels_status') && $address['iso_code_2'] == 'GB' && $address['zone_code'] != 'GGY' && $address['zone_code'] != 'JEY' ) {
 				$cost = 0;
 				$insurance = 0;
 				

@@ -25,14 +25,14 @@ class ModelReportReturn extends Model {
 		
 		switch($group) {
 			case 'day';
-				$sql .= " GROUP BY DAY(r.date_added)";
+				$sql .= " GROUP BY YEAR(r.date_added), MONTH(r.date_added), DAY(r.date_added)";
 				break;
 			default:
 			case 'week':
-				$sql .= " GROUP BY WEEK(r.date_added)";
+				$sql .= " GROUP BY YEAR(r.date_added), WEEK(r.date_added)";
 				break;	
 			case 'month':
-				$sql .= " GROUP BY MONTH(r.date_added)";
+				$sql .= " GROUP BY YEAR(r.date_added), MONTH(r.date_added)";
 				break;
 			case 'year':
 				$sql .= " GROUP BY YEAR(r.date_added)";
@@ -65,14 +65,14 @@ class ModelReportReturn extends Model {
 		
 		switch($group) {
 			case 'day';
-				$sql = "SELECT COUNT(DISTINCT DAY(date_added)) AS total FROM `" . DB_PREFIX . "return`";
+				$sql = "SELECT COUNT(DISTINCT YEAR(date_added), MONTH(date_added), DAY(date_added)) AS total FROM `" . DB_PREFIX . "return`";
 				break;
 			default:
 			case 'week':
-				$sql = "SELECT COUNT(DISTINCT WEEK(date_added)) AS total FROM `" . DB_PREFIX . "return`";
+				$sql = "SELECT COUNT(DISTINCT YEAR(date_added), WEEK(date_added)) AS total FROM `" . DB_PREFIX . "return`";
 				break;	
 			case 'month':
-				$sql = "SELECT COUNT(DISTINCT MONTH(date_added)) AS total FROM `" . DB_PREFIX . "return`";
+				$sql = "SELECT COUNT(DISTINCT YEAR(date_added), MONTH(date_added)) AS total FROM `" . DB_PREFIX . "return`";
 				break;
 			case 'year':
 				$sql = "SELECT COUNT(DISTINCT YEAR(date_added)) AS total FROM `" . DB_PREFIX . "return`";

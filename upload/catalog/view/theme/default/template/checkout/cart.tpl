@@ -3,18 +3,18 @@
 <div class="attention"><?php echo $attention; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
 <?php } ?>
 <?php if ($success) { ?>
-<div class="success"><?php echo $success; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+<div class="alert alert-success"><?php echo $success; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
 <?php } ?>
 <?php if ($error_warning) { ?>
-<div class="warning"><?php echo $error_warning; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+<div class="alert alert-error"><?php echo $error_warning; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
 <?php } ?>
 <?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <h1><?php echo $heading_title; ?>
     <?php if ($weight) { ?>
     &nbsp;(<?php echo $weight; ?>)
@@ -52,7 +52,7 @@
               <small><?php echo $product['reward']; ?></small>
               <?php } ?></td>
             <td class="model"><?php echo $product['model']; ?></td>
-            <td class="quantity"><input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" />
+            <td class="quantity"><input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" class="input-mini" />
               &nbsp;
               <input type="image" src="catalog/view/theme/default/image/update.png" alt="<?php echo $button_update; ?>" title="<?php echo $button_update; ?>" />
               &nbsp;<a href="<?php echo $product['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
@@ -65,7 +65,7 @@
             <td class="image"></td>
             <td class="name"><?php echo $vouchers['description']; ?></td>
             <td class="model"></td>
-            <td class="quantity"><input type="text" name="" value="1" size="1" disabled="disabled" />
+            <td class="quantity"><input type="text" name="" value="1" class="input-mini" disabled="disabled" />
               &nbsp;<a href="<?php echo $vouchers['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
             <td class="price"><?php echo $vouchers['amount']; ?></td>
             <td class="total"><?php echo $vouchers['amount']; ?></td>
@@ -129,7 +129,7 @@
         <input type="text" name="coupon" value="<?php echo $coupon; ?>" />
         <input type="hidden" name="next" value="coupon" />
         &nbsp;
-        <input type="submit" value="<?php echo $button_coupon; ?>" class="button" />
+        <input type="submit" value="<?php echo $button_coupon; ?>" class="btn" />
       </form>
     </div>
     <div id="voucher" class="content" style="display: <?php echo ($next == 'voucher' ? 'block' : 'none'); ?>;">
@@ -138,7 +138,7 @@
         <input type="text" name="voucher" value="<?php echo $voucher; ?>" />
         <input type="hidden" name="next" value="voucher" />
         &nbsp;
-        <input type="submit" value="<?php echo $button_voucher; ?>" class="button" />
+        <input type="submit" value="<?php echo $button_voucher; ?>" class="btn" />
       </form>
     </div>
     <div id="reward" class="content" style="display: <?php echo ($next == 'reward' ? 'block' : 'none'); ?>;">
@@ -147,7 +147,7 @@
         <input type="text" name="reward" value="<?php echo $reward; ?>" />
         <input type="hidden" name="next" value="reward" />
         &nbsp;
-        <input type="submit" value="<?php echo $button_reward; ?>" class="button" />
+        <input type="submit" value="<?php echo $button_reward; ?>" class="btn" />
       </form>
     </div>
     <div id="shipping" class="content" style="display: <?php echo ($next == 'shipping' ? 'block' : 'none'); ?>;">
@@ -176,7 +176,7 @@
           <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
         </tr>
       </table>
-      <input type="button" value="<?php echo $button_quote; ?>" id="button-quote" class="button" />
+      <input type="button" value="<?php echo $button_quote; ?>" id="button-quote" class="btn" />
     </div>
   </div>
   <?php } ?>
@@ -191,12 +191,12 @@
     </table>
   </div>
   <div class="buttons">
-    <div class="right"><a href="<?php echo $checkout; ?>" class="button"><?php echo $button_checkout; ?></a></div>
-    <div class="center"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_shopping; ?></a></div>
+    <div class="right"><a href="<?php echo $checkout; ?>" class="btn"><?php echo $button_checkout; ?></a></div>
+    <div class="center"><a href="<?php echo $continue; ?>" class="btn"><?php echo $button_shopping; ?></a></div>
   </div>
   <?php echo $content_bottom; ?></div>
 <script type="text/javascript"><!--
-$('input[name=\'next\']').bind('change', function() {
+$('input[name=\'next\']').on('change', function() {
 	$('.cart-module > div').hide();
 	
 	$('#' + this.value).show();
@@ -204,7 +204,7 @@ $('input[name=\'next\']').bind('change', function() {
 //--></script>
 <?php if ($shipping_status) { ?>
 <script type="text/javascript"><!--
-$('#button-quote').live('click', function() {
+$('#button-quote').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/cart/quote',
 		type: 'post',
@@ -212,18 +212,18 @@ $('#button-quote').live('click', function() {
 		dataType: 'json',		
 		beforeSend: function() {
 			$('#button-quote').attr('disabled', true);
-			$('#button-quote').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-quote').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
 			$('#button-quote').attr('disabled', false);
-			$('.wait').remove();
+			$('.loading').remove();
 		},		
 		success: function(json) {
 			$('.success, .warning, .attention, .error').remove();			
 						
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#notification').html('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+					$('#notification').html('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 					
 					$('.warning').fadeIn('slow');
 					
@@ -279,9 +279,9 @@ $('#button-quote').live('click', function() {
 				html += '  <input type="hidden" name="next" value="shipping" />';
 				
 				<?php if ($shipping_method) { ?>
-				html += '  <input type="submit" value="<?php echo $button_shipping; ?>" id="button-shipping" class="button" />';	
+				html += '  <input type="submit" value="<?php echo $button_shipping; ?>" id="button-shipping" class="btn" />';	
 				<?php } else { ?>
-				html += '  <input type="submit" value="<?php echo $button_shipping; ?>" id="button-shipping" class="button" disabled="disabled" />';	
+				html += '  <input type="submit" value="<?php echo $button_shipping; ?>" id="button-shipping" class="btn" disabled="disabled" />';	
 				<?php } ?>
 							
 				html += '</form>';
@@ -295,7 +295,7 @@ $('#button-quote').live('click', function() {
 					html: html
 				});
 				
-				$('input[name=\'shipping_method\']').bind('change', function() {
+				$('input[name=\'shipping_method\']').on('change', function() {
 					$('#button-shipping').attr('disabled', false);
 				});
 			}
@@ -304,15 +304,15 @@ $('#button-quote').live('click', function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
-$('select[name=\'country_id\']').bind('change', function() {
+$('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/cart/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('select[name=\'country_id\']').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
-			$('.wait').remove();
+			$('.loading').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

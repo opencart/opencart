@@ -10,7 +10,7 @@
 </div>
 <div id="content">
   <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><?php echo $error_warning; ?></div>
   <?php } ?>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <p>1. Please configure your PHP settings to match requirements listed below.</p>
@@ -104,11 +104,23 @@
         </tr>
         <tr>
           <td><?php echo $config_catalog; ?></td>
-          <td><?php echo is_writable($config_catalog) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
+          <td><?php if (!file_exists($config_catalog)) { ?>
+            <span class="bad">Missing</span>
+            <?php } elseif (!is_writable($config_catalog)) { ?>
+            <span class="bad">Unwritable</span>
+            <?php } else { ?>
+            <span class="good">Writable</span>
+            <?php } ?></td>
         </tr>
         <tr>
           <td><?php echo $config_admin; ?></td>
-          <td><?php echo is_writable($config_admin) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
+          <td><?php if (!file_exists($config_admin)) { ?>
+            <span class="bad">Missing</span>
+            <?php } elseif (!is_writable($config_admin)) { ?>
+            <span class="bad">Unwritable</span>
+            <?php } else { ?>
+            <span class="good">Writable</span>
+            <?php } ?></td>
         </tr>
       </table>
     </fieldset>
@@ -128,6 +140,10 @@
           <td><?php echo is_writable($logs) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
         </tr>
         <tr>
+          <td><?php echo $download . '/'; ?></td>
+          <td><?php echo is_writable($download) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
+        </tr>
+        <tr>
           <td><?php echo $image . '/'; ?></td>
           <td><?php echo is_writable($image) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
         </tr>
@@ -139,18 +155,14 @@
           <td><?php echo $image_data . '/'; ?></td>
           <td><?php echo is_writable($image_data) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
         </tr>
-        <tr>
-          <td><?php echo $download . '/'; ?></td>
-          <td><?php echo is_writable($download) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
-        </tr>
       </table>
     </fieldset>
     <div class="buttons">
-      <div class="left"><a href="<?php echo $back; ?>" class="button">Back</a></div>
+      <div class="left"><a href="<?php echo $back; ?>" class="btn">Back</a></div>
       <div class="right">
-        <input type="submit" value="Continue" class="button" />
+        <input type="submit" value="Continue" class="btn" />
       </div>
     </div>
   </form>
 </div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

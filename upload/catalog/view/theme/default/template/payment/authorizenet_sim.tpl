@@ -32,7 +32,7 @@
   <input type="hidden" name="x_relay_response" value="<?php echo $x_relay_response; ?>" />
   <div class="buttons">
     <div class="right">
-      <input type="submit" value="<?php echo $button_confirm; ?>" class="button" />
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn" />
     </div>
   </div>
 </form>

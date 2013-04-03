@@ -1,23 +1,23 @@
 <?php echo $header; ?>
 <?php if ($success) { ?>
-<div class="success"><?php echo $success; ?></div>
+<div class="alert alert-success"><?php echo $success; ?></div>
 <?php } ?>
 <?php if ($error_warning) { ?>
-<div class="warning"><?php echo $error_warning; ?></div>
+<div class="alert alert-error"><?php echo $error_warning; ?></div>
 <?php } ?>
 <?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <h1><?php echo $heading_title; ?></h1>
   <?php echo $text_description; ?>
   <div class="login-content">
     <div class="left">
       <h2><?php echo $text_new_affiliate; ?></h2>
-      <div class="content"><?php echo $text_register_account; ?> <a href="<?php echo $register; ?>" class="button"><?php echo $button_continue; ?></a></div>
+      <div class="content"><?php echo $text_register_account; ?> <a href="<?php echo $register; ?>" class="btn"><?php echo $button_continue; ?></a></div>
     </div>
     <div class="right">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
@@ -33,7 +33,7 @@
           <br />
           <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a><br />
           <br />
-          <input type="submit" value="<?php echo $button_login; ?>" class="button" />
+          <input type="submit" value="<?php echo $button_login; ?>" class="btn" />
           <?php if ($redirect) { ?>
           <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
           <?php } ?>

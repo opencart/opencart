@@ -3,7 +3,7 @@ class ControllerShippingRoyalMail extends Controller {
 	private $error = array(); 
 	
 	public function index() {   
-		$this->load->language('shipping/royal_mail');
+		$this->language->load('shipping/royal_mail');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -30,16 +30,6 @@ class ControllerShippingRoyalMail extends Controller {
 
 		$this->data['entry_rate'] = $this->language->get('entry_rate');
 		$this->data['entry_insurance'] = $this->language->get('entry_insurance');
-		$this->data['entry_airmail_rate_1'] = $this->language->get('entry_airmail_rate_1');
-		$this->data['entry_airmail_rate_2'] = $this->language->get('entry_airmail_rate_2');
-		$this->data['entry_international_signed_rate_1'] = $this->language->get('entry_international_signed_rate_1');
-		$this->data['entry_international_signed_insurance_1'] = $this->language->get('entry_international_signed_insurance_1');
-		$this->data['entry_international_signed_rate_2'] = $this->language->get('entry_international_signed_rate_2');
-		$this->data['entry_international_signed_insurance_2'] = $this->language->get('entry_international_signed_insurance_2');	
-		$this->data['entry_airsure_rate_1'] = $this->language->get('entry_airsure_rate_1');
-		$this->data['entry_airsure_insurance_1'] = $this->language->get('entry_airsure_insurance_1');
-		$this->data['entry_airsure_rate_2'] = $this->language->get('entry_airsure_rate_2');
-		$this->data['entry_airsure_insurance_2'] = $this->language->get('entry_airsure_insurance_2');	
 		$this->data['entry_display_weight'] = $this->language->get('entry_display_weight');
 		$this->data['entry_display_insurance'] = $this->language->get('entry_display_insurance');
 		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
@@ -47,6 +37,21 @@ class ControllerShippingRoyalMail extends Controller {
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		
+		$this->data['help_rate'] = $this->language->get('help_rate');
+		$this->data['help_insurance'] = $this->language->get('help_insurance');
+		$this->data['help_airmail_rate_1'] = $this->language->get('help_airmail_rate_1');
+		$this->data['help_airmail_rate_2'] = $this->language->get('help_airmail_rate_2');
+		$this->data['help_international_signed_rate_1'] = $this->language->get('help_international_signed_rate_1');
+		$this->data['help_international_signed_insurance_1'] = $this->language->get('help_international_signed_insurance_1');
+		$this->data['help_international_signed_rate_2'] = $this->language->get('help_international_signed_rate_2');
+		$this->data['help_international_signed_insurance_2'] = $this->language->get('help_international_signed_insurance_2');
+		$this->data['help_airsure_rate_1'] = $this->language->get('help_airsure_rate_1');
+		$this->data['help_airsure_insurance_1'] = $this->language->get('help_airsure_insurance_1');
+		$this->data['help_airsure_rate_2'] = $this->language->get('help_airsure_rate_2');
+		$this->data['help_airsure_insurance_2'] = $this->language->get('help_airsure_insurance_2');
+		$this->data['help_display_weight'] = $this->language->get('help_display_weight');
+		$this->data['help_display_insurance'] = $this->language->get('help_display_insurance');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -74,21 +79,18 @@ class ControllerShippingRoyalMail extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_shipping'),
-			'href'      => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('text_shipping'),
+			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('shipping/royal_mail', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('shipping/royal_mail', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
 		$this->data['action'] = $this->url->link('shipping/royal_mail', 'token=' . $this->session->data['token'], 'SSL');
@@ -414,12 +416,20 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$this->data['royal_mail_tax_class_id'] = $this->config->get('royal_mail_tax_class_id');
 		}
+		
+		$this->load->model('localisation/tax_class');
+		
+		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
 		if (isset($this->request->post['royal_mail_geo_zone_id'])) {
 			$this->data['royal_mail_geo_zone_id'] = $this->request->post['royal_mail_geo_zone_id'];
 		} else {
 			$this->data['royal_mail_geo_zone_id'] = $this->config->get('royal_mail_geo_zone_id');
 		}
+		
+		$this->load->model('localisation/geo_zone');
+		
+		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 		
 		if (isset($this->request->post['royal_mail_status'])) {
 			$this->data['royal_mail_status'] = $this->request->post['royal_mail_status'];
@@ -433,14 +443,6 @@ class ControllerShippingRoyalMail extends Controller {
 			$this->data['royal_mail_sort_order'] = $this->config->get('royal_mail_sort_order');
 		}				
 
-		$this->load->model('localisation/tax_class');
-		
-		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
-		
-		$this->load->model('localisation/geo_zone');
-		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-
 		$this->template = 'shipping/royal_mail.tpl';
 		$this->children = array(
 			'common/header',
@@ -450,7 +452,7 @@ class ControllerShippingRoyalMail extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
-	private function validate() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'shipping/royal_mail')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

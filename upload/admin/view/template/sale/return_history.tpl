@@ -1,10 +1,10 @@
 <?php if ($error) { ?>
-<div class="warning"><?php echo $error; ?></div>
+<div class="alert alert-error"><?php echo $error; ?></div>
 <?php } ?>
 <?php if ($success) { ?>
-<div class="success"><?php echo $success; ?></div>
+<div class="alert alert-success"><?php echo $success; ?></div>
 <?php } ?>
-<table class="list">
+<table class="table table-striped table-bordered table-hover">
   <thead>
     <tr>
       <td class="left"><b><?php echo $column_date_added; ?></b></td>
@@ -31,3 +31,4 @@
   </tbody>
 </table>
 <div class="pagination"><?php echo $pagination; ?></div>
+<div class="results"><?php echo $results; ?></div>

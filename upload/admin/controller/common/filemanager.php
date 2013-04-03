@@ -3,7 +3,7 @@ class ControllerCommonFileManager extends Controller {
 	private $error = array();
 	
 	public function index() {
-		$this->load->language('common/filemanager');
+		$this->language->load('common/filemanager');
 		
 		$this->data['title'] = $this->language->get('heading_title');
 		
@@ -67,7 +67,7 @@ class ControllerCommonFileManager extends Controller {
 		$json = array();
 		
 		if (isset($this->request->post['directory'])) {
-			$directories = glob(rtrim(DIR_IMAGE . 'data/' . str_replace('../', '', $this->request->post['directory']), '/') . '/*', GLOB_ONLYDIR); 
+			$directories = glob(rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*', GLOB_ONLYDIR); 
 			
 			if ($directories) {
 				$i = 0;
@@ -94,7 +94,7 @@ class ControllerCommonFileManager extends Controller {
 		$json = array();
 		
 		if (!empty($this->request->post['directory'])) {
-			$directory = DIR_IMAGE . 'data/' . str_replace('../', '', $this->request->post['directory']);
+			$directory = DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']);
 		} else {
 			$directory = DIR_IMAGE . 'data/';
 		}
@@ -151,19 +151,19 @@ class ControllerCommonFileManager extends Controller {
 	}	
 	
 	public function create() {
-		$this->load->language('common/filemanager');
+		$this->language->load('common/filemanager');
 				
 		$json = array();
 		
 		if (isset($this->request->post['directory'])) {
 			if (isset($this->request->post['name']) || $this->request->post['name']) {
-				$directory = rtrim(DIR_IMAGE . 'data/' . str_replace('../', '', $this->request->post['directory']), '/');							   
+				$directory = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/');							   
 				
 				if (!is_dir($directory)) {
 					$json['error'] = $this->language->get('error_directory');
 				}
 				
-				if (file_exists($directory . '/' . str_replace('../', '', $this->request->post['name']))) {
+				if (file_exists($directory . '/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['name']))) {
 					$json['error'] = $this->language->get('error_exists');
 				}
 			} else {
@@ -178,7 +178,7 @@ class ControllerCommonFileManager extends Controller {
     	}
 		
 		if (!isset($json['error'])) {	
-			mkdir($directory . '/' . str_replace('../', '', $this->request->post['name']), 0777);
+			mkdir($directory . '/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['name']), 0777);
 			
 			$json['success'] = $this->language->get('text_create');
 		}	
@@ -187,12 +187,12 @@ class ControllerCommonFileManager extends Controller {
 	}
 	
 	public function delete() {
-		$this->load->language('common/filemanager');
+		$this->language->load('common/filemanager');
 		
 		$json = array();
 		
 		if (isset($this->request->post['path'])) {
-			$path = rtrim(DIR_IMAGE . 'data/' . str_replace('../', '', html_entity_decode($this->request->post['path'], ENT_QUOTES, 'UTF-8')), '/');
+			$path = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['path'], ENT_QUOTES, 'UTF-8')), '/');
 			 
 			if (!file_exists($path)) {
 				$json['error'] = $this->language->get('error_select');
@@ -247,12 +247,12 @@ class ControllerCommonFileManager extends Controller {
 	}
 
 	public function move() {
-		$this->load->language('common/filemanager');
+		$this->language->load('common/filemanager');
 		
 		$json = array();
 		
 		if (isset($this->request->post['from']) && isset($this->request->post['to'])) {
-			$from = rtrim(DIR_IMAGE . 'data/' . str_replace('../', '', html_entity_decode($this->request->post['from'], ENT_QUOTES, 'UTF-8')), '/');
+			$from = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['from'], ENT_QUOTES, 'UTF-8')), '/');
 			
 			if (!file_exists($from)) {
 				$json['error'] = $this->language->get('error_missing');
@@ -262,7 +262,7 @@ class ControllerCommonFileManager extends Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 			
-			$to = rtrim(DIR_IMAGE . 'data/' . str_replace('../', '', html_entity_decode($this->request->post['to'], ENT_QUOTES, 'UTF-8')), '/');
+			$to = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['to'], ENT_QUOTES, 'UTF-8')), '/');
 
 			if (!file_exists($to)) {
 				$json['error'] = $this->language->get('error_move');
@@ -289,7 +289,7 @@ class ControllerCommonFileManager extends Controller {
 	}	
 	
 	public function copy() {
-		$this->load->language('common/filemanager');
+		$this->language->load('common/filemanager');
 		
 		$json = array();
 		
@@ -298,7 +298,7 @@ class ControllerCommonFileManager extends Controller {
 				$json['error'] = $this->language->get('error_filename');
 			}
 				
-			$old_name = rtrim(DIR_IMAGE . 'data/' . str_replace('../', '', html_entity_decode($this->request->post['path'], ENT_QUOTES, 'UTF-8')), '/');
+			$old_name = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['path'], ENT_QUOTES, 'UTF-8')), '/');
 			
 			if (!file_exists($old_name) || $old_name == DIR_IMAGE . 'data') {
 				$json['error'] = $this->language->get('error_copy');
@@ -310,7 +310,7 @@ class ControllerCommonFileManager extends Controller {
 				$ext = '';
 			}		
 			
-			$new_name = dirname($old_name) . '/' . str_replace('../', '', html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8') . $ext);
+			$new_name = dirname($old_name) . '/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8') . $ext);
 																			   
 			if (file_exists($new_name)) {
 				$json['error'] = $this->language->get('error_exists');
@@ -373,7 +373,7 @@ class ControllerCommonFileManager extends Controller {
 	}
 	
 	public function rename() {
-		$this->load->language('common/filemanager');
+		$this->language->load('common/filemanager');
 		
 		$json = array();
 		
@@ -382,7 +382,7 @@ class ControllerCommonFileManager extends Controller {
 				$json['error'] = $this->language->get('error_filename');
 			}
 				
-			$old_name = rtrim(DIR_IMAGE . 'data/' . str_replace('../', '', html_entity_decode($this->request->post['path'], ENT_QUOTES, 'UTF-8')), '/');
+			$old_name = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['path'], ENT_QUOTES, 'UTF-8')), '/');
 			
 			if (!file_exists($old_name) || $old_name == DIR_IMAGE . 'data') {
 				$json['error'] = $this->language->get('error_rename');
@@ -394,7 +394,7 @@ class ControllerCommonFileManager extends Controller {
 				$ext = '';
 			}		
 			
-			$new_name = dirname($old_name) . '/' . str_replace('../', '', html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8') . $ext);
+			$new_name = dirname($old_name) . '/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8') . $ext);
 																			   
 			if (file_exists($new_name)) {
 				$json['error'] = $this->language->get('error_exists');
@@ -415,7 +415,7 @@ class ControllerCommonFileManager extends Controller {
 	}
 	
 	public function upload() {
-		$this->load->language('common/filemanager');
+		$this->language->load('common/filemanager');
 		
 		$json = array();
 		
@@ -427,13 +427,13 @@ class ControllerCommonFileManager extends Controller {
 					$json['error'] = $this->language->get('error_filename');
 				}
 					
-				$directory = rtrim(DIR_IMAGE . 'data/' . str_replace('../', '', $this->request->post['directory']), '/');
+				$directory = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/');
 				
 				if (!is_dir($directory)) {
 					$json['error'] = $this->language->get('error_directory');
 				}
 				
-				if ($this->request->files['image']['size'] > 300000) {
+				if ($this->request->files['image']['size'] > $this->config->get('config_image_file_size')) {
 					$json['error'] = $this->language->get('error_file_size');
 				}
 				

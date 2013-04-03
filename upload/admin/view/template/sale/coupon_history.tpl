@@ -1,4 +1,4 @@
-<table class="list">
+<table class="table table-striped table-bordered table-hover">
   <thead>
     <tr>
       <td class="right"><b><?php echo $column_order_id; ?></b></td>
@@ -25,3 +25,4 @@
   </tbody>
 </table>
 <div class="pagination"><?php echo $pagination; ?></div>
+<div class="results"><?php echo $results; ?></div>

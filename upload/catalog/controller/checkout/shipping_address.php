@@ -7,6 +7,7 @@ class ControllerCheckoutShippingAddress extends Controller {
 		$this->data['text_address_new'] = $this->language->get('text_address_new');
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
+		$this->data['text_modify'] = $this->language->get('text_modify');
 
 		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
@@ -20,8 +21,8 @@ class ControllerCheckoutShippingAddress extends Controller {
 	
 		$this->data['button_continue'] = $this->language->get('button_continue');
 			
-		if (isset($this->session->data['shipping_address_id'])) {
-			$this->data['address_id'] = $this->session->data['shipping_address_id'];
+		if (isset($this->session->data['shipping_address']['address_id'])) {
+			$this->data['address_id'] = $this->session->data['shipping_address']['address_id'];
 		} else {
 			$this->data['address_id'] = $this->customer->getAddressId();
 		}
@@ -30,20 +31,20 @@ class ControllerCheckoutShippingAddress extends Controller {
 
 		$this->data['addresses'] = $this->model_account_address->getAddresses();
 
-		if (isset($this->session->data['shipping_postcode'])) {
-			$this->data['postcode'] = $this->session->data['shipping_postcode'];		
+		if (isset($this->session->data['shipping_address']['postcode'])) {
+			$this->data['postcode'] = $this->session->data['shipping_address']['postcode'];		
 		} else {
 			$this->data['postcode'] = '';
 		}
 				
-		if (isset($this->session->data['shipping_country_id'])) {
-			$this->data['country_id'] = $this->session->data['shipping_country_id'];		
+		if (isset($this->session->data['shipping_address']['country_id'])) {
+			$this->data['country_id'] = $this->session->data['shipping_address']['country_id'];		
 		} else {
 			$this->data['country_id'] = $this->config->get('config_country_id');
 		}
 				
-		if (isset($this->session->data['shipping_zone_id'])) {
-			$this->data['zone_id'] = $this->session->data['shipping_zone_id'];		
+		if (isset($this->session->data['shipping_address']['zone_id'])) {
+			$this->data['zone_id'] = $this->session->data['shipping_address']['zone_id'];		
 		} else {
 			$this->data['zone_id'] = '';
 		}
@@ -61,7 +62,7 @@ class ControllerCheckoutShippingAddress extends Controller {
 		$this->response->setOutput($this->render());
   	}	
 	
-	public function validate() {
+	public function save() {
 		$this->language->load('checkout/checkout');
 		
 		$json = array();
@@ -101,7 +102,7 @@ class ControllerCheckoutShippingAddress extends Controller {
 		}
 								
 		if (!$json) {
-			if ($this->request->post['shipping_address'] == 'existing') {
+			if (isset($this->request->post['shipping_address']) && $this->request->post['shipping_address'] == 'existing') {
 				$this->load->model('account/address');
 				
 				if (empty($this->request->post['address_id'])) {
@@ -111,29 +112,15 @@ class ControllerCheckoutShippingAddress extends Controller {
 				}
 						
 				if (!$json) {			
-					$this->session->data['shipping_address_id'] = $this->request->post['address_id'];
-					
 					// Default Shipping Address
 					$this->load->model('account/address');
 
-					$address_info = $this->model_account_address->getAddress($this->request->post['address_id']);
-					
-					if ($address_info) {
-						$this->session->data['shipping_country_id'] = $address_info['country_id'];
-						$this->session->data['shipping_zone_id'] = $address_info['zone_id'];
-						$this->session->data['shipping_postcode'] = $address_info['postcode'];						
-					} else {
-						unset($this->session->data['shipping_country_id']);	
-						unset($this->session->data['shipping_zone_id']);	
-						unset($this->session->data['shipping_postcode']);
-					}
-					
+					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->request->post['address_id']);
+										
 					unset($this->session->data['shipping_method']);							
 					unset($this->session->data['shipping_methods']);
 				}
-			} 
-			
-			if ($this->request->post['shipping_address'] == 'new') {
+			} else {
 				if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 					$json['error']['firstname'] = $this->language->get('error_firstname');
 				}
@@ -162,7 +149,7 @@ class ControllerCheckoutShippingAddress extends Controller {
 					$json['error']['country'] = $this->language->get('error_country');
 				}
 				
-				if ($this->request->post['zone_id'] == '') {
+				if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
 					$json['error']['zone'] = $this->language->get('error_zone');
 				}
 				
@@ -170,10 +157,9 @@ class ControllerCheckoutShippingAddress extends Controller {
 					// Default Shipping Address
 					$this->load->model('account/address');		
 					
-					$this->session->data['shipping_address_id'] = $this->model_account_address->addAddress($this->request->post);
-					$this->session->data['shipping_country_id'] = $this->request->post['country_id'];
-					$this->session->data['shipping_zone_id'] = $this->request->post['zone_id'];
-					$this->session->data['shipping_postcode'] = $this->request->post['postcode'];
+					$address_id = $this->model_account_address->addAddress($this->request->post);
+					
+					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($address_id);
 									
 					unset($this->session->data['shipping_method']);						
 					unset($this->session->data['shipping_methods']);

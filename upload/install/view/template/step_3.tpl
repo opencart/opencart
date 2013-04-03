@@ -10,7 +10,7 @@
 </div>
 <div id="content">
   <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><?php echo $error_warning; ?></div>
   <?php } ?>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <p>1. Please enter your database connection details.</p>
@@ -52,7 +52,11 @@
         </tr>
         <tr>
           <td>Database Prefix:</td>
-          <td><input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" /></td>
+          <td><input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" />
+            <br />
+            <?php if ($error_db_prefix) { ?>
+            <span class="required"><?php echo $error_db_prefix; ?></span>
+            <?php } ?></td>
         </tr>
       </table>
     </fieldset>
@@ -86,9 +90,9 @@
       </table>
     </fieldset>
     <div class="buttons">
-      <div class="left"><a href="<?php echo $back; ?>" class="button">Back</a></div>
+      <div class="left"><a href="<?php echo $back; ?>" class="btn">Back</a></div>
       <div class="right">
-        <input type="submit" value="Continue" class="button" />
+        <input type="submit" value="Continue" class="btn" />
       </div>
     </div>
   </form>

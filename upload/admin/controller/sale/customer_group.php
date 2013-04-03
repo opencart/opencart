@@ -3,7 +3,7 @@ class ControllerSaleCustomerGroup extends Controller {
 	private $error = array();
  
 	public function index() {
-		$this->load->language('sale/customer_group');
+		$this->language->load('sale/customer_group');
  
 		$this->document->setTitle($this->language->get('heading_title'));
  		
@@ -13,7 +13,7 @@ class ControllerSaleCustomerGroup extends Controller {
 	}
 
 	public function insert() {
-		$this->load->language('sale/customer_group');
+		$this->language->load('sale/customer_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -45,7 +45,7 @@ class ControllerSaleCustomerGroup extends Controller {
 	}
 
 	public function update() {
-		$this->load->language('sale/customer_group');
+		$this->language->load('sale/customer_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -77,7 +77,7 @@ class ControllerSaleCustomerGroup extends Controller {
 	}
 
 	public function delete() { 
-		$this->load->language('sale/customer_group');
+		$this->language->load('sale/customer_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -110,7 +110,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		$this->getList();
 	}
 
-	private function getList() {
+	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -146,15 +146,13 @@ class ControllerSaleCustomerGroup extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 							
 		$this->data['insert'] = $this->url->link('sale/customer_group/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -244,10 +242,11 @@ class ControllerSaleCustomerGroup extends Controller {
 		$pagination->total = $customer_group_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 		
 		$this->data['pagination'] = $pagination->render();				
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($customer_group_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($customer_group_total - $this->config->get('config_admin_limit'))) ? $customer_group_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $customer_group_total, ceil($customer_group_total / $this->config->get('config_admin_limit')));
 
 		$this->data['sort'] = $sort; 
 		$this->data['order'] = $order;
@@ -261,7 +260,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		$this->response->setOutput($this->render());
  	}
 
-	private function getForm() {
+	protected function getForm() {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		
 		$this->data['text_yes'] = $this->language->get('text_yes');
@@ -270,11 +269,9 @@ class ControllerSaleCustomerGroup extends Controller {
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_approval'] = $this->language->get('entry_approval');
-		$this->data['entry_company_id_display'] = $this->language->get('entry_company_id_display');
-		$this->data['entry_company_id_required'] = $this->language->get('entry_company_id_required');
-		$this->data['entry_tax_id_display'] = $this->language->get('entry_tax_id_display');
-		$this->data['entry_tax_id_required'] = $this->language->get('entry_tax_id_required');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		
+		$this->data['help_approval'] = $this->language->get('help_approval');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -308,15 +305,13 @@ class ControllerSaleCustomerGroup extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 			
 		if (!isset($this->request->get['customer_group_id'])) {
@@ -350,39 +345,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		} else {
 			$this->data['approval'] = '';
 		}	
-					
-		if (isset($this->request->post['company_id_display'])) {
-			$this->data['company_id_display'] = $this->request->post['company_id_display'];
-		} elseif (!empty($customer_group_info)) {
-			$this->data['company_id_display'] = $customer_group_info['company_id_display'];
-		} else {
-			$this->data['company_id_display'] = '';
-		}			
-			
-		if (isset($this->request->post['company_id_required'])) {
-			$this->data['company_id_required'] = $this->request->post['company_id_required'];
-		} elseif (!empty($customer_group_info)) {
-			$this->data['company_id_required'] = $customer_group_info['company_id_required'];
-		} else {
-			$this->data['company_id_required'] = '';
-		}		
-		
-		if (isset($this->request->post['tax_id_display'])) {
-			$this->data['tax_id_display'] = $this->request->post['tax_id_display'];
-		} elseif (!empty($customer_group_info)) {
-			$this->data['tax_id_display'] = $customer_group_info['tax_id_display'];
-		} else {
-			$this->data['tax_id_display'] = '';
-		}			
-			
-		if (isset($this->request->post['tax_id_required'])) {
-			$this->data['tax_id_required'] = $this->request->post['tax_id_required'];
-		} elseif (!empty($customer_group_info)) {
-			$this->data['tax_id_required'] = $customer_group_info['tax_id_required'];
-		} else {
-			$this->data['tax_id_required'] = '';
-		}	
-		
+				
 		if (isset($this->request->post['sort_order'])) {
 			$this->data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($customer_group_info)) {
@@ -400,7 +363,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		$this->response->setOutput($this->render()); 
 	}
 
-	private function validateForm() {
+	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'sale/customer_group')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -418,7 +381,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		}
 	}
 
-	private function validateDelete() {
+	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'sale/customer_group')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

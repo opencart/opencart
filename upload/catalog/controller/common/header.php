@@ -32,31 +32,6 @@ class ControllerCommonHeader extends Controller {
 			$this->data['logo'] = '';
 		}		
 		
-		// Whos Online
-		if ($this->config->get('config_customer_online')) {
-			$this->load->model('tool/online');
-	
-			if (isset($this->request->server['REMOTE_ADDR'])) {
-				$ip = $this->request->server['REMOTE_ADDR'];	
-			} else {
-				$ip = ''; 
-			}
-			
-			if (isset($this->request->server['HTTP_HOST']) && isset($this->request->server['REQUEST_URI'])) {
-				$url = 'http://' . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI'];	
-			} else {
-				$url = '';
-			}
-			
-			if (isset($this->request->server['HTTP_REFERER'])) {
-				$referer = $this->request->server['HTTP_REFERER'];	
-			} else {
-				$referer = '';
-			}
-						
-			$this->model_tool_online->whosonline($ip, $this->customer->getId(), $url, $referer);
-		}
-				
 		$this->language->load('common/header');
 		
 		$this->data['text_home'] = $this->language->get('text_home');
@@ -75,10 +50,41 @@ class ControllerCommonHeader extends Controller {
 		$this->data['shopping_cart'] = $this->url->link('checkout/cart');
 		$this->data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
 		
-		if (isset($this->request->get['filter_name'])) {
-			$this->data['filter_name'] = $this->request->get['filter_name'];
+		// Daniel's robot detector
+		$status = true;
+		
+		if (isset($this->request->server['HTTP_USER_AGENT'])) {
+			$robots = explode("\n", trim($this->config->get('config_robots')));
+
+			foreach ($robots as $robot) {
+				if ($robot && strpos($this->request->server['HTTP_USER_AGENT'], trim($robot)) !== false) {
+					$status = false;
+
+					break;
+				}
+			}
+		}
+		
+		// A dirty hack to try to set a cookie for the multi-store feature
+		$this->load->model('setting/store');
+		
+		$this->data['stores'] = array();
+		
+		if ($this->config->get('config_shared') && $status) {
+			$this->data['stores'][] = $server . 'catalog/view/javascript/crossdomain.php?session_id=' . $this->session->getId();
+			
+			$stores = $this->model_setting_store->getStores();
+					
+			foreach ($stores as $store) {
+				$this->data['stores'][] = $store['url'] . 'catalog/view/javascript/crossdomain.php?session_id=' . $this->session->getId();
+			}
+		}
+				
+		// Search		
+		if (isset($this->request->get['search'])) {
+			$this->data['search'] = $this->request->get['search'];
 		} else {
-			$this->data['filter_name'] = '';
+			$this->data['search'] = '';
 		}
 		
 		// Menu
@@ -103,10 +109,8 @@ class ControllerCommonHeader extends Controller {
 						'filter_sub_category' => true
 					);
 					
-					$product_total = $this->model_catalog_product->getTotalProducts($data);
-									
 					$children_data[] = array(
-						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),
+						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($data) . ')' : ''),
 						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
 					);						
 				}

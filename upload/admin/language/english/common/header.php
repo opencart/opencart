@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']                    = 'Administration';
+$_['heading_title']                    = 'OpenCart';
 
 // Text
 $_['text_affiliate']                   = 'Affiliates';
@@ -16,7 +16,8 @@ $_['text_coupon']                      = 'Coupons';
 $_['text_currency']                    = 'Currencies';
 $_['text_customer']                    = 'Customers';
 $_['text_customer_group']              = 'Customer Groups';
-$_['text_customer_blacklist']          = 'IP Blacklist';
+$_['text_customer_ban_ip']             = 'Banned IP';
+$_['text_custom_field']                = 'Custom Fields';
 $_['text_dashboard']                   = 'Dashboard';
 $_['text_design']                      = 'Design';
 $_['text_download']                    = 'Downloads';
@@ -28,13 +29,14 @@ $_['text_front']                       = 'Store Front';
 $_['text_geo_zone']                    = 'Geo Zones';
 $_['text_help']                        = 'Help';
 $_['text_information']                 = 'Information';
+$_['text_installer']                   = 'Extension Installer';
 $_['text_language']                    = 'Languages';
 $_['text_layout']                      = 'Layouts';
 $_['text_localisation']                = 'Localisation';
-$_['text_logged']                      = 'You are logged in as <span>%s</span>';
+$_['text_location']                    = 'Store Location';
 $_['text_logout']                      = 'Logout';
 $_['text_contact']                     = 'Mail';
-$_['text_manager']                     = 'Extension Manager';
+$_['text_modification']                = 'Modifications';
 $_['text_manufacturer']                = 'Manufacturers';
 $_['text_module']                      = 'Modules';
 $_['text_option']                      = 'Options';

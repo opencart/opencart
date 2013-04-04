@@ -16,27 +16,27 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_vendor; ?></label>
+          <label class="control-label" for="input-vendor"><span class="required">*</span> <?php echo $entry_vendor; ?></label>
           <div class="controls">
-            <input type="text" name="sagepay_vendor" value="<?php echo $sagepay_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" />
+            <input type="text" name="sagepay_vendor" value="<?php echo $sagepay_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="input-vendor" />
             <?php if ($error_vendor) { ?>
             <span class="error"><?php echo $error_vendor; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_password; ?></label>
+          <label class="control-label" for="input-password"><span class="required">*</span> <?php echo $entry_password; ?></label>
           <div class="controls">
-            <input type="text" name="sagepay_password" value="<?php echo $sagepay_password; ?>" placeholder="<?php echo $entry_password; ?>" />
+            <input type="text" name="sagepay_password" value="<?php echo $sagepay_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_test; ?></label>
+          <label class="control-label" for="input-test"><?php echo $entry_test; ?></label>
           <div class="controls">
-            <select name="sagepay_test">
+            <select name="sagepay_test" id="input-test">
               <?php if ($sagepay_test == 'sim') { ?>
               <option value="sim" selected="selected"><?php echo $text_sim; ?></option>
               <?php } else { ?>
@@ -56,9 +56,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_transaction; ?></label>
+          <label class="control-label" for="input-transaction"><?php echo $entry_transaction; ?></label>
           <div class="controls">
-            <select name="sagepay_transaction">
+            <select name="sagepay_transaction" id="input-transaction">
               <?php if ($sagepay_transaction == 'PAYMENT') { ?>
               <option value="PAYMENT" selected="selected"><?php echo $text_payment; ?></option>
               <?php } else { ?>
@@ -100,7 +100,7 @@
         <div class="control-group">
           <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
           <div class="controls">
-            <select name="sagepay_geo_zone_id">
+            <select name="sagepay_geo_zone_id" id="input-geo-zone">
               <option value="0"><?php echo $text_all_zones; ?></option>
               <?php foreach ($geo_zones as $geo_zone) { ?>
               <?php if ($geo_zone['geo_zone_id'] == $sagepay_geo_zone_id) { ?>
@@ -115,7 +115,7 @@
         <div class="control-group">
           <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="controls">
-            <select name="sagepay_status">
+            <select name="sagepay_status" id="input-status">
               <?php if ($sagepay_status) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
               <option value="0"><?php echo $text_disabled; ?></option>
@@ -129,7 +129,7 @@
         <div class="control-group">
           <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="sagepay_sort_order" value="<?php echo $sagepay_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
+            <input type="text" name="sagepay_sort_order" value="<?php echo $sagepay_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
           </div>
         </div>
       </form>

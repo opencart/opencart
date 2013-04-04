@@ -16,18 +16,18 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_merchant_id; ?></label>
+          <label class="control-label" for="input-merchant-id"><span class="required">*</span> <?php echo $entry_merchant_id; ?></label>
           <div class="controls">
-            <input type="text" name="sagepay_us_merchant_id" value="<?php echo $sagepay_us_merchant_id; ?>" placeholder="<?php echo $entry_merchant_id; ?>" />
+            <input type="text" name="sagepay_us_merchant_id" value="<?php echo $sagepay_us_merchant_id; ?>" placeholder="<?php echo $entry_merchant_id; ?>" id="input-merchant-id" />
             <?php if ($error_merchant_id) { ?>
             <span class="error"><?php echo $error_merchant_id; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_merchant_key; ?></label>
+          <label class="control-label" for="input-merchant-key"><span class="required">*</span> <?php echo $entry_merchant_key; ?></label>
           <div class="controls">
-            <input type="text" name="sagepay_us_merchant_key" value="<?php echo $sagepay_us_merchant_key; ?>" placeholder="<?php echo $entry_merchant_key; ?>" />
+            <input type="text" name="sagepay_us_merchant_key" value="<?php echo $sagepay_us_merchant_key; ?>" placeholder="<?php echo $entry_merchant_key; ?>" id="input-merchant-key" />
             <?php if ($error_merchant_key) { ?>
             <span class="error"><?php echo $error_merchant_key; ?></span>
             <?php } ?>
@@ -56,7 +56,7 @@
         <div class="control-group">
           <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
           <div class="controls">
-            <select name="sagepay_us_geo_zone_id">
+            <select name="sagepay_us_geo_zone_id" id="input-geo-zone">
               <option value="0"><?php echo $text_all_zones; ?></option>
               <?php foreach ($geo_zones as $geo_zone) { ?>
               <?php if ($geo_zone['geo_zone_id'] == $sagepay_us_geo_zone_id) { ?>

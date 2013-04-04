@@ -24,90 +24,90 @@
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
             <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
+              <label class="control-label" for="input-firstname"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
               <div class="controls">
-                <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" />
+                <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
                 <?php if ($error_firstname) { ?>
                 <span class="error"><?php echo $error_firstname; ?></span>
                 <?php } ?>
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
+              <label class="control-label" for="input-lastname"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
               <div class="controls">
-                <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" />
+                <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
                 <?php if ($error_lastname) { ?>
                 <span class="error"><?php echo $error_lastname; ?></span>
                 <?php } ?>
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_email; ?></label>
+              <label class="control-label" for="input-email"><span class="required">*</span> <?php echo $entry_email; ?></label>
               <div class="controls">
-                <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" />
+                <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
                 <?php if ($error_email) { ?>
                 <span class="error"><?php echo $error_email; ?></span>
                 <?php  } ?>
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_telephone; ?></label>
+              <label class="control-label" for="input-telephone"><span class="required">*</span> <?php echo $entry_telephone; ?></label>
               <div class="controls">
-                <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" />
+                <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
                 <?php if ($error_telephone) { ?>
                 <span class="error"><?php echo $error_telephone; ?></span>
                 <?php  } ?>
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_fax; ?></label>
+              <label class="control-label" for="input-fax"><?php echo $entry_fax; ?></label>
               <div class="controls">
-                <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" />
+                <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" />
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_company; ?></label>
+              <label class="control-label" for="input-company"><?php echo $entry_company; ?></label>
               <div class="controls">
-                <input type="text" name="company" value="<?php echo $company; ?>" placeholder="<?php echo $entry_company; ?>" />
+                <input type="text" name="company" value="<?php echo $company; ?>" placeholder="<?php echo $entry_company; ?>" id="input-company" />
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_address_1; ?></label>
+              <label class="control-label" for="input-address-1"><span class="required">*</span> <?php echo $entry_address_1; ?></label>
               <div class="controls">
-                <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" />
+                <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" />
                 <?php if ($error_address_1) { ?>
                 <span class="error"><?php echo $error_address_1; ?></span>
                 <?php  } ?>
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_address_2; ?></label>
+              <label class="control-label" for="input-address-2"><?php echo $entry_address_2; ?></label>
               <div class="controls">
-                <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="<?php echo $entry_address_2; ?>" />
+                <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2" />
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_city; ?></label>
+              <label class="control-label" for="input-city"><span class="required">*</span> <?php echo $entry_city; ?></label>
               <div class="controls">
-                <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" />
+                <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" />
                 <?php if ($error_city) { ?>
                 <span class="error"><?php echo $error_city ?></span>
                 <?php  } ?>
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></label>
+              <label class="control-label" for="input-postcode"><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></label>
               <div class="controls">
-                <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" />
+                <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" />
                 <?php if ($error_postcode) { ?>
                 <span class="error"><?php echo $error_postcode ?></span>
                 <?php  } ?>
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_country; ?></label>
+              <label class="control-label" for="input-country"><span class="required">*</span> <?php echo $entry_country; ?></label>
               <div class="controls">
-                <select name="country_id">
+                <select name="country_id" id="input-country">
                   <option value="false"><?php echo $text_select; ?></option>
                   <?php foreach ($countries as $country) { ?>
                   <?php if ($country['country_id'] == $country_id) { ?>
@@ -123,9 +123,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_zone; ?></label>
+              <label class="control-label" for="input-zone"><span class="required">*</span> <?php echo $entry_zone; ?></label>
               <div class="controls">
-                <select name="zone_id">
+                <select name="zone_id" id="input-zone">
                 </select>
                 <?php if ($error_zone) { ?>
                 <span class="error"><?php echo $error_zone; ?></span>
@@ -133,9 +133,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_code; ?></label>
+              <label class="control-label" for="input-code"><span class="required">*</span> <?php echo $entry_code; ?></label>
               <div class="controls">
-                <input type="code" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" />
+                <input type="code" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
                 <span class="help-block"><?php echo $help_code; ?></span>
                 <?php if ($error_code) { ?>
                 <span class="error"><?php echo $error_code; ?></span>
@@ -143,18 +143,18 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_password; ?></label>
+              <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
               <div class="controls">
-                <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>"  />
+                <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password"  />
                 <?php if ($error_password) { ?>
                 <span class="error"><?php echo $error_password; ?></span>
                 <?php  } ?>
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_confirm; ?></label>
+              <label class="control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
               <div class="controls">
-                <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" />
+                <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" id="input-confirm" />
                 <?php if ($error_confirm) { ?>
                 <span class="error"><?php echo $error_confirm; ?></span>
                 <?php  } ?>
@@ -163,7 +163,7 @@
             <div class="control-group">
               <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
               <div class="controls">
-                <select name="status">
+                <select name="status" id="input-status">
                   <?php if ($status) { ?>
                   <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                   <option value="0"><?php echo $text_disabled; ?></option>
@@ -177,19 +177,19 @@
           </div>
           <div class="tab-pane" id="tab-payment">
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_commission; ?></label>
+              <label class="control-label" for="input-commission"><?php echo $entry_commission; ?></label>
               <div class="controls">
-                <input type="text" name="commission" value="<?php echo $commission; ?>" placeholder="<?php echo $entry_commission; ?>" />
+                <input type="text" name="commission" value="<?php echo $commission; ?>" placeholder="<?php echo $entry_commission; ?>" id="input-commission" />
                 <span class="help-block"><?php echo $help_commission; ?></span></div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_tax; ?></label>
+              <label class="control-label" for="input-tax"><?php echo $entry_tax; ?></label>
               <div class="controls">
-                <input type="text" name="tax" value="<?php echo $tax; ?>" placeholder="<?php echo $entry_tax; ?>" />
+                <input type="text" name="tax" value="<?php echo $tax; ?>" placeholder="<?php echo $entry_tax; ?>" id="input-tax" />
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_payment; ?></label>
+              <div class="control-label"><?php echo $entry_payment; ?></div>
               <div class="controls">
                 <label class="radio">
                   <?php if ($payment == 'cheque') { ?>
@@ -216,49 +216,49 @@
             </div>
             <div id="payment-cheque" class="payment">
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_cheque; ?></label>
+                <label class="control-label" for="input-cheque"><?php echo $entry_cheque; ?></label>
                 <div class="controls">
-                  <input type="text" name="cheque" value="<?php echo $cheque; ?>" placeholder="<?php echo $entry_cheque; ?>" />
+                  <input type="text" name="cheque" value="<?php echo $cheque; ?>" placeholder="<?php echo $entry_cheque; ?>" id="input-cheque" />
                 </div>
               </div>
             </div>
             <div id="payment-paypal" class="payment">
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_paypal; ?></label>
+                <label class="control-label" for="input-paypal"><?php echo $entry_paypal; ?></label>
                 <div class="controls">
-                  <input type="text" name="paypal" value="<?php echo $paypal; ?>" placeholder="<?php echo $entry_paypal; ?>" />
+                  <input type="text" name="paypal" value="<?php echo $paypal; ?>" placeholder="<?php echo $entry_paypal; ?>" id="input-paypal" />
                 </div>
               </div>
             </div>
             <div id="payment-bank" class="payment">
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_bank_name; ?></label>
+                <label class="control-label" for="input-bank-name"><?php echo $entry_bank_name; ?></label>
                 <div class="controls">
-                  <input type="text" name="bank_name" value="<?php echo $bank_name; ?>" placeholder="<?php echo $entry_bank_name; ?>" />
+                  <input type="text" name="bank_name" value="<?php echo $bank_name; ?>" placeholder="<?php echo $entry_bank_name; ?>" id="input-bank-name" />
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_bank_branch_number; ?></label>
+                <label class="control-label" for="input-bank-branch-number"><?php echo $entry_bank_branch_number; ?></label>
                 <div class="controls">
-                  <input type="text" name="bank_branch_number" value="<?php echo $bank_branch_number; ?>" placeholder="<?php echo $entry_bank_branch_number; ?>" />
+                  <input type="text" name="bank_branch_number" value="<?php echo $bank_branch_number; ?>" placeholder="<?php echo $entry_bank_branch_number; ?>" id="input-bank-branch-number" />
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_bank_swift_code; ?></label>
+                <label class="control-label" for="input-bank-swift-code"><?php echo $entry_bank_swift_code; ?></label>
                 <div class="controls">
-                  <input type="text" name="bank_swift_code" value="<?php echo $bank_swift_code; ?>" placeholder="<?php echo $entry_bank_swift_code; ?>" />
+                  <input type="text" name="bank_swift_code" value="<?php echo $bank_swift_code; ?>" placeholder="<?php echo $entry_bank_swift_code; ?>" id="input-bank-swift-code" />
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_bank_account_name; ?></label>
+                <label class="control-label" for="input-bank-account-name"><span class="required">*</span> <?php echo $entry_bank_account_name; ?></label>
                 <div class="controls">
-                  <input type="text" name="bank_account_name" value="<?php echo $bank_account_name; ?>" placeholder="<?php echo $entry_bank_account_name; ?>" />
+                  <input type="text" name="bank_account_name" value="<?php echo $bank_account_name; ?>" placeholder="<?php echo $entry_bank_account_name; ?>" id="input-bank-account-name" />
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_bank_account_number; ?></label>
+                <label class="control-label" for="input-bank-account-number"><span class="required">*</span> <?php echo $entry_bank_account_number; ?></label>
                 <div class="controls">
-                  <input type="text" name="bank_account_number" value="<?php echo $bank_account_number; ?>" placeholder="<?php echo $entry_bank_account_number; ?>" />
+                  <input type="text" name="bank_account_number" value="<?php echo $bank_account_number; ?>" placeholder="<?php echo $entry_bank_account_number; ?>" id="input-bank-account-number" />
                 </div>
               </div>
             </div>
@@ -266,15 +266,15 @@
           <?php if ($affiliate_id) { ?>
           <div class="tab-pane" id="tab-transaction">
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_description; ?></label>
+              <label class="control-label" for="input-description"><?php echo $entry_description; ?></label>
               <div class="controls">
-                <input type="text" name="description" value="" placeholder="<?php echo $entry_description; ?>" />
+                <input type="text" name="description" value="" placeholder="<?php echo $entry_description; ?>" id="input-description" />
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_amount; ?></label>
+              <label class="control-label" for="input-amount"><?php echo $entry_amount; ?></label>
               <div class="controls">
-                <input type="text" name="amount" value="" placeholder="<?php echo $entry_amount; ?>" />
+                <input type="text" name="amount" value="" placeholder="<?php echo $entry_amount; ?>" id="input-amount" />
               </div>
             </div>
             <a id="button-reward" class="btn" onclick="addTransaction();"><span><?php echo $button_add_transaction; ?></span></a>

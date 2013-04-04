@@ -16,25 +16,25 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_account; ?></label>
+          <label class="control-label" for="input-account"><?php echo $entry_account; ?></label>
           <div class="controls">
-            <input type="text" name="twocheckout_account" value="<?php echo $twocheckout_account; ?>" placeholder="<?php echo $entry_account; ?>" />
+            <input type="text" name="twocheckout_account" value="<?php echo $twocheckout_account; ?>" placeholder="<?php echo $entry_account; ?>" id="input-account" />
             <?php if ($error_account) { ?>
             <span class="error"><?php echo $error_account; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_secret; ?></label>
+          <label class="control-label" for="input-secret"><?php echo $entry_secret; ?></label>
           <div class="controls">
-            <input type="text" name="twocheckout_secret" value="<?php echo $twocheckout_secret; ?>" placeholder="<?php echo $entry_secret; ?>" />
+            <input type="text" name="twocheckout_secret" value="<?php echo $twocheckout_secret; ?>" placeholder="<?php echo $entry_secret; ?>" id="input-secret" />
             <?php if ($error_secret) { ?>
             <span class="error"><?php echo $error_secret; ?></span>
             <?php } ?>
             <span class="help-block"><?php echo $help_secret; ?></span></div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_test; ?></label>
+          <label class="control-label"><?php echo $entry_test; ?></label>
           <div class="controls">
             <label class="radio inline">
               <?php if ($twocheckout_test) { ?>
@@ -79,7 +79,7 @@
         <div class="control-group">
           <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
           <div class="controls">
-            <select name="twocheckout_geo_zone_id">
+            <select name="twocheckout_geo_zone_id" id="input-geo-zone">
               <option value="0"><?php echo $text_all_zones; ?></option>
               <?php foreach ($geo_zones as $geo_zone) { ?>
               <?php if ($geo_zone['geo_zone_id'] == $twocheckout_geo_zone_id) { ?>
@@ -94,7 +94,7 @@
         <div class="control-group">
           <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="controls">
-            <select name="twocheckout_status">
+            <select name="twocheckout_status" id="input-status">
               <?php if ($twocheckout_status) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
               <option value="0"><?php echo $text_disabled; ?></option>
@@ -108,7 +108,7 @@
         <div class="control-group">
           <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="twocheckout_sort_order" value="<?php echo $twocheckout_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
+            <input type="text" name="twocheckout_sort_order" value="<?php echo $twocheckout_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
           </div>
         </div>
       </form>

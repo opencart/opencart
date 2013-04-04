@@ -16,34 +16,34 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_username; ?></label>
+          <label class="control-label" for="input-username"><span class="required">*</span> <?php echo $entry_username; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_username" value="<?php echo $pp_pro_username; ?>" placeholder="<?php echo $entry_username; ?>" />
+            <input type="text" name="pp_pro_username" value="<?php echo $pp_pro_username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" />
             <?php if ($error_username) { ?>
             <span class="error"><?php echo $error_username; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_password; ?></label>
+          <label class="control-label" for="input-password"><span class="required">*</span> <?php echo $entry_password; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_password" value="<?php echo $pp_pro_password; ?>" placeholder="<?php echo $entry_password; ?>" />
+            <input type="text" name="pp_pro_password" value="<?php echo $pp_pro_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_signature; ?></label>
+          <label class="control-label" for="input-signature"><span class="required">*</span> <?php echo $entry_signature; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_signature" value="<?php echo $pp_pro_signature; ?>" placeholder="<?php echo $entry_signature; ?>" />
+            <input type="text" name="pp_pro_signature" value="<?php echo $pp_pro_signature; ?>" placeholder="<?php echo $entry_signature; ?>" id="input-signature" />
             <?php if ($error_signature) { ?>
             <span class="error"><?php echo $error_signature; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_test; ?></label>
+          <div class="control-label"><?php echo $entry_test; ?></div>
           <div class="controls">
             <label class="radio inline">
               <?php if ($pp_pro_test) { ?>
@@ -66,9 +66,9 @@
             <span class="help-block"><?php echo $help_test; ?></span></div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_transaction; ?></label>
+          <label class="control-label" for="input-transaction"><?php echo $entry_transaction; ?></label>
           <div class="controls">
-            <select name="pp_pro_transaction">
+            <select name="pp_pro_transaction" id="input-transaction">
               <?php if (!$pp_pro_transaction) { ?>
               <option value="0" selected="selected"><?php echo $text_authorization; ?></option>
               <?php } else { ?>
@@ -105,7 +105,7 @@
         <div class="control-group">
           <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
           <div class="controls">
-            <select name="pp_pro_geo_zone_id">
+            <select name="pp_pro_geo_zone_id" id="input-geo-zone">
               <option value="0"><?php echo $text_all_zones; ?></option>
               <?php foreach ($geo_zones as $geo_zone) { ?>
               <?php if ($geo_zone['geo_zone_id'] == $pp_pro_geo_zone_id) { ?>
@@ -134,7 +134,7 @@
         <div class="control-group">
           <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="pp_pro_sort_order" value="<?php echo $pp_pro_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
+            <input type="text" name="pp_pro_sort_order" value="<?php echo $pp_pro_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
           </div>
         </div>
       </form>

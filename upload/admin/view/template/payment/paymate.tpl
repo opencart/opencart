@@ -16,18 +16,18 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_username; ?></label>
+          <label class="control-label" for="input-username"><span class="required">*</span> <?php echo $entry_username; ?></label>
           <div class="controls">
-            <input type="text" name="paymate_username" value="<?php echo $paymate_username; ?>" placeholder="<?php echo $entry_username; ?>" />
+            <input type="text" name="paymate_username" value="<?php echo $paymate_username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" />
             <?php if ($error_username) { ?>
             <span class="error"><?php echo $error_username; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_password; ?></label>
+          <label class="control-label" for="input-password"><span class="required">*</span> <?php echo $entry_password; ?></label>
           <div class="controls">
-            <input type="text" name="paymate_password" value="<?php echo $paymate_password; ?>" placeholder="<?php echo $entry_password; ?>" />
+            <input type="text" name="paymate_password" value="<?php echo $paymate_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
             <span class="help-block"><?php echo $help_password; ?></span>
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_test; ?></label>
+          <div class="control-label"><?php echo $entry_test; ?></div>
           <div class="controls">
             <label class="radio inline">
               <?php if ($paymate_test) { ?>
@@ -80,7 +80,7 @@
         <div class="control-group">
           <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
           <div class="controls">
-            <select name="paymate_geo_zone_id">
+            <select name="paymate_geo_zone_id" id="input-geo-zone">
               <option value="0"><?php echo $text_all_zones; ?></option>
               <?php foreach ($geo_zones as $geo_zone) { ?>
               <?php if ($geo_zone['geo_zone_id'] == $paymate_geo_zone_id) { ?>
@@ -95,7 +95,7 @@
         <div class="control-group">
           <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="controls">
-            <select name="paymate_status">
+            <select name="paymate_status" id="input-status">
               <?php if ($paymate_status) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
               <option value="0"><?php echo $text_disabled; ?></option>
@@ -109,7 +109,7 @@
         <div class="control-group">
           <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="paymate_sort_order" value="<?php echo $paymate_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
+            <input type="text" name="paymate_sort_order" value="<?php echo $paymate_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
           </div>
         </div>
       </form>

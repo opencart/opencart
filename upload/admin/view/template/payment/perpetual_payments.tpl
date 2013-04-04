@@ -16,25 +16,25 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_auth_id; ?></label>
+          <label class="control-label" for="input-auth-id"><span class="required">*</span> <?php echo $entry_auth_id; ?></label>
           <div class="controls">
-            <input type="text" name="perpetual_payments_auth_id" value="<?php echo $perpetual_payments_auth_id; ?>" placeholder="<?php echo $entry_auth_id; ?>" />
+            <input type="text" name="perpetual_payments_auth_id" value="<?php echo $perpetual_payments_auth_id; ?>" placeholder="<?php echo $entry_auth_id; ?>" id="input-auth-id" />
             <?php if ($error_auth_id) { ?>
             <span class="error"><?php echo $error_auth_id; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_auth_pass; ?></label>
+          <label class="control-label" for="input-auth-pass"><span class="required">*</span> <?php echo $entry_auth_pass; ?></label>
           <div class="controls">
-            <input type="text" name="perpetual_payments_auth_pass" value="<?php echo $perpetual_payments_auth_pass; ?>" placeholder="<?php echo $entry_auth_pass; ?>" />
+            <input type="text" name="perpetual_payments_auth_pass" value="<?php echo $perpetual_payments_auth_pass; ?>" placeholder="<?php echo $entry_auth_pass; ?>" id="input-auth-pass" />
             <?php if ($error_auth_pass) { ?>
             <span class="error"><?php echo $error_auth_pass; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_test; ?></label>
+          <div class="control-label"><?php echo $entry_test; ?></div>
           <div class="controls">
             <label class="radio inline">
               <?php if ($perpetual_payments_test) { ?>
@@ -54,7 +54,7 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            <span class="help-block"><?php echo $help_test; ?></span> </div>
+            <span class="help-block"><?php echo $help_test; ?></span></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
@@ -79,7 +79,7 @@
         <div class="control-group">
           <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
           <div class="controls">
-            <select name="perpetual_payments_geo_zone_id">
+            <select name="perpetual_payments_geo_zone_id" id="input-geo-zone">
               <option value="0"><?php echo $text_all_zones; ?></option>
               <?php foreach ($geo_zones as $geo_zone) { ?>
               <?php if ($geo_zone['geo_zone_id'] == $perpetual_payments_geo_zone_id) { ?>

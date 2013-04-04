@@ -16,27 +16,27 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_merchant; ?></label>
+          <label class="control-label" for="input-merchant"><span class="required">*</span> <?php echo $entry_merchant; ?></label>
           <div class="controls">
-            <input type="text" name="liqpay_merchant" value="<?php echo $liqpay_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" />
+            <input type="text" name="liqpay_merchant" value="<?php echo $liqpay_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" />
             <?php if ($error_merchant) { ?>
             <span class="error"><?php echo $error_merchant; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_signature; ?></label>
+          <label class="control-label" for="input-signature"><span class="required">*</span> <?php echo $entry_signature; ?></label>
           <div class="controls">
-            <input type="text" name="liqpay_signature" value="<?php echo $liqpay_signature; ?>" placeholder="<?php echo $entry_signature; ?>" />
+            <input type="text" name="liqpay_signature" value="<?php echo $liqpay_signature; ?>" placeholder="<?php echo $entry_signature; ?>" id="input-signature" />
             <?php if ($error_signature) { ?>
             <span class="error"><?php echo $error_signature; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_type; ?></label>
+          <label class="control-label" for="input-type"><?php echo $entry_type; ?></label>
           <div class="controls">
-            <select name="liqpay_type">
+            <select name="liqpay_type" id="input-type">
               <?php if ($liqpay_type == 'liqpay') { ?>
               <option value="liqpay" selected="selected"><?php echo $text_pay; ?></option>
               <?php } else { ?>
@@ -73,7 +73,7 @@
         <div class="control-group">
           <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
           <div class="controls">
-            <select name="liqpay_geo_zone_id">
+            <select name="liqpay_geo_zone_id" id="input-geo-zone">
               <option value="0"><?php echo $text_all_zones; ?></option>
               <?php foreach ($geo_zones as $geo_zone) { ?>
               <?php if ($geo_zone['geo_zone_id'] == $liqpay_geo_zone_id) { ?>
@@ -88,7 +88,7 @@
         <div class="control-group">
           <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="controls">
-            <select name="liqpay_status">
+            <select name="liqpay_status" id="input-status">
               <?php if ($liqpay_status) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
               <option value="0"><?php echo $text_disabled; ?></option>
@@ -102,7 +102,7 @@
         <div class="control-group">
           <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="liqpay_sort_order" value="<?php echo $liqpay_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
+            <input type="text" name="liqpay_sort_order" value="<?php echo $liqpay_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
           </div>
         </div>
       </form>

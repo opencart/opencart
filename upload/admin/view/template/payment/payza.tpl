@@ -16,27 +16,27 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_merchant; ?></label>
+          <label class="control-label" for="input-merchant"><span class="required">*</span> <?php echo $entry_merchant; ?></label>
           <div class="controls">
-            <input type="text" name="payza_merchant" value="<?php echo $payza_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" />
+            <input type="text" name="payza_merchant" value="<?php echo $payza_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" />
             <?php if ($error_merchant) { ?>
             <span class="error"><?php echo $error_merchant; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_security; ?></label>
+          <label class="control-label" for="input-security"><span class="required">*</span> <?php echo $entry_security; ?></label>
           <div class="controls">
-            <input type="text" name="payza_security" value="<?php echo $payza_security; ?>" placeholder="<?php echo $entry_security; ?>" />
+            <input type="text" name="payza_security" value="<?php echo $payza_security; ?>" placeholder="<?php echo $entry_security; ?>" id="input-security" />
             <?php if ($error_security) { ?>
             <span class="error"><?php echo $error_security; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_callback; ?></label>
+          <label class="control-label" for="input-callback"><?php echo $entry_callback; ?></label>
           <div class="controls">
-            <textarea cols="40" rows="5" readonly="readonly"><?php echo $callback; ?></textarea>
+            <textarea cols="40" rows="5" id="input-callback" readonly="readonly"><?php echo $callback; ?></textarea>
             <span class="help-block"><?php echo $help_callback; ?></span></div>
         </div>
         <div class="control-group">

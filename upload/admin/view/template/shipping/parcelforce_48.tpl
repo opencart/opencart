@@ -97,7 +97,7 @@
             <span class="help-block"><?php echo $help_display_time; ?></span> </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_tax_class; ?></label>
+          <label class="control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
           <div class="controls">
             <select name="parcelforce_48_tax_class_id">
               <option value="0"><?php echo $text_none; ?></option>
@@ -112,7 +112,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_geo_zone; ?></label>
+          <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
           <div class="controls">
             <select name="parcelforce_48_geo_zone_id">
               <option value="0"><?php echo $text_all_zones; ?></option>
@@ -127,7 +127,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+          <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="controls">
             <select name="parcelforce_48_status">
               <?php if ($parcelforce_48_status) { ?>
@@ -141,7 +141,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+          <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
             <input type="text" name="parcelforce_48_sort_order" value="<?php echo $parcelforce_48_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>

@@ -27,7 +27,7 @@
               <div class="control-group">
                 <label class="control-label" for="input-name"><?php echo $entry_total ?></label>
                 <div class="controls">
-                  <input type="text" name="klarna_fee[<?php echo $country['code']; ?>][total]" value="<?php echo isset($klarna_fee[$country['code']]) ? $klarna_fee[$country['code']]['total'] : ''; ?>" placeholder="<?php echo $entry_total; ?>" />
+                  <input type="text" name="klarna_fee[<?php echo $country['code']; ?>][total]" value="<?php echo isset($klarna_fee[$country['code']]) ? $klarna_fee[$country['code']]['total'] : ''; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
                 </div>
               </div>
               <div class="control-group">
@@ -37,7 +37,7 @@
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_tax_class; ?></label>
+                <label class="control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
                 <div class="controls">
                   <select name="klarna_fee[<?php echo $country['code']; ?>][tax_class_id]">
                     <option value="0"><?php echo $text_none; ?></option>
@@ -52,7 +52,7 @@
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
                   <select name="klarna_fee[<?php echo $country['code']; ?>][status]">
                     <?php if (isset($klarna_fee[$country['code']]) && $klarna_fee[$country['code']]['status']) { ?>

@@ -59,7 +59,7 @@
             <span class="help-block"><?php echo $help_approval; ?></span></div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+          <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
             <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>

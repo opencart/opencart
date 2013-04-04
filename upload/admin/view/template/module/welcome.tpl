@@ -175,14 +175,14 @@ function addModule() {
 	html += '      </select></div>';
 	html += '  </div>';
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>';
+	html += '    <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>';
 	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][status]">';
 	html += '          <option value="1"><?php echo $text_enabled; ?></option>';
 	html += '          <option value="0"><?php echo $text_disabled; ?></option>';
 	html += '        </select></div>';
 	html += '  </div>';
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>';
+	html += '    <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>';
 	html += '    <div class="controls"><input type="text" name="welcome_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></div>';
 	html += '  </div>';
 	html += '</div>';

@@ -633,9 +633,9 @@
                   <span class="help-block"><?php echo $help_invoice_prefix; ?></span></div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
+                <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
                 <div class="controls">
-                  <select name="config_order_status_id">
+                  <select name="config_order_status_id" id="input-order-status">
                     <?php foreach ($order_statuses as $order_status) { ?>
                     <?php if ($order_status['order_status_id'] == $config_order_status_id) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>

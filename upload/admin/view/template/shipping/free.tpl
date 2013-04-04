@@ -16,13 +16,13 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
+          <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="free_total" value="<?php echo $free_total; ?>" placeholder="<?php echo $entry_total; ?>" />
+            <input type="text" name="free_total" value="<?php echo $free_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
             <span class="help-block"><?php echo $help_total; ?></span> </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_geo_zone; ?></label>
+          <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
           <div class="controls">
             <select name="free_geo_zone_id">
               <option value="0"><?php echo $text_all_zones; ?></option>
@@ -37,7 +37,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+          <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="controls">
             <select name="free_status">
               <?php if ($free_status) { ?>
@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+          <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
             <input type="text" name="free_sort_order" value="<?php echo $free_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>

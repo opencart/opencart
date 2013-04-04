@@ -81,7 +81,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_tax_class; ?></label>
+          <label class="control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
           <div class="controls">
             <select name="auspost_tax_class_id">
               <option value="0"><?php echo $text_none; ?></option>
@@ -96,7 +96,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_geo_zone; ?></label>
+          <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
           <div class="controls">
             <select name="auspost_geo_zone_id">
               <option value="0"><?php echo $text_all_zones; ?></option>
@@ -125,7 +125,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+          <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
             <input type="text" name="auspost_sort_order" value="<?php echo $auspost_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>

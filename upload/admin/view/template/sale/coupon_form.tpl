@@ -66,9 +66,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
+              <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
               <div class="controls">
-                <input type="text" name="total" value="<?php echo $total; ?>" placeholder="<?php echo $entry_total; ?>" />
+                <input type="text" name="total" value="<?php echo $total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
                 <span class="help-block"><?php echo $help_total; ?></span></div>
             </div>
             <div class="control-group">
@@ -174,7 +174,7 @@
                 <span class="help-block"><?php echo $help_uses_customer; ?></span></div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+              <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
               <div class="controls">
                 <select name="status">
                   <?php if ($status) { ?>

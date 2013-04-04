@@ -127,7 +127,7 @@
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                    <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                     <div class="controls">
                       <select name="status">
                         <?php if ($status) { ?>

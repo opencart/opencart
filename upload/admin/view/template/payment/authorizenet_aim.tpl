@@ -14,35 +14,37 @@
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons">
+          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_login; ?></label>
+          <label class="control-label" for="input-login"><span class="required">*</span> <?php echo $entry_login; ?></label>
           <div class="controls">
-            <input type="text" name="authorizenet_aim_login" value="<?php echo $authorizenet_aim_login; ?>" placeholder="<?php echo $entry_login; ?>" />
+            <input type="text" name="authorizenet_aim_login" value="<?php echo $authorizenet_aim_login; ?>" placeholder="<?php echo $entry_login; ?>" id="input-login" />
             <?php if ($error_login) { ?>
             <span class="error"><?php echo $error_login; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_key; ?></label>
+          <label class="control-label" for="input-key"><span class="required">*</span> <?php echo $entry_key; ?></label>
           <div class="controls">
-            <input type="text" name="authorizenet_aim_key" value="<?php echo $authorizenet_aim_key; ?>" placeholder="<?php echo $entry_key; ?>" />
+            <input type="text" name="authorizenet_aim_key" value="<?php echo $authorizenet_aim_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" />
             <?php if ($error_key) { ?>
             <span class="error"><?php echo $error_key; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_hash; ?></label>
+          <label class="control-label" for="input-hash"><?php echo $entry_hash; ?></label>
           <div class="controls">
-            <input type="text" name="authorizenet_aim_hash" value="<?php echo $authorizenet_aim_hash; ?>" placeholder="<?php echo $entry_hash; ?>" />
+            <input type="text" name="authorizenet_aim_hash" value="<?php echo $authorizenet_aim_hash; ?>" placeholder="<?php echo $entry_hash; ?>" id="input-hash" />
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_server; ?></label>
+          <label class="control-label" for="input-server"><?php echo $entry_server; ?></label>
           <div class="controls">
-            <select name="authorizenet_aim_server">
+            <select name="authorizenet_aim_server" id="input-server">
               <?php if ($authorizenet_aim_server == 'live') { ?>
               <option value="live" selected="selected"><?php echo $text_live; ?></option>
               <?php } else { ?>
@@ -57,9 +59,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_mode; ?></label>
+          <label class="control-label" for="input-mode"><?php echo $entry_mode; ?></label>
           <div class="controls">
-            <select name="authorizenet_aim_mode">
+            <select name="authorizenet_aim_mode" id="input-mode">
               <?php if ($authorizenet_aim_mode == 'live') { ?>
               <option value="live" selected="selected"><?php echo $text_live; ?></option>
               <?php } else { ?>
@@ -74,9 +76,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_method; ?></label>
+          <label class="control-label" for="input-method"><?php echo $entry_method; ?></label>
           <div class="controls">
-            <select name="authorizenet_aim_method">
+            <select name="authorizenet_aim_method" id="input-method">
               <?php if ($authorizenet_aim_method == 'authorization') { ?>
               <option value="authorization" selected="selected"><?php echo $text_authorization; ?></option>
               <?php } else { ?>
@@ -91,15 +93,15 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
+          <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="authorizenet_aim_total" value="<?php echo $authorizenet_aim_total; ?>" placeholder="<?php echo $entry_total; ?>" /> <span class="help-block"><?php echo $help_total; ?></span>
-          </div>
+            <input type="text" name="authorizenet_aim_total" value="<?php echo $authorizenet_aim_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
+            <span class="help-block"><?php echo $help_total; ?></span> </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
+          <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
           <div class="controls">
-            <select name="authorizenet_aim_order_status_id">
+            <select name="authorizenet_aim_order_status_id" id="input-order-status">
               <?php foreach ($order_statuses as $order_status) { ?>
               <?php if ($order_status['order_status_id'] == $authorizenet_aim_order_status_id) { ?>
               <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
@@ -111,9 +113,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_geo_zone; ?></label>
+          <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
           <div class="controls">
-            <select name="authorizenet_aim_geo_zone_id">
+            <select name="authorizenet_aim_geo_zone_id" id="input-geo-zone">
               <option value="0"><?php echo $text_all_zones; ?></option>
               <?php foreach ($geo_zones as $geo_zone) { ?>
               <?php if ($geo_zone['geo_zone_id'] == $authorizenet_aim_geo_zone_id) { ?>
@@ -126,9 +128,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+          <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="controls">
-            <select name="authorizenet_aim_status">
+            <select name="authorizenet_aim_status" id="input-status">
               <?php if ($authorizenet_aim_status) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
               <option value="0"><?php echo $text_disabled; ?></option>
@@ -140,9 +142,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+          <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="authorizenet_aim_sort_order" value="<?php echo $authorizenet_aim_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
+            <input type="text" name="authorizenet_aim_sort_order" value="<?php echo $authorizenet_aim_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
           </div>
         </div>
       </form>

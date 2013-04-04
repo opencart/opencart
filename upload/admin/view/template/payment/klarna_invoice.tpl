@@ -33,21 +33,21 @@
                 <?php foreach ($countries as $country) { ?>
                 <div class="tab-pane" id="tab-<?php echo $country['code']; ?>">
                   <div class="control-group">
-                    <label class="control-label" for="input-name"><?php echo $entry_merchant; ?></label>
+                    <label class="control-label" for="input-merchant"><?php echo $entry_merchant; ?></label>
                     <div class="controls">
-                      <input type="text" name="klarna_invoice[<?php echo $country['code']; ?>][merchant]" value="<?php echo isset($klarna_invoice[$country['code']]) ? $klarna_invoice[$country['code']]['merchant'] : ''; ?>" placeholder="<?php echo $entry_merchant; ?>" />
+                      <input type="text" name="klarna_invoice[<?php echo $country['code']; ?>][merchant]" value="<?php echo isset($klarna_invoice[$country['code']]) ? $klarna_invoice[$country['code']]['merchant'] : ''; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" />
                       <span class="help-block"><?php echo $help_merchant; ?></span></div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="input-name"><?php echo $entry_secret; ?></label>
+                    <label class="control-label" for="input-secret"><?php echo $entry_secret; ?></label>
                     <div class="controls">
-                      <input type="text" name="klarna_invoice[<?php echo $country['code']; ?>][secret]" value="<?php echo isset($klarna_invoice[$country['code']]) ? $klarna_invoice[$country['code']]['secret'] : ''; ?>" placeholder="<?php echo $entry_secret; ?>" />
+                      <input type="text" name="klarna_invoice[<?php echo $country['code']; ?>][secret]" value="<?php echo isset($klarna_invoice[$country['code']]) ? $klarna_invoice[$country['code']]['secret'] : ''; ?>" placeholder="<?php echo $entry_secret; ?>" id="input-secret" />
                       <span class="help-block"><?php echo $help_secret; ?></span></div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="input-name"><?php echo $entry_server; ?></label>
+                    <label class="control-label" for="input-server"><?php echo $entry_server; ?></label>
                     <div class="controls">
-                      <select name="klarna_invoice[<?php echo $country['code']; ?>][server]">
+                      <select name="klarna_invoice[<?php echo $country['code']; ?>][server]" id="input-server">
                         <?php if (isset($klarna_invoice[$country['code']]) && $klarna_invoice[$country['code']]['server'] == 'live') { ?>
                         <option value="live" selected="selected"><?php echo $text_live; ?></option>
                         <?php } else { ?>
@@ -62,9 +62,9 @@
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
+                    <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
                     <div class="controls">
-                      <input type="text" name="klarna_invoice[<?php echo $country['code']; ?>][total]" value="<?php echo isset($klarna_invoice[$country['code']]) ? $klarna_invoice[$country['code']]['total'] : ''; ?>" placeholder="<?php echo $entry_total; ?>" />
+                      <input type="text" name="klarna_invoice[<?php echo $country['code']; ?>][total]" value="<?php echo isset($klarna_invoice[$country['code']]) ? $klarna_invoice[$country['code']]['total'] : ''; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
                       <span class="help-block"><?php echo $help_total; ?></span></div>
                   </div>
                   <div class="control-group">
@@ -96,7 +96,7 @@
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="input-name"><?php echo $entry_geo_zone; ?></label>
+                    <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
                     <div class="controls">
                       <select name="klarna_invoice[<?php echo $country['code']; ?>][geo_zone_id]">
                         <option value="0"><?php echo $text_all_zones; ?></option>
@@ -111,7 +111,7 @@
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                    <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                     <div class="controls">
                       <select name="klarna_invoice[<?php echo $country['code']; ?>][status]">
                         <?php if (isset($klarna_invoice[$country['code']]) && $klarna_invoice[$country['code']]['status']) { ?>

@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+          <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="controls">
             <select name="shipping_status">
               <?php if ($shipping_status) { ?>
@@ -44,7 +44,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+          <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
             <input type="text" name="shipping_sort_order" value="<?php echo $shipping_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>

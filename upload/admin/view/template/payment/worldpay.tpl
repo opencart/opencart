@@ -63,15 +63,15 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
+          <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="worldpay_total" value="<?php echo $worldpay_total; ?>" placeholder="<?php echo $entry_total; ?>" />
+            <input type="text" name="worldpay_total" value="<?php echo $worldpay_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
             <span class="help-block"><?php echo $help_total; ?></span></div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
+          <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
           <div class="controls">
-            <select name="worldpay_order_status_id">
+            <select name="worldpay_order_status_id" id="input-order-status">
               <?php foreach ($order_statuses as $order_status) { ?>
               <?php if ($order_status['order_status_id'] == $worldpay_order_status_id) { ?>
               <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
@@ -83,7 +83,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_geo_zone; ?></label>
+          <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
           <div class="controls">
             <select name="worldpay_geo_zone_id">
               <option value="0"><?php echo $text_all_zones; ?></option>
@@ -98,7 +98,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+          <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="controls">
             <select name="worldpay_status">
               <?php if ($worldpay_status) { ?>
@@ -112,7 +112,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+          <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
             <input type="text" name="worldpay_sort_order" value="<?php echo $worldpay_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
           </div>

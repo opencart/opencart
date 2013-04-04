@@ -94,7 +94,7 @@
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_tax_class; ?></label>
+                <label class="control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
                 <div class="controls">
                   <select name="royal_mail_tax_class_id">
                     <option value="0"><?php echo $text_none; ?></option>
@@ -109,7 +109,7 @@
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_geo_zone; ?></label>
+                <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
                 <div class="controls">
                   <select name="royal_mail_geo_zone_id">
                     <option value="0"><?php echo $text_all_zones; ?></option>
@@ -124,7 +124,7 @@
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
                   <select name="royal_mail_status">
                     <?php if ($royal_mail_status) { ?>
@@ -138,7 +138,7 @@
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+                <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
                 <div class="controls">
                   <input type="text" name="royal_mail_sort_order" value="<?php echo $royal_mail_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
                 </div>
@@ -158,7 +158,7 @@
                   <span class="help-block"><?php echo $help_insurance; ?></span> </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
                   <select name="royal_mail_1st_class_standard_status">
                     <?php if ($royal_mail_1st_class_standard_status) { ?>
@@ -186,7 +186,7 @@
                   <span class="help-block"><?php echo $help_insurance; ?></span> </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
                   <select name="royal_mail_1st_class_recorded_status">
                     <?php if ($royal_mail_1st_class_recorded_status) { ?>
@@ -208,7 +208,7 @@
                   <span class="help-block"><?php echo $help_rate; ?></span> </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
                   <select name="royal_mail_2nd_class_standard_status">
                     <?php if ($royal_mail_2nd_class_standard_status) { ?>
@@ -236,7 +236,7 @@
                   <span class="help-block"><?php echo $help_insurance; ?></span> </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
                   <select name="royal_mail_2nd_class_recorded_status">
                     <?php if ($royal_mail_2nd_class_recorded_status) { ?>
@@ -264,7 +264,7 @@
                   <span class="help-block"><?php echo $help_insurance; ?></span> </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
                   <select name="royal_mail_special_delivery_500_status">
                     <?php if ($royal_mail_special_delivery_500_status) { ?>
@@ -292,7 +292,7 @@
                   <span class="help-block"><?php echo $help_insurance; ?></span> </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
                   <select name="royal_mail_special_delivery_1000_status">
                     <?php if ($royal_mail_special_delivery_1000_status) { ?>
@@ -320,7 +320,7 @@
                   <span class="help-block"><?php echo $help_insurance; ?></span> </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
                   <select name="royal_mail_special_delivery_2500_status">
                     <?php if ($royal_mail_special_delivery_2500_status) { ?>
@@ -348,7 +348,7 @@
                   <span class="help-block"><?php echo $help_insurance; ?></span> </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
                   <select name="royal_mail_standard_parcels_status">
                     <?php if ($royal_mail_standard_parcels_status) { ?>
@@ -376,7 +376,7 @@
                   <span class="help-block"><?php echo $help_airmail_rate_2; ?></span> </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
                   <select name="royal_mail_airmail_status">
                     <?php if ($royal_mail_airmail_status) { ?>
@@ -416,7 +416,7 @@
                   <span class="help-block"><?php echo $help_international_signed_insurance_2; ?></span> </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
                   <select name="royal_mail_international_signed_status">
                     <?php if ($royal_mail_international_signed_status) { ?>
@@ -456,7 +456,7 @@
                   <span class="help-block"><?php echo $help_airsure_insurance_2; ?></span> </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
                   <select name="royal_mail_airsure_status">
                     <?php if ($royal_mail_airsure_status) { ?>
@@ -478,7 +478,7 @@
                   <span class="help-block"><?php echo $help_top; ?></span> </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
                   <select name="royal_mail_surface_status">
                     <?php if ($royal_mail_surface_status) { ?>

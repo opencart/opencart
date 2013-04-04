@@ -16,24 +16,24 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_payable; ?></label>
+          <label class="control-label" for="input-payable"><span class="required">*</span> <?php echo $entry_payable; ?></label>
           <div class="controls">
-            <input type="text" name="cheque_payable" value="<?php echo $cheque_payable; ?>" placeholder="<?php echo $entry_payable; ?>" />
+            <input type="text" name="cheque_payable" value="<?php echo $cheque_payable; ?>" placeholder="<?php echo $entry_payable; ?>" id="input-payable" />
             <?php if ($error_payable) { ?>
             <span class="error"><?php echo $error_payable; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_total; ?></label>
+          <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
           <div class="controls">
-            <input type="text" name="cheque_total" value="<?php echo $cheque_total; ?>" placeholder="<?php echo $entry_total; ?>" />
+            <input type="text" name="cheque_total" value="<?php echo $cheque_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
             <span class="help-block"><?php echo $help_total; ?></span></div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_order_status; ?></label>
+          <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
           <div class="controls">
-            <select name="cheque_order_status_id">
+            <select name="cheque_order_status_id" id="input-order-status">
               <?php foreach ($order_statuses as $order_status) { ?>
               <?php if ($order_status['order_status_id'] == $cheque_order_status_id) { ?>
               <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
@@ -45,9 +45,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_geo_zone; ?></label>
+          <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
           <div class="controls">
-            <select name="cheque_geo_zone_id">
+            <select name="cheque_geo_zone_id" id="input-geo-zone">
               <option value="0"><?php echo $text_all_zones; ?></option>
               <?php foreach ($geo_zones as $geo_zone) { ?>
               <?php if ($geo_zone['geo_zone_id'] == $cheque_geo_zone_id) { ?>
@@ -60,9 +60,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_status; ?></label>
+          <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="controls">
-            <select name="cheque_status">
+            <select name="cheque_status" id="input-status">
               <?php if ($cheque_status) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
               <option value="0"><?php echo $text_disabled; ?></option>
@@ -74,9 +74,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+          <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="cheque_sort_order" value="<?php echo $cheque_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
+            <input type="text" name="cheque_sort_order" value="<?php echo $cheque_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
           </div>
         </div>
       </form>

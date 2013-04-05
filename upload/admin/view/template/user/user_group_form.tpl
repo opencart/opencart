@@ -18,14 +18,14 @@
         <div class="control-group required">
           <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
           <div class="controls">
-            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" />
+            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
             <?php if ($error_name) { ?>
             <span class="error"><?php echo $error_name; ?></span>
             <?php  } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label"><?php echo $entry_access; ?></label>
+          <div class="control-label"><?php echo $entry_access; ?></div>
           <div class="controls">
             <?php foreach ($permissions as $permission) { ?>
             <label class="checkbox">
@@ -41,7 +41,7 @@
             <a onclick="$(this).parent().find('[type=\'checkbox\']').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find('[type=\'checkbox\']').attr('checked', false);"><?php echo $text_unselect_all; ?></a></div>
         </div>
         <div class="control-group">
-          <label class="control-label"><?php echo $entry_modify; ?></label>
+          <div class="control-label"><?php echo $entry_modify; ?></div>
           <div class="controls">
             <?php foreach ($permissions as $permission) { ?>
             <label class="checkbox">

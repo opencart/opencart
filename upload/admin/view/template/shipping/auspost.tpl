@@ -16,18 +16,18 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_postcode; ?></label>
+          <label class="control-label" for="input-postcode"><span class="required">*</span> <?php echo $entry_postcode; ?></label>
           <div class="controls">
-            <input type="text" name="auspost_postcode" value="<?php echo $auspost_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" maxlength="4" class="input-mini" />
+            <input type="text" name="auspost_postcode" value="<?php echo $auspost_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" maxlength="4" class="input-mini" />
             <?php if ($error_postcode) { ?>
             <span class="error"><?php echo $error_postcode; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_standard ?></label>
+          <label class="control-label" for="input-standard"><?php echo $entry_standard ?></label>
           <div class="controls">
-            <select name="auspost_standard">
+            <select name="auspost_standard" id="input-standard">
               <?php if ($auspost_standard) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
               <option value="0"><?php echo $text_disabled; ?></option>
@@ -39,9 +39,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_express ?></label>
+          <label class="control-label" for="input-express"><?php echo $entry_express; ?></label>
           <div class="controls">
-            <select name="auspost_express">
+            <select name="auspost_express" id="input-express">
               <?php if ($auspost_express) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
               <option value="0"><?php echo $text_disabled; ?></option>
@@ -53,9 +53,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_display_time ?></label>
+          <label class="control-label" for="input-display-time"><?php echo $entry_display_time; ?></label>
           <div class="controls">
-            <select name="auspost_display_time">
+            <select name="auspost_display_time" id="input-display-time">
               <?php if ($auspost_display_time) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
               <option value="0"><?php echo $text_disabled; ?></option>
@@ -67,9 +67,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_weight_class; ?></label>
+          <label class="control-label" for="input-weight-class"><?php echo $entry_weight_class; ?></label>
           <div class="controls">
-            <select name="auspost_weight_class_id">
+            <select name="auspost_weight_class_id" id="input-weight-class">
               <?php foreach ($weight_classes as $weight_class) { ?>
               <?php if ($weight_class['weight_class_id'] == $auspost_weight_class_id) { ?>
               <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
@@ -83,7 +83,7 @@
         <div class="control-group">
           <label class="control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
           <div class="controls">
-            <select name="auspost_tax_class_id">
+            <select name="auspost_tax_class_id" id="input-tax-class">
               <option value="0"><?php echo $text_none; ?></option>
               <?php foreach ($tax_classes as $tax_class) { ?>
               <?php if ($tax_class['tax_class_id'] == $auspost_tax_class_id) { ?>
@@ -98,7 +98,7 @@
         <div class="control-group">
           <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
           <div class="controls">
-            <select name="auspost_geo_zone_id">
+            <select name="auspost_geo_zone_id" id="input-geo-zone">
               <option value="0"><?php echo $text_all_zones; ?></option>
               <?php foreach ($geo_zones as $geo_zone) { ?>
               <?php if ($geo_zone['geo_zone_id'] == $auspost_geo_zone_id) { ?>
@@ -111,9 +111,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_status ?></label>
+          <label class="control-label" for="input-status"><?php echo $entry_status ?></label>
           <div class="controls">
-            <select name="auspost_status">
+            <select name="auspost_status" id="input-status">
               <?php if ($auspost_status) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
               <option value="0"><?php echo $text_disabled; ?></option>
@@ -127,7 +127,7 @@
         <div class="control-group">
           <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="auspost_sort_order" value="<?php echo $auspost_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
+            <input type="text" name="auspost_sort_order" value="<?php echo $auspost_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
           </div>
         </div>
       </form>

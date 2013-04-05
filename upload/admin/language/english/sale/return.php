@@ -52,7 +52,7 @@ $_['entry_quantity']      = 'Quantity';
 $_['entry_reason']        = 'Return Reason';
 $_['entry_opened']        = 'Opened';
 $_['entry_comment']       = 'Comment';
-$_['entry_return_status'] = 'Return Status';
+$_['entry_status']        = 'Return Status';
 $_['entry_notify']        = 'Notify Customer';
 $_['entry_action']        = 'Return Action';
 

@@ -564,7 +564,7 @@ class ControllerSaleReturn extends Controller {
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
 		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
-		$this->data['entry_return_status'] = $this->language->get('entry_return_status');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_comment'] = $this->language->get('entry_comment');	
 		$this->data['entry_product'] = $this->language->get('entry_product');
 		$this->data['entry_model'] = $this->language->get('entry_model');

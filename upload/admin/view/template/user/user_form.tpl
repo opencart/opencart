@@ -16,42 +16,42 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_username; ?></label>
+          <label class="control-label" for="input-username"><span class="required">*</span> <?php echo $entry_username; ?></label>
           <div class="controls">
-            <input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $entry_username; ?>" />
+            <input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" />
             <?php if ($error_username) { ?>
             <span class="error"><?php echo $error_username; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
+          <label class="control-label" for="input-firstname"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
           <div class="controls">
-            <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" />
+            <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
             <?php if ($error_firstname) { ?>
             <span class="error"><?php echo $error_firstname; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
+          <label class="control-label" for="input-lastname"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
           <div class="controls">
-            <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" />
+            <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
             <?php if ($error_lastname) { ?>
             <span class="error"><?php echo $error_lastname; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_email; ?></label>
+          <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
           <div class="controls">
-            <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" />
+            <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_user_group; ?></label>
+          <label class="control-label" for="input-user-group"><?php echo $entry_user_group; ?></label>
           <div class="controls">
-            <select name="user_group_id">
+            <select name="user_group_id" id="input-user-group">
               <?php foreach ($user_groups as $user_group) { ?>
               <?php if ($user_group['user_group_id'] == $user_group_id) { ?>
               <option value="<?php echo $user_group['user_group_id']; ?>" selected="selected"><?php echo $user_group['name']; ?></option>
@@ -63,18 +63,18 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_password; ?></label>
+          <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
           <div class="controls">
-            <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>"  />
+            <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
             <?php  } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_confirm; ?></label>
+          <label class="control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
           <div class="controls">
-            <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" />
+            <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" id="input-confirm" />
             <?php if ($error_confirm) { ?>
             <span class="error"><?php echo $error_confirm; ?></span>
             <?php  } ?>
@@ -83,7 +83,7 @@
         <div class="control-group">
           <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="controls">
-            <select name="status">
+            <select name="status" id="input-status">
               <?php if ($status) { ?>
               <option value="0"><?php echo $text_disabled; ?></option>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>

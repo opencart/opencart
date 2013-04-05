@@ -18,47 +18,47 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
           <div class="controls">
-            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" />
+            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
             <?php if ($error_name) { ?>
             <span class="error"><?php echo $error_name; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_address_1; ?></label>
+          <label class="control-label" for="input-address-1"><span class="required">*</span> <?php echo $entry_address_1; ?></label>
           <div class="controls">
-            <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" />
+            <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" />
             <?php if ($error_address_1) { ?>
             <span class="error"><?php echo $error_address_1; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_address_2; ?></label>
+          <label class="control-label" for="input-address-2"><?php echo $entry_address_2; ?></label>
           <div class="controls">
-            <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="<?php echo $entry_address_2; ?>" />
+            <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2" />
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_city; ?></label>
+          <label class="control-label" for="input-city"><span class="required">*</span> <?php echo $entry_city; ?></label>
           <div class="controls">
-            <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" />
+            <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" />
             <?php if ($error_city) { ?>
             <span class="error"><?php echo $error_city; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></label>
+          <label class="control-label" for="input-postcode"><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></label>
           <div class="controls">
-            <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" />
+            <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" />
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_country; ?></label>
+          <label class="control-label" for="input-country"><span class="required">*</span> <?php echo $entry_country; ?></label>
           <div class="controls">
-            <select name="country_id">
-              <option value="false"><?php echo $text_select; ?></option>
+            <select name="country_id" id="input-country">
+              <option value=""><?php echo $text_select; ?></option>
               <?php foreach ($countries as $country) { ?>
               <?php if ($country['country_id'] == $country_id) { ?>
               <option value="<?php echo $country['country_id']; ?>" selected="selected"> <?php echo $country['name']; ?> </option>
@@ -73,9 +73,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_zone; ?></label>
+          <label class="control-label" for="input-zone"><span class="required">*</span> <?php echo $entry_zone; ?></label>
           <div class="controls">
-            <select name="zone_id">
+            <select name="zone_id" id="input-zone">
             </select>
             <?php if ($error_zone) { ?>
             <span class="error"><?php echo $error_zone; ?></span>
@@ -83,9 +83,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_geocode; ?></label>
+          <label class="control-label" for="input-geocode"><span class="required">*</span> <?php echo $entry_geocode; ?></label>
           <div class="controls">
-            <input id="geocode" type="text" name="geocode" value="<?php echo $geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" />
+            <input id="geocode" type="text" name="geocode" value="<?php echo $geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" id="input-geocode" />
             <input type="button" onclick="getGeoCode()" value="<?php echo $button_geocode; ?>" class="btn" />
             <span class="help-block"><?php echo $help_geocode; ?></span>
             <?php if ($error_geocode) { ?>
@@ -94,7 +94,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
+          <label class="control-label" for="input-image"><?php echo $entry_image; ?></label>
           <div class="controls">
             <div class="image"><img src="<?php echo $thumb; ?>" alt="" id="thumb" />
               <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
@@ -103,15 +103,15 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_open; ?></label>
+          <label class="control-label" for="input-open"><?php echo $entry_open; ?></label>
           <div class="controls">
-            <textarea name="open" cols="40" rows="5" placeholder="<?php echo $entry_open; ?>"><?php echo $open; ?></textarea>
+            <textarea name="open" cols="40" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open"><?php echo $open; ?></textarea>
             <span class="help-block"><?php echo $help_open; ?></span></div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_comment; ?></label>
+          <label class="control-label" for="input-comment"><?php echo $entry_comment; ?></label>
           <div class="controls">
-            <textarea name="comment" cols="40" rows="5" placeholder="<?php echo $entry_comment; ?>"><?php echo $comment; ?></textarea>
+            <textarea name="comment" cols="40" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment"><?php echo $comment; ?></textarea>
             <span class="help-block"><?php echo $help_comment; ?></span></div>
         </div>
       </form>

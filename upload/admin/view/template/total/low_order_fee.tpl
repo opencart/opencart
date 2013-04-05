@@ -22,15 +22,15 @@
             <span class="help-block"><?php echo $help_total; ?></span> </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_fee; ?></label>
+          <label class="control-label" for="input-fee"><?php echo $entry_fee; ?></label>
           <div class="controls">
-            <input type="text" name="low_order_fee_fee" value="<?php echo $low_order_fee_fee; ?>" placeholder="<?php echo $entry_fee; ?>" />
+            <input type="text" name="low_order_fee_fee" value="<?php echo $low_order_fee_fee; ?>" placeholder="<?php echo $entry_fee; ?>" id="input-fee" />
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
           <div class="controls">
-            <select name="low_order_fee_tax_class_id">
+            <select name="low_order_fee_tax_class_id" id="input-tax-class">
               <option value="0"><?php echo $text_none; ?></option>
               <?php foreach ($tax_classes as $tax_class) { ?>
               <?php if ($tax_class['tax_class_id'] == $low_order_fee_tax_class_id) { ?>
@@ -45,7 +45,7 @@
         <div class="control-group">
           <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="controls">
-            <select name="low_order_fee_status">
+            <select name="low_order_fee_status" id="input-status">
               <?php if ($low_order_fee_status) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
               <option value="0"><?php echo $text_disabled; ?></option>
@@ -59,7 +59,7 @@
         <div class="control-group">
           <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="low_order_fee_sort_order" value="<?php echo $low_order_fee_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
+            <input type="text" name="low_order_fee_sort_order" value="<?php echo $low_order_fee_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
           </div>
         </div>
       </form>

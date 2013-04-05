@@ -39,7 +39,7 @@ class ControllerProductManufacturer extends Controller {
 				$key = utf8_substr(utf8_strtoupper($result['name']), 0, 1);
 			}
 
-			if (!isset($this->data['manufacturers'][$key])) {
+			if (!isset($this->data['categories'][$key])) {
 				$this->data['categories'][$key]['name'] = $key;
 			}
 

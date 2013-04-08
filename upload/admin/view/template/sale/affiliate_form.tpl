@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -357,12 +357,15 @@ function addTransaction() {
 		data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
 		beforeSend: function() {
 			$('.success, .warning').remove();
-			$('#button-transaction').attr('disabled', true);
+						
 			$('#transaction').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
+			
+			$('#button-transaction').attr('disabled', true);
 		},
 		complete: function() {
-			$('#button-transaction').attr('disabled', false);
 			$('.attention').remove();
+			
+			$('#button-transaction').attr('disabled', false);
 		},
 		success: function(html) {
 			$('#transaction').html(html);

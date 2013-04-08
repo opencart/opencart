@@ -2,7 +2,7 @@
 <div class="alert alert-error"><?php echo $error; ?></div>
 <?php } ?>
 <?php if ($success) { ?>
-<div class="alert alert-success"><?php echo $success; ?></div>
+<div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?></div>
 <?php } ?>
 <table class="table table-striped table-bordered table-hover">
   <thead>

@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -38,7 +38,7 @@
         <div class="control-group">
           <label class="control-label" for="input-text"><span class="required">*</span> <?php echo $entry_text; ?></label>
           <div class="controls">
-            <textarea name="text" cols="60" rows="8" placeholder="<?php echo $entry_text; ?>"><?php echo $text; ?></textarea>
+            <textarea name="text" cols="60" rows="8" placeholder="<?php echo $entry_text; ?>" class="input-xxlarge"><?php echo $text; ?></textarea>
             <?php if ($error_text) { ?>
             <span class="error"><?php echo $error_text; ?></span>
             <?php } ?>

@@ -1,38 +1,15 @@
-/*@baseFontFamily {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
+.navbar {
+	/*background: #2D2D2E url('../image/header.png');*/
+	border-bottom: 1px solid #252525;
+	margin-bottom: 14px;
+	background-image: linear-gradient(to bottom, #222222, #111111);
 }
-
-#header {
-	background: #363636;
-	border-bottom: 4px solid #00C3F4;
-	margin-bottom: 15px;
-	background: url('../image/header.png');
+.nav {
 }
-#header a {
-	cursor: pointer;
-	text-shadow: 1px 0.1em 0.05em #000000;
-	color: #FFF;
+.navbar .nav > li > a {
 	font-size: 13px;
-}
-#header i {
-	font-size: 15px;
-	color: #00C3F4;
-	margin-right: 3px;
-}
-#header .icon-chevron-down {
-	font-size: 10px;
-}
-
-
-
-.navbar-inner {
-	background-color: #114B53;
-	background-image: -moz-linear-gradient(top, #0E3D43, #082327) !important;
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0E3D43), to(#082327)) !important;
-	background-image: -webkit-linear-gradient(top, #0E3D43, #082327) !important;
-	background-image: -o-linear-gradient(top, #0E3D43, #E2E6AC) !important;
-	background-image: linear-gradient(to bottom, #0E3D43, #114B53) !important;
+	text-shadow: 0 1px 0 #000000;
+	cursor: pointer;
 }
 #content {
 	padding: 10px 30px 0px 30px;
@@ -59,7 +36,7 @@
 .box-heading {
 	padding: 0px 10px;
 	border: 1px solid #DBDBDB;
-	background: url('../image/box.png');
+	background: #EFEFEF;
 	-webkit-border-radius: 7px 7px 0px 0px;
 	-moz-border-radius: 7px 7px 0px 0px;
 	-khtml-border-radius: 7px 7px 0px 0px;
@@ -87,39 +64,36 @@
 	overflow: auto;
 }
 .breadcrumb li a:before {
-    content: "\f105"; 
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: inherit;
-    color: #000;
-    font-size: 16px;
+	content: "\f105";
+	font-family: FontAwesome;
+	font-style: normal;
+	font-weight: normal;
+	text-decoration: inherit;
+	color: #000;
+	font-size: 16px;
 	padding-right: 5px;
-	text-decoration:none;
+	text-decoration: none;
 }
-
 .breadcrumb li a:hover {
-	text-decoration:none;
+	text-decoration: none;
 }
-
 .breadcrumb li:first-child a:before {
-    content: "\f015"; 
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: inherit;
-    color: #000;
-    font-size: 16px;
-	padding-right: 5px;  
-	text-decoration:none;
- }
+	content: "\f015";
+	font-family: FontAwesome;
+	font-style: normal;
+	font-weight: normal;
+	text-decoration: inherit;
+	color: #000;
+	font-size: 16px;
+	padding-right: 5px;
+	text-decoration: none;
+}
 .buttons {
 	text-align: right;
 	border: 1px solid #DBDBDB;
 	padding: 5px;
 	margin-bottom: 15px;
 }
-
 .table .left {
 	text-align: left;
 }
@@ -129,17 +103,13 @@
 .table .center {
 	text-align: center;
 }
-
 .control-group {
 	border-bottom: 1px dotted #CCCCCC;
 	padding-bottom: 20px;
 	margin-bottom: 10px;
-	
 }
-
 .help-block .icon-question-sign, .help-inline .icon-question-sign {
 	font-size: 18px;
 	color: #00C3F4;
 	cursor: pointer;
 }
-*/

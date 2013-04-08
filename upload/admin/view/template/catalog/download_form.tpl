@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -83,11 +83,11 @@ $('#file').on('change', function() {
 		dataType: 'json',
 		data: new FormData($(this).parent()[0]),
 		beforeSend: function() {
-			$('#button-upload').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('#button-upload i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-upload').attr('disabled', true);
 		},	
 		complete: function() {
-			$('.loading').remove();
+			$('#button-upload i').replaceWith('<i class="icon-upload"></i>');
 			$('#button-upload').attr('disabled', false);
 		},		
 		success: function(json) {

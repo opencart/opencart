@@ -52,7 +52,7 @@ class ControllerExtensionInstaller extends Controller {
 		
 		if (!$this->user->hasPermission('modify', 'extension/modification')) {
       		$json['error'] = $this->language->get('error_permission') . "\n";
-    	}		
+    	}
 		
 		if (!empty($this->request->files['file']['name'])) {
 			if (strrchr($this->request->files['file']['name'], '.') != '.zip' && strrchr($this->request->files['file']['name'], '.') != '.xml') {
@@ -79,72 +79,81 @@ class ControllerExtensionInstaller extends Controller {
 			if (strrchr($this->request->files['file']['name'], '.') == '.xml') {
 				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . 'temp/' . $filename);
 				
-				$json['xml'] = DIR_DOWNLOAD . 'temp/' . $filename; 
+				$json['xml'] = DIR_DOWNLOAD . 'temp/' . $filename;
 			}
 			
 			// If zip file copy it to the temp directory
-			if (strrchr($this->request->files['file']['name'], '.') == '.zip') {
+			if (strrchr($filename, '.') == '.zip') {
+				$json['overwrite'] = array();
+				
 				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . 'temp/' . $filename);
 				
-				if (is_file($filename)) {
+				if (is_file(DIR_DOWNLOAD . 'temp/' . $filename)) {					
+					$zip = zip_open(DIR_DOWNLOAD . 'temp/' . $filename);
 					
-				} else {
-					$json['error'] = $this->language->get('error_upload');
-				}
-		
-		
-		
-		
-				$zip_dir = "./import/";
-				$zip = zip_open($zip_dir . 'import.zip');
-				
-				if ($zip) {
-					while ($zip_entry = zip_read($zip)) {
-						$file = basename(zip_entry_name($zip_entry));
-						$fp = fopen($zip_dir.basename($file), "w+");
-						
-						if (zip_entry_open($zip, $zip_entry, "r")) {
-							$buf = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+					if ($zip) {
+						while ($entry = zip_read($zip)) {
 							
-							zip_entry_close($zip_entry);
+							
+							
+							$file = DIR_APPLICATION . substr(zip_entry_name($entry), 13);
+							
+							if (substr(zip_entry_name($entry), 0, 13) == 'upload/admin/') {
+								$json['overwrite'][] = substr(zip_entry_name($entry), 7);
+							}
+							
+							$file = DIR_CATALOG . substr(zip_entry_name($entry), 15);
+							
+							if (substr(zip_entry_name($entry), 0, 15) == 'upload/catalog/') {
+								$json['overwrite'][] = substr(zip_entry_name($entry), 7);
+							}					
+							
+							$file = DIR_IMAGE . substr(zip_entry_name($entry), 13);
+							
+							if (substr(zip_entry_name($entry), 0, 13) == 'upload/image/') {
+								$json['overwrite'][] = substr(zip_entry_name($entry), 7);
+							}
+							
+							$file = DIR_SYSTEM . substr(zip_entry_name($entry), 14);													
+							
+							if (substr(zip_entry_name($entry), 0, 14) == 'upload/system/') {
+								$json['overwrite'][] = substr(zip_entry_name($entry), 7);
+							}
+							
+							// SQL
+							if (substr(zip_entry_name($entry), 0, 11) == 'install.sql') {
+								//$json['sql'] = zip_entry_name($entry);							
+							}		
+							
+							// XML					
+							if (substr(zip_entry_name($entry), 0, 11) == 'install.xml') {
+								//$json['xml'] = zip_entry_name($entry);
+							}
+
+							// PHP
+							if (substr(zip_entry_name($entry), 0, 11) == 'install.php') {
+								//$json['php'] = zip_entry_name($entry);
+							}
+							
+							$json[] = zip_entry_name($entry);
 						}
 						
-						fwrite($fp, $buf);
-						fclose($fp);
-						
-						echo "The file ".$file." was extracted to dir ".$zip_dir."\n<br>";
-					}
-					
-					zip_close($zip);
-				}
-	
-				//$file = 
-				//$directory = dirname($this->request->files['file']['tmp_name']) . '/' . basename($this->request->files['file']['name'], '.zip') . '/';
-				
-				//$json['zip'] = 
-				/*
-				// SQL
-				if (strrchr($file, '.') == 'install.sql') {
-					$json['sql'] = $file;								
-				}
-				
-				// XML
-				if (strrchr(basename($file), '.') == 'install.xml') {
-					$json['xml'] = $file;
-				}	
+						echo '<pre>';
+						print_r($json);
+						echo '</pre>';
 							
-				// PHP
-				if (strrchr(basename($file), '.') == 'install.php') {
-					$json['php'] = $file;
-				}
-				*/
-				
-				
+						zip_close($zip);
+					} else {
+						$json['error'] = $this->language->get('error_zip');
+					}			
+				} else {
+					$json['error'] = $this->language->get('error_upload');
+				}				
 			}	
 			
 			//unset($this->request->files['file']['tmp_name']);
 			
-			$json['success'] = $this->language->get('text_upload');
+			//$json['success'] = $this->language->get('text_upload');
 		}
 					
 		$this->response->setOutput(json_encode($json));
@@ -158,6 +167,10 @@ class ControllerExtensionInstaller extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/modification')) {
       		$json['error'] = $this->language->get('error_permission');
     	}
+
+		//if () {
+		//	$this->request->post['file'];
+		//}
 
 		if (!is_file()) {
 			$json['error'] = $this->language->get('error_zip_mime');
@@ -312,9 +325,6 @@ class ControllerExtensionInstaller extends Controller {
 				}	
 									
 			}
-			
-			
-			
 		}
 			
 			

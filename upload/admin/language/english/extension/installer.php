@@ -22,7 +22,7 @@ $_['help_upload']          = 'Requires a zip or xml modification file.';
 $_['error_permission']     = 'Warning: You do not have permission to modify extensions!';
 $_['error_exists']         = 'Warning: There are some temporary files that require deleting. Click <a href="">here</a> to remove them!';
 $_['error_filetype']       = 'Invalid file type!';
-$_['error_unzip']          = '';
+$_['error_unzip']          = 'Zip file coud not be opened';
 $_['error_ftp_connection'] = '';
 $_['error_ftp_login']      = '';
 $_['error_ftp_directory']  = '';

@@ -343,43 +343,43 @@ function addAddress() {
 	html += '  <input type="hidden" name="address[' + address_row + '][address_id]" value="" />';
 
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_firstname; ?></label>';
-	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][firstname]" value="" placeholder="<?php echo $entry_firstname; ?>" /></div>';
+	html += '    <label class="control-label" for="input-firstname' + address_row + '"><span class="required">*</span> <?php echo $entry_firstname; ?></label>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][firstname]" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname' + address_row + '" /></div>';
 	html += '  </div>'; 
 	
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_lastname; ?></label>';
-	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][lastname]" value="" placeholder="<?php echo $entry_lastname; ?>" /></div>';
+	html += '    <label class="control-label" for="input-lastname' + address_row + '"><span class="required">*</span> <?php echo $entry_lastname; ?></label>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][lastname]" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname' + address_row + '" /></div>';
 	html += '  </div>'; 
 	
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-name"><?php echo $entry_company; ?></label>';
-	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][company]" value="" placeholder="<?php echo $entry_company; ?>" /></div>';
+	html += '    <label class="control-label" for="input-company' + address_row + '"><?php echo $entry_company; ?></label>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][company]" value="" placeholder="<?php echo $entry_company; ?>" id="input-company' + address_row + '" /></div>';
 	html += '  </div>'; 
 	
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_address_1; ?></label>';
-	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][address_1]" value="" placeholder="<?php echo $entry_address_1; ?>" /></div>';
+	html += '    <label class="control-label" for="input-address-1' + address_row + '"><span class="required">*</span> <?php echo $entry_address_1; ?></label>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][address_1]" value="" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1' + address_row + '" /></div>';
 	html += '  </div>'; 		
 	
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-name"><?php echo $entry_address_2; ?></label>';
-	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][address_2]" value="" placeholder="<?php echo $entry_address_2; ?>" /></div>';
+	html += '    <label class="control-label" for="input-address-2' + address_row + '"><?php echo $entry_address_2; ?></label>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][address_2]" value="" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2' + address_row + '" /></div>';
 	html += '  </div>'; 
 	
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_city; ?></label>';
-	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][city]" value="" placeholder="<?php echo $entry_city; ?>" /></div>';
+	html += '    <label class="control-label" for="input-city' + address_row + '"><span class="required">*</span> <?php echo $entry_city; ?></label>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][city]" value="" placeholder="<?php echo $entry_city; ?>" id="input-city' + address_row + '" /></div>';
 	html += '  </div>'; 
 	
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-name"><span id="postcode-required' + address_row + '" class="required">*</span> <?php echo $entry_postcode; ?></label>';
-	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][postcode]" value="" placeholder="<?php echo $entry_postcode; ?>" /></div>';
+	html += '    <label class="control-label" for="input-postcode' + address_row + '"><span id="postcode-required' + address_row + '" class="required">*</span> <?php echo $entry_postcode; ?></label>';
+	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][postcode]" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode' + address_row + '" /></div>';
 	html += '  </div>'; 
 
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_country; ?></label>';
-	html += '    <div class="controls"><select name="address[' + address_row + '][country_id]" onchange="country(this, \'' + address_row + '\', \'0\');">';
+	html += '    <label class="control-label" for="input-country' + address_row + '"><span class="required">*</span> <?php echo $entry_country; ?></label>';
+	html += '    <div class="controls"><select name="address[' + address_row + '][country_id]" id="input-country' + address_row + '" onchange="country(this, \'' + address_row + '\', \'0\');">';
     html += '         <option value=""><?php echo $text_select; ?></option>';
     <?php foreach ($countries as $country) { ?>
     html += '         <option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
@@ -388,12 +388,12 @@ function addAddress() {
 	html += '  </div>'; 
 
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_zone; ?></label>';
-	html += '    <div class="controls"><select name="address[' + address_row + '][zone_id]"><option value="false"><?php echo $this->language->get('text_none'); ?></option></select></div>';
+	html += '    <label class="control-label" for="input-zone' + address_row + '"><span class="required">*</span> <?php echo $entry_zone; ?></label>';
+	html += '    <div class="controls"><select name="address[' + address_row + '][zone_id]" id="input-zone' + address_row + '"><option value="false"><?php echo $this->language->get('text_none'); ?></option></select></div>';
 	html += '  </div>'; 
 
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-name"><?php echo $entry_default; ?></label>';
+	html += '    <div class="control-label"><?php echo $entry_default; ?></div>';
 	html += '    <div class="controls"><label class="radio"><input type="radio" name="address[' + address_row + '][default]" value="1" /></label></div>';
 	html += '  </div>'; 
 								

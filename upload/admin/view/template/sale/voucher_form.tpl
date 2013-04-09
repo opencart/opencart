@@ -63,7 +63,7 @@
             <div class="control-group">
               <label class="control-label" for="input-to-email"><span class="required">*</span> <?php echo $entry_to_email; ?></label>
               <div class="controls">
-                <input type="text" name="to_email" value="<?php echo $to_email; ?>" placeholder="<?php echo $entry_to_email; ?>" to="input-to-email" />
+                <input type="text" name="to_email" value="<?php echo $to_email; ?>" placeholder="<?php echo $entry_to_email; ?>" id="input-to-email" />
                 <?php if ($error_to_email) { ?>
                 <span class="error"><?php echo $error_to_email; ?></span>
                 <?php } ?>

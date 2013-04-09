@@ -33,7 +33,7 @@
             <div class="control-group">
               <label class="control-label" for="input-date-ordered"><?php echo $entry_date_ordered; ?></label>
               <div class="controls">
-                <input type="text" name="date_ordered" value="<?php echo $date_ordered; ?>" placeholder="<?php echo $entry_date_ordered; ?>" id="input-date-ordered" class="date" />
+                <input type="date" name="date_ordered" value="<?php echo $date_ordered; ?>" placeholder="<?php echo $entry_date_ordered; ?>" id="input-date-ordered" class="date" />
               </div>
             </div>
             <div class="control-group">
@@ -53,9 +53,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
+              <label class="control-label" for="input-lastname"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
               <div class="controls">
-                <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" />
+                <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
                 <?php if ($error_lastname) { ?>
                 <span class="error"><?php echo $error_lastname; ?></span>
                 <?php } ?>
@@ -256,10 +256,5 @@ $('input[name=\'product\']').autocomplete({
       	return false;
    	}
 });
-//--></script> 
-<script type="text/javascript"><!--
-$(document).ready(function() {
-	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
-});
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

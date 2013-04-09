@@ -870,7 +870,7 @@
             <div class="control-group">
               <label class="control-label" for="input-image-additional-width"><span class="required">*</span> <?php echo $entry_image_additional; ?></label>
               <div class="controls">
-                <input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" placeholder="<?php echo $entry_width; ?>" class="input-mini" />
+                <input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-additional-width" class="input-mini" />
                 x
                 <input type="text" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
                 <?php if ($error_image_additional) { ?>
@@ -879,9 +879,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_related; ?></label>
+              <label class="control-label" for="input-image-related"><span class="required">*</span> <?php echo $entry_image_related; ?></label>
               <div class="controls">
-                <input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" placeholder="<?php echo $entry_width; ?>" class="input-mini" />
+                <input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-related" class="input-mini" />
                 x
                 <input type="text" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
                 <?php if ($error_image_related) { ?>
@@ -890,9 +890,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_compare; ?></label>
+              <label class="control-label" for="input-image-compare"><span class="required">*</span> <?php echo $entry_image_compare; ?></label>
               <div class="controls">
-                <input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" placeholder="<?php echo $entry_width; ?>" class="input-mini" />
+                <input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-compare" class="input-mini" />
                 x
                 <input type="text" name="config_image_compare_height" value="<?php echo $config_image_compare_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
                 <?php if ($error_image_compare) { ?>
@@ -901,9 +901,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_wishlist; ?></label>
+              <label class="control-label" for="input-image-wishlist"><span class="required">*</span> <?php echo $entry_image_wishlist; ?></label>
               <div class="controls">
-                <input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" placeholder="<?php echo $entry_width; ?>" class="input-mini" />
+                <input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-wishlist" class="input-mini" />
                 x
                 <input type="text" name="config_image_wishlist_height" value="<?php echo $config_image_wishlist_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
                 <?php if ($error_image_wishlist) { ?>
@@ -912,9 +912,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_image_cart; ?></label>
+              <label class="control-label" for="input-image-cart"><span class="required">*</span> <?php echo $entry_image_cart; ?></label>
               <div class="controls">
-                <input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" placeholder="<?php echo $entry_width; ?>" class="input-mini" />
+                <input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-cart" class="input-mini" />
                 x
                 <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
                 <?php if ($error_image_cart) { ?>
@@ -1023,7 +1023,7 @@
             <div class="control-group">
               <label class="control-label" for="input-smtp-username"><?php echo $entry_smtp_username; ?></label>
               <div class="controls">
-                <input type="text" name="config_smtp_username" value="<?php echo $config_smtp_username; ?>" placeholder="<?php echo $entry_smtp_username; ?>" for="input-smtp-username" />
+                <input type="text" name="config_smtp_username" value="<?php echo $config_smtp_username; ?>" placeholder="<?php echo $entry_smtp_username; ?>" id="input-smtp-username" />
               </div>
             </div>
             <div class="control-group">

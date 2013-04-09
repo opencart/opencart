@@ -14,7 +14,9 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons">
+          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <?php if ($customer_id) { ?>
@@ -31,10 +33,10 @@
                 <li class="active"><a href="#tab-customer" data-toggle="tab"><?php echo $tab_general; ?></a></li>
                 <?php $address_row = 1; ?>
                 <?php foreach ($addresses as $address) { ?>
-                <li><a href="#tab-address<?php echo $address_row; ?>" data-toggle="tab"><?php echo $tab_address . ' ' . $address_row; ?> <img src="view/image/icon-delete.png" alt="" onclick="$('#address a[href=\'#tab-address<?php echo $address_row; ?>\']').parent().remove(); $('#tab-address<?php echo $address_row; ?>').remove();" /></a></li>
+                <li><a href="#tab-address<?php echo $address_row; ?>" data-toggle="tab"><i class="icon-minus-sign" onclick="$('#address a[href=\'#tab-address<?php echo $address_row; ?>\']').parent().remove(); $('#tab-address<?php echo $address_row; ?>').remove();"></i> <?php echo $tab_address . ' ' . $address_row; ?></a></li>
                 <?php $address_row++; ?>
                 <?php } ?>
-                <li id="address-add"><?php echo $button_add_address; ?> <img src="view/image/icon-add.png" alt="" onclick="addAddress();" /></li>
+                <li id="address-add"><a onclick="addAddress();"><i class="icon-plus-sign"></i> <?php echo $button_add_address; ?></a></li>
               </ul>
               <div class="tab-content">
                 <div class="tab-pane active" id="tab-customer">
@@ -194,8 +196,7 @@
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="input-postcode<?php echo $address_row; ?>">
-                    <<span id="postcode-required<?php echo $address_row; ?>" class="required">*</span> <?php echo $entry_postcode; ?></label>
+                    <label class="control-label" for="input-postcode<?php echo $address_row; ?>"> <span id="postcode-required<?php echo $address_row; ?>" class="required">*</span> <?php echo $entry_postcode; ?></label>
                     <div class="controls">
                       <input type="text" name="address[<?php echo $address_row; ?>][postcode]" value="<?php echo $address['postcode']; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode<?php echo $address_row; ?>" />
                     </div>
@@ -221,7 +222,8 @@
                   <div class="control-group">
                     <label class="control-label" for="input-zone<?php echo $address_row; ?>"><span class="required">*</span> <?php echo $entry_zone; ?></label>
                     <div class="controls">
-                      <select name="address[<?php echo $address_row; ?>][zone_id]" id="input-zone<?php echo $address_row; ?>"></select>
+                      <select name="address[<?php echo $address_row; ?>][zone_id]" id="input-zone<?php echo $address_row; ?>">
+                      </select>
                       <?php if (isset($error_address_zone[$address_row])) { ?>
                       <span class="error"><?php echo $error_address_zone[$address_row]; ?></span>
                       <?php } ?>
@@ -248,17 +250,16 @@
           <?php if ($customer_id) { ?>
           <div class="tab-pane" id="tab-history">
             <div id="history"></div>
-            
-            <label class="control-label" for="input-comment"><?php echo $entry_comment; ?></label>
-            
-            
-            <textarea name="comment" cols="40" rows="8" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="input-xxlarge"></textarea>
-            
-            
-            <a id="button-history" class="btn"><span><?php echo $button_add_history; ?></span></a> </div>
-         
-         
+            <div class="control-group">
+              <label class="control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+              <div class="controls">
+                <textarea name="comment" cols="40" rows="8" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="input-xxlarge"></textarea>
+              </div>
+            </div>
+            <button id="button-history" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
+          </div>
           <div class="tab-pane" id="tab-transaction">
+            <div id="transaction"></div>
             <div class="control-group">
               <label class="control-label" for="input-transaction-description"><?php echo $entry_description; ?></label>
               <div class="controls">
@@ -271,11 +272,10 @@
                 <input type="text" name="amount" value="" placeholder="<?php echo $entry_amount; ?>" id="input-amount" />
               </div>
             </div>
-            <a id="button-transaction" class="btn" onclick="addTransaction();"><span><?php echo $button_add_transaction; ?></span></a>
-            <div id="transaction"></div>
+            <button id="button-transaction" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button>
           </div>
-          
           <div class="tab-pane" id="tab-reward">
+            <div id="reward"></div>
             <div class="control-group">
               <label class="control-label" for="input-reward-description"><?php echo $entry_description; ?></label>
               <div class="controls">
@@ -288,8 +288,7 @@
                 <input type="text" name="points" value="" placeholder="<?php echo $entry_points; ?>" id="input-points" />
                 <span class="help-block"><?php echo $help_points; ?></span></div>
             </div>
-            <a id="button-reward" class="btn" onclick="addRewardPoints();"><span><?php echo $button_add_reward; ?></span></a>
-            <div id="reward"></div>
+            <button id="button-reward" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button>
           </div>
           <?php } ?>
           <div class="tab-pane" id="tab-ip">
@@ -310,9 +309,9 @@
                   <td class="right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
                   <td class="left"><?php echo $ip['date_added']; ?></td>
                   <td class="right"><?php if ($ip['ban_ip']) { ?>
-                    <b>[</b> <a id="<?php echo str_replace('.', '-', $ip['ip']); ?>" onclick="removeBanIP('<?php echo $ip['ip']; ?>');"><?php echo $text_remove_ban_ip; ?></a> <b>]</b>
+                    <button value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-add"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
                     <?php } else { ?>
-                    <b>[</b> <a id="<?php echo str_replace('.', '-', $ip['ip']); ?>" onclick="addBanIP('<?php echo $ip['ip']; ?>');"><?php echo $text_add_ban_ip; ?></a> <b>]</b>
+                    <button value="<?php echo $ip['ip']; ?>" class="btn btn-mini"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
                     <?php } ?></td>
                 </tr>
                 <?php } ?>
@@ -335,52 +334,6 @@ $('select[name=\'customer_group_id\']').on('change', function() {
 });
 
 $('select[name=\'customer_group_id\']').trigger('change');
-//--></script> 
-<script type="text/javascript"><!--
-function country(element, index, zone_id) {
-  if (element.value != '') {
-		$.ajax({
-			url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
-			dataType: 'json',
-			beforeSend: function() {
-				$('select[name=\'address[' + index + '][country_id]\']').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-			},
-			complete: function() {
-				$('.loading').remove();
-			},			
-			success: function(json) {
-				if (json['postcode_required'] == '1') {
-					$('#postcode-required' + index).show();
-				} else {
-					$('#postcode-required' + index).hide();
-				}
-				
-				html = '<option value=""><?php echo $text_select; ?></option>';
-				
-				if (json['zone'] != '') {
-					for (i = 0; i < json['zone'].length; i++) {
-						html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-						
-						if (json['zone'][i]['zone_id'] == zone_id) {
-							html += ' selected="selected"';
-						}
-		
-						html += '>' + json['zone'][i]['name'] + '</option>';
-					}
-				} else {
-					html += '<option value="0"><?php echo $text_none; ?></option>';
-				}
-				
-				$('select[name=\'address[' + index + '][zone_id]\']').html(html);
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	}
-}
-
-$('select[name$=\'[country_id]\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 var address_row = <?php echo $address_row; ?>;
@@ -450,12 +403,58 @@ function addAddress() {
 	
 	$('select[name=\'address[' + address_row + '][country_id]\']').trigger('change');	
 	
-	$('#address-add').before('<li><a href="#tab-address' + address_row + '" data-toggle="tab"><?php echo $tab_address; ?> ' + address_row + '&nbsp;<img src="view/image/icon-delete.png" alt="" onclick="$(\'#address a:first\').tab(\'show\'); $(\'a[href=\\\'#tab-address' + address_row + '\\\']\').parent().remove(); $(\'#tab-address' + address_row + '\').remove();" /></a></li>');
+	$('#address-add').before('<li><a href="#tab-address' + address_row + '" data-toggle="tab"><i class="icon-minus-sign" onclick="$(\'#address a:first\').tab(\'show\'); $(\'a[href=\\\'#tab-address' + address_row + '\\\']\').parent().remove(); $(\'#tab-address' + address_row + '\').remove();"></i> <?php echo $tab_address; ?> ' + address_row + '</a></li>');
 	
 	$('#address a[href=\'#tab-address' + address_row + '\']').tab('show');
 	
 	address_row++;
 }
+//--></script> 
+<script type="text/javascript"><!--
+function country(element, index, zone_id) {
+  if (element.value != '') {
+		$.ajax({
+			url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
+			dataType: 'json',
+			beforeSend: function() {
+				$('select[name=\'address[' + index + '][country_id]\']').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			},
+			complete: function() {
+				$('.loading').remove();
+			},			
+			success: function(json) {
+				if (json['postcode_required'] == '1') {
+					$('#postcode-required' + index).show();
+				} else {
+					$('#postcode-required' + index).hide();
+				}
+				
+				html = '<option value=""><?php echo $text_select; ?></option>';
+				
+				if (json['zone'] != '') {
+					for (i = 0; i < json['zone'].length; i++) {
+						html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+						
+						if (json['zone'][i]['zone_id'] == zone_id) {
+							html += ' selected="selected"';
+						}
+		
+						html += '>' + json['zone'][i]['name'] + '</option>';
+					}
+				} else {
+					html += '<option value="0"><?php echo $text_none; ?></option>';
+				}
+				
+				$('select[name=\'address[' + index + '][zone_id]\']').html(html);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+}
+
+$('select[name$=\'[country_id]\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 $('#history .pagination a').on('click', function() {
@@ -473,14 +472,14 @@ $('#button-history').on('click', function() {
 		dataType: 'html',
 		data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
 		beforeSend: function() {
-			$('.success, .warning').remove();
+			$('.alert').remove();
+			
+			$('#button-history i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-history').attr('disabled', true);
-			$('#history').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
+			$('#button-history i').replaceWith('<i class="icon-plus-sign"></i>');
 			$('#button-history').attr('disabled', false);
-			$('.attention').remove();
-      		$('#tab-history textarea[name=\'comment\']').val('');
 		},
 		success: function(html) {
 			$('#history').html(html);
@@ -506,13 +505,14 @@ $('#button-transaction').on('click', function() {
 		dataType: 'html',
 		data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
 		beforeSend: function() {
-			$('.success, .warning').remove();
+			$('.alert').remove();
+			
+			$('#button-transaction i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-transaction').attr('disabled', true);
-			$('#transaction').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
+			$('#button-transaction i').replaceWith('<i class="icon-plus-sign"></i>');
 			$('#button-transaction').attr('disabled', false);
-			$('.attention').remove();
 		},
 		success: function(html) {
 			$('#transaction').html(html);
@@ -532,20 +532,22 @@ $('#reward .pagination a').on('click', function() {
 
 $('#reward').load('index.php?route=sale/customer/reward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
-function addRewardPoints() {
+$('#button-reward').on('click', function() {	
 	$.ajax({
 		url: 'index.php?route=sale/customer/reward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
 		type: 'post',
 		dataType: 'html',
 		data: 'description=' + encodeURIComponent($('#tab-reward input[name=\'description\']').val()) + '&points=' + encodeURIComponent($('#tab-reward input[name=\'points\']').val()),
 		beforeSend: function() {
-			$('.success, .warning').remove();
+			$('.alert').remove();
+			
+			$('#button-reward i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-reward').attr('disabled', true);
-			$('#reward').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
+
 		},
 		complete: function() {
+			$('#button-reward i').replaceWith('<i class="icon-plus-sign"></i>');
 			$('#button-reward').attr('disabled', false);
-			$('.attention').remove();
 		},
 		success: function(html) {
 			$('#reward').html(html);
@@ -554,8 +556,10 @@ function addRewardPoints() {
 			$('#tab-reward input[name=\'description\']').val('');
 		}
 	});
-}
+});
 
+$('.ban-ip').on('click', function() {
+	
 function addBanIP(ip) {
 	var id = ip.replace(/\./g, '-');
 	
@@ -567,7 +571,7 @@ function addBanIP(ip) {
 		beforeSend: function() {
 			$('.success, .warning').remove();
 			
-			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');		
+			$('#button-ban-id i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 		},
 		complete: function() {
 			
@@ -590,7 +594,7 @@ function addBanIP(ip) {
 			}
 		}
 	});	
-}
+});
 
 function removeBanIP(ip) {
 	var id = ip.replace(/\./g, '-');
@@ -601,9 +605,7 @@ function removeBanIP(ip) {
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent(ip),
 		beforeSend: function() {
-			$('.success, .warning').remove();
-			
-			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');					
+			$('.alert').remove();
 		},	
 		success: function(json) {
 			$('.attention').remove();

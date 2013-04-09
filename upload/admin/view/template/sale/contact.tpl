@@ -11,7 +11,9 @@
     </div>
     <div class="box-content">
       <form class="form-horizontal">
-        <div class="buttons"><a id="button-send" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');" class="btn"><i class="icon-envelope"></i> <?php echo $button_send; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons">
+          <button id="button-send" class="btn"><i class="icon-envelope"></i> <?php echo $button_send; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
           <label class="control-label" for="input-store"><?php echo $entry_store; ?></label>
           <div class="controls">
@@ -242,30 +244,31 @@ $('#product div img').on('click', function() {
 	$('#product div:even').attr('class', 'even');	
 });
 
-function send(url) { 
+
+$('#button-send').on('click', function() {
 	$('textarea[name=\'message\']').html(CKEDITOR.instances.message.getData());
 	
 	$.ajax({
-		url: url,
+		url: 'index.php?route=sale/contact/send&token=<?php echo $token; ?>',
 		type: 'post',
 		data: $('select, input, textarea'),		
 		dataType: 'json',
 		beforeSend: function() {
+			$('#button-send i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-send').attr('disabled', true);
-			$('#button-send').before('<img src="view/image/loading.gif" class="loading" style="padding-right: 5px;" />');
 		},
 		complete: function() {
+			$('#button-send i').replaceWith('<i class="icon-envelope"></i>');
 			$('#button-send').attr('disabled', false);
-			$('.loading').remove();
 		},				
 		success: function(json) {
-			$('.success, .warning, .error').remove();
+			$('.alert, .error').remove();
 			
 			if (json['error']) {
 				if (json['error']['warning']) {
 					$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '</div>');
 			
-					$('.warning').fadeIn('slow');
+					$('.alert-error').fadeIn('slow');
 				}
 				
 				if (json['error']['subject']) {
@@ -287,11 +290,11 @@ function send(url) {
 				if (json['success']) {
 					$('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
 			
-					$('.success').fadeIn('slow');
+					$('.alert-success').fadeIn('slow');
 				}					
 			}				
 		}
 	});
-}
+});
 //--></script> 
 <?php echo $footer; ?>

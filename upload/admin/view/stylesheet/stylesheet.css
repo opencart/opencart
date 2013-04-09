@@ -113,3 +113,6 @@
 	color: #00C3F4;
 	cursor: pointer;
 }
+.results {
+	float: right;
+}

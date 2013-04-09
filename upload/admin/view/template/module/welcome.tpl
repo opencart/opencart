@@ -19,10 +19,10 @@
         <ul class="nav nav-tabs" id="module">
           <?php $module_row = 1; ?>
           <?php foreach ($modules as $module) { ?>
-          <li><a href="#tab-module<?php echo $module_row; ?>" data-toggle="tab"><?php echo $tab_module . ' ' . $module_row; ?> <img src="view/image/icon-delete.png" alt="" onclick="$('a[href=\'#tab-module<?php echo $module_row; ?>\']').parent().remove(); $('#tab-module<?php echo $module_row; ?>').remove(); $('#module a:first').tab('show');" /></a></li>
+          <li><a href="#tab-module<?php echo $module_row; ?>" data-toggle="tab"><i class="icon-minus-sign" onclick="$('a[href=\'#tab-module<?php echo $module_row; ?>\']').parent().remove(); $('#tab-module<?php echo $module_row; ?>').remove(); $('#module a:first').tab('show');"></i> <?php echo $tab_module . ' ' . $module_row; ?></a></li>
           <?php $module_row++; ?>
           <?php } ?>
-          <li id="module-add"><?php echo $button_add_module; ?> <img src="view/image/icon-add.png" alt="" onclick="addModule();" /></li>
+          <li id="module-add"><a onclick="addModule();"><i class="icon-plus-sign"></i> <?php echo $button_add_module; ?></a></li>
         </ul>
         <div class="tab-content">
           <?php $module_row = 1; ?>
@@ -148,8 +148,8 @@ function addModule() {
 	<?php foreach ($languages as $language) { ?>
 	html += '    <div class="tab-pane" id="tab-module' + module_row + '-language<?php echo $language['language_id']; ?>">';
 	html += '      <div class="control-group">';
-	html += '        <label class="control-label" for="input-name"><?php echo $entry_description; ?></label>';
-	html += '        <div class="controls"><textarea name="welcome_module[' + module_row + '][description][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_description; ?>" id="description' + module_row + '-language<?php echo $language['language_id']; ?>"></textarea></div>';
+	html += '        <label class="control-label" for="input-description' + module_row + '-language<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>';
+	html += '        <div class="controls"><textarea name="welcome_module[' + module_row + '][description][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_description; ?>" id="input-description' + module_row + '-language<?php echo $language['language_id']; ?>"></textarea></div>';
 	html += '      </div>'; 	
 	html += '    </div>';
 	<?php } ?>
@@ -157,8 +157,8 @@ function addModule() {
 	html += '  </div>';
 
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-name"><?php echo $entry_layout; ?></label>';
-	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][layout_id]">';
+	html += '    <label class="control-label" for="input-layout' + module_row + '"><?php echo $entry_layout; ?></label>';
+	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][layout_id]" id="input-layout' + module_row + '">';
 	<?php foreach ($layouts as $layout) { ?>
 	html += '           <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
 	<?php } ?>
@@ -166,8 +166,8 @@ function addModule() {
 	html += '  </div>';
 
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-name"><?php echo $entry_position; ?></label>';
-	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][position]">';
+	html += '    <label class="control-label" for="input-position' + module_row + '"><?php echo $entry_position; ?></label>';
+	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][position]" id="input-position' + module_row + '">';
 	html += '        <option value="content_top"><?php echo $text_content_top; ?></option>';
 	html += '        <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
 	html += '        <option value="column_left"><?php echo $text_column_left; ?></option>';
@@ -175,22 +175,22 @@ function addModule() {
 	html += '      </select></div>';
 	html += '  </div>';
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>';
-	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][status]">';
+	html += '    <label class="control-label" for="input-status' + module_row + '"><?php echo $entry_status; ?></label>';
+	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][status]" id="input-status' + module_row + '">';
 	html += '          <option value="1"><?php echo $text_enabled; ?></option>';
 	html += '          <option value="0"><?php echo $text_disabled; ?></option>';
 	html += '        </select></div>';
 	html += '  </div>';
 	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>';
-	html += '    <div class="controls"><input type="text" name="welcome_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></div>';
+	html += '    <label class="control-label" for="input-sort-order' + module_row + '"><?php echo $entry_sort_order; ?></label>';
+	html += '    <div class="controls"><input type="text" name="welcome_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order' + module_row + '" class="input-mini" /></div>';
 	html += '  </div>';
 	html += '</div>';
 	
 	$('.form-horizontal > .tabbable > .tab-content').append(html);
 
 	<?php foreach ($languages as $language) { ?>
-	CKEDITOR.replace('description' + module_row + '-language<?php echo $language['language_id']; ?>', {
+	CKEDITOR.replace('input-description' + module_row + '-language<?php echo $language['language_id']; ?>', {
 		filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 		filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 		filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
@@ -200,7 +200,7 @@ function addModule() {
 	});  
 	<?php } ?>
 	
-	$('#module-add').before('<li><a href="#tab-module' + module_row + '" data-toggle="tab"><?php echo $tab_module; ?> ' + module_row + ' <img src="view/image/icon-delete.png" alt="" onclick="$(\'a[href=\\\'#tab-module' + module_row + '\\\']\').parent().remove(); $(\'#tab-module' + module_row + '\').remove(); $(\'#module a:first\').tab(\'show\');" /></a></li>');
+	$('#module-add').before('<li><a href="#tab-module' + module_row + '" data-toggle="tab"><i class="icon-minus-sign" onclick="$(\'a[href=\\\'#tab-module' + module_row + '\\\']\').parent().remove(); $(\'#tab-module' + module_row + '\').remove(); $(\'#module a:first\').tab(\'show\');"></i> <?php echo $tab_module; ?> ' + module_row + '</a></li>');
 	
 	$('#module a[href=\'#tab-module' + module_row + '\']').tab('show');
 	

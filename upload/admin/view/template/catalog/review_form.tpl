@@ -18,7 +18,7 @@
         <div class="control-group">
           <label class="control-label" for="input-author"><span class="required">*</span> <?php echo $entry_author; ?></label>
           <div class="controls">
-            <input type="text" name="author" value="<?php echo $author; ?>" placeholder="<?php echo $entry_author; ?>" />
+            <input type="text" name="author" value="<?php echo $author; ?>" placeholder="<?php echo $entry_author; ?>" id="input-author" />
             <?php if ($error_author) { ?>
             <span class="error"><?php echo $error_author; ?></span>
             <?php } ?>
@@ -27,7 +27,7 @@
         <div class="control-group">
           <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
           <div class="controls">
-            <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" />
+            <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" />
             <span class="help-block"><?php echo $help_product; ?></span>
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
             <?php if ($error_product) { ?>
@@ -38,7 +38,7 @@
         <div class="control-group">
           <label class="control-label" for="input-text"><span class="required">*</span> <?php echo $entry_text; ?></label>
           <div class="controls">
-            <textarea name="text" cols="60" rows="8" placeholder="<?php echo $entry_text; ?>" class="input-xxlarge"><?php echo $text; ?></textarea>
+            <textarea name="text" cols="60" rows="8" placeholder="<?php echo $entry_text; ?>" id="input-text" class="input-xxlarge"><?php echo $text; ?></textarea>
             <?php if ($error_text) { ?>
             <span class="error"><?php echo $error_text; ?></span>
             <?php } ?>

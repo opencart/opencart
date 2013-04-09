@@ -119,6 +119,8 @@
         </div>
         <div class="tab-pane" id="tab-history">
           <div id="history"></div>
+          
+          
           <table class="form">
             <tr>
               <td><?php echo $entry_return_status; ?></td>
@@ -139,7 +141,11 @@
             <tr>
               <td><?php echo $entry_comment; ?></td>
               <td><textarea name="comment" cols="40" rows="8" style="width: 99%"></textarea>
-                <div style="margin-top: 10px; text-align: right;"><a onclick="history();" id="button-history" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></a></div></td>
+                <div style="margin-top: 10px; text-align: right;">
+                
+                <button id="button-history" class="btn btn-mini button-ban-add"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
+                
+                </div></td>
             </tr>
           </table>
         </div>
@@ -155,7 +161,7 @@ $('select[name=\'return_action_id\']').on('change', function() {
 		dataType: 'json',
 		data: 'return_action_id=' + this.value,
 		beforeSend: function() {
-			$('.success, .warning, .attention').remove();
+			$('.alert').remove();
 			
 			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
@@ -188,20 +194,21 @@ $('#history .pagination a').on('click', function() {
 
 $('#history').load('index.php?route=sale/return/history&token=<?php echo $token; ?>&return_id=<?php echo $return_id; ?>');
 
-function history() {
+$('#button-history').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/return/history&token=<?php echo $token; ?>&return_id=<?php echo $return_id; ?>',
 		type: 'post',
 		dataType: 'html',
 		data: 'return_status_id=' + encodeURIComponent($('select[name=\'return_status_id\']').val()) + '&notify=' + encodeURIComponent($('input[name=\'notify\']').attr('checked') ? 1 : 0) + '&append=' + encodeURIComponent($('input[name=\'append\']').attr('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
-			$('.success, .warning').remove();
+			$('.alert').remove();
+			
+			$('#button-history i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-history').attr('disabled', true);
-			$('#history').prepend('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
+			$('#button-history i').replaceWith('<i class="icon-plus-sign"></i>');
 			$('#button-history').attr('disabled', false);
-			$('.attention').remove();
 		},
 		success: function(html) {
 			$('#history').html(html);
@@ -211,6 +218,6 @@ function history() {
 			$('#return-status').html($('select[name=\'return_status_id\'] option:selected').text());
 		}
 	});
-}
+});
 //--></script> 
 <?php echo $footer; ?>

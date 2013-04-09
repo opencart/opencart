@@ -129,7 +129,7 @@
         <div class="control-group">
           <label class="control-label" for="input-expired-status"><?php echo $entry_expired_status; ?></label>
           <div class="controls">
-            <select name="pp_standard_expired_status_id" for="input-expired-status">
+            <select name="pp_standard_expired_status_id" id="input-expired-status">
               <?php foreach ($order_statuses as $order_status) { ?>
               <?php if ($order_status['order_status_id'] == $pp_standard_expired_status_id) { ?>
               <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>

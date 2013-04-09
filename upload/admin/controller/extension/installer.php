@@ -93,49 +93,50 @@ class ControllerExtensionInstaller extends Controller {
 					
 					if ($zip) {
 						while ($entry = zip_read($zip)) {
-							
-							
-							
+							// Compare admin files
 							$file = DIR_APPLICATION . substr(zip_entry_name($entry), 13);
 							
-							if (substr(zip_entry_name($entry), 0, 13) == 'upload/admin/') {
+							if (is_file($file) && substr(zip_entry_name($entry), 0, 13) == 'upload/admin/') {
 								$json['overwrite'][] = substr(zip_entry_name($entry), 7);
 							}
 							
-							$file = DIR_CATALOG . substr(zip_entry_name($entry), 15);
+							// Compare catalog files
+							$file = DIR_CATALOG . substr(zip_entry_name($entry), 7);
 							
-							if (substr(zip_entry_name($entry), 0, 15) == 'upload/catalog/') {
+							if (is_file($file) && substr(zip_entry_name($entry), 0, 15) == 'upload/catalog/') {
 								$json['overwrite'][] = substr(zip_entry_name($entry), 7);
-							}					
+							}
 							
+							// Compare image files
 							$file = DIR_IMAGE . substr(zip_entry_name($entry), 13);
 							
-							if (substr(zip_entry_name($entry), 0, 13) == 'upload/image/') {
+							if (is_file($file) && substr(zip_entry_name($entry), 0, 13) == 'upload/image/') {
 								$json['overwrite'][] = substr(zip_entry_name($entry), 7);
 							}
 							
+							// Compare system files
 							$file = DIR_SYSTEM . substr(zip_entry_name($entry), 14);													
 							
-							if (substr(zip_entry_name($entry), 0, 14) == 'upload/system/') {
+							if (is_file($file) && substr(zip_entry_name($entry), 0, 14) == 'upload/system/') {
 								$json['overwrite'][] = substr(zip_entry_name($entry), 7);
 							}
 							
 							// SQL
 							if (substr(zip_entry_name($entry), 0, 11) == 'install.sql') {
-								//$json['sql'] = zip_entry_name($entry);							
+								$json['sql'] = zip_entry_name($entry);							
 							}		
 							
 							// XML					
 							if (substr(zip_entry_name($entry), 0, 11) == 'install.xml') {
-								//$json['xml'] = zip_entry_name($entry);
+								$json['xml'] = zip_entry_name($entry);
 							}
 
 							// PHP
 							if (substr(zip_entry_name($entry), 0, 11) == 'install.php') {
-								//$json['php'] = zip_entry_name($entry);
+								$json['php'] = zip_entry_name($entry);
 							}
 							
-							$json[] = zip_entry_name($entry);
+							//$json[] = zip_entry_name($entry);
 						}
 						
 						echo '<pre>';

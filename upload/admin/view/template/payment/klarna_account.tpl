@@ -127,7 +127,7 @@
                   <div class="control-group">
                     <label class="control-label" for="input-sort-order<?php echo $country['code']; ?>"><?php echo $entry_sort_order ?></label>
                     <div class="controls">
-                      <input type="text" name="klarna_account[<?php echo $country['code']; ?>][sort_order]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['sort_order'] : ''; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order<?php echo $country['code']; ?>">
+                      <input type="text" name="klarna_account[<?php echo $country['code']; ?>][sort_order]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['sort_order'] : ''; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order<?php echo $country['code']; ?>" class="input-small" />
                     </div>
                   </div>
                 </div>

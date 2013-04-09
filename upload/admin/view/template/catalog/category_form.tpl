@@ -85,7 +85,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label"><?php echo $entry_store; ?></label>
+              <div class="control-label"><?php echo $entry_store; ?></div>
               <div class="controls">
                 <label class="checkbox">
                   <?php if (in_array(0, $category_store)) { ?>

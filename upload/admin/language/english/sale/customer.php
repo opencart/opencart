@@ -6,7 +6,6 @@ $_['heading_title']         = 'Customer';
 $_['text_success']          = 'Success: You have modified customers!';
 $_['text_default']          = 'Default';
 $_['text_approved']         = 'You have approved %s accounts!';
-$_['text_wait']             = 'Please Wait!';
 $_['text_balance']          = 'Balance';
 $_['text_add_ban_ip']       = 'Add Ban IP';
 $_['text_remove_ban_ip']    = 'Remove Ban IP';

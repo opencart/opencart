@@ -27,7 +27,7 @@
               <div class="control-group">
                 <label class="control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
                 <div class="controls">
-                  <select name="weight_tax_class_id">
+                  <select name="weight_tax_class_id" id="input-tax-class">
                     <option value="0"><?php echo $text_none; ?></option>
                     <?php foreach ($tax_classes as $tax_class) { ?>
                     <?php if ($tax_class['tax_class_id'] == $weight_tax_class_id) { ?>
@@ -42,7 +42,7 @@
               <div class="control-group">
                 <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <div class="controls">
-                  <select name="weight_status">
+                  <select name="weight_status" id="input-status">
                     <?php if ($weight_status) { ?>
                     <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                     <option value="0"><?php echo $text_disabled; ?></option>
@@ -56,22 +56,22 @@
               <div class="control-group">
                 <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
                 <div class="controls">
-                  <input type="text" name="weight_sort_order" value="<?php echo $weight_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" />
+                  <input type="text" name="weight_sort_order" value="<?php echo $weight_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
                 </div>
               </div>
             </div>
             <?php foreach ($geo_zones as $geo_zone) { ?>
             <div class="tab-pane" id="tab-geo-zone<?php echo $geo_zone['geo_zone_id']; ?>">
               <div class="control-group">
-                <label class="control-label" for="input-name"><?php echo $entry_rate; ?></label>
+                <label class="control-label" for="input-rate<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $entry_rate; ?></label>
                 <div class="controls">
-                  <textarea name="weight_<?php echo $geo_zone['geo_zone_id']; ?>_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>"><?php echo ${'weight_' . $geo_zone['geo_zone_id'] . '_rate'}; ?></textarea>
+                  <textarea name="weight_<?php echo $geo_zone['geo_zone_id']; ?>_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-rate<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo ${'weight_' . $geo_zone['geo_zone_id'] . '_rate'}; ?></textarea>
                   <span class="help-block"><?php echo $help_rate; ?></span></div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $entry_status; ?></label>
                 <div class="controls">
-                  <select name="weight_<?php echo $geo_zone['geo_zone_id']; ?>_status">
+                  <select name="weight_<?php echo $geo_zone['geo_zone_id']; ?>_status" id="input-status<?php echo $geo_zone['geo_zone_id']; ?>">
                     <?php if (${'weight_' . $geo_zone['geo_zone_id'] . '_status'}) { ?>
                     <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                     <option value="0"><?php echo $text_disabled; ?></option>

@@ -76,8 +76,8 @@
                   <?php } ?>
                 </select></td>
               <td align="right"><input type="text" name="filter_total" value="<?php echo $filter_total; ?>" size="4" style="text-align: right;" /></td>
-              <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" class="date" /></td>
-              <td><input type="text" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" size="12" class="date" /></td>
+              <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="input-medium" /></td>
+              <td><input type="date" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" class="input-medium" /></td>
               <td align="right"><a onclick="filter();" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></a></td>
             </tr>
             <?php if ($orders) { ?>
@@ -154,11 +154,6 @@ function filter() {
 				
 	location = url;
 }
-//--></script> 
-<script type="text/javascript"><!--
-$(document).ready(function() {
-	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
-});
 //--></script> 
 <script type="text/javascript"><!--
 $('#form input').keydown(function(e) {

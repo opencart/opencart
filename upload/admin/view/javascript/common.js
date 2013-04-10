@@ -38,4 +38,6 @@ $(document).ready(function() {
 		
 		$('a[href*=\'' + url + '\']').parents('li[id]').addClass('selected');
 	}
+	
+	$('#help-keyword').tooltip({'title': '<?php echo addslashes($help_keyword); ?>', trigger: 'hover'});
 });

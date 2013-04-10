@@ -74,10 +74,8 @@
                 <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" />
                 <span class="help-block"><?php echo $help_filter; ?></span>
                 <div id="category-filter">
-                  <?php $class = 'odd'; ?>
                   <?php foreach ($category_filters as $category_filter) { ?>
-                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div id="category-filter<?php echo $category_filter['filter_id']; ?>" class="<?php echo $class; ?>"><?php echo $category_filter['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                  <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><?php echo $category_filter['name']; ?><img src="view/image/icon-delete.png" alt="" />
                     <input type="hidden" name="category_filter[]" value="<?php echo $category_filter['filter_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -112,9 +110,9 @@
             <div class="control-group">
               <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
               <div class="controls">
-                <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
+                <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" /> <i id="help-keyword" class="icon-question-sign"></i>
                 <script type="text/javascript"><!--
-                $('#input-keyword').tooltip({'title': '<?php echo addslashes($help_keyword); ?>', trigger: 'focus'});
+                $('#help-keyword').tooltip({'title': '<?php echo addslashes($help_keyword); ?>', trigger: 'hover'});
                 //--></script> 
               </div>
             </div>
@@ -232,29 +230,40 @@ CKEDITOR.replace('input-description<?php echo $language['language_id']; ?>', {
 <script type="text/javascript"><!--
 $('input[name=\'path\']').typeahead({
 	source: function(query, process) {
-		
-		
 		$.ajax({
-			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(this.value),
-			dataType: 'json',
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(query),
+			dataType: 'html',
 			success: function(json) {
+				states = [];
+				map = {};			
+				
+				$.each(json, function(i, state) {
+					map[state.stateName] = state;
+					
+					states.push(state.stateName);
+				});
+					
+				/*
+				
 				json.unshift({
 					'category_id':  0,
 					'name':  '<?php echo $text_none; ?>'
 				});
 				
-				
+				*/
 				process(json);	
-				/*
-					return {
-						label: item.name,
-						value: item.category_id
-					}
-					*/				
+				
+
+									
 			}
 		});		
 		
 		
+	},
+	updater: function (item) {
+    	selectedState = map[item].stateCode;
+   		
+		return item;
 	}
 })
 /*

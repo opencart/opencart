@@ -174,7 +174,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" class="date" />
+          <input type="date" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" class="input-medium" />
         </div>
         <br />
         <?php } ?>
@@ -184,7 +184,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" class="datetime" />
+          <input type="datetime-local" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
         </div>
         <br />
         <?php } ?>
@@ -194,7 +194,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" class="time" />
+          <input type="time" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" class="input-mini" />
         </div>
         <br />
         <?php } ?>
@@ -473,19 +473,4 @@ $('#button-review').on('click', function() {
 	});
 });
 //--></script>
-<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
-<script type="text/javascript"><!--
-$(document).ready(function() {
-	if ($.browser.msie && $.browser.version == 6) {
-		$('.date, .datetime, .time').bgIframe();
-	}
-
-	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
-	$('.datetime').datetimepicker({
-		dateFormat: 'yy-mm-dd',
-		timeFormat: 'h:m'
-	});
-	$('.time').timepicker({timeFormat: 'h:m'});
-});
-//--></script> 
 <?php echo $footer; ?>

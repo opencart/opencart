@@ -19,11 +19,9 @@
           <div class="controls">
             <input type="text" name="product" value="" id="input-product" />
             <span class="help-block"><?php echo $help_product; ?></span>
-            <div id="featured-product" class="scrollbox">
-              <?php $class = 'odd'; ?>
+            <div id="featured-product">
               <?php foreach ($products as $product) { ?>
-              <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-              <div id="featured-product<?php echo $product['product_id']; ?>" class="<?php echo $class; ?>"><?php echo $product['name']; ?> <img src="view/image/icon-delete.png" alt="" />
+              <div id="featured-product<?php echo $product['product_id']; ?>"><?php echo $product['name']; ?> <img src="view/image/icon-delete.png" alt="" />
                 <input type="hidden" value="<?php echo $product['product_id']; ?>" />
               </div>
               <?php } ?>

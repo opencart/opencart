@@ -122,11 +122,9 @@
               <div class="controls">
                 <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
                 <span class="help-block"><?php echo $help_product; ?></span>
-                <div id="coupon-product" class="scrollbox">
-                  <?php $class = 'odd'; ?>
+                <div id="coupon-product">
                   <?php foreach ($coupon_product as $coupon_product) { ?>
-                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div id="coupon-product<?php echo $coupon_product['product_id']; ?>" class="<?php echo $class; ?>"> <?php echo $coupon_product['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                  <div id="coupon-product<?php echo $coupon_product['product_id']; ?>"><?php echo $coupon_product['name']; ?><img src="view/image/icon-delete.png" alt="" />
                     <input type="hidden" name="coupon_product[]" value="<?php echo $coupon_product['product_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -138,11 +136,9 @@
               <div class="controls">
                 <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" />
                 <span class="help-block"><?php echo $help_category ?></span>
-                <div id="coupon-category" class="scrollbox">
-                  <?php $class = 'odd'; ?>
+                <div id="coupon-category">
                   <?php foreach ($coupon_category as $coupon_category) { ?>
-                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-                  <div id="coupon-category<?php echo $coupon_category['category_id']; ?>" class="<?php echo $class; ?>"> <?php echo $coupon_category['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                  <div id="coupon-category<?php echo $coupon_category['category_id']; ?>"><?php echo $coupon_category['name']; ?><img src="view/image/icon-delete.png" alt="" />
                     <input type="hidden" name="coupon_category[]" value="<?php echo $coupon_category['category_id']; ?>" />
                   </div>
                   <?php } ?>

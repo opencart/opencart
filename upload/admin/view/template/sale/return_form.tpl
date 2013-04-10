@@ -33,7 +33,7 @@
             <div class="control-group">
               <label class="control-label" for="input-date-ordered"><?php echo $entry_date_ordered; ?></label>
               <div class="controls">
-                <input type="date" name="date_ordered" value="<?php echo $date_ordered; ?>" placeholder="<?php echo $entry_date_ordered; ?>" id="input-date-ordered" class="date" />
+                <input type="date" name="date_ordered" value="<?php echo $date_ordered; ?>" placeholder="<?php echo $entry_date_ordered; ?>" id="input-date-ordered" class="input-medium" />
               </div>
             </div>
             <div class="control-group">

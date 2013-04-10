@@ -108,9 +108,9 @@
 	padding-bottom: 20px;
 	margin-bottom: 10px;
 }
-.help-block .icon-question-sign, .help-inline .icon-question-sign {
+.control-group .icon-question-sign {
+	color: #37A6CD;
 	font-size: 18px;
-	color: #00C3F4;
 	cursor: pointer;
 }
 .results {

@@ -54,7 +54,7 @@
           <div class="controls">
             <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" />
             <span class="help-block"><?php echo $help_customer; ?></span>
-            <div id="customer" class="scrollbox"></div>
+            <div id="customer"></div>
           </div>
         </div>
         <div class="control-group to" id="to-affiliate">
@@ -62,7 +62,7 @@
           <div class="controls">
             <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" />
             <span class="help-block"><?php echo $help_affiliate; ?></span>
-            <div id="affiliate" class="scrollbox"></div>
+            <div id="affiliate"></div>
           </div>
         </div>
         <div class="control-group to" id="to-product">
@@ -70,7 +70,7 @@
           <div class="controls">
             <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
             <span class="help-block"><?php echo $help_product; ?></span>
-            <div id="product" class="scrollbox"></div>
+            <div id="product"></div>
           </div>
         </div>
         <div class="control-group">

@@ -31,10 +31,10 @@
               <td></td>
             </tr>
           </thead>
-          <tbody id="route-row<?php echo $route_row; ?>">
+          <tbody>
             <?php $route_row = 0; ?>
             <?php foreach ($layout_routes as $layout_route) { ?>
-            <tr>
+            <tr id="route-row<?php echo $route_row; ?>">
               <td class="left"><select name="layout_route[<?php echo $route_row; ?>][store_id]">
                   <option value="0"><?php echo $text_default; ?></option>
                   <?php foreach ($stores as $store) { ?>

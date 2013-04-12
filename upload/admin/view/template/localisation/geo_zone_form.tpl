@@ -32,7 +32,7 @@
             <?php } ?>
           </div>
         </div>
-        <table id="zone-to-geo-zone" class="table">
+        <table id="zone-to-geo-zone" class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
               <td class="left"><?php echo $entry_country; ?></td>

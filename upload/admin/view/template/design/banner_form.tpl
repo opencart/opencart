@@ -37,7 +37,7 @@
             </select>
           </div>
         </div>
-        <table id="images" class="table">
+        <table id="images" class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
               <td class="left"><?php echo $entry_title; ?></td>

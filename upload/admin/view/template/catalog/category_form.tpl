@@ -234,32 +234,29 @@ $('input[name=\'path\']').typeahead({
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(query),
 			dataType: 'html',
 			success: function(json) {
-				states = [];
-				map = {};			
-				
-				$.each(json, function(i, state) {
-					map[state.stateName] = state;
-					
-					states.push(state.stateName);
-				});
-					
 				/*
-				
 				json.unshift({
 					'category_id':  0,
 					'name':  '<?php echo $text_none; ?>'
 				});
-				
 				*/
-				process(json);	
+			
+				data = [];
 				
-
+				for () {
+					
+				}
+			
+				process(JSON.parse(json));	
+				
 									
 			}
 		});		
 		
 		
 	},
+	"key": "city", 
+    "value": "code", 	
 	updater: function (item) {
     	selectedState = map[item].stateCode;
    		

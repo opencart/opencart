@@ -1,14 +1,42 @@
-.navbar {
-	/*background: #2D2D2E url('../image/header.png');*/
-	border-bottom: 1px solid #252525;
-	margin-bottom: 14px;
-	background-image: linear-gradient(to bottom, #222222, #111111);
+html, body {
+	margin: 0;
+	padding: 0;	
+}
+
+#header {
+	height: 50px;
+	background-image: url('../image/header.png');
+	border-bottom: 4px solid #00C3F4;
+	
+}
+#logo {
+	float: left;
+	padding-top: 11px;
+	padding-left: 25px;
+}
+#account {
+	float: right;
+	padding-top: 15px;
+	padding-right: 25px;	
+	color: #FFF;
+	vertical-align: center;
 }
 .nav {
+
+}
+.navbar {
+	background: #F6F6F6;
+	border-bottom: 1px solid #E2E2E2;
+	margin-bottom: 14px;
+	
+}
+.navbar-inner {
+	min-height: 32px;
 }
 .navbar .nav > li > a {
+	color: #666666;
 	font-size: 13px;
-	text-shadow: 0 1px 0 #000000;
+	text-shadow: none;
 	cursor: pointer;
 }
 #content {

@@ -33,7 +33,7 @@
             <?php } ?>
           </div>
         </div>
-        <table id="tax-rule" class="table">
+        <table id="tax-rule" class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
               <td class="left"><?php echo $entry_rate; ?></td>

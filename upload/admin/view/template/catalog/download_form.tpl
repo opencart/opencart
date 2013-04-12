@@ -30,8 +30,12 @@
         <div class="control-group">
           <label class="control-label" for="input-filename"><?php echo $entry_filename; ?></label>
           <div class="controls">
-            <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" />
+            <div class="input-append">
+            <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="span2" />
             <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
+            </div>
+            
+            
             <span class="help-block"><?php echo $help_filename; ?></span>
             <?php if ($error_filename) { ?>
             <span class="error"><?php echo $error_filename; ?></span>

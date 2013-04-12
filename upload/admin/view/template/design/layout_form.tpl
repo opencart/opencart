@@ -23,7 +23,7 @@
             <?php } ?>
           </div>
         </div>
-        <table id="route" class="table">
+        <table id="route" class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
               <td class="left"><?php echo $entry_store; ?></td>

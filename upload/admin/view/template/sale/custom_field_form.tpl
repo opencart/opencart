@@ -253,7 +253,7 @@
             <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
           </div>
         </div>
-        <table id="custom-field-value" class="table">
+        <table id="custom-field-value" class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
               <td class="left"><span class="required">*</span> <?php echo $entry_custom_value; ?></td>

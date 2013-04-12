@@ -386,7 +386,7 @@
             </div>
           </div>
           <div class="tab-pane" id="tab-attribute">
-            <table id="attribute" class="table">
+            <table id="attribute" class="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
                   <td class="left"><?php echo $entry_attribute; ?></td>
@@ -419,19 +419,19 @@
           </div>
           <div class="tab-pane" id="tab-option">
             
+
             
-             <div class="control-group">
-              <label class="control-label" for="input-download"><?php echo $entry_option; ?></label>
-              <div class="controls">
-              
-              <input type="text" name="option" value="" class="input-xxxlarge" />
-              
-                <button type="text" value="" id="input-option" class="btn"><i class="icon-plus"></i> Add Option</button>
-                
-                
-              </div>
-            </div>   
-            
+
+              <table class="table table-striped table-bordered table-hover">
+                <tbody>
+                  <tr>
+                    <td class="left"><?php echo $entry_option; ?></td>
+                    <td class="left"><input type="text" name="option" value="" class="input-xxxlarge" />
+                      <button type="text" value="" id="input-option" class="btn"><i class="icon-plus"></i> Add Option</button></td>
+                  </tr>
+                </tbody>
+              </table>
+
             
                         
             <div class="tabbable tabs-left">
@@ -518,7 +518,7 @@
                   </div>
                   <?php } ?>
                   <?php if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') { ?>
-                  <table id="option-value<?php echo $option_row; ?>" class="table">
+                  <table id="option-value<?php echo $option_row; ?>" class="table table-striped table-bordered table-hover">
                     <thead>
                       <tr>
                         <td class="left"><?php echo $entry_option_value; ?></td>
@@ -621,7 +621,7 @@
             </div>
           </div>
           <div class="tab-pane" id="tab-discount">
-            <table id="discount" class="table">
+            <table id="discount" class="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
                   <td class="left"><?php echo $entry_customer_group; ?></td>
@@ -665,7 +665,7 @@
             </table>
           </div>
           <div class="tab-pane" id="tab-special">
-            <table id="special" class="table">
+            <table id="special" class="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
                   <td class="left"><?php echo $entry_customer_group; ?></td>
@@ -707,7 +707,7 @@
             </table>
           </div>
           <div class="tab-pane" id="tab-image">
-            <table id="images" class="table">
+            <table id="images" class="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
                   <td class="left"><?php echo $entry_image; ?></td>

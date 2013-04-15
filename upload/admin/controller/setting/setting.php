@@ -1280,12 +1280,10 @@ class ControllerSettingSetting extends Controller {
 		}
 		
 		if (file_exists(DIR_IMAGE . 'templates/' . basename($this->request->get['template']) . '.png')) {
-			$image = $server . 'image/templates/' . basename($this->request->get['template']) . '.png';
+			$this->response->setOutput($server . 'image/templates/' . basename($this->request->get['template']) . '.png');
 		} else {
-			$image = $server . 'image/no_image.jpg';
+			$this->response->setOutput($server . 'image/no_image.jpg');
 		}
-		
-		$this->response->setOutput('<img src="' . $image . '" alt="" title="" style="border: 1px solid #EEEEEE;" />');
 	}		
 		
 	public function country() {

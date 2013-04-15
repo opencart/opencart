@@ -1,6 +1,8 @@
 html, body {
 	margin: 0;
-	padding: 0;	
+	padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
 }
 
 #header {
@@ -16,28 +18,27 @@ html, body {
 }
 #account {
 	float: right;
-	padding-top: 15px;
+	padding-top: 10px;
 	padding-right: 25px;	
 	color: #FFF;
-	vertical-align: center;
-}
-.nav {
-
 }
 .navbar {
 	background: #F6F6F6;
 	border-bottom: 1px solid #E2E2E2;
 	margin-bottom: 14px;
-	
-}
-.navbar-inner {
-	min-height: 32px;
+	padding: 0px 25px;
 }
 .navbar .nav > li > a {
 	color: #666666;
 	font-size: 13px;
 	text-shadow: none;
 	cursor: pointer;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #E2E2E2;
+	padding: 6px 15px;
+}
+.navbar .nav > li > a:fist {
+	border-left: none;
 }
 #content {
 	padding: 10px 30px 0px 30px;

@@ -58,7 +58,7 @@
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
           <div class="controls">
-            <div class="image"><img src="<?php echo $thumb; ?>" alt="" id="thumb" />
+            <div class="image"><img src="<?php echo $thumb; ?>" alt="" id="thumb" class="img-polaroid" />
               <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
               <br />
               <a onclick="image_upload('image', 'thumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a></div>

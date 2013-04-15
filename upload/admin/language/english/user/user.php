@@ -20,7 +20,6 @@ $_['entry_lastname']   = 'Last Name';
 $_['entry_email']      = 'E-Mail';
 $_['entry_user_group'] = 'User Group';
 $_['entry_status']     = 'Status';
-$_['entry_captcha']    = 'Enter the code in the box below';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify users!';

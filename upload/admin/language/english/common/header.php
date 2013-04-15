@@ -45,6 +45,7 @@ $_['text_order_status']                = 'Order Statuses';
 $_['text_opencart']                    = 'Homepage';
 $_['text_payment']                     = 'Payments';
 $_['text_product']                     = 'Products';
+$_['text_profile']                     = 'Profile';
 $_['text_reports']                     = 'Reports';
 $_['text_report_sale_order']           = 'Orders';
 $_['text_report_sale_tax']             = 'Tax';

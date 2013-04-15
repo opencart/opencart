@@ -417,10 +417,10 @@ function country(element, index, zone_id) {
 			url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
 			dataType: 'json',
 			beforeSend: function() {
-				$('select[name=\'address[' + index + '][country_id]\']').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+				$('select[name=\'address[' + index + '][country_id]\']').after(' <i class="icon-spinner icon-spin"></i>');
 			},
 			complete: function() {
-				$('.loading').remove();
+				$('.icon-spinner').remove();
 			},			
 			success: function(json) {
 				if (json['postcode_required'] == '1') {

@@ -117,7 +117,7 @@
             <div class="control-group">
               <label class="control-label" for="input-template"><?php echo $entry_template; ?></label>
               <div class="controls">
-                <select name="config_template" id="input-template" onchange="$('#template').load('index.php?route=setting/store/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value));">
+                <select name="config_template" id="input-template">
                   <?php foreach ($templates as $template) { ?>
                   <?php if ($template == $config_template) { ?>
                   <option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
@@ -126,8 +126,8 @@
                   <?php } ?>
                   <?php } ?>
                 </select>
-                <div id="template"> </div>
-              </div>
+                <br />
+                <img src="" alt="" title="" id="template" class="img-polaroid" /> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-layout"><?php echo $entry_layout; ?></label>
@@ -478,7 +478,7 @@
             <div class="control-group">
               <label class="control-label" for="input-logo"><?php echo $entry_logo; ?></label>
               <div class="controls">
-                <div class="image"><img src="<?php echo $logo; ?>" alt="" id="thumb-logo" />
+                <div class="image"><img src="<?php echo $logo; ?>" alt="" id="thumb-logo" class="img-polaroid" />
                   <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="input-logo" />
                   <br />
                   <a onclick="image_upload('logo', 'thumb-logo');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-logo').attr('src', '<?php echo $no_image; ?>'); $('#logo').attr('value', '');"><?php echo $text_clear; ?></a></div>
@@ -487,7 +487,7 @@
             <div class="control-group">
               <label class="control-label" for="input-icon"><?php echo $entry_icon; ?></label>
               <div class="controls">
-                <div class="image"><img src="<?php echo $icon; ?>" alt="" id="thumb-icon" />
+                <div class="image"><img src="<?php echo $icon; ?>" alt="" id="thumb-icon" class="img-polaroid" />
                   <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="input-icon" />
                   <br />
                   <a onclick="image_upload('icon', 'thumb-icon');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-icon').attr('src', '<?php echo $no_image; ?>'); $('#icon').attr('value', '');"><?php echo $text_clear; ?></a></div>
@@ -624,7 +624,26 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#template').load('index.php?route=setting/store/template&token=<?php echo $token; ?>&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
+$('select[name=\'config_template\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value),
+		dataType: 'html',
+		beforeSend: function() {
+			$('select[name=\'country_id\']').after(' <i class="icon-spinner icon-spin"></i>');
+		},		
+		complete: function() {
+			$('.icon-spinner').remove();
+		},			
+		success: function(html) {
+			$('#template').attr('src', html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('select[name=\'config_template\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
@@ -632,10 +651,10 @@ $('select[name=\'config_country_id\']').on('change', function() {
 		url: 'index.php?route=setting/store/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('select[name=\'config_country_id\']').after(' <i class="icon-spinner icon-spin"></i>');
 		},		
 		complete: function() {
-			$('.loading').remove();
+			$('.icon-spinner').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

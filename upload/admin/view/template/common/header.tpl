@@ -14,10 +14,11 @@
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
-<link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
-<link href="view/javascript/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
+<link href="view/javascript/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
 <script src="view/javascript/bootstrap/js/bootstrap.js"></script>
-<link rel="stylesheet" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="view/stylesheet/stylesheet.css" />
 <?php foreach ($styles as $style) { ?>
 <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
@@ -29,36 +30,21 @@
 <body>
 <div id="header">
   <div id="logo"><a href="<?php echo $home; ?>"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a></div>
-  <div id="account">Howdy, Daniel Kerr <i class="icon-caret-down"></i>
-
-  <ul class="nav">
-          <li class="dropdown"><a data-toggle="dropdown"><?php echo $text_catalog; ?> <i class="icon-caret-down"></i></a>
-            <ul class="dropdown-menu">
-              <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
-              <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
-              <li><a href="<?php echo $filter; ?>"><?php echo $text_filter; ?></a></li>
-              <li class="dropdown-submenu"><a><?php echo $text_attribute; ?></a>
-                <ul class="dropdown-menu">
-                  <li><a href="<?php echo $attribute; ?>"><?php echo $text_attribute; ?></a></li>
-                  <li><a href="<?php echo $attribute_group; ?>"><?php echo $text_attribute_group; ?></a></li>
-                </ul>
-              </li>
-              <li><a href="<?php echo $option; ?>"><?php echo $text_option; ?></a></li>
-              <li><a href="<?php echo $manufacturer; ?>"><?php echo $text_manufacturer; ?></a></li>
-              <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>
-              <li><a href="<?php echo $review; ?>"><?php echo $text_review; ?></a></li>
-              <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
-            </ul>
-          </li>
-</ul>
-
-  
+  <div id="account">
+    <ul class="nav pull-right">
+      <li class="dropdown"><a data-toggle="dropdown">Howdy, Daniel Kerr <i class="icon-caret-down"></i></a>
+        <ul class="dropdown-menu">
+          <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
+          <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
+          <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
+        </ul>
+      </li>
+    </ul>
   </div>
 </div>
 <div class="navbar">
   <div class="nav-inner">
-    <div class="container">
-      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+    <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
       <?php if ($logged) { ?>
       <div class="nav-collapse collapse">
         <ul class="nav">
@@ -202,7 +188,7 @@
           </li>
         </ul>
         <ul class="nav pull-right">
-          <li class="dropdown" id="store">
+          <li class="dropdown">
             <?php if (!$stores) { ?>
             <a href="<?php echo $store; ?>" target="_blank"><?php echo $text_front; ?></a>
             <?php } else { ?>
@@ -214,7 +200,6 @@
             </ul>
             <?php } ?>
           </li>
-          <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
         </ul>
       </div>
       <?php } ?>

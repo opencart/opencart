@@ -56,7 +56,7 @@
 </div>
 <script type="text/javascript"><!--
 function filter() {
-	url = 'index.php?route=report/sale_order&token=<?php echo $token; ?>';
+	url = 'index.php?route=report/sale_coupon&token=<?php echo $token; ?>';
 	
 	var filter_date_start = $('input[name=\'filter_date_start\']').attr('value');
 	

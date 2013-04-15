@@ -38,6 +38,13 @@ $(document).ready(function() {
 		
 		$('a[href*=\'' + url + '\']').parents('li[id]').addClass('selected');
 	}
-	
-	$('#help-keyword').tooltip({'title': '<?php echo addslashes($help_keyword); ?>', trigger: 'hover'});
+});
+
+$('a[data-toggle=\'tooltip\']').tooltip({
+	'title': function() {
+		alert('hi');
+		
+		return 'test';	
+	}, 
+	trigger: 'hover'
 });

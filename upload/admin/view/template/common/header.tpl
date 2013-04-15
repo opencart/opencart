@@ -143,6 +143,7 @@
                   <li><a href="<?php echo $weight_class; ?>"><?php echo $text_weight_class; ?></a></li>
                 </ul>
               </li>
+              <li class="divider"></li>
               <li><a href="<?php echo $error_log; ?>"><?php echo $text_error_log; ?></a></li>
               <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
             </ul>

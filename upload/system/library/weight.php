@@ -26,13 +26,13 @@ class Weight {
 		if (isset($this->weights[$from])) {
 			$from = $this->weights[$from]['value'];
 		} else {
-			$from = 0;
+			$from = 1;
 		}
 
 		if (isset($this->weights[$to])) {
 			$to = $this->weights[$to]['value'];
 		} else {
-			$to = 0;
+			$to = 1;
 		}
 
 		return $value * ($to / $from);

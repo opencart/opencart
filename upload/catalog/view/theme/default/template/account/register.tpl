@@ -140,8 +140,8 @@ $('#button-register').on('click', function() {
 		data: $('input[type=\'text\'], input[type=\'password\'], input[type=\'checkbox\']:checked, input[type=\'radio\']:checked, input[type=\'hidden\'], select'),
 		dataType: 'json',
 		beforeSend: function() {
+			$('#button-register').after(' <i class="icon-spinner icon-spin"></i>');
 			$('#button-register').attr('disabled', true);
-			$('#button-register').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
 			$('#button-register').attr('disabled', false); 

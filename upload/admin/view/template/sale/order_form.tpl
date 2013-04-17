@@ -1107,12 +1107,13 @@ function upload(product_option_id) {
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
 			beforeSend: function() {
-				$('#button-option' + product_option_id).after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+				$('#button-option' + product_option_id).after(' <i class="icon-spinner icon-spin"></i>');
 				$('#button-option' + product_option_id).attr('disabled', true);
 				$('#option' + product_option_id + ' + .error').remove();
 			},	
 			complete: function() {
-				$('.loading').remove();
+				$('.icon-spinner').remove();
+				
 				$('#button-option' + product_option_id).attr('disabled', false);
 			},		
 			success: function(json) {

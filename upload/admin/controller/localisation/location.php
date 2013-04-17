@@ -1,26 +1,26 @@
 <?php
-class ControllerSettingLocation extends Controller {
+class ControllerLocalisationLocation extends Controller {
 	private $error = array();
 	
 	public function index() {
-		$this->language->load('setting/location');
+		$this->language->load('localisation/location');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		
-		$this->load->model('setting/location');
+		$this->load->model('localisation/location');
 		
 		$this->getList();
 	}
 
 	public function insert() {
-		$this->language->load('setting/location');
+		$this->language->load('localisation/location');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		
-		$this->load->model('setting/location');
+		$this->load->model('localisation/location');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {   
-			$this->model_setting_location->addLocation($this->request->post);
+			$this->model_localisation_location->addLocation($this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
@@ -38,21 +38,21 @@ class ControllerSettingLocation extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 			
-			$this->redirect($this->url->link('setting/location', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->redirect($this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 		
 		$this->getForm();   
 	}
 
 	public function update() {
-		$this->language->load('setting/location');
+		$this->language->load('localisation/location');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		
-		$this->load->model('setting/location');
+		$this->load->model('localisation/location');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_setting_location->editLocation($this->request->get['location_id'], $this->request->post);
+			$this->model_localisation_location->editLocation($this->request->get['location_id'], $this->request->post);
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 		
@@ -70,22 +70,22 @@ class ControllerSettingLocation extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 		
-			$this->redirect($this->url->link('setting/location', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->redirect($this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 		
 		$this->getForm();
 	}
 
 	public function delete() {
-		$this->language->load('setting/location');
+		$this->language->load('localisation/location');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		
-		$this->load->model('setting/location');
+		$this->load->model('localisation/location');
 		
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach($this->request->post['selected'] as $location_id) {
-				$this->model_setting_location->deleteLocation($location_id);
+				$this->model_localisation_location->deleteLocation($location_id);
 			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -104,7 +104,7 @@ class ControllerSettingLocation extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 			
-			$this->redirect($this->url->link('setting/location', 'token=' . $this->session->data['token'] . $url, 'SSL'));  
+			$this->redirect($this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, 'SSL'));  
 		}
 		
 		$this->getList();
@@ -153,11 +153,11 @@ class ControllerSettingLocation extends Controller {
 		
 		$this->data['breadcrumbs'][] =   array(
 			'text'      =>  $this->language->get('heading_title'),
-			'href'      =>  $this->url->link('setting/location', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href'      =>  $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 		
-		$this->data['insert'] = $this->url->link('setting/location/insert',  'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['delete'] = $this->url->link('setting/location/delete',  'token=' . $this->session->data['token'] . $url, 'SSL');
+		$this->data['insert'] = $this->url->link('localisation/location/insert',  'token=' . $this->session->data['token'] . $url, 'SSL');
+		$this->data['delete'] = $this->url->link('localisation/location/delete',  'token=' . $this->session->data['token'] . $url, 'SSL');
 		
 		$this->data['location'] = array();
 		
@@ -168,16 +168,16 @@ class ControllerSettingLocation extends Controller {
 			'limit' => $this->config->get('config_admin_limit')
 		);
 		     
-		$location_total = $this->model_setting_location->getTotalLocations();
+		$location_total = $this->model_localisation_location->getTotalLocations();
 		
-		$results = $this->model_setting_location->getLocations($data); //  retrieve db information for locations from function in Model
+		$results = $this->model_localisation_location->getLocations($data); //  retrieve db information for locations from function in Model
 		
 		foreach($results as $result) {
 			$action = array();
 			
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('setting/location/update', 'token=' . $this->session->data['token'] . '&location_id=' . $result['location_id'] . $url, 'SSL')
+				'href' => $this->url->link('localisation/location/update', 'token=' . $this->session->data['token'] . '&location_id=' . $result['location_id'] . $url, 'SSL')
 			);			
 		
 			$this->data['location'][] =   array(
@@ -230,10 +230,10 @@ class ControllerSettingLocation extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->link('setting/location', 'token=' . $this->session->data['token'] . '&sort=l.name' . $url, 'SSL');
-		$this->data['sort_address_1'] = $this->url->link('setting/location', 'token=' . $this->session->data['token'] . '&sort=l.address_1' . $url, 'SSL');
-		$this->data['sort_zone'] = $this->url->link('setting/location', 'token=' . $this->session->data['token'] . '&sort=z.name' . $url, 'SSL');
-		$this->data['sort_country'] = $this->url->link('setting/location', 'token=' . $this->session->data['token'] . '&sort=c.name' . $url, 'SSL');
+		$this->data['sort_name'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . '&sort=l.name' . $url, 'SSL');
+		$this->data['sort_address_1'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . '&sort=l.address_1' . $url, 'SSL');
+		$this->data['sort_zone'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . '&sort=z.name' . $url, 'SSL');
+		$this->data['sort_country'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . '&sort=c.name' . $url, 'SSL');
 		
 		$url = '';
 
@@ -249,7 +249,7 @@ class ControllerSettingLocation extends Controller {
 		$pagination->total = $location_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->url = $this->url->link('setting/location', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+		$pagination->url = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 		
 		$this->data['pagination'] = $pagination->render();
 		
@@ -258,7 +258,7 @@ class ControllerSettingLocation extends Controller {
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 		
-		$this->template = 'setting/location_list.tpl';   
+		$this->template = 'localisation/location_list.tpl';   
 		$this->children = array(
 			'common/header',
 			'common/footer'
@@ -369,19 +369,19 @@ class ControllerSettingLocation extends Controller {
 		
 		$this->data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('setting/location', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 		
 		if (!isset($this->request->get['location_id'])) {
-			$this->data['action'] = $this->url->link('setting/location/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$this->data['action'] = $this->url->link('localisation/location/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$this->data['action'] = $this->url->link('setting/location/update', 'token=' . $this->session->data['token'] .  '&location_id=' . $this->request->get['location_id'] . $url, 'SSL');
+			$this->data['action'] = $this->url->link('localisation/location/update', 'token=' . $this->session->data['token'] .  '&location_id=' . $this->request->get['location_id'] . $url, 'SSL');
 		}
 		
-		$this->data['cancel'] = $this->url->link('setting/location', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$this->data['cancel'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		
 		if (isset($this->request->get['location_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$location_info = $this->model_setting_location->getLocation($this->request->get['location_id']);
+			$location_info = $this->model_localisation_location->getLocation($this->request->get['location_id']);
 		}
 		
 		$this->data['token'] = $this->session->data['token'];  
@@ -490,7 +490,7 @@ class ControllerSettingLocation extends Controller {
 			$this->data['comment'] = '';
 		}
 		
-		$this->template = 'setting/location_form.tpl';   //  Remember to create this template!!
+		$this->template = 'localisation/location_form.tpl';   //  Remember to create this template!!
 		$this->children = array(
 			'common/header',
 			'common/footer'
@@ -500,7 +500,7 @@ class ControllerSettingLocation extends Controller {
 	}           
 	
 	protected function validateForm() {
-		if (!$this->user->hasPermission('modify', 'setting/location')) {
+		if (!$this->user->hasPermission('modify', 'localisation/location')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
@@ -544,7 +544,7 @@ class ControllerSettingLocation extends Controller {
 	}
 	
   	protected function validateDelete() {
-    	if (!$this->user->hasPermission('modify', 'setting/location')) {
+    	if (!$this->user->hasPermission('modify', 'localisation/location')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}	
 	  	 

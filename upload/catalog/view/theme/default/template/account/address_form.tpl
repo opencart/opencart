@@ -107,10 +107,10 @@ $('select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=account/address/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('select[name=\'country_id\']').after(' <i class="icon-spinner icon-spin"></i>');
 		},		
 		complete: function() {
-			$('.loading').remove();
+			$('.icon-spinner').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

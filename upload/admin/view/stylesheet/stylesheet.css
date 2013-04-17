@@ -8,7 +8,7 @@ html, body, label, .control-group input, textarea, select, btn {
 	line-height: 15px;
 }
 #header {
-	height: 50px;
+	height: 48px;
 	background-image: url('../image/header.png');
 	border-bottom: 4px solid #00C3F4;
 	
@@ -29,18 +29,25 @@ html, body, label, .control-group input, textarea, select, btn {
 }
 .navbar {
 	background: #F6F6F6;
-	border-bottom: 1px solid #E2E2E2;
+	border-bottom: 1px solid #DDDDDD;
 	margin-bottom: 14px;
 	padding: 0px 25px;
+    -webkit-box-shadow: 0px 0px 4px #E7E7E7;
+   	-moz-box-shadow: 0px 0px 4px #E7E7E7;
+    box-shadow: 0px 0px 4px #E7E7E7;
+}
+.navbar .nav > li {
+	padding: 9px 0px;
 }
 .navbar .nav > li > a {
 	color: #666666;
-	font-size: 13px;
+	font-size: 12px;
+	line-height: 14px;
 	text-shadow: none;
 	cursor: pointer;
 	border-left: 1px solid #FFFFFF;
 	border-right: 1px solid #E2E2E2;
-	padding: 6px 15px;
+	padding: 0px 15px;
 }
 .navbar .nav > li > a:fist {
 	border-left: none;
@@ -64,6 +71,33 @@ html, body, label, .control-group input, textarea, select, btn {
 	color: #333;
 	text-decoration: underline;
 }
+
+.breadcrumb {
+  padding: 5px 15px;
+  margin: 0 0 20px;
+  list-style: none;
+  background-color: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.breadcrumb > li {
+  display: inline-block;
+  *display: inline;
+  /* IE7 inline-block hack */
+
+  *zoom: 1;
+  text-shadow: 0 1px 0 #ffffff;
+}
+.breadcrumb > li > .divider {
+  padding: 0 5px;
+  color: #ccc;
+}
+.breadcrumb > .active {
+  color: #999999;
+}
+
 .box {
 	margin-bottom: 15px;
 }
@@ -96,31 +130,6 @@ html, body, label, .control-group input, textarea, select, btn {
 	border-bottom: 1px solid #CCCCCC;
 	min-height: 300px;
 	overflow: auto;
-}
-.breadcrumb li a:before {
-	content: "\f105";
-	font-family: FontAwesome;
-	font-style: normal;
-	font-weight: normal;
-	text-decoration: inherit;
-	color: #000;
-	font-size: 16px;
-	padding-right: 5px;
-	text-decoration: none;
-}
-.breadcrumb li a:hover {
-	text-decoration: none;
-}
-.breadcrumb li:first-child a:before {
-	content: "\f015";
-	font-family: FontAwesome;
-	font-style: normal;
-	font-weight: normal;
-	text-decoration: inherit;
-	color: #000;
-	font-size: 16px;
-	padding-right: 5px;
-	text-decoration: none;
 }
 .buttons {
 	text-align: right;

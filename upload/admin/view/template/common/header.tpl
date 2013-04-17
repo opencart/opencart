@@ -32,7 +32,7 @@
   <div id="logo"><a href="<?php echo $home; ?>"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a></div>
   <div id="account">
     <ul class="nav pull-right">
-      <li class="dropdown"><a data-toggle="dropdown">Howdy, Daniel Kerr <i class="icon-caret-down"></i></a>
+      <li class="dropdown pull-left"><a data-toggle="dropdown">Howdy, Daniel Kerr <i class="icon-caret-down"></i></a>
         <ul class="dropdown-menu">
           <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
           <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>

@@ -7,124 +7,21 @@ class ControllerCommonHome extends Controller {
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_overview'] = $this->language->get('text_overview');
-		$this->data['text_statistics'] = $this->language->get('text_statistics');
-		$this->data['text_latest_10_orders'] = $this->language->get('text_latest_10_orders');
 		$this->data['text_total_sale'] = $this->language->get('text_total_sale');
-		$this->data['text_total_sale_year'] = $this->language->get('text_total_sale_year');
 		$this->data['text_total_order'] = $this->language->get('text_total_order');
 		$this->data['text_total_customer'] = $this->language->get('text_total_customer');
-		$this->data['text_total_customer_approval'] = $this->language->get('text_total_customer_approval');
-		$this->data['text_total_review_approval'] = $this->language->get('text_total_review_approval');
-		$this->data['text_total_affiliate'] = $this->language->get('text_total_affiliate');
-		$this->data['text_total_affiliate_approval'] = $this->language->get('text_total_affiliate_approval');
+		$this->data['text_total_online'] = $this->language->get('text_total_online');
+		
 		$this->data['text_day'] = $this->language->get('text_day');
 		$this->data['text_week'] = $this->language->get('text_week');
 		$this->data['text_month'] = $this->language->get('text_month');
 		$this->data['text_year'] = $this->language->get('text_year');
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-
-		$this->data['column_order'] = $this->language->get('column_order');
-		$this->data['column_customer'] = $this->language->get('column_customer');
-		$this->data['column_status'] = $this->language->get('column_status');
-		$this->data['column_date_added'] = $this->language->get('column_date_added');
-		$this->data['column_total'] = $this->language->get('column_total');
-		$this->data['column_firstname'] = $this->language->get('column_firstname');
-		$this->data['column_lastname'] = $this->language->get('column_lastname');
-		$this->data['column_action'] = $this->language->get('column_action');
-		
-		$this->data['entry_range'] = $this->language->get('entry_range');
 		
 		// Check install directory exists
  		if (is_dir(dirname(DIR_APPLICATION) . '/install')) {
 			$this->data['error_install'] = $this->language->get('error_install');
 		} else {
 			$this->data['error_install'] = '';
-		}
-
-		// Check image directory is writable
-		$file = DIR_IMAGE . 'test';
-		
-		$handle = fopen($file, 'a+'); 
-		
-		fwrite($handle, '');
-			
-		fclose($handle); 		
-		
-		if (!file_exists($file)) {
-			$this->data['error_image'] = sprintf($this->language->get('error_image'). DIR_IMAGE);
-		} else {
-			$this->data['error_image'] = '';
-			
-			unlink($file);
-		}
-		
-		// Check image cache directory is writable
-		$file = DIR_IMAGE . 'cache/test';
-		
-		$handle = fopen($file, 'a+'); 
-		
-		fwrite($handle, '');
-			
-		fclose($handle); 		
-		
-		if (!file_exists($file)) {
-			$this->data['error_image_cache'] = sprintf($this->language->get('error_image_cache'). DIR_IMAGE . 'cache/');
-		} else {
-			$this->data['error_image_cache'] = '';
-			
-			unlink($file);
-		}
-		
-		// Check cache directory is writable
-		$file = DIR_CACHE . 'test';
-		
-		$handle = fopen($file, 'a+'); 
-		
-		fwrite($handle, '');
-			
-		fclose($handle); 		
-		
-		if (!file_exists($file)) {
-			$this->data['error_cache'] = sprintf($this->language->get('error_image_cache'). DIR_CACHE);
-		} else {
-			$this->data['error_cache'] = '';
-			
-			unlink($file);
-		}
-		
-		// Check download directory is writable
-		$file = DIR_DOWNLOAD . 'test';
-		
-		$handle = fopen($file, 'a+'); 
-		
-		fwrite($handle, '');
-			
-		fclose($handle); 		
-		
-		if (!file_exists($file)) {
-			$this->data['error_download'] = sprintf($this->language->get('error_download'). DIR_DOWNLOAD);
-		} else {
-			$this->data['error_download'] = '';
-			
-			unlink($file);
-		}
-		
-		// Check logs directory is writable
-		$file = DIR_LOGS . 'test';
-		
-		$handle = fopen($file, 'a+'); 
-		
-		fwrite($handle, '');
-			
-		fclose($handle); 		
-		
-		if (!file_exists($file)) {
-			$this->data['error_logs'] = sprintf($this->language->get('error_logs'). DIR_LOGS);
-		} else {
-			$this->data['error_logs'] = '';
-			
-			unlink($file);
 		}
 										
 		$this->data['breadcrumbs'] = array();
@@ -140,22 +37,16 @@ class ControllerCommonHome extends Controller {
 
 		$this->data['total_sale'] = $this->currency->format($this->model_sale_order->getTotalSales(), $this->config->get('config_currency'));
 		$this->data['total_sale_year'] = $this->currency->format($this->model_sale_order->getTotalSalesByYear(date('Y')), $this->config->get('config_currency'));
+		
 		$this->data['total_order'] = $this->model_sale_order->getTotalOrders();
 		
 		$this->load->model('sale/customer');
 		
 		$this->data['total_customer'] = $this->model_sale_customer->getTotalCustomers();
-		$this->data['total_customer_approval'] = $this->model_sale_customer->getTotalCustomersAwaitingApproval();
-		
-		$this->load->model('catalog/review');
-		
-		$this->data['total_review'] = $this->model_catalog_review->getTotalReviews();
-		$this->data['total_review_approval'] = $this->model_catalog_review->getTotalReviewsAwaitingApproval();
-		
-		$this->load->model('sale/affiliate');
-		
-		$this->data['total_affiliate'] = $this->model_sale_affiliate->getTotalAffiliates();
-		$this->data['total_affiliate_approval'] = $this->model_sale_affiliate->getTotalAffiliatesAwaitingApproval();
+
+		$this->load->model('report/online');
+
+		$this->data['total_online'] = $this->model_report_online->getTotalCustomersOnline();
 		
 		if ($this->config->get('config_currency_auto')) {
 			$this->load->model('localisation/currency');

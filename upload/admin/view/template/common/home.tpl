@@ -8,91 +8,103 @@
   <?php if ($error_install) { ?>
   <div class="alert alert-error"><?php echo $error_install; ?></div>
   <?php } ?>
-  <?php if ($error_image) { ?>
-  <div class="alert alert-error"><?php echo $error_image; ?></div>
-  <?php } ?>
-  <?php if ($error_image_cache) { ?>
-  <div class="alert alert-error"><?php echo $error_image_cache; ?></div>
-  <?php } ?>
-  <?php if ($error_cache) { ?>
-  <div class="alert alert-error"><?php echo $error_cache; ?></div>
-  <?php } ?>
-  <?php if ($error_download) { ?>
-  <div class="alert alert-error"><?php echo $error_download; ?></div>
-  <?php } ?>
-  <?php if ($error_logs) { ?>
-  <div class="alert alert-error"><?php echo $error_logs; ?></div>
-  <?php } ?>
   <div class="box">
     <div class="box-heading">
       <h1><i class="icon-eye-open"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
-      <div class="overview">
-        <div class="dashboard-heading"><?php echo $text_overview; ?></div>
-        <div class="dashboard-content">
-          <table>
-            <tr>
-              <td><?php echo $text_total_sale; ?></td>
-              <td><?php echo $total_sale; ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $text_total_sale_year; ?></td>
-              <td><?php echo $total_sale_year; ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $text_total_order; ?></td>
-              <td><?php echo $total_order; ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $text_total_customer; ?></td>
-              <td><?php echo $total_customer; ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $text_total_customer_approval; ?></td>
-              <td><?php echo $total_customer_approval; ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $text_total_review_approval; ?></td>
-              <td><?php echo $total_review_approval; ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $text_total_affiliate; ?></td>
-              <td><?php echo $total_affiliate; ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $text_total_affiliate_approval; ?></td>
-              <td><?php echo $total_affiliate_approval; ?></td>
-            </tr>
-          </table>
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well  stats">
+            <ul class="statistic statistic-red">
+              <li style="height:80%"></li>
+              <li style="height:40%"></li>
+              <li style="height:50%"></li>
+              <li style="height:20%"></li>
+              <li style="height:10%"></li>
+            </ul>
+            <div class="detail">
+              <h5><?php echo $total_sale; ?></h5>
+              <?php echo $text_total_sale; ?></div>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="well">
+            <ul class="statistic statistic-grey">
+              <li style="height:60%"></li>
+              <li style="height:40%"></li>
+              <li style="height:20%"></li>
+              <li style="height:70%"></li>
+              <li style="height:80%"></li>
+              <li style="height:60%"></li>
+              <li style="height:40%"></li>
+            </ul>
+            <div class="detail">
+              <h5><?php echo $total_order; ?></h5>
+              <?php echo $text_total_order; ?></div>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="well stats clearfix">
+            <ul class="statistic statistic-blue">
+              <li style="height:80%"></li>
+              <li style="height:60%"></li>
+              <li style="height:40%"></li>
+              <li style="height:20%"></li>
+              <li style="height:10%"></li>
+              <li style="height:5%"></li>
+              <li style="height:15%"></li>
+            </ul>
+            <div class="detail">
+              <h5><?php echo $total_customer; ?></h5>
+              <?php echo $text_total_customer; ?></div>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="well stats">
+            <ul class="statistic statistic-blue">
+              <li style="height:80%"></li>
+              <li style="height:60%"></li>
+              <li style="height:40%"></li>
+              <li style="height:20%"></li>
+              <li style="height:10%"></li>
+              <li style="height:5%"></li>
+              <li style="height:15%"></li>
+            </ul>
+            <div class="detail">
+              <h5><?php echo $total_online; ?></h5>
+              <?php echo $text_total_online; ?></div>
+          </div>
         </div>
       </div>
-      <div class="statistic">
-        <div class="range"><?php echo $entry_range; ?>
-          <select id="range" onchange="getSalesChart(this.value)">
-            <option value="day"><?php echo $text_day; ?></option>
-            <option value="week"><?php echo $text_week; ?></option>
-            <option value="month"><?php echo $text_month; ?></option>
-            <option value="year"><?php echo $text_year; ?></option>
-          </select>
+      <div class="row-fluid">
+        <div class="span6">
+          <h2>Statistics</h2>
         </div>
-        <div class="dashboard-heading"><?php echo $text_statistics; ?></div>
-        <div class="dashboard-content">
-          <div id="report" style="width: 390px; height: 170px; margin: auto;"></div>
+        <div class="span6">
+          <div class="btn-group" data-toggle="buttons-radio">
+            <button class="btn active" name="range" value="day"><?php echo $text_day; ?></button>
+            <button class="btn" name="range" value="week"><?php echo $text_week; ?></button>
+            <button class="btn" name="range" value="month"><?php echo $text_month; ?></button>
+            <button class="btn" name="range" value="year"><?php echo $text_year; ?></button>
+          </div>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="span12">
+          <div id="report" style="height: 250px; margin-bottom: 20px;"></div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<!--[if IE]>
-<script type="text/javascript" src="view/javascript/jquery/flot/excanvas.js"></script>
-<![endif]--> 
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
+<script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script> 
 <script type="text/javascript"><!--
-function getSalesChart(range) {
+$('.btn-group button').on('click', function() {
 	$.ajax({
 		type: 'get',
-		url: 'index.php?route=common/home/chart&token=<?php echo $token; ?>&range=' + range,
+		url: 'index.php?route=common/home/chart&token=<?php echo $token; ?>&range=' + this.value,
 		dataType: 'json',
 		async: false,
 		success: function(json) {
@@ -106,16 +118,19 @@ function getSalesChart(range) {
 				grid: {
 					backgroundColor: '#FFFFFF'
 				},	
+				colors: [ '#2872bd', '#666666', '#feb900', '#128902', '#c6c12f'],
 				xaxis: {
             		ticks: json.xaxis
 				}
 			}
-
-			$.plot($('#report'), [json.order, json.customer], option);
+			
+			var placeholder = $('#report');
+			
+			$.plot(placeholder, [json.order, json.customer], option);		   
 		}
-	});
-}
+	});	
+})
 
-getSalesChart($('#range').val());
+$('.btn-group .active').trigger('click');
 //--></script> 
 <?php echo $footer; ?>

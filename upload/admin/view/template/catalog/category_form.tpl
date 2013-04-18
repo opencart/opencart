@@ -119,35 +119,13 @@
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
-              <div class="controls">
-                
-            
-                
-                <img src="<?php echo $thumb; ?>" alt="" id="thumb" class="img-polaroid" />
-                  
-                   <br /><br />
-                  <div class="btn-group">
-<button class="btn btn-small"><i class="icon-edit"></i></button>
-<button class="btn btn-small"><i class="icon-remove"></i></button>
-</div>               
- 
-                  
-                  <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
-                  
-                  
-                 
-                  
-                  
-                  
-
-                  
-                  
-                  <a onclick="image_upload('image', 'thumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a>
-                  
-                  
-                  
-                 
-              </div>
+              <div class="controls"> <img src="<?php echo $thumb; ?>" alt="" id="thumb" class="img-polaroid" /> <br />
+                <br />
+                <div class="btn-group">
+                  <button onclick="image_upload('image', 'thumb');" class="btn btn-small"><i class="icon-edit"></i></button>
+                  <button onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');" class="btn btn-small"><i class="icon-remove"></i></button>
+                </div>
+                <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" /></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-top"><?php echo $entry_top; ?></label>

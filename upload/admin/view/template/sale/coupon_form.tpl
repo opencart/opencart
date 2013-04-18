@@ -124,7 +124,7 @@
                 <span class="help-block"><?php echo $help_product; ?></span>
                 <div id="coupon-product">
                   <?php foreach ($coupon_product as $coupon_product) { ?>
-                  <div id="coupon-product<?php echo $coupon_product['product_id']; ?>"><?php echo $coupon_product['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                  <div id="coupon-product<?php echo $coupon_product['product_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $coupon_product['name']; ?>
                     <input type="hidden" name="coupon_product[]" value="<?php echo $coupon_product['product_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -138,7 +138,7 @@
                 <span class="help-block"><?php echo $help_category ?></span>
                 <div id="coupon-category">
                   <?php foreach ($coupon_category as $coupon_category) { ?>
-                  <div id="coupon-category<?php echo $coupon_category['category_id']; ?>"><?php echo $coupon_category['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                  <div id="coupon-category<?php echo $coupon_category['category_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $coupon_category['name']; ?>
                     <input type="hidden" name="coupon_category[]" value="<?php echo $coupon_category['category_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -214,10 +214,7 @@ $('input[name=\'product\']').autocomplete({
 	select: function(event, ui) {
 		$('#coupon-product' + ui.item.value).remove();
 		
-		$('#coupon-product').append('<div id="coupon-product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="coupon_product[]" value="' + ui.item.value + '" /></div>');
-
-		$('#coupon-product div:odd').attr('class', 'odd');
-		$('#coupon-product div:even').attr('class', 'even');
+		$('#coupon-product').append('<div id="coupon-product' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="coupon_product[]" value="' + ui.item.value + '" /></div>');
 		
 		$('input[name=\'product\']').val('');
 		
@@ -228,11 +225,8 @@ $('input[name=\'product\']').autocomplete({
    	}
 });
 
-$('#coupon-product div img').on('click', function() {
+$('#coupon-product .icon-minus-sign').on('click', function() {
 	$(this).parent().remove();
-	
-	$('#coupon-product div:odd').attr('class', 'odd');
-	$('#coupon-product div:even').attr('class', 'even');	
 });
 
 $('input[name=\'category\']').autocomplete({
@@ -255,10 +249,7 @@ $('input[name=\'category\']').autocomplete({
 	select: function(event, ui) {
 		$('#coupon-category' + ui.item.value).remove();
 		
-		$('#coupon-category').append('<div id="product-category' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="coupon_category[]" value="' + ui.item.value + '" /></div>');
-
-		$('#coupon-category div:odd').attr('class', 'odd');
-		$('#coupon-category div:even').attr('class', 'even');
+		$('#coupon-category').append('<div id="product-category' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="coupon_category[]" value="' + ui.item.value + '" /></div>');
 				
 		return false;
 	},
@@ -267,11 +258,8 @@ $('input[name=\'category\']').autocomplete({
    }
 });
 
-$('#coupon-category div img').on('click', function() {
+$('#coupon-category .icon-minus-sign').on('click', function() {
 	$(this).parent().remove();
-	
-	$('#coupon-category div:odd').attr('class', 'odd');
-	$('#coupon-category div:even').attr('class', 'even');	
 });
 //--></script> 
 <script type="text/javascript"><!--

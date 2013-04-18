@@ -2,13 +2,19 @@ html, body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+	color: #333;
 }
-html, body, label, .control-group input, textarea, select, btn {
+html, body, label, .control-group input, textarea, select {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	line-height: 15px;
-	color: #333;
 }
+
+.btn {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
 #header {
 	height: 48px;
 	background-image: url('../image/header.png');

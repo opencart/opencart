@@ -21,7 +21,7 @@
             <span class="help-block"><?php echo $help_product; ?></span>
             <div id="featured-product">
               <?php foreach ($products as $product) { ?>
-              <div id="featured-product<?php echo $product['product_id']; ?>"><?php echo $product['name']; ?> <img src="view/image/icon-delete.png" alt="" />
+              <div id="featured-product<?php echo $product['product_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $product['name']; ?>
                 <input type="hidden" value="<?php echo $product['product_id']; ?>" />
               </div>
               <?php } ?>
@@ -104,12 +104,18 @@
             </tr>
           </tfoot>
         </table>
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+      
+      
       </form>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
+/*
 $('input[name=\'product\']').autocomplete({
 	delay: 500,
 	source: function(request, response) {
@@ -129,10 +135,7 @@ $('input[name=\'product\']').autocomplete({
 	select: function(event, ui) {
 		$('#featured-product' + ui.item.value).remove();
 		
-		$('#featured-product').append('<div id="featured-product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" value="' + ui.item.value + '" /></div>');
-
-		$('#featured-product div:odd').attr('class', 'odd');
-		$('#featured-product div:even').attr('class', 'even');
+		$('#featured-product').append('<div id="featured-product' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" value="' + ui.item.value + '" /></div>');
 		
 		data = $.map($('#featured-product input'), function(element){
 			return $(element).attr('value');
@@ -146,12 +149,9 @@ $('input[name=\'product\']').autocomplete({
       	return false;
    	}
 });
-
-$('#featured-product div img').on('click', function() {
+*/
+$('#featured-product .icon-minus-sign').on('click', function() {
 	$(this).parent().remove();
-	
-	$('#featured-product div:odd').attr('class', 'odd');
-	$('#featured-product div:even').attr('class', 'even');
 
 	data = $.map($('#featured-product input'), function(element){
 		return $(element).attr('value');

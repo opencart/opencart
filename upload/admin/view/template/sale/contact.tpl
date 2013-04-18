@@ -147,10 +147,7 @@ $('input[name=\'customers\']').catcomplete({
 	select: function(event, ui) {
 		$('#customer' + ui.item.value).remove();
 		
-		$('#customer').append('<div id="customer' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="customer[]" value="' + ui.item.value + '" /></div>');
-
-		$('#customer div:odd').attr('class', 'odd');
-		$('#customer div:even').attr('class', 'even');
+		$('#customer').append('<div id="customer' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="customer[]" value="' + ui.item.value + '" /></div>');
 				
 		return false;
 	},
@@ -159,11 +156,8 @@ $('input[name=\'customers\']').catcomplete({
    	}
 });
 
-$('#customer div img').on('click', function() {
+$('#customer .icon-minus-sign').on('click', function() {
 	$(this).parent().remove();
-	
-	$('#customer div:odd').attr('class', 'odd');
-	$('#customer div:even').attr('class', 'even');	
 });
 //--></script> 
 <script type="text/javascript"><!--	
@@ -187,10 +181,7 @@ $('input[name=\'affiliates\']').autocomplete({
 	select: function(event, ui) {
 		$('#affiliate' + ui.item.value).remove();
 		
-		$('#affiliate').append('<div id="affiliate' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="affiliate[]" value="' + ui.item.value + '" /></div>');
-
-		$('#affiliate div:odd').attr('class', 'odd');
-		$('#affiliate div:even').attr('class', 'even');
+		$('#affiliate').append('<div id="affiliate' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="affiliate[]" value="' + ui.item.value + '" /></div>');
 				
 		return false;
 	},
@@ -199,11 +190,8 @@ $('input[name=\'affiliates\']').autocomplete({
    	}
 });
 
-$('#affiliate div img').on('click', function() {
+$('#affiliate .icon-minus-sign').on('click', function() {
 	$(this).parent().remove();
-	
-	$('#affiliate div:odd').attr('class', 'odd');
-	$('#affiliate div:even').attr('class', 'even');	
 });
 
 $('input[name=\'products\']').autocomplete({
@@ -225,10 +213,7 @@ $('input[name=\'products\']').autocomplete({
 	select: function(event, ui) {
 		$('#product' + ui.item.value).remove();
 		
-		$('#product').append('<div id="product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="product[]" value="' + ui.item.value + '" /></div>');
-
-		$('#product div:odd').attr('class', 'odd');
-		$('#product div:even').attr('class', 'even');
+		$('#product').append('<div id="product' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="product[]" value="' + ui.item.value + '" /></div>');
 				
 		return false;
 	},
@@ -237,13 +222,9 @@ $('input[name=\'products\']').autocomplete({
    	}
 });
 
-$('#product div img').on('click', function() {
+$('#product .icon-minus-sign').on('click', function() {
 	$(this).parent().remove();
-	
-	$('#product div:odd').attr('class', 'odd');
-	$('#product div:even').attr('class', 'even');	
 });
-
 
 $('#button-send').on('click', function() {
 	$('textarea[name=\'message\']').html(CKEDITOR.instances.message.getData());

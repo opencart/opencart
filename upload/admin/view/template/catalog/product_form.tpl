@@ -310,7 +310,7 @@
                 <span class="help-block"><?php echo $help_category; ?></span>
                 <div id="product-category">
                   <?php foreach ($product_categories as $product_category) { ?>
-                  <div id="product-category<?php echo $product_category['category_id']; ?>" class="checkbox"><?php echo $product_category['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                  <div id="product-category<?php echo $product_category['category_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $product_category['name']; ?>
                     <input type="hidden" name="product_category[]" value="<?php echo $product_category['category_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -324,7 +324,7 @@
                 <span class="help-block"><?php echo $help_filter; ?></span>
                 <div id="product-filter">
                   <?php foreach ($product_filters as $product_filter) { ?>
-                  <div id="product-filter<?php echo $product_filter['filter_id']; ?>"><?php echo $product_filter['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                  <div id="product-filter<?php echo $product_filter['filter_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $product_filter['name']; ?>
                     <input type="hidden" name="product_filter[]" value="<?php echo $product_filter['filter_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -363,7 +363,7 @@
                 <span class="help-block"><?php echo $help_download; ?></span>
                 <div id="product-download">
                   <?php foreach ($product_downloads as $product_download) { ?>
-                  <div id="product-download<?php echo $product_download['download_id']; ?>"> <?php echo $product_download['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                  <div id="product-download<?php echo $product_download['download_id']; ?>"><i class="icon-minus-sign"></i>  <?php echo $product_download['name']; ?>
                     <input type="hidden" name="product_download[]" value="<?php echo $product_download['download_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -377,7 +377,7 @@
                 <span class="help-block"><?php echo $help_related; ?></span>
                 <div id="product-related">
                   <?php foreach ($product_relateds as $product_related) { ?>
-                  <div id="product-related<?php echo $product_related['product_id']; ?>"><?php echo $product_related['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                  <div id="product-related<?php echo $product_related['product_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $product_related['name']; ?>
                     <input type="hidden" name="product_related[]" value="<?php echo $product_related['product_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -890,10 +890,7 @@ $('input[name=\'category\']').autocomplete({
 	select: function(event, ui) {
 		$('#product-category' + ui.item.value).remove();
 		
-		$('#product-category').append('<div id="product-category' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="product_category[]" value="' + ui.item.value + '" /></div>');
-
-		$('#product-category div:odd').attr('class', 'odd');
-		$('#product-category div:even').attr('class', 'even');
+		$('#product-category').append('<div id="product-category' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="product_category[]" value="' + ui.item.value + '" /></div>');
 				
 		return false;
 	},
@@ -902,11 +899,8 @@ $('input[name=\'category\']').autocomplete({
    }
 });
 
-$('#product-category div img').on('click', function() {
+$('#product-category .icon-minus-sign').on('click', function() {
 	$(this).parent().remove();
-	
-	$('#product-category div:odd').attr('class', 'odd');
-	$('#product-category div:even').attr('class', 'even');	
 });
 
 // Filter
@@ -929,10 +923,7 @@ $('input[name=\'filter\']').autocomplete({
 	select: function(event, ui) {
 		$('#product-filter' + ui.item.value).remove();
 		
-		$('#product-filter').append('<div id="product-filter' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="product_filter[]" value="' + ui.item.value + '" /></div>');
-
-		$('#product-filter div:odd').attr('class', 'odd');
-		$('#product-filter div:even').attr('class', 'even');
+		$('#product-filter').append('<div id="product-filter' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="product_filter[]" value="' + ui.item.value + '" /></div>');
 				
 		return false;
 	},
@@ -941,11 +932,8 @@ $('input[name=\'filter\']').autocomplete({
    }
 });
 
-$('#product-filter div img').on('click', function() {
+$('#product-filter .icon-minus-sign').on('click', function() {
 	$(this).parent().remove();
-	
-	$('#product-filter div:odd').attr('class', 'odd');
-	$('#product-filter div:even').attr('class', 'even');	
 });
 
 // Downloads
@@ -968,10 +956,7 @@ $('input[name=\'download\']').autocomplete({
 	select: function(event, ui) {
 		$('#product-download' + ui.item.value).remove();
 		
-		$('#product-download').append('<div id="product-download' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="product_download[]" value="' + ui.item.value + '" /></div>');
-
-		$('#product-download div:odd').attr('class', 'odd');
-		$('#product-download div:even').attr('class', 'even');
+		$('#product-download').append('<div id="product-download' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="product_download[]" value="' + ui.item.value + '" /></div>');
 				
 		return false;
 	},
@@ -980,11 +965,8 @@ $('input[name=\'download\']').autocomplete({
    }
 });
 
-$('#product-download div img').on('click', function() {
+$('#product-download .icon-minus-sign').on('click', function() {
 	$(this).parent().remove();
-	
-	$('#product-download div:odd').attr('class', 'odd');
-	$('#product-download div:even').attr('class', 'even');	
 });
 
 // Related
@@ -1007,11 +989,8 @@ $('input[name=\'related\']').autocomplete({
 	select: function(event, ui) {
 		$('#product-related' + ui.item.value).remove();
 		
-		$('#product-related').append('<div id="product-related' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="product_related[]" value="' + ui.item.value + '" /></div>');
+		$('#product-related').append('<div id="product-related' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="product_related[]" value="' + ui.item.value + '" /></div>');
 
-		$('#product-related div:odd').attr('class', 'odd');
-		$('#product-related div:even').attr('class', 'even');
-				
 		return false;
 	},
 	focus: function(event, ui) {
@@ -1019,11 +998,8 @@ $('input[name=\'related\']').autocomplete({
    }
 });
 
-$('#product-related div img').on('click', function() {
+$('#product-related .icon-minus-sign').on('click', function() {
 	$(this).parent().remove();
-	
-	$('#product-related div:odd').attr('class', 'odd');
-	$('#product-related div:even').attr('class', 'even');	
 });
 //--></script> 
 <script type="text/javascript"><!--

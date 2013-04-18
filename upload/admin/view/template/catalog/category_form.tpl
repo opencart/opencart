@@ -75,7 +75,7 @@
                 <a data-toggle="tooltip"><?php echo $help_filter; ?></a>
                 <div id="category-filter">
                   <?php foreach ($category_filters as $category_filter) { ?>
-                  <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><?php echo $category_filter['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                  <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $category_filter['name']; ?>
                     <input type="hidden" name="category_filter[]" value="<?php echo $category_filter['filter_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -346,10 +346,7 @@ $('input[name=\'filter\']').autocomplete({
 	select: function(event, ui) {
 		$('#category-filter' + ui.item.value).remove();
 		
-		$('#category-filter').append('<div id="category-filter' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="category_filter[]" value="' + ui.item.value + '" /></div>');
-
-		$('#category-filter div:odd').attr('class', 'odd');
-		$('#category-filter div:even').attr('class', 'even');
+		$('#category-filter').append('<div id="category-filter' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="category_filter[]" value="' + ui.item.value + '" /></div>');
 				
 		return false;
 	},
@@ -358,11 +355,8 @@ $('input[name=\'filter\']').autocomplete({
    }
 });
 
-$('#category-filter div img').on('click', function() {
-	$(this).parent().remove();
-	
-	$('#category-filter div:odd').attr('class', 'odd');
-	$('#category-filter div:even').attr('class', 'even');	
+$('#category-filter  .icon-minus-sign').on('click', function() {
+	$(this).parent().remove();	
 });
 */
 //--></script> 

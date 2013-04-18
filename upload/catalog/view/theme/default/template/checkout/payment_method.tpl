@@ -1,5 +1,5 @@
 <?php if ($error_warning) { ?>
-<div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
+<div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
 <?php } ?>
 <?php if ($payment_methods) { ?>
 <p><?php echo $text_payment_method; ?></p>

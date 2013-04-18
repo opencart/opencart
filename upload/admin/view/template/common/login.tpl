@@ -6,10 +6,10 @@
     </div>
     <div class="box-content">
       <?php if ($success) { ?>
-      <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?></div>
+      <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
       <?php } ?>
       <?php if ($error_warning) { ?>
-      <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
+      <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
       <?php } ?>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
         <div class="control-group">

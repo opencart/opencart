@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_install) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_install; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_install; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -77,11 +77,11 @@
           </div>
         </div>
       </div>
-      <div class="row-fluid">
-        <div class="span6">
+      <div class="row-fluid" style="border: 1px solid #000;">
+        <div class="span6" style="border: 1px solid #000;">
           <h2>Statistics</h2>
         </div>
-        <div class="span6">
+        <div class="span6" style="border: 1px solid #000;">
           <div class="btn-group" data-toggle="buttons-radio">
             <button class="btn active" name="range" value="day"><?php echo $text_day; ?></button>
             <button class="btn" name="range" value="week"><?php echo $text_week; ?></button>

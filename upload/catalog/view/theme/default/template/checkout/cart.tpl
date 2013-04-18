@@ -1,12 +1,12 @@
 <?php echo $header; ?>
 <?php if ($attention) { ?>
-<div class="attention"><?php echo $attention; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+<div class="alert"><i class="icon-warning-sign"></i> <?php echo $attention; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
 <?php } ?>
 <?php if ($success) { ?>
-<div class="alert alert-success"><?php echo $success; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+<div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
 <?php } ?>
 <?php if ($error_warning) { ?>
-<div class="alert alert-error"><?php echo $error_warning; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+<div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
 <?php } ?>
 <?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>

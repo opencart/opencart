@@ -19,10 +19,13 @@ class Url {
 			$url = $this->ssl;
 		}
 
-		$url .= 'index.php?route=' . $route;
-
-		if ($args) {
-			$url .= str_replace('&', '&amp;', '&' . ltrim($args, '&'));
+		if ($route != 'common/home') {
+			$url .= '?route=' . $route;
+			if ($args) {
+				$url .= str_replace('&', '&amp;', '&' . ltrim($args, '&'));
+			}
+		} elseif ($args) {
+			$url .= str_replace('&', '&amp;', '?' . ltrim($args, '&'));
 		}
 
 		foreach ($this->rewrite as $rewrite) {

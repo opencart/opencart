@@ -110,7 +110,7 @@ class ControllerCommonSeoUrl extends Controller {
 				}
 			}
 
-			return $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . str_replace('/index.php', '', $url_info['path']) . $url . $query;
+			return $url_data['scheme'] . '://' . $url_data['host'] . (isset($url_data['port']) ? ':' . $url_data['port'] : '') . $url_data['path'] . ltrim($url, '/') . $query;
 		} else {
 			return $link;
 		}

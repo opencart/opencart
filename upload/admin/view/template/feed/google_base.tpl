@@ -31,7 +31,7 @@
         <div class="control-group">
           <label class="control-label" for="input-data-feed"><?php echo $entry_data_feed; ?></label>
           <div class="controls">
-            <textarea cols="40" rows="5" id="input-data-feed" class="input-xxlarge"><?php echo $data_feed; ?></textarea>
+            <textarea cols="40" rows="5" readonly="readonly" id="input-data-feed" class="input-xxlarge"><?php echo $data_feed; ?></textarea>
           </div>
         </div>
         <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>

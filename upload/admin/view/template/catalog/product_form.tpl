@@ -6,7 +6,9 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -301,14 +303,19 @@
               <div class="controls">
                 <input type="text" name="manufacturer" value="<?php echo $manufacturer ?>" placeholder="<?php echo $entry_manufacturer; ?>" id="input-manufacturer" />
                 <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturer_id; ?>" />
-                <span class="help-block"><?php echo $help_manufacturer; ?></span></div>
+                
+                <a data-toggle="tooltip" title="<?php echo $help_manufacturer; ?>"><i class="icon-question-sign icon-large"></i></a>
+                
+                </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-category"><?php echo $entry_category; ?></label>
               <div class="controls">
                 <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" />
-                <span class="help-block"><?php echo $help_category; ?></span>
-                <div id="product-category">
+                
+                <a data-toggle="tooltip" title="<?php echo $help_category; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <br /><br />
+                <div id="product-category" class="well well-small scrollbox">
                   <?php foreach ($product_categories as $product_category) { ?>
                   <div id="product-category<?php echo $product_category['category_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $product_category['name']; ?>
                     <input type="hidden" name="product_category[]" value="<?php echo $product_category['category_id']; ?>" />
@@ -363,7 +370,7 @@
                 <span class="help-block"><?php echo $help_download; ?></span>
                 <div id="product-download">
                   <?php foreach ($product_downloads as $product_download) { ?>
-                  <div id="product-download<?php echo $product_download['download_id']; ?>"><i class="icon-minus-sign"></i>  <?php echo $product_download['name']; ?>
+                  <div id="product-download<?php echo $product_download['download_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $product_download['name']; ?>
                     <input type="hidden" name="product_download[]" value="<?php echo $product_download['download_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -418,22 +425,15 @@
             </table>
           </div>
           <div class="tab-pane" id="tab-option">
-            
-
-            
-
-              <table class="table table-striped table-bordered table-hover">
-                <tbody>
-                  <tr>
-                    <td class="left"><?php echo $entry_option; ?></td>
-                    <td class="left"><input type="text" name="option" value="" class="input-xxxlarge" />
-                      <button type="text" value="" id="input-option" class="btn"><i class="icon-plus"></i> Add Option</button></td>
-                  </tr>
-                </tbody>
-              </table>
-
-            
-                        
+            <table class="table table-striped table-bordered table-hover">
+              <tbody>
+                <tr>
+                  <td class="left"><?php echo $entry_option; ?></td>
+                  <td class="left"><input type="text" name="option" value="" class="input-xxxlarge" />
+                    <button type="text" value="" id="input-option" class="btn"><i class="icon-plus"></i> Add Option</button></td>
+                </tr>
+              </tbody>
+            </table>
             <div class="tabbable tabs-left">
               <ul class="nav nav-tabs" id="option">
                 <?php $option_row = 0; ?>
@@ -443,10 +443,6 @@
                 <?php } ?>
               </ul>
               <div class="tab-content">
-              
-              
-          
-              
                 <?php $option_row = 0; ?>
                 <?php $option_value_row = 0; ?>
                 <?php foreach ($product_options as $product_option) { ?>
@@ -1140,7 +1136,7 @@ $('input[name=\'option\']').catcomplete({
 		}
 			
 		if (ui.item.type == 'select' || ui.item.type == 'radio' || ui.item.type == 'checkbox' || ui.item.type == 'image') {
-			html += '  <table id="option-value' + option_row + '" class="table">';
+			html += '  <table id="option-value' + option_row + '" class="table table-striped table-bordered table-hover">';
 			html += '  	 <thead>'; 
 			html += '      <tr>';
 			html += '        <td class="left"><?php echo $entry_option_value; ?></td>';

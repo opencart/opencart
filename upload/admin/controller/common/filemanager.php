@@ -55,14 +55,6 @@ class ControllerCommonFileManager extends Controller {
 		$this->response->setOutput($this->render());
 	}	
 	
-	public function image() {
-		$this->load->model('tool/image');
-		
-		if (isset($this->request->get['image'])) {
-			$this->response->setOutput($this->model_tool_image->resize(html_entity_decode($this->request->get['image'], ENT_QUOTES, 'UTF-8'), 100, 100));
-		}
-	}
-	
 	public function directory() {	
 		$json = array();
 		
@@ -73,8 +65,8 @@ class ControllerCommonFileManager extends Controller {
 				$i = 0;
 			
 				foreach ($directories as $directory) {
-					$json[$i]['data'] = basename($directory);
-					$json[$i]['attributes']['directory'] = utf8_substr($directory, strlen(DIR_IMAGE . 'data/'));
+					$json[$i]['name'] = basename($directory);
+					$json[$i]['directory'] = utf8_substr($directory, strlen(DIR_IMAGE . 'data/'));
 					
 					$children = glob(rtrim($directory, '/') . '/*', GLOB_ONLYDIR);
 					
@@ -149,7 +141,15 @@ class ControllerCommonFileManager extends Controller {
 		
 		$this->response->setOutput(json_encode($json));	
 	}	
-	
+
+	public function image() {
+		$this->load->model('tool/image');
+		
+		if (isset($this->request->get['image'])) {
+			$this->response->setOutput($this->model_tool_image->resize(html_entity_decode($this->request->get['image'], ENT_QUOTES, 'UTF-8'), 100, 100));
+		}
+	}
+		
 	public function create() {
 		$this->language->load('common/filemanager');
 				

@@ -13,7 +13,7 @@
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-2.0.0.min.js"></script>
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
 <link href="view/javascript/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
 <script src="view/javascript/bootstrap/js/bootstrap.js"></script>
@@ -23,28 +23,17 @@
 <?php foreach ($styles as $style) { ?>
 <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
+<script src="view/javascript/common.js"></script>
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
 </head>
 <body>
-<div id="header">
-  <div id="logo"><a href="<?php echo $home; ?>"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a></div>
-  <div id="account">
-    <ul class="nav pull-right">
-      <li class="dropdown pull-left"><a data-toggle="dropdown">Howdy, Daniel Kerr <i class="icon-caret-down"></i></a>
-        <ul class="dropdown-menu">
-          <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
-          <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
-          <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</div>
-<div class="navbar">
-  <div class="nav-inner">
-    <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+<div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a href="<?php echo $home; ?>" class="brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a>
       <?php if ($logged) { ?>
       <div class="nav-collapse collapse">
         <ul class="nav">
@@ -104,7 +93,6 @@
           <li class="dropdown" id="system"><a data-toggle="dropdown"><?php echo $text_system; ?> <i class="icon-caret-down"></i></a>
             <ul class="dropdown-menu">
               <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
-              <li><a href="<?php echo $location; ?>"><?php echo $text_location; ?></a></li>
               <li class="dropdown-submenu"><a><?php echo $text_design; ?></a>
                 <ul class="dropdown-menu">
                   <li><a href="<?php echo $layout; ?>"><?php echo $text_layout; ?></a></li>
@@ -119,6 +107,7 @@
               </li>
               <li class="dropdown-submenu"><a><?php echo $text_localisation; ?></a>
                 <ul class="dropdown-menu">
+                  <li><a href="<?php echo $location; ?>"><?php echo $text_location; ?></a></li>
                   <li><a href="<?php echo $language; ?>"><?php echo $text_language; ?></a></li>
                   <li><a href="<?php echo $currency; ?>"><?php echo $text_currency; ?></a></li>
                   <li><a href="<?php echo $stock_status; ?>"><?php echo $text_stock_status; ?></a></li>
@@ -189,17 +178,20 @@
           </li>
         </ul>
         <ul class="nav pull-right">
-          <li class="dropdown">
-            <?php if (!$stores) { ?>
-            <a href="<?php echo $store; ?>" target="_blank"><?php echo $text_front; ?></a>
-            <?php } else { ?>
-            <a href="<?php echo $store; ?>" target="_blank" data-toggle="dropdown"><?php echo $text_front; ?> <i class="icon-caret-down"></i></a>
+          <li class="dropdown"><a href="<?php echo $store; ?>" target="_blank"><i class="icon-shopping-cart icon-large"></i></a>
             <ul class="dropdown-menu">
+              <a href="<?php echo $store; ?>" target="_blank" data-toggle="dropdown"><?php echo $text_front; ?></a>
               <?php foreach ($stores as $stores) { ?>
               <li><a href="<?php echo $stores['href']; ?>" target="_blank"><?php echo $stores['name']; ?></a></li>
               <?php } ?>
             </ul>
-            <?php } ?>
+          </li>
+          <li class="dropdown"><a data-toggle="dropdown"><i class="icon-user icon-large"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
+              <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
+              <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
+            </ul>
           </li>
         </ul>
       </div>

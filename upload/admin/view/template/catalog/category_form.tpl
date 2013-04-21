@@ -2,11 +2,13 @@
 <div id="content">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a> <i class="icon-angle-right"></i></li>
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="page-header">
@@ -29,7 +31,7 @@
             <div class="tab-content">
               <?php foreach ($languages as $language) { ?>
               <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
-                <div class="control-group required">
+                <div class="control-group error required">
                   <label class="control-label" for="input-name<?php echo $language['language_id']; ?>"><span class="required">*</span> <?php echo $entry_name; ?></label>
                   <div class="controls">
                     <input type="text" name="category_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name<?php echo $language['language_id']; ?>" class="input-xxlarge" />
@@ -64,7 +66,12 @@
             <div class="control-group">
               <label class="control-label" for="input-parent"><?php echo $entry_parent; ?></label>
               <div class="controls">
-                <input type="text" name="path" value="<?php echo $path; ?>" placeholder="<?php echo $entry_parent; ?>" id="input-parent" />
+                <input type="text" name="path" value="<?php echo $path; ?>" placeholder="<?php echo $entry_parent; ?>" data-provide="typeahead" id="input-parent" />
+                
+
+                
+                
+                
                 <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
               </div>
             </div>
@@ -72,8 +79,8 @@
               <label class="control-label" for="input-filter"><?php echo $entry_filter; ?></label>
               <div class="controls">
                 <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" />
-                <a data-toggle="tooltip"><?php echo $help_filter; ?></a>
-                <div id="category-filter">
+                <a data-toggle="tooltip" title="<?php echo $help_filter; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <div id="category-filter" class="well well-small scrollbox">
                   <?php foreach ($category_filters as $category_filter) { ?>
                   <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $category_filter['name']; ?>
                     <input type="hidden" name="category_filter[]" value="<?php echo $category_filter['filter_id']; ?>" />
@@ -85,6 +92,7 @@
             <div class="control-group">
               <div class="control-label"><?php echo $entry_store; ?></div>
               <div class="controls">
+              <div class="well well-small scrollbox">
                 <label class="checkbox">
                   <?php if (in_array(0, $category_store)) { ?>
                   <input type="checkbox" name="category_store[]" value="0" checked="checked" />
@@ -105,28 +113,33 @@
                   <?php } ?>
                 </label>
                 <?php } ?>
+                
+                </div>
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
               <div class="controls">
                 <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
-                <i id="help-keyword" class="icon-question-sign"></i> 
-                <script type="text/javascript"><!--
-                $('#help-keyword').tooltip({'title': '<?php echo addslashes($help_keyword); ?>', trigger: 'hover'});
-                //--></script> 
-              </div>
+                <a data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><i class="icon-question-sign icon-large"></i></a></div>
             </div>
+            
+            
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
-              <div class="controls"> <img src="<?php echo $thumb; ?>" alt="" id="thumb" class="img-polaroid" /> <br />
+              <div class="controls"><img src="<?php echo $thumb; ?>" alt="" id="thumb" class="img-polaroid" /> <br />
                 <br />
                 <div class="btn-group">
-                  <button onclick="image_upload('image', 'thumb');" class="btn btn-small"><i class="icon-edit"></i></button>
+                  <button data-toggle="modal" data-target="#modal" class="btn btn-small"><i class="icon-edit"></i></button>
                   <button onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');" class="btn btn-small"><i class="icon-remove"></i></button>
                 </div>
-                <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" /></div>
+                <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
+              </div>
             </div>
+            
+            
+            
+            
             <div class="control-group">
               <label class="control-label" for="input-top"><?php echo $entry_top; ?></label>
               <div class="controls">
@@ -137,21 +150,15 @@
                   <input type="checkbox" name="top" value="1" id="input-top" />
                   <?php } ?>
                 </label>
-                <i id="help-top" class="icon-question-sign"></i> 
-                <script type="text/javascript"><!--
-                $('#help-top').tooltip({'title': '<?php echo addslashes($help_top); ?>', trigger: 'hover'});
-                //--></script> 
-              </div>
+                <a data-toggle="tooltip" title="<?php echo $help_top; ?>"><i class="icon-question-sign icon-large"></i></a></div>
             </div>
+            
+            
             <div class="control-group">
               <label class="control-label" for="input-column"><?php echo $entry_column; ?></label>
               <div class="controls">
                 <input type="text" name="column" value="<?php echo $column; ?>" placeholder="<?php echo $entry_column; ?>" id="input-column" class="input-mini" />
-                <i id="help-column" class="icon-question-sign"></i> 
-                <script type="text/javascript"><!--
-                $('#help-column').tooltip({'title': '<?php echo addslashes($help_column); ?>', trigger: 'hover'});
-                //--></script> 
-              </div>
+                <a data-toggle="tooltip" title="<?php echo $help_column; ?>"><i class="icon-question-sign icon-large"></i></a> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
@@ -224,6 +231,22 @@
     </div>
   </div>
 </div>
+
+
+
+
+<div id="modal" style="width: 60%; height: 60%;" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="modal-label"><?php echo $text_image_manager; ?></h3>
+  </div>
+  <div class="modal-body">
+    <iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="width: 90%; height: 90%;" frameborder="no" scrolling="auto"></iframe>
+  </div>
+</div>
+
+
+
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
@@ -238,57 +261,97 @@ CKEDITOR.replace('input-description<?php echo $language['language_id']; ?>', {
 <?php } ?>
 //--></script> 
 <script type="text/javascript"><!--
-$('input[name=\'path\']').typeahead({
-	source: function(query, process) {
-		$.ajax({
-			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(query),
-			dataType: 'html',
-			success: function(json) {
-				/*
-				json.unshift({
-					'category_id':  0,
-					'name':  '<?php echo $text_none; ?>'
-				});
-				
-			
-				data = [];
-				
-				for () {
-					
-				}
-			
-				process(JSON.parse(json));	
-				*/
-									
-			}
-		});		
-		
-		
-	},
-	"key": "city", 
-    "value": "code", 	
-	updater: function (item) {
-    	selectedState = map[item].stateCode;
-   		
-		return item;
-	}
-})
-/*
 $('input[name=\'path\']').on('keydown', function() {
+	var input = this;
+	
 	$.ajax({
 		url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(this.value),
 		dataType: 'json',
 		success: function(json) {
-			json.unshift({
-				'category_id':  0,
-				'name':  '<?php echo $text_none; ?>'
-			});
+			//alert($(input).parent().has('.typeahead'));
+			
+			// If does not exists create it
+			if (!$(input).parent().has('.typeahead').length) {
+				html = '<ul class="typeahead dropdown-menu" style="position: absolute; display: none;">';
+				html += '</ul>';
 				
-			$('input[name=\'path\']').trigger("liszt:updated");
-		}
-	});
+				$('input[name=\'path\']').after(html);
+			}
 
+			html = '';
+			
+			html += '<li data-value="0"><a><?php echo $text_none; ?></a></li>';
+			
+			if (json) {
+				for (i = 0; i < json.length; i++) {
+					html += '<li data-value="' + json[i]['category_id'] + '"><a>' + json[i]['name'] + '</a></li>';
+				}
+			}
+			
+			$('input + .typeahead').html(html);
+			
+			$('input + .typeahead').show();
+			
+			$('.typeahead a').on('click', function() {
+				alert($(this).parent().attr('data-value'));
+			});				
+			
+			// Remove the 
+			$(input).on('focusout', function() {
+				alert('hi');
+				$('.typeahead').hide();
+			});
+		}		
+	});		
 });
+
+/*
+$('input[name=\'path\']').typeahead({
+	source: function(query, process) {
+		$.ajax({
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(query),
+			dataType: 'json',
+			success: function(json) {
+				var data = [];
+											
+				//json.unshift({
+				//	'category_id':  0,
+				//	'name':  '<?php echo $text_none; ?>'
+				//});
+				
+				
+				if (json) {
+					for (i = 0; i < json.length; i++) {
+						data[i] = {
+							'name': json[i]['name'],
+							'value': json[i]['category_id']
+						}
+					}
+				}
+				
+				
+				
+			}		
+		});		
+	},
+	updater: function(item) {
+		alert(item);
+		
+		//$('input[name=\'path\']').val(ui.item.label);
+		//$('input[name=\'parent_id\']').val(ui.item.value);
+				
+		return item;
+	},
+	matcher: function(item) {
+		return item;
+	},
+	sorter: function(items) {
+		return items;
+	},
+	highlighter: function(item) {
+		return item['name'];
+	}
+})
 
 
 $('input[name=\'path\']').autocomplete({

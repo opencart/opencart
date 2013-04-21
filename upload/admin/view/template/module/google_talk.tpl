@@ -25,7 +25,7 @@
             <?php } ?>
           </div>
         </div>
-        <table id="module" class="table">
+        <table id="module" class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
               <td class="left"><?php echo $entry_layout; ?></td>

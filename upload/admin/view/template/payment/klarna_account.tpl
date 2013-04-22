@@ -36,13 +36,19 @@
                     <label class="control-label" for="input-merchant<?php echo $country['code']; ?>"><?php echo $entry_merchant; ?></label>
                     <div class="controls">
                       <input type="text" name="klarna_account[<?php echo $country['code']; ?>][merchant]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['merchant'] : ''; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant<?php echo $country['code']; ?>" />
-                      <span class="help-block"><?php echo $help_merchant; ?></span></div>
+                      
+                      <a data-toggle="tooltip" title="<?php echo $help_merchant; ?>"><i class="icon-question-sign icon-large"></i></a>
+                      
+                      </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="input-secret<?php echo $country['code']; ?>"><?php echo $entry_secret; ?></label>
                     <div class="controls">
                       <input type="text" name="klarna_account[<?php echo $country['code']; ?>][secret]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['secret'] : ''; ?>" placeholder="<?php echo $entry_secret; ?>" id="input-secret<?php echo $country['code']; ?>" />
-                      <span class="help-block"><?php echo $help_secret; ?></span></div>
+                      
+                      <a data-toggle="tooltip" title="<?php echo $help_secret; ?>"><i class="icon-question-sign icon-large"></i></a>
+                      
+                      </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="input-server<?php echo $country['code']; ?>"><?php echo $entry_server; ?></label>
@@ -65,7 +71,9 @@
                     <label class="control-label" for="input-total<?php echo $country['code']; ?>"><?php echo $entry_total; ?></label>
                     <div class="controls">
                       <input type="text" name="klarna_account[<?php echo $country['code']; ?>][total]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['total'] : ''; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total<?php echo $country['code']; ?>" />
-                      <span class="help-block"><?php echo $help_total; ?></span></div>
+                      
+                      <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-question-sign icon-large"></i></a>
+                      </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="input-pending-status<?php echo $country['code']; ?>"><?php echo $entry_pending_status; ?></label>

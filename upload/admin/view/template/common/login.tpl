@@ -27,7 +27,7 @@
               <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
             </div>
             <?php if ($forgotten) { ?>
-            <span class="help-block"> <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a></span>
+            <span class="help-block"><a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a></span>
             <?php } ?>
           </div>
         </div>

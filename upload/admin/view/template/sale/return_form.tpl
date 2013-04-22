@@ -85,7 +85,9 @@
               <label class="control-label" for="input-product"><span class="required">*</span> <?php echo $entry_product; ?></label>
               <div class="controls">
                 <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" />
-                <span class="help-block"><?php echo $help_product; ?></span>
+                
+                <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
+                
                 <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
                 <?php if ($error_product) { ?>
                 <span class="error"><?php echo $error_product; ?></span>

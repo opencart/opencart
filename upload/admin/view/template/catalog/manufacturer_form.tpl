@@ -53,7 +53,10 @@
           <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
           <div class="controls">
             <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
-            <span class="help-block"><?php echo $help_keyword; ?></span></div>
+            
+            <a data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><i class="icon-question-sign icon-large"></i></a>
+            
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>

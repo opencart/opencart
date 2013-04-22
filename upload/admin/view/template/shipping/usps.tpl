@@ -441,7 +441,9 @@
             <input type="text" name="usps_length" value="<?php echo $usps_length; ?>" placeholder="<?php echo $entry_length; ?>" id="input-length" class="input-mini"/>
             <input type="text" name="usps_width" value="<?php echo $usps_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-width" class="input-mini" />
             <input type="text" name="usps_height" value="<?php echo $usps_height; ?>" placeholder="<?php echo $entry_height; ?>" id="input-height" class="input-mini" />
-            <span class="help-block"><?php echo $help_dimension; ?></span>
+            
+            <a data-toggle="tooltip" title="<?php echo $help_dimension; ?>"><i class="icon-question-sign icon-large"></i></a>
+            
             <?php if ($error_dimension) { ?>
             <span class="error"><?php echo $error_dimension; ?></span>
             <?php } ?>
@@ -468,7 +470,9 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            <span class="help-block"><?php echo $help_display_time; ?></span> </div>
+
+            <a data-toggle="tooltip" title="<?php echo $help_display_time; ?>"><i class="icon-question-sign icon-large"></i></a>
+            </div>
         </div>
         <div class="control-group">
           <div class="control-label"><?php echo $entry_display_weight; ?></div>
@@ -491,7 +495,8 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            <span class="help-block"><?php echo $help_display_weight; ?></span> </div>
+            <a data-toggle="tooltip" title="<?php echo $help_display_weight; ?>"><i class="icon-question-sign icon-large"></i></a>
+          </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-weight-class"><?php echo $entry_weight_class; ?></label>
@@ -505,7 +510,10 @@
               <?php } ?>
               <?php } ?>
             </select>
-            <span class="help-block"><?php echo $help_weight_class; ?></span> </div>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_weight_class; ?>"><i class="icon-question-sign icon-large"></i></a>
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-tax-class"><?php echo $entry_tax; ?></label>
@@ -569,7 +577,10 @@
               <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
               <?php } ?>
             </select>
-            <span class="help-block"><?php echo $help_debug; ?></span> </div>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_debug; ?>"><i class="icon-question-sign icon-large"></i></a>
+            </div>
         </div>
       </form>
     </div>

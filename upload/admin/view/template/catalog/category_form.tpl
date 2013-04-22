@@ -67,11 +67,6 @@
               <label class="control-label" for="input-parent"><?php echo $entry_parent; ?></label>
               <div class="controls">
                 <input type="text" name="path" value="<?php echo $path; ?>" placeholder="<?php echo $entry_parent; ?>" data-provide="typeahead" id="input-parent" />
-                
-
-                
-                
-                
                 <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
               </div>
             </div>
@@ -79,7 +74,8 @@
               <label class="control-label" for="input-filter"><?php echo $entry_filter; ?></label>
               <div class="controls">
                 <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" />
-                <a data-toggle="tooltip" title="<?php echo $help_filter; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_filter; ?>"><i class="icon-question-sign icon-large"></i></a> <br />
+                <br />
                 <div id="category-filter" class="well well-small scrollbox">
                   <?php foreach ($category_filters as $category_filter) { ?>
                   <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $category_filter['name']; ?>
@@ -92,28 +88,27 @@
             <div class="control-group">
               <div class="control-label"><?php echo $entry_store; ?></div>
               <div class="controls">
-              <div class="well well-small scrollbox">
-                <label class="checkbox">
-                  <?php if (in_array(0, $category_store)) { ?>
-                  <input type="checkbox" name="category_store[]" value="0" checked="checked" />
-                  <?php echo $text_default; ?>
-                  <?php } else { ?>
-                  <input type="checkbox" name="category_store[]" value="0" />
-                  <?php echo $text_default; ?>
+                <div class="well well-small scrollbox">
+                  <label class="checkbox">
+                    <?php if (in_array(0, $category_store)) { ?>
+                    <input type="checkbox" name="category_store[]" value="0" checked="checked" />
+                    <?php echo $text_default; ?>
+                    <?php } else { ?>
+                    <input type="checkbox" name="category_store[]" value="0" />
+                    <?php echo $text_default; ?>
+                    <?php } ?>
+                  </label>
+                  <?php foreach ($stores as $store) { ?>
+                  <label class="checkbox">
+                    <?php if (in_array($store['store_id'], $category_store)) { ?>
+                    <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
+                    <?php echo $store['name']; ?>
+                    <?php } else { ?>
+                    <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" />
+                    <?php echo $store['name']; ?>
+                    <?php } ?>
+                  </label>
                   <?php } ?>
-                </label>
-                <?php foreach ($stores as $store) { ?>
-                <label class="checkbox">
-                  <?php if (in_array($store['store_id'], $category_store)) { ?>
-                  <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-                  <?php echo $store['name']; ?>
-                  <?php } else { ?>
-                  <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" />
-                  <?php echo $store['name']; ?>
-                  <?php } ?>
-                </label>
-                <?php } ?>
-                
                 </div>
               </div>
             </div>
@@ -123,12 +118,17 @@
                 <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
                 <a data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><i class="icon-question-sign icon-large"></i></a></div>
             </div>
-            
-            
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
-              <div class="controls"><img src="<?php echo $thumb; ?>" alt="" id="thumb" class="img-polaroid" /> <br />
-                <br />
+              <div class="controls">
+                <ul class="thumbnails">
+                  <li><a class="thumbnail" href="#"><img alt="" src="<?php echo $thumb; ?>"></a>
+                    <ul class="thumbnail-option inline">
+                      <li><a href="#" title="Edit"><span class="icon-edit"></span></a></li>
+                      <li><a href="#" title="Delete"><span class="icon-trash"></span></a></li>
+                    </ul>
+                  </li>
+                </ul>
                 <div class="btn-group">
                   <button data-toggle="modal" data-target="#modal" class="btn btn-small"><i class="icon-edit"></i></button>
                   <button onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');" class="btn btn-small"><i class="icon-remove"></i></button>
@@ -136,10 +136,6 @@
                 <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
               </div>
             </div>
-            
-            
-            
-            
             <div class="control-group">
               <label class="control-label" for="input-top"><?php echo $entry_top; ?></label>
               <div class="controls">
@@ -150,15 +146,13 @@
                   <input type="checkbox" name="top" value="1" id="input-top" />
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_top; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" data-original-title="<?php echo $help_top; ?>"><i class="icon-question-sign icon-large"></i></a></div>
             </div>
-            
-            
             <div class="control-group">
               <label class="control-label" for="input-column"><?php echo $entry_column; ?></label>
               <div class="controls">
                 <input type="text" name="column" value="<?php echo $column; ?>" placeholder="<?php echo $entry_column; ?>" id="input-column" class="input-mini" />
-                <a data-toggle="tooltip" title="<?php echo $help_column; ?>"><i class="icon-question-sign icon-large"></i></a> </div>
+                <a data-toggle="tooltip" title="<?php echo $help_column; ?>"><i class="icon-question-sign icon-large"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
@@ -231,10 +225,6 @@
     </div>
   </div>
 </div>
-
-
-
-
 <div id="modal" style="width: 60%; height: 60%;" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -244,9 +234,6 @@
     <iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="width: 90%; height: 90%;" frameborder="no" scrolling="auto"></iframe>
   </div>
 </div>
-
-
-
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
@@ -272,10 +259,7 @@ $('input[name=\'path\']').on('keydown', function() {
 			
 			// If does not exists create it
 			if (!$(input).parent().has('.typeahead').length) {
-				html = '<ul class="typeahead dropdown-menu" style="position: absolute; display: none;">';
-				html += '</ul>';
-				
-				$('input[name=\'path\']').after(html);
+				$('input[name=\'path\']').after('<ul class="typeahead dropdown-menu" style="position: absolute; display: none;"></ul>');
 			}
 
 			html = '';

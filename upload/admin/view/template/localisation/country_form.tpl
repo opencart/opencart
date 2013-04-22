@@ -39,7 +39,10 @@
           <label class="control-label" for="input-address-format"><?php echo $entry_address_format; ?></label>
           <div class="controls">
             <textarea name="address_format" cols="40" rows="5" placeholder="<?php echo $entry_address_format; ?>" id="input-address-format"><?php echo $address_format; ?></textarea>
-            <span class="help-block"><?php echo $help_address_format; ?></span></div>
+            
+            <a data-toggle="tooltip" title="<?php echo $help_address_format; ?>"><i class="icon-question-sign icon-large"></i></a>
+            
+            </div>
         </div>
         <div class="control-group">
           <div class="control-label"><?php echo $entry_postcode_required; ?></div>

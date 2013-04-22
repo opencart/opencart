@@ -56,7 +56,9 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            <span class="help-block"><?php echo $help_approval; ?></span></div>
+            
+            <a data-toggle="tooltip" title="<?php echo $help_approval; ?>"><i class="icon-question-sign icon-large"></i></a>
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>

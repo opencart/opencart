@@ -76,13 +76,19 @@
               <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
               <?php } ?>
             </select>
-            <span class="help-block"><?php echo $help_debug; ?></span> </div>
+            
+            
+            <a data-toggle="tooltip" title="<?php echo $help_debug; ?>"><i class="icon-question-sign icon-large"></i></a>
+             </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
           <div class="controls">
             <input type="text" name="pp_standard_total" value="<?php echo $pp_standard_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
-            <span class="help-block"><?php echo $help_total; ?></span> </div>
+            
+            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-question-sign icon-large"></i></a>
+            
+             </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-canceled-reversal-status"><?php echo $entry_canceled_reversal_status; ?></label>

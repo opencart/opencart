@@ -211,7 +211,11 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            <span class="help-block"><?php echo $help_display_time; ?></span> </div>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_display_time; ?>"><i class="icon-question-sign icon-large"></i></a>
+            
+            </div>
         </div>
         <div class="control-group">
           <div class="control-label"><?php echo $entry_display_weight; ?></div>
@@ -234,7 +238,11 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            <span class="help-block"><?php echo $help_display_weight; ?></span> </div>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_display_weight; ?>"><i class="icon-question-sign icon-large"></i></a>
+            
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-weight-class"><?php echo $entry_weight_class; ?></label>
@@ -248,7 +256,10 @@
               <?php } ?>
               <?php } ?>
             </select>
-            <span class="help-block"><?php echo $help_weight_class; ?></span> </div>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_weight_class; ?>"><i class="icon-question-sign icon-large"></i></a>
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>

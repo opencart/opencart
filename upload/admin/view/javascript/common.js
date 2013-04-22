@@ -39,5 +39,9 @@ $(document).ready(function() {
 		$('a[href*=\'' + url + '\']').parents('li[id]').addClass('selected');
 	}
 	
-	$('a[data-toggle=\'tooltip\']').tooltip();
+	$('[data-toggle=\'tooltip\']').tooltip({
+		'animation': false,
+		'html': true
+		//'trigger': 'click'
+	});
 });

@@ -66,7 +66,10 @@
                 <label class="control-label" for="input-rate<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $entry_rate; ?></label>
                 <div class="controls">
                   <textarea name="weight_<?php echo $geo_zone['geo_zone_id']; ?>_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-rate<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo ${'weight_' . $geo_zone['geo_zone_id'] . '_rate'}; ?></textarea>
-                  <span class="help-block"><?php echo $help_rate; ?></span></div>
+
+                  
+                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-status<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $entry_status; ?></label>

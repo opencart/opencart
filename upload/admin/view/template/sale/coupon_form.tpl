@@ -36,7 +36,9 @@
               <label class="control-label" for="input-code"><span class="required">*</span> <?php echo $entry_code; ?></label>
               <div class="controls">
                 <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
-                <span class="help-block"><?php echo $help_code; ?></span>
+                
+                <a data-toggle="tooltip" title="<?php echo $help_code; ?>"><i class="icon-question-sign icon-large"></i></a>
+                
                 <?php if ($error_code) { ?>
                 <span class="error"><?php echo $error_code; ?></span>
                 <?php } ?>
@@ -57,7 +59,9 @@
                   <option value="F"><?php echo $text_amount; ?></option>
                   <?php } ?>
                 </select>
-                <span class="help-block"><?php echo $help_type; ?></span></div>
+                
+                <a data-toggle="tooltip" title="<?php echo $help_type; ?>"><i class="icon-question-sign icon-large"></i></a>
+                </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-discount"><?php echo $entry_discount; ?></label>
@@ -69,7 +73,10 @@
               <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
               <div class="controls">
                 <input type="text" name="total" value="<?php echo $total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
-                <span class="help-block"><?php echo $help_total; ?></span></div>
+                
+                <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-question-sign icon-large"></i></a>
+                
+                </div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_logged; ?></div>
@@ -92,7 +99,10 @@
                   <?php echo $text_no; ?>
                   <?php } ?>
                 </label>
-                <span class="help-block"><?php echo $help_logged; ?></span></div>
+                
+                <a data-toggle="tooltip" title="<?php echo $help_logged; ?>"><i class="icon-question-sign icon-large"></i></a>
+                
+                </div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_shipping; ?></div>
@@ -121,7 +131,10 @@
               <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
               <div class="controls">
                 <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
-                <span class="help-block"><?php echo $help_product; ?></span>
+
+                <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
+                
+                
                 <div id="coupon-product">
                   <?php foreach ($coupon_product as $coupon_product) { ?>
                   <div id="coupon-product<?php echo $coupon_product['product_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $coupon_product['name']; ?>
@@ -135,7 +148,8 @@
               <label class="control-label" for="input-category"><?php echo $entry_category; ?></label>
               <div class="controls">
                 <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" />
-                <span class="help-block"><?php echo $help_category ?></span>
+                
+                <a data-toggle="tooltip" title="<?php echo $help_category; ?>"><i class="icon-question-sign icon-large"></i></a>
                 <div id="coupon-category">
                   <?php foreach ($coupon_category as $coupon_category) { ?>
                   <div id="coupon-category<?php echo $coupon_category['category_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $coupon_category['name']; ?>
@@ -161,13 +175,19 @@
               <label class="control-label" for="input-uses-total"><?php echo $entry_uses_total; ?></label>
               <div class="controls">
                 <input type="text" name="uses_total" value="<?php echo $uses_total; ?>" placeholder="<?php echo $entry_uses_total; ?>" id="input-uses-total" />
-                <span class="help-block"><?php echo $help_uses_total; ?></span></div>
+                
+                <a data-toggle="tooltip" title="<?php echo $help_uses_total; ?>"><i class="icon-question-sign icon-large"></i></a>
+                
+                </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-uses-customer"><?php echo $entry_uses_customer; ?></label>
               <div class="controls">
                 <input type="text" name="uses_customer" value="<?php echo $uses_customer; ?>" placeholder="<?php echo $entry_uses_customer; ?>" id="input-uses-customer" />
-                <span class="help-block"><?php echo $help_uses_customer; ?></span></div>
+                
+                <a data-toggle="tooltip" title="<?php echo $help_uses_customer; ?>"><i class="icon-question-sign icon-large"></i></a>
+                
+                </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>

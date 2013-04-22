@@ -1,3 +1,4 @@
+/*
 html, body, label, .control-group input, textarea, select {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -11,6 +12,7 @@ html, body, label, .control-group input, textarea, select {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 }
+*/
 .brand {
 	margin: 0px;
 	padding-top: 0px;
@@ -106,9 +108,6 @@ html, body, label, .control-group input, textarea, select {
 }
 .control-group a[data-toggle='tooltip'] {
 	cursor: pointer;
-	margin-left: 5px;
-	font-size: 13px;
-	text-decoration: none;
 }
 .control-label:after {
 	content: ':';
@@ -117,6 +116,18 @@ html, body, label, .control-group input, textarea, select {
 	content: '*';
 	color: #B94A48;
 }
+
+.thumbnails {
+	position: relative;
+	border: 1px solid #000;
+}
+.thumbnail-option {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+
 .scrollbox {
 	width: 200px;
 	height: 200px; 

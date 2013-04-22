@@ -6,7 +6,9 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -18,8 +20,9 @@
           <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
           <div class="controls">
             <input type="text" name="product" value="" id="input-product" />
-            <span class="help-block"><?php echo $help_product; ?></span>
-            <div id="featured-product">
+            <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a> <br />
+            <br />
+            <div id="featured-product" class="well well-small scrollbox">
               <?php foreach ($products as $product) { ?>
               <div id="featured-product<?php echo $product['product_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $product['name']; ?>
                 <input type="hidden" value="<?php echo $product['product_id']; ?>" />
@@ -104,12 +107,9 @@
             </tr>
           </tfoot>
         </table>
-        
         <div class="form-actions">
           <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
           <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
-      
-      
       </form>
     </div>
   </div>
@@ -150,7 +150,7 @@ $('input[name=\'product\']').autocomplete({
    	}
 });
 */
-$('#featured-product .icon-minus-sign').on('click', function() {
+$('#featured-product').delegate('.icon-minus-sign', 'click', function() {
 	$(this).parent().remove();
 
 	data = $.map($('#featured-product input'), function(element){

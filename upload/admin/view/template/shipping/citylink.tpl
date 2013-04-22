@@ -19,7 +19,11 @@
           <label class="control-label" for="input-rate"><?php echo $entry_rate; ?></label>
           <div class="controls">
             <textarea name="citylink_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-rate"><?php echo $citylink_rate; ?></textarea>
-            <span class="help-block"><?php echo $help_rate; ?></span> </div>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-question-sign icon-large"></i></a>
+            
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>

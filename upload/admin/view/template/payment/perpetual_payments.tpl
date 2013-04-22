@@ -54,7 +54,10 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            <span class="help-block"><?php echo $help_test; ?></span></div>
+            
+            <a data-toggle="tooltip" title="<?php echo $help_test; ?>"><i class="icon-question-sign icon-large"></i></a>
+            
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>

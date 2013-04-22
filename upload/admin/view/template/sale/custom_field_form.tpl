@@ -231,7 +231,10 @@
               <option value="zone_id"><?php echo $text_zone; ?></option>
               <?php } ?>
             </select>
-            <span class="help-block"><?php echo $help_position; ?></span></div>
+            
+            <a data-toggle="tooltip" title="<?php echo $help_position; ?>"><i class="icon-question-sign icon-large"></i></a>
+            
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>

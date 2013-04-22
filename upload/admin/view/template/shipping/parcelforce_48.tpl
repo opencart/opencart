@@ -19,13 +19,19 @@
           <label class="control-label" for="input-rate"><?php echo $entry_rate; ?></label>
           <div class="controls">
             <textarea name="parcelforce_48_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-rate"><?php echo $parcelforce_48_rate; ?></textarea>
-            <span class="help-block"><?php echo $help_rate; ?></span> </div>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-question-sign icon-large"></i></a>
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-insurance"><?php echo $entry_insurance; ?></label>
           <div class="controls">
             <textarea name="parcelforce_48_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-insurance"><?php echo $parcelforce_48_insurance; ?></textarea>
-            <span class="help-block"><?php echo $help_insurance; ?></span> </div>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-question-sign icon-large"></i></a>
+            </div>
         </div>
         <div class="control-group">
           <div class="control-label"><?php echo $entry_display_weight; ?></div>
@@ -48,7 +54,11 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            <span class="help-block"><?php echo $help_display_weight; ?></span> </div>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_display_weight; ?>"><i class="icon-question-sign icon-large"></i></a>
+            
+            </div>
         </div>
         <div class="control-group">
           <div class="control-label" for="input-display-insurance"><?php echo $entry_display_insurance; ?></div>
@@ -71,7 +81,10 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            <span class="help-block"><?php echo $help_display_insurance; ?></span> </div>
+
+            <a data-toggle="tooltip" title="<?php echo $help_display_insurance; ?>"><i class="icon-question-sign icon-large"></i></a>
+            
+            </div>
         </div>
         <div class="control-group">
           <div class="control-label"><?php echo $entry_display_time; ?></div>
@@ -94,7 +107,11 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            <span class="help-block"><?php echo $help_display_time; ?></span> </div>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_display_time; ?>"><i class="icon-question-sign icon-large"></i></a>
+            
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>

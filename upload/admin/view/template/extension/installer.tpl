@@ -18,7 +18,11 @@
           <label class="control-label" for="button-upload"><?php echo $entry_upload; ?></label>
           <div class="controls">
             <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
-            <span class="help-block"><?php echo $help_upload; ?></span></div>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_upload; ?>"><i class="icon-question-sign icon-large"></i></a>
+            
+            </div>
         </div>
         <div class="control-group">
           <div class="control-label"><?php echo $entry_progress; ?></div>

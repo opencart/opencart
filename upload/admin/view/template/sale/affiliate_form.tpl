@@ -136,7 +136,10 @@
               <label class="control-label" for="input-code"><span class="required">*</span> <?php echo $entry_code; ?></label>
               <div class="controls">
                 <input type="code" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
-                <span class="help-block"><?php echo $help_code; ?></span>
+
+                
+                <a data-toggle="tooltip" title="<?php echo $help_code; ?>"><i class="icon-question-sign icon-large"></i></a>
+                
                 <?php if ($error_code) { ?>
                 <span class="error"><?php echo $error_code; ?></span>
                 <?php } ?>
@@ -180,7 +183,10 @@
               <label class="control-label" for="input-commission"><?php echo $entry_commission; ?></label>
               <div class="controls">
                 <input type="text" name="commission" value="<?php echo $commission; ?>" placeholder="<?php echo $entry_commission; ?>" id="input-commission" />
-                <span class="help-block"><?php echo $help_commission; ?></span></div>
+               
+                
+                <a data-toggle="tooltip" title="<?php echo $help_commission; ?>"><i class="icon-question-sign icon-large"></i></a>
+                </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-tax"><?php echo $entry_tax; ?></label>

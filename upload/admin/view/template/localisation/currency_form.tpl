@@ -27,7 +27,9 @@
           <label class="control-label" for="input-code"><span class="required">*</span> <?php echo $entry_code; ?></label>
           <div class="controls">
             <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
-            <span class="help-block"><?php echo $help_code; ?></span>
+            <a data-toggle="tooltip" title="<?php echo $help_code; ?>"><i class="icon-question-sign icon-large"></i></a>
+            
+
             <?php if ($error_code) { ?>
             <span class="error"><?php echo $error_code; ?></span>
             <?php } ?>
@@ -55,7 +57,10 @@
           <label class="control-label" for="input-value"><?php echo $entry_value; ?></label>
           <div class="controls">
             <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" />
-            <span class="help-block"><?php echo $help_value; ?></span></div>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_value; ?>"><i class="icon-question-sign icon-large"></i></a>
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>

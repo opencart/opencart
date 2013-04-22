@@ -91,7 +91,9 @@
               <input type="text" name="geocode" value="<?php echo $geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" class="span2" id="input-geocode" />
               <button type="button" onclick="getGeoCode()" class="btn"><i class="icon-search"></i> <?php echo $button_geocode; ?></button>
             </div>
-            <span class="help-block"><?php echo $help_geocode; ?></span>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_geocode; ?>"><i class="icon-question-sign icon-large"></i></a>
             <?php if ($error_geocode) { ?>
             <span class="error"><?php echo $error_geocode; ?></span>
             <?php } ?>
@@ -110,13 +112,19 @@
           <label class="control-label" for="input-open"><?php echo $entry_open; ?></label>
           <div class="controls">
             <textarea name="open" cols="40" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open"><?php echo $open; ?></textarea>
-            <span class="help-block"><?php echo $help_open; ?></span></div>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_open; ?>"><i class="icon-question-sign icon-large"></i></a>
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-comment"><?php echo $entry_comment; ?></label>
           <div class="controls">
             <textarea name="comment" cols="40" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment"><?php echo $comment; ?></textarea>
-            <span class="help-block"><?php echo $help_comment; ?></span></div>
+
+            
+            <a data-toggle="tooltip" title="<?php echo $help_comment; ?>"><i class="icon-question-sign icon-large"></i></a>
+            </div>
         </div>
       </form>
     </div>

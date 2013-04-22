@@ -61,6 +61,12 @@ class ControllerPaymentTwoCheckout extends Controller {
 		} else {
 			$this->data['demo'] = '';
 		}
+
+		if ($this->config->get('twocheckout_display')) {
+			$this->data['display'] = 'Y';
+		} else {
+			$this->data['display'] = '';
+		}
 		
 		$this->data['lang'] = $this->session->data['language'];
 

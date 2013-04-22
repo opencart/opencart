@@ -60,6 +60,22 @@
           </div>
         </div>
         <div class="control-group">
+          <tr>
+            <td><?php echo $entry_display; ?></td>
+            <td><?php if ($twocheckout_display) { ?>
+              <input type="radio" name="twocheckout_display" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="twocheckout_display" value="0" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="twocheckout_display" value="1" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="twocheckout_display" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } ?></td>
+          </tr>
+        </div>
+        <div class="control-group">
           <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
           <div class="controls">
             <input type="text" name="twocheckout_total" value="<?php echo $twocheckout_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />

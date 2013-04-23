@@ -30,9 +30,9 @@ class ControllerPaymentPPStandard extends Controller {
 	
 				foreach ($product['option'] as $option) {
 					if ($option['type'] != 'file') {
-						$value = $option['option_value'];	
+						$value = $option['value'];	
 					} else {
-						$filename = $this->encryption->decrypt($option['option_value']);
+						$filename = $this->encryption->decrypt($option['value']);
 						
 						$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
 					}
@@ -114,7 +114,7 @@ class ControllerPaymentPPStandard extends Controller {
 				
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 		
-		if ($order_info) {
+		if ($order_info) {			
 			$request = 'cmd=_notify-validate';
 		
 			foreach ($this->request->post as $key => $value) {
@@ -127,6 +127,7 @@ class ControllerPaymentPPStandard extends Controller {
 				$curl = curl_init('https://www.sandbox.paypal.com/cgi-bin/webscr');
 			}
 
+			curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 			curl_setopt($curl, CURLOPT_POST, true);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

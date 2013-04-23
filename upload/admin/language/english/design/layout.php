@@ -11,9 +11,9 @@ $_['column_name']       = 'Layout Name';
 $_['column_action']     = 'Action';
 
 // Entry
-$_['entry_name']        = 'Layout Name:';
-$_['entry_store']       = 'Store:';
-$_['entry_route']       = 'Route:';
+$_['entry_name']        = 'Layout Name';
+$_['entry_store']       = 'Store';
+$_['entry_route']       = 'Route';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify layouts!';

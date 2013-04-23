@@ -67,7 +67,7 @@ class ModelCatalogOption extends Model {
 	public function getOptions($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "option` o LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE od.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 		
-		if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
+		if (isset($data['filter_name']) && $data['filter_name'] !== null) {
 			$sql .= " AND od.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
 		}
 

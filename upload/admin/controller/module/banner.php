@@ -28,10 +28,14 @@ class ControllerModuleBanner extends Controller {
 
 		$this->data['entry_banner'] = $this->language->get('entry_banner');
 		$this->data['entry_dimension'] = $this->language->get('entry_dimension'); 
+		$this->data['entry_width'] = $this->language->get('entry_width');
+		$this->data['entry_height'] = $this->language->get('entry_height');		
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
 		$this->data['entry_position'] = $this->language->get('entry_position');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		$this->data['entry_width'] = $this->language->get('entry_width');
+		$this->data['entry_height'] = $this->language->get('entry_height');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -53,21 +57,18 @@ class ControllerModuleBanner extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_module'),
-			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('text_module'),
+			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('module/banner', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('module/banner', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
 		$this->data['action'] = $this->url->link('module/banner', 'token=' . $this->session->data['token'], 'SSL');

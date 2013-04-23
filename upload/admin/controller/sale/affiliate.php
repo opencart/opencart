@@ -320,15 +320,13 @@ class ControllerSaleAffiliate extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),       		
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		$this->data['approve'] = $this->url->link('sale/affiliate/approve', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -483,10 +481,11 @@ class ControllerSaleAffiliate extends Controller {
 		$pagination->total = $affiliate_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/affiliate', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($affiliate_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($affiliate_total - $this->config->get('config_admin_limit'))) ? $affiliate_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $affiliate_total, ceil($affiliate_total / $this->config->get('config_admin_limit')));
 
 		$this->data['filter_name'] = $filter_name;
 		$this->data['filter_email'] = $filter_email;
@@ -546,7 +545,10 @@ class ControllerSaleAffiliate extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_amount'] = $this->language->get('entry_amount');
  		$this->data['entry_description'] = $this->language->get('entry_description');
- 
+  		
+		$this->data['help_code'] = $this->language->get('help_code');
+		$this->data['help_commission'] = $this->language->get('help_commission');
+
 		$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
     	$this->data['button_add_transaction'] = $this->language->get('button_add_transaction');
@@ -671,15 +673,13 @@ class ControllerSaleAffiliate extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 
 		if (!isset($this->request->get['affiliate_id'])) {
@@ -1086,10 +1086,11 @@ class ControllerSaleAffiliate extends Controller {
 		$pagination->total = $transaction_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/affiliate/transaction', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $this->request->get['affiliate_id'] . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($transaction_total - $this->config->get('config_admin_limit'))) ? $transaction_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $transaction_total, ceil($transaction_total / $this->config->get('config_admin_limit')));
 
 		$this->template = 'sale/affiliate_transaction.tpl';		
 		
@@ -1113,7 +1114,7 @@ class ControllerSaleAffiliate extends Controller {
 			foreach ($results as $result) {
 				$affiliate_data[] = array(
 					'affiliate_id' => $result['affiliate_id'],
-					'name'         => html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')
+					'name'         => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
 				);
 			}
 		}

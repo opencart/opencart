@@ -37,7 +37,9 @@ class ControllerPaymentNOCHEX extends Controller {
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		
+
+		$this->data['help_total'] = $this->language->get('help_total');
+				
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -62,21 +64,18 @@ class ControllerPaymentNOCHEX extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_payment'),
-			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('text_payment'),
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('payment/nochex', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('payment/nochex', 'token=' . $this->session->data['token'], 'SSL')
    		);
 				
 		$this->data['action'] = $this->url->link('payment/nochex', 'token=' . $this->session->data['token'], 'SSL');

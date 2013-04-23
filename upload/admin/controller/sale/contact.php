@@ -27,6 +27,10 @@ class ControllerSaleContact extends Controller {
 		$this->data['entry_subject'] = $this->language->get('entry_subject');
 		$this->data['entry_message'] = $this->language->get('entry_message');
 		
+		$this->data['help_customer'] = $this->language->get('help_customer');
+		$this->data['help_affiliate'] = $this->language->get('help_affiliate');
+		$this->data['help_product'] = $this->language->get('help_product');
+		
 		$this->data['button_send'] = $this->language->get('button_send');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 		
@@ -35,15 +39,13 @@ class ControllerSaleContact extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/contact', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/contact', 'token=' . $this->session->data['token'], 'SSL')
    		);
 				
     	$this->data['cancel'] = $this->url->link('sale/contact', 'token=' . $this->session->data['token'], 'SSL');

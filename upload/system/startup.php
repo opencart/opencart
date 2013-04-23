@@ -27,12 +27,12 @@ if (ini_get('register_globals')) {
 // Magic Quotes Fix
 if (ini_get('magic_quotes_gpc')) {
 	function clean($data) {
-   		if (is_array($data)) {
-  			foreach ($data as $key => $value) {
-    			$data[clean($key)] = clean($value);
-  			}
+		if (is_array($data)) {
+			foreach ($data as $key => $value) {
+				$data[clean($key)] = clean($value);
+			}
 		} else {
-  			$data = stripslashes($data);
+			$data = stripslashes($data);
 		}
 	
 		return $data;
@@ -73,10 +73,6 @@ if (!isset($_SERVER['HTTP_HOST'])) {
 	$_SERVER['HTTP_HOST'] = getenv('HTTP_HOST');
 }
 
-// Helper
-require_once(DIR_SYSTEM . 'helper/json.php'); 
-require_once(DIR_SYSTEM . 'helper/utf8.php'); 
-
 // Engine
 require_once(DIR_SYSTEM . 'engine/action.php'); 
 require_once(DIR_SYSTEM . 'engine/controller.php');
@@ -85,7 +81,7 @@ require_once(DIR_SYSTEM . 'engine/loader.php');
 require_once(DIR_SYSTEM . 'engine/model.php');
 require_once(DIR_SYSTEM . 'engine/registry.php');
 
-// Common
+// Library
 require_once(DIR_SYSTEM . 'library/cache.php');
 require_once(DIR_SYSTEM . 'library/url.php');
 require_once(DIR_SYSTEM . 'library/config.php');
@@ -101,4 +97,8 @@ require_once(DIR_SYSTEM . 'library/request.php');
 require_once(DIR_SYSTEM . 'library/response.php');
 require_once(DIR_SYSTEM . 'library/session.php');
 require_once(DIR_SYSTEM . 'library/template.php');
+
+// Helper
+require_once(DIR_SYSTEM . 'helper/json.php'); 
+require_once(DIR_SYSTEM . 'helper/utf8.php'); 
 ?>

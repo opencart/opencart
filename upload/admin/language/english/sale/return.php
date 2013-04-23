@@ -39,22 +39,25 @@ $_['column_notify']        = 'Customer Notified';
 $_['column_action']        = 'Action';
 
 // Entry
-$_['entry_customer']      = 'Customer:';
-$_['entry_order_id']      = 'Order ID:';
-$_['entry_date_ordered']  = 'Order Date:';
-$_['entry_firstname']     = 'First Name:';
-$_['entry_lastname']      = 'Last Name:';
-$_['entry_email']         = 'E-Mail:';
-$_['entry_telephone']     = 'Telephone:';
-$_['entry_product']       = 'Product:<br /><span class="help">(Autocomplete)</span>';
-$_['entry_model']         = 'Model:';
-$_['entry_quantity']      = 'Quantity:';
-$_['entry_reason']        = 'Return Reason:';
-$_['entry_opened']        = 'Opened:';
-$_['entry_comment']       = 'Comment:';
-$_['entry_return_status'] = 'Return Status:';
-$_['entry_notify']        = 'Notify Customer:';
-$_['entry_action']        = 'Return Action:';
+$_['entry_customer']      = 'Customer';
+$_['entry_order_id']      = 'Order ID';
+$_['entry_date_ordered']  = 'Order Date';
+$_['entry_firstname']     = 'First Name';
+$_['entry_lastname']      = 'Last Name';
+$_['entry_email']         = 'E-Mail';
+$_['entry_telephone']     = 'Telephone';
+$_['entry_product']       = 'Product';
+$_['entry_model']         = 'Model';
+$_['entry_quantity']      = 'Quantity';
+$_['entry_reason']        = 'Return Reason';
+$_['entry_opened']        = 'Opened';
+$_['entry_comment']       = 'Comment';
+$_['entry_status']        = 'Return Status';
+$_['entry_notify']        = 'Notify Customer';
+$_['entry_action']        = 'Return Action';
+
+// Help
+$_['help_product']        = '(Autocomplete)';
 
 // Error
 $_['error_warning']       = 'Warning: Please check the form carefully for errors!';

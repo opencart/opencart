@@ -342,6 +342,13 @@ class ModelUpgrade extends Model {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_group` DROP `name`");	
 		}
 
+		// Rename the option_value field to value
+		if (in_array('option_value', $table_old_data[DB_PREFIX . 'product_option'])) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` DROP `value`");	
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` CHANGE `option_value` `value` TEXT");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` DROP `option_value`");
+		}
+
 		// Sort the categories to take advantage of the nested set model
 		$this->repairCategories(0);
 	}

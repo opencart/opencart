@@ -1,5 +1,5 @@
 <?php if ($error_warning) { ?>
-<div class="warning"><?php echo $error_warning; ?></div>
+<div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
 <?php } ?>
 <div style="margin-bottom: 10px;"><img src="https://cdn.klarna.com/public/images/<?php echo $iso_code_2; ?>/badges/v1/invoice/<?php echo $iso_code_2; ?>_invoice_badge_std_blue.png?width=150&eid=<?php echo $merchant ?>" /></div>
 <div id="payment">
@@ -35,7 +35,7 @@
         <td><input type="text" name="pno" value="" /></td>
       </tr>
       <?php } ?>
-      <?php } elseif (!$company_id) { ?>
+      <?php } else { ?>
       <tr>
         <td><?php echo $entry_company; ?></td>
         <td><input type="text" name="pno" value="" /></td>
@@ -80,11 +80,11 @@
 </div>
 <div class="buttons">
   <div class="right">
-    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="button" />
+    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn" />
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-confirm').bind('click', function() {
+$('#button-confirm').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=payment/klarna_invoice/send',
 		type: 'post',
@@ -103,7 +103,7 @@ $('#button-confirm').bind('click', function() {
 		},		
 		success: function(json) {	
 			if (json['error']) {
-				$('#payment').before('<div class="warning">' + json['error'] + '</div>');
+				$('#payment').before('<div class="alert alert-error">' + json['error'] + '</div>');
 			}
 
 			if (json['redirect']) {

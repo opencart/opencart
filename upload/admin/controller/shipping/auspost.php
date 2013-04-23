@@ -34,6 +34,9 @@ class ControllerShippingAusPost extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
+		$this->data['help_display_time'] = $this->language->get('help_display_time');
+		$this->data['help_weight_class'] = $this->language->get('help_weight_class');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 		
@@ -52,21 +55,18 @@ class ControllerShippingAusPost extends Controller {
 		$this->data['breadcrumbs'] = array();
 		
 		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 		);
 		
 		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_shipping'),
-			'href'      => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('text_shipping'),
+			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
 		);
 		
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('shipping/auspost', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('shipping/auspost', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
 		$this->data['action'] = $this->url->link('shipping/auspost', 'token=' . $this->session->data['token'], 'SSL');

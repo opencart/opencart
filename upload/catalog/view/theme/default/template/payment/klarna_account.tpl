@@ -1,5 +1,5 @@
 <?php if ($error_warning) { ?>
-<div class="warning"><?php echo $error_warning; ?></div>
+<div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
 <?php } ?>
 <div style="margin-bottom: 10px;"><img src="https://cdn.klarna.com/public/images/<?php echo $iso_code_2; ?>/badges/v1/account/<?php echo $iso_code_2; ?>_account_badge_std_blue.png?width=150&eid=<?php echo $merchant; ?>" /></div>
 <div id="payment">
@@ -8,7 +8,12 @@
     <table class="radio">
       <?php foreach ($payment_options as $payment_option) { ?>
       <tr class="highlight">
-        <td><input type="radio" name="code" value="<?php echo $payment_option['code']; ?>" id="plan-id<?php echo $payment_option['code']; ?>" /></td>
+        <td><?php if (!isset($code)) { ?>
+          <?php $code = $payment_option['code']; ?>
+          <input type="radio" name="code" value="<?php echo $payment_option['code']; ?>" id="plan-id<?php echo $payment_option['code']; ?>" checked="checked" />
+          <?php } else { ?>
+          <input type="radio" name="code" value="<?php echo $payment_option['code']; ?>" id="plan-id<?php echo $payment_option['code']; ?>" />
+          <?php } ?></td>
         <td><label for="plan-id<?php echo $payment_option['code']; ?>"><?php echo $payment_option['title']; ?></label></td>
         <td style="width: 1%;"><?php if ($iso_code_3 == 'NLD') { ?>
           <img src="catalog/view/theme/default/image/klarna_nld_banner.png" />
@@ -49,7 +54,7 @@
         <td><input type="text" name="pno" value="" /></td>
       </tr>
       <?php } ?>
-      <?php } elseif (!$company_id) { ?>
+      <?php } else { ?>
       <tr>
         <td><?php echo $entry_company; ?></td>
         <td><input type="text" name="pno" value="" /></td>
@@ -94,11 +99,11 @@
 </div>
 <div class="buttons">
   <div class="right">
-    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="button" />
+    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn" />
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-confirm').bind('click', function() {
+$('#button-confirm').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=payment/klarna_account/send',
 		type: 'post',
@@ -117,7 +122,7 @@ $('#button-confirm').bind('click', function() {
 		},		
 		success: function(json) {
 			if (json['error']) {
-				$('#payment').before('<div class="warning">' + json['error'] + '</div>');
+				$('#payment').before('<div class="alert alert-error">' + json['error'] + '</div>');
 			}
 
 			if (json['redirect']) {

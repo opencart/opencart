@@ -120,15 +120,13 @@ class ControllerCatalogCategory extends Controller {
    		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 									
 		$this->data['insert'] = $this->url->link('catalog/category/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -193,10 +191,11 @@ class ControllerCatalogCategory extends Controller {
 		$pagination->total = $category_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($category_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($category_total - $this->config->get('config_admin_limit'))) ? $category_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $category_total, $category_total, ceil($category_total / $this->config->get('config_admin_limit')));
 		
 		$this->template = 'catalog/category_list.tpl';
 		$this->children = array(
@@ -235,6 +234,11 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
 		
+		$this->data['help_filter'] = $this->language->get('help_filter');
+		$this->data['help_keyword'] = $this->language->get('help_keyword');
+		$this->data['help_top'] = $this->language->get('help_top');
+		$this->data['help_column'] = $this->language->get('help_column');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -257,15 +261,13 @@ class ControllerCatalogCategory extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
 		if (!isset($this->request->get['category_id'])) {
@@ -363,9 +365,9 @@ class ControllerCatalogCategory extends Controller {
 		
 		$this->load->model('tool/image');
 
-		if (isset($this->request->post['image']) && file_exists(DIR_IMAGE . $this->request->post['image'])) {
+		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
 			$this->data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
-		} elseif (!empty($category_info) && $category_info['image'] && file_exists(DIR_IMAGE . $category_info['image'])) {
+		} elseif (!empty($category_info) && $category_info['image'] && is_file(DIR_IMAGE . $category_info['image'])) {
 			$this->data['thumb'] = $this->model_tool_image->resize($category_info['image'], 100, 100);
 		} else {
 			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
@@ -481,7 +483,7 @@ class ControllerCatalogCategory extends Controller {
 			$data = array(
 				'filter_name' => $this->request->get['filter_name'],
 				'start'       => 0,
-				'limit'       => 20
+				'limit'       => 5
 			);
 			
 			$results = $this->model_catalog_category->getCategories($data);

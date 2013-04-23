@@ -32,14 +32,14 @@ class ControllerProductSpecial extends Controller {
 		}
 				    	
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->addScript('catalog/view/javascript/jquery/jquery.cookie.js');
 		$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 
 		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
    		);
 
 		$url = '';
@@ -61,9 +61,8 @@ class ControllerProductSpecial extends Controller {
 		}
 					
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('product/special', $url),
-      		'separator' => $this->language->get('text_separator')
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('product/special', $url)
    		);
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
@@ -136,7 +135,7 @@ class ControllerProductSpecial extends Controller {
 				'product_id'  => $result['product_id'],
 				'thumb'       => $image,
 				'name'        => $result['name'],
-				'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
+				'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_list_description_limit')) . '..',
 				'price'       => $price,
 				'special'     => $special,
 				'tax'         => $tax,
@@ -226,11 +225,11 @@ class ControllerProductSpecial extends Controller {
 		
 		sort($limits);
 
-		foreach($limits as $limit){
+		foreach($limits as $limits){
 			$this->data['limits'][] = array(
-				'text'  => $limit,
-				'value' => $limit,
-				'href'  => $this->url->link('product/special', $url . '&limit=' . $limit)
+				'text'  => $limits,
+				'value' => $limits,
+				'href'  => $this->url->link('product/special', $url . '&limit=' . $limits)
 			);
 		}
 			
@@ -252,11 +251,12 @@ class ControllerProductSpecial extends Controller {
 		$pagination->total = $product_total;
 		$pagination->page = $page;
 		$pagination->limit = $limit;
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('product/special', $url . '&page={page}');
 			
 		$this->data['pagination'] = $pagination->render();
-			
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
+		
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 		$this->data['limit'] = $limit;

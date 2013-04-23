@@ -86,15 +86,13 @@ class ControllerCheckoutCart extends Controller {
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'href'      => $this->url->link('common/home'),
-        	'text'      => $this->language->get('text_home'),
-        	'separator' => false
+        	'href' => $this->url->link('common/home'),
+        	'text' => $this->language->get('text_home')
       	); 
 
       	$this->data['breadcrumbs'][] = array(
-        	'href'      => $this->url->link('checkout/cart'),
-        	'text'      => $this->language->get('heading_title'),
-        	'separator' => $this->language->get('text_separator')
+        	'href' => $this->url->link('checkout/cart'),
+        	'text' => $this->language->get('heading_title')
       	);
 			
     	if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
@@ -204,9 +202,9 @@ class ControllerCheckoutCart extends Controller {
 
         		foreach ($product['option'] as $option) {
 					if ($option['type'] != 'file') {
-						$value = $option['option_value'];	
+						$value = $option['value'];	
 					} else {
-						$filename = $this->encryption->decrypt($option['option_value']);
+						$filename = $this->encryption->decrypt($option['value']);
 						
 						$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
 					}
@@ -301,8 +299,8 @@ class ControllerCheckoutCart extends Controller {
 								
 			if (isset($this->request->post['country_id'])) {
 				$this->data['country_id'] = $this->request->post['country_id'];				
-			} elseif (isset($this->session->data['shipping_country_id'])) {
-				$this->data['country_id'] = $this->session->data['shipping_country_id'];			  	
+			} elseif (isset($this->session->data['shipping_address']['country_id'])) {
+				$this->data['country_id'] = $this->session->data['shipping_address']['country_id'];			  	
 			} else {
 				$this->data['country_id'] = $this->config->get('config_country_id');
 			}
@@ -313,16 +311,16 @@ class ControllerCheckoutCart extends Controller {
 						
 			if (isset($this->request->post['zone_id'])) {
 				$this->data['zone_id'] = $this->request->post['zone_id'];				
-			} elseif (isset($this->session->data['shipping_zone_id'])) {
-				$this->data['zone_id'] = $this->session->data['shipping_zone_id'];			
+			} elseif (isset($this->session->data['shipping_address']['zone_id'])) {
+				$this->data['zone_id'] = $this->session->data['shipping_address']['zone_id'];			
 			} else {
 				$this->data['zone_id'] = '';
 			}
 			
 			if (isset($this->request->post['postcode'])) {
 				$this->data['postcode'] = $this->request->post['postcode'];				
-			} elseif (isset($this->session->data['shipping_postcode'])) {
-				$this->data['postcode'] = $this->session->data['shipping_postcode'];					
+			} elseif (isset($this->session->data['shipping_address']['postcode'])) {
+				$this->data['postcode'] = $this->session->data['shipping_address']['postcode'];					
 			} else {
 				$this->data['postcode'] = '';
 			}
@@ -375,7 +373,7 @@ class ControllerCheckoutCart extends Controller {
 						
 			$this->data['continue'] = $this->url->link('common/home');
 						
-			$this->data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
+			$this->data['checkout'] = $this->url->link('checkout/checkout');
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/cart.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/checkout/cart.tpl';
@@ -384,7 +382,6 @@ class ControllerCheckoutCart extends Controller {
 			}
 			
 			$this->children = array(
-				'payment/google_checkout',
 				'common/column_left',
 				'common/column_right',
 				'common/content_bottom',
@@ -627,11 +624,6 @@ class ControllerCheckoutCart extends Controller {
 		if (!$json) {		
 			$this->tax->setShippingAddress($this->request->post['country_id'], $this->request->post['zone_id']);
 		
-			// Default Shipping Address
-			$this->session->data['shipping_country_id'] = $this->request->post['country_id'];
-			$this->session->data['shipping_zone_id'] = $this->request->post['zone_id'];
-			$this->session->data['shipping_postcode'] = $this->request->post['postcode'];
-		
 			if ($country_info) {
 				$country = $country_info['name'];
 				$iso_code_2 = $country_info['iso_code_2'];
@@ -656,7 +648,7 @@ class ControllerCheckoutCart extends Controller {
 				$zone_code = '';
 			}	
 		 
-			$address_data = array(
+			$this->session->data['shipping_address'] = array(
 				'firstname'      => '',
 				'lastname'       => '',
 				'company'        => '',
@@ -684,7 +676,7 @@ class ControllerCheckoutCart extends Controller {
 				if ($this->config->get($result['code'] . '_status')) {
 					$this->load->model('shipping/' . $result['code']);
 					
-					$quote = $this->{'model_shipping_' . $result['code']}->getQuote($address_data); 
+					$quote = $this->{'model_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']); 
 		
 					if ($quote) {
 						$quote_data[$result['code']] = array( 

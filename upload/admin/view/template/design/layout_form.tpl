@@ -1,31 +1,29 @@
 <?php echo $header; ?>
 <div id="content">
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/layout.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
+    <div class="box-heading">
+      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table class="form">
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_name; ?></td>
-            <td><input type="text" name="name" value="<?php echo $name; ?>" />
-              <?php if ($error_name) { ?>
-              <span class="error"><?php echo $error_name; ?></span>
-              <?php } ?></td>
-          </tr>
-        </table>
-        <br />
-        <table id="route" class="list">
+    <div class="box-content">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
+          <div class="controls">
+            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
+            <?php if ($error_name) { ?>
+            <span class="error"><?php echo $error_name; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <table id="route" class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
               <td class="left"><?php echo $entry_store; ?></td>
@@ -33,10 +31,10 @@
               <td></td>
             </tr>
           </thead>
-          <?php $route_row = 0; ?>
-          <?php foreach ($layout_routes as $layout_route) { ?>
-          <tbody id="route-row<?php echo $route_row; ?>">
-            <tr>
+          <tbody>
+            <?php $route_row = 0; ?>
+            <?php foreach ($layout_routes as $layout_route) { ?>
+            <tr id="route-row<?php echo $route_row; ?>">
               <td class="left"><select name="layout_route[<?php echo $route_row; ?>][store_id]">
                   <option value="0"><?php echo $text_default; ?></option>
                   <?php foreach ($stores as $store) { ?>
@@ -47,19 +45,20 @@
                   <?php } ?>
                   <?php } ?>
                 </select></td>
-              <td class="left"><input type="text" name="layout_route[<?php echo $route_row; ?>][route]" value="<?php echo $layout_route['route']; ?>" /></td>
-              <td class="left"><a onclick="$('#route-row<?php echo $route_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
+              <td class="left"><input type="text" name="layout_route[<?php echo $route_row; ?>][route]" value="<?php echo $layout_route['route']; ?>" placeholder="<?php echo $entry_route; ?>" /></td>
+              <td class="left"><a onclick="$('#route-row<?php echo $route_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
             </tr>
+            <?php $route_row++; ?>
+            <?php } ?>
           </tbody>
-          <?php $route_row++; ?>
-          <?php } ?>
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td class="left"><a onclick="addRoute();" class="button"><?php echo $button_add_route; ?></a></td>
+              <td class="left"><a onclick="addRoute();" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_route; ?></a></td>
             </tr>
           </tfoot>
         </table>
+        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       </form>
     </div>
   </div>
@@ -68,20 +67,18 @@
 var route_row = <?php echo $route_row; ?>;
 
 function addRoute() {
-	html  = '<tbody id="route-row' + route_row + '">';
-	html += '  <tr>';
-	html += '    <td class="left"><select name="layout_route[' + route_row + '][store_id]">';
-	html += '    <option value="0"><?php echo $text_default; ?></option>';
+	html  = '<tr id="route-row' + route_row + '">';
+	html += '  <td class="left"><select name="layout_route[' + route_row + '][store_id]">';
+	html += '  <option value="0"><?php echo $text_default; ?></option>';
 	<?php foreach ($stores as $store) { ?>
 	html += '<option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
 	<?php } ?>   
-	html += '    </select></td>';
-	html += '    <td class="left"><input type="text" name="layout_route[' + route_row + '][route]" value="" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#route-row' + route_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
-	html += '  </tr>';
-	html += '</tbody>';
+	html += '  </select></td>';
+	html += '  <td class="left"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="<?php echo $entry_route; ?>" /></td>';
+	html += '  <td class="left"><a onclick="$(\'#route-row' + route_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
+	html += '</tr>';
 	
-	$('#route > tfoot').before(html);
+	$('#route tbody').append(html);
 	
 	route_row++;
 }

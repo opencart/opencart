@@ -401,6 +401,19 @@ label {
 	color: #CCCCCC;
 	margin-bottom: 10px;
 }
+.breadcrumb {
+	list-style: none;
+	overflow: hidden;
+	margin: 0px 0px 10px 0px;
+	padding: 0;
+}
+.breadcrumb li {
+	float: left;
+}
+.breadcrumb li + li:before {
+	content: '»';
+	padding: 0px 5px 0px 5px;
+}
 .success, .warning, .attention, .information {
 	padding: 10px 10px 10px 33px;
 	margin-bottom: 15px;

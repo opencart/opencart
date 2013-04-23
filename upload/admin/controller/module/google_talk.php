@@ -32,6 +32,8 @@ class ControllerModuleGoogleTalk extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
+		$this->data['help_code'] = $this->language->get('help_code');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 		$this->data['button_add_module'] = $this->language->get('button_add_module');
@@ -52,21 +54,18 @@ class ControllerModuleGoogleTalk extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_module'),
-			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('text_module'),
+			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('module/google_talk', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('module/google_talk', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
 		$this->data['action'] = $this->url->link('module/google_talk', 'token=' . $this->session->data['token'], 'SSL');

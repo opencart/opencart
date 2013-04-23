@@ -74,6 +74,9 @@ class ControllerShippingUsps extends Controller {
 		$this->data['entry_container'] = $this->language->get('entry_container');
 		$this->data['entry_machinable'] = $this->language->get('entry_machinable');
 		$this->data['entry_dimension'] = $this->language->get('entry_dimension');
+		$this->data['entry_length'] = $this->language->get('entry_length');
+		$this->data['entry_width'] = $this->language->get('entry_width');
+		$this->data['entry_height'] = $this->language->get('entry_height');		
 		$this->data['entry_display_time'] = $this->language->get('entry_display_time');
 		$this->data['entry_display_weight'] = $this->language->get('entry_display_weight');
 		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
@@ -83,6 +86,12 @@ class ControllerShippingUsps extends Controller {
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_debug'] = $this->language->get('entry_debug');
 
+		$this->data['help_dimension'] = $this->language->get('help_dimension');
+		$this->data['help_display_time'] = $this->language->get('help_display_time');
+		$this->data['help_display_weight'] = $this->language->get('help_display_weight');
+		$this->data['help_weight_class'] = $this->language->get('help_weight_class');
+		$this->data['help_debug'] = $this->language->get('help_debug');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -104,42 +113,27 @@ class ControllerShippingUsps extends Controller {
 			$this->data['error_postcode'] = '';
 		}
 
-		if (isset($this->error['width'])) {
-			$this->data['error_width'] = $this->error['width'];
+		if (isset($this->error['dimension'])) {
+			$this->data['error_dimension'] = $this->error['dimension'];
 		} else {
-			$this->data['error_width'] = '';
-		}
-
-		if (isset($this->error['length'])) {
-			$this->data['error_length'] = $this->error['length'];
-		} else {
-			$this->data['error_length'] = '';
-		}
-
-		if (isset($this->error['height'])) {
-			$this->data['error_height'] = $this->error['height'];
-		} else {
-			$this->data['error_height'] = '';
+			$this->data['error_dimension'] = '';
 		}
 
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_shipping'),
-			'href'      => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('text_shipping'),
+			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
 		$this->data['action'] = $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], 'SSL');
@@ -540,15 +534,15 @@ class ControllerShippingUsps extends Controller {
 		}
 
 		if (!$this->request->post['usps_width']) {
-			$this->error['width'] = $this->language->get('error_width');
+			$this->error['dimension'] = $this->language->get('error_width');
 		}
 
 		if (!$this->request->post['usps_height']) {
-			$this->error['height'] = $this->language->get('error_height');
+			$this->error['dimension'] = $this->language->get('error_height');
 		}
 
 		if (!$this->request->post['usps_length']) {
-			$this->error['length'] = $this->language->get('error_length');
+			$this->error['dimension'] = $this->language->get('error_length');
 		}
 
 		if (!$this->error) {

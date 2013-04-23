@@ -146,15 +146,13 @@ class ControllerLocalisationWeightClass extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		$this->data['insert'] = $this->url->link('localisation/weight_class/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -247,11 +245,12 @@ class ControllerLocalisationWeightClass extends Controller {
 		$pagination->total = $weight_class_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
 		$this->data['pagination'] = $pagination->render();
 		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($weight_class_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($weight_class_total - $this->config->get('config_admin_limit'))) ? $weight_class_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $weight_class_total, ceil($weight_class_total / $this->config->get('config_admin_limit')));
+	
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 
@@ -270,7 +269,9 @@ class ControllerLocalisationWeightClass extends Controller {
 		$this->data['entry_title'] = $this->language->get('entry_title');
 		$this->data['entry_unit'] = $this->language->get('entry_unit');
 		$this->data['entry_value'] = $this->language->get('entry_value');
-
+		
+		$this->data['help_value'] = $this->language->get('help_value');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -309,15 +310,13 @@ class ControllerLocalisationWeightClass extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		if (!isset($this->request->get['weight_class_id'])) {

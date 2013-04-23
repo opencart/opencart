@@ -278,15 +278,13 @@ class ControllerSaleOrder extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 
 		$this->data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'], 'SSL');
@@ -454,10 +452,11 @@ class ControllerSaleOrder extends Controller {
 		$pagination->total = $order_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($order_total - $this->config->get('config_admin_limit'))) ? $order_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $order_total, ceil($order_total / $this->config->get('config_admin_limit')));
 
 		$this->data['filter_order_id'] = $filter_order_id;
 		$this->data['filter_customer'] = $filter_customer;
@@ -504,13 +503,11 @@ class ControllerSaleOrder extends Controller {
 		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
 		$this->data['entry_fax'] = $this->language->get('entry_fax');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_comment'] = $this->language->get('entry_comment');	
 		$this->data['entry_affiliate'] = $this->language->get('entry_affiliate');
 		$this->data['entry_address'] = $this->language->get('entry_address');
 		$this->data['entry_company'] = $this->language->get('entry_company');
-		$this->data['entry_company_id'] = $this->language->get('entry_company_id');
-		$this->data['entry_tax_id'] = $this->language->get('entry_tax_id');
 		$this->data['entry_address_1'] = $this->language->get('entry_address_1');
 		$this->data['entry_address_2'] = $this->language->get('entry_address_2');
 		$this->data['entry_city'] = $this->language->get('entry_city');
@@ -616,12 +613,6 @@ class ControllerSaleOrder extends Controller {
 			$this->data['error_payment_postcode'] = '';
 		}
 		
-		if (isset($this->error['payment_tax_id'])) {
-			$this->data['error_payment_tax_id'] = $this->error['payment_tax_id'];
-		} else {
-			$this->data['error_payment_tax_id'] = '';
-		}
-				
 		if (isset($this->error['payment_country'])) {
 			$this->data['error_payment_country'] = $this->error['payment_country'];
 		} else {
@@ -729,15 +720,13 @@ class ControllerSaleOrder extends Controller {
 		$this->data['breadcrumbs'] = array();
 
 		$this->data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => false
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$this->data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'),				
-			'separator' => ' :: '
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
 		if (!isset($this->request->get['order_id'])) {
@@ -915,22 +904,6 @@ class ControllerSaleOrder extends Controller {
 		} else {
       		$this->data['payment_company'] = '';
     	}
-		
-    	if (isset($this->request->post['payment_company_id'])) {
-      		$this->data['payment_company_id'] = $this->request->post['payment_company_id'];
-    	} elseif (!empty($order_info)) { 
-			$this->data['payment_company_id'] = $order_info['payment_company_id'];
-		} else {
-      		$this->data['payment_company_id'] = '';
-    	}
-		
-    	if (isset($this->request->post['payment_tax_id'])) {
-      		$this->data['payment_tax_id'] = $this->request->post['payment_tax_id'];
-    	} elseif (!empty($order_info)) { 
-			$this->data['payment_tax_id'] = $order_info['payment_tax_id'];
-		} else {
-      		$this->data['payment_tax_id'] = '';
-    	}
 				
     	if (isset($this->request->post['payment_address_1'])) {
       		$this->data['payment_address_1'] = $this->request->post['payment_address_1'];
@@ -1098,8 +1071,6 @@ class ControllerSaleOrder extends Controller {
 		
 		$this->load->model('catalog/product');
 		
-		$this->document->addScript('view/javascript/jquery/ajaxupload.js');
-		
 		$this->data['order_products'] = array();		
 		
 		foreach ($order_products as $order_product) {
@@ -1203,18 +1174,9 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('localisation/country');
 		
 		$country_info = $this->model_localisation_country->getCountry($this->request->post['payment_country_id']);
-		
-		if ($country_info) {
-			if ($country_info['postcode_required'] && (utf8_strlen($this->request->post['payment_postcode']) < 2) || (utf8_strlen($this->request->post['payment_postcode']) > 10)) {
-				$this->error['payment_postcode'] = $this->language->get('error_postcode');
-			}
-			
-			// VAT Validation
-			$this->load->helper('vat');
-			
-			if ($this->config->get('config_vat') && $this->request->post['payment_tax_id'] && (vat_validation($country_info['iso_code_2'], $this->request->post['payment_tax_id']) == 'invalid')) {
-				$this->error['payment_tax_id'] = $this->language->get('error_vat');
-			}				
+	
+		if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['payment_postcode']) < 2) || (utf8_strlen($this->request->post['payment_postcode']) > 10)) {
+			$this->error['payment_postcode'] = $this->language->get('error_postcode');
 		}
 
     	if ($this->request->post['payment_country_id'] == '') {
@@ -1377,8 +1339,6 @@ class ControllerSaleOrder extends Controller {
 			$this->data['text_firstname'] = $this->language->get('text_firstname');
 			$this->data['text_lastname'] = $this->language->get('text_lastname');
 			$this->data['text_company'] = $this->language->get('text_company');
-			$this->data['text_company_id'] = $this->language->get('text_company_id');
-			$this->data['text_tax_id'] = $this->language->get('text_tax_id');
 			$this->data['text_address_1'] = $this->language->get('text_address_1');
 			$this->data['text_address_2'] = $this->language->get('text_address_2');
 			$this->data['text_city'] = $this->language->get('text_city');
@@ -1447,6 +1407,57 @@ class ControllerSaleOrder extends Controller {
 			$this->data['text_queries_remaining'] = $this->language->get('text_queries_remaining');
 			$this->data['text_maxmind_id'] = $this->language->get('text_maxmind_id');
 			$this->data['text_error'] = $this->language->get('text_error');
+
+			$this->data['help_country_match'] = $this->language->get('help_country_match');
+			$this->data['help_country_code'] = $this->language->get('help_country_code');
+			$this->data['help_high_risk_country'] = $this->language->get('help_high_risk_country');
+			$this->data['help_distance'] = $this->language->get('help_distance');
+			$this->data['help_ip_region'] = $this->language->get('help_ip_region');
+			$this->data['help_ip_city'] = $this->language->get('help_ip_city');
+			$this->data['help_ip_latitude'] = $this->language->get('help_ip_latitude');
+			$this->data['help_ip_longitude'] = $this->language->get('help_ip_longitude');
+			$this->data['help_ip_isp'] = $this->language->get('help_ip_isp');
+			$this->data['help_ip_org'] = $this->language->get('help_ip_org');
+			$this->data['help_ip_asnum'] = $this->language->get('help_ip_asnum');
+			$this->data['help_ip_user_type'] = $this->language->get('help_ip_user_type');
+			$this->data['help_ip_country_confidence'] = $this->language->get('help_ip_country_confidence');
+			$this->data['help_ip_region_confidence'] = $this->language->get('help_ip_region_confidence');
+			$this->data['help_ip_city_confidence'] = $this->language->get('help_ip_city_confidence');
+			$this->data['help_ip_postal_confidence'] = $this->language->get('help_ip_postal_confidence');
+			$this->data['help_ip_postal_code'] = $this->language->get('help_ip_postal_code');
+			$this->data['help_ip_accuracy_radius'] = $this->language->get('help_ip_accuracy_radius');
+			$this->data['help_ip_net_speed_cell'] = $this->language->get('help_ip_net_speed_cell');
+			$this->data['help_ip_metro_code'] = $this->language->get('help_ip_metro_code');
+			$this->data['help_ip_area_code'] = $this->language->get('help_ip_area_code');
+			$this->data['help_ip_time_zone'] = $this->language->get('help_ip_time_zone');
+			$this->data['help_ip_region_name'] = $this->language->get('help_ip_region_name');
+			$this->data['help_ip_domain'] = $this->language->get('help_ip_domain');
+			$this->data['help_ip_country_name'] = $this->language->get('help_ip_country_name');
+			$this->data['help_ip_continent_code'] = $this->language->get('help_ip_continent_code');
+			$this->data['help_ip_corporate_proxy'] = $this->language->get('help_ip_corporate_proxy');
+			$this->data['help_anonymous_proxy'] = $this->language->get('help_anonymous_proxy');
+			$this->data['help_proxy_score'] = $this->language->get('help_proxy_score');
+			$this->data['help_is_trans_proxy'] = $this->language->get('help_is_trans_proxy');
+			$this->data['help_free_mail'] = $this->language->get('help_free_mail');
+			$this->data['help_carder_email'] = $this->language->get('help_carder_email');
+			$this->data['help_high_risk_username'] = $this->language->get('help_high_risk_username');
+			$this->data['help_high_risk_password'] = $this->language->get('help_high_risk_password');
+			$this->data['help_bin_match'] = $this->language->get('help_bin_match');
+			$this->data['help_bin_country'] = $this->language->get('help_bin_country');
+			$this->data['help_bin_name_match'] = $this->language->get('help_bin_name_match');
+			$this->data['help_bin_name'] = $this->language->get('help_bin_name');
+			$this->data['help_bin_phone_match'] = $this->language->get('help_bin_phone_match');
+			$this->data['help_bin_phone'] = $this->language->get('help_bin_phone');
+			$this->data['help_customer_phone_in_billing_location'] = $this->language->get('help_customer_phone_in_billing_location');
+			$this->data['help_ship_forward'] = $this->language->get('help_ship_forward');
+			$this->data['help_city_postal_match'] = $this->language->get('help_city_postal_match');
+			$this->data['help_ship_city_postal_match'] = $this->language->get('help_ship_city_postal_match');
+			$this->data['help_score'] = $this->language->get('help_score');
+			$this->data['help_explanation'] = $this->language->get('help_explanation');
+			$this->data['help_risk_score'] = $this->language->get('help_risk_score');
+			$this->data['help_queries_remaining'] = $this->language->get('help_queries_remaining');
+			$this->data['help_maxmind_id'] = $this->language->get('help_maxmind_id');
+			$this->data['help_error'] = $this->language->get('help_error');
 							
 			$this->data['column_product'] = $this->language->get('column_product');
 			$this->data['column_model'] = $this->language->get('column_model');
@@ -1515,15 +1526,13 @@ class ControllerSaleOrder extends Controller {
 			$this->data['breadcrumbs'] = array();
 
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_home'),
-				'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => false
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('heading_title'),
-				'href'      => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'),				
-				'separator' => ' :: '
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL')
 			);
 
 			$this->data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
@@ -1614,8 +1623,6 @@ class ControllerSaleOrder extends Controller {
 			$this->data['payment_firstname'] = $order_info['payment_firstname'];
 			$this->data['payment_lastname'] = $order_info['payment_lastname'];
 			$this->data['payment_company'] = $order_info['payment_company'];
-			$this->data['payment_company_id'] = $order_info['payment_company_id'];
-			$this->data['payment_tax_id'] = $order_info['payment_tax_id'];
 			$this->data['payment_address_1'] = $order_info['payment_address_1'];
 			$this->data['payment_address_2'] = $order_info['payment_address_2'];
 			$this->data['payment_city'] = $order_info['payment_city'];
@@ -1931,15 +1938,13 @@ class ControllerSaleOrder extends Controller {
 			$this->data['breadcrumbs'] = array();
 
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_home'),
-				'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => false
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('heading_title'),
-				'href'      => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => ' :: '
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL')
 			);
 		
 			$this->template = 'error/not_found.tpl';
@@ -2042,7 +2047,7 @@ class ControllerSaleOrder extends Controller {
 						
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 			
-			if ($order_info && $order_info['customer_id']) {
+			if ($order_info && $order_info['customer_id'] && ($order_info['reward'] > 0)) {
 				$this->load->model('sale/customer');
 
 				$reward_total = $this->model_sale_customer->getTotalCustomerRewardsByOrderId($this->request->get['order_id']);
@@ -2198,10 +2203,11 @@ class ControllerSaleOrder extends Controller {
 		$pagination->total = $history_total;
 		$pagination->page = $page;
 		$pagination->limit = 10; 
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/order/history', 'token=' . $this->session->data['token'] . '&order_id=' . $this->request->get['order_id'] . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($history_total - $this->config->get('config_admin_limit'))) ? $history_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $history_total, ceil($history_total / $this->config->get('config_admin_limit')));
 		
 		$this->template = 'sale/order_history.tpl';		
 		
@@ -2254,15 +2260,13 @@ class ControllerSaleOrder extends Controller {
 			$this->data['breadcrumbs'] = array();
 
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_home'),
-				'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => false
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('heading_title'),
-				'href'      => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => ' :: '
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL')
 			);
 		
 			$this->template = 'error/not_found.tpl';
@@ -2288,15 +2292,29 @@ class ControllerSaleOrder extends Controller {
 					$json['error'] = $this->language->get('error_filename');
 				}	  	
 				
+				// Allowed file extension types
 				$allowed = array();
 				
-				$filetypes = explode(',', $this->config->get('config_upload_allowed'));
+				$filetypes = explode("\n", $this->config->get('config_file_extension_allowed'));
 				
 				foreach ($filetypes as $filetype) {
 					$allowed[] = trim($filetype);
 				}
 				
-				if (!in_array(utf8_substr(strrchr($filename, '.'), 1), $allowed)) {
+				if (!in_array(substr(strrchr($filename, '.'), 1), $allowed)) {
+					$json['error'] = $this->language->get('error_filetype');
+				}	
+				
+				// Allowed file mime types		
+				$allowed = array();
+				
+				$filetypes = explode("\n", $this->config->get('config_file_mime_allowed'));
+				
+				foreach ($filetypes as $filetype) {
+					$allowed[] = trim($filetype);
+				}
+								
+				if (!in_array($this->request->files['file']['type'], $allowed)) {
 					$json['error'] = $this->language->get('error_filetype');
 				}
 							
@@ -2346,8 +2364,6 @@ class ControllerSaleOrder extends Controller {
 		$this->data['text_telephone'] = $this->language->get('text_telephone');
 		$this->data['text_fax'] = $this->language->get('text_fax');
 		$this->data['text_to'] = $this->language->get('text_to');
-		$this->data['text_company_id'] = $this->language->get('text_company_id');
-		$this->data['text_tax_id'] = $this->language->get('text_tax_id');		
 		$this->data['text_ship_to'] = $this->language->get('text_ship_to');
 		$this->data['text_payment_method'] = $this->language->get('text_payment_method');
 		$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
@@ -2525,8 +2541,6 @@ class ControllerSaleOrder extends Controller {
 					'shipping_address'   => $shipping_address,
 					'shipping_method'    => $order_info['shipping_method'],
 					'payment_address'    => $payment_address,
-					'payment_company_id' => $order_info['payment_company_id'],
-					'payment_tax_id'     => $order_info['payment_tax_id'],
 					'payment_method'     => $order_info['payment_method'],
 					'product'            => $product_data,
 					'voucher'            => $voucher_data,

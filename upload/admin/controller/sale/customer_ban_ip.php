@@ -146,15 +146,13 @@ class ControllerSaleCustomerBanIp extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		$this->data['insert'] = $this->url->link('sale/customer_ban_ip/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -244,10 +242,11 @@ class ControllerSaleCustomerBanIp extends Controller {
 		$pagination->total = $customer_ban_ip_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($customer_ban_ip_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($customer_ban_ip_total - $this->config->get('config_admin_limit'))) ? $customer_ban_ip_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $customer_ban_ip_total, ceil($customer_ban_ip_total / $this->config->get('config_admin_limit')));
 				
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
@@ -298,15 +297,13 @@ class ControllerSaleCustomerBanIp extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 
 		if (!isset($this->request->get['customer_ban_ip_id'])) {

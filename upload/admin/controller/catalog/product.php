@@ -310,15 +310,13 @@ class ControllerCatalogProduct extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL'),       		
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		$this->data['insert'] = $this->url->link('catalog/product/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -353,7 +351,7 @@ class ControllerCatalogProduct extends Controller {
 				'href' => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL')
 			);
 			
-			if ($result['image'] && file_exists(DIR_IMAGE . $result['image'])) {
+			if (is_file(DIR_IMAGE . $result['image'])) {
 				$image = $this->model_tool_image->resize($result['image'], 40, 40);
 			} else {
 				$image = $this->model_tool_image->resize('no_image.jpg', 40, 40);
@@ -494,10 +492,11 @@ class ControllerCatalogProduct extends Controller {
 		$pagination->total = $product_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($product_total - $this->config->get('config_admin_limit'))) ? $product_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $product_total, ceil($product_total / $this->config->get('config_admin_limit')));
 	
 		$this->data['filter_name'] = $filter_name;
 		$this->data['filter_model'] = $filter_model;
@@ -567,6 +566,8 @@ class ControllerCatalogProduct extends Controller {
     	$this->data['entry_weight'] = $this->language->get('entry_weight');
 		$this->data['entry_dimension'] = $this->language->get('entry_dimension');
 		$this->data['entry_length'] = $this->language->get('entry_length');
+		$this->data['entry_width'] = $this->language->get('entry_width');
+		$this->data['entry_height'] = $this->language->get('entry_height');
     	$this->data['entry_image'] = $this->language->get('entry_image');
     	$this->data['entry_download'] = $this->language->get('entry_download');
     	$this->data['entry_category'] = $this->language->get('entry_category');
@@ -587,6 +588,23 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$this->data['entry_reward'] = $this->language->get('entry_reward');
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
+		
+		$this->data['help_keyword'] = $this->language->get('help_keyword');
+		$this->data['help_sku'] = $this->language->get('help_sku');
+		$this->data['help_upc'] = $this->language->get('help_upc');
+		$this->data['help_ean'] = $this->language->get('help_ean');
+		$this->data['help_jan'] = $this->language->get('help_jan');
+		$this->data['help_isbn'] = $this->language->get('help_isbn');
+		$this->data['help_mpn'] = $this->language->get('help_mpn');
+		$this->data['help_minimum'] = $this->language->get('help_minimum');
+		$this->data['help_manufacturer'] = $this->language->get('help_manufacturer');
+		$this->data['help_stock_status'] = $this->language->get('help_stock_status');
+		$this->data['help_points'] = $this->language->get('help_points');
+		$this->data['help_category'] = $this->language->get('help_category');
+		$this->data['help_filter'] = $this->language->get('help_filter');
+		$this->data['help_download'] = $this->language->get('help_download');
+		$this->data['help_related'] = $this->language->get('help_related');
+		$this->data['help_tag'] = $this->language->get('help_tag');
 				
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -682,15 +700,13 @@ class ControllerCatalogProduct extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 									
 		if (!isset($this->request->get['product_id'])) {
@@ -813,9 +829,9 @@ class ControllerCatalogProduct extends Controller {
 		
 		$this->load->model('tool/image');
 		
-		if (isset($this->request->post['image']) && file_exists(DIR_IMAGE . $this->request->post['image'])) {
+		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
 			$this->data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
-		} elseif (!empty($product_info) && $product_info['image'] && file_exists(DIR_IMAGE . $product_info['image'])) {
+		} elseif (!empty($product_info) && $product_info['image'] && is_file(DIR_IMAGE . $product_info['image'])) {
 			$this->data['thumb'] = $this->model_tool_image->resize($product_info['image'], 100, 100);
 		} else {
 			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
@@ -1076,46 +1092,32 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['product_options'] = array();
 			
 		foreach ($product_options as $product_option) {
-			$option_info = $this->model_catalog_option->getOption($product_option['option_id']);
+			$product_option_value_data = array();
 			
-			if ($option_info) {
-				if ($option_info['type'] == 'select' || $option_info['type'] == 'radio' || $option_info['type'] == 'checkbox' || $option_info['type'] == 'image') {
-					$product_option_value_data = array();
-					
-					foreach ($product_option['product_option_value'] as $product_option_value) {
-						$product_option_value_data[] = array(
-							'product_option_value_id' => $product_option_value['product_option_value_id'],
-							'option_value_id'         => $product_option_value['option_value_id'],
-							'quantity'                => $product_option_value['quantity'],
-							'subtract'                => $product_option_value['subtract'],
-							'price'                   => $product_option_value['price'],
-							'price_prefix'            => $product_option_value['price_prefix'],
-							'points'                  => $product_option_value['points'],
-							'points_prefix'           => $product_option_value['points_prefix'],						
-							'weight'                  => $product_option_value['weight'],
-							'weight_prefix'           => $product_option_value['weight_prefix']	
-						);
-					}
-					
-					$this->data['product_options'][] = array(
-						'product_option_id'    => $product_option['product_option_id'],
-						'product_option_value' => $product_option_value_data,
-						'option_id'            => $product_option['option_id'],
-						'name'                 => $option_info['name'],
-						'type'                 => $option_info['type'],
-						'required'             => $product_option['required']
-					);				
-				} else {
-					$this->data['product_options'][] = array(
-						'product_option_id' => $product_option['product_option_id'],
-						'option_id'         => $product_option['option_id'],
-						'name'              => $option_info['name'],
-						'type'              => $option_info['type'],
-						'option_value'      => $product_option['option_value'],
-						'required'          => $product_option['required']
-					);				
-				}
+			foreach ($product_option['product_option_value'] as $product_option_value) {
+				$product_option_value_data[] = array(
+					'product_option_value_id' => $product_option_value['product_option_value_id'],
+					'option_value_id'         => $product_option_value['option_value_id'],
+					'quantity'                => $product_option_value['quantity'],
+					'subtract'                => $product_option_value['subtract'],
+					'price'                   => $product_option_value['price'],
+					'price_prefix'            => $product_option_value['price_prefix'],
+					'points'                  => $product_option_value['points'],
+					'points_prefix'           => $product_option_value['points_prefix'],						
+					'weight'                  => $product_option_value['weight'],
+					'weight_prefix'           => $product_option_value['weight_prefix']	
+				);
 			}
+					
+			$this->data['product_options'][] = array(
+				'product_option_id'    => $product_option['product_option_id'],
+				'product_option_value' => $product_option_value_data,
+				'option_id'            => $product_option['option_id'],
+				'name'                 => $product_option['name'],
+				'type'                 => $product_option['type'],
+				'value'                => $product_option['value'],
+				'required'             => $product_option['required']
+			);				
 		}
 		
 		$this->data['option_values'] = array();
@@ -1160,7 +1162,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['product_images'] = array();
 		
 		foreach ($product_images as $product_image) {
-			if ($product_image['image'] && file_exists(DIR_IMAGE . $product_image['image'])) {
+			if (is_file(DIR_IMAGE . $product_image['image'])) {
 				$image = $product_image['image'];
 			} else {
 				$image = 'no_image.jpg';
@@ -1207,13 +1209,13 @@ class ControllerCatalogProduct extends Controller {
 			$products = array();
 		}
 	
-		$this->data['product_related'] = array();
+		$this->data['product_relateds'] = array();
 		
 		foreach ($products as $product_id) {
 			$related_info = $this->model_catalog_product->getProduct($product_id);
 			
 			if ($related_info) {
-				$this->data['product_related'][] = array(
+				$this->data['product_relateds'][] = array(
 					'product_id' => $related_info['product_id'],
 					'name'       => $related_info['name']
 				);
@@ -1310,7 +1312,7 @@ class ControllerCatalogProduct extends Controller {
 	public function autocomplete() {
 		$json = array();
 		
-		if (isset($this->request->get['filter_name']) || isset($this->request->get['filter_model']) || isset($this->request->get['filter_category_id'])) {
+		if (isset($this->request->get['filter_name']) || isset($this->request->get['filter_model'])) {
 			$this->load->model('catalog/product');
 			$this->load->model('catalog/option');
 			
@@ -1350,41 +1352,31 @@ class ControllerCatalogProduct extends Controller {
 					$option_info = $this->model_catalog_option->getOption($product_option['option_id']);
 					
 					if ($option_info) {				
-						if ($option_info['type'] == 'select' || $option_info['type'] == 'radio' || $option_info['type'] == 'checkbox' || $option_info['type'] == 'image') {
-							$option_value_data = array();
+						$product_option_value_data = array();
 							
-							foreach ($product_option['product_option_value'] as $product_option_value) {
-								$option_value_info = $this->model_catalog_option->getOptionValue($product_option_value['option_value_id']);
-						
-								if ($option_value_info) {
-									$option_value_data[] = array(
-										'product_option_value_id' => $product_option_value['product_option_value_id'],
-										'option_value_id'         => $product_option_value['option_value_id'],
-										'name'                    => $option_value_info['name'],
-										'price'                   => (float)$product_option_value['price'] ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
-										'price_prefix'            => $product_option_value['price_prefix']
-									);
-								}
+						foreach ($product_option['product_option_value'] as $product_option_value) {
+							$option_value_info = $this->model_catalog_option->getOptionValue($product_option_value['option_value_id']);
+					
+							if ($option_value_info) {
+								$product_option_value_data[] = array(
+									'product_option_value_id' => $product_option_value['product_option_value_id'],
+									'option_value_id'         => $product_option_value['option_value_id'],
+									'name'                    => $option_value_info['name'],
+									'price'                   => (float)$product_option_value['price'] ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
+									'price_prefix'            => $product_option_value['price_prefix']
+								);
 							}
-						
-							$option_data[] = array(
-								'product_option_id' => $product_option['product_option_id'],
-								'option_id'         => $product_option['option_id'],
-								'name'              => $option_info['name'],
-								'type'              => $option_info['type'],
-								'option_value'      => $option_value_data,
-								'required'          => $product_option['required']
-							);	
-						} else {
-							$option_data[] = array(
-								'product_option_id' => $product_option['product_option_id'],
-								'option_id'         => $product_option['option_id'],
-								'name'              => $option_info['name'],
-								'type'              => $option_info['type'],
-								'option_value'      => $product_option['option_value'],
-								'required'          => $product_option['required']
-							);				
 						}
+			
+						$option_data[] = array(
+							'product_option_id'    => $product_option['product_option_id'],
+							'product_option_value' => $product_option_value_data,							
+							'option_id'            => $product_option['option_id'],
+							'name'                 => $option_info['name'],
+							'type'                 => $option_info['type'],
+							'value'                => $product_option['value'],
+							'required'             => $product_option['required']
+						);				
 					}
 				}
 					

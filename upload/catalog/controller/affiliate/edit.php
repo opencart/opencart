@@ -26,21 +26,18 @@ class ControllerAffiliateEdit extends Controller {
       	$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),     	
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	); 
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('affiliate/account', '', 'SSL'),        	
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('affiliate/account', '', 'SSL')
       	);
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_edit'),
-			'href'      => $this->url->link('affiliate/edit', '', 'SSL'),       	
-        	'separator' => $this->language->get('text_separator')
+        	'text' => $this->language->get('text_edit'),
+			'href' => $this->url->link('affiliate/edit', '', 'SSL')
       	);
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');

@@ -7,9 +7,10 @@ class ControllerPaymentTwoCheckout extends Controller {
 		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		
-		$this->data['action'] = 'https://www.2checkout.com/checkout/spurchase';
+		$this->data['action'] = 'https://www.2checkout.com/checkout/purchase';
 
 		$this->data['sid'] = $this->config->get('twocheckout_account');
+		$this->data['currency_code'] = $order_info['currency_code'];
 		$this->data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 		$this->data['cart_order_id'] = $this->session->data['order_id'];
 		$this->data['card_holder_name'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
@@ -59,6 +60,12 @@ class ControllerPaymentTwoCheckout extends Controller {
 			$this->data['demo'] = 'Y';
 		} else {
 			$this->data['demo'] = '';
+		}
+
+		if ($this->config->get('twocheckout_display')) {
+			$this->data['display'] = 'Y';
+		} else {
+			$this->data['display'] = '';
 		}
 		
 		$this->data['lang'] = $this->session->data['language'];

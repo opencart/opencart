@@ -146,15 +146,13 @@ class ControllerLocalisationOrderStatus extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 							
 		$this->data['insert'] = $this->url->link('localisation/order_status/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -241,10 +239,11 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$pagination->total = $order_status_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($order_status_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($order_status_total - $this->config->get('config_admin_limit'))) ? $order_status_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $order_status_total, ceil($order_status_total / $this->config->get('config_admin_limit')));
 
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
@@ -295,15 +294,13 @@ class ControllerLocalisationOrderStatus extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-      	 	'text'      => $this->language->get('text_home'),	
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+      	 	'text' => $this->language->get('text_home'),	
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		if (!isset($this->request->get['order_status_id'])) {

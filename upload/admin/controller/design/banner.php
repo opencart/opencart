@@ -146,15 +146,13 @@ class ControllerDesignBanner extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('design/banner', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('design/banner', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		$this->data['insert'] = $this->url->link('design/banner/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -244,10 +242,11 @@ class ControllerDesignBanner extends Controller {
 		$pagination->total = $banner_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('design/banner', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($banner_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($banner_total - $this->config->get('config_admin_limit'))) ? $banner_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $banner_total, ceil($banner_total / $this->config->get('config_admin_limit')));
 		
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
@@ -276,6 +275,7 @@ class ControllerDesignBanner extends Controller {
 		$this->data['entry_link'] = $this->language->get('entry_link');
 		$this->data['entry_image'] = $this->language->get('entry_image');		
 		$this->data['entry_status'] = $this->language->get('entry_status');
+		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -317,15 +317,13 @@ class ControllerDesignBanner extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('design/banner', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('design/banner', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 							
 		if (!isset($this->request->get['banner_id'])) { 
@@ -385,7 +383,8 @@ class ControllerDesignBanner extends Controller {
 				'banner_image_description' => $banner_image['banner_image_description'],
 				'link'                     => $banner_image['link'],
 				'image'                    => $image,
-				'thumb'                    => $this->model_tool_image->resize($image, 100, 100)
+				'thumb'                    => $this->model_tool_image->resize($image, 100, 100),
+				'sort_order'               => $banner_image['sort_order']
 			);	
 		} 
 	

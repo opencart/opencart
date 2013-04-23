@@ -110,7 +110,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
             $this->session->data['klarna'][$this->session->data['order_id']] = $total_data;
 			
 			// Order must have identical shipping and billing address or have no shipping address at all
-			if (!($order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3'])) {
+			if ($this->cart->hasShipping() && !($order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3'])) {
 				$this->data['error_warning'] = $this->language->get('error_address_match');
 			} else {
 				$this->data['error_warning'] = '';
@@ -150,7 +150,6 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			}
 						
 			$this->data['company'] = $order_info['payment_company'];
-			$this->data['company_id'] = $order_info['payment_company_id'];
 			$this->data['iso_code_2'] = $order_info['payment_iso_code_2'];
 			$this->data['iso_code_3'] = $order_info['payment_iso_code_3'];
 			
@@ -443,20 +442,22 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				$digest = '';
 				
 				foreach ($goods_list as $goods) {
-					$digest .= $goods['goods']['title'] . ':';
+					$digest .= utf8_decode(htmlspecialchars(html_entity_decode($goods['goods']['title'], ENT_COMPAT, "UTF-8"))) . ':';
 				}
 				
 				$digest = base64_encode(pack('H*', hash('sha256', $digest . $klarna_account[$order_info['payment_iso_code_3']]['secret'])));
 				
 				if (isset($this->request->post['pno'])) {
 					$pno = $this->request->post['pno'];
-				} elseif ($order_info['payment_company_id']) {
-					$pno = $order_info['payment_company_id'];
 				} else {
 					$pno = sprintf('%02d', (int)$this->request->post['pno_day']) . sprintf('%02d', (int)$this->request->post['pno_month']) . (int)$this->request->post['pno_year'];
 				}
 				
-				$pclass = (int)$this->request->post['code'];
+                if (isset($this->request->post['code'])) {
+                    $pclass = (int) $this->request->post['code'];
+                } else {
+                    $pclass = '';
+                }
 				
 				if (isset($this->request->post['gender']) && ($order_info['payment_iso_code_3'] == 'DEU' || $order_info['payment_iso_code_3'] == 'NLD')) {
 					$gender = (int)$this->request->post['gender'];

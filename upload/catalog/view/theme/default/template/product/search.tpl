@@ -1,10 +1,10 @@
 <?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <h1><?php echo $heading_title; ?></h1>
   <b><?php echo $text_critea; ?></b>
   <div class="content">
@@ -53,7 +53,9 @@
     <label for="description"><?php echo $entry_description; ?></label>
   </div>
   <div class="buttons">
-    <div class="right"><input type="button" value="<?php echo $button_search; ?>" id="button-search" class="button" /></div>
+    <div class="right">
+      <input type="button" value="<?php echo $button_search; ?>" id="button-search" class="btn" />
+    </div>
   </div>
   <h2><?php echo $text_search; ?></h2>
   <?php if ($products) { ?>
@@ -107,13 +109,16 @@
       <?php if ($product['rating']) { ?>
       <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
       <?php } ?>
-      <div class="cart"><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
+      <div class="cart">
+        <input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="btn" />
+      </div>
       <div class="wishlist"><a onclick="addToWishList('<?php echo $product['product_id']; ?>');"><?php echo $button_wishlist; ?></a></div>
       <div class="compare"><a onclick="addToCompare('<?php echo $product['product_id']; ?>');"><?php echo $button_compare; ?></a></div>
     </div>
     <?php } ?>
   </div>
   <div class="pagination"><?php echo $pagination; ?></div>
+  <div class="results"><?php echo $results; ?></div>
   <?php } else { ?>
   <div class="content"><?php echo $text_empty; ?></div>
   <?php }?>
@@ -125,7 +130,7 @@ $('#content input[name=\'search\']').keydown(function(e) {
 	}
 });
 
-$('select[name=\'category_id\']').bind('change', function() {
+$('select[name=\'category_id\']').on('change', function() {
 	if (this.value == '0') {
 		$('input[name=\'sub_category\']').attr('disabled', 'disabled');
 		$('input[name=\'sub_category\']').removeAttr('checked');
@@ -136,7 +141,7 @@ $('select[name=\'category_id\']').bind('change', function() {
 
 $('select[name=\'category_id\']').trigger('change');
 
-$('#button-search').bind('click', function() {
+$('#button-search').on('click', function() {
 	url = 'index.php?route=product/search';
 	
 	var search = $('#content input[name=\'search\']').attr('value');

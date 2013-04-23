@@ -322,15 +322,13 @@ class ControllerSaleReturn extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		$this->data['insert'] = $this->url->link('sale/return/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -521,10 +519,11 @@ class ControllerSaleReturn extends Controller {
 		$pagination->total = $return_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($return_total - $this->config->get('config_admin_limit'))) ? $return_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $return_total, ceil($return_total / $this->config->get('config_admin_limit')));
 
 		$this->data['filter_return_id'] = $filter_return_id;
 		$this->data['filter_order_id'] = $filter_order_id;
@@ -565,7 +564,7 @@ class ControllerSaleReturn extends Controller {
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
 		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
-		$this->data['entry_return_status'] = $this->language->get('entry_return_status');
+		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_comment'] = $this->language->get('entry_comment');	
 		$this->data['entry_product'] = $this->language->get('entry_product');
 		$this->data['entry_model'] = $this->language->get('entry_model');
@@ -573,6 +572,8 @@ class ControllerSaleReturn extends Controller {
  		$this->data['entry_reason'] = $this->language->get('entry_reason');
 		$this->data['entry_opened'] = $this->language->get('entry_opened');
 		$this->data['entry_action'] = $this->language->get('entry_action');
+		
+		$this->data['help_product'] = $this->language->get('help_product');
 			
 		$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -679,15 +680,13 @@ class ControllerSaleReturn extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 
 		if (!isset($this->request->get['return_id'])) {
@@ -957,15 +956,13 @@ class ControllerSaleReturn extends Controller {
 			$this->data['breadcrumbs'] = array();
 	
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_home'),
-				'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => false
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 			);
 	
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('heading_title'),
-				'href'      => $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-				'separator' => ' :: '
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, 'SSL')
 			);
 			  
 			$this->data['cancel'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, 'SSL');			
@@ -1056,15 +1053,13 @@ class ControllerSaleReturn extends Controller {
 			$this->data['breadcrumbs'] = array();
 
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_home'),
-				'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => false
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('heading_title'),
-				'href'      => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => ' :: '
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL')
 			);
 		
 			$this->template = 'error/not_found.tpl';
@@ -1207,10 +1202,11 @@ class ControllerSaleReturn extends Controller {
 		$pagination->total = $history_total;
 		$pagination->page = $page;
 		$pagination->limit = 10; 
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/return/history', 'token=' . $this->session->data['token'] . '&return_id=' . $this->request->get['return_id'] . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($history_total - $this->config->get('config_admin_limit'))) ? $history_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $history_total, ceil($history_total / $this->config->get('config_admin_limit')));
 		
 		$this->template = 'sale/return_history.tpl';		
 		

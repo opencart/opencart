@@ -139,7 +139,6 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 			}
 
 			$this->data['company'] = $order_info['payment_company'];
-			$this->data['company_id'] = $order_info['payment_company_id'];
 			$this->data['iso_code_2'] = $order_info['payment_iso_code_2'];
 			$this->data['iso_code_3'] = $order_info['payment_iso_code_3'];
 			
@@ -177,7 +176,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				$json['error'] =  $this->language->get('error_deu_terms');
 			}
 						
-			if (!($order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3'])) {
+			if ($this->cart->hasShipping() && !($order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3'])) {
 				$json['error'] = $this->language->get('error_address_match');
 			}
 			
@@ -281,7 +280,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				$product_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = " . (int) $order_info['order_id'] . " UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = " . (int) $order_info['order_id'])->rows;	
 								
 				foreach ($product_query as $product) {
-					$goods_list[] = array(
+                    $goods_list[] = array(
 						'qty'   => (int)$product['quantity'],
 						'goods' => array(
 							'artno'    => $product['model'],
@@ -293,7 +292,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 						)
 					);
 				}
-				
+                
 				if (isset($this->session->data['klarna'][$this->session->data['order_id']])) {
 					$totals = $this->session->data['klarna'][$this->session->data['order_id']];
 				} else {
@@ -319,15 +318,13 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				$digest = '';
 				
 				foreach ($goods_list as $goods) {
-					$digest .= $goods['goods']['title'] . ':';
+					$digest .= utf8_decode(htmlspecialchars(html_entity_decode($goods['goods']['title'], ENT_COMPAT, "UTF-8"))) . ':';
 				}
-				
+                
 				$digest = base64_encode(pack('H*', hash('sha256', $digest . $klarna_invoice[$order_info['payment_iso_code_3']]['secret'])));
 				
 				if (isset($this->request->post['pno'])) {
 					$pno = $this->request->post['pno'];
-				} elseif ($order_info['payment_company_id']) {
-					$pno = $order_info['payment_company_id'];
 				} else {
 					$pno = sprintf('%02d', (int)$this->request->post['pno_day']) . sprintf('%02d', (int)$this->request->post['pno_month']) . (int)$this->request->post['pno_year'];
 				}
@@ -380,7 +377,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				
 				$xml .= '  </params>';
 				$xml .= '</methodCall>';        
-		
+		        
 				$header  = 'Content-Type: text/xml' . "\n";
 				$header .= 'Content-Length: ' . strlen($xml) . "\n";
 		 
@@ -393,9 +390,9 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt($curl, CURLOPT_HEADER, $header);
 				curl_setopt($curl, CURLOPT_POSTFIELDS, $xml);
-		
-				$response = curl_exec($curl);
-				
+                
+				$response = curl_exec($curl);				
+                
 				if (curl_errno($curl)) {
 					$log = new Log('klarna_invoice.log');
 					$log->write('HTTP Error for order #' . $order_info['order_id'] . '. Code: ' . curl_errno($curl) . ' message: ' . curl_error($curl));
@@ -461,7 +458,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 $xml = '<double>' . (float)$data . '</double>';
                 break;
             case 'string':
-                $xml = '<string>' . htmlspecialchars($data) . '</string>';
+                    $xml = '<string>' . htmlspecialchars($data) . '</string>';
                 break;
             case 'array':
                 // is numeric ?

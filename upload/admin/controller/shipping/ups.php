@@ -69,15 +69,38 @@ class ControllerShippingUPS extends Controller {
 		$this->data['entry_length_code'] = $this->language->get('entry_length_code');
 		$this->data['entry_length_class'] = $this->language->get('entry_length_class');
 		$this->data['entry_dimension'] = $this->language->get('entry_dimension');
+		$this->data['entry_length'] = $this->language->get('entry_length');
+		$this->data['entry_width'] = $this->language->get('entry_width');
+		$this->data['entry_height'] = $this->language->get('entry_height');			
 		$this->data['entry_tax_class'] = $this->language->get('entry_tax_class');
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_debug'] = $this->language->get('entry_debug');
 		
+		$this->data['help_key'] = $this->language->get('help_key');
+		$this->data['help_username'] = $this->language->get('help_username');
+		$this->data['help_password'] = $this->language->get('help_password');
+		$this->data['help_pickup'] = $this->language->get('help_pickup');
+		$this->data['help_packaging'] = $this->language->get('help_packaging');
+		$this->data['help_classification'] = $this->language->get('help_classification');
+		$this->data['help_origin'] = $this->language->get('help_origin');
+		$this->data['help_city'] = $this->language->get('help_city');
+		$this->data['help_state'] = $this->language->get('help_state');
+		$this->data['help_country'] = $this->language->get('help_country');
+		$this->data['help_postcode'] = $this->language->get('help_postcode');
+		$this->data['help_test'] = $this->language->get('help_test');
+		$this->data['help_quote_type'] = $this->language->get('help_quote_type');
+		$this->data['help_service'] = $this->language->get('help_service');
+		$this->data['help_insurance'] = $this->language->get('help_insurance');
+		$this->data['help_display_weight'] = $this->language->get('help_display_weight');
+		$this->data['help_weight_class'] = $this->language->get('help_weight_class');
+		$this->data['help_length_class'] = $this->language->get('help_length_class');
+		$this->data['help_dimension'] = $this->language->get('help_dimension');
+		$this->data['help_debug'] = $this->language->get('help_debug');
+		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-		
 
 		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -130,21 +153,18 @@ class ControllerShippingUPS extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_shipping'),
-			'href'      => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('text_shipping'),
+			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('shipping/ups', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+       		'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('shipping/ups', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
 		$this->data['action'] = $this->url->link('shipping/ups', 'token=' . $this->session->data['token'], 'SSL');

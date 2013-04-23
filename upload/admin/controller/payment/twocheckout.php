@@ -90,6 +90,12 @@ class ControllerPaymentTwoCheckout extends Controller {
 		} else {
 			$this->data['twocheckout_secret'] = $this->config->get('twocheckout_secret');
 		}
+
+		if (isset($this->request->post['twocheckout_display'])) {
+			$this->data['twocheckout_display'] = $this->request->post['twocheckout_display'];
+		} else {
+			$this->data['twocheckout_display'] = $this->config->get('twocheckout_display');
+		}
 		
 		if (isset($this->request->post['twocheckout_test'])) {
 			$this->data['twocheckout_test'] = $this->request->post['twocheckout_test'];

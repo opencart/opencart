@@ -483,7 +483,7 @@ class ControllerCatalogCategory extends Controller {
 			$data = array(
 				'filter_name' => $this->request->get['filter_name'],
 				'start'       => 0,
-				'limit'       => 20
+				'limit'       => 5
 			);
 			
 			$results = $this->model_catalog_category->getCategories($data);

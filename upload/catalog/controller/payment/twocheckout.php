@@ -84,19 +84,19 @@ class ControllerPaymentTwoCheckout extends Controller {
 	public function callback() {
 		$this->load->model('checkout/order');
 		
-		$order_info = $this->model_checkout_order->getOrder($this->request->request['cart_order_id']);
+		$order_info = $this->model_checkout_order->getOrder($this->request->post['cart_order_id']);
 		
 		if (!$this->config->get('twocheckout_test')) {
-			$order_number = $this->request->request['order_number'];
+			$order_number = $this->request->post['order_number'];
 		} else {
 			$order_number = '1';
 		}
 		
-		if (strtoupper(md5($this->config->get('twocheckout_secret') . $this->config->get('twocheckout_account') . $order_number . $this->request->request['total'])) == $this->request->request['key']) {
-			if ($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) == $this->request->request['total']) {
-				$this->model_checkout_order->confirm($this->request->request['cart_order_id'], $this->config->get('twocheckout_order_status_id'));
+		if (strtoupper(md5($this->config->get('twocheckout_secret') . $this->config->get('twocheckout_account') . $order_number . $this->request->post['total'])) == $this->request->post['key']) {
+			if ($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) == $this->request->post['total']) {
+				$this->model_checkout_order->confirm($this->request->post['cart_order_id'], $this->config->get('twocheckout_order_status_id'));
 			} else {
-				$this->model_checkout_order->confirm($this->request->request['cart_order_id'], $this->config->get('config_order_status_id'));// Ugh. Some one've faked the sum. What should we do? Probably drop a mail to the shop owner?				
+				$this->model_checkout_order->confirm($this->request->post['cart_order_id'], $this->config->get('config_order_status_id'));// Ugh. Some one've faked the sum. What should we do? Probably drop a mail to the shop owner?				
 			}
 			
 			// We can't use $this->redirect() here, because of 2CO behavior. It fetches this page

@@ -40,8 +40,8 @@ $(document).ready(function() {
 	}
 	
 	$('[data-toggle=\'tooltip\']').tooltip({
+		'placement': 'top',
 		'animation': false,
 		'html': true
-		//'trigger': 'click'
 	});
 });

@@ -2,7 +2,7 @@
 <div id="content">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a> <i class="icon-angle-right"></i></li>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
@@ -66,8 +66,18 @@
             <div class="control-group">
               <label class="control-label" for="input-parent"><?php echo $entry_parent; ?></label>
               <div class="controls">
-                <input type="text" name="path" value="<?php echo $path; ?>" placeholder="<?php echo $entry_parent; ?>" data-provide="typeahead" id="input-parent" />
                 <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
+                <input type="text" name="path" value="<?php echo $path; ?>" placeholder="<?php echo $entry_parent; ?>" id="input-parent" data-toggle="dropdown" data-target="#dropdown" />
+                
+                
+                <div class="dropdown" id="dropdown">
+                  <ul class="dropdown-menu">
+                    <li data-value="0"><a href="#"><?php echo $text_none; ?></a></li>
+                  </ul>
+                </div>
+                
+                
+                
               </div>
             </div>
             <div class="control-group">
@@ -248,128 +258,42 @@ CKEDITOR.replace('input-description<?php echo $language['language_id']; ?>', {
 <?php } ?>
 //--></script> 
 <script type="text/javascript"><!--
-$('input[name=\'path\']').on('keydown', function() {
+var timer = null;
+
+$('input[name=\'path\']').on('click keyup', function() {
 	var input = this;
 	
-	$.ajax({
-		url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(this.value),
-		dataType: 'json',
-		success: function(json) {
-			//alert($(input).parent().has('.typeahead'));
-			
-			// If does not exists create it
-			if (!$(input).parent().has('.typeahead').length) {
-				$('input[name=\'path\']').after('<ul class="typeahead dropdown-menu" style="position: absolute; display: none;"></ul>');
-			}
-
-			html = '';
-			
-			html += '<li data-value="0"><a><?php echo $text_none; ?></a></li>';
-			
-			if (json) {
-				for (i = 0; i < json.length; i++) {
-					html += '<li data-value="' + json[i]['category_id'] + '"><a>' + json[i]['name'] + '</a></li>';
-				}
-			}
-			
-			$('input + .typeahead').html(html);
-			
-			$('input + .typeahead').show();
-			
-			$('.typeahead a').on('click', function() {
-				alert($(this).parent().attr('data-value'));
-			});				
-			
-			// Remove the 
-			$(input).on('focusout', function() {
-				alert('hi');
-				$('.typeahead').hide();
-			});
-		}		
-	});		
-});
-
-/*
-$('input[name=\'path\']').typeahead({
-	source: function(query, process) {
+	if (timer != null) {
+		clearTimeout(timer);
+	}
+	
+	timer = setTimeout(function(){
 		$.ajax({
-			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(query),
-			dataType: 'json',
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			dataType: 'json',	
 			success: function(json) {
-				var data = [];
-											
-				//json.unshift({
-				//	'category_id':  0,
-				//	'name':  '<?php echo $text_none; ?>'
-				//});
-				
+				html = '<li data-value="0"><a><?php echo $text_none; ?></a></li>';
 				
 				if (json) {
 					for (i = 0; i < json.length; i++) {
-						data[i] = {
-							'name': json[i]['name'],
-							'value': json[i]['category_id']
-						}
+						html += '<li data-value="' + json[i]['category_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
 				}
 				
-				
-				
-			}		
-		});		
-	},
-	updater: function(item) {
-		alert(item);
-		
-		//$('input[name=\'path\']').val(ui.item.label);
-		//$('input[name=\'parent_id\']').val(ui.item.value);
-				
-		return item;
-	},
-	matcher: function(item) {
-		return item;
-	},
-	sorter: function(items) {
-		return items;
-	},
-	highlighter: function(item) {
-		return item['name'];
-	}
-})
-
-
-$('input[name=\'path\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {		
-		$.ajax({
-			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {
-				json.unshift({
-					'category_id':  0,
-					'name':  '<?php echo $text_none; ?>'
-				});
-				
-				response($.map(json, function(item) {
-					return {
-						label: item.name,
-						value: item.category_id
-					}
-				}));
+				$('#dropdown ul').html(html);
 			}
 		});
-	},
-	select: function(event, ui) {
-		$('input[name=\'path\']').val(ui.item.label);
-		$('input[name=\'parent_id\']').val(ui.item.value);
-		
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
+	}, 500);
 });
-*/
+
+$('#dropdown').delegate('a', 'click', function(e) {
+	e.preventDefault();
+	
+	$('input[name=\'path\']').val($(this).text());
+	$('input[name=\'parent_id\']').val($(this).parent().attr('data-value'));
+	
+	alert($(this).parent().attr('data-value'));
+});
 //--></script> 
 <script type="text/javascript"><!--
 /*

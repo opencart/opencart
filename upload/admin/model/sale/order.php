@@ -247,8 +247,19 @@ class ModelSaleOrder extends Model {
 				
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "'");
 		
+		// Get order currency info (other solutin: get it from order_fom / POST data )
+		if ($currency_query->row) {
+			$data['currency_code'] = $currency_query->row['currency_code'];
+			$data['currency_value'] = $currency_query->row['currency_value'];
+		} else {
+			$data['currency_code'] = '';
+			$data['currency_value'] = '';
+		}
+		
 		if (isset($data['order_total'])) {		
       		foreach ($data['order_total'] as $order_total) {	
+      			// format order totals text bak to order currency
+				$order_total['text'] = $this->currency->format((float)$order_total['value'], $data['currency_code'], $data['currency_value']);
       			$this->db->query("INSERT INTO " . DB_PREFIX . "order_total SET order_total_id = '" . (int)$order_total['order_total_id'] . "', order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($order_total['code']) . "', title = '" . $this->db->escape($order_total['title']) . "', text = '" . $this->db->escape($order_total['text']) . "', `value` = '" . (float)$order_total['value'] . "', sort_order = '" . (int)$order_total['sort_order'] . "'");
 			}
 			

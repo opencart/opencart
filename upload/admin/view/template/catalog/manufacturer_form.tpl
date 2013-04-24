@@ -78,9 +78,6 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('.help-inline .icon-question-sign').tooltip();
---></script> 
-<script type="text/javascript"><!--
 function image_upload(field, thumb) {
 	$('#dialog').remove();
 	

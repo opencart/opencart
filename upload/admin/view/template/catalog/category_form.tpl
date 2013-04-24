@@ -266,11 +266,11 @@ $('input[name=\'path\']').on('click keyup', function() {
 	if (timer != null) {
 		clearTimeout(timer);
 	}
-	
+
 	timer = setTimeout(function(){
 		$.ajax({
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
-			dataType: 'json',	
+			dataType: 'json',			
 			success: function(json) {
 				html = '<li data-value="0"><a><?php echo $text_none; ?></a></li>';
 				
@@ -280,7 +280,7 @@ $('input[name=\'path\']').on('click keyup', function() {
 					}
 				}
 				
-				$('#dropdown ul').html(html);
+				$($(input).attr('data-target')).find('ul').html(html);
 			}
 		});
 	}, 500);

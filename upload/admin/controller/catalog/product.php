@@ -566,6 +566,7 @@ class ControllerCatalogProduct extends Controller {
     	$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
     	$this->data['entry_weight'] = $this->language->get('entry_weight');
 		$this->data['entry_dimension'] = $this->language->get('entry_dimension');
+		$this->data['entry_length_class'] = $this->language->get('entry_length_class');
 		$this->data['entry_length'] = $this->language->get('entry_length');
 		$this->data['entry_width'] = $this->language->get('entry_width');
 		$this->data['entry_height'] = $this->language->get('entry_height');

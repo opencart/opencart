@@ -534,8 +534,8 @@ class ControllerCatalogOption extends Controller {
 					$type = $this->language->get('text_date');
 				}
 				
-				$json[$option['type']]['name'] = $type;
-				$json[$option['type']][] = array(
+				$json[$type]['name'] = $type;
+				$json[$type]['option'][] = array(
 					'option_id'    => $option['option_id'],
 					'name'         => strip_tags(html_entity_decode($option['name'], ENT_QUOTES, 'UTF-8')),
 					'type'         => $option['type'],

@@ -243,7 +243,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-length-class"><?php echo $entry_length; ?></label>
+              <label class="control-label" for="input-length-class"><?php echo $entry_length_class; ?></label>
               <div class="controls">
                 <select name="length_class_id" id="input-length-class">
                   <?php foreach ($length_classes as $length_class) { ?>
@@ -909,10 +909,12 @@ $('input[name=\'category\']').on('click keyup', function() {
 			success: function(json) {
 				html = '';
 				
-				if (json) {
+				if (json.length) {
 					for (i = 0; i < json.length; i++) {
 						html += '<li data-value="' + json[i]['category_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
 				}
 				
 				$($(input).attr('data-target')).find('ul').html(html);
@@ -955,10 +957,12 @@ $('input[name=\'filter\']').on('click keyup', function() {
 			success: function(json) {
 				html = '';
 				
-				if (json) {
+				if (json.length) {
 					for (i = 0; i < json.length; i++) {
 						html += '<li data-value="' + json[i]['filter_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
 				}
 				
 				$($(input).attr('data-target')).find('ul').html(html);
@@ -1000,10 +1004,12 @@ $('input[name=\'download\']').on('click keyup', function() {
 			success: function(json) {
 				html = '';
 				
-				if (json) {
+				if (json.length) {
 					for (i = 0; i < json.length; i++) {
 						html += '<li data-value="' + json[i]['download_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
 				}
 				
 				$($(input).attr('data-target')).find('ul').html(html);
@@ -1045,10 +1051,12 @@ $('input[name=\'related\']').on('click keyup', function() {
 			success: function(json) {
 				html = '';
 				
-				if (json) {
+				if (json.length) {
 					for (i = 0; i < json.length; i++) {
 						html += '<li data-value="' + json[i]['product_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
 				}
 				
 				$($(input).attr('data-target')).find('ul').html(html);
@@ -1116,10 +1124,12 @@ $('#attribute').delegate('input[data-toggle=\'dropdown\']', 'click keyup', funct
 			success: function(json) {
 				html = '';
 				
-				if (json) {
+				if (json.length) {
 					for (i = 0; i < json.length; i++) {
 						html += '<li data-value="' + json[i]['attribute_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
 				}
 				
 				$($(input).attr('data-target')).find('ul').html(html);
@@ -1157,28 +1167,25 @@ $('input[name=\'option\']').on('click keyup', function() {
 				html = '';
 				
 				if (json) {
-					
-					
-					//for (i = 0; i < json.length; i++) {
-					//	json[json[i]['category']][] = 
-					//}
-					
-					
-					for (i = 0; i < json.length; i++) {
-						html += '<li class="disabled"><a href="#"><b>' + json[i]['category'] + '</b></a></li>';
+					for (i in json) {
+						option = json[i]['option'];
 						
-						html += '<li data-value="' + json[i]['option_id'] + '"><a href="#">' + json[i]['name'] + '</a>';
+						html += '<li class="disabled"><a href="#"><b>' + json[i]['name'] + '</b></a></li>';
+
+						for (j = 0; j < option.length; j++) {
+							html += '<li data-value="' + option[j]['option_id'] + '"><a href="#">' + option[j]['name'] + '</a>';
 						
-						html += '<input type="hidden" name="type" value="' + json[i]['type'] + '" />';
+							html += '<input type="hidden" name="type" value="' + option[j]['type'] + '" />';
 						
-						for (j = 0; j < json[i]['option_value'].length; i++) {
-							option_value = json[i]['option_value'];
-							
-							html += '<input type="hidden" name="option_value[' + j + '][option_value_id]" value="' + option_value[j]['option_value_id'] + '" />';
-							html += '<input type="hidden" name="option_value[' + j + '][name]" value="' + option_value[j]['name'] + '" />';
+							for (k = 0; k < option[j]['option_value'].length; k++) {
+								option_value = option[j]['option_value'];
+								
+								html += '<input type="hidden" name="option_value[' + k + '][option_value_id]" value="' + option_value[k]['option_value_id'] + '" />';
+								html += '<input type="hidden" name="option_value[' + k + '][name]" value="' + option_value[k]['name'] + '" />';
+							}
+						
+							html += '</li>';
 						}
-						
-						html += '</li>';
 					}
 				}
 				
@@ -1198,7 +1205,7 @@ $('#autocomplete-option').delegate('a', 'click', function(e) {
 		
 		text = $(this).text();
 		type = 	$(this).parent().find('input[name=\'type\']').val();
-		option_value = 	$(this).parent().find('input[name^=\'option_value\']');
+		option_value = $(this).parent().find('input[name^=\'option_value\']');
 		
 		html  = '<div class="tab-pane" id="tab-option' + option_row + '">';
 		html += '	<input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
@@ -1281,7 +1288,8 @@ $('#autocomplete-option').delegate('a', 'click', function(e) {
             html += '  <select id="option-values' + option_row + '" style="display: none;">';
 			
             for (i = 0; i < option_value.length; i++) {
-				html += '  <option value="' + option_value[i]['option_value_id'] + '">' + option_value[i]['name'] + '</option>';
+				//'option_value[i]['option_value_id']option_value[i]['name']
+				html += '  <option value="' + option_value[i]['value'] + '">' + option_value[i]['name'] + '</option>';
             }
 
             html += '  </select>';			

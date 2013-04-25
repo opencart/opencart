@@ -314,10 +314,12 @@ $('input[name=\'filter\']').on('click keyup', function() {
 			success: function(json) {
 				html = '';
 				
-				if (json) {
+				if (json.length) {
 					for (i = 0; i < json.length; i++) {
 						html += '<li data-value="' + json[i]['filter_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
 				}
 				
 				$($(input).attr('data-target')).find('ul').html(html);

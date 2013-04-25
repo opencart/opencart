@@ -19,8 +19,13 @@
         <div class="control-group">
           <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
           <div class="controls">
-            <input type="text" name="product" value="" id="input-product" />
-            <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a> <br />
+            <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" />
+            <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <div id="autocomplete-product" class="typeahead dropdown">
+              <ul class="dropdown-menu">
+                <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>
+              </ul>
+            </div>
             <br />
             <div id="featured-product" class="well well-small scrollbox">
               <?php foreach ($products as $product) { ?>
@@ -115,41 +120,54 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-/*
-$('input[name=\'product\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
+var timer = null;
+
+$('input[name=\'product\']').on('click keyup', function() {
+	var input = this;
+	
+	if (timer != null) {
+		clearTimeout(timer);
+	}
+
+	timer = setTimeout(function() {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {		
-				response($.map(json, function(item) {
-					return {
-						label: item.name,
-						value: item.product_id
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			dataType: 'json',			
+			success: function(json) {
+				html = '';
+				
+				if (json.length) {
+					for (i = 0; i < json.length; i++) {
+						html += '<li data-value="' + json[i]['product_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
-				}));
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
+				}
+				
+				$($(input).attr('data-target')).find('ul').html(html);
 			}
 		});
-	}, 
-	select: function(event, ui) {
-		$('#featured-product' + ui.item.value).remove();
+	}, 250);
+});
+
+$('#autocomplete-product').delegate('a', 'click', function(e) {
+	e.preventDefault();
+	
+	var value = $(this).parent().attr('data-value');
+	
+	if (typeof value !== 'undefined') {
+		$('#featured-product' + value).remove();
 		
-		$('#featured-product').append('<div id="featured-product' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" value="' + ui.item.value + '" /></div>');
+		$('#featured-product').append('<div id="featured-product' + value + '"><i class="icon-minus-sign"></i> ' + $(this).text() + '<input type="hidden" value="' + value + '" /></div>');
 		
 		data = $.map($('#featured-product input'), function(element){
 			return $(element).attr('value');
 		});
 						
 		$('input[name=\'featured_product\']').attr('value', data.join());
-					
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
+	}
 });
-*/
+
 $('#featured-product').delegate('.icon-minus-sign', 'click', function() {
 	$(this).parent().remove();
 

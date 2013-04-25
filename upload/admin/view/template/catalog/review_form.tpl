@@ -6,7 +6,9 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -14,7 +16,9 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons">
+          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
           <label class="control-label" for="input-author"><span class="required">*</span> <?php echo $entry_author; ?></label>
           <div class="controls">
@@ -27,12 +31,14 @@
         <div class="control-group">
           <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
           <div class="controls">
-            <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" />
-            
-            
-            <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
-            
+            <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" />
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
+            <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <div id="autocomplete-product" class="typeahead dropdown">
+              <ul class="dropdown-menu">
+                <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>
+              </ul>
+            </div>
             <?php if ($error_product) { ?>
             <span class="error"><?php echo $error_product; ?></span>
             <?php } ?>
@@ -52,37 +58,47 @@
           <div class="controls">
             <label class="radio inline">
               <?php if ($rating == 1) { ?>
-              <input type="radio" name="rating" value="1" checked="checked" /> 1
+              <input type="radio" name="rating" value="1" checked="checked" />
+              1
               <?php } else { ?>
-              <input type="radio" name="rating" value="1" /> 1
+              <input type="radio" name="rating" value="1" />
+              1
               <?php } ?>
             </label>
             <label class="radio inline">
               <?php if ($rating == 2) { ?>
-              <input type="radio" name="rating" value="2" checked="checked" /> 2
+              <input type="radio" name="rating" value="2" checked="checked" />
+              2
               <?php } else { ?>
-              <input type="radio" name="rating" value="2" /> 2
+              <input type="radio" name="rating" value="2" />
+              2
               <?php } ?>
             </label>
             <label class="radio inline">
               <?php if ($rating == 3) { ?>
-              <input type="radio" name="rating" value="3" checked="checked" /> 3
+              <input type="radio" name="rating" value="3" checked="checked" />
+              3
               <?php } else { ?>
-              <input type="radio" name="rating" value="3" /> 3
+              <input type="radio" name="rating" value="3" />
+              3
               <?php } ?>
             </label>
             <label class="radio inline">
               <?php if ($rating == 4) { ?>
-              <input type="radio" name="rating" value="4" checked="checked" /> 4
+              <input type="radio" name="rating" value="4" checked="checked" />
+              4
               <?php } else { ?>
-              <input type="radio" name="rating" value="4" /> 4
+              <input type="radio" name="rating" value="4" />
+              4
               <?php } ?>
             </label>
             <label class="radio inline">
               <?php if ($rating == 5) { ?>
-              <input type="radio" name="rating" value="5" checked="checked" /> 5
+              <input type="radio" name="rating" value="5" checked="checked" />
+              5
               <?php } else { ?>
-              <input type="radio" name="rating" value="5" /> 5
+              <input type="radio" name="rating" value="5" />
+              5
               <?php } ?>
             </label>
             <?php if ($error_rating) { ?>
@@ -109,31 +125,46 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('input[name=\'product\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
+var timer = null;
+
+$('input[name=\'product\']').on('click keyup', function() {
+	var input = this;
+	
+	if (timer != null) {
+		clearTimeout(timer);
+	}
+
+	timer = setTimeout(function() {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {		
-				response($.map(json, function(item) {
-					return {
-						label: item.name,
-						value: item.product_id
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			dataType: 'json',			
+			success: function(json) {
+				html = '';
+				
+				if (json.length) {
+					for (i = 0; i < json.length; i++) {
+						html += '<li data-value="' + json[i]['product_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
-				}));
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
+				}
+				
+				$($(input).attr('data-target')).find('ul').html(html);
 			}
 		});
-	},
-	select: function(event, ui) {
-		$('input[name=\'product\']').val(ui.item.label);
-		$('input[name=\'product_id\']').val(ui.item.value);
+	}, 250);
+});
+
+$('#autocomplete-product').delegate('a', 'click', function(e) {
+	e.preventDefault();
+	
+	var value = $(this).parent().attr('data-value');
+	
+	if (typeof value !== 'undefined') {
 		
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
+		$('input[name=\'product\']').val($(this).text());
+		$('input[name=\'product_id\']').val(value);
+	}
 });
 //--></script> 
 <?php echo $footer; ?>

@@ -301,7 +301,7 @@
             <div class="control-group">
               <label class="control-label" for="input-manufacturer"><?php echo $entry_manufacturer; ?></label>
               <div class="controls">
-                <input type="text" name="manufacturer" value="<?php echo $manufacturer ?>" placeholder="<?php echo $entry_manufacturer; ?>" id="input-manufacturer" data-toggle="dropdown" data-target="#autocomplete-manufacturer" />
+                <input type="text" name="manufacturer" value="<?php echo $manufacturer ?>" placeholder="<?php echo $entry_manufacturer; ?>" id="input-manufacturer" data-toggle="dropdown" data-target="#autocomplete-manufacturer" autocomplete="off" />
                 <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturer_id; ?>" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_manufacturer; ?>"><i class="icon-question-sign icon-large"></i></a>
                 <div id="autocomplete-manufacturer" class="typeahead dropdown">
@@ -314,7 +314,7 @@
             <div class="control-group">
               <label class="control-label" for="input-category"><?php echo $entry_category; ?></label>
               <div class="controls">
-                <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" data-toggle="dropdown" data-target="#autocomplete-category" />
+                <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" data-toggle="dropdown" data-target="#autocomplete-category" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_category; ?>"><i class="icon-question-sign icon-large"></i></a>
                 <div id="autocomplete-category" class="typeahead dropdown">
                   <ul class="dropdown-menu">
@@ -334,7 +334,7 @@
             <div class="control-group">
               <label class="control-label" for="input-filter"><?php echo $entry_filter; ?></label>
               <div class="controls">
-                <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" data-toggle="dropdown" data-target="#autocomplete-filter" />
+                <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" data-toggle="dropdown" data-target="#autocomplete-filter" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_filter; ?>"><i class="icon-question-sign icon-large"></i></a>
                 <div id="autocomplete-filter" class="typeahead dropdown">
                   <ul class="dropdown-menu">
@@ -381,7 +381,7 @@
             <div class="control-group">
               <label class="control-label" for="input-download"><?php echo $entry_download; ?></label>
               <div class="controls">
-                <input type="text" name="download" value="" placeholder="<?php echo $entry_download; ?>" id="input-download" data-toggle="dropdown" data-target="#autocomplete-download" />
+                <input type="text" name="download" value="" placeholder="<?php echo $entry_download; ?>" id="input-download" data-toggle="dropdown" data-target="#autocomplete-download" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_download; ?>"><i class="icon-question-sign icon-large"></i></a>
                 <div id="autocomplete-download" class="typeahead dropdown">
                   <ul class="dropdown-menu">
@@ -401,7 +401,7 @@
             <div class="control-group">
               <label class="control-label" for="input-related"><?php echo $entry_related; ?></label>
               <div class="controls">
-                <input type="text" name="related" value="" placeholder="<?php echo $entry_related; ?>" id="input-related" data-toggle="dropdown" data-target="#autocomplete-related" />
+                <input type="text" name="related" value="" placeholder="<?php echo $entry_related; ?>" id="input-related" data-toggle="dropdown" data-target="#autocomplete-related" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_related; ?>"><i class="icon-question-sign icon-large"></i></a>
                 <div id="autocomplete-related" class="typeahead dropdown">
                   <ul class="dropdown-menu">
@@ -460,7 +460,7 @@
             <div class="control-group">
               <label class="control-label" for="input-option"><?php echo $entry_option; ?></label>
               <div class="controls">
-                <input type="text" name="option" value="" id="input-option" class="input-xxxlarge" data-toggle="dropdown" data-target="#autocomplete-option" />
+                <input type="text" name="option" value="" id="input-option" data-toggle="dropdown" data-target="#autocomplete-option" autocomplete="off" />
                 <div id="autocomplete-option" class="typeahead dropdown">
                   <ul class="dropdown-menu">
                     <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>

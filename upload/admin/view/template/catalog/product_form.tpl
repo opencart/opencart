@@ -1174,15 +1174,14 @@ $('input[name=\'option\']').on('click keyup', function() {
 
 						for (j = 0; j < option.length; j++) {
 							html += '<li data-value="' + option[j]['option_id'] + '"><a href="#">' + option[j]['name'] + '</a>';
-						
-							html += '<input type="hidden" name="type" value="' + option[j]['type'] + '" />';
-						
+							html += '<input type="hidden" name="type" value="' + option[j]['type'] + '" />';						
+							html += '<select style="display: none;">';
+							
 							for (k = 0; k < option[j]['option_value'].length; k++) {
-								option_value = option[j]['option_value'];
-								
-								html += '<input type="hidden" name="option_value[' + k + '][option_value_id]" value="' + option_value[k]['option_value_id'] + '" />';
-								html += '<input type="hidden" name="option_value[' + k + '][name]" value="' + option_value[k]['name'] + '" />';
+								html += '<option value="' + option[j]['option_value'][k]['option_value_id'] + '">' + option[j]['option_value'][k]['name'] + '</option>';
 							}
+							
+							html += '</select>';
 						
 							html += '</li>';
 						}
@@ -1205,7 +1204,6 @@ $('#autocomplete-option').delegate('a', 'click', function(e) {
 		
 		text = $(this).text();
 		type = 	$(this).parent().find('input[name=\'type\']').val();
-		option_value = $(this).parent().find('input[name^=\'option_value\']');
 		
 		html  = '<div class="tab-pane" id="tab-option' + option_row + '">';
 		html += '	<input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
@@ -1286,12 +1284,7 @@ $('#autocomplete-option').delegate('a', 'click', function(e) {
 			html += '    </tfoot>';
 			html += '  </table>';
             html += '  <select id="option-values' + option_row + '" style="display: none;">';
-			
-            for (i = 0; i < option_value.length; i++) {
-				//'option_value[i]['option_value_id']option_value[i]['name']
-				html += '  <option value="' + option_value[i]['value'] + '">' + option_value[i]['name'] + '</option>';
-            }
-
+			html += $(this).parent().find('select').html();
             html += '  </select>';			
 			html += '</div>';	
 		}
@@ -1314,26 +1307,26 @@ function addOptionValue(option_row) {
 	html += '  <td class="left"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][option_value_id]">';
 	html += $('#option-values' + option_row).html();
 	html += '  </select><input type="hidden" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][product_option_value_id]" value="" /></td>';
-	html += '  <td class="right"><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][quantity]" value="" placeholder="<?php echo $entry_quantity; ?>" class="input-small" /></td>'; 
-	html += '  <td class="left"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][subtract]">';
+	html += '  <td class="right"><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][quantity]" value="" placeholder="<?php echo $entry_quantity; ?>" class="input-mini" /></td>'; 
+	html += '  <td class="left"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][subtract]" class="input-small">';
 	html += '    <option value="1"><?php echo $text_yes; ?></option>';
 	html += '    <option value="0"><?php echo $text_no; ?></option>';
 	html += '  </select></td>';
-	html += '  <td class="right"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price_prefix]">';
+	html += '  <td class="right"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price_prefix]" class="input-mini">';
 	html += '    <option value="+">+</option>';
 	html += '    <option value="-">-</option>';
 	html += '  </select>';
 	html += '  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price]" value="" placeholder="<?php echo $entry_price; ?>" class="input-small" /></td>';
-	html += '  <td class="right"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][points_prefix]">';
+	html += '  <td class="right"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][points_prefix]" class="input-mini">';
 	html += '    <option value="+">+</option>';
 	html += '    <option value="-">-</option>';
 	html += '  </select>';
 	html += '  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][points]" value="" placeholder="<?php echo $entry_points; ?>" class="input-small" /></td>';	
-	html += '  <td class="right"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight_prefix]">';
+	html += '  <td class="right"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight_prefix]" class="input-mini">';
 	html += '    <option value="+">+</option>';
 	html += '    <option value="-">-</option>';
 	html += '  </select>';
-	html += '  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight]" value="" placeholder="<?php echo $entry_weight; ?>" /></td>';
+	html += '  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight]" value="" placeholder="<?php echo $entry_weight; ?>" class="input-small" /></td>';
 	html += '  <td class="left"><a onclick="$(\'#option-value-row' + option_value_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
 	html += '</tr>';
 	

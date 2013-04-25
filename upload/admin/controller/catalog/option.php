@@ -533,11 +533,11 @@ class ControllerCatalogOption extends Controller {
 				if ($option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
 					$type = $this->language->get('text_date');
 				}
-												
-				$json[] = array(
+				
+				$json[$option['type']]['name'] = $type;
+				$json[$option['type']][] = array(
 					'option_id'    => $option['option_id'],
 					'name'         => strip_tags(html_entity_decode($option['name'], ENT_QUOTES, 'UTF-8')),
-					'category'     => $type,
 					'type'         => $option['type'],
 					'option_value' => $option_value_data
 				);

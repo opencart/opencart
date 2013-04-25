@@ -267,7 +267,7 @@ $('input[name=\'path\']').on('click keyup', function() {
 		clearTimeout(timer);
 	}
 
-	timer = setTimeout(function(){
+	timer = setTimeout(function() {
 		$.ajax({
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
 			dataType: 'json',			
@@ -307,7 +307,7 @@ $('input[name=\'filter\']').on('click keyup', function() {
 		clearTimeout(timer);
 	}
 
-	timer = setTimeout(function(){
+	timer = setTimeout(function() {
 		$.ajax({
 			url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
 			dataType: 'json',			

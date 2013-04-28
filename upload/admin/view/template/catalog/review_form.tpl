@@ -34,9 +34,9 @@
             <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" />
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
             <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
-            <div id="autocomplete-product" class="typeahead dropdown">
+            <div id="autocomplete-product" class="dropdown">
               <ul class="dropdown-menu">
-                <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>
+                <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
               </ul>
             </div>
             <?php if ($error_product) { ?>
@@ -139,9 +139,9 @@ $('input[name=\'product\']').on('click keyup', function() {
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
 			dataType: 'json',			
 			success: function(json) {
-				html = '';
-				
 				if (json.length) {
+					html = '';
+					
 					for (i = 0; i < json.length; i++) {
 						html += '<li data-value="' + json[i]['product_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
@@ -161,7 +161,6 @@ $('#autocomplete-product').delegate('a', 'click', function(e) {
 	var value = $(this).parent().attr('data-value');
 	
 	if (typeof value !== 'undefined') {
-		
 		$('input[name=\'product\']').val($(this).text());
 		$('input[name=\'product_id\']').val(value);
 	}

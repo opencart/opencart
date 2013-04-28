@@ -28,7 +28,7 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td align="right"><a onclick="filter();" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></a></td>
+            <td align="right"><button type="button" id="button-filter" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
           </tr>
           <?php if ($customers) { ?>
           <?php foreach ($customers as $customer) { ?>
@@ -58,22 +58,22 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-function filter() {
+$('#button-filter').on('click', function() {
 	url = 'index.php?route=report/customer_online&token=<?php echo $token; ?>';
 	
-	var filter_customer = $('input[name=\'filter_customer\']').attr('value');
+	var filter_customer = $('input[name=\'filter_customer\']').val();
 	
 	if (filter_customer) {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
 		
-	var filter_ip = $('input[name=\'filter_ip\']').attr('value');
+	var filter_ip = $('input[name=\'filter_ip\']').val();
 	
 	if (filter_ip) {
 		url += '&filter_ip=' + encodeURIComponent(filter_ip);
 	}
 				
 	location = url;
-}
+});
 //--></script> 
 <?php echo $footer; ?>

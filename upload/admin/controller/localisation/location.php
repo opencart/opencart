@@ -272,7 +272,6 @@ class ControllerLocalisationLocation extends Controller {
 		
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
-    	$this->data['text_wait'] = $this->language->get('text_wait');		
 		$this->data['text_geocode'] = $this->language->get('text_geocode'); 
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
 		$this->data['text_browse'] = $this->language->get('text_browse');

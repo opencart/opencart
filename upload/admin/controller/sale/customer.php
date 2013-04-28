@@ -436,6 +436,8 @@ class ControllerSaleCustomer extends Controller {
 		$this->data['text_select'] = $this->language->get('text_select');	
 		$this->data['text_default'] = $this->language->get('text_default');		
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
+		$this->data['text_none'] = $this->language->get('text_none');
+		$this->data['text_loading'] = $this->language->get('text_loading');
 
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_email'] = $this->language->get('column_email');
@@ -1322,23 +1324,36 @@ class ControllerSaleCustomer extends Controller {
 	public function autocomplete() {
 		$json = array();
 		
-		if (isset($this->request->get['filter_name'])) {
+		if (isset($this->request->get['filter_name']) || isset($this->request->get['filter_email'])) {
+			if (isset($this->request->get['filter_name'])) {
+				$filter_name = $this->request->get['filter_name'];
+			} else {
+				$filter_name = '';
+			}
+			
+			if (isset($this->request->get['filter_email'])) {
+				$filter_email = $this->request->get['filter_email'];
+			} else {
+				$filter_email = '';
+			}		
+			
 			$this->load->model('sale/customer');
 			
 			$data = array(
-				'filter_name' => $this->request->get['filter_name'],
-				'start'       => 0,
-				'limit'       => 20
+				'filter_name'  => $filter_name,
+				'filter_email' => $filter_email,
+				'start'        => 0,
+				'limit'        => 5
 			);
 		
 			$results = $this->model_sale_customer->getCustomers($data);
 			
 			foreach ($results as $result) {
-				$json[] = array(
+				$json[$result['customer_group_id']]['customer_group_id'] = $result['customer_group_id'];
+				$json[$result['customer_group_id']]['name'] = $result['customer_group'];
+				$json[$result['customer_group_id']]['customer'][] = array(
 					'customer_id'       => $result['customer_id'], 
-					'customer_group_id' => $result['customer_group_id'],
 					'name'              => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
-					'customer_group'    => $result['customer_group'],
 					'firstname'         => $result['firstname'],
 					'lastname'          => $result['lastname'],
 					'email'             => $result['email'],

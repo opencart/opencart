@@ -304,9 +304,9 @@
                 <input type="text" name="manufacturer" value="<?php echo $manufacturer ?>" placeholder="<?php echo $entry_manufacturer; ?>" id="input-manufacturer" data-toggle="dropdown" data-target="#autocomplete-manufacturer" autocomplete="off" />
                 <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturer_id; ?>" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_manufacturer; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="autocomplete-manufacturer" class="typeahead dropdown">
+                <div id="autocomplete-manufacturer" class="dropdown">
                   <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
                   </ul>
                 </div>
               </div>
@@ -316,9 +316,9 @@
               <div class="controls">
                 <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" data-toggle="dropdown" data-target="#autocomplete-category" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_category; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="autocomplete-category" class="typeahead dropdown">
+                <div id="autocomplete-category" class="dropdown">
                   <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
                   </ul>
                 </div>
                 <br />
@@ -336,9 +336,9 @@
               <div class="controls">
                 <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" data-toggle="dropdown" data-target="#autocomplete-filter" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_filter; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="autocomplete-filter" class="typeahead dropdown">
+                <div id="autocomplete-filter" class="dropdown">
                   <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
                   </ul>
                 </div>
                 <br />
@@ -383,9 +383,9 @@
               <div class="controls">
                 <input type="text" name="download" value="" placeholder="<?php echo $entry_download; ?>" id="input-download" data-toggle="dropdown" data-target="#autocomplete-download" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_download; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="autocomplete-download" class="typeahead dropdown">
+                <div id="autocomplete-download" class="dropdown">
                   <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
                   </ul>
                 </div>
                 <br />
@@ -403,9 +403,9 @@
               <div class="controls">
                 <input type="text" name="related" value="" placeholder="<?php echo $entry_related; ?>" id="input-related" data-toggle="dropdown" data-target="#autocomplete-related" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_related; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="autocomplete-related" class="typeahead dropdown">
+                <div id="autocomplete-related" class="dropdown">
                   <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
                   </ul>
                 </div>
                 <br />
@@ -434,9 +434,9 @@
                 <tr id="attribute-row<?php echo $attribute_row; ?>">
                   <td class="left"><input type="text" name="product_attribute[<?php echo $attribute_row; ?>][name]" value="<?php echo $product_attribute['name']; ?>" placeholder="<?php echo $entry_attribute; ?>" data-toggle="dropdown" data-target="#autocomplete-attribute<?php echo $attribute_row; ?>" autocomplete="off" />
                     <input type="hidden" name="product_attribute[<?php echo $attribute_row; ?>][attribute_id]" value="<?php echo $product_attribute['attribute_id']; ?>" />
-                    <div id="autocomplete-attribute<?php echo $attribute_row; ?>" class="typeahead dropdown">
+                    <div id="autocomplete-attribute<?php echo $attribute_row; ?>" class="dropdown">
                       <ul class="dropdown-menu">
-                        <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>
+                        <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
                       </ul>
                     </div></td>
                   <td class="left"><?php foreach ($languages as $language) { ?>
@@ -460,10 +460,10 @@
             <div class="control-group">
               <label class="control-label" for="input-option"><?php echo $entry_option; ?></label>
               <div class="controls">
-                <input type="text" name="option" value="" id="input-option" data-toggle="dropdown" data-target="#autocomplete-option" autocomplete="off" />
-                <div id="autocomplete-option" class="typeahead dropdown">
+                <input type="text" name="option" value="" placeholder="<?php echo $entry_option; ?>" id="input-option" data-toggle="dropdown" data-target="#autocomplete-option" autocomplete="off" />
+                <div id="autocomplete-option" class="dropdown">
                   <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
                   </ul>
                 </div>
               </div>
@@ -907,9 +907,9 @@ $('input[name=\'category\']').on('click keyup', function() {
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
 			dataType: 'json',			
 			success: function(json) {
-				html = '';
-				
 				if (json.length) {
+					html = '';
+					
 					for (i = 0; i < json.length; i++) {
 						html += '<li data-value="' + json[i]['category_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
@@ -939,7 +939,6 @@ $('#product-category').delegate('.icon-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
 
-
 // Filter
 var timer = null;
 
@@ -955,9 +954,9 @@ $('input[name=\'filter\']').on('click keyup', function() {
 			url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
 			dataType: 'json',			
 			success: function(json) {
-				html = '';
-				
 				if (json.length) {
+					html = '';
+					
 					for (i = 0; i < json.length; i++) {
 						html += '<li data-value="' + json[i]['filter_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
@@ -1002,9 +1001,9 @@ $('input[name=\'download\']').on('click keyup', function() {
 			url: 'index.php?route=catalog/download/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
 			dataType: 'json',			
 			success: function(json) {
-				html = '';
-				
 				if (json.length) {
+					html = '';
+					
 					for (i = 0; i < json.length; i++) {
 						html += '<li data-value="' + json[i]['download_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
@@ -1049,9 +1048,9 @@ $('input[name=\'related\']').on('click keyup', function() {
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
 			dataType: 'json',			
 			success: function(json) {
-				html = '';
-				
 				if (json.length) {
+					html = '';
+					
 					for (i = 0; i < json.length; i++) {
 						html += '<li data-value="' + json[i]['product_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
@@ -1087,9 +1086,9 @@ var attribute_row = <?php echo $attribute_row; ?>;
 function addAttribute() {
     html  = '<tr id="attribute-row' + attribute_row + '">';
 	html += '  <td class="left"><input type="text" name="product_attribute[' + attribute_row + '][name]" value="" placeholder="<?php echo $entry_attribute; ?>" data-toggle="dropdown" data-target="#autocomplete-attribute' + attribute_row + '" autocomplete="off" /><input type="hidden" name="product_attribute[' + attribute_row + '][attribute_id]" value="" />';
-	html += '    <div id="autocomplete-attribute' + attribute_row + '" class="typeahead dropdown">';
+	html += '    <div id="autocomplete-attribute' + attribute_row + '" class="dropdown">';
     html += '      <ul class="dropdown-menu">';
-    html += '        <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>';
+    html += '        <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>';
     html += '      </ul>';
     html += '    </div>';
 	html += '  </td>';
@@ -1122,9 +1121,9 @@ $('#attribute').delegate('input[data-toggle=\'dropdown\']', 'click keyup', funct
 			url: 'index.php?route=catalog/attribute/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
 			dataType: 'json',			
 			success: function(json) {
-				html = '';
-				
 				if (json.length) {
+					html = '';
+					
 					for (i = 0; i < json.length; i++) {
 						html += '<li data-value="' + json[i]['attribute_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
@@ -1164,9 +1163,9 @@ $('input[name=\'option\']').on('click keyup', function() {
 			url: 'index.php?route=catalog/option/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
 			dataType: 'json',			
 			success: function(json) {
-				html = '';
-				
-				if (json) {
+				if (json.length) {
+					html = '';
+					
 					for (i in json) {
 						option = json[i]['option'];
 						
@@ -1175,7 +1174,7 @@ $('input[name=\'option\']').on('click keyup', function() {
 						for (j = 0; j < option.length; j++) {
 							html += '<li data-value="' + option[j]['option_id'] + '"><a href="#">' + option[j]['name'] + '</a>';
 							html += '<input type="hidden" name="type" value="' + option[j]['type'] + '" />';						
-							html += '<select style="display: none;">';
+							html += '<select name="option" style="display: none;">';
 							
 							for (k = 0; k < option[j]['option_value'].length; k++) {
 								html += '<option value="' + option[j]['option_value'][k]['option_value_id'] + '">' + option[j]['option_value'][k]['name'] + '</option>';
@@ -1186,6 +1185,8 @@ $('input[name=\'option\']').on('click keyup', function() {
 							html += '</li>';
 						}
 					}
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
 				}
 				
 				$($(input).attr('data-target')).find('ul').html(html);
@@ -1284,7 +1285,7 @@ $('#autocomplete-option').delegate('a', 'click', function(e) {
 			html += '    </tfoot>';
 			html += '  </table>';
             html += '  <select id="option-values' + option_row + '" style="display: none;">';
-			html += $(this).parent().find('select').html();
+			html += $(this).parent().find('select[name=\'option\']').html();
             html += '  </select>';			
 			html += '</div>';	
 		}

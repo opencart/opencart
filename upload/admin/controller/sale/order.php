@@ -341,6 +341,8 @@ class ControllerSaleOrder extends Controller {
 
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 		$this->data['text_missing'] = $this->language->get('text_missing');
+		$this->data['text_none'] = $this->language->get('text_none');
+		$this->data['text_loading'] = $this->language->get('text_loading');
 
 		$this->data['column_order_id'] = $this->language->get('column_order_id');
     	$this->data['column_customer'] = $this->language->get('column_customer');
@@ -490,7 +492,7 @@ class ControllerSaleOrder extends Controller {
 		$this->data['text_default'] = $this->language->get('text_default');
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
-		$this->data['text_wait'] = $this->language->get('text_wait');
+		$this->data['text_loading'] = $this->language->get('text_loading');
 		$this->data['text_product'] = $this->language->get('text_product');
 		$this->data['text_voucher'] = $this->language->get('text_voucher');
 		$this->data['text_order'] = $this->language->get('text_order');
@@ -1351,7 +1353,6 @@ class ControllerSaleOrder extends Controller {
 			$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
 			$this->data['text_payment_method'] = $this->language->get('text_payment_method');	
 			$this->data['text_download'] = $this->language->get('text_download');
-			$this->data['text_wait'] = $this->language->get('text_wait');
 			$this->data['text_generate'] = $this->language->get('text_generate');
 			$this->data['text_reward_add'] = $this->language->get('text_reward_add');
 			$this->data['text_reward_remove'] = $this->language->get('text_reward_remove');

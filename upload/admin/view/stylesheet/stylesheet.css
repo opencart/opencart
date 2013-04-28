@@ -35,12 +35,8 @@
 	border-radius: 0;
 }
 .breadcrumb li + li:before {
-	/*background-image: url('&#xf105;');*/
 	content: "\f105";
 	font-family: FontAwesome;
-	font-size: 30px;
-	font-weight: lighter;
-	text-shadow: none;
 }
 #content {
 	padding: 10px 25px 0px 25px;

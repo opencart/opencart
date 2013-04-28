@@ -6,10 +6,14 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -58,9 +62,14 @@
           <tbody>
             <tr class="filter">
               <td></td>
-              <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" size="4" style="text-align: right;" /></td>
-              <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" /></td>
-              <td><select name="filter_order_status_id">
+              <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="input-mini" style="text-align: right;" /></td>
+              <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" />
+                <div id="autocomplete-customer" class="dropdown">
+                  <ul class="dropdown-menu">
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
+                  </ul>
+                </div></td>
+              <td><select name="filter_order_status_id" class="input-medium">
                   <option value="*"></option>
                   <?php if ($filter_order_status_id == '0') { ?>
                   <option value="0" selected="selected"><?php echo $text_missing; ?></option>
@@ -75,10 +84,10 @@
                   <?php } ?>
                   <?php } ?>
                 </select></td>
-              <td align="right"><input type="text" name="filter_total" value="<?php echo $filter_total; ?>" size="4" style="text-align: right;" /></td>
+              <td align="right"><input type="text" name="filter_total" value="<?php echo $filter_total; ?>" class="input-small" style="text-align: right;" /></td>
               <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="input-medium" /></td>
               <td><input type="date" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" class="input-medium" /></td>
-              <td align="right"><a onclick="filter();" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></a></td>
+              <td align="right"><button type="button" id="button-filter" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
             </tr>
             <?php if ($orders) { ?>
             <?php foreach ($orders as $order) { ?>
@@ -113,47 +122,47 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-function filter() {
+$('#button-filter').on('click', function() {
 	url = 'index.php?route=sale/order&token=<?php echo $token; ?>';
 	
-	var filter_order_id = $('input[name=\'filter_order_id\']').attr('value');
+	var filter_order_id = $('input[name=\'filter_order_id\']').val();
 	
 	if (filter_order_id) {
 		url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
 	}
 	
-	var filter_customer = $('input[name=\'filter_customer\']').attr('value');
+	var filter_customer = $('input[name=\'filter_customer\']').val();
 	
 	if (filter_customer) {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
 	
-	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').attr('value');
+	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
 	
 	if (filter_order_status_id != '*') {
 		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
 	}	
 
-	var filter_total = $('input[name=\'filter_total\']').attr('value');
+	var filter_total = $('input[name=\'filter_total\']').val();
 
 	if (filter_total) {
 		url += '&filter_total=' + encodeURIComponent(filter_total);
 	}	
 	
-	var filter_date_added = $('input[name=\'filter_date_added\']').attr('value');
+	var filter_date_added = $('input[name=\'filter_date_added\']').val();
 	
 	if (filter_date_added) {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
 	
-	var filter_date_modified = $('input[name=\'filter_date_modified\']').attr('value');
+	var filter_date_modified = $('input[name=\'filter_date_modified\']').val();
 	
 	if (filter_date_modified) {
 		url += '&filter_date_modified=' + encodeURIComponent(filter_date_modified);
 	}
 				
 	location = url;
-}
+});
 //--></script> 
 <script type="text/javascript"><!--
 $('#form input').keydown(function(e) {
@@ -163,47 +172,51 @@ $('#form input').keydown(function(e) {
 });
 //--></script> 
 <script type="text/javascript"><!--
-$.widget('custom.catcomplete', $.ui.autocomplete, {
-	_renderMenu: function(ul, items) {
-		var self = this, currentCategory = '';
-		
-		$.each(items, function(index, item) {
-			if (item.category != currentCategory) {
-				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
-				
-				currentCategory = item.category;
-			}
-			
-			self._renderItem(ul, item);
-		});
+var timer = null;
+
+$('input[name=\'filter_customer\']').on('click keyup', function() {
+	var input = this;
+	
+	if (timer != null) {
+		clearTimeout(timer);
 	}
+
+	timer = setTimeout(function() {
+		$.ajax({
+			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			dataType: 'json',			
+			success: function(json) {
+				if (json.length) {
+					html = '';
+					
+					for (i in json) {
+						html += '<li class="disabled"><a href="#"><b>' + json[i]['name'] + '</b></a></li>';
+						
+						for (j = 0; j < json[i]['customer'].length; j++) {
+							customer = json[i]['customer'][j];
+							
+							html += '<li data-value="' + customer['customer_id'] + '"><a href="#">' + customer['name'] + '</a></li>';						
+						}
+					}
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
+				}
+				
+				$($(input).attr('data-target')).find('ul').html(html);
+			}
+		});
+	}, 250);
 });
 
-$('input[name=\'filter_customer\']').catcomplete({
-	delay: 500,
-	source: function(request, response) {
-		$.ajax({
-			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {		
-				response($.map(json, function(item) {
-					return {
-						category: item.customer_group,
-						label: item.name,
-						value: item.customer_id
-					}
-				}));
-			}
-		});
-	}, 
-	select: function(event, ui) {
-		$('input[name=\'filter_customer\']').val(ui.item.label);
-						
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
+
+$('#autocomplete-customer').delegate('a', 'click', function(e) {
+	e.preventDefault();
+	
+	var value = $(this).parent().attr('data-value');
+	
+	if (typeof value !== 'undefined') {
+		$('input[name=\'filter_customer\']').val($(this).text());
+	}
 });
 //--></script> 
 <?php echo $footer; ?>

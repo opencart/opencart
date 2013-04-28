@@ -6,10 +6,14 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -54,10 +58,20 @@
           <tbody>
             <tr class="filter">
               <td></td>
-              <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" /></td>
-              <td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" /></td>
+              <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" data-toggle="dropdown" data-target="#autocomplete-affiliate" autocomplete="off" class="input-medium" />
+                <div id="autocomplete-affiliate" class="dropdown">
+                  <ul class="dropdown-menu">
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
+                  </ul>
+                </div></td>
+              <td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" data-toggle="dropdown" data-target="#autocomplete-email" autocomplete="off" class="input-medium" />
+                <div id="autocomplete-email" class="dropdown">
+                  <ul class="dropdown-menu">
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
+                  </ul>
+                </div></td>
               <td>&nbsp;</td>
-              <td><select name="filter_status">
+              <td><select name="filter_status" class="input-medium">
                   <option value="*"></option>
                   <?php if ($filter_status) { ?>
                   <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -70,7 +84,7 @@
                   <option value="0"><?php echo $text_disabled; ?></option>
                   <?php } ?>
                 </select></td>
-              <td><select name="filter_approved">
+              <td><select name="filter_approved" class="input-mini">
                   <option value="*"></option>
                   <?php if ($filter_approved) { ?>
                   <option value="1" selected="selected"><?php echo $text_yes; ?></option>
@@ -83,8 +97,8 @@
                   <option value="0"><?php echo $text_no; ?></option>
                   <?php } ?>
                 </select></td>
-              <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" id="date" /></td>
-              <td align="right"><a onclick="filter();" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></a></td>
+              <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="input-medium" /></td>
+              <td align="right"><button type="button" id="button-filter" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
             </tr>
             <?php if ($affiliates) { ?>
             <?php foreach ($affiliates as $affiliate) { ?>
@@ -119,78 +133,127 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-function filter() {
+$('#button-filter').on('click', function() {
 	url = 'index.php?route=sale/affiliate&token=<?php echo $token; ?>';
 	
-	var filter_name = $('input[name=\'filter_name\']').attr('value');
+	var filter_name = $('input[name=\'filter_name\']').val();
 	
 	if (filter_name) {
 		url += '&filter_name=' + encodeURIComponent(filter_name);
 	}
 	
-	var filter_email = $('input[name=\'filter_email\']').attr('value');
+	var filter_email = $('input[name=\'filter_email\']').val();
 	
 	if (filter_email) {
 		url += '&filter_email=' + encodeURIComponent(filter_email);
 	}
 	
-	var filter_affiliate_group_id = $('select[name=\'filter_affiliate_group_id\']').attr('value');
+	var filter_affiliate_group_id = $('select[name=\'filter_affiliate_group_id\']').val();
 	
 	if (filter_affiliate_group_id != '*') {
 		url += '&filter_affiliate_group_id=' + encodeURIComponent(filter_affiliate_group_id);
 	}	
 	
-	var filter_status = $('select[name=\'filter_status\']').attr('value');
+	var filter_status = $('select[name=\'filter_status\']').val();
 	
 	if (filter_status != '*') {
 		url += '&filter_status=' + encodeURIComponent(filter_status); 
 	}	
 	
-	var filter_approved = $('select[name=\'filter_approved\']').attr('value');
+	var filter_approved = $('select[name=\'filter_approved\']').val();
 	
 	if (filter_approved != '*') {
 		url += '&filter_approved=' + encodeURIComponent(filter_approved);
 	}	
 	
-	var filter_date_added = $('input[name=\'filter_date_added\']').attr('value');
+	var filter_date_added = $('input[name=\'filter_date_added\']').val();
 	
 	if (filter_date_added) {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
 	
 	location = url;
-}
-//--></script> 
-<script type="text/javascript"><!--
-$(document).ready(function() {
-	$('#date').datepicker({dateFormat: 'yy-mm-dd'});
 });
 //--></script> 
 <script type="text/javascript"><!--
-$('input[name=\'filter_name\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
+var timer = null;
+
+$('input[name=\'filter_name\']').on('click keyup', function() {
+	var input = this;
+	
+	if (timer != null) {
+		clearTimeout(timer);
+	}
+
+	timer = setTimeout(function() {
 		$.ajax({
-			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {		
-				response($.map(json, function(item) {
-					return {
-						label: item.name,
-						value: item.affiliate_id
+			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			dataType: 'json',			
+			success: function(json) {
+				if (json.length) {
+					html = '';
+					
+					for (i = 0; i < json.length; i++) {
+						html += '<li data-value="' + json[i]['customer_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';						
 					}
-				}));
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
+				}
+				
+				$($(input).attr('data-target')).find('ul').html(html);
 			}
 		});
-	}, 
-	select: function(event, ui) {
-		$('input[name=\'filter_name\']').val(ui.item.label);
-						
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
+	}, 250);
+});
+
+$('#autocomplete-affiliate').delegate('a', 'click', function(e) {
+	e.preventDefault();
+	
+	var value = $(this).parent().attr('data-value');
+	
+	if (typeof value !== 'undefined') {
+		$('input[name=\'filter_name\']').val($(this).text());
+	}
+});
+
+var timer = null;
+
+$('input[name=\'filter_email\']').on('click keyup', function() {
+	var input = this;
+	
+	if (timer != null) {
+		clearTimeout(timer);
+	}
+
+	timer = setTimeout(function() {
+		$.ajax({
+			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_email=' +  encodeURIComponent($(input).val()),
+			dataType: 'json',			
+			success: function(json) {
+				if (json.length) {
+					html = '';
+
+					for (i = 0; i < json.length; i++) {
+						html += '<li data-value="' + json[i]['customer_id'] + '"><a href="#">' + json[i]['email'] + '</a></li>';						
+					}
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
+				}
+				
+				$($(input).attr('data-target')).find('ul').html(html);
+			}
+		});
+	}, 250);
+});
+
+$('#autocomplete-email').delegate('a', 'click', function(e) {
+	e.preventDefault();
+	
+	var value = $(this).parent().attr('data-value');
+	
+	if (typeof value !== 'undefined') {
+		$('input[name=\'filter_email\']').val($(this).text());
+	}
 });
 //--></script> 
 <?php echo $footer; ?>

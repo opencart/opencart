@@ -21,9 +21,9 @@
           <div class="controls">
             <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" />
             <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
-            <div id="autocomplete-product" class="typeahead dropdown">
+            <div id="autocomplete-product" class="dropdown">
               <ul class="dropdown-menu">
-                <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>
+                <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
               </ul>
             </div>
             <br />
@@ -134,9 +134,9 @@ $('input[name=\'product\']').on('click keyup', function() {
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
 			dataType: 'json',			
 			success: function(json) {
-				html = '';
-				
 				if (json.length) {
+					html = '';
+					
 					for (i = 0; i < json.length; i++) {
 						html += '<li data-value="' + json[i]['product_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}

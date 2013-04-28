@@ -196,7 +196,6 @@ class ControllerSaleVoucher extends Controller {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		
 		$this->data['text_send'] = $this->language->get('text_send');
-		$this->data['text_wait'] = $this->language->get('text_wait');
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 
 		$this->data['column_code'] = $this->language->get('column_code');

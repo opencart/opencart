@@ -416,7 +416,7 @@ class ControllerCatalogFilter extends Controller {
 			$data = array(
 				'filter_name' => $this->request->get['filter_name'],
 				'start'       => 0,
-				'limit'       => 20
+				'limit'       => 5
 			);
 			
 			$filters = $this->model_catalog_filter->getFilters($data);

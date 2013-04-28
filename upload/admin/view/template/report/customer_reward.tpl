@@ -13,10 +13,10 @@
       <table class="form">
         <tr>
           <td><?php echo $entry_date_start; ?>
-            <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="date-start" size="12" /></td>
+            <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" class="input-medium" /></td>
           <td><?php echo $entry_date_end; ?>
-            <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="date-end" size="12" /></td>
-          <td style="text-align: right;"><a onclick="filter();" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></a></td>
+            <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" class="input-medium" /></td>
+          <td style="text-align: right;"><button type="button" id="button-filter" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
         </tr>
       </table>
       <table class="table table-striped table-bordered table-hover">
@@ -61,29 +61,22 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-function filter() {
+$('#button-filter').on('click', function() {
 	url = 'index.php?route=report/customer_reward&token=<?php echo $token; ?>';
 	
-	var filter_date_start = $('input[name=\'filter_date_start\']').attr('value');
+	var filter_date_start = $('input[name=\'filter_date_start\']').val();
 	
 	if (filter_date_start) {
 		url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
 	}
 
-	var filter_date_end = $('input[name=\'filter_date_end\']').attr('value');
+	var filter_date_end = $('input[name=\'filter_date_end\']').val();
 	
 	if (filter_date_end) {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
 	
 	location = url;
-}
-//--></script> 
-<script type="text/javascript"><!--
-$(document).ready(function() {
-	$('#date-start').datepicker({dateFormat: 'yy-mm-dd'});
-	
-	$('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
 });
 //--></script> 
 <?php echo $footer; ?>

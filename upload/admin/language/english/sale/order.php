@@ -44,7 +44,6 @@ $_['text_to']                                 = 'To';
 $_['text_ship_to']                            = 'Ship To (if different address)';
 $_['text_missing']                            = 'Missing Orders';
 $_['text_default']                            = 'Default';
-$_['text_wait']                               = 'Please Wait!';
 $_['text_product']                            = 'Add Product(s)';
 $_['text_voucher']                            = 'Add Voucher(s)';
 $_['text_order']                              = 'Order Details';

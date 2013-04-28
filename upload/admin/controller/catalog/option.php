@@ -482,7 +482,7 @@ class ControllerCatalogOption extends Controller {
 			$data = array(
 				'filter_name' => $this->request->get['filter_name'],
 				'start'       => 0,
-				'limit'       => 20
+				'limit'       => 5
 			);
 			
 			$options = $this->model_catalog_option->getOptions($data);

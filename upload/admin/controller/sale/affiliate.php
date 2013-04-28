@@ -379,6 +379,8 @@ class ControllerSaleAffiliate extends Controller {
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');		
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
+		$this->data['text_none'] = $this->language->get('text_none');
+		$this->data['text_loading'] = $this->language->get('text_loading');
 
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_email'] = $this->language->get('column_email');
@@ -512,7 +514,6 @@ class ControllerSaleAffiliate extends Controller {
     	$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
-    	$this->data['text_wait'] = $this->language->get('text_wait');
 		$this->data['text_cheque'] = $this->language->get('text_cheque');
 		$this->data['text_paypal'] = $this->language->get('text_paypal');
 		$this->data['text_bank'] = $this->language->get('text_bank');
@@ -1100,13 +1101,27 @@ class ControllerSaleAffiliate extends Controller {
 	public function autocomplete() {
 		$affiliate_data = array();
 		
-		if (isset($this->request->get['filter_name'])) {
+		if (isset($this->request->get['filter_name']) || isset($this->request->get['filter_email'])) {
+			if (isset($this->request->get['filter_name'])) {
+				$filter_name = $this->request->get['filter_name'];
+			} else {
+				$filter_name = '';
+			}
+			
+			if (isset($this->request->get['filter_email'])) {
+				$filter_email = $this->request->get['filter_email'];
+			} else {
+				$filter_email = '';
+			}			
+			
+			
 			$this->load->model('sale/affiliate');
 			
 			$data = array(
-				'filter_name' => $this->request->get['filter_name'],
-				'start'       => 0,
-				'limit'       => 20
+				'filter_name'  => $filter_name,
+				'filter_email' => $filter_email,
+				'start'        => 0,
+				'limit'        => 5
 			);
 		
 			$results = $this->model_sale_affiliate->getAffiliates($data);
@@ -1114,7 +1129,8 @@ class ControllerSaleAffiliate extends Controller {
 			foreach ($results as $result) {
 				$affiliate_data[] = array(
 					'affiliate_id' => $result['affiliate_id'],
-					'name'         => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
+					'name'         => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+					'email'        => $result['email']
 				);
 			}
 		}

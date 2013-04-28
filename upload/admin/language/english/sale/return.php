@@ -6,7 +6,6 @@ $_['heading_title']       = 'Product Returns';
 $_['text_opened']         = 'Opened';
 $_['text_unopened']       = 'Unopened';
 $_['text_success']        = 'Success: You have modified returns!';
-$_['text_wait']           = 'Please Wait!';
 
 // Text
 $_['text_return_id']      = 'Return ID:';

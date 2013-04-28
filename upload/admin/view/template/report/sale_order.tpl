@@ -13,9 +13,9 @@
       <table class="form">
         <tr>
           <td><?php echo $entry_date_start; ?>
-            <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="date-start" size="12" /></td>
+            <input type="datet" name="filter_date_start" value="<?php echo $filter_date_start; ?>" class="input-medium" /></td>
           <td><?php echo $entry_date_end; ?>
-            <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="date-end" size="12" /></td>
+            <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" class="input-medium" /></td>
           <td><?php echo $entry_group; ?>
             <select name="filter_group">
               <?php foreach ($groups as $groups) { ?>
@@ -37,7 +37,7 @@
               <?php } ?>
               <?php } ?>
             </select></td>
-          <td style="text-align: right;"><a onclick="filter();" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></a></td>
+          <td style="text-align: right;"><button type="button" id="button-filter" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
         </tr>
       </table>
       <table class="table table-striped table-bordered table-hover">
@@ -76,41 +76,34 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-function filter() {
+$('#button-filter').on('click', function() {
 	url = 'index.php?route=report/sale_order&token=<?php echo $token; ?>';
 	
-	var filter_date_start = $('input[name=\'filter_date_start\']').attr('value');
+	var filter_date_start = $('input[name=\'filter_date_start\']').val();
 	
 	if (filter_date_start) {
 		url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
 	}
 
-	var filter_date_end = $('input[name=\'filter_date_end\']').attr('value');
+	var filter_date_end = $('input[name=\'filter_date_end\']').val();
 	
 	if (filter_date_end) {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
 		
-	var filter_group = $('select[name=\'filter_group\']').attr('value');
+	var filter_group = $('select[name=\'filter_group\']').val();
 	
 	if (filter_group) {
 		url += '&filter_group=' + encodeURIComponent(filter_group);
 	}
 	
-	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').attr('value');
+	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
 	
 	if (filter_order_status_id != 0) {
 		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
 	}	
 
 	location = url;
-}
-//--></script> 
-<script type="text/javascript"><!--
-$(document).ready(function() {
-	$('#date-start').datepicker({dateFormat: 'yy-mm-dd'});
-	
-	$('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

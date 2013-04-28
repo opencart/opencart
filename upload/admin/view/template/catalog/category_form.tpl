@@ -68,9 +68,9 @@
               <div class="controls">
                 <input type="text" name="path" value="<?php echo $path; ?>" placeholder="<?php echo $entry_parent; ?>" id="input-parent" data-toggle="dropdown" data-target="#autocomplete-parent" autocomplete="off" />
                 <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
-                <div id="autocomplete-parent" class="typeahead dropdown">
+                <div id="autocomplete-parent" class="dropdown">
                   <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
                   </ul>
                 </div>
               </div>
@@ -80,9 +80,9 @@
               <div class="controls">
                 <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" data-toggle="dropdown" data-target="#autocomplete-filter" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_filter; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="autocomplete-filter" class="typeahead dropdown">
+                <div id="autocomplete-filter" class="dropdown">
                   <ul class="dropdown-menu">
-                    <li class="disabled"><a><i class="icon-spinner icon-spin"></i><?php echo $text_loading; ?></a></li>
+                    <li class="disabled"><a><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
                   </ul>
                 </div>
                 <br />
@@ -312,9 +312,9 @@ $('input[name=\'filter\']').on('click keyup', function() {
 			url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
 			dataType: 'json',			
 			success: function(json) {
-				html = '';
-				
 				if (json.length) {
+					html = '';
+					
 					for (i = 0; i < json.length; i++) {
 						html += '<li data-value="' + json[i]['filter_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}

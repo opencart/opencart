@@ -387,8 +387,9 @@ class ControllerCatalogProduct extends Controller {
 				
 		$this->data['text_enabled'] = $this->language->get('text_enabled');		
 		$this->data['text_disabled'] = $this->language->get('text_disabled');		
-		$this->data['text_no_results'] = $this->language->get('text_no_results');		
-		$this->data['text_image_manager'] = $this->language->get('text_image_manager');		
+		$this->data['text_no_results'] = $this->language->get('text_no_results');	
+		$this->data['text_loading'] = $this->language->get('text_loading');		
+		$this->data['text_none'] = $this->language->get('text_none');		
 			
 		$this->data['column_image'] = $this->language->get('column_image');		
 		$this->data['column_name'] = $this->language->get('column_name');		
@@ -1333,7 +1334,7 @@ class ControllerCatalogProduct extends Controller {
 			if (isset($this->request->get['limit'])) {
 				$limit = $this->request->get['limit'];	
 			} else {
-				$limit = 20;	
+				$limit = 5;	
 			}			
 						
 			$data = array(

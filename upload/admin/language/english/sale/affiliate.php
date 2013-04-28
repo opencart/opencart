@@ -5,7 +5,6 @@ $_['heading_title']             = 'Affiliate';
 // Text
 $_['text_success']              = 'Success: You have modified affiliates!';
 $_['text_approved']             = 'You have approved %s accounts!';
-$_['text_wait']                 = 'Please Wait!';
 $_['text_balance']              = 'Balance';
 $_['text_cheque']               = 'Cheque';
 $_['text_paypal']               = 'PayPal';

@@ -287,11 +287,11 @@ $('#button-send').on('click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-send i').replaceWith('<i class="icon-spinner icon-spin"></i>');
-			$('#button-send').attr('disabled', true);
+			$('#button-send').prop('disabled', true);
 		},
 		complete: function() {
 			$('#button-send i').replaceWith('<i class="icon-envelope"></i>');
-			$('#button-send').attr('disabled', false);
+			$('#button-send').prop('disabled', false);
 		},				
 		success: function(json) {
 			$('.alert, .error').remove();

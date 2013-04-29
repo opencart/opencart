@@ -704,10 +704,10 @@ $('#autocomplete-customer').delegate('a', 'click', function(e) {
 		$('select[name=\'shipping_address\']').html($(this).parent().find('select[name=\'address\']').html());
 		$('select[name=\'payment_address\']').html($(this).parent().find('select[name=\'address\']').html());
 		
-		$('select[id=\'customer_group_id\']').attr('disabled', false);
+		$('select[id=\'customer_group_id\']').prop('disabled', false);
 		$('select[id=\'customer_group_id\']').attr('value', $(this).parent().find('input[name=\'customer_group_id\']').val());
 		$('select[id=\'customer_group_id\']').trigger('change');
-		$('select[id=\'customer_group_id\']').attr('disabled', true); 		
+		$('select[id=\'customer_group_id\']').prop('disabled', true); 		
 	}
 });
 
@@ -1138,13 +1138,13 @@ function upload(product_option_id) {
 			data: new FormData($(this).parent()[0]),
 			beforeSend: function() {
 				$('#button-option' + product_option_id).after(' <i class="icon-spinner icon-spin"></i>');
-				$('#button-option' + product_option_id).attr('disabled', true);
+				$('#button-option' + product_option_id).prop('disabled', true);
 				$('#option' + product_option_id + ' + .error').remove();
 			},	
 			complete: function() {
 				$('.icon-spinner').remove();
 				
-				$('#button-option' + product_option_id).attr('disabled', false);
+				$('#button-option' + product_option_id).prop('disabled', false);
 			},		
 			success: function(json) {
 				if (json['error']) {

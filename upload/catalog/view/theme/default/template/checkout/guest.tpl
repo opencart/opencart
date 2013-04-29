@@ -109,11 +109,11 @@ $('#button-guest').off().on('click', function() {
 		data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-guest').attr('disabled', true);
+			$('#button-guest').prop('disabled', true);
 			$('#button-guest').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
-			$('#button-guest').attr('disabled', false); 
+			$('#button-guest').prop('disabled', false); 
 			$('.loading').remove();
 		},			
 		success: function(json) {

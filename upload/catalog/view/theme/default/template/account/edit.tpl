@@ -47,11 +47,11 @@ $('#button-edit').on('click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-edit').after(' <i class="icon-spinner icon-spin"></i>');
-			$('#button-edit').attr('disabled', true);
+			$('#button-edit').prop('disabled', true);
 		},	
 		complete: function() {
 			$('.icon-spinner').remove();
-			$('#button-edit').attr('disabled', false); 
+			$('#button-edit').prop('disabled', false); 
 		},			
 		success: function(json) {
 			$('.warning, .error').remove();

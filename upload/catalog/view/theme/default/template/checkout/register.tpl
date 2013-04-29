@@ -121,11 +121,11 @@ $('#button-register').off().on('click', function() {
 		data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'password\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-register').attr('disabled', true);
+			$('#button-register').prop('disabled', true);
 			$('#button-register').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
-			$('#button-register').attr('disabled', false); 
+			$('#button-register').prop('disabled', false); 
 			$('.loading').remove();
 		},			
 		success: function(json) {

@@ -917,11 +917,11 @@ $('#button-history').on('click', function() {
 		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + encodeURIComponent($('input[name=\'notify\']').attr('checked') ? 1 : 0) + '&append=' + encodeURIComponent($('input[name=\'append\']').attr('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
 			$('.success, .warning').remove();
-			$('#button-history').attr('disabled', true);
+			$('#button-history').prop('disabled', true);
 			$('#history').prepend('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
-			$('#button-history').attr('disabled', false);
+			$('#button-history').prop('disabled', false);
 			$('.attention').remove();
 		},
 		success: function(html) {

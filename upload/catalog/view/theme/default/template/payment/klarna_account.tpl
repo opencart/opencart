@@ -110,14 +110,14 @@ $('#button-confirm').on('click', function() {
 		data: $('#payment input[type=\'text\'], #payment input[type=\'checkbox\']:checked, #payment input[type=\'radio\']:checked, #payment select'),
 		dataType: 'json',		
 		beforeSend: function() {
-			$('#button-confirm').attr('disabled', true);
+			$('#button-confirm').prop('disabled', true);
 			
 			$('.warning, .error').remove();	
 			
 			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
-			$('#button-confirm').attr('disabled', false);
+			$('#button-confirm').prop('disabled', false);
 			$('.attention').remove();
 		},		
 		success: function(json) {

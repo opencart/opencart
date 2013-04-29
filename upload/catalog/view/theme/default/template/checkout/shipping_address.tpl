@@ -93,11 +93,11 @@ $('#button-shipping-address').off().on('click', function() {
 		data: $('#shipping-address input[type=\'text\'], #shipping-address input[type=\'password\'], #shipping-address input[type=\'checkbox\']:checked, #shipping-address input[type=\'radio\']:checked, #shipping-address select'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-shipping-address').attr('disabled', true);
+			$('#button-shipping-address').prop('disabled', true);
 			$('#button-shipping-address').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
-			$('#button-shipping-address').attr('disabled', false);
+			$('#button-shipping-address').prop('disabled', false);
 			$('.loading').remove();
 		},			
 		success: function(json) {

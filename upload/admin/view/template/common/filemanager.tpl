@@ -670,11 +670,11 @@ $(document).ready(function() {
 			data: new FormData($(this).parent()[0]),
 			beforeSend: function() {
 				$('#button-upload').after('<img src="view/image/loading.gif" class="loading" style="padding-top: 5px; padding-left: 5px;" />');
-				$('#button-upload').attr('disabled', true);
+				$('#button-upload').prop('disabled', true);
 			},	
 			complete: function() {
 				$('.loading').remove();
-				$('#button-upload').attr('disabled', false);
+				$('#button-upload').prop('disabled', false);
 			},		
 			success: function(json) {
 				if (json['error']) {

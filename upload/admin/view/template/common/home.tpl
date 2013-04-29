@@ -78,10 +78,10 @@ $('.btn-group button').on('click', function() {
 		url: 'index.php?route=common/home/chart&token=<?php echo $token; ?>&range=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('.btn-group button').attr('disabled', true);
+			$('.btn-group button').prop('disabled', true);
 		},
 		complete: function() {
-			$('.btn-group button').attr('disabled', false);
+			$('.btn-group button').prop('disabled', false);
 		},		
 		success: function(json) {
 			var option = {	

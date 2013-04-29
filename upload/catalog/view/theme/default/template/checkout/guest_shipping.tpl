@@ -59,11 +59,11 @@ $('#button-guest-shipping').off().on('click', function() {
 		data: $('#shipping-address input[type=\'text\'], #shipping-address select'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-guest-shipping').attr('disabled', true);
+			$('#button-guest-shipping').prop('disabled', true);
 			$('#button-guest-shipping').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
-			$('#button-guest-shipping').attr('disabled', false); 
+			$('#button-guest-shipping').prop('disabled', false); 
 			$('.loading').remove();
 		},			
 		success: function(json) {

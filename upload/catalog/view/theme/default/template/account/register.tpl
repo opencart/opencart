@@ -141,10 +141,10 @@ $('#button-register').on('click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-register').after(' <i class="icon-spinner icon-spin"></i>');
-			$('#button-register').attr('disabled', true);
+			$('#button-register').prop('disabled', true);
 		},	
 		complete: function() {
-			$('#button-register').attr('disabled', false); 
+			$('#button-register').prop('disabled', false); 
 			$('.loading').remove();
 		},			
 		success: function(json) {
@@ -329,12 +329,12 @@ function upload(custom_field_id) {
 			data: new FormData($(this).parent()[0]),
 			beforeSend: function() {
 				$('#button-custom-field' + custom_field_id).after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-				$('#button-custom-field' + custom_field_id).attr('disabled', true);
+				$('#button-custom-field' + custom_field_id).prop('disabled', true);
 				$('#custom-field' + custom_field_id + ' + .error').remove();
 			},	
 			complete: function() {
 				$('.loading').remove();
-				$('#button-custom-field' + custom_field_id).attr('disabled', false);
+				$('#button-custom-field' + custom_field_id).prop('disabled', false);
 			},		
 			success: function(json) {
 				if (json['error']) {

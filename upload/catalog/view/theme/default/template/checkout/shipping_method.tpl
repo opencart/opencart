@@ -47,11 +47,11 @@ $('#button-shipping-method').off().on('click', function() {
 		data: $('#shipping-method input[type=\'radio\']:checked, #shipping-method textarea'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-shipping-method').attr('disabled', true);
+			$('#button-shipping-method').prop('disabled', true);
 			$('#button-shipping-method').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
-			$('#button-shipping-method').attr('disabled', false);
+			$('#button-shipping-method').prop('disabled', false);
 			$('.loading').remove();
 		},			
 		success: function(json) {

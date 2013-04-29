@@ -132,10 +132,10 @@ $('#content input[name=\'search\']').keydown(function(e) {
 
 $('select[name=\'category_id\']').on('change', function() {
 	if (this.value == '0') {
-		$('input[name=\'sub_category\']').attr('disabled', 'disabled');
-		$('input[name=\'sub_category\']').removeAttr('checked');
+		$('input[name=\'sub_category\']').prop('disabled', true);
+		$('input[name=\'sub_category\']').prop('checked', false);
 	} else {
-		$('input[name=\'sub_category\']').removeAttr('disabled');
+		$('input[name=\'sub_category\']').prop('disabled', false);
 	}
 });
 

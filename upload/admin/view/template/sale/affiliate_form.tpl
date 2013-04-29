@@ -366,11 +366,11 @@ $('#button-transaction').on('click', function() {
 			$('.alert').remove();
 			
 			$('#button-transaction i').replaceWith('<i class="icon-spinner icon-spin"></i>');
-			$('#button-transaction').attr('disabled', true);
+			$('#button-transaction').prop('disabled', true);
 		},
 		complete: function() {
 			$('#button-transaction i').replaceWith('<i class="icon-plus-sign"></i>');
-			$('#button-transaction').attr('disabled', false);
+			$('#button-transaction').prop('disabled', false);
 		},
 		success: function(html) {
 			$('#transaction').html(html);

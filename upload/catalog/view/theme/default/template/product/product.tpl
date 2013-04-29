@@ -392,12 +392,12 @@ function upload(product_option_id) {
 			data: new FormData($(this).parent()[0]),
 			beforeSend: function() {
 				$('#button-option' + product_option_id).after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-				$('#button-option' + product_option_id).attr('disabled', true);
+				$('#button-option' + product_option_id).prop('disabled', true);
 				$('#option' + product_option_id + ' + .error').remove();
 			},	
 			complete: function() {
 				$('.loading').remove();
-				$('#button-option' + product_option_id).attr('disabled', false);
+				$('#button-option' + product_option_id).prop('disabled', false);
 			},		
 			success: function(json) {
 				if (json['error']) {
@@ -446,11 +446,11 @@ $('#button-review').on('click', function() {
 		data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : '') + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()),
 		beforeSend: function() {
 			$('.success, .warning').remove();
-			$('#button-review').attr('disabled', true);
+			$('#button-review').prop('disabled', true);
 			$('#review-title').after('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
-			$('#button-review').attr('disabled', false);
+			$('#button-review').prop('disabled', false);
 			$('.attention').remove();
 		},
 		success: function(data) {

@@ -204,11 +204,11 @@ $('#button-history').on('click', function() {
 			$('.alert').remove();
 			
 			$('#button-history i').replaceWith('<i class="icon-spinner icon-spin"></i>');
-			$('#button-history').attr('disabled', true);
+			$('#button-history').prop('disabled', true);
 		},
 		complete: function() {
 			$('#button-history i').replaceWith('<i class="icon-plus-sign"></i>');
-			$('#button-history').attr('disabled', false);
+			$('#button-history').prop('disabled', false);
 		},
 		success: function(html) {
 			$('#history').html(html);

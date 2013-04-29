@@ -51,11 +51,11 @@ $('#file').on('change', function() {
 		data: new FormData($(this).parent()[0]),
 		beforeSend: function() {
 			$('#button-upload i').replaceWith('<i class="icon-spinner icon-spin"></i>');
-			$('#button-upload').attr('disabled', true);
+			$('#button-upload').prop('disabled', true);
 		},	
 		complete: function() {
 			$('#button-upload i').replaceWith('<i class="icon-upload"></i>');
-			$('#button-upload').attr('disabled', false);
+			$('#button-upload').prop('disabled', false);
 		},		
 		success: function(html) {
 			$('#output').html(html);
@@ -97,11 +97,11 @@ function unzip(file) {
 		data: new FormData($(this).parent()[0]),
 		beforeSend: function() {
 			$('#button-upload i').replaceWith('<i class="icon-spinner"></i>');
-			$('#button-upload').attr('disabled', true);
+			$('#button-upload').prop('disabled', true);
 		},	
 		complete: function() {
 			$('#button-upload i').replaceWith('<i class="icon-upload"></i>');
-			$('#button-upload').attr('disabled', false);
+			$('#button-upload').prop('disabled', false);
 		},		
 		success: function(html) {
 			$('#output').html(html);

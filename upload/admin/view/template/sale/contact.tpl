@@ -54,15 +54,12 @@
           <div class="controls">
             <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" />
             <a data-toggle="tooltip" title="<?php echo $help_customer; ?>"><i class="icon-question-sign icon-large"></i></a>
-                
-                <div id="autocomplete-customer" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div>            
-            
-            
-            
+            <div id="autocomplete-customer" class="dropdown">
+              <ul class="dropdown-menu">
+                <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
+              </ul>
+            </div>
+            <br />
             <div id="customer" class="well well-small scrollbox"></div>
           </div>
         </div>
@@ -71,28 +68,26 @@
           <div class="controls">
             <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" data-toggle="dropdown" data-target="#autocomplete-affiliate" autocomplete="off" />
             <a data-toggle="tooltip" title="<?php echo $help_affiliate; ?>"><i class="icon-question-sign icon-large"></i></a>
-            
-                 <div id="autocomplete-affiliate" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div>             
-            
+            <div id="autocomplete-affiliate" class="dropdown">
+              <ul class="dropdown-menu">
+                <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
+              </ul>
+            </div>
+            <br />
             <div id="affiliate" class="well well-small scrollbox"></div>
           </div>
         </div>
         <div class="control-group to" id="to-product">
           <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
           <div class="controls">
-            <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" data-toggle="dropdown" data-target="#autocomplete-affiliate" autocomplete="off" />
+            <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" />
             <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
-            
-                <div id="autocomplete-product" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div>  
-                            
+            <div id="autocomplete-product" class="dropdown">
+              <ul class="dropdown-menu">
+                <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
+              </ul>
+            </div>
+            <br />
             <div id="product" class="well well-small scrollbox"></div>
           </div>
         </div>
@@ -133,124 +128,152 @@ $('select[name=\'to\']').on('change', function() {
 $('select[name=\'to\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
+// Customer
+var timer = null;
 
+$('input[name=\'customers\']').on('click keyup', function() {
+	var input = this;
+	
+	if (timer != null) {
+		clearTimeout(timer);
+	}
 
-
-
-
-$.widget('custom.catcomplete', $.ui.autocomplete, {
-	_renderMenu: function(ul, items) {
-		var self = this, currentCategory = '';
-		
-		$.each(items, function(index, item) {
-			if (item.category != currentCategory) {
-				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
+	timer = setTimeout(function() {
+		$.ajax({
+			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			dataType: 'json',			
+			success: function(json) {
+				if (json.length) {
+					html = '';
+					
+					for (i in json) {
+						html += '<li class="disabled"><a href="#"><b>' + json[i]['name'] + '</b></a></li>';
+						
+						for (j = 0; j < json[i]['customer'].length; j++) {
+							customer = json[i]['customer'][j];
+							
+							html += '<li data-value="' + customer['customer_id'] + '"><a href="#">' + customer['name'] + '</a></li>';						
+						}
+					}
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
+				}
 				
-				currentCategory = item.category;
+				$($(input).attr('data-target')).find('ul').html(html);
 			}
-			
-			self._renderItem(ul, item);
 		});
+	}, 250);
+});
+
+$('#autocomplete-customer').delegate('a', 'click', function(e) {
+	e.preventDefault();
+	
+	var value = $(this).parent().attr('data-value');
+	
+	if (typeof value !== 'undefined') {
+		$('#customer' + value).remove();
+		
+		$('#customer').append('<div id="customer' + value + '"><i class="icon-minus-sign"></i> ' + $(this).text() + '<input type="hidden" name="customer[]" value="' + value + '" /></div>');
+		
 	}
 });
 
-$('input[name=\'customers\']').catcomplete({
-	delay: 500,
-	source: function(request, response) {
-		$.ajax({
-			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {	
-				response($.map(json, function(item) {
-					return {
-						category: item.customer_group,
-						label: item.name,
-						value: item.customer_id
-					}
-				}));
-			}
-		});
-		
-	}, 
-	select: function(event, ui) {
-		$('#customer' + ui.item.value).remove();
-		
-		$('#customer').append('<div id="customer' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="customer[]" value="' + ui.item.value + '" /></div>');
-				
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
-});
-
-$('#customer .icon-minus-sign').on('click', function() {
-	$(this).parent().remove();
-});
-//--></script> 
-<script type="text/javascript"><!--	
-$('input[name=\'affiliates\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
-		$.ajax({
-			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {		
-				response($.map(json, function(item) {
-					return {
-						label: item.name,
-						value: item.affiliate_id
-					}
-				}));
-			}
-		});
-		
-	}, 
-	select: function(event, ui) {
-		$('#affiliate' + ui.item.value).remove();
-		
-		$('#affiliate').append('<div id="affiliate' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="affiliate[]" value="' + ui.item.value + '" /></div>');
-				
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
-});
-
-$('#affiliate .icon-minus-sign').on('click', function() {
+$('#customer').delegate('.icon-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
 
-$('input[name=\'products\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
+// Affiliates
+var timer = null;
+
+$('input[name=\'affiliates\']').on('click keyup', function() {
+	var input = this;
+	
+	if (timer != null) {
+		clearTimeout(timer);
+	}
+
+	timer = setTimeout(function() {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {		
-				response($.map(json, function(item) {
-					return {
-						label: item.name,
-						value: item.product_id
+			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			dataType: 'json',			
+			success: function(json) {
+				if (json.length) {
+					html = '';
+					
+					for (i = 0; i < json.length; i++) {
+						html += '<li data-value="' + json[i]['customer_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';						
 					}
-				}));
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
+				}
+				
+				$($(input).attr('data-target')).find('ul').html(html);
 			}
 		});
-	}, 
-	select: function(event, ui) {
-		$('#product' + ui.item.value).remove();
-		
-		$('#product').append('<div id="product' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="product[]" value="' + ui.item.value + '" /></div>');
-				
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
+	}, 250);
 });
 
-$('#product .icon-minus-sign').on('click', function() {
+$('#autocomplete-affiliate').delegate('a', 'click', function(e) {
+	e.preventDefault();
+	
+	var value = $(this).parent().attr('data-value');
+	
+	if (typeof value !== 'undefined') {
+		$('#affiliate' + value).remove();
+		
+		$('#affiliate').append('<div id="affiliate' + value + '"><i class="icon-minus-sign"></i> ' + $(this).text() + '<input type="hidden" name="affiliate[]" value="' + value + '" /></div>');
+		
+	}
+});
+
+$('#affiliate').delegate('.icon-minus-sign', 'click', function() {
+	$(this).parent().remove();
+});
+
+// Products
+var timer = null;
+
+$('input[name=\'products\']').on('click keyup', function() {
+	var input = this;
+	
+	if (timer != null) {
+		clearTimeout(timer);
+	}
+
+	timer = setTimeout(function() {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			dataType: 'json',			
+			success: function(json) {
+				if (json.length) {
+					html = '';
+					
+					for (i = 0; i < json.length; i++) {
+						html += '<li data-value="' + json[i]['product_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
+					}
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
+				}
+				
+				$($(input).attr('data-target')).find('ul').html(html);
+			}
+		});
+	}, 250);
+});
+
+$('#autocomplete-product').delegate('a', 'click', function(e) {
+	e.preventDefault();
+	
+	var value = $(this).parent().attr('data-value');
+	
+	if (typeof value !== 'undefined') {
+		$('#product' + value).remove();
+		
+		$('#product').append('<div id="product' + value + '"><i class="icon-minus-sign"></i> ' + $(this).text() + '<input type="hidden" name="product[]" value="' + value + '" /></div>');
+	}
+});
+
+$('#product').delegate('.icon-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
 

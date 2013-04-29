@@ -45,3 +45,18 @@ $(document).ready(function() {
 		'html': true
 	});
 });
+
+!function ($) {
+	var autocomplete = function() {
+		
+	}
+	
+	$.fn.autocomplete = function (option) {
+	
+	}	
+	
+	$.fn.autocomplete.defaults = {
+		source: []
+	}
+	
+}(window.jQuery);

@@ -17,7 +17,9 @@ class ControllerSaleContact extends Controller {
 		$this->data['text_affiliate_all'] = $this->language->get('text_affiliate_all');	
 		$this->data['text_affiliate'] = $this->language->get('text_affiliate');	
 		$this->data['text_product'] = $this->language->get('text_product');	
-
+		$this->data['text_none'] = $this->language->get('text_none');
+		$this->data['text_loading'] = $this->language->get('text_loading');
+		
 		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_to'] = $this->language->get('entry_to');
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');

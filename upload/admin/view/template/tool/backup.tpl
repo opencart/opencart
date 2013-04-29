@@ -6,10 +6,14 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -29,12 +33,14 @@
         <div class="control-group">
           <div class="control-label"><?php echo $entry_backup; ?></div>
           <div class="controls">
-            <?php foreach ($tables as $table) { ?>
-            <label class="checkbox">
-              <input type="checkbox" name="backup[]" value="<?php echo $table; ?>" checked="checked" />
-              <?php echo $table; ?></label>
-            <?php } ?>
-            <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a></div>
+            <div class="well well-small scrollbox">
+              <?php foreach ($tables as $table) { ?>
+              <label class="checkbox">
+                <input type="checkbox" name="backup[]" value="<?php echo $table; ?>" checked="checked" />
+                <?php echo $table; ?></label>
+              <?php } ?>
+            </div>
+            <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
         </div>
         <button type="submit" class="btn"><i class="icon-download"></i> <?php echo $button_backup; ?></button>
       </form>

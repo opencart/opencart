@@ -52,31 +52,48 @@
         <div class="control-group to" id="to-customer">
           <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
           <div class="controls">
-            <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" />
-            
+            <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" />
             <a data-toggle="tooltip" title="<?php echo $help_customer; ?>"><i class="icon-question-sign icon-large"></i></a>
+                
+                <div id="autocomplete-customer" class="dropdown">
+                  <ul class="dropdown-menu">
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
+                  </ul>
+                </div>            
             
-            <div id="customer"></div>
+            
+            
+            <div id="customer" class="well well-small scrollbox"></div>
           </div>
         </div>
         <div class="control-group to" id="to-affiliate">
           <label class="control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>
           <div class="controls">
-            <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" />
-            
+            <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" data-toggle="dropdown" data-target="#autocomplete-affiliate" autocomplete="off" />
             <a data-toggle="tooltip" title="<?php echo $help_affiliate; ?>"><i class="icon-question-sign icon-large"></i></a>
             
-            <div id="affiliate"></div>
+                 <div id="autocomplete-affiliate" class="dropdown">
+                  <ul class="dropdown-menu">
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
+                  </ul>
+                </div>             
+            
+            <div id="affiliate" class="well well-small scrollbox"></div>
           </div>
         </div>
         <div class="control-group to" id="to-product">
           <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
           <div class="controls">
-            <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
-            
+            <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" data-toggle="dropdown" data-target="#autocomplete-affiliate" autocomplete="off" />
             <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
             
-            <div id="product"></div>
+                <div id="autocomplete-product" class="dropdown">
+                  <ul class="dropdown-menu">
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
+                  </ul>
+                </div>  
+                            
+            <div id="product" class="well well-small scrollbox"></div>
           </div>
         </div>
         <div class="control-group">
@@ -116,6 +133,11 @@ $('select[name=\'to\']').on('change', function() {
 $('select[name=\'to\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
+
+
+
+
+
 $.widget('custom.catcomplete', $.ui.autocomplete, {
 	_renderMenu: function(ul, items) {
 		var self = this, currentCategory = '';

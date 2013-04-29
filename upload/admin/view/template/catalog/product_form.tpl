@@ -302,7 +302,7 @@
               <label class="control-label" for="input-manufacturer"><?php echo $entry_manufacturer; ?></label>
               <div class="controls">
                 <input type="text" name="manufacturer" value="<?php echo $manufacturer ?>" placeholder="<?php echo $entry_manufacturer; ?>" id="input-manufacturer" data-toggle="dropdown" data-target="#autocomplete-manufacturer" autocomplete="off" />
-                <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturer_id; ?>" autocomplete="off" />
+                <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturer_id; ?>" />
                 <a data-toggle="tooltip" title="<?php echo $help_manufacturer; ?>"><i class="icon-question-sign icon-large"></i></a>
                 <div id="autocomplete-manufacturer" class="dropdown">
                   <ul class="dropdown-menu">
@@ -1101,8 +1101,6 @@ function addAttribute() {
     html += '</tr>';
 	
 	$('#attribute tbody').append(html);
-	
-	attributeautocomplete(attribute_row);
 	
 	attribute_row++;
 }

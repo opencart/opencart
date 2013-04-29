@@ -124,9 +124,15 @@
             <div class="control-group">
               <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
               <div class="controls">
-                <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
+                <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="coupon-product">
+                <div id="autocomplete-product" class="dropdown">
+                  <ul class="dropdown-menu">
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
+                  </ul>
+                </div>
+                <br />
+                <div id="coupon-product" class="well well-small scrollbox">
                   <?php foreach ($coupon_product as $coupon_product) { ?>
                   <div id="coupon-product<?php echo $coupon_product['product_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $coupon_product['name']; ?>
                     <input type="hidden" name="coupon_product[]" value="<?php echo $coupon_product['product_id']; ?>" />
@@ -138,9 +144,15 @@
             <div class="control-group">
               <label class="control-label" for="input-category"><?php echo $entry_category; ?></label>
               <div class="controls">
-                <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" />
+                <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" data-toggle="dropdown" data-target="#autocomplete-category" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_category; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="coupon-category">
+                <div id="autocomplete-category" class="dropdown">
+                  <ul class="dropdown-menu">
+                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
+                  </ul>
+                </div>
+                <br />
+                <div id="coupon-category" class="well well-small scrollbox">
                   <?php foreach ($coupon_category as $coupon_category) { ?>
                   <div id="coupon-category<?php echo $coupon_category['category_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $coupon_category['name']; ?>
                     <input type="hidden" name="coupon_category[]" value="<?php echo $coupon_category['category_id']; ?>" />
@@ -201,7 +213,7 @@
 <script type="text/javascript"><!--
 var timer = null;
 
-$('input[name=\'related\']').on('click keyup', function() {
+$('input[name=\'product\']').on('click keyup', function() {
 	var input = this;
 	
 	if (timer != null) {
@@ -229,89 +241,66 @@ $('input[name=\'related\']').on('click keyup', function() {
 	}, 250);
 });
 
-$('#autocomplete-related').delegate('a', 'click', function(e) {
+$('#autocomplete-product').delegate('a', 'click', function(e) {
 	e.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	
 	if (typeof value !== 'undefined') {
-		$('#product-related' + value).remove();
+		$('#coupon-product' + value).remove();
 		
-		$('#product-related').append('<div id="product-related' + value + '"><i class="icon-minus-sign"></i> ' + $(this).text() + '<input type="hidden" name="product_related[]" value="' + value + '" /></div>');
+		$('#coupon-product').append('<div id="product-product' + value + '"><i class="icon-minus-sign"></i> ' + $(this).text() + '<input type="hidden" name="coupon_product[]" value="' + value + '" /></div>');
 	}
 });
 
-$('#product-related').delegate('.icon-minus-sign', 'click', function() {
+$('#coupon-product').delegate('.icon-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
 
+// Category
+var timer = null;
 
+$('input[name=\'category\']').on('click keyup', function() {
+	var input = this;
+	
+	if (timer != null) {
+		clearTimeout(timer);
+	}
 
-
-$('input[name=\'product\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
+	timer = setTimeout(function() {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {		
-				response($.map(json, function(item) {
-					return {
-						label: item.name,
-						value: item.product_id
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			dataType: 'json',			
+			success: function(json) {
+				if (json.length) {
+					html = '';
+					
+					for (i = 0; i < json.length; i++) {
+						html += '<li data-value="' + json[i]['category_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
 					}
-				}));
-			}
-		});
-	}, 
-	select: function(event, ui) {
-		$('#coupon-product' + ui.item.value).remove();
-		
-		$('#coupon-product').append('<div id="coupon-product' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="coupon_product[]" value="' + ui.item.value + '" /></div>');
-		
-		$('input[name=\'product\']').val('');
-		
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
-});
-
-$('#coupon-product .icon-minus-sign').on('click', function() {
-	$(this).parent().remove();
-});
-
-$('input[name=\'category\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
-		$.ajax({
-			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {		
-				response($.map(json, function(item) {
-					return {
-						label: item.name,
-						value: item.category_id
-					}
-				}));
-			}
-		});
-		
-	}, 
-	select: function(event, ui) {
-		$('#coupon-category' + ui.item.value).remove();
-		
-		$('#coupon-category').append('<div id="product-category' + ui.item.value + '"><i class="icon-minus-sign"></i> ' + ui.item.label + '<input type="hidden" name="coupon_category[]" value="' + ui.item.value + '" /></div>');
+				} else {
+					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
+				}
 				
-		return false;
-	},
-	focus: function(event, ui) {
-      return false;
-   }
+				$($(input).attr('data-target')).find('ul').html(html);
+			}
+		});
+	}, 250);
 });
 
-$('#coupon-category .icon-minus-sign').on('click', function() {
+$('#autocomplete-category').delegate('a', 'click', function(e) {
+	e.preventDefault();
+	
+	var value = $(this).parent().attr('data-value');
+	
+	if (typeof value !== 'undefined') {
+		$('#coupon-category' + value).remove();
+		
+		$('#coupon-category').append('<div id="coupon-category' + value + '"><i class="icon-minus-sign"></i> ' + $(this).text() + '<input type="hidden" name="coupon_category[]" value="' + value + '" /></div>');
+	}
+});
+
+$('#coupon-category').delegate('.icon-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
 //--></script>

@@ -676,7 +676,7 @@ $('input[name=\'customer\']').on('click keyup', function() {
 						}
 					}
 
-					$($(input).prop('data-target')).find('ul').html(html);
+					$($(input).attr('data-target')).find('ul').html(html);
 				} else {
 					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
 				}
@@ -695,19 +695,19 @@ $('#autocomplete-customer').delegate('a', 'click', function(e) {
 	if (typeof value !== 'undefined') {
 		$('input[name=\'customer\']').val($(this).text());
 		$('input[name=\'customer_id\']').val(value);
-		$('input[name=\'firstname\']').prop('value', $(this).parent().find('input[name=\'firstname\']').val());
-		$('input[name=\'lastname\']').prop('value', $(this).parent().find('input[name=\'lastname\']').val());
-		$('input[name=\'email\']').prop('value', $(this).parent().find('input[name=\'email\']').val());
-		$('input[name=\'telephone\']').prop('value', $(this).parent().find('input[name=\'telephone\']').val());
-		$('input[name=\'fax\']').prop('value', $(this).parent().find('input[name=\'fax\']').val());
+		$('input[name=\'firstname\']').attr('value', $(this).parent().find('input[name=\'firstname\']').val());
+		$('input[name=\'lastname\']').attr('value', $(this).parent().find('input[name=\'lastname\']').val());
+		$('input[name=\'email\']').attr('value', $(this).parent().find('input[name=\'email\']').val());
+		$('input[name=\'telephone\']').attr('value', $(this).parent().find('input[name=\'telephone\']').val());
+		$('input[name=\'fax\']').attr('value', $(this).parent().find('input[name=\'fax\']').val());
 		
 		$('select[name=\'shipping_address\']').html($(this).parent().find('select[name=\'address\']').html());
 		$('select[name=\'payment_address\']').html($(this).parent().find('select[name=\'address\']').html());
 		
-		$('select[id=\'customer_group_id\']').prop('disabled', false);
-		$('select[id=\'customer_group_id\']').prop('value', $(this).parent().find('input[name=\'customer_group_id\']').val());
+		$('select[id=\'customer_group_id\']').attr('disabled', false);
+		$('select[id=\'customer_group_id\']').attr('value', $(this).parent().find('input[name=\'customer_group_id\']').val());
 		$('select[id=\'customer_group_id\']').trigger('change');
-		$('select[id=\'customer_group_id\']').prop('disabled', true); 		
+		$('select[id=\'customer_group_id\']').attr('disabled', true); 		
 	}
 });
 
@@ -735,8 +735,8 @@ $('input[name=\'affiliate\']').autocomplete({
 		});
 	}, 
 	select: function(event, ui) { 
-		$('input[name=\'affiliate\']').prop('value', ui.item['label']);
-		$('input[name=\'affiliate_id\']').prop('value', ui.item['value']);
+		$('input[name=\'affiliate\']').attr('value', ui.item['label']);
+		$('input[name=\'affiliate_id\']').attr('value', ui.item['value']);
 			
 		return false; 
 	},
@@ -802,14 +802,14 @@ $('select[name=\'payment_address\']').on('change', function() {
 		},		
 		success: function(json) {
 			if (json != '') {	
-				$('input[name=\'payment_firstname\']').prop('value', json['firstname']);
-				$('input[name=\'payment_lastname\']').prop('value', json['lastname']);
-				$('input[name=\'payment_company\']').prop('value', json['company']);
-				$('input[name=\'payment_address_1\']').prop('value', json['address_1']);
-				$('input[name=\'payment_address_2\']').prop('value', json['address_2']);
-				$('input[name=\'payment_city\']').prop('value', json['city']);
-				$('input[name=\'payment_postcode\']').prop('value', json['postcode']);
-				$('select[name=\'payment_country_id\']').prop('value', json['country_id']);
+				$('input[name=\'payment_firstname\']').attr('value', json['firstname']);
+				$('input[name=\'payment_lastname\']').attr('value', json['lastname']);
+				$('input[name=\'payment_company\']').attr('value', json['company']);
+				$('input[name=\'payment_address_1\']').attr('value', json['address_1']);
+				$('input[name=\'payment_address_2\']').attr('value', json['address_2']);
+				$('input[name=\'payment_city\']').attr('value', json['city']);
+				$('input[name=\'payment_postcode\']').attr('value', json['postcode']);
+				$('select[name=\'payment_country_id\']').attr('value', json['country_id']);
 				
 				payment_zone_id = json['zone_id'];
 				
@@ -876,14 +876,14 @@ $('select[name=\'shipping_address\']').on('change', function() {
 		},		
 		success: function(json) {
 			if (json != '') {	
-				$('input[name=\'shipping_firstname\']').prop('value', json['firstname']);
-				$('input[name=\'shipping_lastname\']').prop('value', json['lastname']);
-				$('input[name=\'shipping_company\']').prop('value', json['company']);
-				$('input[name=\'shipping_address_1\']').prop('value', json['address_1']);
-				$('input[name=\'shipping_address_2\']').prop('value', json['address_2']);
-				$('input[name=\'shipping_city\']').prop('value', json['city']);
-				$('input[name=\'shipping_postcode\']').prop('value', json['postcode']);
-				$('select[name=\'shipping_country_id\']').prop('value', json['country_id']);
+				$('input[name=\'shipping_firstname\']').attr('value', json['firstname']);
+				$('input[name=\'shipping_lastname\']').attr('value', json['lastname']);
+				$('input[name=\'shipping_company\']').attr('value', json['company']);
+				$('input[name=\'shipping_address_1\']').attr('value', json['address_1']);
+				$('input[name=\'shipping_address_2\']').attr('value', json['address_2']);
+				$('input[name=\'shipping_city\']').attr('value', json['city']);
+				$('input[name=\'shipping_postcode\']').attr('value', json['postcode']);
+				$('select[name=\'shipping_country_id\']').attr('value', json['country_id']);
 				
 				shipping_zone_id = json['zone_id'];
 				
@@ -915,8 +915,8 @@ $('input[name=\'product\']').autocomplete({
 		});
 	}, 
 	select: function(event, ui) {
-		$('input[name=\'product\']').prop('value', ui.item['label']);
-		$('input[name=\'product_id\']').prop('value', ui.item['value']);
+		$('input[name=\'product\']').attr('value', ui.item['label']);
+		$('input[name=\'product_id\']').attr('value', ui.item['value']);
 		
 		if (ui.item['option'] != '') {
 			html = '';
@@ -1138,13 +1138,13 @@ function upload(product_option_id) {
 			data: new FormData($(this).parent()[0]),
 			beforeSend: function() {
 				$('#button-option' + product_option_id).after(' <i class="icon-spinner icon-spin"></i>');
-				$('#button-option' + product_option_id).prop('disabled', true);
+				$('#button-option' + product_option_id).attr('disabled', true);
 				$('#option' + product_option_id + ' + .error').remove();
 			},	
 			complete: function() {
 				$('.icon-spinner').remove();
 				
-				$('#button-option' + product_option_id).prop('disabled', false);
+				$('#button-option' + product_option_id).attr('disabled', false);
 			},		
 			success: function(json) {
 				if (json['error']) {
@@ -1154,7 +1154,7 @@ function upload(product_option_id) {
 				if (json['success']) {
 					alert(json['success']);
 					
-					$('input[name=\'option[' + product_option_id + ']\']').prop('value', json['file']);
+					$('input[name=\'option[' + product_option_id + ']\']').attr('value', json['file']);
 				}
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -1172,22 +1172,22 @@ function upload(product_option_id) {
 <script type="text/javascript"><!--
 $('select[name=\'payment\']').on('change', function() {
 	if (this.value) {
-		$('input[name=\'payment_method\']').prop('value', $('select[name=\'payment\'] option:selected').text());
+		$('input[name=\'payment_method\']').attr('value', $('select[name=\'payment\'] option:selected').text());
 	} else {
-		$('input[name=\'payment_method\']').prop('value', '');
+		$('input[name=\'payment_method\']').attr('value', '');
 	}
 	
-	$('input[name=\'payment_code\']').prop('value', this.value);
+	$('input[name=\'payment_code\']').attr('value', this.value);
 });
 
 $('select[name=\'shipping\']').on('change', function() {
 	if (this.value) {
-		$('input[name=\'shipping_method\']').prop('value', $('select[name=\'shipping\'] option:selected').text());
+		$('input[name=\'shipping_method\']').attr('value', $('select[name=\'shipping\'] option:selected').text());
 	} else {
-		$('input[name=\'shipping_method\']').prop('value', '');
+		$('input[name=\'shipping_method\']').attr('value', '');
 	}
 	
-	$('input[name=\'shipping_code\']').prop('value', this.value);
+	$('input[name=\'shipping_code\']').attr('value', this.value);
 });
 //--></script> 
 <script type="text/javascript"><!--
@@ -1196,13 +1196,13 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 	data += '#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea, ';
 	data += '#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea, ';
 	
-	if ($(this).prop('id') == 'button-product') {
+	if ($(this).attr('id') == 'button-product') {
 		data += '#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select, #tab-product textarea, ';
 	} else {
 		data += '#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea, ';
 	}
 	
-	if ($(this).prop('id') == 'button-voucher') {
+	if ($(this).attr('id') == 'button-voucher') {
 		data += '#tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea, ';
 	} else {
 		data += '#voucher input[type=\'text\'], #voucher input[type=\'hidden\'], #voucher input[type=\'radio\']:checked, #voucher input[type=\'checkbox\']:checked, #voucher select, #voucher textarea, ';
@@ -1330,10 +1330,10 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 						}						
 					}
 				} else {
-					$('input[name=\'product\']').prop('value', '');
-					$('input[name=\'product_id\']').prop('value', '');
+					$('input[name=\'product\']').attr('value', '');
+					$('input[name=\'product_id\']').attr('value', '');
 					$('#option td').remove();			
-					$('input[name=\'quantity\']').prop('value', '1');			
+					$('input[name=\'quantity\']').attr('value', '1');			
 				}
 				
 				// Voucher
@@ -1358,12 +1358,12 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 						$('input[name=\'amount\']').after('<span class="error">' + json['error']['vouchers']['amount'] + '</span>');
 					}	
 				} else {
-					$('input[name=\'from_name\']').prop('value', '');	
-					$('input[name=\'from_email\']').prop('value', '');	
-					$('input[name=\'to_name\']').prop('value', '');
-					$('input[name=\'to_email\']').prop('value', '');	
-					$('textarea[name=\'message\']').prop('value', '');	
-					$('input[name=\'amount\']').prop('value', '25.00');
+					$('input[name=\'from_name\']').attr('value', '');	
+					$('input[name=\'from_email\']').attr('value', '');	
+					$('input[name=\'to_name\']').attr('value', '');
+					$('input[name=\'to_email\']').attr('value', '');	
+					$('textarea[name=\'message\']').attr('value', '');	
+					$('input[name=\'amount\']').attr('value', '25.00');
 				}
 				
 				// Shipping Method	
@@ -1391,17 +1391,17 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					$('.box').before('<div class="alert alert-error">' + json['error']['reward'] + '</div>');
 				}	
 			} else {
-				$('input[name=\'product\']').prop('value', '');
-				$('input[name=\'product_id\']').prop('value', '');
+				$('input[name=\'product\']').attr('value', '');
+				$('input[name=\'product_id\']').attr('value', '');
 				$('#option td').remove();	
-				$('input[name=\'quantity\']').prop('value', '1');	
+				$('input[name=\'quantity\']').attr('value', '1');	
 				
-				$('input[name=\'from_name\']').prop('value', '');	
-				$('input[name=\'from_email\']').prop('value', '');	
-				$('input[name=\'to_name\']').prop('value', '');
-				$('input[name=\'to_email\']').prop('value', '');	
-				$('textarea[name=\'message\']').prop('value', '');	
-				$('input[name=\'amount\']').prop('value', '25.00');									
+				$('input[name=\'from_name\']').attr('value', '');	
+				$('input[name=\'from_email\']').attr('value', '');	
+				$('input[name=\'to_name\']').attr('value', '');
+				$('input[name=\'to_email\']').attr('value', '');	
+				$('textarea[name=\'message\']').attr('value', '');	
+				$('input[name=\'amount\']').attr('value', '25.00');									
 			}
 
 			if (json['success']) {
@@ -1588,7 +1588,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				
 					if (!json['shipping_method'][i]['error']) {
 						for (j in json['shipping_method'][i]['quote']) {
-							if (json['shipping_method'][i]['quote'][j]['code'] == $('input[name=\'shipping_code\']').prop('value')) {
+							if (json['shipping_method'][i]['quote'][j]['code'] == $('input[name=\'shipping_code\']').attr('value')) {
 								html += '<option value="' + json['shipping_method'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_method'][i]['quote'][j]['title'] + '</option>';
 							} else {
 								html += '<option value="' + json['shipping_method'][i]['quote'][j]['code'] + '">' + json['shipping_method'][i]['quote'][j]['title'] + '</option>';
@@ -1603,13 +1603,13 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 		
 				$('select[name=\'shipping\']').html(html);	
 				
-				if ($('select[name=\'shipping\'] option:selected').prop('value')) {
-					$('input[name=\'shipping_method\']').prop('value', $('select[name=\'shipping\'] option:selected').text());
+				if ($('select[name=\'shipping\'] option:selected').attr('value')) {
+					$('input[name=\'shipping_method\']').attr('value', $('select[name=\'shipping\'] option:selected').text());
 				} else {
-					$('input[name=\'shipping_method\']').prop('value', '');
+					$('input[name=\'shipping_method\']').attr('value', '');
 				}
 				
-				$('input[name=\'shipping_code\']').prop('value', $('select[name=\'shipping\'] option:selected').prop('value'));	
+				$('input[name=\'shipping_code\']').attr('value', $('select[name=\'shipping\'] option:selected').attr('value'));	
 			}
 						
 			// Payment Methods
@@ -1617,7 +1617,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				html = '<option value=""><?php echo $text_select; ?></option>';
 				
 				for (i in json['payment_method']) {
-					if (json['payment_method'][i]['code'] == $('input[name=\'payment_code\']').prop('value')) {
+					if (json['payment_method'][i]['code'] == $('input[name=\'payment_code\']').attr('value')) {
 						html += '<option value="' + json['payment_method'][i]['code'] + '" selected="selected">' + json['payment_method'][i]['title'] + '</option>';
 					} else {
 						html += '<option value="' + json['payment_method'][i]['code'] + '">' + json['payment_method'][i]['title'] + '</option>';
@@ -1626,13 +1626,13 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 		
 				$('select[name=\'payment\']').html(html);
 				
-				if ($('select[name=\'payment\'] option:selected').prop('value')) {
-					$('input[name=\'payment_method\']').prop('value', $('select[name=\'payment\'] option:selected').text());
+				if ($('select[name=\'payment\'] option:selected').attr('value')) {
+					$('input[name=\'payment_method\']').attr('value', $('select[name=\'payment\'] option:selected').text());
 				} else {
-					$('input[name=\'payment_method\']').prop('value', '');
+					$('input[name=\'payment_method\']').attr('value', '');
 				}
 				
-				$('input[name=\'payment_code\']').prop('value', $('select[name=\'payment\'] option:selected').prop('value'));
+				$('input[name=\'payment_code\']').attr('value', $('select[name=\'payment\'] option:selected').attr('value'));
 			}	
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

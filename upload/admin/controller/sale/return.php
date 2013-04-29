@@ -558,7 +558,9 @@ class ControllerSaleReturn extends Controller {
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_opened'] = $this->language->get('text_opened');
 		$this->data['text_unopened'] = $this->language->get('text_unopened');	
-			
+		$this->data['text_none'] = $this->language->get('text_none');
+		$this->data['text_loading'] = $this->language->get('text_loading');
+					
 		$this->data['entry_customer'] = $this->language->get('entry_customer');
 		$this->data['entry_order_id'] = $this->language->get('entry_order_id');
 		$this->data['entry_date_ordered'] = $this->language->get('entry_date_ordered');

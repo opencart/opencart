@@ -44,7 +44,7 @@
               </label>
               <?php } ?>
             </div>
-            <p><a onclick="$(this).parent().find('[type=\'checkbox\']').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find('[type=\'checkbox\']').attr('checked', false);"><?php echo $text_unselect_all; ?></a></p>
+            <p><a onclick="$(this).parent().find('[type=\'checkbox\']').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find('[type=\'checkbox\']').prop('checked', false);"><?php echo $text_unselect_all; ?></a></p>
           </div>
         </div>
         <div class="control-group">
@@ -63,7 +63,7 @@
               </label>
               <?php } ?>
             </div>
-            <a onclick="$(this).parent().find('[type=\'checkbox\']').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find('[type=\'checkbox\']').attr('checked', false);"><?php echo $text_unselect_all; ?></a></div>
+            <a onclick="$(this).parent().find('[type=\'checkbox\']').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find('[type=\'checkbox\']').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
         </div>
       </form>
     </div>

@@ -11,7 +11,7 @@
       <?php if ($error_warning) { ?>
       <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
       <?php } ?>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="control-group">
           <label class="control-label" for="input-username"><?php echo $entry_username; ?></label>
           <div class="controls">

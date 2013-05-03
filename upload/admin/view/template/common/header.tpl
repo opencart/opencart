@@ -20,17 +20,11 @@
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
 <link type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" />
 <link type="text/css" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-<link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" />
-
-<script type="text/javascript" src="view/javascript/jquery/select2/select2.js"></script>
-<link type="text/css" href="view/javascript/jquery/select2/select2.css" rel="stylesheet" />
-    
+<link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" />    
 <?php foreach ($styles as $style) { ?>
 <link type="text/css" href="<?php echo $style['href']; ?>" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
-
 <script src="view/javascript/common.js"></script>
-
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>

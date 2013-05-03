@@ -51,6 +51,7 @@ $(document).ready(function() {
 	function Autocomplete(element, options) {
 		this.element = element;
 		this.options = options;
+		this.timer = null;
 		
 		if (!$(element).parent().has('.dropdown').length) {
 			$(element).attr('autocomplete', 'off');
@@ -73,20 +74,30 @@ $(document).ready(function() {
 				$(object.element).parent().removeClass('open');
 			}, 300, this);
 		},
-		keypress: function(event) {
-			response = function() {
-				alert($(this.element).val());
-			}
-			
-			this.options.source($(this.element).val(), response);
-			
-			this.render();
-		},
 		click: function(e) {
 			e.preventDefault();
 				
 			this.options.select();
-		},					
+		},
+		keypress: function(event) {
+			if (!this.timer) {
+				this.timer = setTimeout(function(object) {
+					//alert($(object.element).val());
+					
+					var response = object.response;
+					
+					object.options.source($(object.element).val(), response);
+					
+					//this.render();
+
+					
+					clearTimeout(object.timer);
+				}, 300, this);
+			}
+		},
+		response: function() {
+			alert($(this.element).val());
+		},
 		render: function() {
 			/*
 			html = '';
@@ -112,7 +123,7 @@ $(document).ready(function() {
 			$(this.element).parent().find('ul.dropdown-menu').html(html);
 			
 			$(this.element).parent().find('ul.dropdown-menu a').on('click', $.proxy(this.click, this));
-		}
+		}		
 	};
 
 	$.fn.autocomplete = function(option) {

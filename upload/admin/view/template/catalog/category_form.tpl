@@ -71,8 +71,6 @@
                 <script type="text/javascript"><!--
 $('#input-parent').autocomplete({
 	'source': function(request, response) {
-		//alert('hi');
-		
 		response();
 		
 		$.ajax({

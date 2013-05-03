@@ -66,13 +66,41 @@
             <div class="control-group">
               <label class="control-label" for="input-parent"><?php echo $entry_parent; ?></label>
               <div class="controls">
-                <input type="text" name="path" value="<?php echo $path; ?>" placeholder="<?php echo $entry_parent; ?>" id="input-parent" data-toggle="dropdown" data-target="#autocomplete-parent" autocomplete="off" />
+                <input type="text" name="path" value="<?php echo $path; ?>" placeholder="<?php echo $entry_parent; ?>" id="input-parent" />
                 <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
-                <div id="autocomplete-parent" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div>
+                <script type="text/javascript"><!--
+$('#input-parent').autocomplete({
+	'source': function(request, response) {
+		//alert('hi');
+		
+		response();
+		
+		$.ajax({
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',			
+			success: function(json) {
+				
+				/*
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['category_id']
+					}
+				}));
+				*/
+			}
+		});
+	},
+	'select': function(item) {
+		var value = $(this).parent().attr('data-value');
+		
+		if (typeof value !== 'undefined') {
+			$('input[name=\'path\']').val($(this).text());
+			$('input[name=\'parent_id\']').val(value);
+		}
+	}	
+});
+//--></script> 
               </div>
             </div>
             <div class="control-group">
@@ -98,28 +126,26 @@
             <div class="control-group">
               <div class="control-label"><?php echo $entry_store; ?></div>
               <div class="controls">
-                <div class="well well-small scrollbox">
-                  <label class="checkbox">
-                    <?php if (in_array(0, $category_store)) { ?>
-                    <input type="checkbox" name="category_store[]" value="0" checked="checked" />
-                    <?php echo $text_default; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="category_store[]" value="0" />
-                    <?php echo $text_default; ?>
-                    <?php } ?>
-                  </label>
-                  <?php foreach ($stores as $store) { ?>
-                  <label class="checkbox">
-                    <?php if (in_array($store['store_id'], $category_store)) { ?>
-                    <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-                    <?php echo $store['name']; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" />
-                    <?php echo $store['name']; ?>
-                    <?php } ?>
-                  </label>
+                <label class="checkbox">
+                  <?php if (in_array(0, $category_store)) { ?>
+                  <input type="checkbox" name="category_store[]" value="0" checked="checked" />
+                  <?php echo $text_default; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="category_store[]" value="0" />
+                  <?php echo $text_default; ?>
                   <?php } ?>
-                </div>
+                </label>
+                <?php foreach ($stores as $store) { ?>
+                <label class="checkbox">
+                  <?php if (in_array($store['store_id'], $category_store)) { ?>
+                  <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
+                  <?php echo $store['name']; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" />
+                  <?php echo $store['name']; ?>
+                  <?php } ?>
+                </label>
+                <?php } ?>
               </div>
             </div>
             <div class="control-group">
@@ -258,6 +284,7 @@ CKEDITOR.replace('input-description<?php echo $language['language_id']; ?>', {
 <?php } ?>
 //--></script> 
 <script type="text/javascript"><!--
+/*
 var timer = null;
 
 $('input[name=\'path\']').on('click keyup', function() {
@@ -296,6 +323,7 @@ $('#autocomplete-parent').delegate('a', 'click', function(e) {
 		$('input[name=\'parent_id\']').val(value);
 	}
 });
+*/
 //--></script> 
 <script type="text/javascript"><!--
 var timer = null;

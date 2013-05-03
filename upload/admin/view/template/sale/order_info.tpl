@@ -26,10 +26,14 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-order">
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $text_order_id; ?></label>
+              <div class="controls"> #<?php echo $order_id; ?> </div>
+            </div>
             <table class="form">
               <tr>
-                <td><?php echo $text_order_id; ?></td>
-                <td>#<?php echo $order_id; ?></td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td><?php echo $text_invoice_no; ?></td>

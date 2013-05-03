@@ -13,17 +13,24 @@
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
+
 <script type="text/javascript" src="//code.jquery.com/jquery-2.0.0.min.js"></script>
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
 <link href="view/javascript/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
-<script src="view/javascript/bootstrap/js/bootstrap.js"></script>
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="view/stylesheet/stylesheet.css" />
+<script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
+<link type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" />
+<link type="text/css" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" />
+
+<script type="text/javascript" src="view/javascript/jquery/select2/select2.js"></script>
+<link type="text/css" href="view/javascript/jquery/select2/select2.css" rel="stylesheet" />
+    
 <?php foreach ($styles as $style) { ?>
-<link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
+<link type="text/css" href="<?php echo $style['href']; ?>" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
+
 <script src="view/javascript/common.js"></script>
+
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>

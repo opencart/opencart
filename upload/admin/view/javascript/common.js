@@ -46,17 +46,90 @@ $(document).ready(function() {
 	});
 });
 
-!function ($) {
-	var autocomplete = function() {
+// Added my own autocomplete method for jquery since bootstraps is pretty much useless	
+(function($) {
+	function Autocomplete(element, options) {
+		this.element = element;
+		this.options = options;
 		
+		if (!$(element).parent().has('.dropdown').length) {
+			$(element).attr('autocomplete', 'off');
+			
+			$(element).wrap('<div class="dropdown" style="border: 1px solid #000000;"></div>');
+			$(element).after('<ul class="dropdown-menu"></ul>');
+
+			$(element).on('focus', $.proxy(this.focus, this));
+			$(element).on('blur', $.proxy(this.blur, this));
+			$(element).on('keypress', $.proxy(this.keypress, this));
+		}
 	}
 	
-	$.fn.autocomplete = function (option) {
-	
-	}	
-	
-	$.fn.autocomplete.defaults = {
-		source: []
+	Autocomplete.prototype = {
+		focus: function(event) {
+			$(this.element).parent().addClass('open');
+		},
+		blur: function(event) {
+			setTimeout(function(object) {
+				$(object.element).parent().removeClass('open');
+			}, 300, this);
+		},
+		keypress: function(event) {
+			response = function() {
+				alert($(this.element).val());
+			}
+			
+			this.options.source($(this.element).val(), response);
+			
+			this.render();
+		},
+		click: function(e) {
+			e.preventDefault();
+				
+			this.options.select();
+		},					
+		render: function() {
+			/*
+			html = '';
+			
+			if (json.length) {
+				for (i in json) {
+					if (json[i]['label']) {
+						option = json[i]['option'];
+						
+						html += '<li class="disabled"><a href="#"><b>' + json[i]['label'] + '</b></a></li>';
+						
+						for (j = 0; j < option.length; j++) {
+					
+						}
+					} else {
+						html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['text'] + '</a></li>';
+					}
+				}
+			}
+			*/
+			html = '<li data-value="0"><a href="#">test</a></li>';
+
+			$(this.element).parent().find('ul.dropdown-menu').html(html);
+			
+			$(this.element).parent().find('ul.dropdown-menu a').on('click', $.proxy(this.click, this));
+		}
+	};
+
+	$.fn.autocomplete = function(option) {
+		return this.each(function() {
+			var $this = $(this);
+			var data = $this.data('autocomplete');
+			var options = typeof option == 'object' && option;
+			
+			if (!data) {
+				data = new Autocomplete(this, options);
+				
+				$this.data('autocomplete', data);
+			}
+			
+			if (typeof option == 'string') {
+				data.option();
+			}
+		});	
 	}
-	
-}(window.jQuery);
+})(window.jQuery);

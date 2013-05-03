@@ -109,7 +109,9 @@ class ControllerCommonHeader extends Controller {
 						'filter_sub_category' => true
 					);
 					
-					$product_total = $this->model_catalog_product->getTotalProducts($data);
+					// Changed for retrieving data as well as showing it according to the configuration setting
+					// Significant performance increase observed especially with huge product sets
+					$product_total = ($this->config->get('config_product_count') ? $this->model_catalog_product->getTotalProducts($data) : NULL ;
 									
 					$children_data[] = array(
 						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),

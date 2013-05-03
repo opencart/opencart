@@ -70,9 +70,7 @@
                 <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
                 <script type="text/javascript"><!--
 $('#input-parent').autocomplete({
-	'source': function(request, response) {
-		response();
-		
+	'source': function(request) {
 		$.ajax({
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
@@ -88,6 +86,8 @@ $('#input-parent').autocomplete({
 				*/
 			}
 		});
+		
+		return 'hi';
 	},
 	'select': function(item) {
 		var value = $(this).parent().attr('data-value');

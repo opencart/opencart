@@ -84,9 +84,7 @@ $(document).ready(function() {
 				this.timer = setTimeout(function(object) {
 					//alert($(object.element).val());
 					
-					var response = object.response;
-					
-					object.options.source($(object.element).val(), response);
+					object.options.source($(object.element).val());
 					
 					//this.render();
 
@@ -94,9 +92,6 @@ $(document).ready(function() {
 					clearTimeout(object.timer);
 				}, 300, this);
 			}
-		},
-		response: function() {
-			alert($(this.element).val());
 		},
 		render: function() {
 			/*

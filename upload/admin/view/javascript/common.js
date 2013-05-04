@@ -52,6 +52,7 @@ $(document).ready(function() {
 		this.element = element;
 		this.options = options;
 		this.timer = null;
+		this.items = [];
 		
 		if (!$(element).parent().has('.dropdown').length) {
 			$(element).attr('autocomplete', 'off');
@@ -66,75 +67,68 @@ $(document).ready(function() {
 	}
 	
 	Autocomplete.prototype = {
-		focus: function(event) {
-			$(this.element).parent().addClass('open');
+		focus: function() {
+			this.request();
 		},
-		blur: function(event) {
+		blur: function() {
 			setTimeout(function(object) {
 				$(object.element).parent().removeClass('open');
-			}, 300, this);
+			}, 500, this);
 		},
 		click: function(e) {
 			e.preventDefault();
-				
-			this.options.select();
-		},
-		keypress: function(event) {
-			if (!this.timer) {
-				this.timer = setTimeout(function(object) {
-					//alert($(object.element).val());
-					
-					object.options.source($(object.element).val());
-					
-					//this.render();
-
-					
-					clearTimeout(object.timer);
-				}, 300, this);
+			
+			value = $(e.target).parent().attr('data-value');
+			
+			if (this.items[value]) {
+				this.options.select(this.items[value]);
 			}
+		},	
+		keypress: function() {
+			this.request();
 		},
-		render: function() {
-			/*
+		request: function() {
+			clearTimeout(this.timer);
+			
+			this.timer = setTimeout(function(object) {
+				object.options.source($(object.element).val(), $.proxy(object.response, object));
+			}, 300, this);	
+		},		
+		response: function(json) {
 			html = '';
 			
 			if (json.length) {
-				for (i in json) {
-					if (json[i]['label']) {
-						option = json[i]['option'];
-						
-						html += '<li class="disabled"><a href="#"><b>' + json[i]['label'] + '</b></a></li>';
-						
-						for (j = 0; j < option.length; j++) {
+				for (i = 0; i < json.length; i++) {
+					console.log(json[i]['label']);
 					
-						}
-					} else {
-						html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['text'] + '</a></li>';
-					}
+					this.items[json[i]['value']] = json[i];
+					
+					html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['label'] + '</a></li>';
 				}
 			}
-			*/
-			html = '<li data-value="0"><a href="#">test</a></li>';
 
 			$(this.element).parent().find('ul.dropdown-menu').html(html);
 			
-			$(this.element).parent().find('ul.dropdown-menu a').on('click', $.proxy(this.click, this));
-		}		
+			if ($(this.element).parent().find('ul.dropdown-menu').has('li').length) {
+				$(this.element).parent().addClass('open');
+			} else {
+				$(this.element).parent().removeClass('open');
+			}
+					
+			$(this.element).parent().find('ul.dropdown-menu a').on('click', $.proxy(this.click, this));			
+			$(this.element).parent().find('ul.dropdown-menu a').on('mouseup', $.proxy(this.mouseup, this));		
+		}
 	};
 
 	$.fn.autocomplete = function(option) {
 		return this.each(function() {
 			var $this = $(this);
 			var data = $this.data('autocomplete');
-			var options = typeof option == 'object' && option;
 			
 			if (!data) {
-				data = new Autocomplete(this, options);
+				data = new Autocomplete(this, option);
 				
 				$this.data('autocomplete', data);
-			}
-			
-			if (typeof option == 'string') {
-				data.option();
 			}
 		});	
 	}

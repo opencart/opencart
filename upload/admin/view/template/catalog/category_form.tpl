@@ -70,32 +70,27 @@
                 <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
                 <script type="text/javascript"><!--
 $('#input-parent').autocomplete({
-	'source': function(request) {
+	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
+				var data = [];
 				
-				/*
-				response($.map(json, function(item) {
-					return {
-						label: item['name'],
-						value: item['category_id']
-					}
-				}));
-				*/
+				for (i = 0; i < json.length; i++) {
+					data.push({
+						'label': json[i]['name'],
+						'value': json[i]['category_id']
+					});
+				}
+				
+				response(data);
 			}
 		});
-		
-		return 'hi';
 	},
 	'select': function(item) {
-		var value = $(this).parent().attr('data-value');
-		
-		if (typeof value !== 'undefined') {
-			$('input[name=\'path\']').val($(this).text());
-			$('input[name=\'parent_id\']').val(value);
-		}
+		$('input[name=\'path\']').val(item['label']);
+		$('input[name=\'parent_id\']').val(item['value']);
 	}	
 });
 //--></script> 

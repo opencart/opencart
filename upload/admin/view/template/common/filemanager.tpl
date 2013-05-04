@@ -22,7 +22,7 @@
     <div class="span3">
       <div class="well well-small">
         <ul id="directory">
-          <li><a href=""><i class="icon-folder-close"></i></a> <a href="">Image</a> <a href=""><i class="icon-folder-close pull-right"></i></a></li>
+          <li><a href="#"><i class="icon-folder-close"></i> Image <i class="icon-edit pull-right"></i> <i class="icon-remove pull-right"></i></a></li>
         </ul>
       </div>
     </div>
@@ -38,7 +38,7 @@
     <button id="button-delete" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
     <button id="button-upload" class="btn"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
     <button id="button-refresh" class="btn"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></button>
-       <div class="btn-group">
+    <div class="btn-group">
     <button id="button-move" class="btn"><i class="icon-remove-sign"></i> <?php echo $button_move; ?></button>
     <button id="button-copy" class="btn"><i class="icon-copy"></i> <?php echo $button_copy; ?></button>
     <button id="button-rename" class="btn"><i class="icon-edit"></i> <?php echo $button_rename; ?></button>
@@ -53,14 +53,14 @@
   </form>
 </div>
 <script type="text/javascript"><!--
-$('#directory').delegate('a', 'click', function(e) {
+$('#directory').delegate('a .icon-folder-close', 'click', function(e) {
 	e.preventDefault();
 
 	var node = this;
 	
 	$('#directory li').removeClass('active');
 	
-	$(node).parent().addClass('active');
+	$(node).parent().parent().addClass('active');
 	
 	if ($(this).find('> .icon-folder-close').hasClass('icon-folder-close')) {
 		$.ajax({
@@ -69,7 +69,7 @@ $('#directory').delegate('a', 'click', function(e) {
 			data: 'directory=' + encodeURIComponent($(node).attr('href')),
 			dataType: 'json',
 			beforeSend: function() {
-				$(node).append('<i class="icon-spinner icon-spin"></i>');
+				$(node).after('<i class="icon-spinner icon-spin"></i>');
 			},
 			complete: function() {
 				$('.icon-spinner').remove();
@@ -82,7 +82,7 @@ $('#directory').delegate('a', 'click', function(e) {
 					html = '<ul>';
 					
 					for (i = 0; i < json.length; i++) {
-						html += '<li><a href="' + json[i]['directory'] + '"><i class="icon-folder-close"></i> ' + json[i]['name'] + '</a></li>';
+						html += '<li><a href="' + json[i]['directory'] + '"><i class="icon-folder-close"></i> ' + json[i]['name'] + '</a> </li>';
 					}
 					
 					html += '</ul>';

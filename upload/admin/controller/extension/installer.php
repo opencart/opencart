@@ -160,7 +160,7 @@ class ControllerExtensionInstaller extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 	
-	public function unzip() {
+	public function unzip($file, $directory) {
 		$this->language->load('extension/modification');
 		
 		$json = array();
@@ -173,16 +173,16 @@ class ControllerExtensionInstaller extends Controller {
 		//	$this->request->post['file'];
 		//}
 
-		if (!is_file()) {
+		if (!is_file($file)) {
 			$json['error'] = $this->language->get('error_zip_mime');
 		}
 				
-		if (!mime_content_type()) {
+		if (!mime_content_type($file)) {
 			$json['error'] = $this->language->get('error_zip_mime');
 		}
 		
 		// Unzip the files
-		$zip = new ZipArchive();
+		$zip = new ZipArchive;
 		
 		if ($zip->open($file)) {
 			$zip->extractTo($directory);
@@ -287,7 +287,7 @@ class ControllerExtensionInstaller extends Controller {
 		$this->response->setOutput(json_encode($json));		
 	}
 	
-	public function sql() {
+	public function sql($file) {
 		$this->language->load('extension/modification');
 		
 		$json = array();
@@ -299,9 +299,7 @@ class ControllerExtensionInstaller extends Controller {
 		if (!$json) {		
 			// SQL
 			if (strrchr(basename($file), '.') == '.sql') {
-				$sql = file_get_contents($file);
-				
-				$lines = explode($sql);
+				$lines = file($file);
 				
 				$query = '';
 		
@@ -311,8 +309,8 @@ class ControllerExtensionInstaller extends Controller {
 		
 						if (preg_match('/;\s*$/', $line)) {
 							$query = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $query);
-							$query = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $query);
-							$query = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $query);
+							$query = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $this->data['db_prefix'], $query);
+							$query = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $this->data['db_prefix'], $query);
 							
 							$result = mysql_query($query, $connection); 
 		

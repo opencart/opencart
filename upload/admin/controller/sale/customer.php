@@ -1347,11 +1347,11 @@ class ControllerSaleCustomer extends Controller {
 			$results = $this->model_sale_customer->getCustomers($data);
 			
 			foreach ($results as $result) {
-				$json[$result['customer_group_id']]['customer_group_id'] = $result['customer_group_id'];
-				$json[$result['customer_group_id']]['name'] = $result['customer_group'];
-				$json[$result['customer_group_id']]['customer'][] = array(
+				$json[] = array(
 					'customer_id'       => $result['customer_id'], 
+					'customer_group_id' => $result['customer_group_id'],
 					'name'              => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+					'customer_group'    => $result['customer_group'],
 					'firstname'         => $result['firstname'],
 					'lastname'          => $result['lastname'],
 					'email'             => $result['email'],

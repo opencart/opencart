@@ -48,7 +48,7 @@
               <div class="control-group">
                 <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
                 <div class="controls">
-                  <input type="text" name="customer" value="<?php echo $customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" />
+                  <input type="text" name="customer" value="<?php echo $customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" />
                   <input type="hidden" name="customer_id" value="<?php echo $customer_id; ?>" />
                   <input type="hidden" name="customer_group_id" value="<?php echo $customer_group_id; ?>" />
                 </div>
@@ -56,7 +56,7 @@
               <div class="control-group">
                 <label class="control-label" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
                 <div class="controls">
-                  <select id="input-customer-group" <?php echo ($customer_id ? 'disabled="disabled"' : ''); ?>>
+                  <select name="customer_group_id" id="input-customer-group" <?php echo ($customer_id ? 'disabled="disabled"' : ''); ?>>
                     <?php foreach ($customer_groups as $customer_group) { ?>
                     <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
                     <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
@@ -628,82 +628,51 @@
   </form>
 </div>
 <script type="text/javascript"><!--
-var timer = null;
-
-$('input[name=\'customer\']').on('click keyup', function() {
-	var input = this;
-	
-	if (timer != null) {
-		clearTimeout(timer);
-	}
-
-	timer = setTimeout(function() {
+$('input[name=\'customer\']').autocomplete({
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
-				if (json.length) {
-					html = '';
-					
-					for (i in json) {
-						html += '<li class="disabled"><a href="#"><b>' + json[i]['name'] + '</b></a></li>';
-						
-						for (j = 0; j < json[i]['customer'].length; j++) {
-							customer = json[i]['customer'][j];
-							
-							html += '<li data-value="' + customer['customer_id'] + '"><a href="#">' + customer['name'] + '</a>';
-							html += '<input type="hidden" name="customer_group_id" value="' + json[i]['customer_group_id'] + '" />';
-							html += '<input type="hidden" name="firstname" value="' + customer['firstname'] + '" />';
-							html += '<input type="hidden" name="lastname" value="' + customer['lastname'] + '" />';
-							html += '<input type="hidden" name="email" value="' + customer['email'] + '" />';
-							html += '<input type="hidden" name="telephone" value="' + customer['telephone'] + '" />';
-							html += '<input type="hidden" name="fax" value="' + customer['fax'] + '" />';
-							html += '<select name="address" style="display: none;">';
-							html += '<option value="0"><?php echo $text_none; ?></option>'; 
-							
-							for (k = 0; k < customer['address'].length; k++) {
-								address = customer['address'][k];
-								
-								html += '<option value="' + address['address_id'] + '">' + address['firstname'] + ' ' + address['lastname'] + ', ' + address['address_1'] + ', ' + address['city'] + ', ' + address['country'] + '</option>';
-							}
-										
-							html += '</select>';
-							html += '</li>';						
-						}
+				response($.map(json, function(item) {
+					return {
+						category: item['customer_group'],
+						label: item['name'],
+						value: item['customer_id'],
+						customer_group_id: item['customer_group_id'],						
+						firstname: item['firstname'],
+						lastname: item['lastname'],
+						email: item['email'],
+						telephone: item['telephone'],
+						fax: item['fax'],
+						address: item['address']
 					}
-
-					$($(input).attr('data-target')).find('ul').html(html);
-				} else {
-					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
-				}
-				
-				$($(input).prop('data-target')).find('ul').html(html);
+				}));
 			}
 		});
-	}, 250);
-});
-
-$('#autocomplete-customer').delegate('a', 'click', function(e) {
-	e.preventDefault();
-	
-	var value = $(this).parent().attr('data-value');
-	
-	if (typeof value !== 'undefined') {
-		$('input[name=\'customer\']').val($(this).text());
-		$('input[name=\'customer_id\']').val(value);
-		$('input[name=\'firstname\']').attr('value', $(this).parent().find('input[name=\'firstname\']').val());
-		$('input[name=\'lastname\']').attr('value', $(this).parent().find('input[name=\'lastname\']').val());
-		$('input[name=\'email\']').attr('value', $(this).parent().find('input[name=\'email\']').val());
-		$('input[name=\'telephone\']').attr('value', $(this).parent().find('input[name=\'telephone\']').val());
-		$('input[name=\'fax\']').attr('value', $(this).parent().find('input[name=\'fax\']').val());
+	},
+	'select': function(item) {
+		$('input[name=\'customer\']').val(item['label']);
+		$('input[name=\'customer_id\']').val(item['value']);
+		$('input[name=\'firstname\']').attr('value', item['firstname']);
+		$('input[name=\'lastname\']').attr('value', item['lastname']);
+		$('input[name=\'email\']').attr('value', item['email']);
+		$('input[name=\'telephone\']').attr('value', item['telephone']);
+		$('input[name=\'fax\']').attr('value', item['fax']);
 		
-		$('select[name=\'shipping_address\']').html($(this).parent().find('select[name=\'address\']').html());
-		$('select[name=\'payment_address\']').html($(this).parent().find('select[name=\'address\']').html());
+		html = '<option value="0"><?php echo $text_none; ?></option>'; 
+			
+		for (i in  item['address']) {
+			html += '<option value="' + item['address'][i]['address_id'] + '">' + item['address'][i]['firstname'] + ' ' + item['address'][i]['lastname'] + ', ' + item['address'][i]['address_1'] + ', ' + item['address'][i]['city'] + ', ' + item['address'][i]['country'] + '</option>';
+		}
 		
-		$('select[id=\'customer_group_id\']').prop('disabled', false);
-		$('select[id=\'customer_group_id\']').attr('value', $(this).parent().find('input[name=\'customer_group_id\']').val());
-		$('select[id=\'customer_group_id\']').trigger('change');
-		$('select[id=\'customer_group_id\']').prop('disabled', true); 		
+		$('select[name=\'shipping_address\']').html(html);
+		$('select[name=\'payment_address\']').html(html);
+		
+		$('select[name=\'customer_group_id\']').prop('disabled', false);
+		$('select[name=\'customer_group_id\']').prop('value', item['customer_group_id']);
+		$('select[name=\'customer_group_id\']').trigger('change');
+		$('select[name=\'customer_group_id\']').prop('disabled', true); 		
 	}
 });
 
@@ -713,34 +682,28 @@ $('#customer-group').on('change', function() {
 });
 
 $('#customer-group').trigger('change');
-/*
+
 $('input[name=\'affiliate\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {	
+			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',			
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['affiliate_id'],
+						value: item['affiliate_id']
 					}
 				}));
 			}
 		});
-	}, 
-	select: function(event, ui) { 
-		$('input[name=\'affiliate\']').attr('value', ui.item['label']);
-		$('input[name=\'affiliate_id\']').attr('value', ui.item['value']);
-			
-		return false; 
 	},
-	focus: function(event, ui) {
-      	return false;
-   	}
+	'select': function(item) {
+		$('input[name=\'affiliate\']').val(item['label']);
+		$('input[name=\'affiliate_id\']').val(item['value']);		
+	}	
 });
-*/
+
 var payment_zone_id = '<?php echo $payment_zone_id; ?>';
 
 $('select[name=\'payment_country_id\']').on('change', function() {
@@ -805,7 +768,7 @@ $('select[name=\'payment_address\']').on('change', function() {
 				$('input[name=\'payment_address_2\']').attr('value', json['address_2']);
 				$('input[name=\'payment_city\']').attr('value', json['city']);
 				$('input[name=\'payment_postcode\']').attr('value', json['postcode']);
-				$('select[name=\'payment_country_id\']').attr('value', json['country_id']);
+				$('select[name=\'payment_country_id\']').prop('value', json['country_id']);
 				
 				payment_zone_id = json['zone_id'];
 				
@@ -822,7 +785,7 @@ $('select[name=\'shipping_country_id\']').on('change', function() {
 		url: 'index.php?route=sale/order/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'payment_country_id\']').after(' <i class="icon-spinner icon-spin"></i>');
+			$('select[name=\'shipping_country_id\']').after(' <i class="icon-spinner icon-spin"></i>');
 		},
 		complete: function() {
 			$('.icon-spinner').remove();
@@ -879,7 +842,7 @@ $('select[name=\'shipping_address\']').on('change', function() {
 				$('input[name=\'shipping_address_2\']').attr('value', json['address_2']);
 				$('input[name=\'shipping_city\']').attr('value', json['city']);
 				$('input[name=\'shipping_postcode\']').attr('value', json['postcode']);
-				$('select[name=\'shipping_country_id\']').attr('value', json['country_id']);
+				$('select[name=\'shipping_country_id\']').prop('value', json['country_id']);
 				
 				shipping_zone_id = json['zone_id'];
 				

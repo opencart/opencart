@@ -52,7 +52,7 @@
         <div class="control-group to" id="to-customer">
           <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
           <div class="controls">
-            <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" />
+            <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" />
             <a data-toggle="tooltip" title="<?php echo $help_customer; ?>"><i class="icon-question-sign icon-large"></i></a>
             <br />
             <div id="customer" class="well well-small scrollbox"></div>
@@ -61,7 +61,7 @@
         <div class="control-group to" id="to-affiliate">
           <label class="control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>
           <div class="controls">
-            <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" data-toggle="dropdown" data-target="#autocomplete-affiliate" autocomplete="off" />
+            <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" />
             <a data-toggle="tooltip" title="<?php echo $help_affiliate; ?>"><i class="icon-question-sign icon-large"></i></a>
             <br />
             <div id="affiliate" class="well well-small scrollbox"></div>
@@ -70,7 +70,7 @@
         <div class="control-group to" id="to-product">
           <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
           <div class="controls">
-            <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" />
+            <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
             <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
             <br />
             <div id="product" class="well well-small scrollbox"></div>
@@ -113,54 +113,29 @@ $('select[name=\'to\']').on('change', function() {
 $('select[name=\'to\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
-// Customer
-var timer = null;
-
-$('input[name=\'customers\']').on('click keyup', function() {
-	var input = this;
-	
-	if (timer != null) {
-		clearTimeout(timer);
-	}
-
-	timer = setTimeout(function() {
+// Customers
+$('input[name=\'customers\']').autocomplete({
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
-				if (json.length) {
-					html = '';
-					
-					for (i in json) {
-						html += '<li class="disabled"><a href="#"><b>' + json[i]['name'] + '</b></a></li>';
-						
-						for (j = 0; j < json[i]['customer'].length; j++) {
-							customer = json[i]['customer'][j];
-							
-							html += '<li data-value="' + customer['customer_id'] + '"><a href="#">' + customer['name'] + '</a></li>';						
-						}
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['customer_id']
 					}
-				} else {
-					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
-				}
-				
-				$($(input).attr('data-target')).find('ul').html(html);
+				}));
 			}
 		});
-	}, 250);
-});
-
-$('#autocomplete-customer').delegate('a', 'click', function(e) {
-	event.preventDefault();
-	
-	var value = $(this).parent().attr('data-value');
-	
-	if (typeof value !== 'undefined') {
-		$('#customer' + value).remove();
+	},
+	'select': function(item) {
+		$('input[name=\'customers\']').val('');
 		
-		$('#customer').append('<div id="customer' + value + '"><i class="icon-minus-sign"></i> ' + $(this).text() + '<input type="hidden" name="customer[]" value="' + value + '" /></div>');
+		$('#customer' + item['value']).remove();
 		
-	}
+		$('#customer').append('<div id="customer' + item['value'] + '"><i class="icon-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '" /></div>');	
+	}	
 });
 
 $('#customer').delegate('.icon-minus-sign', 'click', function() {
@@ -168,47 +143,28 @@ $('#customer').delegate('.icon-minus-sign', 'click', function() {
 });
 
 // Affiliates
-var timer = null;
-
-$('input[name=\'affiliates\']').on('click keyup', function() {
-	var input = this;
-	
-	if (timer != null) {
-		clearTimeout(timer);
-	}
-
-	timer = setTimeout(function() {
+$('input[name=\'affiliates\']').autocomplete({
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
-				if (json.length) {
-					html = '';
-					
-					for (i = 0; i < json.length; i++) {
-						html += '<li data-value="' + json[i]['customer_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';						
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['customer_id']
 					}
-				} else {
-					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
-				}
-				
-				$($(input).attr('data-target')).find('ul').html(html);
+				}));
 			}
 		});
-	}, 250);
-});
-
-$('#autocomplete-affiliate').delegate('a', 'click', function(e) {
-	event.preventDefault();
-	
-	var value = $(this).parent().attr('data-value');
-	
-	if (typeof value !== 'undefined') {
-		$('#affiliate' + value).remove();
+	},
+	'select': function(item) {
+		$('input[name=\'affiliates\']').val('');
 		
-		$('#affiliate').append('<div id="affiliate' + value + '"><i class="icon-minus-sign"></i> ' + $(this).text() + '<input type="hidden" name="affiliate[]" value="' + value + '" /></div>');
+		$('#affiliate' + item['value']).remove();
 		
-	}
+		$('#affiliate').append('<div id="affiliate' + item['value'] + '"><i class="icon-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '" /></div>');	
+	}	
 });
 
 $('#affiliate').delegate('.icon-minus-sign', 'click', function() {
@@ -216,46 +172,28 @@ $('#affiliate').delegate('.icon-minus-sign', 'click', function() {
 });
 
 // Products
-var timer = null;
-
-$('input[name=\'products\']').on('click keyup', function() {
-	var input = this;
-	
-	if (timer != null) {
-		clearTimeout(timer);
-	}
-
-	timer = setTimeout(function() {
+$('input[name=\'products\']').autocomplete({
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
-				if (json.length) {
-					html = '';
-					
-					for (i = 0; i < json.length; i++) {
-						html += '<li data-value="' + json[i]['product_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['product_id']
 					}
-				} else {
-					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
-				}
-				
-				$($(input).attr('data-target')).find('ul').html(html);
+				}));
 			}
 		});
-	}, 250);
-});
-
-$('#autocomplete-product').delegate('a', 'click', function(e) {
-	event.preventDefault();
-	
-	var value = $(this).parent().attr('data-value');
-	
-	if (typeof value !== 'undefined') {
-		$('#product' + value).remove();
+	},
+	'select': function(item) {
+		$('input[name=\'products\']').val('');
 		
-		$('#product').append('<div id="product' + value + '"><i class="icon-minus-sign"></i> ' + $(this).text() + '<input type="hidden" name="product[]" value="' + value + '" /></div>');
-	}
+		$('#product' + item['value']).remove();
+		
+		$('#product').append('<div id="product' + item['value'] + '"><i class="icon-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');	
+	}	
 });
 
 $('#product').delegate('.icon-minus-sign', 'click', function() {

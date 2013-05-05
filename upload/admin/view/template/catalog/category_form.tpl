@@ -253,14 +253,14 @@ $('input[name=\'path\']').autocomplete({
 			dataType: 'json',			
 			success: function(json) {
 				json.unshift({
-					'category_id':  0,
-					'name':  '<?php echo $text_none; ?>'
+					'category_id': 0,
+					'name': '<?php echo $text_none; ?>'
 				});
 				
 				response($.map(json, function(item) {
 					return {
-						label: item.name,
-						value: item.category_id
+						label: item['name'],
+						value: item['category_id']
 					}
 				}));
 			}
@@ -281,18 +281,19 @@ $('input[name=\'filter\']').autocomplete({
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
-						label: item.name,
-						value: item.filter_id
+						label: item['name'],
+						value: item['filter_id']
 					}
 				}));
 			}
 		});
 	},
 	'select': function(item) {
+		$('input[name=\'filter\']').val('');
+		
 		$('#category-filter' + item['value']).remove();
 		
 		$('#category-filter').append('<div id="category-filter' + item['value'] + '"><i class="icon-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '" /></div>');
-		
 	}	
 });
 

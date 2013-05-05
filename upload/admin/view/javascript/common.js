@@ -53,16 +53,14 @@ $(document).ready(function() {
 		this.options = options;
 		this.timer = null;
 		this.items = [];
-		
-		if (!$(element).siblings('ul.dropdown-menu').length) {
-			$(element).attr('autocomplete', 'off');
-	  			
-			$(element).after('<ul class="dropdown-menu"></ul>');
 
-			$(element).on('focus', $.proxy(this.focus, this));
-			$(element).on('blur', $.proxy(this.blur, this));
-			$(element).on('keydown', $.proxy(this.keydown, this));
-		}
+		$(element).attr('autocomplete', 'off');
+	  			
+		$(element).after('<ul class="dropdown-menu"></ul>');
+
+		$(element).on('focus', $.proxy(this.focus, this));
+		$(element).on('blur', $.proxy(this.blur, this));
+		$(element).on('keydown', $.proxy(this.keydown, this));
 	}
 	
 	Autocomplete.prototype = {
@@ -110,7 +108,7 @@ $(document).ready(function() {
 			
 			this.timer = setTimeout(function(object) {
 				object.options.source($(object.element).val(), $.proxy(object.response, object));
-			}, 200, this);	
+			}, 200, this);
 		},		
 		response: function(json) {
 			html = '';
@@ -118,6 +116,12 @@ $(document).ready(function() {
 			if (json.length) {
 				for (i = 0; i < json.length; i++) {
 					this.items[json[i]['value']] = json[i];
+					
+					//if (json[i]['category']) {
+					//	test['caegory'][]
+					//}
+					
+					
 					
 					html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['label'] + '</a></li>';
 				}
@@ -137,13 +141,12 @@ $(document).ready(function() {
 
 	$.fn.autocomplete = function(option) {
 		return this.each(function() {
-			var $this = $(this);
-			var data = $this.data('autocomplete');
+			var data = $(this).data('autocomplete');
 			
 			if (!data) {
 				data = new Autocomplete(this, option);
 				
-				$this.data('autocomplete', data);
+				$(this).data('autocomplete', data);
 			}
 		});	
 	}

@@ -63,7 +63,7 @@
             <tr class="filter">
               <td></td>
               <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="input-mini" style="text-align: right;" /></td>
-              <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" /></td>
+              <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" /></td>
               <td><select name="filter_order_status_id" class="input-medium">
                   <option value="*"></option>
                   <?php if ($filter_order_status_id == '0') { ?>
@@ -158,60 +158,26 @@ $('#button-filter').on('click', function() {
 				
 	location = url;
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
-$('#form input').keydown(function(e) {
-	if (e.keyCode == 13) {
-		filter();
-	}
-});
-//--></script> 
-<script type="text/javascript"><!--
-var timer = null;
-
-$('input[name=\'filter_customer\']').on('click keyup', function() {
-	var input = this;
-	
-	if (timer != null) {
-		clearTimeout(timer);
-	}
-
-	timer = setTimeout(function() {
+$('input[name=\'filter_customer\']').autocomplete({
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
-				if (json.length) {
-					html = '';
-					
-					for (i in json) {
-						html += '<li class="disabled"><a href="#"><b>' + json[i]['name'] + '</b></a></li>';
-						
-						for (j = 0; j < json[i]['customer'].length; j++) {
-							customer = json[i]['customer'][j];
-							
-							html += '<li data-value="' + customer['customer_id'] + '"><a href="#">' + customer['name'] + '</a></li>';						
-						}
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['customer_id']
 					}
-				} else {
-					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
-				}
-				
-				$($(input).attr('data-target')).find('ul').html(html);
+				}));
 			}
 		});
-	}, 250);
-});
-
-
-$('#autocomplete-customer').delegate('a', 'click', function(e) {
-	e.preventDefault();
-	
-	var value = $(this).parent().attr('data-value');
-	
-	if (typeof value !== 'undefined') {
-		$('input[name=\'filter_customer\']').val($(this).text());
-	}
+	},
+	'select': function(item) {
+		$('input[name=\'filter_customer\']').val(item['label']);
+	}	
 });
 //--></script> 
 <?php echo $footer; ?>

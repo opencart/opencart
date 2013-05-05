@@ -58,8 +58,8 @@
           <tbody>
             <tr class="filter">
               <td></td>
-              <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" data-toggle="dropdown" data-target="#autocomplete-affiliate" autocomplete="off" class="input-medium" /></td>
-              <td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" data-toggle="dropdown" data-target="#autocomplete-email" autocomplete="off" class="input-medium" /></td>
+              <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" class="input-medium" /></td>
+              <td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" class="input-medium" /></td>
               <td>&nbsp;</td>
               <td><select name="filter_status" class="input-medium">
                   <option value="*"></option>
@@ -166,84 +166,44 @@ $('#button-filter').on('click', function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
-var timer = null;
-
-$('input[name=\'filter_name\']').on('click keyup', function() {
-	var input = this;
-	
-	if (timer != null) {
-		clearTimeout(timer);
-	}
-
-	timer = setTimeout(function() {
+$('input[name=\'filter_name\']').autocomplete({
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
-				if (json.length) {
-					html = '';
-					
-					for (i = 0; i < json.length; i++) {
-						html += '<li data-value="' + json[i]['customer_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';						
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['affiliate_id']
 					}
-				} else {
-					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
-				}
-				
-				$($(input).attr('data-target')).find('ul').html(html);
+				}));
 			}
 		});
-	}, 250);
+	},
+	'select': function(item) {
+		$('input[name=\'filter_name\']').val(item['label']);
+	}	
 });
 
-$('#autocomplete-affiliate').delegate('a', 'click', function(e) {
-	event.preventDefault();
-	
-	var value = $(this).parent().attr('data-value');
-	
-	if (typeof value !== 'undefined') {
-		$('input[name=\'filter_name\']').val($(this).text());
-	}
-});
-
-var timer = null;
-
-$('input[name=\'filter_email\']').on('click keyup', function() {
-	var input = this;
-	
-	if (timer != null) {
-		clearTimeout(timer);
-	}
-
-	timer = setTimeout(function() {
+$('input[name=\'filter_email\']').autocomplete({
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_email=' +  encodeURIComponent($(input).val()),
+			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_email=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
-				if (json.length) {
-					html = '';
-
-					for (i = 0; i < json.length; i++) {
-						html += '<li data-value="' + json[i]['customer_id'] + '"><a href="#">' + json[i]['email'] + '</a></li>';						
+				response($.map(json, function(item) {
+					return {
+						label: item['email'],
+						value: item['affiliate_id']
 					}
-				} else {
-					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
-				}
-				
-				$($(input).attr('data-target')).find('ul').html(html);
+				}));
 			}
 		});
-	}, 250);
-});
-
-$('#autocomplete-email').delegate('a', 'click', function(e) {
-	event.preventDefault();
-	
-	var value = $(this).parent().attr('data-value');
-	
-	if (typeof value !== 'undefined') {
-		$('input[name=\'filter_email\']').val($(this).text());
-	}
+	},
+	'select': function(item) {
+		$('input[name=\'filter_email\']').val(item['label']);
+	}	
 });
 //--></script> 
 <?php echo $footer; ?>

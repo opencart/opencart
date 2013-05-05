@@ -74,9 +74,9 @@
               <td></td>
               <td align="right"><input type="text" name="filter_return_id" value="<?php echo $filter_return_id; ?>" class="input-mini" style="text-align: right;" /></td>
               <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="input-mini" style="text-align: right;" /></td>
-              <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" class="input-medium" /></td>
-              <td><input type="text" name="filter_product" value="<?php echo $filter_product; ?>" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" class="input-medium" /></td>
-              <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" data-toggle="dropdown" data-target="#autocomplete-model" autocomplete="off" class="input-medium" /></td>
+              <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" class="input-medium" /></td>
+              <td><input type="text" name="filter_product" value="<?php echo $filter_product; ?>" class="input-medium" /></td>
+              <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" class="input-medium" /></td>
               <td><select name="filter_return_status_id" class="input-medium">
                   <option value="*"></option>
                   <?php foreach ($return_statuses as $return_status) { ?>
@@ -181,130 +181,64 @@ $('#button-filter').on('click', function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
-var timer = null;
-
-$('input[name=\'filter_customer\']').on('click keyup', function() {
-	var input = this;
-	
-	if (timer != null) {
-		clearTimeout(timer);
-	}
-
-	timer = setTimeout(function() {
+$('input[name=\'filter_customer\']').autocomplete({
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
-				if (json.length) {
-					html = '';
-					
-					for (i in json) {
-						html += '<li class="disabled"><a href="#"><b>' + json[i]['name'] + '</b></a></li>';
-						
-						for (j = 0; j < json[i]['customer'].length; j++) {
-							customer = json[i]['customer'][j];
-							
-							html += '<li data-value="' + customer['customer_id'] + '"><a href="#">' + customer['name'] + '</a></li>';						
-						}
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['customer_id']
 					}
-				} else {
-					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
-				}
-				
-				$($(input).attr('data-target')).find('ul').html(html);
+				}));
 			}
 		});
-	}, 250);
+	},
+	'select': function(item) {
+		$('input[name=\'filter_customer\']').val(item['label']);
+	}	
 });
 
-$('#autocomplete-customer').delegate('a', 'click', function(e) {
-	e.preventDefault();
-	
-	var value = $(this).parent().attr('data-value');
-	
-	if (typeof value !== 'undefined') {
-		$('input[name=\'filter_customer\']').val($(this).text());
-	}
-});
-
-var timer = null;
-
-$('input[name=\'filter_product\']').on('click keyup', function() {
-	var input = this;
-	
-	if (timer != null) {
-		clearTimeout(timer);
-	}
-
-	timer = setTimeout(function() {
+$('input[name=\'filter_product\']').autocomplete({
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
-				if (json.length) {
-					html = '';
-					
-					for (i = 0; i < json.length; i++) {
-						html += '<li data-value="' + json[i]['product_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['product_id']
 					}
-				} else {
-					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
-				}
-				
-				$($(input).attr('data-target')).find('ul').html(html);
+				}));
 			}
 		});
-	}, 250);
+	},
+	'select': function(item) {
+		$('input[name=\'filter_product\']').val(item['label']);
+	}	
 });
 
-$('#autocomplete-product').delegate('a', 'click', function(e) {
-	e.preventDefault();
-	
-	var value = $(this).parent().attr('data-value');
-	
-	if (typeof value !== 'undefined') {
-		$('input[name=\'filter_product\']').val($(this).text());
-	}
-});
-
-var timer = null;
-
-$('input[name=\'filter_model\']').on('click keyup', function() {
-	var input = this;
-	
-	if (timer != null) {
-		clearTimeout(timer);
-	}
-
-	timer = setTimeout(function() {
+$('input[name=\'filter_model\']').autocomplete({
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_model=' +  encodeURIComponent($(input).val()),
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_model=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
-				if (json.length) {
-					html = '';
-					
-					for (i = 0; i < json.length; i++) {
-						html += '<li data-value="' + json[i]['product_id'] + '"><a href="#">' + json[i]['model'] + '</a></li>';
+				response($.map(json, function(item) {
+					return {
+						label: item['model'],
+						value: item['product_id']
 					}
-				} else {
-					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
-				}
-				
-				$($(input).attr('data-target')).find('ul').html(html);
+				}));
 			}
 		});
-	}, 250);
-});
-
-$('#autocomplete-model').delegate('a', 'click', function(e) {
-	e.preventDefault();
-	
-	var value = $(this).parent().attr('data-value');
-	
-	if (typeof value !== 'undefined') {
-		$('input[name=\'filter_model\']').val($(this).text());
-	}
+	},
+	'select': function(item) {
+		$('input[name=\'filter_model\']').val(item['label']);
+	}	
 });
 //--></script> 
 <?php echo $footer; ?> 

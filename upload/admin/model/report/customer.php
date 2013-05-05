@@ -88,7 +88,7 @@ class ModelReportCustomer extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalRewardPoints() {
+	public function getTotalRewardPoints($data = array()) {
 		$sql = "SELECT COUNT(DISTINCT customer_id) AS total FROM `" . DB_PREFIX . "customer_reward`";
 		
 		$implode = array();
@@ -152,7 +152,7 @@ class ModelReportCustomer extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalCredit() {
+	public function getTotalCredit($data = array()) {
 		$sql = "SELECT COUNT(DISTINCT customer_id) AS total FROM `" . DB_PREFIX . "customer_transaction`";
 		
 		$implode = array();

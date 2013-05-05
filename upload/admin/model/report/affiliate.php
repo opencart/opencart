@@ -52,19 +52,7 @@ class ModelReportAffiliate extends Model {
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
 		}
-				
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}			
 
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}	
-			
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
-						
 		$query = $this->db->query($sql);
 		
 		return $query->row['total'];
@@ -88,21 +76,9 @@ class ModelReportAffiliate extends Model {
 		}
 				
 		$sql .= " GROUP BY at.affiliate_id ORDER BY commission DESC";
-				
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}			
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}	
-			
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
-			
+							
 		$query = $this->db->query($sql);
-	
+
 		return $query->rows;
 	}
 
@@ -121,18 +97,6 @@ class ModelReportAffiliate extends Model {
 		
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-				
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}			
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}	
-			
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 						
 		$query = $this->db->query($sql);

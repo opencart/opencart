@@ -6,7 +6,7 @@ class DB {
 		if (file_exists(DIR_DATABASE . $type . '.php')) {
 			require_once(DIR_DATABASE . $type . '.php');
 		} else {
-			exit('Error: Could not load database file ' . $driver . '!');
+			exit('Error: Could not load database file ' . $type . '!');
 		}
 
 		$this->db = new $type($hostname, $username, $password, $database);

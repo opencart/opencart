@@ -23,7 +23,7 @@ final class MySQLi {
 			exit();
 		}
 
-		if (is_resource($resource)) {
+		if (is_resource($result)) {
 			$i = 0;
 
 			$data = array();

@@ -126,11 +126,6 @@
               <div class="controls">
                 <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="autocomplete-product" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div>
                 <br />
                 <div id="coupon-product" class="well well-small scrollbox">
                   <?php foreach ($coupon_product as $coupon_product) { ?>
@@ -146,11 +141,6 @@
               <div class="controls">
                 <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" data-toggle="dropdown" data-target="#autocomplete-category" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_category; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="autocomplete-category" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div>
                 <br />
                 <div id="coupon-category" class="well well-small scrollbox">
                   <?php foreach ($coupon_category as $coupon_category) { ?>
@@ -242,7 +232,7 @@ $('input[name=\'product\']').on('click keyup', function() {
 });
 
 $('#autocomplete-product').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	
@@ -289,7 +279,7 @@ $('input[name=\'category\']').on('click keyup', function() {
 });
 
 $('#autocomplete-category').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	

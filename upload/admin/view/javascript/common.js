@@ -54,15 +54,14 @@ $(document).ready(function() {
 		this.timer = null;
 		this.items = [];
 		
-		if (!$(element).parent().has('.dropdown').length) {
+		if (!$(element).siblings('ul.dropdown-menu').length) {
 			$(element).attr('autocomplete', 'off');
-			
-			$(element).wrap('<div class="dropdown" style="border: 1px solid #000000;"></div>');
+	  			
 			$(element).after('<ul class="dropdown-menu"></ul>');
 
 			$(element).on('focus', $.proxy(this.focus, this));
 			$(element).on('blur', $.proxy(this.blur, this));
-			$(element).on('keypress', $.proxy(this.keypress, this));
+			$(element).on('keydown', $.proxy(this.keydown, this));
 		}
 	}
 	
@@ -72,49 +71,65 @@ $(document).ready(function() {
 		},
 		blur: function() {
 			setTimeout(function(object) {
-				$(object.element).parent().removeClass('open');
-			}, 500, this);
+				object.hide();
+			}, 200, this);
 		},
-		click: function(e) {
-			e.preventDefault();
+		click: function(event) {
+			event.preventDefault();
 			
-			value = $(e.target).parent().attr('data-value');
+			value = $(event.target).parent().attr('data-value');
 			
 			if (this.items[value]) {
 				this.options.select(this.items[value]);
 			}
 		},	
-		keypress: function() {
-			this.request();
+		keydown: function(event) {
+			switch(event.keyCode) {
+				case 27: // escape
+					this.hide();
+					break
+				default:
+					this.request();
+			}
+		},
+		show: function() {
+			var pos = $(this.element).position();
+			
+			$(this.element).siblings('ul.dropdown-menu').css({
+				top: pos.top + $(this.element).outerHeight(),
+				left: pos.left
+			});
+						
+			$(this.element).siblings('ul.dropdown-menu').show();			
+		},
+		hide: function() {
+			$(this.element).siblings('ul.dropdown-menu').hide();
 		},
 		request: function() {
 			clearTimeout(this.timer);
 			
 			this.timer = setTimeout(function(object) {
 				object.options.source($(object.element).val(), $.proxy(object.response, object));
-			}, 300, this);	
+			}, 200, this);	
 		},		
 		response: function(json) {
 			html = '';
 			
 			if (json.length) {
 				for (i = 0; i < json.length; i++) {
-					console.log(json[i]['label']);
-					
 					this.items[json[i]['value']] = json[i];
 					
 					html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['label'] + '</a></li>';
 				}
 			}
-
-			$(this.element).parent().find('ul.dropdown-menu').html(html);
 			
-			if ($(this.element).parent().find('ul.dropdown-menu').has('li').length) {
-				$(this.element).parent().addClass('open');
+			if (html) {
+				this.show();
 			} else {
-				$(this.element).parent().removeClass('open');
+				this.hide();
 			}
-					
+			
+			$(this.element).parent().find('ul.dropdown-menu').html(html);	
 			$(this.element).parent().find('ul.dropdown-menu a').on('click', $.proxy(this.click, this));			
 			$(this.element).parent().find('ul.dropdown-menu a').on('mouseup', $.proxy(this.mouseup, this));		
 		}

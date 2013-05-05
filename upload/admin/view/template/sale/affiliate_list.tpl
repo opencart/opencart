@@ -58,18 +58,8 @@
           <tbody>
             <tr class="filter">
               <td></td>
-              <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" data-toggle="dropdown" data-target="#autocomplete-affiliate" autocomplete="off" class="input-medium" />
-                <div id="autocomplete-affiliate" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div></td>
-              <td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" data-toggle="dropdown" data-target="#autocomplete-email" autocomplete="off" class="input-medium" />
-                <div id="autocomplete-email" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div></td>
+              <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" data-toggle="dropdown" data-target="#autocomplete-affiliate" autocomplete="off" class="input-medium" /></td>
+              <td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" data-toggle="dropdown" data-target="#autocomplete-email" autocomplete="off" class="input-medium" /></td>
               <td>&nbsp;</td>
               <td><select name="filter_status" class="input-medium">
                   <option value="*"></option>
@@ -207,7 +197,7 @@ $('input[name=\'filter_name\']').on('click keyup', function() {
 });
 
 $('#autocomplete-affiliate').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	
@@ -247,7 +237,7 @@ $('input[name=\'filter_email\']').on('click keyup', function() {
 });
 
 $('#autocomplete-email').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	

@@ -51,11 +51,6 @@
                   <input type="text" name="customer" value="<?php echo $customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" />
                   <input type="hidden" name="customer_id" value="<?php echo $customer_id; ?>" />
                   <input type="hidden" name="customer_group_id" value="<?php echo $customer_group_id; ?>" />
-                  <div id="autocomplete-customer" class="dropdown">
-                    <ul class="dropdown-menu">
-                      <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                    </ul>
-                  </div>
                 </div>
               </div>
               <div class="control-group">

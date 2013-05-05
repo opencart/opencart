@@ -74,24 +74,9 @@
               <td></td>
               <td align="right"><input type="text" name="filter_return_id" value="<?php echo $filter_return_id; ?>" class="input-mini" style="text-align: right;" /></td>
               <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="input-mini" style="text-align: right;" /></td>
-              <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" class="input-medium" />
-                <div id="autocomplete-customer" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div></td>
-              <td><input type="text" name="filter_product" value="<?php echo $filter_product; ?>" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" class="input-medium" />
-                <div id="autocomplete-product" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div></td>
-              <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" data-toggle="dropdown" data-target="#autocomplete-model" autocomplete="off" class="input-medium" />
-                <div id="autocomplete-model" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div></td>
+              <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" class="input-medium" /></td>
+              <td><input type="text" name="filter_product" value="<?php echo $filter_product; ?>" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" class="input-medium" /></td>
+              <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" data-toggle="dropdown" data-target="#autocomplete-model" autocomplete="off" class="input-medium" /></td>
               <td><select name="filter_return_status_id" class="input-medium">
                   <option value="*"></option>
                   <?php foreach ($return_statuses as $return_status) { ?>

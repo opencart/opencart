@@ -54,11 +54,6 @@
           <div class="controls">
             <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" />
             <a data-toggle="tooltip" title="<?php echo $help_customer; ?>"><i class="icon-question-sign icon-large"></i></a>
-            <div id="autocomplete-customer" class="dropdown">
-              <ul class="dropdown-menu">
-                <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-              </ul>
-            </div>
             <br />
             <div id="customer" class="well well-small scrollbox"></div>
           </div>
@@ -68,11 +63,6 @@
           <div class="controls">
             <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" data-toggle="dropdown" data-target="#autocomplete-affiliate" autocomplete="off" />
             <a data-toggle="tooltip" title="<?php echo $help_affiliate; ?>"><i class="icon-question-sign icon-large"></i></a>
-            <div id="autocomplete-affiliate" class="dropdown">
-              <ul class="dropdown-menu">
-                <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-              </ul>
-            </div>
             <br />
             <div id="affiliate" class="well well-small scrollbox"></div>
           </div>
@@ -82,11 +72,6 @@
           <div class="controls">
             <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" />
             <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
-            <div id="autocomplete-product" class="dropdown">
-              <ul class="dropdown-menu">
-                <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-              </ul>
-            </div>
             <br />
             <div id="product" class="well well-small scrollbox"></div>
           </div>
@@ -166,7 +151,7 @@ $('input[name=\'customers\']').on('click keyup', function() {
 });
 
 $('#autocomplete-customer').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	
@@ -214,7 +199,7 @@ $('input[name=\'affiliates\']').on('click keyup', function() {
 });
 
 $('#autocomplete-affiliate').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	
@@ -262,7 +247,7 @@ $('input[name=\'products\']').on('click keyup', function() {
 });
 
 $('#autocomplete-product').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	

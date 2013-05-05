@@ -68,18 +68,8 @@
           <tbody>
             <tr class="filter">
               <td></td>
-              <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" class="input-medium" />
-                <div id="autocomplete-customer" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div></td>
-              <td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" data-toggle="dropdown" data-target="#autocomplete-email" autocomplete="off" class="input-medium" />
-                <div id="autocomplete-email" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div></td>
+              <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" class="input-medium" /></td>
+              <td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" data-toggle="dropdown" data-target="#autocomplete-email" autocomplete="off" class="input-medium" /></td>
               <td><select name="filter_customer_group_id">
                   <option value="*"></option>
                   <?php foreach ($customer_groups as $customer_group) { ?>

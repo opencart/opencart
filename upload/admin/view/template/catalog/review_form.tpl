@@ -34,11 +34,6 @@
             <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" />
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
             <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
-            <div id="autocomplete-product" class="dropdown">
-              <ul class="dropdown-menu">
-                <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-              </ul>
-            </div>
             <?php if ($error_product) { ?>
             <span class="error"><?php echo $error_product; ?></span>
             <?php } ?>
@@ -156,7 +151,7 @@ $('input[name=\'product\']').on('click keyup', function() {
 });
 
 $('#autocomplete-product').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	

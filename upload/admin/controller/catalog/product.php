@@ -388,8 +388,6 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['text_enabled'] = $this->language->get('text_enabled');		
 		$this->data['text_disabled'] = $this->language->get('text_disabled');		
 		$this->data['text_no_results'] = $this->language->get('text_no_results');	
-		$this->data['text_loading'] = $this->language->get('text_loading');		
-		$this->data['text_none'] = $this->language->get('text_none');		
 			
 		$this->data['column_image'] = $this->language->get('column_image');		
 		$this->data['column_name'] = $this->language->get('column_name');		
@@ -534,10 +532,8 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['text_option'] = $this->language->get('text_option');
 		$this->data['text_option_value'] = $this->language->get('text_option_value');
 		$this->data['text_select'] = $this->language->get('text_select');
-		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_percent'] = $this->language->get('text_percent');
 		$this->data['text_amount'] = $this->language->get('text_amount');
-		$this->data['text_loading'] = $this->language->get('text_loading');
 
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');

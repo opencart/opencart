@@ -68,45 +68,14 @@
               <div class="controls">
                 <input type="text" name="path" value="<?php echo $path; ?>" placeholder="<?php echo $entry_parent; ?>" id="input-parent" />
                 <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
-                <script type="text/javascript"><!--
-$('#input-parent').autocomplete({
-	'source': function(request, response) {
-		$.ajax({
-			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-			dataType: 'json',			
-			success: function(json) {
-				var data = [];
-				
-				for (i = 0; i < json.length; i++) {
-					data.push({
-						'label': json[i]['name'],
-						'value': json[i]['category_id']
-					});
-				}
-				
-				response(data);
-			}
-		});
-	},
-	'select': function(item) {
-		$('input[name=\'path\']').val(item['label']);
-		$('input[name=\'parent_id\']').val(item['value']);
-	}	
-});
-//--></script> 
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-filter"><?php echo $entry_filter; ?></label>
               <div class="controls">
-                <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" data-toggle="dropdown" data-target="#autocomplete-filter" autocomplete="off" />
+                <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" />
                 <a data-toggle="tooltip" title="<?php echo $help_filter; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="autocomplete-filter" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div>
-                <br />
+                <br /><br />
                 <div id="category-filter" class="well well-small scrollbox">
                   <?php foreach ($category_filters as $category_filter) { ?>
                   <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $category_filter['name']; ?>
@@ -277,88 +246,54 @@ CKEDITOR.replace('input-description<?php echo $language['language_id']; ?>', {
 <?php } ?>
 //--></script> 
 <script type="text/javascript"><!--
-/*
-var timer = null;
-
-$('input[name=\'path\']').on('click keyup', function() {
-	var input = this;
-	
-	if (timer != null) {
-		clearTimeout(timer);
-	}
-
-	timer = setTimeout(function() {
+$('input[name=\'path\']').autocomplete({
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
-				html = '<li data-value="0"><a href="#"><?php echo $text_none; ?></a></li>';
+				json.unshift({
+					'category_id':  0,
+					'name':  '<?php echo $text_none; ?>'
+				});
 				
-				if (json) {
-					for (i = 0; i < json.length; i++) {
-						html += '<li data-value="' + json[i]['category_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.category_id
 					}
-				}
-				
-				$($(input).attr('data-target')).find('ul').html(html);
+				}));
 			}
 		});
-	}, 250);
+	},
+	'select': function(item) {
+		$('input[name=\'path\']').val(item['label']);
+		$('input[name=\'parent_id\']').val(item['value']);
+	}	
 });
-
-$('#autocomplete-parent').delegate('a', 'click', function(e) {
-	e.preventDefault();
-	
-	var value = $(this).parent().attr('data-value');
-	
-	if (typeof value !== 'undefined') {
-		$('input[name=\'path\']').val($(this).text());
-		$('input[name=\'parent_id\']').val(value);
-	}
-});
-*/
 //--></script> 
 <script type="text/javascript"><!--
-var timer = null;
-
-$('input[name=\'filter\']').on('click keyup', function() {
-	var input = this;
-	
-	if (timer != null) {
-		clearTimeout(timer);
-	}
-
-	timer = setTimeout(function() {
+$('input[name=\'filter\']').autocomplete({
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
+			url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
-				if (json.length) {
-					html = '';
-					
-					for (i = 0; i < json.length; i++) {
-						html += '<li data-value="' + json[i]['filter_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.filter_id
 					}
-				} else {
-					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
-				}
-				
-				$($(input).attr('data-target')).find('ul').html(html);
+				}));
 			}
 		});
-	}, 250);
-});
-
-$('#autocomplete-filter').delegate('a', 'click', function(e) {
-	e.preventDefault();
-	
-	var value = $(this).parent().attr('data-value');
-	
-	if (typeof value !== 'undefined') {
-		$('#category-filter' + value).remove();
+	},
+	'select': function(item) {
+		$('#category-filter' + item['value']).remove();
 		
-		$('#category-filter').append('<div id="category-filter' + value + '"><i class="icon-minus-sign"></i> ' + $(this).text() + '<input type="hidden" name="category_filter[]" value="' + value + '" /></div>');
-	}
+		$('#category-filter').append('<div id="category-filter' + item['value'] + '"><i class="icon-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '" /></div>');
+		
+	}	
 });
 
 $('#category-filter').delegate('.icon-minus-sign', 'click', function() {

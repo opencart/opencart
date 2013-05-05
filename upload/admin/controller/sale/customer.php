@@ -436,8 +436,6 @@ class ControllerSaleCustomer extends Controller {
 		$this->data['text_select'] = $this->language->get('text_select');	
 		$this->data['text_default'] = $this->language->get('text_default');		
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_none'] = $this->language->get('text_none');
-		$this->data['text_loading'] = $this->language->get('text_loading');
 
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_email'] = $this->language->get('column_email');

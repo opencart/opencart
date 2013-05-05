@@ -304,11 +304,6 @@
                 <input type="text" name="manufacturer" value="<?php echo $manufacturer ?>" placeholder="<?php echo $entry_manufacturer; ?>" id="input-manufacturer" data-toggle="dropdown" data-target="#autocomplete-manufacturer" autocomplete="off" />
                 <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturer_id; ?>" />
                 <a data-toggle="tooltip" title="<?php echo $help_manufacturer; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="autocomplete-manufacturer" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div>
               </div>
             </div>
             <div class="control-group">
@@ -316,11 +311,7 @@
               <div class="controls">
                 <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" data-toggle="dropdown" data-target="#autocomplete-category" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_category; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="autocomplete-category" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div>
+
                 <br />
                 <div id="product-category" class="well well-small scrollbox">
                   <?php foreach ($product_categories as $product_category) { ?>
@@ -336,11 +327,6 @@
               <div class="controls">
                 <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" data-toggle="dropdown" data-target="#autocomplete-filter" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_filter; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="autocomplete-filter" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div>
                 <br />
                 <div id="product-filter" class="well well-small scrollbox">
                   <?php foreach ($product_filters as $product_filter) { ?>
@@ -383,11 +369,6 @@
               <div class="controls">
                 <input type="text" name="download" value="" placeholder="<?php echo $entry_download; ?>" id="input-download" data-toggle="dropdown" data-target="#autocomplete-download" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_download; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="autocomplete-download" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div>
                 <br />
                 <div id="product-download" class="well well-small scrollbox">
                   <?php foreach ($product_downloads as $product_download) { ?>
@@ -403,11 +384,6 @@
               <div class="controls">
                 <input type="text" name="related" value="" placeholder="<?php echo $entry_related; ?>" id="input-related" data-toggle="dropdown" data-target="#autocomplete-related" autocomplete="off" />
                 <a data-toggle="tooltip" title="<?php echo $help_related; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <div id="autocomplete-related" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div>
                 <br />
                 <div id="product-related" class="well well-small scrollbox">
                   <?php foreach ($product_relateds as $product_related) { ?>
@@ -433,12 +409,7 @@
                 <?php foreach ($product_attributes as $product_attribute) { ?>
                 <tr id="attribute-row<?php echo $attribute_row; ?>">
                   <td class="left"><input type="text" name="product_attribute[<?php echo $attribute_row; ?>][name]" value="<?php echo $product_attribute['name']; ?>" placeholder="<?php echo $entry_attribute; ?>" data-toggle="dropdown" data-target="#autocomplete-attribute<?php echo $attribute_row; ?>" autocomplete="off" />
-                    <input type="hidden" name="product_attribute[<?php echo $attribute_row; ?>][attribute_id]" value="<?php echo $product_attribute['attribute_id']; ?>" />
-                    <div id="autocomplete-attribute<?php echo $attribute_row; ?>" class="dropdown">
-                      <ul class="dropdown-menu">
-                        <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                      </ul>
-                    </div></td>
+                    <input type="hidden" name="product_attribute[<?php echo $attribute_row; ?>][attribute_id]" value="<?php echo $product_attribute['attribute_id']; ?>" /></td>
                   <td class="left"><?php foreach ($languages as $language) { ?>
                     <textarea name="product_attribute[<?php echo $attribute_row; ?>][product_attribute_description][<?php echo $language['language_id']; ?>][text]" cols="40" rows="5" placeholder="<?php echo $entry_text; ?>"><?php echo isset($product_attribute['product_attribute_description'][$language['language_id']]) ? $product_attribute['product_attribute_description'][$language['language_id']]['text'] : ''; ?></textarea>
                     <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" align="top" /><br />
@@ -461,11 +432,6 @@
               <label class="control-label" for="input-option"><?php echo $entry_option; ?></label>
               <div class="controls">
                 <input type="text" name="option" value="" placeholder="<?php echo $entry_option; ?>" id="input-option" data-toggle="dropdown" data-target="#autocomplete-option" autocomplete="off" />
-                <div id="autocomplete-option" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div>
               </div>
             </div>
             <div class="tabbable tabs-left">
@@ -924,7 +890,7 @@ $('input[name=\'category\']').on('click keyup', function() {
 });
 
 $('#autocomplete-category').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	
@@ -971,7 +937,7 @@ $('input[name=\'filter\']').on('click keyup', function() {
 });
 
 $('#autocomplete-filter').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	
@@ -1018,7 +984,7 @@ $('input[name=\'download\']').on('click keyup', function() {
 });
 
 $('#autocomplete-download').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	
@@ -1065,7 +1031,7 @@ $('input[name=\'related\']').on('click keyup', function() {
 });
 
 $('#autocomplete-related').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	
@@ -1085,13 +1051,7 @@ var attribute_row = <?php echo $attribute_row; ?>;
 
 function addAttribute() {
     html  = '<tr id="attribute-row' + attribute_row + '">';
-	html += '  <td class="left"><input type="text" name="product_attribute[' + attribute_row + '][name]" value="" placeholder="<?php echo $entry_attribute; ?>" data-toggle="dropdown" data-target="#autocomplete-attribute' + attribute_row + '" autocomplete="off" /><input type="hidden" name="product_attribute[' + attribute_row + '][attribute_id]" value="" />';
-	html += '    <div id="autocomplete-attribute' + attribute_row + '" class="dropdown">';
-    html += '      <ul class="dropdown-menu">';
-    html += '        <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>';
-    html += '      </ul>';
-    html += '    </div>';
-	html += '  </td>';
+	html += '  <td class="left"><input type="text" name="product_attribute[' + attribute_row + '][name]" value="" placeholder="<?php echo $entry_attribute; ?>" data-toggle="dropdown" data-target="#autocomplete-attribute' + attribute_row + '" autocomplete="off" /><input type="hidden" name="product_attribute[' + attribute_row + '][attribute_id]" value="" /></td>';
 	html += '  <td class="left">';
 	<?php foreach ($languages as $language) { ?>
 	html += '<textarea name="product_attribute[' + attribute_row + '][product_attribute_description][<?php echo $language['language_id']; ?>][text]" cols="40" rows="5" placeholder="<?php echo $entry_text; ?>"></textarea> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" align="top" /><br />';
@@ -1136,7 +1096,7 @@ $('#attribute').delegate('input[data-toggle=\'dropdown\']', 'click keyup', funct
 });
 
 $('#attribute').delegate('.dropdown-menu a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	
@@ -1194,7 +1154,7 @@ $('input[name=\'option\']').on('click keyup', function() {
 });
 
 $('#autocomplete-option').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	

@@ -385,8 +385,6 @@ class ControllerSaleReturn extends Controller {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_none'] = $this->language->get('text_none');
-		$this->data['text_loading'] = $this->language->get('text_loading');
 		
 		$this->data['column_return_id'] = $this->language->get('column_return_id');
 		$this->data['column_order_id'] = $this->language->get('column_order_id');
@@ -557,9 +555,7 @@ class ControllerSaleReturn extends Controller {
  		
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_opened'] = $this->language->get('text_opened');
-		$this->data['text_unopened'] = $this->language->get('text_unopened');	
-		$this->data['text_none'] = $this->language->get('text_none');
-		$this->data['text_loading'] = $this->language->get('text_loading');
+		$this->data['text_unopened'] = $this->language->get('text_unopened');
 					
 		$this->data['entry_customer'] = $this->language->get('entry_customer');
 		$this->data['entry_order_id'] = $this->language->get('entry_order_id');

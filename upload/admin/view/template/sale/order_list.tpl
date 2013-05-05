@@ -63,12 +63,7 @@
             <tr class="filter">
               <td></td>
               <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="input-mini" style="text-align: right;" /></td>
-              <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" />
-                <div id="autocomplete-customer" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div></td>
+              <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" data-toggle="dropdown" data-target="#autocomplete-customer" autocomplete="off" /></td>
               <td><select name="filter_order_status_id" class="input-medium">
                   <option value="*"></option>
                   <?php if ($filter_order_status_id == '0') { ?>

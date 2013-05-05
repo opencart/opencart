@@ -59,18 +59,8 @@
             <tr class="filter">
               <td></td>
               <td></td>
-              <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" class="input-medium" />
-                <div id="autocomplete-product" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div></td>
-              <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" data-toggle="dropdown" data-target="#autocomplete-model" autocomplete="off" class="input-medium" />
-                <div id="autocomplete-model" class="dropdown">
-                  <ul class="dropdown-menu">
-                    <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-                  </ul>
-                </div></td>
+              <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" class="input-medium" /></td>
+              <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" data-toggle="dropdown" data-target="#autocomplete-model" autocomplete="off" class="input-medium" /></td>
               <td align="left"><input type="text" name="filter_price" value="<?php echo $filter_price; ?>" class="input-small" /></td>
               <td align="right"><input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" class="input-mini" style="text-align: right;" /></td>
               <td><select name="filter_status" class="input-medium">
@@ -207,7 +197,7 @@ $('input[name=\'filter_name\']').on('click keyup', function() {
 });
 
 $('#autocomplete-product').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	
@@ -247,7 +237,7 @@ $('input[name=\'filter_model\']').on('click keyup', function() {
 });
 
 $('#autocomplete-model').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	

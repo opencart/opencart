@@ -54,7 +54,7 @@
 </div>
 <script type="text/javascript"><!--
 $('#directory').delegate('a .icon-folder-close', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 
 	var node = this;
 	

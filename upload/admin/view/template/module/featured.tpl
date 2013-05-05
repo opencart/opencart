@@ -21,11 +21,6 @@
           <div class="controls">
             <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" data-toggle="dropdown" data-target="#autocomplete-product" autocomplete="off" />
             <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
-            <div id="autocomplete-product" class="dropdown">
-              <ul class="dropdown-menu">
-                <li class="disabled"><a href="#"><i class="icon-spinner icon-spin"></i> <?php echo $text_loading; ?></a></li>
-              </ul>
-            </div>
             <br />
             <div id="featured-product" class="well well-small scrollbox">
               <?php foreach ($products as $product) { ?>
@@ -151,7 +146,7 @@ $('input[name=\'product\']').on('click keyup', function() {
 });
 
 $('#autocomplete-product').delegate('a', 'click', function(e) {
-	e.preventDefault();
+	event.preventDefault();
 	
 	var value = $(this).parent().attr('data-value');
 	

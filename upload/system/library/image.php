@@ -166,8 +166,8 @@ class Image {
 	private function merge($file, $x = 0, $y = 0, $opacity = 100) {
 		$merge = $this->create($file);
 
-		$merge_width = imagesx($image);
-		$merge_height = imagesy($image);
+		$merge_width = imagesx($merge);
+		$merge_height = imagesy($merge);
 
 		imagecopymerge($this->image, $merge, $x, $y, 0, 0, $merge_width, $merge_height, $opacity);
 	}

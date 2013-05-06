@@ -853,35 +853,34 @@ $('select[name=\'shipping_address\']').on('change', function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
-/*
 $('input[name=\'product\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {	
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',			
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
-						label: item.name,
-						value: item.product_id,
-						model: item.model,
-						option: item.option,
-						price: item.price
+						label: item['name'],
+						value: item['product_id'],
+						model: item['model'],
+						option: item['option'],
+						price: item['price']						
 					}
 				}));
 			}
 		});
-	}, 
-	select: function(event, ui) {
-		$('input[name=\'product\']').attr('value', ui.item['label']);
-		$('input[name=\'product_id\']').attr('value', ui.item['value']);
+	},
+	'select': function(item) {
+		$('input[name=\'product\']').val(item['label']);
+		$('input[name=\'product_id\']').attr('value', item['value']);
 		
-		if (ui.item['option'] != '') {
+		
+		if (item['option'] != '') {
 			html = '';
 
-			for (i = 0; i < ui.item['option'].length; i++) {
-				option = ui.item['option'][i];
+			for (i = 0; i < item['option'].length; i++) {
+				option = item['option'][i];
 				
 				if (option['type'] == 'select') {
 					html += '<div id="option' + option['product_option_id'] + '">';
@@ -1077,15 +1076,10 @@ $('input[name=\'product\']').autocomplete({
 			$('#option').html('<td class="left"><?php echo $entry_option; ?></td><td class="left">' + html + '</td>');			
 		} else {
 			$('#option td').remove();
-		}
-		
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
-});	
-*/
+		}		
+	}	
+});
+
 function upload(product_option_id) {
 	$('#file').off();
 	

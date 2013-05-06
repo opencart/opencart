@@ -404,7 +404,7 @@
                     <input type="hidden" name="product_attribute[<?php echo $attribute_row; ?>][attribute_id]" value="<?php echo $product_attribute['attribute_id']; ?>" /></td>
                   <td class="left"><?php foreach ($languages as $language) { ?>
                     <textarea name="product_attribute[<?php echo $attribute_row; ?>][product_attribute_description][<?php echo $language['language_id']; ?>][text]" cols="40" rows="5" placeholder="<?php echo $entry_text; ?>"><?php echo isset($product_attribute['product_attribute_description'][$language['language_id']]) ? $product_attribute['product_attribute_description'][$language['language_id']]['text'] : ''; ?></textarea>
-                    <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" align="top" /><br />
+                    <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
                     <?php } ?></td>
                   <td class="left"><a onclick="$('#attribute-row<?php echo $attribute_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
                 </tr>
@@ -961,7 +961,7 @@ function addAttribute() {
 	html += '  <td class="left"><input type="text" name="product_attribute[' + attribute_row + '][name]" value="" placeholder="<?php echo $entry_attribute; ?>" /><input type="hidden" name="product_attribute[' + attribute_row + '][attribute_id]" value="" /></td>';
 	html += '  <td class="left">';
 	<?php foreach ($languages as $language) { ?>
-	html += '<textarea name="product_attribute[' + attribute_row + '][product_attribute_description][<?php echo $language['language_id']; ?>][text]" cols="40" rows="5" placeholder="<?php echo $entry_text; ?>"></textarea> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" align="top" /><br />';
+	html += '<textarea name="product_attribute[' + attribute_row + '][product_attribute_description][<?php echo $language['language_id']; ?>][text]" cols="40" rows="5" placeholder="<?php echo $entry_text; ?>"></textarea> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
     <?php } ?>
 	html += '  </td>';
 	html += '  <td class="left"><a onclick="$(\'#attribute-row' + attribute_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
@@ -969,48 +969,37 @@ function addAttribute() {
 	
 	$('#attribute tbody').append(html);
 	
+	attributeautocomplete(attribute_row);
+	
 	attribute_row++;
 }
 
-var timer = null;
-
-$('#attribute').delegate('input[data-toggle=\'dropdown\']', 'click', function() {
-	var input = this;
-	
-	if (timer != null) {
-		clearTimeout(timer);
-	}
-
-	timer = setTimeout(function() {
-		$.ajax({
-			url: 'index.php?route=catalog/attribute/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent($(input).val()),
-			dataType: 'json',			
-			success: function(json) {
-				if (json.length) {
-					html = '';
-					
-					for (i = 0; i < json.length; i++) {
-						html += '<li data-value="' + json[i]['attribute_id'] + '"><a href="#">' + json[i]['name'] + '</a></li>';
-					}
-				} else {
-					html = '<li class="disabled"><a href="#"><?php echo $text_none; ?></a></li>';
+function attributeautocomplete(attribute_row) {
+	$('input[name=\'product_attribute[' + attribute_row + '][name]\']').autocomplete({
+		'source': function(request, response) {
+			$.ajax({
+				url: 'index.php?route=catalog/attribute/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+				dataType: 'json',			
+				success: function(json) {
+					response($.map(json, function(item) {
+						return {
+							category: item.attribute_group,
+							label: item.name,
+							value: item.attribute_id
+						}
+					}));
 				}
-				
-				$($(input).attr('data-target')).find('ul').html(html);
-			}
-		});
-	}, 250);
-});
+			});
+		},
+		'select': function(item) {
+			$('input[name=\'product_attribute[' + attribute_row + '][name]\']').val(item['label']);
+			$('input[name=\'product_attribute[' + attribute_row + '][attribute_id]\']').val(item['value']);
+		}
+	});
+}
 
-$('#attribute').delegate('.dropdown-menu a', 'click', function(e) {
-	event.preventDefault();
-	
-	var value = $(this).parent().attr('data-value');
-	
-	if (typeof value !== 'undefined') {
-		$(this).parent().parent().parent().parent().find('input[name*=\'name\']').val($(this).text());
-		$(this).parent().parent().parent().parent().find('input[name*=\'attribute_id\']').val(value);
-	}
+$('#attribute tbody tr').each(function(index, element) {
+	attributeautocomplete(index);
 });
 //--></script> 
 <script type="text/javascript"><!--	

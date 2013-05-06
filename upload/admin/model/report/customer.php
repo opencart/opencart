@@ -88,7 +88,7 @@ class ModelReportCustomer extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalRewardPoints() {
+	public function getTotalRewardPoints($data = array()) {
 		$sql = "SELECT COUNT(DISTINCT customer_id) AS total FROM `" . DB_PREFIX . "customer_reward`";
 		
 		$implode = array();
@@ -103,18 +103,6 @@ class ModelReportCustomer extends Model {
 		
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-				
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}			
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}	
-			
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 						
 		$query = $this->db->query($sql);
@@ -152,7 +140,7 @@ class ModelReportCustomer extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalCredit() {
+	public function getTotalCredit($data = array()) {
 		$sql = "SELECT COUNT(DISTINCT customer_id) AS total FROM `" . DB_PREFIX . "customer_transaction`";
 		
 		$implode = array();
@@ -168,19 +156,7 @@ class ModelReportCustomer extends Model {
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
 		}
-				
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}			
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}	
-			
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
-						
+								
 		$query = $this->db->query($sql);
 		
 		return $query->row['total'];

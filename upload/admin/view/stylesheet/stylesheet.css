@@ -124,7 +124,7 @@
 	content: ':';
 }
 .required .control-label:before {
-	content: '*';
+	content: '* ';
 	color: #B94A48;
 }
 

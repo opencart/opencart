@@ -1100,18 +1100,19 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 	data += '#tab-shipping input, #tab-shipping select, #tab-shipping textarea, ';
 	
 	if ($(this).attr('id') == 'button-product') {
-		data  += '#tab-product input, #tab-product select, #tab-product textarea, ';
+		
+		data += '#tab-product input, #tab-product select, #tab-product textarea, ';
 	} else {
-		data  += '#product input, #product select, #product textarea, ';
+		data += '#product input, #product select, #product textarea, ';
 	}
 	
 	if ($(this).attr('id') == 'button-voucher') {
-		data  += '#tab-voucher input, #tab-voucher select, #tab-voucher textarea, ';
+		data += '#tab-voucher input, #tab-voucher select, #tab-voucher textarea, ';
 	} else {
-		data  += '#voucher input, #voucher select, #voucher textarea, ';
+		data += '#voucher input, #voucher select, #voucher textarea, ';
 	}
 	
-	data  += '#tab-total input, #tab-total select, #tab-total textarea';
+	data += '#tab-total input, #tab-total select, #tab-total textarea';
 
 	$.ajax({
 		url: '<?php echo $store_url; ?>index.php?route=checkout/manual&token=<?php echo $token; ?>',
@@ -1127,6 +1128,8 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 			$('#button-product, #button-voucher , #button-update').prop('disabled', false);
 		},		
 		success: function(json) {
+			$('#content').prepend(json);
+			
 			$('.alert, .error').remove();
 			
 			// Check for errors
@@ -1158,22 +1161,6 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 			
 				// Payment Address
 				if (json['error']['payment']) {	
-					if (json['error']['payment']['firstname']) {
-						$('input[name=\'payment_firstname\']').after('<span class="error">' + json['error']['payment']['firstname'] + '</span>');
-					}
-					
-					if (json['error']['payment']['lastname']) {
-						$('input[name=\'payment_lastname\']').after('<span class="error">' + json['error']['payment']['lastname'] + '</span>');
-					}	
-					
-					if (json['error']['payment']['address_1']) {
-						$('input[name=\'payment_address_1\']').after('<span class="error">' + json['error']['payment']['address_1'] + '</span>');
-					}	
-					
-					if (json['error']['payment']['city']) {
-						$('input[name=\'payment_city\']').after('<span class="error">' + json['error']['payment']['city'] + '</span>');
-					}	
-																								
 					if (json['error']['payment']['country']) {
 						$('select[name=\'payment_country_id\']').after('<span class="error">' + json['error']['payment']['country'] + '</span>');
 					}	
@@ -1189,22 +1176,6 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 			
 				// Shipping	Address
 				if (json['error']['shipping']) {		
-					if (json['error']['shipping']['firstname']) {
-						$('input[name=\'shipping_firstname\']').after('<span class="error">' + json['error']['shipping']['firstname'] + '</span>');
-					}
-					
-					if (json['error']['shipping']['lastname']) {
-						$('input[name=\'shipping_lastname\']').after('<span class="error">' + json['error']['shipping']['lastname'] + '</span>');
-					}	
-					
-					if (json['error']['shipping']['address_1']) {
-						$('input[name=\'shipping_address_1\']').after('<span class="error">' + json['error']['shipping']['address_1'] + '</span>');
-					}	
-					
-					if (json['error']['shipping']['city']) {
-						$('input[name=\'shipping_city\']').after('<span class="error">' + json['error']['shipping']['city'] + '</span>');
-					}	
-																								
 					if (json['error']['shipping']['country']) {
 						$('select[name=\'shipping_country_id\']').after('<span class="error">' + json['error']['shipping']['country'] + '</span>');
 					}	
@@ -1229,13 +1200,19 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					if (json['error']['product']['stock']) {
 						$('.box').before('<div class="alert alert-error">' + json['error']['product']['stock'] + '</div>');
 					}	
-											
+					
+					if (json['error']['product']['store']) {
+						$('.box').before('<div class="alert alert-error">' + json['error']['product']['store'] + '</div>');
+					}	
+																
 					if (json['error']['product']['minimum']) {	
 						for (i in json['error']['product']['minimum']) {
 							$('.box').before('<div class="alert alert-error">' + json['error']['product']['minimum'][i] + '</div>');
 						}						
 					}
 				} else {
+					alert('hi');
+					
 					$('input[name=\'product\']').val('');
 					$('input[name=\'product_id\']').val('');
 					$('#option').html('');			
@@ -1478,7 +1455,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				
 				$('#total').html(html);
 			} else {
-				html  = '</tr>';
+				html  = '<tr>';
 				html += '  <td colspan="5" class="center"><?php echo $text_no_results; ?></td>';
 				html += '</tr>';	
 
@@ -1494,7 +1471,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				
 					if (!json['shipping_method'][i]['error']) {
 						for (j in json['shipping_method'][i]['quote']) {
-							if (json['shipping_method'][i]['quote'][j]['code'] == $('input[name=\'shipping_code\']').attr('value')) {
+							if (json['shipping_method'][i]['quote'][j]['code'] == $('input[name=\'shipping_code\']').val()) {
 								html += '<option value="' + json['shipping_method'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_method'][i]['quote'][j]['title'] + '</option>';
 							} else {
 								html += '<option value="' + json['shipping_method'][i]['quote'][j]['code'] + '">' + json['shipping_method'][i]['quote'][j]['title'] + '</option>';
@@ -1509,13 +1486,13 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 		
 				$('select[name=\'shipping\']').html(html);	
 				
-				if ($('select[name=\'shipping\'] option:selected').attr('value')) {
-					$('input[name=\'shipping_method\']').attr('value', $('select[name=\'shipping\'] option:selected').text());
+				if ($('select[name=\'shipping\']').val()) {
+					$('input[name=\'shipping_method\']').attr('value', $('select[name=\'shipping\']').text());
 				} else {
 					$('input[name=\'shipping_method\']').attr('value', '');
 				}
 				
-				$('input[name=\'shipping_code\']').attr('value', $('select[name=\'shipping\'] option:selected').attr('value'));	
+				$('input[name=\'shipping_code\']').attr('value', $('select[name=\'shipping\']').val());	
 			}
 						
 			// Payment Methods
@@ -1523,7 +1500,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				html = '<option value=""><?php echo $text_select; ?></option>';
 				
 				for (i in json['payment_method']) {
-					if (json['payment_method'][i]['code'] == $('input[name=\'payment_code\']').attr('value')) {
+					if (json['payment_method'][i]['code'] == $('input[name=\'payment_code\']').val()) {
 						html += '<option value="' + json['payment_method'][i]['code'] + '" selected="selected">' + json['payment_method'][i]['title'] + '</option>';
 					} else {
 						html += '<option value="' + json['payment_method'][i]['code'] + '">' + json['payment_method'][i]['title'] + '</option>';
@@ -1532,13 +1509,13 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 		
 				$('select[name=\'payment\']').html(html);
 				
-				if ($('select[name=\'payment\'] option:selected').attr('value')) {
-					$('input[name=\'payment_method\']').attr('value', $('select[name=\'payment\'] option:selected').text());
+				if ($('select[name=\'payment\']').val()) {
+					$('input[name=\'payment_method\']').attr('value', $('select[name=\'payment\']').text());
 				} else {
 					$('input[name=\'payment_method\']').attr('value', '');
 				}
 				
-				$('input[name=\'payment_code\']').attr('value', $('select[name=\'payment\'] option:selected').attr('value'));
+				$('input[name=\'payment_code\']').attr('value', $('select[name=\'payment\']').val());
 			}	
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

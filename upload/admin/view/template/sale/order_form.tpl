@@ -322,7 +322,7 @@
                   <?php if ($order_products) { ?>
                   <?php foreach ($order_products as $order_product) { ?>
                   <tr id="product-row<?php echo $product_row; ?>">
-                    <td class="center" style="width: 3px;"><img src="view/image/icon-delete.png" title="<?php echo $button_remove; ?>" alt="<?php echo $button_remove; ?>" style="cursor: pointer;" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-update').trigger('click');" /></td>
+                    <td class="center" style="width: 3px;"><i class="icon-minus-sign" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-update').trigger('click');"></i></td>
                     <td class="left"><?php echo $order_product['name']; ?><br />
                       <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_product_id]" value="<?php echo $order_product['order_product_id']; ?>" />
                       <input type="hidden" name="order_product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
@@ -374,13 +374,13 @@
                     <input type="hidden" name="product_id" value="" />
                   </div>
                 </div>
-                <div id="option"></div>
                 <div class="control-group">
                   <label class="control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
                   <div class="controls">
                     <input type="text" name="quantity" value="1" id="input-quantity" />
                   </div>
                 </div>
+                <div id="option"></div>
               </fieldset>
               <button type="button" id="button-product" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_product; ?></button>
             </div>
@@ -401,7 +401,7 @@
                   <?php if ($order_vouchers) { ?>
                   <?php foreach ($order_vouchers as $order_voucher) { ?>
                   <tr id="voucher-row<?php echo $voucher_row; ?>">
-                    <td class="center" style="width: 3px;"><img src="view/image/icon-delete.png" title="<?php echo $button_remove; ?>" alt="<?php echo $button_remove; ?>" style="cursor: pointer;" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove(); $('#button-update').trigger('click');" /></td>
+                    <td class="center" style="width: 3px;"><i class="icon-minus-sign" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove(); $('#button-update').trigger('click');"></i></td>
                     <td class="left"><?php echo $order_voucher['description']; ?>
                       <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][order_voucher_id]" value="<?php echo $order_voucher['order_voucher_id']; ?>" />
                       <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][voucher_id]" value="<?php echo $order_voucher['voucher_id']; ?>" />
@@ -614,7 +614,7 @@
                   </div>
                 </div>
               </fieldset>
-              <button type="button" id="button-update" class="btn"><?php echo $button_update_total; ?></button>
+              <button type="button" id="button-update" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_update_total; ?></button>
             </div>
           </div>
         </div>
@@ -873,25 +873,21 @@ $('input[name=\'product\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'product\']').val(item['label']);
-		$('input[name=\'product_id\']').attr('value', item['value']);
-		
+		$('input[name=\'product_id\']').val(item['value']);
 		
 		if (item['option'] != '') {
-			html = '';
-
+ 			html  = '<fieldset>';
+            html += '  <legend><?php echo $entry_option; ?></legend>';
+			  
 			for (i = 0; i < item['option'].length; i++) {
 				option = item['option'][i];
 				
 				if (option['type'] == 'select') {
-					html += '<div id="option' + option['product_option_id'] + '">';
-					
-					if (option['required']) {
-						html += '<span class="required">*</span> ';
-					}
-				
-					html += option['name'] + '<br />';
-					html += '<select name="option[' + option['product_option_id'] + ']">';
-					html += '<option value=""><?php echo $text_select; ?></option>';
+					html += '<div id="option' + option['product_option_id'] + '" class="control-group' + (option['required'] ? ' required' : '') + '">';
+					html += '  <label class="control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <div class="controls">';
+					html += '    <select name="option[' + option['product_option_id'] + ']" id="input-option' + option['product_option_id'] + '">';
+					html += '      <option value=""><?php echo $text_select; ?></option>';
 				
 					for (j = 0; j < option['product_option_value'].length; j++) {
 						option_value = option['product_option_value'][j];
@@ -905,21 +901,17 @@ $('input[name=\'product\']').autocomplete({
 						html += '</option>';
 					}
 						
-					html += '</select>';
+					html += '    </select>';
+					html += '  </div>';
 					html += '</div>';
-					html += '<br />';
 				}
 				
 				if (option['type'] == 'radio') {
-					html += '<div id="option' + option['product_option_id'] + '">';
-					
-					if (option['required']) {
-						html += '<span class="required">*</span> ';
-					}
-				
-					html += option['name'] + '<br />';
-					html += '<select name="option[' + option['product_option_id'] + ']">';
-					html += '<option value=""><?php echo $text_select; ?></option>';
+					html += '<div id="option' + option['product_option_id'] + '" class="control-group' + (option['required'] ? ' required' : '') + '">';
+					html += '  <label class="control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <div class="controls">';
+					html += '    <select name="option[' + option['product_option_id'] + ']" id="input-option' + option['product_option_id'] + '">';
+					html += '      <option value=""><?php echo $text_select; ?></option>';
 				
 					for (j = 0; j < option['product_option_value'].length; j++) {
 						option_value = option['product_option_value'][j];
@@ -933,48 +925,38 @@ $('input[name=\'product\']').autocomplete({
 						html += '</option>';
 					}
 						
-					html += '</select>';
+					html += '    </select>';
+					html += '  </div>';
 					html += '</div>';
-					html += '<br />';
 				}
 					
 				if (option['type'] == 'checkbox') {
-					html += '<div id="option' + option['product_option_id'] + '">';
-					
-					if (option['required']) {
-						html += '<span class="required">*</span> ';
-					}
-					
-					html += option['name'] + '<br />';
+					html += '<div id="option' + option['product_option_id'] + '" class="control-group' + (option['required'] ? ' required' : '') + '">';
+					html += '  <div class="control-label">' + option['name'] + '</div>';
+					html += '  <div class="controls">';
 					
 					for (j = 0; j < option['product_option_value'].length; j++) {
 						option_value = option['product_option_value'][j];
 						
-						html += '<input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="option-value' + option_value['product_option_value_id'] + '" />';
-						html += '<label for="option-value' + option_value['product_option_value_id'] + '">' + option_value['name'];
+						html += '<label class="checkbox"><input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" /> ' + option_value['name'];
 						
 						if (option_value['price']) {
 							html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
 						}
 						
 						html += '</label>';
-						html += '<br />';
-					}
+					}					
 					
+					html += '  </div>';
 					html += '</div>';
-					html += '<br />';
 				}
 			
 				if (option['type'] == 'image') {
-					html += '<div id="option' + option['product_option_id'] + '">';
-					
-					if (option['required']) {
-						html += '<span class="required">*</span> ';
-					}
-				
-					html += option['name'] + '<br />';
-					html += '<select name="option[' + option['product_option_id'] + ']">';
-					html += '<option value=""><?php echo $text_select; ?></option>';
+					html += '<div id="option' + option['product_option_id'] + '" class="control-group' + (option['required'] ? ' required' : '') + '">';
+					html += '  <label class="control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <div class="controls">';
+					html += '    <select name="option[' + option['product_option_id'] + ']" id="input-option' + option['product_option_id'] + '">';
+					html += '      <option value=""><?php echo $text_select; ?></option>';
 				
 					for (j = 0; j < option['product_option_value'].length; j++) {
 						option_value = option['product_option_value'][j];
@@ -988,94 +970,62 @@ $('input[name=\'product\']').autocomplete({
 						html += '</option>';
 					}
 						
-					html += '</select>';
+					html += '    </select>';					
+					html += '  </div>';
 					html += '</div>';
-					html += '<br />';
 				}
 						
 				if (option['type'] == 'text') {
-					html += '<div id="option' + option['product_option_id'] + '">';
-					
-					if (option['required']) {
-						html += '<span class="required">*</span> ';
-					}
-					
-					html += option['name'] + '<br />';
-					html += '<input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
-					html += '</div>';
-					html += '<br />';
+					html += '<div id="option' + option['product_option_id'] + '" class="control-group' + (option['required'] ? ' required' : '') + '">';
+					html += '  <label class="control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <div class="controls"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['product_option_id'] + '" /></div>';
+					html += '</div>';					
 				}
 				
 				if (option['type'] == 'textarea') {
-					html += '<div id="option' + option['product_option_id'] + '">';
-					
-					if (option['required']) {
-						html += '<span class="required">*</span> ';
-					}
-					
-					html += option['name'] + '<br />';
-					html += '<textarea name="option[' + option['product_option_id'] + ']" cols="40" rows="5">' + option['value'] + '</textarea>';
+					html += '<div id="option' + option['product_option_id'] + '" class="control-group' + (option['required'] ? ' required' : '') + '">';
+					html += '  <label class="control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <div class="controls"><textarea name="option[' + option['product_option_id'] + ']" cols="40" rows="5" id="input-option' + option['product_option_id'] + '">' + option['value'] + '</textarea></div>';
 					html += '</div>';
-					html += '<br />';
 				}
 				
 				if (option['type'] == 'file') {
-					html += '<div id="option' + option['product_option_id'] + '">';
-					
-					if (option['required']) {
-						html += '<span class="required">*</span> ';
-					}
-					
-					html += option['name'] + '<br />';
-					html += '<button type="button" id="button-option' + option['product_option_id'] + '" class="btn" onclick="upload(\'' + option['product_option_id'] + '\');"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>';
-					html += '<input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
+					html += '<div id="option' + option['product_option_id'] + '" class="control-group' + (option['required'] ? ' required' : '') + '">';
+					html += '  <div class="control-label">' + option['name'] + '</div>';
+					html += '  <div class="controls">';
+					html += '    <button type="button" id="button-option' + option['product_option_id'] + '" class="btn" onclick="upload(\'' + option['product_option_id'] + '\');"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>';
+					html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
+					html += '  </div>';
 					html += '</div>';
-					html += '<br />';
 				}
 				
 				if (option['type'] == 'date') {
-					html += '<div id="option' + option['product_option_id'] + '">';
-					
-					if (option['required']) {
-						html += '<span class="required">*</span> ';
-					}
-					
-					html += option['name'] + '<br />';
-					html += '<input type="date" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" class="input-medium" />';
+					html += '<div id="option' + option['product_option_id'] + '" class="control-group' + (option['required'] ? ' required' : '') + '">';
+					html += '  <label class="control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <div class="controls"><input type="date" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['product_option_id'] + '" class="input-medium" /></div>';
 					html += '</div>';
-					html += '<br />';
 				}
 				
 				if (option['type'] == 'datetime') {
-					html += '<div id="option' + option['product_option_id'] + '">';
-					
-					if (option['required']) {
-						html += '<span class="required">*</span> ';
-					}
-					
-					html += option['name'] + '<br />';
-					html += '<input type="datetime-local" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
-					html += '</div>';
-					html += '<br />';						
+					html += '<div id="option' + option['product_option_id'] + '" class="control-group' + (option['required'] ? ' required' : '') + '">';
+					html += '  <label class="control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <div class="controls"><input type="datetime-local" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['product_option_id'] + '" /></div>';
+					html += '</div>';					
 				}
 				
 				if (option['type'] == 'time') {
-					html += '<div id="option' + option['product_option_id'] + '">';
-					
-					if (option['required']) {
-						html += '<span class="required">*</span> ';
-					}
-					
-					html += option['name'] + '<br />';
-					html += '<input type="time" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" class="input-mini" />';
-					html += '</div>';
-					html += '<br />';						
+					html += '<div id="option' + option['product_option_id'] + '" class="control-group' + (option['required'] ? ' required' : '') + '">';
+					html += '  <label class="control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
+					html += '  <div class="controls"><input type="time" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['product_option_id'] + '" class="input-mini" /></div>';
+					html += '</div>';					
 				}
 			}
 			
-			$('#option').html('<td class="left"><?php echo $entry_option; ?></td><td class="left">' + html + '</td>');			
+			html += '</fieldset>';
+			
+			$('#option').html(html);			
 		} else {
-			$('#option td').remove();
+			$('#option').html('');
 		}		
 	}	
 });
@@ -1145,36 +1095,39 @@ $('select[name=\'shipping\']').on('change', function() {
 //--></script> 
 <script type="text/javascript"><!--
 $('#button-product, #button-voucher, #button-update').on('click', function() {	
-	data  = '#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea, ';
-	data += '#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea, ';
-	data += '#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea, ';
+	data  = '#tab-customer input, #tab-customer select, #tab-customer textarea, ';
+	data += '#tab-payment input, #tab-payment select, #tab-payment textarea, ';
+	data += '#tab-shipping input, #tab-shipping select, #tab-shipping textarea, ';
 	
 	if ($(this).attr('id') == 'button-product') {
-		data += '#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select, #tab-product textarea, ';
+		data  += '#tab-product input, #tab-product select, #tab-product textarea, ';
 	} else {
-		data += '#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea, ';
+		data  += '#product input, #product select, #product textarea, ';
 	}
 	
 	if ($(this).attr('id') == 'button-voucher') {
-		data += '#tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea, ';
+		data  += '#tab-voucher input, #tab-voucher select, #tab-voucher textarea, ';
 	} else {
-		data += '#voucher input[type=\'text\'], #voucher input[type=\'hidden\'], #voucher input[type=\'radio\']:checked, #voucher input[type=\'checkbox\']:checked, #voucher select, #voucher textarea, ';
+		data  += '#voucher input, #voucher select, #voucher textarea, ';
 	}
 	
-	data += '#tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea';
+	data  += '#tab-total input, #tab-total select, #tab-total textarea';
 
 	$.ajax({
 		url: '<?php echo $store_url; ?>index.php?route=checkout/manual&token=<?php echo $token; ?>',
 		type: 'post',
-		data: $(data),
-		dataType: 'json',	
+		data: $(data).serialize(),
+		dataType: 'json',
 		beforeSend: function() {
-			$('.success, .warning, .attention, .error').remove();
-			
-			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /></div>');
-		},			
+			$('#button-product i, #button-voucher i, #button-update i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-product, #button-voucher , #button-update').prop('disabled', true);
+		},	
+		complete: function() {
+			$('#button-product i, #button-voucher i, #button-update i').replaceWith('<i class="icon-plus-sign"></i>');
+			$('#button-product, #button-voucher , #button-update').prop('disabled', false);
+		},		
 		success: function(json) {
-			$('.success, .warning, .attention, .error').remove();
+			$('.alert, .error').remove();
 			
 			// Check for errors
 			if (json['error']) {
@@ -1269,7 +1222,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				if (json['error']['product']) {
 					if (json['error']['product']['option']) {	
 						for (i in json['error']['product']['option']) {
-							$('#option' + i).after('<span class="error">' + json['error']['product']['option'][i] + '</span>');
+							$('#input-option' + i).after('<span class="error">' + json['error']['product']['option'][i] + '</span>');
 						}						
 					}
 					
@@ -1283,10 +1236,10 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 						}						
 					}
 				} else {
-					$('input[name=\'product\']').attr('value', '');
-					$('input[name=\'product_id\']').attr('value', '');
-					$('#option td').remove();			
-					$('input[name=\'quantity\']').attr('value', '1');			
+					$('input[name=\'product\']').val('');
+					$('input[name=\'product_id\']').val('');
+					$('#option').html('');			
+					$('input[name=\'quantity\']').val('1');		
 				}
 				
 				// Voucher
@@ -1344,17 +1297,17 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					$('.box').before('<div class="alert alert-error">' + json['error']['reward'] + '</div>');
 				}	
 			} else {
-				$('input[name=\'product\']').attr('value', '');
-				$('input[name=\'product_id\']').attr('value', '');
-				$('#option td').remove();	
-				$('input[name=\'quantity\']').attr('value', '1');	
+				$('input[name=\'product\']').val('');
+				$('input[name=\'product_id\']').val('');
+				$('#option').html('');	
+				$('input[name=\'quantity\']').val('1');	
 				
-				$('input[name=\'from_name\']').attr('value', '');	
-				$('input[name=\'from_email\']').attr('value', '');	
-				$('input[name=\'to_name\']').attr('value', '');
-				$('input[name=\'to_email\']').attr('value', '');	
-				$('textarea[name=\'message\']').attr('value', '');	
-				$('input[name=\'amount\']').attr('value', '25.00');									
+				$('input[name=\'from_name\']').val('');	
+				$('input[name=\'from_email\']').val('');	
+				$('input[name=\'to_name\']').val('');
+				$('input[name=\'to_email\']').val('');	
+				$('textarea[name=\'message\']').val('');	
+				$('input[name=\'amount\']').val('25.00');								
 			}
 
 			if (json['success']) {
@@ -1374,7 +1327,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					product = json['order_product'][i];
 					
 					html += '<tr id="product-row' + product_row + '">';
-					html += '  <td class="center" style="width: 3px;"><img src="view/image/icon-delete.png" title="<?php echo $button_remove; ?>" alt="<?php echo $button_remove; ?>" style="cursor: pointer;" onclick="$(\'#product-row' + product_row + '\').remove(); $(\'#button-update\').trigger(\'click\');" /></td>';
+					html += '  <td class="center" style="width: 3px;"><i class="icon-minus-sign" onclick="$(\'#product-row' + product_row + '\').remove(); $(\'#button-update\').trigger(\'click\');"></i></td>';
 					html += '  <td class="left">' + product['name'] + '<br /><input type="hidden" name="order_product[' + product_row + '][order_product_id]" value="" /><input type="hidden" name="order_product[' + product_row + '][product_id]" value="' + product['product_id'] + '" /><input type="hidden" name="order_product[' + product_row + '][name]" value="' + product['name'] + '" />';
 					
 					if (product['option']) {
@@ -1418,12 +1371,12 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				}
 				
 				$('#product').html(html);
-			} else {
-				html  = '</tr>';
+			} else {				
+				html  = '<tr>';
 				html += '  <td colspan="6" class="center"><?php echo $text_no_results; ?></td>';
 				html += '</tr>';	
 
-				$('#product').html(html);	
+				$('#product').html(html);
 			}
 						
 			// Vouchers
@@ -1436,7 +1389,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					voucher = json['order_voucher'][i];
 					 
 					html += '<tr id="voucher-row' + voucher_row + '">';
-					html += '  <td class="center" style="width: 3px;"><img src="view/image/icon-delete.png" title="<?php echo $button_remove; ?>" alt="<?php echo $button_remove; ?>" style="cursor: pointer;" onclick="$(\'#voucher-row' + voucher_row + '\').remove(); $(\'#button-update\').trigger(\'click\');" /></td>';
+					html += '  <td class="center" style="width: 3px;"><i class="icon-minus-sign" onclick="$(\'#voucher-row' + voucher_row + '\').remove(); $(\'#button-update\').trigger(\'click\');"></i></td>';
 					html += '  <td class="left">' + voucher['description'];
 					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][order_voucher_id]" value="" />';
 					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][voucher_id]" value="' + voucher['voucher_id'] + '" />';
@@ -1461,7 +1414,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				  
 				$('#voucher').html(html);				
 			} else {
-				html  = '</tr>';
+				html  = '<tr>';
 				html += '  <td colspan="6" class="center"><?php echo $text_no_results; ?></td>';
 				html += '</tr>';	
 

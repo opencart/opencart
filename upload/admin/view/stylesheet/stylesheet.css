@@ -61,7 +61,7 @@
 	margin-bottom: 15px;
 }
 .box-heading {
-	padding: 0px 10px;
+	padding: 0px 15px;
 	border: 1px solid #DBDBDB;
 	background: #EFEFEF;
 	-webkit-border-radius: 7px 7px 0px 0px;
@@ -73,13 +73,16 @@
 	margin: 0px;
 	padding: 0px;
 	color: #666666;
-	font-size: 15px;
-	line-height: 32px;
-	padding-top: 3px;
+	font-size: 19px;
+	font-weight: normal;
+	text-shadow: 1px 1px 0px #FFFFFF;	
+	line-height: 42px;
+	padding-top: 0px;
 }
 .box-heading h1 i {
-	font-size: 17px;
+	font-size: 20px;
 	font-weight: normal;
+	color: #00C3F4;
 	margin-right: 5px;
 }
 .box-content {

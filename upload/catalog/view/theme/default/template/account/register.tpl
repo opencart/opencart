@@ -7,125 +7,127 @@
   </ul>
   <h1><?php echo $heading_title; ?></h1>
   <p><?php echo $text_account_already; ?></p>
-  <h2><?php echo $text_your_details; ?></h2>
-  <div class="content">
-    <table class="form">
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
-        <td><input type="text" name="firstname" value="" /></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
-        <td><input type="text" name="lastname" value="" /></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_email; ?></td>
-        <td><input type="text" name="email" value="" /></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_telephone; ?></td>
-        <td><input type="text" name="telephone" value="" /></td>
-      </tr>
-      <tr>
-        <td><?php echo $entry_fax; ?></td>
-        <td><input type="text" name="fax" value="" /></td>
-      </tr>
-    </table>
-  </div>
-  <h2><?php echo $text_your_address; ?></h2>
-  <div class="content">
-    <table class="form">
-      <tr>
-        <td><?php echo $entry_company; ?></td>
-        <td><input type="text" name="company" value="" /></td>
-      </tr>
-      <tr style="display: <?php echo (count($customer_groups) > 1 ? 'table-row' : 'none'); ?>;">
-        <td><?php echo $entry_customer_group; ?></td>
-        <td><select name="customer_group_id">
-            <?php foreach ($customer_groups as $customer_group) { ?>
-            <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
-            <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
-            <?php } else { ?>
-            <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
-            <?php } ?>
-            <?php } ?>
-          </select></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
-        <td><input type="text" name="address_1" value="" /></td>
-      </tr>
-      <tr>
-        <td><?php echo $entry_address_2; ?></td>
-        <td><input type="text" name="address_2" value="" /></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_city; ?></td>
-        <td><input type="text" name="city" value="" /></td>
-      </tr>
-      <tr>
-        <td><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
-        <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-        <td><select name="country_id">
-            <option value=""><?php echo $text_select; ?></option>
-            <?php foreach ($countries as $country) { ?>
-            <?php if ($country['country_id'] == $country_id) { ?>
-            <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-            <?php } else { ?>
-            <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-            <?php } ?>
-            <?php } ?>
-          </select></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
-        <td><select name="zone_id">
-          </select></td>
-      </tr>
-    </table>
-  </div>
-  <h2><?php echo $text_your_password; ?></h2>
-  <div class="content">
-    <table class="form">
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_password; ?></td>
-        <td><input type="password" name="password" value="" /></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_confirm; ?></td>
-        <td><input type="password" name="confirm" value="" /></td>
-      </tr>
-    </table>
-  </div>
-  <h2><?php echo $text_newsletter; ?></h2>
-  <div class="content">
-    <table class="form">
-      <tr>
-        <td><?php echo $entry_newsletter; ?></td>
-        <td><input type="radio" name="newsletter" value="1" />
-          <?php echo $text_yes; ?>
-          <input type="radio" name="newsletter" value="0" checked="checked" />
-          <?php echo $text_no; ?></td>
-      </tr>
-    </table>
-  </div>
-  <?php if ($text_agree) { ?>
-  <div class="buttons">
-    <div class="right"><?php echo $text_agree; ?>
-      <input type="checkbox" name="agree" value="1" />
-      <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="btn" />
+  <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+    <h2><?php echo $text_your_details; ?></h2>
+    <div class="content">
+      <table class="form">
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
+          <td><input type="text" name="firstname" value="" /></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
+          <td><input type="text" name="lastname" value="" /></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_email; ?></td>
+          <td><input type="text" name="email" value="" /></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_telephone; ?></td>
+          <td><input type="text" name="telephone" value="" /></td>
+        </tr>
+        <tr>
+          <td><?php echo $entry_fax; ?></td>
+          <td><input type="text" name="fax" value="" /></td>
+        </tr>
+      </table>
     </div>
-  </div>
-  <?php } else { ?>
-  <div class="buttons">
-    <div class="right">
-      <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="btn" />
+    <h2><?php echo $text_your_address; ?></h2>
+    <div class="content">
+      <table class="form">
+        <tr>
+          <td><?php echo $entry_company; ?></td>
+          <td><input type="text" name="company" value="" /></td>
+        </tr>
+        <tr style="display: <?php echo (count($customer_groups) > 1 ? 'table-row' : 'none'); ?>;">
+          <td><?php echo $entry_customer_group; ?></td>
+          <td><select name="customer_group_id">
+              <?php foreach ($customer_groups as $customer_group) { ?>
+              <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+              <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
+          <td><input type="text" name="address_1" value="" /></td>
+        </tr>
+        <tr>
+          <td><?php echo $entry_address_2; ?></td>
+          <td><input type="text" name="address_2" value="" /></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_city; ?></td>
+          <td><input type="text" name="city" value="" /></td>
+        </tr>
+        <tr>
+          <td><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
+          <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_country; ?></td>
+          <td><select name="country_id">
+              <option value=""><?php echo $text_select; ?></option>
+              <?php foreach ($countries as $country) { ?>
+              <?php if ($country['country_id'] == $country_id) { ?>
+              <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
+          <td><select name="zone_id">
+            </select></td>
+        </tr>
+      </table>
     </div>
-  </div>
-  <?php } ?>
+    <h2><?php echo $text_your_password; ?></h2>
+    <div class="content">
+      <table class="form">
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_password; ?></td>
+          <td><input type="password" name="password" value="" /></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_confirm; ?></td>
+          <td><input type="password" name="confirm" value="" /></td>
+        </tr>
+      </table>
+    </div>
+    <h2><?php echo $text_newsletter; ?></h2>
+    <div class="content">
+      <table class="form">
+        <tr>
+          <td><?php echo $entry_newsletter; ?></td>
+          <td><input type="radio" name="newsletter" value="1" />
+            <?php echo $text_yes; ?>
+            <input type="radio" name="newsletter" value="0" checked="checked" />
+            <?php echo $text_no; ?></td>
+        </tr>
+      </table>
+    </div>
+    <?php if ($text_agree) { ?>
+    <div class="buttons">
+      <div class="right"><?php echo $text_agree; ?>
+        <input type="checkbox" name="agree" value="1" />
+        <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="btn" />
+      </div>
+    </div>
+    <?php } else { ?>
+    <div class="buttons">
+      <div class="right">
+        <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="btn" />
+      </div>
+    </div>
+    <?php } ?>
+  </form>
   <?php echo $content_bottom; ?></div>
 <div style="display: none;">
   <form enctype="multipart/form-data">
@@ -137,15 +139,15 @@ $('#button-register').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=account/register/save',
 		type: 'post',
-		data: $('input[type=\'text\'], input[type=\'password\'], input[type=\'checkbox\']:checked, input[type=\'radio\']:checked, input[type=\'hidden\'], select'),
+		data: $('form').serialize(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-register').after(' <i class="icon-spinner icon-spin"></i>');
 			$('#button-register').prop('disabled', true);
 		},	
 		complete: function() {
+			$('#button-register').after(' <i class="icon-spinner icon-spin"></i>');
 			$('#button-register').prop('disabled', false); 
-			$('.loading').remove();
 		},			
 		success: function(json) {
 			$('.warning, .error').remove();

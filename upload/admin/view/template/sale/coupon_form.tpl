@@ -61,7 +61,7 @@
                   <option value="F"><?php echo $text_amount; ?></option>
                   <?php } ?>
                 </select>
-                <a data-toggle="tooltip" title="<?php echo $help_type; ?>"><i class="icon-question-sign icon-large"></i></a> </div>
+                <a data-toggle="tooltip" title="<?php echo $help_type; ?>"><i class="icon-question-sign icon-large"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-discount"><?php echo $entry_discount; ?></label>
@@ -73,7 +73,7 @@
               <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
               <div class="controls">
                 <input type="text" name="total" value="<?php echo $total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
-                <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-question-sign icon-large"></i></a> </div>
+                <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-question-sign icon-large"></i></a></div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_logged; ?></div>
@@ -96,7 +96,7 @@
                   <?php echo $text_no; ?>
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_logged; ?>"><i class="icon-question-sign icon-large"></i></a> </div>
+                <a data-toggle="tooltip" title="<?php echo $help_logged; ?>"><i class="icon-question-sign icon-large"></i></a></div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_shipping; ?></div>
@@ -167,13 +167,13 @@
               <label class="control-label" for="input-uses-total"><?php echo $entry_uses_total; ?></label>
               <div class="controls">
                 <input type="text" name="uses_total" value="<?php echo $uses_total; ?>" placeholder="<?php echo $entry_uses_total; ?>" id="input-uses-total" />
-                <a data-toggle="tooltip" title="<?php echo $help_uses_total; ?>"><i class="icon-question-sign icon-large"></i></a> </div>
+                <a data-toggle="tooltip" title="<?php echo $help_uses_total; ?>"><i class="icon-question-sign icon-large"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-uses-customer"><?php echo $entry_uses_customer; ?></label>
               <div class="controls">
                 <input type="text" name="uses_customer" value="<?php echo $uses_customer; ?>" placeholder="<?php echo $entry_uses_customer; ?>" id="input-uses-customer" />
-                <a data-toggle="tooltip" title="<?php echo $help_uses_customer; ?>"><i class="icon-question-sign icon-large"></i></a> </div>
+                <a data-toggle="tooltip" title="<?php echo $help_uses_customer; ?>"><i class="icon-question-sign icon-large"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>

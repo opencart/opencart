@@ -18,53 +18,37 @@
           <li><a href="#tab-history" data-toggle="tab"><?php echo $tab_history; ?></a></li>
         </ul>
         <div class="tab-content">
-          <div class="tab-pane active" id="tab-return">
-            <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $text_return_id; ?></label>
-              <div class="controls"> <?php echo $return_id; ?> </div>
-            </div>
+        <h2>Return Details</h2>
+          <div class="row-fluid">
+            <div class="span6"><?php echo $text_return_id; ?> <?php echo $return_id; ?></div>
             <?php if ($order) { ?>
-            <div class="control-group">
-              <div class="control-label"><?php echo $text_order_id; ?></div>
-              <div class="controls"><a href="<?php echo $order; ?>"><?php echo $order_id; ?></a></div>
-            </div>
+            <div class="span6"><?php echo $text_order_id; ?><a href="<?php echo $order; ?>"><?php echo $order_id; ?></a></div>
             <?php } else { ?>
-            <div class="control-group">
-              <div class="control-label"><?php echo $text_order_id; ?></div>
-              <div class="controls"><?php echo $order_id; ?></div>
-            </div>
+            <div class="span6"><?php echo $text_order_id; ?> <?php echo $order_id; ?></div>
             <?php } ?>
-            <div class="control-group">
-              <div class="control-label"><?php echo $text_date_ordered; ?></div>
-              <div class="controls"><?php echo $date_ordered; ?></div>
+          </div>
+          
+               <div class="row-fluid">
+            <div class="span6"><?php echo $text_date_ordered; ?> <?php echo $date_ordered; ?></div>  
+          
+           <?php if ($customer) { ?>
+          <div class="span6"><?php echo $text_customer; ?> <a href="<?php echo $customer; ?>"><?php echo $firstname; ?> <?php echo $lastname; ?></a></div>
+          
+          <?php } else { ?>
+          
+          <div class="span6"><?php echo $text_customer; ?> <?php echo $firstname; ?> <?php echo $lastname; ?></div>
+          <?php } ?>
+          </div>
+          
+            <div class="row-fluid">
+            <div class="span6"><?php echo $text_email; ?> <?php echo $email; ?></div>
+            <div class="span6"><?php echo $text_telephone; ?> <?php echo $telephone; ?></div>
+            
             </div>
             
-            <?php if ($customer) { ?>
-            <div class="control-group">
-              <div class="control-label"><?php echo $text_customer; ?></div>
-              <div class="controls"><a href="<?php echo $customer; ?>"><?php echo $firstname; ?> <?php echo $lastname; ?></a></div>
-            </div>
             
-            <?php } else { ?>
-            <div class="control-group">
-              <div class="control-label"><?php echo $text_customer; ?></div>
-              <div class="controls"><?php echo $firstname; ?> <?php echo $lastname; ?></div>
-            </div>
-            
-            <?php } ?>
             
             <table class="form">
-
-
-              
-              <tr>
-                <td><?php echo $text_email; ?></td>
-                <td><?php echo $email; ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $text_telephone; ?></td>
-                <td><?php echo $telephone; ?></td>
-              </tr>
               <?php if ($return_status) { ?>
               <tr>
                 <td><?php echo $text_return_status; ?></td>
@@ -80,8 +64,8 @@
                 <td><?php echo $date_modified; ?></td>
               </tr>
             </table>
-          </div>
-          <div class="tab-pane" id="tab-product">
+  <h2>Product</h2>
+  
             <table class="form">
               <tr>
                 <td><?php echo $text_product; ?></td>
@@ -123,8 +107,8 @@
               </tr>
               <?php } ?>
             </table>
-          </div>
-          <div class="tab-pane" id="tab-history">
+    <h2>Product</h2>
+
             <div id="history"></div>
             <table class="form">
               <tr>
@@ -147,11 +131,11 @@
                 <td><?php echo $entry_comment; ?></td>
                 <td><textarea name="comment" cols="40" rows="8" style="width: 99%"></textarea>
                   <div style="margin-top: 10px; text-align: right;">
-                    <button id="button-history" class="btn btn-mini button-ban-add"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
+                    <button id="button-history" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
                   </div></td>
               </tr>
             </table>
-          </div>
+   
         </div>
       </div>
     </div>

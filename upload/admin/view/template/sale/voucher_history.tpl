@@ -1,10 +1,10 @@
 <table class="table table-striped table-bordered table-hover">
   <thead>
     <tr>
-      <td class="right"><b><?php echo $column_order_id; ?></b></td>
-      <td class="left"><b><?php echo $column_customer; ?></b></td>
-      <td class="right"><b><?php echo $column_amount; ?></b></td>
-      <td class="left"><b><?php echo $column_date_added; ?></b></td>
+      <td class="right"><?php echo $column_order_id; ?></td>
+      <td class="left"><?php echo $column_customer; ?></td>
+      <td class="right"><?php echo $column_amount; ?></td>
+      <td class="left"><?php echo $column_date_added; ?></td>
     </tr>
   </thead>
   <tbody>

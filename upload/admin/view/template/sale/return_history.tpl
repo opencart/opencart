@@ -7,10 +7,10 @@
 <table class="table table-striped table-bordered table-hover">
   <thead>
     <tr>
-      <td class="left"><b><?php echo $column_date_added; ?></b></td>
-      <td class="left"><b><?php echo $column_comment; ?></b></td>
-      <td class="left"><b><?php echo $column_status; ?></b></td>
-      <td class="left"><b><?php echo $column_notify; ?></b></td>
+      <td class="left"><?php echo $column_date_added; ?></td>
+      <td class="left"><?php echo $column_comment; ?></td>
+      <td class="left"><?php echo $column_status; ?></td>
+      <td class="left"><?php echo $column_notify; ?></td>
     </tr>
   </thead>
   <tbody>

@@ -1,0 +1,6 @@
+{
+    "require": {
+        "swiftmailer/swiftmailer": "v5.0.0"
+    },
+    "minimum-stability": "dev"    
+}

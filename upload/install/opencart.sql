@@ -1809,6 +1809,7 @@ CREATE TABLE `oc_modification` (
   `author` varchar(64) NOT NULL,
   `version` varchar(32) NOT NULL,
   `code` text NOT NULL,
+  `sort_order` int(3) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,

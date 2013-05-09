@@ -17,7 +17,6 @@
 	padding-top: 0px;
 	padding-left: 5px;
 }
-
 .navbar {
 	border-bottom: 1px solid #DDDDDD;
 	margin-bottom: 14px;
@@ -75,7 +74,7 @@
 	color: #666666;
 	font-size: 19px;
 	font-weight: normal;
-	text-shadow: 1px 1px 0px #FFFFFF;	
+	text-shadow: 1px 1px 0px #FFFFFF;
 	line-height: 42px;
 	padding-top: 0px;
 }
@@ -118,8 +117,6 @@
 	text-decoration: none;
 	margin-left: 5px;
 }
-
-
 .control-label:after {
 	content: ':';
 }
@@ -127,7 +124,6 @@
 	content: '* ';
 	color: #B94A48;
 }
-
 .thumbnails {
 	position: relative;
 	border: 1px solid #000;
@@ -138,11 +134,10 @@
 	left: 0;
 	z-index: 999;
 }
-
 .scrollbox {
 	width: 250px;
-	height: 200px; 
-	overflow-y: scroll;	
+	height: 200px;
+	overflow-y: scroll;
 }
 .results {
 	float: right;

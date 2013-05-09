@@ -159,9 +159,7 @@ $('.ajax').on('submit', function(event) {
 			if (json.length) {
 				for (i = 0; i < json.length; i++) {
 					this.items[json[i]['value']] = json[i];				
-				}
-				
-				for (i = 0; i < json.length; i++) {
+					
 					// Check for categories to place them at the top
 					if (json[i]['category']) {
 						if (!$(this.element).siblings('ul.dropdown-menu').find('li.disabled a b:contains(\'' + json[i]['category'] + '\')').length) {

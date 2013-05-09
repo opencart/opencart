@@ -46,6 +46,49 @@ $(document).ready(function() {
 	});
 });
 
+$('.ajax').on('submit', function(event) {
+	event.preventDefault();
+	
+	$.ajax({
+		url: $(this).attr('action'),
+		type: $(this).attr('method'),
+		data: $(this).serialize(),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-option').prop('disabled', true);
+		},	
+		complete: function() {
+			$('#button-option').prop('disabled', false);
+		},		
+		success: function(json) {
+			$('.alert, .error .help-block').remove();
+			$('.error').removeClass('error');
+						
+			if (json['error']) {
+				if (json['error']['warning']) {
+					$('.box').before('<div class="alert alert-error">' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				
+				for (i in json['error']) {
+					$('#input-' + i).parent().parent().addClass('error');
+				
+					$('#input-' + i).after('<span class="help-block">' + json['error'][i] + '</span>');
+				}				
+			}
+						
+			if (json['success']) {
+				$('.box').before('<div class="alert alert-success">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		},
+		cache: false,
+		contentType: false,
+		processData: false
+	});
+});
+
 // Added my own autocomplete method for jquery since bootstraps is pretty much useless	
 (function($) {
 	function Autocomplete(element, options) {
@@ -77,7 +120,7 @@ $(document).ready(function() {
 			
 			value = $(event.target).parent().attr('data-value');
 			
-			if (this.items[value]) {
+			if (value && this.items[value]) {
 				this.options.select(this.items[value]);
 			}
 		},	
@@ -115,25 +158,37 @@ $(document).ready(function() {
 			
 			if (json.length) {
 				for (i = 0; i < json.length; i++) {
-					this.items[json[i]['value']] = json[i];
-					
-					//if (json[i]['category']) {
-					//	test['caegory'][]
-					//}
-					
-					
-					
-					html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['label'] + '</a></li>';
+					this.items[json[i]['value']] = json[i];				
+				}
+				
+				for (i = 0; i < json.length; i++) {
+					// Check for categories to place them at the top
+					if (json[i]['category']) {
+						if (!$(this.element).siblings('ul.dropdown-menu').find('li.disabled a b:contains(\'' + json[i]['category'] + '\')').length) {
+							$(this.element).siblings('ul.dropdown-menu').append('<li class="disabled"><a href="#"><b>' + json[i]['category'] + '</b></a></li>');
+						}
+						
+						for (j = 0; j < json.length; j++) {
+							if (json[j]['category'] && json[i]['category'] == json[j]['category']) {
+								if (!$(this.element).siblings('ul.dropdown-menu').find('[data-value=\'' + json[j]['value'] + '\']').length) {
+									$(this.element).siblings('ul.dropdown-menu').append('<li data-value="' + json[j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + json[j]['label'] + '</a></li>');
+								}
+							}
+						}
+					} else {
+						if (!$(this.element).siblings('ul.dropdown-menu').find('[data-value=\'' + json[i]['value'] + '\']').length) {
+							$(this.element).siblings('ul.dropdown-menu').append('<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['label'] + '</a></li>');
+						}
+					}
 				}
 			}
 			
-			if (html) {
+			if ($(this.element).siblings('ul.dropdown-menu').find('li').length) {
 				this.show();
 			} else {
 				this.hide();
 			}
 			
-			$(this.element).parent().find('ul.dropdown-menu').html(html);	
 			$(this.element).parent().find('ul.dropdown-menu a').on('click', $.proxy(this.click, this));			
 			$(this.element).parent().find('ul.dropdown-menu a').on('mouseup', $.proxy(this.mouseup, this));		
 		}

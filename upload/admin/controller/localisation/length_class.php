@@ -181,7 +181,7 @@ class ControllerLocalisationLengthClass extends Controller {
 
 			$this->data['length_classes'][] = array(
 				'length_class_id' => $result['length_class_id'],
-				'title'           => $result['title'] . (($result['unit'] == $this->config->get('config_length_class')) ? $this->language->get('text_default') : null),
+				'title'           => $result['title'] . (($result['length_class_id'] == $this->config->get('config_length_class_id')) ? $this->language->get('text_default') : null),
 				'unit'            => $result['unit'],
 				'value'           => $result['value'],
 				'selected'        => isset($this->request->post['selected']) && in_array($result['length_class_id'], $this->request->post['selected']),

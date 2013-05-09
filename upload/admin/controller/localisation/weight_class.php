@@ -181,7 +181,7 @@ class ControllerLocalisationWeightClass extends Controller {
 
 			$this->data['weight_classes'][] = array(
 				'weight_class_id' => $result['weight_class_id'],
-				'title'           => $result['title'] . (($result['unit'] == $this->config->get('config_weight_class')) ? $this->language->get('text_default') : null),
+				'title'           => $result['title'] . (($result['weight_class_id'] == $this->config->get('config_weight_class_id')) ? $this->language->get('text_default') : null),
 				'unit'            => $result['unit'],
 				'value'           => $result['value'],
 				'selected'        => isset($this->request->post['selected']) && in_array($result['weight_class_id'], $this->request->post['selected']),

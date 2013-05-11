@@ -6,7 +6,9 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -14,7 +16,9 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons">
+          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
@@ -82,10 +86,7 @@
               <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
               <div class="controls">
                 <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
-                
-                <a data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><i class="icon-question-sign icon-large"></i></a>
-                
-                </div>
+                <a data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><i class="icon-question-sign icon-large"></i></a> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-bottom"><?php echo $entry_bottom; ?></label>
@@ -97,10 +98,7 @@
                   <input type="checkbox" name="bottom" value="1" id="input-bottom" />
                   <?php } ?>
                 </label>
-                
-                <a data-toggle="tooltip" title="<?php echo $help_bottom; ?>"><i class="icon-question-sign icon-large"></i></a>
-                
-                </div>
+                <a data-toggle="tooltip" title="<?php echo $help_bottom; ?>"><i class="icon-question-sign icon-large"></i></a> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
@@ -145,9 +143,7 @@
                       <?php } ?>
                     </select></td>
                 </tr>
-              </tbody>
-              <?php foreach ($stores as $store) { ?>
-              <tbody>
+                <?php foreach ($stores as $store) { ?>
                 <tr>
                   <td class="left"><?php echo $store['name']; ?></td>
                   <td class="left"><select name="information_layout[<?php echo $store['store_id']; ?>][layout_id]">
@@ -161,8 +157,8 @@
                       <?php } ?>
                     </select></td>
                 </tr>
+                <?php } ?>
               </tbody>
-              <?php } ?>
             </table>
           </div>
         </div>

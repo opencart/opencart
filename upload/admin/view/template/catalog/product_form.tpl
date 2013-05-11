@@ -739,14 +739,14 @@
                   <td class="right"><?php echo $entry_reward; ?></td>
                 </tr>
               </thead>
-              <?php foreach ($customer_groups as $customer_group) { ?>
               <tbody>
+                <?php foreach ($customer_groups as $customer_group) { ?>
                 <tr>
                   <td class="left"><?php echo $customer_group['name']; ?></td>
                   <td class="right"><input type="text" name="product_reward[<?php echo $customer_group['customer_group_id']; ?>][points]" value="<?php echo isset($product_reward[$customer_group['customer_group_id']]) ? $product_reward[$customer_group['customer_group_id']]['points'] : ''; ?>" /></td>
                 </tr>
+                <?php } ?>
               </tbody>
-              <?php } ?>
             </table>
           </div>
           <div class="tab-pane" id="tab-design">
@@ -771,9 +771,7 @@
                       <?php } ?>
                     </select></td>
                 </tr>
-              </tbody>
-              <?php foreach ($stores as $store) { ?>
-              <tbody>
+                <?php foreach ($stores as $store) { ?>
                 <tr>
                   <td class="left"><?php echo $store['name']; ?></td>
                   <td class="left"><select name="product_layout[<?php echo $store['store_id']; ?>][layout_id]">
@@ -787,8 +785,8 @@
                       <?php } ?>
                     </select></td>
                 </tr>
+                <?php } ?>
               </tbody>
-              <?php } ?>
             </table>
           </div>
         </div>
@@ -1114,7 +1112,7 @@ $('input[name=\'option\']').autocomplete({
 		
 		$('#tab-option .tab-content').append(html);
 		
-		$('#option').append('<li><a href="#tab-option' + option_row + '" data-toggle="tab"><i class="icon-minus-sign" onclick="$(\'a[href=\\\'#tab-option' + option_row + '\\\'\').parent().remove(); $(\'#tab-option' + option_row + '\').remove(); $(\'#vtab-option a:first\').trigger(\'click\');"></i> ' + item['label'] + '</li>');
+		$('#option').append('<li><a href="#tab-option' + option_row + '" data-toggle="tab"><i class="icon-minus-sign" onclick="$(\'a[href=\\\'#tab-option' + option_row + '\\\']\').parent().remove(); $(\'#tab-option' + option_row + '\').remove(); $(\'#vtab-option a:first\').trigger(\'click\');"></i> ' + item['label'] + '</li>');
 		
 		$('#option a[href=\'#tab-option' + option_row + '\']').tab('show');
 				

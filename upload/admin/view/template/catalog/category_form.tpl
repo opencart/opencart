@@ -74,8 +74,8 @@
               <label class="control-label" for="input-filter"><?php echo $entry_filter; ?></label>
               <div class="controls">
                 <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" />
-                <a data-toggle="tooltip" title="<?php echo $help_filter; ?>"><i class="icon-question-sign icon-large"></i></a>
-                <br /><br />
+                <a data-toggle="tooltip" title="<?php echo $help_filter; ?>"><i class="icon-question-sign icon-large"></i></a> <br />
+                <br />
                 <div id="category-filter" class="well well-small scrollbox">
                   <?php foreach ($category_filters as $category_filter) { ?>
                   <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $category_filter['name']; ?>
@@ -121,7 +121,7 @@
               <div class="controls">
                 <ul class="thumbnails">
                   <li><a class="thumbnail" href="#"><img alt="" src="<?php echo $thumb; ?>"></a>
-                    <ul class="thumbnail-option inline">
+                    <ul class="thumbnail-option">
                       <li><a href="#" title="Edit"><span class="icon-edit"></span></a></li>
                       <li><a href="#" title="Delete"><span class="icon-trash"></span></a></li>
                     </ul>
@@ -195,9 +195,7 @@
                       <?php } ?>
                     </select></td>
                 </tr>
-              </tbody>
-              <?php foreach ($stores as $store) { ?>
-              <tbody>
+                <?php foreach ($stores as $store) { ?>
                 <tr>
                   <td class="left"><?php echo $store['name']; ?></td>
                   <td class="left"><select name="category_layout[<?php echo $store['store_id']; ?>][layout_id]">
@@ -211,8 +209,8 @@
                       <?php } ?>
                     </select></td>
                 </tr>
+                <?php } ?>
               </tbody>
-              <?php } ?>
             </table>
           </div>
         </div>
@@ -229,7 +227,7 @@
     <h3 id="modal-label"><?php echo $text_image_manager; ?></h3>
   </div>
   <div class="modal-body">
-    <iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="width: 90%; height: 90%;" frameborder="no" scrolling="auto"></iframe>
+    <iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>" style="width: 90%; height: 90%;" frameborder="no" scrolling="auto"></iframe>
   </div>
 </div>
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 

@@ -16,38 +16,53 @@
     </div>
     <div class="box-content">
       <div class="row-fluid">
+        
+        
         <div class="span3">
-          <div class="well">
-            <div id="chart-sale"></div>
+          <div class="well well-small">
+          
+          
+          
+            <div id="chart-sale" class="chart"></div>
             <div class="detail">
               <h5><?php echo $total_sale; ?></h5>
               <?php echo $text_total_sale; ?></div>
+          
+          
           </div>
         </div>
+        
+        
         <div class="span3">
-          <div class="well">
-            <div id="chart-order"></div>
+          <div class="well well-small">
+            <div id="chart-order" class="chart"></div>
             <div class="detail">
               <h5><?php echo $total_order; ?></h5>
               <?php echo $text_total_order; ?></div>
           </div>
         </div>
+        
         <div class="span3">
-          <div class="well">
-            <div id="chart-sale"></div>
+          <div class="well well-small">
+            <div id="chart-customer" class="chart"></div>
             <div class="detail">
               <h5><?php echo $total_customer; ?></h5>
               <?php echo $text_total_customer; ?></div>
           </div>
         </div>
+        
+        
         <div class="span3">
-          <div class="well">
-            <div id="chart-online"></div>
+          <div class="well well-small">
+            <div id="chart-online" class="chart"></div>
             <div class="detail">
               <h5><?php echo $total_online; ?></h5>
               <?php echo $text_total_online; ?></div>
           </div>
         </div>
+      
+      
+      
       </div>
       <div class="row-fluid">
         <div class="span12">
@@ -72,6 +87,121 @@
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script> 
 <script type="text/javascript"><!--
+var option = {	
+	shadowSize: 0,
+	bars: {
+		show: true,
+		barWidth: 0.9,
+		align: 'center',
+		lineWidth: 0,
+		fill: true,
+		fillColor: '#FF0000'
+	},
+	grid: false,
+	xaxis: {
+		ticks: false
+	},
+	yaxis: {
+		ticks: false
+	}
+}
+
+var data = [];
+
+for (var i = 0; i < 5; i++) {
+	data.push([i, Math.floor((Math.random() * 100) + 1)]);
+}
+
+
+<?php $sale_data = array(); ?>
+<?php foreach ($sales as $key => $value) { ?>
+<?php $sale_data[] = '[' . $key . ', ' . $value . ']'; ?>
+<?php } ?>
+
+
+$.plot($('#chart-sale'), [[<?php echo implode(', ', $sale_data); ?>]], option);
+
+var option = {	
+	shadowSize: 0,
+	bars: {
+		show: true,
+		barWidth: 0.9,
+		align: 'center',
+		lineWidth: 0,
+		fill: true,
+		fillColor: '#0000FF'
+	},
+	grid: false,
+	xaxis: {
+		ticks: false
+	},
+	yaxis: {
+		ticks: false
+	}
+}
+
+var data = [];
+
+for (var i = 0; i < 5; i++) {
+	data.push([i, Math.floor((Math.random() * 100) + 1)]);
+}
+		
+$.plot($('#chart-order'), [data], option);
+
+var option = {	
+	shadowSize: 0,
+	bars: {
+		show: true,
+		barWidth: 0.9,
+		align: 'center',
+		lineWidth: 0,
+		fill: true,
+		fillColor: '#00FF00'
+	},
+	grid: false,
+	xaxis: {
+		ticks: false
+	},
+	yaxis: {
+		ticks: false
+	}
+}
+
+var data = [];
+
+for (var i = 0; i < 5; i++) {
+	data.push([i, Math.floor((Math.random() * 100) + 1)]);
+}
+		
+$.plot($('#chart-customer'), [data], option);
+
+var option = {	
+	shadowSize: 0,
+	bars: {
+		show: true,
+		barWidth: 0.9,
+		align: 'center',
+		lineWidth: 0,
+		fill: true,
+		fillColor: '#FEB900'
+	},
+	grid: false,
+	xaxis: {
+		ticks: false
+	},
+	yaxis: {
+		ticks: false
+	}
+}
+
+var data = [];
+
+for (var i = 0; i < 5; i++) {
+	data.push([i, Math.floor((Math.random() * 100) + 1)]);
+}
+		
+$.plot($('#chart-online'), [data], option);
+
 $('.btn-group button').on('click', function() {
 	$.ajax({
 		type: 'get',
@@ -92,39 +222,39 @@ $('.btn-group button').on('click', function() {
 					lineWidth: 1
 				},
 				grid: {
-					backgroundColor: '#FFFFFF'
-				},	
+					backgroundColor: '#FFFFFF',
+					hoverable: true,
+					clickable: false
+				},
+				points: {
+					show: true				
+				},
 				colors: ['#8CC7E0', '#2D83A6'],
 				xaxis: {
             		ticks: json.xaxis
 				}
 			}
 			
-			var placeholder = $('#report');
-			
-			$.plot(placeholder, [json.order, json.customer], option);	
-			/*
-			// Test
-			var option = {	
-				shadowSize: 0,
-				lines: { 
-					show: true,
-					fill: true,
-					lineWidth: 1
-				},
-				grid: {
-					backgroundColor: '#FFFFFF'
-				},	
-				colors: ['#2872BD'],
-				xaxis: {
-            		ticks: json.xaxis
+			var plot = $.plot($('#report'), [json.order, json.customer], option);	
+					
+			$('#report').bind('plothover', function(event, pos, item) {
+				$('.tooltip').remove();
+			  
+				if (item) {
+					$('<div id="tooltip" class="tooltip top in"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').appendTo('body');
+					
+					$('#tooltip').css({
+						position: 'absolute',
+						left: item.pageX - ($('#tooltip').outerWidth() / 2),
+						top: item.pageY - $('#tooltip').outerHeight(),
+						pointer: 'cusror'
+					}).fadeIn('slow');	
+					
+					$(plot.getPlaceholder()).css('cursor', 'pointer');		
+			  	} else {
+					$(plot.getPlaceholder()).css('cursor', 'auto');
 				}
-			}
-			
-			var placeholder = $('#chart-sale');
-			
-			$.plot(placeholder, [json.customer], option);					   
-			*/
+			});
 		}
 	});	
 })

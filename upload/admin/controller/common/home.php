@@ -35,18 +35,71 @@ class ControllerCommonHome extends Controller {
 		
 		$this->load->model('sale/order');
 
+		// Total Sales
 		$this->data['total_sale'] = $this->currency->format($this->model_sale_order->getTotalSales(), $this->config->get('config_currency'));
-		$this->data['total_sale_year'] = $this->currency->format($this->model_sale_order->getTotalSalesByYear(date('Y')), $this->config->get('config_currency'));
+			
+		$this->data['sales'] = array();
+		/*
+		$query = $this->db->query("select a.Date 
+from (
+    select curdate() - INTERVAL (a.a + (10 * b.a) + (100 * c.a)) DAY as Date
+    from (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as a
+    cross join (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as b
+    cross join (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as c
+) a
+where a.Date between '2010-01-20' and '2010-01-24'");
+		*/
 		
+		//print_r($query->rows);
+		
+		$query = $this->db->query("SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND DATE(date_added) <= DATE(NOW()) AND DATE(date_added) >= DATE(DATE_SUB(NOW(), INTERVAL 5 MONTH)) GROUP BY MONTH(date_added), YEAR(date_added)");
+		
+		//$this->data['sales'][] = 100;
+		//$this->data['sales'][] = 200;
+		//$this->data['sales'][] = 400;
+		foreach ($query->rows as $result) {
+			$this->data['sales'][] = $this->currency->format($result['total'], $this->config->get('config_currency'), 1.00000000, false);
+		}
+		
+		// Total Orders
 		$this->data['total_order'] = $this->model_sale_order->getTotalOrders();
 		
+		$this->data['orders'] = array();
+		
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND DATE(date_added) <= DATE(NOW()) AND DATE(date_added) >= DATE(DATE_SUB(NOW(), INTERVAL 5 MONTH)) GROUP BY MONTH(date_added), YEAR(date_added)");
+		
+		foreach ($query->rows as $result) {
+			$this->data['orders'][] = $result['total'];
+		}
+				
+		// Total Orders
 		$this->load->model('sale/customer');
 		
 		$this->data['total_customer'] = $this->model_sale_customer->getTotalCustomers();
+		
+		$this->data['customers'] = array();
 
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer` WHERE (DATE(date_added) >= '" . $this->db->escape(date('Y-m-d H:m:s', strtotime('-5 months'))) . "' AND DATE(date_added) <= NOW()) GROUP BY MONTH(date_added), YEAR(date_added)");
+		
+		foreach ($query->rows as $result) {
+			$this->data['customers'][] = $result['total'];
+		}
+
+
+		// Number of people onlne
 		$this->load->model('report/online');
 
 		$this->data['total_online'] = $this->model_report_online->getTotalCustomersOnline();
+		
+		$this->data['online'] = array();
+
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer` WHERE (DATE(date_added) >= '" . $this->db->escape(date('Y-m-d H:m:s', strtotime('-5 months'))) . "' AND DATE(date_added) <= NOW()) GROUP BY MONTH(date_added), YEAR(date_added)");
+		
+		foreach ($query->rows as $result) {
+			$this->data['onlines'][] = $result['total'];
+		}
+
+		
 		
 		if ($this->config->get('config_currency_auto')) {
 			$this->load->model('localisation/currency');
@@ -66,14 +119,14 @@ class ControllerCommonHome extends Controller {
 	public function chart() {
 		$this->language->load('common/home');
 		
-		$data = array();
+		$json = array();
 		
-		$data['order'] = array();
-		$data['customer'] = array();
-		$data['xaxis'] = array();
+		$json['order'] = array();
+		$json['customer'] = array();
+		$json['xaxis'] = array();
 		
-		$data['order']['label'] = $this->language->get('text_order');
-		$data['customer']['label'] = $this->language->get('text_customer');
+		$json['order']['label'] = $this->language->get('text_order');
+		$json['customer']['label'] = $this->language->get('text_customer');
 		
 		if (isset($this->request->get['range'])) {
 			$range = $this->request->get['range'];
@@ -83,24 +136,26 @@ class ControllerCommonHome extends Controller {
 		
 		switch ($range) {
 			case 'day':
+			
+			
 				for ($i = 0; $i < 24; $i++) {
 					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND (DATE(date_added) = DATE(NOW()) AND HOUR(date_added) = '" . (int)$i . "') GROUP BY HOUR(date_added) ORDER BY date_added ASC");
 					
 					if ($query->num_rows) {
-						$data['order']['data'][]  = array($i, (int)$query->row['total']);
+						$json['order']['data'][]  = array($i, (int)$query->row['total']);
 					} else {
-						$data['order']['data'][]  = array($i, 0);
+						$json['order']['data'][]  = array($i, 0);
 					}
 					
 					$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE DATE(date_added) = DATE(NOW()) AND HOUR(date_added) = '" . (int)$i . "' GROUP BY HOUR(date_added) ORDER BY date_added ASC");
 					
 					if ($query->num_rows) {
-						$data['customer']['data'][] = array($i, (int)$query->row['total']);
+						$json['customer']['data'][] = array($i, (int)$query->row['total']);
 					} else {
-						$data['customer']['data'][] = array($i, 0);
+						$json['customer']['data'][] = array($i, 0);
 					}
 			
-					$data['xaxis'][] = array($i, date('H', mktime($i, 0, 0, date('n'), date('j'), date('Y'))));
+					$json['xaxis'][] = array($i, date('H', mktime($i, 0, 0, date('n'), date('j'), date('Y'))));
 				}					
 				break;
 			case 'week':
@@ -112,20 +167,20 @@ class ControllerCommonHome extends Controller {
 					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND DATE(date_added) = '" . $this->db->escape($date) . "' GROUP BY DATE(date_added)");
 			
 					if ($query->num_rows) {
-						$data['order']['data'][] = array($i, (int)$query->row['total']);
+						$json['order']['data'][] = array($i, (int)$query->row['total']);
 					} else {
-						$data['order']['data'][] = array($i, 0);
+						$json['order']['data'][] = array($i, 0);
 					}
 				
 					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer` WHERE DATE(date_added) = '" . $this->db->escape($date) . "' GROUP BY DATE(date_added)");
 			
 					if ($query->num_rows) {
-						$data['customer']['data'][] = array($i, (int)$query->row['total']);
+						$json['customer']['data'][] = array($i, (int)$query->row['total']);
 					} else {
-						$data['customer']['data'][] = array($i, 0);
+						$json['customer']['data'][] = array($i, 0);
 					}
 		
-					$data['xaxis'][] = array($i, date('D', strtotime($date)));
+					$json['xaxis'][] = array($i, date('D', strtotime($date)));
 				}
 				
 				break;
@@ -137,20 +192,20 @@ class ControllerCommonHome extends Controller {
 					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND (DATE(date_added) = '" . $this->db->escape($date) . "') GROUP BY DAY(date_added)");
 					
 					if ($query->num_rows) {
-						$data['order']['data'][] = array($i, (int)$query->row['total']);
+						$json['order']['data'][] = array($i, (int)$query->row['total']);
 					} else {
-						$data['order']['data'][] = array($i, 0);
+						$json['order']['data'][] = array($i, 0);
 					}	
 				
 					$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE DATE(date_added) = '" . $this->db->escape($date) . "' GROUP BY DAY(date_added)");
 			
 					if ($query->num_rows) {
-						$data['customer']['data'][] = array($i, (int)$query->row['total']);
+						$json['customer']['data'][] = array($i, (int)$query->row['total']);
 					} else {
-						$data['customer']['data'][] = array($i, 0);
+						$json['customer']['data'][] = array($i, 0);
 					}	
 					
-					$data['xaxis'][] = array($i, date('j', strtotime($date)));
+					$json['xaxis'][] = array($i, date('j', strtotime($date)));
 				}
 				break;
 			case 'year':
@@ -158,25 +213,25 @@ class ControllerCommonHome extends Controller {
 					$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND YEAR(date_added) = '" . date('Y') . "' AND MONTH(date_added) = '" . $i . "' GROUP BY MONTH(date_added)");
 					
 					if ($query->num_rows) {
-						$data['order']['data'][] = array($i, (int)$query->row['total']);
+						$json['order']['data'][] = array($i, (int)$query->row['total']);
 					} else {
-						$data['order']['data'][] = array($i, 0);
+						$json['order']['data'][] = array($i, 0);
 					}
 					
 					$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE YEAR(date_added) = '" . date('Y') . "' AND MONTH(date_added) = '" . $i . "' GROUP BY MONTH(date_added)");
 					
 					if ($query->num_rows) { 
-						$data['customer']['data'][] = array($i, (int)$query->row['total']);
+						$json['customer']['data'][] = array($i, (int)$query->row['total']);
 					} else {
-						$data['customer']['data'][] = array($i, 0);
+						$json['customer']['data'][] = array($i, 0);
 					}
 					
-					$data['xaxis'][] = array($i, date('M', mktime(0, 0, 0, $i, 1, date('Y'))));
+					$json['xaxis'][] = array($i, date('M', mktime(0, 0, 0, $i, 1, date('Y'))));
 				}			
 				break;	
 		} 
 		
-		$this->response->setOutput(json_encode($data));
+		$this->response->setOutput(json_encode($json));
 	}
 	
 	public function login() {
